@@ -8,10 +8,10 @@
     <table class="dashboard-table" width="100%">
         <thead>
             <tr>
-                <td class="dashboard-revision">Revision</td>
-                <td class="dashboard-title">Title</td>
-                <td class="dashboard-comment">Comment</td>
-                <td class="dashboard-author">Author</td>
+                <th class="dashboard-revision">Revision</th>
+                <th class="dashboard-title">Title</th>
+                <th class="dashboard-comment">Comment</th>
+                <th class="dashboard-author">Author{% if show_ips %} <button id="show_ips_btn">Toggle IPs</button>{% endif %}</th>
             </tr>
         </thead>
         <tbody>
@@ -42,8 +42,20 @@
                     </td>
                     <td class="dashboard-comment">{{ format_comment(revision) }}</td>
                     <td class="dashboard-author"><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a>
-                    {% if show_ips %}
-                    <br/><a class="dashboard-ip-link" href="{{ url('admin:wiki_revisionip_changelist') }}?revision={{revision.id}}" target="_blank">{{ _('View IP') }}</a>
+                    {% if show_ips and revision.revisionip_set.all() %}
+                    {% set revision_ip = revision.revisionip_set.all()[0].ip %}
+                    <span class="revision_ip">
+                    <br/>IP: {{ revision_ip }}
+                    {% set ban_ip_url = '%s?%s' % (url('admin:core_ipban_add'), 'ip=%s' % revision_ip) %}
+                    <br/><a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a>
+                    </span>
+                    {% endif %}
+                    {% if request.user.is_superuser and revision.creator.get_profile().is_banned %}
+                        {% set active_ban = revision.creator.get_profile().active_ban() %}
+                        <div class="banned">
+                            banned {{ datetimeformat(active_ban.date, format='date') }}
+                            by {{ active_ban.by }}
+                        </div>
                     {% endif %}
                     </td>
                 </tr>

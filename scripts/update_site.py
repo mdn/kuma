@@ -59,7 +59,6 @@ def update_site(debug):
         ]
 
     commands += [
-        (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
         (EXEC, 'python2.6 manage.py syncdb --noinput'),
 
         (EXEC, 'python2.6 manage.py migrate --noinput'),

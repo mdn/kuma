@@ -37,28 +37,43 @@ Contributing Code
 What to work on
 ===============
 
-Good starting projects are listed on [Bugzilla][bugzilla]. If you have any questions, just ask in the #mdndev IRC channel on irc.mozilla.org!
+We keep a good list of starting mentored bugs on [the MDN "Getting Involved" page](https://wiki.mozilla.org/Webdev/GetInvolved/developer.mozilla.org#Mentored_Bugs).
 
-[bugzilla]: https://bugzilla.mozilla.org/buglist.cgi?bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&columnlist=short_desc%2Ccomponent%2Cchangeddate&list_id=9799718&product=Mozilla%20Developer%20Network&query_format=advanced&status_whiteboard=[good%20first%20bug]&status_whiteboard_type=allwordssubstr&query_based_on=
+If you have questions about what to work on, you can ask:
+
+* In the #mdndev [IRC channel on irc.mozilla.org](https://wiki.mozilla.org/Irc)
+* On [the dev-mdn@lists.mozilla.org mailing list](https://lists.mozilla.org/listinfo/dev-mdn)
+
 
 How to submit code
 ==================
 
+MDN development process is very much like [these Mozilla Webdev guidelines](http://mozweb.readthedocs.org/en/latest/guide/development_process.html).
+
+The [GitHub Flow](https://guides.github.com/introduction/flow/) site is a great interactive guide to the flow described here.
+
 GitHub workflow
 ---------------
 
-   1. [Install our development environment](http://kuma.readthedocs.org/en/latest/installation-vagrant.html)
-   2. Set up mozilla remote ($ git remote add mozilla git://github.com/mozilla/kuma.git)
-   3. Create a branch for a bug ($ git checkout -b new-issue-888888)
-   4. Develop on bug branch.
+1. [Install our development environment](http://kuma.readthedocs.org/en/latest/installation-vagrant.html)
+2. Create a branch for your bug:
 
-   [Time passes, the mozilla/kuma repository accumulates new commits]
-   5. Commit changes to bug branch ($ git add . ; git commit -m 'fix bug 888888 - commit message')
-   6. Fetch mozilla ($ git fetch mozilla)
-   7. Update local master ($ git checkout master; git pull mozilla master)
+    ```
+    git checkout -b new-issue-888888
+    ```
 
-   Repeat steps 4-7 till dev is complete
+3. Code on the bug branch
+4. Commit changes to bug branch:
 
-   8. Rebase issue branch ($ git checkout new-issue-888888; git rebase master)
-   9. Push branch to GitHub ($ git push origin new-issue-888888)
-   10. Issue pull request (Click Pull Request button)
+    ```
+    git add .
+    git commit -m 'fix bug 888888 - commit message'
+    ```
+
+5. Push branch to GitHub:
+
+    ```
+    git push origin new-issue-888888
+    ```
+
+6. Send pull request on GitHub

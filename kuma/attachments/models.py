@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 import jingo
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from .managers import AttachmentManager
 from .utils import attachment_upload_to

@@ -1,6 +1,6 @@
 define(['intern'], function(intern) {
 
-    var domain = intern.args.d || 'developer-local.allizom.org';
+    var domain = intern.args.d || 'developer.allizom.org';
     var httpsAddress = 'https://' + domain + '/';
     var defaultLocale = 'en-US';
 
@@ -32,8 +32,11 @@ define(['intern'], function(intern) {
         personaPassword: intern.args.p || '',
 
         // Async testing in milliseconds
-        testTimeout: 22000
+        testTimeout: 22000,
+        asyncExecutionTimeout: 4000,
 
+        // Wiki-specific
+        wikiDocumentSlug: intern.args.wd || ''
     };
 
 });

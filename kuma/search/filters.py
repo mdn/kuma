@@ -1,13 +1,13 @@
-import operator
 from django.conf import settings
 from django.utils.datastructures import SortedDict
 
-from elasticutils import Q
-from elasticutils.contrib.django import F
+from elasticsearch_dsl import F, Q, query
 from rest_framework.filters import BaseFilterBackend
 from waffle import flag_is_active
 
-from .models import DocumentType, Filter, FilterGroup
+from kuma.wiki.search import WikiDocumentType
+
+from .models import Filter, FilterGroup
 
 
 def get_filters(getter_func):
@@ -34,43 +34,39 @@ class LanguageFilterBackend(BaseFilterBackend):
     we're limiting the documents to either English or the requested
     language, effectively filtering out all other languages. We also boost
     the non-English documents to show up before the English ones.
+
     """
     def filter_queryset(self, request, queryset, view):
         locale = request.GET.get('locale', None)
         if '*' == locale:
             return queryset
 
-        query = queryset.build_search().get('query', {'match_all': {}})
+        sq = queryset.to_dict().pop('query', query.MatchAll().to_dict())
 
         if request.locale == settings.LANGUAGE_CODE:
             locales = [request.locale]
         else:
             locales = [request.locale, settings.LANGUAGE_CODE]
-        query = {
+
+        positive_sq = {
             'filtered': {
-                'query': query,
-                'filter': {
-                    'terms': {
-                        'locale': locales,
-                    }
-                }
+                'query': sq,
+                'filter': {'terms': {'locale': locales}}
             }
         }
-        return queryset.query_raw({
-            'boosting': {
-                'positive': query,
-                'negative': {
-                    'bool': {
-                        'must_not': {
-                            'term': {
-                                'locale': request.locale
-                            }
-                        }
-                    }
-                },
-                "negative_boost": 0.5
+        negative_sq = {
+            'bool': {
+                'must_not': [
+                    {'term': {'locale': request.locale}}
+                ]
             }
-        })
+        }
+        # Note: Here we are replacing the query rather than calling
+        # `queryset.query` which would result in a boolean must query.
+        queryset.query = query.Boosting(positive=positive_sq,
+                                        negative=negative_sq,
+                                        negative_boost=0.5)
+        return queryset
 
 
 class SearchQueryBackend(BaseFilterBackend):
@@ -79,28 +75,33 @@ class SearchQueryBackend(BaseFilterBackend):
     queryset based on the search query found in the current request's
     query parameters.
     """
-    search_param = 'q'
     search_operations = [
-        ('title__match', 6.0),
-        ('summary__match', 2.0),
-        ('content__match', 1.0),
-        ('title__match_phrase', 10.0),
-        ('content__match_phrase', 8.0),
+        # (<query type>, <field>, <boost factor>)
+        ('match', 'title', 6.0),
+        ('match', 'summary', 2.0),
+        ('match', 'content', 1.0),
+        ('match_phrase', 'title', 10.0),
+        ('match_phrase', 'content', 8.0),
     ]
 
     def filter_queryset(self, request, queryset, view):
-        search_param = request.QUERY_PARAMS.get(self.search_param, None)
+        search_term = view.query_params.get('q')
 
-        if search_param:
-            queries = {}
-            boosts = {}
-            for operation, boost in self.search_operations:
-                queries[operation] = search_param
-                boosts[operation] = boost
-            queryset = (queryset.query(Q(should=True, **queries))
-                                .boost(**boosts))
+        if search_term:
+            queries = []
+            for query_type, field, boost in self.search_operations:
+                queries.append(
+                    Q(query_type, **{field: {'query': search_term,
+                                             'boost': boost}}))
+            queryset = queryset.query(
+                'function_score',
+                query=query.Bool(should=queries),
+                functions=[query.SF('field_value_factor', field='boost')],
+            )
+
         if flag_is_active(request, 'search_explanation'):
-            queryset = queryset.explain()  # adds scoring explaination
+            queryset = queryset.extra(explain=True)
+
         return queryset
 
 
@@ -110,46 +111,31 @@ class AdvancedSearchQueryBackend(BaseFilterBackend):
     based on additional query parameters that correspond to advanced search
     indexes.
     """
-    search_params = (
+    fields = (
         'kumascript_macros',
         'css_classnames',
         'html_attributes',
     )
-    search_operations = [
-        ('%s__match', 10.0),
-        ('%s__prefix', 5.0),
-    ]
 
     def filter_queryset(self, request, queryset, view):
-        queries = {}
-        boosts = {}
+        queries = []
 
-        for name in self.search_params:
-
-            search_param = request.QUERY_PARAMS.get(name, None)
+        for field in self.fields:
+            search_param = view.query_params.get(field)
             if not search_param:
                 continue
 
-            for operation_tmpl, boost in self.search_operations:
-                operation = operation_tmpl % name
-                queries[operation] = search_param.lower()
-                boosts[operation] = boost
+            queries.append(
+                Q('match', **{field: {'query': search_param,
+                                      'boost': 10.0}}))
+            queries.append(
+                Q('prefix', **{field: {'value': search_param,
+                                       'boost': 5.0}}))
 
-        queryset = (queryset.query(Q(should=True, **queries))
-                            .boost(**boosts))
+        if queries:
+            queryset = queryset.query(query.Bool(should=queries))
 
         return queryset
-
-
-class HighlightFilterBackend(BaseFilterBackend):
-    """
-    A django-rest-framework filter backend that applies highlighting
-    based on the excerpt fields of the Document search index.
-    """
-    highlight_fields = DocumentType.excerpt_fields
-
-    def filter_queryset(self, request, queryset, view):
-        return queryset.highlight(*self.highlight_fields)
 
 
 class DatabaseFilterBackend(BaseFilterBackend):
@@ -161,8 +147,8 @@ class DatabaseFilterBackend(BaseFilterBackend):
     use the filter's operator to determine which logical operation to
     use with those tags. The default is OR.
 
-    It then applies custom facets based on those database filters
-    but will ignore non-raw facets.
+    It then applies custom aggregations based on those database filters
+    but will ignore non-raw aggregations.
     """
     def filter_queryset(self, request, queryset, view):
         active_filters = []
@@ -172,54 +158,45 @@ class DatabaseFilterBackend(BaseFilterBackend):
             filter_tags = serialized_filter['tags']
             filter_operator = Filter.OPERATORS[serialized_filter['operator']]
             if serialized_filter['slug'] in view.selected_filters:
-
                 if len(filter_tags) > 1:
                     tag_filters = []
                     for filter_tag in filter_tags:
-                        tag_filters.append(F(tags=filter_tag))
-                    active_filters.append(reduce(filter_operator, tag_filters))
+                        tag_filters.append(F('term', tags=filter_tag))
+                    active_filters.append(F(filter_operator, tag_filters))
                 else:
-                    active_filters.append(F(tags=filter_tags[0]))
+                    active_filters.append(F('term', tags=filter_tags[0]))
 
             if len(filter_tags) > 1:
-                facet_params = {
-                    'or': {
-                        'filters': [
-                            {'term': {'tags': tag}}
-                            for tag in filter_tags
-                        ],
-                        '_cache': True,
-                    },
-                }
+                facet_params = F('terms', tags=filter_tags)
             else:
-                facet_params = {
-                    'term': {'tags': filter_tags[0]}
-                }
+                facet_params = F('term', tags=filter_tags[0])
             active_facets.append((serialized_filter['slug'], facet_params))
 
-        if view.drilldown_faceting:
-            filter_operator = operator.and_
-        else:
-            filter_operator = operator.or_
-
-        unfiltered_queryset = queryset
         if active_filters:
-            queryset = queryset.filter(reduce(filter_operator, active_filters))
-
-        # only way to get to the currently applied filters
-        # to use it to limit the facets filters below
-        if view.drilldown_faceting:
-            facet_filter = queryset.build_search().get('filter', [])
-        else:
-            facet_filter = unfiltered_queryset.build_search().get('filter', [])
+            if len(active_filters) == 1:
+                queryset = queryset.post_filter(active_filters[0])
+            else:
+                queryset = queryset.post_filter(F('or', active_filters))
 
         for facet_slug, facet_params in active_facets:
-            facet_query = {
-                facet_slug: {
-                    'filter': facet_params,
-                    'facet_filter': facet_filter,
-                }
-            }
-            queryset = queryset.facet_raw(**facet_query)
+            queryset.aggs.bucket(facet_slug, 'filter',
+                                 **facet_params.to_dict())
+
+        return queryset
+
+
+class HighlightFilterBackend(BaseFilterBackend):
+    """
+    A django-rest-framework filter backend that adds search term highlighting.
+    """
+    def filter_queryset(self, request, queryset, view):
+
+        highlight = view.query_params.get('highlight')
+
+        if highlight:
+            queryset = queryset.highlight(*WikiDocumentType.excerpt_fields)
+            queryset = queryset.highlight_options(order='score',
+                                                  pre_tags=['<mark>'],
+                                                  post_tags=['</mark>'])
 
         return queryset

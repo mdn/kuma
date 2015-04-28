@@ -1,0 +1,11 @@
+{% if tags.exists() %}
+  <div class="tag-attach-list contributors-sub">
+    <i aria-hidden="true" class="icon-tags"></i>
+    <strong>{{_('Tags:')}}</strong>&nbsp;
+    <ul class="tags tags-small">
+      {% for tag in tags %}
+        <li><a href="{{ url('wiki.tag', tag) }}">{{ tag }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

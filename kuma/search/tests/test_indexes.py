@@ -2,13 +2,14 @@ from nose.tools import eq_, ok_
 
 from django.conf import settings
 
+from elasticsearch_dsl.connections import connections
 from elasticsearch.exceptions import RequestError
 
 from kuma.wiki.models import Document
+from kuma.wiki.search import WikiDocumentType
 
 from . import ElasticTestCase
-from ..models import Index, DocumentType
-from ..index import get_indexing_es, get_indexes
+from ..models import Index
 
 
 class TestIndexes(ElasticTestCase):
@@ -22,18 +23,21 @@ class TestIndexes(ElasticTestCase):
         eq_(Index.objects.get_current().prefixed_name,
             '%s-main_index' % settings.ES_INDEX_PREFIX)
 
+    def _reload(self, index):
+        return Index.objects.get(pk=index.pk)
+
     def test_add_newindex(self):
         index = Index.objects.create()
         ok_(not index.populated)
         index.populate()
-        index = Index.objects.get(pk=index.pk)  # reload the index again
+        index = self._reload(index)
         ok_(index.populated)
         index.delete()
 
     def test_promote_index(self):
         index = Index.objects.create()
         index.populate()
-        index = Index.objects.get(pk=index.pk)  # reload the index again
+        index = self._reload(index)
         ok_(index.populated)
         index.promote()
         ok_(index.promoted)
@@ -42,58 +46,62 @@ class TestIndexes(ElasticTestCase):
 
         index.demote()
         ok_(not index.promoted)
-        main_name = '%s-main_index' % settings.ES_INDEX_PREFIX
-        eq_(Index.objects.get_current().prefixed_name, main_name)
-        index.delete()
+
+    def test_there_can_be_only_one(self):
+        """Tests that when one index is promoted, all others are demoted."""
+        index1 = Index.objects.get_current()
+        ok_(index1.promoted)
+
+        index2 = Index.objects.create(name='second')
+        index2.promote()
+        index1 = self._reload(index1)
+        ok_(index2.promoted)
+        ok_(not index1.promoted)
 
     def test_outdated(self):
         # first create and populate an index
-        main_index = Index.objects.create()
+        main_index = Index.objects.create(name='first')
         main_index.populate()
-        main_index = Index.objects.get(pk=main_index.pk)
+        main_index = self._reload(main_index)
         ok_(main_index.populated)
         main_index.promote()
         eq_(Index.objects.get_current().prefixed_name,
             main_index.prefixed_name)
 
         # then create a successor and render a document against the old index
-        successor_index = Index.objects.create()
+        successor_index = Index.objects.create(name='second')
         doc = Document.objects.get(pk=1)
+        doc.title = 'test outdated'
+        doc.slug = 'test-outdated'
+        doc.save()
         doc.render()
         eq_(successor_index.outdated_objects.count(), 1)
 
-        # then populate the successor and see if we still have outdated objects
+        # .populate() creates the index and populates it.
         successor_index.populate()
-        successor_index = Index.objects.get(pk=successor_index.pk)
 
-        # check if the newly created index is empty
-        indexes_dict = dict(get_indexes())
-        eq_(indexes_dict[successor_index.prefixed_name], 0)
+        S = WikiDocumentType.search
+        eq_(S(index=successor_index.prefixed_name).count(), 7)
+        eq_(S().query('match', title='lorem').execute()[0].slug, 'lorem-ipsum')
 
+        # Promotion reindexes outdated documents. Test that our change is
+        # reflected in the index.
         successor_index.promote()
+        self.refresh(index=successor_index.prefixed_name)
         eq_(successor_index.outdated_objects.count(), 0)
-
-        self.refresh()  # refresh to make sure the index has the results ready
-        indexes_dict = dict(get_indexes())
-        # many due to translations
-        eq_(indexes_dict[successor_index.prefixed_name], 14)
-        S = DocumentType.search
-        eq_(S().all().count(), 7)
-        eq_(S().query(content__match='an article title')[0].slug,
-            'article-title')
+        eq_(S(index=successor_index.prefixed_name)
+            .query('match', title='outdated').execute()[0].slug,
+            'test-outdated')
 
     def test_delete_index(self):
         # first create and populate the index
         index = Index.objects.create()
         index.populate()
 
-        # then create it again and see if it blows up
-        es = get_indexing_es()
-
-        self.assertRaises(RequestError, es.indices.create, index.prefixed_name)
-
         # then delete it and check if recreating works without blowing up
         index.delete()
+
+        es = connections.get_connection()
         try:
             es.indices.create(index.prefixed_name)
         except RequestError:

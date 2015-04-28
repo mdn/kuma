@@ -1,41 +1,21 @@
 # -*- coding: utf-8 -*-
-import operator
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import query
-from django.db.models.signals import post_delete
-from django.utils.html import strip_tags
+from django.dispatch import receiver
+from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.functional import cached_property
-from django.template.defaultfilters import slugify
 
-from elasticutils.contrib.django import MappingType, Indexable
-from elasticutils.contrib.django.tasks import index_objects
+from elasticsearch.exceptions import NotFoundError
 
-from sumo.urlresolvers import reverse
+from kuma.core.managers import PrefetchTaggableManager
+from kuma.core.urlresolvers import reverse
+from kuma.wiki.search import WikiDocumentType
 
-from kuma.wiki.models import Document
-from taggit_extras.managers import PrefetchTaggableManager
-
-from .decorators import register_mapping_type
-from .queries import DocumentS
-from .signals import delete_index
-
-
-class IndexManager(models.Manager):
-    """
-    The model manager to implement a couple of useful methods for handling
-    search indexes.
-    """
-    def get_current(self):
-        try:
-            return (self.filter(promoted=True, populated=True)
-                        .order_by('-created_at'))[0]
-        except (self.model.DoesNotExist, IndexError, AttributeError):
-            fallback_name = settings.ES_INDEXES['default']
-            return Index(name=fallback_name, populated=True, promoted=True)
+from .jobs import AvailableFiltersJob
+from .managers import IndexManager, FilterManager
 
 
 class Index(models.Model):
@@ -62,6 +42,15 @@ class Index(models.Model):
             self.name = self.created_at.strftime('%Y-%m-%d-%H-%M-%S')
         super(Index, self).save(*args, **kwargs)
 
+    def delete_if_exists(self):
+        es = WikiDocumentType.get_connection()
+        try:
+            es.indices.delete(self.prefixed_name)
+        except NotFoundError:
+            # Can ignore this since it indicates the index doesn't exist
+            # and therefore there's nothing to delete.
+            pass
+
     def __unicode__(self):
         return self.name
 
@@ -78,8 +67,7 @@ class Index(models.Model):
         return '%s-%s' % (settings.ES_INDEX_PREFIX, self.name)
 
     def populate(self):
-        from .tasks import populate_index
-        populate_index.delay(self.pk)
+        return WikiDocumentType.reindex_all(index=self, chunk_size=500)
 
     def record_outdated(self, instance):
         if self.successor:
@@ -87,28 +75,34 @@ class Index(models.Model):
                                                  content_object=instance)
 
     def promote(self):
-        rescheduled = []
+        from kuma.wiki.tasks import index_documents
+
+        # Index all outdated documents to this index.
+        outdated_ids = []
         for outdated_object in self.outdated_objects.all():
             instance = outdated_object.content_object
-            label = ('%s.%s.%s' %
-                     (outdated_object.content_type.natural_key() +
-                      (instance.id,)))  # gives us 'wiki.document.12345'
-            if label in rescheduled:
-                continue
-            mappping_type = instance.get_mapping_type()
-            index_objects.delay(mappping_type, [instance.id])
-            rescheduled.append(label)
+            outdated_ids.append(instance.id)
+        if outdated_ids:
+            index_documents.delay(outdated_ids, self.pk)
+        # Clear outdated.
         self.outdated_objects.all().delete()
+        # Promote this index.
         self.promoted = True
         self.save()
+        # Allow only a single index to be promoted.
+        Index.objects.exclude(pk=self.pk).update(promoted=False)
 
     def demote(self):
         self.promoted = False
         self.save()
 
 
-post_delete.connect(delete_index, sender=Index,
-                    dispatch_uid='search.index.delete')
+@receiver(models.signals.post_delete,
+          sender=Index, dispatch_uid='search.index.delete')
+def delete_index(**kwargs):
+    index = kwargs.get('instance', None)
+    if index is not None:
+        index.delete_if_exists()
 
 
 class OutdatedObject(models.Model):
@@ -146,11 +140,6 @@ class FilterGroup(models.Model):
     def __unicode__(self):
         return self.name
 
-class FilterManager(models.Manager):
-    use_for_related_fields = True
-
-    def visible_only(self):
-        return self.filter(visible=True)
 
 class Filter(models.Model):
     """
@@ -164,8 +153,8 @@ class Filter(models.Model):
         (OPERATOR_AND, OPERATOR_AND),
     )
     OPERATORS = {
-        OPERATOR_OR: operator.or_,
-        OPERATOR_AND: operator.and_,
+        OPERATOR_OR: 'or',
+        OPERATOR_AND: 'and',
     }
     name = models.CharField(max_length=255, db_index=True,
                             help_text='the English name of the filter '
@@ -211,213 +200,7 @@ class Filter(models.Model):
                                self.group.slug, self.slug)
 
 
-@register_mapping_type
-class DocumentType(MappingType, Indexable):
-    excerpt_fields = ['summary', 'content']
-    exclude_slugs = ['Talk:', 'User:', 'User_talk:', 'Template_talk:',
-                     'Project_talk:']
-
-    @classmethod
-    def get_model(cls):
-        return Document
-
-    @classmethod
-    def get_index(cls):
-        return Index.objects.get_current().prefixed_name
-
-    @classmethod
-    def search(cls):
-        """Returns a typed S for this class.
-
-        :returns: an `S` for this DjangoMappingType
-
-        """
-        return DocumentS(cls)
-
-    @classmethod
-    def get_analysis(cls):
-        return {
-            'filter': {
-                'kuma_word_delimiter': {
-                    'type': 'word_delimiter',
-                    'preserve_original': True,  # hi-fi -> hifi, hi-fi
-                    'catenate_words': True,  # hi-fi -> hifi
-                    'catenate_numbers': True,  # 90-210 -> 90210
-                }
-            },
-            'analyzer': {
-                'default': {
-                    'tokenizer': 'standard',
-                    'filter': ['standard', 'elision']
-                },
-                # a custom analyzer that strips html and uses our own
-                # word delimiter filter and the elision filter#
-                # (e.g. L'attribut -> attribut). The rest is the same as
-                # the snowball analyzer
-                'kuma_content': {
-                    'type': 'custom',
-                    'tokenizer': 'standard',
-                    'char_filter': ['html_strip'],
-                    'filter': [
-                        'elision',
-                        'kuma_word_delimiter',
-                        'lowercase',
-                        'standard',
-                        'stop',
-                        'snowball',
-                    ],
-                },
-                'kuma_title': {
-                    'type': 'custom',
-                    'tokenizer': 'standard',
-                    'filter': [
-                        'elision',
-                        'kuma_word_delimiter',
-                        'lowercase',
-                        'standard',
-                        'snowball',
-                    ],
-                },
-                'case_sensitive': {
-                    'type': 'custom',
-                    'tokenizer': 'keyword'
-                },
-                'caseInsensitiveKeyword': {
-                    'type': 'custom',
-                    'tokenizer': 'keyword',
-                    'filter': 'lowercase'
-                }
-            },
-        }
-
-    @classmethod
-    def get_mapping(cls):
-        return {
-            # try to not waste so much space
-            '_all': {'enabled': False},
-            '_boost': {'name': '_boost', 'null_value': 1.0, 'type': 'float'},
-            'content': {
-                'type': 'string',
-                'analyzer': 'kuma_content',
-                # faster highlighting
-                'term_vector': 'with_positions_offsets',
-            },
-            'id': {'type': 'long', 'index': 'not_analyzed'},
-            'locale': {'type': 'string', 'index': 'not_analyzed'},
-            'modified': {'type': 'date'},
-            'slug': {'type': 'string', 'index': 'not_analyzed'},
-            'parent': {
-                'type': 'nested',
-                'properties': {
-                    'id': {'type': 'long', 'index': 'not_analyzed'},
-                    'title': {'type': 'string', 'analyzer': 'kuma_title'},
-                    'slug': {'type': 'string', 'index': 'not_analyzed'},
-                    'locale': {'type': 'string', 'index': 'not_analyzed'},
-                }
-            },
-            'summary': {
-                'type': 'string',
-                'analyzer': 'kuma_content',
-                # faster highlighting
-                'term_vector': 'with_positions_offsets',
-            },
-            'tags': {'type': 'string', 'analyzer': 'case_sensitive'},
-            'title': {
-                'type': 'string',
-                'analyzer': 'kuma_title',
-                'boost': 1.2,  # the title usually has the best description
-            },
-            'kumascript_macros': {
-                'type': 'string',
-                'analyzer': 'caseInsensitiveKeyword'
-            },
-            'css_classnames': {
-                'type': 'string',
-                'analyzer': 'caseInsensitiveKeyword'
-            },
-            'html_attributes': {
-                'type': 'string',
-                'analyzer': 'caseInsensitiveKeyword'
-            },
-        }
-
-    @classmethod
-    def extract_document(cls, obj_id, obj=None):
-        if obj is None:
-            obj = cls.get_model().objects.get(pk=obj_id)
-
-        doc = {
-            'id': obj.id,
-            'title': obj.title,
-            'slug': obj.slug,
-            'summary': obj.get_summary(strip_markup=True),
-            'locale': obj.locale,
-            'modified': obj.modified,
-            'content': strip_tags(obj.rendered_html),
-            'tags': list(obj.tags.values_list('name', flat=True)),
-            'kumascript_macros': obj.extract_kumascript_macro_names(),
-            'css_classnames': obj.extract_css_classnames(),
-            'html_attributes': obj.extract_html_attributes(),
-        }
-        if obj.zones.exists():
-            # boost all documents that are a zone
-            doc['_boost'] = 8.0
-        elif obj.slug.split('/') == 1:
-            # a little boost if no zone but still first level
-            doc['_boost'] = 4.0
-        else:
-            doc['_boost'] = 1.0
-        if obj.parent:
-            doc['parent'] = {
-                'id': obj.parent.id,
-                'title': obj.parent.title,
-                'locale': obj.parent.locale,
-                'slug': obj.parent.slug,
-            }
-        else:
-            doc['parent'] = {}
-
-        return doc
-
-    @classmethod
-    def get_indexable(cls):
-        """
-        For this mapping type return a list of model IDs that should be
-        indexed with the management command, in a full reindex.
-
-        WARNING: When changing this code make sure to update the
-                 ``should_update`` method below, too!
-        """
-        model = cls.get_model()
-
-        excludes = []
-        for exclude in cls.exclude_slugs:
-            excludes.append(models.Q(slug__icontains=exclude))
-
-        return (model.objects
-                     .filter(is_template=False,
-                             is_redirect=False,
-                             deleted=False)
-                     .exclude(reduce(operator.or_, excludes))
-                     .values_list('id', flat=True))
-
-    @classmethod
-    def should_update(cls, obj):
-        """
-        Given a Document instance should return boolean value
-        whether the instance should be indexed or not.
-
-        WARNING: This *must* mirror the logic of the ``get_indexable``
-                 method above!
-        """
-        return (not obj.is_template and
-                not obj.is_redirect and
-                not obj.deleted and
-                not any([exclude in obj.slug
-                         for exclude in cls.exclude_slugs]))
-
-    def get_excerpt(self):
-        for field in self.excerpt_fields:
-            if field in self.es_meta.highlight:
-                return u'…'.join(self.es_meta.highlight[field])
-        return self.summary
+@receiver(models.signals.post_save, sender=Filter)
+@receiver(models.signals.pre_delete, sender=Filter)
+def invalidate_filter_cache(sender, instance, **kwargs):
+    AvailableFiltersJob().invalidate()

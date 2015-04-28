@@ -1,0 +1,74 @@
+@require 'includes/vars';
+
+/* Derby CTA */
+#derby-cta {
+  position: absolute;
+  z-index: 10;
+  top: 5px;
+  right: 50px;
+  width: 125px;
+  height: 125px;
+  padding: 20px 20px 200px 160px;
+  background: url("/media/img/demos/bg-searchlight.png") right top no-repeat;
+}
+#derby-cta a {
+  display: block;
+  width: 125px;
+  height: 105px;
+  padding: 10px 0;
+  text-align: center;
+  color: #fff;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+  font: 24px/0.8 $heading-font-family;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  -moz-transform: rotate(-18deg);
+  -webkit-transform: rotate(-18deg);
+  -o-transform: rotate(-18deg);
+  transform: rotate(-18deg);
+  -moz-transition: color, text-shadow 0.5s;
+  -webkit-transition: color, text-shadow 0.5s;
+  -o-transition: color, text-shadow 0.5s;
+  transition: color, text-shadow 0.5s;
+}
+#derby-cta a:hover,
+#derby-cta a:focus,
+#derby-cta a:active {
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 0 5px rgba(0,0,0,0.5), 0 0 5px rgba(200,255,255,0.95);
+  -moz-transition: color, text-shadow 0.1s;
+  -webkit-transition: color, text-shadow 0.1s;
+  -o-transition: color, text-shadow 0.1s;
+  transition: color, text-shadow 0.1s;
+}
+#derby-cta span:before,
+#derby-cta span:after {
+  content: "\272D";
+  display: inline-block;
+  font-size: 11px;
+  margin: 0 6px;
+  position: relative;
+  top: -5px;
+}
+#derby-cta em {
+  font-style: normal;
+  display: block;
+  font-size: 32px;
+  padding: 4px 0 1px;
+  margin: 4px 0 6px;
+  border: solid #fff;
+  border-width: 1px 0;
+}
+#derby-cta strong {
+  font-weight: normal;
+  font: 11px "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+  color: #f1ed0f;
+}
+#derby-cta strong:before {
+  content: "\203A";
+  font-size: 1.4em;
+  line-height: 1;
+  margin-right: 2px;
+}

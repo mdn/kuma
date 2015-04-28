@@ -1,16 +1,18 @@
-import test_utils
+from django.conf import settings
 from nose.tools import eq_
 
-from django.conf import settings
+from kuma.core.tests import KumaTestCase
 
 from ..helpers import tag_description
 
 
-class HelperTestCase(test_utils.TestCase):
+class TagDescriptionTestCase(KumaTestCase):
 
     def test_tag_description_no_description(self):
-        settings.TAG_DESCRIPTIONS = {"tag_name": "test_tag",
-                 "title": "Testing tag without description"}
+        settings.TAG_DESCRIPTIONS = {
+            "tag_name": "test_tag",
+            "title": "Testing tag without description",
+        }
         description = tag_description("test_tag")
         eq_("test_tag", description)
 

@@ -3,8 +3,9 @@ define([
     'intern/chai!assert',
     'base/lib/config',
     'base/lib/poll',
-    'base/lib/POM'
-], function(registerSuite, assert, config, poll, POM) {
+    'base/lib/POM',
+    'intern/dojo/node!leadfoot/keys'
+], function(registerSuite, assert, config, poll, POM, keys) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -30,7 +31,7 @@ define([
             return Page.teardown();
         },
 
-        'Homepage search form displays and accepts text': function() {
+        'Homepage search form displays and accepts text, [ENTER] key submits form': function() {
 
             var term = 'Hello';
 
@@ -41,6 +42,11 @@ define([
                         .getProperty('value')
                         .then(function(resultText) {
                             assert.ok(resultText.indexOf(term) > -1, term + ' is found in box');
+                        })
+                        .type(keys.RETURN)
+                        .getCurrentUrl()
+                        .then(function(url) {
+                            assert.isTrue(url.indexOf('/search') != -1);
                         });
         },
 

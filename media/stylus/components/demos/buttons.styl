@@ -1,0 +1,37 @@
+/* Buttons */
+
+@require '../../includes/vars';
+@require '../../includes/mixins';
+
+.section-demos main button,
+.section-demos main .button {
+  background: #0095dd;
+  border-radius: 4px;
+  box-shadow: inset 0 -1px $homepage-background-color;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font: normal 1em/1 $heading-font-family;
+  line-height: 1;
+  padding: 5px 11px;
+  text-decoration: none;
+  text-transform: uppercase;
+  -webkit-transition: background-color 0.2s;
+     -moz-transition: background-color 0.2s;
+       -o-transition: background-color 0.2s;
+          transition: background-color 0.2s;
+}
+
+.section-demos main button:hover,
+.section-demos main button:focus,
+.section-demos main button:active,
+.section-demos main .button:hover,
+.section-demos main .button:focus,
+.section-demos main .button:active {
+  text-decoration: underline;
+  -webkit-transition: background-color 0.1s;
+     -moz-transition: background-color 0.1s;
+       -o-transition: background-color 0.1s;
+          transition: background-color 0.1s;
+}

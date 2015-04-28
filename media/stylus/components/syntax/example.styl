@@ -1,0 +1,74 @@
+$bg-good = blend(rgba($positive, 0.05), #fff);
+$bg-bad = blend(rgba($negative, 0.05), #fff);
+
+/*
+Pseudo element for icons
+-------------------------------------------------------------- */
+
+:not(pre)>code.example-good[class*='language-']:before,
+pre.example-good[class*='language-']:before,
+:not(pre)>code.example-bad[class*='language-']:before,
+pre.example-bad[class*='language-']:before {
+    border-radius: 100%; /* make it into a circle so bgcolor doesn't show */
+    font-family: 'FontAwesome';
+    font-size: $larger-font-size ;
+    position: absolute;
+    top: 14px;
+    left: 6px;
+    z-index: 10;
+    speak: none;
+}
+
+:not(pre)>code.example-good[class*='language-']:before,
+pre.example-good[class*='language-']:before {
+    background: $bg-good;
+    color: $positive;
+    content: '\f118';
+}
+
+:not(pre)>code.example-bad[class*='language-']:before,
+pre.example-bad[class*='language-']:before {
+    background: $bg-bad;
+    color:  $negative;
+    content: '\f119';
+}
+
+/*
+Background colouration
+-------------------------------------------------------------- */
+
+:not(pre)>code.example-good[class*='language-'],
+pre.example-good[class*='language-'] {
+    background: $bg-good;
+    background:
+        linear-gradient(rgba(0,0,0,0) 9px, rgba(0,0,0,0.02) 9px, rgba(0,0,0,0.02) 10px),
+        linear-gradient(90deg, rgba(0,0,0,0) 9px, rgba(0,0,0,0.02) 9px, rgba(0,0,0,0.02) 10px),
+        linear-gradient(rgba(0,0,0,0) 29px, rgba(0,0,0,0.02) 29px, rgba(0,0,0,0.02) 30px),
+        linear-gradient(90deg, rgba(0,0,0,0) 29px, rgba(0,0,0,0.02) 29px, rgba(0,0,0,0.02) 30px),
+        linear-gradient($bg-good, $bg-good);
+    background-size:
+        10px 10px,
+        10px 10px,
+        30px 30px,
+        30px 30px,
+        cover;
+    border-left: $code-block-border-width $code-block-border-style $positive;
+}
+
+:not(pre)>code.example-bad[class*='language-'],
+pre.example-bad[class*='language-'] {
+    background: $bg-bad;
+    background:
+        linear-gradient(45deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.01) 45%, rgba(0,0,0,0.01) 55%, rgba(0,0,0,0) 55%),
+        linear-gradient(135deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.01) 45%, rgba(0,0,0,0.01) 55%, rgba(0,0,0,0) 55%),
+        linear-gradient(45deg, rgba(0,0,0,0) 20px, rgba(0,0,0,0.01) 20px, rgba(0,0,0,0.01) 21px, rgba(0,0,0,0) 21px),
+        linear-gradient(135deg, rgba(0,0,0,0) 20px, rgba(0,0,0,0.01) 20px, rgba(0,0,0,0.01) 21px, rgba(0,0,0,0) 21px),
+        linear-gradient($bg-bad, $bg-bad);
+    background-size:
+        10px 10px,
+        10px 10px,
+        30px 30px,
+        30px 30px,
+        cover;
+    border-left: $code-block-border-width $code-block-border-style $negative;
+}

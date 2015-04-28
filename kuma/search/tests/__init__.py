@@ -1,17 +1,20 @@
 from __future__ import absolute_import
+
 import time
 
 from django.conf import settings
 
-from elasticsearch.exceptions import ConnectionError, NotFoundError
+from elasticsearch_dsl.connections import connections
+from elasticsearch.exceptions import ConnectionError
 from rest_framework.test import APIRequestFactory
 
-from devmo.tests import LocalizingMixin
-from sumo.urlresolvers import reset_url_prefixer
-from sumo.middleware import LocaleURLMiddleware
+from kuma.core.middleware import LocaleURLMiddleware
+from kuma.core.tests import LocalizingMixin
+from kuma.core.urlresolvers import reset_url_prefixer
 from kuma.users.tests import UserTestCase
+from kuma.wiki.search import WikiDocumentType
 
-from ..index import get_index, get_indexing_es
+from ..models import Index
 
 
 class LocalizingAPIRequestFactory(LocalizingMixin, APIRequestFactory):
@@ -35,16 +38,14 @@ class ElasticTestCase(UserTestCase):
             cls.skipme = True
             return
 
-        # try to connect to ES and if it fails, skip ElasticTestCases.
         try:
-            get_indexing_es().cluster.health()
+            connections.get_connection().cluster.health()
         except ConnectionError:
             cls.skipme = True
             return
 
         cls._old_es_index_prefix = settings.ES_INDEX_PREFIX
-        settings.ES_INDEX_PREFIX = settings.ES_INDEX_PREFIX + 'test'
-        # TODO: cleanup after upgarding test-utils (also in tearDownClass)
+        settings.ES_INDEX_PREFIX = 'test-%s' % settings.ES_INDEX_PREFIX
         cls._old_es_live_index = settings.ES_LIVE_INDEX
         settings.ES_LIVE_INDEX = True
 
@@ -59,7 +60,6 @@ class ElasticTestCase(UserTestCase):
         if not cls.skipme:
             # Restore old setting.
             settings.ES_INDEX_PREFIX = cls._old_es_index_prefix
-            # TODO: cleanup after upgarding test-utils
             settings.ES_LIVE_INDEX = cls._old_es_live_index
 
     def setUp(self):
@@ -71,41 +71,25 @@ class ElasticTestCase(UserTestCase):
         self.teardown_indexes()
         reset_url_prefixer()
 
-    def refresh(self, timesleep=0):
-        index = get_index()
+    def refresh(self, index=None, timesleep=0):
+        index = index or Index.objects.get_current().prefixed_name
         # Any time we're doing a refresh, we're making sure that the
         # index is ready to be queried.  Given that, it's almost
         # always the case that we want to run all the generated tasks,
         # then refresh.
-        get_indexing_es().indices.refresh(index=index)
+        connections.get_connection().indices.refresh(index=index)
         if timesleep > 0:
             time.sleep(timesleep)
 
-    def setup_indexes(self, empty=False, wait=True):
-        """(Re-)create ES indexes."""
-        from ..commands import es_reindex_cmd
-
-        if empty:
-            # Removes the index and creates a new one with nothing in
-            # it (by abusing the percent argument).
-            es_reindex_cmd(percent=0)
-        else:
-            # Removes the index, creates a new one, and indexes
-            # existing data into it.
-            es_reindex_cmd()
-
-        self.refresh()
-        if wait:
-            get_indexing_es().cluster.health(wait_for_status='yellow')
+    def setup_indexes(self):
+        """Clear and repopulate the current index."""
+        WikiDocumentType.reindex_all()
 
     def teardown_indexes(self):
-        es = get_indexing_es()
-        try:
-            es.indices.delete(get_index())
-        except NotFoundError:
-            # If we get this error, it means the index didn't exist
-            # so there's nothing to delete.
-            pass
+        es = connections.get_connection()
+        for index in Index.objects.all():
+            # Ignore indices that do not exist.
+            es.indices.delete(index.prefixed_name, ignore=[404])
 
     def get_request(self, *args, **kwargs):
         request = factory.get(*args, **kwargs)

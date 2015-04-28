@@ -12,11 +12,11 @@ from django.core.management.base import NoArgsCommand
 from django.db import IntegrityError
 from django.utils import encoding, hashcompat
 
-from devmo.utils import file_lock
+from kuma.core.utils import file_lock
 from kuma.feeder.models import Feed, Entry
 
 
-log = logging.getLogger('mdn.feeder')
+log = logging.getLogger('kuma.feeder')
 
 
 class Command(NoArgsCommand):

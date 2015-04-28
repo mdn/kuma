@@ -1,9 +1,9 @@
 import requests
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, QueryDict
 from django.shortcuts import redirect
 from django.template import RequestContext
-from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST, require_GET
 
 from allauth.socialaccount.helpers import complete_social_login
@@ -11,7 +11,8 @@ from allauth.socialaccount.helpers import render_authentication_error
 from allauth.socialaccount.models import SocialLogin
 from allauth.socialaccount import app_settings, providers
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
+from kuma.core.decorators import never_cache
 
 from .provider import PersonaProvider
 
@@ -57,16 +58,15 @@ def persona_login(request):
 
 def persona_complete(request):
     assertion = request.session.pop('sociallogin_assertion', '')
-    settings = app_settings.PROVIDERS.get(PersonaProvider.id, {})
-    audience = settings.get('AUDIENCE', None)
+    provider_settings = app_settings.PROVIDERS.get(PersonaProvider.id, {})
+    audience = provider_settings.get('AUDIENCE', None)
     if audience is None:
         raise ImproperlyConfigured("No Persona audience configured. Please "
                                    "add an AUDIENCE item to the "
                                    "SOCIALACCOUNT_PROVIDERS['persona'] setting.")
 
-    resp = requests.post('https://verifier.login.persona.org/verify',
-                         {'assertion': assertion,
-                          'audience': audience})
+    resp = requests.post(settings.PERSONA_VERIFIER_URL,
+                         {'assertion': assertion, 'audience': audience})
     if resp.json()['status'] != 'okay':
         return render_authentication_error(request)
     extra_data = resp.json()

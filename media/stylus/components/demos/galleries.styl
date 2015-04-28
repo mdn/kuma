@@ -1,0 +1,214 @@
+@require '../../includes/vars';
+@require '../../includes/mixins';
+
+/* Galleries */
+.gallery {
+  list-style: none;
+  text-align: center;
+}
+.gallery:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+.gallery li {
+  padding: 0;
+  background-image: none;
+}
+.landing .gallery,
+.plain .gallery,
+.profile .gallery {
+  margin: 0 0 1em 20px;
+}
+
+.landing .gallery .demo,
+.landing .gallery .demo .stats {
+    color: #fff;
+    vendorize(transition, color 0.2s 0.2s);
+}
+
+.landing .gallery .demo:hover,
+.landing .gallery .demo:hover .stats,
+.landing .gallery .demo .byline a {
+    color: inherit;
+}
+
+.gallery .demo {
+  position: relative;
+  z-index: 1;
+  width: 200px;
+  margin: 20px 20px 0 0;
+  padding: 168px 5px 0;
+  display: inline-block;
+  text-align: left;
+  vertical-align: text-top;
+
+    &:before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        top: -8px;
+        right: -8px;
+        bottom: -8px;
+        left: -8px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.75);
+        opacity: 0;
+        vendorize(transition, opacity 0.2s 0.2s);
+    }
+
+    &:hover:before {
+        opacity: 0.95;
+    }
+}
+
+.gallery .demo.row-first {
+  margin-left: 0;
+  clear: left;
+}
+.demo .demo-title {
+  font: normal 1.285em/1 $heading-font-family;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  margin: 0 0 0.15em;
+}
+.demo .demo-title a:link,
+.demo .demo-title a:visited {
+  color: $link-color;
+}
+.demo .demo-title a:hover,
+.demo .demo-title a:focus,
+.demo .demo-title a:active {
+  text-decoration: underline;
+}
+.demo .demo-title a img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 3px 3px 1px rgba(0,0,0,0.25);
+  /* can't vendorize because multiple values. PR #2840 has a fix for that */
+  -webkit-transition: box-shadow 0.2s 0.2s, top 0.2s 0.2s, left 0.2s 0.2s;
+     -moz-transition: box-shadow 0.2s 0.2s, top 0.2s 0.2s, left 0.2s 0.2s;
+      -ms-transition: box-shadow 0.2s 0.2s, top 0.2s 0.2s, left 0.2s 0.2s;
+          transition: box-shadow 0.2s 0.2s, top 0.2s 0.2s, left 0.2s 0.2s;
+}
+
+.demo:hover .demo-title a img {
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
+    top: 3px;
+    left: 3px;
+}
+
+.demo .flag {
+  position: absolute;
+  left: 10px;
+  top: -2px;
+  background: #e23737;
+  color: #fff;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 4px 10px 2px;
+  border: 1px solid #b52c2c;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+  box-shadow: 2px -2px 0 rgba(0,0,0,0.1);
+  -moz-transform-origin: top left;
+  -moz-transform: rotate(90deg) translateY(-25px);
+  -webkit-transform-origin: top left;
+  -webkit-transform: rotate(90deg) translateY(-25px);
+  transform-origin: top left;
+  transform: rotate(90deg) translateY(-25px);
+}
+.demohover .flag {
+  left: 17px;
+  top: 5px;
+}
+.demo .byline {
+  font-size: 0.786em;
+  font-weight: bold;
+  margin: 0 0 0.5em;
+}
+.demo .byline a {
+  color: #555;
+}
+.demo .stats {
+  float: left;
+  clear: both;
+  width: 100%;
+  margin: 0.25em 0 0.75em;
+  list-style: none;
+  font-size: 0.786em;
+  color: #999;
+}
+.demo .stats li {
+  display: inline;
+  margin-right: 8px;
+  padding-left: 22px;
+  background: url("/media/img/demos/demobox-icons.png") no-repeat;
+}
+.demo .stats .views {
+  padding-left: 25px;
+  background-position: 0 -799px;
+}
+.demo .stats .likes {
+  background-position: 0 -850px;
+}
+.demo .stats .comments {
+  padding: 0;
+  background: none;
+}
+.demo .stats .comments a {
+  color: #999;
+  padding-left: 22px;
+  background: url("/media/img/demos/demobox-icons.png") 0 -900px no-repeat;
+}
+.demo .stats .comments a:hover,
+.demo .stats .comments a:focus,
+.demo .stats .comments a:active {
+  color: #333;
+}
+.demo .desc {
+  font-size: 0.786em;
+  margin: 0 0 0.75em;
+}
+.demo .descLink {
+  font-weight: bold;
+}
+.demo .launch {
+  position: absolute;
+  top: 120px;
+  right: 12px;
+  font-size: 1.2em;
+}
+.section-demo .demo .launch .button {
+  color: #fff;
+}
+.hasJS .gallery .extra {
+  display: none;
+}
+
+@media $media-query-small-mobile {
+    .landing .gallery,
+    .plain .gallery,
+    .profile .gallery {
+        margin-left: 0;
+    }
+
+    .gallery .demo {
+        margin-right: 0;
+
+        &:nth-child(odd){
+            margin-right: 10px;
+        }
+    }
+}
+
+
+

@@ -182,10 +182,6 @@ ALLOWED_STYLES = [
     'direction', 'white-space', 'unicode-bidi', 'word-wrap'
 ]
 
-SECONDARY_CACHE_ALIAS = getattr(settings,
-                                'SECONDARY_CACHE_ALIAS',
-                                'secondary')
-
 DIFF_WRAP_COLUMN = 65
 TEMPLATE_TITLE_PREFIX = 'Template:'
 DOCUMENTS_PER_PAGE = 100
@@ -195,8 +191,6 @@ KUMASCRIPT_TIMEOUT_ERROR = [
      "args": ["TimeoutError"]}
 ]
 SLUG_CLEANSING_REGEX = '^\/?(([A-z-]+)?\/?docs\/)?'
-
-URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
 
 # TODO: Put this under the control of Constance / Waffle?
 # Flags used to signify revisions in need of review

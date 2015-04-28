@@ -24,7 +24,6 @@ locale
 xfers/*
 puppet/cache/*
 humans.txt
-apps/humans/tmp
 tmp
 webroot/.htaccess
 kumascript.log
@@ -32,9 +31,11 @@ kumascript_settings_local.json
 lib/product_details_json
 .DS_Store
 node_modules/
-media/redesign/css/*.css
+media/css/*.css
 docs/_build/
-maintenance/media
 wheelhouse
 .awsconfig
 james.ini
+celeryev.pid
+media/js/libs/ckeditor/source/ckbuilder
+.tox

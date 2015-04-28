@@ -1,41 +1,17 @@
-from hashlib import md5
-import logging
-import tarfile
-import zipfile
-
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-
-try:
-    from PIL import Image
-except ImportError:
-    import Image
-
 from django import forms
 from django.conf import settings
-from django.contrib.auth.models import User, AnonymousUser
-from django.core.exceptions import ObjectDoesNotExist
-from django.core import validators
+from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
-from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.db import models
 from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
-import django.forms.fields
-from django.utils.encoding import smart_unicode, smart_str
-from django.utils.translation import ugettext_lazy as _
 
-from captcha.fields import ReCaptchaField
 import constance.config
-from taggit_extras.utils import parse_tags, split_strip
 
-from . import (scale_image, TAG_DESCRIPTIONS)
+from kuma.core.utils import parse_tags
+from . import TAG_DESCRIPTIONS
 from .models import Submission
 
 
-SCREENSHOT_MAXW  = getattr(settings, 'DEMO_SCREENSHOT_MAX_WIDTH', 480)
+SCREENSHOT_MAXW = getattr(settings, 'DEMO_SCREENSHOT_MAX_WIDTH', 480)
 SCREENSHOT_MAXH = getattr(settings, 'DEMO_SCREENSHOT_MAX_HEIGHT', 360)
 
 
@@ -72,8 +48,8 @@ class SubmissionEditForm(MyModelForm):
         fields = (
             'title', 'summary', 'description', 'hidden',
             'tech_tags', 'challenge_tags',
-            'screenshot_1', 'screenshot_2', 'screenshot_3', 
-            'screenshot_4', 'screenshot_5', 
+            'screenshot_1', 'screenshot_2', 'screenshot_3',
+            'screenshot_4', 'screenshot_5',
             'video_url', 'navbar_optout',
             'demo_package', 'source_code_url', 'license_name',
         )
@@ -83,9 +59,9 @@ class SubmissionEditForm(MyModelForm):
         label = "Tech tags",
         widget = CheckboxSelectMultiple,
         required = False,
-        choices = ( 
-            (x['tag_name'], x['title']) 
-            for x in TAG_DESCRIPTIONS.values() 
+        choices = (
+            (x['tag_name'], x['title'])
+            for x in TAG_DESCRIPTIONS.values()
             if x['tag_name'].startswith('tech:')
         )
     )
@@ -108,7 +84,7 @@ class SubmissionEditForm(MyModelForm):
             (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title'])
             for x in parse_tags(
                 'challenge:none %s' %
-                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS, 
+                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
                 sorted=False)
             if x in TAG_DESCRIPTIONS
         )
@@ -137,7 +113,7 @@ class SubmissionEditForm(MyModelForm):
                     self._old_challenge_tags = [unicode(tag) for tag in instance.taggit_tags.all_ns('challenge:')]
             for ns in ('tech', 'challenge'):
                 if '%s_tags' % ns in self.fields:
-                    self.initial['%s_tags' % ns] = [t.name 
+                    self.initial['%s_tags' % ns] = [t.name
                         for t in instance.taggit_tags.all_ns('%s:' % ns)]
 
     def clean(self):
@@ -155,10 +131,11 @@ class SubmissionEditForm(MyModelForm):
 
     def save(self, commit=True):
         rv = super(SubmissionEditForm,self).save(commit)
-        
+
         # HACK: Since django.forms.models does this in a hack, we have to mimic
         # the hack to override it.
         super_save_m2m = hasattr(self, 'save_m2m') and self.save_m2m or None
+
         def save_m2m():
             if super_save_m2m: super_save_m2m()
             self.instance.taggit_tags.set_ns('tech:', *self.cleaned_data.get('tech_tags', []))
@@ -178,8 +155,10 @@ class SubmissionEditForm(MyModelForm):
             if challenge_tags:
                 self.instance.taggit_tags.set_ns('challenge:', *challenge_tags)
 
-        if commit: save_m2m()
-        else: self.save_m2m = save_m2m
+        if commit:
+            save_m2m()
+        else:
+            self.save_m2m = save_m2m
 
         return rv
 
@@ -187,12 +166,9 @@ class SubmissionEditForm(MyModelForm):
 class SubmissionNewForm(SubmissionEditForm):
 
     class Meta(SubmissionEditForm.Meta):
-        fields = SubmissionEditForm.Meta.fields + ( 'captcha', 'accept_terms', )
+        fields = SubmissionEditForm.Meta.fields + ('accept_terms', )
 
-    captcha = ReCaptchaField(label=_("Show us you're human")) 
     accept_terms = forms.BooleanField(initial=False, required=True)
 
     def __init__(self, *args, **kwargs):
         super(SubmissionNewForm, self).__init__(*args, **kwargs)
-        if not settings.RECAPTCHA_PRIVATE_KEY:
-            del self.fields['captcha']

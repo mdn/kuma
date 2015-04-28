@@ -1,0 +1,44 @@
+{% extends "authkeys/base.html" %}
+
+{% block intro %}{{ _("API Keys: <b>Your Keys</b>" | safe) }}{% endblock %}
+
+{% block subcontent %}
+
+{% if request.user.has_perm('authkeys.add_key') %}
+<p>{% trans %}
+    These are your API keys. They're useful for building applications that
+    perform tasks on MDN on your behalf. If you have stopped using any of
+    them, or suspect one has been exposed to parties you don't trust with your
+    account delete the key. It's easy to create a replacement key at any time.
+{% endtrans %}</p>
+<p><a class="button positive" href="{{ url('authkeys.new') }}">{{ _('Create a new key') }}</a></p>
+{% if not keys %}
+    <p>{{ _("You have no API keys, yet.") }}</p>
+{% else %}
+    <ul class="option-list">
+        {% for key in keys %}
+        <li id="key-{{ key.pk }}">
+            <span class="created">{{ key.created }}</span> &nbsp;
+            <span class="description">{{ key.description }}</span>
+            <span class="option-list-options">
+                <a class="button"
+                   title="{{ _('View key usage history') }}"
+                   href="{{ url('authkeys.history', pk=key.pk) }}">{{ _('History ({count})') | f(count=key.history.count()) }}</a>
+            </span>
+
+        </li>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% else %}
+<p>{% trans bugzilla_url="https://bugzilla.mozilla.org/enter_bug.cgi?format=__standard__&product=Mozilla Developer Network&component=User management" %}
+  You need a special permission to use API keys.
+  You may request permission by <a href="{{ bugzilla_url }}">filing a bug</a>.
+{% endtrans %}
+</p>
+
+{% endif %}
+
+
+{% endblock %}

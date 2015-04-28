@@ -2,16 +2,17 @@ import urllib
 import hashlib
 
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 
 from jinja2 import escape, Markup, contextfunction
 from jingo import register
 
 from allauth.account.utils import user_display
 from allauth.socialaccount import providers
+from honeypot.templatetags.honeypot import render_honeypot_field
 from tower import ugettext as _
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
+from kuma.core.helpers import datetimeformat
 
 DEFAULT_AVATAR = getattr(settings, 'DEFAULT_AVATAR',
                          settings.MEDIA_URL + 'img/avatar-default.png')
@@ -33,12 +34,29 @@ def gravatar_url(user, secure=True, size=220, rating='pg',
 
 
 @register.function
-def ban_link(ban_user, banner_user):
+@contextfunction
+def ban_link(context, ban_user, banner_user):
     """Returns a link to ban a user"""
     link = ''
     if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
-        url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
-        link = '<a href="%s" class="button ban-link">%s</a>' % (url, _('Ban User'))
+        if ban_user.get_profile().is_banned:
+            active_ban = ban_user.get_profile().active_ban()
+            url = reverse('admin:users_userban_change', args=(active_ban.id,))
+            title = _('Banned on {ban_date} by {ban_admin}.').format(ban_date=datetimeformat(context, active_ban.date, format='date', output='json'), ban_admin=active_ban.by )
+            link = '<a href="%s" class="button ban-link" title="%s">%s<i aria-hidden="true" class="icon-ban"></i></a>' % (url, title, _('Banned'))
+        else:
+            url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
+            link = '<a href="%s" class="button negative ban-link">%s<i aria-hidden="true" class="icon-ban"></i></a>' % (url, _('Ban User'))
+    return Markup(link)
+
+
+@register.function
+@contextfunction
+def admin_link(context, user):
+    """Returns a link to admin a user"""
+    link = ''
+    url = reverse('admin:auth_user_change', args=(user.id,))
+    link = '<a href="%s" class="button neutral">%s<i aria-hidden="true" class="icon-wrench"></i></a>' % (url, _('Admin'))
     return Markup(link)
 
 
@@ -109,6 +127,11 @@ def social_accounts(user):
         providers = accounts.setdefault(account.provider, [])
         providers.append(account)
     return accounts
+
+
+@register.inclusion_tag('honeypot/honeypot_field.html')
+def honeypot_field(field_name=None):
+    return render_honeypot_field(field_name)
 
 
 register.function(user_display)

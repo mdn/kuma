@@ -8,7 +8,6 @@ import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from nose import SkipTest
-import test_utils
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -17,22 +16,20 @@ from django.core.exceptions import ValidationError
 import constance.config
 from waffle.models import Switch
 
-from devmo.utils import MemcacheLock
-from devmo.tests import override_constance_settings
-from kuma.wiki.constants import REDIRECT_CONTENT
-from kuma.wiki.cron import calculate_related_documents
-from kuma.wiki.exceptions import (PageMoveError,
-                                  DocumentRenderedContentNotAvailable,
-                                  DocumentRenderingInProgress)
-from kuma.wiki.models import (Document, Revision, RevisionIP,
-                              DocumentZone, TaggedDocument)
-from kuma.wiki import tasks
-from kuma.wiki.tests import (document, revision, doc_rev, normalize_html,
-                             create_template_test_users,
-                             create_topical_parents_docs)
+from kuma.core.exceptions import ProgrammingError
+from kuma.core.tests import override_constance_settings, KumaTestCase
 from kuma.users.tests import UserTestCase
 
-from sumo import ProgrammingError
+from . import (document, revision, doc_rev, normalize_html,
+               create_template_test_users, create_topical_parents_docs)
+from .. import tasks
+from ..constants import REDIRECT_CONTENT
+from ..exceptions import (PageMoveError,
+                          DocumentRenderedContentNotAvailable,
+                          DocumentRenderingInProgress)
+from ..jobs import DocumentZoneStackJob
+from ..models import (Document, Revision, RevisionIP, DocumentZone,
+                      TaggedDocument)
 
 
 def _objects_eq(manager, list_):
@@ -338,7 +335,8 @@ class DocumentTests(UserTestCase):
         d = document(is_redirect=True, html=html)
         eq_(href, d.redirect_url())
 
-class PermissionTests(test_utils.TestCase):
+
+class PermissionTests(KumaTestCase):
 
     def setUp(self):
         """Set up the permissions, groups, and users needed for the tests"""
@@ -489,10 +487,10 @@ class DocumentTestsWithFixture(UserTestCase):
 
         for p in parents_5:
             ok_(p.current_revision)
-            if not p.pk in (trans_0.pk, trans_2.pk, trans_5.pk):
+            if p.pk not in (trans_0.pk, trans_2.pk, trans_5.pk):
                 ok_('NeedsTranslation' in p.current_revision.tags)
                 ok_('TopicStub' in p.current_revision.tags)
-                ok_(p.current_revision.localization_in_progress())
+                ok_(p.current_revision.localization_in_progress)
 
     def test_repair_breadcrumbs(self):
         english_top = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
@@ -716,36 +714,6 @@ class RevisionTests(UserTestCase):
         reverted_tags = [t.name for t in reverted.review_tags.all()]
         ok_('technical' in reverted_tags)
         ok_('editorial' not in reverted_tags)
-
-
-class RelatedDocumentTests(UserTestCase):
-    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
-
-    def test_related_documents_calculated(self):
-        d = Document.objects.get(pk=1)
-        eq_(0, d.related_documents.count())
-
-        calculate_related_documents()
-
-        d = Document.objects.get(pk=1)
-        eq_(2, d.related_documents.count())
-
-    def test_related_only_locale(self):
-        calculate_related_documents()
-        d = Document.objects.get(pk=1)
-        for rd in d.related_documents.all():
-            eq_(settings.WIKI_DEFAULT_LANGUAGE, rd.locale)
-
-    def test_only_approved_revisions(self):
-        calculate_related_documents()
-        d = Document.objects.get(pk=1)
-        for rd in d.related_documents.all():
-            assert rd.current_revision
-
-    def test_only_approved_have_related(self):
-        calculate_related_documents()
-        d = Document.objects.get(pk=3)
-        eq_(0, d.related_documents.count())
 
 
 class GetCurrentOrLatestRevisionTests(UserTestCase):
@@ -1018,7 +986,7 @@ class DeferredRenderingTests(UserTestCase):
         constance.config.KUMASCRIPT_TIMEOUT = 0.0
 
     @mock.patch('kuma.wiki.kumascript.get')
-    @mock.patch_object(tasks.render_document, 'delay')
+    @mock.patch.object(tasks.render_document, 'delay')
     def test_schedule_rendering(self, mock_render_document_delay,
                                 mock_kumascript_get):
         mock_kumascript_get.return_value = (self.rendered_content, None)
@@ -1053,7 +1021,7 @@ class DeferredRenderingTests(UserTestCase):
         ok_(not self.d1.is_rendering_in_progress)
 
     @mock.patch('kuma.wiki.kumascript.get')
-    @mock.patch_object(tasks.render_document, 'delay')
+    @mock.patch.object(tasks.render_document, 'delay')
     def test_deferred_vs_immediate_rendering(self, mock_render_document_delay,
                                              mock_kumascript_get):
         mock_kumascript_get.return_value = (self.rendered_content, None)
@@ -1164,7 +1132,9 @@ class RenderExpiresTests(UserTestCase):
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
-    def test_render_stale(self, mock_kumascript_get):
+    @mock.patch.object(tasks.render_document, 'delay')
+    def test_render_stale(self, mock_render_document_delay,
+                          mock_kumascript_get):
         mock_kumascript_get.return_value = ('MOCK CONTENT', None)
 
         now = datetime.now()
@@ -1174,33 +1144,8 @@ class RenderExpiresTests(UserTestCase):
         d1.last_rendered_at = earlier
         d1.render_expires = now - timedelta(seconds=100)
         d1.save()
-        eq_(Document.objects.get_by_stale_rendering().count(), 1)
 
-        lock = MemcacheLock('render-stale-documents-lock')
-        ok_(not lock.acquired)
         tasks.render_stale_documents()
-        ok_(not lock.acquired)
-        eq_(Document.objects.get_by_stale_rendering().count(), 0)
-
-        d1_fresh = Document.objects.get(pk=d1.pk)
-        ok_(d1_fresh.last_rendered_at > earlier)
-
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
-    @mock.patch('kuma.wiki.kumascript.get')
-    @mock.patch_object(tasks.render_document, 'delay')
-    def test_render_stale_immediate(self, mock_render_document_delay,
-                                    mock_kumascript_get):
-        mock_kumascript_get.return_value = ('MOCK CONTENT', None)
-
-        now = datetime.now()
-        earlier = now - timedelta(seconds=1000)
-
-        d1 = document(title='Aged 3')
-        d1.last_rendered_at = earlier
-        d1.render_expires = now - timedelta(seconds=100)
-        d1.save()
-
-        tasks.render_stale_documents(immediate=True)
 
         d1_fresh = Document.objects.get(pk=d1.pk)
         ok_(not mock_render_document_delay.called)
@@ -1300,14 +1245,6 @@ class PageMoveTests(UserTestCase):
         child.save()
 
         ok_(child.is_child_of(grandparent))
-
-    def test_has_children(self):
-        parent = document(title='Parent document for testing has_children()')
-        child = document(title='Child document for testing has_children()')
-        child.parent_topic = parent
-        child.save()
-
-        ok_(parent.has_children())
 
     @attr('move')
     def test_move_tree(self):
@@ -1798,8 +1735,8 @@ class DocumentZoneTests(UserTestCase):
         root_doc = root_rev.document
 
         middle_rev = revision(title='Zonemiddle', slug='Zonemiddle',
-                            content='This is the Zone middle',
-                            is_approved=True, save=True)
+                              content='This is the Zone middle',
+                              is_approved=True, save=True)
         middle_doc = middle_rev.document
         middle_doc.parent_topic = root_doc
         middle_doc.save()
@@ -1829,14 +1766,17 @@ class DocumentZoneTests(UserTestCase):
         middle_zone = DocumentZone(document=middle_doc)
         middle_zone.save()
 
-        eq_(root_zone, root_doc.find_zone_stack()[0])
-        eq_(middle_zone, middle_doc.find_zone_stack()[0])
-        eq_(middle_zone, sub_doc.find_zone_stack()[0])
-        eq_(0, len(other_doc.find_zone_stack()))
+        eq_(self.get_zone_stack(root_doc)[0], root_zone)
+        eq_(self.get_zone_stack(middle_doc)[0], middle_zone)
+        eq_(self.get_zone_stack(sub_doc)[0], middle_zone)
+        eq_(0, len(self.get_zone_stack(other_doc)))
 
-        zone_stack = sub_sub_doc.find_zone_stack()
+        zone_stack = self.get_zone_stack(sub_sub_doc)
         eq_(zone_stack[0], middle_zone)
         eq_(zone_stack[1], root_zone)
+
+    def get_zone_stack(self, doc):
+        return DocumentZoneStackJob().get(doc.pk)
 
 
 class DocumentParsingTests(UserTestCase):

@@ -1,21 +1,23 @@
 import json
 
-from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
-from waffle import flag_is_active
 
-from .filters import (LanguageFilterBackend, DatabaseFilterBackend,
-                      SearchQueryBackend, HighlightFilterBackend,
-                      AdvancedSearchQueryBackend, get_filters)
-from .models import Filter, DocumentType
+from kuma.wiki.search import WikiDocumentType
+
+from .exceptions import ValidationError
+from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
+                      get_filters, HighlightFilterBackend,
+                      LanguageFilterBackend, SearchQueryBackend)
+from .jobs import AvailableFiltersJob
+from .paginator import SearchPaginator
 from .renderers import ExtendedTemplateHTMLRenderer
-from .serializers import SearchSerializer, DocumentSerializer, FilterWithGroupSerializer
-from .queries import DocumentS
+from .serializers import (DocumentSerializer, FilterWithGroupSerializer,
+                          SearchQuerySerializer, SearchSerializer)
 
 
 class SearchView(ListAPIView):
@@ -30,10 +32,11 @@ class SearchView(ListAPIView):
     filter_backends = (
         SearchQueryBackend,
         AdvancedSearchQueryBackend,
-        HighlightFilterBackend,
         DatabaseFilterBackend,
         LanguageFilterBackend,
+        HighlightFilterBackend,
     )
+    paginator_class = SearchPaginator
     paginate_by = 10
     max_paginate_by = 100
     paginate_by_param = 'per_page'
@@ -42,21 +45,28 @@ class SearchView(ListAPIView):
     def initial(self, request, *args, **kwargs):
         super(SearchView, self).initial(request, *args, **kwargs)
         self.current_page = self.request.QUERY_PARAMS.get(self.page_kwarg, 1)
-        self.drilldown_faceting = flag_is_active(request,
-                                                 'search_drilldown_faceting')
-        self.available_filters = (Filter.objects.prefetch_related('tags',
-                                                                  'group')
-                                                .filter(enabled=True))
-        self.serialized_filters = FilterWithGroupSerializer(self.available_filters,
-                                                   many=True).data
+        self.available_filters = AvailableFiltersJob().get()
+        self.serialized_filters = (
+            FilterWithGroupSerializer(self.available_filters, many=True).data)
         self.selected_filters = get_filters(self.request.QUERY_PARAMS.getlist)
+        self.query_params = {}
 
     def get_queryset(self):
-        return DocumentS(DocumentType,
-                         url=self.request.get_full_path(),
-                         current_page=self.current_page,
-                         serialized_filters=self.serialized_filters,
-                         selected_filters=self.selected_filters)
+        return WikiDocumentType.search()
+
+    def list(self, request, *args, **kwargs):
+        """
+        We override the `list` method here to store the URL.
+        """
+        # Stash some data here for the serializer.
+        self.url = request.get_full_path()
+        query_params = SearchQuerySerializer(data=request.QUERY_PARAMS)
+        if not query_params.is_valid():
+            raise ValidationError(query_params.errors)
+        self.query_params = query_params.data
+
+        return super(SearchView, self).list(request, *args, **kwargs)
+
 
 search = SearchView.as_view()
 
@@ -78,8 +88,6 @@ def suggestions(request):
 @cache_page(60 * 60 * 168)  # 1 week.
 def plugin(request):
     """Render an OpenSearch Plugin."""
-    site = Site.objects.get_current()
     return render(request, 'search/plugin.html', {
-        'site': site,
         'locale': request.locale
     }, content_type='application/opensearchdescription+xml')

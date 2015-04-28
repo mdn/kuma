@@ -1,7 +1,7 @@
 {% extends "wiki/base.html" %}
 {% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
 
-{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, get_approvals_html, document_watch with context %}
+{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, get_approvals_html, document_watch, share_links with context %}
 
 {% if fallback_reason == 'no_translation' %}
   {% set help_link = url('wiki.translate', document_path=document.full_path, locale=document.locale)|urlparams(tolocale=request.locale) %}
@@ -18,11 +18,11 @@
 {% endif %}
 
 {% set current_revision = document.current_revision %}
-{% if (is_logged_in and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review() or current_revision.needs_editorial_review()) %}
+{% if (is_logged_in and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review or current_revision.needs_editorial_review) %}
   {% set approvals_html = get_approvals_html(document, request.user) %}
 {% endif %}
 
-{% set zone_stack = document.find_zone_stack() %}
+{% set zone_stack = document.zone_stack %}
 {% set is_zone = zone_stack|length %}
 {% set is_zone_root = is_zone and zone_stack[0].document == document %}
 {% set is_translated = document.other_translations.exists() %}
@@ -78,7 +78,7 @@
 
 {% block lang_switcher %}
   {% if (document.is_localizable or document.parent) and is_translated %}
-    <form class="languages go" method="get" action="{{ devmo_url('Web') }}">
+    <form class="languages go" method="get" action="{{ wiki_url('Web') }}">
       <label for="language">{{ _('Other languages:') }}</label>
       <select id="language" class="wiki-l10n" name="next" dir="ltr">
         <option value="{{ document.get_absolute_url() }}" selected>
@@ -171,7 +171,13 @@
           <span class="from-search-next-box">
             <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-right"></i></a>
           </span>
+
         <h1>{{ document.title }}</h1>
+
+        {% if waffle.flag('share_links') %}
+          {{ share_links(document) }}
+        {% endif %}
+
         {% if waffle.flag('top_contributors') %}
             {% set contributors = document.get_contributors() %}
             {% set contrib_limit = 13 %}
@@ -227,6 +233,9 @@
                 <ol class="toggle-container">
                   {{ toc_html|safe }}
                 </ol>
+                {% if waffle.flag('share_links') %}
+                  {{ share_links(document) }}
+                {% endif %}
               </div>
               {% endif %}
               </div>
@@ -277,17 +286,17 @@
               {% endif %}
 
               {% if document.current_revision %}
-                {% if document.current_revision.needs_technical_review() %}
+                {% if document.current_revision.needs_technical_review %}
                   <div class="warning warning-review"><p>{% trans %}
                     This article is in need of a technical review.
                   {% endtrans %}</p></div>
                 {% endif %}
-                {% if document.current_revision.needs_editorial_review() %}
+                {% if document.current_revision.needs_editorial_review %}
                   <div class="warning warning-review"><p>{% trans %}
                     This article is in need of an editorial review.
                   {% endtrans %}</p></div>
                 {% endif %}
-                {% if document.current_revision.localization_in_progress() %}
+                {% if document.current_revision.localization_in_progress %}
                   {% if document.current_revision.translation_age >= 10 %}
                       <div class="warning warning-review"><p>{% trans translate_url=url('wiki.edit_document', document.full_path, locale=document.locale) %}
                         This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
@@ -332,19 +341,18 @@
                 {% endif %}
               </article>
 
+            {% if waffle.flag('share_links') %}
+              {{ share_links(document) }}
+            {% endif %}
+
+
               {% if not is_zone_root %}
 
                 <!-- contributors -->
                 <div class="wiki-block contributors">
                   <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
                   {% set tags = document.tags.all() %}
-                  {% if tags.exists() %}
-                  <!-- tags if present -->
-                  <div class="tag-attach-list contributors-sub">
-                    <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>&nbsp;
-                    <ul class="tags tags-small">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
-                  </div>
-                  {% endif %}
+                  {% include "wiki/includes/document_tag.html" %}
                   {% trans contributors=user_list(contributors) %}
                   <div class="contributors-sub">
                     <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
@@ -394,8 +402,8 @@
     </div> <!-- ends "main-content" -->
 
   <menu type="context" id="edit-history-menu">
-    <menuitem data-action="$edit" label="{{_('Edit page')}}"></menuitem>
-    <menuitem data-action="$history" label="{{_('View page history')}}"></menuitem>
+    <menuitem data-action="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" label="{{_('Edit page')}}"></menuitem>
+    <menuitem data-action="{{ url('wiki.document_revisions', document.full_path) }}" label="{{_('View page history')}}"></menuitem>
   </menu>
 
   <!-- embed scrollback widget based on the tags on the page -->
@@ -414,7 +422,10 @@
 	{% if waffle.flag('scrollback_widget') %}
 		<script type="text/javascript" src="../../../../media/redesign/js/scrollback.js" async="true"></script>
 	{% endif %}
-	<script type="text/javascript">
-		if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
-	</script>
+  <script type="text/javascript">
+      if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
+
+      {# This can be removed once the social network button multivariate test is completed. #}
+      mdn.optimizely.push(['activate', 2796520257]);
+  </script>
 {% endblock %}

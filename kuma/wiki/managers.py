@@ -1,15 +1,15 @@
 from datetime import date, datetime, timedelta
 
 from django.core import serializers
-from django.core.cache import get_cache
 from django.db import models
 
 import bleach
 import constance.config
 
+from kuma.core.cache import memcache
+
 from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
-                        SECONDARY_CACHE_ALIAS, TEMPLATE_TITLE_PREFIX,
-                        URL_REMAPS_CACHE_KEY_TMPL)
+                        TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
 from .queries import TransformQuerySet
 
@@ -96,26 +96,26 @@ class BaseDocumentManager(models.Manager):
 
     def filter_for_review(self, locale=None, tag=None, tag_name=None):
         """Filter for documents with current revision flagged for review"""
-        bq = 'current_revision__review_tags__%s'
+        query = 'current_revision__review_tags__%s'
         if tag_name:
-            query = {bq % 'name': tag_name}
+            query = {query % 'name': tag_name}
         elif tag:
-            query = {bq % 'in': [tag]}
+            query = {query % 'in': [tag]}
         else:
-            query = {bq % 'name__isnull': False}
+            query = {query % 'name__isnull': False}
         if locale:
             query['locale'] = locale
         return self.filter(**query).distinct()
 
     def filter_with_localization_tag(self, locale=None, tag=None, tag_name=None):
         """Filter for documents with a localization tag on current revision"""
-        bq = 'current_revision__localization_tags__%s'
+        query = 'current_revision__localization_tags__%s'
         if tag_name:
-            query = {bq % 'name': tag_name}
+            query = {query % 'name': tag_name}
         elif tag:
-            query = {bq % 'in': [tag]}
+            query = {query % 'in': [tag]}
         else:
-            query = {bq % 'name__isnull': False}
+            query = {query % 'name__isnull': False}
         if locale:
             query['locale'] = locale
         return self.filter(**query).distinct()
@@ -227,30 +227,8 @@ class TaggedDocumentManager(models.Manager):
         return base_qs.filter(content_object__deleted=False)
 
 
-class DocumentZoneManager(models.Manager):
-    """Manager for DocumentZone objects"""
-
-    def get_url_remaps(self, locale):
-        cache_key = URL_REMAPS_CACHE_KEY_TMPL % locale
-        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
-        remaps = s_cache.get(cache_key)
-
-        if not remaps:
-            qs = (self.filter(document__locale=locale,
-                              url_root__isnull=False)
-                      .exclude(url_root=''))
-            remaps = [{
-                'original_path': '/docs/%s' % zone.document.slug,
-                'new_path': '/%s' % zone.url_root
-            } for zone in qs]
-            s_cache.set(cache_key, remaps)
-
-        return remaps
-
-
 class RevisionIPManager(models.Manager):
     def delete_old(self, days=30):
         cutoff_date = date.today() - timedelta(days=days)
-        old_rev_ips = self.get_query_set().filter(
-            revision__created__lte=cutoff_date)
+        old_rev_ips = self.filter(revision__created__lte=cutoff_date)
         old_rev_ips.delete()

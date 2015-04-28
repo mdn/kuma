@@ -50,6 +50,7 @@
             {% endif %}
 
           <form class="submission readable-line-length" method="post" action="{{ url('socialaccount_signup') }}">
+              {{ honeypot_field()|safe }}
 
               <p>{% trans provider_name=provider.name %}
               Thanks for signing in to MDN with {{ provider_name }}. You have
@@ -156,9 +157,9 @@
               </li>
               {% endif %}
 
-              {{ newsletter_widget(form) }}
+              <li>{{ newsletter_widget(form) }}</li>
 
-              <fieldset id="terms-of-use" class="section">
+              <li>
                   <ol>
                       <li id="terms-agree>">
                           <ul class="errorlist">
@@ -172,7 +173,7 @@
                       </label>
                       </li>
                   </ol>
-              </fieldset>
+              </li>
 
               <li class="submit">
                 <button class="positive" type="submit" name="create">{{ _('Create my MDN profile') }}</button>

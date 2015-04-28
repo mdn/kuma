@@ -6,11 +6,10 @@ from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Q
-from django.http import Http404, HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.datastructures import SortedDict
 
-from access.decorators import login_required
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
@@ -18,10 +17,12 @@ from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from badger.models import Award
 import constance.config
+from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 from teamwork.models import Team
 from tower import ugettext_lazy as _
 
+from kuma.core.decorators import login_required
 from kuma.demos.models import Submission
 from kuma.demos.views import DEMOS_PAGE_SIZE
 
@@ -82,8 +83,7 @@ def profile_view(request, username):
     profile = get_object_or_404(UserProfile, user__username=username)
     user = profile.user
 
-    if (user.bans.filter(is_active=True).exists() and
-            not request.user.is_superuser):
+    if (profile.is_banned and not request.user.is_superuser):
         return render(request, '403.html',
                       {'reason': "bannedprofile"}, status=403)
 
@@ -418,6 +418,12 @@ class SignupView(BaseSignupView):
             'matching_accounts': matching_accounts,
         })
         return context
+
+    def dispatch(self, request, *args, **kwargs):
+        response = verify_honeypot_value(request, None)
+        if isinstance(response, HttpResponseBadRequest):
+            return response
+        return super(SignupView, self).dispatch(request, *args, **kwargs)
 
 
 signup = SignupView.as_view()

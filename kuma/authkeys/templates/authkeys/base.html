@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block bodyclass %}profile-api-page{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('profile') }}
+    {{ css('submission') }}
+{% endblock %}
+
+{% block content %}
+<div class="text-content readable-line-length">
+  <header id="section-head">
+  <div class="wrap">
+      <h1 class="intro">{% block intro %}{{ _("API Keys: <b>...</b>" | safe) }}{% endblock %}</h1>
+  </div>
+  </header>
+
+  <section id="content">
+  <div class="wrap">
+    <section id="content-main" role="main">
+      <div class="boxed">
+        <section>
+          {% block subcontent %}{% endblock %}
+        </section>
+      </div>
+    </section>
+  </div>
+  </section>
+</div>
+{% endblock %}

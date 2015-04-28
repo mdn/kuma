@@ -3,8 +3,9 @@ define([
     'intern/chai!assert',
     'base/lib/config',
     'base/lib/assert',
-    'base/lib/POM'
-], function(registerSuite, assert, config, libAssert, POM) {
+    'base/lib/POM',
+    'base/lib/poll'
+], function(registerSuite, assert, config, libAssert, POM, poll) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -17,7 +18,6 @@ define([
 
         before: function() {
             Page.init(this.remote, config.homepageUrl);
-            return Page.login();
         },
 
         beforeEach: function() {
@@ -26,6 +26,13 @@ define([
 
         after: function() {
             return Page.teardown();
+        },
+
+        '[requires-login] Logging in for wiki tests': function() {
+            // This appears here instead of "before" so that login isn't attempted
+            // due to '[requires-login]'
+
+            return Page.login();
         },
 
         '[requires-login] The new document screen passes all the checks': function() {
@@ -49,8 +56,8 @@ define([
                         });
 
         },
-        /*
-        'The new document-template screen passes all the checks': function() {
+
+        '[requires-login] The new document-template screen passes all the checks': function() {
 
             var remote = this.remote;
 
@@ -60,8 +67,60 @@ define([
                             return libAssert.windowPropertyExists(remote, 'ace_editor');
                         });
 
+        },
+
+        '[requires-login][requires-doc] Existing document shows "Edit", "Advanced" and "Languages" menu': function() {
+
+            return this.remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#edit-button');
+                        })
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#advanced-menu');
+                        })
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#languages-menu');
+                        });
+
+        },
+
+        '[requires-login][requires-doc] Clicking the edit button goes to edit page, CKEditor loads properly': function() {
+
+            var remote = this.remote;
+
+            return remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
+                        .findById('edit-button')
+                        .moveMouseTo(5, 5)
+                        .click()
+                        .then(function() {
+                            return libAssert.windowPropertyExists(remote, 'CKEDITOR');
+                        });
+        },
+
+        '[requires-login][requires-doc] Clicking the "translate button" allows for translation and CKEditor loads': function() {
+
+            var remote = this.remote;
+
+            return remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
+                        .findById('languages-menu')
+                        .moveMouseTo(5, 5)
+                        .end()
+                        .findById('languages-menu-submenu')
+                        .then(function(element) {
+                            return poll.until(element, 'isDisplayed').then(function() {
+                                return remote.findById('translations-add')
+                                    .click()
+                                    .end()
+                                    .findByCssSelector('.locales a')
+                                    .click()
+                                    .then(function() {
+                                        return libAssert.windowPropertyExists(remote, 'CKEDITOR');
+                                    });
+                            });
+                        });
         }
-        */
+
+
     });
 
 });

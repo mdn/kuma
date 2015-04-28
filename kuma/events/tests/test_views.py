@@ -3,10 +3,10 @@ from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 from waffle.models import Flag
 
-from sumo.urlresolvers import reverse
-from devmo.tests import KumaTestCase
+from kuma.core.urlresolvers import reverse
+from kuma.core.tests import KumaTestCase
 
-from ..cron import calendar_reload
+from ..tasks import calendar_reload
 
 
 class EventsViewsTest(KumaTestCase):

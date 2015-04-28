@@ -1,0 +1,236 @@
+{% extends "wiki/base.html" %}
+
+{% block body_attributes %}id="fellowship-2015" class="document zone zone-landing fellowship"{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('fellowship') }}
+{% endblock %}
+
+{% block extrahead %}
+
+  {% set seo_description = _('The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla.') %}
+  {% set social_title = 'MDN Fellowship Program' %}
+  <meta property="og:description" content="{{ seo_description }}">
+  <meta name="description" content="{{ seo_description }}">
+  <meta name="twitter:description" content="{{ seo_description }}">
+  <meta name="twitter:title" content="{{ social_title }}">
+  <meta property="og:title" content="{{ social_title }}">
+
+{% endblock %}
+
+{% block content %}
+
+    <div id="document-main" class="zone-landing-header" role="main">
+        <div class="center">
+            <nav class="crumbs" role="navigation">
+            <ol xmlns:v="http://rdf.data-vocabulary.org/#" aria-label="breadcrumbs">
+                <li typeof="v:Breadcrumb"><a href="/en-US" rel="v:url" property="v:title">MDN</a></li>
+                <li class="crumb" typeof="v:Breadcrumb" property="v:title">Fellowship Program</li>
+            </ol>
+            </nav>
+
+            <h1>2015 MDN Fellowship Program</h1>
+
+        </div><!-- .center -->
+        <div class="zone-image"></div>
+    </div><!-- #document-main -->
+
+
+    <div class="wiki-main-content">
+    <div class="center">
+    <div id="wiki-column-container" class="wiki-right-closed wiki-right-none wiki-left-closed wiki-left-none">
+    <div id="wiki-content" class="column-all wiki-column text-content">
+    <div class="column-container">
+
+        <div class="column-9">
+            <div class="media media-small-mobile-stack media-reverse">
+                <div class="media-side">
+                    {% if waffle.flag('fellowship_applications_open') %}
+                        <a class="cta" href="http://www.surveygizmo.com/s3/1998528/PILOT-Developer-Fellowship-Application">
+                            <span class="cta-head">Apply now!</span>
+                        </a>
+                    {% else %}
+                        <div class="cta negative">
+                            <span class="cta-head">Applications<br> are closed.</span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="media-body">
+                    <p>Launching in Q1 2015, the Mozilla Developer Fellowship intends to accelerate the involvement of highly-skilled and experienced web developers with the open web.</p>
+                </div>
+            </div>
+            <h3>Who</h3>
+            <p>Web and mobile developers with an established track record of contributions and expertise in a specific web technology, function or domain who wish to increase the effectiveness of their teaching and communications.</p>
+            <h3>What</h3>
+            <p>Seven weeks of partnering closely with Mozilla to (1) build curriculum, code, or likely both; and (2) receive coaching, training and best practices for effectively communicating and educating with technical information. We expect this to be between 5-10 hours of your time per week.</p>
+            <p>Specific projects (we encourage you to target one of these in your application):</p>
+            <div id="fellowship-projects" class="details-list">
+                <details>
+                    <summary><h4>TestTheWebForward</h4></summary>
+                    <dl>
+                        <dt>Brief project description</dt>
+                        <dd>Mozilla participates in an important W3C open testing initiative, TestTheWebForward.com. To support our efforts, the Fellow will review various technical specifications to identify gaps between the documentation and current situation and refine existing tests to adapt to this cross-browser test harness.</dd>
+                        <dt>Activities and Deliverables</dt>
+                        <dd>Identify gaps between existing documentation and current development environments. The work would entail refining existing tests to adapt to this framework.</dd>
+                        <dt>Required skills and experience</dt>
+                        <dd>Experience and comfort writing Javascript test scripts.</dd>
+                        <dt>Mentor Information</dt>
+                        <dd>Josh Matthews, Mozilla Platform Group.<br>
+                            GitHub: <a href="https://github.com/jdm">jdm</a><br>
+                            Twitter: <a href="https://twitter.com/lastontheboat">@lastontheboat</a></dd>
+                    </dl>
+                </details>
+                <details>
+                    <summary><h4>Service Workers</h4></summary>
+                    <dl>
+                        <dt>Brief Project Description</dt>
+                        <dd>Service workers essentially act as proxy servers that sit between web applications, the browser and (when available) the network. They enable the creation of effective offline experiences and wiill also allow access to push notifications and background sync APIs.</dd>
+                        <dt>Activities and Deliverables</dt>
+                        <dd>Write a demonstration web application (new or existing) to showcase Service Worker functionality. Provide detailed API descriptions.</dd>
+                        <dt>Required skills and experience</dt>
+                        <dd>Experienced Web developer with expertise in JavaScript, CSS, HTML as well as with efficient network interaction (queuing resource fetching, etc.). Self-starter and autonomous worker</dd>
+                        <dt>Mentor information</dt>
+                        <dd>Brittany Storoz, Mozilla Apps Engineering.<br>
+                            Github: <a href="https://github.com/brittanystoroz">brittanystoroz</a><br>
+                            Twitter: <a href="https://twitter.com/brittanystoroz">@brittanystoroz</a></dd>
+                    </dl>
+                </details>
+                <details>
+                    <summary><h4>WebGL</h4></summary>
+                    <dl>
+                        <dt>Brief Project Description</dt>
+                        <dd>WebGL is the latest incarnation of the OpenGL family of real time rendering immediate mode graphics APIs. WebGL is getting some cool new features in 2015 with the standardization efforts around the WebGL 2.0 spec being published.</dd>
+                        <dt>Activities and Deliverables</dt>
+                        <dd>Help us develop a curriculum on MDN for teaching developers new to graphics programming the WebGL APIs.</dd>
+                        <dt>Required skills and experience</dt>
+                        <dd>Computer graphics experience with programmable shaders and the OpenGL, OpenGL ES, WebGL, or Direct3D APIs. Command of JavaScript and module systems preferred.</dd>
+                        <dt>Mentor information</dt>
+                        <dd>Nick Desaulniers, Sleeps at Desk.<br>
+                           Github: <a href="https://github.com/nickdesaulniers">nickdesaulniers</a><br>
+                           Twitter: <a href="https://twitter.com/LostOracle">@LostOracle</a>
+                        </dd>
+                    </dl>
+                </details>
+                <details>
+                    <summary><h4>Web App Performance</h4></summary>
+                    <dl>
+                        <dt>Brief Project Description</dt>
+                        <dd>Web performance is a feature that needs to be considered from serving content to rendering to interactivity. Finding and addressing performance bottlenecks depends on tooling the browser networking and rendering but also, often more important, user perception.</dd>
+                        <dt>Activities and Deliverables</dt>
+                        <dd>Help us develop a curriculum on MDN for teaching developers to master performance tooling and to develop web apps with performance as a feature.</dd>
+                        <dt>Required skills and experience</dt>
+                        <dd>Experienced Web developer with expertise in JavaScript, CSS, HTML. Knowledge of server-side development, caching and network layers preferred.</dd>
+                        <dt>Mentor information</dt>
+                        <dd>Harald Kirschner, Web Craftsman.<br>
+                            Github: <a href="https://github.com/digitarald">digitarald</a><br>
+                            Twitter: <a href="https://twitter.com/digitarald">@digitarald</a>
+                        </dd>
+                    </dl>
+                </details>
+                <details>
+                    <summary><h4>Curriculum Development</h4></summary>
+                    <dl>
+                        <dt>Brief Project Description</dt>
+                        <dd>MDN serves as a trusted resource for literally millions of developers on a regular basis. In 2015, MDN will expand the impact of this content by developing Kits of key learning materials, including such elements as code samples, videos and other elements being finalized.</dd>
+                        <dt>Activities and Deliverables</dt>
+                        <dd>Act as lead curator for technical curriculum addressing a key web technology, developing code samples, videos, interactive exercises and other components to be determined. You may propose your own subject area (examples: virtual reality on the web, network security, CSS, etc.) or we will work with you to match you to the best subject based on your background and Mozilla priorities.</dd>
+                        <dt>Required skills and experience</dt>
+                        <dd>Experienced Web developer with expertise in JavaScript, CSS, HTML and/or other key technologies. Proficient in written and spoken English.</dd>
+                        <dt>Mentor information</dt>
+                        <dd>Chris Mills, Senior Technology Writer, Mozilla Developer Network.<br>
+                            Github: <a href="https://github.com/ChrisDavidMills">ChrisDavidMills</a><br>
+                            Twitter: <a href="https://twitter.com/chrisdavidmills">@chrisdavidmills</a>
+                        </dd>
+                    </dl>
+                </details>
+            </div>
+
+            <h3>Why</h3>
+            <ul>
+                <li>Increase the reach and impact of your expertise</li>
+                <li>Grow your skills beyond coding and managing to educating and communicating</li>
+                <li>Build something used by hundreds of thousands (or more) developers worldwide</li>
+                <li>Directly impact and grow the value of the open web</li>
+            </ul>
+
+            <h3>When</h3>
+            <p>
+                <strong>Application deadline:</strong> April 1, 2015 <br>
+                <strong>Orientation:</strong> Early June (dates TBD) <br>
+                <strong>Graduation:</strong> August 11-12, 2015
+            </p>
+            <h3>Where</h3>
+            <p>
+                <strong>Orientation:</strong> A Mozilla location (TBD).<br>
+                <strong>Core program:</strong> Conducted at your normal workspace.</p>
+
+            <h3>The Fine Print</h3>
+            <p>Mozilla will provide coaching, direction and training on teaching best practices.  Subject to Mozilla’s travel reimbursement policies, Mozilla will cover Fellows travel, room, per diem food costs and visa costs up to $3,000 to attend the Orientation. Fellows are responsible for obtaining their own visas if any are required (Mozilla will provide reasonable supporting documentation).</p>
+
+            <p>The Fellows will meet the stated deliverables of their projects and meet weekly with their mentor, the program lead and their other Fellows. The Fellow will also share the results of their projects at 1-2 events agreed upon by the Fellow and the Program Director, as well as on their personal channels (blog, social media, etc). The Fellow is responsible for any related visas (Mozilla can provide any necessary supporting documentation).  Fellows will be required to sign Mozilla’s Fellowship agreement in order to participate.</p>
+
+            <p>If you’ve read all of this and still have a question, contact Diane Tate at <a href="mailto:diane@mozilla.com">diane@mozilla.com</a>. If you don’t have specific questions and just want to introduce yourself, please use the application form.</p>
+
+
+            {% if waffle.flag('fellowship_applications_open') %}
+            <section class="section-apply">
+                <h2 class="offscreen">Apply now.</h2>
+
+                <div class="media media-small-mobile-stack">
+                    <div class="media-side">
+                        <a class="cta" href="http://www.surveygizmo.com/s3/1998528/PILOT-Developer-Fellowship-Application"><span class="cta-head"> Apply now!</span></a>
+                    </div>
+                    <div class="media-body">
+                        <p><a href="http://www.surveygizmo.com/s3/1998528/PILOT-Developer-Fellowship-Application">Applications are open now</a> and we will accept them through April 1, 2015.</p>
+                    </div>
+                </div>
+
+
+                <div class="media media-small-mobile-stack">
+                    <div class="media-side">
+                        <div class="cta">
+                            <h3 class="cta-head">Share This</h3>
+                            <ul>
+                                <li><a class="twitter" href="https://www.twitter.com/intent/tweet?url=https://developer.mozilla.org{{ url('fellowship') }}" title="Twitter" target="_blank">Twitter</a></li>
+                                <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://developer.mozilla.org{{ url('fellowship') }}" title="Facebook" target="_blank">Facebook</a></li>
+                                <li><a class="g-plus" href="https://plus.google.com/share?url=https://developer.mozilla.org{{ url('fellowship') }}" title="Google+" target="_blank">Google+</a></li>
+                            </ul>
+                        </div><!-- .share-widget -->
+                    </div>
+                    <div class="media-body">
+                        <p>Excited about this opportunity? Share it with your friends.</p>
+                    </div>
+                </div>
+            </section>
+
+            {% else %}
+                <h2>Applications are closed.</h2>
+                <p>The application period has ended. Watch this space for information about our 2015 Fellows!</p>
+            {% endif %}
+
+        </div><!-- .column-9 -->
+
+        <div class="column-3" dir="ltr">
+            <figure class="hero">
+                <img src="/media/img/fellowship.jpg" alt="A group of people at a Mozilla event, the man in the foreground is wearing a Firefox t-shirt.">
+                <p><small><a href="https://www.flickr.com/photos/roland/10081117356">Photo courtesy Roland Tanglao on Flickr.</a></small></p>
+            </figure>
+            <div class="pullquote">
+                <p class="quote">Building people’s understanding of the web — and building the leaders of the future of the web — is core to our work.</p>
+                <span class="attribution">&mdash;Mark Surman, Executive Director of the Mozilla Foundation</span>
+            </div><!-- .pullquote -->
+        </div><!-- .column-3 -->
+    </div><!-- .column-container -->
+
+    </div><!-- #wiki-content -->
+    </div><!-- #wiki-column-container -->
+    </div><!-- .center -->
+    </div><!-- .wiki-main-content -->
+
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+  {{ js('fellowship') }}
+{% endblock %}

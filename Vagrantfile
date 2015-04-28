@@ -47,8 +47,8 @@ Vagrant.configure("2") do |config|
                       apt-get --assume-yes install facter=1.7.6-1puppetlabs1 puppet=2.7.26-1puppetlabs1 puppet-common=2.7.26-1puppetlabs1;
                       mkdir -p /etc/puppet/modules;
                       puppet module install -f puppetlabs-stdlib;
-                      puppet module install -f puppetlabs-apt;
-                      puppet module install -f elasticsearch-elasticsearch"
+                      puppet module install -f --version 1.8.0 puppetlabs-apt;
+                      puppet module install -f --version 0.4.0 elasticsearch-elasticsearch"
     end
 
     config.vm.provision :puppet do |puppet|

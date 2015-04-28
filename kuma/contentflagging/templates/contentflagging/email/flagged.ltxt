@@ -1,0 +1,9 @@
+{% load i18n %}
+{# L10n: This is an email. Whitespace matters! #}
+{% trans object=object, flag_type=flag_type %}{{object}} has been flagged {{flag_type}}{% endtrans %}
+
+{% trans %}
+To change the status of this flag, click the following
+link, or paste it into your browser's location bar:
+{% trans %}
+{{ url|absolutify }}

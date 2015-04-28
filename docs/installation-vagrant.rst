@@ -6,11 +6,7 @@ the entire MDN stack. (Django, KumaScript, Search, Celery, etc.)
 If you're on Mac OS X or Linux and looking for a quick way to get started, you
 should try these instructions.
 
-At the end, you'll earn `the badge`_:
-
-.. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
-
-.. note:: **If you have problems using vagrant**, check Troubleshooting_ and `Getting More Help`_ below.
+.. note:: **If you have problems getting vagrant up**, check Errors_ below.
 
 .. _vagrant: http://vagrantup.com/
 .. _uses NFS to share the current working directory: http://docs.vagrantup.com/v2/synced-folders/nfs.html
@@ -52,7 +48,7 @@ Install and run everything
       => default: notice: Finished catalog run in .... seconds
 
 
-   If the above process fails with an error, check `Troubleshooting`_.
+   If the above process fails with an error, check `Errors`_.
 
 
 #. Add the hostnames to the end of your hosts file with this shell command::
@@ -79,9 +75,11 @@ Install and run everything
 
 #. Visit the homepage at `https://developer-local.allizom.org <https://developer-local.allizom.org/>`_
 
-#. You've installed Kuma! If you want `the badge`_, `email a screenshot of your
-   browser to mdn-dev at mozilla dot com
-   <mailto:mdn-dev@mozilla.com?subject=Local%20MDN%20Screenshot>`_.
+#. You've installed Kuma! If you want `the badge`_ ...
+
+.. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
+
+`email a screenshot of your browser to mdn-dev at mozilla dot com <mailto:mdn-dev@mozilla.com?subject=Local%20MDN%20Screenshot>`_.
 
 .. _the badge: https://badges.mozilla.org/badges/badge/Installed-and-ran-Kuma
 
@@ -105,14 +103,8 @@ You will want to make yourself an admin user to enable important site features.
 
 Enable Important Site Features
 ------------------------------
-
-Some site features are controlled using `django-waffle <http://waffle.readthedocs.org/en/latest/>`_.
-You control these features in the `waffle admin
-<https://developer-local.allizom.org/admin/waffle/>`_.
-
-Some site features are controlled using `constance
-<https://github.com/comoga/django-constance>`_. You control these features in
-the `constance config admin panel`_.
+You'll need to use :doc:`feature toggles <feature-toggles>` to enable some
+basic features.
 
 .. _GitHub Auth:
 
@@ -157,6 +149,8 @@ To enable wiki editing on your MDN vm, `add a waffle flag`_ called
 
 .. _add a waffle flag: https://developer-local.allizom.org/admin/waffle/flag/add/
 
+.. _enable KumaScript:
+
 KumaScript
 ~~~~~~~~~~
 
@@ -167,7 +161,14 @@ To enable KumaScript (Kuma's template system):
 #. Change ``KUMASCRIPT_TIMEOUT`` to 600
 #. Click "Save" at the bottom
 
+KumaScript is now enabled. You will also want to import the `KumaScript auto-loaded modules`_.
+You can simply copy & paste them from the production site to your local site at
+the same slugs. Or you can email the dev-mdn@lists.mozilla.org list to get a .json file to
+load in your local django admin interface as described in `this comment`_.
+
 .. _constance config admin panel: https://developer-local.allizom.org/admin/constance/config/
+.. _KumaScript auto-loaded modules: https://developer.mozilla.org/en-US/docs/MDN/Kuma/Introduction_to_KumaScript#Auto-loaded_modules
+.. _this comment: https://github.com/mozilla/kuma/issues/2518#issuecomment-53665362
 
 Create pages
 ------------
@@ -198,13 +199,10 @@ reflected without any action on your part.
 
 
 
-.. _Troubleshooting:
-
-Troubleshooting
----------------
+.. _Errors:
 
 Errors during `vagrant up`
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 ``vagrant up`` starts the virtual machine. The first time you run ``vagrant up`` it
 also `provisions <https://docs.vagrantup.com/v2/cli/provision.html>`_ the vm -
@@ -217,8 +215,30 @@ errors can be fixed by simply provisioning the vm again::
 
        vagrant provision
 
-In some rare occasions you might need to run this multiple times. If you see
-the same error over and over, please ask for `more help`_.
+In some rare occasions you might need to run this multiple times. If you find an
+error that is fixed by running ``vagrant provision`` again, please email us the
+error at dev-mdn@lists.mozilla.org and we'll see if we can fix it.
+
+If you see the same error over and over, please ask for :ref:`more help <more-help>`.
+
+.. _puppet: http://puppetlabs.com/puppet/puppet-open-source
+
+kuma_south_migrate
+~~~~~~~~~~~~~~~~~~
+
+If you see errors like::
+
+    notice: /Stage[main]/Kuma_config/Exec[kuma_south_migrate]
+
+try to manually run database migrations in the vm. To do so::
+
+    vagrant ssh
+    python manage.py migrate
+
+If you get an error, please ask for :ref:`more help <more-help>`.
+
+Ubuntu
+~~~~~~
 
 On Ubuntu, ``vagrant up`` might fail after being unable to mount NFS shared
 folders. First, make sure you have the nfs-common and nfs-server packages
@@ -237,36 +257,5 @@ There is also the potential of running into weird issues with puppet,
 since the current puppet configurations do not currently support
 ``nfs: false``.
 
-If you have other problems during ``vagrant up``, please ask for `more help`_.
-
-Errors after switching branches
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
--  You should occasionally re-run the Puppet setup, especially after
-   updating code with major changes. This will ensure that the VM
-   environment stays up to date with configuration changes and
-   installation of additional services.
-
-   -  On the Host::
-
-          vagrant provision
-
-   -  Inside the VM::
-
-          sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
-
-.. _more help:
-.. _Getting More Help:
-
-Getting more help
-~~~~~~~~~~~~~~~~~
-
-If you have more problems using vagrant, please:
-
-#. Paste errors to `pastebin`_
-#. `email dev-mdn@lists.mozilla.org <mailto:dev-mdn@lists.mozilla.org?subject=vagrant%20issue>`_.
-#. After you email dev-mdn, you can also ask in `IRC`_
-
-.. _pastebin: http://pastebin.mozilla.org/
-.. _IRC: irc://irc.mozilla.org:6697/#mdndev
-.. _puppet: http://puppetlabs.com/puppet/puppet-open-source
+If you have other problems during ``vagrant up``, please check
+:doc:`Troubleshooting <troubleshooting>`.

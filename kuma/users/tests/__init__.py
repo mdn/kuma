@@ -3,7 +3,7 @@ from nose.tools import ok_
 from django.contrib.auth.models import User
 from allauth.account.models import EmailAddress
 
-from devmo.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase
 
 from ..models import UserProfile
 

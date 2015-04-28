@@ -11,8 +11,14 @@ Contents:
    celery
    wsgi
    email
-   search
+   elasticsearch
 
    development
+   migrations
+   feature-toggles
    localization
+   ckeditor
    tests
+   tests-ui
+
+   troubleshooting

@@ -1,5 +1,18 @@
-from itertools import islice
+import logging
+
+import elasticsearch
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import exception_handler
+from tower import ugettext_lazy as _
 from urlobject import URLObject
+
+
+log = logging.getLogger('kuma.search.utils')
+
+
+SEARCH_DOWN_DETAIL = _('Search is temporarily unavailable. '
+                       'Please try again in a few minutes.')
 
 
 class QueryURLObject(URLObject):
@@ -17,7 +30,7 @@ class QueryURLObject(URLObject):
             else:
                 params[param] = defaults
         return (self.del_query_param(name)
-                    .set_query_params(params))
+                    .set_query_params(self.clean_params(params)))
 
     def merge_query_param(self, name, value):
         """
@@ -30,44 +43,38 @@ class QueryURLObject(URLObject):
                 if param == name:
                     if value not in defaults and value not in (None, [None]):
                         defaults.append(value)
-                params[param] = defaults
         else:
             params[name] = value
-        return self.set_query_params(params)
+        return self.without_query().set_query_params(self.clean_params(params))
+
+    def clean_params(self, params):
+        """
+        Cleans query parameters that don't have a value to not freak out
+        urllib's quoting and Django's form system.
+        """
+        clean_params = {}
+        for param, default in params.items():
+            if isinstance(default, list) and len(default) == 1:
+                default = default[0]
+            if isinstance(default, basestring):
+                default = default.strip()
+            if default not in ('', None):
+                clean_params[param] = default
+        return clean_params
 
 
-def chunked(iterable, n):
-    """Return chunks of n length of iterable.
+def search_exception_handler(exc):
+    # Call REST framework's default exception handler first,
+    # to get the standard error response.
+    response = exception_handler(exc)
 
-    If ``len(iterable) % n != 0``, then the last chunk will have
-    length less than n.
+    if (response is None and
+            isinstance(exc, elasticsearch.ElasticsearchException)):
+        # FIXME: This really should return a 503 error instead but Zeus
+        # doesn't let that through and displays a generic error page in that
+        # case which we don't want here
+        log.error('Elasticsearch exception: %s' % exc)
+        return Response({'error': SEARCH_DOWN_DETAIL},
+                        status=status.HTTP_200_OK)
 
-    Example:
-
-    >>> chunked([1, 2, 3, 4, 5], 2)
-    [(1, 2), (3, 4), (5,)]
-
-    :arg iterable: the iterable
-    :arg n: the chunk length
-
-    :returns: generator of chunks from the iterable
-    """
-    iterable = iter(iterable)
-    while 1:
-        t = tuple(islice(iterable, n))
-        if t:
-            yield t
-        else:
-            return
-
-
-def format_time(time_to_go):
-    """Return minutes and seconds string for given time in seconds.
-
-    :arg time_to_go: Number of seconds to go.
-
-    :returns: string representation of how much time to go.
-    """
-    if time_to_go < 60:
-        return '%ds' % time_to_go
-    return '%dm %ds' % (time_to_go / 60, time_to_go % 60)
+    return response

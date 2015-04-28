@@ -7,7 +7,6 @@ import re
 from time import time
 import zipfile
 
-from embedutils import VideoEmbedURLField
 import magic
 
 try:
@@ -30,14 +29,15 @@ from constance.admin import FIELDS
 from django.utils.functional import lazy
 
 import south.modelsinspector
-from taggit_extras.managers import NamespacedTaggableManager
 from threadedcomments.models import ThreadedComment
 
-from actioncounters.fields import ActionCounterField
-from sumo.urlresolvers import reverse
-from devmo.utils import generate_filename_and_delete_previous
+from kuma.actioncounters.fields import ActionCounterField
+from kuma.core.managers import NamespacedTaggableManager
+from kuma.core.urlresolvers import reverse
+from kuma.core.utils import generate_filename_and_delete_previous
 
 from . import challenge_utils, DEMO_LICENSES, scale_image
+from .embed import VideoEmbedURLField
 
 
 south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
@@ -352,7 +352,7 @@ class SubmissionManager(models.Manager):
             query = self._get_query(strip_qs, ['title', 'summary', 'description'])
             return self.all_sorted(sort).filter(query).order_by('-modified')
 
-    def all_sorted(self, sort=None):
+    def all_sorted(self, sort=None, max=5):
         """Apply to .all() one of the sort orders supported for views"""
         queryset = self.all()
         if sort == 'launches':
@@ -361,6 +361,10 @@ class SubmissionManager(models.Manager):
             return queryset.order_by('-likes_total')
         elif sort == 'upandcoming':
             return queryset.order_by('-likes_recent', '-launches_recent')
+        elif sort == 'recentfeatured':
+            return (queryset.filter(featured=True)
+                            .exclude(hidden=True)
+                            .order_by('-modified')[:max])
         else:
             return queryset.order_by('-created')
 

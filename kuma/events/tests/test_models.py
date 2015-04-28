@@ -1,8 +1,9 @@
 import os
 import csv
-import test_utils
 
 from nose.tools import ok_, eq_
+
+from kuma.core.tests import KumaTestCase
 
 from ..models import Event, Calendar
 
@@ -12,7 +13,7 @@ XSS_CSV = os.path.join(fixtures, 'xss.csv')
 BAD_DATE_CSV = os.path.join(fixtures, 'bad_date.csv')
 
 
-class TestCalendar(test_utils.TestCase):
+class TestCalendar(KumaTestCase):
     fixtures = ['calendar.json']
 
     def setUp(self):

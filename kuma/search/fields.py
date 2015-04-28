@@ -1,6 +1,8 @@
 from django.conf import settings
+
 from rest_framework import serializers
-from sumo.urlresolvers import reverse
+
+from kuma.core.urlresolvers import reverse
 
 
 class QueryParameterField(serializers.Field):
@@ -26,18 +28,6 @@ class LocaleField(serializers.Field):
     def to_native(self, value):
         request = self.context.get('request')
         return request.locale
-
-
-class DocumentExcerptField(serializers.Field):
-    """
-    A serializer field that given a wiki DocumentType object returns
-    a cleaned version of the excerpt fields with the highlighting
-    <em> tag intact.
-    """
-    def to_native(self, value):
-        if not value.es_meta.highlight:
-            return value.summary
-        return value.get_excerpt()
 
 
 class SiteURLField(serializers.Field):

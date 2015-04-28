@@ -1,14 +1,17 @@
 # Django settings for kuma project.
+from collections import namedtuple
+import json
 import logging
 import os
 import platform
-import json
+import sys
 
 from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 
-from sumo_locales import LOCALES
+_Language = namedtuple(u'Language', u'english native iso639_1')
+
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -35,21 +38,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'kuma',  # Or path to database file if using sqlite3.
-        'USER': '',  # Not used with sqlite3.
-        'PASSWORD': '',  # Not used with sqlite3.
-        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
+        'USER': 'kuma',  # Not used with sqlite3.
+        'PASSWORD': 'kuma',  # Not used with sqlite3.
+        'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
-    },
-}
-
-MIGRATION_DATABASES = {
-    'wikidb': {
-        'NAME': 'wikidb',
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'USER': 'wikiuser',
-        'PASSWORD': 'wikipass',
     },
 }
 
@@ -63,15 +56,6 @@ CACHES = {
         'TIMEOUT': CACHE_COUNT_TIMEOUT,
         'KEY_PREFIX': CACHE_PREFIX,
     },
-    # NOTE: The 'secondary' cache should be the same as 'default' in
-    # settings_local. The only reason it exists is because we had some issues
-    # with caching, disabled 'default', and wanted to selectively re-enable
-    # caching on a case-by-case basis to resolve the issue.
-    'secondary': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': CACHE_COUNT_TIMEOUT,
-        'KEY_PREFIX': CACHE_PREFIX,
-    },
     'memcache': {
         'BACKEND': 'memcached_hashring.backend.MemcachedHashRingCache',
         'TIMEOUT': CACHE_COUNT_TIMEOUT * 60,
@@ -80,7 +64,7 @@ CACHES = {
     },
 }
 
-SECONDARY_CACHE_ALIAS = 'secondary'
+CACHEBACK_CACHE_ALIAS = 'memcache'
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
@@ -99,44 +83,38 @@ TIME_ZONE = 'US/Pacific'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-US'
 
-# Supported languages
-SUMO_LANGUAGES = (
-    'ak', 'ar', 'as', 'ast', 'bg', 'bn-BD', 'bn-IN', 'bs', 'ca', 'cs', 'da',
-    'de', 'el', 'en-US', 'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'fur',
-    'fy-NL', 'ga-IE', 'gd', 'gl', 'gu-IN', 'he', 'hi-IN', 'hr', 'hu', 'hy-AM',
-    'id', 'ilo', 'is', 'it', 'ja', 'kk', 'kn', 'ko', 'lt', 'mai', 'mk', 'mn',
-    'mr', 'ms', 'my', 'nb-NO', 'nl', 'no', 'oc', 'pa-IN', 'pl', 'pt-BR',
-    'pt-PT', 'rm', 'ro', 'ru', 'rw', 'si', 'sk', 'sl', 'sq', 'sr-CYRL',
-    'sr-LATN', 'sv-SE', 'ta-LK', 'te', 'th', 'tr', 'uk', 'vi', 'zh-CN',
-    'zh-TW',
-)
-
 # Accepted locales
 MDN_LANGUAGES = (
                  'en-US',
                  'af',
                  'ar',
+                 'az',
                  'bn-BD',
                  'bn-IN',
+                 'cs',
+                 'ca',
                  'de',
+                 'ee',
                  'el',
                  'es',
                  'fa',
+                 'ff',
                  'fi',
                  'fr',
-                 'cs',
-                 'ca',
                  'fy-NL',
                  'ga-IE',
+                 'ha',
                  'he',
                  'hi-IN',
                  'hr',
                  'hu',
                  'id',
+                 'ig',
                  'it',
                  'ja',
                  'ka',
                  'ko',
+                 'ln',
                  'ml',
                  'ms',
                  'nl',
@@ -146,11 +124,14 @@ MDN_LANGUAGES = (
                  'ro',
                  'ru',
                  'sq',
+                 'sw',
                  'ta',
                  'th',
                  'tr',
                  'vi',
+                 'wo',
                  'xh',
+                 'yo',
                  'zh-CN',
                  'zh-TW',
                  'zu',
@@ -202,9 +183,9 @@ LOCALE_ALIASES = {
 
 try:
     DEV_LANGUAGES = [
-        loc.replace('_','-') for loc in os.listdir(path('locale'))
-        if os.path.isdir(path('locale', loc))
-            and loc not in ['.svn', '.git', 'templates']
+        loc.replace('_', '-') for loc in os.listdir(path('locale'))
+        if (os.path.isdir(path('locale', loc)) and
+            loc not in ['.svn', '.git', 'templates'])
     ]
     for pootle_dir in DEV_LANGUAGES:
         if pootle_dir in DEV_POOTLE_PRODUCT_DETAILS_MAP:
@@ -220,8 +201,22 @@ for requested_lang, delivered_lang in LOCALE_ALIASES.items():
     if delivered_lang in PROD_LANGUAGES:
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
 
-# Override Django's built-in with our native names
+
+def get_locales():
+    locales = {}
+    file = os.path.join(ROOT, 'kuma', 'languages.json')
+    json_locales = json.load(open(file, 'r'))
+    for locale, meta in json_locales.items():
+        locales[locale] = _Language(meta['English'],
+                                    meta['native'],
+                                    locale)
+    return locales
+
+LOCALES = get_locales()
+
+
 def lazy_langs():
+    """Override Django's built-in with our native names"""
     from product_details import product_details
     # for bug 664330
     # from django.conf import settings
@@ -387,10 +382,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'allauth.account.context_processors.account',
     'allauth.socialaccount.context_processors.socialaccount',
 
-    'sumo.context_processors.global_settings',
-
-    'devmo.context_processors.i18n',
-    'devmo.context_processors.next_url',
+    'kuma.core.context_processors.global_settings',
+    'kuma.core.context_processors.i18n',
+    'kuma.core.context_processors.next_url',
 
     'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
@@ -408,19 +402,19 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.transaction.TransactionMiddleware',
 
     # LocaleURLMiddleware must be before any middleware that uses
-    # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
-    'sumo.middleware.LocaleURLMiddleware',
+    # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
+    'kuma.core.middleware.LocaleURLMiddleware',
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
-    'sumo.middleware.Forbidden403Middleware',
+    'kuma.core.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
-    'sumo.middleware.RemoveSlashMiddleware',
+    'kuma.core.middleware.RemoveSlashMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'sumo.anonymous.AnonymousIdentityMiddleware',
+    'kuma.core.anonymous.AnonymousIdentityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
 
@@ -480,10 +474,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # MDN
-    'devmo',
-    'docs',
+    'kuma.core',
     'kuma.feeder',
-    'landing',
+    'kuma.landing',
     'kuma.search',
     'kuma.users',
     'kuma.wiki',
@@ -497,13 +490,11 @@ INSTALLED_APPS = (
 
     # DEMOS
     'kuma.demos',
-    'captcha',
-    'contentflagging',
-    'actioncounters',
+    'kuma.contentflagging',
+    'kuma.actioncounters',
     'threadedcomments',
 
     # util
-    'cronjobs',
     'jingo_minify',
     'product_details',
     'tower',
@@ -512,15 +503,16 @@ INSTALLED_APPS = (
     'constance',
     'waffle',
     'soapbox',
-    'authkeys',
+    'kuma.authkeys',
     'tidings',
     'teamwork',
     'djcelery',
     'taggit',
     'dbgettext',
+    'honeypot',
+    'cacheback',
 
     'kuma.dashboards',
-    'kpi',
     'statici18n',
     'rest_framework',
 
@@ -529,21 +521,19 @@ INSTALLED_APPS = (
 
     # testing.
     'django_nose',
-    'test_utils',
 
     # other
     'kuma.humans',
 
     'badger',
+    'cacheback',
 )
 
-TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
     '--traverse-namespace',  # make sure `./manage.py test kuma` works
 ]
-
-TEST_UTILS_NO_TRUNCATE = ('django_content_type',)
 
 # Feed fetcher config
 FEEDER_TIMEOUT = 6  # in seconds
@@ -580,11 +570,9 @@ TOWER_KEYWORDS = {
 DOMAIN_METHODS = {
     'messages': [
         ('vendor/**', 'ignore'),
-        ('apps/access/**', 'ignore'),
         ('kuma/dashboards/**', 'ignore'),
-        ('apps/kadmin/**', 'ignore'),
-        ('apps/sumo/**', 'ignore'),
-        ('apps/**.py',
+        ('kuma/core/**', 'ignore'),
+        ('kuma/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
             'tower.management.commands.extract.extract_tower_template'),
@@ -617,108 +605,109 @@ UGLIFY_BIN = '/usr/bin/uglifyjs'
 MINIFY_BUNDLES = {
     'css': {
         'mdn': (
-            'redesign/css/font-awesome.css',
-            'redesign/css/main.css',
-            'redesign/css/badges.css',
+            'css/font-awesome.css',
+            'css/main.css',
+            'css/badges.css',
         ),
         'jquery-ui': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',
-            'redesign/css/jquery-ui-customizations.css',
+            'css/jquery-ui-customizations.css',
         ),
         'demostudio': (
-            'redesign/css/demos.css',
+            'css/demos.css',
         ),
         'devderby': (
             'css/devderby.css',
         ),
         'home': (
-            'redesign/css/home.css',
+            'css/home.css',
             'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
             'js/libs/owl.carousel/owl-carousel/owl.theme.css',
         ),
         'search': (
-            'redesign/css/search.css',
+            'css/search.css',
         ),
         'search-suggestions': (
-            'redesign/css/search-suggestions.css',
+            'css/search-suggestions.css',
         ),
         'wiki': (
-            'redesign/css/wiki.css',
-            'redesign/css/zones.css',
-            'redesign/css/diff.css',
+            'css/wiki.css',
+            'css/zones.css',
+            'css/diff.css',
 
             'js/libs/prism/themes/prism.css',
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
             'js/libs/prism/plugins/ie8/prism-ie8.css',
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
             'js/prism-mdn/components/prism-json.css',
-            'redesign/css/wiki-syntax.css',
+            'css/wiki-syntax.css',
         ),
         'wiki-revisions': (
-            'redesign/css/wiki-revisions.css',
+            'css/wiki-revisions.css',
         ),
         'wiki-edit': (
-            'redesign/css/wiki-edit.css',
+            'css/wiki-edit.css',
         ),
         'sphinx': (
-            'redesign/css/wiki.css',
-            'redesign/css/sphinx.css',
+            'css/wiki.css',
+            'css/sphinx.css',
         ),
         'users': (
-            'redesign/css/users.css',
+            'css/users.css',
         ),
         'tagit': (
             'css/libs/jquery.tagit.css',
         ),
         'promote': (
-            'redesign/css/promote.css',
+            'css/promote.css',
         ),
         'error': (
-            'redesign/css/error.css',
+            'css/error.css',
         ),
         'error-404': (
-            'redesign/css/error.css',
-            'redesign/css/error-404.css',
+            'css/error.css',
+            'css/error-404.css',
         ),
         'calendar': (
-            'redesign/css/calendar.css',
+            'css/calendar.css',
         ),
         'profile': (
-            'redesign/css/profile.css',
+            'css/profile.css',
         ),
         'dashboards': (
-            'redesign/css/dashboards.css',
-            'redesign/css/diff.css',
+            'css/dashboards.css',
+            'css/diff.css',
         ),
         'newsletter': (
-            'redesign/css/newsletter.css',
-        ),
-        'learn': (
-            'redesign/css/learn.css',
+            'css/newsletter.css',
         ),
         'submission': (
-            'redesign/css/submission.css',
+            'css/submission.css',
         ),
         'user-banned': (
-            'redesign/css/user-banned.css',
+            'css/user-banned.css',
         ),
         'error-403-alternate': (
-            'redesign/css/error-403-alternate.css',
+            'css/error-403-alternate.css',
+        ),
+        'fellowship': (
+            'css/fellowship.css',
         ),
     },
     'js': {
         'main': (
             'js/libs/jquery-2.1.0.js',
-            'redesign/js/components.js',
-            'redesign/js/analytics.js',
-            'redesign/js/main.js',
-            'redesign/js/auth.js',
-            'redesign/js/badges.js',
+            'js/components.js',
+            'js/analytics.js',
+            'js/main.js',
+            'js/auth.js',
+            'js/badges.js',
+            'js/social.js',
         ),
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
-            'redesign/js/home.js'
+            'js/home.js'
         ),
         'popup': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
@@ -750,8 +739,8 @@ MINIFY_BUNDLES = {
             'js/libs/tag-it.js',
         ),
         'search': (
-            'redesign/js/search.js',
-            'redesign/js/search-navigator.js',
+            'js/search.js',
+            'js/search-navigator.js',
         ),
         'framebuster': (
             'js/framebuster.js',
@@ -767,8 +756,8 @@ MINIFY_BUNDLES = {
             'js/search-suggestions.js',
         ),
         'wiki': (
-            'redesign/js/search-navigator.js',
-            'redesign/js/wiki.js',
+            'js/search-navigator.js',
+            'js/wiki.js',
         ),
         'wiki-edit': (
             'js/wiki-edit.js',
@@ -779,7 +768,10 @@ MINIFY_BUNDLES = {
             'js/wiki-move.js',
         ),
         'newsletter': (
-            'redesign/js/newsletter.js',
+            'js/newsletter.js',
+        ),
+        'fellowship': (
+            'js/fellowship.js',
         ),
     },
 }
@@ -829,48 +821,36 @@ EMAIL_FILE_PATH = '/tmp/kuma-messages'
 import djcelery
 djcelery.setup_loader()
 
-BROKER_HOST = 'localhost'
-BROKER_PORT = 5672
-BROKER_USER = 'kuma'
-BROKER_PASSWORD = 'kuma'
-BROKER_VHOST = 'kuma'
-CELERY_RESULT_BACKEND = 'amqp'
-CELERY_IGNORE_RESULT = True
+BROKER_URL = 'amqp://kuma:kuma@localhost:5672/kuma'
+
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
 CELERY_SEND_TASK_ERROR_EMAILS = True
+CELERY_SEND_EVENTS = True
+CELERY_SEND_TASK_SENT_EVENT = True
+CELERY_TRACK_STARTED = True
+
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = 4
-CELERY_SEND_TASK_SENT_EVENT = True
 
-CELERY_IMPORTS = (
-    'devmo.tasks',
-    'kuma.wiki.tasks',
-    'kuma.search.tasks',
-    'tidings.events',
-    'elasticutils.contrib.django.tasks',
-)
-
-CELERY_ANNOTATIONS = {
-    "elasticutils.contrib.django.tasks.index_objects": {
-        "rate_limit": "100/m",
-    },
-    "elasticutils.contrib.django.tasks.unindex_objects": {
-        "rate_limit": "100/m",
-    }
-}
-
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
+CELERY_ACCEPT_CONTENT = ['pickle']
+
+CELERY_IMPORTS = (
+    'tidings.events',
+)
+
 # Wiki rebuild settings
-WIKI_REBUILD_TOKEN = 'sumo:wiki:full-rebuild'
+WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'
 WIKI_REBUILD_ON_DEMAND = False
 
 # Anonymous user cookie
-ANONYMOUS_COOKIE_NAME = 'SUMO_ANONID'
+ANONYMOUS_COOKIE_NAME = 'KUMA_ANONID'
 ANONYMOUS_COOKIE_MAX_AGE = 30 * 86400  # Seconds
 
 # Top contributors cache settings
-TOP_CONTRIBUTORS_CACHE_KEY = 'sumo:TopContributors'
+TOP_CONTRIBUTORS_CACHE_KEY = 'kuma:TopContributors'
 TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
 
 # Do not change this without also deleting all wiki documents:
@@ -880,10 +860,6 @@ WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 TIDINGS_FROM_ADDRESS = 'notifications@developer.mozilla.org'
 TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
-# recaptcha
-RECAPTCHA_USE_SSL = False
-RECAPTCHA_PRIVATE_KEY = 'SET ME IN SETTINGS_LOCAL'
-RECAPTCHA_PUBLIC_KEY = 'SET ME IN SETTINGS_LOCAL'
 
 # content flagging
 DEMO_FLAG_REASONS = (
@@ -920,7 +896,6 @@ SKIP_SOUTH_TESTS = True
 # TODO: Move migrations for our apps here, rather than living with the app?
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'migrations.south.taggit',
-    'djcelery': 'migrations.south.djcelery',
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
@@ -1168,8 +1143,17 @@ BASKET_APPS_NEWSLETTER = 'app-dev'
 
 KUMASCRIPT_URL_TEMPLATE = 'http://developer.mozilla.org:9080/docs/{path}'
 
+# Elasticsearch related settings.
+ES_DEFAULT_NUM_REPLICAS = 1
+ES_DEFAULT_NUM_SHARDS = 5
+ES_DEFAULT_REFRESH_INTERVAL = '5s'
 ES_DISABLED = True
+ES_INDEX_PREFIX = 'mdn'
+ES_INDEXES = {'default': 'main_index'}
+# Specify the extra timeout in seconds for the indexing ES connection.
+ES_INDEXING_TIMEOUT = 30
 ES_LIVE_INDEX = False
+ES_URLS = ['localhost:9200']
 
 LOG_LEVEL = logging.WARN
 SYSLOG_TAG = 'http_app_kuma'
@@ -1181,10 +1165,6 @@ LOGGING = {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse',
         },
-        'require_debug_true': {
-            # use from devmo.helpers until we upgrade to django 1.5
-            '()': 'devmo.future.filters.RequireDebugTrue',
-        },
     },
     'formatters': {
         'default': {
@@ -1195,7 +1175,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'filters': ['require_debug_true'],
+            'formatter': 'default',
             'level': LOG_LEVEL,
         },
         'mail_admins': {
@@ -1205,29 +1185,30 @@ LOGGING = {
         },
     },
     'loggers': {
-        'mdn': {
+        'kuma': {
             'handlers': ['console'],
             'propagate': True,
-            # Use the most permissive setting. It is filtered in the handlers.
-            'level': logging.DEBUG,
-        },
-        'cron': {
-            'handlers': ['console'],
-            'level': logging.INFO,
+            'level': logging.ERROR,
         },
         'django.request': {
             'handlers': ['console'],
             'propagate': True,
-            # Use the most permissive setting. It is filtered in the handlers.
-            'level': logging.DEBUG,
+            'level': logging.ERROR,
         },
         'elasticsearch': {
-            'level': logging.ERROR,
             'handlers': ['console'],
+            'level': logging.ERROR,
         },
+        'urllib3': {
+            'handlers': ['console'],
+            'level': logging.ERROR,
+        },
+        'cacheback': {
+            'handlers': ['console'],
+            'level': logging.ERROR,
+        }
     },
 }
-
 
 CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
@@ -1242,12 +1223,12 @@ TEAMWORK_BASE_POLICIES = {
 GRAPPELLI_ADMIN_TITLE = 'Mozilla Developer Network - Admin'
 GRAPPELLI_INDEX_DASHBOARD = 'admin_dashboard.CustomIndexDashboard'
 
-DBGETTEXT_PATH = 'apps/'
+DBGETTEXT_PATH = 'kuma/core/'
 DBGETTEXT_ROOT = 'translations'
 
 
 def get_user_url(user):
-    from sumo.urlresolvers import reverse
+    from kuma.core.urlresolvers import reverse
     return reverse('users.profile', args=[user.username])
 
 ABSOLUTE_URL_OVERRIDES = {
@@ -1286,7 +1267,16 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUDIENCE': 'https://developer.mozilla.org',
         'REQUEST_PARAMETERS': {
             'siteName': 'Mozilla Developer Network',
-            'siteLogo': '/media/redesign/img/opengraph-logo.png',
+            'siteLogo': '/media/img/opengraph-logo.png',
         }
     }
+}
+PERSONA_VERIFIER_URL = 'https://verifier.login.persona.org/verify'
+PERSONA_INCLUDE_URL = 'https://login.persona.org/include.js'
+
+HONEYPOT_FIELD_NAME = 'website'
+
+# TODO: Once using DRF more we need to make that exception handler more generic
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'kuma.search.utils.search_exception_handler'
 }

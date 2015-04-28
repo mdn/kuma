@@ -1,5 +1,5 @@
+import elasticsearch
 from nose.tools import eq_
-
 from . import ElasticTestCase
 from ..models import Index, Filter, FilterGroup
 from ..views import SearchView
@@ -96,23 +96,26 @@ class ViewTests(ElasticTestCase):
             def list(self, *args, **kwargs):
                 response = super(QuerysetSearchView, self).list(*args,
                                                                 **kwargs)
+                data = response.data
+
                 # queryset content
-                eq_(self.object_list[0].title, 'an article title')
-                eq_(self.object_list[0].locale, 'en-US')
+                docs = data['documents']
+                eq_(docs[0]['title'], 'an article title')
+                eq_(docs[0]['locale'], 'en-US')
 
                 # metadata
-                eq_(self.object_list.current_page, 1)
-                eq_(len(self.object_list.serialized_filters), 1)
-                eq_(self.object_list.selected_filters, ['tagged'])
-                eq_(self.object_list.url, self.request.get_full_path())
+                eq_(self.current_page, 1)
+                eq_(len(self.serialized_filters), 1)
+                eq_(self.selected_filters, ['tagged'])
+                eq_(self.url, self.request.get_full_path())
 
-                # facets
-                faceted_filters = self.object_list.faceted_filters()
-                eq_(len(faceted_filters), 1)
-                eq_(faceted_filters[0].name, 'Group')
-                eq_(faceted_filters[0].options[0].name, 'Tagged')
-                eq_(faceted_filters[0].options[0].count, 2)
-                eq_(faceted_filters[0].options[0].active, True)
+                # aggregations
+                filters = data['filters']
+                eq_(len(filters), 1)
+                eq_(filters[0]['name'], 'Group')
+                eq_(filters[0]['options'][0]['name'], 'Tagged')
+                eq_(filters[0]['options'][0]['count'], 2)
+                eq_(filters[0]['options'][0]['active'], True)
                 return response
 
         view = QuerysetSearchView.as_view()
@@ -128,6 +131,39 @@ class ViewTests(ElasticTestCase):
 
         response = self.client.post('/en-US/search?q=test')
         eq_(response.status_code, 405)
+
+    def test_handled_exceptions(self):
+
+        # These are instantiated with an error string.
+        for exc in [elasticsearch.ElasticsearchException,
+                    elasticsearch.SerializationError,
+                    elasticsearch.TransportError,
+                    elasticsearch.NotFoundError,
+                    elasticsearch.RequestError]:
+
+            class ExceptionSearchView(SearchView):
+                filter_backends = ()
+
+                def list(self, *args, **kwargs):
+                    raise exc(503, 'ERROR!!')
+
+            view = ExceptionSearchView.as_view()
+            request = self.get_request('/en-US/search')
+            response = view(request)
+            self.assertContains(response,
+                                'Search is temporarily unavailable',
+                                status_code=200)
+
+    def test_unhandled_exceptions(self):
+        class RealExceptionSearchView(SearchView):
+            filter_backends = ()
+
+            def list(self, *args, **kwargs):
+                raise ValueError
+
+        view = RealExceptionSearchView.as_view()
+        request = self.get_request('/en-US/search')
+        self.assertRaises(ValueError, view, request)
 
     def test_paginate_by_param(self):
         request = self.get_request('/en-US/search')

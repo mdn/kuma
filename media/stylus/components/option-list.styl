@@ -1,0 +1,32 @@
+/*
+- list that has text on left and child .option-list-options on right
+- list is as narrow as possible given with width of the text on the left
+- on large screens the options will drop below the text if the text is long
+- on mobile screens the options are placed below intentionally
+*/
+
+ul.option-list {
+    clearfix();
+    float:left;
+    list-style-type: none;
+    max-width: 100%;
+    overflow: hidden;
+    bidi-style(padding-left, ($grid-spacing), padding-right, 0);
+
+    li {
+        clearfix();
+    }
+}
+
+.option-list-options {
+    bidi-value(float, right, left);
+    bidi-style(margin-left, $grid-spacing, margin-right, $grid-spacing );
+    bidi-value(text-align, right, left);
+}
+
+/* options drop beneath text on smaller screens */
+@media $media-query-mobile {
+    .option-list-options {
+        width: 100%;
+    }
+}

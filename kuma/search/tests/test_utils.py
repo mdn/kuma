@@ -1,12 +1,13 @@
 from __future__ import absolute_import
-import test_utils
 from nose.tools import eq_, ok_
+
+from kuma.core.tests import KumaTestCase
 
 from ..store import referrer_url
 from ..utils import QueryURLObject
 
 
-class URLTests(test_utils.TestCase):
+class URLTests(KumaTestCase):
 
     def test_pop_query_param(self):
         original = 'http://example.com/?spam=eggs'
@@ -42,6 +43,12 @@ class URLTests(test_utils.TestCase):
 
         eq_(url.merge_query_param('foo', [None]),
             'http://example.com/?foo=&foo=bar&spam=eggs')
+
+    def test_clean_params(self):
+        for url in ['http://example.com/?spam=',
+                    'http://example.com/?spam']:
+            url_object = QueryURLObject(url)
+            eq_(url_object.clean_params(url_object.query_dict), {})
 
     def test_referer_bad_encoding(self):
         class _TestRequest(object):

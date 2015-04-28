@@ -38,9 +38,8 @@ def populate(modeladmin, request, queryset):
                        _("Can't populate more than one index at once."))
         return
     index = queryset[0]
-    index.populate()
-    messages.info(request, _("Scheduled a Celery task to populate "
-                             "search index %s.") % index)
+    message = index.populate()
+    messages.info(request, message)
 populate.short_description = _("Populate selected search index via Celery")
 
 

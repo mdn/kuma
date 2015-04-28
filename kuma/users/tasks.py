@@ -8,10 +8,10 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-from devmo.utils import strings_are_translated
-from devmo.email_utils import uselocale
+from kuma.core.utils import strings_are_translated
+from kuma.core.email_utils import uselocale
 
-log = logging.getLogger('mdn.email')
+log = logging.getLogger('kuma.users.tasks')
 
 
 WELCOME_EMAIL_STRINGS = [

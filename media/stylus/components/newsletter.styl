@@ -1,0 +1,44 @@
+/*
+    Styles for formatting the #apps-newsletter-subscribe component
+    - used on: users/profile_edit.html and socialaccount/signup.html
+*/
+
+#newsletter-toggle {
+    @extend $checkbox-label-container;
+}
+
+.newsletter-setting {
+    display: none; /* Prevents flash of content */
+    padding-left: $grid-spacing;
+
+    .no-js & {
+        display: block;
+    }
+}
+
+
+/* profile */
+
+.profile-newsletter-container {
+    #apps-newsletter-subscribe {
+        padding: 10px 0 0 0;
+
+        b {
+            position: static;
+        }
+
+        @media $media-query-mobile {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+     /* hide save button on mobile because container has been moved down next to save button for entire form */
+    @media $media-query-mobile {
+        & {
+            [type="submit"] {
+                display: none;
+            }
+        }
+    }
+}

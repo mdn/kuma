@@ -1,10 +1,24 @@
 from django.contrib import admin
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
-from taggit_extras.managers import NamespacedTaggableManager
 from taggit.forms import TagWidget
 
+from kuma.core.managers import NamespacedTaggableManager
 from .models import UserBan, UserProfile
+
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+
+
+class ExtendedUserAdmin(UserAdmin):
+    # extend the admin view of users to show date_joined field; add a filter on the field too
+    list_display = ('username', 'email', 'first_name', 'last_name', 'date_joined', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'date_joined',)
+    ordering = ('-date_joined',)
+
+
+admin.site.unregister(User)
+admin.site.register(User, ExtendedUserAdmin)
 
 
 class UserBanAdmin(admin.ModelAdmin):

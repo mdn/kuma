@@ -11,7 +11,7 @@
 
   <article>
 
-    <h1>{{ _('History of') }} <a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ _('{title}')|fe(title=document.title) }}</a></h1>
+    <h1>{{ _('History of') }} <a href="{{ document.get_absolute_url() }}">{{ document.title }}</a></h1>
 
     <div class="revision-list-head">
       {{ _('Revision history for:') }}
@@ -73,11 +73,6 @@
             </li>
             {% if loop.last %}</ul>{% endif %}
           {% endfor %}
-          {% if revision_count > 1 %}
-            <div class="revision-list-controls revision-list-controls-bottom">
-              <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
-            </div>
-          {% endif %}
         </form>
       {% else %}
         {{ _('This document has no revisions.') }}

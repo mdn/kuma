@@ -1,0 +1,28 @@
+/* warning elements */
+.warning {
+    set-message-base();
+    background: rgba-fallback(rgba(193, 56, 50, 0.85));
+    color: #c13832;
+    border-color: rgba-fallback(rgba(0, 0, 0, 0.1));
+    color: #fff;
+    font-style: italic;
+    margin: 0 0 $grid-spacing 0;
+    set-font-size($base-font-size);
+
+    /* set-message-base strips this, we have to add it back because it looks funny with the bg-color */
+    pre:last-child {
+        padding-bottom: $code-block-padding;
+    }
+
+    &.warning-review {
+        @extend $review-base;
+
+        a,
+        a:hover,
+        a:visited {
+            color: $link-color;
+            border-color: $link-color;
+        }
+    }
+
+}

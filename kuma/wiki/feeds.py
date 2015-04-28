@@ -4,16 +4,16 @@ import datetime
 import json
 import urllib
 
-import validate_jsonp
-
 from django.conf import settings
 from django.db.models import F
 from django.contrib.syndication.views import Feed
+from django.utils.html import escape
 from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
                                         Atom1Feed)
 from django.utils.translation import ugettext as _
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
+from kuma.core.validators import valid_jsonp_callback_value
 from kuma.users.helpers import gravatar_url
 from .helpers import diff_table, tag_diff_table, compare_url, colorize_diff
 from .models import Document, Revision
@@ -86,7 +86,7 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
         # Check for a callback param, validate it before use
         callback = request.GET.get('callback', None)
         if callback is not None:
-            if not validate_jsonp.is_valid_jsonp_callback_value(callback):
+            if not valid_jsonp_callback_value(callback):
                 callback = None
 
         items_out = []
@@ -262,17 +262,18 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
 
 
 class RevisionsFeed(DocumentsFeed):
-    """Feed of recent revisions"""
-
-    title = _("MDN recent revisions")
-    subtitle = _("Recent revisions to MDN documents")
+    """
+    Feed of recent revisions
+    """
+    title = _('MDN recent revisions')
+    subtitle = _('Recent revisions to MDN documents')
 
     def items(self):
         items = Revision.objects
         limit = int(self.request.GET.get('limit', DEFAULT_FEED_ITEMS))
         page = int(self.request.GET.get('page', 1))
 
-        start = ((page - 1) * limit)
+        start = (page - 1) * limit
         finish = start + limit
 
         if not limit or limit > MAX_FEED_ITEMS:
@@ -285,41 +286,47 @@ class RevisionsFeed(DocumentsFeed):
         return items.order_by('-created')[start:finish]
 
     def item_title(self, item):
-        return "%s (%s)" % (item.document.full_path, item.document.locale)
+        return '%s (%s)' % (item.document.full_path, item.document.locale)
 
     def item_description(self, item):
         # TODO: put this in a jinja template if django syndication will let us
         previous = item.get_previous()
-        action = "Edited"
         if previous is None:
-            action = "Created"
-        by = '<h3>%s by:</h3><p>%s</p>' % (action, item.creator.username)
-        comment = ''
-        if item.comment:
-            comment = '<h3>Comment:</h3><p>%s</p>' % item.comment
+            action = u'Created'
+        else:
+            action = u'Edited'
 
-        review_diff = ''
-        tag_diff = ''
-        content_diff = ''
+        by = u'<h3>%s by:</h3><p>%s</p>' % (action, item.creator.username)
+
+        if item.comment:
+            comment = u'<h3>Comment:</h3><p>%s</p>' % item.comment
+        else:
+            comment = u''
+
+        review_diff = u''
+        tag_diff = u''
+        content_diff = u''
 
         if previous:
-            prev_review_tags = ','.join(
-                [x.name for x in previous.review_tags.all()])
-            curr_review_tags = ','.join(
-                [x.name for x in item.review_tags.all()])
-            if prev_review_tags != curr_review_tags:
-                review_diff = ("<h3>Review changes:</h3>%s" % tag_diff_table(
-                    prev_review_tags, curr_review_tags, previous.id, item.id))
+            prev_review_tags = previous.review_tags.values_list('name',
+                                                                flat=True)
+            curr_review_tags = item.review_tags.values_list('name', flat=True)
+            if set(prev_review_tags) != set(curr_review_tags):
+                table = tag_diff_table(u','.join(prev_review_tags),
+                                       u','.join(curr_review_tags),
+                                       previous.id, item.id)
+                review_diff = u'<h3>Review changes:</h3>%s' % table
                 review_diff = colorize_diff(review_diff)
 
             if previous.tags != item.tags:
-                tag_diff = ("<h3>Tag changes:</h3>%s" % tag_diff_table(
-                    previous.tags, item.tags, previous.id, item.id))
+                table = tag_diff_table(previous.tags, item.tags,
+                                       previous.id, item.id)
+                tag_diff = u'<h3>Tag changes:</h3>%s' % table
                 tag_diff = colorize_diff(tag_diff)
 
         previous_content = ''
-        previous_id = 'N/A'
-        content_diff = "<h3>Content changes:</h3>"
+        previous_id = u'N/A'
+        content_diff = u'<h3>Content changes:</h3>'
         if previous:
             previous_content = previous.content
             previous_id = previous.id
@@ -328,46 +335,44 @@ class RevisionsFeed(DocumentsFeed):
                     previous_content, item.content, previous_id, item.id)
                 content_diff = colorize_diff(content_diff)
         else:
-            content_diff = content_diff + cgi.escape(item.content, quote=True)
+            content_diff = content_diff + escape(item.content)
 
-        link_cell = '<td><a href="%s">%s</a></td>'
+        link_cell = u'<td><a href="%s">%s</a></td>'
         view_cell = link_cell % (reverse('wiki.document',
                                          args=[item.document.full_path]),
                                  _('View Page'))
         edit_cell = link_cell % (reverse('wiki.edit_document',
                                          args=[item.document.full_path]),
                                  _('Edit Page'))
-        compare_cell = ''
         if previous:
             compare_cell = link_cell % (reverse('wiki.compare_revisions',
-                                             args=[item.document.full_path])
+                                                args=[item.document.full_path])
                                         + '?' +
                                         urllib.urlencode({'from': previous.id,
                                                           'to': item.id}),
-                                     _('Show comparison'))
+                                        _('Show comparison'))
+        else:
+            compare_cell = ''
         history_cell = link_cell % (reverse('wiki.document_revisions',
-                                         args=[item.document.full_path]),
-                                 _('History'))
-        links_table = '<table border="0" width="80%">'
-        links_table = links_table + '<tr>%s%s%s%s</tr>' % (view_cell,
-                                                           edit_cell,
-                                                           compare_cell,
-                                                           history_cell)
-        links_table = links_table + '</table>'
-        description = "%s%s%s%s%s%s" % (by, comment, tag_diff, review_diff,
-                                        content_diff, links_table)
-        return description
+                                            args=[item.document.full_path]),
+                                    _('History'))
+        links_table = u'<table border="0" width="80%">'
+        links_table = links_table + u'<tr>%s%s%s%s</tr>' % (view_cell,
+                                                            edit_cell,
+                                                            compare_cell,
+                                                            history_cell)
+        links_table = links_table + u'</table>'
+        return u''.join([by, comment,
+                         tag_diff, review_diff, content_diff, links_table])
 
     def item_link(self, item):
-        return self.request.build_absolute_uri(
-            reverse('kuma.wiki.views.document', locale=item.document.locale,
-                    args=(item.document.slug,)))
+        return self.request.build_absolute_uri(item.document.get_absolute_url())
 
     def item_pubdate(self, item):
         return item.created
 
     def item_author_name(self, item):
-        return '%s' % item.creator
+        return u'%s' % item.creator
 
     def item_author_link(self, item):
         return self.request.build_absolute_uri(item.creator.get_absolute_url())

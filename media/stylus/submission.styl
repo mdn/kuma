@@ -1,0 +1,158 @@
+@require 'includes/vars';
+@require 'includes/mixins';
+
+.submission {
+    .section {
+        set-font-size($small-bump-font-size);
+        margin: 0 0 $grid-spacing;
+        padding: 35px 0 0;
+        position: relative;
+
+        & > legend {
+            b {
+                display: block;
+                set-font-size($base-bump-font-size);
+                position: absolute;
+            }
+        }
+
+        &.notitle {
+            padding-top: 0;
+        }
+    }
+
+    li {
+        margin: 0 0 ($grid-spacing / 2);
+    }
+
+    input[readonly] {
+        background: transparent;
+        border: 0;
+    }
+
+    label {
+        input {
+            padding: 0;
+            width: auto;
+        }
+    }
+
+    .trouble {
+        margin-top: $grid-spacing;
+    }
+
+    .inline {
+        legend {
+            b {
+                display: block;
+                margin: 0 0 7px;
+            }
+        }
+        li {
+            margin: 0 0 ($grid-spacing / 4);
+        }
+        label {
+            display: inline;
+            font-weight: normal;
+        }
+    }
+
+    .disabled {
+        color: #999;
+        color: rgba(0,0,0,.4);
+    }
+
+    .other-value {
+        margin-top: ($grid-spacing / 4);
+
+        label {
+            display: block;
+        }
+    }
+
+    input[type='url'],
+    input[type='email'],
+    input[type='text'] {
+        width: 350px;
+        max-width: 100%;
+    }
+
+    label, .label {
+        display: block;
+        font-weight: normal;
+        margin: 0 0 ($grid-spacing / 4);
+    }
+
+    .inner {
+        display: inline;
+    }
+
+    .outer {
+        set-font-size($base-bump-font-size);
+    }
+
+    .choices {
+        list-style-type: none;
+    }
+
+    .choices li {
+        margin-bottom: 5px;
+    }
+
+    .choices li label {
+        display: inline-block;
+    }
+
+    .choices li.exists label {
+        text-decoration:line-through;
+    }
+
+    .check {
+        label, .label {
+            display: inline;
+        }
+    }
+}
+
+.field-note {
+    color: #666;
+    font-family: inherit;
+    set-smaller-font-size();
+    font-style: normal;
+    font-weight: normal;
+
+    p& {
+        margin: ($grid-spacing / 4) 0;
+    }
+
+    .wordcount & {
+        float: right;
+    }
+}
+
+.field-management {
+    bidi-value(float, right, left);
+    margin: 0 0 5px;
+}
+
+.field-account {
+    clear: both;
+}
+
+#field-beta {
+    @extend $checkbox-label-container;
+}
+
+#profiles {
+    label {
+        margin: 0 0 5px;
+        bidi-value(float, left, right);
+        bidi-style(margin-right, 10px, margin-left, 10px);
+    }
+}
+
+.key {
+    label {
+        display: block;
+    }
+}

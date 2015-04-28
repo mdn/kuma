@@ -5,13 +5,13 @@ import hashlib
 import time
 from urlparse import urljoin
 
-import requests
-
 from django.conf import settings
-from django.core.cache import cache
 from django.contrib.sites.models import Site
 
 import constance.config
+import requests
+
+from kuma.core.cache import memcache
 
 from .constants import KUMASCRIPT_TIMEOUT_ERROR, TEMPLATE_TITLE_PREFIX
 
@@ -42,28 +42,26 @@ def should_use_rendered(doc, params, html=None):
 
 def post(request, content, locale=settings.LANGUAGE_CODE,
          use_constance_bleach_whitelists=False):
-    ks_url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
+    url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
     headers = {
         'X-FireLogger': '1.2',
     }
-    env_vars = dict(
-        url=request.build_absolute_uri('/'),
-        locale=locale
-    )
-
+    env_vars = {
+        'url': request.build_absolute_uri('/'),
+        'locale': locale,
+    }
     add_env_headers(headers, env_vars)
-    data = content.encode('utf8')
-    resp = requests.post(ks_url,
-                         timeout=constance.config.KUMASCRIPT_TIMEOUT,
-                         data=data,
-                         headers=headers)
-    if resp:
-        resp_body = process_body(resp, use_constance_bleach_whitelists)
-        resp_errors = process_errors(resp)
-        return resp_body, resp_errors
+    response = requests.post(url,
+                             timeout=constance.config.KUMASCRIPT_TIMEOUT,
+                             data=content.encode('utf8'),
+                             headers=headers)
+    if response:
+        body = process_body(response, use_constance_bleach_whitelists)
+        errors = process_errors(response)
+        return body, errors
     else:
-        resp_errors = KUMASCRIPT_TIMEOUT_ERROR
-        return content, resp_errors
+        errors = KUMASCRIPT_TIMEOUT_ERROR
+        return content, errors
 
 
 def _get_attachment_metadata_dict(attachment):
@@ -116,19 +114,20 @@ def get(document, cache_control, base_url, timeout=None):
     if document.is_template:
         document_slug_for_kumascript = _format_slug_for_request(document_slug)
 
-    resp_body, resp_errors = None, None
+    body, errors = None, None
 
     try:
         url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
         url = unicode(url_tmpl).format(path=u'%s/%s' %
-                                       (document_locale, document_slug_for_kumascript))
+                                       (document_locale,
+                                        document_slug_for_kumascript))
 
-        ck_etag, ck_modified, ck_body, ck_errors = (
-                build_cache_keys(document_slug, document_locale))
+        cache_keys = build_cache_keys(document_slug, document_locale)
+        etag_key, modified_key, body_key, errors_key = cache_keys
 
         headers = {
             'X-FireLogger': '1.2',
-            'Cache-Control': cache_control
+            'Cache-Control': cache_control,
         }
 
         # Create the file interface
@@ -153,66 +152,68 @@ def get(document, cache_control, base_url, timeout=None):
             files=files,
             attachments=files,  # Just for sake of verbiage?
             slug=document.slug,
-            tags=[x.name for x in document.tags.all()],
-            review_tags=[x.name for x in
-                         document.current_revision.review_tags.all()],
+            tags=list(document.tags.values_list('name', flat=True)),
+            review_tags=list(document.current_revision
+                                     .review_tags
+                                     .values_list('name', flat=True)),
             modified=time.mktime(document.modified.timetuple()),
             cache_control=cache_control,
         )
         add_env_headers(headers, env_vars)
 
         # Set up for conditional GET, if we have the details cached.
-        c_meta = cache.get_many([ck_etag, ck_modified])
-        if ck_etag in c_meta:
-            headers['If-None-Match'] = c_meta[ck_etag]
-        if ck_modified in c_meta:
-            headers['If-Modified-Since'] = c_meta[ck_modified]
+        cached_meta = memcache.get_many([etag_key, modified_key])
+        if etag_key in cached_meta:
+            headers['If-None-Match'] = cached_meta[etag_key]
+        if modified_key in cached_meta:
+            headers['If-Modified-Since'] = cached_meta[modified_key]
 
         # Finally, fire off the request.
-        resp = requests.get(url, headers=headers, timeout=timeout)
+        response = requests.get(url, headers=headers, timeout=timeout)
 
-        if resp.status_code == 304:
+        if response.status_code == 304:
             # Conditional GET was a pass, so use the cached content.
-            c_result = cache.get_many([ck_body, ck_errors])
-            resp_body = c_result.get(ck_body, '').decode('utf-8')
-            resp_errors = c_result.get(ck_errors, None)
+            result = memcache.get_many([body_key, errors_key])
+            body = result.get(body_key, '').decode('utf-8')
+            errors = result.get(errors_key, None)
 
-        elif resp.status_code == 200:
-            resp_body = process_body(resp)
-            resp_errors = process_errors(resp)
+        elif response.status_code == 200:
+            body = process_body(response)
+            errors = process_errors(response)
 
             # Cache the request for conditional GET, but use the max_age for
             # the cache timeout here too.
-            cache.set(ck_etag, resp.headers.get('etag'),
-                      timeout=max_age)
-            cache.set(ck_modified, resp.headers.get('last-modified'),
-                      timeout=max_age)
-            cache.set(ck_body, resp_body.encode('utf-8'),
-                      timeout=max_age)
-            if resp_errors:
-                cache.set(ck_errors, resp_errors, timeout=max_age)
+            headers = response.headers
+            memcache.set(etag_key, headers.get('etag'), timeout=max_age)
+            memcache.set(modified_key, headers.get('last-modified'), timeout=max_age)
+            memcache.set(body_key, body.encode('utf-8'), timeout=max_age)
+            if errors:
+                memcache.set(errors_key, errors, timeout=max_age)
 
-        elif resp.status_code is None:
-            resp_errors = KUMASCRIPT_TIMEOUT_ERROR
+        elif response.status_code is None:
+            errors = KUMASCRIPT_TIMEOUT_ERROR
 
         else:
-            resp_errors = [
-                {"level": "error",
-                  "message": "Unexpected response from Kumascript service: %s"
-                             % resp.status_code,
-                  "args": ["UnknownError"]}
+            errors = [
+                {
+                    "level": "error",
+                    "message": "Unexpected response from Kumascript service: %s" %
+                               response.status_code,
+                    "args": ["UnknownError"],
+                },
             ]
 
-    except Exception, e:
+    except Exception, exc:
         # Last resort: Something went really haywire. Kumascript server died
         # mid-request, or something. Try to report at least some hint.
-        resp_errors = [
-            {"level": "error",
-             "message": "Kumascript service failed unexpectedly: %s" % str(e),
-             "args": ["UnknownError"]}
+        errors = [
+            {
+                "level": "error",
+                "message": "Kumascript service failed unexpectedly: %s" % exc,
+                "args": ["UnknownError"],
+            },
         ]
-
-    return (resp_body, resp_errors)
+    return (body, errors)
 
 
 def add_env_headers(headers, env_vars):
@@ -225,58 +226,60 @@ def add_env_headers(headers, env_vars):
 
 
 def process_body(response, use_constance_bleach_whitelists=False):
-    resp_body = response.text
-
     # We defer bleach sanitation of kumascript content all the way
     # through editing, source display, and raw output. But, we still
     # want sanitation, so it finally gets picked up here.
     from kuma.wiki.models import Document
-    return Document.objects.clean_content(resp_body,
+    return Document.objects.clean_content(response.text,
                                           use_constance_bleach_whitelists)
 
 
 def process_errors(response):
-    """Attempt to decode any FireLogger-style error messages in the response
-    from kumascript."""
-    resp_errors = []
+    """
+    Attempt to decode any FireLogger-style error messages in the response
+    from kumascript.
+    """
+    errors = []
     try:
         # Extract all the log packets from headers.
-        fl_packets = defaultdict(dict)
-        for k, v in response.headers.items():
-            if not k.lower().startswith('firelogger-'):
+        packets = defaultdict(dict)
+        for key, value in response.headers.items():
+            if not key.lower().startswith('firelogger-'):
                 continue
-            _, packet_id, seq = k.split('-', 3)
-            fl_packets[packet_id][seq] = v
+            prefix, id_, seq = key.split('-', 3)
+            packets[id_][seq] = value
 
         # The FireLogger spec allows for multiple "packets". But,
         # kumascript only ever sends the one, so flatten all messages.
-        fl_msgs = []
-        for id, contents in fl_packets.items():
-            seqs = sorted(contents.keys(), key=int)
-            d_b64 = "\n".join(contents[x] for x in seqs)
-            d_json = base64.decodestring(d_b64)
-            packet = json.loads(d_json)
-            fl_msgs.extend(packet['logs'])
+        msgs = []
+        for contents in packets.values():
+            keys = sorted(contents.keys(), key=int)
+            encoded = '\n'.join(contents[key] for key in keys)
+            decoded_json = base64.decodestring(encoded)
+            packet = json.loads(decoded_json)
+            msgs.extend(packet['logs'])
 
-        if len(fl_msgs):
-            resp_errors = fl_msgs
+        if len(msgs):
+            errors = msgs
 
-    except Exception, e:
-        resp_errors = [
-            {"level": "error",
-              "message": "Problem parsing errors: %s" % e,
-              "args": ["ParsingError"]}
+    except Exception, exc:
+        errors = [
+            {
+                "level": "error",
+                "message": "Problem parsing errors: %s" % exc,
+                "args": ["ParsingError"],
+            },
         ]
-    return resp_errors
+    return errors
 
 
 def build_cache_keys(document_locale, document_slug):
     """Build the cache keys used for Kumascript"""
     path_hash = hashlib.md5((u'%s/%s' % (document_locale, document_slug))
                             .encode('utf8'))
-    cache_key = 'kumascript:%s:%s' % (path_hash.hexdigest(), '%s')
-    ck_etag = cache_key % 'etag'
-    ck_modified = cache_key % 'modified'
-    ck_body = cache_key % 'body'
-    ck_errors = cache_key % 'errors'
-    return (ck_etag, ck_modified, ck_body, ck_errors)
+    base_key = 'kumascript:%s:%%s' % path_hash.hexdigest()
+    etag_key = base_key % 'etag'
+    modified_key = base_key % 'modified'
+    body_key = base_key % 'body'
+    errors_key = base_key % 'errors'
+    return (etag_key, modified_key, body_key, errors_key)

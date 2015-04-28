@@ -1,0 +1,147 @@
+/* vendors */
+/* - this is a global variable set by stylus to 'moz webkit o ms official' by default
+   - as far as I can tell it only uses it for @keyframes
+   - and they're going to remove it in 1.0
+   - anyway, we get csslint errors if ms is in this list
+*/
+vendors =  webkit official;
+/* our custom variable for prefixing */
+VENDOR-PREFIXES = '-webkit-' '-moz-' '-ms-';
+/* custom list of properties and their valid prefixes for vendors we support */
+@require 'prefixes';
+
+/* colors */
+$text-color = #4d4e53;
+$link-color = #0095dd;
+$menu-link-color = $text-color;
+$blue-background-text-color = #fff;
+$header-background-color = #eaeff2;
+$light-background-color = #f4f7f8;
+$homepage-background-color = #00539f;
+$code-block-background-color = #fafbfc;
+$code-block-background-alt-color = #dde4e9;
+$code-block-border-color = #558abb;
+$code-block-padding = 15px;
+$code-block-border-width = 6px;
+$code-block-border-style = solid;
+
+$red = #ea3b28;
+$yellow = #ffcb00;
+$green = #70a300;
+$blue = #0095dd;
+$grey = #c7ccce;
+
+$negative = $red;
+$warning = $yellow;
+$positive = $green;
+$neutral = $blue;
+$default = $grey;
+
+$text-dark = $text-color;
+$text-light = #fff;
+
+/* typography */
+$light-font-weight = 200;
+$site-font-family = 'Open Sans', Arial, sans-serif;
+$heading-font-family = 'Open Sans Light', 'Helvetica', Arial, sans-serif;
+
+/* sizes */
+$larger-font-size = 20px;
+$base-font-size = 14px;
+$smaller-font-size = 12px;
+
+$small-bump-font-size = 13px;
+$base-bump-font-size = 16px;
+
+/* buttons */
+$button-background = #eaeff2;
+$button-color = $menu-link-color;
+$button-shadow-color = #bbbfc2;
+
+/* grid and site dimensions */
+$grid-spacing = 20px;
+$grid-margin = 3%;
+$grid-column-selector = '> [class^="column-"]';
+$grid-width-column-main = $calc-col-width(9);
+
+$max-width-default = 1400px;
+
+$media-query-small-desktop = 'all and (max-width: 1200px)';
+$media-query-tablet = 'all and (max-width: 1024px)';
+$media-query-mobile = 'all and (max-width: 768px)';
+$media-query-small-mobile = 'all and (max-width : 480px)';
+
+$media-query-navigation-break = 'all and (max-width: 970px)'; /* Moves nav items all the way to the left, moves logo above */
+$media-query-navigation-block = 'all and (max-width: 660px)'; /* Moves nav menu items to block, its own line */
+
+/* animation */
+$default-animation-duration = .5s;
+$slide-timing-function = cubic-bezier(0, 1, 0.5, 1);
+
+/* dimensions */
+$gutter-width = 24px;
+$first-content-top-padding = ($grid-spacing * 1.5);
+$list-item-spacing = 8px;
+$content-block-margin = $gutter-width;
+$icon-margin = 10px;
+
+/* forms */
+$input-padding = 6px 8px;
+
+/* selectors */
+$selector-icon = 'i[class^="icon-"]';
+
+/* paths */
+$media-url-dir = '/media/img/';
+$logo-sprite-url = $media-url-dir + 'logo_sprite.svg?2014-01';
+
+/* grid - 12 columns assuming a 3% margin */
+$calc-col-width($col-span) {
+    $grid-margin-numb = unit($grid-margin, '');
+    $col-percent = (100 - $grid-margin-numb * 11) / 12 * $col-span + $grid-margin-numb * ($col-span - 1);
+    if($col-percent > 100) {
+        $col-percent = 100;
+    }
+    $col-percent = unit($col-percent, unquote('%'));
+    $col-percent = round($col-percent, 3);
+    return $col-percent;
+}
+
+$column-1 {
+    width: $calc-col-width(1) ; // 5.583%;
+}
+$column-2 {
+    width: $calc-col-width(2) ; // 14.167%;
+}
+$column-3, $column-strip, $column-quarter {
+    width: $calc-col-width(3) ; // 22.75%;
+}
+$column-4, $column-third {
+    width: $calc-col-width(4) ; // 31.333%;
+}
+$column-5 {
+    width: $calc-col-width(5) ; // 39.917%;
+}
+$column-6, $column-half {
+    width: $calc-col-width(6) ; // 48.5%;
+}
+$column-7 {
+    width: $calc-col-width(7) ; // 57.083%;
+}
+$column-8 {
+    width: $calc-col-width(8) ; // 65.667%;
+}
+$column-9, $column-main {
+    width: $grid-width-column-main; // 74.25%
+}
+$column-10 {
+    width: $calc-col-width(10) ; // 82.833%;
+}
+$column-11 {
+    width: $calc-col-width(11) ; // 91.417%;
+}
+$column-12, $column-all {
+    width: auto;
+    margin: 0;
+    float: none;
+}

@@ -1,34 +1,33 @@
 # -*- coding: ascii -*-
 
-import unittest, os, os.path, sys
-from doctest import DocTestSuite
+from doctest import DocFileSuite
+import unittest, os.path, sys
 
-# We test the documentation this way instead of using DocFileSuite so
-# we can run the tests under Python 2.3
-def test_README():
-    pass
+THIS_DIR = os.path.dirname(__file__)
 
-this_dir = os.path.dirname(__file__)
-locs = [
-    os.path.join(this_dir, os.pardir, 'README.txt'),
-    os.path.join(this_dir, os.pardir, os.pardir, 'README.txt'),
-    ]
-for loc in locs:
-    if os.path.exists(loc):
-        test_README.__doc__ = open(loc).read()
-        break
-if test_README.__doc__ is None:
-    raise RuntimeError('README.txt not found')
+README = os.path.join(THIS_DIR, os.pardir, os.pardir, 'README.txt')
+
+
+class DocumentationTestCase(unittest.TestCase):
+    def test_readme_encoding(self):
+        '''Confirm the README.txt is pure ASCII.'''
+        f = open(README, 'rb')
+        try:
+            f.read().decode('US-ASCII')
+        finally:
+            f.close()
 
 
 def test_suite():
     "For the Z3 test runner"
-    return DocTestSuite()
+    return unittest.TestSuite((
+        DocumentationTestCase('test_readme_encoding'),
+        DocFileSuite(os.path.join(os.pardir, os.pardir, 'README.txt'))))
 
 
 if __name__ == '__main__':
     sys.path.insert(0, os.path.abspath(os.path.join(
-        this_dir, os.pardir, os.pardir
+        THIS_DIR, os.pardir, os.pardir
         )))
     unittest.main(defaultTest='test_suite')
 

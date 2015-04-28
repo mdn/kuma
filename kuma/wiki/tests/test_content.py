@@ -7,8 +7,8 @@ from jinja2 import escape, Markup
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
-import test_utils
 
+from kuma.core.tests import KumaTestCase
 from kuma.users.tests import UserTestCase
 import kuma.wiki.content
 from kuma.wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
@@ -129,10 +129,9 @@ class ContentSectionToolTests(UserTestCase):
             <p>test</p>
             <p>test</p>
         """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .extractSection(id="s1")
-                  .serialize())
+        result = (kuma.wiki.content.parse(doc_src)
+                                   .extractSection(id="s1")
+                                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
     def test_contained_implicit_section_extract(self):
@@ -170,10 +169,9 @@ class ContentSectionToolTests(UserTestCase):
                 <p>test</p>
                 <p>test</p>
         """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .extractSection(id="s5")
-                  .serialize())
+        result = (kuma.wiki.content.parse(doc_src)
+                                   .extractSection(id="s5")
+                                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
     def test_explicit_section_extract(self):
@@ -214,10 +212,9 @@ class ContentSectionToolTests(UserTestCase):
                 <p>test</p>
                 <p>test</p>
         """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .extractSection(id="parent-s5")
-                  .serialize())
+        result = (kuma.wiki.content.parse(doc_src)
+                                   .extractSection(id="parent-s5")
+                                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
     def test_multilevel_implicit_section_extract(self):
@@ -248,10 +245,9 @@ class ContentSectionToolTests(UserTestCase):
             <p>test</p>
             <p>test</p>
         """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .extractSection(id="s4")
-                  .serialize())
+        result = (kuma.wiki.content.parse(doc_src)
+                                   .extractSection(id="s4")
+                                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
     def test_morelevels_implicit_section_extract(self):
@@ -295,10 +291,9 @@ class ContentSectionToolTests(UserTestCase):
             <h2 id="s8-3">Head</h1>
             <p>test</p>
         """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .extractSection(id="s8")
-                  .serialize())
+        result = (kuma.wiki.content.parse(doc_src)
+                                   .extractSection(id="s8")
+                                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
     def test_basic_section_replace(self):
@@ -968,10 +963,10 @@ class ContentSectionToolTests(UserTestCase):
             <h3 id="s4-2">Head 4-1-1</h3>
             <p>test s4-2</p>
         """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .extractSection(id="s4-1", ignore_heading=True)
-                  .serialize())
+        result = (kuma.wiki.content.parse(doc_src)
+                                   .extractSection(id="s4-1",
+                                                   ignore_heading=True)
+                                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
     def test_ignore_heading_section_replace(self):
@@ -1008,7 +1003,7 @@ class ContentSectionToolTests(UserTestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class AllowedHTMLTests(test_utils.TestCase):
+class AllowedHTMLTests(KumaTestCase):
     simple_tags = (
         'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre',
         'code', 'dl', 'dt', 'dd', 'table',
@@ -1082,7 +1077,7 @@ class AllowedHTMLTests(test_utils.TestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class SearchParserTests(test_utils.TestCase):
+class SearchParserTests(KumaTestCase):
     """Tests for document parsers that extract content for search indexing"""
 
     def test_css_classname_extraction(self):
@@ -1121,7 +1116,7 @@ class SearchParserTests(test_utils.TestCase):
         eq_(sorted(expected), sorted(result))
 
 
-class GetSEODescriptionTests(test_utils.TestCase):
+class GetSEODescriptionTests(KumaTestCase):
 
     def test_summary_section(self):
         content = (

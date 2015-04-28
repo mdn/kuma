@@ -20,13 +20,13 @@ class CustomIndexDashboard(Dashboard):
             title='Wiki',
             column=1,
             models=(
-                'wiki.models.Document',
-                'wiki.models.DocumentZone',
-                'wiki.models.DocumentTag',
-                'wiki.models.Revision',
-                'wiki.models.Attachment',
-                'wiki.models.AttachmentRevision',
-                'wiki.models.EditorToolbar',
+                'kuma.wiki.models.Document',
+                'kuma.wiki.models.DocumentZone',
+                'kuma.wiki.models.DocumentTag',
+                'kuma.wiki.models.Revision',
+                'kuma.wiki.models.Attachment',
+                'kuma.wiki.models.AttachmentRevision',
+                'kuma.wiki.models.EditorToolbar',
             )
         ))
 
@@ -34,7 +34,7 @@ class CustomIndexDashboard(Dashboard):
             title='Demo Studio',
             column=1,
             models=(
-                'demos.models.*',
+                'kuma.demos.models.*',
             )
         ))
 
@@ -48,7 +48,7 @@ class CustomIndexDashboard(Dashboard):
                 'allauth.account.*',
                 'allauth.socialaccount.*',
                 'teamwork.*',
-                'authkeys.*',
+                'kuma.authkeys.*',
             ),
         ))
 
@@ -71,8 +71,8 @@ class CustomIndexDashboard(Dashboard):
             column=1,
             collapsible=True,
             exclude=(
-                'wiki.*',
-                'demos.*',
+                'kuma.wiki.*',
+                'kuma.demos.*',
                 'kuma.users.*',
                 'waffle.*',
                 'constance.*',
@@ -83,7 +83,7 @@ class CustomIndexDashboard(Dashboard):
                 'allauth.account.*',
                 'allauth.socialaccount.*',
                 'djcelery.*',
-                'authkeys.*',
+                'kuma.authkeys.*',
             ),
         ))
 

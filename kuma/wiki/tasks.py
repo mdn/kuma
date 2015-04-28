@@ -1,45 +1,110 @@
-import logging
+from __future__ import with_statement
 
-from celery.task import task, group
+import logging
+import os
+from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.db import transaction
+from django.contrib.sitemaps import GenericSitemap
+from django.core.mail import EmailMessage, mail_admins, send_mail
+from django.db import connection, transaction
 from django.dispatch import receiver
-from django.db import connection
-from django.core.cache import get_cache
+from django.template.loader import render_to_string
+from django.utils.encoding import smart_str
 
+from celery import task
 from constance import config
-import waffle
+from lxml import etree
 
-from devmo.utils import MemcacheLock
-from .exceptions import StaleDocumentsRenderingInProgress, PageMoveError
-from .models import Document, RevisionIP
+from kuma.core.cache import memcache
+from kuma.core.utils import chord_flow, chunked, MemcacheLock
+from kuma.search.models import Index
+
+from .events import context_dict
+from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
+from .helpers import absolutify
+from .models import Document, Revision, RevisionIP
+from .search import WikiDocumentType
 from .signals import render_done
 
 
-log = logging.getLogger('k.task')
+log = logging.getLogger('kuma.wiki.tasks')
+render_lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
 
 
 @task(rate_limit='60/m')
-def render_document(pk, cache_control, base_url):
+def render_document(pk, cache_control, base_url, force=False):
     """Simple task wrapper for the render() method of the Document model"""
     document = Document.objects.get(pk=pk)
-    document.render(cache_control, base_url)
+    if force:
+        document.render_started_at = None
+
+    try:
+        document.render(cache_control, base_url)
+    except Exception as e:
+        subject = 'Exception while rendering document %s' % document.pk
+        mail_admins(subject=subject, message=e)
     return document.rendered_errors
 
 
 @task
-def render_stale_documents(immediate=False, log=None):
-    """Simple task wrapper for rendering stale documents"""
-    lock = MemcacheLock('render-stale-documents-lock')
-    if lock.acquired and not immediate:
+def email_render_document_progress(percent_complete, total):
+    """
+    Task to send email for render_document progress notification.
+    """
+    subject = ('The command `render_document` is %s%% complete' %
+               percent_complete)
+    message = (
+        'The command `render_document` is %s%% complete out of a total of '
+        '%s documents to render.' % (percent_complete, total))
+    mail_admins(subject=subject, message=message)
+
+
+@task
+def render_document_chunk(pks, cache_control='no-cache', base_url=None,
+                          force=False):
+    """
+    Simple task to render a chunk of documents instead of one per each
+    """
+    logger = render_document_chunk.get_logger()
+    logger.info(u'Starting to render document chunk: %s' %
+                ','.join([str(pk) for pk in pks]))
+    base_url = base_url or settings.SITE_URL
+    for pk in pks:
+        # calling the task without delay here since we want to localize
+        # the processing of the chunk in one process
+        result = render_document(pk, cache_control, base_url, force=force)
+        if result:
+            logger.error(u'Error while rendering document %s with error: %s' %
+                         (pk, result))
+    logger.info(u'Finished rendering of document chunk')
+
+
+@task(throws=(StaleDocumentsRenderingInProgress,))
+def acquire_render_lock():
+    """
+    A task to acquire the render document lock
+    """
+    if render_lock.locked():
         # fail loudly if this is running already
         # may indicate a problem with the schedule of this task
         raise StaleDocumentsRenderingInProgress
+    render_lock.acquire()
 
-    stale_docs = Document.objects.get_by_stale_rendering()
+
+@task
+def release_render_lock():
+    """
+    A task to release the render document lock
+    """
+    render_lock.release()
+
+
+@task
+def render_stale_documents(log=None):
+    """Simple task wrapper for rendering stale documents"""
+    stale_docs = Document.objects.get_by_stale_rendering().distinct()
     stale_docs_count = stale_docs.count()
     if stale_docs_count == 0:
         # not stale documents to render
@@ -49,32 +114,15 @@ def render_stale_documents(immediate=False, log=None):
         # fetch a logger in case none is given
         log = render_stale_documents.get_logger()
 
-    log.info("Found %s stale documents" % stale_docs_count)
-    response = None
-    if lock.acquire():
-        try:
-            subtasks = []
-            for doc in stale_docs:
-                if immediate:
-                    doc.render('no-cache', settings.SITE_URL)
-                    log.info("Rendered stale %s" % doc)
-                else:
-                    subtask = render_document.subtask((doc.pk, 'no-cache',
-                                                       settings.SITE_URL))
-                    subtasks.append(subtask)
-                    log.info("Deferred rendering for stale %s" % doc)
-            if subtasks:
-                task_group = group(tasks=subtasks)
-                if waffle.switch_is_active('render_stale_documents_async'):
-                    # kick off the task group asynchronously
-                    task_group.apply_async()
-                else:
-                    # kick off the task group synchronously
-                    result = task_group.apply()
-                    response = result.join()
-        finally:
-            lock.release()
-    return response
+    log.info('Found %s stale documents' % stale_docs_count)
+    stale_pks = stale_docs.values_list('pk', flat=True)
+
+    pre_task = acquire_render_lock.si()
+    render_tasks = [render_document_chunk.si(pks)
+                    for pks in chunked(stale_pks, 10)]
+    post_task = release_render_lock.si()
+
+    chord_flow(pre_task, render_tasks, post_task).apply_async()
 
 
 @task
@@ -86,11 +134,7 @@ def build_json_data_for_document_task(pk, stale):
 
 @receiver(render_done)
 def build_json_data_handler(sender, instance, **kwargs):
-    try:
-        build_json_data_for_document_task.delay(instance.pk, stale=False)
-    except:
-        logging.error('JSON metadata build task failed',
-                      exc_info=True)
+    build_json_data_for_document_task.delay(instance.pk, stale=False)
 
 
 @task
@@ -209,16 +253,130 @@ def update_community_stats():
     if 0 in community_stats.values():
         community_stats = None
 
-    cache = get_cache('memcache')
-    cache.set('community_stats', community_stats, 86400)
+    memcache.set('community_stats', community_stats, 86400)
 
 
 @task
-def delete_old_revision_ips(immediate=False, days=30):
+def delete_old_revision_ips(days=30):
     RevisionIP.objects.delete_old(days=days)
 
 
 @task
-def send_first_edit_email(email):
-    email.to = [config.EMAIL_LIST_FOR_FIRST_EDITS,]
+def send_first_edit_email(revision_pk):
+    """ Make an 'edited' notification email for first-time editors """
+    revision = Revision.objects.get(pk=revision_pk)
+    user, doc = revision.creator, revision.document
+    subject = (u"[MDN] %(user)s made their first edit, to: %(doc)s" %
+               {'user': user.username, 'doc': doc.title})
+    message = render_to_string('wiki/email/edited.ltxt',
+                               context_dict(revision))
+    doc_url = absolutify(doc.get_absolute_url())
+    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
+                         to=[config.EMAIL_LIST_FOR_FIRST_EDITS],
+                         headers={'X-Kuma-Document-Url': doc_url,
+                                  'X-Kuma-Editor-Username': user.username})
     email.send()
+
+
+class WikiSitemap(GenericSitemap):
+    protocol = 'https'
+    priority = 0.5
+
+
+SITEMAP_ELEMENT = u'<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>'
+
+
+@task
+def build_sitemaps():
+    sitemap_parts = [u'<sitemapindex xmlns="http://www.sitemaps.org/'
+                     u'schemas/sitemap/0.9">']
+    now = datetime.utcnow()
+    timestamp = '%s+00:00' % now.replace(microsecond=0).isoformat()
+    index_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
+
+    for locale in settings.MDN_LANGUAGES:
+        queryset = (Document.objects
+                            .filter(is_template=False,
+                                    locale=locale,
+                                    is_redirect=False)
+                            .exclude(title__startswith='User:')
+                            .exclude(slug__icontains='Talk:'))
+        if queryset.count() > 0:
+            info = {'queryset': queryset, 'date_field': 'modified'}
+
+            directory = os.path.join(settings.MEDIA_ROOT, 'sitemaps', locale)
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
+            with open(os.path.join(directory, 'sitemap.xml'), 'w') as f:
+                f.write(smart_str(render_to_string('wiki/sitemap.xml',
+                                  {'urls': WikiSitemap(info).get_urls(page=1)})))
+
+            del info  # Force the gc to cleanup
+
+            sitemap_url = absolutify('/sitemaps/%s/sitemap.xml' % locale)
+            sitemap_parts.append(SITEMAP_ELEMENT % (sitemap_url, timestamp))
+
+        del queryset  # Force the gc to cleanup
+
+    sitemap_parts.append(u'</sitemapindex>')
+
+    sitemap_tree = etree.fromstringlist(sitemap_parts)
+    with open(index_path, 'w') as index_file:
+        sitemap_tree.getroottree().write(index_file,
+                                         encoding='utf-8',
+                                         pretty_print=True)
+
+
+@task
+def index_documents(ids, index_pk, reraise=False):
+    """
+    Index a list of documents into the provided index.
+
+    :arg ids: Iterable of `Document` pks to index.
+    :arg index_pk: The `Index` pk of the index to index into.
+    :arg reraise: False if you want errors to be swallowed and True
+        if you want errors to be thrown.
+
+    .. Note::
+
+       This indexes all the documents in the chunk in one single bulk
+       indexing call. Keep that in mind when you break your indexing
+       task into chunks.
+
+    """
+    from kuma.wiki.models import Document
+
+    cls = WikiDocumentType
+    es = cls.get_connection('indexing')
+    index = Index.objects.get(pk=index_pk)
+
+    objects = Document.objects.filter(id__in=ids)
+    documents = []
+    for obj in objects:
+        try:
+            documents.append(cls.from_django(obj))
+        except Exception:
+            log.exception('Unable to extract/index document (id: %d)', obj.id)
+            if reraise:
+                raise
+
+    if documents:
+        cls.bulk_index(documents, id_field='id', es=es,
+                       index=index.prefixed_name)
+
+
+@task
+def unindex_documents(ids, index_pk):
+    """
+    Delete a list of documents from the provided index.
+
+    :arg ids: Iterable of `Document` pks to remove.
+    :arg index_pk: The `Index` pk of the index to remove items from.
+
+    """
+    cls = WikiDocumentType
+    es = cls.get_connection('indexing')
+    index = Index.objects.get(pk=index_pk)
+
+    cls.bulk_delete(ids, es=es, index=index.prefixed_name)

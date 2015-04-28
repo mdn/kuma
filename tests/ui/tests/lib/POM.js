@@ -25,6 +25,8 @@ define(['base/lib/config', 'base/lib/login'], function(config, libLogin) {
     POM.prototype.setup = function() {
         var remote = this.remote;
 
+        remote.setExecuteAsyncTimeout(config.asyncExecutionTimeout);
+
         // Go to the homepage, set the default size of the window
         return this.goTo().then(function() {
             return remote.setWindowSize(config.defaultWidth, config.defaultHeight);

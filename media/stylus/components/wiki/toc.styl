@@ -1,0 +1,43 @@
+#toc {
+    reverse-link-decoration();
+    background: $light-background-color;
+    padding: 20px 15px;
+
+    > ol {
+        set-smaller-font-size();
+    }
+
+    li {
+        padding-top: ($grid-spacing / 2);
+        position: relative;
+
+        &:before {
+            bidi-value(text-align, left, right);
+            bidi-style(left, -($grid-spacing * 1.5), right, auto);
+            position: absolute;
+            color: #484848;
+        }
+    }
+
+    li li {
+        padding-left: $grid-spacing;
+    }
+
+    .toggler {
+        pointer-events: none;
+        color: inherit;
+
+        i {
+            display: none;
+        }
+    }
+
+    .title {
+        margin-bottom: 0;
+    }
+
+    a.title {
+        position: relative;
+        text-decoration: none;
+    }
+}

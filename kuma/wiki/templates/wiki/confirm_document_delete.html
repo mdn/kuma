@@ -12,7 +12,7 @@
 
     {{ build_document_crumbs(document) }}
 
-    <h1>{{ _('Delete') }} <a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ _('{title}')|fe(title=document.title) }}</a></h1>
+    <h1>{{ _('Delete') }} <a href="{{ document.get_absolute_url() }}">{{ document.title }}</a></h1>
 
     <strong>{{ _('Creator') }}</strong>
     <p><a href="{{ revision.creator.get_absolute_url() }}">{{ user_display(revision.creator) }}</a></p>

@@ -1,0 +1,39 @@
+/*
+    Syntax boxes are used for short, non-functional code snippets.
+    .syntaxbox is used anywhere (DOM, JS, CSS, ...)
+    .twopartsyntaxbox is used for CSS properties
+*/
+
+pre.syntaxbox,
+pre.twopartsyntaxbox {
+    background: $code-block-background-alt-color;
+    @extend $code-block;
+    white-space: pre-wrap;
+    text-overflow: ellipsis ellipsis;
+}
+
+pre.twopartsyntaxbox {
+    margin-bottom: 0;
+}
+
+.syntaxbox-help {
+    height: 1.2em;
+    float: left;
+    font-size: $larger-font-size;
+    width: 1.1em;
+    margin-left: @width * -1;
+    margin-top: -4px;
+    opacity: 0;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+
+    /* show on hover and focus, and when triggered by JS adding class */
+    &.isOpaque,
+    &:hover,
+    &:focus {
+        opacity: 1;
+    }
+}
+
+

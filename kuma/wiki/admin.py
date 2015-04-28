@@ -6,9 +6,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
 
-from sumo.urlresolvers import reverse
+from kuma.core.decorators import login_required, permission_required
+from kuma.core.urlresolvers import reverse
 
-from access.decorators import login_required, permission_required
 from .decorators import check_readonly
 from .models import (Document, DocumentZone, DocumentTag,
                      Revision, RevisionIP, EditorToolbar)

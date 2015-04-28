@@ -4,13 +4,16 @@ define([
     'base/lib/config',
     'base/lib/assert',
     'base/lib/poll',
-    'base/lib/POM'
-], function(registerSuite, assert, config, libAssert, poll, POM) {
+    'base/lib/POM',
+    'intern/dojo/node!leadfoot/keys'
+], function(registerSuite, assert, config, libAssert, poll, POM, keys) {
 
     // Create this page's specific POM
     var Page = new POM({
         // Any functions used multiple times or important properties of the page
     });
+
+    var searchBoxId = 'main-q';
 
     registerSuite({
 
@@ -45,38 +48,80 @@ define([
         },
 
         'The header search box expands and contracts correctly': function() {
+            // Possible ToDo:  Move click() call after the transitionend event listener
 
-            var searchBoxId = 'main-q';
+            var remote = this.remote;
             var homeSearchBoxId = 'home-q';
-            var originalSize;
+            var originalWidth;
 
-            return this.remote
+            var transitionEndCallback = function() {
+                return remote.executeAsync(function(done) {
+                    var element = document.getElementById('main-q');
+                    var eventType = 'transitionend';
+
+                    var ev = element.addEventListener(eventType, function(){
+                        element.removeEventListener(eventType, ev);
+                        done();
+                    });
+                });
+            }
+
+            return remote
                             .findById(searchBoxId)
                             .getSize()
                             .then(function(size) {
-                                originalSize = size;
+                                originalWidth = size.width;
                             })
-                            .click()
-                            .end()
-                            .sleep(2000) // wait for animation
+                            .click() // ToDo:  Will calling click first cause a timing issue?
+                            .then(transitionEndCallback)
                             .findById(searchBoxId)
                             .getSize()
                             .then(function(newSize) {
-                                assert.isTrue(newSize.width > originalSize.width);
+                                assert.isTrue(newSize.width > originalWidth);
                             })
                             .end()
-                            .findById(homeSearchBoxId)
-                            .click()
-                            .end()
-                            .sleep(2000) // wait for animation
+                            .then(function() {
+                                return remote
+                                            .findById(homeSearchBoxId)
+                                            .click() // ToDo:  Will calling click first cause a timing issue?
+                                            .end()
+                                            .then(transitionEndCallback)
+                                            .findById(searchBoxId)
+                                            .getSize()
+                                            .then(function(newSize) {
+                                                assert.equal(newSize.width, originalWidth);
+                                            });
+                            });
+
+        },
+
+        'Pressing [ENTER] submits the header search box': function() {
+
+            return this.remote
                             .findById(searchBoxId)
-                            .getSize()
-                            .then(function(newSize) {
-                                assert.equal(newSize.width, originalSize.width);
+                            .click()
+                            .type(['css', keys.RETURN])
+                            .getCurrentUrl()
+                            .then(function(url) {
+                                assert.isTrue(url.indexOf('/search') != -1);
                             });
         },
 
-        'Tabzilla loads properly': libAssert.elementExistsAndDisplayed('#tabzilla')
+        'Tabzilla loads properly': function() {
+
+            return this.remote.executeAsync(function(done) {
+                            var interval = setInterval(function() {
+                                if(document.getElementById('tabzilla-panel')) {
+                                    clearInterval(interval);
+                                    done();
+                                }
+                            }, 200);
+                        }).
+                        then(function() {
+                            return libAssert.elementExistsAndDisplayed('#tabzilla');
+                        });
+
+        }
 
     });
 

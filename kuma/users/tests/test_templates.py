@@ -1,12 +1,13 @@
 import mock
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
+from waffle import Flag
 
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from kuma.core.helpers import urlparams
+from kuma.core.urlresolvers import reverse
 from .test_views import TESTUSER_PASSWORD
 from . import (verify_strings_in_response, verify_strings_not_in_response,
                UserTestCase)
@@ -37,6 +38,41 @@ class SignupTests(UserTestCase):
                         'to Mozilla',
                         'Terms',
                         'Privacy Notice']
+        verify_strings_in_response(test_strings, r)
+
+
+    @mock.patch('requests.post')
+    def test_signup_page_disabled(self, mock_post):
+        user_email = "newuser@test.com"
+        mock_post.return_value = mock_resp = mock.Mock()
+        mock_resp.json.return_value = {
+            "status": "okay",
+            "email": user_email,
+            "audience": "https://developer-local.allizom.org"
+        }
+
+        url = reverse('persona_login')
+
+        registration_disabled = Flag.objects.create(
+            name='registration_disabled',
+            everyone=True
+        )
+        r = self.client.post(url, follow=True)
+
+        eq_(200, r.status_code)
+        ok_('Sign In Failure' not in r.content)
+        test_strings = ['Profile Creation Disabled']
+        verify_strings_in_response(test_strings, r)
+
+        # re-enable registration
+        registration_disabled.everyone = False
+        registration_disabled.save()
+
+        r = self.client.post(url, follow=True)
+        eq_(200, r.status_code)
+        test_strings = ['Create your MDN profile to continue',
+                        'choose a username',
+                        'having trouble']
         verify_strings_in_response(test_strings, r)
 
 
@@ -277,7 +313,8 @@ class AllauthPersonaTestCase(UserTestCase):
             }
             r = self.client.post(reverse('persona_login'),
                                  follow=True)
-            data = {'username': persona_signup_username,
+            data = {'website': '',
+                    'username': persona_signup_username,
                     'email': persona_signup_email,
                     'terms': True}
             r = self.client.post(

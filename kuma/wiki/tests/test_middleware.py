@@ -1,11 +1,9 @@
 # coding=utf-8
-from django.core.cache import get_cache
-
 from nose.tools import eq_
-from sumo.urlresolvers import reverse
 
+from kuma.core.cache import memcache
+from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
-from kuma.wiki.constants import SECONDARY_CACHE_ALIAS
 from kuma.wiki.models import DocumentZone
 from kuma.wiki.tests import revision
 
@@ -17,8 +15,7 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
     def setUp(self):
         super(DocumentZoneMiddlewareTestCase, self).setUp()
 
-        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
-        s_cache.clear()
+        memcache.clear()
 
         self.zone_root = 'ExtraWiki'
         self.zone_root_content = 'This is the Zone Root'
@@ -61,8 +58,8 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
         # One more doc, just to be sure we can have multiple blank url_roots
         onemore_rev = revision(title='onemorePage', slug='onemorePage',
-                             content='This is an onemorepage',
-                             is_approved=True, save=True)
+                               content='This is an onemorepage',
+                               is_approved=True, save=True)
         self.onemore_doc = onemore_rev.document
         self.onemore_doc.save()
 
@@ -92,9 +89,10 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         eq_(self.sub_doc.html, response.content)
 
     def test_actual_wiki_url_redirect(self):
-        """Ensure a request for the 'real' path to a document results in a
-        redirect to the internal redirect path"""
-
+        """
+        Ensure a request for the 'real' path to a document results in a
+        redirect to the internal redirect path
+        """
         url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
         response = self.client.get(url, follow=False)
         eq_(302, response.status_code)
@@ -118,7 +116,7 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
     def test_reverse_rewrite(self):
         """Ensure reverse() URLs are remapped"""
-        # HACK: This actually exercises code in apps/sumo/urlresolvers.py, but
+        # HACK: This actually exercises code in kuma/core/urlresolvers.py, but
         # lives here to share fixtures and such with other wiki URL remap code.
         url = reverse('wiki.document',
                       args=[self.other_doc.slug],

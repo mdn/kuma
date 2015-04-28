@@ -10,10 +10,8 @@ packages/python-dateutil
 packages/pylint
 packages/ipython
 packages/pyflakes
-packages/amqplib
 packages/django-taggit
 packages/anyjson
-packages/carrot
 packages/pyquery
 packages/django-picklefield/src
 packages/setuptools
@@ -22,13 +20,9 @@ packages/logilab-astng
 packages/importlib
 packages/selenium
 packages/mock
-packages/celery
-packages/kombu
 packages/ordereddict
-packages/django-celery
 packages/html5lib/src
 packages/logilab-common
-packages/billiard
 packages/pyparsing
 packages/sqlalchemy
 packages/translate-toolkit
@@ -43,8 +37,6 @@ packages/beautifulsoup
 packages/pyes
 packages/six
 src
-src/django-cronjobs
-src/django-cache-machine
 src/django-nose
 src/django-authority
 src/django-timezones
@@ -54,8 +46,6 @@ src/django-debug-cache-panel
 src/jingo-minify
 src/check
 src/django-mozilla-product-details
-src/test-utils
-src/schematic
 src/py-wikimarkup
 src/django-multidb-router
 src/bleach
@@ -77,7 +67,7 @@ src/pytidylib
 src/pystatsd
 src/django-statsd
 src/elasticsearch-py
-src/elasticutils
+src/elasticsearch-dsl-py
 src/urllib3
 src/simplejson
 src/django-tidings
@@ -98,3 +88,13 @@ src/django-allauth
 src/requests-oauthlib
 src/python-openid
 src/oauthlib
+src/billiard
+src/celery
+src/kombu
+src/py-amqp
+src/django-celery
+src/django-honeypot
+src/bitly-api-python
+src/django-cacheback
+src/django-ratelimit
+src/django-cacheback

@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block body_attributes %}id="home"{% endblock %}
+
+{% block site_css %}
+	{{ super() }}
+	{{ css('home', 'all') }}
+{% endblock %}
+
+{% block extrahead %}
+  <meta name="google-site-verification" content="Phj8dHc2oKwic3FGPsKIhdOBk_1wnCTnKwjcjiLgJPc">
+  <meta name="google-site-verification" content="TH9rA27HbfjO_XqYWTIPrW1E7E7Dtgsh7ULzHi3UTVA">
+
+  {% set seo_description = _('The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox OS.') %}
+  {% set social_title = 'Mozilla Developer Network' %}
+  <meta property="og:description" content="{{ seo_description }}">
+  <meta name="description" content="{{ seo_description }}">
+  <meta name="twitter:description" content="{{ seo_description }}">
+  <meta name="twitter:title" content="{{ social_title }}">
+  <meta property="og:title" content="{{ social_title }}">
+
+  {% if waffle.flag('search_suggestions') %}
+  {{ css('search-suggestions') }}
+  {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- top search area -->
+<div class="home-masthead"><div class="center">
+
+
+    {# We want to A/B test the removal of this heading. If we try to remove it
+       with Optimizely, it flashes briefly before disappearing. By using Waffle
+       and percent-based activation, we can achieve the same effect without
+       needing to remove the heading on the client side after the fact. We can
+       then later use the Optimizely API to bucket visitors accordingly for
+       accurate reporting.
+
+       This can be removed once the homepage heading A/B test is completed. #}
+    {% if not waffle.flag('hide_homepage_heading') %}
+        <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
+    {% endif %}
+
+    {% if waffle.flag('search_suggestions') %}
+        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
+            <div class="home-search-form search-form">
+                <div class="search-filter-wrapper">
+                    <label for="home-q" class="offscreen">{{ _('Search') }}</label>
+                    <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
+                    <div class="filters"></div>
+                    <button class="show-topics only-icon" type="button">
+                        <span>{{ _('Show topics') }}</span>
+                        <i class="icon-caret-down" aria-hidden="true"></i>
+                    </button>
+                    <button type="submit" class="offscreen">{{ _('Search') }}</button>
+                </div>
+            </div>
+        </form>
+    {% else %}
+        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
+            <div class="home-search-form search-form">
+                <label for="home-q" class="offscreen">{{ _('Search') }}</label>
+                <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
+                <button type="submit" class="offscreen">{{ _('Search') }}</button>
+            </div>
+        </form>
+    {% endif %}
+
+  <div class="home-features">
+    <h2 class="offscreen">{{ _('Web Technologies') }}</h2>
+    <div class="column-container">
+      <div class="column-home-features">
+        <h3><i aria-hidden="true" class="icon-file-text"></i><span>{{ _('Web<br />Platform') }}</span></h3>
+        <ul>
+          <li><a href="{{ wiki_url('Web/Reference/API') }}">{{ _('Web APIs &amp; DOM') }}</a></li>
+          <li><a href="{{ wiki_url('Web/HTML') }}">{{ _('HTML') }}</a> &amp; <a href="{{ wiki_url('Web/Guide/HTML/HTML5') }}">{{ _('HTML5') }}</a></li>
+          <li><a href="{{ wiki_url('Web/CSS') }}">{{ _('CSS') }}</a> &amp; <a href="{{ wiki_url('Web/CSS/CSS3') }}">{{ _('CSS3') }}</a></li>
+          <li><a href="{{ wiki_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
+          <li><a href="{{ wiki_url('Web') }}">{{ _('more...') }}</a></li>
+        </ul>
+      </div>
+      <div class="column-home-features">
+        <h3 class="zones"><i aria-hidden="true" class="icon-suitcase"></i><span>{{ _('Zones') }}</span></h3>
+        <ul>
+          <li><a href="{{ wiki_url('Firefox') }}">{{ _('Firefox') }}</a></li>
+          <li><a href="{{ wiki_url('Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
+          <li><a href="{{ wiki_url('Mozilla/Marketplace') }}">{{ _('Firefox Marketplace') }}</a></li>
+          <li><a href="{{ wiki_url('Apps') }}">{{ _('App Center') }}</a></li>
+          <li><a href="{{ wiki_url('Mozilla/Add-ons') }}?menu">{{ _('Add-ons') }}</a></li>
+        </ul>
+      </div>
+      <div class="column-home-features">
+        <h3><i aria-hidden="true" class="icon-wrench"></i><span>{{ _('Developer<br />Tools') }}</span></h3>
+        <ul>
+        <li><a href="{{ wiki_url('Mozilla/Firefox_OS/Using_the_App_Manager') }}">{{ _('Firefox OS App Manager') }}</a></li>
+        <li><a href="{{ wiki_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
+        <li><a href="{{ wiki_url('Tools/Debugger') }}">{{ _('JavaScript Debugger') }}</a></li>
+        <li><a href="{{ wiki_url('Tools/Web_Console') }}">{{ _('Web Console') }}</a></li>
+        <li><a href="{{ wiki_url('Tools') }}">{{ _('more...') }}</a></li>
+        </ul>
+      </div>
+      <div class="column-home-features">
+        <h3 class="connect"><i aria-hidden="true" class="icon-certificate"></i><span>{{ _('Connect') }}</span></h3>
+        <p>{{ _('Get Web technology news from Mozilla, get help from other developers, and more!') }}</p>
+        <p><a href="{{ wiki_url('Mozilla/Connect') }}">{{ _('Learn more and sign up!') }}</a></p>
+      </div>
+    </div>
+  </div>
+
+</div></div>
+
+<!-- callout area -->
+<div class="home-callouts">
+  <h2 class="offscreen">{{ _('Open Web and Mobile') }}</h2>
+  <div class="column-container center">
+    <div class="column-callout callout-learn">
+      <a href="{{ wiki_url('Learn') }}"><span>{{ _('Learn Web Development') }}</span></a>
+    </div>
+    <div class="column-callout callout-deved">
+      <a href="https://www.mozilla.org/firefox/developer/"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
+    </div>
+    <div class="column-callout callout-apps">
+      <a href="{{ wiki_url('Apps') }}"><span>{{ _('Build Open Web Apps') }}</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- hacks area -->
+<div class="home-hacks"><div class="column-container center">
+  <div class="column-hacks" dir="ltr">
+    <h2><i aria-hidden="true" class="icon-star"></i> Hacks Blog<span class="heading-link">{{ _('<a href="http://hacks.mozilla.org">read more at hacks.mozilla.org <i aria-hidden="true" class="icon-arrow-right"></i></a></span>') }}</h2>
+    {{ newsfeed(updates, section_headers=True) }}
+  </div>
+  <div class="column-involved">
+    <div class="home-involved-card"><a href="{{ wiki_url('Project:MDN/Contributing') }}">
+      <h2 class="title">{{ _('Get Involved') }}</h2>
+
+      {% trans contributors=stats.contributors, locales=stats.locales %}
+      <p class="numbers">
+         <span class="row1">Join <span class="number">{{ contributors }}</span> contributors</span>
+         <span class="row2">in <span class="number">{{ locales }}</span> languages and locales</span>
+         <span class="row3">around the world.</span>
+      </p>
+      {% endtrans %}
+      <p><span class="button">{{ _('Help improve MDN') }}</span></p>
+    </a></div>
+  </div>
+</div></div>
+
+<!-- demos and dev derby -->
+{% if demos %}
+<div class="home-demos"><div class="center">
+
+{% if not waffle.flag('derby_closed') %}
+  <div class="preview">
+    <span>{{ _('Next Dev Derby: <strong>July 2013</strong>') }}</span>
+    <span>{{ _('Subject: <strong>File API</strong>') }}</span>
+  </div>
+{% endif %}
+
+<h2><i aria-hidden="true" class="icon-magic blue"></i> {{ _('See & submit demos') }}
+  {% if not waffle.flag('derby_closed') %}
+    <a href="{{ url('demos_devderby_landing') }}" class="heading-link">{{ _('MDN Dev Derby <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
+  {% else %}
+    <a href="{{ url('demos') }}" class="heading-link">{{ _('MDN Demo Studio <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
+  {% endif %}
+</h2>
+<div class="home-demos-list">
+  {% set extra_class = cycler(' row-first', '')%}
+  {% for submission in demos %}
+      {{ submission_thumb(submission, extra_class, thumb_width="180", thumb_height="133", is_homepage=True) }}
+  {% endfor %}
+  </div>
+</div></div>
+{% endif %}
+
+<!-- contributions section -->
+<div class="home-contribute"><div class="center">
+  <h2><i aria-hidden="true" class="icon-smile-o"></i> {{ _('Help improve MDN') }}</h2>
+
+  <div class="column-container">
+    <div class="column-half">
+      <p>{{ _('All parts of MDN (docs, demos, and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:') }}</p>
+    </div>
+    <div class="column-half">
+      <div class="column-container">
+        <div class="column-half">
+          <ul>
+            <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Getting started') }}</a></li>
+            <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_an_editorial_review') }}">{{ _('Editorial review') }}</a></li>
+            <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_a_technical_review') }}">{{ _('Technical review') }}</a></li>
+          </ul>
+        </div>
+        <div class="column-half">
+          <ul>
+            <li><a href="{{ wiki_url('MDN/Contribute/Localize/Translating_pages') }}">{{ _('Translating') }}</a></li>
+            <li><a href="{{ wiki_url('MDN/Promote') }}">{{ _('Promoting MDN') }}</a></li>
+            <li><a href="https://github.com/mozilla/kuma#readme">{{ _('Contributing to the MDN codebase') }}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+  {% if settings.TEMPLATE_DEBUG %}
+      {{ js('home') }}
+  {% else %}
+      {{ js('home', async=True) }}
+  {% endif %}
+  {% if waffle.flag('search_suggestions') %}
+    {{ js('search-suggestions') }}
+    <script>
+        jQuery('#home-search-form').searchSuggestions();
+    </script>
+  {% endif %}
+
+  {# This can be removed once the homepage heading A/B test is completed. #}
+  <script>
+      {% if not waffle.flag('hide_homepage_heading') %}
+          // Bucket visitor into the baseline Optimizely variation for reporting
+          mdn.optimizely.push(['bucketVisitor', 2702600192, 2707400176]);
+      {% else %}
+          // Bucket visitor into the tested Optimizely variation for reporting
+          mdn.optimizely.push(['bucketVisitor', 2702600192, 2709140171]);
+      {% endif %}
+  </script>
+{% endblock %}

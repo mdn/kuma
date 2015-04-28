@@ -1,0 +1,44 @@
+/*
+    This file modifies <pre> and <code> with the class 'language-' which is added by prism.js
+    This is complicated by the fact that we don't know the configuration of the HTML
+        - it could be <pre> or <code> or <pre><code> or or <pre><code><code> or <pre><em><code> (just to name a few)
+*/
+
+/*
+prism.css problem fixing
+====================================================================== */
+
+/* prism.css incorrectly double styles code > code, but only with a backround color */
+code[class*='language-'] > code[class*='language-'] {
+    background-color: none;
+}
+
+/* prism.css overrides our gridspacing with its own margin, override it back */
+pre[class*='language-'] {
+    margin: 0 0 $grid-spacing 0;
+
+    span.comment {
+        display: inherit;
+    }
+}
+
+/* prism.css overrides our text-color with black and adds a text-shadow, override it back */
+code[class*='language-'],
+pre[class*='language-'] {
+    color: $text-color;
+    text-shadow: none;
+}
+
+/*
+Enhamcements!
+====================================================================== */
+:not(pre):not(code)>code[class*='language-'],
+pre[class*='language-'] {
+    @extend $code-block;
+}
+
+/*  we don't want <pre><em><code> to have the code-block styling  */
+pre em code[class*='language-'] {
+    background: none;
+    border-left: 0;
+}

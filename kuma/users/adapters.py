@@ -10,8 +10,9 @@ from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialLogin
 from tower import ugettext_lazy as _
+from waffle import flag_is_active
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from .constants import USERNAME_CHARACTERS, USERNAME_REGEX
 
@@ -103,7 +104,8 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         because the default adapter uses the account adpater above
         as the default.
         """
-        return True
+        # Check if profile creation is disabled via waffle
+        return not flag_is_active(request, 'registration_disabled')
 
     def validate_disconnect(self, account, accounts):
         """

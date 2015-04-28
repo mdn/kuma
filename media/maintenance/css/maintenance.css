@@ -1,0 +1,79 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: url('/media/maintenance/fonts/OpenSans-Regular-webfont.eot');
+    src: url('/media/maintenance/fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/media/maintenance/fonts/OpenSans-Regular-webfont.woff') format('woff'),
+         url('/media/maintenance/fonts/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('/media/maintenance/fonts/OpenSans-Regular-webfont.svg#OpenSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    background: #fff;
+    font-size: 14px;
+}
+
+body {
+    color: #4d4e53;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+    margin: 0;
+}
+
+header {
+    background-color: #00539f;
+    background-image: url("/media/maintenance/img/header-background.png");
+    background-image: url("/media/maintenance/img/header-background.png"),
+                      url("/media/maintenance/img/blueprint.png"),
+                      url("/media/maintenance/img/mdn-header-gradient.png");
+    background-position: 0 0, 0 0, 0 0;
+    background-repeat: repeat, repeat, repeat-x;
+
+    /* Recommended when using Tabzilla */
+    border-top: 2px solid #fff;
+}
+
+.wrap {
+    margin: 0 auto;
+    max-width: 1400px;
+    padding: 0 24px;
+}
+
+.logo {
+    background-image: url("/media/maintenance/img/logo_sprite.svg");
+    background-position: 0 -41px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    direction: ltr;
+    display: inline-block;
+    height: 40px;
+    margin: 24px 0;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 205px;
+}
+
+dd {
+    margin-left: 0;
+    margin-bottom: 1em;
+}
+
+@media all and (max-width: 480px) {
+    /* Hide Tabzilla on small mobile screens */
+    #tabzilla {
+        display: none;
+    }
+    header {
+        border-top: none;
+    }
+
+    /* Center the logo on small mobile screens */
+    header {
+        padding: 24px;
+    }
+    .logo {
+        display: block;
+        margin: 0 auto;
+    }
+}

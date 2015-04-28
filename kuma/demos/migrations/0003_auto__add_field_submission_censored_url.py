@@ -87,7 +87,7 @@ class Migration(SchemaMigration):
             #'tags': ('kuma.demos.models.ConstrainedTagField', [], {}),
             'tags': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
-            'video_url': ('embedutils.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
+            'video_url': ('kuma.demos.embed.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         'taggit.tag': {
             'Meta': {'object_name': 'Tag'},

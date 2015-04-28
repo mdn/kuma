@@ -13,7 +13,7 @@ from pyquery import PyQuery as pq
 
 from tower import ugettext as _
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 from .utils import locale_and_slug_from_path
 
 
@@ -77,9 +77,8 @@ def get_seo_description(content, locale=None, strip_markup=True):
         if content:
             # Try constraining the search for summary to an explicit "Summary"
             # section, if any.
-            summary_section = (parse(content)
-                               .extractSection('Summary')
-                               .serialize())
+            summary_section = (parse(content).extractSection('Summary')
+                                             .serialize())
             if summary_section:
                 content = summary_section
 

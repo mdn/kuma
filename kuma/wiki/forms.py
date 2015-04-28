@@ -8,9 +8,9 @@ from django.conf import settings
 from django.forms.widgets import CheckboxSelectMultiple
 
 
-from contentflagging.forms import ContentFlagForm
+from kuma.contentflagging.forms import ContentFlagForm
 import kuma.wiki.content
-from sumo.form_fields import StrippedCharField
+from kuma.core.form_fields import StrippedCharField
 from .constants import (SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS,
                         LOCALIZATION_FLAG_TAGS, RESERVED_SLUGS)
 from .models import (Document, Revision,
@@ -222,10 +222,13 @@ class RevisionForm(forms.ModelForm):
                 content = tool.serialize()
             self.initial['content'] = content
 
-            self.initial['review_tags'] = [x.name
-                for x in self.instance.review_tags.all()]
-            self.initial['localization_tags'] = [x.name
-                for x in self.instance.localization_tags.all()]
+            self.initial['review_tags'] = list(self.instance.review_tags
+                                                            .values_list('name',
+                                                                         flat=True))
+            self.initial['localization_tags'] = list(self.instance
+                                                         .localization_tags
+                                                         .values_list('name',
+                                                                      flat=True))
 
         if self.section_id:
             self.fields['toc_depth'].required = False
@@ -337,8 +340,8 @@ class RevisionForm(forms.ModelForm):
         new_rev.creator = creator
         new_rev.toc_depth = old_rev.toc_depth
         new_rev.save()
-        new_rev.review_tags.set(*[t.name for t in
-                                  old_rev.review_tags.all()])
+        new_rev.review_tags.set(*list(old_rev.review_tags
+                                             .values_list('name', flat=True)))
         return new_rev
 
     def save(self, creator, document, **kwargs):
@@ -348,8 +351,8 @@ class RevisionForm(forms.ModelForm):
         form.
 
         """
-        if self.section_id and self.instance and \
-           self.instance.document:
+        if (self.section_id and self.instance and
+                self.instance.document):
             return self.save_section(creator, document, **kwargs)
         # Throws a TypeError if somebody passes in a commit kwarg:
         new_rev = super(RevisionForm, self).save(commit=False, **kwargs)
@@ -425,6 +428,10 @@ class TreeMoveForm(forms.Form):
         self.cleaned_data['slug'] = re.sub(re.compile(SLUG_CLEANSING_REGEX),
                                            '', self.cleaned_data['slug'])
 
+        # Remove the trailing slash if one is present, because it
+        # will screw up the page move, which doesn't expect one.
+        self.cleaned_data['slug'] = self.cleaned_data['slug'].rstrip('/');
+        
         return self.cleaned_data['slug']
 
     def clean(self):

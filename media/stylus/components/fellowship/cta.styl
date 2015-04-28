@@ -1,0 +1,104 @@
+/*
+Call to action button
+- can be applied to a link for a single button
+- can be applied to a heading and list for a share widget inspired by
+  https://www.mozilla.org/en-US/privacy/tips/
+======================================================================*/
+.cta {
+    position: relative;
+    min-width: 11rem;
+    background-color: $neutral;
+    border: 2px solid rgba-fallback(rgba(255,255,255,0.4), $neutral);
+    border-radius: 8px;
+    overflow: hidden;
+    color: #ffffff;
+    display: inline-block;
+    text-align: center;
+
+    a&:hover,
+    a&:focus {
+        color: $text-color;
+    }
+
+    &.negative {
+        background-color: $negative;
+    }
+
+    &-head {
+        box-sizing: border-box;
+        display: inline-block;
+        width: 100%;
+        padding: 0.75rem;
+        margin: 0px;
+        set-font-size(22px);
+        line-height: 1;
+        text-transform: uppercase;
+        text-align: center;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.2s ease-in-out 0s;
+    }
+    ul {
+        display: table;
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        transition: opacity 0.2s ease-in-out 0s;
+        background-color: inherit;
+
+        .js& {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+    &:hover ul,
+    &:focus ul,
+    &.active ul {
+        visibility: visible;
+        opacity: 1;
+        z-index: 1;
+    }
+    li {
+        display: table-cell;
+        width: 33.3%;
+        margin: 0px;
+        padding: .3rem 0px;
+        text-align: center;
+        vertical-align: middle;
+
+        a:hover,
+        a:focus {
+            transition: color 0.1s ease-in-out 0s;
+            color: $text-color;
+        }
+        a {
+            color: #fff;
+            font-size: 0px;
+            display: block;
+            height: 100%;
+            width: 100%;
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
+            &:before {
+                font-family: "FontAwesome";
+                font-size: 2rem;
+            }
+            &.twitter:before {
+                content: '\f099';
+            }
+            &.facebook:before {
+                content: '\f09a';
+            }
+            &.g-plus:before {
+                content: '\f0d5';
+            }
+        }
+    }
+}

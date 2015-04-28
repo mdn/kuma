@@ -13,7 +13,7 @@ from pyquery import PyQuery as pq
 from kuma.users.tests import UserTestCase
 from kuma.wiki.tests import (WikiTestCase, document, revision,
                              make_translation, wait_add_rev)
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 
 class FeedTests(UserTestCase, WikiTestCase):

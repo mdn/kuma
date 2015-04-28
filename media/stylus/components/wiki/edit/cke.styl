@@ -1,0 +1,32 @@
+/* ckeditor / content area styles */
+.ckeditor-container {
+    padding: 6px;
+    border: 1px solid #eaeff2;
+}
+
+.editor-container {
+    clear: both;
+}
+
+.cke_skin_kuma {
+    padding: 0 !important;
+}
+
+.cke_skin_kuma .cke_toolbox {
+    border-width: 0 !important;
+    margin: 0 !important;
+}
+
+/* CKEditor adjustments, many marked as !important to override CKEditor's issues */
+.ui-autocomplete {
+    z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
+    max-height: 200px;
+    overflow: auto;
+}
+.cke_combo_text {
+    width: 100px !important;
+}
+.cke_combopanel {
+    width: 250px !important;
+    height: 300px !important;
+}

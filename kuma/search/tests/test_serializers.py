@@ -1,10 +1,15 @@
+import mock
 from nose.tools import ok_, eq_
 
+from django.utils import translation
+
+from kuma.wiki.search import WikiDocumentType
+
 from . import ElasticTestCase
-from ..fields import DocumentExcerptField, SearchQueryField, SiteURLField
-from ..models import DocumentType, Filter, FilterGroup
-from ..serializers import FilterWithGroupSerializer, DocumentSerializer
-from ..queries import DocumentS
+from ..fields import SearchQueryField, SiteURLField
+from ..models import Filter, FilterGroup
+from ..serializers import (DocumentSerializer, FilterSerializer,
+                           FilterWithGroupSerializer)
 
 
 class SerializerTests(ElasticTestCase):
@@ -25,40 +30,41 @@ class SerializerTests(ElasticTestCase):
             'group': {'name': 'Group', 'slug': 'group', 'order': 1},
             'shortcut': None})
 
+    @mock.patch('kuma.search.serializers._')
+    def test_filter_serializer_with_translations(self, _mock):
+        _mock.return_value = u'Juegos'
+        translation.activate('es')
+        filter_ = Filter(name='Games', slug='games')
+        serializer = FilterSerializer(filter_)
+        eq_(serializer.data, {
+            'name': u'Juegos',
+            'slug': u'games',
+            'shortcut': None})
+
     def test_document_serializer(self):
-        doc = DocumentS(DocumentType)
-        doc_serializer = DocumentSerializer(doc, many=True)
+        search = WikiDocumentType.search()
+        result = search.execute()
+        doc_serializer = DocumentSerializer(result, many=True)
         list_data = doc_serializer.data
         eq_(len(list_data), 7)
         ok_(isinstance(list_data, list))
         ok_(1 in [data['id'] for data in list_data])
 
-        doc_serializer = DocumentSerializer(doc[0], many=False)
+        doc_serializer = DocumentSerializer(result[0], many=False)
         dict_data = doc_serializer.data
         ok_(isinstance(dict_data, dict))
-        eq_(dict_data['id'], doc[0]['id'])
+        eq_(dict_data['id'], result[0].id)
+
+    def test_excerpt(self):
+        search = WikiDocumentType.search()
+        search = search.query('match', summary='CSS')
+        search = search.highlight(*WikiDocumentType.excerpt_fields)
+        result = search.execute()
+        data = DocumentSerializer(result).data
+        eq_(data[0]['excerpt'], u'A <em>CSS</em> article')
 
 
 class FieldTests(ElasticTestCase):
-
-    def test_DocumentExcerptField(self):
-
-        class Meta(object):
-            def __init__(self, highlight):
-                self.highlight = highlight
-
-        class FakeValue(DocumentType):
-            summary = 'just a summary'
-            es_meta = Meta({'content': ['this is <em>matching</em> text']})
-
-        field = DocumentExcerptField()
-        eq_(field.to_native(FakeValue()), 'this is <em>matching</em> text')
-
-        class FakeValue(DocumentType):
-            summary = 'just a summary'
-            es_meta = Meta({})
-
-        eq_(field.to_native(FakeValue()), FakeValue.summary)
 
     def test_SearchQueryField(self):
         request = self.get_request('/?q=test')

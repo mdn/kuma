@@ -1,6 +1,5 @@
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
-import test_utils
 
 from kuma.users.tests import UserTestCase
 from kuma.wiki.forms import RevisionForm, RevisionValidationForm, TreeMoveForm
@@ -102,7 +101,8 @@ class TreeMoveFormTests(UserTestCase):
 
     def test_form_properly_strips_leading_cruft(self):
         """
-        Tests that leading slash and {locale}/docs/ is removed if included
+        Tests that leading slash, trailing slash, and {locale}/docs/
+        are removed if included
         """
         comparisons = [
             ['/somedoc', 'somedoc'],  # leading slash
@@ -110,7 +110,8 @@ class TreeMoveFormTests(UserTestCase):
             ['/docs/one', 'one'],  # leading docs
             ['docs/one', 'one'],  # leading docs without slash
             ['fr/docs/one', 'one'],  # foreign locale with docs
-            ['docs/article-title/docs', 'article-title/docs'] # docs with later docs
+            ['docs/article-title/docs', 'article-title/docs'], # docs with later docs
+            ['/en-US/docs/something/', 'something']  # trailing slash
         ]
 
         for comparison in comparisons:

@@ -7,7 +7,7 @@ from django.conf import settings
 
 from kuma.users.tests import UserTestCase
 from kuma.wiki.tests import revision, WikiTestCase
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from ..models import Attachment
 from ..utils import make_test_file
@@ -43,7 +43,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         # now stick it in/on a document
         attachment = Attachment.objects.get(title=title)
         rev = revision(content='<img src="%s" />' % attachment.get_file_url(),
-                      save=True)
+                       save=True)
 
         # view it and verify markup is escaped
         response = self.client.get(reverse('wiki.edit_document', args=(rev.slug,),

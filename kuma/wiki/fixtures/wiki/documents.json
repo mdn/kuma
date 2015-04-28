@@ -23,7 +23,7 @@
             "current_revision": 23,
             "modified": "2013-06-06 05:54:18",
             "is_template": false,
-            "html": "<p>the keyword video only appears in the body of this article\n</p>",
+            "html": "<p>the keyword cupcake only appears in the body of this article\n</p>",
             "slug": "article-title-2"
         }
     },
@@ -36,8 +36,8 @@
             "locale": "en-US",
             "is_template": false,
             "modified": "2013-06-06 05:54:18",
-            "html": "",
-            "slug": "article-title-3"
+            "html": "<p>A CSS article</p>",
+            "slug": "CSS/article-title-3"
         }
     },
     {

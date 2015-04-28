@@ -5,7 +5,7 @@ from allauth.socialaccount.providers.oauth2.views import (OAuth2LoginView,
                                                           OAuth2CallbackView)
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 
 class KumaGitHubOAuth2Adapter(GitHubOAuth2Adapter):

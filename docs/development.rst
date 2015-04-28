@@ -48,7 +48,7 @@ If you're updating the Stylus CSS files, you'll need to compile them before you 
 
 	./scripts/compile-stylesheets
 
-The relevant CSS files will be generated and placed within the `media/redesign/css` directory. You can add a ``-w`` flag to that call to compile stylesheets upon save.
+The relevant CSS files will be generated and placed within the `media/css` directory. You can add a ``-w`` flag to that call to compile stylesheets upon save.
 
 Hacking on bleeding edge features
 =================================
@@ -88,7 +88,7 @@ Running the test suite is easy::
 Note that this will try (and fail) to run tests that depend on apps disabled
 via ``INSTALLED_APPS``. You should run a subset of tests::
 
-    ./manage.py test actioncounters authkeys contentflagging devmo landing kpi kuma
+    ./manage.py test kuma
 
 For more information, see the :doc:`test documentation <tests>`.
 
@@ -103,9 +103,6 @@ Coding Conventions
 
 Tests
 -----
-
-* Avoid naming test files ``test_utils.py``, since we use a library with the
-  same name. Use ``test__utils.py`` instead.
 
 * If you're expecting ``reverse`` to return locales in the URL, use
   ``LocalizingClient`` instead of the default client for the ``TestCase``

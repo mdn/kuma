@@ -1,0 +1,20 @@
+/* The .no-details styles will get applied only if JavaScript is enabled and
+<details> is not natively supported. Add focus styles (for keyboard
+accessibility) */
+.no-details {
+    summary {
+        cursor: pointer;
+    }
+    summary:before {
+        set-font-size(1.25em);
+        bidi-value(float, left, right);
+        content: '+';
+        margin-top: -.15em;
+        bidi-style(margin-left, -15px, margin-right, 0);
+    }
+    &.open summary:before {
+        content: '–';
+        margin-top: -.2em;
+        bidi-style(margin-left, -13px, margin-right, 0);
+    }
+}

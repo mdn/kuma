@@ -15,7 +15,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
-from django.core.cache import cache
 from django.db.models import Q
 from django.test.client import (FakePayload, encode_multipart,
                                 BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT)
@@ -25,24 +24,22 @@ from django.utils.encoding import smart_str
 import constance.config
 from waffle.models import Flag, Switch
 
-from authkeys.models import Key
-from devmo.tests import override_constance_settings
-from . import WikiTestCase, FakeResponse
-
+from kuma.authkeys.models import Key
+from kuma.core.cache import memcache as cache
+from kuma.core.helpers import urlparams
+from kuma.core.models import IPBan
+from kuma.core.tests import post, get, override_constance_settings
+from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase, user
-from kuma.wiki.constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
-from kuma.wiki.content import get_seo_description
-from kuma.wiki.events import EditDocumentEvent
-from kuma.wiki.models import (Document, Revision, RevisionIP, DocumentZone,
-                              DocumentTag)
-from kuma.wiki.tests import (doc_rev, document, new_document_data, revision,
-                             normalize_html, create_template_test_users,
-                             make_translation)
-from kuma.wiki.forms import MIDAIR_COLLISION
 
-from sumo.tests import post, get
-from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from ..content import get_seo_description
+from ..events import EditDocumentEvent
+from ..models import (Document, Revision, RevisionIP, DocumentZone,
+                      DocumentTag, DocumentDeletionLog)
+from ..tests import (doc_rev, document, new_document_data, revision,
+                     normalize_html, create_template_test_users,
+                     make_translation, WikiTestCase, FakeResponse)
+from ..forms import MIDAIR_COLLISION
 
 
 class RedirectTests(UserTestCase, WikiTestCase):
@@ -304,6 +301,13 @@ class ViewTests(UserTestCase, WikiTestCase):
         json_obj = json.loads(resp.content)
         eq_(json_obj['subpages'][0]['title'], 'A Child')
 
+        # Test if we are serving an error json if document does not exist
+        no_doc_url = reverse('wiki.get_children', args=['nonexistentDocument'],
+            locale=settings.WIKI_DEFAULT_LANGUAGE)
+        resp = self.client.get(no_doc_url)
+        result = json.loads(resp.content)
+        eq_(result, {'error': 'Document does not exist.'})
+
     def test_summary_view(self):
         """The ?summary option should restrict document view to summary"""
         d, r = doc_rev("""
@@ -334,6 +338,33 @@ class PermissionTests(UserTestCase, WikiTestCase):
         super(PermissionTests, self).setUp()
         self.perms, self.groups, self.users, self.superuser = (
             create_template_test_users())
+
+    def test_template_revert_permission(self):
+        locale = 'en-US'
+        slug = 'Template:test-revert-perm'
+        doc = document(save=True, slug=slug, title=slug, locale=locale)
+        rev = revision(save=True, document=doc)
+
+        # Revision template should not show revert button
+        url = reverse('wiki.revision', args=([doc.full_path, rev.id]))
+        resp = self.client.get(url)
+        ok_('Revert' not in resp.content)
+
+        # Revert POST should give permission denied to user without perm
+        username = self.users['none'].username
+        self.client.login(username=username, password='testpass')
+        url = reverse('wiki.revert_document',
+                      args=([doc.full_path, rev.id]))
+        resp = self.client.post(url, {'comment': 'test'})
+        eq_(403, resp.status_code)
+
+        # Revert POST should give success to user with perm
+        username = self.users['change'].username
+        self.client.login(username=username, password='testpass')
+        url = reverse('wiki.revert_document',
+                      args=([doc.full_path, rev.id]))
+        resp = self.client.post(url, {'comment': 'test'}, follow=True)
+        eq_(200, resp.status_code)
 
     def test_template_permissions(self):
         msg = ('edit', 'create')
@@ -408,10 +439,9 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
                           args=[doc.slug],
                           locale=settings.WIKI_DEFAULT_LANGUAGE)
 
-        # There should be no last-modified date cached for this document yet.
-        cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
-                     doc.natural_cache_key)
-        ok_(not cache.get(cache_key))
+        # There should be a last-modified date cached for this document already
+        cache_key = doc.last_modified_cache_key
+        ok_(cache.get(cache_key))
 
         # Now, try a request, and ensure that the last-modified header is
         # present.
@@ -419,7 +449,7 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
         ok_(response.has_header('last-modified'))
         last_mod = response['last-modified']
 
-        # Try another request, using If-Modified-Since. THis should be a 304
+        # Try another request, using If-Modified-Since. This should be a 304
         response = self.client.get(get_url, follow=False,
                                    HTTP_IF_MODIFIED_SINCE=last_mod)
         eq_(304, response.status_code)
@@ -433,7 +463,7 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
 
         # Edit the document, ensure the last-modified has been invalidated.
         revision(document=doc, content="New edits", save=True)
-        ok_(not cache.get(cache_key))
+        ok_(cache.get(cache_key) != cached_last_mod)
 
         # This should be another 304, but the last-modified in response and
         # cache should have changed.
@@ -451,16 +481,25 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
         self.url = reverse('wiki.document',
                            args=[doc.slug],
                            locale=settings.WIKI_DEFAULT_LANGUAGE)
-        cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
-                     doc.natural_cache_key)
-        ok_(not cache.get(cache_key))
-        response = self.client.get(self.url, follow=False)
-        ok_(cache.get(cache_key))
+        cache_key = doc.last_modified_cache_key
+        last_mod = cache.get(cache_key)
+        ok_(last_mod)  # exists already because pre-filled
+        self.client.get(self.url, follow=False)
+        ok_(cache.get(cache_key) == last_mod)
 
         # Now delete the doc and make sure there's no longer
         # last-modified data in the cache for it afterward.
         doc.delete()
         ok_(not cache.get(cache_key))
+
+    def test_deleted_doc_returns_404(self):
+        """Requesting a deleted doc returns 404"""
+        doc, rev = doc_rev()
+        doc.delete()
+        DocumentDeletionLog.objects.create(locale=doc.locale, slug=doc.slug,
+                                           user=rev.creator, reason="test")
+        response = self.client.get(doc.get_absolute_url(), follow=False)
+        eq_(404, response.status_code)
 
 
 class ReadOnlyTests(UserTestCase, WikiTestCase):
@@ -541,6 +580,38 @@ class ReadOnlyTests(UserTestCase, WikiTestCase):
         resp = self.client.get(self.edit_url)
         eq_(403, resp.status_code)
         ok_('Your profile has been banned from making edits.' in resp.content)
+
+
+class BannedIPTests(UserTestCase, WikiTestCase):
+    """Tests readonly scenarios"""
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+    localizing_client = True
+
+    def setUp(self):
+        super(BannedIPTests, self).setUp()
+        self.ip = '127.0.0.1'
+        self.ip_ban = IPBan.objects.create(ip=self.ip)
+        self.doc, rev = doc_rev()
+        self.edit_url = reverse('wiki.edit_document',
+                                args=[self.doc.full_path])
+
+    def tearDown(self):
+        cache.clear()
+
+    def test_banned_ip_cant_get_edit(self):
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
+        eq_(403, response.status_code)
+
+    def test_banned_ip_cant_post_edit(self):
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
+        eq_(403, response.status_code)
+
+    def test_banned_ip_can_still_get_articles(self):
+        response = self.client.get(self.doc.get_absolute_url(),
+                                   REMOTE_ADDR=self.ip)
+        eq_(200, response.status_code)
 
 
 class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
@@ -1772,8 +1843,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
     def test_clone(self):
         self.client.login(username='admin', password='testpass')
-        slug = 'my_doc'
-        title = 'My Doc'
+        slug = None 
+        title = None
         content = '<p>Hello!</p>'
 
         test_revision = revision(save=True, title=title, slug=slug,
@@ -1786,7 +1857,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         page = pq(response.content)
 
         eq_(page.find('input[name=title]')[0].value, title)
-        eq_(page.find('input[name=slug]')[0].value, slug + '_clone')
+        eq_(page.find('input[name=slug]')[0].value, slug)
         eq_(page.find('textarea[name=content]')[0].value, content)
 
     def test_localized_based_on(self):
@@ -1857,7 +1928,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(str(parent.id) in content.html())
 
     @attr('tags')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_document_tags(self, get_current):
         """Document tags can be edited through revisions"""
         data = new_document_data()
@@ -1918,7 +1989,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert_tag_state(ts2, ts1)
 
     @attr('review_tags')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_review_tags(self, get_current):
         """Review tags can be managed on document revisions"""
         get_current.return_value.domain = 'su.mo.com'
@@ -2350,7 +2421,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev_ip = RevisionIP.objects.get(revision=rev)
         eq_('127.0.0.1', rev_ip.ip)
 
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_first_edits(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'
 
@@ -2385,7 +2456,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         def _check_message_for_headers(message, username):
             ok_("%s made their first edit" % username in message.subject)
-            eq_({'X-Kuma-Document-Url': "dev.mo.org%s" % doc.get_absolute_url(),
+            eq_({'X-Kuma-Document-Url': "https://dev.mo.org%s" % doc.get_absolute_url(),
                  'X-Kuma-Editor-Username': username}, message.extra_headers)
 
         testuser_message = mail.outbox[0]
@@ -3253,7 +3324,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         eq_(1, p.find('#doc-render-raw-fallback').length)
 
     @attr('schedule_rendering')
-    @mock.patch_object(Document, 'schedule_rendering')
+    @mock.patch.object(Document, 'schedule_rendering')
     @mock.patch('kuma.wiki.kumascript.get')
     def test_schedule_rendering(self, mock_kumascript_get,
                                 mock_document_schedule_rendering):

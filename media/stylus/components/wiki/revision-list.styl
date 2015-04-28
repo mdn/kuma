@@ -1,0 +1,103 @@
+/* used only by document_revisons */
+
+.revision-list-head {
+    margin: $grid-spacing 0;
+
+    ul {
+        display: inline;
+    }
+
+    li {
+        display: inline-block;
+        list-style: none;
+        padding: 0 5px;
+        font-weight: bold;
+    }
+}
+
+.revision-list-contain {
+    set-smaller-font-size();
+}
+
+.revision-list-controls:before {
+    content: '';
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    width: 48px;
+    background: url("/media/img/compare.arrows.png") 100% 0 no-repeat;
+    vertical-align: top;
+}
+
+html[dir=rtl] .revision-list-controls:before {
+    transform: scaleX(-1);
+}
+
+.revision-list-controls-top {
+    padding-bottom: 5px;
+    &:before {
+        top: 5px;
+    }
+}
+
+.revision-list-controls-bottom {
+    padding-top: 10px;
+    &:before {
+        background-position: 100% 100%;
+        top: -5px;
+    }
+}
+
+.revision-list {
+    margin: 5px 0;
+
+    li {
+        list-style: none;
+        padding: 4px 0;
+
+        &:nth-child(odd) {
+            background: rgba-fallback(rgba(170, 160, 130, .1));
+        }
+    }
+}
+
+.revision-list-cell {
+    display: inline-block;
+}
+
+.revision-list-radio {
+    text-align: center;
+    width: 15px;
+}
+
+.revision-list-prev {
+    bidi-value(padding, 0 0 0 10px, 0 10px 0 0);
+    width: 45px;
+}
+
+.revision-list-date {
+    bidi-value(padding, 0 0 0 10px, 0 10px 0 0);
+    width: 190px;
+}
+
+.revision-list-status {
+    width: 80px;
+
+    a {
+        font-weight: bold;
+    }
+}
+
+.revision-list-creator {
+    color: #333;
+    width: 175px;
+}
+
+.revision-list-comment {
+    width: 460px;
+}
+
+/* make the Compare selected revisions button align to layout */
+.revision-list-controls .fixed {
+    bidi-style(left, 24px, right, auto);
+}

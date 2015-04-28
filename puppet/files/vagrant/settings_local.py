@@ -18,10 +18,6 @@ MDC_PAGES_DIR    = '/home/vagrant/mdc_pages'
 
 GOOGLE_MAPS_API_KEY = "ABQIAAAANRj9BHQi5ireVluCwVy0yRSrufPN8BjQWjkoRva24PCQEXS2OhSXu2BEgUH5PmGOmW71r2-tEuOVuQ"
 
-RECAPTCHA_USE_SSL = True
-RECAPTCHA_PUBLIC_KEY = '6LdX8cISAAAAAA9HRXmzrcRSFsUoIK9u0nWpvGS_'
-RECAPTCHA_PRIVATE_KEY = '6LdX8cISAAAAACkC1kqYmpeSf-1geTmLzrLnq0t6'
-
 BITLY_USERNAME = 'lmorchard'
 BITLY_API_KEY = "R_2653e6351e31d02988b3da31dac6e2c0"
 
@@ -73,28 +69,6 @@ DEVSERVER_MODULES = (
     #'devserver.modules.profile.LineProfilerModule',
 )
 
-# The default database should point to the master.
-DATABASES = {
-    'default': {
-        'NAME': 'kuma',
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'USER': 'kuma',
-        'PASSWORD': 'kuma',
-        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
-    },
-}
-
-MIGRATION_DATABASES = {
-    'wikidb': {
-        'NAME': 'wikidb',
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'USER': 'wikiuser',
-        'PASSWORD': '2yeOr7ByBUMBiB4z',
-    },
-}
-
 # This is used to hash some things in Django.
 SECRET_KEY = 'jenny8675309'
 
@@ -110,12 +84,18 @@ KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
 
 ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
 
+# Elasticsearch related settings.
+ES_DEFAULT_NUM_REPLICAS = 0
+ES_DEFAULT_NUM_SHARDS = 5
+ES_DEFAULT_REFRESH_INTERVAL = '5s'
 ES_DISABLED = False
-ES_URLS = ['http://127.0.0.1:9200']
-ES_INDEXES = {'default': 'main_index'}
 ES_INDEX_PREFIX = 'mdn'
-ES_LIVE_INDEX = True
+ES_INDEXES = {'default': 'main_index'}
+# Specify the extra timeout in seconds for the indexing ES connection.
 ES_INDEXING_TIMEOUT = 30
+ES_LIVE_INDEX = True
+ES_URLS = ['localhost:9200']
+
 
 # See https://mana.mozilla.org/wiki/display/websites/Developer+Cluster#DeveloperCluster-Sentry
 SENTRY_DSN = ''

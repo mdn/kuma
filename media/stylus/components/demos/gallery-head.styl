@@ -1,0 +1,85 @@
+@require '../../includes/vars';
+@require '../../includes/mixins';
+
+/* Gallery Head */
+.gallery-head {
+  clear: both;
+  position: relative;
+  z-index: 11;
+}
+.gallery-head:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+
+.section-demos .gallery-head {
+  margin: 0 0 20px;
+  border: 0;
+  padding: 8px 20px;
+  color: #fff;
+  background: #000;
+  background: -moz-linear-gradient(top, #333 0, #000 100%);
+  background: -webkit-linear-gradient(top, #333 0, #000 100%);
+  background: linear-gradient(top, #333 0, #000 100%);
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.gallery-head .count {
+  float: left;
+  text-transform: uppercase;
+}
+.gallery-head .count .button {
+  font-size: 0.636em;
+  margin-left: 15px;
+  position: relative;
+  top: -2px;
+}
+.section-demos .gallery-head .count {
+  margin: -2px 20px -1px 0;
+  font: normal 22px/1.2 $heading-font-family;
+  letter-spacing: 2px;
+}
+.gallery-head .sort {
+  float: right;
+  font-size: 0.786em;
+  margin: 0.5em 0 0;
+}
+.gallery-head .sort li {
+  display: inline;
+  padding: 0;
+  margin: 0 0 0 20px;
+  background: none;
+}
+.section-demos .gallery-head .sort {
+  margin: 0.35em 0 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.section-demos .gallery-head .sort a {
+  color: #fff;
+  padding-bottom: 6px;
+}
+.section-demos .gallery-head .sort strong {
+  font-weight: normal;
+  color: $link-color;
+  padding-bottom: 6px;
+  background: url("/media/img/demos/sort-arrow.png?v=2") center bottom no-repeat;
+}
+
+@media $media-query-mobile {
+    .section-demos .gallery-head .sort {
+        margin: 10px 0 -10px 0;
+        font-size: 1em;
+        text-align:right;
+    }
+
+    .section-demos .gallery-head .sort li {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+}

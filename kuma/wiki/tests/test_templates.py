@@ -20,18 +20,16 @@ from django.test.utils import override_settings
 import constance.config
 from waffle.models import Flag
 
-from devmo.tests import SkippedTestCase
+from kuma.core.helpers import urlparams
+from kuma.core.tests import SkippedTestCase, post, get
+from kuma.core.urlresolvers import reverse
 from kuma.wiki.events import EditDocumentEvent
 from kuma.wiki.constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from kuma.wiki.models import (Document, Revision, HelpfulVote,
-                              DocumentTag, Attachment)
-from kuma.wiki.tests import (WikiTestCase, document, revision, new_document_data,
-                             create_topical_parents_docs)
+                              DocumentTag)
+from kuma.wiki.tests import (WikiTestCase, document, revision,
+                             new_document_data, create_topical_parents_docs)
 from kuma.users.tests import UserTestCase
-
-from sumo.urlresolvers import reverse
-from sumo.helpers import urlparams
-from sumo.tests import post, get
 
 
 DOCUMENT_EDITED_EMAIL_CONTENT = """
@@ -261,7 +259,7 @@ class RevisionTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_('Revision id: %s' % r.id,
             doc('div.revision-info li.revision-id').text())
-        eq_(d.title, doc('h1').text())
+        eq_('Revision %s of %s' % (r.id, d.title), doc('h1').text())
         eq_(r.content,
             doc('#doc-source pre').text())
         eq_('Created: Jan 1, 2011 12:00:00 AM',
@@ -319,7 +317,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         eq_("Name Your Article", doc('input#id_title').attr('placeholder'))
         eq_("10", doc('input#id_category').attr('value'))
 
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_new_document_POST(self, get_current):
         """HTTP POST to new document URL creates the document."""
         get_current.return_value.domain = 'testserver'
@@ -340,7 +338,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         eq_(data['summary'], r.summary)
         eq_(data['content'], r.content)
 
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_new_document_other_locale(self, get_current):
         """Make sure we can create a document in a non-default locale."""
         # You shouldn't be able to make a new doc in a non-default locale
@@ -488,8 +486,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         eq_(doc('#id_content')[0].value, r.content)
 
     @override_settings(CELERY_ALWAYS_EAGER=True)
-    @mock.patch_object(Site.objects, 'get_current')
-    @mock.patch_object(settings._wrapped, 'TIDINGS_CONFIRM_ANONYMOUS_WATCHES', False)
+    @mock.patch.object(Site.objects, 'get_current')
+    @mock.patch.object(settings._wrapped, 'TIDINGS_CONFIRM_ANONYMOUS_WATCHES', False)
     def test_new_revision_POST_document_with_current(self, get_current):
         """HTTP POST to new revision URL creates the revision on a document.
 
@@ -519,10 +517,11 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         # Assert notifications fired and have the expected content:
         # 1 email for the first time edit notification
         # 1 email for the EditDocumentEvent to sam@example.com
-        eq_(2, len(mail.outbox)) # Regression check:
-                                 # messing with context processors can
-                                 # cause notification emails to error
-                                 # and stop being sent.
+        # Regression check:
+        # messing with context processors can
+        # cause notification emails to error
+        # and stop being sent.
+        eq_(2, len(mail.outbox))
         first_edit_email = mail.outbox[0]
         expected_to = [constance.config.EMAIL_LIST_FOR_FIRST_EDITS]
         expected_subject = u'[MDN] %(username)s made their first edit, to: %(title)s' % ({'username': new_rev.creator.username, 'title': self.d.title})
@@ -541,8 +540,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                                                                     self.d.slug
             in edited_email.body)
 
-    @mock.patch_object(EditDocumentEvent, 'fire')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(EditDocumentEvent, 'fire')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_new_revision_POST_document_without_current(
             self, get_current, edited_fire):
         """HTTP POST to new revision URL creates the revision on a document.
@@ -853,8 +852,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         eq_(0, self.d.translations.count())
 
-    @mock.patch_object(EditDocumentEvent, 'fire')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(EditDocumentEvent, 'fire')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_first_translation_to_locale(self, get_current, edited_fire):
         """Create the first translation of a doc to new locale."""
         get_current.return_value.domain = 'testserver'
@@ -883,8 +882,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         rev_es.save()
         return rev_es
 
-    @mock.patch_object(EditDocumentEvent, 'fire')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(EditDocumentEvent, 'fire')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_another_translation_to_locale(self, get_current, edited_fire):
         """Create the second translation of a doc."""
         get_current.return_value.domain = 'testserver'

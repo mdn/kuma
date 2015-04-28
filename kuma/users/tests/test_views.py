@@ -16,8 +16,8 @@ from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.tests import MockedResponse, mocked_response
 
-from devmo.tests import mock_lookup_user
-from sumo.urlresolvers import reverse
+from kuma.core.tests import mock_lookup_user
+from kuma.core.urlresolvers import reverse
 
 from . import UserTestCase, user, email
 from ..models import UserProfile, UserBan
@@ -156,7 +156,7 @@ class ProfileViewsTest(UserTestCase):
         eq_('IRC: ' + profile.irc_nickname,
             doc.find('#profile-head.vcard .irc').text())
         eq_(profile.bio,
-            doc.find('#profile-head.vcard .bio').text())
+            doc.find('#profile-head.vcard .profile-bio').text())
 
     def test_my_profile_view(self):
         u = User.objects.get(username='testuser')
@@ -198,7 +198,7 @@ class ProfileViewsTest(UserTestCase):
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
 
-        edit_button = doc.find('#profile-head .edit #edit-profile')
+        edit_button = doc.find('#profile-head .profile-buttons #edit-profile')
         eq_(1, edit_button.length)
 
         url = edit_button.attr('href')
@@ -230,11 +230,11 @@ class ProfileViewsTest(UserTestCase):
 
         eq_(1, doc.find('#profile-head').length)
         eq_(new_attrs['profile-fullname'],
-            doc.find('#profile-head .main .fn').text())
+            doc.find('#profile-head .fn').text())
         eq_(new_attrs['profile-title'],
-            doc.find('#profile-head .info .title').text())
+            doc.find('#profile-head .profile-info .title').text())
         eq_(new_attrs['profile-organization'],
-            doc.find('#profile-head .info .org').text())
+            doc.find('#profile-head .profile-info .org').text())
 
         profile = UserProfile.objects.get(user__username=profile.user.username)
         eq_(new_attrs['profile-fullname'], profile.fullname)
@@ -595,7 +595,8 @@ class AllauthPersonaTestCase(UserTestCase):
                 'email': persona_signup_email,
             }
             self.client.post(reverse('persona_login'), follow=True)
-            data = {'username': persona_signup_username,
+            data = {'website': '',
+                    'username': persona_signup_username,
                     'email': persona_signup_email,
                     'newsletter': True,
                     'terms': True}
@@ -643,7 +644,8 @@ class AllauthPersonaTestCase(UserTestCase):
                 'email': persona_signup_email,
             }
             self.client.post(reverse('persona_login'), follow=True)
-            data = {'username': persona_signup_username,
+            data = {'website': '',
+                    'username': persona_signup_username,
                     'email': persona_signup_email,
                     'terms': True}
             signup_url = reverse('socialaccount_signup',
@@ -763,6 +765,7 @@ class KumaGitHubTests(UserTestCase):
 
         unverified_email = 'o.ctocat@gmail.com'
         data = {
+            'website': '',
             'username': 'octocat',
             'email': SignupForm.other_email_value,  # = use other_email
             'other_email': unverified_email,
@@ -852,7 +855,7 @@ class KumaGitHubTests(UserTestCase):
                            {'content-type': 'application/json'}),
                 MockedResponse(200,
                                self.mocked_user_response %
-                               {'username': username, 
+                               {'username': username,
                                 'public_email': json.dumps(public_email)}),
                 MockedResponse(200,
                                self.mocked_email_response %

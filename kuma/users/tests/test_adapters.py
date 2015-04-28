@@ -8,7 +8,7 @@ from django.test import RequestFactory
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.models import SocialLogin, SocialAccount
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 from kuma.users.adapters import KumaSocialAccountAdapter, KumaAccountAdapter
 
 from . import UserTestCase

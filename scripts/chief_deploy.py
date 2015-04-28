@@ -43,7 +43,6 @@ def update_assets(ctx):
 @task
 def database(ctx):
     with ctx.lcd(settings.SRC_DIR):
-        ctx.local("python2.6 ./vendor/src/schematic/schematic migrations")  # schematic (old)
         ctx.local("python2.6 manage.py syncdb --noinput")                   # Django
         ctx.local("python2.6 manage.py migrate --noinput")                  # South (new)
         ctx.local("python2.6 manage.py update_badges")
@@ -71,7 +70,7 @@ def prime_app(ctx):
 @hostgroups(settings.CELERY_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def update_celery(ctx):
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
-    ctx.remote('/usr/bin/supervisorctl restart %s' % settings.CELERY_SERVICE)
+    ctx.remote('/usr/bin/supervisorctl mrestart celery\*')
 
 # As far as I can tell, Chief does not pass the username to commander,
 # so I can't give a username here: (
@@ -91,7 +90,6 @@ def update_info(ctx):
         ctx.local("git log -3")
         ctx.local("git status")
         ctx.local("git submodule status")
-        ctx.local("python2.6 ./vendor/src/schematic/schematic -v migrations/")
         ctx.local("python2.6 ./manage.py migrate --list")
         with ctx.lcd("locale"):
             ctx.local("svn info")
