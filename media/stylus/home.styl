@@ -128,18 +128,6 @@ $home-involved-background-y = 50px;
 
 /* homepage masthead (search, feature callouts) */
 .home-masthead {
-
-    h1 {
-        color: $blue-background-text-color;
-        margin: 0 auto;
-        width: 60%;
-
-        span {
-            bidi-style(padding-left, 20%, padding-right, 0);
-            display: block;
-        }
-    }
-
     .search-form {
       padding: ($grid-spacing * 2) 0;
 
@@ -469,7 +457,7 @@ $callout-icon-width = 90px;
 @media $media-query-tablet {
     #home {
         .home-masthead {
-            h1, input {
+            input {
                 width: 90%;
             }
         }
@@ -485,9 +473,8 @@ $callout-icon-width = 90px;
 /* mobile */
 @media $media-query-mobile {
     #home {
-
         .home-masthead {
-            h1, input {
+            input {
                 width: 90%;
 
                 span {
@@ -531,7 +518,7 @@ $callout-icon-width = 90px;
             }
         }
 
-        .home-masthead h1, .home-search-form {
+        .home-search-form {
             display: none;
         }
 

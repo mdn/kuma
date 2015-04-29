@@ -30,19 +30,6 @@
 <!-- top search area -->
 <div class="home-masthead"><div class="center">
 
-
-    {# We want to A/B test the removal of this heading. If we try to remove it
-       with Optimizely, it flashes briefly before disappearing. By using Waffle
-       and percent-based activation, we can achieve the same effect without
-       needing to remove the heading on the client side after the fact. We can
-       then later use the Optimizely API to bucket visitors accordingly for
-       accurate reporting.
-
-       This can be removed once the homepage heading A/B test is completed. #}
-    {% if not waffle.flag('hide_homepage_heading') %}
-        <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
-    {% endif %}
-
     {% if waffle.flag('search_suggestions') %}
         <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
             <div class="home-search-form search-form">
