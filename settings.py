@@ -420,6 +420,8 @@ MIDDLEWARE_CLASSES = (
 
     'badger.middleware.RecentBadgeAwardsMiddleware',
     'kuma.wiki.badges.BadgeAwardingMiddleware',
+
+    'waffle.middleware.WaffleMiddleware',
 )
 
 # Auth
