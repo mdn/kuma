@@ -119,7 +119,7 @@
                 <div class="approved">
                   <section class="page-tags">
                   <h3>{{ _('English tags') }}</h3>
-                    {% set parent_tags = parent.tags.all() %}
+                    {% set parent_tags = parent.tags.all().order_by('name') %}
                     <div id="translate-tags">
                       {% if parent_tags | length %}
                         <ul class="tags">
@@ -138,7 +138,7 @@
                 <div class="localized">
                   <section id="page-tags" class="page-tags">
                   <h3>{{ _('{locale} tags')|f(locale=language) }}</h3>
-                    <input id="tagit_tags" type="text" name="tags" value="{% if document.tags %}{% for tag in document.tags.all() %}{{ tag.name }},{% endfor %}{% endif %}" maxlength="255" class="tags">
+                    <input id="tagit_tags" type="text" name="tags" value="{% if document.tags %}{% for tag in document.tags.all().order_by('name') %}{{ tag.name }},{% endfor %}{% endif %}" maxlength="255" class="tags">
                   </section>
                 </div>
               </div>

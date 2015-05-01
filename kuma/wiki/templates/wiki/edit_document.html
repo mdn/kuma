@@ -169,7 +169,7 @@
             <input type="hidden" name="form" value="rev" />
             {{ revision_form.hidden_fields()|join|safe }}
 
-            {% set tags = document.tags.all() %}
+            {% set tags = document.tags.all().order_by('name') %}
             <section id="page-tags" class="page-tags wiki-block">
               <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }} <a href="{{ wiki_url('Project:MDN/Contributing/Editor_guide/Editing#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="icon-question-sign editor-help-icon"></i></a></h3>
               <p>
