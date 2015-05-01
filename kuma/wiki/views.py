@@ -1308,7 +1308,6 @@ def move(request, document_slug, document_locale):
 @process_document_path
 @check_readonly
 @superuser_required
-@transaction.autocommit
 def repair_breadcrumbs(request, document_slug, document_locale):
     doc = get_object_or_404(Document,
                             locale=document_locale,
