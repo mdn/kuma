@@ -1857,7 +1857,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         eq_(page.find('input[name=title]')[0].value, title)
         eq_(page.find('input[name=slug]')[0].value, slug)
-        eq_(page.find('textarea[name=content]')[0].value, content)
+        self.assertHTMLEqual(page.find('textarea[name=content]')[0].value, content)
 
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
