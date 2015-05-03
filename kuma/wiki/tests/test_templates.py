@@ -482,7 +482,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                                            args=[self.d.full_path, r.id]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(doc('#id_content')[0].value, r.content)
+        self.assertHTMLEqual(doc('#id_content')[0].value.strip(),
+                             r.content.strip())
 
     @override_settings(CELERY_ALWAYS_EAGER=True)
     @mock.patch.object(Site.objects, 'get_current')
