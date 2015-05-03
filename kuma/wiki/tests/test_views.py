@@ -80,7 +80,10 @@ class RedirectTests(UserTestCase, WikiTestCase):
         rev = revision(document=doc, content=html, is_approved=True, save=True)
 
         response = self.client.get(doc.get_absolute_url(), follow=True)
-        self.assertContains(response, html)
+        eq_(200, response.status_code)
+        response_html = pq(response.content)
+        article_body = response_html.find('#wikiArticle').html()
+        self.assertHTMLEqual(html, article_body)
 
 
 class LocaleRedirectTests(UserTestCase, WikiTestCase):
