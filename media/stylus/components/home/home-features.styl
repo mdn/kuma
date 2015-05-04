@@ -1,0 +1,46 @@
+/* List of four feature columns within the masthead */
+.home-features {
+    &, a {
+        color: $blue-background-text-color !important;
+    }
+
+    a {
+        text-decoration: underline;
+        outline-color: $blue-background-text-color;
+    }
+
+    h3 {
+        set-larger-font-size();
+        font-weight: bold;
+        font-family: 'Open Sans Extra Bold', sans-serif;
+
+        {$selector-icon} {
+            bidi-style(margin-right, $icon-margin, margin-left, 0);
+        }
+    }
+
+    li {
+        padding: 4px 0;
+    }
+}
+
+.column-home-features {
+    @extend $column-strip;
+}
+
+
+@media $media-query-mobile {
+
+    .column-home-features {
+        width: auto !important;
+        float: none;
+        margin-bottom: $grid-spacing;
+    }
+
+    .column-home-features {
+        li {
+            display: inline-block;
+            bidi-style(padding-right, $grid-spacing, padding-left, 0);
+        }
+    }
+}

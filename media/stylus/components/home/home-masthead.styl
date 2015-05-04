@@ -1,0 +1,63 @@
+/*
+homepage masthead (search, feature callouts)
+====================================================================== */
+.home-masthead {
+    padding: $first-content-top-padding 0;
+
+    h1 {
+        color: $blue-background-text-color;
+        margin: 0 auto;
+        width: 60%;
+
+        span {
+            bidi-style(padding-left, 20%, padding-right, 0);
+            display: block;
+        }
+    }
+}
+
+.search-form {
+    padding: ($grid-spacing * 2) 0;
+
+    /* Only use the "big search" style when the search filter feature
+    is not enabled. */
+    > input#home-q {
+        big-search();
+    }
+
+    input#home-q {
+        set-placeholder-style(letter-spacing, -1px);
+        set-placeholder-style(color, $text-color);
+        color: $text-color;
+        background-color: #fff;
+    }
+}
+
+
+
+@media $media-query-tablet {
+
+    .home-masthead {
+        h1, input {
+            width: 90%;
+        }
+    }
+}
+
+@media $media-query-mobile {
+
+    .home-masthead {
+        h1, input {
+            width: 90%;
+
+            span {
+                padding-left: 0;
+            }
+        }
+    }
+
+    .home-masthead h1,
+    .home-search-form {
+        display: none;
+    }
+}
