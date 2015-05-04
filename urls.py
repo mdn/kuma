@@ -71,6 +71,7 @@ if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
 
 if settings.SERVE_MEDIA:
+    # /media
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
     urlpatterns += patterns('',
         (r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',

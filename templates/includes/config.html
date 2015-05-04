@@ -11,13 +11,12 @@
 
         // This represents the site configuration
         win.mdn = {
-            build: '{{ BUILD_ID_JS }}',
             // Properties and settings for CKEditor will go here
             ckeditor: {},
             // Feature test results and methods will be placed here
             features: {},
             // The path to media (images, CSS, JS) in MDN
-            mediaPath: '{{ MEDIA_URL }}',
+            mediaPath: '{{ STATIC_URL }}assets/',
             // Optimizely API
             optimizely: win['optimizely'] || [],
             // Site notifications
@@ -32,7 +31,8 @@
             wiki: {
                 autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
             },
-            searchFilters: {{ command_search_filters|jsonencode }}
+            prismPath: {% compressed_js('syntax-prism') %}
+            searchFilters: {{ command_search_filters|jsonencode }},
         };
 
         // Ensures gettext always returns something, is always set

@@ -4,7 +4,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki-revisions') }}
+    {% compressed_css('wiki-revisions') %}
 {% endblock %}
 
 {% block content %}
@@ -88,7 +88,7 @@
 
  {% block site_js %}
   {{ super() }}
-  {{ js('framebuster') }}
+  {% compressed_js('framebuster') %}
 
   <script type="text/javascript">
     $(document).ready(function() {

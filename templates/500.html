@@ -15,7 +15,7 @@
 
     <h1 class="page-title">Internal Server Error</h1>
     
-    <img src="{{ MEDIA_URL }}img/beast-500.png" alt="" class="beast 500">
+    <img src="{{ static('assets/img/beast-500.png') }}" alt="" class="beast 500">
 
     {% if error_message %}
       <ul class="messages errorlist">
@@ -44,5 +44,5 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('framebuster') }}
+    {% compressed_js('framebuster') %}
 {% endblock %}

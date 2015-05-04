@@ -94,5 +94,5 @@
 {% if waffle.flag('events_map') %}
 <script src="https://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key={{ google_maps_api_key }}" type="text/javascript"></script>
 {% endif %}
-{{ js('events') }}
+{% compressed_js('events') %}
 {% endblock %}

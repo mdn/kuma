@@ -9,7 +9,7 @@
     {% set image_url = badge.image.url %}
 {% else %}
     {# TODO: Put the URL for default badge image in settings #}
-    {% set image_url = "/media/img/default-badge.png" %}
+    {% set image_url = static("assets/img/default-badge.png") %}
 {% endif %}
 
 {% block pageid %}award_detail{% endblock %}
@@ -19,14 +19,14 @@
         title="{{ _('{title} (JSON)') | f(title=award) }}"
         href="{{ request.build_absolute_uri(url('badger.award_detail_json', badge.slug, award.pk)) }}" />
 
-     <meta property="og:type" content="article"> 
+     <meta property="og:type" content="article">
      <meta property="og:url" content="{{ award_url }}">
      <meta property="og:site_name" content="{{ settings.SITE_TITLE }}">
      <meta property="og:image" content="{{ request.build_absolute_uri(image_url) }}">
      <meta property="og:title" content="{{ badge.title }}">
-     <meta property="og:description" content="{{ award.user }} earned the badge &quot;{{ badge.title }}&quot; on {{ settings.SITE_TITLE }}!"> 
-     <meta property="og:updated_time" content="{{ award.created.isoformat() }}Z"> 
-     <meta property="article:published_time" content="{{ award.created.isoformat() }}Z"> 
+     <meta property="og:description" content="{{ award.user }} earned the badge &quot;{{ badge.title }}&quot; on {{ settings.SITE_TITLE }}!">
+     <meta property="og:updated_time" content="{{ award.created.isoformat() }}Z">
+     <meta property="article:published_time" content="{{ award.created.isoformat() }}Z">
      {% if award.creator %}
          <meta property="article:author" content="{{ request.build_absolute_uri(award.creator.get_absolute_url()) }}">
      {% endif %}
@@ -36,7 +36,7 @@
 {% endblock %}
 
 {% block intro %}
-    
+
 {% endblock %}
 
 {% block subcontent %}

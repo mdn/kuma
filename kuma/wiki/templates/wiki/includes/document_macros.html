@@ -225,7 +225,7 @@
     {% set short_share_url_gplus = share_url_gplus | bitly_shorten %}
 
     {% set twitter_url = 'http://twitter.com/share'|urlparams(url=short_share_url_twitter, text=share_text) %}
-    {% set facebook_url = 'http://facebook.com/sharer.php?s=100&p[url]='+short_share_url_facebook+'&p[images][0]=/media/redesign/img/favicon144.png&p[title]=' + share_text %}
+    {% set facebook_url = 'http://facebook.com/sharer.php?s=100&p[url]='+short_share_url_facebook+'&p[images][0]=' + {{ static("assets/img/favicon144.png") }} + '&p[title]=' + share_text %}
     {% set gplus_url = 'https://plus.google.com/share'|urlparams(url=short_share_url_gplus) %}
 
     <div class="share">

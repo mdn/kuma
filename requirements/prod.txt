@@ -94,8 +94,6 @@ django-ratelimit==0.5.0
 -e git://github.com/jbalogh/django-multidb-router.git@25ca0c68929144ed9020d89f2ea1e941c7f9aeca#egg=django-multidb-router
 # 2013-04-22
 -e git://github.com/jbalogh/jingo.git@327dd865b6c350f02ce40092f2983be19de71303#egg=jingo
-# 2010-11-05
--e git://github.com/jsocol/jingo-minify.git@b7405d3f93628190bf83cc43b0ff44e2fbb8b3c0#egg=jingo-minify
 # 2011-09-09
 -e git://github.com/pcraciunoiu/py-wikimarkup.git@bf2046e42a2f2aaae8df233407efbce803342d04#egg=py-wikimarkup
 # 2013-02-07
@@ -112,6 +110,10 @@ django-ratelimit==0.5.0
 -e git://github.com/lmorchard/django-teamwork.git@b7dc818d39c92f733cb933814698cedfbbde3622#egg=django-teamwork
 # 2013-02-21
 -e git://github.com/simplejson/simplejson.git@062aa98fe19c9536b6ede4c0b84f5f3e6711b768#egg=simplejson
+# 2015-05-05
+-e git://github.com/cyberdelia/django-pipeline.git@47eaf9d6915446b99b7ba4b3c3bcf61c7b6d39be#egg=django-pipeline
+# 2015-05-05
+-e git://github.com/agronholm/pythonfutures.git@cb09ff1f52d2b5d62c1ed6363a60d728434b60f0#egg=futures
 
 ## Obsoleted / no longer needed
 

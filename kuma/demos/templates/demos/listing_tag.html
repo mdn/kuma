@@ -19,7 +19,7 @@
       <header id="page-head" class="column-container">
         <div class="column-8">
             <div class="main">
-                <h1 class="page-title"><img src="{{MEDIA_URL}}img/icons/{{tag.name.replace('tech:','')}}.png" alt="" width="160" height="160"> {{ tag_title(tag) }}</h1>
+                <h1 class="page-title"><img src="{{ static('assets/img/icons/' + tag.name.replace('tech:','') + '.png') }}" alt="" width="160" height="160"> {{ tag_title(tag) }}</h1>
               <p>{{ tag_description(tag) }}</p>
             </div>
         </div>

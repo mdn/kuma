@@ -12,9 +12,9 @@
   <section id="content-main" class="full" role="main">
     <h1>Not Found</h1>
     <div id="beastainer">
-      <img id="beast404le" src="{{ MEDIA_URL }}img/beast-404_LE.png" alt="">
-      <img id="beast404re" src="{{ MEDIA_URL }}img/beast-404_RE.png" alt="">
-      <img class="beast 404" src="{{ MEDIA_URL }}img/beast-404.png" alt="">
+      <img id="beast404le" src="{{ static('assets/img/beast-404_LE.png') }}" alt="">
+      <img id="beast404re" src="{{ static('assets/img/beast-404_RE.png') }}" alt="">
+      <img class="beast 404" src="{{ static('assets/img/beast-404.png') }}" alt="">
     </div>
 
     <p>{% trans %}
@@ -45,7 +45,7 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('framebuster') }}
+    {% compressed_js('framebuster') %}
 {% endblock %}
 
 {% block js %}

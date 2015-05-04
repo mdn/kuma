@@ -51,9 +51,9 @@
 {% endblock %}
 
 {% block js %}
-    {{ js('wiki') }}
+    {% compressed_js('wiki') %}
 {% endblock %}
 
 {% block extrahead %}
-  {{ css('sphinx') }}
+  {% compressed_css('sphinx') %}
 {% endblock %}

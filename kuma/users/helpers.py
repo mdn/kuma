@@ -15,7 +15,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.helpers import datetimeformat
 
 DEFAULT_AVATAR = getattr(settings, 'DEFAULT_AVATAR',
-                         settings.MEDIA_URL + 'img/avatar-default.png')
+                         settings.STATIC_URL + 'assets/img/avatar-default.png')
 
 
 @register.function

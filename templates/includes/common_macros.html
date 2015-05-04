@@ -24,7 +24,7 @@
     <form action="{{ url('search') }}" method="get" {% if target %} target="{{ target }}"{% endif %}>
       <input type="text" class="text" name="q" placeholder="{{ placeholder }}" required="required" />
       <button type="submit" class="img-submit" title="{{ _('Search') }}">
-        <img src="{{ settings.MEDIA_URL }}img/btn.search.png" alt="{{ _('Search') }}" />
+        <img src="{{ static('assets/img/btn.search.png') }}" alt="{{ _('Search') }}" />
       </button>
     </form>
   </div>

@@ -10,7 +10,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('user-banned') }}
+    {% compressed_css('user-banned') %}
 {% endblock %}
 
 {% block content %}

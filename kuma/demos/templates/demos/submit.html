@@ -3,7 +3,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('submission',) }}
+    {% compressed_css('submission') %}
 {% endblock %}
 
 {% block body_attributes %}id="submit"{% endblock %}

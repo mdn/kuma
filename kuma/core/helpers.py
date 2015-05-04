@@ -391,3 +391,7 @@ def number(context, n):
     if n is None:
         return ''
     return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
+
+@register.function
+def static(path):
+    return staticfiles_storage.url(path)

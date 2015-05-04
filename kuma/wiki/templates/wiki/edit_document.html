@@ -8,8 +8,8 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki-edit') }}
-    {{ css('jquery-ui') }}
+    {% compressed_css('wiki-edit') %}
+    {% compressed_css('jquery-ui') %}
 {% endblock %}
 
 {% block content %}
@@ -205,8 +205,8 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('jquery-ui') }}
-    {{ js('framebuster') }}
+    {% compressed_js('jquery-ui') %}
+    {% compressed_js('framebuster') %}
     {% include 'wiki/includes/tag_suggestions.html' %}
 
     {% if document.is_template %}
@@ -214,6 +214,6 @@
     {% else %}
       {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
-    {{ js('wiki-edit') }}
+    {% compressed_js('wiki-edit') %}
 
 {% endblock %}
