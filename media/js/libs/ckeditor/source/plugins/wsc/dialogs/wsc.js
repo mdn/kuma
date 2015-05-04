@@ -181,6 +181,7 @@
 		NS.onLoadOverlay = null;
 		NS.LocalizationComing = {};
 		NS.OverlayPlace = null;
+		NS.sessionid = '';
 		NS.LocalizationButton = {
 			'ChangeTo_button': {
 				'instance' : null,
@@ -883,6 +884,18 @@
 			var command = NS.dialog.getParentEditor().getCommand( 'checkspell' ),
 				editor = NS.dialog.getParentEditor();
 
+			//set local storage for synchronization before scayt reinit
+			if (editor.scayt && editor.wsc.isSsrvSame) {
+				var	wscUDN = editor.wsc.udn;
+
+					if (!wscUDN) {
+						editor.wsc.DataStorage.setData('scayt_user_dictionary_name', '');
+					} else {
+						editor.wsc.DataStorage.setData('scayt_user_dictionary_name', wscUDN);
+					}
+			}
+
+
 			try {
 				editor.focus();
 			} catch(e) {}
@@ -937,6 +950,7 @@
 			NS.show_grammar = response.show_grammar;
 			NS.langList = response.lang;
 			NS.bnr = response.bannerId;
+			NS.sessionid = response.sessionid;
 			if (response.bannerId) {
 				NS.setHeightBannerFrame();
 				setBannerInPlace(response.banner);
@@ -1063,7 +1077,8 @@
 				'cust_dic_ids': NS.cust_dic_ids,
 				'udn': NS.userDictionaryName,
 				'slang': NS.selectingLang,
-				'reset_suggest': reset_suggest
+				'reset_suggest': reset_suggest,
+				'sessionid': NS.sessionid
 			},
 			'target': frameTarget,
 			'id': 'data_outer__page'
@@ -1448,6 +1463,322 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 		}
 	}
 
+	function createWscObjectForUdAndUdnSyncrhonization() {
+		editor.wsc = {};
+
+		//DataStorage object for cookies and localStorage manipulation
+		(function( object ) {
+			'use strict';
+
+			var DataTypeManager = {
+				separator: '<$>',
+				getDataType: function(value) {
+					var type;
+
+					if(typeof value === 'undefined') {
+						type = 'undefined';
+					} else if(value === null) {
+						type = 'null';
+					} else {
+						type = Object.prototype.toString.call(value).slice(8, -1);
+					}
+					return type;
+				},
+				convertDataToString: function(value) {
+					var str,
+						type = this.getDataType(value).toLowerCase();
+
+					str = type + this.separator + value;
+					return str;
+				},
+				// get value type and convert value due to type, since all stored values are String
+				restoreDataFromString: function(str) {
+					var value = str,
+						type,
+						separatorStartIndex;
+
+					// @TODO: remove this line much later. Support of old format for options
+					str = this.backCompatibility(str);
+
+					if(typeof str === 'string') {
+						separatorStartIndex = str.indexOf(this.separator);
+						type = str.substring(0, separatorStartIndex);
+						value = str.substring(separatorStartIndex + this.separator.length);
+
+						switch(type) {
+							case 'boolean':
+								value = value === 'true';
+							break;
+							case 'number':
+								value = parseFloat(value);
+							break;
+							// we assume that we will store string values only, due to performance
+							case 'array':
+								value = value === '' ? [] : value.split(',');
+							break;
+							case 'null':
+								value = null;
+							break;
+							case 'undefined':
+								value = undefined;
+							break;
+						}
+					}
+					return value;
+				},
+				// old data type support
+				// here we trying to convert data from old format into new
+				// @TODO: remove this function much later
+				backCompatibility: function(str) {
+					var convertedStr = str,
+						value,
+						separatorStartIndex;
+
+					if(typeof str === 'string') {
+						separatorStartIndex = str.indexOf(this.separator);
+						// is it old format?
+						if(separatorStartIndex < 0) {
+							// try to get number from string
+							value = parseFloat(str);
+							// is it not a number?
+							if(isNaN(value)) {
+								// yes, this is not a number. Lets check is this is an array "[comma,separated,values]"
+								if((str[0] === '[') && (str[str.length - 1] === ']')) {
+									// this is an array. Lets remove brackets symbols and extract the words
+									str = str.replace('[', '');
+									str = str.replace(']', '');
+									if(str === '') {
+										value = [];
+									} else {
+										value = str.split(',');
+									}
+									// value = str === '[]' ? [] : str.split(',');
+								} else if(str === 'true' || str === 'false') {
+									// this is boolean value
+									value = str === 'true';
+								} else {
+									// this is string
+									value = str;
+								}
+							}
+
+							convertedStr = this.convertDataToString(value);
+						}
+					}
+
+					return convertedStr;
+				}
+			};
+
+			var LocalStorage = {
+
+				get: function( key ) {
+					var value = DataTypeManager.restoreDataFromString( window.localStorage.getItem(key) );
+					return value;
+				},
+
+				set: function( key, value ) {
+					var _value = DataTypeManager.convertDataToString( value );
+					window.localStorage.setItem( key, _value );
+				},
+
+				del: function( key ) {
+					window.localStorage.removeItem( key );
+				},
+
+				clear: function() {
+					window.localStorage.clear();
+				}
+			};
+
+			var CookiesStorage = {
+
+				expiration: (function() {
+					return 60 * 60 * 24 * 366;
+				}()),
+
+				get: function(key) {
+					var value = DataTypeManager.restoreDataFromString(this.getCookie(key));
+					return value;
+				},
+
+				set: function(key, value) {
+					var _value = DataTypeManager.convertDataToString(value);
+					this.setCookie(key, _value, {expires: this.expiration});
+				},
+
+				del: function(key) {
+					this.deleteCookie(key);
+				},
+
+				getCookie: function(name) {
+					var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+					return matches ? decodeURIComponent(matches[1]) : undefined;
+				},
+
+				setCookie: function(name, value, props) {
+					props = props || {};
+					var exp = props.expires;
+
+					if (typeof exp === "number" && exp) {
+						var d = new Date();
+
+						d.setTime(d.getTime() + exp * 1000);
+						exp = props.expires = d;
+					}
+
+					if(exp && exp.toUTCString) {
+						props.expires = exp.toUTCString();
+					}
+
+					value = encodeURIComponent(value);
+					var updatedCookie = name + "=" + value;
+
+					for(var propName in props) {
+						var propValue = props[propName];
+
+						updatedCookie += "; " + propName;
+
+						if(propValue !== true) {
+							updatedCookie += "=" + propValue;
+						}
+					}
+
+					document.cookie = updatedCookie;
+				},
+
+				deleteCookie: function(name) {
+					this.setCookie(name, null, {expires: -1});
+				},
+
+				// delete all cookies
+				clear: function() {
+					var cookies = document.cookie.split(";");
+
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = cookies[i];
+						var eqPos = cookie.indexOf("=");
+						var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+
+						this.deleteCookie(name);
+					}
+				}
+			};
+
+			var strategy = window.localStorage ? LocalStorage : CookiesStorage;
+
+			/**
+			 * @exports SCAYT.prototype.DataStorage
+			 */
+			var DataStorage = {
+
+				/**
+				 * Get data within storage for key
+				 *
+				 * @param {string} key 	- Key
+				 */
+				getData: function( key ) {
+					return strategy.get( key );
+				},
+
+				/**
+				 * Set data within storage
+				 *
+				 * @param {string} key 		- Key
+				 * @param {object} value 	- Value
+				 */
+				setData: function( key, value ) {
+					strategy.set( key, value );
+				},
+
+				/**
+				 * Delete data within storage for key
+				 *
+				 * @param {String} key 	- Key
+				 */
+				deleteData: function( key ) {
+					strategy.del( key );
+				},
+
+				/**
+				 * Clear storage
+				 */
+				clear: function() {
+					strategy.clear();
+				}
+			};
+
+			/**
+			 * Static Module of Storage Data in the localStorage.
+			 *
+			 * @alias SCAYT.prototype.DataStorage
+			 */
+			object.DataStorage = DataStorage;
+		}( editor.wsc ));
+
+		editor.wsc.operationWithUDN = function(command, UDName) {
+			var obj = {
+				'udn': UDName,
+				'id': 'operationWithUDN',
+				'udnCmd': command
+			};
+			var currentTabId = NS.dialog._.currentTabId,
+				frameId = NS.iframeNumber + '_' + currentTabId;
+
+			appTools.postMessage.send({
+				'message': obj,
+				'target': NS.targetFromFrame[frameId]
+			});
+		};
+		editor.wsc.getLocalStorageUDN = function() {
+			var udn = editor.wsc.DataStorage.getData('scayt_user_dictionary_name');
+
+			if (!udn) {
+				return;
+			}
+
+			return udn;
+		};
+		editor.wsc.getLocalStorageUD = function() {
+			var ud = editor.wsc.DataStorage.getData('scayt_user_dictionary');
+
+			if (!ud) {
+				return;
+			}
+
+			return ud;
+		};
+		editor.wsc.addWords = function(words, callback) {
+			var url = editor.config.wsc.DefaultParams.serviceHost + editor.config.wsc.DefaultParams.ssrvHost +
+						'?cmd=dictionary&format=json&' +
+						'customerid=1%3AncttD3-fIoSf2-huzwE4-Y5muI2-mD0Tt-kG9Wz-UEDFC-tYu243-1Uq474-d9Z2l3&' +
+						'action=addword&word='+ words + '&callback=toString&synchronization=true',
+				script = document.createElement('script');
+
+			script['type'] = 'text/javascript';
+			script['src'] = url;
+			document.getElementsByTagName("head")[0].appendChild(script);
+
+			//chrome, firefox, safari
+			script.onload = callback;
+
+			//IE
+			script.onreadystatechange = function() {
+				if (this.readyState === 'loaded') {
+					callback();
+				}
+			};
+		};
+		editor.wsc.cgiOrigin = function() {
+			var wscServiceHostString = editor.config.wsc.DefaultParams.serviceHost,
+				wscServiceHostArray = wscServiceHostString.split('/'),
+				cgiOrigin = wscServiceHostArray[0] + '//' + wscServiceHostArray[2];
+
+			return cgiOrigin;
+		};
+		editor.wsc.isSsrvSame = false;
+	}
+
  return {
 		title: editor.config.wsc_dialogTitle || editor.lang.wsc.title,
 		minWidth: constraints.minWidth,
@@ -1455,10 +1786,14 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 		buttons: [CKEDITOR.dialog.cancelButton],
 		onLoad: function() {
 			NS.dialog = this;
-
 			hideThesaurusTab();
 			hideGrammTab();
 			showSpellTab();
+
+			//creating wsc object for UD synchronization between wsc and scayt
+			if (editor.plugins.scayt) {
+				createWscObjectForUdAndUdnSyncrhonization();
+			}
 		},
 		onShow: function() {
 			NS.dialog = this;
@@ -1485,7 +1820,6 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 			initView(this);
 
 			CKEDITOR.scriptLoader.load(wscCoreUrl, function(success) {
-
 				if(CKEDITOR.config && CKEDITOR.config.wsc && CKEDITOR.config.wsc.DefaultParams){
 					NS.serverLocationHash = CKEDITOR.config.wsc.DefaultParams.serviceHost;
 					NS.logotype = CKEDITOR.config.wsc.DefaultParams.logoPath;
@@ -1533,6 +1867,116 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 					NS.dialog.setupContent(NS.dialog);
 				}
 
+				if (editor.plugins.scayt) {
+					//is ssrv.cgi path for WSC and scayt same
+					editor.wsc.isSsrvSame = (function() {
+						var wscSsrvWholePath,
+							wscServiceHost = CKEDITOR.config.wsc.DefaultParams.serviceHost.replace('lf/22/js/../../../', '').split('//')[1],
+							wscSsrvHost = CKEDITOR.config.wsc.DefaultParams.ssrvHost,
+							scaytSsrvWholePath,
+							scaytSsrvProtocol,
+							scaytSsrvHost,
+							scaytSsrvPath,
+
+							scaytSrcUrl = editor.config.scayt_srcUrl,
+							scaytSsrvSrcUrlSsrvProtocol,
+							scaytSsrvSrcUrlSsrvHost,
+							scaytSsrvSrcUrlSsrvPath,
+
+							scaytBasePath,
+							scaytBasePathSsrvProtocol,
+							scaytBasePathSsrvHost,
+							scaytBasePathSsrvPath;
+
+						if (window.SCAYT && window.SCAYT.CKSCAYT) {
+							scaytBasePath = SCAYT.CKSCAYT.prototype.basePath;
+							scaytBasePathSsrvProtocol = scaytBasePath.split('//')[0];
+							scaytBasePathSsrvHost = scaytBasePath.split('//')[1].split('/')[0];
+							scaytBasePathSsrvPath = scaytBasePath.split(scaytBasePathSsrvHost + '/')[1].replace('/lf/scayt3/ckscayt/', '') + '/script/ssrv.cgi';
+						}
+
+						if (scaytSrcUrl && !scaytBasePath && !editor.config.scayt_servicePath) {
+							scaytSsrvSrcUrlSsrvProtocol = scaytSrcUrl.split('//')[0];
+							scaytSsrvSrcUrlSsrvHost = scaytSrcUrl.split('//')[1].split('/')[0];
+							scaytSsrvSrcUrlSsrvPath = scaytSrcUrl.split(scaytSsrvSrcUrlSsrvHost + '/')[1].replace('/lf/scayt3/ckscayt/ckscayt.js', '') + '/script/ssrv.cgi';
+						}
+
+						scaytSsrvProtocol = editor.config.scayt_serviceProtocol || scaytBasePathSsrvProtocol || scaytSsrvSrcUrlSsrvProtocol;
+						scaytSsrvHost = editor.config.scayt_serviceHost || scaytBasePathSsrvHost || scaytSsrvSrcUrlSsrvHost;
+						scaytSsrvPath = editor.config.scayt_servicePath || scaytBasePathSsrvPath || scaytSsrvSrcUrlSsrvPath;
+
+						wscSsrvWholePath = '//' + wscServiceHost + wscSsrvHost;
+						scaytSsrvWholePath = '//' + scaytSsrvHost + '/' + scaytSsrvPath;
+
+						return wscSsrvWholePath === scaytSsrvWholePath;
+					})();
+				}
+
+				//wsc on scayt UserDictionary and UserDictionaryName synchronization
+				if (window.SCAYT && editor.wsc && editor.wsc.isSsrvSame) {
+					var cgiOrigin = editor.wsc.cgiOrigin();
+					editor.wsc.syncIsDone = false;
+
+					var getUdOrUdn = function (e) {
+						if (e.origin === cgiOrigin) {
+							var data = JSON.parse(e.data);
+
+							if (data.ud && data.ud !== 'undefined') {
+								editor.wsc.ud = data.ud;
+							} else if (data.ud === 'undefined') {
+								editor.wsc.ud = undefined;
+							}
+
+							if (data.udn && data.udn !== 'undefined') {
+								editor.wsc.udn = data.udn;
+							} else if (data.udn === 'undefined') {
+								editor.wsc.udn = undefined;
+							}
+
+							if (!editor.wsc.syncIsDone) {
+								udSynchronization(editor.wsc.ud);
+								editor.wsc.syncIsDone = true;
+							}
+						}
+					};
+
+					var udSynchronization = function(cookieUd) {
+						var localStorageUdArray = editor.wsc.getLocalStorageUD(),
+							newUd;
+
+						if (localStorageUdArray instanceof Array) {
+							newUd = localStorageUdArray.toString();
+						}
+
+						if (newUd !== undefined && newUd !== '') {
+							setTimeout(function() {
+								editor.wsc.addWords(newUd, function() {
+									showFirstTab(NS.dialog);
+									NS.dialog.setupContent(NS.dialog);
+								});
+							}, 400);
+						}
+					};
+
+					if (window.addEventListener){
+						addEventListener("message", getUdOrUdn, false);
+					} else {
+						window.attachEvent("onmessage", getUdOrUdn);
+					}
+
+					//wsc on scayt UserDictionaryName synchronization
+					setTimeout(
+						function() {
+							var udn = editor.wsc.getLocalStorageUDN();
+
+							if (udn !== undefined) {
+								editor.wsc.operationWithUDN('restore', udn);
+							}
+
+						},
+					500); //need to wait spell.js file to load
+
+				}
 			});
 
 		},
@@ -1547,7 +1991,52 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 			}
 
 			NS.dataTemp = '';
+			NS.sessionid = '';
 			appTools.postMessage.unbindHandler(handlerIncomingData);
+
+			//scayt on wsc UserDictionary and UserDictionaryName synchronization
+			if (editor.plugins.scayt && editor.wsc && editor.wsc.isSsrvSame) {
+				var	wscUDN = editor.wsc.udn,
+					wscUD = editor.wsc.ud,
+					wscUDarray,
+					i;
+
+				if (editor.scayt) { // if SCAYT active
+					if (!wscUDN) {
+						editor.wsc.DataStorage.setData('scayt_user_dictionary_name', '');
+						editor.scayt.removeUserDictionary();
+					} else {
+						editor.wsc.DataStorage.setData('scayt_user_dictionary_name', wscUDN);
+						editor.scayt.restoreUserDictionary(wscUDN);
+					}
+
+					if (wscUD) {
+						setTimeout(function() {
+							wscUDarray = wscUD.split(',');
+							for (i = 0; i < wscUDarray.length; i += 1) {
+								editor.scayt.addWordToUserDictionary(wscUDarray[i]);
+							}
+						}, 200); //wait for 'removeUserDictionary' command response
+					}
+
+					if (!wscUD) {
+						editor.wsc.DataStorage.setData('scayt_user_dictionary', []);
+					}
+
+				} else { //if SCAYT not active
+
+					if (!wscUDN) {
+						editor.wsc.DataStorage.setData('scayt_user_dictionary_name', '');
+					} else {
+						editor.wsc.DataStorage.setData('scayt_user_dictionary_name', wscUDN);
+					}
+
+					if (wscUD) {
+						wscUDarray = wscUD.split(',');
+						editor.wsc.DataStorage.setData('scayt_user_dictionary', wscUDarray);
+					}
+				}
+			}
 		},
 		contents: [
 			{
@@ -2348,7 +2837,6 @@ CKEDITOR.dialog.add('options', function(editor) {
 		osp = osp.toString().replace(/,/g, "");
 
 		appTools.cookie.set('osp', osp);
-		appTools.cookie.set('udn', nameNode.getValue());
 
 		appTools.postMessage.send({
 			'id': 'options_checkbox_send'

@@ -1,49 +1,53 @@
 /*
-* Youtube Embed Plugin
+* YouTube Embed Plugin
 *
 * @author Jonnas Fonini <contato@fonini.net>
 * @version 0.1
 * https://github.com/fonini/ckeditor-youtube-plugin
+*
+* REVISED BY MDN CONTENT TEAM:
+*   This plugin now inserts a KumaScript macro into the page instead of
+*   directly inserting an <iframe> element.
 */
 
 'use strict';
 
 ( function() {
 
-	CKEDITOR.plugins.add( 'youtube',
+	CKEDITOR.plugins.add( 'mdn-youtube',
 	{
 		icons: 'youtube-moono', // %REMOVE_LINE_CORE%
-		
+
 		init: function( editor )
 		{
 			// Backport language
-			editor.lang.youtube = {
+			editor.lang['mdn-youtube'] = {
 				button : gettext('Embed YouTube Video'),
-				title : gettext('Embed Youtube Video'),
+				title : gettext('Locate a YouTube Video'),
 				txtEmbed : gettext('Paste Embed Code Here'),
-				txtUrl : gettext('Paste Youtube Video URL'),
-				txtWidth : gettext('Width'),
-				txtHeight : gettext('Height'),
+				txtUrl : gettext('Paste YouTube Video URL'),
+				txtAspect : gettext('Aspect ratio'),
 				noCode : gettext('You must input an embed code or URL'),
 				invalidEmbed : gettext('The embed code you\'ve entered doesn\'t appear to be valid'),
 				invalidUrl : gettext('The URL you\'ve entered doesn\'t appear to be valid'),
-				or : gettext('or')
+				or : gettext('or'),
+				defaultStr : gettext("Default")
 			};
 
-			editor.addCommand( 'youtube', new CKEDITOR.dialogCommand( 'youtube' ) );
+			editor.addCommand( 'mdn-youtube', new CKEDITOR.dialogCommand( 'mdn-youtube' ) );
 
-			editor.ui.addButton( 'youtube',
+			editor.ui.addButton( 'mdn-youtube',
 			{
 				icon: 'youtube-moono',
-				label: editor.lang.youtube.button,
-				command: 'youtube',
+				label: editor.lang['mdn-youtube'].button,
+				command: 'mdn-youtube',
 				toolbar: 'insert'
 			});
 
-			CKEDITOR.dialog.add( 'youtube', function ( instance )
+			CKEDITOR.dialog.add( 'mdn-youtube', function ( instance )
 			{
 				return {
-					title : editor.lang.youtube.title,
+					title : editor.lang['mdn-youtube'].title,
 					minWidth : 550,
 					minHeight : 200,
 					contents :
@@ -54,7 +58,7 @@
 								[{
 									id : 'txtEmbed',
 									type : 'textarea',
-									label : editor.lang.youtube.txtEmbed,
+									label : editor.lang['mdn-youtube'].txtEmbed,
 									autofocus : 'autofocus',
 									onChange : function ( api ){
 										if ( this.getValue().length > 0 ){
@@ -68,11 +72,11 @@
 										if ( this.isEnabled() ){
 											if ( !this.getValue() )
 											{
-												alert( editor.lang.youtube.noCode );
+												alert( editor.lang['mdn-youtube'].noCode );
 												return false;
 											}
 											else if (!(/https?\:\/\//.test(this.getValue()))) {
-												alert( editor.lang.youtube.invalidEmbed );
+												alert( editor.lang['mdn-youtube'].invalidEmbed );
 												return false;
 											}
 										}
@@ -80,17 +84,17 @@
 								},
 								{
 									type : 'html',
-									html : editor.lang.youtube.or + '<hr>'
+									html : editor.lang['mdn-youtube'].or + '<hr>'
 								},
 								{
 									type : 'hbox',
-									widths : [ '70%', '15%', '15%' ],
+									widths : [ '70%', '30%' ],
 									children :
 									[
 										{
 											id : 'txtUrl',
 											type : 'text',
-											label : editor.lang.youtube.txtUrl,
+											label : editor.lang['mdn-youtube'].txtUrl,
 											onChange : function ( api ){
 												if ( this.getValue().length > 0 ){
 													this.getDialog().getContentElement( 'youtubePlugin', 'txtEmbed' ).disable();
@@ -103,29 +107,22 @@
 												if ( this.isEnabled() ){
 													if ( !this.getValue() )
 													{
-														alert( editor.lang.youtube.noCode );
+														alert( editor.lang['mdn-youtube'].noCode );
 														return false;
 													}
 													else if (!(/https?\:\/\//.test(this.getValue()))) {
-														alert( editor.lang.youtube.invalidUrl );
+														alert( editor.lang['mdn-youtube'].invalidUrl );
 														return false;
 													}
 												}
 											}
 										},
 										{
-											type : 'text',
-											id : 'txtWidth',
-											width : '60px',
-											label : editor.lang.youtube.txtWidth,
-											'default' : '640'
-										},
-										{
-											type : 'text',
-											id : 'txtHeight',
-											width : '60px',
-											label : editor.lang.youtube.txtHeight,
-											'default' : '360'
+											type : 'select',
+											id : 'txtAspect',
+											label : editor.lang['mdn-youtube'].txtAspect,
+											items : [ ['Default'], ['4:3'], ['16:9'] ],
+											'default' : 'Default'
 										}
 									]
 								}
@@ -141,13 +138,14 @@
 						}
 						else {
 							var url = this.getValueOf( 'youtubePlugin', 'txtUrl' );
-							var width = this.getValueOf( 'youtubePlugin', 'txtWidth' );
-							var height = this.getValueOf( 'youtubePlugin', 'txtHeight' );
+							var aspect = this.getValueOf( 'youtubePlugin', 'txtAspect' );
+							var aspectArg = (aspect == '4:3') ? ', "4:3"' : '';
 							var urlSplit = url.split('?');
 							var video = urlSplit.length && urlSplit[1] ? jQuery.parseQuerystring(urlSplit[1]).v : '';
-							if(video) {
-								url = 'https://www.youtube.com/embed/' + video + '/?feature=player_detailpage';
-								content = '<iframe width="' + width + '" height="' + height + '" src="' + url + '" frameborder="0" allowfullscreen></iframe>';
+							if (video) {
+							    content = '{{EmbedYouTube("' + video + '"' + aspectArg + ')}}';
+								//url = 'https://www.youtube.com/embed/' + video + '/?feature=player_detailpage';
+								//content = '<iframe width="' + width + '" height="' + height + '" src="' + url + '" frameborder="0" allowfullscreen></iframe>';
  							}
 						}
 
