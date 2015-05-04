@@ -216,9 +216,10 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(url)
         ok_('Access-Control-Allow-Origin' in resp)
         eq_('*', resp['Access-Control-Allow-Origin'])
-        eq_(resp.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a>'
-                          '<ol><li><a href="#Head_3" rel="internal">Head 3</a>'
-                          '</ol></li></ol>')
+        self.assertHTMLEqual(
+            resp.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a>'
+            '<ol><li><a href="#Head_3" rel="internal">Head 3</a>'
+            '</ol></li></ol>')
 
     @attr('bug875349')
     def test_children_view(self):
