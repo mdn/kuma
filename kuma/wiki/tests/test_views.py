@@ -80,7 +80,10 @@ class RedirectTests(UserTestCase, WikiTestCase):
         rev = revision(document=doc, content=html, is_approved=True, save=True)
 
         response = self.client.get(doc.get_absolute_url(), follow=True)
-        self.assertContains(response, html)
+        eq_(200, response.status_code)
+        response_html = pq(response.content)
+        article_body = response_html.find('#wikiArticle').html()
+        self.assertHTMLEqual(html, article_body)
 
 
 class LocaleRedirectTests(UserTestCase, WikiTestCase):
@@ -213,9 +216,10 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(url)
         ok_('Access-Control-Allow-Origin' in resp)
         eq_('*', resp['Access-Control-Allow-Origin'])
-        eq_(resp.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a>'
-                          '<ol><li><a href="#Head_3" rel="internal">Head 3</a>'
-                          '</ol></li></ol>')
+        self.assertHTMLEqual(
+            resp.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a>'
+            '<ol><li><a href="#Head_3" rel="internal">Head 3</a>'
+            '</ol></li></ol>')
 
     @attr('bug875349')
     def test_children_view(self):
@@ -1857,7 +1861,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         eq_(page.find('input[name=title]')[0].value, title)
         eq_(page.find('input[name=slug]')[0].value, slug)
-        eq_(page.find('textarea[name=content]')[0].value, content)
+        self.assertHTMLEqual(page.find('textarea[name=content]')[0].value, content)
 
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the

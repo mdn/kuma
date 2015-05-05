@@ -1158,11 +1158,11 @@ class PageMoveTests(UserTestCase):
     def test_children_simple(self):
         """A basic tree with two direct children and no sub-trees on
         either."""
-        d1 = document(title='Parent')
-        d2 = document(title='Child')
+        d1 = document(title='Parent', save=True)
+        d2 = document(title='Child', save=True)
         d2.parent_topic = d1
         d2.save()
-        d3 = document(title='Another child')
+        d3 = document(title='Another child', save=True)
         d3.parent_topic = d1
         d3.save()
 

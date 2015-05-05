@@ -595,11 +595,11 @@ def _document_PUT(request, document_slug, document_locale):
         content_type = request.META.get('CONTENT_TYPE', '')
 
         if content_type.startswith('application/json'):
-            data = json.loads(request.raw_post_data)
+            data = json.loads(request.body)
 
         elif content_type.startswith('multipart/form-data'):
             parser = MultiPartParser(request.META,
-                                     StringIO(request.raw_post_data),
+                                     StringIO(request.body),
                                      request.upload_handlers,
                                      request.encoding)
             data, files = parser.parse()
@@ -607,7 +607,7 @@ def _document_PUT(request, document_slug, document_locale):
         elif content_type.startswith('text/html'):
             # TODO: Refactor this into wiki.content ?
             # First pass: Just assume the request body is an HTML fragment.
-            html = request.raw_post_data
+            html = request.body
             data = dict(content=html)
 
             # Second pass: Try parsing the body as a fuller HTML document,
@@ -1308,7 +1308,6 @@ def move(request, document_slug, document_locale):
 @process_document_path
 @check_readonly
 @superuser_required
-@transaction.autocommit
 def repair_breadcrumbs(request, document_slug, document_locale):
     doc = get_object_or_404(Document,
                             locale=document_locale,

@@ -566,88 +566,120 @@ class SectionIDFilter(html5lib_Filter):
         # we can just replace the escape sequence with the dot, uppercase
         # it, and we have the thing MindTouch would generate.
         return repr(c.encode('utf-8')).strip("'").replace(r'\x', '.').upper()
+    
+    def process_header(self, token, buffer):
+        # If we get into this code, 'token' will be the start tag of a
+        # header element. We're going to grab its text contents to
+        # generate a slugified ID for it, add that ID in, and then
+        # spit it back out. 'buffer' is the list of tokens we were in
+        # the process of handling when we hit this header.
+        start, text, tmp = token, [], []
+        attrs = dict(token['data'])
+        while len(buffer):
+            # Loop through successive tokens in the stream of HTML
+            # until we find our end tag, building up in 'tmp' a list
+            # of those tokens to emit later, and in 'text' a list of
+            # the text content we see along the way.
+            next_token = buffer.pop(0)
+            tmp.append(next_token)
+            if next_token['type'] in ('Characters', 'SpaceCharacters'):
+                text.append(next_token['data'])
+            elif (next_token['type'] == 'EndTag' and
+                  next_token['name'] == start['name']):
+                # Note: This is naive, and doesn't track other
+                # start/end tags nested in the header. Odd things might
+                # happen in a case like <h1><h1></h1></h1>. But, that's
+                # invalid markup and the worst case should be a
+                # truncated ID because all the text wasn't accumulated.
+                break
+
+        # Slugify the text we found inside the header, generate an ID
+        # as a last resort.
+        slug = self.slugify(u''.join(text))
+        if not slug:
+            slug = self.gen_id()
+        else:
+            # Create unique slug for heading tags with the same content
+            start_inc = 2
+            slug_base = slug
+            while slug in self.known_ids:
+                slug = '{0}_{1}'.format(slug_base, start_inc)
+                start_inc += 1
+
+        attrs[(None, u'id')] = slug
+        start['data'] = attrs
+        self.known_ids.add(slug)
+
+        # Hand back buffer minus the bits we yanked out of it, and the
+        # new ID-ified header start tag and contents.
+        return buffer, [start] + tmp
+        
 
     def __iter__(self):
         input = html5lib_Filter.__iter__(self)
 
-        # Pass 1: Collect all known IDs from the stream
+        # First, collect all ID values already in the source HTML.
         buffer = []
         for token in input:
             buffer.append(token)
             if token['type'] == 'StartTag':
                 attrs = dict(token['data'])
                 for (namespace, name), value in attrs.items():
-                    # The header tags IDs will be (re)evaluated in pass 2
+                    # Collect both 'name' and 'id' attributes since
+                    # 'name' gets treated as a manual override to
+                    # specify an ID.
                     if name == 'id' and token['name'] not in HEAD_TAGS:
                         self.known_ids.add(value)
                     if name == 'name':
                         self.known_ids.add(value)
 
-        # Pass 2: Sprinkle in IDs where they're needed
+        # Then walk the tree again identifying elements in need of IDs
+        # and adding them.
         while len(buffer):
             token = buffer.pop(0)
 
             if not (token['type'] == 'StartTag' and
                     token['name'] in SECTION_TAGS):
+                # If this token isn't the start tag of a section or
+                # header, we don't add an ID and just short-circuit
+                # out to return the token as-is.
                 yield token
             else:
+                # Potential bug warning: there may not be any
+                # attributes, so doing a for loop over them to look
+                # for existing ID/name values is unsafe. Instead we
+                # dict-ify the attrs, and then check directly for the
+                # things we care about instead of iterating all
+                # attributes and waiting for one we care about to show
+                # up.
                 attrs = dict(token['data'])
 
-                for (namespace, name), value in attrs.items():
-                    # Treat a name attribute as a human-specified ID override
-                    if name == 'name' and value:
-                        attrs[(namespace, u'id')] = value
+                # First check for a 'name' attribute; if it's present,
+                # treat it as a manual override by the author and make
+                # that value be the ID.
+                if (None, 'name') in attrs:
+                    attrs[(None, u'id')] = attrs[(None, 'name')]
+                    token['data'] = attrs
+                    yield token
+                    continue
+                # Next look for <section> tags which don't have an ID
+                # set; since we don't generate an ID for them from
+                # their text contents, they just get a numeric one
+                # from gen_id().
+                if token['name'] not in HEAD_TAGS:
+                    if (None, 'id') not in attrs:
+                        attrs[(None, u'id')] = self.gen_id()
                         token['data'] = attrs
-                        yield token
-                        continue
-
-                    # If this is not a header, then generate a section ID.
-                    if token['name'] not in HEAD_TAGS:
-                        # But, only generate the ID if there's not already one
-                        if name != 'id':
-                            attrs[(namespace, u'id')] = self.gen_id()
-                            token['data'] = attrs
-                        yield token
-                        continue
-
-                    # If this is a header, then scoop up the rest of the header and
-                    # gather the text it contains.
-                    start, text, tmp = token, [], []
-                    while len(buffer):
-                        token = buffer.pop(0)
-                        tmp.append(token)
-                        if token['type'] in ('Characters', 'SpaceCharacters'):
-                            text.append(token['data'])
-                        elif (token['type'] == 'EndTag' and
-                              token['name'] == start['name']):
-                            # Note: This is naive, and doesn't track other
-                            # start/end tags nested in the header. Odd things might
-                            # happen in a case like <h1><h1></h1></h1>. But, that's
-                            # invalid markup and the worst case should be a
-                            # truncated ID because all the text wasn't accumulated.
-                            break
-
-                    # Slugify the text we found inside the header, generate an ID
-                    # as a last resort.
-                    slug = self.slugify(u''.join(text))
-                    if not slug:
-                        slug = self.gen_id()
-                    else:
-                        # Create unique slug for heading tags with the same content
-                        start_inc = 2
-                        slug_base = slug
-                        while slug in self.known_ids:
-                            slug = '{0}_{1}'.format(slug_base, start_inc)
-                            start_inc += 1
-
-                    attrs[(namespace, u'id')] = slug
-                    start['data'] = attrs
-                    self.known_ids.add(slug)
-
-                    # Finally, emit the tokens we scooped up for the header.
-                    yield start
-                    for t in tmp:
-                        yield t
+                    yield token
+                    continue
+                # If we got here, we're looking at the start tag of a
+                # header which had no 'name' attribute set. We're
+                # going to pop out the text contents of the header,
+                # use them to generate a slugified ID for it, and
+                # return it with that ID added in.
+                buffer, header_tokens = self.process_header(token, buffer)
+                for t in header_tokens:
+                    yield t
 
 
 class SectionEditLinkFilter(html5lib_Filter):
@@ -752,7 +784,7 @@ class SectionTOCFilter(html5lib_Filter):
                         self.open_level -= 1
                     self.level = level
                 attrs = dict(token['data'])
-                id = attrs.get('id', None)
+                id = attrs.get((None, 'id'), None)
                 if id:
                     out.extend([
                         {'type': 'StartTag', 'name': 'li', 'data': {}},
@@ -977,7 +1009,7 @@ class CodeSyntaxFilter(html5lib_Filter):
                             lang = m.group(1).lower()
                             brush = MT_SYNTAX_BRUSH_MAP.get(lang, lang)
                             attrs[(namespace, u'class')] = "brush: %s" % brush
-                            del attrs['function']
+                            del attrs[(None, 'function')]
                             token['data'] = attrs
             yield token
 
@@ -1021,80 +1053,8 @@ class IframeHostFilter(html5lib_Filter):
                         if not re.search(self.hosts, value):
                             attrs[(namespace, 'src')] = ''
                     token['data'] = attrs
-                    yield token
+                yield token
             if token['type'] == 'EndTag' and token['name'] == 'iframe':
                 in_iframe = False
             if not in_iframe:
-                yield token
-
-
-class DekiscriptMacroFilter(html5lib_Filter):
-    """
-    Filter to convert Dekiscript template calls into kumascript macros.
-    """
-    def __iter__(self):
-
-        buffer = []
-        for token in html5lib_Filter.__iter__(self):
-            buffer.append(token)
-
-        while len(buffer):
-            token = buffer.pop(0)
-
-            if not (token['type'] == 'StartTag' and
-                    token['name'] == 'span'):
-                yield token
-                continue
-
-            attrs = dict(token['data'])
-            for (namespace, name), value in attrs.items():
-                if name == 'class' and value != 'script':
-                    yield token
-                    continue
-
-            ds_call = []
-            while len(buffer):
-                token = buffer.pop(0)
-                if token['type'] in ('Characters', 'SpaceCharacters'):
-                    ds_call.append(token['data'])
-                elif token['type'] == 'StartTag':
-                    attrs = token['data']
-                    if attrs:
-                        a_out = (u' %s' % u' '.join(
-                            (u'%s=%s' %
-                             (name, quoteattr(val))
-                             for name, val in attrs)))
-                    else:
-                        a_out = u''
-                    ds_call.append(u'<%s%s>' % (token['name'], a_out))
-                elif token['type'] == 'EndTag':
-                    if token['name'] == 'span':
-                        break
-                    ds_call.append('</%s>' % token['name'])
-
-            ds_call = u''.join(ds_call).strip()
-
-            # Snip off any "template." prefixes
-            strip_prefixes = ('template.', 'wiki.')
-            for prefix in strip_prefixes:
-                if ds_call.lower().startswith(prefix):
-                    ds_call = ds_call[len(prefix):]
-
-            # template("template name", [ "params" ])
-            m = TEMPLATE_PARAMS_RE.match(ds_call)
-            if m:
-                ds_call = '%s(%s)' % (m.group(1), m.group(2).strip())
-
-            # template("template name")
-            m = TEMPLATE_RE.match(ds_call)
-            if m:
-                ds_call = '%s()' % (m.group(1))
-
-            # HACK: This is dirty, but seems like the easiest way to
-            # reconstitute the token stream, including what gets parsed as
-            # markup in the middle of macro parameters.
-            #
-            # eg. {{ Note("This is <strong>strongly</strong> discouraged") }}
-            parsed = parse('{{ %s }}' % ds_call)
-            for token in parsed.stream:
                 yield token
