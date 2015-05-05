@@ -10,20 +10,6 @@ from .managers import AttachmentManager
 from .utils import attachment_upload_to
 
 
-class DocumentAttachment(models.Model):
-    """
-    Intermediary between Documents and Attachments. Allows storing the
-    user who attached a file to a document, and a (unique for that
-    document) name for referring to the file from the document.
-
-    """
-    file = models.ForeignKey('Attachment')
-    # This has to be a string ref to avoid circular import.
-    document = models.ForeignKey('wiki.Document')
-    attached_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
-    name = models.TextField()
-
-
 class Attachment(models.Model):
     """
     An attachment which can be inserted into one or more wiki documents.
@@ -68,6 +54,7 @@ class Attachment(models.Model):
 
     def attach(self, document, user, name):
         if self.id not in document.attachments.values_list('id', flat=True):
+            from kuma.wiki.models import DocumentAttachment
             intermediate = DocumentAttachment(file=self,
                                               document=document,
                                               attached_by=user,

@@ -33,7 +33,7 @@ from taggit.utils import edit_string_for_tags, parse_tags
 from teamwork.models import Team
 from tidings.models import NotificationsMixin
 
-from kuma.attachments.models import Attachment, DocumentAttachment
+from kuma.attachments.models import Attachment
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.cache import memcache
 from kuma.core.fields import LocaleField
@@ -149,6 +149,22 @@ class TaggedDocument(ItemBase):
                 taggeddocument__content_object=instance)
         return DocumentTag.objects.filter(
             taggeddocument__content_object__isnull=False).distinct()
+
+
+class DocumentAttachment(models.Model):
+    """
+    Intermediary between Documents and Attachments. Allows storing the
+    user who attached a file to a document, and a (unique for that
+    document) name for referring to the file from the document.
+    """
+    file = models.ForeignKey(Attachment)
+    # This has to be a string ref to avoid circular import.
+    document = models.ForeignKey('wiki.Document')
+    attached_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    name = models.TextField()
+
+    class Meta:
+        db_table = 'attachments_documentattachement'
 
 
 @register_live_index

@@ -1964,17 +1964,17 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             # Check for the document slug (title in feeds) in the tag listing
             for t in yes_tags:
                 response = self.client.get(reverse('wiki.tag', args=[t]))
-                ok_(doc.slug in response.content.decode('utf-8'))
+                self.assertContains(response, doc.slug, msg_prefix=t)
                 response = self.client.get(reverse('wiki.feeds.recent_documents',
                                                    args=['atom', t]))
-                ok_(doc.title in response.content.decode('utf-8'))
+                self.assertContains(response, doc.title)
 
             for t in no_tags:
                 response = self.client.get(reverse('wiki.tag', args=[t]))
-                ok_(doc.slug not in response.content.decode('utf-8'))
+                self.assertNotContains(response, doc.slug)
                 response = self.client.get(reverse('wiki.feeds.recent_documents',
                                                    args=['atom', t]))
-                ok_(doc.title not in response.content.decode('utf-8'))
+                self.assertNotContains(response, doc.title)
 
         # Create a new doc with tags
         data.update({'slug': slug, 'tags': ','.join(ts1)})
@@ -3906,7 +3906,7 @@ class ListDocumentTests(UserTestCase, WikiTestCase):
 
     def test_case_insensitive_tags(self):
         """
-        Bug 976071 - Tags shouldn't be case sensitive
+        Bug 976071 - Tags should be case insensitive
         https://bugzil.la/976071
         """
         lower_tag = DocumentTag.objects.create(name='foo', slug='foo')

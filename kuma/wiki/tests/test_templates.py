@@ -705,7 +705,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         """
         en_tag = DocumentTag(name='CSS Reference', slug='css-reference')
         en_tag.save()
-        fr_tag = DocumentTag(name='CSS Référence', slug='css-reference_1')
+        fr_tag = DocumentTag(name=u'CSS Référence', slug='css-reference_1')
         fr_tag.save()
         self.doc.tags.add(en_tag)
         self.doc.tags.add(fr_tag)

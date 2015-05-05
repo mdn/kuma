@@ -129,30 +129,41 @@ config_lazy = lazy(_config, *LAZY_CONSTANCE_TYPES)
 
 def get_root_for_submission(instance):
     """Build a root path for demo submission files"""
-    c_name = instance.creator.username
-    return '%(h1)s/%(h2)s/%(username)s/%(slug_hash)s' % dict(
-         h1=c_name[0], h2=c_name[1], username=c_name,
-         slug_hash=md5(instance.slug).hexdigest())
+    username = instance.creator.username
+    return join(username[0], username[1], username,
+                md5(instance.slug).hexdigest())
 
 
-def mk_upload_to(field_fn):
-    """upload_to builder for file upload fields"""
-    def upload_to(instance, filename):
-        time_now = int(time())
-        return '%(base)s/%(time_now)s_%(field_fn)s' % dict(
-            time_now=time_now,
-            base=get_root_for_submission(instance), field_fn=field_fn)
-    return upload_to
+def screenshot_upload_to(instance, filename, field_filename):
+    base = get_root_for_submission(instance)
+    filename = '%s_%s' % (int(time()), field_filename)
+    return join(base, filename)
 
 
-def mk_slug_upload_to(field_fn):
-    """upload_to builder for file upload fields, includes slug in filename"""
-    def upload_to(instance, filename):
-        time_now = int(time())
-        return '%(base)s/%(slug_short)s_%(time_now)s_%(field_fn)s' % dict(
-            time_now=time_now, slug_short=instance.slug[:20],
-            base=get_root_for_submission(instance), field_fn=field_fn)
-    return upload_to
+def upload_screenshot_1(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_1.png')
+
+
+def upload_screenshot_2(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_2.png')
+
+
+def upload_screenshot_3(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_3.png')
+
+
+def upload_screenshot_4(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_4.png')
+
+
+def upload_screenshot_5(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_5.png')
+
+
+def demo_package_upload_to(instance, filename):
+    base = get_root_for_submission(instance)
+    filename = '%s_%s_%s' % (instance.slug[:20], int(time()), 'demo_package.zip')
+    return join(base, filename)
 
 
 class ReplacingFieldZipFile(FieldFile):
@@ -387,31 +398,31 @@ class Submission(models.Model):
             _('Screenshot #1'),
             max_length=255,
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_1.png'),
+            upload_to=upload_screenshot_1,
             blank=False)
     screenshot_2 = ReplacingImageWithThumbField(
             _('Screenshot #2'),
             max_length=255,
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_2.png'),
+            upload_to=upload_screenshot_2,
             blank=True)
     screenshot_3 = ReplacingImageWithThumbField(
             _('Screenshot #3'),
             max_length=255,
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_3.png'),
+            upload_to=upload_screenshot_3,
             blank=True)
     screenshot_4 = ReplacingImageWithThumbField(
             _('Screenshot #4'),
             max_length=255,
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_4.png'),
+            upload_to=upload_screenshot_4,
             blank=True)
     screenshot_5 = ReplacingImageWithThumbField(
             _('Screenshot #5'),
             max_length=255,
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_5.png'),
+            upload_to=upload_screenshot_5,
             blank=True)
 
     video_url = VideoEmbedURLField(
@@ -424,7 +435,7 @@ class Submission(models.Model):
             max_upload_size=config_lazy('DEMO_MAX_ZIP_FILESIZE',
                                         60 * 1024 * 1024),  # overridden by constance
             storage=demo_uploads_fs,
-            upload_to=mk_slug_upload_to('demo_package.zip'),
+            upload_to=demo_package_upload_to,
             blank=False)
 
     source_code_url = models.URLField(
