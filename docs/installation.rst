@@ -126,11 +126,11 @@ configuration is::
                     'collation_connection=utf8_general_ci',
             },
             'ATOMIC_REQUESTS': True,
+            'TEST': {
+                'CHARSET': 'utf8',
+                'COLLATION': 'utf8_general_ci',
+            },
         },
-    }
-    TEST = {
-        'CHARSET': 'utf8',
-        'COLLATION': 'utf8_general_ci',
     }
 
 Note the two settings ``TEST_CHARSET`` and ``TEST_COLLATION``. Without these,
