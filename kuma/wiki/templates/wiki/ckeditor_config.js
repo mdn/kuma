@@ -54,7 +54,7 @@
       // MDN's plugins.
       'mdn-attachment,mdn-format,mdn-sticky-toolbar,mdn-image-attachment,mdn-link-customization,mdn-link-launch,' +
       'mdn-redirect,mdn-sample-finder,mdn-sampler,mdn-syntaxhighlighter,mdn-system-integration,mdn-table-customization,' +
-      'mdn-toggle-block,mdn-wrapstyle,' +
+      'mdn-toggle-block,mdn-wrapstyle,mdn-youtube,' +
       // Other plugins.
       'descriptionlist,tablesort,texzilla';
 
