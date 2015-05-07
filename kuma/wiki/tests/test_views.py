@@ -1975,7 +1975,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
             for t in no_tags:
                 response = self.client.get(reverse('wiki.tag', args=[t]))
-                self.assertNotContains(response, doc.slug)
+                ok_(doc.slug not in response.content.decode('utf-8'))
                 response = self.client.get(reverse('wiki.feeds.recent_documents',
                                                    args=['atom', t]))
                 self.assertNotContains(response, doc.title)
