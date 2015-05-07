@@ -2,7 +2,6 @@ MySQL-python==1.2.3c1
 Jinja2==2.5.2
 lxml==2.2.6
 coverage==3.7.1
-pyquery==0.5
 # commented out since it doesn't work on Travis with Python 2.6
 # readd once we're using a sane Python version
 # librabbitmq==1.6.1

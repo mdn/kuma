@@ -12,7 +12,6 @@ packages/ipython
 packages/pyflakes
 packages/django-taggit
 packages/anyjson
-packages/pyquery
 packages/django-picklefield/src
 packages/setuptools
 packages/pep8
@@ -100,3 +99,4 @@ src/django-cacheback
 src/django-taggit
 src/httplib2/python2
 src/html5lib
+src/pyquery
