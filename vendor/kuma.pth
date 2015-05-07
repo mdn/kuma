@@ -7,7 +7,6 @@ packages/Werkzeug
 packages/Babel
 packages/python-dateutil
 packages/pylint
-packages/ipython
 packages/pyflakes
 packages/django-taggit
 packages/anyjson

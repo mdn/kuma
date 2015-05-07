@@ -2,7 +2,7 @@
 # This pulls in requirements specific for development.
 
 Werkzeug==0.5.1
-ipython==0.10
+ipython==3.1.0
 sqlparse==0.1.1
 selenium==1.0.1
 translate-toolkit==1.6.0
