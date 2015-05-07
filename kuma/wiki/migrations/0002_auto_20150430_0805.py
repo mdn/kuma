@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import logging
 
 from django.db import models, migrations
+
+
+logger = logging.getLogger(__name__)
 
 
 tables = [
@@ -13,7 +17,7 @@ tables = [
 
 def alter_collation(cursor, collation):
     for table in tables:
-        print('    Altering table %s to collation %s...' % (table, collation))
+        logger.info('Altering table %s to collation %s...', table, collation)
         cursor.execute("ALTER TABLE %s "
                        "MODIFY name VARCHAR(100) "
                        "CHARACTER SET utf8 COLLATE %s;" %
