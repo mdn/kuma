@@ -1,7 +1,6 @@
 lib/python
 packages
 packages/pytz
-packages/coverage
 packages/sqlparse
 packages/GitPython/lib
 packages/Werkzeug
