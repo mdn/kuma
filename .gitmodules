@@ -145,3 +145,6 @@
 [submodule "vendor/src/pyquery"]
 	path = vendor/src/pyquery
 	url = https://github.com/gawel/pyquery
+[submodule "vendor/src/py-amqp"]
+	path = vendor/src/py-amqp
+	url = https://github.com/celery/py-amqp
