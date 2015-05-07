@@ -47,7 +47,7 @@ class AnonymousIdentity(object):
 
     @property
     def has_id(self):
-        return self._anonymous_id != None
+        return self._anonymous_id is not None
 
     @property
     def anonymous_id(self):

@@ -82,7 +82,7 @@ def attachments_json(attachments):
 
 def make_test_file(content=None):
     """Create a fake file for testing purposes."""
-    if content == None:
+    if content is None:
         content = 'I am a test file for upload.'
     # Shamelessly stolen from Django's own file-upload tests.
     tdir = tempfile.gettempdir()

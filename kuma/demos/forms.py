@@ -19,22 +19,22 @@ class MyModelForm(forms.ModelForm):
     def as_ul(self):
         "Returns this form rendered as HTML <li>s -- excluding the <ul></ul>."
         return self._html_output(
-            normal_row = u'<li%(html_class_attr)s>%(label)s %(field)s%(help_text)s%(errors)s</li>',
-            error_row = u'<li>%s</li>',
-            row_ender = '</li>',
-            help_text_html = u' <p class="help">%s</p>',
-            errors_on_separate_row = False)
+            normal_row=u'<li%(html_class_attr)s>%(label)s %(field)s%(help_text)s%(errors)s</li>',
+            error_row=u'<li>%s</li>',
+            row_ender='</li>',
+            help_text_html=u' <p class="help">%s</p>',
+            errors_on_separate_row=False)
 
 
 class MyForm(forms.Form):
     def as_ul(self):
         "Returns this form rendered as HTML <li>s -- excluding the <ul></ul>."
         return self._html_output(
-            normal_row = u'<li%(html_class_attr)s>%(label)s %(field)s%(help_text)s%(errors)s</li>',
-            error_row = u'<li>%s</li>',
-            row_ender = '</li>',
-            help_text_html = u' <p class="help">%s</p>',
-            errors_on_separate_row = False)
+            normal_row=u'<li%(html_class_attr)s>%(label)s %(field)s%(help_text)s%(errors)s</li>',
+            error_row=u'<li>%s</li>',
+            row_ender='</li>',
+            help_text_html=u' <p class="help">%s</p>',
+            errors_on_separate_row=False)
 
 
 class SubmissionEditForm(MyModelForm):
@@ -56,10 +56,10 @@ class SubmissionEditForm(MyModelForm):
 
     # Assemble tech tag choices from TAG_DESCRIPTIONS
     tech_tags = forms.MultipleChoiceField(
-        label = "Tech tags",
-        widget = CheckboxSelectMultiple,
-        required = False,
-        choices = (
+        label="Tech tags",
+        widget=CheckboxSelectMultiple,
+        required=False,
+        choices=(
             (x['tag_name'], x['title'])
             for x in TAG_DESCRIPTIONS.values()
             if x['tag_name'].startswith('tech:')
@@ -67,9 +67,9 @@ class SubmissionEditForm(MyModelForm):
     )
 
     challenge_tags = forms.ChoiceField(
-        label = "Dev Derby Challenge tag",
-        widget = RadioSelect,
-        required = False,
+        label="Dev Derby Challenge tag",
+        widget=RadioSelect,
+        required=False,
     )
 
     def __init__(self, *args, **kwargs):
@@ -113,7 +113,8 @@ class SubmissionEditForm(MyModelForm):
                     self._old_challenge_tags = [unicode(tag) for tag in instance.taggit_tags.all_ns('challenge:')]
             for ns in ('tech', 'challenge'):
                 if '%s_tags' % ns in self.fields:
-                    self.initial['%s_tags' % ns] = [t.name
+                    self.initial['%s_tags' % ns] = [
+                        t.name
                         for t in instance.taggit_tags.all_ns('%s:' % ns)]
 
     def clean(self):
@@ -137,7 +138,8 @@ class SubmissionEditForm(MyModelForm):
         super_save_m2m = hasattr(self, 'save_m2m') and self.save_m2m or None
 
         def save_m2m():
-            if super_save_m2m: super_save_m2m()
+            if super_save_m2m:
+                super_save_m2m()
             self.instance.taggit_tags.set_ns('tech:', *self.cleaned_data.get('tech_tags', []))
             # Look for a dev derby tag first in cleaned_data; if it
             # doesn't exist there, see if we stashed away the tags

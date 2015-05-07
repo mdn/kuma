@@ -1,5 +1,3 @@
-from nose.tools import ok_
-
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 from allauth.account.models import EmailAddress

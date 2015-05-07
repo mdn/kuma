@@ -102,11 +102,11 @@ def submission_thumb(submission, extra_class=None, thumb_width="200",
     # TODO: Move to a constant or DB table? Too much view stuff here?
     flags_meta = {
         # flag name      thumb class     flag description
-        'firstplace':  ('first-place',  _('First Place')),
+        'firstplace': ('first-place', _('First Place')),
         'secondplace': ('second-place', _('Second Place')),
-        'thirdplace':  ('third-place',  _('Third Place')),
-        'finalist':    ('finalist',     _('Finalist')),
-        'featured':    ('featured',     _('Featured')),
+        'thirdplace': ('third-place', _('Third Place')),
+        'finalist': ('finalist', _('Finalist')),
+        'featured': ('featured', _('Featured')),
     }
 
     # If there are any flags, pass them onto the template. Special treatment
@@ -130,7 +130,8 @@ def submission_listing_cache_key(*args, **kw):
         memcache.set(DEMOS_CACHE_NS_KEY, ns_key)
     full_path = args[0].get_full_path()
     username = args[0].user.username
-    return 'demos_%s:%s' % (ns_key,
+    return 'demos_%s:%s' % (
+        ns_key,
         hashlib.md5(full_path + username).hexdigest())
 
 
@@ -311,7 +312,7 @@ def timesince(d, now=None):
         (60, lambda n: ungettext('%(number)d minute ago',
                                  '%(number)d minutes ago', n)),
         (1, lambda n: ungettext('%(number)d second ago',
-                                 '%(number)d seconds ago', n))]
+                                '%(number)d seconds ago', n))]
     if not now:
         if d.tzinfo:
             now = datetime.datetime.now(LocalTimezone(d))

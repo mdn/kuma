@@ -28,11 +28,12 @@ register.function(build_policy_admin_links)
 
 
 def compare_url(doc, from_id, to_id):
-    return (reverse('wiki.compare_revisions', args=[doc.full_path],
-                    locale=doc.locale)
-            + '?' +
-            urllib.urlencode({'from': from_id, 'to': to_id})
-           )
+    return (
+        reverse('wiki.compare_revisions', args=[doc.full_path],
+                locale=doc.locale)
+        + '?' +
+        urllib.urlencode({'from': from_id, 'to': to_id})
+    )
 
 
 # http://stackoverflow.com/q/774316/571420
@@ -102,7 +103,7 @@ def bugize_text(content):
         jinja2.Markup('<a href="https://bugzilla.mozilla.org/'
                       'show_bug.cgi?id=\\2" '
                       'target="_blank">\\1 \\2</a>'),
-                  content)
+        content)
     return content
 
 
@@ -157,11 +158,10 @@ def diff_table(content_from, content_to, prev_id, curr_id):
     to_lines = tidy_to.splitlines()
     try:
         diff = html_diff.make_table(from_lines, to_lines,
-                                _("Revision %s") % prev_id,
-                                _("Revision %s") % curr_id,
-                                context=True,
-                                numlines=config.DIFF_CONTEXT_LINES
-                               )
+                                    _("Revision %s") % prev_id,
+                                    _("Revision %s") % curr_id,
+                                    context=True,
+                                    numlines=config.DIFF_CONTEXT_LINES)
     except RuntimeError:
         # some diffs hit a max recursion error
         message = _(u'There was an error generating the content.')
@@ -198,11 +198,11 @@ def colorize_diff(diff):
     # we're doing something horrible here because this will show up
     # in feed reader and other clients that don't load CSS files
     diff = diff.replace('<span class="diff_add"', '<span class="diff_add" '
-                'style="background-color: #afa; text-decoration: none;"')
+                        'style="background-color: #afa; text-decoration: none;"')
     diff = diff.replace('<span class="diff_sub"', '<span class="diff_sub" '
-                'style="background-color: #faa; text-decoration: none;"')
+                        'style="background-color: #faa; text-decoration: none;"')
     diff = diff.replace('<span class="diff_chg"', '<span class="diff_chg" '
-                'style="background-color: #fe0; text-decoration: none;"')
+                        'style="background-color: #fe0; text-decoration: none;"')
     return diff
 
 

@@ -18,7 +18,6 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
-from django.db import transaction
 from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
@@ -429,8 +428,7 @@ def document(request, document_slug, document_locale):
     """
     # PUT requests go to the write API.
     if request.method == 'PUT':
-        if (not request.authkey and
-               not request.user.is_authenticated()):
+        if (not request.authkey and not request.user.is_authenticated()):
             raise PermissionDenied
         return _document_PUT(request,
                              document_slug,
@@ -490,15 +488,13 @@ def document(request, document_slug, document_locale):
 
     if redirect_url and redirect_url != doc.get_absolute_url():
         url = urlparams(redirect_url, query_dict=request.GET)
-        messages.add_message(request, messages.WARNING,
-            # TODO: Re-enable the link in this message after Django >1.5 upgrade
-            # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
-            mark_safe(_(u'''
-                Redirected from %(url)s
-            ''') % {
+        # TODO: Re-enable the link in this message after Django >1.5 upgrade
+        # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
+        messages.add_message(
+            request, messages.WARNING,
+            mark_safe(_(u'Redirected from %(url)s') % {
                 "url": request.build_absolute_uri(doc.get_absolute_url())
-            }),
-            extra_tags='wiki_redirect')
+            }), extra_tags='wiki_redirect')
         return HttpResponsePermanentRedirect(url)
 
     # Step 2: Kick 'em out if they're not allowed to view this Document.

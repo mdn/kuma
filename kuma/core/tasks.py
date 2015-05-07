@@ -1,6 +1,5 @@
 from celery.task import task
 
-from django.core.cache import cache
 from django.db import connection
 from django.contrib.sessions.models import Session
 from django.utils import timezone

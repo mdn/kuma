@@ -47,7 +47,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
 
         # view it and verify markup is escaped
         response = self.client.get(reverse('wiki.edit_document', args=(rev.slug,),
-                                    locale=settings.WIKI_DEFAULT_LANGUAGE))
+                                           locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_('%s xss' % title,

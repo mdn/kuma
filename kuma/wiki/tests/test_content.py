@@ -868,8 +868,9 @@ class ContentSectionToolTests(UserTestCase):
             doc_line = doc_lines[idx]
             expected_line = expected_lines[idx]
             result_line = (kuma.wiki.content.parse(doc_line)
-                          .annotateLinks(base_url=vars['base_url'])
-                          .serialize())
+                                            .annotateLinks(
+                                                base_url=vars['base_url'])
+                                            .serialize())
             self.assertHTMLEqual(normalize_html(expected_line), normalize_html(result_line))
 
     @attr('bug821986')
@@ -1124,18 +1125,20 @@ class GetSEODescriptionTests(KumaTestCase):
 
     def test_html_elements_spaces(self):
         # No spaces with html tags
-        content = (u'<p><span class="seoSummary">The <strong>Document Object '
-             'Model'
-             '</strong> (<strong>DOM</strong>) is an API for '
-             '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
-             '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
-             'documents. It provides a structural representation of the '
-             'document, enabling you to modify its content and visual '
-             'presentation by using a scripting language such as '
-             '<a href="/en-US/docs/JavaScript" '
-             'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
-             'JavaScript</a>.</span></p>')
-        expected = ('The Document Object Model (DOM) is an API for HTML and '
+        content = (
+            u'<p><span class="seoSummary">The <strong>Document Object '
+            'Model'
+            '</strong> (<strong>DOM</strong>) is an API for '
+            '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
+            '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
+            'documents. It provides a structural representation of the '
+            'document, enabling you to modify its content and visual '
+            'presentation by using a scripting language such as '
+            '<a href="/en-US/docs/JavaScript" '
+            'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
+            'JavaScript</a>.</span></p>')
+        expected = (
+            'The Document Object Model (DOM) is an API for HTML and '
             'XML'
             ' documents. It provides a structural representation of the'
             ' document, enabling you to modify its content and visual'

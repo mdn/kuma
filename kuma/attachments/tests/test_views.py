@@ -231,9 +231,9 @@ class AttachmentTests(UserTestCase, WikiTestCase):
     def test_mime_type_filtering(self):
         """Don't allow uploads outside of the explicitly-permitted
         mime-types."""
-        #SLIGHT HACK: this requires the default set of allowed
-        #mime-types specified in settings.py. Specifically, adding
-        #'text/html' to that set will make this test fail.
+        # SLIGHT HACK: this requires the default set of allowed
+        # mime-types specified in settings.py. Specifically, adding
+        # 'text/html' to that set will make this test fail.
         test_user = self.user_model.objects.get(username='testuser2')
         a = Attachment(title='Test attachment for file type filter',
                        slug='test-attachment-for-file-type-filter')

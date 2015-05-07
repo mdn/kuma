@@ -8,7 +8,8 @@ from teamwork.views import user_roles
 from . import views
 
 
-account_patterns = patterns('',
+account_patterns = patterns(
+    '',
     url(r'^signin/cancelled/?$', socialaccount_views.login_cancelled,
         name='socialaccount_login_cancelled'),
     url(r'^signin/error/?$', socialaccount_views.login_error,
@@ -28,7 +29,8 @@ account_patterns = patterns('',
 )
 
 
-users_patterns = patterns('',
+users_patterns = patterns(
+    '',
     url(r'^signup/?$', account_views.signup, name='account_signup'),
     url(r'^signin/?$', account_views.login, name='account_login'),
     url(r'^signout/?$', account_views.logout, name='account_logout'),
@@ -47,7 +49,8 @@ for provider in providers.registry.get_list():
         users_patterns += prov_urlpatterns
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^profiles/(?P<username>[^/]+)/?$', views.profile_view,
         name='users.profile'),
     url(r'^profiles/(?P<username>[^/]+)/roles$', user_roles,

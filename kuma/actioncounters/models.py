@@ -23,11 +23,12 @@ class ActionCounterUniqueManager(models.Manager):
                                                        action_name,
                                                        request=request)
         if create:
-            return self.get_or_create(unique_hash=unique_hash,
-                    defaults=dict(content_type=content_type, object_pk=object.pk,
-                                  name=action_name, ip=ip,
-                                  user_agent=user_agent, user=user,
-                                  total=0))
+            return self.get_or_create(
+                unique_hash=unique_hash,
+                defaults=dict(content_type=content_type, object_pk=object.pk,
+                              name=action_name, ip=ip,
+                              user_agent=user_agent, user=user,
+                              total=0))
         else:
             try:
                 return (self.get(unique_hash=unique_hash), False)

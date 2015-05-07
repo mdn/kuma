@@ -93,6 +93,7 @@ def urlparams(url_, hash=None, query_dict=None, **query):
 bitly = bitly_api.Connection(login=getattr(settings, 'BITLY_USERNAME', ''),
                              api_key=getattr(settings, 'BITLY_API_KEY', ''))
 
+
 @register.filter
 def bitly_shorten(url):
     """Attempt to shorten a given URL through bit.ly / mzl.la"""

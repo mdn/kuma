@@ -80,10 +80,12 @@ def attachment_detail(request, attachment_id):
     if current.mime_type in ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']:
         preview_content = jinja2.Markup('<img src="%s" alt="%s" />') % (attachment.get_file_url(), attachment.title)
 
-    return render(request, 'attachments/attachment_detail.html',
-                        {'attachment': attachment,
-                         'preview_content': preview_content,
-                         'revision': attachment.current_revision})
+    return render(
+        request,
+        'attachments/attachment_detail.html',
+        {'attachment': attachment,
+         'preview_content': preview_content,
+         'revision': attachment.current_revision})
 
 
 def attachment_history(request, attachment_id):
@@ -93,9 +95,11 @@ def attachment_history(request, attachment_id):
     # a few extra bits, like the ability to set an arbitrary revision
     # to be current.
     attachment = get_object_or_404(Attachment, pk=attachment_id)
-    return render(request, 'attachments/attachment_history.html',
-                        {'attachment': attachment,
-                         'revision': attachment.current_revision})
+    return render(
+        request,
+        'attachments/attachment_history.html',
+        {'attachment': attachment,
+         'revision': attachment.current_revision})
 
 
 @require_POST
@@ -151,8 +155,10 @@ def new_attachment(request):
                 'attachments/includes/attachment_upload_results.html',
                 {'result': json.dumps([error_obj])})
         else:
-            response = render(request, 'attachments/edit_attachment.html',
-                                    {'form': form})
+            response = render(
+                request,
+                'attachments/edit_attachment.html',
+                {'form': form})
     return response
 
 

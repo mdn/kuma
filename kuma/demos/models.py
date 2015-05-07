@@ -9,11 +9,6 @@ import zipfile
 
 import magic
 
-try:
-    from PIL import Image
-except ImportError:
-    import Image
-
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
@@ -46,9 +41,11 @@ THUMBNAIL_MAXH = getattr(settings, 'DEMO_THUMBNAIL_MAX_HEIGHT', 150)
 # Set up a file system for demo uploads that can be kept separate from the rest
 # of /media if necessary. Lots of hackery here to ensure a set of sensible
 # defaults are tried.
-DEMO_UPLOADS_ROOT = getattr(settings, 'DEMO_UPLOADS_ROOT',
+DEMO_UPLOADS_ROOT = getattr(
+    settings, 'DEMO_UPLOADS_ROOT',
     '%s/uploads/demos' % getattr(settings, 'MEDIA_ROOT', 'media'))
-DEMO_UPLOADS_URL = getattr(settings, 'DEMO_UPLOADS_URL',
+DEMO_UPLOADS_URL = getattr(
+    settings, 'DEMO_UPLOADS_URL',
     '%s/uploads/demos' % getattr(settings, 'MEDIA_URL', '/media'))
 demo_uploads_fs = FileSystemStorage(location=DEMO_UPLOADS_ROOT, base_url=DEMO_UPLOADS_URL)
 
@@ -247,8 +244,9 @@ class ReplacingImageWithThumbFieldFile(ImageFieldFile):
         # Create associated scaled thumbnail image
         t_name = self.thumbnail_name()
         if t_name:
-            thumb_file = scale_image(self.storage.open(new_filename),
-                    (self.field.thumb_max_width, self.field.thumb_max_height))
+            thumb_file = scale_image(
+                self.storage.open(new_filename),
+                (self.field.thumb_max_width, self.field.thumb_max_height))
             self.storage.save(t_name, thumb_file)
 
 
@@ -268,8 +266,9 @@ class ReplacingImageWithThumbField(models.ImageField):
         data = super(ReplacingImageWithThumbField, self).clean(*args, **kwargs)
 
         # Scale the input image down to maximum full size.
-        scaled_file = scale_image(data.file,
-                (self.full_max_width, self.full_max_height))
+        scaled_file = scale_image(
+            data.file,
+            (self.full_max_width, self.full_max_height))
         if not scaled_file:
             raise ValidationError(_('Cannot process image'))
         data.file = scaled_file
@@ -291,8 +290,8 @@ class SubmissionManager(models.Manager):
 
     # See: http://www.julienphalip.com/blog/2008/08/16/adding-search-django-site-snap/
     def _normalize_query(self, query_string,
-                        findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
-                        normspace=re.compile(r'\s{2,}').sub):
+                         findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+                         normspace=re.compile(r'\s{2,}').sub):
         ''' Splits the query string in invidual keywords, getting rid of unecessary spaces
             and grouping quoted words together.
             Example:
@@ -309,10 +308,10 @@ class SubmissionManager(models.Manager):
             aims to search keywords within a model by testing the given search fields.
 
         '''
-        query = None # Query to search for every search term
+        query = None  # Query to search for every search term
         terms = self._normalize_query(query_string)
         for term in terms:
-            or_query = None # Query to search for a given term in each field
+            or_query = None  # Query to search for a given term in each field
             for field_name in search_fields:
                 q = Q(**{"%s__icontains" % field_name: term})
                 if or_query is None:
@@ -358,33 +357,32 @@ class Submission(models.Model):
     admin_manager = models.Manager()
 
     title = models.CharField(
-            _("what is your demo's name?"),
-            max_length=255, blank=False, unique=True)
-    slug = models.SlugField(_("slug"),
-            blank=False, unique=True, max_length=50)
+        _("what is your demo's name?"),
+        max_length=255, blank=False, unique=True)
+    slug = models.SlugField(
+        _("slug"),
+        blank=False, unique=True, max_length=50)
     summary = models.CharField(
-            _("describe your demo in one line"),
-            max_length=255, blank=False)
+        _("describe your demo in one line"),
+        max_length=255, blank=False)
     description = models.TextField(
-            _("describe your demo in more detail (optional)"),
-            blank=True)
+        _("describe your demo in more detail (optional)"),
+        blank=True)
 
     featured = models.BooleanField(default=False)
     hidden = models.BooleanField(
-            _("Hide this demo from others?"), default=False)
+        _("Hide this demo from others?"), default=False)
     censored = models.BooleanField(default=False)
     censored_url = models.URLField(
-            _("Redirect URL for censorship."),
-            blank=True, null=True)
+        _("Redirect URL for censorship."),
+        blank=True, null=True)
 
     navbar_optout = models.BooleanField(
         _('control how your demo is launched'),
         choices=(
             (True, _('Disable navigation bar, launch demo in a new window')),
             (False, _('Use navigation bar, display demo in <iframe>'))
-        ),
-        default=False
-    )
+        ), default=False)
 
     # FIXME: remove since it's unneeded
     comments_total = models.PositiveIntegerField(default=0)
@@ -395,65 +393,67 @@ class Submission(models.Model):
     taggit_tags = NamespacedTaggableManager(blank=True)
 
     screenshot_1 = ReplacingImageWithThumbField(
-            _('Screenshot #1'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=upload_screenshot_1,
-            blank=False)
+        _('Screenshot #1'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_1,
+        blank=False)
     screenshot_2 = ReplacingImageWithThumbField(
-            _('Screenshot #2'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=upload_screenshot_2,
-            blank=True)
+        _('Screenshot #2'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_2,
+        blank=True)
     screenshot_3 = ReplacingImageWithThumbField(
-            _('Screenshot #3'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=upload_screenshot_3,
-            blank=True)
+        _('Screenshot #3'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_3,
+        blank=True)
     screenshot_4 = ReplacingImageWithThumbField(
-            _('Screenshot #4'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=upload_screenshot_4,
-            blank=True)
+        _('Screenshot #4'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_4,
+        blank=True)
     screenshot_5 = ReplacingImageWithThumbField(
-            _('Screenshot #5'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=upload_screenshot_5,
-            blank=True)
+        _('Screenshot #5'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_5,
+        blank=True)
 
     video_url = VideoEmbedURLField(
-            _("have a video of your demo in action? (optional)"),
-            blank=True, null=True)
+        _("have a video of your demo in action? (optional)"),
+        blank=True, null=True)
 
     demo_package = ReplacingZipFileField(
-            _('select a ZIP file containing your demo'),
-            max_length=255,
-            max_upload_size=config_lazy('DEMO_MAX_ZIP_FILESIZE',
-                                        60 * 1024 * 1024),  # overridden by constance
-            storage=demo_uploads_fs,
-            upload_to=demo_package_upload_to,
-            blank=False)
+        _('select a ZIP file containing your demo'),
+        max_length=255,
+        max_upload_size=config_lazy('DEMO_MAX_ZIP_FILESIZE',
+                                    60 * 1024 * 1024),  # overridden by constance
+        storage=demo_uploads_fs,
+        upload_to=demo_package_upload_to,
+        blank=False)
 
     source_code_url = models.URLField(
-            _("Is your source code also available somewhere else on the web (e.g., github)? Please share the link."),
-            blank=True, null=True)
+        _("Is your source code also available somewhere else on the web (e.g., github)? Please share the link."),
+        blank=True, null=True)
     license_name = models.CharField(
-            _("Select the license that applies to your source code."),
-            max_length=64, blank=False,
-            choices=[(license['name'], license['title'])
-                     for license in DEMO_LICENSES.values()]
+        _("Select the license that applies to your source code."),
+        max_length=64, blank=False,
+        choices=[(license['name'], license['title'])
+                 for license in DEMO_LICENSES.values()]
     )
 
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, null=True)
 
-    created = models.DateTimeField(_('date created'),
-            auto_now_add=True, blank=False)
-    modified = models.DateTimeField(_('date last modified'),
-            auto_now=True, blank=False)
+    created = models.DateTimeField(
+        _('date created'),
+        auto_now_add=True, blank=False)
+    modified = models.DateTimeField(
+        _('date last modified'),
+        auto_now=True, blank=False)
 
     def natural_key(self):
         return (self.slug,)
@@ -645,9 +645,9 @@ class Submission(models.Model):
         """Filter a ZIP file's entries for only accepted entries"""
         # TODO: Move to zip file field?
         return [x for x in zf.infolist() if
-            not (x.filename.startswith('/') or '/..' in x.filename) and
-            not (basename(x.filename).startswith('.')) and
-            x.file_size > 0]
+                not (x.filename.startswith('/') or '/..' in x.filename) and
+                not (basename(x.filename).startswith('.')) and
+                x.file_size > 0]
 
     @classmethod
     def validate_demo_zipfile(cls, file):
@@ -689,7 +689,7 @@ class Submission(models.Model):
 
             extensions = config.DEMO_BLACKLIST_OVERRIDE_EXTENSIONS.split()
             override_file_extensions = ['.%s' % extension
-                                       for extension in extensions]
+                                        for extension in extensions]
 
             if (file_mime_type in DEMO_MIMETYPE_BLACKLIST and
                     not name.endswith(tuple(override_file_extensions))):

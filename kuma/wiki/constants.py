@@ -3,8 +3,6 @@ import re
 import bleach
 from tower import ugettext_lazy as _lazy
 
-from django.conf import settings
-
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'pre', 'code', 'cite',
@@ -77,14 +75,20 @@ ALLOWED_ATTRIBUTES['del'] = ['datetime']
 # MathML
 ALLOWED_ATTRIBUTES.update(dict((x, ['encoding', 'src']) for x in (
     'annotation', 'annotation-xml')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['href', 'mathbackground', 'mathcolor',
-    'id', 'class', 'style']) for x in (
-    'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
-    'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
-    'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle',
-    'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder',
-    'munderover', 'none', 'mprescripts')))
-ALLOWED_ATTRIBUTES['math'] += ['display', 'dir', 'selection', 'notation',
+ALLOWED_ATTRIBUTES.update(
+    dict((x,
+          ['href', 'mathbackground', 'mathcolor',
+           'id', 'class', 'style']) for x in ('math', 'maction', 'menclose',
+                                              'merror', 'mfenced', 'mfrac', 'mglyph',
+                                              'mi', 'mlabeledtr', 'mmultiscripts',
+                                              'mn', 'mo', 'mover', 'mpadded',
+                                              'mphantom', 'mroot', 'mrow', 'ms',
+                                              'mspace', 'msqrt', 'mstyle',
+                                              'msub', 'msup', 'msubsup', 'mtable',
+                                              'mtd', 'mtext', 'mtr', 'munder',
+                                              'munderover', 'none', 'mprescripts')))
+ALLOWED_ATTRIBUTES['math'] += [
+    'display', 'dir', 'selection', 'notation',
     'close', 'open', 'separators', 'bevelled', 'denomalign', 'linethickness',
     'numalign', 'largeop', 'maxsize', 'minsize', 'movablelimits', 'rspace',
     'separator', 'stretchy', 'symmetric', 'depth', 'lquote', 'rquote', 'align',
@@ -97,20 +101,22 @@ ALLOWED_ATTRIBUTES['maction'] += ['actiontype', 'selection']
 ALLOWED_ATTRIBUTES['menclose'] += ['notation']
 ALLOWED_ATTRIBUTES['mfenced'] += ['close', 'open', 'separators']
 ALLOWED_ATTRIBUTES['mfrac'] += ['bevelled', 'denomalign', 'linethickness',
-    'numalign']
+                                'numalign']
 ALLOWED_ATTRIBUTES['mi'] += ['dir', 'mathsize', 'mathvariant']
 ALLOWED_ATTRIBUTES['mi'] += ['mathsize', 'mathvariant']
 ALLOWED_ATTRIBUTES['mmultiscripts'] += ['subscriptshift', 'superscriptshift']
 ALLOWED_ATTRIBUTES['mo'] += ['largeop', 'lspace', 'maxsize', 'minsize',
-    'movablelimits', 'rspace', 'separator', 'stretchy', 'symmetric', 'accent',
-    'dir', 'mathsize', 'mathvariant']
+                             'movablelimits', 'rspace', 'separator',
+                             'stretchy', 'symmetric', 'accent',
+                             'dir', 'mathsize', 'mathvariant']
 ALLOWED_ATTRIBUTES['mover'] += ['accent']
 ALLOWED_ATTRIBUTES['mpadded'] += ['lspace', 'voffset', 'depth']
 ALLOWED_ATTRIBUTES['mrow'] += ['dir']
 ALLOWED_ATTRIBUTES['ms'] += ['lquote', 'rquote', 'dir', 'mathsize',
-    'mathvariant']
+                             'mathvariant']
 ALLOWED_ATTRIBUTES['mspace'] += ['depth', 'height', 'width']
-ALLOWED_ATTRIBUTES['mstyle'] += ['display', 'dir', 'selection', 'notation',
+ALLOWED_ATTRIBUTES['mstyle'] += [
+    'display', 'dir', 'selection', 'notation',
     'close', 'open', 'separators', 'bevelled', 'denomalign', 'linethickness',
     'numalign', 'largeop', 'maxsize', 'minsize', 'movablelimits', 'rspace',
     'separator', 'stretchy', 'symmetric', 'depth', 'lquote', 'rquote', 'align',
@@ -123,9 +129,9 @@ ALLOWED_ATTRIBUTES['msub'] += ['subscriptshift']
 ALLOWED_ATTRIBUTES['msubsup'] += ['subscriptshift', 'superscriptshift']
 ALLOWED_ATTRIBUTES['msup'] += ['superscriptshift']
 ALLOWED_ATTRIBUTES['mtable'] += ['align', 'columnalign', 'columnlines',
-    'frame', 'rowalign', 'rowspacing', 'rowlines']
+                                 'frame', 'rowalign', 'rowspacing', 'rowlines']
 ALLOWED_ATTRIBUTES['mtd'] += ['columnalign', 'columnspan', 'rowalign',
-    'rowspan']
+                              'rowspan']
 ALLOWED_ATTRIBUTES['mtext'] += ['dir', 'mathsize', 'mathvariant']
 ALLOWED_ATTRIBUTES['mtr'] += ['columnalign', 'rowalign']
 ALLOWED_ATTRIBUTES['munder'] += ['accentunder']
@@ -172,7 +178,7 @@ ALLOWED_STYLES = [
     '-o-transition-duration', 'transition-property',
     '-moz-transition-property', '-webkit-transition-property',
     '-o-transition-property', 'transition-timing-function',
-    '-moz-transition-timing-function',  '-webkit-transition-timing-function',
+    '-moz-transition-timing-function', '-webkit-transition-timing-function',
     '-o-transition-timing-function', 'color', 'display', 'position',
     'outline-color', 'outline', 'outline-offset', 'box-shadow',
     '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',

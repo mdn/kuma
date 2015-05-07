@@ -118,8 +118,9 @@ def valid_slug_parent(slug, locale):
         try:
             parent = Document.objects.get(locale=locale, slug=parent_slug)
         except Document.DoesNotExist:
-            raise Exception(_("Parent %s/%s does not exist." % (locale,
-                                                         parent_slug)))
+            raise Exception(
+                _("Parent %s/%s does not exist." % (locale,
+                                                    parent_slug)))
 
     return parent
 
@@ -581,9 +582,9 @@ class Document(NotificationsMixin, models.Model):
             for translation in self.other_translations:
                 revision = translation.current_revision
                 if revision.summary:
-                   summary = revision.summary
+                    summary = revision.summary
                 else:
-                   summary = translation.get_summary(strip_markup=False)
+                    summary = translation.get_summary(strip_markup=False)
                 translations.append({
                     'last_edit': revision.created.isoformat(),
                     'locale': translation.locale,

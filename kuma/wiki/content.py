@@ -4,7 +4,6 @@ import re
 import urllib
 from urllib import urlencode
 from urlparse import urlparse
-from xml.sax.saxutils import quoteattr
 
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
@@ -566,7 +565,7 @@ class SectionIDFilter(html5lib_Filter):
         # we can just replace the escape sequence with the dot, uppercase
         # it, and we have the thing MindTouch would generate.
         return repr(c.encode('utf-8')).strip("'").replace(r'\x', '.').upper()
-    
+
     def process_header(self, token, buffer):
         # If we get into this code, 'token' will be the start tag of a
         # header element. We're going to grab its text contents to
@@ -613,7 +612,6 @@ class SectionIDFilter(html5lib_Filter):
         # Hand back buffer minus the bits we yanked out of it, and the
         # new ID-ified header start tag and contents.
         return buffer, [start] + tmp
-        
 
     def __iter__(self):
         input = html5lib_Filter.__iter__(self)

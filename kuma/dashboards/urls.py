@@ -2,7 +2,8 @@ from django.conf.urls import patterns, url
 from django.views.generic.base import RedirectView
 
 
-urlpatterns = patterns('kuma.dashboards.views',
+urlpatterns = patterns(
+    'kuma.dashboards.views',
     url(r'^dashboards/revisions$', 'revisions',
         name='dashboards.revisions'),
     url(r'^dashboards/user_lookup$', 'user_lookup',

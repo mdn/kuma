@@ -7,7 +7,8 @@ from .feeds import (DocumentsRecentFeed, DocumentsReviewFeed, RevisionsFeed,
 
 
 # These patterns inherit (?P<document_path>[^\$]+).
-document_patterns = patterns('kuma.wiki.views',
+document_patterns = patterns(
+    'kuma.wiki.views',
     url(r'^$', 'document', name='wiki.document'),
     url(r'^\$revision/(?P<revision_id>\d+)$', 'revision',
         name='wiki.revision'),
@@ -48,7 +49,8 @@ document_patterns = patterns('kuma.wiki.views',
     url(r'^\$vote', 'helpful_vote', name="wiki.document_vote"),
 )
 
-urlpatterns = patterns('kuma.wiki.views',
+urlpatterns = patterns(
+    'kuma.wiki.views',
     # Un/Subscribe to locale 'ready for review' notifications.
     url(r'^/ckeditor_config.js$', 'ckeditor_config',
         name='wiki.ckeditor_config'),
@@ -82,7 +84,7 @@ urlpatterns = patterns('kuma.wiki.views',
     url(r'^/localization-tag/?', 'list_documents_with_localization_tag',
         name='wiki.list_with_localization_tags'),
     url(r'^/category/(?P<category>\d+)$', 'list_documents',
-    name='wiki.category'),
+        name='wiki.category'),
 
     # Feeds
     url(r'^/feeds/(?P<format>[^/]+)/all/?',

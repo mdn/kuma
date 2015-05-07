@@ -193,7 +193,7 @@ class ActionCountersTest(TransactionTestCase):
         for unique in UNIQUES:
             request = self.mk_request(**unique)
 
-            for x in range(1, MAX+1):
+            for x in range(1, MAX + 1):
                 obj_1.boogs.increment(request)
                 eq_(x, obj_1.boogs.get_total_for_request(request))
 

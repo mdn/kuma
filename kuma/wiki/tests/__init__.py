@@ -160,7 +160,7 @@ def create_template_test_users():
     groups = {}
     for x in ('add', 'change', 'all'):
         group, created = Group.objects.get_or_create(
-                             name='templaters_%s' % x)
+            name='templaters_%s' % x)
         if created:
             group.permissions = perms[x]
             group.save()
@@ -169,7 +169,8 @@ def create_template_test_users():
     users = {}
     User = get_user_model()
     for x in ('none', 'add', 'change', 'all'):
-        user, created = User.objects.get_or_create(username='user_%s' % x,
+        user, created = User.objects.get_or_create(
+            username='user_%s' % x,
             defaults=dict(email='user_%s@example.com',
                           is_active=True, is_staff=False, is_superuser=False))
         if created:

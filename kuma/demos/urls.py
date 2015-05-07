@@ -1,4 +1,4 @@
-from django.conf.urls import include, patterns, url
+from django.conf.urls import patterns, url
 
 from .feeds import (FeaturedSubmissionsFeed,
                     RecentSubmissionsFeed,
@@ -14,7 +14,8 @@ from .views import (AllView,
                     TagView)
 
 
-urlpatterns = patterns('kuma.demos.views',
+urlpatterns = patterns(
+    'kuma.demos.views',
 
     url(r'^$', HomeView.as_view(), name='demos'),
 

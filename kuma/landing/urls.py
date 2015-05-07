@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 
-urlpatterns = patterns('kuma.landing.views',
+urlpatterns = patterns(
+    'kuma.landing.views',
     url(r'^$', 'home', name='home'),
     url(r'^fellowship/?$', 'fellowship', name='fellowship'),
     url(r'^promote/?$', 'promote_buttons', name='promote'),

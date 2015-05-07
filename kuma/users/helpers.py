@@ -43,7 +43,7 @@ def ban_link(context, ban_user, banner_user):
         if ban_user.profile.is_banned:
             active_ban = ban_user.profile.active_ban()
             url = reverse('admin:users_userban_change', args=(active_ban.id,))
-            title = _('Banned on {ban_date} by {ban_admin}.').format(ban_date=datetimeformat(context, active_ban.date, format='date', output='json'), ban_admin=active_ban.by )
+            title = _('Banned on {ban_date} by {ban_admin}.').format(ban_date=datetimeformat(context, active_ban.date, format='date', output='json'), ban_admin=active_ban.by)
             link = '<a href="%s" class="button ban-link" title="%s">%s<i aria-hidden="true" class="icon-ban"></i></a>' % (url, title, _('Banned'))
         else:
             url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)

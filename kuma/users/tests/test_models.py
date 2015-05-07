@@ -108,7 +108,7 @@ class BanTestCase(UserTestCase):
         ban.save()
         testuser_banned = self.user_model.objects.get(username='testuser')
         ok_(not testuser_banned.is_active)
-        ok_(testuser_banned.profile.is_banned == True)
+        ok_(testuser_banned.profile.is_banned is True)
         ok_(testuser_banned.profile.active_ban().by == admin)
 
         ban.is_active = False

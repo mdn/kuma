@@ -11,7 +11,7 @@ from django.utils.functional import cached_property
 from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.socialaccount.signals import social_account_removed
 from constance import config
-from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
+from timezones.fields import TimeZoneField
 from tower import ugettext_lazy as _
 from waffle import switch_is_active
 
@@ -128,11 +128,12 @@ class UserProfile(ModelBase):
                              verbose_name=_(u'Timezone'))
     locale = LocaleField(null=True, blank=True, db_index=True,
                          verbose_name=_(u'Language'))
-    homepage = models.URLField(max_length=255, blank=True, default='',
-                               error_messages={
-                               'invalid': _(u'This URL has an invalid format. '
-                                            u'Valid URLs look like '
-                                            u'http://example.com/my_page.')})
+    homepage = models.URLField(
+        max_length=255, blank=True, default='',
+        error_messages={
+            'invalid': _(u'This URL has an invalid format. '
+                         u'Valid URLs look like '
+                         u'http://example.com/my_page.')})
     title = models.CharField(_(u'Title'), max_length=255, default='',
                              blank=True)
     fullname = models.CharField(_(u'Name'), max_length=255, default='',
@@ -234,7 +235,6 @@ def on_email_confirmed(sender, request, email_address, **kwargs):
                              .emailaddress_set.exclude(pk=email_address.pk)
                                               .exists()):
             send_welcome_email.delay(email_address.user.pk, request.locale)
-
 
 
 @receiver(social_account_removed)

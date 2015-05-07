@@ -16,7 +16,8 @@ handler403 = core_views.handler403
 handler404 = core_views.handler404
 handler500 = core_views.handler500
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     ('', include('kuma.landing.urls')),
     (r'^demos/', include('kuma.demos.urls')),
     (r'^demos', lambda x: redirect('demos')),
@@ -72,16 +73,18 @@ if settings.DEBUG:
 
 if settings.SERVE_MEDIA:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
-    urlpatterns += patterns('',
+    urlpatterns += patterns(
+        '',
         (r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',
-          {'document_root': settings.MEDIA_ROOT}),
+         {'document_root': settings.MEDIA_ROOT}),
     )
 
 # Legacy MindTouch redirects. These go last so that they don't mess
 # with local instances' ability to serve media.
-urlpatterns += patterns('',
-                        url(r'^@api/deki/files/(?P<file_id>\d+)/=(?P<filename>.+)$',
-                            'kuma.attachments.views.mindtouch_file_redirect',
-                            name='attachments.mindtouch_file_redirect'),
-                        (r'^(?P<path>.*)$', 'kuma.wiki.views.mindtouch_to_kuma_redirect'),
+urlpatterns += patterns(
+    '',
+    url(r'^@api/deki/files/(?P<file_id>\d+)/=(?P<filename>.+)$',
+        'kuma.attachments.views.mindtouch_file_redirect',
+        name='attachments.mindtouch_file_redirect'),
+    (r'^(?P<path>.*)$', 'kuma.wiki.views.mindtouch_to_kuma_redirect'),
 )

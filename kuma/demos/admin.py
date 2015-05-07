@@ -38,7 +38,8 @@ def censor_selected(modeladmin, request, queryset):
                 modeladmin.message_user(request, _("Censored %(item)s") % {
                     "item": obj_display
                 })
-            modeladmin.message_user(request,
+            modeladmin.message_user(
+                request,
                 _("Successfully censored %(count)d %(items)s.") % {
                     "count": n, "items": model_ngettext(modeladmin.opts, n)
                 })
@@ -60,7 +61,8 @@ def censor_selected(modeladmin, request, queryset):
     }
 
     # Display the confirmation page
-    return TemplateResponse(request,
+    return TemplateResponse(
+        request,
         'admin/demos/submission/censor_selected_confirmation.html',
         context, current_app=modeladmin.admin_site.name)
 censor_selected.short_description = ugettext_lazy("Censor selected %(verbose_name_plural)s")
@@ -99,11 +101,13 @@ def delete_selected(modeladmin, request, queryset):
                 obj_display = force_unicode(obj)
                 modeladmin.log_deletion(request, obj, obj_display)
                 obj.delete()
-                modeladmin.message_user(request,
+                modeladmin.message_user(
+                    request,
                     _("Deleted and uploaded files for %(item)s") % {
                         "item": obj_display
                     })
-            modeladmin.message_user(request,
+            modeladmin.message_user(
+                request,
                 _("Successfully deleted %(count)d %(items)s.") % {
                     "count": n, "items": model_ngettext(modeladmin.opts, n)
                 })

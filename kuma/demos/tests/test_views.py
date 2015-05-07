@@ -8,8 +8,6 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
-from django.conf import settings
-
 from constance import config
 
 from kuma.core.urlresolvers import reverse
@@ -24,14 +22,14 @@ from ..tests import make_users, build_submission, build_hidden_submission
 from .test_models import save_valid_submission
 
 SCREENSHOT_PATH = ('%s/fixtures/screenshot_1.png' %
-        dirname(dirname(__file__)))
+                   dirname(dirname(__file__)))
 TESTUSER_PASSWORD = 'trustno1'
 
 
 def logged_in(test, *args, **kwargs):
     def test_new(self):
         self.client.login(username=self.testuser.username,
-                password=TESTUSER_PASSWORD)
+                          password=TESTUSER_PASSWORD)
         test(self, *args, **kwargs)
     return test_new
 

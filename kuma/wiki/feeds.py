@@ -1,5 +1,4 @@
 """Feeds for documents"""
-import cgi
 import datetime
 import json
 import urllib
@@ -116,14 +115,14 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
             # Linkify the tags used in the feed item
             categories = dict(
                 (x, request.build_absolute_uri(
-                        reverse('kuma.wiki.views.list_documents',
-                                kwargs={'tag': x})))
+                    reverse('kuma.wiki.views.list_documents',
+                            kwargs={'tag': x})))
                 for x in item['categories']
             )
             if categories:
                 item_out['categories'] = categories
 
-            #TODO: What else might be useful in a JSON feed of documents?
+            # TODO: What else might be useful in a JSON feed of documents?
 
             items_out.append(item_out)
 
@@ -165,7 +164,7 @@ class DocumentsRecentFeed(DocumentsFeed):
                         .prefetch_related('current_revision',
                                           'current_revision__creator')
                         .order_by('-current_revision__created')
-                        [:MAX_FEED_ITEMS])
+                [:MAX_FEED_ITEMS])
 
 
 class DocumentsReviewFeed(DocumentsRecentFeed):
@@ -194,7 +193,7 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
                         .prefetch_related('current_revision',
                                           'current_revision__creator')
                         .order_by('-current_revision__created')
-                        [:MAX_FEED_ITEMS])
+                [:MAX_FEED_ITEMS])
 
 
 class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
@@ -218,7 +217,7 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
                         .filter(locale=self.locale, parent__isnull=False)
                         .filter(modified__lt=F('parent__modified'))
                         .order_by('-parent__current_revision__created')
-                        [:MAX_FEED_ITEMS])
+                [:MAX_FEED_ITEMS])
 
     def item_description(self, item):
         # TODO: Needs to be a jinja template?
@@ -240,8 +239,8 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
         doc, parent = item, item.parent
 
         trans_based_on_rev = (Revision.objects.filter(document=parent)
-                                            .filter(created__lte=doc.modified)
-                                            .order_by('created')[0])
+                              .filter(created__lte=doc.modified)
+                              .order_by('created')[0])
         mod_url = compare_url(parent, trans_based_on_rev.id,
                               parent.current_revision.id)
 
