@@ -8,6 +8,9 @@ Werkzeug==0.10.4
 
 django-devserver==0.8.0
 
+# not released yet as of 2015-05-08
+jingo-minify==0.6.0
+
 Django==1.7.8
 
 django-extensions==1.5.3
