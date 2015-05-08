@@ -44,7 +44,6 @@ src/check
 src/django-product-details
 src/test-utils
 src/py-wikimarkup
-src/django-multidb-router
 src/bleach
 src/tower
 src/django-extensions
