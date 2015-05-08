@@ -59,7 +59,7 @@ class DocumentTests(UserTestCase):
 
         # Create a translation with some tags
         de_doc = document(parent=doc, locale='de', save=True)
-        de_rev = revision(document=de_doc, save=True)
+        revision(document=de_doc, save=True)
         expected_l10n_tags = ['inprogress']
         de_doc.current_revision.localization_tags.set(*expected_l10n_tags)
         de_doc.tags.set(*expected_tags)
@@ -1584,12 +1584,12 @@ class PageMoveTests(UserTestCase):
         child_doc._move_tree(moved_child_slug)
 
         redirected_child = Document.objects.get(slug=child_slug)
-        moved_child = Document.objects.get(slug=moved_child_slug)
+        Document.objects.get(slug=moved_child_slug)
         ok_('REDIRECT' in redirected_child.html)
         ok_(moved_child_slug in redirected_child.html)
 
         redirected_grandchild = Document.objects.get(slug=grandchild_doc.slug)
-        moved_grandchild = Document.objects.get(slug=moved_grandchild_slug)
+        Document.objects.get(slug=moved_grandchild_slug)
         ok_('REDIRECT' in redirected_grandchild.html)
         ok_(moved_grandchild_slug in redirected_grandchild.html)
 
@@ -1603,18 +1603,18 @@ class PageMoveTests(UserTestCase):
         special_root = document(title='User:foo',
                                 slug=root_slug,
                                 save=True)
-        root_rev = revision(document=special_root,
-                            title=special_root.title,
-                            slug=root_slug,
-                            save=True)
+        revision(document=special_root,
+                 title=special_root.title,
+                 slug=root_slug,
+                 save=True)
 
         special_child = document(title='User:foo child',
                                  slug=child_slug,
                                  save=True)
-        child_rev = revision(document=special_child,
-                             title=special_child.title,
-                             slug=child_slug,
-                             save=True)
+        revision(document=special_child,
+                 title=special_child.title,
+                 slug=child_slug,
+                 save=True)
 
         special_child.parent_topic = special_root
         special_child.save()
