@@ -8,3 +8,5 @@ Werkzeug==0.10.4
 
 django-devserver==0.8.0
 
+Django==1.7.8
+
