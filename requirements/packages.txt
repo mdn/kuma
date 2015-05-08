@@ -43,4 +43,7 @@ django-dbgettext==0.1.1
 
 polib==1.0.6
 
-pygments==2.0.2
+Pygments==2.0.2
+
+diff-match-patch==20121119
+

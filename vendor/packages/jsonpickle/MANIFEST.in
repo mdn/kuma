@@ -1,5 +1,0 @@
-include COPYING README.rst
-include *.py
-include tests/*.py
-include docs/source/**
-

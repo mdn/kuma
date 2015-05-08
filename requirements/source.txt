@@ -1,7 +1,7 @@
 # The requirements checked out as git submodules in vendor/src
 # Must be kept up-to-date at all times.
 
-# NO EDITABLE REQUIREMENTS ALLOWED!
+# NO EDITABLE/VERSION CONTROL REQUIREMENTS ALLOWED!
 
 python-dateutil==2.4.2
 
