@@ -148,3 +148,15 @@
 [submodule "vendor/src/py-amqp"]
 	path = vendor/src/py-amqp
 	url = https://github.com/celery/py-amqp
+[submodule "vendor/src/cssselect"]
+	path = vendor/src/cssselect
+	url = https://github.com/SimonSapin/cssselect
+[submodule "vendor/src/python-dateutil"]
+	path = vendor/src/python-dateutil
+	url = https://github.com/dateutil/dateutil
+[submodule "vendor/src/sqlparse"]
+	path = vendor/src/sqlparse
+	url = https://github.com/andialbrecht/sqlparse
+[submodule "vendor/src/werkzeug"]
+	path = vendor/src/werkzeug
+	url = https://github.com/mitsuhiko/werkzeug

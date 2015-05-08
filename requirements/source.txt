@@ -1,0 +1,8 @@
+python-dateutil==2.4.2
+
+sqlparse==0.1.15
+
+cssselect==0.9.1
+
+Werkzeug==0.10.4
+
