@@ -95,5 +95,6 @@ src/django-taggit
 src/httplib2/python2
 src/html5lib
 src/pyquery
+src/sqlparse
 src/django-devserver
 src/django-product-details
