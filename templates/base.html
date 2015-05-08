@@ -77,11 +77,6 @@
     </div>
   {% endif %}
 
-
-  {% if waffle.flag('badger') %}
-    {% include "badger/includes/recent_badge_awards.html" %}
-  {% endif %}
-
   <ul id="nav-access">
     <li><a href="#{% block main_content_id %}content{% endblock %}" id="skip-main">{{ _('Skip to main content') }}</a></li>
     <li><a id="skip-language" href="#language">{{ _('Select language') }}</a></li>

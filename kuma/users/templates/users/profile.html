@@ -142,15 +142,6 @@
       </div>
     </section>
 
-    {% if waffle.flag('badger') and award_list %}
-      <section id="profile-badges" class="profile-section">
-        <header>
-            <h2>{{ _("Recent Badge Awards") }}</h2>
-        </header>
-        {% include "badger/includes/awards_as_badges_list.html" %}
-      </section>
-    {% endif %}
-
     {% if demos_page.object_list|length %}
         <section id="profile-demos" class="profile-section">
             {{ submission_listing(

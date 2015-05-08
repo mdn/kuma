@@ -77,7 +77,6 @@ src/django-rest-framework
 src/python-memcached
 src/hash_ring
 src/django-memcached-hashring
-src/django-badger
 src/django-appconf
 src/django-statici18n/src
 src/django-allauth
