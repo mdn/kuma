@@ -56,14 +56,14 @@ class DemoPackageTest(UserTestCase):
         super(DemoPackageTest, self).setUp()
         self.user, self.admin_user, self.other_user = make_users()
 
-        hidden_prev_demo = build_hidden_submission(self.other_user,
-                                                   'hidden-submission-1')
+        build_hidden_submission(self.other_user,
+                                'hidden-submission-1')
 
         self.submission = build_submission(self.user)
         self.old_blacklist = models.DEMO_MIMETYPE_BLACKLIST
 
-        hidden_next_demo = build_hidden_submission(self.other_user,
-                                                   'hidden-submission-2')
+        build_hidden_submission(self.other_user,
+                                'hidden-submission-2')
 
     def tearDown(self):
         models.DEMO_MIMETYPE_BLACKLIST = self.old_blacklist

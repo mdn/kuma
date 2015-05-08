@@ -77,7 +77,7 @@ class RedirectTests(UserTestCase, WikiTestCase):
 
         doc = document(title='blah', slug=slug, html=html, save=True,
                        locale=settings.WIKI_DEFAULT_LANGUAGE)
-        rev = revision(document=doc, content=html, is_approved=True, save=True)
+        revision(document=doc, content=html, is_approved=True, save=True)
 
         response = self.client.get(doc.get_absolute_url(), follow=True)
         eq_(200, response.status_code)
@@ -125,7 +125,7 @@ class LocaleRedirectTests(UserTestCase, WikiTestCase):
         en = settings.WIKI_DEFAULT_LANGUAGE
         en_doc = document(locale=en, slug='english-slug', save=True)
         de_doc = document(locale='de', parent=en_doc, save=True)
-        de_rev = revision(document=de_doc, is_approved=True, save=True)
+        revision(document=de_doc, is_approved=True, save=True)
         return en_doc, de_doc
 
 
@@ -181,9 +181,9 @@ class ViewTests(UserTestCase, WikiTestCase):
                        locale=settings.WIKI_DEFAULT_LANGUAGE)
 
         for i in xrange(1, 51):
-            rev = revision(document=doc, content=html,
-                           comment='Revision %s' % i,
-                           is_approved=True, save=True)
+            revision(document=doc, content=html,
+                     comment='Revision %s' % i,
+                     is_approved=True, save=True)
 
         url = reverse('wiki.document_revisions', args=(slug,),
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -207,7 +207,7 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         doc = document(title='blah', slug=slug, html=html, save=True,
                        locale=settings.WIKI_DEFAULT_LANGUAGE)
-        rev = revision(document=doc, content=html, is_approved=True, save=True)
+        revision(document=doc, content=html, is_approved=True, save=True)
 
         url = reverse('wiki.toc', args=[slug],
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -392,9 +392,9 @@ class PermissionTests(UserTestCase, WikiTestCase):
             )
 
             for slug_tmpl, trials in slug_trials:
-                for expected, user in trials:
+                for expected, tmp_user in trials:
 
-                    username = user.username
+                    username = tmp_user.username
                     slug = slug_tmpl % username
                     locale = settings.WIKI_DEFAULT_LANGUAGE
 
@@ -1745,7 +1745,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         en_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                       slug=en_slug)
-        old_en_json = json.loads(en_doc.json)
+        json.loads(en_doc.json)
 
         r = revision(document=en_doc)
         r.save()
