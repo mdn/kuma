@@ -12,5 +12,7 @@ Django==1.7.8
 
 django-extensions==1.5.3
 
+django-nose==1.4
+
 django-mozilla-product-details==0.6
 
