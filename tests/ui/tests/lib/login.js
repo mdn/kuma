@@ -4,8 +4,9 @@ define([
     'base/lib/config',
     'base/lib/poll',
     'intern/dojo/node!leadfoot/helpers/pollUntil',
-    'intern/chai!assert'
-], function(http, Deferred, config, poll, pollUntil, assert) {
+    'intern/chai!assert',
+    'intern/dojo/node!leadfoot/keys'
+], function(http, Deferred, config, poll, pollUntil, assert, keys) {
 
     return {
 
@@ -63,6 +64,7 @@ define([
                         .end()
                         .getAllWindowHandles()
                         .then(function(handles) {
+
                             return remote.switchToWindow(handles[1])
                                 .findById('authentication_email')
                                 .then(function() {
@@ -70,19 +72,29 @@ define([
                                     // Needing do perform this "hack" instead of polling for element isDisplayed()
                                     // due to either a selenium issue or weird construction of Persona window
                                     // return poll.until(element, 'isDisplayed')
-                                    return remote.executeAsync(function(done) {
+                                    return remote.executeAsync(function(username, done) {
+
+                                        // Delete some nodes that could get in our way (overlays)
+                                        ['load', 'wait', 'error', 'delay'].forEach(function(id) {
+                                            var node = document.getElementById(id);
+                                            node.parentNode.removeChild(node);
+                                        });
+
+                                        // Provide the email address via JS, more reliable than selenium's click()
                                         var interval = setInterval(function() {
                                             if(document.getElementById('authentication_email').offsetHeight) {
+                                                document.getElementById('authentication_email').value = username;
                                                 clearInterval(interval);
                                                 done();
                                             }
                                         }, 200);
-                                    });
+                                    }, [username]);
                                 })
-                                .type(username)
                                 .end()
                                 .findByCssSelector('button.isStart')
-                                .click()
+
+                                // Using the [ENTER] key is more reliable than selenium's click()
+                                .type([keys.RETURN])
                                 .end()
                                 .findById('authentication_password')
                                 .then(function() {
@@ -90,32 +102,40 @@ define([
                                     // Needing do perform this "hack" instead of polling for element isDisplayed()
                                     // due to either a selenium issue or weird construction of Persona window
                                     // return poll.until(element, 'isDisplayed')
-                                    return remote.executeAsync(function(done) {
+                                    return remote.executeAsync(function(password, done) {
+
+                                        // Provide the password via JS, more reliable than selenium's click()
                                         var interval = setInterval(function() {
                                             if(document.getElementById('authentication_password').offsetHeight) {
-                                                //alert('Password field has offsetHeight!' + document.getElementById('authentication_password').offsetHeight);
+                                                document.getElementById('authentication_password').value = password;
                                                 clearInterval(interval);
-                                                done();
+
+                                                var button = document.querySelector('button.isTransitionToSecondary');
+                                                if(button.offsetHeight) {
+                                                    button.focus();
+                                                    done();
+                                                }
                                             }
                                         }, 200);
-                                    });
+                                    }, [password]);
                                 })
-                                .type(password)
                                 .end()
                                 .findByCssSelector('button.isTransitionToSecondary')
-                                .click()
+
+                                // Using the [ENTER] key is more reliable than selenium's click()
+                                .type([keys.RETURN])
                                 .switchToWindow(handles[0])
 
                                 // A bit crazy, but since we need to wait for Persona to (1) close the login window and
                                 // (2) refresh the main window, we need to listen for "beforeunload" to confirm the page is "turning"...
                                 .then(function() {
+
                                     return remote.executeAsync(function(done) {
                                         var eventType = 'beforeunload';
                                         var asyncCallback = function() {
                                             window.removeEventListener(eventType, asyncCallback);
                                             done();
                                         };
-
                                         var listener = window.addEventListener(eventType, asyncCallback);
                                     });
                                 })
@@ -123,7 +143,7 @@ define([
                                 // ... and to confirm the login worked, we need to poll for either the "#id_username" element (signup page)
                                 // or the "a.user-state-signout" element (sign out link)
                                 .then(function() {
-                                    return pollUntil('alert(document.querySelector("#id_username") || document.querySelector("a.user-state-signout")); return document.querySelector("#id_username") || document.querySelector("a.user-state-signout")');
+                                    return pollUntil('return document.querySelector("#id_username") || document.querySelector("a.user-state-signout")');
                                 })
 
                                 .end()

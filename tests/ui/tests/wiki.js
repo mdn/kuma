@@ -4,8 +4,9 @@ define([
     'base/lib/config',
     'base/lib/assert',
     'base/lib/POM',
-    'base/lib/poll'
-], function(registerSuite, assert, config, libAssert, POM, poll) {
+    'base/lib/poll',
+    'intern/dojo/node!leadfoot/keys'
+], function(registerSuite, assert, config, libAssert, POM, poll, keys) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -36,7 +37,6 @@ define([
             return Page.login();
         },
 
-        /*
         '[requires-login] The new document screen passes all the checks': function() {
 
             var remote = this.remote;
@@ -121,7 +121,6 @@ define([
                             });
                         });
         },
-        */
 
         '[requires-login][requires-intrusive] Can create a document, button becomes enabled as soon as updates made': function() {
 
@@ -130,17 +129,27 @@ define([
 
             return remote.get(config.url + 'docs/new')
                         .then(function() {
-                                return remote.findById('id_title').click().type('Hello$ World').then(function() {
+                                return remote.findById('id_title').click().type(title).then(function() {
                                     return remote.findById('id_slug').getSpecAttribute('value').then(function(value) {
                                         Page.documentCreatedSlug = value;
 
-                                        return remote.findAllByCssSelector('.page-buttons .btn-save')
-                                                    .click()
-                                                    .sleep(7000)
+                                        return remote.executeAsync(function(done) {
+                                                if(window.CKEDITOR) {
+                                                    CKEDITOR.instances.id_content.setData('Hello, this is a robot!  Enjoy!');
+                                                    done();
+                                                }
+                                        })
+                                        .then(function() {
+
+                                            return remote.findAllByCssSelector('.page-buttons .btn-save')
+                                                    .type([keys.RETURN])
                                                     .getCurrentUrl()
                                                     .then(function(url) {
                                                         assert.isTrue(url.indexOf(Page.documentCreatedSlug) != -1);
                                                     });
+                                        });
+
+
 
                                     });
                                 });
