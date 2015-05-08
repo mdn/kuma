@@ -8,7 +8,6 @@ packages/Babel
 packages/python-dateutil
 packages/pylint
 packages/pyflakes
-packages/django-taggit
 packages/anyjson
 packages/django-picklefield/src
 packages/setuptools

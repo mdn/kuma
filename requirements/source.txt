@@ -16,5 +16,7 @@ django-nose==1.4
 
 django-statici18n==1.1.3
 
+django-taggit==0.14.0
+
 django-mozilla-product-details==0.6
 
