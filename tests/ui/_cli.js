@@ -39,6 +39,13 @@ define({
             console.log('No wiki document (-wd) provided.  Most wiki tests will be skipped.');
         }
 
+        // Allow intrusive testing if specified (i.e. actually saving, editing generated documents)
+        // DO NOT DO ON PRODUCTION
+        if(args.i == true) {
+            greps.push('requires-intrusive');
+            console.log('No intrusive permission provided.  Some wiki tests will be skipped.');
+        }
+
         // Set the final GREP value
         args.grep = greps.length ? ('^(?!.*?\\[' + greps.join('|') + '\\])') : '';
 

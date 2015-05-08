@@ -10,6 +10,7 @@ define([
     // Create this page's specific POM
     var Page = new POM({
         // Any functions used multiple times or important properties of the page
+        documentCreatedSlug: ''
     });
 
     registerSuite({
@@ -35,6 +36,7 @@ define([
             return Page.login();
         },
 
+        /*
         '[requires-login] The new document screen passes all the checks': function() {
 
             var remote = this.remote;
@@ -118,8 +120,33 @@ define([
                                     });
                             });
                         });
-        }
+        },
+        */
 
+        '[requires-login][requires-intrusive] Can create a document, button becomes enabled as soon as updates made': function() {
+
+            var remote = this.remote;
+            var title = 'Intern Test ' + new Date().getTime();
+
+            return remote.get(config.url + 'docs/new')
+                        .then(function() {
+                                return remote.findById('id_title').click().type('Hello$ World').then(function() {
+                                    return remote.findById('id_slug').getSpecAttribute('value').then(function(value) {
+                                        Page.documentCreatedSlug = value;
+
+                                        return remote.findAllByCssSelector('.page-buttons .btn-save')
+                                                    .click()
+                                                    .sleep(7000)
+                                                    .getCurrentUrl()
+                                                    .then(function(url) {
+                                                        assert.isTrue(url.indexOf(Page.documentCreatedSlug) != -1);
+                                                    });
+
+                                    });
+                                });
+                        });
+
+        }
 
     });
 

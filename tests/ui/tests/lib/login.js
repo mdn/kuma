@@ -65,7 +65,20 @@ define([
                         .then(function(handles) {
                             return remote.switchToWindow(handles[1])
                                 .findById('authentication_email')
-                                .click()
+                                .then(function() {
+
+                                    // Needing do perform this "hack" instead of polling for element isDisplayed()
+                                    // due to either a selenium issue or weird construction of Persona window
+                                    // return poll.until(element, 'isDisplayed')
+                                    return remote.executeAsync(function(done) {
+                                        var interval = setInterval(function() {
+                                            if(document.getElementById('authentication_email').offsetHeight) {
+                                                clearInterval(interval);
+                                                done();
+                                            }
+                                        }, 200);
+                                    });
+                                })
                                 .type(username)
                                 .end()
                                 .findByCssSelector('button.isStart')
@@ -80,13 +93,13 @@ define([
                                     return remote.executeAsync(function(done) {
                                         var interval = setInterval(function() {
                                             if(document.getElementById('authentication_password').offsetHeight) {
+                                                //alert('Password field has offsetHeight!' + document.getElementById('authentication_password').offsetHeight);
                                                 clearInterval(interval);
                                                 done();
                                             }
                                         }, 200);
                                     });
                                 })
-                                .click()
                                 .type(password)
                                 .end()
                                 .findByCssSelector('button.isTransitionToSecondary')
