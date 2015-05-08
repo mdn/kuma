@@ -13,6 +13,8 @@ jingo-minify==0.6.0
 
 oauthlib==0.7.2
 
+python-magic==0.4.6
+
 Django==1.7.8
 
 django-extensions==1.5.3
