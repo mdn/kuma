@@ -17,6 +17,8 @@ python-magic==0.4.6
 
 python-memcached==1.54
 
+pytidylib==0.2.4
+
 Django==1.7.8
 
 django-extensions==1.5.3
