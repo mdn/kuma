@@ -3,7 +3,6 @@ packages
 packages/pytz
 packages/sqlparse
 packages/GitPython/lib
-packages/Werkzeug
 packages/Babel
 packages/python-dateutil
 packages/pylint
@@ -96,5 +95,6 @@ src/httplib2/python2
 src/html5lib
 src/pyquery
 src/sqlparse
+src/Werkzeug
 src/django-devserver
 src/django-product-details
