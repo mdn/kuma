@@ -6,3 +6,5 @@ cssselect==0.9.1
 
 Werkzeug==0.10.4
 
+django-devserver==0.8.0
+

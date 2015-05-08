@@ -160,3 +160,6 @@
 [submodule "vendor/src/werkzeug"]
 	path = vendor/src/werkzeug
 	url = https://github.com/mitsuhiko/werkzeug
+[submodule "vendor/src/django-devserver"]
+	path = vendor/src/django-devserver
+	url = https://github.com/dcramer/django-devserver

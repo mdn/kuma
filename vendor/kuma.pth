@@ -98,3 +98,4 @@ src/django-taggit
 src/httplib2/python2
 src/html5lib
 src/pyquery
+src/django-devserver
