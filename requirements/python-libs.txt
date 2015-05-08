@@ -120,4 +120,5 @@ urllib3==1.8
 # sha256: syCYLbXKUlTBX4CcAEy8gNcSuQLFzfgP3HG_DpDfBFc
 URLObject==2.3.4
 
+cssselect==0.9.1
 pyquery==1.2.9
