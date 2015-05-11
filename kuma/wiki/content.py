@@ -60,18 +60,10 @@ def get_content_sections(src=''):
     Gets sections in a document
     """
     sections = []
-
     if src:
         attr = '[id]'
-        try:
-            elements = pq(src).find(((attr + ',').join(SECTION_TAGS)) + attr)
-
-            def objectify_pyquery_item(i):
-                sections.append({'title': i.text(), 'id': i.attr('id')})
-
-            elements.each(lambda e: objectify_pyquery_item(e))
-        except:
-            pass
+        for element in pq(src).find(((attr + ',').join(SECTION_TAGS)) + attr):
+            sections.append({'title': element.text(), 'id': element.attr('id')})
 
     return sections
 
@@ -165,30 +157,29 @@ def extract_code_sample(id, src):
     data = dict((x, None) for x in parts)
     if not src:
         return data
-    try:
-        section = parse(src).extractSection(id).serialize()
-        if section:
-            # HACK: Ensure the extracted section has a container, in case it
-            # consists of a single element.
-            sample = pq('<section>%s</section>' % section)
-        else:
-            # If no section, fall back to plain old ID lookup
-            sample = pq(src).find('#%s' % id)
-        for part in parts:
-            selector = ','.join(x % (part,) for x in (
-                '.%s',
-                # HACK: syntaxhighlighter (ab)uses the className as a
-                # semicolon-separated options list...
-                'pre[class*="brush:%s"]',
-                'pre[class*="%s;"]'
-            ))
-            src = sample.find(selector).text()
-            if src is not None:
-                # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
-                src = src.replace(u'\xa0', u' ')
-            data[part] = src
-    except:
-        pass
+
+    section = parse(src).extractSection(id).serialize()
+    if section:
+        # HACK: Ensure the extracted section has a container, in case it
+        # consists of a single element.
+        sample = pq('<section>%s</section>' % section)
+    else:
+        # If no section, fall back to plain old ID lookup
+        sample = pq(src).find('#%s' % id)
+    for part in parts:
+        selector = ','.join(x % (part,) for x in (
+            '.%s',
+            # HACK: syntaxhighlighter (ab)uses the className as a
+            # semicolon-separated options list...
+            'pre[class*="brush:%s"]',
+            'pre[class*="%s;"]'
+        ))
+        src = sample.find(selector).text()
+        if src is not None:
+            # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
+            src = src.replace(u'\xa0', u' ')
+        data[part] = src
+
     return data
 
 
@@ -198,17 +189,10 @@ def extract_css_classnames(content):
     Extract the unique set of class names used in the content
     """
     classnames = set()
-    try:
-        elements = pq(content).find('*')
-
-        def process_el(e):
-            cls = e.attr('class')
-            if cls:
-                classnames.update(cls.split(' '))
-
-        elements.each(process_el)
-    except:
-        pass
+    for element in pq(content).find('*'):
+        css_classes = element.attrib.get('class')
+        if css_classes:
+            classnames.update(css_classes.split(' '))
     return list(classnames)
 
 
