@@ -59,6 +59,41 @@ define([
 
         },
 
+        '[requires-login] IFRAME elements are not allowed by CKEditor': function() {
+
+            var remote = this.remote;
+
+            return remote.get(config.url + 'docs/new')
+                        .then(function() {
+                            // Go into source mode, add an IFRAME, go back into view mode, ensure iframe isn't there
+                            return remote.executeAsync(function(done) {
+                                var editor = CKEDITOR.instances.id_content;
+                                var switchMode = function() {
+                                    editor.execCommand('source');
+                                };
+                                var interval;
+
+                                editor.on('mode', function() {
+                                    if(editor.mode == 'source') {
+                                        document.querySelector('.cke_source').value = '<p>Hi!</p><iframe src="http://davidwalsh.name"></iframe><img src="javascript:;" onerror="alert(1);">';
+                                    }
+                                    else {
+                                        clearInterval(interval);
+
+                                        var html = editor.getData().toLowerCase();
+                                        done(html.indexOf('<iframe') === -1 && html.indexOf('onerror') === -1);
+                                    }
+                                });
+
+                                interval = setInterval(switchMode, 300);
+                            })
+                            .then(function(returnValue) {
+                                assert.isTrue(returnValue);
+                            });
+                        });
+
+        },
+
         '[requires-login] The new document-template screen passes all the checks': function() {
 
             var remote = this.remote;
@@ -122,7 +157,7 @@ define([
                         });
         },
 
-        '[requires-login][requires-intrusive] Can create a document, button becomes enabled as soon as updates made': function() {
+        '[requires-login][requires-destructive] Can create a document, button becomes enabled as soon as updates made': function() {
 
             var remote = this.remote;
             var title = 'Intern Test ' + new Date().getTime();
@@ -134,20 +169,20 @@ define([
                                         Page.documentCreatedSlug = value;
 
                                         return remote.executeAsync(function(done) {
-                                                if(window.CKEDITOR) {
-                                                    CKEDITOR.instances.id_content.setData('Hello, this is a robot!  Enjoy!');
-                                                    done();
-                                                }
-                                        })
-                                        .then(function() {
+                                                            if(window.CKEDITOR) {
+                                                                CKEDITOR.instances.id_content.setData('Hello, this is a robot!  Enjoy!');
+                                                                done();
+                                                            }
+                                                    })
+                                                    .then(function() {
 
-                                            return remote.findAllByCssSelector('.page-buttons .btn-save')
-                                                    .type([keys.RETURN])
-                                                    .getCurrentUrl()
-                                                    .then(function(url) {
-                                                        assert.isTrue(url.indexOf(Page.documentCreatedSlug) != -1);
+                                                        return remote.findAllByCssSelector('.page-buttons .btn-save')
+                                                                .type([keys.RETURN])
+                                                                .getCurrentUrl()
+                                                                .then(function(url) {
+                                                                    assert.isTrue(url.indexOf(Page.documentCreatedSlug) != -1);
+                                                                });
                                                     });
-                                        });
 
 
 
@@ -156,7 +191,6 @@ define([
                         });
 
         }
-
     });
 
 });
