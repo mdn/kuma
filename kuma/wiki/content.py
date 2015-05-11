@@ -8,6 +8,7 @@ from urlparse import urlparse
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
 import newrelic.agent
+from lxml import etree
 from pyquery import PyQuery as pq
 
 from tower import ugettext as _
@@ -62,9 +63,15 @@ def get_content_sections(src=''):
     sections = []
     if src:
         attr = '[id]'
-        for element in pq(src).find(((attr + ',').join(SECTION_TAGS)) + attr):
-            sections.append({'title': element.text(), 'id': element.attr('id')})
-
+        selector = (attr + ',').join(SECTION_TAGS) + attr
+        try:
+            document = pq(src)
+        except etree.ParserError:
+            pass
+        else:
+            for element in document.find(selector):
+                sections.append({'title': element.text,
+                                 'id': element.attrib.get('id')})
     return sections
 
 
@@ -178,7 +185,8 @@ def extract_code_sample(id, src):
         if src is not None:
             # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
             src = src.replace(u'\xa0', u' ')
-        data[part] = src
+        if src:
+            data[part] = src
 
     return data
 
