@@ -41,7 +41,7 @@ class python_reqs {
         "install-reqs":
             cwd => '/home/vagrant/src',
             timeout => 1200, # Too long, but this can take awhile
-            command => "/home/vagrant/env/bin/pip install -r requirements/dev.txt -r requirements/compiled.txt -r requirements/docs.txt",
+            command => "/home/vagrant/env/bin/pip install -r requirements/compiled.txt -r requirements/docs.txt",
             user => 'vagrant';
      }
 }
