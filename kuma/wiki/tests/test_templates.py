@@ -260,7 +260,7 @@ class RevisionTests(UserTestCase, WikiTestCase):
         eq_('Revision %s of %s' % (r.id, d.title), doc('h1').text())
         eq_(r.content,
             doc('#doc-source pre').text())
-        eq_('Created: Jan 1, 2011 12:00:00 AM',
+        eq_('Created: Jan 1, 2011, 12:00:00 AM',
             doc('div.revision-info li.revision-created').text().strip())
 
 
