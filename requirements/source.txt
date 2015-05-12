@@ -31,7 +31,7 @@ elasticsearch==0.4.5
 
 hash_ring==1.3.1
 
-html5lib==0.999
+html5lib==0.99999
 
 jingo==0.7.1
 
