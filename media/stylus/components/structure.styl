@@ -125,6 +125,9 @@ draw-grid();
             > a, .search-trigger {
                 text-transform: uppercase;
                 font-weight: bold;
+                {$selector-site-font-fallback} & {
+                    font-weight: 600;
+                }
             }
 
             > a {
@@ -298,8 +301,12 @@ a.github-button {
     bidi-style(right, 200px, left, auto);
     position: absolute;
     top: 12px;
-    set-font-size($small-bump-font-size);
     z-index: 3;
+
+    set-font-size($small-bump-font-size);
+    {$selector-site-font-fallback} & {
+        letter-spacing: -.005em;
+    }
 }
 
 .user-state {
