@@ -54,9 +54,9 @@
       // MDN's plugins.
       'mdn-attachment,mdn-format,mdn-sticky-toolbar,mdn-image-attachment,mdn-link-customization,mdn-link-launch,' +
       'mdn-redirect,mdn-sample-finder,mdn-sampler,mdn-syntaxhighlighter,mdn-system-integration,mdn-table-customization,' +
-      'mdn-toggle-block,mdn-wrapstyle,' +
+      'mdn-toggle-block,mdn-wrapstyle,mdn-youtube,' +
       // Other plugins.
-      'descriptionlist,tablesort,texzilla,youtube';
+      'descriptionlist,tablesort,texzilla';
 
     config.removeButtons = 'Cut,Copy,PasteFromWord,Language';
     config.toolbarGroups = [
@@ -78,7 +78,16 @@
 
     // Disable the Advanced Content Filter because too many pages
     // use unlimited HTML.
-    config.allowedContent = true;
+    config.allowedContent = {
+        $1: {
+            // Use the ability to specify elements as an object.
+            elements: '{{ allowed_tags }}',
+            attributes: true,
+            styles: true,
+            classes: true
+        }
+    };
+    config.disallowedContent = 'iframe; *[on*]';
 
     // Don't use HTML entities in the output except basic ones (config.basicEntities).
     config.entities = false;
