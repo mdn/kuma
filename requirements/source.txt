@@ -17,13 +17,13 @@ amqp==1.4.6
 
 basket-client==0.3.10
 
-billiard==3.3.0.19
+billiard==3.3.0.20
 
 bleach==1.4.1
 
 bitly_api==0.3
 
-celery==3.1.17
+celery==3.1.18
 
 elasticsearch-dsl==0.0.4
 
@@ -38,7 +38,7 @@ jingo==0.7.1
 # not released yet as of 2015-05-08
 jingo-minify==0.6.0
 
-kombu==3.0.24
+kombu==3.0.26
 
 oauthlib==0.7.2
 
