@@ -420,7 +420,7 @@
 
 {% block js %}
 	{% if waffle.flag('scrollback_widget') %}
-		<script type="text/javascript" src="../../../../media/redesign/js/scrollback.js" async="true"></script>
+		<script type="text/javascript" src="/media/js/scrollback.js" async="true"></script>
 	{% endif %}
   <script type="text/javascript">
       if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
