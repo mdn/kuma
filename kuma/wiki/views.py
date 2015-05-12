@@ -33,6 +33,7 @@ from django.views.decorators.clickjacking import (xframe_options_exempt,
 from django.views.decorators.csrf import csrf_exempt
 
 from constance import config
+from jingo.helpers import urlparams
 from ratelimit.decorators import ratelimit
 from smuggler.forms import ImportForm
 from teamwork.shortcuts import get_object_or_404_or_403
@@ -47,7 +48,6 @@ from kuma.attachments.utils import attachments_json
 from kuma.core.cache import memcache
 from kuma.core.decorators import (never_cache, login_required,
                                   permission_required, superuser_required)
-from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import (get_object_or_none, paginate, smart_int,
                              get_ip, limit_banned_ip_to_0)

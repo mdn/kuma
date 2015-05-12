@@ -21,11 +21,11 @@ from django.http import Http404
 from django.utils.encoding import smart_str
 
 from constance import config
+from jingo.helpers import urlparams
 from waffle.models import Flag, Switch
 
 from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
-from kuma.core.helpers import urlparams
 from kuma.core.models import IPBan
 from kuma.core.tests import post, get, override_constance_settings
 from kuma.core.urlresolvers import reverse

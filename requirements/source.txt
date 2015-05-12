@@ -33,8 +33,7 @@ hash_ring==1.3.1
 
 html5lib==0.999
 
-# not released yet as of 2015-05-08
-jingo==0.8
+jingo==0.7.1
 
 # not released yet as of 2015-05-08
 jingo-minify==0.6.0

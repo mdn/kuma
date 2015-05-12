@@ -1,11 +1,10 @@
+from django.conf import settings
+from jingo.helpers import urlparams
 import mock
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 from waffle.models import Flag
 
-from django.conf import settings
-
-from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
 
 from . import UserTestCase

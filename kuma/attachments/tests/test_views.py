@@ -8,11 +8,11 @@ from django.core.files import temp as tempfile
 from django.utils.http import parse_http_date_safe
 
 from constance import config
+from jingo.helpers import urlparams
 
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import Document, DocumentAttachment
 from kuma.wiki.tests import document, revision, WikiTestCase
-from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
 
 from ..models import Attachment, AttachmentRevision

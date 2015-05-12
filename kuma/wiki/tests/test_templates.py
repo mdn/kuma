@@ -17,9 +17,9 @@ from django.utils.http import urlquote
 from django.test.utils import override_settings
 
 from constance import config
+from jingo.helpers import urlparams
 from waffle.models import Flag
 
-from kuma.core.helpers import urlparams
 from kuma.core.tests import SkippedTestCase, post, get
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.events import EditDocumentEvent

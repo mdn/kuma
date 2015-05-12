@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-
-from kuma.core.helpers import urlparams
+from jingo.helpers import urlparams
 
 from .exceptions import ReadOnlyException
 from .jobs import DocumentZoneURLRemapsJob

@@ -22,7 +22,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
-from ..helpers import (timesince, urlparams, yesno, urlencode,
+from ..helpers import (timesince, yesno, urlencode,
                        soapbox_messages, get_soapbox_messages,
                        datetimeformat, jsonencode, number)
 
@@ -41,27 +41,6 @@ class TestHelpers(KumaTestCase):
         context = {'request': namedtuple('R', 'locale')('en-US')}
         eq_('5,000', number(context, 5000))
         eq_('', number(context, None))
-
-    def test_urlparams_unicode(self):
-        context = {'q': u'Français'}
-        eq_(u'/foo?q=Fran%C3%A7ais', urlparams('/foo', **context))
-        context['q'] = u'\u0125help'
-        eq_(u'/foo?q=%C4%A5help', urlparams('/foo', **context))
-
-    def test_urlparams_valid(self):
-        context = {'a': 'foo', 'b': 'bar'}
-        eq_(u'/foo?a=foo&b=bar', urlparams('/foo', **context))
-
-    def test_urlparams_query_string(self):
-        eq_(u'/foo?a=foo&b=bar', urlparams('/foo?a=foo', b='bar'))
-
-    def test_urlparams_multivalue(self):
-        eq_(u'/foo?a=foo&a=bar', urlparams('/foo?a=foo&a=bar'))
-        eq_(u'/foo?a=bar', urlparams('/foo?a=foo', a='bar'))
-
-    def test_urlparams_none(self):
-        """Assert a value of None doesn't make it into the query string."""
-        eq_(u'/foo', urlparams('/foo', bar=None))
 
     def test_yesno(self):
         eq_('Yes', yesno(True))
