@@ -15,7 +15,7 @@ django-devserver==0.8.0
 
 amqp==1.4.6
 
-basket-client==0.3.10
+basket-client==0.3.11
 
 billiard==3.3.0.20
 
