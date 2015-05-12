@@ -275,10 +275,11 @@ class WikiDocumentType(document.DocType):
                          for exclude in cls.exclude_slugs]))
 
     def get_excerpt(self):
-        if getattr(self, 'highlight', False):
+        highlighted = self.meta.get('highlight')
+        if highlighted:
             for excerpt_field in self.excerpt_fields:
-                if excerpt_field in self.highlight:
-                    return u'…'.join(self.highlight[excerpt_field])
+                if excerpt_field in highlighted:
+                    return u'…'.join(highlighted[excerpt_field])
         return self.summary
 
     @classmethod

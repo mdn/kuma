@@ -148,7 +148,7 @@ class BaseDocumentSerializer(serializers.Serializer):
 class DocumentSerializer(BaseDocumentSerializer):
     excerpt = serializers.SerializerMethodField('get_excerpt')
     tags = serializers.ChoiceField(read_only=True, source='tags')
-    score = serializers.FloatField(read_only=True, source='_meta.score')
+    score = serializers.FloatField(read_only=True, source='meta.score')
     explanation = serializers.SerializerMethodField('get_explanation')
     parent = BaseDocumentSerializer(read_only=True, source='parent')
 
@@ -156,7 +156,7 @@ class DocumentSerializer(BaseDocumentSerializer):
         return obj.get_excerpt()
 
     def get_explanation(self, obj):
-        return getattr(obj._meta, 'explanation', None)
+        return getattr(obj.meta, 'explanation', None)
 
 
 class FilterSerializer(serializers.ModelSerializer):

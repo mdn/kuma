@@ -58,9 +58,6 @@
 [submodule "vendor/src/elasticsearch-py"]
 	path = vendor/src/elasticsearch-py
 	url = git://github.com/elasticsearch/elasticsearch-py.git
-[submodule "vendor/src/elasticsearch-dsl-py"]
-       path = vendor/src/elasticsearch-dsl-py
-       url = git://github.com/elasticsearch/elasticsearch-dsl-py.git
 [submodule "vendor/src/hash_ring"]
 	path = vendor/src/hash_ring
 	url = git://github.com/Doist/hash_ring.git
@@ -160,3 +157,6 @@
 [submodule "vendor/src/django-devserver"]
 	path = vendor/src/django-devserver
 	url = https://github.com/dcramer/django-devserver
+[submodule "vendor/src/elasticsearch-dsl-py"]
+	path = vendor/src/elasticsearch-dsl-py
+	url = https://github.com/elastic/elasticsearch-dsl-py
