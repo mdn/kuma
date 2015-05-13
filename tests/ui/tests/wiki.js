@@ -191,7 +191,34 @@ define([
                                 });
                         });
 
+        },
+
+        // Ensures the TOC scrolls down with the user
+        '[requires-login][requires-destructive] Created page passes TOC tests': function() {
+
+            var remote = this.remote;
+
+            return remote.get(config.url + '/docs/' + Page.documentCreatedSlug)
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#toc');
+                        })
+                        .executeAsync(function(done) {
+                            scrollTo(0, 600);
+                            done();
+                        })
+                        .end()
+                        .findByCssSelector('#toc')
+                        .getComputedStyle('top')
+                        .then(function(y) {
+                            assert.isTrue(y == '0' || y == '0px');
+                        })
+                        .getComputedStyle('position')
+                        .then(function(position) {
+                            assert.isTrue(position == 'fixed');
+                        });
+
         }
+
     });
 
 });
