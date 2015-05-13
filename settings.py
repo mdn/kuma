@@ -89,6 +89,7 @@ MDN_LANGUAGES = (
                  'af',
                  'ar',
                  'az',
+                 'bm',
                  'bn-BD',
                  'bn-IN',
                  'cs',
