@@ -197,17 +197,18 @@ define([
         '[requires-login][requires-destructive] Created page passes TOC tests': function() {
 
             var remote = this.remote;
+            var tocSelector = '#toc';
 
             return remote.get(config.url + '/docs/' + Page.documentCreatedSlug)
                         .then(function() {
-                            return libAssert.elementExistsAndDisplayed('#toc');
+                            return libAssert.elementExistsAndDisplayed(tocSelector);
                         })
                         .executeAsync(function(done) {
                             scrollTo(0, 600);
                             done();
                         })
                         .end()
-                        .findByCssSelector('#toc')
+                        .findByCssSelector(tocSelector)
                         .getComputedStyle('top')
                         .then(function(y) {
                             assert.isTrue(y == '0' || y == '0px');
@@ -215,6 +216,16 @@ define([
                         .getComputedStyle('position')
                         .then(function(position) {
                             assert.isTrue(position == 'fixed');
+                        });
+
+        },
+
+        // Ensure the review popups display by default
+        '[requires-login][requires-destructive] Created page displays review requests': function() {
+
+            return this.remote.get(config.url + '/docs/' + Page.documentCreatedSlug)
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('.page-meta.reviews');
                         });
 
         }
