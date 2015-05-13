@@ -154,7 +154,7 @@ class kuma_config {
             command => "/home/vagrant/env/bin/python manage.py syncdb --noinput",
             require => [ Exec["kuma_update_product_details"],
                 Service["mysql"], File["/home/vagrant/logs"] ];
-        "kuma_south_migrate":
+        "kuma_migrate":
             user => "vagrant",
             cwd => "/home/vagrant/src",
             command => "/home/vagrant/env/bin/python manage.py migrate --noinput",
@@ -164,13 +164,13 @@ class kuma_config {
             cwd => "/home/vagrant/src",
             command => "/home/vagrant/env/bin/python ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
-            require => [ Exec["kuma_south_migrate"] ];
+            require => [ Exec["kuma_migrate"] ];
         "kuma_index_database":
             user => "vagrant",
             cwd => "/home/vagrant/src",
             command => "/home/vagrant/env/bin/python manage.py reindex -p 5 -c 250",
             timeout => 600,
-            require => [ Service["elasticsearch-kuma"], Exec["kuma_south_migrate"] ];
+            require => [ Service["elasticsearch-kuma"], Exec["kuma_migrate"] ];
     }
 }
 
