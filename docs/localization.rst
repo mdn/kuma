@@ -347,8 +347,8 @@ Adding a new Locale
     `our Travis install script`_::
 
         $ python manage.py update_product_details
-        $ tar -czf product_details_json.tar.gz ../product_details_json/
-        $ tar -czf locale.tar.gz locale/
+        $ tar -czf etc/data/product_details_json.tar.gz ../product_details_json/
+        $ tar -czf etc/data/locale.tar.gz locale/
 
 9.  Commit the changes to `settings.py`, `locale.tar.gz`, and
     `product_details_json.tar.gz`
