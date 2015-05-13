@@ -127,6 +127,7 @@ MDN_LANGUAGES = (
                  'sw',
                  'ta',
                  'th',
+                 'tl',
                  'tr',
                  'vi',
                  'wo',
