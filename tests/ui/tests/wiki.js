@@ -5,8 +5,9 @@ define([
     'base/lib/assert',
     'base/lib/POM',
     'base/lib/poll',
-    'intern/dojo/node!leadfoot/keys'
-], function(registerSuite, assert, config, libAssert, POM, poll, keys) {
+    'intern/dojo/node!leadfoot/keys',
+    'intern/dojo/text!tests/fixtures/in-content.html'
+], function(registerSuite, assert, config, libAssert, POM, poll, keys, inContentTemplate) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -168,12 +169,12 @@ define([
                                     return remote.findById('id_slug').getSpecAttribute('value').then(function(value) {
                                         Page.documentCreatedSlug = value;
 
-                                        return remote.executeAsync(function(done) {
+                                        return remote.executeAsync(function(html, done) {
                                                             if(window.CKEDITOR) {
-                                                                CKEDITOR.instances.id_content.setData('Hello, this is a robot!  Enjoy!');
+                                                                CKEDITOR.instances.id_content.setData(html);
                                                                 done();
                                                             }
-                                                    })
+                                                    }, [inContentTemplate])
                                                     .then(function() {
 
                                                         return remote.findAllByCssSelector('.page-buttons .btn-save')
