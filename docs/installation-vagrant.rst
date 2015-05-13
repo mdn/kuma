@@ -223,12 +223,12 @@ If you see the same error over and over, please ask for :ref:`more help <more-he
 
 .. _puppet: http://puppetlabs.com/puppet/puppet-open-source
 
-kuma_migrate
-~~~~~~~~~~~~
+kuma_django_migrate
+~~~~~~~~~~~~~~~~~~~
 
 If you see errors like::
 
-    notice: /Stage[main]/Kuma_config/Exec[kuma_migrate]
+    notice: /Stage[main]/Kuma_config/Exec[kuma_djagno_migrate]
 
 try to manually run database migrations in the vm. To do so::
 

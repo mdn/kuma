@@ -6,7 +6,7 @@ class basics {
         [ "build-essential", "git", "subversion", "mercurial", "vim",
           "nfs-common", "openjdk-7-jdk", "tmux", "translate-toolkit",
           "gettext", "htop", "ack-grep", "locate", "sqlite3",
-          "python-software-properties", "curl", "axel",
+          "python2.7", "python2.7-dev", "python-software-properties", "curl",
           "libxml2-dev", "libxslt1.1", "libxslt1-dev",
           "libjpeg62", "libjpeg62-dev",
           "libfreetype6", "libfreetype6-dev",
@@ -14,17 +14,6 @@ class basics {
           "libtidy-0.99-0", "libtidy-dev", "rlwrap", "make"]:
             ensure => installed,
             require => Exec['apt-get-update'];
-    }
-    exec {
-        "deadsnakes-ppa":
-            command => "/usr/bin/add-apt-repository --yes ppa:fkrull/deadsnakes && apt-get update -qq",
-            creates => '/etc/apt/sources.list.d/fkrull-deadsnakes-precise.list',
-            require => Package["python-software-properties"];
-    }
-    package {
-        [ "python2.7", "python2.7-dev"]:
-          ensure => installed,
-          require => Exec["deadsnakes-ppa"];
     }
 }
 

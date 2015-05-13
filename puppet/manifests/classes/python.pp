@@ -11,26 +11,22 @@ class python_prereqs {
     exec {
         "get-pip":
             cwd => '/tmp',
-            command => '/usr/bin/curl -LO https://raw.github.com/pypa/pip/master/contrib/get-pip.py',
+            command => '/usr/bin/curl -LO https://bootstrap.pypa.io/get-pip.py',
             creates => '/tmp/get-pip.py',
-            require => Package["axel"];
+            require => Package["curl"];
         # will install setuptools, too
         "install-pip":
             cwd => '/tmp',
             require => [Exec["get-pip"], Package["python2.7"]],
             command => '/usr/bin/python2.7 get-pip.py && /bin/rm get-pip.py',
             creates => '/usr/local/bin/pip2.7';
-    }
-    exec {
         "install-extras":
             require => Exec["install-pip"],
             command => '/usr/local/bin/pip2.7 install virtualenv';
-    }
-    exec {
         "create-virtualenv":
             cwd => '/home/vagrant',
             require => Exec["install-extras"],
-            command => '/bin/rm -rf env && /usr/local/bin/virtualenv -p /usr/bin/python2.7 env',
+            command => '/bin/rm -rf env && /usr/bin/sudo -H -u vagrant /usr/local/bin/virtualenv env',
             user => 'vagrant';
     }
 }
@@ -41,8 +37,7 @@ class python_reqs {
         "install-reqs":
             cwd => '/home/vagrant/src',
             timeout => 1200, # Too long, but this can take awhile
-            command => "/home/vagrant/env/bin/pip install -r requirements/compiled.txt -r requirements/docs.txt",
-            user => 'vagrant';
+            command => "/usr/bin/sudo -H -u vagrant /home/vagrant/env/bin/pip install -r requirements/compiled.txt -r requirements/docs.txt";
      }
 }
 
