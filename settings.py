@@ -117,6 +117,7 @@ MDN_LANGUAGES = (
                  'ln',
                  'ml',
                  'ms',
+                 'my',
                  'nl',
                  'pl',
                  'pt-BR',
