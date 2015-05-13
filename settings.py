@@ -124,6 +124,7 @@ MDN_LANGUAGES = (
                  'pt-PT',
                  'ro',
                  'ru',
+                 'son',
                  'sq',
                  'sw',
                  'ta',
