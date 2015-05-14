@@ -43,6 +43,10 @@
         "English": "Bulgarian",
         "native": "\u0411\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438"
     },
+    "bm": {
+        "English": "Bambara",
+        "native": "Bamanankan"
+    },
     "bn-BD": {
         "English": "Bengali (Bangladesh)",
         "native": "\u09ac\u09be\u0982\u09b2\u09be (\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6)"
@@ -514,6 +518,10 @@
     "th": {
         "English": "Thai",
         "native": "\u0e44\u0e17\u0e22"
+    },
+    "tl": {
+        "English": "Tagalog",
+        "native": "Tagalog"
     },
     "tn": {
         "English": "Tswana",
