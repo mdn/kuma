@@ -2,13 +2,10 @@ import datetime
 import HTMLParser
 import os
 import urllib
-import urlparse
 import hashlib
 import bitly_api
 
-from django.http import QueryDict
 from django.utils.encoding import smart_str
-from django.utils.http import urlencode as urlencode_util
 from django.utils.tzinfo import LocalTimezone
 
 from babel import localedata
