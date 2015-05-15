@@ -91,12 +91,23 @@
             Track specific clientside errors create by our code
         */
         trackClientErrors: function() {
+
             $(win).on('error', function(e) {
                 var originalEvent = e.originalEvent;
-                analytics.trackError(' JavaScript Error: ' + originalEvent.message + ' ; ' + originalEvent.filename + ':' + originalEvent.lineno);
+
+                analytics.trackEvent({
+                    category: 'JavaScript Error',
+                    action: originalEvent.message,
+                    label:  originalEvent.filename + ':' + originalEvent.lineno
+                });
             });
+
             $(doc).ajaxError(function(e, request, settings) {
-                analytics.trackError('AJAX Error: ' +  settings.url + ' : ' + e.result);
+                analytics.trackEvent({
+                    category: 'AJAX Error',
+                    action: settings.url,
+                    label:  e.result
+                });
             });
         },
 
