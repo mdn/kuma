@@ -626,6 +626,9 @@ MINIFY_BUNDLES = {
         'devderby': (
             'css/devderby.css',
         ),
+        'gaia': (
+            'css/gaia.css',
+        ),
         'home': (
             'css/home.css',
             'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
