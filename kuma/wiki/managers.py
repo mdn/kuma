@@ -2,6 +2,7 @@ from datetime import date, datetime, timedelta
 
 from django.core import serializers
 from django.db import models
+from django.utils import timezone
 
 import bleach
 from constance import config
@@ -47,7 +48,7 @@ class BaseDocumentManager(models.Manager):
     def get_by_stale_rendering(self):
         """Find documents whose renderings have gone stale"""
         return (self.exclude(render_expires__isnull=True)
-                    .filter(render_expires__lte=datetime.now()))
+                    .filter(render_expires__lte=timezone.now()))
 
     def allows_add_by(self, user, slug):
         """
@@ -186,7 +187,7 @@ class BaseDocumentManager(models.Manager):
             # Don't do a type check here since that would require importing
             if actual._meta.object_name == 'Revision':
                 actual.creator = creator
-                actual.created = datetime.now()
+                actual.created = timezone.now()
 
             actual.save()
             counter += 1

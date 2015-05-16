@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import base64
-import datetime
 import json
 import time
 from urlparse import urlparse
@@ -17,6 +16,7 @@ from django.http import Http404
 from django.test.client import (BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT,
                                 FakePayload, encode_multipart)
 from django.test.utils import override_settings
+from django.utils import timezone
 from django.utils.encoding import smart_str
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
@@ -3569,7 +3569,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
 
     def test_rendering_in_progress_warning(self):
         # Make the document look like there's a rendering in progress.
-        self.d.render_started_at = datetime.datetime.now()
+        self.d.render_started_at = timezone.now()
         self.d.save()
 
         resp = self.client.get(self.url, follow=False)
@@ -3599,7 +3599,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         # rendering is in progress.
         self.d.html = self.raw_content
         self.d.rendered_html = ''
-        self.d.render_started_at = datetime.datetime.now()
+        self.d.render_started_at = timezone.now()
         self.d.save()
 
         # Now, ensure that raw content is shown in the view.

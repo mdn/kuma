@@ -12,6 +12,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.models import signals
+from django.utils import timezone
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
@@ -405,7 +406,7 @@ class Document(NotificationsMixin, models.Model):
         # failure, in this case, and allow another scheduling attempt.
         timeout = config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
-        duration = datetime.now() - self.render_scheduled_at
+        duration = timezone.now() - self.render_scheduled_at
         if duration > max_duration:
             return False
 
@@ -424,7 +425,7 @@ class Document(NotificationsMixin, models.Model):
         # Assume failure, in this case, and allow another rendering attempt.
         timeout = config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
-        duration = datetime.now() - self.render_started_at
+        duration = timezone.now() - self.render_started_at
         if duration > max_duration:
             return False
 
@@ -483,7 +484,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Note when the rendering was scheduled. Kind of a hack, doing a quick
         # update and setting the local property rather than doing a save()
-        now = datetime.now()
+        now = timezone.now()
         Document.objects.filter(pk=self.pk).update(render_scheduled_at=now)
         self.render_scheduled_at = now
 
@@ -510,7 +511,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Note when the rendering was started. Kind of a hack, doing a quick
         # update and setting the local property rather than doing a save()
-        now = datetime.now()
+        now = timezone.now()
         Document.objects.filter(pk=self.pk).update(render_started_at=now)
         self.render_started_at = now
 
@@ -528,7 +529,7 @@ class Document(NotificationsMixin, models.Model):
         self.regenerate_cache_with_fields()
 
         # Finally, note the end time of rendering and update the document.
-        self.last_rendered_at = datetime.now()
+        self.last_rendered_at = timezone.now()
 
         # If this rendering took longer than we'd like, mark it for deferred
         # rendering in the future.
@@ -543,7 +544,7 @@ class Document(NotificationsMixin, models.Model):
         # intervention to free docs from deferred jail.
         if self.render_max_age:
             # If there's a render_max_age, automatically update render_expires
-            self.render_expires = (datetime.now() +
+            self.render_expires = (timezone.now() +
                                    timedelta(seconds=self.render_max_age))
         else:
             # Otherwise, just clear the expiration time as a one-shot
@@ -799,7 +800,7 @@ class Document(NotificationsMixin, models.Model):
                                 (revision.created, revision.creator))
             if comment:
                 revision.comment = u'%s: "%s"' % (revision.comment, comment)
-            revision.created = datetime.now()
+            revision.created = timezone.now()
             revision.creator = user
 
             if revision.document.original.pk == self.pk:
@@ -989,7 +990,7 @@ class Document(NotificationsMixin, models.Model):
         moved_rev.id = None
 
         moved_rev.creator = user
-        moved_rev.created = datetime.now()
+        moved_rev.created = timezone.now()
         moved_rev.slug = new_slug
         if title:
             moved_rev.title = title
@@ -1579,7 +1580,7 @@ class Revision(models.Model):
     # Maximum age (in seconds) before this document needs re-rendering
     render_max_age = models.IntegerField(blank=True, null=True)
 
-    created = models.DateTimeField(default=datetime.now, db_index=True)
+    created = models.DateTimeField(default=timezone.now, db_index=True)
     comment = models.CharField(max_length=255)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 related_name='created_revisions')
@@ -1764,7 +1765,7 @@ class Revision(models.Model):
 
     @property
     def translation_age(self):
-        return abs((datetime.now() - self.created).days)
+        return abs((timezone.now() - self.created).days)
 
 
 class RevisionIP(models.Model):

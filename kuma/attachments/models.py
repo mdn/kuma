@@ -1,8 +1,7 @@
-from datetime import datetime
-
 from django.conf import settings
 from django.db import models
 from django.template.loader import select_template
+from django.utils import timezone
 
 from .utils import attachment_upload_to, full_attachment_url
 
@@ -97,7 +96,7 @@ class AttachmentRevision(models.Model):
 
     description = models.TextField(blank=True)  # Does not allow wiki markup
 
-    created = models.DateTimeField(default=datetime.now)
+    created = models.DateTimeField(default=timezone.now)
     comment = models.CharField(max_length=255, blank=True)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 related_name='created_attachment_revisions')

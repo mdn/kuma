@@ -7,6 +7,8 @@ import time
 from django.utils.html import escape
 from pyquery import PyQuery as pq
 
+from django.utils import timezone
+
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
@@ -59,7 +61,7 @@ class FeedTests(UserTestCase, WikiTestCase):
     def test_revisions_feed(self):
         d = document(title='HTML9')
         d.save()
-        now = datetime.datetime.now()
+        now = timezone.now()
         for i in xrange(1, 6):
             created = now + datetime.timedelta(seconds=5 * i)
             revision(save=True,
@@ -108,7 +110,7 @@ class FeedTests(UserTestCase, WikiTestCase):
         reflect proper document locale, regardless of requestor's locale"""
         d = document(title='HTML9', locale="fr")
         d.save()
-        now = datetime.datetime.now()
+        now = timezone.now()
         for i in xrange(1, 6):
             created = now + datetime.timedelta(seconds=5 * i)
             revision(save=True,
@@ -140,14 +142,14 @@ class FeedTests(UserTestCase, WikiTestCase):
                  comment='Revision 1',
                  content="First Content",
                  is_approved=True,
-                 created=datetime.datetime.now())
+                 created=timezone.now())
         r = revision(save=True,
                      document=d,
                      title='HTML9',
                      comment='Revision 2',
                      content="First Content",
                      is_approved=True,
-                     created=(datetime.datetime.now() +
+                     created=(timezone.now() +
                               datetime.timedelta(seconds=1)),
                      tags='"some", "more", "tags"')
         r.review_tags.set(*[u'editorial'])
