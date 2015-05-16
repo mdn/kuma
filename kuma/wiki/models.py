@@ -22,6 +22,7 @@ from django.db import models
 from django.db.models import Count, signals
 from django.dispatch import receiver
 from django.http import Http404
+from django.utils import timezone
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 
@@ -396,7 +397,7 @@ class Document(NotificationsMixin, models.Model):
         # failure, in this case, and allow another scheduling attempt.
         timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
-        duration = datetime.now() - self.render_scheduled_at
+        duration = timezone.now() - self.render_scheduled_at
         if duration > max_duration:
             return False
 
@@ -415,7 +416,7 @@ class Document(NotificationsMixin, models.Model):
         # Assume failure, in this case, and allow another rendering attempt.
         timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
-        duration = datetime.now() - self.render_started_at
+        duration = timezone.now() - self.render_started_at
         if duration > max_duration:
             return False
 
@@ -474,7 +475,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Note when the rendering was scheduled. Kind of a hack, doing a quick
         # update and setting the local property rather than doing a save()
-        now = datetime.now()
+        now = timezone.now()
         Document.objects.filter(pk=self.pk).update(render_scheduled_at=now)
         self.render_scheduled_at = now
 
@@ -501,7 +502,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Note when the rendering was started. Kind of a hack, doing a quick
         # update and setting the local property rather than doing a save()
-        now = datetime.now()
+        now = timezone.now()
         Document.objects.filter(pk=self.pk).update(render_started_at=now)
         self.render_started_at = now
 
@@ -519,7 +520,7 @@ class Document(NotificationsMixin, models.Model):
         self.regenerate_cache_with_fields()
 
         # Finally, note the end time of rendering and update the document.
-        self.last_rendered_at = datetime.now()
+        self.last_rendered_at = timezone.now()
 
         # If this rendering took longer than we'd like, mark it for deferred
         # rendering in the future.
@@ -534,7 +535,7 @@ class Document(NotificationsMixin, models.Model):
         # intervention to free docs from deferred jail.
         if self.render_max_age:
             # If there's a render_max_age, automatically update render_expires
-            self.render_expires = (datetime.now() +
+            self.render_expires = (timezone.now() +
                                    timedelta(seconds=self.render_max_age))
         else:
             # Otherwise, just clear the expiration time as a one-shot
@@ -802,7 +803,7 @@ class Document(NotificationsMixin, models.Model):
                             (revision.created, revision.creator))
         if comment:
             revision.comment += ': "%s"' % comment
-        revision.created = datetime.now()
+        revision.created = timezone.now()
         revision.creator = user
         revision.save()
         if old_review_tags:
@@ -981,7 +982,7 @@ class Document(NotificationsMixin, models.Model):
         moved_rev.id = None
 
         moved_rev.creator = user
-        moved_rev.created = datetime.now()
+        moved_rev.created = timezone.now()
         moved_rev.slug = new_slug
         if title:
             moved_rev.title = title
@@ -1689,7 +1690,7 @@ class Revision(models.Model):
     # Maximum age (in seconds) before this document needs re-rendering
     render_max_age = models.IntegerField(blank=True, null=True)
 
-    created = models.DateTimeField(default=datetime.now, db_index=True)
+    created = models.DateTimeField(default=timezone.now, db_index=True)
     comment = models.CharField(max_length=255)
     creator = models.ForeignKey(User, related_name='created_revisions')
     is_approved = models.BooleanField(default=True, db_index=True)
@@ -1841,7 +1842,7 @@ class Revision(models.Model):
 
     @property
     def translation_age(self):
-        return abs((datetime.now() - self.created).days)
+        return abs((timezone.now() - self.created).days)
 
 
 class RevisionIP(models.Model):
@@ -1857,7 +1858,7 @@ class HelpfulVote(models.Model):
     """Helpful or Not Helpful vote on Document."""
     document = models.ForeignKey(Document, related_name='poll_votes')
     helpful = models.BooleanField(default=False)
-    created = models.DateTimeField(default=datetime.now, db_index=True)
+    created = models.DateTimeField(default=timezone.now, db_index=True)
     creator = models.ForeignKey(User, related_name='poll_votes', null=True)
     anonymous_id = models.CharField(max_length=40, db_index=True)
     user_agent = models.CharField(max_length=1000)

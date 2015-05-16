@@ -7,6 +7,7 @@ from babel import localedata
 import jinja2
 
 from django.conf import settings
+from django.utils import timezone
 from django.utils.tzinfo import LocalTimezone
 
 import jingo
@@ -374,7 +375,7 @@ def timesince(d, now=None):
         if d.tzinfo:
             now = datetime.datetime.now(LocalTimezone(d))
         else:
-            now = datetime.datetime.now()
+            now = timezone.now()
 
     # Ignore microsecond part of 'd' since we removed it from 'now'
     delta = now - (d - datetime.timedelta(0, 0, d.microsecond))

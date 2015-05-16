@@ -3,6 +3,7 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from django.utils import timezone
 
 
 class Migration(SchemaMigration):
@@ -12,7 +13,7 @@ class Migration(SchemaMigration):
         db.create_table('search_index', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(default=django.utils.timezone.now)),
             ('promoted', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('populated', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
@@ -49,7 +50,7 @@ class Migration(SchemaMigration):
         },
         'search.index': {
             'Meta': {'ordering': "['-created_at']", 'object_name': 'Index'},
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'default': 'django.utils.timezone.now'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
             'populated': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),

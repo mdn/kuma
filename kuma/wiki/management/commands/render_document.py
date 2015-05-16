@@ -13,6 +13,7 @@ from celery import chain
 
 from django.core.management.base import BaseCommand, CommandError
 from django.db.models import Q
+from django.utils import timezone
 
 from kuma.core.utils import chunked
 from kuma.wiki.helpers import absolutify
@@ -59,7 +60,7 @@ class Command(BaseCommand):
             # Query all documents, excluding those whose `last_rendered_at` is
             # within `min_render_age` or NULL.
             min_render_age = (
-                datetime.datetime.now() -
+                timezone.now() -
                 datetime.timedelta(seconds=self.options['min_age']))
             docs = Document.objects.filter(
                 Q(last_rendered_at__isnull=True) |

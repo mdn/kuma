@@ -3,6 +3,8 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from django.utils import timezone
+
 
 class Migration(SchemaMigration):
 
@@ -17,7 +19,7 @@ class Migration(SchemaMigration):
             ('slug', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, db_index=True)),
             ('mime_type', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
             ('description', self.gf('django.db.models.fields.TextField')()),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=django.utils.timezone.now)),
             ('comment', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('creator', self.gf('django.db.models.fields.related.ForeignKey')(related_name='created_attachment_revisions', to=orm['auth.User'])),
             ('is_approved', self.gf('django.db.models.fields.BooleanField')(default=True, db_index=True)),
@@ -63,7 +65,7 @@ class Migration(SchemaMigration):
         },
         'auth.user': {
             'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'django.utils.timezone.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
@@ -71,7 +73,7 @@ class Migration(SchemaMigration):
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'django.utils.timezone.now'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
@@ -97,7 +99,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'AttachmentRevision', 'db_table': "'wiki_attachmentrevision'"},
             'attachment': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['attachments.Attachment']"}),
             'comment': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'django.utils.timezone.now'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_attachment_revisions'", 'to': "orm['auth.User']"}),
             'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'file': ('django.db.models.fields.files.FileField', [], {'max_length': '500'}),
@@ -149,7 +151,7 @@ class Migration(SchemaMigration):
         'wiki.helpfulvote': {
             'Meta': {'object_name': 'HelpfulVote'},
             'anonymous_id': ('django.db.models.fields.CharField', [], {'max_length': '40', 'db_index': 'True'}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'db_index': 'True'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'django.utils.timezone.now', 'db_index': 'True'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'poll_votes'", 'null': 'True', 'to': "orm['auth.User']"}),
             'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'poll_votes'", 'to': "orm['wiki.Document']"}),
             'helpful': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -186,7 +188,7 @@ class Migration(SchemaMigration):
             'based_on': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wiki.Revision']", 'null': 'True', 'blank': 'True'}),
             'comment': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'content': ('django.db.models.fields.TextField', [], {}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'django.utils.timezone.now'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_revisions'", 'to': "orm['auth.User']"}),
             'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['wiki.Document']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
