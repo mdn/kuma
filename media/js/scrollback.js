@@ -4,12 +4,12 @@
 
 var scrollbackAdded = false;
 var scrollbackWarningShowed = false;
-
+var host = 'scrollback.io';
 function showNotice() {
 	/* displays a notice that the widget is not a substitute for tech support */
 	if(!scrollbackWarningShowed) {
 		scrollbackWarningShowed = true;
-		
+
 		/* compute position of the scrollback widget relative to the window and place the notice over it */
 		var scrollbackEl = document.getElementsByClassName('scrollback-stream')[0];
 		var scrollbackStyle = window.getComputedStyle(scrollbackEl);
@@ -29,7 +29,7 @@ function showNotice() {
 		noticeDiv.appendChild(document.createTextNode("Welcome to Mozilla's IRC network. Please follow the "));
 		noticeDiv.appendChild(link);
 		noticeDiv.appendChild(document.createTextNode(" of this community."));
-		
+
 		['position', 'bottom', 'left', 'right'].forEach(function (prop) {
 			noticeDiv.style[prop] = scrollbackStyle[prop];
 		});
@@ -41,7 +41,7 @@ function showNotice() {
 		noticeDiv.style.color = '#333333';
 		noticeDiv.style.boxShadow = '0 4px 16px 0 rgba(0,0,0,0.5)'
 		noticeDiv.style.width = parseInt(scrollbackStyle.width) + 2*parseInt(scrollbackStyle.borderWidth) + 'px';
-		
+
 		var closeButton = document.createElement('button');
 		closeButton.innerHTML = "Okay";
 		var closeButtonStyle = 'display: block; margin: 0 auto; cursor: pointer; color: white; padding: 0;' +
@@ -53,7 +53,7 @@ function showNotice() {
 		}
 
 		noticeDiv.appendChild(closeButton);
-		
+
 		document.body.appendChild(noticeDiv);
 	}
 }
@@ -76,12 +76,16 @@ function addScrollback(roomName, suggestedNick) {
 		}
 		var el = document.createElement("script");
 		el.async = 1;
-		el.src = (location.protocol === "https:" ? "https:" : "http:") + "//scrollback.io/client.min.js";
+		el.src = 'https://' + host + '/client.min.js';
 		document.getElementsByTagName("script")[0].parentNode.appendChild(el);
 		scrollbackAdded = true;
-		showNotice();
+		setTimeout(showNotice, 2000);
 	} else {
 		var iframe = document.getElementsByClassName("scrollback-stream")[0];
-		iframe.src = iframe.src.replace(/\/[^/]*\?/, '/' + encodeURIComponent(roomName) + '?');
+		var url = iframe.src;
+		url = url.replace('https://' + host, '');
+		url = 'https://' + host + url.replace(/\/[^/]*/, '/' + roomName);
+        console.log(url);
+		iframe.src = url;
 	}
 }
