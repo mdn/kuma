@@ -6,8 +6,8 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki-edit') }}
-    {{ css('jquery-ui') }}
+    {% compressed_css('wiki-edit') %}
+    {% compressed_css('jquery-ui') %}
 {% endblock %}
 
 {% block content %}
@@ -109,6 +109,6 @@
 {% endblock %}
 
 {% block js %}
-  {{ js('jquery-ui') }}
-  {{ js('wiki-move', async=True) }}
+  {% compressed_js('jquery-ui') %}
+  {% compressed_js('wiki-move') %}
 {% endblock %}

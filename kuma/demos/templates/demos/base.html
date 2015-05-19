@@ -2,11 +2,11 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('demostudio') }}
-    {{ css('jquery-ui') }}
+    {% compressed_css('demostudio') %}
+    {% compressed_css('jquery-ui') %}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
-    {{ js('demostudio') }}
+    {% compressed_js('demostudio') %}
 {% endblock %}

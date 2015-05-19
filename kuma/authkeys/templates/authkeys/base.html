@@ -4,8 +4,8 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('profile') }}
-    {{ css('submission') }}
+    {% compressed_css('profile') %}
+    {% compressed_css('submission') %}
 {% endblock %}
 
 {% block content %}

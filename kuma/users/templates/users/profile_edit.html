@@ -11,20 +11,20 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('demostudio') }}
-    {{ css('jquery-ui') }}
-    {{ css('profile') }}
-    {{ css('newsletter') }}
-    {{ css('submission') }}
+    {% compressed_css('demostudio') %}
+    {% compressed_css('jquery-ui') %}
+    {% compressed_css('profile') %}
+    {% compressed_css('newsletter') %}
+    {% compressed_css('submission') %}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
-    {{ js('jquery-ui') }}
-    {{ js('demostudio') }}
-    {{ js('libs/tagit') }}
-    {{ js('profile') }}
-    {{ js('newsletter',) }}
+    {% compressed_js('jquery-ui') %}
+    {% compressed_js('demostudio') %}
+    {% compressed_js('libs/tagit') %}
+    {% compressed_js('profile') %}
+    {% compressed_js('newsletter') %}
 {% endblock %}
 
 {% block content %}

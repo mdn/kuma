@@ -4,7 +4,7 @@
 {# L10n: Search Mozilla Developer Network documentation #}
 <Description>{{ _('Search Mozilla Developer Network documentation') }}</Description>
 <InputEncoding>UTF-8</InputEncoding>
-<Image width="16" height="16" type="image/png">{{ MEDIA_URL }}img/favicon32.png</Image>
+<Image width="16" height="16" type="image/png">{{ static('assets/img/favicon32.png') }}</Image>
 <Url type="text/html" method="get" template="{{ url('search', locale=locale)|absolutify }}">
   <Param name="q" value="{searchTerms}"/>
   <Param name="w" value="3"/>

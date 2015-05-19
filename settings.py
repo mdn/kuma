@@ -381,6 +381,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
+    'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
 
     'allauth.account.context_processors.account',
@@ -390,7 +391,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'kuma.core.context_processors.i18n',
     'kuma.core.context_processors.next_url',
 
-    'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
 
     'kuma.search.context_processors.search_filters',
@@ -443,7 +443,7 @@ PASSWORD_HASHERS = (
 )
 
 USER_AVATAR_PATH = 'uploads/avatars/'
-DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
+DEFAULT_AVATAR = STATIC_URL + 'assets/img/avatar.png'
 AVATAR_SIZE = 48  # in pixels
 ACCOUNT_ACTIVATION_DAYS = 30
 MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
@@ -457,9 +457,15 @@ TEMPLATE_DIRS = (
     path('templates'),
 )
 
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
+)
+
+STATICFILES_DIRS = (
+    path('kuma/static'),
 )
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
@@ -501,7 +507,7 @@ INSTALLED_APPS = (
     'threadedcomments',
 
     # util
-    'jingo_minify',
+    'pipeline',
     'product_details',
     'tower',
     'smuggler',
@@ -552,7 +558,8 @@ def JINJA_CONFIG():
     cache = get_cache('memcache')
     config = {'extensions': ['jinja2.ext.i18n', 'tower.template.i18n',
                              'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
-                             'jinja2.ext.autoescape'],
+                             'jinja2.ext.autoescape',
+                             'pipeline.jinja2.ext.PipelineExtension'],
               'finalize': lambda x: x if x is not None else ''}
     if isinstance(cache, MemcachedCacheClass) and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
@@ -603,189 +610,352 @@ STANDALONE_DOMAINS = [
 # to True
 TOWER_ADD_HEADERS = True
 
-# Bundles for JS/CSS Minification
-JINGO_MINIFY_USE_STATIC = False
-CLEANCSS_BIN = '/usr/local/bin/cleancss'
-UGLIFY_BIN = '/usr/bin/uglifyjs'
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.cssmin.CSSMinCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
+PIPELINE_DISABLE_WRAPPER = True
+PIPELINE_COMPILERS = (
+    'pipeline.compilers.stylus.StylusCompiler',
+)
 
-MINIFY_BUNDLES = {
-    'css': {
-        'mdn': (
-            'css/font-awesome.css',
-            'css/main.css',
-            'css/badges.css',
+PIPELINE_CSS = {
+    'mdn': {
+        'source_filenames': (
+            'assets/styles/font-awesome.styl',
+            'assets/styles/main.styl',
+            'assets/styles/badges.styl',
         ),
-        'jquery-ui': (
-            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'css/jqueryui/moz-jquery-plugins.css',
-            'css/jquery-ui-customizations.css',
-        ),
-        'demostudio': (
-            'css/demos.css',
-        ),
-        'devderby': (
-            'css/devderby.css',
-        ),
-        'gaia': (
-            'css/gaia.css',
-        ),
-        'home': (
-            'css/home.css',
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
-            'js/libs/owl.carousel/owl-carousel/owl.theme.css',
-        ),
-        'search': (
-            'css/search.css',
-        ),
-        'search-suggestions': (
-            'css/search-suggestions.css',
-        ),
-        'wiki': (
-            'css/wiki.css',
-            'css/zones.css',
-            'css/diff.css',
-
-            'js/libs/prism/themes/prism.css',
-            'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
-            'js/libs/prism/plugins/ie8/prism-ie8.css',
-            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
-            'js/prism-mdn/components/prism-json.css',
-            'css/wiki-syntax.css',
-        ),
-        'wiki-revisions': (
-            'css/wiki-revisions.css',
-        ),
-        'wiki-edit': (
-            'css/wiki-edit.css',
-        ),
-        'sphinx': (
-            'css/wiki.css',
-            'css/sphinx.css',
-        ),
-        'users': (
-            'css/users.css',
-        ),
-        'tagit': (
-            'css/libs/jquery.tagit.css',
-        ),
-        'promote': (
-            'css/promote.css',
-        ),
-        'error': (
-            'css/error.css',
-        ),
-        'error-404': (
-            'css/error.css',
-            'css/error-404.css',
-        ),
-        'calendar': (
-            'css/calendar.css',
-        ),
-        'profile': (
-            'css/profile.css',
-        ),
-        'dashboards': (
-            'css/dashboards.css',
-            'css/diff.css',
-        ),
-        'newsletter': (
-            'css/newsletter.css',
-        ),
-        'submission': (
-            'css/submission.css',
-        ),
-        'user-banned': (
-            'css/user-banned.css',
-        ),
-        'error-403-alternate': (
-            'css/error-403-alternate.css',
-        ),
-        'fellowship': (
-            'css/fellowship.css',
-        ),
+        'output_filename': 'assets/compressed/css/mdn.css',
     },
-    'js': {
-        'main': (
-            'js/libs/jquery-2.1.0.js',
-            'js/components.js',
-            'js/analytics.js',
-            'js/main.js',
-            'js/auth.js',
-            'js/badges.js',
-            'js/social.js',
-            'js/fonts.js',
+    'jquery-ui': {
+        'source_filenames': (
+            'assets/js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
+            'assets/styles/jqueryui/moz-jquery-plugins.css',
+            'assets/styles/jquery-ui-customizations.styl',
         ),
-        'home': (
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
-            'js/home.js'
+        'output_filename': 'assets/compressed/css/jquery-ui.css',
+    },
+    'demostudio': {
+        'source_filenames': (
+            'assets/styles/demos.styl',
         ),
-        'popup': (
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/modal-control.js',
+        'output_filename': 'assets/compressed/css/demostudio.css',
+    },
+    'demowrap': {
+        'source_filenames': (
+            'assets/styles/demowrap.styl',
+            'assets/styles/demos_wrap.styl',
         ),
-        'profile': (
-            'js/profile.js',
-            'js/moz-jquery-plugins.js',
+        'output_filename': 'assets/compressed/css/demowrap.css',
+    },
+    'devderby': {
+        'source_filenames': (
+            'assets/styles/devderby.styl',
         ),
-        'events': (
-            'js/libs/jquery.gmap-1.1.0.js',
-            'js/calendar.js',
+        'output_filename': 'assets/compressed/css/devderby.css',
+    },
+    'gaia': {
+        'source_filenames': (
+            'assets/styles/gaia.styl',
         ),
-        'demostudio': (
-            'js/libs/jquery.hoverIntent.minified.js',
-            'js/libs/jquery.scrollTo-1.4.2-min.js',
-            'js/demos.js',
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/modal-control.js',
+        'output_filename': 'assets/compressed/css/gaia.css',
+    },
+    'home': {
+        'source_filenames': (
+            'assets/styles/home.styl',
+            'assets/js/libs/owl.carousel/owl-carousel/owl.carousel.css',
+            'assets/js/libs/owl.carousel/owl-carousel/owl.theme.css',
         ),
-        'demostudio_devderby_landing': (
-            'js/demos-devderby-landing.js',
+        'output_filename': 'assets/compressed/css/home.css',
+    },
+    'search': {
+        'source_filenames': (
+            'assets/styles/search.styl',
         ),
-        'jquery-ui': (
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/moz-jquery-plugins.js',
+        'output_filename': 'assets/compressed/css/search.css',
+    },
+    'search-suggestions': {
+        'source_filenames': (
+            'assets/styles/search-suggestions.styl',
         ),
-        'libs/tagit': (
-            'js/libs/tag-it.js',
+        'output_filename': 'assets/compressed/css/search-suggestions.css',
+    },
+    'wiki': {
+        'source_filenames': (
+            'assets/styles/wiki.styl',
+            'assets/styles/zones.styl',
+            'assets/styles/diff.styl',
+
+            'assets/js/libs/prism/themes/prism.css',
+            'assets/js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
+            'assets/js/libs/prism/plugins/ie8/prism-ie8.css',
+            'assets/js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
+            'assets/js/prism-mdn/components/prism-json.css',
+            'assets/styles/wiki-syntax.styl',
         ),
-        'search': (
-            'js/search.js',
-            'js/search-navigator.js',
+        'output_filename': 'assets/compressed/css/wiki.css',
+    },
+    'wiki-revisions': {
+        'source_filenames': (
+            'assets/styles/wiki-revisions.styl',
         ),
-        'framebuster': (
-            'js/framebuster.js',
+        'output_filename': 'assets/compressed/css/wiki-revisions.css',
+    },
+    'wiki-edit': {
+        'source_filenames': (
+            'assets/styles/wiki-edit.styl',
         ),
-        'syntax-prism': (
-            'js/libs/prism/prism.js',
-            'js/prism-mdn/components/prism-json.js',
-            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
-            'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
-            'js/syntax-prism.js',
+        'output_filename': 'assets/compressed/css/wiki-edit.css',
+    },
+    'sphinx': {
+        'source_filenames': (
+            'assets/styles/wiki.styl',
+            'assets/styles/sphinx.styl',
         ),
-        'search-suggestions': (
-            'js/search-suggestions.js',
+        'output_filename': 'assets/compressed/css/sphinx.css',
+    },
+    'users': {
+        'source_filenames': (
+            'assets/styles/users.styl',
         ),
-        'wiki': (
-            'js/search-navigator.js',
-            'js/wiki.js',
+        'output_filename': 'assets/compressed/css/users.css',
+    },
+    'tagit': {
+        'source_filenames': (
+            'assets/styles/libs/jquery.tagit.css',
         ),
-        'wiki-edit': (
-            'js/wiki-edit.js',
-            'js/libs/tag-it.js',
-            'js/wiki-tags-edit.js',
+        'output_filename': 'assets/compressed/css/tagit.css',
+    },
+    'promote': {
+        'source_filenames': (
+            'assets/styles/promote.styl',
         ),
-        'wiki-move': (
-            'js/wiki-move.js',
+        'output_filename': 'assets/compressed/css/promote.css',
+    },
+    'error': {
+        'source_filenames': (
+            'assets/styles/error.styl',
         ),
-        'newsletter': (
-            'js/newsletter.js',
+        'output_filename': 'assets/compressed/css/error.css',
+    },
+    'error-404': {
+        'source_filenames': (
+            'assets/styles/error.styl',
+            'assets/styles/error-404.styl',
         ),
-        'fellowship': (
-            'js/fellowship.js',
+        'output_filename': 'assets/compressed/css/error-404.css',
+    },
+    'calendar': {
+        'source_filenames': (
+            'assets/styles/calendar.styl',
         ),
-        'fontfaceobserver': (
-            'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
+        'output_filename': 'assets/compressed/css/calendar.css',
+    },
+    'profile': {
+        'source_filenames': (
+            'assets/styles/profile.styl',
         ),
+        'output_filename': 'assets/compressed/css/profile.css',
+    },
+    'dashboards': {
+        'source_filenames': (
+            'assets/styles/dashboards.styl',
+            'assets/styles/diff.styl',
+        ),
+        'output_filename': 'assets/compressed/css/dashboards.css',
+    },
+    'newsletter': {
+        'source_filenames': (
+            'assets/styles/newsletter.styl',
+        ),
+        'output_filename': 'assets/compressed/css/newsletter.css',
+    },
+    'submission': {
+        'source_filenames': (
+            'assets/styles/submission.styl',
+        ),
+        'output_filename': 'assets/compressed/css/submission.css',
+    },
+    'user-banned': {
+        'source_filenames': (
+            'assets/styles/user-banned.styl',
+        ),
+        'output_filename': 'assets/compressed/css/user-banned.css',
+    },
+    'error-403-alternate': {
+        'source_filenames': (
+            'assets/styles/error-403-alternate.styl',
+        ),
+        'output_filename': 'assets/compressed/css/error-403-alternate.css',
+    },
+    'fellowship': {
+        'source_filenames': (
+            'assets/styles/fellowship.styl',
+        ),
+        'output_filename': 'assets/compressed/css/fellowship.css',
+    },
+    'ckeditor-content': {
+        'source_filenames': (
+            'assets/styles/main.styl',
+            'assets/styles/wiki.styl',
+            'assets/styles/wiki-wysiwyg.styl',
+            'assets/styles/wiki-syntax.styl',
+            'assets/styles/libs/font-awesome/css/font-awesome.min.css',
+        ),
+        'output_filename': 'assets/compressed/css/ckeditor-content.css',
+        'template_name': 'pipeline/javascript-object.jinja',
+    },
+}
+PIPELINE_JS = {
+    'main': {
+        'source_filenames': (
+            'assets/js/libs/jquery-2.1.0.js',
+            'assets/js/main.js',
+            'assets/js/components.js',
+            'assets/js/analytics.js',
+            'assets/js/auth.js',
+            'assets/js/badges.js',
+            'assets/js/social.js',
+            'assets/js/fonts.js',
+        ),
+        'output_filename': 'assets/compressed/js/main.js',
+    },
+    'home': {
+        'source_filenames': (
+            'assets/js/libs/owl.carousel/owl-carousel/owl.carousel.js',
+            'assets/js/home.js'
+        ),
+        'extra_context': {
+            'async': True,
+        },
+        'output_filename': 'assets/compressed/js/home.js',
+    },
+    'popup': {
+        'source_filenames': (
+            'assets/js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
+            'assets/js/modal-control.js',
+        ),
+        'output_filename': 'assets/compressed/js/popup.js',
+    },
+    'profile': {
+        'source_filenames': (
+            'assets/js/profile.js',
+            'assets/js/moz-jquery-plugins.js',
+        ),
+        'output_filename': 'assets/compressed/js/profile.js',
+    },
+    'events': {
+        'source_filenames': (
+            'assets/js/libs/jquery.gmap-1.1.0.js',
+            'assets/js/calendar.js',
+        ),
+        'output_filename': 'assets/compressed/js/events.js',
+    },
+    'demostudio': {
+        'source_filenames': (
+            'assets/js/libs/jquery.hoverIntent.minified.js',
+            'assets/js/libs/jquery.scrollTo-1.4.2-min.js',
+            'assets/js/demos.js',
+            'assets/js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
+            'assets/js/modal-control.js',
+        ),
+        'output_filename': 'assets/compressed/js/demostudio.js',
+    },
+    'demostudio_devderby_landing': {
+        'source_filenames': (
+            'assets/js/demos-devderby-landing.js',
+        ),
+        'output_filename': 'assets/compressed/js/demostudio_devderby_landing.js',
+    },
+    'jquery-ui': {
+        'source_filenames': (
+            'assets/js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
+            'assets/js/moz-jquery-plugins.js',
+        ),
+        'output_filename': 'assets/compressed/js/jquery-ui.js',
+    },
+    'libs/tagit': {
+        'source_filenames': (
+            'assets/js/libs/tag-it.js',
+        ),
+        'output_filename': 'assets/compressed/js/libs/tagit.js',
+    },
+    'search': {
+        'source_filenames': (
+            'assets/js/search.js',
+            'assets/js/search-navigator.js',
+        ),
+        'output_filename': 'assets/compressed/js/search.js',
+    },
+    'framebuster': {
+        'source_filenames': (
+            'assets/js/framebuster.js',
+        ),
+        'output_filename': 'assets/compressed/js/framebuster.js',
+    },
+    'syntax-prism': {
+        'source_filenames': (
+            'assets/js/libs/prism/prism.js',
+            'assets/js/prism-mdn/components/prism-json.js',
+            'assets/js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
+            'assets/js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
+            'assets/js/syntax-prism.js',
+        ),
+        'output_filename': 'assets/compressed/js/syntax-prism.js',
+    },
+    'search-suggestions': {
+        'source_filenames': (
+            'assets/js/search-suggestions.js',
+        ),
+        'output_filename': 'assets/compressed/js/search-suggestions.js',
+    },
+    'wiki': {
+        'source_filenames': (
+            'assets/js/search-navigator.js',
+            'assets/js/wiki.js',
+        ),
+        'output_filename': 'assets/compressed/js/wiki.js',
+    },
+    'wiki-edit': {
+        'source_filenames': (
+            'assets/js/wiki-edit.js',
+            'assets/js/libs/tag-it.js',
+            'assets/js/wiki-tags-edit.js',
+        ),
+        'output_filename': 'assets/compressed/js/wiki-edit.js',
+    },
+    'wiki-move': {
+        'source_filenames': (
+            'assets/js/wiki-move.js',
+        ),
+        'extra_context': {
+            'async': True,
+        },
+        'output_filename': 'assets/compressed/js/wiki-move.js',
+    },
+    'newsletter': {
+        'source_filenames': (
+            'assets/js/newsletter.js',
+        ),
+        'output_filename': 'assets/compressed/js/newsletter.js',
+    },
+    'fellowship': {
+        'source_filenames': (
+            'assets/js/fellowship.js',
+        ),
+        'output_filename': 'assets/compressed/js/fellowship.js',
+    },
+    'syntax-prism': {
+        'source_filenames': (
+            'assets/js/syntax-prism.js',
+        ),
+        'output_filename': 'assets/compressed/js/syntax-prism.js',
+        'template_name': 'pipeline/javascript-object.jinja',
+    },
+    'fontfaceobserver': {
+        'source_filenames': (
+            'assets/js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
+        ),
+        'output_filename': 'assets/compressed/js/fontfaceobserver.js',
     },
 }
 
@@ -1273,7 +1443,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUDIENCE': 'https://developer.mozilla.org',
         'REQUEST_PARAMETERS': {
             'siteName': 'Mozilla Developer Network',
-            'siteLogo': '/media/img/opengraph-logo.png',
+            'siteLogo': STATIC_URL + 'assets/img/opengraph-logo.png',
         }
     }
 }

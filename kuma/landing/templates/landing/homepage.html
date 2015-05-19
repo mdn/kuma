@@ -4,7 +4,7 @@
 
 {% block site_css %}
 	{{ super() }}
-	{{ css('home', 'all') }}
+	{% compressed_css('home') %}
 {% endblock %}
 
 {% block extrahead %}
@@ -20,7 +20,7 @@
   <meta property="og:title" content="{{ social_title }}">
 
   {% if waffle.flag('search_suggestions') %}
-  {{ css('search-suggestions') }}
+  {% compressed_css('search-suggestions') %}
   {% endif %}
 
 {% endblock %}
@@ -208,13 +208,9 @@
 
 {% block js %}
   {{ super() }}
-  {% if settings.TEMPLATE_DEBUG %}
-      {{ js('home') }}
-  {% else %}
-      {{ js('home', async=True) }}
-  {% endif %}
+  {% compressed_js('home') %}
   {% if waffle.flag('search_suggestions') %}
-    {{ js('search-suggestions') }}
+    {% compressed_js('search-suggestions') %}
     <script>
         jQuery('#home-search-form').searchSuggestions();
     </script>

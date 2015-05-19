@@ -6,7 +6,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('error-403-alternate') }}
+    {% compressed_css('error-403-alternate') %}
 {% endblock %}
 
 {% block content %}
@@ -28,7 +28,7 @@
       <p class="notice">{{ _("You must sign in to view all history") }}</p>
     {% endif %}
 
-    <img src="{{ MEDIA_URL }}img/beast-403.png" alt="" class="beast 403">
+    <img src="{{ static('assets/img/beast-403.png') }}" alt="" class="beast 403">
 
     {% if user.username %}
       {% trans name=user.username %}
@@ -68,5 +68,5 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('framebuster') }}
+    {% compressed_js('framebuster') %}
 {% endblock %}

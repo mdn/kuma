@@ -9,13 +9,13 @@
 {% block bodyclass%}translate{% endblock %}
 
 {% block extrahead %}
-  {{ css('home') }}
+  {% compressed_css('home') %}
 {% endblock %}
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki-edit') }}
-    {{ css('jquery-ui') }}
+    {% compressed_css('wiki-edit') %}
+    {% compressed_css('jquery-ui') %}
 {% endblock %}
 
 {% block content %}
@@ -169,10 +169,10 @@
 {% endblock %}
 
 {% block js %}
-  {{ js('jquery-ui') }}
+  {% compressed_js('jquery-ui') %}
 
   {% include 'wiki/includes/tag_suggestions.html' %}
   {% include 'wiki/includes/ckeditor_scripts.html' %}
-  {{ js('wiki-edit') }}
+  {% compressed_js('wiki-edit') %}
 
 {% endblock %}

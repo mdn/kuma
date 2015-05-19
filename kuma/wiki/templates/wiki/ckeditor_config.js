@@ -95,11 +95,7 @@
     config.startupFocus = true;
     config.bodyClass = 'text-content redesign';
     config.contentsCss = [
-      mdn.mediaPath + 'css/main.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/wiki.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/wiki-wysiwyg.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/wiki-syntax.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}'
+        {% compressed_css 'ckeditor-content' %}
     ];
 
     if (window.waffle && waffle.FLAGS.enable_customcss) {

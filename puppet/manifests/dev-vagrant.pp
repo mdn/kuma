@@ -78,7 +78,7 @@ class dev {
         python: stage => langs;
 
         stylus: stage => extras;
-        cleancss: stage => extras;
+        cssmin: stage => extras;
         uglify: stage => extras;
         csslint: stage => extras;
 

@@ -8,6 +8,7 @@ from django.template.response import TemplateResponse
 
 from kuma.core.decorators import login_required, permission_required
 from kuma.core.urlresolvers import reverse
+from kuma.core.helpers import static
 
 from .decorators import check_readonly
 from .models import (Document, DocumentZone, DocumentTag,
@@ -197,8 +198,8 @@ def document_link(self):
     """Public link to the document"""
     link = self.get_absolute_url()
     return ('<a target="_blank" href="%s">'
-            '<img src="/media/img/icons/link_external.png"> View</a>' %
-            (link,))
+            '<img src="%s"> View</a>' %
+            (link, static('assets/img/icons/link_external.png')))
 
 document_link.allow_tags = True
 document_link.short_description = "Public"

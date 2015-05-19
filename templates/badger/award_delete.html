@@ -9,7 +9,7 @@
     {% set image_url = badge.image.url %}
 {% else %}
     {# TODO: Put the URL for default badge image in settings #}
-    {% set image_url = "/media/img/default-badge.png" %}
+    {% set image_url = static('assets/img/default-badge.png') %}
 {% endif %}
 
 {% block pageid %}award_delete{% endblock %}

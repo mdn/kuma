@@ -18,7 +18,7 @@
 
 {% block extrahead %}
   {% if waffle.flag('search_suggestions') %}
-  {{ css('search-suggestions') }}
+  {% compressed_css('search-suggestions') %}
   {% endif %}
 {% endblock %}
 
@@ -220,7 +220,7 @@
   </script>
   {% endif %}
   {% if waffle.flag('search_suggestions') %}
-  {{ js('search-suggestions') }}
+  {% compressed_js('search-suggestions') %}
   <script>
   (function($) {
     var get_filters = function() {

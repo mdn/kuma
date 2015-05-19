@@ -17,21 +17,20 @@
 
   <meta name="description" content="{{ submission.summary }}" />
 
-  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
-  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demos_wrap.css">
-  {{ css('jquery-ui') }}
+  {% compressed_css('demowrap') %}
+  {% compressed_css('jquery-ui') %}
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
 
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
+  <script src="{{ static('assets/js/libs/html5.js') }}"></script>
   <![endif]-->
 
 </head>
 <body>
   <header id="demobar">
-  <h4 id="logo"><a href="{{ url('demos') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-micro.png" alt="{{_('Mozilla Developer Network')}}" width="54" height="16"></a></h4>
+  <h4 id="logo"><a href="{{ url('demos') }}"><img src="{{ static('assets/img/mdn-logo-micro.png') }}" alt="{{_('Mozilla Developer Network')}}" width="54" height="16"></a></h4>
 
     <div class="title">
       <h1 class="demo-title"><a href="{{ submission.get_absolute_url() }}">{{ submission.title }}</a></h1>
@@ -90,8 +89,8 @@
     </nav>
 
 
-    {{ js('main') }}
-    {{ js('popup') }}
+    {% compressed_js('main') %}
+    {% compressed_js('popup') %}
 
     <script type="text/javascript">
 
@@ -186,8 +185,8 @@
   </script>
 
   <!-- provide "report" functionality -->
-  <script type="text/javascript" src="{{MEDIA_URL}}js/libs/jquery.hoverIntent.minified.js"></script>
-  <script type="text/javascript" src="{{MEDIA_URL}}js/modal-control.js"></script>
+  <script type="text/javascript" src="{{ static('assets/js/libs/jquery.hoverIntent.minified.js') }}"></script>
+  <script type="text/javascript" src="{{ static('assets/js/modal-control.js') }}"></script>
 
 </body>
 </html>

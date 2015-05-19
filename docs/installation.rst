@@ -159,12 +159,10 @@ set your ``settings_local.py`` with the following::
     TEMPLATE_DEBUG = DEBUG
     SERVE_MEDIA = True
 
-Setting ``DEBUG = False`` will put the installation in production mode
-and ask for minified assets. In that case, you will need to generate
-CSS from stylus and compress resource::
+Setting ``DEBUG = False`` will put the installation in production mode. Kuma
+will look for compressed assets, so be sure to run collectstatic::
 
-    ./scripts/compile-stylesheets
-    ./manage.py compress_assets
+    ./manage.py collectstatic
 
 Configure Persona
 -------------------

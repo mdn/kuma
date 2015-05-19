@@ -24,13 +24,13 @@
           <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little bit better by sharing MDN with the world.</li>
       </ol>
       {% endtrans %}
-    </div> 
+    </div>
   </header>
 
   <section id="content-main" class="full" role="main">
 
         <form id="button-builder">
-            
+
             <div id="button-preview" class="boxed">
                 <h3>{{_('Preview')}}</h3>
                 <div><img id="button-image" src="" width="120" height="240" alt="" /></div>
@@ -42,25 +42,25 @@
                     <li>
                         <label for="button-design-betterdocs">
                             <input type="radio" name="button-design" value="Better Docs" id="button-design-betterdocs">
-                            <img src="{{ MEDIA_URL }}img/promote/betterdocs_foo.png" alt="{{_('Better Docs')}}" />
+                            <img src="{{ static('assets/img/promote/betterdocs_foo.png') }}" alt="{{_('Better Docs')}}" />
                         </label>
                     </li>
                     <li>
                         <label for="button-design-devpowered">
                             <input type="radio" name="button-design" value="Developer Powered" id="button-design-devpowered">
-                            <img src="{{ MEDIA_URL }}img/promote/devpowered_foo.png" alt="{{_('Developer Powered')}}" />
+                            <img src="{{ static('assets/img/promote/devpowered_foo.png') }}" alt="{{_('Developer Powered')}}" />
                         </label>
                     </li>
                     <li>
                         <label for="button-design-bydev">
                             <input type="radio" name="button-design" value="For Developer, By Developers" id="button-design-bydev">
-                            <img src="{{ MEDIA_URL }}img/promote/bydev_foo.png" alt="{{_('For Developers, By Developers')}}" />
+                            <img src="{{ static('assets/img/promote/bydev_foo.png') }}" alt="{{_('For Developers, By Developers')}}" />
                         </label>
                     </li>
                     <li>
                         <label for="button-design-devtoolbox">
                             <input type="radio" name="button-design" value="Web Developer Toolbox" id="button-design-devtoolbox">
-                            <img src="{{ MEDIA_URL }}img/promote/devtoolbox_foo.png" alt="{{_('Web Developer Toolbox')}}" />
+                            <img src="{{ static('assets/img/promote/devtoolbox_foo.png') }}" alt="{{_('Web Developer Toolbox')}}" />
                         </label>
                     </li>
                 </ul>
@@ -71,7 +71,7 @@
                 <ul>
                     <li class="gray">
                         <label for="button-color-gray">
-                            <input id="button-color-gray" name="button-color" type="radio" value="Gray" /> 
+                            <input id="button-color-gray" name="button-color" type="radio" value="Gray" />
                             {{_('Gray')}}
                         </label>
                     </li>
@@ -130,7 +130,7 @@
 
         </form>
     </div>
-    
+
   </section><!-- /#content-main -->
 
 </div>
@@ -208,7 +208,7 @@ var buttons = rowsToObjects(
         var was_visible = $(sel).is(':visible');
         $(sel).fadeIn('fast', function() {
             if (!was_visible) {
-                $("html,body").animate({scrollTop: $(sel).offset().top}, 500); 
+                $("html,body").animate({scrollTop: $(sel).offset().top}, 500);
             }
         });
     }
@@ -234,14 +234,14 @@ var buttons = rowsToObjects(
         } else {
             $('#step-topic').hide();
         }
-        
+
         if ( spec['design'] === 'Web Developer Toolbox' ) {
           $("#step-code h3 b").text("3");
         }
         else {
           $("#step-code h3 b").text("4");
         }
-        
+
         $('#step-topic ul').removeClass();
         $('#step-topic ul').addClass(spec['color']);
 
@@ -252,7 +252,7 @@ var buttons = rowsToObjects(
             var found = true;
             for (var k in spec) if (spec.hasOwnProperty(k)) {
                 // Accept --- or selector value as column match.
-                if ('---' != item[k] && spec[k] != item[k]) { 
+                if ('---' != item[k] && spec[k] != item[k]) {
                     found = false; break;
                 }
             }
@@ -274,7 +274,7 @@ var buttons = rowsToObjects(
         // Update the button preview image.
         $('#button-image')
             .attr('alt', sel.alt_text)
-            .attr('src', '{{ MEDIA_URL }}img/promote/promobutton_'+sel.id+'.png');
+            .attr('src', '{{ STATIC_URL }}assets/img/promote/promobutton_' + sel.id + '.png');
 
         $('#button-url')
             .text(sel.url)
@@ -284,7 +284,7 @@ var buttons = rowsToObjects(
         // Update the button code.
         $('#button-code').val([
             '<a href="', sel.tracked_url, '" title="', sel.alt_text, '">',
-            '<img src="{{ request.build_absolute_uri(MEDIA_URL) }}img/promote/promobutton_', sel.id, '.png" ', 
+            '<img src="{{ STATIC_URL }}assets/img/promote/promobutton_' + sel.id + '.png" ',
                 'alt="', sel.alt_text, '" />',
             '</a>'
         ].join(''));
@@ -293,25 +293,25 @@ var buttons = rowsToObjects(
 
     $('#button-builder input:radio').click(function(){
       $(this).parents('ul').children('li').removeClass('selected');
-      $(this).parents('li').addClass('selected');      
+      $(this).parents('li').addClass('selected');
     });
     $('#button-builder input:radio:checked').parents('li').addClass('selected');
-    
+
 
     // Update the button code on any change to selectors.
     $('#button-builder input:radio').click(updateButtonCode);
     $('#button-builder select').change(updateButtonCode);
-    
+
     // Do an initial code update on page ready.
     $(document).ready(function () {
         updateButtonCode();
     });
 
     // Redirect clicks on topic links to radio selection.
-    $('#step-topic a').click(function () { 
-        $(this).parent().prev().click(); 
+    $('#step-topic a').click(function () {
+        $(this).parent().prev().click();
         updateButtonCode();
-        return false; 
+        return false;
     });
 
     // Focusing on the code textarea selects all for copypasta

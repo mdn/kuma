@@ -7,7 +7,7 @@
   <link rel="alternate" type="application/atom+xml"
       title="{{_('Demos tagged {tag}') | f(tag=tag_title(tag)) }}"
       href="{{ url('demos_feed_tag', format='atom', tag=tag.name) }}" />
-    {{ css('devderby') }}
+    {% compressed_css('devderby') %}
 {% endblock %}
 
 {% block content %}

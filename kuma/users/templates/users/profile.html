@@ -12,14 +12,14 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('demostudio') }}
-    {{ css('jquery-ui') }}
-    {{ css('profile') }}
+    {% compressed_css('demostudio') %}
+    {% compressed_css('jquery-ui') %}
+    {% compressed_css('profile') %}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
-    {{ js('demostudio') }}
+    {% compressed_js('demostudio') %}
 {% endblock %}
 
 {% macro account(profile, site_name, site_meta) %}

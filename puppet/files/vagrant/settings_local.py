@@ -106,3 +106,7 @@ if SENTRY_DSN:
     )
 
 SOCIALACCOUNT_PROVIDERS['persona']['AUDIENCE'] = 'https://developer-local.allizom.org'
+
+# When running Kuma locally, load the homepage JavaScript synchronously
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1139947
+PIPELINE_JS['home']['extra_context']['async'] = not TEMPLATE_DEBUG
