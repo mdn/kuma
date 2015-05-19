@@ -351,7 +351,7 @@
                 <!-- contributors -->
                 <div class="wiki-block contributors">
                   <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
-                  {% set tags = document.tags.all() %}
+                  {% set tags = document.tags.all().order_by('name') %}
                   {% include "wiki/includes/document_tag.html" %}
                   {% trans contributors=user_list(contributors) %}
                   <div class="contributors-sub">

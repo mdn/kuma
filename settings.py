@@ -89,6 +89,7 @@ MDN_LANGUAGES = (
                  'af',
                  'ar',
                  'az',
+                 'bm',
                  'bn-BD',
                  'bn-IN',
                  'cs',
@@ -117,16 +118,19 @@ MDN_LANGUAGES = (
                  'ln',
                  'ml',
                  'ms',
+                 'my',
                  'nl',
                  'pl',
                  'pt-BR',
                  'pt-PT',
                  'ro',
                  'ru',
+                 'son',
                  'sq',
                  'sw',
                  'ta',
                  'th',
+                 'tl',
                  'tr',
                  'vi',
                  'wo',
@@ -420,6 +424,8 @@ MIDDLEWARE_CLASSES = (
 
     'badger.middleware.RecentBadgeAwardsMiddleware',
     'kuma.wiki.badges.BadgeAwardingMiddleware',
+
+    'waffle.middleware.WaffleMiddleware',
 )
 
 # Auth
@@ -620,6 +626,9 @@ MINIFY_BUNDLES = {
         'devderby': (
             'css/devderby.css',
         ),
+        'gaia': (
+            'css/gaia.css',
+        ),
         'home': (
             'css/home.css',
             'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
@@ -704,6 +713,7 @@ MINIFY_BUNDLES = {
             'js/auth.js',
             'js/badges.js',
             'js/social.js',
+            'js/fonts.js',
         ),
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
@@ -772,6 +782,9 @@ MINIFY_BUNDLES = {
         ),
         'fellowship': (
             'js/fellowship.js',
+        ),
+        'fontfaceobserver': (
+            'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
         ),
     },
 }

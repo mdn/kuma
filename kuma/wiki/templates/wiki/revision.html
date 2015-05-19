@@ -53,7 +53,7 @@
     </details>
 
     <div class="wiki-block contributors">
-      {% set tags = document.tags.all() %}
+      {% set tags = document.tags.all().order_by('name') %}
       {% include "wiki/includes/document_tag.html" %}
     </div>
 

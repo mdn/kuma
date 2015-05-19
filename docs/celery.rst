@@ -45,9 +45,9 @@ RabbitMQ takes very little configuration.
     sudo rabbitmq-server -detached
 
     # Set up the permissions.
-    rabbitmqctl add_user kuma kuma
-    rabbitmqctl add_vhost kuma
-    rabbitmqctl set_permissions -p kuma kuma ".*" ".*" ".*"
+    sudo rabbitmqctl add_user kuma kuma
+    sudo rabbitmqctl add_vhost kuma
+    sudo rabbitmqctl set_permissions -p kuma kuma ".*" ".*" ".*"
 
 That should do it. You may need to use ``sudo`` for ``rabbitmqctl``. It depends
 on the OS and how Rabbit was installed.

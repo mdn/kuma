@@ -43,7 +43,9 @@ $text-light = #fff;
 /* typography */
 $light-font-weight = 200;
 $site-font-family = 'Open Sans', Arial, sans-serif;
+$site-font-family-fallback = Arial, sans-serif;
 $heading-font-family = 'Open Sans Light', 'Helvetica', Arial, sans-serif;
+$heading-font-family-fallback = 'Helvetica', Arial, sans-serif;
 
 /* sizes */
 $larger-font-size = 20px;
@@ -90,6 +92,8 @@ $input-padding = 6px 8px;
 
 /* selectors */
 $selector-icon = 'i[class^="icon-"]';
+$selector-site-font-fallback = 'html[data-ffo-opensans="false"]:not(.no-js) &';
+$selector-heading-font-fallback = 'html[data-ffo-opensanslight="false"]:not(.no-js) &';
 
 /* paths */
 $media-url-dir = '/media/img/';

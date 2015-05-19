@@ -24,6 +24,9 @@ Install and run everything
 #. Install the `vagrant-vbguest <https://github.com/dotless-de/vagrant-vbguest>`_
    plugin.
 
+   .. note:: (OSX) If you have not previously run xCode and agreed to the terms of service
+              you will have  to do that first.
+
 #. Fork the project. (See `GitHub <https://help.github.com/articles/fork-a-repo#step-1-fork-the-spoon-knife-repository>`_ and `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_)
 
 #. Clone your fork of Kuma and update submodules::
