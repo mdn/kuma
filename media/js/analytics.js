@@ -39,7 +39,7 @@
 
             // If Analytics has loaded, go ahead with tracking
             // Checking for ".create" due to Ghostery mocking of ga
-            if (ga && ga.create) {
+            if(ga && ga.create) {
                 // Send event to GA
                 ga('send', data);
             }
@@ -76,7 +76,7 @@
                         action: href
                     };
 
-                    if (newTab) {
+                    if(newTab) {
                         analytics.trackEvent(data);
                     } else {
                         e.preventDefault();
@@ -103,12 +103,11 @@
         /*
             Sends universal analytics client side error
         */
-        trackError: function(description) {
-            if(win.ga && ga.create) {
-                ga('send', 'exception', {
-                    'exDescription': description
-                });
-            }
+        trackError: function(category, action) {
+            return analytics.trackEvent({
+                category: category,
+                action: action
+            });
         }
     };
 })(window, document, jQuery);
