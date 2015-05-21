@@ -69,9 +69,6 @@ define([
                             // Go into source mode, add an IFRAME, go back into view mode, ensure iframe isn't there
                             return remote.executeAsync(function(done) {
                                 var editor = CKEDITOR.instances.id_content;
-                                var switchMode = function() {
-                                    editor.execCommand('source');
-                                };
                                 var interval;
 
                                 editor.on('mode', function() {
@@ -86,11 +83,11 @@ define([
                                     }
                                 });
 
-                                interval = setInterval(switchMode, 300);
+                                interval = setInterval(function() {
+                                    editor.execCommand('source');
+                                }, 300);
                             })
-                            .then(function(returnValue) {
-                                assert.isTrue(returnValue);
-                            });
+                            .then(assert.isTrue);
                         });
 
         },
