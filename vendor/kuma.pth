@@ -15,6 +15,7 @@ src/django-constance
 src/django-debug-toolbar
 src/django-devserver
 src/django-extensions
+src/django-flat-theme
 src/django-honeypot
 src/django-memcached-hashring
 src/django-nose

@@ -160,3 +160,6 @@
 [submodule "vendor/src/elasticsearch-dsl-py"]
 	path = vendor/src/elasticsearch-dsl-py
 	url = https://github.com/elastic/elasticsearch-dsl-py
+[submodule "vendor/src/django-flat-theme"]
+	path = vendor/src/django-flat-theme
+	url = https://github.com/elky/django-flat-theme.git
