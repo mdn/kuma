@@ -3,3 +3,5 @@
     ExpiresActive On
     ExpiresDefault "access plus 2 weeks"
 </FilesMatch>
+
+AddType application/font-woff .woff
