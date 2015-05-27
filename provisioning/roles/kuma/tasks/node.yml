@@ -1,0 +1,19 @@
+---
+- name: Install node dependencies
+  npm: name={{ item.name }} version={{ item.version }} global=yes
+  with_items:
+    - {name: 'fibers', version: '1.0.1'}
+    - {name: 'clean-css', version: '2.2.16'}
+    - {name: 'csslint', version: '0.10.0'}
+    - {name: 'jshint', version: '2.7.0'}
+    - {name: 'stylus', version: '0.49.2'}
+    - {name: 'uglify-js', version: '2.4.13'}
+
+- name: Node binary symlinks
+  file:
+    src: "/usr/bin/{{ item }}"
+    path: "/usr/local/bin/{{ item }}"
+    state: link
+  with_items:
+    - cleancss
+    - stylus

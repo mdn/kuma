@@ -1,0 +1,55 @@
+---
+language: python
+python: "2.7"
+
+env:
+  - SITE=test.yml
+
+before_install:
+  - sudo apt-get update -qq
+
+  # Remove MySQL. Completely and totally.
+  - sudo apt-get remove --purge 'mysql*'
+  - sudo apt-get autoremove
+  - sudo apt-get autoclean
+  - sudo rm -rf /var/lib/mysql
+  - sudo truncate -s 0 /var/log/mysql/error.log
+
+install:
+  # Install Ansible.
+  - pip install ansible
+
+  # Add ansible.cfg to pick up roles path.
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+
+script:
+  # Check the role/playbook's syntax.
+  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+
+  # Run the role/playbook with ansible-playbook.
+  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+
+  # Run the role/playbook again, checking to make sure it's idempotent.
+  - >
+    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Some MySQL debugging (show all the logs).
+  - "sudo ls -lah /var/log"
+  - "sudo cat /var/log/mysql/error.log"
+
+  # Check to make sure we can connect to MySQL via Unix socket.
+  - >
+    mysql -u root -proot -e 'show databases;'
+    | grep -q 'performance_schema'
+    && (echo 'MySQL running normally' && exit 0)
+    || (echo 'MySQL not running' && exit 1)
+
+  # Check to make sure we can connect to MySQL via TCP.
+  - >
+    mysql -u root -proot -h 127.0.0.1 -e 'show databases;'
+    | grep -q 'performance_schema'
+    && (echo 'MySQL running normally' && exit 0)
+    || (echo 'MySQL not running' && exit 1)

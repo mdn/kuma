@@ -1,0 +1,33 @@
+---
+- hosts: all
+  gather_facts: yes
+  sudo: true
+  pre_tasks:
+    - name: Update APT cache
+      apt: update_cache=yes
+    - name: Check if packages need to be autoremoved
+      command: apt-get --dry-run autoremove
+      register: check_autoremove
+      changed_when: False
+    - name: Autoremove unused packages
+      command: apt-get -y autoremove
+      when: "'packages will be REMOVED' in check_autoremove.stdout"
+    - name: Get Elasticsearch GPG key
+      apt_key:
+        id: 46095ACC8548582C1A2699A9D27D666CD88E42B4
+        url: https://packages.elasticsearch.org/GPG-KEY-elasticsearch
+
+  vars_files:
+    - vars/apache.yml
+    - vars/elasticsearch.yml
+    - vars/mysql.yml
+    - vars/rabbitmq.yml
+  roles:
+    - geerlingguy.memcached
+    - geerlingguy.mysql
+    - geerlingguy.apache
+    - Mayeu.RabbitMQ
+    - Stouts.elasticsearch
+    - bobbyrenwick.pip
+    - nodesource.node
+    - kuma

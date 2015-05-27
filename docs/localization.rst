@@ -242,7 +242,6 @@ convert it to a ``unicode`` object::
         # Works:
         unicode(WELCOME) % request.user.username
 
-
 .. _get-localizations:
 
 Getting the Localizations
@@ -272,7 +271,8 @@ templates and PO files for localizers. If you commit changes to SVN without
 updating Verbatim, localizers will have merge head-aches.
 
 1.  Check out the localizations (See `get-localizations`_)
-2.  Run the following in the virtual machine (see :doc:`installation-vagrant <installation-vagrant>`)::
+
+2.  Run the following in the virtual machine (see :doc:`installation`)::
 
         $ python manage.py extract
 
@@ -342,8 +342,8 @@ Adding a new Locale
     `our Travis install script`_::
 
         $ python manage.py update_product_details
-        $ tar -czf product_details_json.tar.gz ../product_details_json/
-        $ tar -czf locale.tar.gz locale/
+        $ tar -czf etc/data/product_details_json.tar.gz ../product_details_json/
+        $ tar -czf etc/data/locale.tar.gz locale/
 
 8.  Commit the changes to `settings.py`, `locale.tar.gz`, and
     `product_details_json.tar.gz`

@@ -33,7 +33,6 @@ Installing
 RabbitMQ should be installed via your favorite package manager. It can be
 installed from source but has a number of Erlang dependencies.
 
-
 Configuring
 -----------
 

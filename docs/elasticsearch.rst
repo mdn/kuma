@@ -18,14 +18,8 @@ search or Google's site search.
 Installing Elasticsearch Search
 ===============================
 
-We currently require **Elasticsearch 1.3.x**. You may be able to install this
-from a package manager like yum, aptitude, or brew.
-
-If not, you can easily `download <http://www.elasticsearch.org/download/>`_ the
-source and compile it. Generally all you'll need to do is::
-
-    $ cd elasticsearch-*
-    $ bin/elasticsearch -f
+We currently require **Elasticsearch 1.3.x** and automatically install it
+as part of the :doc:`Vagrant provisioning <installation>`.
 
 Then run the Kuma search tests::
 
@@ -40,25 +34,6 @@ Having Elasticsearch installed will allow the search tests to run, which may be
 enough. But you want to work on or test the search app, you will probably need
 to actually see search results!
 
-The Easy, Sort of Wrong Way
----------------------------
-
-The easiest way to start Elasticsearch for testing is::
-
-    $ cd path/to/elasticsearch-*
-    $ bin/elasticsearch -f
-
-Then from the Kuma source code path::
-
-    $ ./manage.py reindex
-
-If you need to update the search indexes again::
-
-    $ ./manage.py reindex
-
-While this method is very easy, you will need to reindex after any time you run
-the search tests, as they will overwrite the data files Elasticsearch uses.
-
 The Elaborate, Kinda Proper Way
 -------------------------------
 
@@ -66,9 +41,8 @@ Assuming you're running the full stack with ``foreman start`` (or any other
 way that makes sure the :doc:`Celery <celery>` workers run) there is a better
 way:
 
-- Open the Django admin UI under http://127.0.0.1:8000/admin/search/index/ or
-  https://developer-local.allizom.org/admin/search/index/ if you're using
-  Vagrant.
+- Open the Django admin UI under
+  https://developer-local.allizom.org/admin/search/index/.
 
 - Add a search index by clicking on the "Add index" button in the top right
   corner, safe it by clicking on the same button in the lower right corner to
@@ -102,3 +76,15 @@ used instead.
 
    If you delete any of the search indexes in the admin interface they will be
    deleted on Elasticsearch as well.
+
+The Easy, Sort of Wrong Way
+---------------------------
+
+From the Kuma source code path::
+
+    $ ./manage.py reindex
+
+If you need to update the search indexes run the command again.
+
+While this method is very easy, you will need to reindex after any time you run
+the search tests, as they will overwrite the data files Elasticsearch uses.

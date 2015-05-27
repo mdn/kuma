@@ -1,0 +1,24 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: geerlingguy
+  description: Memcached for Linux
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.4
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+  - name: Ubuntu
+    versions:
+    - precise
+    - trusty
+  - name: Debian
+    versions:
+    - all
+  categories:
+    - web
+    - database

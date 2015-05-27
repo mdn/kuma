@@ -1,0 +1,12 @@
+elasticsearch_apt_java_package: openjdk-7-jre-headless
+elasticsearch_apt_repos: []
+elasticsearch_version: 1.3.7
+elasticsearch_network_host: 0.0.0.0
+
+elasticsearch_node_name: kuma
+elasticsearch_index_number_of_replicas: 0
+elasticsearch_index_number_of_shards: 1
+
+elasticsearch_plugins:
+- name: lukas-vlcek/bigdesk
+- name: mobz/elasticsearch-head

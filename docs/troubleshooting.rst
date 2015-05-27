@@ -7,15 +7,20 @@ Kuma has many components. Even core developers need reminders of how to keep
 them all working together. This doc outlines some problems and potential
 solutions running Kuma.
 
+Kuma "Reset"
+------------
 
-Kuma "Reset" script
--------------------
+We have a script that attempts to fix some of the most common problems with
+Kuma that are described below::
 
-If you're using the vagrant vm, we have a script that attempts to fix some of
-the most common problems with Kuma that are described below.
-
-`kuma-vagrant-reset.sh <https://gist.github.com/openjck/b69445fa3e34e1780377>`_
-
+  pushd .
+  # open https://www.youtube.com/watch?v=ckIMuvumYrg
+  cd /path/to/kuma
+  vagrant halt
+  find . -name "*.pyc" -exec rm -rf {} \; &&\
+  git submodule sync --recursive && git submodule update --init --recursive
+  vagrant up && vagrant provision
+  popd
 
 .. _Running individual processes:
 
@@ -40,18 +45,14 @@ exactly as it is listed in ``Procfile``
 Errors after switching branches
 -------------------------------
 
--  If you are using a vm, you should occasionally re-run the Puppet setup,
-   especially after updating code with major changes. This will ensure that the
-   VM environment stays up to date with configuration changes and installation
-   of additional services.
+-  You should occasionally re-run the VM setup, especially after updating
+   code with major changes. This will ensure that the VM environment stays
+   up to date with configuration changes and installation of additional
+   services.
 
-   -  On the Host::
+   On the Host run::
 
-          vagrant provision
-
-   -  Inside the VM::
-
-          sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
+       vagrant provision
 
 -  If you see ``ImportError:`` errors, you may need to update your git
    submodules and/or clean out your ``*.pyc`` files to make sure python has all
@@ -65,7 +66,7 @@ Errors after switching branches
 
        python manage.py migrate
 
-   Note: If you are using a vm, this is done when you re-run the Puppet setup.
+   Note: If you are using a VM, this is done when you re-run the Puppet setup.
 
 
 Errors with KumaScript
@@ -75,16 +76,15 @@ KumaScript is a very intensive process. If you are only working on python code
 or front-end code that doesn't affect live site content, you can usually avoid
 running it. (See `Running individual processes`_.)
 
--  If you see lots of KumaScript timeout errors and you're running a vm, try
-   increasing the memory allocated to the vm. If you're using the vagrant vm::
+-  If you see lots of KumaScript timeout errors and you're running a VM, try
+   increasing the memory allocated to the VM.
 
-       memory_size: 4096
+   Update the ``.env`` file in the ``/home/vagrant/src`` folder::
 
-   in the ``vagrantconfig.yaml`` file.
+       MEMORY_SIZE=4096
 
 -  If you see ``Kumascript service failed unexpectedly: HTTPConnectionPool``,
    make sure you enabled :ref:`KumaScript <enable KumaScript>`.
-
 
 Errors with styles
 ------------------
@@ -103,7 +103,6 @@ Errors with styles
    404s on ``.css``, generate the compressed assets for these features::
 
        python manage.py compress_assets
-
 
 .. _more-help:
 

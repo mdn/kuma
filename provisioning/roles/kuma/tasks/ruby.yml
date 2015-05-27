@@ -1,0 +1,6 @@
+---
+- name: Install Foreman
+  gem: name="{{ item }}" state=latest user_install=no
+  with_items:
+    - foreman
+    - posix-spawn

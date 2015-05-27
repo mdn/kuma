@@ -2,14 +2,8 @@ import datetime
 import HTMLParser
 import os
 import urllib
-import urlparse
 import hashlib
 import bitly_api
-
-from django.http import QueryDict
-from django.utils.encoding import smart_str
-from django.utils.http import urlencode as urlencode_util
-from django.utils.tzinfo import LocalTimezone
 
 from babel import localedata
 from babel.dates import format_date, format_time, format_datetime
@@ -26,9 +20,10 @@ from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
-from django.utils.encoding import force_text
+from django.utils.encoding import smart_str, force_text
 from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
+from django.utils.tzinfo import LocalTimezone
 
 from soapbox.models import Message
 from statici18n.utils import get_filename

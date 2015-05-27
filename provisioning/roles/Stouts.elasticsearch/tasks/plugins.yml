@@ -1,0 +1,18 @@
+---
+
+- name: elasticsearch-plugins | Install plugins
+  command: "{{elasticsearch_home}}/bin/plugin --install {{item.name}} {%if item.url is defined %} --url {{item.url}}{% endif %} creates={{elasticsearch_plugindir}}/{{item.dir|default(item.name.split('/')[-1])}}"
+  when: item.remove is not defined or not item.remove
+  with_items: elasticsearch_plugins
+  ignore_errors: yes
+  notify: elasticsearch restart
+
+- name: elasticsearch-plugins | Remove plugins
+  command: "{{elasticsearch_home}}/bin/plugin --remove {{item.name}}"
+  when: item.remove is defined and item.remove
+  with_items: elasticsearch_plugins
+  ignore_errors: yes
+  notify: elasticsearch restart
+
+- name: elasticsearch-plugins | Chown plugins
+  file: path={{elasticsearch_plugindir}} state=directory owner={{elasticsearch_user}} group={{elasticsearch_group}} recurse=yes

@@ -1,58 +1,82 @@
-require "yaml"
+Vagrant.require_version ">= 1.7.2"
 
-# Load up our vagrant config files -- vagrantconfig.yaml first
-_config = YAML.load(File.open(File.join(File.dirname(__FILE__),
-                    "vagrantconfig.yaml"), File::RDONLY).read)
-
-# Local-specific/not-git-managed config -- vagrantconfig_local.yaml
-begin
-  _config.merge!(YAML.load(File.open(File.join(File.dirname(__FILE__),
-                 "vagrantconfig_local.yaml"), File::RDONLY).read))
-rescue Errno::ENOENT # No vagrantconfig_local.yaml found -- that's OK; just
-                     # use the defaults.
+plugins = [
+    'vagrant-hostsupdater',
+    'vagrant-env',
+    'vagrant-vbguest',
+    'vagrant-cachier',
+]
+plugins.each do |plugin|
+    if !Vagrant.has_plugin?(plugin)
+        system("vagrant plugin install #{plugin}")
+    end
 end
 
-CONF = _config
+if Vagrant::Util::Platform.windows?
+  NFS = false
+else
+  NFS = (ENV['VAGRANT_NFS'] || 'true') == 'true'
+end
 
-Vagrant.configure("2") do |config|
-    config.vm.box = CONF['box']
-    config.vm.network :private_network, :ip => CONF['ip_address']
-    config.package.name = CONF['package_name']
-    config.vm.synced_folder ".", "/vagrant", :disabled => true
+MEMORY_SIZE = (ENV['VAGRANT_MEMORY_SIZE'] || '2048').to_i
+CPU_CORES = (ENV['VAGRANT_CPU_CORES'] || '2').to_i
+IP = ENV['VAGRANT_IP'] || '192.168.10.55'
+GUI = (ENV['VAGRANT_GUI'] || 'false') == 'true'
+ANSIBLE_VERBOSE = (ENV['VAGRANT_ANSIBLE_VERBOSE'] || 'false') == 'true'
 
-    # nfs needs to be explicitly enabled to run.
-    if CONF['nfs'] == false or RUBY_PLATFORM =~ /mswin(32|64)/
-        config.vm.synced_folder ".", CONF['mount_point']
-    else
-        config.vm.synced_folder ".", CONF['mount_point'], :nfs => true
+Vagrant.configure('2') do |config|
+    config.package.name = 'kuma-ubuntu.box'
+    config.vm.box = 'ubuntu/trusty64'
+    config.vm.define 'developer-local'
+    config.vm.network :private_network, ip: IP
+    config.vm.hostname = 'developer-local.allizom.org'
+    config.hostsupdater.aliases = ['mdn-local.mozillademos.org']
+    config.ssh.forward_agent = true
+    config.env.enable
+
+    config.cache.scope = :box
+    config.cache.auto_detect = false
+    config.cache.enable :apt
+    config.cache.enable :apt_lists
+    config.cache.enable :gem
+    config.cache.enable :generic, {
+      "pip" => { cache_dir: "/root/.cache/pip" },
+      "npm" => { cache_dir: "/root/.npm" },
+      "product_details" => { cache_dir: "/home/vagrant/product_details_json" },
+    }
+    if NFS
+        config.cache.synced_folder_opts = {
+            type: :nfs,
+            # The nolock option can be useful for an NFSv3 client that wants to avoid the
+            # NLM sideband protocol. Without this option, apt-get might hang if it tries
+            # to lock files needed for /var/cache/* operations. All of this can be avoided
+            # by using NFSv4 everywhere. Please note that the tcp option is not the default.
+            mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+        }
     end
 
+    # nfs needs to be explicitly enabled to run.
+    config.vm.synced_folder '.', '/vagrant', :disabled => true
+    config.vm.synced_folder '.', '/home/vagrant/src', :nfs => NFS
+
     config.vm.provider :virtualbox do |vb, override|
-        vb.customize ["modifyvm", :id, "--memory", CONF['memory_size']]
         vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu']
-        vb.customize ['modifyvm', :id, '--cpus', CONF['number_cpus']]
-        vb.customize ["modifyvm", :id, "--ioapic", "on"]
+        vb.customize ['modifyvm', :id, '--ioapic', 'on']
+        vb.customize ['modifyvm', :id, '--memory', MEMORY_SIZE]
+        vb.customize ['modifyvm', :id, '--cpus', CPU_CORES]
 
         # This thing can be a little hungry for memory
         # uncomment to enable VM GUI console, mainly for troubleshooting
-        if CONF['gui'] == true
+        if GUI
             vb.boot_mode = :gui
         end
     end
 
-    config.vm.provision :shell do |shell|
-      shell.inline = "wget -O /tmp/puppetlabs-release-precise.deb https://apt.puppetlabs.com/puppetlabs-release-precise.deb;
-                      dpkg -i /tmp/puppetlabs-release-precise.deb;
-                      apt-get update;
-                      apt-get --assume-yes install facter=1.7.6-1puppetlabs1 puppet=2.7.26-1puppetlabs1 puppet-common=2.7.26-1puppetlabs1;
-                      mkdir -p /etc/puppet/modules;
-                      puppet module install -f puppetlabs-stdlib;
-                      puppet module install -f --version 1.8.0 puppetlabs-apt;
-                      puppet module install -f --version 0.4.0 elasticsearch-elasticsearch"
-    end
-
-    config.vm.provision :puppet do |puppet|
-        puppet.manifests_path = "puppet/manifests"
-        puppet.manifest_file = "dev-vagrant.pp"
+    config.vm.provision :ansible do |ansible|
+        ansible.playbook = 'provisioning/playbook.yml'
+        ansible.sudo = true
+        if ANSIBLE_VERBOSE
+          ansible.verbose = 'vvvv'
+        end
     end
 end

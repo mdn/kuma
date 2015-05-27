@@ -1,0 +1,30 @@
+---
+apache_enablerepo: ""
+
+apache_listen_port: 80
+apache_listen_port_ssl: 443
+
+apache_create_vhosts: true
+apache_vhosts_filename: "vhosts.conf"
+
+apache_vhosts:
+  # Additional properties: 'serveradmin, serveralias, extra_parameters'.
+  - {servername: "local.dev", documentroot: "/var/www/html"}
+
+apache_vhosts_ssl: []
+  # Additional properties: 'serveradmin, extra_parameters'.
+  # - {
+  #   servername: "local.dev",
+  #   documentroot: "/var/www/html",
+  #   certificate_file: "/path/to/certificate.crt",
+  #   certificate_key_file: "/path/to/certificate.key",
+  #   # Optional.
+  #   certificate_chain_file: "/path/to/certificate_chain.crt"
+  # }
+
+apache_ssl_protocol: "All -SSLv2 -SSLv3"
+apache_ssl_cipher_suite: "AES256+EECDH:AES256+EDH"
+
+apache_mods_enabled:
+  - rewrite.load
+  - ssl.load

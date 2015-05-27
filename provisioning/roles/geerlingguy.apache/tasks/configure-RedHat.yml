@@ -1,0 +1,19 @@
+---
+- name: Configure Apache.
+  lineinfile:
+    dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items: apache_ports_configuration_items
+  notify: restart apache
+
+- name: Add apache vhosts configuration.
+  template:
+    src: "vhosts-{{ apache_vhosts_version }}.conf.j2"
+    dest: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  when: apache_create_vhosts

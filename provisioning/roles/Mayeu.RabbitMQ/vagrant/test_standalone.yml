@@ -1,0 +1,58 @@
+---
+- shell: netstat -an | grep 0.0.0.0:5672.*LISTEN
+  register: test_result
+  ignore_errors: True
+- name: rabbitmq should not be listenning to the unencrypted port
+  assert:
+    that:
+      - test_result|failed
+
+- shell: netstat -an | grep 0.0.0.0:5671.*LISTEN
+  register: test_result
+- name: rabbitmq should be listenning to the ssl port
+  assert:
+    that:
+      - test_result|success
+
+- shell: rabbitmqctl list_vhosts | grep sensu
+  register: test_result
+- name: ensure the sensu vhost was added
+  assert:
+    that:
+      - "{{ test_result.rc }} == 0"
+
+- shell: rabbitmqctl list_users | grep sensu
+  register: test_result
+- name: ensure the sensu user was added
+  assert:
+    that:
+      - "{{ test_result.rc }} == 0"
+
+- shell: rabbitmqctl list_permissions -p sensu | grep ^sensu
+  register: test_result
+- name: ensure the sensu user was added to the sensu vhost
+  assert:
+    that:
+      - "{{ test_result.rc }} == 0"
+
+- shell: rabbitmq-plugins list | grep 'rabbitmq_federation ' | grep '^\[E\]' | wc -l
+  register: test_result
+- name: ensure federation plugin was installed
+  assert:
+    that:
+      - "{{ test_result.stdout }} == 1"
+  when: rabbitmq_federation == true
+
+- shell: rabbitmqctl list_parameters -p sensu | grep ^federation-upstream | grep test | wc -l
+  register: test_result
+- name: ensure federation-upstream parameter set
+  assert:
+    that:
+      - "{{ test_result.stdout }} == 1"
+
+- shell: rabbitmqctl list_policies -p sensu | grep ^sensu | grep '{"federation-upstream-set":"all"}' | wc -l
+  register: test_result
+- name: ensure federation policy set
+  assert:
+    that:
+      - "{{ test_result.stdout }} == 1"

@@ -2,32 +2,15 @@
 Development
 ===========
 
-We strongly suggest using a :doc:`Vagrant-managed VM <installation-vagrant>` if you can.
-Or, you can use the :doc:`manual installation steps <installation>`.
+We only support developing MDN with the :doc:`Vagrant-managed VM <installation>`.
 
-Running Kuma in Vagrant VM
-==========================
+Running Kuma
+============
 
-If you are using a :doc:`Vagrant-managed VM <installation-vagrant>`, you can start all
-Kuma servers and services with::
+You can start all Kuma servers and services with::
 
     vagrant ssh
     foreman start
-
-Running Kuma manually
-=====================
-
-If you are using :doc:`manual installation <installation>`, you can run the django server with::
-
-    ./manage.py runserver
-
-and the kumascript service with::
-
-    node kumascript/run.js
-
-Note: Before running kumascript, you need to install the node.js ``fibers`` module
-by running ``npm install fibers``.
-
 
 Log in
 ======
@@ -38,17 +21,21 @@ You can log into MDN using Persona or GitHub. For GitHub, you must first enable
 Set up permissions
 ==================
 
-Some features are only available to privileged users. To manage permissions use the
-Auth -> Users section of the django admin interface.
+Some features are only available to privileged users. To manage permissions
+use the Auth -> Users section of the Django admin interface.
 
 Compiling Stylus Files
 ======================
 
-If you're updating the Stylus CSS files, you'll need to compile them before you can see your updates within the browser.  To compile stylus files, run the following from the command line::
+If you're updating the Stylus CSS files, you'll need to compile them before
+you can see your updates within the browser. To compile stylus files,
+run the following from the command line::
 
-	./scripts/compile-stylesheets
+    ./scripts/compile-stylesheets
 
-The relevant CSS files will be generated and placed within the `media/css` directory. You can add a ``-w`` flag to that call to compile stylesheets upon save.
+The relevant CSS files will be generated and placed within the `media/css`
+directory. You can add a ``-w`` flag to that call to compile stylesheets
+upon save.
 
 Hacking on bleeding edge features
 =================================
@@ -62,6 +49,21 @@ use is disabled by default, to enable: open the django admin interface and in th
 Constance section change the value of ``KUMASCRIPT_TIMEOUT`` parameter to a positive
 value (such as ``2.0`` seconds).
 
+Migrations
+==========
+
+Basically all apps are migrated using Django's migration system.
+
+See the Django documentation for the
+`migration workflow <https://docs.djangoproject.com/en/1.8/topics/migrations/#workflow>`_.
+
+How to run the migrations
+-------------------------
+
+Run the migrations via the Django management command::
+
+    python manage.py migrate
+
 Running the Tests
 =================
 
@@ -70,20 +72,10 @@ suite.
 
 Django tests
 ------------
-If you're not using the vagrant VM, you'll need to add an extra grant in MySQL for
-your database user::
-
-    GRANT ALL ON test_NAME.* TO USER@localhost;
-
-Where ``NAME`` and ``USER`` are the same as the values in your database
-configuration.
-
-The test suite will create and use this database, to keep any data in your
-development database safe from tests.
 
 Running the test suite is easy::
 
-    ./manage.py test -s --noinput --logging-clear-handlers
+    ./manage.py test
 
 Note that this will try (and fail) to run tests that depend on apps disabled
 via ``INSTALLED_APPS``. You should run a subset of tests::

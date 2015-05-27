@@ -1,0 +1,10 @@
+---
+
+- name: elasticsearch restart
+  service: name=elasticsearch state=restarted
+
+- name: nginx reload
+  service: name=nginx state=reloaded
+
+- name: apache restart
+  service: name=apache2 state=restarted
