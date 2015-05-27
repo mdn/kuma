@@ -31,7 +31,7 @@
         var fontsLoaded = {};
 
         // timout for all observers
-        var ffoTimeout = 3000;
+        var ffoTimeout = 2000;
 
         // starts observers for all fonts in fonts array
         function ffoLoad() {
