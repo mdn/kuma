@@ -1,9 +1,18 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns(
-    'kuma.authkeys.views',
-    url(r'^$', 'list', name='authkeys.list'),
-    url(r'^/new$', 'new', name='authkeys.new'),
-    url(r'^/(?P<pk>\d+)/history$', 'history', name='authkeys.history'),
-    url(r'^/(?P<pk>\d+)/delete$', 'delete', name='authkeys.delete'),
-)
+from . import views
+
+urlpatterns = [
+    url(r'^$',
+        views.list,
+        name='authkeys.list'),
+    url(r'^/new$',
+        views.new,
+        name='authkeys.new'),
+    url(r'^/(?P<pk>\d+)/history$',
+        views.history,
+        name='authkeys.history'),
+    url(r'^/(?P<pk>\d+)/delete$',
+        views.delete,
+        name='authkeys.delete'),
+]
