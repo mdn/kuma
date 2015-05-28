@@ -13,6 +13,7 @@
     dest: "/home/vagrant/src/{{ item }}"
   with_items:
     - settings_local.py
+    - settings_test.py
     - kumascript_settings_local.json
 
 - name: Bash profile
@@ -38,15 +39,6 @@
     group: vagrant
     state: directory
     mode: 0777
-
-- name: Ensure upload symlink
-  file:
-    src: "/home/vagrant/src/media/uploads"
-    path: "/home/vagrant/uploads"
-    state: link
-    owner: vagrant
-    group: vagrant
-    force: yes
 
 - name: htaccess links
   file:
