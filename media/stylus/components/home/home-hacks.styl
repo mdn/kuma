@@ -1,0 +1,103 @@
+/*
+hacks blog row, wrapper, entries, and get involved teaser
+====================================================================== */
+
+$home-involved-background-y = 50px;
+
+.home-hacks {
+    padding-bottom: $first-content-top-padding;
+    background: #fff;
+
+    li {
+        padding-top: $grid-spacing;
+        border-bottom: 1px solid #ececec;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    h2.entry-title {
+        letter-spacing: 0;
+        line-height: normal;
+        margin-bottom: 0;
+        set-font-size($base-font-size);
+
+        a {
+            text-decoration: underline;
+        }
+    }
+}
+
+.column-hacks {
+    @extend $column-main;
+}
+
+.column-involved {
+    @extend $column-strip;
+}
+
+.home-involved-card {
+    background: url($media-url-dir + 'home-globe.jpg') -90px $home-involved-background-y no-repeat $light-background-color;
+
+    h2 {
+        set-larger-font-size();
+        padding-bottom: ($grid-spacing / 2);
+        border-bottom: 1px solid #e0e2e4;
+        margin-bottom: 110px;
+        bidi-style(margin-right, -($grid-spacing), margin-left, 0);
+        font-weight: bold;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    a {
+        color: $blue-background-text-color;
+        text-decoration: none;
+        padding: $grid-spacing;
+        display: block;
+    }
+
+    .numbers {
+        padding-bottom: 40px;
+        line-height: 40px;
+
+        .row1, .row2, .row3 {
+            display: block;
+        }
+    }
+
+    .number {
+        set-font-size(30px);
+        font-weight: bold;
+    }
+
+    .button {
+        background-color: #48ade4 !important;
+        font-size: $smaller-font-size !important;
+        color: $blue-background-text-color !important;
+        font-weight: bold;
+    }
+}
+
+@media $media-query-mobile {
+
+    .column-hacks,
+    .column-involved {
+        float: none;
+        width: auto;
+    }
+
+    .column-involved {
+        margin-top: ($grid-spacing * 2);
+    }
+
+    .home-involved-card {
+        background-position: center $home-involved-background-y;
+    }
+}
+

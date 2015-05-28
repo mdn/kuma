@@ -29,9 +29,15 @@ main {
 }
 
 footer {
-    set-smaller-font-size();
+
     background: #fff;
     padding:  $first-content-top-padding 0 0 0;
+
+    set-smaller-font-size();
+    {$selector-heading-font-fallback} {
+        letter-spacing: -0.01em;
+        word-spacing: 0;
+    }
 
     p, label {
         font-style: italic;

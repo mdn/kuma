@@ -7,7 +7,7 @@
 
 /* Settings which apply to _all_ zone pages */
 .zone {
-    create-gradient-background(#00539f, true);
+    create-gradient-background($homepage-background-color, true);
     use-white-logo();
     remove-main-spacing();
     override-main-nav-color($blue-background-text-color);
@@ -140,8 +140,12 @@
         heading-2();
 
         a {
-            font-family: $heading-font-family;
             color: $blue-background-text-color;
+
+            font-family: $heading-font-family;
+            {$selector-heading-font-fallback} {
+                font-family: $hdeading-font-family-fallback;
+            }
         }
     }
 

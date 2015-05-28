@@ -11,21 +11,33 @@ Headings
 ====================================================================== */
 
 h1, h2, h3, h4 {
-    font-weight: $light-font-weight;
     margin-bottom: ($content-block-margin / 2);
+
     font-family: $heading-font-family;
+    font-weight: $light-font-weight;
+    line-height: 1.5;
+    {$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+        letter-spacing: -0.04em;
+        line-height: 1.515;
+        word-spacing: 0.01em;
+    }
 }
 
 h2, h3 {
     font-family: $site-font-family;
+    {$selector-site-font-fallback} {
+        font-family: $site-font-family-fallback;
+        line-height: 1.515;
+    }
 }
 
 h2, h3, h4 {
     line-height: 100%;
-}
 
-h3, h4 {
-    font-weight: 200;
+    {$selector-site-font-fallback} {
+        line-height: 1;
+    }
 }
 
 h1 {
@@ -35,17 +47,32 @@ h1 {
 
 h2 {
     heading-2();
+
     font-weight: 700;
+    {$selector-site-font-fallback} {
+        font-weight: normal;
+        letter-spacing: 0;
+        word-spacing: -0.02em;
+    }
 }
 
 h3 {
     set-font-size(24px);
     letter-spacing: -0.021em;
+    {$selector-site-font-fallback} {
+        line-height: 1.01;
+        letter-spacing: 0.002em;
+        word-spacing: 0.032em;
+    }
 }
 
 h4 {
     set-font-size(18px);
     letter-spacing: -0.014em;
+    {$selector-site-font-fallback} {
+        letter-spacing: -0.044em;
+        word-spacing: 0.22em;
+    }
 }
 
 /*
@@ -76,6 +103,15 @@ a {
     }
 }
 
+/*
+====================================================================== */
+
+sup {
+    /* stops sup from messing with line height */
+    position: relative;
+    top: -0.15em;
+    vertical-align: top;
+}
 
 /*
 ====================================================================== */

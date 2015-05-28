@@ -1,7 +1,11 @@
 /* contributors block at the bottom of the article */
 .contributors {
-    set-smaller-font-size();
     color: #777;
+
+    set-smaller-font-size();
+    {$selector-heading-font-fallback} {
+        letter-spacing: -0.002em;
+    }
 
     {$selector-icon} {
         bidi-style(margin-left, 0, margin-right, $icon-margin);

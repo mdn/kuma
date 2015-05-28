@@ -239,6 +239,27 @@ def get_soapbox_messages(url):
     return Message.objects.match(path)
 
 
+@register.function
+def get_webfont_attributes(request):
+    """Return data attributes based on assumptions about if user has them cached"""
+    assume_loaded = 'true'
+    if request.META.get('HTTP_PRAGMA') == 'no-cache':
+        assume_loaded = 'false'
+    elif request.META.get('HTTP_CACHE_CONTROL') == 'no-cache':
+        assume_loaded = 'false'
+    elif request.COOKIES.get('ffo', 'false') == 'true':
+        assume_loaded = 'true'
+    else:
+        assume_loaded = 'false'
+
+    font_names = ['opensanslight', 'opensans']
+    font_attributes = ''
+    for font_name in font_names:
+        font_attributes += ' data-ffo-' + font_name + '=' + assume_loaded + ''
+
+    return font_attributes
+
+
 @register.inclusion_tag('core/elements/soapbox_messages.html')
 def soapbox_messages(soapbox_messages):
     return {'soapbox_messages': soapbox_messages}

@@ -17,6 +17,9 @@
 
         a, button, input[type='submit'], input[type='button'] {
             set-smaller-font-size();
+            {$selector-heading-font-fallback} {
+                letter-spacing: -0.035em;
+            }
         }
 
         .transparent {

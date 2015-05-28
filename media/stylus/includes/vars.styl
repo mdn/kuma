@@ -17,6 +17,7 @@ $menu-link-color = $text-color;
 $blue-background-text-color = #fff;
 $header-background-color = #eaeff2;
 $light-background-color = #f4f7f8;
+$homepage-background-color = #00539f;
 $code-block-background-color = #fafbfc;
 $code-block-background-alt-color = #dde4e9;
 $code-block-border-color = #558abb;
@@ -42,7 +43,9 @@ $text-light = #fff;
 /* typography */
 $light-font-weight = 200;
 $site-font-family = 'Open Sans', Arial, sans-serif;
+$site-font-family-fallback = Arial, sans-serif;
 $heading-font-family = 'Open Sans Light', 'Helvetica', Arial, sans-serif;
+$heading-font-family-fallback = 'Helvetica', Arial, sans-serif;
 
 /* sizes */
 $larger-font-size = 20px;
@@ -84,8 +87,13 @@ $list-item-spacing = 8px;
 $content-block-margin = $gutter-width;
 $icon-margin = 10px;
 
+/* forms */
+$input-padding = 6px 8px;
+
 /* selectors */
 $selector-icon = 'i[class^="icon-"]';
+$selector-site-font-fallback = 'html[data-ffo-opensans="false"]:not(.no-js) &';
+$selector-heading-font-fallback = 'html[data-ffo-opensanslight="false"]:not(.no-js) &';
 
 /* paths */
 $media-url-dir = '/media/img/';

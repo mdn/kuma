@@ -4,13 +4,16 @@ define([
     'base/lib/config',
     'base/lib/assert',
     'base/lib/poll',
-    'base/lib/POM'
-], function(registerSuite, assert, config, libAssert, poll, POM) {
+    'base/lib/POM',
+    'intern/dojo/node!leadfoot/keys'
+], function(registerSuite, assert, config, libAssert, poll, POM, keys) {
 
     // Create this page's specific POM
     var Page = new POM({
         // Any functions used multiple times or important properties of the page
     });
+
+    var searchBoxId = 'main-q';
 
     registerSuite({
 
@@ -48,7 +51,6 @@ define([
             // Possible ToDo:  Move click() call after the transitionend event listener
 
             var remote = this.remote;
-            var searchBoxId = 'main-q';
             var homeSearchBoxId = 'home-q';
             var originalWidth;
 
@@ -93,7 +95,33 @@ define([
 
         },
 
-        'Tabzilla loads properly': libAssert.elementExistsAndDisplayed('#tabzilla')
+        'Pressing [ENTER] submits the header search box': function() {
+
+            return this.remote
+                            .findById(searchBoxId)
+                            .click()
+                            .type(['css', keys.RETURN])
+                            .getCurrentUrl()
+                            .then(function(url) {
+                                assert.isTrue(url.indexOf('/search') != -1);
+                            });
+        },
+
+        'Tabzilla loads properly': function() {
+
+            return this.remote.executeAsync(function(done) {
+                            var interval = setInterval(function() {
+                                if(document.getElementById('tabzilla-panel')) {
+                                    clearInterval(interval);
+                                    done();
+                                }
+                            }, 200);
+                        }).
+                        then(function() {
+                            return libAssert.elementExistsAndDisplayed('#tabzilla');
+                        });
+
+        }
 
     });
 

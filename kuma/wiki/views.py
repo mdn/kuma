@@ -59,7 +59,7 @@ from . import kumascript
 from .constants import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
                         SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS_DEFAULT,
                         DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
-                        REDIRECT_CONTENT)
+                        REDIRECT_CONTENT, ALLOWED_TAGS)
 from .decorators import (check_readonly, process_document_path,
                          allow_CORS_GET, prevent_indexing)
 from .events import EditDocumentEvent
@@ -1319,7 +1319,9 @@ def ckeditor_config(request):
         code = default_config[0].code
     else:
         code = ''
-    context = {'editor_config': code, 'redirect_pattern': REDIRECT_CONTENT}
+
+    context = {'editor_config': code, 'redirect_pattern': REDIRECT_CONTENT,
+                        'allowed_tags': ' '.join(ALLOWED_TAGS)}
     return render(request, 'wiki/ckeditor_config.js', context,
                   content_type="application/x-javascript")
 

@@ -32,8 +32,7 @@ define([
         'jQuery',
         'mdn',
         'waffle',
-        'gettext',
-        'Tabzilla'
+        'gettext'
     ];
 
     requiredObjects.forEach(function(property) {

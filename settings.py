@@ -100,6 +100,7 @@ MDN_LANGUAGES = (
     'af',
     'ar',
     'az',
+    'bm',
     'bn-BD',
     'bn-IN',
     'cs',
@@ -128,16 +129,19 @@ MDN_LANGUAGES = (
     'ln',
     'ml',
     'ms',
+    'my',
     'nl',
     'pl',
     'pt-BR',
     'pt-PT',
     'ro',
     'ru',
+    'son',
     'sq',
     'sw',
     'ta',
     'th',
+    'tl',
     'tr',
     'vi',
     'wo',
@@ -419,6 +423,7 @@ MIDDLEWARE_CLASSES = (
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
+    'waffle.middleware.WaffleMiddleware',
 )
 
 # Auth
@@ -610,6 +615,9 @@ MINIFY_BUNDLES = {
         'devderby': (
             'css/devderby.css',
         ),
+        'gaia': (
+            'css/gaia.css',
+        ),
         'home': (
             'css/home.css',
             'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
@@ -693,6 +701,7 @@ MINIFY_BUNDLES = {
             'js/main.js',
             'js/auth.js',
             'js/social.js',
+            'js/fonts.js',
         ),
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
@@ -757,6 +766,9 @@ MINIFY_BUNDLES = {
         ),
         'fellowship': (
             'js/fellowship.js',
+        ),
+        'fontfaceobserver': (
+            'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
         ),
     },
 }

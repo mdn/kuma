@@ -54,9 +54,9 @@
       // MDN's plugins.
       'mdn-attachment,mdn-format,mdn-sticky-toolbar,mdn-image-attachment,mdn-link-customization,mdn-link-launch,' +
       'mdn-redirect,mdn-sample-finder,mdn-sampler,mdn-syntaxhighlighter,mdn-system-integration,mdn-table-customization,' +
-      'mdn-toggle-block,mdn-wrapstyle,' +
+      'mdn-toggle-block,mdn-wrapstyle,mdn-youtube,' +
       // Other plugins.
-      'descriptionlist,tablesort,texzilla,youtube';
+      'descriptionlist,tablesort,texzilla';
 
     config.removeButtons = 'Cut,Copy,PasteFromWord,Language';
     config.toolbarGroups = [
@@ -78,7 +78,16 @@
 
     // Disable the Advanced Content Filter because too many pages
     // use unlimited HTML.
-    config.allowedContent = true;
+    config.allowedContent = {
+        $1: {
+            // Use the ability to specify elements as an object.
+            elements: '{{ allowed_tags }}',
+            attributes: true,
+            styles: true,
+            classes: true
+        }
+    };
+    config.disallowedContent = 'iframe; *[on*]';
 
     // Don't use HTML entities in the output except basic ones (config.basicEntities).
     config.entities = false;
@@ -106,17 +115,17 @@
         { name: 'None', element: 'p' },
         { name: 'Note box', element: 'div', attributes: { 'class': 'note' }, type: 'wrap' },
         { name: 'Warning box', element: 'div', attributes: { 'class': 'warning' }, type: 'wrap' },
-        { name: 'Callout box', element: 'div', attributes: { 'class': 'geckoVersionNote' }, type: 'wrap' },
         { name: 'Two columns', element: 'div', attributes: { 'class': 'twocolumns' }, type: 'wrap' },
         { name: 'Three columns', element: 'div', attributes: { 'class': 'threecolumns' }, type: 'wrap' },
         { name: 'Article Summary', element: 'p', attributes: { 'class': 'summary' } },
         { name: 'Syntax Box', element: 'div', attributes: { 'class': 'syntaxbox' } },
-        { name: 'Right Sidebar', element: 'div', attributes: { 'class': 'standardSidebar' } },
         { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' } }
       ]);
     }
 
     config.keystrokes = [
+      // CTRL+0
+      [ CKEDITOR.CTRL + 48, 'removeFormat' ],
       // CTRL+2
       [ CKEDITOR.CTRL + 50, 'mdn-format-h2' ],
       // CTRL+3
@@ -131,6 +140,8 @@
       [ CKEDITOR.CTRL + 80, 'mdn-format-pre' ],
       // CTRL+K
       [ CKEDITOR.CTRL + 75, 'link' ],
+      // CTRL+SHIFT+K
+      [ CKEDITOR.CTRL + CKEDITOR.SHIFT + 75, 'unlink' ],
       // CTRL+SHIFT+L
       [ CKEDITOR.CTRL + CKEDITOR.SHIFT + 76, 'mdn-toggle-block' ],
       // CTRL+S

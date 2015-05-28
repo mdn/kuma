@@ -142,7 +142,7 @@ CKEDITOR.plugins.add('scayt', {
 				editor.addMenuGroup('scayt_' + items_order[pos], pos - 10);
 			}
 		}
-		
+
 		editor.addCommand( 'scaytToggle', {
 			exec: function(editor) {
 				var scaytInstance = editor.scayt;
@@ -170,7 +170,7 @@ CKEDITOR.plugins.add('scayt', {
 				editor.openDialog(self.dialogName);
 			}
 		} );
-		
+
 		editor.addCommand( 'scaytOptions', {
 			exec: function(editor) {
 				var scaytInstance = editor.scayt;
@@ -263,16 +263,12 @@ CKEDITOR.plugins.add('scayt', {
 			inline_mode = (editor.elementMode == CKEDITOR.ELEMENT_MODE_INLINE);
 
 		var scaytDestroy = function() {
-
-			if (editor.scayt) {
-				plugin.destroy(editor);
-			}
+			plugin.destroy(editor);
 		};
 
 		var contentDomReady = function() {
-
 			// The event is fired when editable iframe node was reinited so we should restart our service
-			if (plugin.state[editor.name] && !editor.readOnly) {
+			if (plugin.state[editor.name] && !editor.readOnly && !editor.scayt) {
 				plugin.createScayt(editor);
 			}
 		};
@@ -282,7 +278,7 @@ CKEDITOR.plugins.add('scayt', {
 
 			editable.attachListener( editable, 'focus', function( evt ) {
 				if( CKEDITOR.plugins.scayt && !editor.scayt ) {
-					contentDomReady();
+					setTimeout(contentDomReady, 0); // we need small timeout in order to correctly set initial 'focused' option value in SCAYT core
 				}
 
 				var pluginStatus = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state[editor.name] && editor.scayt,
@@ -294,19 +290,22 @@ CKEDITOR.plugins.add('scayt', {
 
 					for(var i = 0; i < ranges.length; i++) {
 						range = ranges[i];
-						textLength = range.startContainer.getText().length;
-						if(textLength < range.startOffset || textLength < range.endOffset) {
-							editor.unlockSelection(false);
+						// we need to check type of node value in order to avoid error in IE when accessing 'nodeValue' property
+						if(typeof range.startContainer.$.nodeValue === 'string') {
+							textLength = range.startContainer.getText().length;
+							if(textLength < range.startOffset || textLength < range.endOffset) {
+								editor.unlockSelection(false);
+							}
 						}
 					}
 				}
 			}, this, null, -10 );	// priority "-10" is set to call SCAYT CKEDITOR.editor#unlockSelection before CKEDITOR.editor#unlockSelection call
 		};
 
-		var contentDomtHandler = function() {
+		var contentDomHandler = function() {
 			if(inline_mode) {
-				editor.on( 'blur', scaytDestroy);
-				editor.on( 'focus', contentDomReady);
+				editor.on('blur', scaytDestroy);
+				editor.on('focus', contentDomReady);
 
 				// We need to check if editor has focus(created) right now.
 				// If editor is active - make attempt to create scayt
@@ -321,7 +320,7 @@ CKEDITOR.plugins.add('scayt', {
 			addMarkupStateHandlers();
 		};
 
-		editor.on('contentDom', contentDomtHandler);
+		editor.on('contentDom', contentDomHandler);
 
 		editor.on('beforeCommandExec', function(ev) {
 			var scaytInstance;
@@ -408,8 +407,8 @@ CKEDITOR.plugins.add('scayt', {
 			scaytDestroy();
 
 			// in inline mode SetData does not fire contentDom event
-			if(editor.elementMode == CKEDITOR.ELEMENT_MODE_INLINE) {
-				contentDomtHandler();
+			if(editor.elementMode == CKEDITOR.ELEMENT_MODE_INLINE || editor.plugins.divarea) {
+				contentDomHandler();
 			}
 		}, this, null, 50);
 
@@ -1019,14 +1018,26 @@ CKEDITOR.plugins.scayt = {
 		editor.fire('scaytButtonState', CKEDITOR.TRISTATE_OFF);
 	},
 	loadScaytLibrary: function(editor, callback) {
-		var self = this;
+		var self = this,
+			date,
+			timestamp,
+			scaytUrl;
 
 		if(typeof window.SCAYT === 'undefined' || typeof window.SCAYT.CKSCAYT !== 'function') {
+			// no need to process load requests from same editor as it can cause bugs with
+			// loading ckscayt app due to subsequent calls of some events
+			if(this.loadingHelper[editor.name]) return;
+
 			// add onLoad callbacks for editors while SCAYT is loading
 			this.loadingHelper[editor.name] = callback;
 			this.loadingHelper.loadOrder.push(editor.name);
 
-			CKEDITOR.scriptLoader.load(editor.config.scayt_srcUrl, function(success) {
+			//creating unique timestamp for SCAYT URL
+			date = new Date();
+			timestamp = date.getTime();
+			scaytUrl = editor.config.scayt_srcUrl + '?' + timestamp;
+
+			CKEDITOR.scriptLoader.load(scaytUrl, function(success) {
 				var editorName;
 
 				CKEDITOR.fireOnce('scaytReady');

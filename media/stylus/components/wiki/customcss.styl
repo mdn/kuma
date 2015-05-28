@@ -1,3 +1,5 @@
+@require 'includes/vars';
+
 /*
 
 Copied from the custom CSS macro template https://developer.mozilla.org/en-US/docs/Template:CustomCSS
@@ -666,11 +668,15 @@ table.compat-table th,
 table.compat-table td.header {
     border: 1px solid rgba-fallback(rgba(212,221,228,0));
     background: none;
-    font-weight: 200;
+    padding: 2px 4px 8px;
+
     font-family: $heading-font-family;
     font-size: 16px;
+    font-weight: 200;
     line-height: 100%;
-    padding: 2px 4px 8px;
+    {$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+    }
 /* From content.styl
         background: rgba-fallback(rgba(212, 221, 228, 0.5));
         font-weight: 700;
@@ -685,8 +691,11 @@ div.action-driven {
     vertical-align: top;
 }
 div.action-driven > div {
-    font: 400 20px 'Bebas Neue', 'League Gothic', Haettenschweiler, Impact, 'Arial Narrow', Meiryo, sans-serif;
+    font: 400 20px $heading-font-family;
     text-transform: uppercase;
+    {$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+    }
 }
 /* standard coloring */
 .notice.experimental {
@@ -760,11 +769,15 @@ ul.card-grid li {
     }
     .card-grid > li span {
         display: block;
+        margin-bottom: 12px;
+
         font-family: $heading-font-family;
         font-size: 22px;
         letter-spacing: -1px;
         line-height: 22px;
-        margin-bottom: 12px;
+        {$selector-heading-font-fallback} {
+            font-family: $heading-font-family-fallback;
+        }
     }
 }
 .card-grid > li {
@@ -1437,9 +1450,6 @@ dd.landingPageList {
             border-radius: 0;
             color: #4d4e53;
             display: inline;
-            font-size: 14px;
-            font-weight: 200;
-            font-family: $heading-font-family;
             height: 32px;
             list-style-type: none;
             margin: auto;
@@ -1449,6 +1459,13 @@ dd.landingPageList {
             position: relative;
             padding: 5px 6px 3px 6px;
             text-align: left;
+
+            font-family: $heading-font-family;
+            font-size: 14px;
+            font-weight: 200;
+            {$selector-heading-font-fallback} {
+                font-family: $heading-font-family-fallback;
+            }
 
             &.selected {
                 background-color: #eaeff2 !important;
@@ -1509,7 +1526,7 @@ dd.landingPageList {
 }
 /* new community box */
 .communitybox {
-    background-color: #00539f;
+    background-color: $homepage-background-color;
     background-image: url("/media/img/blueprint.png");
 }
 .communitybox,
@@ -1679,9 +1696,13 @@ a.addpage-button .right-align {
     border-right: none;
     vertical-align: top;
     padding: 6px;
+    text-align: right;
+
     font-family: $site-font-family;
     font-weight: bold;
-    text-align: right;
+    {$selector-site-font-fallback} {
+        font-family: $site-font-family-fallback;
+    }
 }
 .text-content table.learn-box td {
     border: 1px solid #f69855;
