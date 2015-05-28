@@ -1,0 +1,31 @@
+{
+    "log": {
+        "console": true,
+        "file": {
+            "filename": "/home/vagrant/logs/kumascript.log",
+            "maxsize": 500000
+        }
+    },
+    "server": {
+        "port": 9080,
+        "numWorkers": 4,
+        "workerTimeout": 10000,
+        "memcache": {
+            "server": {"127.0.0.1:11211": 1},
+            "options": { }
+        },
+        "macro_timeout": 60000,
+        "document_url_template": "https://localhost/en-US/docs/{path}?raw=1",
+        "template_url_template": "https://localhost/en-US/docs/en-US/Template:{name}?raw=1",
+        "template_class": "EJSTemplate",
+        "autorequire": {
+            "mdn": "MDN:Common",
+            "Date": "DekiScript:Date",
+            "Page": "DekiScript:Page",
+            "String": "DekiScript:String",
+            "Uri": "DekiScript:Uri",
+            "Web": "DekiScript:Web",
+            "Wiki": "DekiScript:Wiki"
+        }
+    }
+}
