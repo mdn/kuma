@@ -81,9 +81,9 @@ if settings.DEBUG:
 if settings.SERVE_MEDIA:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
     urlpatterns += [
-        (r'^%s/(?P<path>.*)$' % media_url,
-         serve,
-         {'document_root': settings.MEDIA_ROOT}),
+        url(r'^%s/(?P<path>.*)$' % media_url,
+            serve,
+            {'document_root': settings.MEDIA_ROOT}),
     ]
 
 # Legacy MindTouch redirects. These go last so that they don't mess
