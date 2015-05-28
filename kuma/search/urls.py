@@ -7,7 +7,7 @@ from . import views
 
 # this allows using ".json" extensions for the view to force json output
 urlpatterns = format_suffix_patterns(
-    [url(r'^$', 'search', name='search')])
+    [url(r'^$', views.search, name='search')])
 
 urlpatterns += [
     url(r'^/xml$',
