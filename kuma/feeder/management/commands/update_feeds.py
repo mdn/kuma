@@ -204,7 +204,7 @@ class Command(NoArgsCommand):
         if dirty_feed:
             try:
                 dirty_feed = False
-                log.debug("Feed changed, updating db" % feed)
+                log.debug("Feed %s changed, updating db" % feed)
                 feed.save()
             except KeyboardInterrupt:
                 raise
