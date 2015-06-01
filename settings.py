@@ -811,7 +811,7 @@ EMAIL_FILE_PATH = '/tmp/kuma-messages'
 import djcelery
 djcelery.setup_loader()
 
-BROKER_URL = 'amqp://kuma:kuma@localhost:5672/kuma'
+BROKER_URL = 'amqp://kuma:kuma@developer-local:5672/kuma'
 
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
 CELERY_SEND_TASK_ERROR_EMAILS = True
