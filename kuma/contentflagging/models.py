@@ -1,6 +1,6 @@
 """Models for content moderation flagging"""
 from django.conf import settings
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core import urlresolvers
 from django.core.mail import send_mail
@@ -109,7 +109,7 @@ class ContentFlag(models.Model):
                                      verbose_name="content type",
                                      related_name="content_type_set_for_%(class)s",)
     object_pk = models.CharField(_('object ID'), max_length=32, editable=False)
-    content_object = generic.GenericForeignKey('content_type', 'object_pk')
+    content_object = GenericForeignKey('content_type', 'object_pk')
 
     ip = models.CharField(max_length=40, editable=False, blank=True, null=True)
     user_agent = models.CharField(max_length=128, editable=False,

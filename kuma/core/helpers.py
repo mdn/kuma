@@ -23,7 +23,7 @@ from django.template import defaultfilters
 from django.utils.encoding import smart_str, force_text
 from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
-from django.utils.tzinfo import LocalTimezone
+from django.utils.timezone import get_default_timezone
 
 from soapbox.models import Message
 from statici18n.utils import get_filename
@@ -145,7 +145,7 @@ def timesince(d, now=None):
                                 '%(number)d seconds ago', n))]
     if not now:
         if d.tzinfo:
-            now = datetime.datetime.now(LocalTimezone(d))
+            now = datetime.datetime.now(get_default_timezone())
         else:
             now = datetime.datetime.now()
 

@@ -1590,8 +1590,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
         # HACK: Seems weird, but sticking the translate-to locale in a query
         # param is the best way to avoid the MindTouch-legacy locale
         # redirection logic.
-        document_locale = request.REQUEST.get('tolocale',
-                                              document_locale)
+        document_locale = request.GET.get('tolocale',
+                                          document_locale)
 
     # Set a "Discard Changes" page
     discard_href = ''

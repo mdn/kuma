@@ -1,6 +1,5 @@
+import collections
 from operator import attrgetter
-
-from django.utils.datastructures import SortedDict
 
 from elasticsearch_dsl import document
 from rest_framework import serializers, pagination
@@ -71,10 +70,10 @@ class SearchSerializer(pagination.PaginationSerializer):
         view = self.context['view']
 
         url = QueryURLObject(view.url)
-        filter_mapping = SortedDict((filter_['slug'], filter_)
-                                    for filter_ in view.serialized_filters)
+        filter_mapping = collections.OrderedDict((filter_['slug'], filter_)
+                                                 for filter_ in view.serialized_filters)
 
-        filter_groups = SortedDict()
+        filter_groups = collections.OrderedDict()
 
         try:
             facet_counts = [

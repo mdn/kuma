@@ -1,7 +1,7 @@
 """Models for activity counters"""
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 from django.db import models
 from django.db.models import F
 from django.utils.translation import ugettext_lazy as _
@@ -44,7 +44,7 @@ class ActionCounterUnique(models.Model):
     content_type = models.ForeignKey(ContentType, verbose_name="content type",
                                      related_name="content_type_set_for_%(class)s",)
     object_pk = models.CharField(_('object ID'), max_length=32)
-    content_object = generic.GenericForeignKey('content_type', 'object_pk')
+    content_object = GenericForeignKey('content_type', 'object_pk')
     name = models.CharField(_('name of the action'), max_length=64,
                             db_index=True, blank=False)
 

@@ -538,8 +538,8 @@ def JINJA_CONFIG():
     import jinja2
     from django.conf import settings
     from django.core.cache.backends.memcached import MemcachedCache
-    from django.core.cache import get_cache
-    cache = get_cache('memcache')
+    from django.core.cache import caches
+    cache = caches['memcache']
     config = {'extensions': ['jinja2.ext.i18n', 'tower.template.i18n',
                              'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
                              'jinja2.ext.autoescape'],

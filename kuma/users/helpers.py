@@ -92,7 +92,7 @@ def provider_login_url(context, provider_id, **params):
     request = context['request']
     provider = providers.registry.by_id(provider_id)
     if 'next' not in params:
-        next = request.REQUEST.get('next')
+        next = request.GET.get('next')
         if next:
             params['next'] = next
     else:

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin import helpers
-from django.contrib.admin.util import model_ngettext, get_deleted_objects
+from django.contrib.admin.utils import model_ngettext, get_deleted_objects
 from django.db import router
 from django.core.exceptions import PermissionDenied
 from django.template.response import TemplateResponse

@@ -5,8 +5,8 @@ import random
 from django.conf import settings
 from django.db import models
 
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -63,5 +63,5 @@ class KeyAction(models.Model):
     notes = models.TextField(null=True)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = GenericForeignKey('content_type', 'object_id')
     created = models.DateTimeField(auto_now_add=True)

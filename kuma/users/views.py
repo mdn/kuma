@@ -1,3 +1,4 @@
+import collections
 import operator
 
 from django import forms
@@ -9,7 +10,6 @@ from django.db import transaction
 from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render, redirect
-from django.utils.datastructures import SortedDict
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -273,7 +273,7 @@ class SignupView(BaseSignupView):
         """
         Returns an instance of the form to be used in this view.
         """
-        self.email_addresses = SortedDict()
+        self.email_addresses = collections.OrderedDict()
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
         self.matching_user = None

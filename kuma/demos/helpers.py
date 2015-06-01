@@ -7,7 +7,8 @@ from babel import localedata
 import jinja2
 
 from django.conf import settings
-from django.utils.tzinfo import LocalTimezone
+
+from django.utils.timezone import get_default_timezone
 
 import jingo
 from jingo import register
@@ -315,7 +316,7 @@ def timesince(d, now=None):
                                 '%(number)d seconds ago', n))]
     if not now:
         if d.tzinfo:
-            now = datetime.datetime.now(LocalTimezone(d))
+            now = datetime.datetime.now(get_default_timezone())
         else:
             now = datetime.datetime.now()
 

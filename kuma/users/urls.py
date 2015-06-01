@@ -1,5 +1,6 @@
+import importlib
+
 from django.conf.urls import include, url
-from django.utils import importlib
 
 from allauth.account import views as account_views
 from allauth.socialaccount import providers, views as socialaccount_views
