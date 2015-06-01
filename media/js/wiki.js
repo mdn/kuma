@@ -289,8 +289,36 @@
         }
     })();
 
+
     /*
-    Track Clicks on TOC links
+        Load and build compat tables if present in page
+    */
+    (function() {
+        var $compatTables = $('.bc-table');
+        if(!$compatTables.length) return;
+
+        $('<link />').attr({
+                href: '/media/css/wiki-compat-tables-min.css',
+                type: 'text/css',
+                rel: 'stylesheet'
+            }).on('load', function() {
+
+                $.ajax({
+                    url: '/media/js/wiki-compat-tables-min.js',
+                    dataType: 'script',
+                    cache: true
+                }).then(function() {
+                    $compatTables.mozCompatTable();
+                });
+
+            }).prependTo(doc.head);
+
+    })();
+
+
+
+    /*
+        Track Clicks on TOC links
     */
     $('#toc').on('click', 'a', function() {
         var $thisLink = $(this);
