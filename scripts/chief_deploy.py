@@ -14,6 +14,9 @@ from commander.deploy import task, hostgroups
 
 import commander_settings as settings
 
+# Setup venv path
+venv_bin_path = os.path.join(settings.VENV_DIR, 'bin')
+os.environ['PATH'] = venv_bin_path + os.pathsep + os.environ['PATH']
 
 @task
 def update_code(ctx, tag):
