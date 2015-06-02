@@ -48,7 +48,6 @@ def database(ctx):
     with ctx.lcd(settings.SRC_DIR):
         ctx.local("python2.7 manage.py syncdb --noinput")                   # Django
         ctx.local("python2.7 manage.py migrate --noinput")                  # South (new)
-        ctx.local("python2.7 manage.py update_badges")
 
 
 @task
