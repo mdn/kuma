@@ -33,15 +33,9 @@ import django.core.handlers.wsgi
 import django.core.management
 import django.utils
 
-# Do validate and activate translations like using `./manage.py runserver`.
-# http://blog.dscpl.com.au/2010/03/improved-wsgi-script-for-use-with.html
-django.utils.translation.activate(django.conf.settings.LANGUAGE_CODE)
-utility = django.core.management.ManagementUtility()
-command = utility.fetch_command('runserver')
-command.validate()
-
 # This is what mod_wsgi runs.
-django_app = django.core.handlers.wsgi.WSGIHandler()
+from django.core.wsgi import get_wsgi_application
+django_app = get_wsgi_application()
 
 # Normally we could let WSGIHandler run directly, but while we're dark
 # launching, we want to force the script name to be empty so we don't create
