@@ -23,11 +23,12 @@
 -- (PII) data must be removed such that no data would be specifically tied to
 -- an individual.
 
-SET @common_hash_secret=rand();
+SET @common_hash_secret := rand();
 
 SET FOREIGN_KEY_CHECKS=0;
 
 TRUNCATE actioncounters_actioncounterunique;
+TRUNCATE account_emailconfirmation;
 TRUNCATE auth_message;
 TRUNCATE authkeys_key;
 TRUNCATE authkeys_keyaction;
@@ -47,10 +48,13 @@ TRUNCATE tidings_watch;
 
 UPDATE auth_user SET
     -- username left alone, because it's public info
-    password = NULL,
-    email = CONCAT('user-', id, '@example.com'),
+    password = '!',
+    email = CONCAT(MD5(CONCAT(email, @common_hash_secret)), '@example.com'),
     first_name = ROUND(RAND()*1000000),
     last_name = ROUND(RAND()*1000000);
+
+UPDATE account_emailaddress SET
+    email = CONCAT(MD5(CONCAT(email, @common_hash_secret)), '@example.com');
 
 -- Does this table need more scrubbing? It's profile data made intentionally
 -- public by users.
