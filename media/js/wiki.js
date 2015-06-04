@@ -311,7 +311,7 @@
                     $compatTables.mozCompatTable();
                 });
 
-            }).prependTo(doc.head);
+            }).appendTo(doc.head);
 
     })();
 

@@ -148,3 +148,15 @@ media-stack() {
     }
 }
 
+/* elements with this class move spans off screen and only display icons */
+.only-icon {
+    {$selector-icon} {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: -1px !important;
+    }
+
+    span {
+        offscreen();
+    }
+}
