@@ -1,0 +1,112 @@
+/*
+History
+====================================================================== */
+
+.bc-history {
+    z-index: 20;
+    box-sizing: border-box;
+    border-top: 4px solid $bc-color-border;
+    border-bottom: 3px solid $bc-color-border;
+    overflow: hidden;
+    cursor: default;
+}
+
+    .bc-table .bc-history{
+        position: absolute;
+        top: 100%;
+        display: none;
+        visibility: hidden;
+        box-shadow: inset 200px 0 0 0 $bc-color-border;
+    }
+
+    .active .bc-history {
+        display: block;
+        visibility: visible;
+        height: 0;
+        padding-left: 200px;
+        transition: height 0.2s ease-out;
+    }
+
+    .bc-history:before {
+        content: '';
+        display: block;
+        height: 45px;
+        width: 60px;
+        float: right;
+    }
+
+.bc-history dl {
+    text-align: left;
+    margin: 10px;
+    margin-left: 160px;
+}
+
+.bc-history dt {
+    float: left;
+    clear: left;
+    max-width: 120px;
+    margin-left: -150px;
+}
+
+.bc-history dt,
+.bc-history dd {
+    margin-top: 30px;
+}
+
+.bc-history dd {
+    min-height: 1.2em;
+    padding-top: 4px;
+    padding-bottom: 10px;
+}
+
+.bc-history dl > dt:first-child,
+.bc-history dl > dt:first-child + dd,
+.bc-history dd + dd {
+    margin-top: 0;
+}
+
+.bc-history-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.bc-supports {
+    display: inline-block;
+    position: relative;
+    border: 1px solid $bc-color-border;
+    padding: 3px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.bc-legend .bc-supports {
+    display: inline-block;
+    min-width: 30px;
+}
+
+@media $media-query-mobile {
+
+    .bc-table .bc-history {
+        padding-left: 0;
+        box-shadow: none;
+    }
+}
+
+@media $media-query-small-mobile {
+
+    .bc-history dl {
+       margin-left: 10px;
+    }
+
+    .bc-history dt {
+        margin-top: 20px;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .bc-history dd {
+        clear: left;
+        min-height: 0;
+    }
+}
