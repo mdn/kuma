@@ -30,7 +30,9 @@ class TestUserProfile(UserTestCase):
             twitter='http://twitter.com/lmorchard',
             github='http://github.com/lmorchard',
             stackoverflow='http://stackoverflow.com/users/lmorchard',
+            linkedin='https://in.linkedin.com/in/testuser',
             linkedin='https://www.linkedin.com/in/testuser',
+            linkedin='https://www.linkedin.com/pub/testuser',
             mozillians='https://mozillians.org/u/testuser',
             facebook='https://www.facebook.com/test.user'
         )
