@@ -8,7 +8,7 @@ from django.conf import settings
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'pre', 'code', 'cite',
-    'dl', 'dt', 'dd', 'small', 'sub', 'sup', 'u', 'strike', 'samp',
+    'dl', 'dt', 'dd', 'small', 'sub', 'sup', 'u', 'strike', 'samp', 'abbr',
     'ul', 'ol', 'li',
     'nobr', 'dfn', 'caption', 'var', 's',
     'i', 'img', 'hr',
@@ -39,6 +39,7 @@ ALLOWED_ATTRIBUTES['iframe'] = ['id', 'src', 'sandbox', 'seamless',
                                 'frameborder', 'width', 'height', 'class']
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
+ALLOWED_ATTRIBUTES['abbr'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style', 'lang', 'dir', 'width',
                              'height']
