@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
+import os
 
 from django.db import models, migrations
 
@@ -25,6 +26,8 @@ def alter_collation(cursor, collation):
 
 
 def forwards(apps, schema_editor):
+    if os.environ.get('TRAVIS', False):
+        return
     with schema_editor.connection.cursor() as cursor:
         alter_collation(cursor, 'utf8_distinct_ci')
 

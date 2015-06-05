@@ -20,8 +20,12 @@ env:
 before_install: scripts/travis-install
 install:
     - pip wheel -r requirements/compiled.txt coveralls
-    - pip install coveralls tox==1.9.2
-before_script: mysql -e 'create database kuma;'
+    - pip install -r requirements/compiled.txt coveralls tox==1.9.2
+before_script:
+#    - sudo ~/virtualenv/python2.7/bin/python scripts/travis-before-script.py
+#    - sudo sed s/16M/128M/ /etc/mysql/my.cnf | sudo tee /etc/mysql/my.cnf
+#    - sudo service mysql restart
+    - mysql -e 'create database kuma;'
 script: tox -v
 after_success: coveralls
 notifications:
