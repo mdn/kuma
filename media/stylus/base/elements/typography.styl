@@ -148,9 +148,9 @@ blockquote {
 pre/code/kbd
 ====================================================================== */
 
-pre,
 code {
-    font-family: Consolas, Monaco, 'Andale Mono', monospace; /* match Prism */
+    font-family: $code-inline-font-family;
+    font-weight: bold;
 }
 
 /* pre is a block element so it gets a bit more fancy styling */
@@ -163,10 +163,11 @@ pre {
     padding: $code-block-padding;
     overflow: auto;
     margin: 0 0 $grid-spacing 0;
+    font-family: $code-block-font-family;
 }
 
-/* code may appear inline in headings, we want to match the font weight of the element its nested in */
-code {
+pre code {
+    font-family: inherit;
     font-weight: inherit;
 }
 
@@ -184,9 +185,10 @@ kbd {
     border: 1px solid #b4b4b4;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 2px 0px 0px rgba(255, 255, 255, 0.7) inset;
     display: inline-block;
-    font-family: inherit;
+    font-family: $code-inline-font-family;
     font-size: 0.85em;
-    line-height: 1.2;
+    font-weight: bold;
+    line-height: inherit;
     padding: 2px 4px;
     white-space:nowrap;
 }
