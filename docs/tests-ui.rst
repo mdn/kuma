@@ -30,7 +30,17 @@ Running Tests
 
     node_modules/.bin/intern-runner config=intern-local
 
-The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely `b` to set which browsers to run in, `t` for which test suites to run, `u` to provide a username for Persona, `p` to provide a password for Persona, `d` for which domain to run on, `descructive=true` to signal real docs can be created (do not run this on production), and `wd` which represents the slug of an existing article to test::
+The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely:
+
+* `b` to set which browsers to run in (ex: `b=chrome,firefox`)
+* `t` for which test suites to run (ex: `t=wiki,home`)
+* `u` to provide a username for Persona
+* `p` to provide a password for Persona
+* `d` for which domain to run on (ex: `developer.allizom.org`)
+* `descructive=true` to signal real docs can be created (do not run this on production)
+* `wd` which represents the slug of an existing article to test (ex: `My_Test_Doc`)
+
+An example::
 
     node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309 wd='TestDoc'
 
