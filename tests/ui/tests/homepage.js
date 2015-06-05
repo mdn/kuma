@@ -65,7 +65,7 @@ define([
             return this.remote
                         .findAllByCssSelector('.owl-item')
                         .then(function(arr) {
-                            assert.ok(arr.length > 0, 'If this fails, you may need to upload demos via the demo studio to ensure this works');
+                            assert.ok(arr.length > 0, 'If this fails, you may need to upload featured demos via the demo studio to ensure this works');
                         });
 
         },
