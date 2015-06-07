@@ -46,7 +46,7 @@ def revisions(request):
         start_date = filter_form.cleaned_data['start_date']
         if start_date:
             end_date = (filter_form.cleaned_data['end_date'] or
-                        datetime.datetime.now())
+                        timezone.now())
             query_kwargs['created__range'] = [start_date, end_date]
 
         preceding_period = filter_form.cleaned_data['preceding_period']

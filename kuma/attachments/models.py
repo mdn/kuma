@@ -3,6 +3,7 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 import jingo
 from kuma.core.urlresolvers import reverse
@@ -121,7 +122,7 @@ class AttachmentRevision(models.Model):
 
     description = models.TextField(blank=True)  # Does not allow wiki markup
 
-    created = models.DateTimeField(default=datetime.now)
+    created = models.DateTimeField(default=timezone.now)
     comment = models.CharField(max_length=255, blank=True)
     creator = models.ForeignKey(User,
                                 related_name='created_attachment_revisions')

@@ -3,6 +3,7 @@ import time
 
 from django.contrib.auth.models import User, Group, Permission
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 
 from html5lib.filters._base import Filter as html5lib_Filter
 from nose.tools import nottest
@@ -31,7 +32,7 @@ def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
     defaults = {'category': Document.CATEGORIES[0][0],
-                'title': str(datetime.now()),
+                'title': str(timezone.now()),
                 'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
