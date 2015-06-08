@@ -1,0 +1,451 @@
+<div>
+<p>This list the widgets that need new styling.</p>
+<h2 id="Action-driven_boxes">Action-driven boxes</h2>
+<p>These boxes have helped a lot in lowering the bouncing rate and increasing the conversion rate (going to pages with actual content, not landing pages).</p>
+<ul class="card-grid">
+ <li><span>CSS Reference</span>
+  <p>An <a href="/en-US/docs/Web/CSS/Reference" title="en-US/docs/CSS/CSS_Reference">exhaustive reference</a> for <u>seasoned Web developers</u> describing every property and concept of CSS.</p>
+ </li>
+ <li><span>CSS Tutorial</span>
+  <p>A <a href="/en-US/docs/CSS/Getting_Started" title="en-US/docs/CSS/Getting_Started">step-by-step introduction</a> to help <u>complete beginners</u> get started. It presents all the needed fundamentals.</p>
+ </li>
+ <li><span>CSS3 Demos</span>
+  <p>A <a href="/en-US/demos/tag/tech:css3" title="https://developer.mozilla.org/en-US/demos/tag/tech:css3">collection of demos</a> showing the <u>latest CSS technologies</u> in action: a boost for the creativity.</p>
+ </li>
+</ul>
+<p class="Documentation" id="Documentation"><a class="external external-icon" href="https://bugzilla.mozilla.org/show_bug.cgi?id=924844" title="FIXED: [In-content] Horizontal action-driven box">bug&nbsp;924844</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">In-context usage</a>.</p>
+<p class="Documentation">Another one, slightly different does appear on the FxOS zone landing page (can't cut &amp; paste here as the CSS is not accessible out of the landing pages:</p>
+<p class="Documentation"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox_OS">Builds Apps for Firefox OS</a></p>
+<p class="Documentation">There's also a similar box at the top of the <a href="/en-US/Apps">App Center</a> that needs some work.</p>
+<h2 class="Documentation" id="Documentation" name="Documentation">Two-column landing page text</h2>
+<p>On small screen, this get transformed into one single column (via a media query).</p>
+<div class="row topicpage-table">
+ <div class="section">
+  <h2 class="Documentation" id="Documentation" name="Documentation">Documentation and tutorials</h2>
+  <dl>
+   <dt>
+    CSS key concepts</dt>
+   <dd>
+    Describes the <a href="/en-US/docs/CSS/Syntax" title="/en-US/docs/CSS/Syntax">syntax and forms of the language</a> and ...</dd>
+   <dt>
+    <a href="/en-US/docs/Web/Guide/CSS" title="/en-US/docs/Web/Guide/CSS">CSS developer guide</a></dt>
+   <dd>
+    Articles to help you learn CSS techniques to make your content shine.</dd>
+  </dl>
+  <h2 class="Tools" id="Tools" name="Tools">Tools for CSS development</h2>
+  <ul>
+   <li><span class="external external-icon">The </span><a class="external external-icon" href="http://jigsaw.w3.org/css-validator/">W3C CSS Validation Service</a> checks if a given CSS is valid. It is an invaluable debugging tool.</li>
+   <li>Firefox' <a class="external link-https external-icon" href="https://addons.mozilla.org/en-US/firefox/addon/1843">Firebug extension</a><span class="external external-icon">, a popular</span> extension of that navigator that allows to edit live CSS on watched sites. Very practical to test some changes, though this extension does much more.</li>
+  </ul>
+ </div>
+ <div class="section">
+  <h2 class="Related_Topics" id="News" name="News">News</h2>
+  <ul>
+   <li><a class="external external-icon" href="http://www.w3.org/TR/css-text-decor-3/" title="http://www.w3.org/TR/css-text-decor-3/">CSS Text-decoration Level 3</a> reached the <em>Candidate Recommandation</em> status, defining that the <code>text-decoration-*</code> and <code>text-emphasis-*</code> properties. The long known <a href="/en-US/docs/Web/CSS/text-shadow" title="The text-shadow property adds shadows to text. It accepts a comma-separated list of shadows to be applied to the text and text-decorations of the element."><code>text-shadow</code></a> is also defined in it. (<em>August 1st, 2013)</em></li>
+   <li>Gecko's now support <a href="/en-US/docs/Web/CSS/background-origin" title="The background-origin CSS property determines the background positioning area, that is the position of the origin of an image specified using the background-image CSS property."><code>background-origin</code></a><code>: local</code>. It will be available from Firefox 25 (and already is in Nightly). <em>(July 25th, 2013)</em></li>
+  </ul>
+ </div>
+</div>
+<p><a class="external external-icon" href="https://bugzilla.mozilla.org/show_bug.cgi?id=924847" title="FIXED: [In-content] Two-column widget for landing pages">bug&nbsp;924847</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">In-context usage</a>.</p>
+<h2 id="Specification_boxes">Specification boxes</h2>
+<p>These boxes list the specifications where the described feature is defined, this is usually at the end of such a page (we have 1000s of such pages), right before a Browser compatibility section.</p>
+<p>The current look and feel doesn't scale to small screen (read: phone screans), the current idea (but to be discussed, amended) is to switch a definition list style section on smaller screens. The idea has not been implemented.</p>
+<p>The most complete (unusally long):</p>
+<table class="standard-table">
+ <thead>
+  <tr>
+   <th scope="col">Specification</th>
+   <th scope="col">Status</th>
+   <th scope="col">Comment</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td><a class="external external-icon" href="https://dvcs.w3.org/hg/undomanager/raw-file/tip/undomanager.html" hreflang="en" lang="en">UndoManager and DOMTransaction<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-ED">Editor's Draft</span></td>
+   <td>Added the <code>undoScope</code> and <code>undoManager</code> properties.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="https://dvcs.w3.org/hg/pointerevents/raw-file/tip/pointerEvents.html#extensions-to-the-element-interface" hreflang="en" lang="en">Pointer Events<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-REC">Recommendation</span></td>
+   <td>Added the following event handlers: <code>ongotpointercapture</code> and <code>onlostpointercapture</code>.<br>
+    Added the following methods: <code>setPointerCapture()</code> and <code>releasePointerCapture()</code>.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://dev.w3.org/2006/webapi/selectors-api2/#interface-definitions" hreflang="en" lang="en">Selectors API Level 2<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-WD">Working Draft</span></td>
+   <td>Added the following methods:<code> matches()</code> (implemented as <code>mozMatchesSelector()</code>), <code>find()</code>, <code>findAll()</code>.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://dev.w3.org/2006/webapi/selectors-api/#interface-definitions" hreflang="en" lang="en">Selectors API Level 1<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-REC">Recommendation</span></td>
+   <td>Added the following methods: <code>querySelector()</code> and <code>querySelectorAll()</code>.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="https://dvcs.w3.org/hg/pointerlock/raw-file/default/index.htmlindex.html#element-interface" hreflang="en" lang="en">Pointer Lock<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-CR">Candidate Recommendation</span></td>
+   <td>Added the <code>requestPointerLock()</code> method.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://fullscreen.spec.whatwg.org/#api" hreflang="en" lang="en">Fullscreen API<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-Living">Living Standard</span></td>
+   <td>Added the <code>requestFullscreen()</code> method.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://domparsing.spec.whatwg.org/#extensions-to-the-element-interface" hreflang="en" lang="en">DOM Parsing and Serialization<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-Living">Living Standard</span></td>
+   <td>Added the following properties: <code>innerHTML</code>, and <code>outerHTML</code>.<br>
+    Added the following method: <code>insertAdjacentHTML()</code>.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://dev.w3.org/csswg/cssom-view/#extensions-to-the-element-interface" hreflang="en" lang="en">CSS Object Model (CSSOM) View Module<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-WD">Working Draft</span></td>
+   <td>Added the following properties: <code>scrollTop</code>, <code>scrollLeft</code>, <code>scrollWidth</code>, <code>scrollHeight</code>, <code>clientTop</code>, <code>clientLeft</code>, <code>clientWidth</code>, and <code>clientHeight</code>.<br>
+    Added the following methods: <code>getClientRects()</code>, <code>getBoundingClientRect()</code>, and <code>scrollIntoView()</code>.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://www.w3.org/TR/ElementTraversal/#ecmascript-bindings" hreflang="en" lang="en">Element Traversal Specification<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-REC">Recommendation</span></td>
+   <td>Added inheritance of the <a href="/en-US/docs/Web/API/ElementTraversal" title="The ElementTraversal interface was defining methods allowing to access from one Node to another one in the document tree."><code>ElementTraversal</code></a> interface.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://dom.spec.whatwg.org/#interface-element" hreflang="en" lang="en">DOM<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-Living">Living Standard</span></td>
+   <td>Removed the following methods: <code>setIdAttribute()</code>, <code>setIdAttributeNS()</code>, and <code>setIdAttributeNode()</code>.<br>
+    Removed the <code>schemaTypeInfo</code> property.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-745549614" hreflang="en" lang="en">Document Object Model (DOM) Level 3 Core Specification<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-REC">Recommendation</span></td>
+   <td>Added the following methods: <code>setIdAttribute()</code>, <code>setIdAttributeNS()</code>, and <code>setIdAttributeNode()</code>. These methods were never implemented and have been removed in later specifications.<br>
+    Added the <code>schemaTypeInfo</code> property. This property was never implemented and has been removed in later specifications.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://www.w3.org/TR/DOM-Level-2-Core/core.html#ID-745549614" hreflang="en" lang="en">Document Object Model (DOM) Level 2 Core Specification<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-REC">Recommendation</span></td>
+   <td>The <code>normalize()</code> method has been moved to <a href="/en-US/docs/Web/API/Node" title="A Node is an interface from which a number of DOM types inherit, and allows these various types to be treated (or tested) similarly."><code>Node</code></a>.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-745549614" hreflang="en" lang="en">Document Object Model (DOM) Level 1 Specification<br><small lang="en-US">The definition of 'Element' in that specification.</small></a></td>
+   <td><span class="spec-REC">Recommendation</span></td>
+   <td>Initial definition.</td>
+  </tr>
+ </tbody>
+</table>
+<p id="Browser_compatibility">A regular one:</p>
+<table class="standard-table">
+ <tbody>
+  <tr>
+   <th scope="col">Specification</th>
+   <th scope="col">Status</th>
+   <th scope="col">Comment</th>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-li-element" hreflang="en" lang="en">WHATWG HTML Living Standard<br><small lang="en-US">The definition of 'HTMLLIElement' in that specification.</small></a></td>
+   <td><span class="spec-Living">Living Standard</span></td>
+   <td>No change from <a class="external external-icon" href="http://www.w3.org/TR/html5/" hreflang="en" lang="en" title="The 'HTML5' specification">HTML5</a>.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://www.w3.org/TR/html5/grouping-content.html#the-li-element" hreflang="en" lang="en">HTML5<br><small lang="en-US">The definition of 'HTMLLIElement' in that specification.</small></a></td>
+   <td><span class="spec-REC">Recommendation</span></td>
+   <td>The following property is now obsolete: <code>type</code>.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-74680021" hreflang="en" lang="en">Document Object Model (DOM) Level 2 HTML Specification<br><small lang="en-US">The definition of 'HTMLLIElement' in that specification.</small></a></td>
+   <td><span class="spec-REC">Recommendation</span></td>
+   <td>No change from <a class="external external-icon" href="http://www.w3.org/TR/REC-DOM-Level-1/" hreflang="en" lang="en" title="The 'Document Object Model (DOM) Level 1 Specification' specification">Document Object Model (DOM) Level 1 Specification</a>.</td>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://www.w3.org/TR/REC-DOM-Level-1/level-one-html.html#ID-74680021" hreflang="en" lang="en">Document Object Model (DOM) Level 1 Specification<br><small lang="en-US">The definition of 'HTMLLIElement' in that specification.</small></a></td>
+   <td><span class="spec-REC">Recommendation</span></td>
+   <td>Initial definition.</td>
+  </tr>
+ </tbody>
+</table>
+<p>A small one (quite common):</p>
+<table class="standard-table">
+ <tbody>
+  <tr>
+   <th scope="col">Specification</th>
+   <th scope="col">Status</th>
+   <th scope="col">Comment</th>
+  </tr>
+  <tr>
+   <td><a class="external external-icon" href="http://webaudio.github.io/web-audio-api/#OscillatorNode-section" hreflang="en" lang="en">Web Audio API<br><small lang="en-US">The definition of 'OscillatorNode' in that specification.</small></a></td>
+   <td><span class="spec-WD">Working Draft</span></td>
+   <td>&nbsp;</td>
+  </tr>
+ </tbody>
+</table>
+<p><a class="external external-icon" href="https://bugzilla.mozilla.org/show_bug.cgi?id=924875" title="FIXED: [In-content] Specification boxes">bug&nbsp;924875</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">In-context usage</a>.</p>
+<h2 id="Compatibility_tables">Compatibility tables</h2>
+<p>The compatibility tables are at the bottom of most pages, they list which browser support what.</p>
+<p>They must stay there, but we dream of a way to present compat info inside the page (as not all methods/properties have the same compatibility levels). To do it without being intrusive (it is a side information, though important in some use cases), is a challenge. [We don't want to take this challenge for the redesign launch, but any idea is welcome].</p>
+<p></p><div class="htab">
+    <a id="AutoCompatibilityTable" name="AutoCompatibilityTable"></a>
+    <ul>
+        <li class="selected"><a>Desktop</a></li>
+        <li><a>Mobile</a></li>
+    </ul>
+<div id="compat-desktop" style="display: block;">
+ <table class="compat-table">
+  <tbody>
+   <tr>
+    <th>Feature</th>
+    <th>Chrome</th>
+    <th>Firefox (Gecko)</th>
+    <th>Internet Explorer</th>
+    <th>Opera</th>
+    <th>Safari</th>
+   </tr>
+   <tr>
+    <td>Basic support</td>
+    <td>8.0 as <code>webkitURL</code></td>
+    <td><a href="/en-US/Firefox/Releases/4" title="Released on 2011-03-22.">4.0</a> (2.0) (non-standard name) [1]<br>
+     <a href="/en-US/Firefox/Releases/19" title="Released on 2013-02-19.">19.0</a> (19.0)</td>
+    <td>10.0</td>
+    <td>15.0 as <code>webkitURL</code></td>
+    <td>6.0 as <code>webkitURL</code></td>
+   </tr>
+   <tr>
+    <td><code>URLUtils</code> properties</td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: #888;" title="Please update this with the earliest version of support.">(Yes)</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+   </tr>
+   <tr>
+    <td><code>username</code>, <code>password</code>, <code>href</code>, and <code>origin</code></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><a href="/en-US/Firefox/Releases/26" title="Released on 2013-12-10.">26.0</a> (26.0)</td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+   </tr>
+  </tbody>
+ </table>
+</div><div id="compat-mobile" style="display: none;">
+ <table class="compat-table">
+  <tbody>
+   <tr>
+    <th>Feature</th>
+    <th>Android</th>
+    <th>Firefox Mobile (Gecko)</th>
+    <th>IE Mobile</th>
+    <th>Opera Mobile</th>
+    <th>Safari Mobile</th>
+   </tr>
+   <tr>
+    <td>Basic support</td>
+    <td><span style="color: #888;" title="Please update this with the earliest version of support.">(Yes)</span>as <code>webkitURL</code></td>
+    <td>14.0 (14.0)(non-standard name) [1]<br>
+     19.0 (19.0)</td>
+    <td><span style="color: #888;" title="Please update this with the earliest version of support.">(Yes)</span></td>
+    <td>15.0 as <code>webkitURL</code></td>
+    <td>6.0 as <code>webkitURL</code></td>
+   </tr>
+   <tr>
+    <td><code>URLUtils</code> properties</td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: #f00;">Not&nbsp;supported</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+   </tr>
+   <tr>
+    <td><code>username</code>, <code>password</code>, <code>href</code>, and <code>origin</code></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><a href="/en-US/Firefox/Releases/26" title="Released on 2013-12-10.">26.0</a> (26.0)</td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+    <td><span style="color: rgb(255, 153, 0);" title="Compatibility unknown; please update this.">?</span></td>
+   </tr>
+  </tbody>
+ </table>
+</div></div><p></p>
+
+
+<p>[1] From Gecko 2 (Firefox 4) to Gecko 18 included, Gecko supported this interface with the non-standard <code>nsIDOMMozURLProperty</code> internal type. As the only to access such an object was through <a href="/en-US/docs/Web/API/Window/URL" title="The Window.URL property returns a URL object that provides static methods used for creating and managing object URLs."><code>window.URL</code></a>, in practice, this didn't make any difference.</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/URL">In context usage</a></p>
+<p>&nbsp;</p>
+<h2 id="Code_Sample">Code Sample</h2>
+<pre class="brush: js  language-js" data-number=""><code class=" language-js">@charset <span class="token string">"utf-8"</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/* This is a special template used as a custom CSS for MDN. */</span><span class="token comment" spellcheck="true">/*
+
+    When editing this stylesheet, please be careful of different writing direction pages like: https://developer.mozilla.org/he/docs/HTML
+
+    If you add a custom CSS class, please try one of the following.
+        1, Report to the (evil) leader.
+        2, Write a description about the class that you have added to -- https://developer.mozilla.org/en-US/docs/Project:Custom_CSS_Classes --
+
+*/</span><div class="line-number" data-start="1" style="top: 0px;"></div><div class="line-number" data-start="2" style="top: 19px;"></div><div class="line-number" data-start="3" style="top: 38px;"></div><div class="line-number" data-start="4" style="top: 57px;"></div><div class="line-number" data-start="5" style="top: 76px;"></div><div class="line-number" data-start="6" style="top: 95px;"></div><div class="line-number" data-start="7" style="top: 114px;"></div><div class="line-number" data-start="8" style="top: 133px;"></div><div class="line-number" data-start="9" style="top: 152px;"></div><div class="line-number" data-start="10" style="top: 171px;"></div><div class="line-number" data-start="11" style="top: 190px;"></div></code></pre>
+<h2 id="Notes">Notes</h2>
+<div class="note">
+ <p><strong>Note:</strong> TextTextTextTextTextText TextTextTextTextTextTextText TextTextTextTextTextTextTextText TextTextTextTextTextTextText TextTextTextTextTextTextText TextTextTextTextText TextTextTextTextText TextTextTextText TextTextTextText TextTextTextTextText TextTextTextTextText TextTextTextTextText</p>
+</div>
+<p>No bug filed | <a href="https://developer.mozilla.org/en-US/Firefox_OS">In-context usage</a>.</p>
+<div class="warning">
+ <p><strong>Warning:</strong> this is a warning message!</p>
+</div>
+<h2 id="Summary_boxes">Summary boxes</h2>
+<p>Several kind of articles have prominent summary boxes. These have two goals:</p>
+<ul>
+ <li>Presenting some technical information always at the same position so that user can find it very very quickly.</li>
+ <li>With the background color, give the sense of being in a specific area.</li>
+</ul>
+<p>We have such boxes for CSS properties reference pages, HTML elements, JavaScript method and property, WebAudio Node, events. We may have one or two new needs for those in the next two years.</p>
+<h3 id="CSS">CSS</h3>
+<p></p><ul class="cssprop">
+  <li><dfn><a href="/en-US/docs/CSS/initial_value">Initial value</a></dfn> the concatenation of the initial values of its longhand properties:<ul><li><code>flex-direction</code>: <code>row</code></li><li><code>flex-wrap</code>: <code>nowrap</code></li></ul></li>  <li><dfn>Applies to</dfn> flex containers</li>  <li><dfn><a href="/en-US/docs/CSS/inheritance">Inherited</a></dfn> no</li>  <li><dfn>Media</dfn> <a href="/en-US/docs/CSS/@media#Media_groups"><code>visual</code></a></li>  <li><dfn><a href="/en-US/docs/CSS/computed_value">Computed value</a></dfn> as each of the properties of the shorthand:<ul><li><code>flex-direction</code>: as specified<span></span></li><li><code>flex-wrap</code>: as specified<span></span></li></ul></li>  <li><dfn>Animatable</dfn> no</li>  <li><dfn>Canonical order</dfn> order of appearance in the formal grammar of the values<span></span></li>
+</ul><p></p>
+<h3 id="HTML">HTML</h3>
+<ul class="htmlelt">
+ <li><dfn><a href="/en-US/docs/HTML/Content_categories" title="HTML/Content_categories">Content categories</a></dfn> <a href="/en-US/docs/HTML/Content_categories#Flow_content" title="HTML/Content categories#Flow content">Flow content</a>, <a href="/en-US/docs/HTML/Content_categories#Phrasing_content" title="HTML/Content categories#Phrasing content">phrasing content</a>, palpable content.</li>
+ <li><dfn>Permitted content</dfn><a href="/en-US/docs/HTML/Content_categories#Phrasing_content" title="HTML/Content categories#Phrasing content">Phrasing content</a>.</li>
+ <li><dfn>Tag omission</dfn> None, both the starting and ending tag are mandatory.</li>
+ <li><dfn>Permitted parent elements</dfn> Any element that accepts <a href="/en-US/docs/HTML/Content_categories#Phrasing_content" title="HTML/Content_categories#Phrasing_content">phrasing content</a>.</li>
+ <li><dfn>DOM interface</dfn> <a href="/en-US/docs/Web/API/HTMLDataElement" title="The HTMLDataElement interface provides special properties (beyond the regular HTMLElement interface it also has available to it by inheritance) for manipulating <data> elements."><code>HTMLDataElement</code></a></li>
+</ul>
+<h3 id="Events">Events</h3>
+<ul class="summary-box-events">
+ <li><dfn>Specification</dfn> <a class="external external-icon" href="http://www.whatwg.org/specs/web-apps/current-work/multipage/dom.html#current-document-readiness">HTML5</a></li>
+ <li><dfn>Interface</dfn><a href="/en-US/docs/HTML/Content_categories#Phrasing_content" title="HTML/Content categories#Phrasing content">Phrasing content</a>.</li>
+ <li><dfn>Bubbles</dfn> No</li>
+ <li><dfn>Cancelable</dfn> No</li>
+ <li><dfn>Target</dfn> Document</li>
+ <li><dfn>Default Action</dfn> None</li>
+</ul>
+<h3 id="JavaScript">JavaScript</h3>
+<ul class="summary-box-js">
+ <li><dfn><a href="/en-US/docs/HTML/Content_categories" title="HTML/Content_categories">Content categories</a></dfn> <a href="/en-US/docs/HTML/Content_categories#Flow_content" title="HTML/Content categories#Flow content">Flow content</a>, <a href="/en-US/docs/HTML/Content_categories#Phrasing_content" title="HTML/Content categories#Phrasing content">phrasing content</a>, palpable content.</li>
+ <li><dfn>Permitted content</dfn><a href="/en-US/docs/HTML/Content_categories#Phrasing_content" title="HTML/Content categories#Phrasing content">Phrasing content</a>.</li>
+ <li><dfn>Tag omission</dfn> None, both the starting and ending tag are mandatory.</li>
+ <li><dfn>Permitted parent elements</dfn> Any element that accepts <a href="/en-US/docs/HTML/Content_categories#Phrasing_content" title="HTML/Content_categories#Phrasing_content">phrasing content</a>.</li>
+ <li><dfn>DOM interface</dfn> <a href="/en-US/docs/Web/API/HTMLDataElement" title="The HTMLDataElement interface provides special properties (beyond the regular HTMLElement interface it also has available to it by inheritance) for manipulating <data> elements."><code>HTMLDataElement</code></a></li>
+</ul>
+<h3 id="WebAudio">WebAudio</h3>
+<ul class="audionodebox">
+ <li><dfn>Number of inputs</dfn> <code>1</code></li>
+ <li><dfn>Number of outputs</dfn> <code>1</code></li>
+ <li><dfn>Channel count mode</dfn> <code>"clamped-max"</code></li>
+ <li><dfn>Channel count</dfn> <code>2</code></li>
+ <li><dfn>Channel interpretation</dfn> <code>"speakers"</code></li>
+</ul>
+<h2 id="Syntax_boxes">Syntax boxes</h2>
+<p>The classical CSS syntax box:</p>
+<a href="/docs/Web/CSS/Value_definition_syntax" class="syntaxbox-help icon-only" lang="en"><i aria-hidden="true" class="icon-question-sign"></i><span>How to read CSS syntax.</span></a><pre class="twopartsyntaxbox"><a href="/en-US/docs/CSS/Value_definition_syntax" title="CSS/Value_definition_syntax">Formal syntax</a>: <code>none <a href="/en-US/docs/CSS/Value_definition_syntax#Single_bar" title="Single bar: The two entities are optional, but exactly one must be present.">|</a> [ <a href="/en-US/docs/CSS/flex-grow" title="<number>">&lt;'flex-grow'&gt;</a> <a href="/en-US/docs/CSS/flex-shrink" title="<number>">&lt;'flex-shrink'&gt;</a><a href="/en-US/docs/CSS/Value_definition_syntax#Question_mark_(.3F)" title="Question mark multiplier: The previous entity is optional (it may be used once, or not at all).">?</a> <a href="/en-US/docs/CSS/Value_definition_syntax#Double_bar" title="Double bar: The two entities are optional, and may appear in any order.">||</a> <a href="/en-US/docs/CSS/flex-basis" title="content | <'width'>">&lt;'flex-basis'&gt;</a> ]</code>
+</pre>
+<pre class=" language-html" data-number=""><code class=" language-html">flex: none                                            /* value 'none' case */
+flex: &lt;'flex-grow'&gt;                                   /* One value syntax, variation 1 */
+flex: &lt;'flex-basis'&gt;                                  /* One value syntax, variation 2 */
+flex: &lt;'flex-grow'&gt; &lt;'flex-basis'&gt;                    /* Two values syntax, variation 1 */
+flex: &lt;'flex-grow'&gt; &lt;'flex-shrink'&gt;                   /* Two values syntax, variation 2 */
+flex: &lt;'flex-grow'&gt; &lt;'flex-shrink'&gt; &lt;'flex-basis'&gt;    /* Three values syntax */
+
+flex: inherit<div class="line-number" data-start="1" style="top: 0px;"></div><div class="line-number" data-start="2" style="top: 19px;"></div><div class="line-number" data-start="3" style="top: 38px;"></div><div class="line-number" data-start="4" style="top: 57px;"></div><div class="line-number" data-start="5" style="top: 76px;"></div><div class="line-number" data-start="6" style="top: 95px;"></div><div class="line-number" data-start="7" style="top: 114px;"></div><div class="line-number" data-start="8" style="top: 133px;"></div></code></pre>
+<p>The API syntax box:</p>
+<pre class="syntaxbox"><em>b</em> = <em>encoder</em>.encoding;</pre>
+<h2 id="Banners">Banners</h2>
+<p>In general we are fighting banners, there are a few exceptions, and still a lot of banners to remove (by incorporating the information in some other widgets...).</p>
+<h3 id="Status_of_the_feature">Status of the feature</h3>
+<p>These banners are really important: they indicate if a feature is experimental, obsolete, deprecated or non-standard. This is a very important piece of information: we want to make people to think about it before using it.</p>
+<p></p><div class="notice experimental">
+    <p><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span> <strong>This is an experimental technology</strong><br>Because this technology's specification has not stabilized, check the <a href="#Browser_compatibility">compatibility table</a> for the proper prefixes to use in various browsers. Also note that the syntax and behavior of an experimental technology is subject to change in future versions of browsers as the spec changes.</p>
+</div><p></p>
+<p>(Harmony variant:</p>
+<p></p><div class="overheadIndicator" style="background: #9CF49C;">
+    <p><strong>This is an experimental technology, part of the ECMAScript 6 (Harmony) proposal.</strong><br>Because this technology's specification has not stabilized, check the <a href="#Browser_compatibility">compatibility table</a> for usage in various browsers. Also note that the syntax and behavior of an experimental technology is subject to change in future version of browsers as the spec changes.</p>
+</div><p></p>
+<p></p><div class="overheadIndicator obsolete obsoleteHeader"><p><strong><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span> Obsolete</strong><br>This feature is obsolete. Although it may still work in some browsers, its use is discouraged since it could be removed at any time. Try to avoid using it.</p></div><p></p>
+<p></p><div class="overheadIndicator deprecated deprecatedHeader">
+            <p><strong><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span> Deprecated</strong><br>This feature has been removed from the Web standards. Though some browsers may still support it, it is in the process of being dropped. Do not use it in old or new projects. Pages or Web apps using it may break at any time.</p>
+        </div><p></p>
+<p></p><div class="overheadIndicator nonStandard nonStandardHeader">
+      <p><strong><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span> Non-standard</strong><br>
+      This feature is non-standard and is not on a standards track. Do not use it on production sites facing the Web: it will not work for every user. There may also be large incompatibilities between implementations and the behavior may change in the future.</p>
+      </div><p></p>
+<p>We also use special widgets to indicate it in some list, maybe we want to use similar colors and or the icon in big:</p>
+<p>&nbsp;</p>
+<h3 id="Others">Others</h3>
+<p></p><div class="overheadIndicator draft">
+    <p><strong>Draft</strong><br>
+    This page is not complete.</p>
+</div><p></p>
+<div class="overheadIndicator draft draftHeader">
+ <strong>This page is not complete</strong>
+ <div>
+  Firefox 25 hasn't reached its feature freeze yet. New features will be added to it in the near future.</div>
+</div>
+<h3 id="Phasing_out_(but_long-term)">Phasing out (but long-term)</h3>
+<p></p><div class="overheadIndicator mobileOnly mobileOnlyHeader">
+    <p><strong>Mobile Only in Gecko </strong><br>
+    Available only in Firefox Mobile as of Gecko  </p>
+</div><p></p>
+<p></p>
+<p></p>
+<p></p><div class="overheadIndicator standardNote standardNoteBlock">
+<p>This content covers features introduced in <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Thunderbird/Releases/3">Thunderbird 3</a></p>
+</div><p></p>
+<p></p><div class="overheadIndicator jsMinVerHeader standardNote">
+<p>Introduced in <a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.8.5">JavaScript 1.8.5</a></p>
+</div><p></p>
+<p>{fx_minversion_note(3)}}</p>
+<p></p><div class="overheadIndicator standardNote standardNoteBlock">
+<p>This content covers features introduced in <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Thunderbird/Releases/3">Thunderbird 3</a></p>
+</div><p></p>
+<p></p><div class="overheadIndicator jsMinVerHeader standardNote">
+<p>Introduced in <a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.8.5">JavaScript 1.8.5</a></p>
+</div><p></p>
+<p></p><div class="warning warningHeader">
+    <p><strong>Warning:</strong> texttexttext</p>
+</div><p></p>
+<p></p><div class="warning warningHeader">
+    <p><strong>Warning:</strong> <strong>The content of this article may be out of date.</strong> outdatedoutdated</p>
+</div><p></p>
+<p></p><div style="border: 1px solid #818151; background: #FFE0E0; font-weight: 700; text-align: center; padding: 4px 10px; margin: 10px 0; overflow: hidden;">
+    <p>This page is marked as <em>protected</em> web.html($0) for the following reason: web.html($1).<br> Please discuss changes that need to be made on the web.link(page.talkURI, "Talk page").</p>
+</div><p></p>
+<p></p><div class="overheadIndicator unimplemented unimplementedHeader">
+      <p>Unimplemented</p>
+      </div><p></p>
+<p>I probably have missed a few of these banners. We need a rule to define border/content colors for them as we stumble on them. We don't plan to add many more, but new use case may arise in the future (I hate banners).</p>
+<h2 id="Badges">Badges</h2>
+<p>I also try to minimize the amount of badges (I call pages with a lot of these "Christmas trees". But here are the most common</p>
+<p><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span> <span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span> (the counter parts of the banners, these will stay in the future but their usage strictly limited to titles or &lt;dt&gt; of definition lists.</p>
+<p><span class="inlineIndicator optional optionalInline">Optional</span> <span class="inlineIndicator readOnly readOnlyInline" title="This value may not be changed.">Read only </span></p>
+<ul>
+ <li><code>SomeAPIWithNewName</code> <span class="inlineIndicator renamed renamedInline" title="">Renamed from <code></code> in Gecko </span></li>
+ <li><code>AnUnimplementedAPI</code> <span class="inlineIndicator unimplemented unimplementedInline">Unimplemented</span></li>
+ <li><code>AMethodNotAvailableInXPCOM</code> <span class="inlineIndicator notXPCOM notXPCOMInline" title="Only use this method if you REALLY know what you are doing!">Violates the XPCOM interface guidelines</span></li>
+</ul>
+<p>Phasing out:  <span class="inlineIndicator standardNote standardNoteInline">New in <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Thunderbird/Releases/5">Thunderbird 5</a></span> <span class="inlineIndicator jsMinVer">Requires <a class="new" href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/5">JavaScript 5</a></span> <span class="inlineIndicator domLevel domLevelInline">DOM level 5</span></p>
+<h2 id="Community_information_boxes">Community information boxes</h2>
+<p>This box will be presented on all (or almost all) top-level landing pages for given technologies or topic areas, to provide links to the appropriate IRC channel, newsgroup, and other forums (like Stack Overflow).</p>
+<div class="overheadIndicator communitybox">
+ <div class="column-container">
+  <div class="column-half">
+   <h2 id="Join_the_Community">Join the Community</h2>
+   <h3 id="Mailing_List.2FNewsgroup">Mailing List/Newsgroup</h3>
+   <ul class="communitymailinglist">
+    <li><a href="">Some Item</a></li>
+    <li><a href="">Some Item</a></li>
+    <li><a href="">Some Item</a></li>
+    <li><a href="">Some Item</a></li>
+   </ul>
+  </div>
+  <div class="column-half">
+   <ul class="communitycontact">
+    <li><strong>Heading: </strong> Blah</li>
+    <li><strong>Heading: </strong> Blah</li>
+    <li><strong>Heading: </strong> Blah</li>
+   </ul>
+  </div>
+ </div>
+</div>
+<div class="note">
+ <p><strong>Notes:</strong> The "Mailing list/newsgroup" list will always be those four options. There will always be only one IRC option. The "Get help" section may not exist at all, or may have any number of options. See http://jsfiddle.net/3XxQL/ for the styled version of this prototype.</p>
+</div>
+<p>&nbsp;</p>
+</div>

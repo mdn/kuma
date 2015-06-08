@@ -27,7 +27,7 @@ define([
             return Page.teardown();
         },
 
-        'The featured demo widget is present': libAssert.elementExistsAndDisplayed('#demo-main'),
+        'The 3 featured "demos-main" element is present': libAssert.elementExistsAndDisplayed('#demo-main'),
 
         'The demo search form is present': libAssert.elementExistsAndDisplayed('#search-demos')
 
