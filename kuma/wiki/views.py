@@ -1108,7 +1108,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 # Come up with the original revision to which these changes
                 # would be applied.
                 orig_rev_id = request.POST.get('current_rev', False)
-                if False == orig_rev_id:
+                if orig_rev_id is False:
                     orig_rev = None
                 else:
                     orig_rev = Revision.objects.get(pk=orig_rev_id)
@@ -1321,7 +1321,7 @@ def ckeditor_config(request):
         code = ''
 
     context = {'editor_config': code, 'redirect_pattern': REDIRECT_CONTENT,
-                        'allowed_tags': ' '.join(ALLOWED_TAGS)}
+               'allowed_tags': ' '.join(ALLOWED_TAGS)}
     return render(request, 'wiki/ckeditor_config.js', context,
                   content_type="application/x-javascript")
 
