@@ -1320,8 +1320,11 @@ def ckeditor_config(request):
     else:
         code = ''
 
-    context = {'editor_config': code, 'redirect_pattern': REDIRECT_CONTENT,
-                        'allowed_tags': ' '.join(ALLOWED_TAGS)}
+    context = {
+        'editor_config': code,
+        'redirect_pattern': REDIRECT_CONTENT,
+        'allowed_tags': ' '.join(ALLOWED_TAGS),
+    }
     return render(request, 'wiki/ckeditor_config.js', context,
                   content_type="application/x-javascript")
 

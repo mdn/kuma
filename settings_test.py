@@ -10,3 +10,5 @@ INSTALLED_APPS += (
     'kuma.actioncounters.tests',
 )
 BANISH_ENABLED = False
+
+DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'

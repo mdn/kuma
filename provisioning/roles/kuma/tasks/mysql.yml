@@ -1,6 +1,12 @@
 ---
+- name: Find out the character sets directory
+  shell: >
+    /usr/bin/mysql -uroot -p{{ mysql_root_password }}
+    -e "SELECT @@character_sets_dir;" | head -2 | tail -1
+  register: character_sets_dir
+
 - name: Check if utf8_distinct_ci collation is already installed
-  shell: grep "utf8_distinct_ci" /usr/share/mysql/charsets/Index.xml
+  shell: "grep utf8_distinct_ci {{ character_sets_dir.stdout }}Index.xml"
   register: utf8_distinct_ci_found
   ignore_errors: True
 
@@ -9,7 +15,7 @@
     /usr/bin/mysql -uroot -p{{ mysql_root_password }}
     -e "SELECT MAX(ID) FROM INFORMATION_SCHEMA.COLLATIONS;" | head -2 | tail -1
   register: max_collation_id
-  when: utf8_distinct_ci_found|failed
+  when: utf8_distinct_ci_found|failed and mysql_root_password
 
 - name: Store max_collation_id in a fact
   set_fact: collation_id="{{ max_collation_id.stdout|int + 1 }}"
@@ -18,7 +24,7 @@
 - name: Copy collation index
   template:
     src: Index.xml.j2
-    dest: /usr/share/mysql/charsets/Index.xml
+    dest: "{{ character_sets_dir.stdout }}Index.xml"
     owner: root
     group: root
     backup: yes

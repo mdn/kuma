@@ -3,7 +3,7 @@
   tags: [setup]
 
 - include: mysql.yml
-  tags: [setup]
+  tags: [setup, mysql]
 
 - include: apache.yml
   tags: [setup]

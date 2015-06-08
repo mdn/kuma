@@ -1,7 +1,7 @@
 cache:
     - apt
     - directories:
-        - ~/.cache/pip
+        - $HOME/.cache/pip
 language: python
 python:
     - "2.7"
@@ -13,16 +13,16 @@ env:
         - TOXENV=flake8
         - TOXENV=docs
     global:
-        - PIP_WHEEL_DIR=$HOME/.cache/pip/wheels
-        - PIP_FIND_LINKS=file://$HOME/.cache/pip/wheels
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive
-before_install: scripts/travis-install
+before_install:
+    - scripts/travis-install
+    - pip install -U pip
 install:
-    - pip wheel -r requirements/compiled.txt coveralls
-    - pip install coveralls tox==1.9.2
-before_script: mysql -e 'create database kuma;'
-script: tox -v
+    - pip install -r requirements/travis.txt
+    - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
+script:
+    - tox -v
 after_success: coveralls
 notifications:
     irc:

@@ -13,7 +13,6 @@
     dest: "/home/vagrant/src/{{ item }}"
   with_items:
     - settings_local.py
-    - settings_test.py
     - kumascript_settings_local.json
 
 - name: Bash profile
