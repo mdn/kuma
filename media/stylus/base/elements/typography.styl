@@ -12,14 +12,16 @@ Headings
 
 h1, h2, h3, h4 {
     margin-bottom: ($content-block-margin / 2);
+    word-wrap: break-word; /* keep for browsers & locales that don't support hyphens */
+    vendorize(hyphens, auto);
 
     font-family: $heading-font-family;
     font-weight: $light-font-weight;
-    line-height: 1.5;
+    line-height: 1;
     {$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
         letter-spacing: -0.04em;
-        line-height: 1.515;
+        line-height: 1;
         word-spacing: 0.01em;
     }
 }
@@ -28,21 +30,17 @@ h2, h3 {
     font-family: $site-font-family;
     {$selector-site-font-fallback} {
         font-family: $site-font-family-fallback;
-        line-height: 1.515;
-    }
-}
-
-h2, h3, h4 {
-    line-height: 100%;
-
-    {$selector-site-font-fallback} {
-        line-height: 1;
     }
 }
 
 h1 {
     heading-1();
     margin-bottom: $grid-spacing;
+
+    line-height: 1.5;
+    {$selector-heading-font-fallback} {
+        line-height: 1.515;
+    }
 }
 
 h2 {
@@ -148,9 +146,9 @@ blockquote {
 pre/code/kbd
 ====================================================================== */
 
-pre,
 code {
-    font-family: Consolas, Monaco, 'Andale Mono', monospace; /* match Prism */
+    font-family: $code-inline-font-family;
+    font-weight: bold;
 }
 
 /* pre is a block element so it gets a bit more fancy styling */
@@ -163,10 +161,11 @@ pre {
     padding: $code-block-padding;
     overflow: auto;
     margin: 0 0 $grid-spacing 0;
+    font-family: $code-block-font-family;
 }
 
-/* code may appear inline in headings, we want to match the font weight of the element its nested in */
-code {
+pre code {
+    font-family: inherit;
     font-weight: inherit;
 }
 
@@ -184,9 +183,10 @@ kbd {
     border: 1px solid #b4b4b4;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 2px 0px 0px rgba(255, 255, 255, 0.7) inset;
     display: inline-block;
-    font-family: inherit;
+    font-family: $code-inline-font-family;
     font-size: 0.85em;
-    line-height: 1.2;
+    font-weight: bold;
+    line-height: inherit;
     padding: 2px 4px;
     white-space:nowrap;
 }
