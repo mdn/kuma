@@ -1,4 +1,4 @@
-(function() {
+(function(win, doc, $) {
 
     var sites = ['jsfiddle', 'codepen'];
 
@@ -33,7 +33,6 @@
             var cssCode = $sample.find('.brush\\:.css, .brush\\:.css\\;').text();
             var jsCode = $sample.find('.brush\\:.js, .brush\\:.js\\;').text();
             var title = $sample.find('h2[name=' + section + ']').text();
-
             openSample(sampleCodeHost, title, htmlCode, cssCode, jsCode);
 
             $button.removeAttr('disabled');
@@ -41,29 +40,29 @@
     });
 
     function openJSFiddle(title, htmlCode, cssCode, jsCode) {
-       var $form = $('<form method="post" target="_blank" action="https://jsfiddle.net/api/mdn/">'
+       var $form = $('<form method="post" target="_blank" action="https://jsfiddle.net/api/mdn/" class="hidden">'
             + '<input type="hidden" name="html" />'
             + '<input type="hidden" name="css" />'
             + '<input type="hidden" name="js" />'
             + '<input type="hidden" name="title" />'
             + '<input type="hidden" name="wrap" value="b" />'
             + '<input type="submit" />'
-        + '</form>');
+        + '</form>').appendTo(doc.body);
        $form.find('input[name=html]').val(htmlCode);
        $form.find('input[name=css]').val(cssCode);
        $form.find('input[name=js]').val(jsCode);
        $form.find('input[name=title]').val(title);
-       $form.submit();
+       $form.get(0).submit();
     }
 
     function openCodepen(title, htmlCode, cssCode, jsCode) {
-       var $form = $('<form method="post" target="_blank" action="http://codepen.io/pen/define">'
+       var $form = $('<form method="post" target="_blank" action="http://codepen.io/pen/define" class="hidden">'
             + '<input type="hidden" name="data">'
             + '<input type="submit" />'
-        + '</form>');
+        + '</form>').appendTo(doc.body);
        var data = {'title': title, 'html': htmlCode, 'css': cssCode, 'js': jsCode};
        $form.find('input[name=data]').val(JSON.stringify(data));
-       $form.submit();
+       $form.get(0).submit();
     }
 
     function openSample(sampleCodeHost, title, htmlCode, cssCode, jsCode) {
