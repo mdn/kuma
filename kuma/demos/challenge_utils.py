@@ -2,7 +2,7 @@ import calendar
 import datetime
 
 
-MONTH_TAG_NAMES =[
+MONTH_TAG_NAMES = [
     'january',
     'february',
     'march',
@@ -33,7 +33,7 @@ def challenge_tag_to_end_date(tag):
     """
     Given a dev derby challenge tag, return the date on which the
     challenge ends.
-    
+
     """
     year, month = challenge_tag_to_date_parts(tag)
     if month == 2 and calendar.isleap(year):

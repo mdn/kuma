@@ -1,8 +1,9 @@
 from datetime import datetime
 import time
 
-from django.contrib.auth.models import User, Group, Permission
-from django.template.defaultfilters import slugify
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group, Permission
+from django.utils.text import slugify
 
 from html5lib.filters._base import Filter as html5lib_Filter
 from nose.tools import nottest
@@ -31,11 +32,11 @@ def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
     defaults = {'category': Document.CATEGORIES[0][0],
-                'title': str(datetime.now()),
+                'title': unicode(datetime.now()),
                 'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
-        defaults['slug'] = slugify(defaults['title'])
+        defaults['slug'] = slugify(unicode(defaults['title']))
     d = Document(**defaults)
     if save:
         d.save()
@@ -159,15 +160,17 @@ def create_template_test_users():
     groups = {}
     for x in ('add', 'change', 'all'):
         group, created = Group.objects.get_or_create(
-                             name='templaters_%s' % x)
+            name='templaters_%s' % x)
         if created:
             group.permissions = perms[x]
             group.save()
         groups[x] = [group]
 
     users = {}
+    User = get_user_model()
     for x in ('none', 'add', 'change', 'all'):
-        user, created = User.objects.get_or_create(username='user_%s' % x,
+        user, created = User.objects.get_or_create(
+            username='user_%s' % x,
             defaults=dict(email='user_%s@example.com',
                           is_active=True, is_staff=False, is_superuser=False))
         if created:

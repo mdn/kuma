@@ -1,7 +1,6 @@
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 
-from django.contrib.auth.models import User
 from django.contrib import messages as django_messages
 from django.test import RequestFactory
 
@@ -50,7 +49,8 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 
         # Set up a GitHub SocialLogin in the session
         github_account = SocialAccount.objects.get(user__username='testuser2')
-        github_login = SocialLogin(account=github_account)
+        github_login = SocialLogin(account=github_account,
+                                   user=github_account.user)
 
         request = self.rf.get('/')
         session = self.client.session
@@ -60,7 +60,8 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         messages = self.get_messages(request)
 
         # Set up an un-matching Persona SocialLogin for request
-        persona_account = SocialAccount(user=User(), provider='persona',
+        persona_account = SocialAccount(user=self.user_model(),
+                                        provider='persona',
                                         uid='noone@inexistant.com')
         persona_login = SocialLogin(account=persona_account)
 
@@ -92,7 +93,7 @@ class KumaAccountAdapterTestCase(UserTestCase):
         session['sociallogin_next_url'] = '/'
         session.save()
         request.session = session
-        request.user = User.objects.get(username='testuser')
+        request.user = self.user_model.objects.get(username='testuser')
         request.locale = 'en-US'
         messages = self.get_messages(request)
 

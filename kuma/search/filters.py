@@ -1,5 +1,6 @@
+import collections
+
 from django.conf import settings
-from django.utils.datastructures import SortedDict
 
 from elasticsearch_dsl import F, Q, query
 from rest_framework.filters import BaseFilterBackend
@@ -11,7 +12,7 @@ from .models import Filter, FilterGroup
 
 
 def get_filters(getter_func):
-    filters = SortedDict()
+    filters = collections.OrderedDict()
     for slug in FilterGroup.objects.values_list('slug', flat=True):
         for filters_slug in getter_func(slug, []):
             filters[filters_slug] = None

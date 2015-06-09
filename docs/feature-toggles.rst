@@ -1,3 +1,4 @@
+===============
 Feature Toggles
 ===============
 
@@ -11,10 +12,10 @@ Some site features are controlled using `constance`_. You control these
 features in the django admin site's `constance section`_.
 
 Waffle Features
----------------
+===============
 
 Switches
-~~~~~~~~
+--------
 
 `Waffle switches`_ are simple booleans - they are either on or off.
 
@@ -26,7 +27,7 @@ Switches
   sub-task
 
 Flags
-~~~~~
+-----
 
 `Waffle flags`_ control behavior by specific users, groups, percentages, and
 other advanced criteria.

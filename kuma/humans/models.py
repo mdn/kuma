@@ -61,7 +61,8 @@ class HumansTXT(object):
         return name
 
     def get_mdn(self):
-        p = subprocess.Popen("svn log --quiet http://svn.mozilla.org/projects/\
+        p = subprocess.Popen(
+            "svn log --quiet http://svn.mozilla.org/projects/\
             mdn/trunk/locale/ | grep '^r' | awk '{print $3}' | sort | uniq",
             shell=True, stdout=subprocess.PIPE)
         localizers_list = p.communicate()[0].rstrip().split('\n', -1)

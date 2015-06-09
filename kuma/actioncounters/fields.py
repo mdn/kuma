@@ -95,15 +95,17 @@ class ActionCounterManager(object):
 
     def increment(self, request):
         counter = self._get_counter_for_request(request)
-        ok = counter.increment(self.field.min_total_per_unique,
-                self.field.max_total_per_unique)
+        ok = counter.increment(
+            self.field.min_total_per_unique,
+            self.field.max_total_per_unique)
         if ok:
             self._change_total(1)
 
     def decrement(self, request):
         counter = self._get_counter_for_request(request)
-        ok = counter.decrement(self.field.min_total_per_unique,
-                self.field.max_total_per_unique)
+        ok = counter.decrement(
+            self.field.min_total_per_unique,
+            self.field.max_total_per_unique)
         if ok:
             self._change_total(-1)
 

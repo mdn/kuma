@@ -3,11 +3,10 @@ import base64
 import random
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.db import models
 
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,8 +27,8 @@ def hash_secret(secret):
 
 class Key(models.Model):
     """Authentication key"""
-    user = models.ForeignKey(User, editable=False, db_index=True, blank=False,
-                             null=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False,
+                             db_index=True, blank=False, null=False)
     key = models.CharField(_("Lookup key"), max_length=64,
                            editable=False, db_index=True)
     hashed_secret = models.CharField(_("Hashed secret"), max_length=128,
@@ -64,5 +63,5 @@ class KeyAction(models.Model):
     notes = models.TextField(null=True)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = GenericForeignKey('content_type', 'object_id')
     created = models.DateTimeField(auto_now_add=True)

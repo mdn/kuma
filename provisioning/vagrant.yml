@@ -1,0 +1,39 @@
+---
+- hosts: all
+  gather_facts: yes
+  sudo: true
+  pre_tasks:
+    - name: Check if packages need to be autoremoved
+      command: apt-get --dry-run autoremove
+      register: check_autoremove
+      changed_when: False
+    - name: Autoremove unused packages
+      command: apt-get -y autoremove
+      when: "'packages will be REMOVED' in check_autoremove.stdout"
+    - name: Get Elasticsearch GPG key
+      apt_key:
+        id: 46095ACC8548582C1A2699A9D27D666CD88E42B4
+        url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    - name: Get MySQL GPG key
+      apt_key:
+        id: 5072E1F5
+        url: "https://pgp.mit.edu/pks/lookup?op=get&fingerprint=on&search=0x8C718D3B5072E1F5"
+    - name: Add MySQL deb repository
+      apt_repository: repo='deb http://repo.mysql.com/apt/ubuntu/ precise mysql-5.6' state=present
+    - name: Update APT cache
+      apt: update_cache=yes
+
+  vars_files:
+    - vars/apache.yml
+    - vars/elasticsearch.yml
+    - vars/mysql.yml
+    - vars/rabbitmq.yml
+  roles:
+    - geerlingguy.memcached
+    - geerlingguy.mysql
+    - geerlingguy.apache
+    - Mayeu.RabbitMQ
+    - Stouts.elasticsearch
+    - bobbyrenwick.pip
+    - nodesource.node
+    - kuma

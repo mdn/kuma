@@ -16,7 +16,7 @@ from .models import (Document, DocumentZone, DocumentTag,
 
 def dump_selected_documents(self, request, queryset):
     filename = "documents_%s.json" % (datetime.now().isoformat(),)
-    response = HttpResponse(mimetype="text/plain")
+    response = HttpResponse(content_type="text/plain")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     Document.objects.dump_json(queryset, response)
     return response
@@ -35,6 +35,7 @@ def purge_documents(self, request, queryset):
     selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
     return HttpResponseRedirect(redirect_url % ','.join(selected))
 purge_documents.short_description = "Permanently purge deleted documents"
+
 
 @login_required
 @staff_member_required
@@ -58,6 +59,7 @@ def purge_view(request):
     return TemplateResponse(request,
                             'admin/wiki/purge_documents.html',
                             {'to_purge': to_purge})
+
 
 def undelete_documents(self, request, queryset):
     for doc in queryset:
@@ -239,9 +241,9 @@ def rendering_info(self):
     return '<ul>%s</ul>' % ''.join('<li>%s</li>' % (x % y) for x, y in (
         ('<img src="/admin-media/img/admin/icon-yes.gif" alt="%s"> '
          'Deferred rendering', self.defer_rendering),
-        ('%s (last)',        self.last_rendered_at),
-        ('%s (started)',     self.render_started_at),
-        ('%s (scheduled)',   self.render_scheduled_at),
+        ('%s (last)', self.last_rendered_at),
+        ('%s (started)', self.render_started_at),
+        ('%s (scheduled)', self.render_scheduled_at),
     ) if y)
 
 rendering_info.allow_tags = True
@@ -300,12 +302,11 @@ class DocumentAdmin(admin.ModelAdmin):
         """
         return False
 
-    def queryset(self, request):
+    def get_queryset(self, request):
         """
         The Document class has multiple managers which perform
         different filtering based on deleted status; we want the
         special admin-only one that doesn't filter.
-
         """
         qs = Document.admin_objects.all()
         # TODO: When we're on a Django version that handles admin

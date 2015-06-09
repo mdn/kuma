@@ -15,7 +15,7 @@ from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
@@ -25,16 +25,15 @@ from django.http import Http404
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 
-import constance.config
+from constance import config
 import waffle
-from south.modelsinspector import add_introspection_rules
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
 from teamwork.models import Team
 from tidings.models import NotificationsMixin
 
-from kuma.attachments.models import Attachment, DocumentAttachment
+from kuma.attachments.models import Attachment
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.cache import memcache
 from kuma.core.fields import LocaleField
@@ -59,9 +58,6 @@ from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        TaggedDocumentManager, TransformManager)
 from .search import WikiDocumentType
 from .signals import render_done
-
-
-add_introspection_rules([], ["^utils\.OverwritingFileField"])
 
 
 def cache_with_field(field_name):
@@ -122,8 +118,9 @@ def valid_slug_parent(slug, locale):
         try:
             parent = Document.objects.get(locale=locale, slug=parent_slug)
         except Document.DoesNotExist:
-            raise Exception(_("Parent %s/%s does not exist." % (locale,
-                                                         parent_slug)))
+            raise Exception(
+                _("Parent %s/%s does not exist." % (locale,
+                                                    parent_slug)))
 
     return parent
 
@@ -153,6 +150,22 @@ class TaggedDocument(ItemBase):
                 taggeddocument__content_object=instance)
         return DocumentTag.objects.filter(
             taggeddocument__content_object__isnull=False).distinct()
+
+
+class DocumentAttachment(models.Model):
+    """
+    Intermediary between Documents and Attachments. Allows storing the
+    user who attached a file to a document, and a (unique for that
+    document) name for referring to the file from the document.
+    """
+    file = models.ForeignKey(Attachment)
+    # This has to be a string ref to avoid circular import.
+    document = models.ForeignKey('wiki.Document')
+    attached_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    name = models.TextField()
+
+    class Meta:
+        db_table = 'attachments_documentattachement'
 
 
 @register_live_index
@@ -394,7 +407,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Check whether a scheduled rendering has waited for too long.  Assume
         # failure, in this case, and allow another scheduling attempt.
-        timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
+        timeout = config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = datetime.now() - self.render_scheduled_at
         if duration > max_duration:
@@ -413,7 +426,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Check whether an in-progress rendering has gone on for too long.
         # Assume failure, in this case, and allow another rendering attempt.
-        timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
+        timeout = config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = datetime.now() - self.render_started_at
         if duration > max_duration:
@@ -506,7 +519,7 @@ class Document(NotificationsMixin, models.Model):
         self.render_started_at = now
 
         # Perform rendering and update document
-        if not constance.config.KUMASCRIPT_TIMEOUT:
+        if not config.KUMASCRIPT_TIMEOUT:
             # A timeout of 0 should shortcircuit kumascript usage.
             self.rendered_html, self.rendered_errors = self.html, []
         else:
@@ -523,7 +536,7 @@ class Document(NotificationsMixin, models.Model):
 
         # If this rendering took longer than we'd like, mark it for deferred
         # rendering in the future.
-        timeout = constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
+        timeout = config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = self.last_rendered_at - self.render_started_at
         if duration >= max_duration:
@@ -569,9 +582,9 @@ class Document(NotificationsMixin, models.Model):
             for translation in self.other_translations:
                 revision = translation.current_revision
                 if revision.summary:
-                   summary = revision.summary
+                    summary = revision.summary
                 else:
-                   summary = translation.get_summary(strip_markup=False)
+                    summary = translation.get_summary(strip_markup=False)
                 translations.append({
                     'last_edit': revision.created.isoformat(),
                     'locale': translation.locale,
@@ -1502,7 +1515,7 @@ Full traceback:
         top_creator_ids = (self.revisions.values_list('creator', flat=True)
                                          .annotate(Count('creator'))
                                          .order_by('-creator__count'))
-        return User.objects.filter(pk__in=list(top_creator_ids))
+        return get_user_model().objects.filter(pk__in=list(top_creator_ids))
 
     @cached_property
     def zone_stack(self):
@@ -1523,7 +1536,7 @@ class DocumentDeletionLog(models.Model):
     locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     timestamp = models.DateTimeField(auto_now=True)
     reason = models.TextField()
 
@@ -1691,7 +1704,8 @@ class Revision(models.Model):
 
     created = models.DateTimeField(default=datetime.now, db_index=True)
     comment = models.CharField(max_length=255)
-    creator = models.ForeignKey(User, related_name='created_revisions')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name='created_revisions')
     is_approved = models.BooleanField(default=True, db_index=True)
 
     # The default locale's rev that was current when the Edit button was hit to
@@ -1858,13 +1872,15 @@ class HelpfulVote(models.Model):
     document = models.ForeignKey(Document, related_name='poll_votes')
     helpful = models.BooleanField(default=False)
     created = models.DateTimeField(default=datetime.now, db_index=True)
-    creator = models.ForeignKey(User, related_name='poll_votes', null=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name='poll_votes', null=True)
     anonymous_id = models.CharField(max_length=40, db_index=True)
     user_agent = models.CharField(max_length=1000)
 
 
 class EditorToolbar(models.Model):
-    creator = models.ForeignKey(User, related_name='created_toolbars')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name='created_toolbars')
     default = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
     code = models.TextField(max_length=2000)

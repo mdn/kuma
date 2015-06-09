@@ -1,0 +1,30 @@
+---
+- name: Update product details
+  command: /home/vagrant/env/bin/python manage.py update_product_details
+  args:
+    chdir: /home/vagrant/src
+    creates: /home/vagrant/product_details_json/firefox_versions.json
+
+- name: Run Django database migrations
+  command: /home/vagrant/env/bin/python manage.py migrate --noinput
+  args:
+    chdir: /home/vagrant/src
+
+- name: Get feed count
+  shell: >
+    /usr/bin/mysql -B -uroot -p{{ mysql_root_password }} kuma
+    -e "SELECT COUNT(*) FROM feeder_entry;" | grep "0"
+  register: feeder_table_empty
+  ignore_errors: True
+
+- name: Update feeds
+  command: /home/vagrant/env/bin/python manage.py update_feeds
+  args:
+    chdir: /home/vagrant/src
+  when: feeder_table_empty|success
+
+- name: Index database
+  command: /home/vagrant/env/bin/python manage.py reindex -p 5 -c 250
+  args:
+    chdir: /home/vagrant/src
+  when: feeder_table_empty|success

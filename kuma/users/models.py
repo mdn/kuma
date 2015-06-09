@@ -1,7 +1,8 @@
 import datetime
 
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.dispatch import receiver
 from django.db import models
@@ -9,8 +10,8 @@ from django.utils.functional import cached_property
 
 from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.socialaccount.signals import social_account_removed
-import constance.config
-from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
+from constance import config
+from timezones.fields import TimeZoneField
 from tower import ugettext_lazy as _
 from waffle import switch_is_active
 
@@ -25,10 +26,10 @@ from .tasks import send_welcome_email
 
 
 class UserBan(models.Model):
-    user = models.ForeignKey(User,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name="bans",
                              verbose_name="Banned user")
-    by = models.ForeignKey(User,
+    by = models.ForeignKey(settings.AUTH_USER_MODEL,
                            related_name="bans_issued",
                            verbose_name="Banned by")
     reason = models.TextField()
@@ -45,6 +46,23 @@ class UserBan(models.Model):
         super(UserBan, self).save(*args, **kwargs)
         self.user.is_active = not self.is_active
         self.user.save()
+
+
+class User(AbstractUser):
+    """
+    Our custom user class that contains just a link to the user's profile
+    right now.
+    """
+    class Meta:
+        db_table = 'auth_user'
+
+    @cached_property
+    def profile(self):
+        """
+        Returns site-specific profile for this user. Is locally cached.
+        """
+        return (UserProfile.objects.using(self._state.db)
+                                   .get(user__id__exact=self.id))
 
 
 class UserProfile(ModelBase):
@@ -110,11 +128,12 @@ class UserProfile(ModelBase):
                              verbose_name=_(u'Timezone'))
     locale = LocaleField(null=True, blank=True, db_index=True,
                          verbose_name=_(u'Language'))
-    homepage = models.URLField(max_length=255, blank=True, default='',
-                               error_messages={
-                               'invalid': _(u'This URL has an invalid format. '
-                                            u'Valid URLs look like '
-                                            u'http://example.com/my_page.')})
+    homepage = models.URLField(
+        max_length=255, blank=True, default='',
+        error_messages={
+            'invalid': _(u'This URL has an invalid format. '
+                         u'Valid URLs look like '
+                         u'http://example.com/my_page.')})
     title = models.CharField(_(u'Title'), max_length=255, default='',
                              blank=True)
     fullname = models.CharField(_(u'Name'), max_length=255, default='',
@@ -132,7 +151,8 @@ class UserProfile(ModelBase):
 
     # should this user receive contentflagging emails?
     content_flagging_email = models.BooleanField(default=False)
-    user = models.ForeignKey(User, null=True, editable=False, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             null=True, editable=False, blank=True)
 
     # HACK: Grab-bag field for future expansion in profiles
     # We can store arbitrary data in here and later migrate to relational
@@ -163,7 +183,7 @@ class UserProfile(ModelBase):
 
     @cached_property
     def beta_tester(self):
-        return (constance.config.BETA_GROUP_NAME in
+        return (config.BETA_GROUP_NAME in
                 self.user.groups.values_list('name', flat=True))
 
     @property
@@ -189,7 +209,7 @@ class UserProfile(ModelBase):
                                 .order_by('-created')[:5])
 
 
-@receiver(models.signals.post_save, sender=User)
+@receiver(models.signals.post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
     if created and not kwargs.get('raw', False):
         p, created = UserProfile.objects.get_or_create(user=instance)
@@ -217,7 +237,6 @@ def on_email_confirmed(sender, request, email_address, **kwargs):
             send_welcome_email.delay(email_address.user.pk, request.locale)
 
 
-
 @receiver(social_account_removed)
 def on_social_account_removed(sender, request, socialaccount, **kwargs):
     """
@@ -234,20 +253,3 @@ def on_social_account_removed(sender, request, socialaccount, **kwargs):
         request.session.modified = True
     except (ObjectDoesNotExist, IndexError):
         pass
-
-
-# from https://github.com/brosner/django-timezones/pull/13
-try:
-    from south.modelsinspector import (add_introspection_rules,
-                                       add_ignored_fields)
-    add_ignored_fields(["^taggit\.managers"])
-    add_introspection_rules(rules=[(
-            (TimeZoneField,),   # Class(es) these apply to
-            [],                 # Positional arguments (not used)
-            {                   # Keyword argument
-            "max_length": ["max_length", {"default": MAX_TIMEZONE_LENGTH}],
-            }
-            )],
-        patterns=['timezones\.fields\.'])
-except ImportError:
-    pass

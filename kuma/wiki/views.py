@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from datetime import datetime
 import json
 import logging
@@ -16,8 +16,8 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
-from django.db import transaction
 from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
@@ -32,9 +32,10 @@ from django.views.decorators.clickjacking import (xframe_options_exempt,
                                                   xframe_options_sameorigin)
 from django.views.decorators.csrf import csrf_exempt
 
-import constance.config
+from constance import config
+from jingo.helpers import urlparams
 from ratelimit.decorators import ratelimit
-from smuggler.forms import ImportFileForm
+from smuggler.forms import ImportForm
 from teamwork.shortcuts import get_object_or_404_or_403
 import waffle
 
@@ -47,7 +48,6 @@ from kuma.attachments.utils import attachments_json
 from kuma.core.cache import memcache
 from kuma.core.decorators import (never_cache, login_required,
                                   permission_required, superuser_required)
-from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import (get_object_or_none, paginate, smart_int,
                              get_ip, limit_banned_ip_to_0)
@@ -404,8 +404,8 @@ def _document_raw(request, doc, doc_html, rendering_params):
     response['X-Robots-Tag'] = 'noindex'
     absolute_url = doc.get_absolute_url()
 
-    if absolute_url in (constance.config.KUMA_CUSTOM_CSS_PATH,
-                        constance.config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
+    if absolute_url in (config.KUMA_CUSTOM_CSS_PATH,
+                        config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
         response['Content-Type'] = 'text/css; charset=utf-8'
     elif doc.is_template:
         # Treat raw, un-bleached template source as plain text, not HTML.
@@ -420,7 +420,6 @@ def _document_raw(request, doc, doc_html, rendering_params):
 @accepts_auth_key
 @process_document_path
 @condition(last_modified_func=_document_last_modified)
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @newrelic.agent.function_trace()
 def document(request, document_slug, document_locale):
     """
@@ -429,8 +428,7 @@ def document(request, document_slug, document_locale):
     """
     # PUT requests go to the write API.
     if request.method == 'PUT':
-        if (not request.authkey and
-               not request.user.is_authenticated()):
+        if (not request.authkey and not request.user.is_authenticated()):
             raise PermissionDenied
         return _document_PUT(request,
                              document_slug,
@@ -490,15 +488,13 @@ def document(request, document_slug, document_locale):
 
     if redirect_url and redirect_url != doc.get_absolute_url():
         url = urlparams(redirect_url, query_dict=request.GET)
-        messages.add_message(request, messages.WARNING,
-            # TODO: Re-enable the link in this message after Django >1.5 upgrade
-            # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
-            mark_safe(_(u'''
-                Redirected from %(url)s
-            ''') % {
+        # TODO: Re-enable the link in this message after Django >1.5 upgrade
+        # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
+        messages.add_message(
+            request, messages.WARNING,
+            mark_safe(_(u'Redirected from %(url)s') % {
                 "url": request.build_absolute_uri(doc.get_absolute_url())
-            }),
-            extra_tags='wiki_redirect')
+            }), extra_tags='wiki_redirect')
         return HttpResponsePermanentRedirect(url)
 
     # Step 2: Kick 'em out if they're not allowed to view this Document.
@@ -595,11 +591,11 @@ def _document_PUT(request, document_slug, document_locale):
         content_type = request.META.get('CONTENT_TYPE', '')
 
         if content_type.startswith('application/json'):
-            data = json.loads(request.raw_post_data)
+            data = json.loads(request.body)
 
         elif content_type.startswith('multipart/form-data'):
             parser = MultiPartParser(request.META,
-                                     StringIO(request.raw_post_data),
+                                     StringIO(request.body),
                                      request.upload_handlers,
                                      request.encoding)
             data, files = parser.parse()
@@ -607,7 +603,7 @@ def _document_PUT(request, document_slug, document_locale):
         elif content_type.startswith('text/html'):
             # TODO: Refactor this into wiki.content ?
             # First pass: Just assume the request body is an HTML fragment.
-            html = request.raw_post_data
+            html = request.body
             data = dict(content=html)
 
             # Second pass: Try parsing the body as a fuller HTML document,
@@ -844,7 +840,6 @@ def list_top_level_documents(request):
 @check_readonly
 @prevent_indexing
 @never_cache
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @newrelic.agent.function_trace()
 def new_document(request):
     """Create a new wiki document."""
@@ -933,7 +928,7 @@ def new_document(request):
             'parent_id': initial_parent_id,
             'document_form': doc_form,
             'revision_form': rev_form,
-            'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+            'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
             'initial_tags': initial_tags,
             'allow_add_attachment': allow_add_attachment,
             'attachment_form': AttachmentRevisionForm(),
@@ -978,7 +973,7 @@ def new_document(request):
         'is_template': is_template,
         'document_form': doc_form,
         'revision_form': rev_form,
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
         'parent_slug': parent_slug,
@@ -994,7 +989,6 @@ def new_document(request):
 @check_readonly
 @prevent_indexing
 @never_cache
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @newrelic.agent.function_trace()
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
@@ -1114,7 +1108,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 # Come up with the original revision to which these changes
                 # would be applied.
                 orig_rev_id = request.POST.get('current_rev', False)
-                if False == orig_rev_id:
+                if orig_rev_id is False:
                     orig_rev = None
                 else:
                     orig_rev = Revision.objects.get(pk=orig_rev_id)
@@ -1208,7 +1202,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
         'attachment_data': attachments,
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'attachment_data_json': json.dumps(attachments)
     }
     return render(request, 'wiki/edit_document.html', context)
@@ -1310,7 +1304,6 @@ def move(request, document_slug, document_locale):
 @process_document_path
 @check_readonly
 @superuser_required
-@transaction.autocommit
 def repair_breadcrumbs(request, document_slug, document_locale):
     doc = get_object_or_404(Document,
                             locale=document_locale,
@@ -1327,8 +1320,11 @@ def ckeditor_config(request):
     else:
         code = ''
 
-    context = {'editor_config': code, 'redirect_pattern': REDIRECT_CONTENT,
-                        'allowed_tags': ' '.join(ALLOWED_TAGS)}
+    context = {
+        'editor_config': code,
+        'redirect_pattern': REDIRECT_CONTENT,
+        'allowed_tags': ' '.join(ALLOWED_TAGS),
+    }
     return render(request, 'wiki/ckeditor_config.js', context,
                   content_type="application/x-javascript")
 
@@ -1406,7 +1402,7 @@ def get_children(request, document_slug, document_locale):
         result = {'error': 'Document does not exist.'}
 
     result = json.dumps(result)
-    return HttpResponse(result, mimetype='application/json')
+    return HttpResponse(result, content_type='application/json')
 
 
 @require_GET
@@ -1447,7 +1443,8 @@ def autosuggest_documents(request):
         data['label'] += ' [' + doc.locale + ']'
         docs_list.append(data)
 
-    return HttpResponse(json.dumps(docs_list), mimetype='application/json')
+    data = json.dumps(docs_list)
+    return HttpResponse(data, content_type='application/json')
 
 
 @require_GET
@@ -1577,7 +1574,6 @@ def select_locale(request, document_slug, document_locale):
 @check_readonly
 @prevent_indexing
 @never_cache
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def translate(request, document_slug, document_locale, revision_id=None):
     """
     Create a new translation of a wiki document.
@@ -1597,8 +1593,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
         # HACK: Seems weird, but sticking the translate-to locale in a query
         # param is the best way to avoid the MindTouch-legacy locale
         # redirection logic.
-        document_locale = request.REQUEST.get('tolocale',
-                                              document_locale)
+        document_locale = request.GET.get('tolocale',
+                                          document_locale)
 
     # Set a "Discard Changes" page
     discard_href = ''
@@ -1794,7 +1790,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
         'attachment_form': AttachmentRevisionForm(),
         'attachment_data': attachments,
         'attachment_data_json': json.dumps(attachments),
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'specific_slug': parent_split['specific'],
         'parent_slug': parent_split['parent'],
         'revision_from': revision_from,
@@ -1857,7 +1853,7 @@ def json_view(request, document_slug=None, document_locale=None):
     json_obj = document.get_json_data(stale=stale)
 
     data = json.dumps(json_obj)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 @require_GET
@@ -1869,7 +1865,7 @@ def styles_view(request, document_slug=None, document_locale=None):
     kwargs = {'slug': document_slug, 'locale': document_locale}
     document = get_object_or_404(Document, **kwargs)
     zone = get_object_or_404(DocumentZone, document=document)
-    return HttpResponse(zone.styles, mimetype='text/css')
+    return HttpResponse(zone.styles, content_type='text/css')
 
 
 @require_GET
@@ -1909,7 +1905,7 @@ def code_sample(request, document_slug, document_locale, sample_id):
     full_address = (''.join(('http', ('', 's')[request.is_secure()], '://',
                     request.META.get('HTTP_HOST'), request.path)))
 
-    if not re.search(constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS, full_address):
+    if not re.search(config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS, full_address):
         raise PermissionDenied
 
     document = get_object_or_404(Document, slug=document_slug,
@@ -1970,7 +1966,6 @@ def _check_doc_revision_for_alteration(request, document_path, revision_id):
 
 @login_required
 @check_readonly
-@transaction.autocommit
 def revert_document(request, document_path, revision_id):
     """Revert document to a specific revision."""
     document, revision = _check_doc_revision_for_alteration(request,
@@ -2181,7 +2176,7 @@ def _save_rev_and_notify(rev_form, request, document):
     """Save the given RevisionForm and send notifications."""
     creator = request.user
     # have to check for first edit before we rev_form.save
-    first_edit = creator.get_profile().wiki_activity().count() == 0
+    first_edit = creator.profile.wiki_activity().count() == 0
 
     new_rev = rev_form.save(creator, document)
 
@@ -2308,15 +2303,15 @@ def mindtouch_to_kuma_redirect(request, path):
     return HttpResponsePermanentRedirect(location)
 
 
-@superuser_required
+@user_passes_test(lambda u: u.is_superuser)
 def load_documents(request):
     """Load documents from uploaded file."""
-    form = ImportFileForm()
+    form = ImportForm()
     if request.method == 'POST':
 
         # Accept the uploaded document data.
         file_data = None
-        form = ImportFileForm(request.POST, request.FILES)
+        form = ImportForm(request.POST, request.FILES)
         if form.is_valid():
             uploaded_file = request.FILES['file']
             if uploaded_file.multiple_chunks():

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
 
 from django.test import RequestFactory
@@ -27,14 +27,14 @@ class LogoutRequiredTestCase(UserTestCase):
 
     def test_logged_in_default(self):
         request = self.rf.get('/foo')
-        request.user = User.objects.get(username='testuser')
+        request.user = self.user_model.objects.get(username='testuser')
         view = logout_required(simple_view)
         response = view(request)
         eq_(302, response.status_code)
 
     def test_logged_in_argument(self):
         request = self.rf.get('/foo')
-        request.user = User.objects.get(username='testuser')
+        request.user = self.user_model.objects.get(username='testuser')
         view = logout_required('/bar')(simple_view)
         response = view(request)
         eq_(302, response.status_code)
@@ -54,7 +54,7 @@ class LoginRequiredTestCase(UserTestCase):
     def test_logged_in_default(self):
         """Active user login."""
         request = self.rf.get('/foo')
-        request.user = User.objects.get(username='testuser')
+        request.user = self.user_model.objects.get(username='testuser')
         view = login_required(simple_view)
         response = view(request)
         eq_(200, response.status_code)
@@ -62,7 +62,7 @@ class LoginRequiredTestCase(UserTestCase):
     def test_logged_in_inactive(self):
         """Inactive user login not allowed by default."""
         request = self.rf.get('/foo')
-        user = User.objects.get(username='testuser2')
+        user = self.user_model.objects.get(username='testuser2')
         user.is_active = False
         request.user = user
         view = login_required(simple_view)
@@ -72,7 +72,7 @@ class LoginRequiredTestCase(UserTestCase):
     def test_logged_in_inactive_allow(self):
         """Inactive user login explicitly allowed."""
         request = self.rf.get('/foo')
-        user = User.objects.get(username='testuser2')
+        user = self.user_model.objects.get(username='testuser2')
         user.is_active = False
         request.user = user
         view = login_required(simple_view, only_active=False)
@@ -92,7 +92,7 @@ class PermissionRequiredTestCase(UserTestCase):
 
     def test_logged_in_default(self):
         request = self.rf.get('/foo')
-        request.user = User.objects.get(username='testuser')
+        request.user = self.user_model.objects.get(username='testuser')
         view = permission_required('perm')(simple_view)
         response = view(request)
         eq_(403, response.status_code)
@@ -100,7 +100,7 @@ class PermissionRequiredTestCase(UserTestCase):
     def test_logged_in_inactive(self):
         """Inactive user is denied access."""
         request = self.rf.get('/foo')
-        user = User.objects.get(username='admin')
+        user = self.user_model.objects.get(username='admin')
         user.is_active = False
         request.user = user
         view = permission_required('perm')(simple_view)
@@ -109,7 +109,7 @@ class PermissionRequiredTestCase(UserTestCase):
 
     def test_logged_in_admin(self):
         request = self.rf.get('/foo')
-        request.user = User.objects.get(username='admin')
+        request.user = self.user_model.objects.get(username='admin')
         view = permission_required('perm')(simple_view)
         response = view(request)
         eq_(200, response.status_code)

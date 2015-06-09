@@ -51,7 +51,7 @@ class SoapboxViewsTest(KumaTestCase):
         doc = pq(r.content)
         eq_(m.message, doc.find('div.global-notice').text())
 
-        url = reverse('events')
+        url = reverse('demos')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
@@ -59,11 +59,11 @@ class SoapboxViewsTest(KumaTestCase):
         eq_(m.message, doc.find('div.global-notice').text())
 
     def test_subsection(self):
-        m = Message(message="Events", is_global=False, is_active=True,
-                    url="/events/")
+        m = Message(message="Demos", is_global=False, is_active=True,
+                    url="/demos/")
         m.save()
 
-        url = reverse('events')
+        url = reverse('demos')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
@@ -78,13 +78,22 @@ class SoapboxViewsTest(KumaTestCase):
         eq_([], doc.find('div.global-notice'))
 
     def test_inactive(self):
-        m = Message(message="Events", is_global=False, is_active=False,
-                    url="/events/")
+        m = Message(message="Demos", is_global=False, is_active=False,
+                    url="/demos/")
         m.save()
 
-        url = reverse('events')
+        url = reverse('demos')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
         doc = pq(r.content)
         eq_([], doc.find('div.global-notice'))
+
+
+class EventsRedirectTest(KumaTestCase):
+
+    def test_redirect_to_mozilla_org(self):
+        url = '/en-US/events'
+        response = self.client.get(url)
+        eq_(302, response.status_code)
+        eq_('https://mozilla.org/contribute/events', response['Location'])

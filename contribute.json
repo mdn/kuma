@@ -41,7 +41,7 @@
         "jquery",
         "ckeditor",
         "vagrant",
-        "puppet",
+        "ansible",
         "mysql",
         "elasticsearch"
     ]

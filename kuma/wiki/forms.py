@@ -152,21 +152,23 @@ class RevisionForm(forms.ModelForm):
                                  label=_lazy(u'Keywords:'),
                                  help_text=_lazy(u'Affects search results'))
 
-    summary = StrippedCharField(required=False,
-                min_length=5, max_length=1000, widget=forms.Textarea(),
-                label=_lazy(u'Search result summary:'),
-                help_text=_lazy(u'Only displayed on search results page'),
-                error_messages={'required': SUMMARY_REQUIRED,
-                                'min_length': SUMMARY_SHORT,
-                                'max_length': SUMMARY_LONG})
+    summary = StrippedCharField(
+        required=False,
+        min_length=5, max_length=1000,
+        widget=forms.Textarea(),
+        label=_lazy(u'Search result summary:'),
+        help_text=_lazy(u'Only displayed on search results page'),
+        error_messages={'required': SUMMARY_REQUIRED,
+                        'min_length': SUMMARY_SHORT,
+                        'max_length': SUMMARY_LONG})
 
     content = StrippedCharField(
-                min_length=5, max_length=300000,
-                label=_lazy(u'Content:'),
-                widget=forms.Textarea(),
-                error_messages={'required': CONTENT_REQUIRED,
-                                'min_length': CONTENT_SHORT,
-                                'max_length': CONTENT_LONG})
+        min_length=5, max_length=300000,
+        label=_lazy(u'Content:'),
+        widget=forms.Textarea(),
+        error_messages={'required': CONTENT_REQUIRED,
+                        'min_length': CONTENT_SHORT,
+                        'max_length': CONTENT_LONG})
 
     comment = StrippedCharField(required=False, label=_lazy(u'Comment:'))
 
@@ -244,8 +246,8 @@ class RevisionForm(forms.ModelForm):
         error_message = {'slug': SLUG_COLLIDES}.get(name, OTHER_COLLIDES)
         try:
             existing_doc = Document.objects.get(
-                    locale=self.instance.document.locale,
-                    **{name: value})
+                locale=self.instance.document.locale,
+                **{name: value})
             if self.instance and self.instance.document:
                 if (not existing_doc.redirect_url() and
                         existing_doc.pk != self.instance.document.pk):
@@ -430,8 +432,8 @@ class TreeMoveForm(forms.Form):
 
         # Remove the trailing slash if one is present, because it
         # will screw up the page move, which doesn't expect one.
-        self.cleaned_data['slug'] = self.cleaned_data['slug'].rstrip('/');
-        
+        self.cleaned_data['slug'] = self.cleaned_data['slug'].rstrip('/')
+
         return self.cleaned_data['slug']
 
     def clean(self):

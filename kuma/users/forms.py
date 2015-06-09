@@ -4,12 +4,12 @@ import time
 from django import forms
 from django.conf import settings
 from django.http import HttpResponseServerError
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 import basket
 from basket.base import BasketException
 from basket.errors import BASKET_UNKNOWN_EMAIL
-import constance.config
+from constance import config
 from product_details import product_details
 from taggit.utils import parse_tags
 from tower import ugettext_lazy as _
@@ -90,7 +90,7 @@ class NewsletterForm(forms.Form):
     def get_subscription_details(cls, email):
         subscription_details = None
         try:
-            api_key = constance.config.BASKET_API_KEY
+            api_key = config.BASKET_API_KEY
             subscription_details = basket.lookup_user(email=email,
                                                       api_key=api_key)
         except BasketException, e:
@@ -114,16 +114,16 @@ class NewsletterForm(forms.Form):
                 'optin': optin,
                 'source_url': request.build_absolute_uri()
             }
-            for retry in range(constance.config.BASKET_RETRIES):
+            for retry in range(config.BASKET_RETRIES):
                 try:
                     result = basket.subscribe(**basket_data)
                     if result.get('status') != 'error':
                         break
                 except BasketException:
-                    if retry == constance.config.BASKET_RETRIES:
+                    if retry == config.BASKET_RETRIES:
                         return HttpResponseServerError()
                     else:
-                        time.sleep(constance.config.BASKET_RETRY_WAIT * retry)
+                        time.sleep(config.BASKET_RETRY_WAIT * retry)
         elif subscription_details:
             basket.unsubscribe(subscription_details['token'], email,
                                newsletters=settings.BASKET_APPS_NEWSLETTER)
@@ -184,8 +184,9 @@ class UserProfileEditForm(forms.ModelForm):
         new_username = self.cleaned_data['username']
 
         if (self.instance is not None and
-                User.objects.exclude(pk=self.instance.user.pk)
-                            .filter(username=new_username)
-                            .exists()):
+                get_user_model().objects
+                                .exclude(pk=self.instance.user.pk)
+                                .filter(username=new_username)
+                                .exists()):
             raise forms.ValidationError(_('Username already in use.'))
         return new_username

@@ -1,0 +1,51 @@
+---
+- name: Ensure replication user exists on master.
+  mysql_user:
+    name: "{{ mysql_replication_user.name }}"
+    host: "{{ mysql_replication_user.host | default('%') }}"
+    password: "{{ mysql_replication_user.password }}"
+    priv: "{{ mysql_replication_user.priv | default('*.*:REPLICATION SLAVE') }}"
+    state: present
+  when: >
+    (mysql_replication_role == 'master')
+    and mysql_replication_user
+    and (mysql_replication_master != '')
+
+- name: Check slave replication status.
+  mysql_replication: mode=getslave
+  ignore_errors: true
+  register: slave
+  when: >
+    mysql_replication_role == 'slave'
+    and (mysql_replication_master != '')
+
+- name: Check master replication status.
+  mysql_replication: mode=getmaster
+  delegate_to: "{{ mysql_replication_master }}"
+  register: master
+  when: >
+    slave|failed
+    and (mysql_replication_role == 'slave')
+    and (mysql_replication_master != '')
+
+- name: Configure replication on the slave.
+  mysql_replication:
+    mode: changemaster
+    master_host: "{{ mysql_replication_master }}"
+    master_user: "{{ mysql_replication_user.name }}"
+    master_password: "{{ mysql_replication_user.password }}"
+    master_log_file: "{{ master.File }}"
+    master_log_pos: "{{ master.Position }}"
+  ignore_errors: True
+  when: >
+    slave|failed
+    and (mysql_replication_role == 'slave')
+    and (mysql_replication_master != '')
+    and mysql_replication_user
+
+- name: Start replication.
+  mysql_replication: mode=startslave
+  when: >
+    slave|failed
+    and (mysql_replication_role == 'slave')
+    and (mysql_replication_master != '')

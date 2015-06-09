@@ -1,0 +1,13 @@
+---
+
+- name: elasticsearch-proxy | Encrypt HTTP Auth passwords
+  htpasswd: path={{elasticsearch_home}}/.htpasswd name={{item.name}} password={{item.password}}
+  with_items: elasticsearch_proxy_auth_users
+  when: elasticsearch_proxy_auth
+
+- name: elasticsearch-proxy | Configure nginx as proxy
+  template: src=nginx.conf.j2 dest=/etc/nginx/sites-available/elasticsearch.conf
+  notify: [ nginx reload ]
+
+- name: elasticsearch-proxy | Enable the service in nginx
+  file: src=/etc/nginx/sites-available/elasticsearch.conf dest=/etc/nginx/sites-enabled/elasticsearch.conf state=link

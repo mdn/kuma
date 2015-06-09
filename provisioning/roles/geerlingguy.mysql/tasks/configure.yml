@@ -1,0 +1,26 @@
+---
+- name: Copy my.cnf global MySQL configuration.
+  template:
+    src: my.cnf.j2
+    dest: "{{ mysql_config_file }}"
+    owner: root
+    group: root
+    mode: 0644
+    force: "{{ overwrite_global_mycnf }}"
+  notify: restart mysql
+
+- name: Create slow query log file (if configured).
+  shell: "touch {{ mysql_slow_query_log_file }} creates={{ mysql_slow_query_log_file }}"
+  when: mysql_slow_query_log_enabled
+
+- name: Set ownership on slow query log file (if configured).
+  file:
+    path: "{{ mysql_slow_query_log_file }}"
+    state: file
+    owner: mysql
+    group: mysql
+    mode: 0644
+  when: mysql_slow_query_log_enabled
+
+- name: Ensure MySQL is started and enabled on boot.
+  service: "name={{ mysql_daemon }} state=started enabled={{ mysql_enabled_on_startup }}"

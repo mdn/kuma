@@ -7,14 +7,11 @@ Contents:
 
    installation
    vendor
-   installation-vagrant
+   development
    celery
-   wsgi
    email
    elasticsearch
 
-   development
-   migrations
    feature-toggles
    localization
    ckeditor

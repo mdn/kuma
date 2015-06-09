@@ -8,7 +8,6 @@ import mock
 from nose.tools import eq_, ok_, assert_raises
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.test import RequestFactory
 
 from babel.dates import format_date, format_time, format_datetime
@@ -23,7 +22,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
-from ..helpers import (timesince, urlparams, yesno, urlencode,
+from ..helpers import (timesince, yesno, urlencode,
                        soapbox_messages, get_soapbox_messages,
                        datetimeformat, jsonencode, number)
 
@@ -42,27 +41,6 @@ class TestHelpers(KumaTestCase):
         context = {'request': namedtuple('R', 'locale')('en-US')}
         eq_('5,000', number(context, 5000))
         eq_('', number(context, None))
-
-    def test_urlparams_unicode(self):
-        context = {'q': u'Français'}
-        eq_(u'/foo?q=Fran%C3%A7ais', urlparams('/foo', **context))
-        context['q'] = u'\u0125help'
-        eq_(u'/foo?q=%C4%A5help', urlparams('/foo', **context))
-
-    def test_urlparams_valid(self):
-        context = {'a': 'foo', 'b': 'bar'}
-        eq_(u'/foo?a=foo&b=bar', urlparams('/foo', **context))
-
-    def test_urlparams_query_string(self):
-        eq_(u'/foo?a=foo&b=bar', urlparams('/foo?a=foo', b='bar'))
-
-    def test_urlparams_multivalue(self):
-        eq_(u'/foo?a=foo&a=bar', urlparams('/foo?a=foo&a=bar'))
-        eq_(u'/foo?a=bar', urlparams('/foo?a=foo', a='bar'))
-
-    def test_urlparams_none(self):
-        """Assert a value of None doesn't make it into the query string."""
-        eq_(u'/foo', urlparams('/foo', bar=None))
 
     def test_yesno(self):
         eq_('Yes', yesno(True))
@@ -138,7 +116,7 @@ class TestDateTimeFormat(UserTestCase):
         url_ = reverse('home')
         self.context = {'request': RequestFactory().get(url_)}
         self.context['request'].locale = u'en-US'
-        self.context['request'].user = User.objects.get(username='testuser01')
+        self.context['request'].user = self.user_model.objects.get(username='testuser01')
 
     def test_today(self):
         """Expects shortdatetime, format: Today at {time}."""
@@ -218,12 +196,12 @@ class TestDateTimeFormat(UserTestCase):
         """Shows time in user timezone."""
         value_test = datetime.fromordinal(733900)
         # Choose user with non default timezone
-        user = User.objects.get(username='admin')
+        user = self.user_model.objects.get(username='admin')
         self.context['request'].user = user
 
         # Convert tzvalue to user timezone
         default_tz = timezone(settings.TIME_ZONE)
-        user_tz = user.get_profile().timezone
+        user_tz = user.profile.timezone
         tzvalue = default_tz.localize(value_test)
         tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
 

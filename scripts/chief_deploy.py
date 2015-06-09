@@ -14,6 +14,9 @@ from commander.deploy import task, hostgroups
 
 import commander_settings as settings
 
+# Setup venv path
+venv_bin_path = os.path.join(settings.VENV_DIR, 'bin')
+os.environ['PATH'] = venv_bin_path + os.pathsep + os.environ['PATH']
 
 @task
 def update_code(ctx, tag):
@@ -34,18 +37,17 @@ def update_locales(ctx):
 @task
 def update_assets(ctx):
     with ctx.lcd(settings.SRC_DIR):
-        ctx.local("python2.6 manage.py collectstatic --noinput")
-        ctx.local("python2.6 manage.py compilejsi18n")
+        ctx.local("python2.7 manage.py collectstatic --noinput")
+        ctx.local("python2.7 manage.py compilejsi18n")
         ctx.local("./scripts/compile-stylesheets")
-        ctx.local("LANG=en_US.UTF-8 python2.6 manage.py compress_assets")
+        ctx.local("LANG=en_US.UTF-8 python2.7 manage.py compress_assets")
 
 
 @task
 def database(ctx):
     with ctx.lcd(settings.SRC_DIR):
-        ctx.local("python2.6 manage.py syncdb --noinput")                   # Django
-        ctx.local("python2.6 manage.py migrate --noinput")                  # South (new)
-        ctx.local("python2.6 manage.py update_badges")
+        ctx.local("python2.7 manage.py syncdb --noinput")                   # Django
+        ctx.local("python2.7 manage.py migrate --noinput")                  # South (new)
 
 
 @task
@@ -90,7 +92,7 @@ def update_info(ctx):
         ctx.local("git log -3")
         ctx.local("git status")
         ctx.local("git submodule status")
-        ctx.local("python2.6 ./manage.py migrate --list")
+        ctx.local("python2.7 ./manage.py migrate --list")
         with ctx.lcd("locale"):
             ctx.local("svn info")
             ctx.local("svn status")

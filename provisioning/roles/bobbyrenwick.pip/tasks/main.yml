@@ -1,0 +1,35 @@
+---
+
+# Causes an error if we try and which something that doesn't exist so use this
+# as a workaround.
+- name: check to see if pip is already installed
+  command: "{{ pip }} --version"
+  ignore_errors: true
+  changed_when: false
+  register: pip_is_installed
+
+- name: download pip
+  get_url: url=https://bootstrap.pypa.io/get-pip.py dest={{ pip_download_dest }}
+  when: pip_is_installed.rc != 0
+
+- name: install pip
+  command: "{{ python }} {{ pip_download_dest }}/get-pip.py"
+  sudo: yes
+  when: pip_is_installed.rc != 0
+
+- name: delete get-pip.py
+  file: state=absent path={{ pip_download_dest }}/get-pip.py
+  when: pip_is_installed.rc != 0
+
+# $ pip --version
+# pip 1.5.2 from /usr/local/lib/python2.7/dist-packages (python 2.7)
+- name: check to see if pip is installed at the correct version
+  shell: "{{ pip }} --version | awk '{print $2}'"
+  register: pip_installed_version
+  changed_when: false
+  when: pip_version != None
+
+- name: install required version of pip
+  command: "{{ pip }} install pip=={{ pip_version }}"
+  sudo: yes
+  when: pip_version != None and pip_installed_version.stdout != pip_version

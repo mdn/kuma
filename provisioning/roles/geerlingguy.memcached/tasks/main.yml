@@ -1,0 +1,18 @@
+---
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Copy Memcached configuration.
+  template:
+    src: memcached.conf.j2
+    dest: /etc/memcached.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart memcached
+
+- name: Ensure Memcached is started and set to run on startup.
+  service: name=memcached state=started enabled=yes

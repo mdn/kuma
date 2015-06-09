@@ -3,34 +3,33 @@ import datetime
 from nose.tools import eq_, ok_
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.core.files import temp as tempfile
 from django.utils.http import parse_http_date_safe
 
-import constance.config
+from constance import config
+from jingo.helpers import urlparams
 
 from kuma.users.tests import UserTestCase
-from kuma.wiki.models import Document
+from kuma.wiki.models import Document, DocumentAttachment
 from kuma.wiki.tests import document, revision, WikiTestCase
-from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
 
-from ..models import Attachment, AttachmentRevision, DocumentAttachment
+from ..models import Attachment, AttachmentRevision
 from ..utils import make_test_file
 
 
 class AttachmentTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
-        self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
+        self.old_allowed_types = config.WIKI_ATTACHMENT_ALLOWED_TYPES
+        config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
         super(AttachmentTests, self).setUp()
         self.client.login(username='admin', password='testpass')
 
     def tearDown(self):
         super(AttachmentTests, self).tearDown()
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
+        config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
 
     def _post_new_attachment(self):
         file_for_upload = make_test_file(
@@ -46,7 +45,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         return resp
 
     def test_legacy_redirect(self):
-        test_user = User.objects.get(username='testuser2')
+        test_user = self.user_model.objects.get(username='testuser2')
         test_file_content = 'Meh meh I am a test file.'
         test_files = (
             {'file_id': 97, 'filename': 'Canvas_rect.png',
@@ -193,7 +192,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         """
         AttachmentRevision.get_previous() should return this revisions's
         files's most recent approved revision."""
-        test_user = User.objects.get(username='testuser2')
+        test_user = self.user_model.objects.get(username='testuser2')
         a = Attachment(title='Test attachment for get_previous',
                        slug='test-attachment-for-get-previous')
         a.save()
@@ -232,10 +231,10 @@ class AttachmentTests(UserTestCase, WikiTestCase):
     def test_mime_type_filtering(self):
         """Don't allow uploads outside of the explicitly-permitted
         mime-types."""
-        #SLIGHT HACK: this requires the default set of allowed
-        #mime-types specified in settings.py. Specifically, adding
-        #'text/html' to that set will make this test fail.
-        test_user = User.objects.get(username='testuser2')
+        # SLIGHT HACK: this requires the default set of allowed
+        # mime-types specified in settings.py. Specifically, adding
+        # 'text/html' to that set will make this test fail.
+        test_user = self.user_model.objects.get(username='testuser2')
         a = Attachment(title='Test attachment for file type filter',
                        slug='test-attachment-for-file-type-filter')
         a.save()

@@ -1,0 +1,6 @@
+---
+- name: Test the Node.js role
+  hosts: all
+  sudo: yes
+  tasks:
+    - include: "tasks/main.yml"

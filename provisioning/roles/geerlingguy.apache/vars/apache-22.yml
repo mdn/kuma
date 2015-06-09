@@ -1,0 +1,11 @@
+---
+apache_vhosts_version: "2.2"
+apache_ports_configuration_items:
+  - {
+    regexp: "^Listen ",
+    line: "Listen {{ apache_listen_port }}"
+  }
+  - {
+    regexp: "^NameVirtualHost ",
+    line: "NameVirtualHost *:{{ apache_listen_port }}"
+  }

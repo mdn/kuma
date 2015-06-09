@@ -1,0 +1,49 @@
+---
+- name: Ensure vagrant home owner/group is correct
+  file:
+    path: /home/vagrant
+    owner: vagrant
+    group: vagrant
+    mode: 0755
+    state: directory
+
+- name: Ensure local settings files
+  copy:
+    src: "vagrant/{{ item }}"
+    dest: "/home/vagrant/src/{{ item }}"
+  with_items:
+    - settings_local.py
+    - kumascript_settings_local.json
+
+- name: Bash profile
+  copy:
+    src: bash_profile
+    dest: /home/vagrant/.bash_profile
+    owner: vagrant
+    group: vagrant
+    mode: 0644
+
+- name: Ensure bin directory owner/group
+  file:
+    path: /home/vagrant/bin
+    owner: vagrant
+    group: vagrant
+    state: directory
+    mode: 0755
+
+- name: Ensure owner/group of the log folder are correct
+  file:
+    path: /home/vagrant/logs
+    owner: vagrant
+    group: vagrant
+    state: directory
+    mode: 0777
+
+- name: htaccess links
+  file:
+    src: "/home/vagrant/src/configs/htaccess"
+    path: "{{ item }}"
+    state: link
+  with_items:
+    - /home/vagrant/src/webroot/.htaccess
+    - /var/www/.htaccess

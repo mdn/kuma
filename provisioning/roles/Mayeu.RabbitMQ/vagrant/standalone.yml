@@ -1,0 +1,24 @@
+---
+- hosts: rabbit-standalone
+  roles:
+    - role: rabbitmq
+      rabbitmq_vhost_definitions:
+        - name: sensu
+      rabbitmq_users_definitions:
+        - vhost:    sensu
+          user:     sensu
+          password: placeholder
+      rabbitmq_federation: true
+      rabbitmq_federation_configuration:
+        - name:  test
+          vhost: sensu
+          value: '{"uri" : "amqp://server-name", "expires" : 3600000}'
+      rabbitmq_policy_configuration:
+        - name:    policy
+          pattern: '.'
+          vhost:   sensu
+          tags:    "federation-upstream-set=all"
+  tasks:
+    # Flush outstanding handlers before tests.
+    - meta:    flush_handlers
+    - include: test_standalone.yml

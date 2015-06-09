@@ -37,7 +37,7 @@ key_link.short_description = 'Key'
 def content_object_link(self):
     obj = self.content_object
     url_key = 'admin:%s_%s_change' % (obj._meta.app_label,
-                                      obj._meta.module_name)
+                                      obj._meta.model_name)
     url = reverse(url_key, args=[obj.id])
     return '<a href="%s">%s (#%s)</a>' % (url, self.content_type, obj.pk)
 

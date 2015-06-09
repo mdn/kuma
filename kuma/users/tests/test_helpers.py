@@ -2,7 +2,6 @@ import urllib
 from hashlib import md5
 
 from django.conf import settings
-from django.contrib.auth.models import User
 
 from jinja2 import Markup
 from nose.tools import eq_, ok_
@@ -16,7 +15,7 @@ class HelperTestCase(UserTestCase):
 
     def setUp(self):
         super(HelperTestCase, self).setUp()
-        self.u = User.objects.get(username=u'testuser')
+        self.u = self.user_model.objects.get(username=u'testuser')
 
     def test_profile_default_gravatar(self):
         d_param = urllib.urlencode({'d': settings.DEFAULT_AVATAR})
@@ -37,7 +36,7 @@ class HelperTestCase(UserTestCase):
 
     def test_user_list(self):
         user(pk=400000, username='testuser3', save=True)
-        users = User.objects.all()
+        users = self.user_model.objects.all()
         list = user_list(users)
         assert isinstance(list, Markup)
         fragment = pq(list)

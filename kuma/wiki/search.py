@@ -79,7 +79,7 @@ class WikiDocumentType(document.DocType):
             'summary': obj.get_summary(strip_markup=True),
             'locale': obj.locale,
             'modified': obj.modified,
-            'content': strip_tags(obj.rendered_html),
+            'content': strip_tags(obj.rendered_html or ''),
             'tags': list(obj.tags.values_list('name', flat=True)),
             'kumascript_macros': obj.extract_kumascript_macro_names(),
             'css_classnames': obj.extract_css_classnames(),
@@ -275,10 +275,11 @@ class WikiDocumentType(document.DocType):
                          for exclude in cls.exclude_slugs]))
 
     def get_excerpt(self):
-        if getattr(self, 'highlight', False):
+        highlighted = self.meta.get('highlight')
+        if highlighted:
             for excerpt_field in self.excerpt_fields:
-                if excerpt_field in self.highlight:
-                    return u'…'.join(self.highlight[excerpt_field])
+                if excerpt_field in highlighted:
+                    return u'…'.join(highlighted[excerpt_field])
         return self.summary
 
     @classmethod

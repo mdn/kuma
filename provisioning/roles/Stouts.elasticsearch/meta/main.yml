@@ -1,0 +1,20 @@
+---
+
+dependencies: []
+
+galaxy_info:
+  author: klen
+  company: Stouts
+  description: Manage Elasticsearch (installation, plugins)
+  license: MIT
+  min_ansible_version: 1.6
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  categories:
+  - cloud
+  - development
+  - database:nosql
+  - system
+  - web

@@ -6,8 +6,8 @@ from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
 from django.utils.encoding import iri_to_uri, smart_str
 
 import tower
+from jingo.helpers import urlparams
 
-from .helpers import urlparams
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
 from .views import handler403
 

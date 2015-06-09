@@ -1,5 +1,4 @@
-# This Python file uses the following encoding: utf-8
-# see also: http://www.python.org/dev/peps/pep-0263/
+# -*- coding: utf-8 -*-
 from urlparse import urljoin
 
 import bleach
@@ -11,7 +10,7 @@ from pyquery import PyQuery as pq
 from kuma.core.tests import KumaTestCase
 from kuma.users.tests import UserTestCase
 import kuma.wiki.content
-from kuma.wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
+from kuma.wiki.content import (CodeSyntaxFilter,
                                SectionTOCFilter, SectionIDFilter,
                                H2TOCFilter, H3TOCFilter,
                                SECTION_TAGS, get_seo_description,
@@ -98,21 +97,21 @@ class ContentSectionToolTests(UserTestCase):
                       .serialize())
 
         expected = """
-        <h1 class="header1" id="Header_One">Header One</h1>
+        <h1 id="Header_One" class="header1">Header One</h1>
         <h1 id="Header_One_2">Header One</h1>
         <h1 id="Header_One_3">Header One</h1>
         <h1 id="Header_Two">Header Two</h1>
         <h1 id="someId" name="someId">Header Two</h1>
         """
 
-        eq_(result_src, expected)
+        self.assertHTMLEqual(result_src, expected)
 
         # Ensure 1, 2 doesn't turn into 3, 4
         result_src = (kuma.wiki.content
                       .parse(expected)
                       .injectSectionIDs()
                       .serialize())
-        eq_(result_src, expected)
+        self.assertHTMLEqual(result_src, expected)
 
     def test_simple_implicit_section_extract(self):
         doc_src = """
@@ -547,49 +546,6 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(SectionTOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    def test_dekiscript_macro_conversion(self):
-        doc_src = u"""
-            <span>Just a span</span>
-            <span class="notascript">Hi there</span>
-            <li><span class="script">Warning("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong>strongly</strong> discouraged!")</span></li>
-            <li><span class="script">Note("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong class="important">strongly</strong> discouraged!")</span></li>
-            <li><span class="script">MixedCaseName('parameter1', 'parameter2')</span></li>
-            <li><span class="script">template.lowercasename('border')</span></li>
-            <li><span class="script">Template.UpperCaseTemplate("foo")</span></li>
-            <li><span class="script">wiki.template('英語版章題', [ "Reusing tabs" ])</span></li>
-            <li><span class="script">template("non-standard_inline", ["Reusing tabs", "YAY"])</span></li>
-            <li><span class="script">wiki.template('英語版章題')</span></li>
-            <li><span class="script">template("non-standard_inline")</span></li>
-        """
-        expected = u"""
-            <span>Just a span</span>
-            <span class="notascript">Hi there</span>
-            <li>{{ Warning("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong>strongly</strong> discouraged!") }}</li>
-            <li>{{ Note("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong class="important">strongly</strong> discouraged!") }}</li>
-            <li>{{ MixedCaseName('parameter1', 'parameter2') }}</li>
-            <li>{{ lowercasename('border') }}</li>
-            <li>{{ UpperCaseTemplate("foo") }}</li>
-            <li>{{ 英語版章題("Reusing tabs") }}</li>
-            <li>{{ non-standard_inline("Reusing tabs", "YAY") }}</li>
-            <li>{{ 英語版章題() }}</li>
-            <li>{{ non-standard_inline() }}</li>
-        """
-
-        # Check line-by-line, to help work out any issues failure-by-failure
-        doc_src_lines = doc_src.split("\n")
-        expected_lines = expected.split("\n")
-        for i in range(0, len(doc_src_lines)):
-            result = (kuma.wiki.content
-                      .parse(doc_src_lines[i])
-                      .filter(DekiscriptMacroFilter).serialize())
-            eq_(normalize_html(expected_lines[i]), normalize_html(result))
-
-        # But, the whole thing should work in the filter, as well.
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .filter(DekiscriptMacroFilter).serialize())
-        eq_(normalize_html(expected), normalize_html(result))
-
     def test_noinclude(self):
         doc_src = u"""
             <div class="noinclude">{{ XULRefAttr() }}</div>
@@ -912,9 +868,10 @@ class ContentSectionToolTests(UserTestCase):
             doc_line = doc_lines[idx]
             expected_line = expected_lines[idx]
             result_line = (kuma.wiki.content.parse(doc_line)
-                          .annotateLinks(base_url=vars['base_url'])
-                          .serialize())
-            eq_(normalize_html(expected_line), normalize_html(result_line))
+                                            .annotateLinks(
+                                                base_url=vars['base_url'])
+                                            .serialize())
+            self.assertHTMLEqual(normalize_html(expected_line), normalize_html(result_line))
 
     @attr('bug821986')
     def test_editor_safety_filter(self):
@@ -1168,18 +1125,20 @@ class GetSEODescriptionTests(KumaTestCase):
 
     def test_html_elements_spaces(self):
         # No spaces with html tags
-        content = (u'<p><span class="seoSummary">The <strong>Document Object '
-             'Model'
-             '</strong> (<strong>DOM</strong>) is an API for '
-             '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
-             '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
-             'documents. It provides a structural representation of the '
-             'document, enabling you to modify its content and visual '
-             'presentation by using a scripting language such as '
-             '<a href="/en-US/docs/JavaScript" '
-             'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
-             'JavaScript</a>.</span></p>')
-        expected = ('The Document Object Model (DOM) is an API for HTML and '
+        content = (
+            u'<p><span class="seoSummary">The <strong>Document Object '
+            'Model'
+            '</strong> (<strong>DOM</strong>) is an API for '
+            '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
+            '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
+            'documents. It provides a structural representation of the '
+            'document, enabling you to modify its content and visual '
+            'presentation by using a scripting language such as '
+            '<a href="/en-US/docs/JavaScript" '
+            'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
+            'JavaScript</a>.</span></p>')
+        expected = (
+            'The Document Object Model (DOM) is an API for HTML and '
             'XML'
             ' documents. It provides a structural representation of the'
             ' document, enabling you to modify its content and visual'

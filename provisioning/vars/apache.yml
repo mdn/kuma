@@ -1,0 +1,12 @@
+apache_create_vhosts: false
+apache_mods_enabled:
+  - env.load
+  - setenvif.load
+  - headers.load
+  - expires.load
+  - alias.load
+  - rewrite.load
+  - proxy.load
+  - proxy_http.load
+  - vhost_alias.load
+  - ssl.load

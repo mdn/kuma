@@ -1,7 +1,8 @@
+import json
+
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
-from django.utils import simplejson as json
 
 
 class LocaleField(models.CharField):
@@ -14,7 +15,8 @@ class LocaleField(models.CharField):
 
 
 class JSONField(models.TextField):
-    """JSONField is a generic textfield that neatly serializes/unserializes
+    """
+    JSONField is a generic textfield that neatly serializes/unserializes
     JSON objects seamlessly
     see: http://djangosnippets.org/snippets/1478/
     """

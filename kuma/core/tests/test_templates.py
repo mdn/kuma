@@ -8,6 +8,7 @@ import jingo
 
 from kuma.core.tests import KumaTestCase
 
+
 def setup():
     jingo.load_helpers()
 

@@ -7,23 +7,18 @@ from babel import localedata
 import jinja2
 
 from django.conf import settings
-from django.utils.tzinfo import LocalTimezone
+
+from django.utils.timezone import get_default_timezone
 
 import jingo
 from jingo import register
 from tower import ungettext, ugettext as _
 from taggit.models import TaggedItem
-from threadedcomments.models import ThreadedComment
-from threadedcomments.forms import ThreadedCommentForm
-from threadedcomments.templatetags import threadedcommentstags
-import threadedcomments.views
 
 from kuma.core.cache import memcache
 from kuma.core.urlresolvers import reverse
 from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
-
-threadedcommentstags.reverse = reverse
 
 
 TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
@@ -108,11 +103,11 @@ def submission_thumb(submission, extra_class=None, thumb_width="200",
     # TODO: Move to a constant or DB table? Too much view stuff here?
     flags_meta = {
         # flag name      thumb class     flag description
-        'firstplace':  ('first-place',  _('First Place')),
+        'firstplace': ('first-place', _('First Place')),
         'secondplace': ('second-place', _('Second Place')),
-        'thirdplace':  ('third-place',  _('Third Place')),
-        'finalist':    ('finalist',     _('Finalist')),
-        'featured':    ('featured',     _('Featured')),
+        'thirdplace': ('third-place', _('Third Place')),
+        'finalist': ('finalist', _('Finalist')),
+        'featured': ('featured', _('Featured')),
     }
 
     # If there are any flags, pass them onto the template. Special treatment
@@ -136,7 +131,8 @@ def submission_listing_cache_key(*args, **kw):
         memcache.set(DEMOS_CACHE_NS_KEY, ns_key)
     full_path = args[0].get_full_path()
     username = args[0].user.username
-    return 'demos_%s:%s' % (ns_key,
+    return 'demos_%s:%s' % (
+        ns_key,
         hashlib.md5(full_path + username).hexdigest())
 
 
@@ -285,58 +281,6 @@ def date_diff(timestamp, to=None):
         return date_str + " ago"
 
 
-# TODO: Maybe just register the template tag functions in the jingo environment
-# directly, rather than building adapter functions?
-@register.function
-def get_threaded_comment_flat(content_object, tree_root=0):
-    return ThreadedComment.public.get_tree(content_object, root=tree_root)
-
-
-@register.function
-def get_threaded_comment_tree(content_object, tree_root=0):
-    """Convert the flat list with depth indices into a true tree structure for
-    recursive template display"""
-    root = dict(children=[])
-    parent_stack = [root, ]
-
-    flat = ThreadedComment.public.get_tree(content_object, root=tree_root)
-    for comment in flat:
-        c = dict(comment=comment, children=[])
-        if (comment.depth > len(parent_stack) - 1 and
-            len(parent_stack[-1]['children'])):
-            parent_stack.append(parent_stack[-1]['children'][-1])
-        while comment.depth < len(parent_stack) - 1:
-            parent_stack.pop(-1)
-        parent_stack[-1]['children'].append(c)
-
-    return root
-
-
-@register.inclusion_tag('demos/elements/comments_tree.html')
-def comments_tree(request, object, root):
-    return locals()
-
-
-@register.function
-def get_comment_url(content_object, parent=None):
-    return threadedcommentstags.get_comment_url(content_object, parent)
-
-
-@register.function
-def get_threaded_comment_form():
-    return ThreadedCommentForm()
-
-
-@register.function
-def auto_transform_markup(comment):
-    return threadedcommentstags.auto_transform_markup(comment)
-
-
-@register.function
-def can_delete_comment(comment, user):
-    return threadedcomments.views.can_delete_comment(comment, user)
-
-
 @register.filter
 def timesince(d, now=None):
     """Take two datetime objects and return the time between d and now as a
@@ -369,10 +313,10 @@ def timesince(d, now=None):
         (60, lambda n: ungettext('%(number)d minute ago',
                                  '%(number)d minutes ago', n)),
         (1, lambda n: ungettext('%(number)d second ago',
-                                 '%(number)d seconds ago', n))]
+                                '%(number)d seconds ago', n))]
     if not now:
         if d.tzinfo:
-            now = datetime.datetime.now(LocalTimezone(d))
+            now = datetime.datetime.now(get_default_timezone())
         else:
             now = datetime.datetime.now()
 

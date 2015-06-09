@@ -1,9 +1,22 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns('kuma.landing.views',
-    url(r'^$', 'home', name='home'),
-    url(r'^fellowship/?$', 'fellowship', name='fellowship'),
-    url(r'^promote/?$', 'promote_buttons', name='promote'),
-    url(r'^promote/buttons/?$', 'promote_buttons', name='promote_buttons'),
-    url(r'^contribute\.json$', 'contribute_json', name='contribute_json'),
-)
+from . import views
+
+
+urlpatterns = [
+    url(r'^$',
+        views.home,
+        name='home'),
+    url(r'^fellowship/?$',
+        views.fellowship,
+        name='fellowship'),
+    url(r'^promote/?$',
+        views.promote_buttons,
+        name='promote'),
+    url(r'^promote/buttons/?$',
+        views.promote_buttons,
+        name='promote_buttons'),
+    url(r'^contribute\.json$',
+        views.contribute_json,
+        name='contribute_json'),
+]

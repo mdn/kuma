@@ -4,9 +4,7 @@ from django.core import serializers
 from django.db import models
 
 import bleach
-import constance.config
-
-from kuma.core.cache import memcache
+from constance import config
 
 from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
                         TEMPLATE_TITLE_PREFIX)
@@ -16,29 +14,29 @@ from .queries import TransformQuerySet
 
 class TransformManager(models.Manager):
 
-    def get_query_set(self):
+    def get_queryset(self):
         return TransformQuerySet(self.model)
 
 
 class BaseDocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
-        allowed_hosts = constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
+        allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
         out = (parse_content(content_in)
                .filterIframeHosts(allowed_hosts)
                .serialize())
 
         if use_constance_bleach_whitelists:
-            tags = constance.config.BLEACH_ALLOWED_TAGS
-            attributes = constance.config.BLEACH_ALLOWED_ATTRIBUTES
-            styles = constance.config.BLEACH_ALLOWED_STYLES
+            tags = config.BLEACH_ALLOWED_TAGS
+            attributes = config.BLEACH_ALLOWED_ATTRIBUTES
+            styles = config.BLEACH_ALLOWED_STYLES
         else:
             tags = ALLOWED_TAGS
             attributes = ALLOWED_ATTRIBUTES
             styles = ALLOWED_STYLES
 
         out = bleach.clean(out, attributes=attributes, tags=tags,
-                           styles=styles, skip_gauntlet=True)
+                           styles=styles)
         return out
 
     def get_by_natural_key(self, locale, slug):
@@ -202,16 +200,16 @@ class DocumentManager(BaseDocumentManager):
     """
     The actual manager, which filters to show only non-deleted pages.
     """
-    def get_query_set(self):
-        return super(DocumentManager, self).get_query_set().filter(deleted=False)
+    def get_queryset(self):
+        return super(DocumentManager, self).get_queryset().filter(deleted=False)
 
 
 class DeletedDocumentManager(BaseDocumentManager):
     """
     Specialized manager for working with deleted pages.
     """
-    def get_query_set(self):
-        return super(DeletedDocumentManager, self).get_query_set().filter(deleted=True)
+    def get_queryset(self):
+        return super(DeletedDocumentManager, self).get_queryset().filter(deleted=True)
 
 
 class DocumentAdminManager(BaseDocumentManager):
@@ -222,8 +220,8 @@ class DocumentAdminManager(BaseDocumentManager):
 
 
 class TaggedDocumentManager(models.Manager):
-    def get_query_set(self):
-        base_qs = super(TaggedDocumentManager, self).get_query_set()
+    def get_queryset(self):
+        base_qs = super(TaggedDocumentManager, self).get_queryset()
         return base_qs.filter(content_object__deleted=False)
 
 

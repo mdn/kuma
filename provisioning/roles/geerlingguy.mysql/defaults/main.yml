@@ -1,0 +1,87 @@
+---
+mysql_user_home: /root
+mysql_root_username: root
+mysql_root_password: root
+
+mysql_enabled_on_startup: yes
+
+# update my.cnf. each time role is run? yes | no
+overwrite_global_mycnf: yes
+
+# Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
+# for RedHat systems (and derivatives).
+mysql_enablerepo: ""
+
+# Define a custom list of packages to install; if none provided, the default
+# package list from vars/[OS-family].yml will be used.
+# mysql_packages:
+#   - mysql
+#   - mysql-server
+#   - MySQL-python
+
+# MySQL connection settings.
+mysql_port: "3306"
+mysql_bind_address: '0.0.0.0'
+mysql_datadir: /var/lib/mysql
+
+# Slow query log settings.
+mysql_slow_query_log_enabled: no
+mysql_slow_query_log_file: /var/log/mysql-slow.log
+mysql_slow_query_time: 2
+
+# Memory settings (default values optimized ~512MB RAM).
+mysql_key_buffer_size: "256M"
+mysql_max_allowed_packet: "64M"
+mysql_table_open_cache: "256"
+mysql_sort_buffer_size: "1M"
+mysql_read_buffer_size: "1M"
+mysql_read_rnd_buffer_size: "4M"
+mysql_myisam_sort_buffer_size: "64M"
+mysql_thread_cache_size: "8"
+mysql_query_cache_size: "16M"
+
+# Other settings.
+mysql_wait_timeout: 28800
+
+# Try number of CPU's * 2 for thread_concurrency.
+mysql_thread_concurrency: 2
+
+# InnoDB settings.
+# Set .._buffer_pool_size up to 80% of RAM but beware of setting too high.
+mysql_innodb_file_per_table: "1"
+mysql_innodb_buffer_pool_size: "256M"
+mysql_innodb_additional_mem_pool_size: "20M"
+# Set .._log_file_size to 25% of buffer pool size.
+mysql_innodb_log_file_size: "64M"
+mysql_innodb_log_buffer_size: "8M"
+mysql_innodb_flush_log_at_trx_commit: "1"
+mysql_innodb_lock_wait_timeout: 50
+
+# mysqldump settings.
+mysql_mysqldump_max_allowed_packet: "64M"
+
+# Logging settings.
+mysql_log: ""
+mysql_log_error: /var/log/mysql.err
+mysql_syslog_tag: mysql
+
+# Databases.
+mysql_databases: []
+# Full example:
+# mysql_databases:
+#   - { name: example, collation: utf8_general_ci, encoding: utf8, replicate: 1 }
+
+# Users
+mysql_users: []
+# Full Example:
+# mysql_users:
+#   - { name: example, host: 127.0.0.1, password: secret, priv: *.*:USAGE }
+
+# Replication settings (replication is only enabled if master/user have values).
+mysql_server_id: "1"
+mysql_max_binlog_size: "100M"
+mysql_expire_logs_days: "10"
+mysql_replication_role: ''
+mysql_replication_master: ''
+# Same keys as `mysql_users` above.
+mysql_replication_user: []

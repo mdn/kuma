@@ -1,4 +1,4 @@
-# This Python file uses the following encoding: utf-8
+# -*- coding: utf-8 -*-
 from datetime import datetime
 import time
 import urllib
@@ -11,16 +11,15 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.utils.http import urlquote
 from django.test.utils import override_settings
 
-import constance.config
+from constance import config
+from jingo.helpers import urlparams
 from waffle.models import Flag
 
-from kuma.core.helpers import urlparams
 from kuma.core.tests import SkippedTestCase, post, get
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.events import EditDocumentEvent
@@ -65,12 +64,12 @@ class DocumentTests(UserTestCase, WikiTestCase):
         r = revision(save=True, content='Some text.', is_approved=True)
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
-        ok_(constance.config.KUMA_CUSTOM_CSS_PATH not in response.content)
+        ok_(config.KUMA_CUSTOM_CSS_PATH not in response.content)
 
         Flag.objects.create(name='enable_customcss', everyone=True)
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
-        ok_(constance.config.KUMA_CUSTOM_CSS_PATH in response.content)
+        ok_(config.KUMA_CUSTOM_CSS_PATH in response.content)
 
     @attr("breadcrumbs")
     def test_document_breadcrumbs(self):
@@ -114,8 +113,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
                 doc('article#wikiArticle').text())
             or
             ("Cet article n'a pas encore de contenu" in
-                doc('article#wikiArticle').text())
-           )
+                doc('article#wikiArticle').text()))
 
     def test_document_fallback_with_translation(self):
         """The document template falls back to English if translation exists
@@ -262,7 +260,7 @@ class RevisionTests(UserTestCase, WikiTestCase):
         eq_('Revision %s of %s' % (r.id, d.title), doc('h1').text())
         eq_(r.content,
             doc('#doc-source pre').text())
-        eq_('Created: Jan 1, 2011 12:00:00 AM',
+        eq_('Created: Jan 1, 2011, 12:00:00 AM',
             doc('div.revision-info li.revision-created').text().strip())
 
 
@@ -304,7 +302,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         ok_(len(doc('.btn-preview')) > 0)
 
         response = self.client.get(reverse('wiki.new_document') +
-                                                    '?slug=' + TEMPLATE_TITLE_PREFIX)
+                                   '?slug=' + TEMPLATE_TITLE_PREFIX)
         doc = pq(response.content)
         eq_(0, len(doc('.btn-preview')))
 
@@ -350,7 +348,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         data = new_document_data(['tag1', 'tag2'])
         locale = 'es'
         self.client.post(reverse('wiki.new_document', locale=locale),
-                                    data, follow=True)
+                         data, follow=True)
         d = Document.objects.get(title=data['title'])
         eq_(locale, d.locale)
 
@@ -483,7 +481,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                                            args=[self.d.full_path, r.id]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(doc('#id_content')[0].value, r.content)
+        self.assertHTMLEqual(doc('#id_content')[0].value.strip(),
+                             r.content.strip())
 
     @override_settings(CELERY_ALWAYS_EAGER=True)
     @mock.patch.object(Site.objects, 'get_current')
@@ -508,7 +507,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
             reverse('wiki.edit_document', args=[self.d.full_path]),
             {'summary': 'A brief summary', 'content': 'The article content',
              'keywords': 'keyword1 keyword2', 'slug': self.d.slug, 'toc_depth': 1,
-             'based_on': self.d.current_revision.id, 'form': 'rev',})
+             'based_on': self.d.current_revision.id, 'form': 'rev'})
         ok_(response.status_code in (200, 302))
         eq_(2, self.d.revisions.count())
         new_rev = self.d.revisions.order_by('-id')[0]
@@ -523,7 +522,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         # and stop being sent.
         eq_(2, len(mail.outbox))
         first_edit_email = mail.outbox[0]
-        expected_to = [constance.config.EMAIL_LIST_FOR_FIRST_EDITS]
+        expected_to = [config.EMAIL_LIST_FOR_FIRST_EDITS]
         expected_subject = u'[MDN] %(username)s made their first edit, to: %(title)s' % ({'username': new_rev.creator.username, 'title': self.d.title})
         eq_(expected_subject, first_edit_email.subject)
         eq_(expected_to, first_edit_email.to)
@@ -531,13 +530,13 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         edited_email = mail.outbox[1]
         expected_to = [u'sam@example.com']
         expected_subject = u'[MDN] Page "%s" changed by %s' % (self.d.title,
-                                                     new_rev.creator)
+                                                               new_rev.creator)
         eq_(expected_subject, edited_email.subject)
         eq_(expected_to, edited_email.to)
         ok_('%s changed %s.' % (unicode(self.username), unicode(self.d.title))
             in edited_email.body)
         ok_(u'https://testserver/en-US/docs/%s$history?utm_campaign=' %
-                                                                    self.d.slug
+            self.d.slug
             in edited_email.body)
 
     @mock.patch.object(EditDocumentEvent, 'fire')
@@ -582,7 +581,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         data['form'] = 'rev'
         self.client.post(reverse('wiki.edit_document',
                                  args=[self.d.full_path]),
-                        data)
+                         data)
         result_tags = list(self.d.tags.values_list('name', flat=True))
         result_tags.sort()
         eq_(tags, result_tags)
@@ -611,16 +610,12 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         """Make sure we can save a document with translations."""
         # Create a translation
         _create_document(title='Document Prueba', parent=self.d,
-                             locale='es')
+                         locale='es')
         # Make sure is_localizable hidden field is rendered
         response = get(self.client, 'wiki.edit_document',
                        args=[self.d.full_path])
         eq_(200, response.status_code)
         doc = pq(response.content)
-        #is_localizable = doc('input[name="is_localizable"]')
-        #eq_(1, len(is_localizable))
-        #eq_('True', is_localizable[0].attrib['value'])
-        # And make sure we can update the document
         data = new_document_data()
         new_title = 'A brand new title'
         data.update(title=new_title)
@@ -706,7 +701,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         """
         en_tag = DocumentTag(name='CSS Reference', slug='css-reference')
         en_tag.save()
-        fr_tag = DocumentTag(name='CSS Référence', slug='css-reference_1')
+        fr_tag = DocumentTag(name=u'CSS Référence', slug='css-reference_1')
         fr_tag.save()
         self.doc.tags.add(en_tag)
         self.doc.tags.add(fr_tag)
@@ -725,11 +720,11 @@ class CompareRevisionTests(UserTestCase, WikiTestCase):
         super(CompareRevisionTests, self).setUp()
         self.document = _create_document()
         self.revision1 = self.document.current_revision
-        user = User.objects.get(username='testuser')
+        user = self.user_model.objects.get(username='testuser')
         self.revision2 = Revision(summary="lipsum",
-                                 content='<div>Lorem Ipsum Dolor</div>',
-                                 keywords='kw1 kw2',
-                                 document=self.document, creator=user)
+                                  content='<div>Lorem Ipsum Dolor</div>',
+                                  keywords='kw1 kw2',
+                                  document=self.document, creator=user)
         self.revision2.save()
 
         self.client.login(username='admin', password='testpass')
@@ -750,7 +745,7 @@ class CompareRevisionTests(UserTestCase, WikiTestCase):
         response = self.client.get(url)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_('Dolor',  doc('span.diff_add').text())
+        eq_('Dolor', doc('span.diff_add').text())
 
     def test_compare_revisions_invalid_to_int(self):
         """Provide invalid 'to' int for revision ids."""
@@ -892,9 +887,9 @@ class TranslateTests(UserTestCase, WikiTestCase):
 
         # Create and approve a new en-US revision
         rev_enUS = Revision(summary="lipsum",
-                       content='lorem ipsum dolor sit amet new',
-                       keywords='kw1 kw2',
-                       document=self.d, creator_id=8, is_approved=True)
+                            content='lorem ipsum dolor sit amet new',
+                            keywords='kw1 kw2',
+                            document=self.d, creator_id=8, is_approved=True)
         rev_enUS.save()
 
         # Verify the form renders with correct content
@@ -1014,8 +1009,8 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     if trans_lang:
         translate_path = doc.slug
         uri = urllib.quote(reverse('wiki.translate',
-                                             locale=trans_lang,
-                                             args=[translate_path]))
+                                   locale=trans_lang,
+                                   args=[translate_path]))
     else:
         uri = reverse(view, locale=locale, args=[doc.full_path])
     response = client.get(uri)
@@ -1084,7 +1079,7 @@ class HelpfulVoteTests(UserTestCase, SkippedTestCase):
     def test_vote_yes(self):
         """Test voting helpful."""
         d = self.document
-        user = User.objects.get(username='testuser')
+        user = self.user_model.objects.get(username='testuser')
         self.client.login(username='testuser', password='testpass')
         response = post(self.client, 'wiki.document_vote',
                         {'helpful': 'Yes'}, args=[self.document.slug])
@@ -1096,7 +1091,7 @@ class HelpfulVoteTests(UserTestCase, SkippedTestCase):
     def test_vote_no(self):
         """Test voting not helpful."""
         d = self.document
-        user = User.objects.get(username='testuser')
+        user = self.user_model.objects.get(username='testuser')
         self.client.login(username='testuser', password='testpass')
         response = post(self.client, 'wiki.document_vote',
                         {'not-helpful': 'No'}, args=[d.slug])
@@ -1121,7 +1116,7 @@ class HelpfulVoteTests(UserTestCase, SkippedTestCase):
         d = self.document
         url = reverse('wiki.document_vote', args=[d.slug])
         response = self.client.post(url, data={'helpful': 'Yes'},
-                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
         eq_('{"message": "Glad to hear it &mdash; thanks for the feedback!"}',
             response.content)

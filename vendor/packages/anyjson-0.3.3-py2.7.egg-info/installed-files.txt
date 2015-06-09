@@ -1,0 +1,8 @@
+../anyjson/__init__.py
+../anyjson/__init__.pyc
+./
+dependency_links.txt
+not-zip-safe
+PKG-INFO
+SOURCES.txt
+top_level.txt

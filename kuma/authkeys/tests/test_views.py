@@ -1,7 +1,8 @@
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from django.contrib.auth.models import Permission, User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
 from django.test import TestCase
 
 from kuma.core.urlresolvers import reverse
@@ -16,7 +17,7 @@ class RefetchingUserTestCase(TestCase):
     def _cache_bust_user_perms(self):
         # method to cache-bust the user perms by re-fetching from DB
         # https://docs.djangoproject.com/en/1.7/topics/auth/default/#permissions-and-authorization
-        self.user = User.objects.get(username=self.user.username)
+        self.user = get_user_model().objects.get(username=self.user.username)
 
 
 class KeyViewsTest(RefetchingUserTestCase):

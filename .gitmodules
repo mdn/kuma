@@ -6,7 +6,7 @@
 	url = git://github.com/mozilla/basket-client.git
 [submodule "vendor/src/bleach"]
 	path = vendor/src/bleach
-	url = git://github.com/lmorchard/bleach.git
+	url = git://github.com/jsocol/bleach.git
 [submodule "vendor/src/commonware"]
 	path = vendor/src/commonware
 	url = git://github.com/jsocol/commonware.git
@@ -19,27 +19,15 @@
 [submodule "vendor/src/django-appconf"]
 	path = vendor/src/django-appconf
 	url = git://github.com/jezdez/django-appconf.git
-[submodule "vendor/src/django-badger"]
-	path = vendor/src/django-badger
-	url = git://github.com/mozilla/django-badger.git
 [submodule "vendor/src/django-constance"]
 	path = vendor/src/django-constance
 	url = git://github.com/comoga/django-constance.git
 [submodule "vendor/src/django-extensions"]
 	path = vendor/src/django-extensions
 	url = git://github.com/django-extensions/django-extensions.git
-[submodule "vendor/src/django-grappelli"]
-	path = vendor/src/django-grappelli
-	url = git://github.com/sehmaschine/django-grappelli.git
 [submodule "vendor/src/django-memcached-hashring"]
 	path = vendor/src/django-memcached-hashring
 	url = git://github.com/jezdez/django-memcached-hashring.git
-[submodule "vendor/src/django-mozilla-product-details"]
-	path = vendor/src/django-mozilla-product-details
-	url = git://github.com/fwenzel/django-mozilla-product-details.git
-[submodule "vendor/src/django-multidb-router"]
-	path = vendor/src/django-multidb-router
-	url = git://github.com/jbalogh/django-multidb-router.git
 [submodule "vendor/src/django-nose"]
 	path = vendor/src/django-nose
 	url = git://github.com/django-nose/django-nose.git
@@ -60,7 +48,7 @@
 	url = git://github.com/lmorchard/django-teamwork.git
 [submodule "vendor/src/django-tidings"]
 	path = vendor/src/django-tidings
-	url = git://github.com/erikrose/django-tidings.git
+	url = git://github.com/mozilla/django-tidings.git
 [submodule "vendor/src/django-timezones"]
 	path = vendor/src/django-timezones
 	url = git://github.com/brosner/django-timezones.git
@@ -70,9 +58,6 @@
 [submodule "vendor/src/elasticsearch-py"]
 	path = vendor/src/elasticsearch-py
 	url = git://github.com/elasticsearch/elasticsearch-py.git
-[submodule "vendor/src/elasticsearch-dsl-py"]
-       path = vendor/src/elasticsearch-dsl-py
-       url = git://github.com/elasticsearch/elasticsearch-dsl-py.git
 [submodule "vendor/src/hash_ring"]
 	path = vendor/src/hash_ring
 	url = git://github.com/Doist/hash_ring.git
@@ -106,9 +91,6 @@
 [submodule "vendor/src/requests-oauthlib"]
 	path = vendor/src/requests-oauthlib
 	url = git://github.com/requests/requests-oauthlib.git
-[submodule "vendor/src/simplejson"]
-	path = vendor/src/simplejson
-	url = git://github.com/simplejson/simplejson.git
 [submodule "vendor/src/tower"]
 	path = vendor/src/tower
 	url = git://github.com/clouserw/tower.git
@@ -142,3 +124,42 @@
 [submodule "vendor/src/django-ratelimit"]
 	path = vendor/src/django-ratelimit
 	url = git://github.com/jsocol/django-ratelimit.git
+[submodule "vendor/src/django-taggit"]
+	path = vendor/src/django-taggit
+	url = git://github.com/alex/django-taggit.git
+[submodule "vendor/src/django-product-details"]
+	path = vendor/src/django-product-details
+	url = git://github.com/mozilla/django-product-details.git
+[submodule "vendor/src/django-debug-toolbar"]
+	path = vendor/src/django-debug-toolbar
+	url = git://github.com/django-debug-toolbar/django-debug-toolbar.git
+[submodule "vendor/src/html5lib"]
+	path = vendor/src/html5lib
+	url = https://github.com/html5lib/html5lib-python
+[submodule "vendor/src/pyquery"]
+	path = vendor/src/pyquery
+	url = https://github.com/gawel/pyquery
+[submodule "vendor/src/py-amqp"]
+	path = vendor/src/py-amqp
+	url = https://github.com/celery/py-amqp
+[submodule "vendor/src/cssselect"]
+	path = vendor/src/cssselect
+	url = https://github.com/SimonSapin/cssselect
+[submodule "vendor/src/python-dateutil"]
+	path = vendor/src/python-dateutil
+	url = https://github.com/dateutil/dateutil
+[submodule "vendor/src/sqlparse"]
+	path = vendor/src/sqlparse
+	url = https://github.com/andialbrecht/sqlparse
+[submodule "vendor/src/werkzeug"]
+	path = vendor/src/werkzeug
+	url = https://github.com/mitsuhiko/werkzeug
+[submodule "vendor/src/django-devserver"]
+	path = vendor/src/django-devserver
+	url = https://github.com/dcramer/django-devserver
+[submodule "vendor/src/elasticsearch-dsl-py"]
+	path = vendor/src/elasticsearch-dsl-py
+	url = https://github.com/elastic/elasticsearch-dsl-py
+[submodule "vendor/src/django-flat-theme"]
+	path = vendor/src/django-flat-theme
+	url = https://github.com/elky/django-flat-theme.git

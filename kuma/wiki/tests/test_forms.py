@@ -110,7 +110,7 @@ class TreeMoveFormTests(UserTestCase):
             ['/docs/one', 'one'],  # leading docs
             ['docs/one', 'one'],  # leading docs without slash
             ['fr/docs/one', 'one'],  # foreign locale with docs
-            ['docs/article-title/docs', 'article-title/docs'], # docs with later docs
+            ['docs/article-title/docs', 'article-title/docs'],  # docs with later docs
             ['/en-US/docs/something/', 'something']  # trailing slash
         ]
 

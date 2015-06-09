@@ -1,0 +1,31 @@
+Metadata-Version: 1.1
+Name: importlib
+Version: 1.0.3
+Summary: Backport of importlib.import_module() from Python 2.7
+Home-page: UNKNOWN
+Author: Brett Cannon
+Author-email: brett@python.org
+License: UNKNOWN
+Description: Purpose
+        ========
+        
+        This package contains the code from importlib as found in Python 2.7. It is
+        provided so that people who wish to use ``importlib.import_module()`` with a
+        version of Python prior to 2.7 or in 3.0 have the function readily available.
+        The code in no way deviates from what can be found in the Python 2.7 standard
+        library.
+        
+        For documentation, see the `importlib docs`_ for Python 2.7.
+        
+        .. _importlib docs: http://docs.python.org/2.7/library/importlib.html
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.3
+Classifier: Programming Language :: Python :: 2.4
+Classifier: Programming Language :: Python :: 2.5
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: OSI Approved :: Python Software Foundation License

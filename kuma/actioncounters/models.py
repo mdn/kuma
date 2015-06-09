@@ -1,11 +1,9 @@
 """Models for activity counters"""
+from django.conf import settings
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import F
-
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
-from django.contrib.contenttypes import generic
-
 from django.utils.translation import ugettext_lazy as _
 
 from .utils import get_unique
@@ -25,11 +23,12 @@ class ActionCounterUniqueManager(models.Manager):
                                                        action_name,
                                                        request=request)
         if create:
-            return self.get_or_create(unique_hash=unique_hash,
-                    defaults=dict(content_type=content_type, object_pk=object.pk,
-                                  name=action_name, ip=ip,
-                                  user_agent=user_agent, user=user,
-                                  total=0))
+            return self.get_or_create(
+                unique_hash=unique_hash,
+                defaults=dict(content_type=content_type, object_pk=object.pk,
+                              name=action_name, ip=ip,
+                              user_agent=user_agent, user=user,
+                              total=0))
         else:
             try:
                 return (self.get(unique_hash=unique_hash), False)
@@ -45,7 +44,7 @@ class ActionCounterUnique(models.Model):
     content_type = models.ForeignKey(ContentType, verbose_name="content type",
                                      related_name="content_type_set_for_%(class)s",)
     object_pk = models.CharField(_('object ID'), max_length=32)
-    content_object = generic.GenericForeignKey('content_type', 'object_pk')
+    content_object = GenericForeignKey('content_type', 'object_pk')
     name = models.CharField(_('name of the action'), max_length=64,
                             db_index=True, blank=False)
 
@@ -55,7 +54,7 @@ class ActionCounterUnique(models.Model):
                           db_index=True, blank=True, null=True)
     user_agent = models.CharField(max_length=128, editable=False,
                                   db_index=True, blank=True, null=True)
-    user = models.ForeignKey(User, editable=False,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False,
                              db_index=True, blank=True, null=True)
 
     # HACK: As it turns out, MySQL doesn't consider two rows with NULL values

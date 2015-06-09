@@ -23,8 +23,9 @@ def context_dict(revision):
 
     compare_url = ''
     if from_revision:
-        compare_url = (reverse('wiki.compare_revisions',
-            args=[document.full_path], locale=document.locale)
+        compare_url = (
+            reverse('wiki.compare_revisions',
+                    args=[document.full_path], locale=document.locale)
             + '?from=%s&to=%s' % (from_revision.id, to_revision.id))
 
     link_urls = {

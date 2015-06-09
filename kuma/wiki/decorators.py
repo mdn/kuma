@@ -7,8 +7,8 @@ import newrelic.agent
 from waffle import flag_is_active, switch_is_active
 
 from django.http import HttpResponsePermanentRedirect, Http404
+from jingo.helpers import urlparams
 
-from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
 
 from .exceptions import ReadOnlyException

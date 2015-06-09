@@ -3,7 +3,7 @@ from tower import ugettext_lazy as _lazy
 
 from django import forms
 
-import constance.config
+from constance import config
 
 from .models import AttachmentRevision
 
@@ -29,7 +29,7 @@ class AttachmentRevisionForm(forms.ModelForm):
         uploaded_file.seek(0)
 
         if mime_type not in \
-                constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split():
+                config.WIKI_ATTACHMENT_ALLOWED_TYPES.split():
             raise forms.ValidationError(MIME_TYPE_INVALID)
         return self.cleaned_data['file']
 
@@ -50,5 +50,3 @@ class AttachmentRevisionForm(forms.ModelForm):
         rev.mime_type = mime_type
 
         return rev
-
-

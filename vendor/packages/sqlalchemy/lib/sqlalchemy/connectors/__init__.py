@@ -1,6 +1,0 @@
-
-
-class Connector(object):
-    pass
-    
-    

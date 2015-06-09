@@ -2,6 +2,7 @@ import urllib
 import hashlib
 
 from django.conf import settings
+from django.contrib import admin
 
 from jinja2 import escape, Markup, contextfunction
 from jingo import register
@@ -39,10 +40,10 @@ def ban_link(context, ban_user, banner_user):
     """Returns a link to ban a user"""
     link = ''
     if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
-        if ban_user.get_profile().is_banned:
-            active_ban = ban_user.get_profile().active_ban()
+        if ban_user.profile.is_banned:
+            active_ban = ban_user.profile.active_ban()
             url = reverse('admin:users_userban_change', args=(active_ban.id,))
-            title = _('Banned on {ban_date} by {ban_admin}.').format(ban_date=datetimeformat(context, active_ban.date, format='date', output='json'), ban_admin=active_ban.by )
+            title = _('Banned on {ban_date} by {ban_admin}.').format(ban_date=datetimeformat(context, active_ban.date, format='date', output='json'), ban_admin=active_ban.by)
             link = '<a href="%s" class="button ban-link" title="%s">%s<i aria-hidden="true" class="icon-ban"></i></a>' % (url, title, _('Banned'))
         else:
             url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
@@ -51,12 +52,13 @@ def ban_link(context, ban_user, banner_user):
 
 
 @register.function
-@contextfunction
-def admin_link(context, user):
+def admin_link(user):
     """Returns a link to admin a user"""
-    link = ''
-    url = reverse('admin:auth_user_change', args=(user.id,))
-    link = '<a href="%s" class="button neutral">%s<i aria-hidden="true" class="icon-wrench"></i></a>' % (url, _('Admin'))
+    url = reverse('admin:users_user_change', args=(user.id,),
+                  current_app=admin.site.name)
+    link = ('<a href="%s" class="button neutral">%s'
+            '<i aria-hidden="true" class="icon-wrench"></i></a>' %
+            (url, _('Admin')))
     return Markup(link)
 
 
@@ -90,7 +92,7 @@ def provider_login_url(context, provider_id, **params):
     request = context['request']
     provider = providers.registry.by_id(provider_id)
     if 'next' not in params:
-        next = request.REQUEST.get('next')
+        next = request.GET.get('next')
         if next:
             params['next'] = next
     else:

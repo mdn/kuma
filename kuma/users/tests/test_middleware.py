@@ -1,5 +1,3 @@
-from django.contrib.auth.models import User
-
 from nose.plugins.attrib import attr
 
 from . import UserTestCase
@@ -17,8 +15,8 @@ class BanTestCase(UserTestCase):
         resp = self.client.get('/')
         self.assertTemplateNotUsed(resp, 'users/user_banned.html')
 
-        admin = User.objects.get(username='admin')
-        testuser = User.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username='testuser')
         ban = UserBan(user=testuser, by=admin,
                       reason='Banned by unit test.',
                       is_active=True)

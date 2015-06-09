@@ -2,7 +2,6 @@
 *.pyo
 *.sw?
 .vagrant
-vagrantconfig_local.yaml
 kuma.box
 settings_local.py
 pip-log.txt
@@ -22,13 +21,11 @@ media/sitemap*
 static/
 locale
 xfers/*
-puppet/cache/*
 humans.txt
 tmp
 webroot/.htaccess
 kumascript.log
 kumascript_settings_local.json
-lib/product_details_json
 .DS_Store
 node_modules/
 media/css/*.css
@@ -39,3 +36,4 @@ james.ini
 celeryev.pid
 media/js/libs/ckeditor/source/ckbuilder
 .tox
+.env

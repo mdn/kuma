@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
 from django.core.mail import EmailMessage, mail_admins, send_mail
 from django.db import connection, transaction
@@ -139,33 +139,35 @@ def build_json_data_handler(sender, instance, **kwargs):
 
 @task
 def move_page(locale, slug, new_slug, email):
-    with transaction.commit_manually():
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            transaction.rollback()
-            logging.error('Page move failed: no user with email address %s' %
-                          email)
-            return
-        try:
-            doc = Document.objects.get(locale=locale, slug=slug)
-        except Document.DoesNotExist:
-            transaction.rollback()
-            message = """
+    transaction.set_autocommit(False)
+    User = get_user_model()
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        transaction.rollback()
+        logging.error('Page move failed: no user with email address %s' %
+                      email)
+        return
+    try:
+        doc = Document.objects.get(locale=locale, slug=slug)
+    except Document.DoesNotExist:
+        transaction.rollback()
+        message = """
     Page move failed.
 
     Move was requested for document with slug %(slug)s in locale
     %(locale)s, but no such document exists.
-            """ % {'slug': slug, 'locale': locale}
-            logging.error(message)
-            send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
-                      [user.email])
-            return
-        try:
-            doc._move_tree(new_slug, user=user)
-        except PageMoveError as e:
-            transaction.rollback()
-            message = """
+    """ % {'slug': slug, 'locale': locale}
+        logging.error(message)
+        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+                  [user.email])
+        transaction.set_autocommit(True)
+        return
+    try:
+        doc._move_tree(new_slug, user=user)
+    except PageMoveError as e:
+        transaction.rollback()
+        message = """
     Page move failed.
 
     Move was requested for document with slug %(slug)s in locale
@@ -174,27 +176,30 @@ def move_page(locale, slug, new_slug, email):
     Diagnostic info:
 
     %(message)s
-            """ % {'slug': slug, 'locale': locale, 'message': e.message}
-            logging.error(message)
-            send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
-                      [user.email])
-            return
-        except Exception as e:
-            transaction.rollback()
-            message = """
+    """ % {'slug': slug, 'locale': locale, 'message': e.message}
+        logging.error(message)
+        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+                  [user.email])
+        transaction.set_autocommit(True)
+        return
+    except Exception as e:
+        transaction.rollback()
+        message = """
     Page move failed.
 
     Move was requested for document with slug %(slug)s in locale %(locale)s,
     but could not be completed.
 
     %(info)s
-            """ % {'slug': slug, 'locale': locale, 'info': e}
-            logging.error(message)
-            send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
-                      [user.email])
-            return
+    """ % {'slug': slug, 'locale': locale, 'info': e}
+        logging.error(message)
+        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+                  [user.email])
+        transaction.set_autocommit(True)
+        return
 
-        transaction.commit()
+    transaction.commit()
+    transaction.set_autocommit(True)
 
     # Now that we know the move succeeded, re-render the whole tree.
     for moved_doc in [doc] + doc.get_descendants():

@@ -2,8 +2,6 @@ from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
 
-from south.modelsinspector import add_introspection_rules
-
 from .managers import IPBanManager
 from .jobs import IPBanJob
 
@@ -58,9 +56,3 @@ class IPBan(models.Model):
 @receiver(models.signals.pre_delete, sender=IPBan)
 def invalidate_ipban_caches(sender, instance, **kwargs):
     IPBanJob().invalidate(instance.ip)
-
-
-add_introspection_rules([], [
-    '^kuma\.core\.fields\.LocaleField',
-    '^kuma\.core\.fields\.JSONField',
-])

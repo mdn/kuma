@@ -1,0 +1,29 @@
+---
+
+- name: elasticsearch-install | Add repositories
+  apt_repository: repo={{item}} update_cache=yes
+  with_items: elasticsearch_apt_repos
+
+- name: elasticsearch-install | Accept Oracle license
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections; echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
+         creates=/usr/lib/jvm/java-7-oracle
+
+- name: elasticsearch-install | Install Java
+  apt: pkg={{elasticsearch_apt_java_package}}
+
+- name: elasticsearch-install | Check for Elasticsearch already installed
+  stat: path={{elasticsearch_home}}/lib/elasticsearch-{{elasticsearch_version}}.jar
+  register: version_exists
+
+- name: elasticsearch-install | Download deb
+  get_url: url={{elasticsearch_download_url}}/elasticsearch-{{elasticsearch_version}}.deb dest=/tmp/elasticsearch-{{elasticsearch_version}}.deb mode=0440
+  when: not version_exists.stat.exists
+
+- name: elasticsearch-install | Install Elasticsearch
+  apt: deb=/tmp/elasticsearch-{{elasticsearch_version}}.deb dpkg_options=force-confnew
+  when: not version_exists.stat.exists
+
+- name: elasticsearch-install | Setup passlib
+  apt: pkg=python-passlib
+  when: elasticsearch_proxy_auth
+

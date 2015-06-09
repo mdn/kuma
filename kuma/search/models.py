@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.dispatch import receiver
-from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.functional import cached_property
+from django.utils.text import slugify
 
 from elasticsearch.exceptions import NotFoundError
+from taggit.managers import TaggableManager
 
-from kuma.core.managers import PrefetchTaggableManager
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.search import WikiDocumentType
 
@@ -110,7 +110,7 @@ class OutdatedObject(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = GenericForeignKey('content_type', 'object_id')
 
 
 class FilterGroup(models.Model):
@@ -169,9 +169,9 @@ class Filter(models.Model):
                                           'e.g. fxos')
     group = models.ForeignKey(FilterGroup, related_name='filters',
                               help_text='E.g. "Topic", "Skill level" etc')
-    tags = PrefetchTaggableManager(help_text='A comma-separated list of tags. '
-                                             'If more than one tag given a OR '
-                                             'query is executed')
+    tags = TaggableManager(help_text='A comma-separated list of tags. '
+                                     'If more than one tag given a OR '
+                                     'query is executed')
     operator = models.CharField(max_length=3, choices=OPERATOR_CHOICES,
                                 default=OPERATOR_OR,
                                 help_text='The logical operator to use '

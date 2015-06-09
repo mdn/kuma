@@ -1,0 +1,41 @@
+---
+- name: ensure rabbitmq is runned
+  service: name=rabbitmq-server state=started
+
+- name: add rabbitmq vhost
+  rabbitmq_vhost: >
+    name={{ item.name }}
+    node={{ item.node | default('rabbit') }}
+    tracing={{ item.tracing | default('no') }}
+    state=present
+  with_items: rabbitmq_vhost_definitions
+
+- name: add rabbitmq user and set priveleges
+  rabbitmq_user:
+    user={{ item.user }}
+    password={{ item.password }}
+    vhost={{ item.vhost | default('/', false) }}
+    node={{ item.node | default('rabbit') }}
+    tags={{ (item.tags | default('')) | join(',') }}
+    configure_priv=.*
+    read_priv=.*
+    write_priv=.*
+    state=present
+    force={{ item.force|default('yes') }}
+  with_items: rabbitmq_users_definitions
+
+- name: remove guest user (hostname)
+  rabbitmq_user:
+    user=guest
+    vhost=/
+    node="rabbit@{{ ansible_hostname }}"
+    state=absent
+  register: rm_guest_hostname
+  ignore_errors: true
+
+- name: remove guest user (default)
+  rabbitmq_user:
+    user=guest
+    vhost=/
+    state=absent
+  when: rm_guest_hostname|failed

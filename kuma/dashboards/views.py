@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -66,7 +66,7 @@ def revisions(request):
                         timezone.now())
             start_date = end_date - datetime.timedelta(seconds=seconds)
             query_kwargs['created__range'] = [start_date, end_date]
-            
+
     if query_kwargs:
         revisions = revisions.filter(**query_kwargs)
         total = revisions.count()
@@ -100,13 +100,12 @@ def user_lookup(request):
     if request.is_ajax():
         user = request.GET.get('user', '')
         if user:
-            matches = User.objects.filter(username__istartswith=user)
+            matches = get_user_model().objects.filter(username__istartswith=user)
             for match in matches:
                 userlist.append({'label': match.username})
 
     data = json.dumps(userlist)
-    return HttpResponse(data,
-                        content_type='application/json; charset=utf-8')
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
 
 
 @require_GET

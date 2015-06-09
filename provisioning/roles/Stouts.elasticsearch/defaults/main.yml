@@ -1,0 +1,46 @@
+---
+
+elasticsearch_enabled: yes                      # The role is enabled
+elasticsearch_version: 1.5.2                    # Elasticsearch version
+elasticsearch_download_url: https://download.elastic.co/elasticsearch/elasticsearch
+elasticsearch_apt_repos:
+- 'ppa:webupd8team/java'
+elasticsearch_apt_java_package: oracle-java7-installer
+
+elasticsearch_user: elasticsearch               # Elasticsearch user
+elasticsearch_group: elasticsearch              # Elasticsearch group
+
+elasticsearch_home: /usr/share/elasticsearch
+elasticsearch_confdir: /etc/elasticsearch
+elasticsearch_datadir: /var/lib/elasticsearch
+elasticsearch_workdir: /tmp/elasticsearch
+elasticsearch_logdir: /var/log/elasticsearch
+
+elasticsearch_plugindir: "{{elasticsearch_home}}/plugins"
+elasticsearch_plugins: []                       # Manage elasticsearch plugins (install/remove)
+                                                # Ex. elasticsearch_plugins:
+                                                #       - name: <plugin name>
+                                                #         url: <optional plugin url>
+                                                #         dir: <optional plugin dir>
+                                                #         remove: yes # Optional the plugin will be removed
+
+# Options
+elasticsearch_network_host: 127.0.0.1           # Listen the host
+elasticsearch_http_port: 9200                   # Listen the port fot HTTP traffic
+elasticsearch_http_cors_enabled: yes            # Enable CORS
+elasticsearch_http_cors_allow_origin: "*"       # Set allowed origins
+elasticsearch_http_cors_allow_methods: OPTIONS, HEAD, GET, POST, PUT, DELETE
+elasticsearch_max_open_files: 65535
+elasticsearch_gateway_type: local
+elasticsearch_script_disable_dynamic: yes
+elasticsearch_network_bind_host: "{{elasticsearch_network_host}}"
+elasticsearch_network_publish_host: "{{elasticsearch_network_host}}"
+
+# Setup a proxy
+elasticsearch_proxy: no                           # Enable nginx as elasticsearch proxy
+elasticsearch_proxy_hostname:                     # Listen a hostname (leave empty for skip)
+elasticsearch_proxy_port: 80                      # Listen a port
+elasticsearch_proxy_auth: no                      # Enable HTTP Auth
+elasticsearch_proxy_auth_users: []                # Setup users for HTTP Auth. Example:
+                                                  # elasticsearch_proxy_auth_users:
+                                                  # - { name: username, password: userpassword }

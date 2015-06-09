@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.db import models
 
 import jingo
@@ -9,20 +8,6 @@ from kuma.core.urlresolvers import reverse
 
 from .managers import AttachmentManager
 from .utils import attachment_upload_to
-
-
-class DocumentAttachment(models.Model):
-    """
-    Intermediary between Documents and Attachments. Allows storing the
-    user who attached a file to a document, and a (unique for that
-    document) name for referring to the file from the document.
-
-    """
-    file = models.ForeignKey('Attachment')
-    # This has to be a string ref to avoid circular import.
-    document = models.ForeignKey('wiki.Document')
-    attached_by = models.ForeignKey(User, null=True)
-    name = models.TextField()
 
 
 class Attachment(models.Model):
@@ -69,6 +54,7 @@ class Attachment(models.Model):
 
     def attach(self, document, user, name):
         if self.id not in document.attachments.values_list('id', flat=True):
+            from kuma.wiki.models import DocumentAttachment
             intermediate = DocumentAttachment(file=self,
                                               document=document,
                                               attached_by=user,
@@ -123,7 +109,7 @@ class AttachmentRevision(models.Model):
 
     created = models.DateTimeField(default=datetime.now)
     comment = models.CharField(max_length=255, blank=True)
-    creator = models.ForeignKey(User,
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 related_name='created_attachment_revisions')
     is_approved = models.BooleanField(default=True, db_index=True)
 

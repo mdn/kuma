@@ -1,0 +1,23 @@
+---
+- name: Install virtualenv
+  pip: name=virtualenv
+
+- name: Install compiled Python packages in virtualenv
+  pip:
+    requirements: "/home/vagrant/src/requirements/compiled.txt"
+    virtualenv: "/home/vagrant/env"
+    virtualenv_site_packages: yes
+
+- name: Install docs Python packages in virtualenv
+  pip:
+    requirements: "/home/vagrant/src/requirements/docs.txt"
+    virtualenv: "/home/vagrant/env"
+    virtualenv_site_packages: yes
+
+- name: Update ownership of virtualenv to vagrant
+  file:
+    owner: vagrant
+    group: vagrant
+    recurse: yes
+    state: directory
+    path: "/home/vagrant/env"

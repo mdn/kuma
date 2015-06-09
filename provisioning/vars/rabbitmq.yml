@@ -1,0 +1,11 @@
+rabbitmq_vhost_definitions:
+  - name: kuma
+    node: "rabbit@{{ ansible_hostname }}"
+rabbitmq_users_definitions:
+  - vhost: kuma
+    user: kuma
+    password: kuma
+    node: "rabbit@{{ ansible_hostname }}"
+rabbitmq_ssl: false
+rabbitmq_conf_tcp_listeners_address: '{{ ansible_hostname }}'
+rabbitmq_conf_tcp_listeners_port: 5672

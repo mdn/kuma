@@ -1,0 +1,69 @@
+---
+- name: Install common packages
+  apt: name={{ item }} state=present
+  with_items:
+    - build-essential
+    - git
+    - subversion
+    - mercurial
+    - vim
+    - nfs-common
+    - tmux
+    - translate-toolkit
+    - gettext
+    - htop
+    - ack-grep
+    - locate
+    - sqlite3
+    - python2.7
+    - python2.7-dev
+    - python-software-properties
+    - curl
+    - libxml2-dev
+    - libxslt1.1
+    - libxslt1-dev
+    - libjpeg8
+    - libjpeg8-dev
+    - rlwrap
+    - libfreetype6
+    - libfreetype6-dev
+    - libpng12-0
+    - libpng12-dev
+    - ruby-full
+    - ruby-dev
+    - rubygems-integration
+    - libtidy-0.99-0
+    - libtidy-dev
+    - make
+    - libmemcached-dev
+
+- name: Build | generate the missing locale and reconfigure locales
+  command: locale-gen --purge en_US.UTF-8
+  sudo: true
+  ignore_errors: true
+
+- name: Build | Reconfigure locales
+  command: echo -e 'LANG="en_US.UTF-8"\nLANGUAGE="en_US:en"\n' > /etc/default/locale
+  sudo: true
+  ignore_errors: true
+
+- name: Misc files
+  copy:
+    src: etc/{{ item }}
+    dest: /etc/{{ item }}
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - motd
+    - hosts
+    - hostname
+    - resolv.conf
+
+- name: motd
+  copy:
+    src: etc/motd
+    dest: /etc/update-motd.d/99-kuma
+    owner: root
+    group: root
+    mode: 0755

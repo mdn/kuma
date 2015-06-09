@@ -1,22 +1,22 @@
+import collections
 import operator
 
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render, redirect
-from django.utils.datastructures import SortedDict
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import SignupView as BaseSignupView
-from badger.models import Award
-import constance.config
+from constance import config
 from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 from teamwork.models import Team
@@ -55,6 +55,7 @@ def ban_user(request, user_id):
     """
     Ban a user.
     """
+    User = get_user_model()
     try:
         user = User.objects.get(pk=user_id)
     except User.DoesNotExist:
@@ -105,8 +106,6 @@ def profile_view(request, username):
     wiki_activity, docs_feed_items = None, None
     wiki_activity = profile.wiki_activity()
 
-    awards = Award.objects.filter(user=user)
-
     if request.user.is_anonymous():
         show_manage_roles_button = False
     else:
@@ -122,7 +121,6 @@ def profile_view(request, username):
         'demos_page': demos_page,
         'docs_feed_items': docs_feed_items,
         'wiki_activity': wiki_activity,
-        'award_list': awards,
         'show_manage_roles_button': show_manage_roles_button,
     }
     return render(request, 'users/profile.html', context)
@@ -217,7 +215,7 @@ def profile_edit(request, username):
 
             try:
                 # Beta
-                beta_group = Group.objects.get(name=constance.config.BETA_GROUP_NAME)
+                beta_group = Group.objects.get(name=config.BETA_GROUP_NAME)
                 if profile_form.cleaned_data['beta']:
                     beta_group.user_set.add(request.user)
                 else:
@@ -275,13 +273,14 @@ class SignupView(BaseSignupView):
         """
         Returns an instance of the form to be used in this view.
         """
-        self.email_addresses = SortedDict()
+        self.email_addresses = collections.OrderedDict()
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
         self.matching_user = None
         initial_username = form.initial.get('username', None)
         # For GitHub users, see if we can find matching user by username
         if self.sociallogin.account.provider == 'github':
+            User = get_user_model()
             try:
                 self.matching_user = User.objects.get(username=initial_username)
                 # deleting the initial username because we found a matching user
@@ -387,7 +386,7 @@ class SignupView(BaseSignupView):
                 get_adapter().stash_verified_email(self.request,
                                                    email_address['email'])
 
-        with transaction.commit_on_success():
+        with transaction.atomic():
             form.save(self.request)
         return helpers.complete_social_signup(self.request,
                                               self.sociallogin)

@@ -1,10 +1,10 @@
 import logging
-import constance.config
+from constance import config
 from celery.task import task
 from tower import ugettext_lazy as _
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
@@ -22,7 +22,7 @@ WELCOME_EMAIL_STRINGS = [
 
 @task
 def send_welcome_email(user_pk, locale):
-    user = User.objects.get(pk=user_pk)
+    user = get_user_model().objects.get(pk=user_pk)
     if (locale == settings.WIKI_DEFAULT_LANGUAGE or
             strings_are_translated(WELCOME_EMAIL_STRINGS, locale)):
         context = {'username': user.username}
@@ -36,7 +36,7 @@ def send_welcome_email(user_pk, locale):
             email = EmailMultiAlternatives(
                 _('Take the next step to get involved on MDN!'),
                 content_plain,
-                constance.config.WELCOME_EMAIL_FROM,
+                config.WELCOME_EMAIL_FROM,
                 [user.email],
             )
             email.attach_alternative(content_html, 'text/html')

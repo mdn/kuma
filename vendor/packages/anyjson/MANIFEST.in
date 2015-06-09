@@ -1,4 +1,0 @@
-include CHANGELOG
-include README
-include LICENSE
-graft tests

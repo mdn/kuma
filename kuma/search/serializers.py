@@ -1,6 +1,5 @@
+import collections
 from operator import attrgetter
-
-from django.utils.datastructures import SortedDict
 
 from elasticsearch_dsl import document
 from rest_framework import serializers, pagination
@@ -45,14 +44,14 @@ class FacetedFilterOptionsSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
     count = serializers.IntegerField(read_only=True)
-    active = serializers.BooleanField(read_only=True)
+    active = serializers.BooleanField(read_only=True, default=False)
     urls = FilterURLSerializer(read_only=True)
 
 
 class FacetedFilterSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
-    options = FacetedFilterOptionsSerializer(source='options')
+    options = FacetedFilterOptionsSerializer(source='options', many=True)
 
 
 class SearchSerializer(pagination.PaginationSerializer):
@@ -71,10 +70,10 @@ class SearchSerializer(pagination.PaginationSerializer):
         view = self.context['view']
 
         url = QueryURLObject(view.url)
-        filter_mapping = SortedDict((filter_['slug'], filter_)
-                                    for filter_ in view.serialized_filters)
+        filter_mapping = collections.OrderedDict((filter_['slug'], filter_)
+                                                 for filter_ in view.serialized_filters)
 
-        filter_groups = SortedDict()
+        filter_groups = collections.OrderedDict()
 
         try:
             facet_counts = [
@@ -101,9 +100,13 @@ class SearchSerializer(pagination.PaginationSerializer):
                 group_slug,
                 filter_['group']['order']
             ), []).append(
-                Filter(url=url, page=view.current_page, name=filter_name,
-                       slug=slug, count=count, active=slug in
-                       view.selected_filters, group_name=group_name,
+                Filter(url=url,
+                       page=view.current_page,
+                       name=filter_name,
+                       slug=slug,
+                       count=count,
+                       active=slug in view.selected_filters,
+                       group_name=group_name,
                        group_slug=group_slug)
             )
 
@@ -144,7 +147,7 @@ class BaseDocumentSerializer(serializers.Serializer):
 class DocumentSerializer(BaseDocumentSerializer):
     excerpt = serializers.SerializerMethodField('get_excerpt')
     tags = serializers.ChoiceField(read_only=True, source='tags')
-    score = serializers.FloatField(read_only=True, source='_meta.score')
+    score = serializers.FloatField(read_only=True, source='meta.score')
     explanation = serializers.SerializerMethodField('get_explanation')
     parent = BaseDocumentSerializer(read_only=True, source='parent')
 
@@ -152,7 +155,7 @@ class DocumentSerializer(BaseDocumentSerializer):
         return obj.get_excerpt()
 
     def get_explanation(self, obj):
-        return getattr(obj._meta, 'explanation', None)
+        return getattr(obj.meta, 'explanation', None)
 
 
 class FilterSerializer(serializers.ModelSerializer):

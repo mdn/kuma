@@ -14,7 +14,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_GET, require_POST
 
-import constance.config
+from constance import config
 
 from kuma.core.decorators import login_required
 from kuma.core.utils import paginate
@@ -33,8 +33,8 @@ OVERRIDE_MIMETYPES = {
 }
 
 
-def guess_extension(mimetype):
-    return OVERRIDE_MIMETYPES.get(mimetype, mimetypes.guess_extension(mimetype))
+def guess_extension(_type):
+    return OVERRIDE_MIMETYPES.get(_type, mimetypes.guess_extension(_type))
 
 
 @require_GET
@@ -56,7 +56,7 @@ def raw_file(request, attachment_id, filename):
         raise Http404
     if request.get_host() == settings.ATTACHMENT_HOST:
         rev = attachment.current_revision
-        resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
+        resp = HttpResponse(rev.file.read(), content_type=rev.mime_type)
         resp['Last-Modified'] = convert_to_http_date(rev.created)
         resp['Content-Length'] = rev.file.size
         resp['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
@@ -80,10 +80,12 @@ def attachment_detail(request, attachment_id):
     if current.mime_type in ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']:
         preview_content = jinja2.Markup('<img src="%s" alt="%s" />') % (attachment.get_file_url(), attachment.title)
 
-    return render(request, 'attachments/attachment_detail.html',
-                        {'attachment': attachment,
-                         'preview_content': preview_content,
-                         'revision': attachment.current_revision})
+    return render(
+        request,
+        'attachments/attachment_detail.html',
+        {'attachment': attachment,
+         'preview_content': preview_content,
+         'revision': attachment.current_revision})
 
 
 def attachment_history(request, attachment_id):
@@ -93,9 +95,11 @@ def attachment_history(request, attachment_id):
     # a few extra bits, like the ability to set an arbitrary revision
     # to be current.
     attachment = get_object_or_404(Attachment, pk=attachment_id)
-    return render(request, 'attachments/attachment_history.html',
-                        {'attachment': attachment,
-                         'revision': attachment.current_revision})
+    return render(
+        request,
+        'attachments/attachment_history.html',
+        {'attachment': attachment,
+         'revision': attachment.current_revision})
 
 
 @require_POST
@@ -139,7 +143,7 @@ def new_attachment(request):
             return HttpResponseRedirect(attachment.get_absolute_url())
     else:
         if request.POST.get('is_ajax', ''):
-            allowed_list = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
+            allowed_list = config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
             allowed_types = ', '.join(map(guess_extension, allowed_list))
             error_obj = {
                 'title': request.POST.get('is_ajax', ''),
@@ -151,8 +155,10 @@ def new_attachment(request):
                 'attachments/includes/attachment_upload_results.html',
                 {'result': json.dumps([error_obj])})
         else:
-            response = render(request, 'attachments/edit_attachment.html',
-                                    {'form': form})
+            response = render(
+                request,
+                'attachments/edit_attachment.html',
+                {'form': form})
     return response
 
 

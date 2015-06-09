@@ -7,7 +7,7 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
 
@@ -41,8 +41,8 @@ class BanTestCase(UserTestCase):
     @attr('bans')
     def test_ban_permission(self):
         """The ban permission controls access to the ban view."""
-        admin = User.objects.get(username='admin')
-        testuser = User.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username='testuser')
 
         # testuser doesn't have ban permission, can't ban.
         self.client.login(username='testuser',
@@ -64,8 +64,8 @@ class BanTestCase(UserTestCase):
 
     @attr('bans')
     def test_ban_view(self):
-        testuser = User.objects.get(username='testuser')
-        admin = User.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
 
         self.client.login(username='admin', password='testpass')
 
@@ -77,7 +77,7 @@ class BanTestCase(UserTestCase):
         eq_(302, resp.status_code)
         ok_(testuser.get_absolute_url() in resp['Location'])
 
-        testuser_banned = User.objects.get(username='testuser')
+        testuser_banned = self.user_model.objects.get(username='testuser')
         ok_(not testuser_banned.is_active)
 
         bans = UserBan.objects.filter(user=testuser,
@@ -88,7 +88,7 @@ class BanTestCase(UserTestCase):
     @attr('bans')
     def test_bug_811751_banned_profile(self):
         """A banned user's profile should not be viewable"""
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         url = reverse('users.profile', args=(testuser.username,))
 
         # Profile viewable if not banned
@@ -96,8 +96,8 @@ class BanTestCase(UserTestCase):
         self.assertNotEqual(response.status_code, 403)
 
         # Ban User
-        admin = User.objects.get(username='admin')
-        testuser = User.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username='testuser')
         UserBan.objects.create(user=testuser, by=admin,
                                reason='Banned by unit test.',
                                is_active=True)
@@ -140,8 +140,8 @@ class ProfileViewsTest(UserTestCase):
         """A user profile can be viewed"""
         profile = UserProfile.objects.get(user__username='testuser')
         url = reverse('users.profile', args=(profile.user.username,))
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
 
         eq_(profile.user.username,
             doc.find('#profile-head.vcard .nickname').text())
@@ -159,7 +159,7 @@ class ProfileViewsTest(UserTestCase):
             doc.find('#profile-head.vcard .profile-bio').text())
 
     def test_my_profile_view(self):
-        u = User.objects.get(username='testuser')
+        u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         resp = self.client.get(reverse('users.my_profile'))
         eq_(302, resp.status_code)
@@ -168,7 +168,7 @@ class ProfileViewsTest(UserTestCase):
 
     def test_bug_698971(self):
         """A non-numeric page number should not cause an error"""
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
 
         url = '%s?page=asdf' % reverse('users.profile',
                                        args=(testuser.username,))
@@ -187,23 +187,23 @@ class ProfileViewsTest(UserTestCase):
         unsubscribe.return_value = True
         profile = UserProfile.objects.get(user__username='testuser')
         url = reverse('users.profile', args=(profile.user.username,))
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
         eq_(0, doc.find('#profile-head .edit .button').length)
 
         self.client.login(username=profile.user.username,
                           password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile', args=(profile.user.username,))
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
 
         edit_button = doc.find('#profile-head .profile-buttons #edit-profile')
         eq_(1, edit_button.length)
 
         url = edit_button.attr('href')
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
 
         eq_(profile.fullname,
             doc.find('#profile-edit input[name="profile-fullname"]').val())
@@ -225,8 +225,8 @@ class ProfileViewsTest(UserTestCase):
             'profile-format': "html"
         }
 
-        r = self.client.post(url, new_attrs, follow=True)
-        doc = pq(r.content)
+        response = self.client.post(url, new_attrs, follow=True)
+        doc = pq(response.content)
 
         eq_(1, doc.find('#profile-head').length)
         eq_(new_attrs['profile-fullname'],
@@ -242,7 +242,7 @@ class ProfileViewsTest(UserTestCase):
         eq_(new_attrs['profile-organization'], profile.organization)
 
     def test_my_profile_edit(self):
-        u = User.objects.get(username='testuser')
+        u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         resp = self.client.get(reverse('users.my_profile_edit'))
         eq_(302, resp.status_code)
@@ -256,25 +256,25 @@ class ProfileViewsTest(UserTestCase):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile_edit',
                       args=(testuser.username,))
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
         eq_(None, doc.find('input#id_profile-beta').attr('checked'))
 
         form = self._get_current_form_field_values(doc)
         form['profile-beta'] = True
 
-        r = self.client.post(url, form, follow=True)
+        self.client.post(url, form, follow=True)
 
         url = reverse('users.profile_edit',
                       args=(testuser.username,))
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
         eq_('checked', doc.find('input#id_profile-beta').attr('checked'))
 
     @mock.patch('basket.lookup_user')
@@ -285,14 +285,14 @@ class ProfileViewsTest(UserTestCase):
         subscribe.return_value = True
         unsubscribe.return_value = True
 
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile_edit',
                       args=(testuser.username,))
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
 
         test_sites = {
             u'website': u'http://example.com/',
@@ -311,8 +311,8 @@ class ProfileViewsTest(UserTestCase):
                     for k, v in test_sites.items()))
 
         # Submit the form, verify redirect to profile detail
-        r = self.client.post(url, form, follow=True)
-        doc = pq(r.content)
+        response = self.client.post(url, form, follow=True)
+        doc = pq(response.content)
         eq_(1, doc.find('#profile-head').length)
 
         profile = UserProfile.objects.get(user=testuser)
@@ -323,8 +323,8 @@ class ProfileViewsTest(UserTestCase):
         # Verify the saved websites appear in the editing form
         url = reverse('users.profile_edit',
                       args=(testuser.username,))
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
         for k, v in test_sites.items():
             eq_(v,
                 doc.find('#profile-edit *[name="profile-websites_%s"]' %
@@ -340,8 +340,8 @@ class ProfileViewsTest(UserTestCase):
                     for k, v in bad_sites.items()))
 
         # Submit the form, verify errors for all of the bad sites
-        r = self.client.post(url, form, follow=True)
-        doc = pq(r.content)
+        response = self.client.post(url, form, follow=True)
+        doc = pq(response.content)
         eq_(1, doc.find('#profile-edit').length)
         tmpl = '#profile-edit #profiles .%s .errorlist'
         for n in ('website', 'twitter', 'stackoverflow'):
@@ -358,14 +358,14 @@ class ProfileViewsTest(UserTestCase):
         subscribe.return_value = True
         unsubscribe.return_value = True
 
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile_edit',
                       args=(testuser.username,))
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
 
         test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
 
@@ -373,8 +373,8 @@ class ProfileViewsTest(UserTestCase):
 
         form['profile-interests'] = ', '.join(test_tags)
 
-        r = self.client.post(url, form, follow=True)
-        doc = pq(r.content)
+        response = self.client.post(url, form, follow=True)
+        doc = pq(response.content)
         eq_(1, doc.find('#profile-head').length)
 
         profile = UserProfile.objects.get(user=testuser)
@@ -387,8 +387,8 @@ class ProfileViewsTest(UserTestCase):
 
         test_expertise = ['css', 'canvas']
         form['profile-expertise'] = ', '.join(test_expertise)
-        r = self.client.post(url, form, follow=True)
-        doc = pq(r.content)
+        response = self.client.post(url, form, follow=True)
+        doc = pq(response.content)
 
         eq_(1, doc.find('#profile-head').length)
 
@@ -403,8 +403,8 @@ class ProfileViewsTest(UserTestCase):
         # Now, try some expertise tags not covered in interests
         test_expertise = ['css', 'canvas', 'mobile', 'movies']
         form['profile-expertise'] = ', '.join(test_expertise)
-        r = self.client.post(url, form, follow=True)
-        doc = pq(r.content)
+        response = self.client.post(url, form, follow=True)
+        doc = pq(response.content)
 
         eq_(1, doc.find('.error #id_profile-expertise').length)
 
@@ -415,13 +415,13 @@ class ProfileViewsTest(UserTestCase):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile_edit', args=(testuser.username,))
-        r = self.client.get(url, follow=True)
-        doc = pq(r.content)
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
 
         test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,'
                      u'vector,meme,heuristics,harmony,mathesis universalis,'
@@ -434,9 +434,9 @@ class ProfileViewsTest(UserTestCase):
 
         form['profile-interests'] = test_tags
 
-        r = self.client.post(url, form, follow=True)
-        eq_(200, r.status_code)
-        doc = pq(r.content)
+        response = self.client.post(url, form, follow=True)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
         eq_(1, doc.find('ul.errorlist li').length)
         assert ('Ensure this value has at most 255 characters'
                 in doc.find('ul.errorlist li').text())
@@ -449,17 +449,17 @@ class ProfileViewsTest(UserTestCase):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile_edit',
                       args=(testuser.username,))
-        r = self.client.get(url, follow=True)
-        for field in r.context['profile_form'].fields:
+        response = self.client.get(url, follow=True)
+        for field in response.context['profile_form'].fields:
             # if label is localized it's a lazy proxy object
             ok_(not isinstance(
-                r.context['profile_form'].fields[field].label, basestring),
+                response.context['profile_form'].fields[field].label, basestring),
                 'Field %s is a string!' % field)
 
 
@@ -509,10 +509,10 @@ class AllauthPersonaTestCase(UserTestCase):
                 'status': 'failure',
                 'reason': 'this email address has been naughty'
             }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
-            eq_(200, r.status_code)
-            eq_(r.redirect_chain,
+            response = self.client.post(reverse('persona_login'),
+                                        follow=True)
+            eq_(200, response.status_code)
+            eq_(response.redirect_chain,
                 [('http://testserver/users/persona/complete?process=&next=',
                   302)])
 
@@ -527,9 +527,9 @@ class AllauthPersonaTestCase(UserTestCase):
                 'status': 'okay',
                 'email': 'views_persona_auth@example.com',
             }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
-            eq_(200, r.status_code)
+            response = self.client.post(reverse('persona_login'),
+                                        follow=True)
+            eq_(response.status_code, 200)
             expected_redirects = [
                 ('http://testserver/users/persona/complete?process=&next=',
                  302),
@@ -537,7 +537,7 @@ class AllauthPersonaTestCase(UserTestCase):
                  302),
             ]
             for red in expected_redirects:
-                ok_(red in r.redirect_chain)
+                ok_(red in response.redirect_chain)
 
     def test_persona_signin(self):
         """
@@ -551,9 +551,9 @@ class AllauthPersonaTestCase(UserTestCase):
                 'status': 'okay',
                 'email': self.existing_persona_email,
             }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
-            eq_(200, r.status_code)
+            response = self.client.post(reverse('persona_login'),
+                                        follow=True)
+            eq_(response.status_code, 200)
             expected_redirects = [
                 ('http://testserver/users/persona/complete?process=&next=',
                  302),
@@ -561,7 +561,7 @@ class AllauthPersonaTestCase(UserTestCase):
                  301)
             ]
             for red in expected_redirects:
-                ok_(red in r.redirect_chain)
+                ok_(red in response.redirect_chain)
 
     def test_persona_signin_next(self):
         """
@@ -576,10 +576,10 @@ class AllauthPersonaTestCase(UserTestCase):
             }
             doc_url = reverse('wiki.document', args=['article-title'],
                               locale=settings.WIKI_DEFAULT_LANGUAGE)
-            r = self.client.post(reverse('persona_login'),
-                                 data={'next': doc_url},
-                                 follow=True)
-            ok_(('http://testserver%s' % doc_url, 302) in r.redirect_chain)
+            response = self.client.post(reverse('persona_login'),
+                                        data={'next': doc_url},
+                                        follow=True)
+            ok_(('http://testserver%s' % doc_url, 302) in response.redirect_chain)
 
     def test_persona_signup_create_django_user(self):
         """
@@ -589,7 +589,7 @@ class AllauthPersonaTestCase(UserTestCase):
         persona_signup_username = 'views_persona_django_user'
 
         with mock.patch('requests.post') as requests_mock:
-            old_count = User.objects.count()
+            old_count = self.user_model.objects.count()
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
                 'email': persona_signup_email,
@@ -608,7 +608,7 @@ class AllauthPersonaTestCase(UserTestCase):
                 {'__all__': ['You must agree to the privacy policy.']})
 
             # We didn't create a new user.
-            eq_(old_count, User.objects.count())
+            eq_(old_count, self.user_model.objects.count())
 
             data.update({'agree': True})
             response = self.client.post(signup_url, data=data, follow=True)
@@ -617,19 +617,19 @@ class AllauthPersonaTestCase(UserTestCase):
             ok_('form' not in response.context)
 
             # Did we get a new user?
-            eq_(old_count + 1, User.objects.count())
+            eq_(old_count + 1, self.user_model.objects.count())
 
             # Does it have the right attributes?
             testuser = None
             try:
-                testuser = User.objects.order_by('-date_joined')[0]
+                testuser = self.user_model.objects.order_by('-date_joined')[0]
             except IndexError:
                 pass
             ok_(testuser)
             ok_(testuser.is_active)
             eq_(persona_signup_username, testuser.username)
             eq_(persona_signup_email, testuser.email)
-            eq_('!', testuser.password)
+            ok_(testuser.password.startswith(UNUSABLE_PASSWORD_PREFIX))
 
     def test_persona_signup_create_socialaccount(self):
         """
@@ -661,7 +661,7 @@ class AllauthPersonaTestCase(UserTestCase):
             eq_(persona_signup_email, socialaccount.uid)
             eq_({'status': 'okay', 'email': persona_signup_email},
                 socialaccount.extra_data)
-            testuser = User.objects.get(username=persona_signup_username)
+            testuser = self.user_model.objects.get(username=persona_signup_username)
             eq_(testuser.id, socialaccount.user.id)
 
 

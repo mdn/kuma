@@ -2,14 +2,8 @@ import datetime
 import HTMLParser
 import os
 import urllib
-import urlparse
 import hashlib
 import bitly_api
-
-from django.http import QueryDict
-from django.utils.encoding import smart_str
-from django.utils.http import urlencode as urlencode_util
-from django.utils.tzinfo import LocalTimezone
 
 from babel import localedata
 from babel.dates import format_date, format_time, format_datetime
@@ -26,9 +20,10 @@ from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
-from django.utils.encoding import force_text
+from django.utils.encoding import smart_str, force_text
 from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
+from django.utils.timezone import get_default_timezone
 
 from soapbox.models import Message
 from statici18n.utils import get_filename
@@ -59,39 +54,9 @@ def url(viewname, *args, **kwargs):
     locale = kwargs.pop('locale', None)
     return reverse(viewname, args=args, kwargs=kwargs, locale=locale)
 
-
-@register.filter
-def urlparams(url_, hash=None, query_dict=None, **query):
-    """
-    Add a fragment and/or query paramaters to a URL.
-
-    New query params will be appended to exising parameters, except duplicate
-    names, which will be replaced.
-    """
-    url_ = urlparse.urlparse(url_)
-    fragment = hash if hash is not None else url_.fragment
-
-    q = url_.query
-    new_query_dict = (QueryDict(smart_str(q), mutable=True) if
-                      q else QueryDict('', mutable=True))
-    if query_dict:
-        for k, l in query_dict.lists():
-            new_query_dict[k] = None  # Replace, don't append.
-            for v in l:
-                new_query_dict.appendlist(k, v)
-
-    for k, v in query.items():
-        new_query_dict[k] = v  # Replace, don't append.
-
-    query_string = urlencode_util([(k, v) for k, l in new_query_dict.lists() for
-                                  v in l if v is not None])
-    new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
-                               url_.params, query_string, fragment)
-    return new.geturl()
-
-
 bitly = bitly_api.Connection(login=getattr(settings, 'BITLY_USERNAME', ''),
                              api_key=getattr(settings, 'BITLY_API_KEY', ''))
+
 
 @register.filter
 def bitly_shorten(url):
@@ -180,7 +145,7 @@ def timesince(d, now=None):
                                 '%(number)d seconds ago', n))]
     if not now:
         if d.tzinfo:
-            now = datetime.datetime.now(LocalTimezone(d))
+            now = datetime.datetime.now(get_default_timezone())
         else:
             now = datetime.datetime.now()
 
@@ -345,9 +310,8 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
 
     user = context['request'].user
     try:
-        profile = user.get_profile()
-        if user.is_authenticated() and profile.timezone:
-            user_tz = profile.timezone
+        if user.is_authenticated() and user.profile.timezone:
+            user_tz = user.profile.timezone
             tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
     except AttributeError:
         pass
