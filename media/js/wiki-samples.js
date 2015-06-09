@@ -56,7 +56,7 @@
     }
 
     function openCodepen(title, htmlCode, cssCode, jsCode) {
-       var $form = $('<form method="post" target="_blank" action="http://codepen.io/pen/define" class="hidden">'
+       var $form = $('<form method="post" target="_blank" action="https://codepen.io/pen/define" class="hidden">'
             + '<input type="hidden" name="data">'
             + '<input type="submit" />'
         + '</form>').appendTo(doc.body);
