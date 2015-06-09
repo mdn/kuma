@@ -197,7 +197,7 @@ class FilterWithGroupSerializer(FilterSerializer):
     group = GroupSerializer(source='group', read_only=True)
 
     def tag_names(self, obj):
-        return obj.tags.values_list('name', flat=True)
+        return [tag.name for tag in obj.tags.all()]
 
     class Meta(FilterSerializer.Meta):
         fields = FilterSerializer.Meta.fields + ('tags', 'operator', 'group')
