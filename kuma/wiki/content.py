@@ -534,29 +534,10 @@ class SectionIDFilter(html5lib_Filter):
         non_safe = [c for c in text if c in self.non_url_safe]
         if non_safe:
             for c in non_safe:
-                text = text.replace(c, hex(ord(c)).replace('0x', '.').upper())
+                text = text.replace(c, '')
         # Strip leading, trailing and multiple whitespace, convert remaining whitespace to _
         text = u'_'.join(text.split())
-        non_ascii = [c for c in text if ord(c) > 128]
-        if non_ascii:
-            for c in non_ascii:
-                text = text.replace(c, self.encode_non_ascii(c))
         return text
-
-    def encode_non_ascii(self, c):
-        # This is slightly gnarly.
-        #
-        # What MindTouch does is basically turn any non-ASCII characters
-        # into UTF-8 codepoints, preceded by a dot.
-        #
-        # This is somewhat tricky in Python because Python's internals are
-        # UCS-2, meaning that Python will give us, essentially, UTF-16
-        # codepoints out of Unicode strings. So, an ugly but functional
-        # hack: encode the offending character UTF-8 and repr that, which
-        # gives us the codepoints preceded by '\x' escape sequences. Then
-        # we can just replace the escape sequence with the dot, uppercase
-        # it, and we have the thing MindTouch would generate.
-        return repr(c.encode('utf-8')).strip("'").replace(r'\x', '.').upper()
 
     def process_header(self, token, buffer):
         # If we get into this code, 'token' will be the start tag of a
