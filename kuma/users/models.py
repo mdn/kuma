@@ -22,6 +22,7 @@ from kuma.wiki.models import Revision
 from kuma.wiki.helpers import wiki_url
 
 from .helpers import gravatar_url
+from .jobs import UserGravatarURLJob
 from .tasks import send_welcome_email
 
 
@@ -213,6 +214,15 @@ class UserProfile(ModelBase):
 def create_user_profile(sender, instance, created, **kwargs):
     if created and not kwargs.get('raw', False):
         p, created = UserProfile.objects.get_or_create(user=instance)
+
+
+@receiver(models.signals.post_save, sender=settings.AUTH_USER_MODEL)
+def invalidate_gravatar_url(sender, instance, created, **kwargs):
+    job = UserGravatarURLJob()
+    if instance.email:
+        job.invalidate(instance.email)
+    elif instance.email is None:
+        job.delete(instance.email)
 
 
 @receiver(user_signed_up)
