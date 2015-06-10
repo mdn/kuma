@@ -8,7 +8,7 @@ from kuma.wiki.tests import WikiTestCase, revision
 class NotificationEmailTests(UserTestCase, WikiTestCase):
 
     def test_context_dict_no_previous_revision(self):
-        rev = revision()
+        rev = revision(save=True)
         try:
             cd = context_dict(rev)
         except AttributeError:

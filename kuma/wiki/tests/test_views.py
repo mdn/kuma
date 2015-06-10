@@ -349,7 +349,7 @@ class PermissionTests(UserTestCase, WikiTestCase):
         rev = revision(save=True, document=doc)
 
         # Revision template should not show revert button
-        url = reverse('wiki.revision', args=([doc.full_path, rev.id]))
+        url = reverse('wiki.revision', args=([doc.slug, rev.id]))
         resp = self.client.get(url)
         ok_('Revert' not in resp.content)
 
@@ -357,7 +357,7 @@ class PermissionTests(UserTestCase, WikiTestCase):
         username = self.users['none'].username
         self.client.login(username=username, password='testpass')
         url = reverse('wiki.revert_document',
-                      args=([doc.full_path, rev.id]))
+                      args=([doc.slug, rev.id]))
         resp = self.client.post(url, {'comment': 'test'})
         eq_(403, resp.status_code)
 
@@ -365,7 +365,7 @@ class PermissionTests(UserTestCase, WikiTestCase):
         username = self.users['change'].username
         self.client.login(username=username, password='testpass')
         url = reverse('wiki.revert_document',
-                      args=([doc.full_path, rev.id]))
+                      args=([doc.slug, rev.id]))
         resp = self.client.post(url, {'comment': 'test'}, follow=True)
         eq_(200, resp.status_code)
 
@@ -513,7 +513,7 @@ class ReadOnlyTests(UserTestCase, WikiTestCase):
     def setUp(self):
         super(ReadOnlyTests, self).setUp()
         self.d, r = doc_rev()
-        self.edit_url = reverse('wiki.edit_document', args=[self.d.full_path])
+        self.edit_url = reverse('wiki.edit_document', args=[self.d.slug])
 
     def test_everyone(self):
         """ kumaediting: everyone, kumabanned: none  """
@@ -596,7 +596,7 @@ class BannedIPTests(UserTestCase, WikiTestCase):
         self.ip_ban = IPBan.objects.create(ip=self.ip)
         self.doc, rev = doc_rev()
         self.edit_url = reverse('wiki.edit_document',
-                                args=[self.doc.full_path])
+                                args=[self.doc.slug])
 
     def tearDown(self):
         cache.clear()
@@ -1015,7 +1015,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             <svg><circle onload=confirm(3)>
         """)
 
-        args = [r.document.full_path]
+        args = [r.document.slug]
         urls = (
             reverse('wiki.edit_document', args=args),
             '%s?tolocale=%s' % (reverse('wiki.translate', args=args), 'fr')
@@ -1114,7 +1114,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data.update({'title': new_title,
                      'form': 'rev'})
         data['slug'] = ''
-        url = reverse('wiki.edit_document', args=[d.full_path])
+        url = reverse('wiki.edit_document', args=[d.slug])
         self.client.post(url, data)
         eq_(new_title,
             Document.objects.get(slug=d.slug, locale=d.locale).title)
@@ -1148,7 +1148,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data.update({'title': new_title,
                      'form': 'rev'})
         data['slug'] = ''
-        url = reverse('wiki.edit_document', args=[d.full_path])
+        url = reverse('wiki.edit_document', args=[d.slug])
         self.client.post(url, data)
         eq_(new_title,
             Document.objects.get(slug=d.slug, locale=d.locale).title)
@@ -1170,7 +1170,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'slug': new_slug,
                      'form': 'rev'})
         self.client.post('%s?iframe=1' % reverse('wiki.edit_document',
-                                                 args=[d.full_path]), data)
+                                                 args=[d.slug]), data)
         eq_(old_slug, Document.objects.get(slug=d.slug,
                                            locale=d.locale).slug)
         assert "REDIRECT" not in Document.objects.get(slug=old_slug).html
@@ -1874,7 +1874,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         fr_d = document(parent=en_r.document, locale='fr', save=True)
         fr_r = revision(document=fr_d, based_on=en_r, save=True)
         url = reverse('wiki.new_revision_based_on',
-                      locale='fr', args=(fr_d.full_path, fr_r.pk,))
+                      locale='fr', args=(fr_d.slug, fr_r.pk,))
         response = self.client.get(url)
         input = pq(response.content)('#id_based_on')[0]
         eq_(int(input.value), en_r.pk)
@@ -1890,7 +1890,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Create french doc
         data.update({'locale': 'fr',
-                     'full_path': 'fr/a-test-article',
                      'title': 'A Tést Articlé',
                      'content': "C'ést bon."})
         self.client.post(reverse('wiki.new_document', locale='fr'), data)
@@ -1920,8 +1919,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.post(reverse('wiki.new_document'), data)
         parent = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
-        data.update({'full_path': 'en-US/a-test-article',
-                     'title': 'Another Test Article',
+        data.update({'title': 'Another Test Article',
                      'content': "Yahoooo!",
                      'parent_id': parent.id})
         self.client.post(reverse('wiki.new_document'), data)
@@ -1959,7 +1957,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
             # Ensure the tags are found in the Document view
             response = self.client.get(reverse('wiki.document',
-                                               args=[doc.full_path]), data)
+                                               args=[doc.slug]), data)
             page = pq(response.content)
             for t in yes_tags:
                 eq_(1, page.find('.tags li a:contains("%s")' % t).length,
@@ -2019,7 +2017,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'review_tags': ['editorial', 'technical'],
         })
         response = self.client.post(reverse('wiki.edit_document',
-                                            args=[doc.full_path]), data)
+                                            args=[doc.slug]), data)
 
         # Ensure the doc's newest revision has both tags.
         doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
@@ -2031,7 +2029,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Now, ensure that warning boxes appear for the review tags.
         response = self.client.get(reverse('wiki.document',
-                                           args=[doc.full_path]), data)
+                                           args=[doc.slug]), data)
         page = pq(response.content)
         eq_(2, page.find('.warning.warning-review').length)
 
@@ -2066,11 +2064,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'review_tags': ['editorial', ]
         })
         response = self.client.post(reverse('wiki.edit_document',
-                                            args=[doc.full_path]), data)
+                                            args=[doc.slug]), data)
 
         # Ensure only one of the tags' warning boxes appears, now.
         response = self.client.get(reverse('wiki.document',
-                                           args=[doc.full_path]), data)
+                                           args=[doc.slug]), data)
         page = pq(response.content)
         eq_(1, page.find('.warning.warning-review').length)
 
@@ -2141,7 +2139,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             doc = Document.objects.get(slug=slug)
             rev = doc.revisions.order_by('-id').all()[0]
             review_url = reverse('wiki.quick_review',
-                                 args=[doc.full_path])
+                                 args=[doc.slug])
 
             params = dict(data_dict['params'], revision_id=rev.id)
             resp = self.client.post(review_url, params)
@@ -2167,13 +2165,13 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Edit #1 starts...
         resp = self.client.get(reverse('wiki.edit_document',
-                                       args=[doc.full_path]))
+                                       args=[doc.slug]))
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
         resp = self.client.get(reverse('wiki.edit_document',
-                                       args=[doc.full_path]))
+                                       args=[doc.slug]))
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -2184,7 +2182,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'current_rev': rev_id2
         })
         resp = self.client.post(reverse('wiki.edit_document',
-                                        args=[doc.full_path]), data)
+                                        args=[doc.slug]), data)
         eq_(302, resp.status_code)
 
         # Edit #1 submits, but receives a mid-aired notification
@@ -2194,7 +2192,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'current_rev': rev_id1
         })
         resp = self.client.post(reverse('wiki.edit_document',
-                                        args=[doc.full_path]), data)
+                                        args=[doc.slug]), data)
         eq_(200, resp.status_code)
 
         ok_(unicode(MIDAIR_COLLISION).encode('utf-8') in resp.content,
@@ -2212,7 +2210,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data['slug'] = d.slug
         data['title'] = d.title
         self.client.post(reverse('wiki.edit_document',
-                                 args=[d.full_path]),
+                                 args=[d.slug]),
                          data)
         doc = Document.objects.get(slug=d.slug, locale=d.locale)
         eq_(0, doc.current_revision.toc_depth)
@@ -2231,7 +2229,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data['slug'] = d.slug
         data['title'] = d.title
         self.client.post(reverse('wiki.edit_document',
-                                 args=[d.full_path]),
+                                 args=[d.slug]),
                          data)
         ok_(Document.objects.get(slug=d.slug, locale=d.locale).show_toc)
 
@@ -2282,7 +2280,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
 
         resp = self.client.get(reverse('wiki.repair_breadcrumbs',
-                                       args=[french_bottom.full_path],
+                                       args=[french_bottom.slug],
                                        locale='fr'))
         eq_(302, resp.status_code)
         ok_(french_bottom.get_absolute_url() in resp['Location'])
@@ -2371,11 +2369,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data['comment'] = 'Nobody likes Latin anyway'
 
         response = self.client.post(reverse('wiki.edit_document',
-                                            args=[doc.full_path]), data)
+                                            args=[doc.slug]), data)
 
         mock_kumascript_get.called = False
         response = self.client.post(reverse('wiki.revert_document',
-                                            args=[doc.full_path, rev.id]),
+                                            args=[doc.slug, rev.id]),
                                     {'revert': True, 'comment': 'Blah blah'})
         ok_(mock_kumascript_get.called,
             "kumascript should have been used")
@@ -2388,7 +2386,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         mock_kumascript_get.called = False
         rev = doc.revisions.order_by('-id').all()[1]
         response = self.client.post(reverse('wiki.revert_document',
-                                            args=[doc.full_path, rev.id]),
+                                            args=[doc.slug, rev.id]),
                                     {'revert': True})
         ok_(302 == response.status_code)
         rev = doc.revisions.order_by('-id').all()[0]
@@ -2411,7 +2409,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'content': 'This revision should NOT record IP',
                      'comment': 'This revision should NOT record IP'})
 
-        self.client.post(reverse('wiki.edit_document', args=[doc.full_path]),
+        self.client.post(reverse('wiki.edit_document', args=[doc.slug]),
                          data)
         eq_(0, RevisionIP.objects.all().count())
 
@@ -2420,7 +2418,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data.update({'content': 'Store the IP address for the revision.',
                      'comment': 'Store the IP address for the revision.'})
 
-        self.client.post(reverse('wiki.edit_document', args=[doc.full_path]),
+        self.client.post(reverse('wiki.edit_document', args=[doc.slug]),
                          data)
         eq_(1, RevisionIP.objects.all().count())
         rev = doc.revisions.order_by('-id').all()[0]
@@ -2447,7 +2445,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'comment': 'This edit should not send an email'})
 
         self.client.post(reverse('wiki.edit_document',
-                                 args=[doc.full_path]),
+                                 args=[doc.slug]),
                          data)
         eq_(1, len(mail.outbox))
 
@@ -2456,7 +2454,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'comment': 'Admin first edit should send an email'})
 
         self.client.post(reverse('wiki.edit_document',
-                                 args=[doc.full_path]),
+                                 args=[doc.slug]),
                          data)
         eq_(2, len(mail.outbox))
 
@@ -2543,7 +2541,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         """
         Switch.objects.create(name='application_ACAO', active=True)
         response = self.client.get('%s?raw=true' %
-                                   reverse('wiki.document', args=[d.full_path]),
+                                   reverse('wiki.document', args=[d.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         ok_('Access-Control-Allow-Origin' in response)
         eq_('*', response['Access-Control-Allow-Origin'])
@@ -2559,7 +2557,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <svg><circle onload=confirm(3)>HI THERE</circle></svg>
         """)
         response = self.client.get('%s?raw=true' %
-                                   reverse('wiki.document', args=[d.full_path]),
+                                   reverse('wiki.document', args=[d.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         ok_('<p onload=' not in response.content)
         ok_('<circle onload=' not in response.content)
@@ -2582,18 +2580,18 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
         """)
         expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s1" href="/en-US/docs/%(full_path)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>s1</h1>
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s1" href="/en-US/docs/%(slug)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>s1</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s2" href="/en-US/docs/%(full_path)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>s2</h1>
+            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s2" href="/en-US/docs/%(slug)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>s2</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s3" href="/en-US/docs/%(full_path)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>s3</h1>
+            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s3" href="/en-US/docs/%(slug)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>s3</h1>
             <p>test</p>
             <p>test</p>
-        """ % {'full_path': d.full_path}
+        """ % {'slug': d.slug}
         response = self.client.get('%s?raw=true&edit_links=true' %
-                                   reverse('wiki.document', args=[d.full_path]),
+                                   reverse('wiki.document', args=[d.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
@@ -2621,7 +2619,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         """
         response = self.client.get('%s?section=s2&raw=true' %
                                    reverse('wiki.document',
-                                           args=[d.full_path]),
+                                           args=[d.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
@@ -2653,7 +2651,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         """
         response = self.client.post('%s?section=s2&raw=true' %
                                     reverse('wiki.edit_document',
-                                            args=[d.full_path]),
+                                            args=[d.slug]),
                                     {"form": "rev",
                                      "slug": d.slug,
                                      "content": replace},
@@ -2676,7 +2674,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         """
         response = self.client.get('%s?raw=true' %
                                    reverse('wiki.document',
-                                           args=[d.full_path]),
+                                           args=[d.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
@@ -2729,7 +2727,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         # Edit #1 starts...
         resp = self.client.get('%s?section=s1' %
                                reverse('wiki.edit_document',
-                                       args=[doc.full_path]),
+                                       args=[doc.slug]),
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
@@ -2737,7 +2735,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         # Edit #2 starts...
         resp = self.client.get('%s?section=s2' %
                                reverse('wiki.edit_document',
-                                       args=[doc.full_path]),
+                                       args=[doc.slug]),
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
@@ -2751,7 +2749,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         })
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit_document',
-                                        args=[doc.full_path]),
+                                        args=[doc.slug]),
                                 data,
                                 HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(302, resp.status_code)
@@ -2764,7 +2762,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             'current_rev': rev_id1
         })
         resp = self.client.post('%s?section=s1&raw=true' %
-                                reverse('wiki.edit_document', args=[doc.full_path]),
+                                reverse('wiki.edit_document', args=[doc.slug]),
                                 data,
                                 HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         # No conflict, but we should get a 205 Reset as an indication that the
@@ -2774,7 +2772,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         # Finally, make sure that all the edits landed
         response = self.client.get('%s?raw=true' %
                                    reverse('wiki.document',
-                                           args=[doc.full_path]),
+                                           args=[doc.slug]),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
@@ -2819,7 +2817,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         # Edit #1 starts...
         resp = self.client.get('%s?section=s2' %
                                reverse('wiki.edit_document',
-                                       args=[doc.full_path]),
+                                       args=[doc.slug]),
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
@@ -2827,7 +2825,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         # Edit #2 starts...
         resp = self.client.get('%s?section=s2' %
                                reverse('wiki.edit_document',
-                                       args=[doc.full_path]),
+                                       args=[doc.slug]),
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
@@ -2841,7 +2839,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         })
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit_document',
-                                        args=[doc.full_path]),
+                                        args=[doc.slug]),
                                 data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(302, resp.status_code)
 
@@ -2853,7 +2851,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         })
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit_document',
-                                        args=[doc.full_path]),
+                                        args=[doc.slug]),
                                 data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         # With the raw API, we should get a 409 Conflict on collision.
         eq_(409, resp.status_code)
@@ -2879,7 +2877,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             </dl>
         """
         resp = self.client.get('%s?raw&include' %
-                               reverse('wiki.document', args=[doc.full_path]),
+                               reverse('wiki.document', args=[doc.slug]),
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(resp.content.decode('utf-8')))
@@ -2909,7 +2907,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         <p>replace</p>
         """
         self.client.post('%s?section=s2&raw=true' %
-                         reverse('wiki.edit_document', args=[doc.full_path]),
+                         reverse('wiki.edit_document', args=[doc.slug]),
                          {"form": "rev", "slug": doc.slug, "content": replace},
                          follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
@@ -2942,7 +2940,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         <p>replace</p>
         """
         self.client.post('%s?section=s2&raw=true' %
-                         reverse('wiki.edit_document', args=[doc.full_path]),
+                         reverse('wiki.edit_document', args=[doc.slug]),
                          {"form": "rev", "slug": doc.slug, "content": replace},
                          follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
@@ -3155,7 +3153,7 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
 
         Switch.objects.create(name='application_ACAO', active=True)
         response = self.client.get(reverse('wiki.code_sample',
-                                           args=[d.full_path, 'sample1']),
+                                           args=[d.slug, 'sample1']),
                                    HTTP_HOST='testserver')
         ok_('Access-Control-Allow-Origin' in response)
         eq_('*', response['Access-Control-Allow-Origin'])
@@ -3181,12 +3179,12 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
         """)
 
         response = self.client.get(reverse('wiki.code_sample',
-                                           args=[d.full_path, 'sample1']),
+                                           args=[d.slug, 'sample1']),
                                    HTTP_HOST='testserver')
         eq_(403, response.status_code)
 
         response = self.client.get(reverse('wiki.code_sample',
-                                           args=[d.full_path, 'sample1']),
+                                           args=[d.slug, 'sample1']),
                                    HTTP_HOST='sampleserver')
         eq_(200, response.status_code)
 
@@ -3344,7 +3342,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
             'content': 'This is an update',
         })
 
-        edit_url = reverse('wiki.edit_document', args=[self.d.full_path])
+        edit_url = reverse('wiki.edit_document', args=[self.d.slug])
         resp = self.client.post(edit_url, data)
         eq_(302, resp.status_code)
         ok_(mock_document_schedule_rendering.called)

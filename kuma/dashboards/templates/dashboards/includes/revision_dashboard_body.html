@@ -18,19 +18,19 @@
             {% for revision in revisions %}
 
                 {% set previous_id = revision.get_previous().id %}
-                {% set revision_url = url('wiki.document', revision.document.full_path, locale=revision.document.locale) %}
+                {% set revision_url = url('wiki.document', revision.document.slug, locale=revision.document.locale) %}
                 <tr
                     tabindex="0"
                     class="dashboard-row {% if not previous_id %}dashboard-row-new{% endif %}"
                     data-revision-id="{{ revision.id }}"
                     data-previous-id="{{ previous_id }}"
                     data-view-url="{{ revision_url }}"
-                    data-edit-url="{{ url('wiki.edit_document', revision.document.full_path, locale=revision.document.locale) }}"
-                    data-compare-url="{{ url('wiki.compare_revisions', revision.document.full_path, locale=revision.document.locale) }}?from={{ previous_id if previous_id else revision.id }}&to={{ revision.id }}&raw=1"
-                    data-revert-url="{{ url('wiki.revert_document', revision.document.full_path, revision.id, locale=revision.document.locale) }}"
-                    data-history-url="{{ url('wiki.document_revisions', revision.document.full_path, locale=revision.document.locale) }}">
+                    data-edit-url="{{ url('wiki.edit_document', revision.document.slug, locale=revision.document.locale) }}"
+                    data-compare-url="{{ url('wiki.compare_revisions', revision.document.slug, locale=revision.document.locale) }}?from={{ previous_id if previous_id else revision.id }}&to={{ revision.id }}&raw=1"
+                    data-revert-url="{{ url('wiki.revert_document', revision.document.slug, revision.id, locale=revision.document.locale) }}"
+                    data-history-url="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}">
                     <td class="dashboard-revision">
-                        <a href="{{ url('wiki.revision', revision.document.full_path, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
+                        <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
                         <br />
                         <span class="locale">{{ revision.document.locale }}</span>
                         {% if not previous_id %}<span class="new">{{ _('new') }}</span>{% endif %}

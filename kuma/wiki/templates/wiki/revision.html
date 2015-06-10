@@ -72,7 +72,7 @@
     </details>
 
     {% if document.allows_revision_by(request.user) %}
-    <a href="{{ url('wiki.revert_document', document.full_path, revision.id) }}" class="button" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
+    <a href="{{ url('wiki.revert_document', document.slug, revision.id) }}" class="button" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
     {% endif %}
   </article>
 {% endblock %}

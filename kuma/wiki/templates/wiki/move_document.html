@@ -65,7 +65,7 @@
             <dl>
               <dt>{{ _('Preview URL:') }}</dt>
               <dd id="preview-url" data-url="{{ settings.SITE_URL  }}/{{ document.locale }}/docs/" data-specific="{{ specific_slug }}">
-                {{ request.build_absolute_uri(url('wiki.document', document.full_path)) }}
+                {{ request.build_absolute_uri(url('wiki.document', document.slug)) }}
               </dd>
             </dl>
           </li>
@@ -90,7 +90,7 @@
 
         <ul id="page-buttons">
           <li><button type="submit">{{ _('Move {d} Pages')|f(d=descendants_count) if descendants_count else _('Move Page') }}</button></li>
-          <li><a class="button negative" href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ _('Cancel') }}</a></li>
+          <li><a class="button negative" href="{{ url('wiki.document', document.slug, locale=document.locale) }}">{{ _('Cancel') }}</a></li>
         </ul>
 
         {% if descendants_count: %}

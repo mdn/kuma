@@ -2,7 +2,7 @@
   <nav class="crumbs" role="navigation"><ol xmlns:v="http://rdf.data-vocabulary.org/#" aria-label="{{ _('breadcrumbs') }}">
     <li typeof="v:Breadcrumb"><a href="/{{ request.locale }}" rel="v:url" property="v:title">MDN</a></li>
     {% for doc in document.parents %}
-      <li class="crumb" typeof="v:Breadcrumb"><a href="{{ url('wiki.document', doc.full_path) }}" rel="v:url" property="v:title">{{ doc.title }}</a></li>
+      <li class="crumb" typeof="v:Breadcrumb"><a href="{{ url('wiki.document', doc.slug) }}" rel="v:url" property="v:title">{{ doc.title }}</a></li>
     {% endfor %}
     <li class="crumb" typeof="v:Breadcrumb" property="v:title">{{ document.title }}</li>
   </ol></nav>
@@ -12,13 +12,13 @@
 
   {% if document.parent %}
     {# If there is a parent doc, use it for translating. #}
-    {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
+    {% set translate_url = url('wiki.select_locale', document_path=document.parent.slug) %}
   {% else %}
-    {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
+    {% set translate_url = url('wiki.select_locale', document_path=document.slug, locale=document.locale) %}
   {% endif %}
 
   {% if not edit_link %}
-    {% set edit_link = url('wiki.edit_document', document.full_path, locale=document.locale) %}
+    {% set edit_link = url('wiki.edit_document', document.slug, locale=document.locale) %}
   {% endif %}
 
 
@@ -29,7 +29,7 @@
             <ul id="translations">
               {% if document.other_translations.exists() %}
                 {% for translation in document.other_translations %}
-                  <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></bdi></li>
+                  <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.slug, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></bdi></li>
                 {% endfor %}
               {% else %}
                 <li class="smaller">{{ _('No translations exist for this article.') }}</li>
@@ -47,7 +47,7 @@
           <div class="submenu-column">
             <div class="title">{{ _('Advanced') }}</div>
             <ul>
-                <li><a href="{{ url('wiki.document_revisions', document.full_path) }}" rel="nofollow, noindex">{{_('History')}}</a></li>
+                <li><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow, noindex">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
                   <li class="page-watch">
                     {% set subscribe_status = _('Updating subscription status') %}
@@ -132,7 +132,7 @@
     <section class="page-meta reviews">
       <p>{{ _('The following reviews have been requested:') }}</p>
 
-      <form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
+      <form method="post" action="{{ url('wiki.quick_review', document.slug) }}">
         {{ csrf() }}
         <ul>
         {% if document.current_revision.needs_technical_review %}

@@ -18,7 +18,7 @@
       <ul>
         {% if document.parent %}
           <li>
-            <a href="{{ url('wiki.document_revisions', document.parent.full_path, locale=document.parent.locale) }}" rel="nofollow, noindex">{{ document.parent.language }}</a>
+            <a href="{{ url('wiki.document_revisions', document.parent.slug, locale=document.parent.locale) }}" rel="nofollow, noindex">{{ document.parent.language }}</a>
           </li>
         {% endif %}
         <li>
@@ -31,9 +31,9 @@
       {% set user_can_delete=user.has_perm('wiki.delete_revision') %}
       {% if revision_count > 0 %}
         {% if request.GET.origin == 'translate' %}
-          {% set destination_url = url('wiki.translate', document.full_path) %}
+          {% set destination_url = url('wiki.translate', document.slug) %}
         {% else %}
-          {% set destination_url = url('wiki.compare_revisions', document.full_path) %}
+          {% set destination_url = url('wiki.compare_revisions', document.slug) %}
         {% endif %}
         <form action="{{ destination_url }}" method="get" class="nodisable">
           <input type="hidden" name="locale" value="{{ document.locale }}">
@@ -53,11 +53,11 @@
               </div>
                <div class="revision-list-cell revision-list-prev">
               {% if rev.previous_revision %}
-                <a href="{{ url('wiki.compare_revisions', document.full_path) }}?to={{ rev.id }}&amp;from={{ rev.previous_revision.id }}" rel="nofollow, noindex">{{ _('Previous') }}</a>
+                <a href="{{ url('wiki.compare_revisions', document.slug) }}?to={{ rev.id }}&amp;from={{ rev.previous_revision.id }}" rel="nofollow, noindex">{{ _('Previous') }}</a>
               {% endif %}
               </div>
               <div class="revision-list-cell revision-list-date">
-                <a href="{{ url('wiki.revision', document.full_path, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
+                <a href="{{ url('wiki.revision', document.slug, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
               </div>
               <div class="revision-list-cell revision-list-creator">
                 <a href="{{ rev.creator.get_absolute_url() }}">{{ rev.creator }}</a>
@@ -67,7 +67,7 @@
               </div>
               {% if document.current_revision.id != rev.id and user_can_delete %}
               <div class="revision-list-cell">
-                <a href="{{ url('wiki.revert_document', document.full_path, rev.id) }}" class="button" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
+                <a href="{{ url('wiki.revert_document', document.slug, rev.id) }}" class="button" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
               </div>
               {% endif %}
             </li>

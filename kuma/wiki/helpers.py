@@ -29,7 +29,7 @@ register.function(build_policy_admin_links)
 
 def compare_url(doc, from_id, to_id):
     return (
-        reverse('wiki.compare_revisions', args=[doc.full_path],
+        reverse('wiki.compare_revisions', args=[doc.slug],
                 locale=doc.locale)
         + '?' +
         urllib.urlencode({'from': from_id, 'to': to_id})

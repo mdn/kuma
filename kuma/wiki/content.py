@@ -288,8 +288,8 @@ class ContentSectionTool(object):
         return self
 
     @newrelic.agent.function_trace()
-    def injectSectionEditingLinks(self, full_path, locale):
-        self.stream = SectionEditLinkFilter(self.stream, full_path, locale)
+    def injectSectionEditingLinks(self, slug, locale):
+        self.stream = SectionEditLinkFilter(self.stream, slug, locale)
         return self
 
     @newrelic.agent.function_trace()
@@ -657,9 +657,9 @@ class SectionEditLinkFilter(html5lib_Filter):
     """
     Filter which injects editing links for sections with IDs
     """
-    def __init__(self, source, full_path, locale):
+    def __init__(self, source, slug, locale):
         html5lib_Filter.__init__(self, source)
-        self.full_path = full_path
+        self.slug = slug
         self.locale = locale
 
     def __iter__(self):
@@ -682,14 +682,14 @@ class SectionEditLinkFilter(html5lib_Filter):
                                    (None, u'data-section-id'): value,
                                    (None, u'data-section-src-url'): u'%s?%s' % (
                                        reverse('wiki.document',
-                                               args=[self.full_path],
+                                               args=[self.slug],
                                                locale=self.locale),
                                        urlencode({'section': value.encode('utf-8'),
                                                   'raw': 'true'})
                                    ),
                                    (None, u'href'): u'%s?%s' % (
                                        reverse('wiki.edit_document',
-                                               args=[self.full_path],
+                                               args=[self.slug],
                                                locale=self.locale),
                                        urlencode({'section': value.encode('utf-8'),
                                                   'edit_links': 'true'})

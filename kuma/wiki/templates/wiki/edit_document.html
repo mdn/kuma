@@ -37,7 +37,7 @@
               </div>
               <div>
                 <h3>
-                    <a href="{{ url('wiki.revision', current_revision.document.full_path, current_revision.id) }}">
+                    <a href="{{ url('wiki.revision', current_revision.document.slug, current_revision.id) }}">
                       {{ _('Current Revision:')|f(num=current_revision.id) }}
                     </a>
                 </h3>

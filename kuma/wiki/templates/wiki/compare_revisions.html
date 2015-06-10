@@ -10,7 +10,7 @@
   <article id="compare-revisions">
 
     <h1>{{ _('Compare Revisions') }}</h1>
-    <h2><a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ document.title }}</a></h2>
+    <h2><a href="{{ url('wiki.document', document.slug, locale=document.locale) }}">{{ document.title }}</a></h2>
 
     {{ revision_diff(revision_from, revision_to) }}
 
