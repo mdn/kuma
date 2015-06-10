@@ -201,10 +201,8 @@
             </ul>
         </div>
         {% endif %}
-
       </div>
       {% endif %}
-
       <!-- start the main content container -->
         <div id="wiki-column-container" class="{% if show_right %}wiki-right-present{% else %}wiki-right-closed wiki-right-none{% endif %} {% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
 
@@ -407,9 +405,13 @@
     <menuitem data-action="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" label="{{_('Edit page')}}"></menuitem>
     <menuitem data-action="{{ url('wiki.document_revisions', document.full_path) }}" label="{{_('View page history')}}"></menuitem>
   </menu>
+
 {% endblock %}
 
 {% block js %}
+  {% if waffle.flag('scrollback_widget') %}
+    {{ js('scrollback', async=True) }}
+  {% endif %}
   <script type="text/javascript">
       if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
 
