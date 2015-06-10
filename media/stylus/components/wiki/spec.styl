@@ -1,0 +1,108 @@
+/*
+Colors and Badges for the Spec2 macro template
+====================================================================== */
+
+.spec-ED {
+    color: #e61919;
+}
+
+.spec-WD,
+.spec-Draft {
+    color: #e66e33;
+}
+
+.spec-CR,
+.spec-RC {
+    color: #00978e;
+}
+
+.spec-PR {
+    color: #72ac35;
+}
+
+.spec-REC,
+.spec-RFC {
+    color: #309c40;
+}
+
+.spec-Living,
+.spec-Standard {
+    color: #00539f;
+}
+
+/*
+Badges
+-------------------------------------------------------------- */
+.spec-ED:before,
+.spec-WD:before,
+.spec-CR:before,
+.spec-RC:before,
+.spec-PR:before,
+.spec-REC:before,
+.spec-RFC:before,
+.spec-Living:before,
+.spec-Standard:before,
+.spec-Draft:before {
+    font: 0.7em Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    border-radius: 2px;
+    border-left: 4px solid;
+    letter-spacing: 1px;
+    padding: 0.45em 0.35em 0.30em;
+    /* bidi for this is complicated, the tag itself is LTR but the
+       name of the spec could be either LTR or RTL (depending on
+       if it's been translated) so we add margins to both sides.
+       Not perfect but good compromise.  */
+    bidi-value(margin, 0.2em 0.6em 0 0, 0.2em 0.6em 0);
+    direction: ltr;
+}
+
+.spec-ED:before {
+    content: 'ED';
+    background: #F4C1C2;
+}
+
+.spec-WD:before {
+    content: 'WD';
+    background: #F4D7C9;
+}
+
+.spec-CR:before,
+.spec-RC:before {
+    content: 'CR';
+    background: #BAE1E0;
+}
+
+.spec-RC:before {
+    content: "RC";
+}
+
+.spec-PR:before {
+    content: 'PR';
+    background: #D7E6C9;
+}
+
+.spec-REC:before {
+    content: 'REC';
+    background: #C6E2CC;
+}
+
+.spec-Living:before {
+    content: 'LS';
+    background: #BAD0E4;
+}
+
+.spec-RFC:before {
+    content: 'RFC';
+    background: #BAD0E4;
+}
+
+.spec-Standard:before {
+    content: 'ST';
+    background: #BAD0E4;
+}
+
+.spec-Draft:before {
+    content: 'D';
+    background: #F4D7C9;
+}
