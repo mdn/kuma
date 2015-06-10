@@ -1,6 +1,6 @@
 cache:
-    - apt
-    - directories:
+    apt: true
+    directories:
         - $HOME/.cache/pip
 language: python
 python:
