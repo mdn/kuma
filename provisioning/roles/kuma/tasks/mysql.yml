@@ -30,6 +30,8 @@
     backup: yes
   when: utf8_distinct_ci_found|failed
 
-- name: Ensure MySQL is restarted after collation installation.
-  service: name=mysql state=restarted sleep=5
-  when: utf8_distinct_ci_found|failed
+- name: Ensure MySQL is stopped.
+  service: name=mysql state=stopped sleep=5
+
+- name: Ensure MySQL is started.
+  service: name=mysql state=started
