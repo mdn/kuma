@@ -406,22 +406,12 @@
     <menuitem data-action="{{ url('wiki.document_revisions', document.full_path) }}" label="{{_('View page history')}}"></menuitem>
   </menu>
 
-  <!-- embed scrollback widget based on the tags on the page -->
-	{% if waffle.flag('scrollback_widget') %}
-		{% set tags = document.tags.all() %}
-		{% for tag in tags %}
-			{% if settings.SCROLLBACK_ROOM_MAP[tag.name] %}
-			<button class = "scrollback-button" onclick='addScrollback("{{settings.SCROLLBACK_ROOM_MAP[tag.name]}}", "{{request.user.username}}")'> Chat about {{tag.name}} </button>
-			{% endif %}
-		{% endfor %}
-	{% endif %}
-
 {% endblock %}
 
 {% block js %}
-	{% if waffle.flag('scrollback_widget') %}
-		<script type="text/javascript" src="/media/js/scrollback.js" async="true"></script>
-	{% endif %}
+  {% if waffle.flag('scrollback_widget') %}
+    {{ js('scrollback', async=True) }}
+  {% endif %}
   <script type="text/javascript">
       if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
 

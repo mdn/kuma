@@ -786,14 +786,17 @@ MINIFY_BUNDLES = {
         'fontfaceobserver': (
             'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
         ),
+        'scrollback': (
+            'js/libs/scrollback.js',
+        )
     },
 }
 
 # Map wiki article tags to scrollback.io rooms
-# Warning: Tag matching is case-sensitive.
 SCROLLBACK_ROOM_MAP = {
-    "MDN": "mdn",
-    "mdn": "mdn"
+    'mdn': 'mdn',
+    'css': 'mdn',
+    'javascript': 'mdn',
 }
 
 #
