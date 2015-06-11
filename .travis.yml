@@ -15,14 +15,16 @@ env:
     global:
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive
+        - CFLAGS=-O0
 before_install:
     - scripts/travis-install
     - pip install -U pip
 install:
     - pip install -r requirements/travis.txt
     - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
-script:
-    - tox -v
+script: tox -v
+after_failure:
+    - dmesg | tail
 after_success: coveralls
 notifications:
     irc:
