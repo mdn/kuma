@@ -132,7 +132,7 @@
                 var windowWidth;
 
                 // Add a close button if one doesn't already exist
-                if($history.find('.bc-history-button').length == 0) {
+                if($history.find('.bc-history-button').length === 0) {
                     $historyCloseButton.clone().appendTo($history);
                 }
 
