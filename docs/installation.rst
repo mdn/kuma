@@ -209,8 +209,9 @@ configuration is::
             'NAME': 'kuma',
             'ENGINE': 'django.db.backends.mysql',
             'HOST': 'localhost',
+            'PORT': '3306',
             'USER': 'kuma',
-            'PASSWORD': '',
+            'PASSWORD': 'kuma',
             'OPTIONS': {
                 'sql_mode': 'TRADITIONAL',
                 'charset': 'utf8',
