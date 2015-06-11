@@ -1,0 +1,98 @@
+/*
+History-link
+====================================================================== */
+
+.bc-history-link {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 11;
+    display: block;
+    width: 100%;
+    height: 11px;
+    margin-top: -10px;
+    clear: both;
+    text-align: center;
+    font-size: 12px;
+    border-top: 1px solid rgba($bc-color-border, 0.3);
+    line-height: 1;
+}
+
+a.bc-history-link { /* needs additional specificity to over ride rule giving it an underline */
+    text-decoration: none;
+}
+
+.active .bc-history-link {
+    z-index: 21;
+}
+
+/* increases hit area of the history link, making it easier to click/tap/etc, only necisary if JS is off */
+.bc-history-link:before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    margin-left: -15px;
+    display: block;
+    height: 15px;
+    width: 30px;
+}
+    /* if there are icons the text is shifted left, shift the target extention as well */
+    .bc-icons + .bc-history-link:before {
+        margin-left: -30px;
+    }
+
+.active .bc-history-link,
+td[tabindex]:hover .bc-history-link,
+td[tabindex]:focus .bc-history-link {
+    background-color: $bc-color-border;
+    border-top: 1px solid rgba($bc-color-border, 1);
+}
+
+    .active.bc-supports-yes .bc-history-link,
+    td[tabindex].bc-supports-yes:hover .bc-history-link,
+    td[tabindex].bc-supports-yes:focus .bc-history-link {
+        color: $bc-color-yes;
+    }
+    .active.bc-supports-no .bc-history-link,
+    td[tabindex].bc-supports-no:hover .bc-history-link,
+    td[tabindex].bc-supports-no:focus .bc-history-link {
+        color: $bc-color-no;
+    }
+    .active.bc-supports-partial .bc-history-link,
+    td[tabindex].bc-supports-partial:hover .bc-history-link,
+    td[tabindex].bc-supports-partial:focus .bc-history-link {
+        color: $bc-color-partial;
+    }
+    .active.bc-supports-unknown .bc-history-link,
+    td[tabindex].bc-supports-unknown:hover .bc-history-link,
+    td[tabindex].bc-supports-unknown:focus .bc-history-link {
+        color: $bc-color-unknown;
+    }
+
+    .active .bc-history-link {
+        margin-top: -8px;
+    }
+
+.bc-history-link i {
+    position: relative;
+    top: -4px;
+}
+
+
+@media $media-query-small-mobile {
+    .bc-history-link {
+        width: calc(100% - 60px); /* falls back to 100% on non supporting browsers */
+        height: 20px;
+        margin-top: -20px;
+        font-size: 16px;
+    }
+
+    .active .bc-history-link {
+        margin-top: -18px;
+    }
+
+    .bc-history-link i {
+        top: 0;
+    }
+}
