@@ -16,14 +16,11 @@ History-link
     font-size: 12px;
     border-top: 1px solid rgba($bc-color-border, 0.3);
     line-height: 1;
-}
 
-a.bc-history-link { /* needs additional specificity to over ride rule giving it an underline */
-    text-decoration: none;
-}
-
-.active .bc-history-link {
-    z-index: 21;
+    /* needs additional specificity to over ride rule giving it an underline */
+    a& {
+        text-decoration: none;
+    }
 }
 
 /* increases hit area of the history link, making it easier to click/tap/etc, only necisary if JS is off */
@@ -36,11 +33,26 @@ a.bc-history-link { /* needs additional specificity to over ride rule giving it 
     display: block;
     height: 15px;
     width: 30px;
-}
+
     /* if there are icons the text is shifted left, shift the target extention as well */
-    .bc-icons + .bc-history-link:before {
+    .bc-icons +  & {
         margin-left: -30px;
     }
+
+}
+
+.bc-history-link i {
+    position: relative;
+    top: -4px;
+}
+
+/*
+active styles
+----------------------------------------------------------------------  */
+.active .bc-history-link {
+    z-index: 21;
+    margin-top: -8px;
+}
 
 .active .bc-history-link,
 td[tabindex]:hover .bc-history-link,
@@ -49,36 +61,19 @@ td[tabindex]:focus .bc-history-link {
     border-top: 1px solid rgba($bc-color-border, 1);
 }
 
-    .active.bc-supports-yes .bc-history-link,
-    td[tabindex].bc-supports-yes:hover .bc-history-link,
-    td[tabindex].bc-supports-yes:focus .bc-history-link {
-        color: $bc-color-yes;
-    }
-    .active.bc-supports-no .bc-history-link,
-    td[tabindex].bc-supports-no:hover .bc-history-link,
-    td[tabindex].bc-supports-no:focus .bc-history-link {
-        color: $bc-color-no;
-    }
-    .active.bc-supports-partial .bc-history-link,
-    td[tabindex].bc-supports-partial:hover .bc-history-link,
-    td[tabindex].bc-supports-partial:focus .bc-history-link {
-        color: $bc-color-partial;
-    }
-    .active.bc-supports-unknown .bc-history-link,
-    td[tabindex].bc-supports-unknown:hover .bc-history-link,
-    td[tabindex].bc-supports-unknown:focus .bc-history-link {
-        color: $bc-color-unknown;
-    }
+for $support in $bc-support {
 
-    .active .bc-history-link {
-        margin-top: -8px;
+    .active.bc-supports-{$support} .bc-history-link,
+    td[tabindex].bc-supports-{$support}:hover .bc-history-link,
+    td[tabindex].bc-supports-{$support}:focus .bc-history-link {
+        color: $bc-color- + $support;
     }
-
-.bc-history-link i {
-    position: relative;
-    top: -4px;
 }
 
+
+/*
+mobile adjustments
+----------------------------------------------------------------------  */
 
 @media $media-query-small-mobile {
     .bc-history-link {
@@ -88,11 +83,12 @@ td[tabindex]:focus .bc-history-link {
         font-size: 16px;
     }
 
-    .active .bc-history-link {
-        margin-top: -18px;
-    }
-
     .bc-history-link i {
         top: 0;
+    }
+
+
+    .active .bc-history-link {
+        margin-top: -18px;
     }
 }
