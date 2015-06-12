@@ -55,7 +55,7 @@ class DocumentsFeed(Feed):
         return document.current_revision.summary
 
     def item_author_name(self, document):
-        return '%s' % document.current_revision.creator
+        return document.current_revision.creator.username
 
     def item_author_link(self, document):
         return self.request.build_absolute_uri(
@@ -281,8 +281,13 @@ class RevisionsFeed(DocumentsFeed):
         if self.request.GET.get('all_locales', False) is False:
             items = items.filter(document__locale=self.request.locale)
 
-        items = items.prefetch_related('creator', 'document')
-        return items.order_by('-created')[start:finish]
+        # Temporarily storing the selected revision PKs in a list
+        # to speed up retrieval (max MAX_FEED_ITEMS size)
+        item_pks = (items.order_by('-created')
+                         .values_list('pk', flat=True)[start:finish])
+        return (Revision.objects.filter(pk__in=list(item_pks))
+                                .prefetch_related('creator',
+                                                  'document'))
 
     def item_title(self, item):
         return '%s (%s)' % (item.document.slug, item.document.locale)
@@ -371,7 +376,7 @@ class RevisionsFeed(DocumentsFeed):
         return item.created
 
     def item_author_name(self, item):
-        return u'%s' % item.creator
+        return item.creator.username
 
     def item_author_link(self, item):
         return self.request.build_absolute_uri(item.creator.get_absolute_url())
