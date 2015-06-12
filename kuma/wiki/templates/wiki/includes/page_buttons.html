@@ -3,7 +3,7 @@
 
 {% if not discard_href %}
   {% if document %}
-    {% set discard_href = url('wiki.document', document.full_path) %}
+    {% set discard_href = url('wiki.document', document.slug) %}
   {% else %}
     {% set discard_href = url('wiki.new_document') %}
   {% endif %}

@@ -247,7 +247,7 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
         return tmpl % dict(
             doc_url=self.request.build_absolute_uri(doc.get_absolute_url()),
             doc_edit_url=self.request.build_absolute_uri(
-                reverse('wiki.edit_document', args=[doc.full_path])),
+                reverse('wiki.edit_document', args=[doc.slug])),
             doc_title=doc.title,
             doc_locale=doc.locale,
             doc_modified=doc.modified,
@@ -285,7 +285,7 @@ class RevisionsFeed(DocumentsFeed):
         return items.order_by('-created')[start:finish]
 
     def item_title(self, item):
-        return '%s (%s)' % (item.document.full_path, item.document.locale)
+        return '%s (%s)' % (item.document.slug, item.document.locale)
 
     def item_description(self, item):
         # TODO: put this in a jinja template if django syndication will let us
@@ -338,14 +338,14 @@ class RevisionsFeed(DocumentsFeed):
 
         link_cell = u'<td><a href="%s">%s</a></td>'
         view_cell = link_cell % (reverse('wiki.document',
-                                         args=[item.document.full_path]),
+                                         args=[item.document.slug]),
                                  _('View Page'))
         edit_cell = link_cell % (reverse('wiki.edit_document',
-                                         args=[item.document.full_path]),
+                                         args=[item.document.slug]),
                                  _('Edit Page'))
         if previous:
             compare_cell = link_cell % (reverse('wiki.compare_revisions',
-                                                args=[item.document.full_path])
+                                                args=[item.document.slug])
                                         + '?' +
                                         urllib.urlencode({'from': previous.id,
                                                           'to': item.id}),
@@ -353,7 +353,7 @@ class RevisionsFeed(DocumentsFeed):
         else:
             compare_cell = ''
         history_cell = link_cell % (reverse('wiki.document_revisions',
-                                            args=[item.document.full_path]),
+                                            args=[item.document.slug]),
                                     _('History'))
         links_table = u'<table border="0" width="80%">'
         links_table = links_table + u'<tr>%s%s%s%s</tr>' % (view_cell,

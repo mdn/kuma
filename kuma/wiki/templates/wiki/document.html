@@ -4,9 +4,9 @@
 {% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, get_approvals_html, document_watch, share_links with context %}
 
 {% if fallback_reason == 'no_translation' %}
-  {% set help_link = url('wiki.translate', document_path=document.full_path, locale=document.locale)|urlparams(tolocale=request.locale) %}
+  {% set help_link = url('wiki.translate', document_path=document.slug, locale=document.locale)|urlparams(tolocale=request.locale) %}
 {% elif fallback_reason == 'translation_not_approved' %}
-  {% set help_link = url('wiki.translate', document_path=document.parent.full_path, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
+  {% set help_link = url('wiki.translate', document_path=document.parent.slug, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
 {% endif %}
 
 {% set is_logged_in = request.user.is_authenticated() %}
@@ -49,13 +49,13 @@
     {{ super() }}
     {% if zone_stack %}
       {% for zone in zone_stack|reverse() %}
-        <link rel="stylesheet" type="text/css" href="{{ url('wiki.styles', zone.document.full_path) }}">
+        <link rel="stylesheet" type="text/css" href="{{ url('wiki.styles', zone.document.slug) }}">
       {% endfor %}
     {% endif %}
 {% endblock %}
 
 {% block extrahead %}
-  <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}">
+  <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.slug) }}">
   <link rel="canonical" href="{{ canonical }}" >
 
   {% if is_translated %}
@@ -300,7 +300,7 @@
                 {% endif %}
                 {% if document.current_revision.localization_in_progress %}
                   {% if document.current_revision.translation_age >= 10 %}
-                      <div class="warning warning-review"><p>{% trans translate_url=url('wiki.edit_document', document.full_path, locale=document.locale) %}
+                      <div class="warning warning-review"><p>{% trans translate_url=url('wiki.edit_document', document.slug, locale=document.locale) %}
                         This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
                       {% endtrans %}</p></div>
                   {% else %}
@@ -404,8 +404,8 @@
     </div> <!-- ends "main-content" -->
 
   <menu type="context" id="edit-history-menu">
-    <menuitem data-action="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" label="{{_('Edit page')}}"></menuitem>
-    <menuitem data-action="{{ url('wiki.document_revisions', document.full_path) }}" label="{{_('View page history')}}"></menuitem>
+    <menuitem data-action="{{ url('wiki.edit_document', document.slug, locale=document.locale) }}" label="{{_('Edit page')}}"></menuitem>
+    <menuitem data-action="{{ url('wiki.document_revisions', document.slug) }}" label="{{_('View page history')}}"></menuitem>
   </menu>
 {% endblock %}
 

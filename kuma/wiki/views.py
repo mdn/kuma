@@ -345,7 +345,7 @@ def _filter_doc_html(request, doc, doc_html, rendering_params):
     if ((rendering_params['edit_links'] or not rendering_params['raw']) and
             request.user.is_authenticated() and
             doc.allows_revision_by(request.user)):
-        tool.injectSectionEditingLinks(doc.full_path, doc.locale)
+        tool.injectSectionEditingLinks(doc.slug, doc.locale)
 
     doc_html = tool.serialize()
 
@@ -960,8 +960,7 @@ def new_document(request):
                 view = 'wiki.document'
             else:
                 view = 'wiki.document_revisions'
-            return HttpResponseRedirect(reverse(view,
-                                        args=[doc.full_path]))
+            return HttpResponseRedirect(reverse(view, args=[doc.slug]))
         else:
             doc_form.data['slug'] = posted_slug
     else:
@@ -1088,7 +1087,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
 
                     return HttpResponseRedirect(
                         urlparams(reverse('wiki.edit_document',
-                                          args=[doc.full_path]),
+                                          args=[doc.slug]),
                                   opendescription=1))
                 disclose_description = True
             else:
@@ -1155,8 +1154,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                         view = 'wiki.document_revisions'
 
                     # Construct the redirect URL, adding any needed parameters
-                    url = reverse(view, args=[doc.full_path],
-                                  locale=doc.locale)
+                    url = reverse(view, args=[doc.slug], locale=doc.locale)
                     params = {}
                     if is_raw:
                         params['raw'] = 'true'
@@ -1603,7 +1601,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
         # Don't translate to the default language.
         return HttpResponseRedirect(reverse(
             'wiki.edit_document', locale=settings.WIKI_DEFAULT_LANGUAGE,
-            args=[parent_doc.full_path]))
+            args=[parent_doc.slug]))
 
     if not parent_doc.is_localizable:
         message = _lazy(u'You cannot translate this document.')
@@ -1707,7 +1705,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
                     if which_form == 'doc':
                         url = urlparams(reverse('wiki.edit_document',
-                                                args=[doc.full_path],
+                                                args=[doc.slug],
                                                 locale=doc.locale),
                                         opendescription=1)
                         return HttpResponseRedirect(url)
@@ -1752,7 +1750,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                             pass
 
                     _save_rev_and_notify(rev_form, request, doc)
-                    url = reverse('wiki.document', args=[doc.full_path],
+                    url = reverse('wiki.document', args=[doc.slug],
                                   locale=doc.locale)
                     return HttpResponseRedirect(url)
 
@@ -1978,7 +1976,7 @@ def revert_document(request, document_path, revision_id):
 
     document.revert(revision, request.user, request.POST.get('comment'))
     return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                args=[document.full_path]))
+                                args=[document.slug]))
 
 
 @login_required
@@ -2020,7 +2018,7 @@ def delete_revision(request, document_path, revision_id):
     revision.delete()
 
     return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                        args=[document.full_path]))
+                                        args=[document.slug]))
 
 
 @login_required

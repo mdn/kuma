@@ -1287,20 +1287,11 @@ Full traceback:
     def language(self):
         return settings.LANGUAGES_DICT[self.locale.lower()]
 
-    @property
-    def full_path(self):
-        """The full path of a document consists of {slug}"""
-        # TODO: See about removing this and all references to full_path? Once
-        # upon a time, this was composed of {locale}/{slug}, but bug 754534
-        # reverted that.
-        return self.slug
-
     def get_absolute_url(self, ui_locale=None):
         """Build the absolute URL to this document from its full path"""
         if not ui_locale:
             ui_locale = self.locale
-        return reverse('wiki.document', locale=ui_locale,
-                       args=[self.full_path])
+        return reverse('wiki.document', locale=ui_locale, args=[self.slug])
 
     @staticmethod
     def from_url(url, required_locale=None, id_only=False):
@@ -1724,7 +1715,7 @@ class Revision(models.Model):
         """Build the absolute URL to this revision"""
         return reverse('wiki.revision',
                        locale=self.document.locale,
-                       args=[self.document.full_path, self.pk])
+                       args=[self.document.slug, self.pk])
 
     def _based_on_is_clean(self):
         """Return a tuple: (the correct value of based_on, whether the old

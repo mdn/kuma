@@ -454,13 +454,13 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         """
         self.client.logout()
         response = self.client.get(reverse('wiki.edit_document',
-                                           args=[self.d.full_path]))
+                                           args=[self.d.slug]))
         eq_(302, response.status_code)
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
         response = self.client.get(reverse('wiki.edit_document',
-                                           args=[self.d.full_path]))
+                                           args=[self.d.slug]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('article#edit-document '
@@ -478,7 +478,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                      content='<div>The content here</div>', creator_id=7)
         r.save()
         response = self.client.get(reverse('wiki.new_revision_based_on',
-                                           args=[self.d.full_path, r.id]))
+                                           args=[self.d.slug, r.id]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         self.assertHTMLEqual(doc('#id_content')[0].value.strip(),
@@ -504,7 +504,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         # Edit a document (pause for get_previous)
         time.sleep(1)
         response = self.client.post(
-            reverse('wiki.edit_document', args=[self.d.full_path]),
+            reverse('wiki.edit_document', args=[self.d.slug]),
             {'summary': 'A brief summary', 'content': 'The article content',
              'keywords': 'keyword1 keyword2', 'slug': self.d.slug, 'toc_depth': 1,
              'based_on': self.d.current_revision.id, 'form': 'rev'})
@@ -557,7 +557,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         data = new_document_data(tags)
         data['form'] = 'rev'
         response = self.client.post(reverse('wiki.edit_document',
-                                    args=[self.d.full_path]), data)
+                                    args=[self.d.slug]), data)
         eq_(302, response.status_code)
         eq_(2, self.d.revisions.count())
 
@@ -580,7 +580,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         data = new_document_data(tags)
         data['form'] = 'rev'
         self.client.post(reverse('wiki.edit_document',
-                                 args=[self.d.full_path]),
+                                 args=[self.d.slug]),
                          data)
         result_tags = list(self.d.tags.values_list('name', flat=True))
         result_tags.sort()
@@ -613,7 +613,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
                          locale='es')
         # Make sure is_localizable hidden field is rendered
         response = get(self.client, 'wiki.edit_document',
-                       args=[self.d.full_path])
+                       args=[self.d.slug])
         eq_(200, response.status_code)
         doc = pq(response.content)
         data = new_document_data()
@@ -622,7 +622,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         data.update(form='doc')
         data.update(is_localizable='True')
         response = post(self.client, 'wiki.edit_document', data,
-                        args=[self.d.full_path])
+                        args=[self.d.slug])
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
         eq_(new_title, doc.title)
@@ -634,7 +634,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         data.update(slug=new_slug)
         data.update(form='doc')
         response = post(self.client, 'wiki.edit_document', data,
-                        args=[self.d.full_path])
+                        args=[self.d.slug])
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
         eq_(new_slug, doc.slug)
@@ -646,7 +646,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         data.update(title=new_title)
         data.update(form='doc')
         response = post(self.client, 'wiki.edit_document', data,
-                        args=[self.d.full_path])
+                        args=[self.d.slug])
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
         eq_(new_title, doc.title)
@@ -1012,7 +1012,7 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
                                    locale=trans_lang,
                                    args=[translate_path]))
     else:
-        uri = reverse(view, locale=locale, args=[doc.full_path])
+        uri = reverse(view, locale=locale, args=[doc.slug])
     response = client.get(uri)
     orig_rev = doc.current_revision
     eq_(orig_rev.id,
@@ -1137,7 +1137,7 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
     def test_page_renders_locales(self):
         """Load the page and verify it contains all the locales for l10n."""
         response = get(self.client, 'wiki.select_locale',
-                       args=[self.d.full_path])
+                       args=[self.d.slug])
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(len(settings.LANGUAGES) - 1,  # All except for 1 (en-US)
