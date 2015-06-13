@@ -44,6 +44,14 @@ Install and run everything
        $ sudo apt-add-repository ppa:ansible/ansible
        $ sudo apt-get update
        $ sudo apt-get install ansible
+   
+   Fedora / RPM-based distribution::
+   
+       $ sudo dnf install ansible.noarch
+
+   For previous versions based on yum, use::
+   
+       $ sudo yum install ansible.noarch
 
    Windows:
 
