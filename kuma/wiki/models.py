@@ -1825,8 +1825,11 @@ class Revision(models.Model):
         Returns the previous approved revision or None.
         """
         try:
-            return self.get_previous_by_created(is_approved=True)
-        except Revision.DoesNotExist:
+            return self.document.revisions.filter(
+                is_approved=True,
+                created__lt=self.created,
+            ).order_by('-created')[0]
+        except IndexError:
             return None
 
     @cached_property
