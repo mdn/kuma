@@ -858,6 +858,9 @@ class Document(NotificationsMixin, models.Model):
 
         new_rev.summary = data.get('summary', '')
 
+        # To add comment, when Technical/Editorial review completed
+        new_rev.comment = data.get('comment', '')
+
         # Accept HTML edits, optionally by section
         new_html = data.get('content', data.get('html', False))
         if new_html:
