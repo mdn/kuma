@@ -35,7 +35,6 @@ Development
                 http://logs.glob.uno/?c=mozilla%23mdndev (logs)
 
 :Servers:       http://mzl.la/whats-deployed (What's Deployed)
-                https://developer-dev.allizom.org/ (dev)
                 https://developer.allizom.org/ (stage)
                 https://developer.mozilla.org/ (prod)
 
