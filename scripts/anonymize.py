@@ -60,7 +60,6 @@ TABLES_TO_DUMP=[x.strip() for x in """
     gallery_video
     schema_version
     soapbox_message
-    south_migrationhistory
     tagging_tag
     tagging_taggeditem
     taggit_tag
