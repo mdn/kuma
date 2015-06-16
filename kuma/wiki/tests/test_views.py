@@ -33,12 +33,12 @@ from kuma.users.tests import UserTestCase, user
 
 from ..content import get_seo_description
 from ..events import EditDocumentEvent
+from ..forms import MIDAIR_COLLISION
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       DocumentTag, DocumentDeletionLog)
-from ..tests import (doc_rev, document, new_document_data, revision,
-                     normalize_html, create_template_test_users,
-                     make_translation, WikiTestCase, FakeResponse)
-from ..forms import MIDAIR_COLLISION
+from . import (doc_rev, document, new_document_data, revision,
+               normalize_html, create_template_test_users,
+               make_translation, WikiTestCase, FakeResponse)
 
 
 class RedirectTests(UserTestCase, WikiTestCase):

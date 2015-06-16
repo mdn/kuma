@@ -1,8 +1,8 @@
 from nose.tools import eq_
 
 from kuma.users.tests import UserTestCase
-from kuma.wiki.events import context_dict
-from kuma.wiki.tests import WikiTestCase, revision
+from . import WikiTestCase, revision
+from ..events import context_dict
 
 
 class NotificationEmailTests(UserTestCase, WikiTestCase):

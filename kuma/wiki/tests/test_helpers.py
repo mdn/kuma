@@ -5,10 +5,10 @@ from django.contrib.sites.models import Site
 
 from kuma.core.cache import memcache
 from kuma.users.tests import UserTestCase
-from kuma.wiki.helpers import (absolutify, document_zone_management_links,
-                               revisions_unified_diff, tojson)
-from kuma.wiki.models import DocumentZone
-from kuma.wiki.tests import revision, WikiTestCase
+from . import revision, WikiTestCase
+from ..helpers import (absolutify, document_zone_management_links,
+                       revisions_unified_diff, tojson)
+from ..models import DocumentZone
 
 
 class HelpTests(WikiTestCase):

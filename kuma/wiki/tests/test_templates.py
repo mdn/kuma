@@ -22,13 +22,12 @@ from waffle.models import Flag
 
 from kuma.core.tests import SkippedTestCase, post, get
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.events import EditDocumentEvent
-from kuma.wiki.constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
-from kuma.wiki.models import (Document, Revision, HelpfulVote,
-                              DocumentTag)
-from kuma.wiki.tests import (WikiTestCase, document, revision,
-                             new_document_data, create_topical_parents_docs)
 from kuma.users.tests import UserTestCase
+from ..events import EditDocumentEvent
+from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
+from ..models import Document, Revision, HelpfulVote, DocumentTag
+from . import (WikiTestCase, document, revision, new_document_data,
+               create_topical_parents_docs)
 
 
 DOCUMENT_EDITED_EMAIL_CONTENT = """
