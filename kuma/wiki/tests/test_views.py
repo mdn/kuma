@@ -2148,6 +2148,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             review_tags.sort()
             for expected_str in data_dict['message_contains']:
                 ok_(expected_str in rev.summary)
+                ok_(expected_str in rev.comment)
             eq_(data_dict['expected_tags'], review_tags)
 
     @attr('midair')

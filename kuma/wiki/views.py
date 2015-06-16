@@ -2158,7 +2158,7 @@ def quick_review(request, document_slug, document_locale):
     if messages:
         # We approved something, make the new revision.
         new_rev = doc.revise(request.user,
-                             data={'summary': ' '.join(messages)})
+                             data={'summary': ' '.join(messages), 'comment': ' '.join(messages)})
         if new_tags:
             new_rev.review_tags.set(*new_tags)
         else:
