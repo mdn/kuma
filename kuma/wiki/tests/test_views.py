@@ -17,6 +17,7 @@ from django.core import mail
 from django.db.models import Q
 from django.test.client import (FakePayload, encode_multipart,
                                 BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT)
+from django.test.utils import override_settings
 from django.http import Http404
 from django.utils.encoding import smart_str
 
@@ -24,6 +25,8 @@ from constance import config
 from jingo.helpers import urlparams
 from waffle.models import Flag, Switch
 
+from kuma.attachments.models import Attachment
+from kuma.attachments.utils import make_test_file
 from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.models import IPBan
@@ -33,12 +36,12 @@ from kuma.users.tests import UserTestCase, user
 
 from ..content import get_seo_description
 from ..events import EditDocumentEvent
+from ..forms import MIDAIR_COLLISION
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       DocumentTag, DocumentDeletionLog)
-from ..tests import (doc_rev, document, new_document_data, revision,
-                     normalize_html, create_template_test_users,
-                     make_translation, WikiTestCase, FakeResponse)
-from ..forms import MIDAIR_COLLISION
+from . import (doc_rev, document, new_document_data, revision,
+               normalize_html, create_template_test_users,
+               make_translation, WikiTestCase, FakeResponse)
 
 
 class RedirectTests(UserTestCase, WikiTestCase):
@@ -3229,6 +3232,63 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
         if3 = page.find('#if3')
         eq_(if3.length, 1)
         eq_(if3.attr('src'), '')
+
+
+class CodeSampleViewFileServingTests(UserTestCase, WikiTestCase):
+
+    @override_constance_settings(
+        KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/testserver',
+        WIKI_ATTACHMENT_ALLOWED_TYPES='text/plain')
+    @override_settings(ATTACHMENT_HOST='testserver')
+    def test_code_sample_file_serving(self):
+        self.client.login(username='admin', password='testpass')
+        # first let's upload a file
+        file_for_upload = make_test_file(content='Something something unique')
+        post_data = {
+            'title': 'An uploaded file',
+            'description': 'A unique experience for your file serving needs.',
+            'comment': 'Yadda yadda yadda',
+            'file': file_for_upload,
+        }
+        response = self.client.post(reverse('attachments.new_attachment'),
+                                    data=post_data)
+        eq_(response.status_code, 302)
+
+        # then build the document and revision we need to test
+        attachment = Attachment.objects.get(title='An uploaded file')
+        filename = attachment.current_revision.filename()
+        url_css = 'url("files/%(attachment_id)s/%(filename)s")' % {
+            'attachment_id': attachment.id,
+            'filename': filename,
+        }
+        doc, rev = doc_rev("""
+            <p>This is a page. Deal with it.</p>
+            <div id="sample1" class="code-sample">
+                <pre class="brush: html">Some HTML</pre>
+                <pre class="brush: css">.some-css { background: %s }</pre>
+                <pre class="brush: js">window.alert("HI THERE")</pre>
+            </div>
+            <p>test</p>
+        """ % url_css)
+
+        # then see of the code sample view has successfully found the sample
+        response = self.client.get(reverse('wiki.code_sample',
+                                           args=[doc.slug, 'sample1'],
+                                           locale='en-US'))
+        eq_(response.status_code, 200)
+        normalized = normalize_html(response.content)
+        ok_(url_css in normalized)
+
+        # and then we try if a redirect by the file serving view redirects
+        # to the main file serving view
+        response = self.client.get(reverse('wiki.raw_code_sample_file',
+                                           args=[doc.slug,
+                                                 'sample1',
+                                                 attachment.id,
+                                                 filename],
+                                           locale='en-US'))
+        eq_(response.status_code, 302)
+        eq_(response['Location'], attachment.get_file_url())
 
 
 class DeferredRenderingViewTests(UserTestCase, WikiTestCase):

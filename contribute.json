@@ -31,7 +31,6 @@
     "urls": {
         "prod": "https://developer.mozilla.org/",
         "stage": "https://developer.allizom.org/",
-        "dev": "https://developer-dev.allizom.org/"
     },
     "keywords": [
         "python",

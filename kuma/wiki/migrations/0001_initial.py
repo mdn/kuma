@@ -62,7 +62,7 @@ class Migration(migrations.Migration):
                 ('file', models.ForeignKey(to='attachments.Attachment')),
             ],
             options={
-                'db_table': 'attachments_documentattachement',
+                'db_table': 'attachments_documentattachment',
             },
             bases=(models.Model,),
         ),

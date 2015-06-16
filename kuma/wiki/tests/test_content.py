@@ -10,17 +10,15 @@ from pyquery import PyQuery as pq
 from kuma.core.tests import KumaTestCase
 from kuma.users.tests import UserTestCase
 import kuma.wiki.content
-from kuma.wiki.content import (CodeSyntaxFilter,
-                               SectionTOCFilter, SectionIDFilter,
-                               H2TOCFilter, H3TOCFilter,
-                               SECTION_TAGS, get_seo_description,
-                               get_content_sections, extract_css_classnames,
-                               extract_html_attributes,
-                               extract_kumascript_macro_names)
-from kuma.wiki.constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
-from kuma.wiki.models import Document
-from kuma.wiki.tests import normalize_html, doc_rev, document
-from kuma.wiki.helpers import bugize_text
+from ..constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
+from ..content import (CodeSyntaxFilter, SectionTOCFilter, SectionIDFilter,
+                       H2TOCFilter, H3TOCFilter, SECTION_TAGS,
+                       get_seo_description, get_content_sections,
+                       extract_css_classnames, extract_html_attributes,
+                       extract_kumascript_macro_names)
+from ..helpers import bugize_text
+from ..models import Document
+from . import normalize_html, doc_rev, document
 
 
 class ContentSectionToolTests(UserTestCase):

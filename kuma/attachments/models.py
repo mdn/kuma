@@ -4,10 +4,9 @@ from django.conf import settings
 from django.db import models
 
 import jingo
-from kuma.core.urlresolvers import reverse
 
 from .managers import AttachmentManager
-from .utils import attachment_upload_to
+from .utils import attachment_upload_to, full_attachment_url
 
 
 class Attachment(models.Model):
@@ -46,11 +45,7 @@ class Attachment(models.Model):
         return ('attachments.attachment_detail', (), {'attachment_id': self.id})
 
     def get_file_url(self):
-        uri = reverse('attachments.raw_file', kwargs={
-            'attachment_id': self.id,
-            'filename': self.current_revision.filename(),
-        })
-        return '%s%s%s' % (settings.PROTOCOL, settings.ATTACHMENT_HOST, uri)
+        return full_attachment_url(self.id, self.current_revision.filename())
 
     def attach(self, document, user, name):
         if self.id not in document.attachments.values_list('id', flat=True):

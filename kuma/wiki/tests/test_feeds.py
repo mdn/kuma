@@ -7,10 +7,9 @@ import time
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from kuma.users.tests import UserTestCase
-from kuma.wiki.tests import (WikiTestCase, document, revision,
-                             make_translation, wait_add_rev)
 from kuma.core.urlresolvers import reverse
+from kuma.users.tests import UserTestCase
+from . import WikiTestCase, document, revision, make_translation, wait_add_rev
 
 
 class FeedTests(UserTestCase, WikiTestCase):

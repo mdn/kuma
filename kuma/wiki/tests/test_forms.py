@@ -2,8 +2,8 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from kuma.users.tests import UserTestCase
-from kuma.wiki.forms import RevisionForm, RevisionValidationForm, TreeMoveForm
-from kuma.wiki.tests import doc_rev, normalize_html
+from ..forms import RevisionForm, RevisionValidationForm, TreeMoveForm
+from ..tests import doc_rev, normalize_html
 
 
 class FormEditorSafetyFilterTests(UserTestCase):
