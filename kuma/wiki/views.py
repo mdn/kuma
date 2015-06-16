@@ -1896,14 +1896,13 @@ def toc_view(request, document_slug=None, document_locale=None):
 @xframe_options_exempt
 @process_document_path
 def code_sample(request, document_slug, document_locale, sample_id):
-    """Extract a code sample from a document and render it as a standalone
-    HTML document"""
-
+    """
+    Extract a code sample from a document and render it as a standalone
+    HTML document
+    """
     # Restrict rendering of live code samples to specified hosts
-    full_address = (''.join(('http', ('', 's')[request.is_secure()], '://',
-                    request.META.get('HTTP_HOST'), request.path)))
-
-    if not re.search(config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS, full_address):
+    if not re.search(config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS,
+                     request.build_absolute_uri()):
         raise PermissionDenied
 
     document = get_object_or_404(Document, slug=document_slug,
