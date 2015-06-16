@@ -181,6 +181,8 @@ topic_children_documents_link.short_description = "Child Documents"
 
 def topic_sibling_documents_link(self):
     """HTML link to a list of sibling documents"""
+    if not self.parent_topic:
+        return ''
     count = self.parent_topic.children.count()
     if not count:
         return ''
