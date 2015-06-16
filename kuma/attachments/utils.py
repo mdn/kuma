@@ -2,11 +2,22 @@ import calendar
 from datetime import datetime
 import hashlib
 
+from django.conf import settings
 from django.core.files import temp as tempfile
 from django.template import loader
 from django.utils import timezone
 from django.utils.http import http_date
 from django.utils.safestring import mark_safe
+
+from kuma.core.urlresolvers import reverse
+
+
+def full_attachment_url(attachment_id, filename):
+    path = reverse('attachments.raw_file', kwargs={
+        'attachment_id': attachment_id,
+        'filename': filename,
+    })
+    return '%s%s%s' % (settings.PROTOCOL, settings.ATTACHMENT_HOST, path)
 
 
 def convert_to_http_date(dt):

@@ -165,7 +165,7 @@ class DocumentAttachment(models.Model):
     name = models.TextField()
 
     class Meta:
-        db_table = 'attachments_documentattachement'
+        db_table = 'attachments_documentattachment'
 
 
 @register_live_index
