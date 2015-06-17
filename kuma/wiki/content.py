@@ -575,7 +575,7 @@ class SectionIDFilter(html5lib_Filter):
             start_inc = 2
             slug_base = slug
             while slug in self.known_ids:
-                slug = '{0}_{1}'.format(slug_base, start_inc)
+                slug = u'{0}_{1}'.format(slug_base, start_inc)
                 start_inc += 1
 
         attrs[(None, u'id')] = slug
