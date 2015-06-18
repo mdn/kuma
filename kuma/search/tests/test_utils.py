@@ -44,6 +44,11 @@ class URLTests(KumaTestCase):
         eq_(url.merge_query_param('foo', [None]),
             'http://example.com/?foo=&foo=bar&spam=eggs')
 
+        # bug 930300
+        url = QueryURLObject('http://example.com/en-US/search?q=javascript%20&&&highlight=false')
+        eq_(url.merge_query_param('topic', 'api'),
+            'http://example.com/en-US/search?q=javascript&topic=api&highlight=false')
+
     def test_clean_params(self):
         for url in ['http://example.com/?spam=',
                     'http://example.com/?spam']:
