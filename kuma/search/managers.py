@@ -24,7 +24,9 @@ class IndexManager(models.Manager):
                         .order_by('-created_at'))[0]
         except (self.model.DoesNotExist, IndexError, AttributeError):
             fallback_name = settings.ES_INDEXES['default']
-            return self.create(name=fallback_name, promoted=True)
+            index, created = self.get_or_create(name=fallback_name,
+                                                promoted=True)
+            return index
 
     def recreate_index(self, es=None, index=None):
         """Delete index if it's there and creates a new one.
