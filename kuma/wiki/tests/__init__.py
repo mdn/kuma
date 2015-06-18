@@ -52,24 +52,28 @@ def revision(save=False, **kwargs):
     Requires a users fixture if no creator is provided.
 
     """
-    d = None
+    doc = None
     if 'document' not in kwargs:
-        d = document()
-        d.save()
+        doc = document(save=True)
     else:
-        d = kwargs['document']
+        doc = kwargs['document']
 
-    defaults = {'summary': 'Some summary', 'content': 'Some content',
-                'comment': 'Some comment',
-                'creator': kwargs.get('creator', get_user()), 'document': d,
-                'tags': '"some", "tags"', 'toc_depth': 1}
+    defaults = {
+        'summary': 'Some summary',
+        'content': 'Some content',
+        'comment': 'Some comment',
+        'creator': kwargs.get('creator', get_user()),
+        'document': doc,
+        'tags': '"some", "tags"',
+        'toc_depth': 1,
+    }
 
     defaults.update(kwargs)
 
-    r = Revision(**defaults)
+    rev = Revision(**defaults)
     if save:
-        r.save()
-    return r
+        rev.save()
+    return rev
 
 
 def translated_revision(locale='de', **kwargs):
