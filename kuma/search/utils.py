@@ -54,11 +54,15 @@ class QueryURLObject(URLObject):
         """
         clean_params = {}
         for param, default in params.items():
-            if isinstance(default, list) and len(default) == 1:
-                default = default[0]
+            if isinstance(default, (list, tuple)):
+                # set all items with an empty value to an empty string
+                default = [item or '' for item in default]
+                if len(default) == 1:
+                    default = default[0]
             if isinstance(default, basestring):
                 default = default.strip()
-            if default not in ('', None):
+            # make sure the parameter name and value aren't empty
+            if param and default:
                 clean_params[param] = default
         return clean_params
 
