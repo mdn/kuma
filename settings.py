@@ -719,6 +719,7 @@ MINIFY_BUNDLES = {
         'wiki': (
             'js/search-navigator.js',
             'js/wiki.js',
+            'js/wiki-samples.js',
         ),
         'wiki-edit': (
             'js/wiki-edit.js',
