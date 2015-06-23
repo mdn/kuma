@@ -416,4 +416,8 @@
       {# This can be removed once the social network button multivariate test is completed. #}
       mdn.optimizely.push(['activate', 2796520257]);
   </script>
+
+  {% if waffle.flag('wiki_samples') %}
+    {{ js('wiki-samples') }}
+  {% endif %}
 {% endblock %}

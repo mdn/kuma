@@ -761,6 +761,9 @@ MINIFY_BUNDLES = {
         'wiki-move': (
             'js/wiki-move.js',
         ),
+        'wiki-samples': (
+            'js/wiki-samples.js',
+        ),
         'newsletter': (
             'js/newsletter.js',
         ),
