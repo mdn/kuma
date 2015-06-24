@@ -70,14 +70,6 @@
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
 
-  {% if waffle.flag('github_beta_notice') %}
-    <div class="global-notice">
-      <div class="wrap center">
-          <p><bdi>Help us <a href="https://wiki.mozilla.org/MDN/Development/GitHub_Beta">test GitHub Sign-in</a> on our stage server.</bdi></p>
-      </div>
-    </div>
-  {% endif %}
-
   <ul id="nav-access">
     <li><a href="#{% block main_content_id %}content{% endblock %}" id="skip-main">{{ _('Skip to main content') }}</a></li>
     <li><a id="skip-language" href="#language">{{ _('Select language') }}</a></li>
