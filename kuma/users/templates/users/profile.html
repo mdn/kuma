@@ -127,7 +127,7 @@
         <ul class="profile-links">
         {% for site_name, site_meta in profile.website_choices %}
           {% if site_name == 'github' %}
-            {% if accounts.github and waffle.flag('github_login') %}
+            {% if accounts.github %}
               {% for github_account in accounts.github %}{% if github_account.extra_data %}
               <li class="{{ site_name }}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="{{ github_account.get_profile_url() }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
               {% endif %}{% endfor %}

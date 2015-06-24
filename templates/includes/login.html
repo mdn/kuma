@@ -8,9 +8,7 @@
     </div>
 {% else %}
 
-    {% if waffle.flag('github_login') %}
-        {% set github_url = provider_login_url('github', next=next_url) %}
-    {% endif %}
+    {% set github_url = provider_login_url('github', next=next_url) %}
 
     <form>
       <div class="oauth-login-container">
@@ -20,16 +18,12 @@
                 <span class="oauth-login-options-text-no-icons">{{ _('Sign in') }}</span>
               </span>
               <span class="oauth-icon oauth-persona launch-persona-login" data-service="Persona" data-next="{{ next_url }}" title="{{ _('Persona') }}"><i class="icon-user" aria-hidden="true"></i></span>
-            {% if waffle.flag('github_login') %}
               <span class="oauth-icon oauth-github" data-service="GitHub" data-href="{{ github_url }}" title="{{ _('GitHub') }}"><i class="icon-github" aria-hidden="true"></i></span>
-            {% endif %}
           </div>
           <div class="submenu oauth-login-picker" aria-hidden="true">
               <ul>
                   <li><a href="{{ url('account_login') }}" class="login-link launch-persona-login" data-next="{{ next_url }}" data-service="Persona"><i class="icon-user" aria-hidden="true"></i>Persona</a></li>
-                {% if waffle.flag('github_login') %}
                   <li><a href="{{ github_url }}" class="login-link" data-service="GitHub"><i class="icon-github" aria-hidden="true"></i>GitHub</a></li>
-                {% endif %}
               </ul>
           </div>
       </div>

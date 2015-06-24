@@ -44,13 +44,13 @@ Install and run everything
        $ sudo apt-add-repository ppa:ansible/ansible
        $ sudo apt-get update
        $ sudo apt-get install ansible
-   
+
    Fedora / RPM-based distribution::
-   
+
        $ sudo dnf install ansible.noarch
 
    For previous versions based on yum, use::
-   
+
        $ sudo yum install ansible.noarch
 
    Windows:
@@ -317,9 +317,6 @@ To enable GitHub authentication ...
 * Client id: <your GitHub App Client ID>
 * Secret key: <your GitHub App Client Secret>
 * Sites: example.com -> Chosen sites
-
-GitHub auth is also (temporarily) behind a waffle flag. So, :doc:`add a waffle
-flag <feature-toggles>` called ``github_login`` and set "Everyone" to "Yes".
 
 Now you can sign in with GitHub at https://developer-local.allizom.org/
 

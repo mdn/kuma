@@ -126,7 +126,7 @@ define([
                         .click()
                         .getCurrentUrl()
                         .then(function(url) {
-                            assert.ok(url.toLowerCase().indexOf('github.com') != -1, 'Clicking GitHub login link goes to GitHub.com. (Requires working github_login flag)');
+                            assert.ok(url.toLowerCase().indexOf('github.com') != -1, 'Clicking GitHub login link goes to GitHub.com. (Requires working GitHub login.)');
                         })
                         .goBack(); // Cleanup to go back to MDN from GitHub sign in page
 
