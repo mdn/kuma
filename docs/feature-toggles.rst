@@ -42,7 +42,6 @@ other advanced criteria.
 * ``registration_disabled`` - enable/disable new user registration
 * ``social_account_research`` - enable/disable social account research on the
   "Sign in to Edit" page
-* ``github_login`` - enable/disable sign in via github
 * ``kumaediting`` - enable/disable wiki editing
 * ``kumabanned`` - (deprecated) added to users to mark them as banned
 * ``enable_customcss`` - enable/disable Template:CustomCSS styles in wiki pages

@@ -117,7 +117,7 @@
                   {% for site_name, site_meta in profile.website_choices %}
                     {% if site_name == 'github' %}
                       <li id="field_websites_github" class="field site github">
-                      {% if accounts.github and waffle.flag('github_login') %}
+                      {% if accounts.github %}
                         <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub</label>
                         <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
                         <div class="field-account">
@@ -126,11 +126,9 @@
                       {% else %}
                           <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub
                           </label>
-                          {% if waffle.flag('github_login') %}
                           <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
                             {{ _('Use your GitHub account to sign in.') }}
                           </a>
-                          {% endif %}
                           {{ profile_form.websites_github }}
                       {% endif %}
                       </li>

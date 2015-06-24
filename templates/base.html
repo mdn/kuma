@@ -1,7 +1,7 @@
 {% from "includes/common_macros.html" import optimizely_script with context %}
 
 <!DOCTYPE html>
-<html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js" {% if waffle.flag('web_font_loader') %}{{ get_webfont_attributes(request) }}{% endif %} >
+<html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js" {{ get_webfont_attributes(request) }} >
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -69,14 +69,6 @@
   {% include "includes/config.html" %}
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
-
-  {% if waffle.flag('github_beta_notice') %}
-    <div class="global-notice">
-      <div class="wrap center">
-          <p><bdi>Help us <a href="https://wiki.mozilla.org/MDN/Development/GitHub_Beta">test GitHub Sign-in</a> on our stage server.</bdi></p>
-      </div>
-    </div>
-  {% endif %}
 
   <ul id="nav-access">
     <li><a href="#{% block main_content_id %}content{% endblock %}" id="skip-main">{{ _('Skip to main content') }}</a></li>
@@ -191,11 +183,9 @@
     {{ providers_media_js() }}
     {{ js('main') }}
 
-    {% if waffle.flag('ga_outbound_links') %}
       <script>
         if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
       </script>
-    {% endif %}
 
     </script>
 

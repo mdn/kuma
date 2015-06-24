@@ -153,19 +153,8 @@
 {% if demos %}
 <div class="home-demos"><div class="center">
 
-{% if not waffle.flag('derby_closed') %}
-  <div class="preview">
-    <span>{{ _('Next Dev Derby: <strong>July 2013</strong>') }}</span>
-    <span>{{ _('Subject: <strong>File API</strong>') }}</span>
-  </div>
-{% endif %}
-
 <h2><i aria-hidden="true" class="icon-magic blue"></i> {{ _('See & submit demos') }}
-  {% if not waffle.flag('derby_closed') %}
-    <a href="{{ url('demos_devderby_landing') }}" class="heading-link">{{ _('MDN Dev Derby <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
-  {% else %}
     <a href="{{ url('demos') }}" class="heading-link">{{ _('MDN Demo Studio <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
-  {% endif %}
 </h2>
 <div class="home-demos-list">
   {% set extra_class = cycler(' row-first', '')%}

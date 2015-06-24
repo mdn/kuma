@@ -314,15 +314,13 @@
 
 
         // Preload images for sake of smoothness
-        if(window.waffle && waffle.flag_is_active('demos_10th_preload')) {
-            $.each(demos, function() {
-                $('<img>').attr({
-                    'src': this.screenshot,
-                    'aria-hidden': 'true',
-                    'class': 'offscreen'
-                }).appendTo(document.body);
-            });
-        }
+        $.each(demos, function() {
+            $('<img>').attr({
+                'src': this.screenshot,
+                'aria-hidden': 'true',
+                'class': 'offscreen'
+            }).appendTo(document.body);
+        });
 
     });
 

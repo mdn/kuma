@@ -21,7 +21,6 @@
             </span>
           </a></li>
         {% elif provider.id == "github" %}
-          {% if waffle.flag('github_login') %}
             <li><a href="{{ provider_login_url(provider.id, process=process, next=next_url) }}" class="github-button login-link" data-next="{{ next_url }}" data-service="{{ provider.name }}" data-process="{{ process }}">
               <span class="github-icon"><i class="icon-github" aria-hidden="true"></i></span>
               <span class="signin">
@@ -32,7 +31,6 @@
               {% endif %}
               </span>
             </a></li>
-          {% endif %}
         {# {% else %}
           <li><a title="{{ provider.name }}" class="socialaccount_provider {{ provider.id }}" href="{{ provider_login_url(provider.id, process=process, next=next_url) }}">{{ provider.name }}</a></li> #}
         {% endif %}
