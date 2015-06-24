@@ -529,10 +529,7 @@ def document(request, document_slug, document_locale):
     # the contributors right into the Document's html field.)
     # NOTE: .only() avoids a memcache object-too-large error for large wiki
     # pages when an attempt is made to cache all revisions
-    contributors = set([r.creator for r in doc.revisions
-                                              .filter(is_approved=True)
-                                              .only('creator')
-                                              .select_related('creator')])
+    contributors = doc.get_contributors()
 
     # TODO: Port this kitsune feature over, eventually:
     #     https://github.com/jsocol/kitsune/commit/
