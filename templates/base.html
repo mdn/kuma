@@ -1,7 +1,7 @@
 {% from "includes/common_macros.html" import optimizely_script with context %}
 
 <!DOCTYPE html>
-<html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js" {% if waffle.flag('web_font_loader') %}{{ get_webfont_attributes(request) }}{% endif %} >
+<html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js" {{ get_webfont_attributes(request) }} >
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">

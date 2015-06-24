@@ -3,8 +3,6 @@
         Font Loading
     */
 
-    if(!(win.waffle && win.waffle.flag_is_active('web_font_loader'))) return;
-
     // what fonts are we loading?
     var fonts = [
         {
