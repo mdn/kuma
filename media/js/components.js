@@ -429,6 +429,7 @@
             { state: 'success', className: 'success', iconName: 'icon-smile' },
             { state: 'error', className: 'error', iconName: 'icon-frown' },
             { state: 'warning', className: 'warning', iconName: 'icon-warning-sign'  },
+            { state: 'question', className: 'question', iconName: 'icon-question-sign'  },
             defaultState
         ];
         var statesObj = {};
