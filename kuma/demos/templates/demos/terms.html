@@ -6,7 +6,7 @@
 {% endif %}
 
 {% block body_attributes %}{% endblock %}
-{% block bodyclass %}{% if waffle.flag('demos_10th') %}section-demos{% endif %}{% endblock %}
+{% block bodyclass %}section-demos{% endblock %}
 {% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Terms for Contributors'))) }}{% endblock %}
 
 {% block content %}
