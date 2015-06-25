@@ -6,21 +6,21 @@
     // what fonts are we loading?
     var fonts = [
         {
-            "name" : "Open Sans Light",
-            "class" : "ffo-opensanslight",
-            "varient" : [
-                {"weight" : "normal"},
-                {"weight" : "bold"},
-                {"style" : "italic"}
+            'name' : 'Open Sans Light',
+            'class' : 'ffo-opensanslight',
+            'varient' : [
+                {'weight' : 'normal'},
+                {'weight' : 'bold'},
+                {'style' : 'italic'}
             ]
         },
         {
-            "name" : "Open Sans",
-            "class" : "ffo-opensans",
-            "varient" : [
-                {"weight" : "normal"},
-                {"weight" : "bold"},
-                {"style" : "italic"}
+            'name' : 'Open Sans',
+            'class' : 'ffo-opensans',
+            'varient' : [
+                {'weight' : 'normal'},
+                {'weight' : 'bold'},
+                {'style' : 'italic'}
             ]
         }
     ];
@@ -33,8 +33,8 @@
 
     // load the observer plug in
     $.getScript('/media/js/fontfaceobserver-min.js')
-    .done(ffoLoad)
-    .fail(ffoFinished);
+      .done(ffoLoad)
+      .fail(ffoFinished);
 
     // starts observers for all fonts in fonts array
     function ffoLoad() {
@@ -80,11 +80,11 @@
         $.each(fontsLoaded, function(){
             var isLoaded = true;
             $.each(this, function(){
-                if(this == false) {
+                if(!this) {
                     isLoaded = false;
                 }
             })
-            if(isLoaded == false) {
+            if(!isLoaded) {
                 allLoaded = false;
             }
         });
@@ -110,13 +110,14 @@
         $.each(fontsLoaded, function(index) {
             var fontAttribute = index;
             var fontLoaded = true;
+
             $.each(this, function() {
-                if(this == false) {
+                if(!this) {
                     fontLoaded = false;
                 }
             })
-            if(fontLoaded == true) {
-                $('html').attr("data-"+fontAttribute, true);
+            if(fontLoaded) {
+                $('html').attr('data-' + fontAttribute, true);
             }
         });
     }
