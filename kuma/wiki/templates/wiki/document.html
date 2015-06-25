@@ -26,7 +26,7 @@
 {% set zone_stack = document.zone_stack %}
 {% set is_zone = zone_stack|length %}
 {% set is_zone_root = is_zone and zone_stack[0].document == document %}
-{% set is_translated = document.other_translations.exists() %}
+{% set other_translations = document.other_translations %}
 
 {% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
 {% set show_right = (not is_zone_root and toc_html) %}
@@ -59,8 +59,8 @@
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.slug) }}">
   <link rel="canonical" href="{{ canonical }}" >
 
-  {% if is_translated %}
-    {% for translation in document.other_translations %}
+  {% if other_translations %}
+    {% for translation in other_translations %}
       <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ translation.get_absolute_url() }}" title="{{ translation.title }}">
     {% endfor %}
   {% endif %}
@@ -78,14 +78,14 @@
 {% endblock %}
 
 {% block lang_switcher %}
-  {% if (document.is_localizable or document.parent) and is_translated %}
+  {% if (document.is_localizable or document.parent) and other_translations %}
     <form class="languages go" method="get" action="{{ wiki_url('Web') }}">
       <label for="language">{{ _('Other languages:') }}</label>
       <select id="language" class="wiki-l10n" name="next" dir="ltr">
         <option value="{{ doc_abs_url }}" selected>
           {{ document.language }}
         </option>
-        {% for translation in document.other_translations %}
+        {% for translation in other_translations %}
           <option value="{{ translation.get_absolute_url() }}">
             {{ translation.language }}
           </option>
