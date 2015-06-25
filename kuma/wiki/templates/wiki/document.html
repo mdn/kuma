@@ -10,7 +10,8 @@
 {% endif %}
 
 {% set is_logged_in = request.user.is_authenticated() %}
-{% set canonical = request.build_absolute_uri(document.get_absolute_url()) %}
+{% set doc_abs_url = document.get_absolute_url() %}
+{% set canonical = request.build_absolute_uri(doc_abs_url) %}
 
 {% if document.is_template %}
   {% set macro_name = document.slug|replace('Template:','', 1) %}
@@ -81,7 +82,7 @@
     <form class="languages go" method="get" action="{{ wiki_url('Web') }}">
       <label for="language">{{ _('Other languages:') }}</label>
       <select id="language" class="wiki-l10n" name="next" dir="ltr">
-        <option value="{{ document.get_absolute_url() }}" selected>
+        <option value="{{ doc_abs_url }}" selected>
           {{ document.language }}
         </option>
         {% for translation in document.other_translations %}
@@ -256,7 +257,7 @@
               {% if is_logged_in and document_html %}
                 {% if render_raw_fallback %}
                   <div id="doc-render-raw-fallback" class="warning">
-                  {% trans url=document.get_absolute_url() %}
+                  {% trans url=doc_abs_url %}
                     This document is being rendered for the first time by the system.
                     Please <a href="{{ url }}">reload this page</a> in a few minutes
                     to see full content.
@@ -264,7 +265,7 @@
                   </div>
                 {% elif document.is_rendering_in_progress %}
                   <div id="doc-rendering-in-progress" class="warning">
-                  {% trans url=document.get_absolute_url(), started_at=document.render_started_at %}
+                  {% trans url=doc_abs_url, started_at=document.render_started_at %}
                     An update to this document
                     <abbr title="{{ started_at }}">is currently in progress</abbr>.
                     If the content below seems stale or if something is missing,
@@ -273,7 +274,7 @@
                   </div>
                 {% elif document.is_rendering_scheduled and not kumascript_errors %}
                   <div id="doc-rendering-scheduled" class="warning">
-                  {% trans url=document.get_absolute_url(), scheduled_at=document.render_scheduled_at %}
+                  {% trans url=doc_abs_url, scheduled_at=document.render_scheduled_at %}
                     An update to this document
                     <abbr title="{{ scheduled_at }}">has been scheduled</abbr>.
                     If the content below seems stale or if something is missing,
