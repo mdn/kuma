@@ -22,7 +22,8 @@
                     mdn.analytics.trackEvent({
                         category: 'Helpful',
                         action: 'Clicked',
-                        label: label
+                        label: label,
+                        {'nonInteraction': 1} //http://www.lunametrics.com/blog/2014/05/06/noninteraction-events-google-analytics/
                     });
                 }
 
