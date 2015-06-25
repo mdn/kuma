@@ -417,7 +417,7 @@ a.github-button {
 
     a {
         display: block;
-        padding: 6px 8px;
+        padding: $content-vertical-spacing $content-horizontal-spacing;
         position: relative;
 
         &:hover, &:active, &:focus {
@@ -585,7 +585,7 @@ a.github-button {
             bidi-value(text-align, left, right);
 
             > li {
-                bidi-value(margin, 6px 6px 6px 0, 6px 0 6px 6px);
+                bidi-value(margin, $content-vertical-spacing $content-horizontal-spacing $content-vertical-spacing 0, $content-vertical-spacing 0 $content-vertical-spacing $content-horizontal-spacing);
             }
         }
     }

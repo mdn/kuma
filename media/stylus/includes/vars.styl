@@ -107,16 +107,21 @@ $slide-timing-function = cubic-bezier(0, 1, 0.5, 1);
 dimensions
 ====================================================================== */
 $gutter-width = 24px;
-$first-content-top-padding = ($grid-spacing * 1.5);
-$list-item-spacing = 8px;
 $content-block-margin = $gutter-width;
+
+$first-content-top-padding = ($grid-spacing * 1.5);
+
+$content-horizontal-spacing = 8px;
+$content-vertical-spacing = 6px;
+$list-item-spacing = $content-horizontal-spacing;
+
 $icon-margin = 10px;
 
 
 /*
 forms
 ====================================================================== */
-$input-padding = 6px 8px;
+$input-padding = $content-vertical-spacing $content-horizontal-spacing;
 
 
 /*
