@@ -3,10 +3,7 @@
 Summary boxes
 ====================================================================== */
 
-/* item-spacing matches border and text-content li and td padding
-but no global varible becuase we should really pick 6 or 8 and
-just use $list-item-spacing everywhere */
-$summary-box-item-spacing = 6px;
+$summary-box-item-spacing = $content-horizontal-spacing;
 $summary-box-spacing = ($grid-spacing) - $summary-box-item-spacing;
 $summary-box-indent = ($grid-spacing * 2) - $summary-box-item-spacing;
 

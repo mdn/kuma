@@ -35,9 +35,11 @@ ul.tags li {
     small
 */
 
+$small-tag-spacing = 3px;
+
 ul.tags-small li {
-    margin: 0 6px 6px 0;
-    padding: 1px 3px;
+    margin: 0 ($small-tag-spacing * 2) ($small-tag-spacing * 2) 0;
+    padding: 1px $small-tag-spacing;
 }
 
 .tag-attach-list .tags-small {
