@@ -53,7 +53,7 @@
                         });
                         notification.error(gettext('Uh oh. What would make it better?') + '<br>' + $select[0].outerHTML, 0);
                         $('#helpful-detail').change(function() {
-                            confirm(gettext("Thanks! We\'ll fix it."), 'info', $(this).val());
+                            confirm(gettext("Thanks! We'll fix it."), 'info', $(this).val());
                         });
                     }
                     else {
