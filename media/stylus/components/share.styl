@@ -37,9 +37,13 @@
         }
 
         /* hide title if there isn't enough space for it in TOC */
-        /* stylus does not evaluate variables in the MQ correctly, can't switch :( */
-        @media all and (min-width:1025px) and (max-width: $max-width-default),
-        all and (max-width: 480px) {
+        /* duplicate rule because STYLUS *shakes fist* */
+        @media $media-query-between-small-desktop-and-max-width {
+            & strong {
+                offscreen();
+            }
+        }
+        @media $media-query-small-mobile {
             & strong {
                 offscreen();
             }
