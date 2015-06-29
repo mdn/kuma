@@ -179,7 +179,6 @@
         {% endif %}
 
         {% if waffle.flag('top_contributors') %}
-            {% set contributors = document.get_contributors() %}
             {% set contrib_limit = 13 %}
             {% set contrib_count = contributors.count() %}
 
@@ -355,9 +354,9 @@
                   <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
                   {% set tags = document.tags.all().order_by('name') %}
                   {% include "wiki/includes/document_tag.html" %}
-                  {% trans contributors=user_list(contributors) %}
+                  {% trans contributors_list=user_list(contributors) %}
                   <div class="contributors-sub">
-                    <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
+                    <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors_list }}
                   </div>
                   {% endtrans %}
                   {% if current_revision.creator %}
