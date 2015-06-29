@@ -1,5 +1,6 @@
 from __future__ import with_statement
 
+import json
 import logging
 import os
 from datetime import datetime
@@ -126,15 +127,22 @@ def render_stale_documents(log=None):
 
 
 @task
-def build_json_data_for_document_task(pk, stale):
+def build_json_data_for_document(pk, stale):
     """Force-refresh cached JSON data after rendering."""
     document = Document.objects.get(pk=pk)
     document.get_json_data(stale=stale)
 
+    # If we're a translation, rebuild our source doc's JSON so its
+    # translation list includes our last edit date.
+    if document.parent is not None:
+        parent_json = json.dumps(document.parent.build_json_data())
+        Document.objects.filter(pk=document.parent.pk).update(json=parent_json)
+
 
 @receiver(render_done)
 def build_json_data_handler(sender, instance, **kwargs):
-    build_json_data_for_document_task.delay(instance.pk, stale=False)
+    if not instance.deleted:
+        build_json_data_for_document.delay(instance.pk, stale=False)
 
 
 @task
