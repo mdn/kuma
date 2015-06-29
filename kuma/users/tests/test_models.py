@@ -108,10 +108,23 @@ class BanTestCase(UserTestCase):
         ban.save()
         testuser_banned = self.user_model.objects.get(username='testuser')
         ok_(not testuser_banned.is_active)
-        ok_(testuser_banned.profile.is_banned is True)
+        ok_(testuser_banned.profile.is_banned)
         ok_(testuser_banned.profile.active_ban().by == admin)
 
         ban.is_active = False
         ban.save()
         testuser_unbanned = self.user_model.objects.get(username='testuser')
         ok_(testuser_unbanned.is_active)
+
+        ban.is_active = True
+        ban.save()
+        testuser_banned = self.user_model.objects.get(username='testuser')
+        ok_(not testuser_banned.is_active)
+        ok_(testuser_unbanned.profile.is_banned)
+        ok_(testuser_unbanned.profile.active_ban())
+
+        ban.delete()
+        testuser_unbanned = self.user_model.objects.get(username='testuser')
+        ok_(testuser_unbanned.is_active)
+        ok_(not testuser_unbanned.profile.is_banned)
+        ok_(testuser_unbanned.profile.active_ban() is None)
