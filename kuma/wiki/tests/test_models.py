@@ -7,10 +7,10 @@ from xml.sax.saxutils import escape
 import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
-from nose import SkipTest
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.test.utils import override_settings
 
 from constance import config
 from waffle.models import Switch
@@ -891,43 +891,61 @@ class DeferredRenderingTests(UserTestCase):
 
     @attr('bug875349')
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @override_settings(CELERY_ALWAYS_EAGER=True)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_build_json_on_render(self, mock_kumascript_get):
         """
         A document's json field is refreshed on render(), but not on save()
         """
-        # FIXME
-        # this was broken when render_done signal was introduced
-        raise SkipTest("Skip for now")
         mock_kumascript_get.return_value = (self.rendered_content, None)
 
         # Initially empty json field should be filled in after render()
-        eq_(None, self.d1.json)
+        eq_(self.d1.json, None)
         self.d1.render()
+        # reloading from db to get the updates done in the celery task
+        self.d1 = Document.objects.get(pk=self.d1.pk)
         ok_(self.d1.json is not None)
 
-        time.sleep(0.1)  # Small clock-tick to age the results.
+        time.sleep(1.0)  # Small clock-tick to age the results.
 
         # Change the doc title, saving does not actually change the json field.
         self.d1.title = "New title"
         self.d1.save()
         ok_(self.d1.title != self.d1.get_json_data()['title'])
+        self.d1 = Document.objects.get(pk=self.d1.pk)
 
         # However, rendering refreshes the json field.
         self.d1.render()
+        self.d1 = Document.objects.get(pk=self.d1.pk)
         eq_(self.d1.title, self.d1.get_json_data()['title'])
 
-    @mock.patch('kuma.wiki.kumascript.get')
-    def test_get_summary(self, mock_kumascript_get):
-        """get_summary() should attempt to use rendered"""
-        raise SkipTest("Transient failures here, skip for now")
+        # In case we logically delete a document with a changed title
+        # we don't update the json blob
+        deleted_title = 'Deleted title'
+        self.d1.title = deleted_title
+        self.d1.save()
+        self.d1.delete()
+        self.d1.render()
+        self.d1 = Document.objects.get(pk=self.d1.pk)
+        ok_(deleted_title != self.d1.get_json_data()['title'])
 
+    @mock.patch('kuma.wiki.kumascript.get')
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_get_summary(self, mock_kumascript_get):
+        """
+        get_summary() should attempt to use rendered
+        """
         config.KUMASCRIPT_TIMEOUT = 1.0
         mock_kumascript_get.return_value = ('<p>summary!</p>', None)
-
         ok_(not self.d1.rendered_html)
         result_summary = self.d1.get_summary()
+        ok_(not mock_kumascript_get.called)
+        ok_(not self.d1.rendered_html)
+
+        self.d1.render()
+        ok_(self.d1.rendered_html)
         ok_(mock_kumascript_get.called)
+        result_summary = self.d1.get_summary()
         eq_("summary!", result_summary)
 
         config.KUMASCRIPT_TIMEOUT = 0.0
