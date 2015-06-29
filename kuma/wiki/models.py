@@ -1509,7 +1509,9 @@ Full traceback:
         top_creator_ids = (self.revisions.values_list('creator', flat=True)
                                          .annotate(Count('creator'))
                                          .order_by('-creator__count'))
-        return get_user_model().objects.filter(pk__in=list(top_creator_ids))
+        return (get_user_model().objects
+                                .filter(pk__in=list(top_creator_ids),
+                                        is_active=True))
 
     @cached_property
     def zone_stack(self):
