@@ -151,17 +151,20 @@
                 // set max-height to 0 and visibility to visible
                 $openCell.addClass('active');
                 $openCell.attr('aria-expanded', true);
-                $history.css('height', historyHeight);
 
-                // add measured height to history and to the cell/row it is being displayed beneath (CSS handles transition)
-                windowWidth = window.innerWidth;
-                if(windowWidth > 801) {
-                    $row.find('th, td').css('border-bottom', historyHeight + 'px solid transparent');
-                } if(windowWidth > 481) {
-                    $row.find('td').css('border-bottom', historyHeight + 'px solid transparent');
-                } else {
-                    $openCell.css('border-bottom', historyHeight + 'px solid transparent');
-                }
+                setTimeout(function() {
+                    $history.css('height', historyHeight);
+
+                    // add measured height to history and to the cell/row it is being displayed beneath (CSS handles transition)
+                    windowWidth = window.innerWidth;
+                    if(windowWidth > 801) {
+                        $row.find('th, td').css('border-bottom', historyHeight + 'px solid transparent');
+                    } if(windowWidth > 481) {
+                        $row.find('td').css('border-bottom', historyHeight + 'px solid transparent');
+                    } else {
+                        $openCell.css('border-bottom', historyHeight + 'px solid transparent');
+                    }
+                }, 10);
             }
 
             // Hides the history dropdown for a given cell
