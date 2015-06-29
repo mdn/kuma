@@ -17,7 +17,7 @@ from waffle.models import Switch
 
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import override_constance_settings, KumaTestCase
-from kuma.users.tests import UserTestCase
+from kuma.users.tests import UserTestCase, user
 
 from . import (document, revision, doc_rev, normalize_html,
                create_template_test_users, create_topical_parents_docs)
@@ -366,23 +366,23 @@ class PermissionTests(KumaTestCase):
             )
 
             for slug_tmpl, trials in slug_trials:
-                for expected, user in trials:
-                    slug = slug_tmpl % user.username
+                for expected, trial_user in trials:
+                    slug = slug_tmpl % trial_user.username
                     if is_add:
                         eq_(expected,
-                            Document.objects.allows_add_by(user, slug),
+                            Document.objects.allows_add_by(trial_user, slug),
                             'User %s %s able to create %s' % (
-                                user, msg[expected], slug))
+                                trial_user, msg[expected], slug))
                     else:
                         doc = document(slug=slug, title=slug)
                         eq_(expected,
-                            doc.allows_revision_by(user),
+                            doc.allows_revision_by(trial_user),
                             'User %s %s able to revise %s' % (
-                                user, msg[expected], slug))
+                                trial_user, msg[expected], slug))
                         eq_(expected,
-                            doc.allows_editing_by(user),
+                            doc.allows_editing_by(trial_user),
                             'User %s %s able to edit %s' % (
-                                user, msg[expected], slug))
+                                trial_user, msg[expected], slug))
 
 
 class DocumentTestsWithFixture(UserTestCase):
@@ -1776,6 +1776,29 @@ class DocumentZoneTests(UserTestCase):
 
     def get_zone_stack(self, doc):
         return DocumentZoneStackJob().get(doc.pk)
+
+
+class DocumentContributorsTests(UserTestCase):
+
+    def test_get_contributors(self):
+        contrib_1 = user(save=True)
+        revision_1 = revision(creator=contrib_1, save=True)
+        self.assertIn(contrib_1, revision_1.document.get_contributors())
+
+    def test_get_contributors_inactive_or_banned(self):
+        contrib_2 = user(save=True)
+        contrib_3 = user(is_active=False, save=True)
+        contrib_4 = user(save=True)
+        contrib_4.bans.create(by=contrib_3, reason='because reasons')
+        revision_2 = revision(creator=contrib_2, save=True)
+
+        revision(creator=contrib_3, document=revision_2.document, save=True)
+        revision(creator=contrib_4, document=revision_2.document, save=True)
+
+        contributors = revision_2.document.get_contributors()
+        self.assertIn(contrib_2, contributors)
+        self.assertNotIn(contrib_3, contributors)
+        self.assertNotIn(contrib_4, contributors)
 
 
 class DocumentParsingTests(UserTestCase):
