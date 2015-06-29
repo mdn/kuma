@@ -25,6 +25,7 @@ from django.http import (HttpResponse, HttpResponseRedirect,
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import (get_object_or_404, get_list_or_404,
                               redirect, render)
+from django.utils.http import urlunquote_plus
 from django.utils.safestring import mark_safe
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
@@ -402,7 +403,7 @@ def _document_raw(request, doc, doc_html, rendering_params):
     response = HttpResponse(doc_html)
     response['X-Frame-Options'] = 'Allow'
     response['X-Robots-Tag'] = 'noindex'
-    absolute_url = doc.get_absolute_url()
+    absolute_url = urlunquote_plus(doc.get_absolute_url())
 
     if absolute_url in (config.KUMA_CUSTOM_CSS_PATH,
                         config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
