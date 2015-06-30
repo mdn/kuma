@@ -17,3 +17,5 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 cd /home/vagrant/src
 
 source /home/vagrant/env/bin/activate
+
+alias rmpyc="find . -name '*.pyc' -exec rm {} \;"
