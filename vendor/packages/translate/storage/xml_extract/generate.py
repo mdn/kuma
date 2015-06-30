@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2002-2006 Zuza Software Foundation
+# Copyright 2002-2014 Zuza Software Foundation
 #
 # This file is part of translate.
 #
@@ -17,7 +17,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
-#
 
 import lxml.etree as etree
 
@@ -161,7 +160,6 @@ def _map_target_dom_to_source_dom(source_dom_node, target_dom_node):
     id_to_dom_node = reduce_dom_tree(map_id_to_dom_node, target_dom_node, {})
 
     def map_target_dom_to_source_dom_aux(parent_node, node, target_dom_to_source_dom):
-        #
         if u'id' in node.attrib and node.attrib[u'id'] in id_to_dom_node:
             target_dom_to_source_dom[id_to_dom_node[node.attrib[u'id']]] = node
         return target_dom_to_source_dom
@@ -195,14 +193,20 @@ def _build_translated_dom(dom_node, target_node, target_dom_to_doc_dom):
     The mapping 'target_dom_to_doc_dom' is used to map nodes from 'target_node'
     to nodes which much be inserted into dom_node.
     """
+    if isinstance(dom_node, etree._ProcessingInstruction):
+        # If the DOM node is a processing instruction we can safely skip it,
+        # because we don't want to change it and it has no children.
+        return
+
     dom_node.text = target_node.text
     # 1. Find all child nodes of target_node.
     # 2. Filter out the children which map to None.
-    # 3. Call _get_translated_node on the remaining children; this maps a node in
-    #    'target_node' to a node in 'dom_node' and assigns the tail text of 'target_node'
-    #    to the mapped node.
+    # 3. Call _get_translated_node on the remaining children; this maps a node
+    #    in 'target_node' to a node in 'dom_node' and assigns the tail text of
+    #    'target_node' to the mapped node.
     # 4. Add all of these mapped nodes to 'dom_node'
-    dom_node.extend(_get_translated_node(child, target_dom_to_doc_dom) for child in target_node
+    dom_node.extend(_get_translated_node(child, target_dom_to_doc_dom)
+                    for child in target_node
                     if target_dom_to_doc_dom[child] is not None)
     # Recursively call this function on pairs of matched children in
     # dom_node and target_node.
@@ -210,7 +214,21 @@ def _build_translated_dom(dom_node, target_node, target_dom_to_doc_dom):
         _build_translated_dom(dom_child, target_child, target_dom_to_doc_dom)
 
 
-def replace_dom_text(make_parse_state):
+def get_xliff_source_target_doms(unit):
+    """Return a tuple with unit source and target DOM objects.
+
+    This method is method is meant to provide a way to retrieve the DOM objects
+    for the unit source and target for XLIFF stores.
+    """
+    if unit.target_dom is not None:
+        return (unit.source_dom, unit.target_dom)
+
+    return (unit.source_dom, unit.source_dom)
+
+
+def replace_dom_text(make_parse_state,
+                     dom_retriever=get_xliff_source_target_doms,
+                     process_translatable=extract.process_translatable):
     """Return a function::
 
           action: etree_Element x base.TranslationUnit -> None
@@ -219,18 +237,18 @@ def replace_dom_text(make_parse_state):
       according to rearrangement of placeables in unit.target (relative to their
       positions in unit.source).
     """
-
     def action(dom_node, unit):
-        """Use the unit's target (or source in the case where there is no translation)
-        to update the text in the dom_node and at the tails of its children."""
-        source_dom = unit.source_dom
-        if unit.target_dom is not None:
-            target_dom = unit.target_dom
-        else:
-            target_dom = unit.source_dom
+        """Use the unit's target (or source in the case where there is no
+        translation) to update the text in the dom_node and at the tails of its
+        children.
+        """
+        source_dom, target_dom = dom_retriever(unit)
+
         # Build a tree of (non-DOM) nodes which correspond to the translatable DOM nodes in 'dom_node'.
         # Pass in a fresh parse_state every time, so as avoid working with stale parse state info.
-        unit_node = extract.find_translatable_dom_nodes(dom_node, make_parse_state())[0]
+        unit_node = extract.find_translatable_dom_nodes(dom_node,
+                                                        make_parse_state(),
+                                                        process_translatable)[0]
         target_dom_to_doc_dom = _build_target_dom_to_doc_dom(unit_node, source_dom, target_dom)
         # Before we start reconstructing the sub-tree rooted at dom_node, we must clear out its children
         dom_node[:] = []

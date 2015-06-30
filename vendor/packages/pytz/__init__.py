@@ -9,8 +9,8 @@ on how to use these modules.
 '''
 
 # The Olson database is updated several times a year.
-OLSON_VERSION = '2015b'
-VERSION = '2015.2'  # Switching to pip compatible version numbering.
+OLSON_VERSION = '2015d'
+VERSION = '2015.4'  # Switching to pip compatible version numbering.
 __version__ = VERSION
 
 OLSEN_VERSION = OLSON_VERSION # Old releases had this misspelling
@@ -1224,7 +1224,6 @@ common_timezones = \
  'America/Moncton',
  'America/Monterrey',
  'America/Montevideo',
- 'America/Montreal',
  'America/Montserrat',
  'America/Nassau',
  'America/New_York',

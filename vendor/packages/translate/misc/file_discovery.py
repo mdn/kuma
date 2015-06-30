@@ -46,6 +46,7 @@ def get_abs_data_filename(path_parts, basedirs=None):
         # Toolkit's data files
         base = os.path.dirname(unicode(__file__, sys.getfilesystemencoding()))
         BASE_DIRS = [
+                base,
                 os.path.join(base, os.path.pardir),
         ]
 

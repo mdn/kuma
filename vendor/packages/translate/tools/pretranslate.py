@@ -26,7 +26,7 @@ for examples and usage instructions.
 """
 
 from translate.search import match
-from translate.storage import factory, xliff
+from translate.storage import factory
 
 
 # We don't want to reinitialise the TM each time, so let's store it here.
@@ -138,8 +138,8 @@ def pretranslate_unit(input_unit, template_store, matchers=None,
             matching_unit = match_fuzzy(input_unit, matchers)
 
         if matching_unit and matching_unit.gettargetlen() > 0:
-            # FIXME: should we dispatch here instead of this crude type check
-            if isinstance(input_unit, xliff.xliffunit):
+            # FIXME: should we dispatch here instead of this crude attr check
+            if hasattr(input_unit, "addalttrans"):
                 # FIXME: what about origin, lang and matchquality
                 input_unit.addalttrans(matching_unit.target, origin="fish",
                                        sourcetxt=matching_unit.source)

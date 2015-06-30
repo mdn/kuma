@@ -21,6 +21,7 @@
 
 """Module for handling Android String and Plurals resource files."""
 
+import copy
 import re
 import os
 
@@ -102,33 +103,34 @@ class AndroidResourceUnit(base.TranslationUnit):
         while i < len(text):
             c = text[i]
 
-            # Handle whitespace collapsing
-            if c is not EOF and c in WHITESPACE:
-                space_count += 1
-            elif space_count > 1:
-                # Remove duplicate whitespace; Pay attention: We
-                # don't do this if we are currently inside a quote,
-                # except for one special case: If we have unbalanced
-                # quotes, e.g. we reach eof while a quote is still
-                # open, we *do* collapse that trailing part; this is
-                # how Android does it, for some reason.
-                if not active_quote or c is EOF:
-                    # Replace by a single space, will get rid of
-                    # non-significant newlines/tabs etc.
-                    text[i-space_count : i] = ' '
-                    i -= space_count - 1
-                space_count = 0
-            elif space_count == 1:
-                # At this point we have a single whitespace character,
-                # but it might be a newline or tab. If we write this
-                # kind of insignificant whitespace into the .po file,
-                # it will be considered significant on import. So,
-                # make sure that this kind of whitespace is always a
-                # standard space.
-                text[i-1] = ' '
-                space_count = 0
-            else:
-                space_count = 0
+            if not active_escape:
+                # Handle whitespace collapsing
+                if c is not EOF and c in WHITESPACE:
+                    space_count += 1
+                elif space_count > 1:
+                    # Remove duplicate whitespace; Pay attention: We
+                    # don't do this if we are currently inside a quote,
+                    # except for one special case: If we have unbalanced
+                    # quotes, e.g. we reach eof while a quote is still
+                    # open, we *do* collapse that trailing part; this is
+                    # how Android does it, for some reason.
+                    if not active_quote or c is EOF:
+                        # Replace by a single space, will get rid of
+                        # non-significant newlines/tabs etc.
+                        text[i-space_count : i] = ' '
+                        i -= space_count - 1
+                    space_count = 0
+                elif space_count == 1:
+                    # At this point we have a single whitespace character,
+                    # but it might be a newline or tab. If we write this
+                    # kind of insignificant whitespace into the .po file,
+                    # it will be considered significant on import. So,
+                    # make sure that this kind of whitespace is always a
+                    # standard space.
+                    text[i-1] = ' '
+                    space_count = 0
+                else:
+                    space_count = 0
 
             # Handle quotes
             if c == '"' and not active_escape:
@@ -213,10 +215,15 @@ class AndroidResourceUnit(base.TranslationUnit):
         # Join the string together again, but w/o EOF marker
         return "".join(text[:-1])
 
-    def escape(self, text, add_quote=True):
-        '''
-        Escape all the characters which need to be escaped in an Android XML file.
-        '''
+    def escape(self, text, quote_wrapping_whitespaces=True):
+        """Escape all the characters which need to be escaped in an Android XML
+        file.
+
+        :param text: Text to escape
+        :param quote_wrapping_whitespaces: If True, heading and trailing
+               whitespaces will be quoted placing the entire resulting text in
+               double quotes.
+        """
         if text is None:
             return
         if len(text) == 0:
@@ -234,7 +241,8 @@ class AndroidResourceUnit(base.TranslationUnit):
         if text.startswith('@'):
             text = '\\@' + text[1:]
         # Quote strings with more whitespace
-        if add_quote and (text[0] in WHITESPACE or text[-1] in WHITESPACE or len(MULTIWHITESPACE.findall(text)) > 0):
+        if ((quote_wrapping_whitespaces and (text[0] in WHITESPACE or text[-1] in WHITESPACE))
+                or len(MULTIWHITESPACE.findall(text))) > 0:
             return '"%s"' % text
         return text
 
@@ -251,33 +259,31 @@ class AndroidResourceUnit(base.TranslationUnit):
 
     def set_xml_text_value(self, target, xmltarget):
         if '<' in target:
-            # Handle text with possible markup
-            target = target.replace('&', '&amp;')
             try:
-                # Try as XML
+                # Try to handle it as legacy XML
                 newstring = etree.fromstring('<string>%s</string>' % target)
             except:
                 # Fallback to string with XML escaping
-                target = target.replace('<', '&lt;')
-                newstring = etree.fromstring('<string>%s</string>' % target)
-            # Update text
-            if newstring.text is None:
-                xmltarget.text = ''
+                xmltarget.text = self.escape(target)
             else:
+                # Escape all text parts.
+                if newstring.text is not None:
+                    newstring.text = self.escape(newstring.text, False)
+                for x in newstring.iterdescendants():
+                    if x.text is not None:
+                        x.text = self.escape(x.text, False)
+                    if x.tail is not None:
+                        x.tail = self.escape(x.tail, False)
+
+                # Update text
                 xmltarget.text = newstring.text
-            # Remove old elements
-            for x in xmltarget.iterchildren():
-                xmltarget.remove(x)
-            # Escape all text parts
-            for x in newstring.iter():
-                x.text = self.escape(x.text, False)
-                if x.prefix is not None:
-                    x.prefix = self.escape(x.prefix, False)
-                if x.tail is not None:
-                    x.tail = self.escape(x.tail, False)
-            # Add new elements
-            for x in newstring.iterchildren():
-                xmltarget.append(x)
+
+                # Remove old elements
+                for x in xmltarget.iterchildren():
+                    xmltarget.remove(x)
+                # Add new elements
+                for x in newstring.iterchildren():
+                    xmltarget.append(x)
         else:
             # Handle text only
             xmltarget.text = self.escape(target)
@@ -288,6 +294,7 @@ class AndroidResourceUnit(base.TranslationUnit):
             if self.xmlelement.tag != "plurals":
                 old_id = self.getid()
                 self.xmlelement = etree.Element("plurals")
+                self.xmlelement.tail = '\n'
                 self.setid(old_id)
 
             lang_tags = set(Locale(self.gettargetlanguage()).plural_form.tags)
@@ -329,6 +336,7 @@ class AndroidResourceUnit(base.TranslationUnit):
             if self.xmlelement.tag != "string":
                 old_id = self.getid()
                 self.xmlelement = etree.Element("string")
+                self.xmlelement.tail = '\n'
                 self.setid(old_id)
 
             self.set_xml_text_value(target, self.xmlelement)
@@ -336,11 +344,34 @@ class AndroidResourceUnit(base.TranslationUnit):
         super(AndroidResourceUnit, self).settarget(target)
 
     def get_xml_text_value(self, xmltarget):
-        # Grab inner text
-        target = self.unescape(xmltarget.text or u'')
-        # Include markup as well
-        target += u''.join([data.forceunicode(etree.tostring(child, encoding='utf-8')) for child in xmltarget.iterchildren()])
-        return target
+        if (len(xmltarget) == 0):
+            # There are no html markups, so unescaping it as plain text.
+            return self.unescape(xmltarget.text)
+        else:
+            # There are html markups, so clone it to perform unescaping for all elements.
+            cloned_target = copy.deepcopy(xmltarget)
+
+            # Unescaping texts.
+            if (cloned_target.text is not None):
+                cloned_target.text = self.unescape(cloned_target.text)
+            for xmlelement in cloned_target.iterdescendants():
+                if (xmlelement.text is not None):
+                    xmlelement.text = self.unescape(xmlelement.text)
+                if (xmlelement.tail is not None):
+                    xmlelement.tail = self.unescape(xmlelement.tail)
+
+            # Grab root text (using a temporary xml element for text escaping)
+            if (cloned_target.text is not None):
+                tmp_element = etree.Element('t')
+                tmp_element.text = cloned_target.text
+                target = data.forceunicode(etree.tostring(tmp_element, encoding='utf-8')[3:-4])
+            else:
+                target = u''
+
+            # Include markup as well
+            target += u''.join([data.forceunicode(etree.tostring(child, encoding='utf-8'))
+                                for child in cloned_target.iterchildren()])
+            return target
 
     def gettarget(self, lang=None):
         if (self.xmlelement.tag == "plurals"):

@@ -471,7 +471,7 @@ class Checker(object):
             return
 
         scopes = [scope for scope in self.scopeStack[:-1]
-                  if isinstance(scope, (FunctionScope, ModuleScope))]
+                  if isinstance(scope, (FunctionScope, ModuleScope, GeneratorScope))]
         if isinstance(self.scope, GeneratorScope) and scopes[-1] != self.scopeStack[-2]:
             scopes.append(self.scopeStack[-2])
 
@@ -531,9 +531,27 @@ class Checker(object):
         self.addBinding(node, binding)
 
     def handleNodeDelete(self, node):
+
+        def on_conditional_branch():
+            """
+            Return `True` if node is part of a conditional body.
+            """
+            current = getattr(node, 'parent', None)
+            while current:
+                if isinstance(current, (ast.If, ast.While, ast.IfExp)):
+                    return True
+                current = getattr(current, 'parent', None)
+            return False
+
         name = getNodeName(node)
         if not name:
             return
+
+        if on_conditional_branch():
+            # We can not predict if this conditional branch is going to
+            # be executed.
+            return
+
         if isinstance(self.scope, FunctionScope) and name in self.scope.globals:
             self.scope.globals.remove(name)
         else:
@@ -654,14 +672,36 @@ class Checker(object):
         EQ = NOTEQ = LT = LTE = GT = GTE = IS = ISNOT = IN = NOTIN = ignore
 
     # additional node types
-    LISTCOMP = COMPREHENSION = KEYWORD = handleChildren
+    COMPREHENSION = KEYWORD = handleChildren
 
     def GLOBAL(self, node):
         """
         Keep track of globals declarations.
         """
-        if isinstance(self.scope, FunctionScope):
-            self.scope.globals.update(node.names)
+        # In doctests, the global scope is an anonymous function at index 1.
+        global_scope_index = 1 if self.withDoctest else 0
+        global_scope = self.scopeStack[global_scope_index]
+
+        # Ignore 'global' statement in global scope.
+        if self.scope is not global_scope:
+
+            # One 'global' statement can bind multiple (comma-delimited) names.
+            for node_name in node.names:
+                node_value = Assignment(node_name, node)
+
+                # Remove UndefinedName messages already reported for this name.
+                self.messages = [
+                    m for m in self.messages if not
+                    isinstance(m, messages.UndefinedName) and not
+                    m.message_args[0] == node_name]
+
+                # Bind name to global scope if it doesn't exist already.
+                global_scope.setdefault(node_name, node_value)
+
+                # Bind name to non-global scopes, but as already "used".
+                node_value.used = (global_scope, node)
+                for scope in self.scopeStack[global_scope_index + 1:]:
+                    scope[node_name] = node_value
 
     NONLOCAL = GLOBAL
 
@@ -669,6 +709,8 @@ class Checker(object):
         self.pushScope(GeneratorScope)
         self.handleChildren(node)
         self.popScope()
+
+    LISTCOMP = handleChildren if PY2 else GENERATOREXP
 
     DICTCOMP = SETCOMP = GENERATOREXP
 
@@ -693,7 +735,15 @@ class Checker(object):
             raise RuntimeError("Got impossible expression context: %r" % (node.ctx,))
 
     def RETURN(self, node):
-        if node.value and not self.scope.returnValue:
+        if isinstance(self.scope, ClassScope):
+            self.report(messages.ReturnOutsideFunction, node)
+            return
+
+        if (
+            node.value and
+            hasattr(self.scope, 'returnValue') and
+            not self.scope.returnValue
+        ):
             self.scope.returnValue = node.value
         self.handleNode(node.value, node)
 

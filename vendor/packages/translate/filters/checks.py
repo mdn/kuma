@@ -52,6 +52,8 @@ logger = logging.getLogger(__name__)
 # (see https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Strings/Articles/formatSpecifiers.html)
 printf_pat = re.compile('''
         %(                          # initial %
+        (?P<boost_ord>\d+)%         # boost::format style variable order, like %1%
+        |
               (?:(?P<ord>\d+)\$|    # variable order, like %1$s
               \((?P<key>\w+)\))?    # Python style variables, like %(var)s
         (?P<fullvar>
@@ -59,7 +61,7 @@ printf_pat = re.compile('''
             (?:\d+)?                # width
             (?:\.\d+)?              # precision
             (hh\|h\|l\|ll)?         # length formatting
-            (?P<type>[\w%@]))       # type (%s, %d, etc.)
+            (?P<type>[\w@]))        # type (%s, %d, etc.)
         )''', re.VERBOSE)
 
 # The name of the XML tag
@@ -615,7 +617,11 @@ class StandardChecker(TranslationChecker):
 
     @extraction
     def untranslated(self, str1, str2):
-        """Checks whether a string has been translated at all."""
+        """Checks whether a string has been translated at all.
+
+        This check is really only useful if you want to extract untranslated
+        strings so that they can be translated independently of the main work.
+        """
         str2 = prefilters.removekdecomments(str2)
 
         return not (len(str1.strip()) > 0 and len(str2) == 0)
@@ -625,6 +631,10 @@ class StandardChecker(TranslationChecker):
     def unchanged(self, str1, str2):
         """Checks whether a translation is basically identical to the original
         string.
+
+        This checks to see if the translation isn’t just a copy of the English
+        original. Sometimes, this is what you want, but other times you will
+        detect words that should have been translated.
         """
         str1 = self.filteraccelerators(self.removevariables(str1)).strip()
         str2 = self.filteraccelerators(self.removevariables(str2)).strip()
@@ -656,7 +666,13 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def blank(self, str1, str2):
-        """Checks whether a translation only contains spaces."""
+        """Checks whether a translation is totally blank.
+
+        This will check to see if a translation has inadvertently been
+        translated as blank i.e. as spaces. This is different from untranslated
+        which is completely empty. This test is useful in that if something is
+        translated as "  " it will appear to most tools as if it is translated.
+        """
         len1 = len(str1.strip())
         len2 = len(str2.strip())
 
@@ -670,6 +686,11 @@ class StandardChecker(TranslationChecker):
     def short(self, str1, str2):
         """Checks whether a translation is much shorter than the original
         string.
+
+        This is most useful in the special case where the translation is 1
+        characters long while the source text is multiple characters long.
+        Otherwise, we use a general ratio that will catch very big differences
+        but is set conservatively to limit the number of false positives.
         """
         len1 = len(str1.strip())
         len2 = len(str2.strip())
@@ -684,6 +705,12 @@ class StandardChecker(TranslationChecker):
     def long(self, str1, str2):
         """Checks whether a translation is much longer than the original
         string.
+
+        This is most useful in the special case where the translation is
+        multiple characters long while the source text is only 1 character
+        long. Otherwise, we use a general ratio that will catch very big
+        differences but is set conservatively to limit the number of false
+        positives.
         """
         len1 = len(str1.strip())
         len2 = len(str2.strip())
@@ -696,7 +723,11 @@ class StandardChecker(TranslationChecker):
 
     @critical
     def escapes(self, str1, str2):
-        """Checks whether escaping is consistent between the two strings."""
+        """Checks whether escaping is consistent between the two strings.
+
+        Checks escapes such as ``\\n`` ``\uNNNN`` to ensure that if they exist
+        in the original string you also have them in the translation.
+        """
         if not helpers.countsmatch(str1, str2, (u"\\", u"\\\\")):
             escapes1 = u", ".join([u"'%s'" % word for word in str1.split() if u"\\" in word])
             escapes2 = u", ".join([u"'%s'" % word for word in str2.split() if u"\\" in word])
@@ -710,7 +741,11 @@ class StandardChecker(TranslationChecker):
 
     @critical
     def newlines(self, str1, str2):
-        """Checks whether newlines are consistent between the two strings."""
+        """Checks whether newlines are consistent between the two strings.
+
+        Counts the number of ``\\n`` newlines (and variants such as ``\\r\\n``)
+        and reports and error if they differ.
+        """
         if not helpers.countsmatch(str1, str2, (u"\n", u"\r")):
             raise FilterFailure(u"Different line endings")
 
@@ -725,7 +760,11 @@ class StandardChecker(TranslationChecker):
 
     @critical
     def tabs(self, str1, str2):
-        """Checks whether tabs are consistent between the two strings."""
+        """Checks whether tabs are consistent between the two strings.
+
+        Counts the number of ``\\t`` tab markers and reports an error if they
+        differ.
+        """
         if not helpers.countmatch(str1, str2, "\t"):
             raise SeriousFilterFailure(u"Different tabs")
         else:
@@ -734,7 +773,15 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def singlequoting(self, str1, str2):
-        """Checks whether singlequoting is consistent between the two strings."""
+        """Checks whether singlequoting is consistent between the two strings.
+
+        The same as doublequoting but checks for the ``'`` character. Because
+        this is used in contractions like it's and in possessive forms like
+        user's, this test can output spurious errors if your language doesn't
+        use such forms. If a quote appears at the end of a sentence in the
+        translation, i.e. ``'.``, this might not be detected properly by the
+        check.
+        """
         str1 = self.filterwordswithpunctuation(self.filteraccelerators(self.filtervariables(str1)))
         str1 = self.config.lang.punctranslate(str1)
 
@@ -748,8 +795,12 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def doublequoting(self, str1, str2):
-        """Checks whether doublequoting is consistent between the
-        two strings.
+        """Checks whether doublequoting is consistent between the two strings.
+
+        Checks on double quotes ``"`` to ensure that you have the same number
+        in both the original and the translated string. This tests takes into
+        account that several languages use different quoting characters, and
+        will test for them instead.
         """
         str1 = self.filteraccelerators(self.filtervariables(str1))
         str1 = self.filterxml(str1)
@@ -767,7 +818,13 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def doublespacing(self, str1, str2):
-        """Checks for bad double-spaces by comparing to original."""
+        """Checks for bad double-spaces by comparing to original.
+
+        This will identify if you have [space][space] in when you don't have it
+        in the original or it appears in the original but not in your
+        translation. Some of these are spurious and how you correct them
+        depends on the conventions of your language.
+        """
         str1 = self.filteraccelerators(str1)
         str2 = self.filteraccelerators(str2)
 
@@ -779,7 +836,16 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def puncspacing(self, str1, str2):
-        """Checks for bad spacing after punctuation."""
+        """Checks for bad spacing after punctuation.
+
+        In the case of [full-stop][space] in the original, this test checks
+        that your translation does not remove the space. It checks also for
+        [comma], [colon], etc.
+
+        Some languages don't use spaces after common punctuation marks,
+        especially where full-width punctuation marks are used. This check will
+        take that into account.
+        """
         # Convert all nbsp to space, and just check spaces. Useful intermediate
         # step to stricter nbsp checking?
         str1 = self.filteraccelerators(self.filtervariables(str1))
@@ -819,7 +885,21 @@ class StandardChecker(TranslationChecker):
 
     @critical
     def printf(self, str1, str2):
-        """Checks whether printf format strings match."""
+        """Checks whether printf format strings match.
+
+        If the printf formatting variables are not identical, then this will
+        indicate an error. Printf statements are used by programs to format
+        output in a human readable form (they are placeholders for variable
+        data). They allow you to specify lengths of string variables, string
+        padding, number padding, precision, etc. Generally they will look like
+        this: ``%d``, ``%5.2f``, ``%100s``, etc. The test can also manage
+        variables-reordering using the ``%1$s`` syntax. The variables' type and
+        details following data are tested to ensure that they are strictly
+        identical, but they may be reordered.
+
+        See also `printf Format String
+        <http://en.wikipedia.org/wiki/Printf_format_string>`_.
+        """
         count1 = count2 = plural = None
 
         # self.hasplural only set by run_filters, not always available
@@ -828,43 +908,52 @@ class StandardChecker(TranslationChecker):
 
         for var_num2, match2 in enumerate(printf_pat.finditer(str2)):
             count2 = var_num2 + 1
-            str2ord = match2.group('ord')
+            str2ord = match2.group('ord') if not match2.group('boost_ord') else match2.group('boost_ord')
             str2key = match2.group('key')
+            str2fullvar = match2.group('fullvar') if not match2.group('boost_ord') else '%'
 
             if str2ord:
                 str1ord = None
+                gotmatch = False
 
                 for var_num1, match1 in enumerate(printf_pat.finditer(str1)):
                     count1 = var_num1 + 1
+                    localstr1ord = match1.group('ord') if not match1.group('boost_ord') else match1.group('boost_ord')
 
-                    if match1.group('ord'):
-                        if str2ord == match1.group('ord'):
+                    if localstr1ord:
+                        if str2ord == localstr1ord:
                             str1ord = str2ord
+                            str1fullvar = match1.group('fullvar') if not match1.group('boost_ord') else '%'
 
-                            if match2.group('fullvar') != match1.group('fullvar'):
-                                raise FilterFailure(u"Different printf variable: %s" % match2.group())
+                            if str2fullvar == str1fullvar:
+                                gotmatch = True
                     elif int(str2ord) == var_num1 + 1:
                         str1ord = str2ord
+                        str1fullvar = match1.group('fullvar') if not match1.group('boost_ord') else '%'
 
-                        if match2.group('fullvar') != match1.group('fullvar'):
-                            raise FilterFailure(u"Different printf variable: %s" % match2.group())
+                        if str2fullvar == str1fullvar:
+                            gotmatch = True
 
                 if str1ord is None:
                     raise FilterFailure(u"Added printf variable: %s" % match2.group())
+
+                if not gotmatch:
+                    raise FilterFailure(u"Different printf variable: %s" % match2.group())
             elif str2key:
                 str1key = None
 
                 for var_num1, match1 in enumerate(printf_pat.finditer(str1)):
                     count1 = var_num1 + 1
+                    str1fullvar = match1.group('fullvar') if not match1.group('boost_ord') else '%'
 
                     if match1.group('key') and str2key == match1.group('key'):
                         str1key = match1.group('key')
 
                         # '%.0s' "placeholder" in plural will match anything
-                        if plural and match2.group('fullvar') == '.0s':
+                        if plural and str2fullvar == '.0s':
                             continue
 
-                        if match1.group('fullvar') != match2.group('fullvar'):
+                        if str1fullvar != str2fullvar:
                             raise FilterFailure(u"Different printf variable: %s" % match2.group())
 
                 if str1key is None:
@@ -872,12 +961,13 @@ class StandardChecker(TranslationChecker):
             else:
                 for var_num1, match1 in enumerate(printf_pat.finditer(str1)):
                     count1 = var_num1 + 1
+                    str1fullvar = match1.group('fullvar') if not match1.group('boost_ord') else '%'
 
                     # '%.0s' "placeholder" in plural will match anything
-                    if plural and match2.group('fullvar') == '.0s':
+                    if plural and str2fullvar == '.0s':
                         continue
 
-                    if (var_num1 == var_num2) and (match1.group('fullvar') != match2.group('fullvar')):
+                    if (var_num1 == var_num2) and (str1fullvar != str2fullvar):
                         raise FilterFailure(u"Different printf variable: %s" % match2.group())
 
         if count2 is None:
@@ -892,10 +982,125 @@ class StandardChecker(TranslationChecker):
         return 1
 
 
+    @critical
+    def pythonbraceformat(self, str1, str2):
+        """Checks whether python brace format strings match."""
+
+        # Helper function
+        def max_anons(anons):
+            """
+            Takes a list of anonymous placeholder variables, e.g.
+            ['', '1', ...]
+            Determines how many anonymous formatting args the string
+            they come from requires. Motivation for this function:
+              * max_anons(vars_from_original) tells us how many
+                anonymous placeholders are supported (at least).
+              * max_anons(vars_from_translation) should not
+                exceed it.
+            """
+
+            # implicit_n: you need at least as many anonymous args as
+            # there are anonymous placeholders.
+            implicit_n = anons.count('')
+            # explicit_n: you need at least as many anonymous args as
+            # the highest '{99}'-style placeholder. (The `+ 1` is to
+            # correct for 0-indexing)
+            try:
+                explicit_n = max([
+                    int(numbered_anon) + 1
+                    for numbered_anon in anons
+                    if len(numbered_anon) >= 1
+                ])
+            except ValueError:
+                explicit_n = 0
+
+            highest_n = max(implicit_n, explicit_n)
+
+            return highest_n
+
+        messages = []
+        # Possible failure states: 0 = ok, 1 = mild, 2 = serious
+        STATE_OK, STATE_MILD, STATE_SERIOUS = 0, 1, 2
+        failure_state = STATE_OK
+        pythonbraceformat_pat = re.compile('{[^}]*}')
+        data1 = {}
+        data2 = {}
+
+        # Populate the data1 and data2 dicts.
+        for data_, str_ in [(data1, str1),
+                            (data2, str2)]:
+            # Remove all escaped braces {{ and }}
+            data_['strclean'] = re.sub('{{|}}', '', str_)
+            data_['allvars'] = pythonbraceformat_pat.findall(data_['strclean'])
+            data_['anonvars'] = [
+                var[1:-1]
+                for var in data_['allvars']
+                if re.match(r'^{[0-9]*}$', var)
+            ]
+            data_['namedvars'] = [
+                var
+                for var in data_['allvars']
+                if not re.match(r'^{[0-9]*}$', var)
+            ]
+
+        max1 = max_anons(data1['anonvars'])
+        max2 = max_anons(data2['anonvars'])
+
+        if max1 == max2:
+            pass
+        elif max1 < max2:
+            failure_state = max(failure_state, STATE_SERIOUS)
+            messages.append(
+                u"Translation requires %s anonymous formatting args, original only %s." %
+                    (max2, max1)
+            )
+        else:
+            failure_state = max(failure_state, STATE_MILD)
+            messages.append(
+                u"Highest anonymous placeholder in original is %s, in translation %s" %
+                    (max1, max2)
+            )
+
+        if set(data1['namedvars']) == set(data2['namedvars']):
+            pass
+
+        extra_in_2 = set(data2['namedvars']).difference(set(data1['namedvars']))
+        if 0 < len(extra_in_2):
+            failure_state = max(failure_state, STATE_SERIOUS)
+            messages.append(
+                u"Unknown named placeholders in translation: %s\n" %
+                    ', '.join(extra_in_2)
+            )
+
+        extra_in_1 = set(data1['namedvars']).difference(set(data2['namedvars']))
+        if 0 < len(extra_in_1):
+            failure_state = max(failure_state, STATE_MILD)
+            messages.append(
+                u"Named placeholders absent in translation: %s" %
+                    ', '.join(extra_in_1)
+            )
+
+        if failure_state == STATE_OK:
+            return 1
+        elif failure_state == STATE_MILD:
+            raise FilterFailure(messages)
+        elif failure_state == STATE_SERIOUS:
+            raise SeriousFilterFailure(messages)
+        else:
+            raise ValueError(u"Something wrong in python brace checks: unreachable state reached.")
+
+
     @functional
     def accelerators(self, str1, str2):
-        """Checks whether accelerators are consistent between the
-        two strings.
+        """Checks whether accelerators are consistent between the two strings.
+
+        This test is capable of checking the different type of accelerators
+        that are used in different projects, like Mozilla or KDE. The test will
+        pick up accelerators that are missing and ones that shouldn't be there.
+
+        See `accelerators on the localization guide
+        <http://docs.translatehouse.org/projects/localization-guide/en/latest/guide/translation/accelerators.html>`_
+        for a full description on accelerators.
         """
         str1 = self.filtervariables(str1)
         str2 = self.filtervariables(str2)
@@ -957,6 +1162,11 @@ class StandardChecker(TranslationChecker):
     def variables(self, str1, str2):
         """Checks whether variables of various forms are consistent between the
         two strings.
+
+        This checks to make sure that variables that appear in the original
+        also appear in the translation. It can handle variables from projects
+        like KDE or OpenOffice. It does not at the moment cope with variables
+        that use the reordering syntax of Gettext PO files.
         """
         messages = []
         mismatch1, mismatch2 = [], []
@@ -1007,7 +1217,11 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def functions(self, str1, str2):
-        """Checks that function names are not translated."""
+        """Checks that function names are not translated.
+
+        Checks that function names e.g. ``rgb()`` or ``getEntity.Name()`` are
+        not translated.
+        """
         # We can't just use helpers.funcmatch() since it doesn't ignore order
         if not set(decoration.getfunctions(str1)).symmetric_difference(set(decoration.getfunctions(str2))):
             return True
@@ -1017,7 +1231,13 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def emails(self, str1, str2):
-        """Checks that emails are not translated."""
+        """Checks that emails are not translated.
+
+        Generally you should not be translating email addresses. This check
+        will look to see that email addresses e.g. ``info@example.com`` are not
+        translated. In some cases of course you should translate the address
+        but generally you shouldn't.
+        """
         if helpers.funcmatch(str1, str2, decoration.getemails):
             return True
         else:
@@ -1026,7 +1246,16 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def urls(self, str1, str2):
-        """Checks that URLs are not translated."""
+        """Checks that URLs are not translated.
+
+        This checks only basic URLs (http, ftp, mailto etc.) not all URIs (e.g.
+        afp, smb, file). Generally, you don't want to translate URLs, unless
+        they are example URLs (http://your_server.com/filename.html). If the
+        URL is for configuration information, then you need to query the
+        developers about placing configuration information in PO files. It
+        shouldn't really be there, unless it is very clearly marked: such
+        information should go into a configuration file.
+        """
         if helpers.funcmatch(str1, str2, decoration.geturls):
             return True
         else:
@@ -1037,6 +1266,10 @@ class StandardChecker(TranslationChecker):
     def numbers(self, str1, str2):
         """Checks whether numbers of various forms are consistent between the
         two strings.
+
+        You will see some errors where you have either written the number in
+        full or converted it to the digit in your translation. Also changes in
+        order will trigger this error.
         """
         if helpers.countsmatch(str1, str2, decoration.getnumbers(str1)):
             return True
@@ -1046,8 +1279,9 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def startwhitespace(self, str1, str2):
-        """Checks whether whitespace at the beginning of the strings
-        matches.
+        """Checks whether whitespace at the beginning of the strings matches.
+
+        As in endwhitespace but you will see fewer errors.
         """
         if helpers.funcmatch(str1, str2, decoration.spacestart):
             return True
@@ -1057,7 +1291,18 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def endwhitespace(self, str1, str2):
-        """Checks whether whitespace at the end of the strings matches."""
+        """Checks whether whitespace at the end of the strings matches.
+
+        Operates the same as endpunc but is only concerned with whitespace.
+        This filter is particularly useful for those strings which will
+        evidently be followed by another string in the program, e.g.
+        [Password: ] or [Enter your username: ]. The whitespace is an inherent
+        part of the string. This filter makes sure you don't miss those
+        important but otherwise invisible spaces!
+
+        If your language uses full-width punctuation (like Chinese), the visual
+        spacing in the character might be enough without an added extra space.
+        """
         str1 = self.config.lang.punctranslate(str1)
 
         if helpers.funcmatch(str1, str2, decoration.spaceend):
@@ -1068,7 +1313,10 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def startpunc(self, str1, str2):
-        """Checks whether punctuation at the beginning of the strings match."""
+        """Checks whether punctuation at the beginning of the strings match.
+
+        Operates as endpunc but you will probably see fewer errors.
+        """
         str1 = self.filterxml(self.filterwordswithpunctuation(self.filteraccelerators(self.filtervariables(str1))))
         str1 = self.config.lang.punctranslate(str1)
         str2 = self.filterxml(self.filterwordswithpunctuation(self.filteraccelerators(self.filtervariables(str2))))
@@ -1081,7 +1329,31 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def endpunc(self, str1, str2):
-        """Checks whether punctuation at the end of the strings match."""
+        """Checks whether punctuation at the end of the strings match.
+
+        This will ensure that the ending of your translation has the same
+        punctuation as the original. E.g. if it ends in :[space] then so should
+        yours. It is useful for ensuring that you have ellipses [...] in all
+        your translations, not simply three separate full-stops. You may pick
+        up some errors in the original: feel free to keep your translation and
+        notify the programmers. In some languages, characters such as ``?`` or
+        ``!`` are always preceded by a space e.g. [space]? — do what your
+        language customs dictate. Other false positives you will notice are,
+        for example, if through changes in word-order you add "), etc. at the
+        end of the sentence. Do not change these: your language word-order
+        takes precedence.
+
+        It must be noted that if you are tempted to leave out [full-stop] or
+        [colon] or add [full-stop] to a sentence, that often these have been
+        done for a reason, e.g. a list where fullstops make it look cluttered.
+        So, initially match them with the English, and make changes once the
+        program is being used.
+
+        This check is aware of several language conventions for punctuation
+        characters, such as the custom question marks for Greek and Arabic,
+        Devanagari Danda, full-width punctuation for CJK languages, etc.
+        Support for your language can be added easily if it is not there yet.
+        """
         str1 = self.filtervariables(str1)
         str1 = self.config.lang.punctranslate(str1)
         str2 = self.filtervariables(str2)
@@ -1096,7 +1368,11 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def purepunc(self, str1, str2):
-        """Checks that strings that are purely punctuation are not changed."""
+        """Checks that strings that are purely punctuation are not changed.
+
+        This extracts strings like ``+`` or ``-`` as these usually should not
+        be changed.
+        """
         # this test is a subset of startandend
         if (decoration.ispurepunctuation(str1)):
             success = str1 == str2
@@ -1111,7 +1387,11 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def brackets(self, str1, str2):
-        """Checks that the number of brackets in both strings match."""
+        """Checks that the number of brackets in both strings match.
+
+        If ``([{`` or ``}])`` appear in the original this will check that the
+        same number appear in the translation.
+        """
         str1 = self.filtervariables(str1)
         str2 = self.filtervariables(str2)
 
@@ -1142,7 +1422,16 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def sentencecount(self, str1, str2):
-        """Checks that the number of sentences in both strings match."""
+        """Checks that the number of sentences in both strings match.
+
+        Adds the number of sentences to see that the sentence count is the same
+        between the original and translated string. You may not always want to
+        use this test, if you find you often need to reformat your translation,
+        because the original is badly-expressed, or because the structure of
+        your language works better that way. Do what works best for your
+        language: it's the meaning of the original you want to convey, not the
+        exact way it was written in the English.
+        """
         str1 = self.filteraccelerators(str1)
         str2 = self.filteraccelerators(str2)
 
@@ -1158,7 +1447,15 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def options(self, str1, str2):
-        """Checks that options are not translated."""
+        """Checks that command line options are not translated.
+
+        In messages that contain command line options, such as ``--help``,
+        this test will check that these remain untranslated. These could be
+        translated in the future if programs can create a mechanism to allow
+        this, but currently they are not translated. If the options has a
+        parameter, e.g. ``--file=FILE``, then the test will check that the
+        parameter has been translated.
+        """
         str1 = self.filtervariables(str1)
 
         for word1 in str1.split():
@@ -1179,7 +1476,17 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def startcaps(self, str1, str2):
-        """Checks that the message starts with the correct capitalisation."""
+        """Checks that the message starts with the correct capitalisation.
+
+        After stripping whitespace and common punctuation characters, it then
+        checks to see that the first remaining character is correctly
+        capitalised. So, if the sentence starts with an upper-case letter, and
+        the translation does not, an error is produced.
+
+        This check is entirely disabled for many languages that don't make a
+        distinction between upper and lower case. Contact us if this is not yet
+        disabled for your language.
+        """
         str1 = self.filteraccelerators(str1)
         str2 = self.filteraccelerators(str2)
 
@@ -1202,7 +1509,16 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def simplecaps(self, str1, str2):
-        """Checks the capitalisation of two strings isn't wildly different."""
+        """Checks the capitalisation of two strings isn't wildly different.
+
+        This will pick up many false positives, so don't be a slave to it. It
+        is useful for identifying translations that don't start with a capital
+        letter (upper-case letter) when they should, or those that do when they
+        shouldn't. It will also highlight sentences that have extra capitals;
+        depending on the capitalisation convention of your language, you might
+        want to change these to Title Case, or change them all to normal
+        sentence case.
+        """
         str1 = self.removevariables(str1)
         str2 = self.removevariables(str2)
         # TODO: review this. The 'I' is specific to English, so it probably
@@ -1243,7 +1559,14 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def acronyms(self, str1, str2):
-        """Checks that acronyms that appear are unchanged."""
+        """Checks that acronyms that appear are unchanged.
+
+        If an acronym appears in the original this test will check that it
+        appears in the translation. Translating acronyms is a language decision
+        but many languages leave them unchanged. In that case this test is
+        useful for tracking down translations of the acronym and correcting
+        them.
+        """
         acronyms = []
         allowed = []
 
@@ -1273,7 +1596,14 @@ class StandardChecker(TranslationChecker):
 
     @cosmetic
     def doublewords(self, str1, str2):
-        """Checks for repeated words in the translation."""
+        """Checks for repeated words in the translation.
+
+        Words that have been repeated in a translation will be highlighted with
+        this test e.g. "the the", "a a". These are generally typos that need
+        correcting. Some languages may have valid repeated words in their
+        structure, in that case either ignore those instances or switch this
+        test off.
+        """
         lastword = ""
         without_newlines = "\n".join(str2.split("\n"))
         words = self.filteraccelerators(self.removevariables(self.filterxml(without_newlines))).replace(u".", u"").lower().split()
@@ -1289,7 +1619,13 @@ class StandardChecker(TranslationChecker):
     @functional
     def notranslatewords(self, str1, str2):
         """Checks that words configured as untranslatable appear in the
-        translation too."""
+        translation too.
+
+        Many brand names should not be translated, this test allows you to
+        easily make sure that words like: Word, Excel, Impress, Calc, etc. are
+        not translated. You must specify a file containing all of the
+        *no translate* words using ``--notranslatefile``.
+        """
         if not self.config.notranslatewords:
             return True
 
@@ -1316,7 +1652,14 @@ class StandardChecker(TranslationChecker):
     @functional
     def musttranslatewords(self, str1, str2):
         """Checks that words configured as definitely translatable don't appear
-        in the translation."""
+        in the translation.
+
+        If for instance in your language you decide that you must translate
+        'OK' then this test will flag any occurrences of 'OK' in the
+        translation if it appeared in the source string. You must specify a
+        file containing all of the *must translate* words using
+        ``--musttranslatefile``.
+        """
         if not self.config.musttranslatewords:
             return True
 
@@ -1343,6 +1686,19 @@ class StandardChecker(TranslationChecker):
     def validchars(self, str1, str2):
         """Checks that only characters specified as valid appear in the
         translation.
+
+        Often during character conversion to and from UTF-8 you get some
+        strange characters appearing in your translation. This test presents a
+        simple way to try and identify such errors.
+
+        This test will only run of you specify the ``--validcharsfile`` command
+        line option. This file contains all the characters that are valid in
+        your language. You must use UTF-8 encoding for the characters in the
+        file.
+
+        If the test finds any characters not in your valid characters file then
+        the test will print the character together with its Unicode value
+        (e.g. 002B).
         """
         if not self.config.validcharsmap:
             return True
@@ -1359,7 +1715,12 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def filepaths(self, str1, str2):
-        """Checks that file paths have not been translated."""
+        """Checks that file paths have not been translated.
+
+        Checks that paths such as ``/home/user1`` have not been translated.
+        Generally you do not translate a file path, unless it is being used as
+        an example, e.g. ``your_user_name/path/to/filename.conf``.
+        """
         for word1 in self.filteraccelerators(self.filterxml(str1)).split():
             if word1.startswith(u"/"):
                 if not helpers.countsmatch(str1, str2, (word1,)):
@@ -1370,7 +1731,20 @@ class StandardChecker(TranslationChecker):
 
     @critical
     def xmltags(self, str1, str2):
-        """Checks that XML/HTML tags have not been translated."""
+        """Checks that XML/HTML tags have not been translated.
+
+        This check finds the number of tags in the source string and checks
+        that the same number are in the translation. If the counts don't match
+        then either the tag is missing or it was mistakenly translated by the
+        translator, both of which are errors.
+
+        The check ignores tags or things that look like tags that cover the
+        whole string e.g. ``<Error>`` but will produce false positives for
+        things like ``An <Error> occurred`` as here ``Error`` should be
+        translated. It also will allow translation of the *alt* attribute in
+        e.g. ``<img src="bob.png" alt="Image description">`` or similar
+        translatable attributes in OpenOffice.org help files.
+        """
         tags1 = tag_re.findall(str1)
 
         if len(tags1) > 0:
@@ -1409,19 +1783,42 @@ class StandardChecker(TranslationChecker):
     def kdecomments(self, str1, str2):
         """Checks to ensure that no KDE style comments appear in the
         translation.
+
+        KDE style translator comments appear in PO files as
+        ``"_: comment\\n"``. New translators often translate the comment. This
+        test tries to identify instances where the comment has been translated.
         """
         return str2.find(u"\n_:") == -1 and not str2.startswith(u"_:")
 
 
     @extraction
     def compendiumconflicts(self, str1, str2):
-        """Checks for Gettext compendium conflicts (#-#-#-#-#)."""
+        """Checks for Gettext compendium conflicts (#-#-#-#-#).
+
+        When you use msgcat to create a PO compendium it will insert
+        ``#-#-#-#-#`` into entries that are not consistent. If the compendium
+        is used later in a message merge then these conflicts will appear in
+        your translations. This test quickly extracts those for correction.
+        """
         return str2.find(u"#-#-#-#-#") == -1
 
 
     @cosmetic
     def simpleplurals(self, str1, str2):
-        """Checks for English style plural(s) for you to review."""
+        """Checks for English style plural(s) for you to review.
+
+        This test will extract any message that contains words with a final
+        "(s)" in the source text. You can then inspect the message, to check
+        that the correct plural form has been used for your language. In some
+        languages, plurals are made by adding text at the beginning of words,
+        making the English style messy. In this case, they often revert to the
+        plural form. This test allows an editor to check that the plurals used
+        are correct. Be aware that this test may create a number of false
+        positives.
+
+        For languages with no plural forms (only one noun form) this test will
+        simply test that nothing like "(s)" was used in the translation.
+        """
 
         def numberofpatterns(string, patterns):
             number = 0
@@ -1450,7 +1847,25 @@ class StandardChecker(TranslationChecker):
 
     @functional
     def spellcheck(self, str1, str2):
-        """Checks words that don't pass a spell check."""
+        """Checks words that don't pass a spell check.
+
+        This test will check for misspelled words in your translation. The test
+        first checks for misspelled words in the original (usually English)
+        text, and adds those to an exclusion list. The advantage of this
+        exclusion is that many words that are specific to the application will
+        not raise errors e.g. program names, brand names, function names.
+
+        The checker works with `PyEnchant
+        <http://pythonhosted.org/pyenchant/>`_. You need to have PyEnchant
+        installed as well as a dictionary for your language (for example, one
+        of the `Hunspell <https://wiki.openoffice.org/wiki/Dictionaries>`_ or
+        `aspell <http://ftp.gnu.org/gnu/aspell/dict/>`_ dictionaries). This
+        test will only work if you have specified the ``--language`` option.
+
+        The pofilter error that is created, lists the misspelled word, plus
+        suggestions returned from the spell checker. That makes it easy for you
+        to identify the word and select a replacement.
+        """
         if not self.config.targetlanguage:
             return True
 
@@ -1494,6 +1909,13 @@ class StandardChecker(TranslationChecker):
     def credits(self, str1, str2):
         """Checks for messages containing translation credits instead of
         normal translations.
+
+        Some projects have consistent ways of giving credit to translators by
+        having a unit or two where translators can fill in their name and
+        possibly their contact details. This test allows you to find these
+        units easily to check that they are completed correctly and also
+        disables other tests that might incorrectly get triggered for these
+        units (such as urls, emails, etc.)
         """
         if str1 in self.config.credit_sources:
             raise FilterFailure(u"Don't translate. Just credit the translators.")
@@ -1512,6 +1934,7 @@ class StandardChecker(TranslationChecker):
                          "sentencecount", "numbers", "isfuzzy",
                          "isreview", "notranslatewords", "musttranslatewords",
                          "emails", "simpleplurals", "urls", "printf",
+                         "pythonbraceformat",
                          "tabs", "newlines", "functions", "options",
                          "blank", "nplurals", "gconf", "dialogsizes",
                          "validxml"),
@@ -1524,6 +1947,7 @@ class StandardChecker(TranslationChecker):
                     "sentencecount", "numbers", "isfuzzy",
                     "isreview", "notranslatewords", "musttranslatewords",
                     "emails", "simpleplurals", "urls", "printf",
+                    "pythonbraceformat",
                     "tabs", "newlines", "functions", "options",
                     "gconf", "dialogsizes", "validxml"),
           "credits": ("simplecaps", "variables", "startcaps",
@@ -1533,6 +1957,7 @@ class StandardChecker(TranslationChecker):
                       "filepaths", "doublespacing",
                       "sentencecount", "numbers",
                       "emails", "simpleplurals", "urls", "printf",
+                      "pythonbraceformat",
                       "tabs", "newlines", "functions", "options",
                       "validxml"),
          "purepunc": ("startcaps", "options"),
@@ -1660,6 +2085,13 @@ class MozillaChecker(StandardChecker):
     def credits(self, str1, str2):
         """Checks for messages containing translation credits instead of
         normal translations.
+
+        Some projects have consistent ways of giving credit to translators by
+        having a unit or two where translators can fill in their name and
+        possibly their contact details. This test allows you to find these
+        units easily to check that they are completed correctly and also
+        disables other tests that might incorrectly get triggered for these
+        units (such as urls, emails, etc.)
         """
         for location in self.locations:
             if location in ['MOZ_LANGPACK_CONTRIBUTORS', 'credit.translation']:
@@ -1680,7 +2112,18 @@ class MozillaChecker(StandardChecker):
 
     @critical
     def dialogsizes(self, str1, str2):
-        """Checks that dialog sizes are not translated."""
+        """Checks that dialog sizes are not translated.
+
+        This is a Mozilla specific test. Mozilla uses a language called XUL to
+        define dialogues and screens. This can make use of CSS to specify
+        properties of the dialogue. These properties include things such as the
+        width and height of the box. The size might need to be changed if the
+        dialogue size changes due to longer translations. Thus translators can
+        change these settings. But you are only meant to change the number not
+        translate the words 'width' or 'height'. This check capture instances
+        where these are translated. It will also catch other types of errors in
+        these units.
+        """
         # Example: "width: 635px; height: 400px;"
         if "width" in str1 or "height" in str1:
             str1pairs = self.mozilla_dialog_re.findall(str1)
@@ -1783,7 +2226,13 @@ class GnomeChecker(StandardChecker):
 
     @functional
     def gconf(self, str1, str2):
-        """Checks if we have any gconf config settings translated."""
+        """Checks if we have any gconf config settings translated.
+
+        Gconf settings should not be translated so this check checks that gconf
+        settings such as "name" or "modification_date" are not translated in
+        the translation. It allows you to change the surrounding quotes but
+        will ensure that the setting values remain untranslated.
+        """
         for location in self.locations:
             if location.find('schemas.in') != -1 or location.find('gschema.xml.in') != -1:
                 gconf_attributes = gconf_attribute_re.findall(str1)
@@ -1872,20 +2321,41 @@ class StandardUnitChecker(UnitChecker):
 
     @extraction
     def isfuzzy(self, unit):
-        """Check if the unit has been marked fuzzy."""
+        """Check if the unit has been marked fuzzy.
+
+        If a message is marked fuzzy in the PO file then it is extracted.
+        Note this is different from ``--fuzzy`` and ``--nofuzzy`` options which
+        specify whether tests should be performed against messages marked
+        fuzzy.
+        """
         return not unit.isfuzzy()
 
 
     @extraction
     def isreview(self, unit):
-        """Check if the unit has been marked review."""
+        """Check if the unit has been marked review.
+
+        If you have made use of the 'review' flags in your translations::
+
+          # (review) reason for review
+          # (pofilter) testname: explanation for translator
+
+        Then if a message is marked for review in the PO file it will be
+        extracted. Note this is different from ``--review`` and ``--noreview``
+        options which specify whether tests should be performed against
+        messages already marked as under review.
+        """
         return not unit.isreview()
 
 
     @critical
     def nplurals(self, unit):
-        """Checks for the correct number of noun forms for plural
-        translations.
+        """Checks for the correct number of noun forms for plural translations.
+
+        This uses the plural information in the language module of the
+        Translate Toolkit. This is the same as the Gettext nplural value. It
+        will check that the number of plurals required is the same as the
+        number supplied in your translation.
         """
         if unit.hasplural():
             # if we don't have a valid nplurals value, don't run the test
@@ -1899,8 +2369,12 @@ class StandardUnitChecker(UnitChecker):
 
     @extraction
     def hassuggestion(self, unit):
-        """Checks if there is at least one suggested translation for this
-        unit.
+        """Checks if there is at least one suggested translation for this unit.
+
+        If a message has a suggestion (an alternate translation stored in
+        alt-trans units in XLIFF and .pending files in PO) then these will be
+        extracted. This is used by Pootle and is probably only useful in
+        pofilter when using XLIFF files.
         """
         self.suggestion_store = getattr(self, 'suggestion_store', None)
         suggestions = []

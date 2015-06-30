@@ -264,6 +264,8 @@ def main(argv=None):
         ("pot", "po"): ("po", convertpot),
         "xlf": ("xlf", convertpot),
         ("xlf", "xlf"): ("xlf", convertpot),
+        "xliff": ("xliff", convertpot),
+        ("xliff", "xliff"): ("xliff", convertpot),
         "ts": ("ts", convertpot),
         "lang": ("lang", convertpot),
         ("lang", "lang"): ("lang", convertpot),

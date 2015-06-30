@@ -38,5 +38,5 @@ import xliff
 
 try:
     import trados
-except ImportError as e:
+except ImportError:
     pass
