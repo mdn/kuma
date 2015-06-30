@@ -76,7 +76,7 @@ class WikiDocumentType(document.DocType):
             'id': obj.id,
             'title': obj.title,
             'slug': obj.slug,
-            'summary': obj.get_summary(strip_markup=True),
+            'summary': obj.get_summary_text(),
             'locale': obj.locale,
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html or ''),
