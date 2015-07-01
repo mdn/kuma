@@ -29,7 +29,6 @@ import waffle
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
-from teamwork.models import Team
 from tidings.models import NotificationsMixin
 
 from kuma.attachments.models import Attachment
@@ -266,9 +265,6 @@ class Document(NotificationsMixin, models.Model):
     # A document's category much always be that of its parent. If it has no
     # parent, it can do what it wants. This invariant is enforced in save().
     category = models.IntegerField(choices=CATEGORIES, db_index=True)
-
-    # Team to which this document belongs, if any
-    team = models.ForeignKey(Team, blank=True, null=True)
 
     # Whether this page is deleted.
     deleted = models.BooleanField(default=False, db_index=True)

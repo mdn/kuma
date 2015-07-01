@@ -17,15 +17,12 @@ from django.utils.html import conditional_escape
 
 from constance import config
 from jingo import register
-from teamwork.shortcuts import build_policy_admin_links
 import waffle
 
 from kuma.core.urlresolvers import reverse
 from .constants import DIFF_WRAP_COLUMN
 from .jobs import DocumentZoneStackJob
 from .models import Document, memcache
-
-register.function(build_policy_admin_links)
 
 
 def compare_url(doc, from_id, to_id):

@@ -43,9 +43,6 @@
 [submodule "vendor/src/django-statici18n"]
 	path = vendor/src/django-statici18n
 	url = git://github.com/zyegfryed/django-statici18n.git
-[submodule "vendor/src/django-teamwork"]
-	path = vendor/src/django-teamwork
-	url = git://github.com/lmorchard/django-teamwork.git
 [submodule "vendor/src/django-tidings"]
 	path = vendor/src/django-tidings
 	url = git://github.com/mozilla/django-tidings.git
