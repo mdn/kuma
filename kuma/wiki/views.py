@@ -477,8 +477,7 @@ def document(request, document_slug, document_locale):
     # We found a Document. Now we need to figure out how we're going
     # to display it.
 
-    # Step 1: If we're a redirect, and redirecting hasn't been
-    # disabled, redirect.
+    # If we're a redirect, and redirecting hasn't been disabled, redirect.
 
     # Obey explicit redirect pages:
     # Don't redirect on redirect=no (like Wikipedia), so we can link from a
@@ -498,12 +497,7 @@ def document(request, document_slug, document_locale):
             }), extra_tags='wiki_redirect')
         return HttpResponsePermanentRedirect(url)
 
-    # Step 2: Kick 'em out if they're not allowed to view this Document.
-    if not request.user.has_perm('wiki.view_document', doc):
-        raise PermissionDenied
-
-    # Step 3: Read some request params to see what we're supposed to
-    # do.
+    # Read some request params to see what we're supposed to do.
     rendering_params = {}
     for param in ('raw', 'summary', 'include', 'edit_links'):
         rendering_params[param] = request.GET.get(param, False) is not False
@@ -511,18 +505,18 @@ def document(request, document_slug, document_locale):
     rendering_params['render_raw_fallback'] = False
     rendering_params['use_rendered'] = kumascript.should_use_rendered(doc, request.GET)
 
-    # Step 4: Get us some HTML to play with.
+    # Get us some HTML to play with.
     doc_html, ks_errors, render_raw_fallback = _get_html_and_errors(
         request, doc, rendering_params)
     rendering_params['render_raw_fallback'] = render_raw_fallback
     toc_html = None
 
-    # Step 5: Start parsing and applying filters.
+    # Start parsing and applying filters.
     if not doc.is_template:
         toc_html = _generate_toc_html(doc, rendering_params)
         doc_html = _filter_doc_html(request, doc, doc_html, rendering_params)
 
-    # Step 6: If we're doing raw view, bail out to that now.
+    # If we're doing raw view, bail out to that now.
     if rendering_params['raw']:
         return _document_raw(request, doc, doc_html, rendering_params)
 
@@ -552,7 +546,7 @@ def document(request, document_slug, document_locale):
 
     share_text = _('I learned about %(title)s on MDN.') % {"title": doc.title, }
 
-    # Step 8: Bundle it all up and, finally, return.
+    # Bundle it all up and, finally, return.
     context = {
         'document': doc,
         'document_html': doc_html,
