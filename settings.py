@@ -429,7 +429,6 @@ MIDDLEWARE_CLASSES = (
 # Auth
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
-    'teamwork.backends.TeamworkBackend',
 )
 AUTH_USER_MODEL = 'users.User'
 

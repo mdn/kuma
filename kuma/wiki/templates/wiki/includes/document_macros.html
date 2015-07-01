@@ -88,15 +88,6 @@
                   <li><a href="{{ url('wiki.delete_document', document.slug) }}" rel="nofollow, noindex">{{ _('Delete this page') }}</a></li>
                 {% endif %}
 
-                {% set policy_links = build_policy_admin_links(request.user, document) %}
-                {% if policy_links['change_one'] %}
-                  <li><a target="_blank" href="{{ policy_links['change_one'] }}" rel="nofollow, noindex">{{ _('Manage access policy') }}</a></li>
-                {% elif policy_links['change_list'] %}
-                  <li><a target="_blank" href="{{ policy_links['change_list'] }}" rel="nofollow, noindex">{{ _('Manage access policies') }}</a></li>
-                {% elif policy_links['add'] %}
-                  <li><a target="_blank" href="{{ policy_links['add'] }}" rel="nofollow, noindex">{{ _('Add access policy') }}</a></li>
-                {% endif %}
-
                 {% set zone_links = document_zone_management_links(request.user, document) %}
                 {% if zone_links['change'] %}
                   <li><a target="_blank" href="{{ zone_links['change'] }}" rel="nofollow, noindex">{{ _('Manage content zone') }}</a></li>
