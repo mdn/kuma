@@ -132,24 +132,34 @@ class DocumentTag(TagBase):
         verbose_name_plural = _("Document Tags")
 
 
+def tags_for(cls, model, instance=None, **extra_filters):
+    """
+    Sadly copied from taggit to work around the issue of not being
+    able to use the TaggedItemBase class that has tag field already
+    defined.
+    """
+    kwargs = extra_filters or {}
+    if instance is not None:
+        kwargs.update({
+            '%s__content_object' % cls.tag_relname(): instance
+        })
+        return cls.tag_model().objects.filter(**kwargs)
+    kwargs.update({
+        '%s__content_object__isnull' % cls.tag_relname(): False
+    })
+    return cls.tag_model().objects.filter(**kwargs).distinct()
+
+
 class TaggedDocument(ItemBase):
     """Through model, for tags on Documents"""
     content_object = models.ForeignKey('Document')
-    tag = models.ForeignKey(DocumentTag)
+    tag = models.ForeignKey(DocumentTag, related_name="%(app_label)s_%(class)s_items")
 
     objects = TaggedDocumentManager()
 
-    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
-    # don't like. But, it seems to be the only way to get *both* a custom tag
-    # *and* a custom through model.
-    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
     @classmethod
-    def tags_for(cls, model, instance=None):
-        if instance is not None:
-            return DocumentTag.objects.filter(
-                taggeddocument__content_object=instance)
-        return DocumentTag.objects.filter(
-            taggeddocument__content_object__isnull=False).distinct()
+    def tags_for(cls, *args, **kwargs):
+        return tags_for(cls, *args, **kwargs)
 
 
 class DocumentAttachment(models.Model):
@@ -1617,33 +1627,21 @@ class LocalizationTag(TagBase):
 class ReviewTaggedRevision(ItemBase):
     """Through model, just for review tags on revisions"""
     content_object = models.ForeignKey('Revision')
-    tag = models.ForeignKey(ReviewTag)
+    tag = models.ForeignKey(ReviewTag, related_name="%(app_label)s_%(class)s_items")
 
-    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
-    # don't like. But, it seems to be the only way to get *both* a custom tag
-    # *and* a custom through model.
-    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
     @classmethod
-    def tags_for(cls, model, instance=None):
-        if instance is not None:
-            return ReviewTag.objects.filter(
-                reviewtaggedrevision__content_object=instance)
-        return ReviewTag.objects.filter(
-            reviewtaggedrevision__content_object__isnull=False).distinct()
+    def tags_for(cls, *args, **kwargs):
+        return tags_for(cls, *args, **kwargs)
 
 
 class LocalizationTaggedRevision(ItemBase):
     """Through model, just for localization tags on revisions"""
     content_object = models.ForeignKey('Revision')
-    tag = models.ForeignKey(LocalizationTag)
+    tag = models.ForeignKey(LocalizationTag, related_name="%(app_label)s_%(class)s_items")
 
     @classmethod
-    def tags_for(cls, model, instance=None):
-        if instance is not None:
-            return LocalizationTag.objects.filter(
-                localizationtaggedrevision__content_object=instance)
-        return LocalizationTag.objects.filter(
-            localizationtaggedrevision__content_object__isnull=False).distinct()
+    def tags_for(cls, *args, **kwargs):
+        return tags_for(cls, *args, **kwargs)
 
 
 class Revision(models.Model):
