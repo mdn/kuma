@@ -560,7 +560,6 @@ def document(request, document_slug, document_locale):
         'quick_links_html': quick_links_html,
         'zone_subnav_html': zone_subnav_html,
         'body_html': body_html,
-        'contributors': doc.get_contributors(),
         'fallback_reason': fallback_reason,
         'kumascript_errors': ks_errors,
         'render_raw_fallback': rendering_params['render_raw_fallback'],
