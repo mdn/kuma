@@ -200,8 +200,9 @@ def entityencode(source, codepoint2name):
     """Encode ``source`` using entities from ``codepoint2name``.
 
     :param unicode source: Source string to encode
-    :param dict codepoint2name: Dictionary mapping code points to entity names
+    :param codepoint2name: Dictionary mapping code points to entity names
            (without the the leading ``&`` or the trailing ``;``)
+    :type codepoint2name: :meth:`dict`
     """
     output = u""
     inentity = False
@@ -242,8 +243,9 @@ def entitydecode(source, name2codepoint):
     """Decode ``source`` using entities from ``name2codepoint``.
 
     :param unicode source: Source string to decode
-    :param dict name2codepoint: Dictionary mapping entity names (without the
+    :param name2codepoint: Dictionary mapping entity names (without the
            the leading ``&`` or the trailing ``;``) to code points
+    :type name2codepoint: :meth:`dict`
     """
     output = u""
     inentity = False

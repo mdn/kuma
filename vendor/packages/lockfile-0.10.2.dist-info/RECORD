@@ -13,6 +13,6 @@ lockfile/linklockfile.py,sha256=pLUQvtn6BLNfzEy5Vd_SH86mx5hO3XpVDu1xAdSeRaw,2649
 lockfile/pidlockfile.pyc,,
 lockfile/mkdirlockfile.pyc,,
 lockfile/__init__.pyc,,
-lockfile/linklockfile.pyc,,
 lockfile/sqlitelockfile.pyc,,
 lockfile/symlinklockfile.pyc,,
+lockfile/linklockfile.pyc,,

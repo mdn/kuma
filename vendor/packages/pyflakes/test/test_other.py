@@ -21,6 +21,8 @@ class Test(TestCase):
         f()
         ''', m.UndefinedLocal, m.UnusedVariable)
 
+    @skipIf(version_info >= (3,),
+            'in Python 3 list comprehensions execute in a separate scope')
     def test_redefinedInListComp(self):
         """
         Test that shadowing a variable in a list comprehension raises
@@ -220,6 +222,8 @@ class Test(TestCase):
             [a for a in '12']
         ''')
 
+    @skipIf(version_info >= (3,),
+            'in Python 3 list comprehensions execute in a separate scope')
     def test_redefinedElseInListComp(self):
         """
         Test that shadowing a variable in a list comprehension in
@@ -339,6 +343,15 @@ class Test(TestCase):
         def Foo():
             pass
         ''', m.RedefinedWhileUnused)
+
+    def test_classWithReturn(self):
+        """
+        If a return is used inside a class, a warning is emitted.
+        """
+        self.flakes('''
+        class Foo(object):
+            return
+        ''', m.ReturnOutsideFunction)
 
     @skip("todo: Too hard to make this warn but other cases stay silent")
     def test_doubleAssignment(self):
@@ -461,6 +474,15 @@ class Test(TestCase):
         self.flakes('''
         foo = None
         foo.bar += foo.baz
+        ''')
+
+    def test_globalDeclaredInDifferentScope(self):
+        """
+        A 'global' can be declared in one scope and reused in another.
+        """
+        self.flakes('''
+        def f(): global foo
+        def g(): foo = 'anything'; foo.is_used()
         ''')
 
 
@@ -938,3 +960,7 @@ class TestUnusedAssignment(TestCase):
         def bar():
             yield from foo()
         ''', m.UndefinedName)
+
+    def test_returnOnly(self):
+        """Do not crash on lone "return"."""
+        self.flakes('return 2')

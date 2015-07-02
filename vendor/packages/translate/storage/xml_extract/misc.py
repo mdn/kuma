@@ -66,6 +66,7 @@ def compose_mappings(left, right):
             pass
     return result_map
 
+
 tag_pattern = re.compile('({(?P<namespace>(\w|[-:./])*)})?(?P<tag>(\w|[-])*)')
 
 
@@ -73,6 +74,8 @@ def parse_tag(full_tag):
     """
     >>> parse_tag('{urn:oasis:names:tc:opendocument:xmlns:office:1.0}document-content')
     ('urn:oasis:names:tc:opendocument:xmlns:office:1.0', 'document-content')
+    >>> parse_tag('document-content')
+    ('', 'document-content')
     """
     match = tag_pattern.match(full_tag)
     if match is not None:

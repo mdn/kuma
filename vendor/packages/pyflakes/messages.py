@@ -100,14 +100,6 @@ class DuplicateArgument(Message):
         self.message_args = (name,)
 
 
-class Redefined(Message):
-    message = 'redefinition of %r from line %r'
-
-    def __init__(self, filename, loc, name, orig_loc):
-        Message.__init__(self, filename, loc)
-        self.message_args = (name, orig_loc.lineno)
-
-
 class LateFutureImport(Message):
     message = 'future import(s) %r after other statements'
 
@@ -133,3 +125,10 @@ class ReturnWithArgsInsideGenerator(Message):
     Indicates a return statement with arguments inside a generator.
     """
     message = '\'return\' with argument inside generator'
+
+
+class ReturnOutsideFunction(Message):
+    """
+    Indicates a return statement outside of a function/method.
+    """
+    message = '\'return\' outside function'

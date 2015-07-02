@@ -488,6 +488,8 @@ class xliffunit(lisa.LISAunit):
                 self.markfuzzy()
             elif otherunit.source == self.source:
                 self.markfuzzy(False)
+            elif otherunit.source != self.source:
+                self.markfuzzy(True)
         if comments:
             self.addnote(otherunit.getnotes())
 

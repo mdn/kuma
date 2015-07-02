@@ -107,7 +107,6 @@ class JsonUnit(base.TranslationUnit):
                 return str(value)
             return value
 
-            return newvalue
         if isinstance(self._ref, list):
             return change_type(self._ref[self._item])
         elif isinstance(self._ref, dict):
@@ -155,7 +154,11 @@ class JsonFile(base.TranslationStore):
             self.parse(inputfile)
 
     def __str__(self):
-        return json.dumps(self._file, sort_keys=True,
+        units = {}
+        for unit in self.unit_iter():
+            path = unit.getid().lstrip('.')
+            units[path] = unit.target
+        return json.dumps(units, sort_keys=True, separators=(',', ': '),
                           indent=4, ensure_ascii=False).encode('utf-8')
 
     def _extract_translatables(self, data, stop=None, prev="", name_node=None,

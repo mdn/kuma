@@ -79,7 +79,7 @@ def update(existing, add=False, **kwargs):
     only if add is true.
 
     :return: Updated dictionary of header entries
-    :rtype: dict
+    :rtype: dict of strings
     """
     headerargs = OrderedDict()
     fixedargs = cidict()
@@ -155,7 +155,7 @@ class poheader(object):
         or a value (datetime or string)
 
         :return: Dictionary with the header items
-        :rtype: dict
+        :rtype: dict of strings
         """
         if project_id_version is None:
             project_id_version = "PACKAGE VERSION"

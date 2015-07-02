@@ -96,7 +96,8 @@ class pocheckfilter:
     def getfilterdocs(self):
         """Lists the docs for filters available on checker."""
         filterdict = self.checker.getfilters()
-        filterdocs = ["%s\t%s" % (name, filterfunc.__doc__) for (name, filterfunc) in filterdict.iteritems()]
+        filterdocs = ["%s\t%s" % (name, filterfunc.__doc__.split('\n\n')[0])
+                      for (name, filterfunc) in filterdict.iteritems()]
         filterdocs.sort()
 
         return "\n".join(filterdocs)

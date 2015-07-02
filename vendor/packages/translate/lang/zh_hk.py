@@ -28,3 +28,5 @@ from translate.lang.zh import zh
 
 class zh_hk(zh):
     specialchars = u"←→↔×÷©…—‘’“”「」『』【】《》"
+
+    ignoretests = ["startcaps", "simplecaps", "acronyms"]

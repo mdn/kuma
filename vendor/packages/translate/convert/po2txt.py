@@ -31,7 +31,10 @@ from translate.storage import factory
 
 
 class po2txt:
-    """po2txt can take a po file and generate txt. best to give it a template file otherwise will just concat msgstrs"""
+    """po2txt can take a po file and generate txt.
+
+    best to give it a template file otherwise will just concat msgstrs
+    """
 
     def __init__(self, wrap=None):
         self.wrap = wrap
@@ -40,7 +43,8 @@ class po2txt:
         """rewraps text as required"""
         if self.wrap is None:
             return message
-        return "\n".join([textwrap.fill(line, self.wrap, replace_whitespace=False) for line in message.split("\n")])
+        return "\n".join([textwrap.fill(line, self.wrap, replace_whitespace=False)
+                          for line in message.split("\n")])
 
     def convertstore(self, inputstore, includefuzzy):
         """converts a file to txt format"""
@@ -49,9 +53,9 @@ class po2txt:
             if unit.isheader():
                 continue
             if unit.istranslated() or (includefuzzy and unit.isfuzzy()):
-                txtresult += self.wrapmessage(unit.target) + "\n" + "\n"
+                txtresult += self.wrapmessage(unit.target) + "\n\n"
             else:
-                txtresult += self.wrapmessage(unit.source) + "\n" + "\n"
+                txtresult += self.wrapmessage(unit.source) + "\n\n"
         return txtresult.rstrip()
 
     def mergestore(self, inputstore, templatetext, includefuzzy):
@@ -70,8 +74,8 @@ class po2txt:
         return txtresult
 
 
-def converttxt(inputfile, outputfile, templatefile, wrap=None, includefuzzy=False, encoding='utf-8',
-               outputthreshold=None):
+def converttxt(inputfile, outputfile, templatefile, wrap=None,
+               includefuzzy=False, encoding='utf-8', outputthreshold=None):
     """reads in stdin using fromfileclass, converts using convertorclass, writes to stdout"""
     inputstore = factory.getobject(inputfile)
 
@@ -79,20 +83,27 @@ def converttxt(inputfile, outputfile, templatefile, wrap=None, includefuzzy=Fals
         return False
 
     convertor = po2txt(wrap=wrap)
+
     if templatefile is None:
         outputstring = convertor.convertstore(inputstore, includefuzzy)
     else:
         templatestring = templatefile.read().decode(encoding)
         outputstring = convertor.mergestore(inputstore, templatestring, includefuzzy)
+
     outputfile.write(outputstring.encode('utf-8'))
-    return 1
+    return True
 
 
 def main(argv=None):
     from translate.misc import stdiotell
     import sys
     sys.stdout = stdiotell.StdIOWrapper(sys.stdout)
-    formats = {("po", "txt"): ("txt", converttxt), ("po"): ("txt", converttxt), ("xlf", "txt"): ("txt", converttxt), ("xlf"): ("txt", converttxt)}
+    formats = {
+        ("po", "txt"): ("txt", converttxt),
+        ("po"): ("txt", converttxt),
+        ("xlf", "txt"): ("txt", converttxt),
+        ("xlf"): ("txt", converttxt),
+    }
     parser = convert.ConvertOptionParser(formats, usetemplates=True, description=__doc__)
     parser.add_option("", "--encoding", dest="encoding", default='utf-8', type="string",
             help="The encoding of the template file (default: UTF-8)")
