@@ -5,7 +5,7 @@
 # Build CKEditor for Kuma.
 # Based on https://github.com/ckeditor/ckeditor-presets/blob/master/build.sh
 
-CKEDITOR_VERSION="4.4.7"
+CKEDITOR_VERSION="4.4.8"
 
 CKBUILDER_VERSION="1.7.2"
 CKBUILDER_URL="http://download.cksource.com/CKBuilder/$CKBUILDER_VERSION/ckbuilder.jar"
