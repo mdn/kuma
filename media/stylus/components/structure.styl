@@ -398,7 +398,7 @@ a.github-button {
     cursor: pointer;
 
     {$selector-icon} {
-    	bidi-style(margin-left, 0, margin-right, 0);
+        bidi-style(margin-left, 0, margin-right, 0);
     }
 }
 
@@ -637,11 +637,12 @@ a.github-button {
         .main-nav-search {
             display: none;
             padding: 0px;
-            margin-top: 10px;
+            bidi-value(margin, 10px 0 0 0, 10px 0 0 0);
             width: auto;
 
             .search-wrap {
                 width: 90%;
+                width: calc(100% - 16px); /* 16px = left + right padding */
                 bidi-value(left, auto, 0);
                 bidi-value(right, 0, auto);
 
