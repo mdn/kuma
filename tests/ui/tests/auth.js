@@ -86,7 +86,7 @@ define([
             libLogin.completePersonaWindow(remote).then(function() {
 
                 return remote
-                    .findByCssSelector('.user-state-profile')
+                    .findByCssSelector('.oauth-logged-in-profile')
                     .then(function(element) {
                         poll.until(element, 'isDisplayed')
                                 .then(function() {
@@ -103,7 +103,7 @@ define([
                                                                 .findByCssSelector('.memberSince')
                                                                 .click() // Just ensuring the element is there
                                                                 .end()
-                                                                .findByCssSelector('.user-state-signout')
+                                                                .findByCssSelector('.oauth-logged-in-signout')
                                                                 .click()
                                                                 .end()
                                                                 .findByCssSelector('.oauth-login-container')
