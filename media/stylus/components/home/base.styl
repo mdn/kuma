@@ -13,15 +13,10 @@ Override MDN standard styles
     }
 
     /* update main nav menu color */
-    override-main-nav-color($blue-background-text-color);
+    override-main-header-color($blue-background-text-color);
 
     /* update the homepage search size */
     minimize-header-search();
-
-    /*  Change open auth text in white */
-    .oauth-login-options {
-        color: $blue-background-text-color;
-    }
 
     .search-wrap {
         input {
@@ -103,12 +98,6 @@ Override MDN standard styles
     .entry-meta {
         set-smaller-font-size();
         font-style: italic;
-    }
-
-    .oauth-logged-in {
-        > {$selector-icon} {
-            color: $blue-background-text-color;
-        }
     }
 }
 
