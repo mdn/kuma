@@ -40,6 +40,7 @@
     (function() {
         var $container = $('.oauth-login-container');
         var $options = $container.find('.oauth-login-options');
+        var $picker = $container.find('.oauth-login-picker');
         var activeClass = 'active';
         var fadeSpeed = 300;
 
@@ -51,6 +52,7 @@
         };
 
         $options.mozMenu({
+            submenu: $picker,
             fadeInSpeed: fadeSpeed,
             fadeOutSpeed: fadeSpeed,
             onOpen: function() {
@@ -66,6 +68,7 @@
                 $options.removeClass(activeClass);
             }
         });
+        $picker.find('ul').mozKeyboardNav();
 
         // Service click callback
         var trackingCallback = function() {
