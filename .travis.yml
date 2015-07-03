@@ -25,7 +25,8 @@ install:
 script: tox -v
 after_failure:
     - dmesg | tail
-after_success: coveralls
+after_success:
+    - codecov
 notifications:
     irc:
         channels:
