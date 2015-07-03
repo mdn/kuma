@@ -26,7 +26,7 @@ from ..constants import REDIRECT_CONTENT
 from ..exceptions import (PageMoveError,
                           DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress)
-from ..jobs import DocumentZoneStackJob
+from ..jobs import DocumentZoneStackJob, DocumentContributorsJob
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       TaggedDocument)
 
@@ -1798,25 +1798,69 @@ class DocumentZoneTests(UserTestCase):
 
 class DocumentContributorsTests(UserTestCase):
 
-    def test_get_contributors(self):
+    def test_contributors(self):
+        contrib = user(save=True)
+        rev = revision(creator=contrib, save=True)
+        self.assertIn(contrib, rev.document.contributors)
+
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_contributors_ordering(self):
         contrib_1 = user(save=True)
-        revision_1 = revision(creator=contrib_1, save=True)
-        self.assertIn(contrib_1, revision_1.document.get_contributors())
-
-    def test_get_contributors_inactive_or_banned(self):
         contrib_2 = user(save=True)
-        contrib_3 = user(is_active=False, save=True)
-        contrib_4 = user(save=True)
-        contrib_4.bans.create(by=contrib_3, reason='because reasons')
-        revision_2 = revision(creator=contrib_2, save=True)
+        contrib_3 = user(save=True)
+        rev_1 = revision(creator=contrib_1, save=True)
+        rev_2 = revision(creator=contrib_2,
+                         document=rev_1.document,
+                         # live in the future to make sure we handle the lack
+                         # of microseconds support in Django 1.7 nicely
+                         created=rev_1.created + timedelta(seconds=1),
+                         save=True)
+        ok_(rev_1.created < rev_2.created)
+        job = DocumentContributorsJob()
+        job_user_pks = [contributor.pk
+                        for contributor in job.get(rev_1.document.pk)]
+        # the user with the more recent revision first
+        recent_contributors_pks = [contrib_2.pk, contrib_1.pk]
+        eq_(job_user_pks, recent_contributors_pks)
 
+        # a third revision should now show up again and
+        # the job's cache is invalidated
+        rev_3 = revision(creator=contrib_3,
+                         document=rev_1.document,
+                         created=rev_2.created + timedelta(seconds=1),
+                         save=True)
+        ok_(rev_2.created < rev_3.created)
+        job_user_pks = [contributor.pk
+                        for contributor in job.get(rev_1.document.pk)]
+        # The new revision shows up
+        eq_(job_user_pks, [contrib_3.pk] + recent_contributors_pks)
+
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_contributors_inactive_or_banned(self):
+        contrib_1 = user(save=True)
+        contrib_2 = user(is_active=False, save=True)
+        contrib_3 = user(save=True)
+        contrib_3_ban = contrib_3.bans.create(by=contrib_1, reason='because reasons')
+        revision_2 = revision(creator=contrib_1, save=True)
+
+        revision(creator=contrib_2, document=revision_2.document, save=True)
         revision(creator=contrib_3, document=revision_2.document, save=True)
-        revision(creator=contrib_4, document=revision_2.document, save=True)
 
-        contributors = revision_2.document.get_contributors()
-        self.assertIn(contrib_2, contributors)
-        self.assertNotIn(contrib_3, contributors)
-        self.assertNotIn(contrib_4, contributors)
+        self.assertIn(contrib_1, revision_2.document.contributors)
+        self.assertNotIn(contrib_2, revision_2.document.contributors)
+        self.assertNotIn(contrib_3, revision_2.document.contributors)
+
+        # delete the ban again
+        contrib_3_ban.delete()
+        # reloading the document from db to prevent cache
+        doc = Document.objects.get(pk=revision_2.document.pk)
+        # user not in contributors because job invalidation hasn't happened
+        self.assertNotIn(contrib_3, doc.contributors)
+
+        # trigger the invalidation manually by saving the document
+        doc.save()
+        doc = Document.objects.get(pk=doc.pk)
+        self.assertIn(contrib_3, doc.contributors)
 
 
 class DocumentParsingTests(UserTestCase):
