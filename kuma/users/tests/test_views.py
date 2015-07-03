@@ -470,7 +470,7 @@ class Test404Case(UserTestCase):
         response = self.client.get('/something-doesnt-exist', follow=True)
         doc = pq(response.content)
 
-        login_block = doc.find('.socialaccount_providers')
+        login_block = doc.find('.socialaccount-providers')
         ok_(len(login_block) > 0)
         eq_(404, response.status_code)
 
@@ -485,7 +485,7 @@ class Test404Case(UserTestCase):
         response = self.client.get('/something-doesnt-exist', follow=True)
         doc = pq(response.content)
 
-        login_block = doc.find('.socialaccount_providers')
+        login_block = doc.find('.socialaccount-providers')
         eq_(len(login_block), 0)
         eq_(404, response.status_code)
         self.client.logout()
