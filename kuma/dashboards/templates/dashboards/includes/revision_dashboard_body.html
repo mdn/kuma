@@ -16,8 +16,7 @@
         </thead>
         <tbody>
             {% for revision in revisions %}
-
-                {% set previous_id = revision.get_previous().id %}
+                {% set previous_id = revision.previous.id %}
                 {% set revision_url = revision.document.get_absolute_url() %}
                 <tr
                     tabindex="0"

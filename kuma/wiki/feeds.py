@@ -308,7 +308,7 @@ class RevisionsFeed(DocumentsFeed):
 
     def item_description(self, item):
         # TODO: put this in a jinja template if django syndication will let us
-        previous = item.get_previous()
+        previous = item.previous
         if previous is None:
             action = u'Created'
         else:

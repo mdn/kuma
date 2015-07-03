@@ -2185,7 +2185,7 @@ def _save_rev_and_notify(rev_form, request, document):
     """Save the given RevisionForm and send notifications."""
     creator = request.user
     # have to check for first edit before we rev_form.save
-    first_edit = creator.profile.wiki_activity().count() == 0
+    first_edit = creator.wiki_revisions().count() == 0
 
     new_rev = rev_form.save(creator, document)
 

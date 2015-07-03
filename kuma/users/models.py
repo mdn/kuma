@@ -19,9 +19,7 @@ from kuma.core.fields import LocaleField, JSONField
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.models import ModelBase
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.models import Revision
 
-from .helpers import gravatar_url
 from .jobs import UserGravatarURLJob
 from .tasks import send_welcome_email
 
@@ -65,6 +63,11 @@ class User(AbstractUser):
     """
     class Meta:
         db_table = 'auth_user'
+
+    def wiki_revisions(self, count=5):
+        return (self.created_revisions.prefetch_related('document')
+                                      .defer('content', 'summary')
+                                      .order_by('-created')[:count])
 
     @cached_property
     def profile(self):
@@ -204,19 +207,12 @@ class UserProfile(ModelBase):
         if self.is_banned:
             return self.user.bans.filter(is_active=True)[:1][0]
 
-    def gravatar(self):
-        return gravatar_url(self.user)
-
     def allows_editing_by(self, user):
         if user == self.user:
             return True
         if user.is_staff or user.is_superuser:
             return True
         return False
-
-    def wiki_activity(self):
-        return (Revision.objects.filter(creator=self.user)
-                                .order_by('-created')[:5])
 
 
 @receiver(models.signals.post_save, sender=settings.AUTH_USER_MODEL)
@@ -229,9 +225,14 @@ def create_user_profile(sender, instance, created, **kwargs):
 def invalidate_gravatar_url(sender, instance, created, **kwargs):
     job = UserGravatarURLJob()
     if instance.email:
-        job.invalidate(instance.email)
+        handler = job.invalidate
     elif instance.email is None:
-        job.delete(instance.email)
+        handler = job.delete
+    else:
+        return
+    # do the heavy-lifting for all avatar sizes
+    for size in settings.AVATAR_SIZES:
+        handler(instance.email, size=size)
 
 
 @receiver(user_signed_up)

@@ -80,8 +80,8 @@ def profile_view(request, username):
     The main profile view that only collects a bunch of user
     specific data to populate the template context.
     """
-    profile = get_object_or_404(UserProfile, user__username=username)
-    user = profile.user
+    profile = get_object_or_404(UserProfile.objects.select_related('user'),
+                                user__username=username)
 
     if (profile.is_banned and not request.user.is_superuser):
         return render(request, '403.html',
@@ -92,7 +92,7 @@ def profile_view(request, username):
         page_number = int(request.GET.get('page', 1))
     except ValueError:
         page_number = 1
-    show_hidden = (user == request.user) or user.is_superuser
+    show_hidden = (profile.user == request.user) or profile.user.is_superuser
 
     demos = (Submission.objects.all_sorted(sort_order)
                                .filter(creator=profile.user))
@@ -102,8 +102,7 @@ def profile_view(request, username):
     demos_paginator = Paginator(demos, DEMOS_PAGE_SIZE, True)
     demos_page = demos_paginator.page(page_number)
 
-    wiki_activity, docs_feed_items = None, None
-    wiki_activity = profile.wiki_activity()
+    docs_feed_items = None
 
     context = {
         'profile': profile,
@@ -111,7 +110,6 @@ def profile_view(request, username):
         'demos_paginator': demos_paginator,
         'demos_page': demos_page,
         'docs_feed_items': docs_feed_items,
-        'wiki_activity': wiki_activity,
     }
     return render(request, 'users/profile.html', context)
 

@@ -401,7 +401,12 @@ PASSWORD_HASHERS = (
 
 USER_AVATAR_PATH = 'uploads/avatars/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
-AVATAR_SIZE = 48  # in pixels
+AVATAR_SIZES = [  # in pixels
+    34,   # wiki document page
+    48,   # profile_link helper
+    200,  # profile pages
+    220,  # default, e.g. used in feeds
+]
 ACCOUNT_ACTIVATION_DAYS = 30
 MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 

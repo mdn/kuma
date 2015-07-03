@@ -17,7 +17,7 @@ log = logging.getLogger('kuma.wiki.events')
 def context_dict(revision):
     """Return a dict that fills in the blanks in notification templates."""
     document = revision.document
-    from_revision = revision.get_previous()
+    from_revision = revision.previous
     to_revision = revision
     diff = revisions_unified_diff(from_revision, to_revision)
 
