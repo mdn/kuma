@@ -7,13 +7,16 @@
     mdn.analytics.trackClientErrors();
 
     /*
-        Main menu
+        Submenus
+        - main and secondary navigation
+        - language and admin menus
+        - profile menu
     */
     (function() {
-        var $mainItems = $('#main-nav > ul > li');
-        $mainItems.find('> a').mozMenu();
-        $mainItems.find('.submenu').mozKeyboardNav();
-    })();
+         var $submenus = $('.js-submenu');
+         $submenus.prev('a, button').mozMenu();
+         $submenus.mozKeyboardNav();
+     })();
 
     /*
         Search animation
@@ -174,15 +177,6 @@
         e.preventDefault();
         $('#language').get(0).focus();
     });
-
-    /*
-        Create advanced and language menus
-    */
-    (function() {
-        var $menus = $('#advanced-menu, #languages-menu');
-        $menus.mozMenu();
-        $menus.parent().find('.submenu').mozKeyboardNav();
-    })();
 
     /*
         Messages / Notifications -- show the initial ones

@@ -65,7 +65,7 @@
               <a id="edit-profile" href="{{ url('users.profile_edit', username=profile.user.username) }}" class="button neutral">{{ _("Edit") }}<i aria-hidden="true" class="icon-pencil"></i></a>
               {% if request.user == profile.user %}
               <button id="advanced-menu" class="neutral only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
-              <div class="submenu" id="advanced-menu-submenu">
+              <div class="submenu js-submenu" id="advanced-menu-submenu">
                 <!-- this page -->
                 <div class="submenu-column">
                   <div class="title">{{ _('Manage') }}</div>
