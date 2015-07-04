@@ -1,3 +1,5 @@
+@require '../../includes/mixins_indicators';
+
 /*
 Colors and Badges for the Spec2 macro template
 ====================================================================== */
@@ -43,12 +45,8 @@ Badges
 .spec-Living:before,
 .spec-Standard:before,
 .spec-Draft:before {
-    font: 0.7em Helvetica, Arial, sans-serif;
+    @extends $indicator-inline;
     font-weight: 700;
-    border-radius: 2px;
-    border-left: 4px solid;
-    letter-spacing: 1px;
-    padding: 0.45em 0.35em 0.30em;
     /* bidi for this is complicated, the tag itself is LTR but the
        name of the spec could be either LTR or RTL (depending on
        if it's been translated) so we add margins to both sides.

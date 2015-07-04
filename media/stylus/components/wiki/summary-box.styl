@@ -16,11 +16,13 @@ $summary-box-indent = ($grid-spacing * 2) - $summary-box-item-spacing;
     margin: 0 0 $grid-spacing 0;
     border: 0 solid transparent;
     bidi-value(clear, left, right);
+    background: $code-block-background-alt-color;
+    border-color: $code-block-border-color;
 
     .text-content & { /* need to override default text-content styles */
         border-collapse: separate;
         bidi-value(padding, $summary-box-spacing $summary-box-indent $summary-box-spacing $summary-box-spacing, $summary-box-spacing $summary-box-spacing $summary-box-spacing $summary-box-indent);
-        bidi-value(border-width, 0 0 0 $summary-box-item-spacing, 0 $summary-box-item-spacing 0 0);
+        bidi-value(border-width, 0 0 0 $border-width, 0 $border-width 0 0);
 
         @media $media-query-small-mobile {
             bidi-value(padding, $summary-box-item-spacing, $summary-box-item-spacing);
@@ -57,29 +59,3 @@ $summary-box-indent = ($grid-spacing * 2) - $summary-box-item-spacing;
         vertical-align: top;
     }
 }
-
-.text-content .cssprop {
-    background-color: rgba-fallback(rgba(255,203,0,0.1));
-    border-color: rgba-fallback(rgba(255,203,0,0.5));
-}
-
-.text-content .htmlelt {
-    background-color: rgba-fallback(rgba(255,149,0,0.1));
-    border-color: rgba-fallback(rgba(255,149,0,0.5));
-}
-
-.text-content .audionodebox {
-    background-color: rgba-fallback(rgba(117,195,165,0.1));
-    border-color: rgba-fallback(rgba(117,195,165,0.5));
-}
-
-.text-content .summary-box-js {
-    background-color: rgba-fallback(rgba(230,96,0,0.1));
-    border-color: rgba-fallback(rgba(230,96,0,0.5));
-}
-
-.text-content .summary-box-events {
-    background-color: rgba-fallback(rgba(0,150,221,0.1));
-    border-color: rgba-fallback(rgba(0,150,221,0.5));
-}
-

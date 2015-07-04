@@ -211,8 +211,8 @@ slider(duration=$default-animation-duration, maximum-height = 10000px) {
 
 /* sets the base styles for messages (review, warning, error, notice, etc.) */
 set-message-base(remove-last-spacing = true) {
-    border-width: 5px;
-    border-style: solid;
+    bidi-style(border-left-width, $border-width, border-right-width, 0);
+    bidi-style(border-left-style, solid, border-right-style, none);
     padding: ($grid-spacing / 2);
     margin-bottom: $grid-spacing;
     set-smaller-font-size();
@@ -447,3 +447,85 @@ $code-block {
     vendorize(hyphens, none);
 }
 
+
+
+
+/* functions to transform the base colors into variations of themselves
+-------------------------------------------------------------- */
+
+theme-pale-light($color) {
+    return tint($color, 80%);
+}
+
+theme-pale-medium($color) {
+    $color = theme-pale-light($color);
+    $color = darken($color, 20%);
+    return $color;
+}
+
+theme-pale-dark($color) {
+    return darken($color, 20%);
+}
+
+/* functions to get correct text colors for variations of theme colors
+-------------------------------------------------------------- */
+
+theme-pale-text($color) {
+    $color = theme-pale-light($color);
+    $color = darken($color, 60%);
+    return $color;
+}
+
+theme-pale-contrast-text($color){
+    $hu = hue($color);
+    $lite = lightness($color);
+    $sat = saturation($color);
+    if (($hu < 20deg || $hu > 199deg) && $sat > 30% && $lite < 70%) {
+        $color = $text-light;
+    } else if ($lite < 50%) {
+        $color = $text-light;
+    } else {
+        $color = $text-dark;
+    }
+    return $color;
+}
+
+/* function to apply all the generated colors to a notification to theme it
+-------------------------------------------------------------- */
+
+notification-theme($color) {
+    background-color: theme-pale-light($color);
+    border-color: theme-pale-medium($color);
+    color: theme-pale-contrast-text(theme-pale-light($color));
+
+    .notification-button {
+        background-color: theme-pale-medium($color);
+        color: theme-pale-text($color);
+
+        &:hover, &:focus {
+          background: transparent;
+          text-decoration: none;
+        }
+    }
+
+    .notification-img i {
+        color: theme-pale-dark($color);
+    }
+
+    button.close {
+        color: theme-pale-medium($color);
+
+        &:hover, &:focus {
+            color: theme-pale-dark($color);
+        }
+    }
+
+}
+
+/* coloured boxes
+-------------------------------------------------------------- */
+
+box-theme($color) {
+    background: theme-pale-light($color);
+    border-color: theme-pale-medium($color);
+}
