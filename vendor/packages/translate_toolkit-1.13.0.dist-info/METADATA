@@ -1,0 +1,50 @@
+Metadata-Version: 2.0
+Name: translate-toolkit
+Version: 1.13.0
+Summary: Tools and API for translation and localization engineering.
+Home-page: http://toolkit.translatehouse.org/
+Author: Translate
+Author-email: translate-devel@lists.sourceforge.net
+License: GNU General Public License (GPL)
+Download-URL: http://sourceforge.net/projects/translate/files/Translate Toolkit/1.13.0
+Platform: any
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Operating System :: OS Independent
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: Unix
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Localization
+Requires-Dist: argparse
+Requires-Dist: six
+Requires-Dist: diff-match-patch
+
+The `Translate Toolkit <http://toolkit.translatehouse.org/>`_ is created by
+localizers for localizers. It contains several utilities, as well as an API for
+building localization tools.
+
+Some of the **tools** include:
+
+- File format `converters
+  <http://docs.translatehouse.org/projects/translate-toolkit/en/latest/commands/index.html#converters>`_
+- `Quality checking
+  <http://docs.translatehouse.org/projects/translate-toolkit/en/latest/commands/index.html#quality-assurance>`_
+  tools
+- Tools for counting, grepping, terminology extraction, and pseudo-localization
+
+Apart from the code for the tools above, some features of the **API** include:
+
+- Support for multiple `file formats
+  <http://docs.translatehouse.org/projects/translate-toolkit/en/latest/formats/index.html>`_
+- Language information and language support code (including language detection)
+- Code for translation memory, terminology matching and indexed search
+- Several helper classes and functions for tools built on the Translate
+  Toolkit.
+
+
+

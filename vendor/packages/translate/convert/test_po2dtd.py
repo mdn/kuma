@@ -452,7 +452,7 @@ msgstr "Simple string 3"
         print(dtdfile)
         assert str(dtdfile) == dtdexpected
 
-    def test_preserving_spaces(self):
+    def test_preserving_spaces_after_value(self):
         """Preseve spaces after value. Bug 1662"""
         # Space between value and >
         posource = '''#: simple.label\nmsgid "One"\nmsgstr "Een"\n'''

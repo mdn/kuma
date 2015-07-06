@@ -49,14 +49,17 @@ class rephp:
         self.includefuzzy = includefuzzy
         self.inputstore.makeindex()
         outputlines = []
+
         for line in self.templatefile.readlines():
             outputstr = self.convertline(line)
             outputlines.append(outputstr)
+
         return outputlines
 
     def convertline(self, line):
         line = unicode(line, 'utf-8')
         returnline = ""
+
         # handle multiline msgid if we're in one
         if self.inmultilinemsgid:
             # see if there's more
@@ -70,7 +73,7 @@ class rephp:
         # otherwise, this could be a comment
         elif line.strip()[:2] == '//' or line.strip()[:2] == '/*':
             returnline = quote.rstripeol(line) + eol
-        elif line.find('array(') != -1:
+        elif line.lower().replace(" ", "").find('array(') != -1:
             self.inarray = True
             self.prename = line[:line.find('=')].strip() + "->"
             self.equaldel = "=>"
@@ -92,6 +95,7 @@ class rephp:
             elif 0 <= hashpos < equalspos:
                 # Assume that this is a '#' comment line
                 returnline = quote.rstripeol(line) + eol
+
             # otherwise, this is a definition
             else:
                 # now deal with the current string...
@@ -109,35 +113,49 @@ class rephp:
                     inlinecomment = line[inlinecomment_pos+2:]
                 else:
                     inlinecomment = ""
+
                 if lookupkey in self.inputstore.locationindex:
                     unit = self.inputstore.locationindex[lookupkey]
-                    if (unit.isfuzzy() and not self.includefuzzy) or len(unit.target) == 0:
+                    if ((unit.isfuzzy() and not self.includefuzzy) or
+                        len(unit.target) == 0):
                         value = unit.source
                     else:
                         value = unit.target
+
                     value = php.phpencode(value, self.quotechar)
                     self.inecho = False
+
                     if isinstance(value, str):
                         value = value.decode('utf8')
-                    returnline = "%(key)s%(pre)s%(del)s%(post)s%(quote)s%(value)s%(quote)s%(enddel)s%(comment)s%(eol)s" % {
-                                     "key": key,
-                                     "pre": prespace, "del": self.equaldel,
-                                     "post": postspace,
-                                     "quote": self.quotechar, "value": value,
-                                     "enddel": self.enddel,
-                                     "comment": inlinecomment, "eol": eol,
-                                  }
+
+                    params = {
+                        "key": key,
+                        "pre": prespace,
+                        "del": self.equaldel,
+                        "post": postspace,
+                        "quote": self.quotechar,
+                        "value": value,
+                        "enddel": self.enddel,
+                        "comment": inlinecomment,
+                        "eol": eol,
+                    }
+                    returnline = ("%(key)s%(pre)s%(del)s%(post)s%(quote)s"
+                                  "%(value)s%(quote)s%(enddel)s%(comment)s"
+                                  "%(eol)s" % params)
                 else:
                     self.inecho = True
                     returnline = line + eol
+
                 # no string termination means carry string on to next line
                 endpos = line.rfind("%s%s" % (self.quotechar, self.enddel))
                 # if there was no '; or the quote is escaped, we have to
                 # continue
                 if endpos == -1 or line[endpos-1] == '\\':
                     self.inmultilinemsgid = True
+
         if isinstance(returnline, unicode):
             returnline = returnline.encode('utf-8')
+
         return returnline
 
 
@@ -150,9 +168,8 @@ def convertphp(inputfile, outputfile, templatefile, includefuzzy=False,
 
     if templatefile is None:
         raise ValueError("must have template file for php files")
-        # convertor = po2php()
-    else:
-        convertor = rephp(templatefile, inputstore)
+
+    convertor = rephp(templatefile, inputstore)
     outputphplines = convertor.convertstore(includefuzzy)
     outputfile.writelines(outputphplines)
     return 1
@@ -161,14 +178,15 @@ def convertphp(inputfile, outputfile, templatefile, includefuzzy=False,
 def main(argv=None):
     # handle command line options
     formats = {
-            ("po", "php"): ("php", convertphp),
-            ("po", "html"): ("html", convertphp),
+        ("po", "php"): ("php", convertphp),
+        ("po", "html"): ("html", convertphp),
     }
     parser = convert.ConvertOptionParser(formats, usetemplates=True,
                                          description=__doc__)
     parser.add_threshold_option()
     parser.add_fuzzy_option()
     parser.run(argv)
+
 
 if __name__ == '__main__':
     main()

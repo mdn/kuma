@@ -7,17 +7,17 @@ from xml.sax.saxutils import escape
 import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
-from nose import SkipTest
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.test.utils import override_settings
 
 from constance import config
 from waffle.models import Switch
 
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import override_constance_settings, KumaTestCase
-from kuma.users.tests import UserTestCase
+from kuma.users.tests import UserTestCase, user
 
 from . import (document, revision, doc_rev, normalize_html,
                create_template_test_users, create_topical_parents_docs)
@@ -26,7 +26,7 @@ from ..constants import REDIRECT_CONTENT
 from ..exceptions import (PageMoveError,
                           DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress)
-from ..jobs import DocumentZoneStackJob
+from ..jobs import DocumentZoneStackJob, DocumentContributorsJob
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       TaggedDocument)
 
@@ -366,23 +366,23 @@ class PermissionTests(KumaTestCase):
             )
 
             for slug_tmpl, trials in slug_trials:
-                for expected, user in trials:
-                    slug = slug_tmpl % user.username
+                for expected, trial_user in trials:
+                    slug = slug_tmpl % trial_user.username
                     if is_add:
                         eq_(expected,
-                            Document.objects.allows_add_by(user, slug),
+                            Document.objects.allows_add_by(trial_user, slug),
                             'User %s %s able to create %s' % (
-                                user, msg[expected], slug))
+                                trial_user, msg[expected], slug))
                     else:
                         doc = document(slug=slug, title=slug)
                         eq_(expected,
-                            doc.allows_revision_by(user),
+                            doc.allows_revision_by(trial_user),
                             'User %s %s able to revise %s' % (
-                                user, msg[expected], slug))
+                                trial_user, msg[expected], slug))
                         eq_(expected,
-                            doc.allows_editing_by(user),
+                            doc.allows_editing_by(trial_user),
                             'User %s %s able to edit %s' % (
-                                user, msg[expected], slug))
+                                trial_user, msg[expected], slug))
 
 
 class DocumentTestsWithFixture(UserTestCase):
@@ -891,43 +891,61 @@ class DeferredRenderingTests(UserTestCase):
 
     @attr('bug875349')
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @override_settings(CELERY_ALWAYS_EAGER=True)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_build_json_on_render(self, mock_kumascript_get):
         """
         A document's json field is refreshed on render(), but not on save()
         """
-        # FIXME
-        # this was broken when render_done signal was introduced
-        raise SkipTest("Skip for now")
         mock_kumascript_get.return_value = (self.rendered_content, None)
 
         # Initially empty json field should be filled in after render()
-        eq_(None, self.d1.json)
+        eq_(self.d1.json, None)
         self.d1.render()
+        # reloading from db to get the updates done in the celery task
+        self.d1 = Document.objects.get(pk=self.d1.pk)
         ok_(self.d1.json is not None)
 
-        time.sleep(0.1)  # Small clock-tick to age the results.
+        time.sleep(1.0)  # Small clock-tick to age the results.
 
         # Change the doc title, saving does not actually change the json field.
         self.d1.title = "New title"
         self.d1.save()
         ok_(self.d1.title != self.d1.get_json_data()['title'])
+        self.d1 = Document.objects.get(pk=self.d1.pk)
 
         # However, rendering refreshes the json field.
         self.d1.render()
+        self.d1 = Document.objects.get(pk=self.d1.pk)
         eq_(self.d1.title, self.d1.get_json_data()['title'])
 
-    @mock.patch('kuma.wiki.kumascript.get')
-    def test_get_summary(self, mock_kumascript_get):
-        """get_summary() should attempt to use rendered"""
-        raise SkipTest("Transient failures here, skip for now")
+        # In case we logically delete a document with a changed title
+        # we don't update the json blob
+        deleted_title = 'Deleted title'
+        self.d1.title = deleted_title
+        self.d1.save()
+        self.d1.delete()
+        self.d1.render()
+        self.d1 = Document.objects.get(pk=self.d1.pk)
+        ok_(deleted_title != self.d1.get_json_data()['title'])
 
+    @mock.patch('kuma.wiki.kumascript.get')
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_get_summary(self, mock_kumascript_get):
+        """
+        get_summary() should attempt to use rendered
+        """
         config.KUMASCRIPT_TIMEOUT = 1.0
         mock_kumascript_get.return_value = ('<p>summary!</p>', None)
-
         ok_(not self.d1.rendered_html)
         result_summary = self.d1.get_summary()
+        ok_(not mock_kumascript_get.called)
+        ok_(not self.d1.rendered_html)
+
+        self.d1.render()
+        ok_(self.d1.rendered_html)
         ok_(mock_kumascript_get.called)
+        result_summary = self.d1.get_summary()
         eq_("summary!", result_summary)
 
         config.KUMASCRIPT_TIMEOUT = 0.0
@@ -1776,6 +1794,73 @@ class DocumentZoneTests(UserTestCase):
 
     def get_zone_stack(self, doc):
         return DocumentZoneStackJob().get(doc.pk)
+
+
+class DocumentContributorsTests(UserTestCase):
+
+    def test_contributors(self):
+        contrib = user(save=True)
+        rev = revision(creator=contrib, save=True)
+        self.assertIn(contrib, rev.document.contributors)
+
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_contributors_ordering(self):
+        contrib_1 = user(save=True)
+        contrib_2 = user(save=True)
+        contrib_3 = user(save=True)
+        rev_1 = revision(creator=contrib_1, save=True)
+        rev_2 = revision(creator=contrib_2,
+                         document=rev_1.document,
+                         # live in the future to make sure we handle the lack
+                         # of microseconds support in Django 1.7 nicely
+                         created=rev_1.created + timedelta(seconds=1),
+                         save=True)
+        ok_(rev_1.created < rev_2.created)
+        job = DocumentContributorsJob()
+        job_user_pks = [contributor.pk
+                        for contributor in job.get(rev_1.document.pk)]
+        # the user with the more recent revision first
+        recent_contributors_pks = [contrib_2.pk, contrib_1.pk]
+        eq_(job_user_pks, recent_contributors_pks)
+
+        # a third revision should now show up again and
+        # the job's cache is invalidated
+        rev_3 = revision(creator=contrib_3,
+                         document=rev_1.document,
+                         created=rev_2.created + timedelta(seconds=1),
+                         save=True)
+        ok_(rev_2.created < rev_3.created)
+        job_user_pks = [contributor.pk
+                        for contributor in job.get(rev_1.document.pk)]
+        # The new revision shows up
+        eq_(job_user_pks, [contrib_3.pk] + recent_contributors_pks)
+
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_contributors_inactive_or_banned(self):
+        contrib_1 = user(save=True)
+        contrib_2 = user(is_active=False, save=True)
+        contrib_3 = user(save=True)
+        contrib_3_ban = contrib_3.bans.create(by=contrib_1, reason='because reasons')
+        revision_2 = revision(creator=contrib_1, save=True)
+
+        revision(creator=contrib_2, document=revision_2.document, save=True)
+        revision(creator=contrib_3, document=revision_2.document, save=True)
+
+        self.assertIn(contrib_1, revision_2.document.contributors)
+        self.assertNotIn(contrib_2, revision_2.document.contributors)
+        self.assertNotIn(contrib_3, revision_2.document.contributors)
+
+        # delete the ban again
+        contrib_3_ban.delete()
+        # reloading the document from db to prevent cache
+        doc = Document.objects.get(pk=revision_2.document.pk)
+        # user not in contributors because job invalidation hasn't happened
+        self.assertNotIn(contrib_3, doc.contributors)
+
+        # trigger the invalidation manually by saving the document
+        doc.save()
+        doc = Document.objects.get(pk=doc.pk)
+        self.assertIn(contrib_3, doc.contributors)
 
 
 class DocumentParsingTests(UserTestCase):

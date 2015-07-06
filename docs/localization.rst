@@ -306,7 +306,7 @@ updating Verbatim, localizers will have merge head-aches.
 
         sudo su verbatim
         cd /data/www/localize.mozilla.org/verbatim/pootle_env/Pootle
-        POOTLE_SETTINGS=localsettings.py python manage.py
+        POOTLE_SETTINGS=localsettings.py python2.6 manage.py
         update_against_templates --project=mdn -v 2
 
 Adding a new Locale

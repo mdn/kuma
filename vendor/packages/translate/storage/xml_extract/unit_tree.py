@@ -31,9 +31,8 @@ class XPathTree(object):
         self.children = {}
 
     def __eq__(self, other):
-        return isinstance(other, XPathTree) and \
-            self.unit == other.unit and \
-            self.children == other.children
+        return (isinstance(other, XPathTree) and self.unit == other.unit and
+                self.children == other.children)
 
 
 def _split_xpath_component(xpath_component):
@@ -95,7 +94,7 @@ def _add_unit_to_tree(node, xpath_components, unit):
         node.unit = unit
 
 
-def build_unit_tree(store):
+def build_unit_tree(store, filename=None):
     """Enumerate a translation store and build a tree with XPath components as nodes
     and where a node contains a unit if a path from the root of the tree to the node
     containing the unit, is equal to the XPath of the unit.
@@ -117,7 +116,14 @@ def build_unit_tree(store):
     """
     tree = XPathTree()
     for unit in store.units:
-        if not unit.isfuzzy():
-            location = _split_xpath(unit.getlocations()[0])
+        if unit.source and not unit.isfuzzy():
+            locations = unit.getlocations()
+            if (filename is not None and len(locations) > 1 and
+                filename != locations[1]):
+                # Skip units that don't come from the filename we are currently
+                # trying to get units for.
+                # This is not used for ODF, right now only for IDML.
+                continue
+            location = _split_xpath(locations[0])
             _add_unit_to_tree(tree, location, unit)
     return tree

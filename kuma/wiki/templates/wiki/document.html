@@ -10,7 +10,8 @@
 {% endif %}
 
 {% set is_logged_in = request.user.is_authenticated() %}
-{% set canonical = request.build_absolute_uri(document.get_absolute_url()) %}
+{% set doc_abs_url = document.get_absolute_url() %}
+{% set canonical = request.build_absolute_uri(doc_abs_url) %}
 
 {% if document.is_template %}
   {% set macro_name = document.slug|replace('Template:','', 1) %}
@@ -25,7 +26,7 @@
 {% set zone_stack = document.zone_stack %}
 {% set is_zone = zone_stack|length %}
 {% set is_zone_root = is_zone and zone_stack[0].document == document %}
-{% set is_translated = document.other_translations.exists() %}
+{% set other_translations = document.other_translations %}
 
 {% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
 {% set show_right = (not is_zone_root and toc_html) %}
@@ -58,8 +59,8 @@
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.slug) }}">
   <link rel="canonical" href="{{ canonical }}" >
 
-  {% if is_translated %}
-    {% for translation in document.other_translations %}
+  {% if other_translations %}
+    {% for translation in other_translations %}
       <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ translation.get_absolute_url() }}" title="{{ translation.title }}">
     {% endfor %}
   {% endif %}
@@ -77,14 +78,14 @@
 {% endblock %}
 
 {% block lang_switcher %}
-  {% if (document.is_localizable or document.parent) and is_translated %}
+  {% if (document.is_localizable or document.parent) and other_translations %}
     <form class="languages go" method="get" action="{{ wiki_url('Web') }}">
       <label for="language">{{ _('Other languages:') }}</label>
       <select id="language" class="wiki-l10n" name="next" dir="ltr">
-        <option value="{{ document.get_absolute_url() }}" selected>
+        <option value="{{ doc_abs_url }}" selected>
           {{ document.language }}
         </option>
-        {% for translation in document.other_translations %}
+        {% for translation in other_translations %}
           <option value="{{ translation.get_absolute_url() }}">
             {{ translation.language }}
           </option>
@@ -179,9 +180,8 @@
         {% endif %}
 
         {% if waffle.flag('top_contributors') %}
-            {% set contributors = document.get_contributors() %}
             {% set contrib_limit = 13 %}
-            {% set contrib_count = contributors.count() %}
+            {% set contrib_count = document.contributors.count() %}
 
         <div class="contributor-avatars" data-all-text="{{ _('Show all') }}&hellip;<span class='hidden'>{{ _('contributors') }}</span>" {% if contrib_count > contrib_limit %}data-has-hidden="1"{% endif %}>
             <span class="quickstat">
@@ -192,7 +192,7 @@
             {% endtrans %}
             </span>
             <ul>
-            {% for contributor in contributors %}
+            {% for contributor in document.contributors %}
                 <li class="{% if loop.index > contrib_limit %}hidden{% else %}shown{% endif %}">
                 <a href="{{ contributor.get_absolute_url() }}" title="{% trans username=contributor.username %}View profile: {{ username }}{% endtrans %}">
                 <noscript data-class="avatar" data-alt="{{ contributor.username }}" data-src="{{ gravatar_url(contributor, size=34) }}">{{ contributor.username }}</noscript></a>
@@ -256,7 +256,7 @@
               {% if is_logged_in and document_html %}
                 {% if render_raw_fallback %}
                   <div id="doc-render-raw-fallback" class="warning">
-                  {% trans url=document.get_absolute_url() %}
+                  {% trans url=doc_abs_url %}
                     This document is being rendered for the first time by the system.
                     Please <a href="{{ url }}">reload this page</a> in a few minutes
                     to see full content.
@@ -264,7 +264,7 @@
                   </div>
                 {% elif document.is_rendering_in_progress %}
                   <div id="doc-rendering-in-progress" class="warning">
-                  {% trans url=document.get_absolute_url(), started_at=document.render_started_at %}
+                  {% trans url=doc_abs_url, started_at=document.render_started_at %}
                     An update to this document
                     <abbr title="{{ started_at }}">is currently in progress</abbr>.
                     If the content below seems stale or if something is missing,
@@ -273,7 +273,7 @@
                   </div>
                 {% elif document.is_rendering_scheduled and not kumascript_errors %}
                   <div id="doc-rendering-scheduled" class="warning">
-                  {% trans url=document.get_absolute_url(), scheduled_at=document.render_scheduled_at %}
+                  {% trans url=doc_abs_url, scheduled_at=document.render_scheduled_at %}
                     An update to this document
                     <abbr title="{{ scheduled_at }}">has been scheduled</abbr>.
                     If the content below seems stale or if something is missing,
@@ -355,9 +355,9 @@
                   <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
                   {% set tags = document.tags.all().order_by('name') %}
                   {% include "wiki/includes/document_tag.html" %}
-                  {% trans contributors=user_list(contributors) %}
+                  {% trans contributors_list=user_list(contributors) %}
                   <div class="contributors-sub">
-                    <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
+                    <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors_list }}
                   </div>
                   {% endtrans %}
                   {% if current_revision.creator %}

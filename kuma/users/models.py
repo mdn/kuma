@@ -49,6 +49,15 @@ class UserBan(models.Model):
         self.user.save()
 
 
+@receiver(models.signals.post_delete,
+          sender=UserBan, dispatch_uid='users.user_ban.delete')
+def delete_ban(**kwargs):
+    ban = kwargs.get('instance', None)
+    if ban is not None:
+        ban.user.is_active = True
+        ban.user.save()
+
+
 class User(AbstractUser):
     """
     Our custom user class that contains just a link to the user's profile

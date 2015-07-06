@@ -449,6 +449,13 @@ x = "%s"
         sourcePath = self.makeTempFile(source)
         self.assertHasErrors(sourcePath, [])
 
+    def test_CRLFLineEndings(self):
+        """
+        Source files with Windows CR LF line endings are parsed successfully.
+        """
+        sourcePath = self.makeTempFile("x = 42\r\n")
+        self.assertHasErrors(sourcePath, [])
+
     def test_misencodedFileUTF8(self):
         """
         If a source file contains bytes which cannot be decoded, this is

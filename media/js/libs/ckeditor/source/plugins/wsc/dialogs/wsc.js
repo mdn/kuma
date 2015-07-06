@@ -227,7 +227,7 @@
 				'instance' : null,
 				'text' : 'Finish Checking',
 				'localizationID': 'FinishChecking'
-			},
+			}
 		};
 
 		NS.LocalizationLabel = {
@@ -1667,52 +1667,29 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 
 			var strategy = window.localStorage ? LocalStorage : CookiesStorage;
 
-			/**
-			 * @exports SCAYT.prototype.DataStorage
-			 */
 			var DataStorage = {
-
-				/**
-				 * Get data within storage for key
-				 *
-				 * @param {string} key 	- Key
-				 */
+				// Get data within storage for key
 				getData: function( key ) {
 					return strategy.get( key );
 				},
 
-				/**
-				 * Set data within storage
-				 *
-				 * @param {string} key 		- Key
-				 * @param {object} value 	- Value
-				 */
+				// Set data within storage
 				setData: function( key, value ) {
 					strategy.set( key, value );
 				},
 
-				/**
-				 * Delete data within storage for key
-				 *
-				 * @param {String} key 	- Key
-				 */
+				// Delete data within storage for key
 				deleteData: function( key ) {
 					strategy.del( key );
 				},
 
-				/**
-				 * Clear storage
-				 */
+				// Clear storage
 				clear: function() {
 					strategy.clear();
 				}
 			};
 
-			/**
-			 * Static Module of Storage Data in the localStorage.
-			 *
-			 * @alias SCAYT.prototype.DataStorage
-			 */
+			// Static Module of Storage Data in the localStorage.
 			object.DataStorage = DataStorage;
 		}( editor.wsc ));
 
