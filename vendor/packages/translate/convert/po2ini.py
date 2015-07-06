@@ -52,8 +52,9 @@ class reini:
         return str(self.templatestore)
 
 
-def convertini(inputfile, outputfile, templatefile, includefuzzy=False, dialect="default",
-               outputthreshold=None):
+def convertini(inputfile, outputfile, templatefile, includefuzzy=False,
+               dialect="default", outputthreshold=None):
+
     inputstore = factory.getobject(inputfile)
 
     if not convert.should_output_store(inputstore, outputthreshold):
@@ -63,24 +64,26 @@ def convertini(inputfile, outputfile, templatefile, includefuzzy=False, dialect=
         raise ValueError("must have template file for ini files")
     else:
         convertor = reini(templatefile, inputstore, dialect)
+
     outputstring = convertor.convertstore(includefuzzy)
     outputfile.write(outputstring)
-    return 1
+    return True
 
 
-def convertisl(inputfile, outputfile, templatefile, includefuzzy=False, dialect="inno",
-               outputthreshold=None):
+def convertisl(inputfile, outputfile, templatefile, includefuzzy=False,
+               dialect="inno", outputthreshold=None):
+
     convertini(inputfile, outputfile, templatefile, includefuzzy, dialect,
                outputthreshold=outputthreshold)
 
 
 def main(argv=None):
-    # handle command line options
     formats = {
-               ("po", "ini"): ("ini", convertini),
-               ("po", "isl"): ("isl", convertisl),
-              }
-    parser = convert.ConvertOptionParser(formats, usetemplates=True, description=__doc__)
+        ("po", "ini"): ("ini", convertini),
+        ("po", "isl"): ("isl", convertisl),
+    }
+    parser = convert.ConvertOptionParser(formats, usetemplates=True,
+                                         description=__doc__)
     parser.add_threshold_option()
     parser.add_fuzzy_option()
     parser.run(argv)

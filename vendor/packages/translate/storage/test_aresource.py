@@ -75,6 +75,11 @@ class TestAndroidResourceUnit(test_monolingual.TestMonolingualUnit):
         xml = '<string name="Test String">" leading space"</string>\n\n'
         self.__check_escape(string, xml)
 
+    def test_escape_trailing_space(self):
+        string = 'leading space '
+        xml = '<string name="Test String">"leading space "</string>\n\n'
+        self.__check_escape(string, xml)
+
     def test_escape_xml_entities(self):
         string = '>xml&entities'
         xml = '<string name="Test String">&gt;xml&amp;entities</string>\n\n'
@@ -99,8 +104,9 @@ class TestAndroidResourceUnit(test_monolingual.TestMonolingualUnit):
 
     def test_escape_link(self):
         string = '<a href="http://example.net">link</a>'
-        xml = ('<string name="Test String"><a href="http://example.net">link'
-               '</a></string>\n\n')
+        xml = ('<string name="Test String">\n'
+               '  <a href="http://example.net">link</a>\n'
+               '</string>\n\n')
         self.__check_escape(string, xml)
 
     def test_escape_link_and_text(self):
@@ -119,8 +125,51 @@ class TestAndroidResourceUnit(test_monolingual.TestMonolingualUnit):
         xml = ('<plurals name="Test String">\n\t'
                  '<item quantity="one">one message\\nwith newline</item>\n\t'
                  '<item quantity="other">other message\\nwith newline</item>\n'
-               '</plurals>\n')
+               '</plurals>\n\n')
         self.__check_escape(mString, xml, 'en')
+
+    def test_escape_html_quote(self):
+        string = 'start \'here\' <b>html code \'to escape\'</b> also \'here\''
+        xml = ('<string name="Test String">start \\\'here\\\' <b>html code \\\'to escape\\\'</b> also \\\'here\\\''
+               '</string>\n\n')
+        self.__check_escape(string, xml)
+
+    def test_escape_html_leading_space(self):
+        string = ' <b>html code \'to escape\'</b> some \'here\''
+        xml = ('<string name="Test String"> <b>html code \\\'to escape\\\'</b> some \\\'here\\\''
+               '</string>\n\n')
+        self.__check_escape(string, xml)
+
+    def test_escape_html_trailing_space(self):
+        string = '<b>html code \'to escape\'</b> some \'here\' '
+        xml = ('<string name="Test String"><b>html code \\\'to escape\\\'</b> some \\\'here\\\' '
+               '</string>\n\n')
+        self.__check_escape(string, xml)
+
+    def test_escape_html_with_ampersand(self):
+        string = '<b>html code \'to escape\'</b> some \'here\' with &amp; char'
+        xml = ('<string name="Test String"><b>html code \\\'to escape\\\'</b> some \\\'here\\\' with &amp; char'
+               '</string>\n\n')
+        self.__check_escape(string, xml)
+
+    def test_escape_html_double_space(self):
+        string = '<b>html code \'to  escape\'</b> some \'here\''
+        xml = ('<string name="Test String"><b>"html code \\\'to  escape\\\'"</b> some \\\'here\\\''
+               '</string>\n\n')
+        self.__check_escape(string, xml)
+
+    def test_escape_html_deep_double_space(self):
+        string = '<b>html code \'to  <i>escape</i>\'</b> some \'here\''
+        xml = ('<string name="Test String"><b>"html code \\\'to  "<i>escape</i>\\\'</b> some \\\'here\\\''
+               '</string>\n\n')
+        self.__check_escape(string, xml)
+
+    def test_escape_complex_xml(self):
+        string = '<g:test xmlns:g="ttt" g:somevalue="aaaa  &quot;  aaa">value</g:test> &amp; outer &gt; <br/>text'
+        xml = ('<string name="Test String">'
+               '<g:test xmlns:g="ttt" g:somevalue="aaaa  &quot;  aaa">value</g:test> &amp; outer &gt; <br/>text'
+               '</string>\n\n')
+        self.__check_escape(string, xml)
 
     ############################ Check string parse ###########################
 
@@ -130,8 +179,8 @@ class TestAndroidResourceUnit(test_monolingual.TestMonolingualUnit):
         self.__check_parse(string, xml)
 
     def test_parse_message_with_newline_in_xml(self):
-        string = 'message \nwith newline in xml'
-        xml = ('<string name="Test String">message\n\\nwith newline in xml'
+        string = 'message \nwith\n newline\nin xml'
+        xml = ('<string name="Test String">message\n\\nwith\\n\nnewline\\n\\\nin xml'
                '</string>\n\n')
         self.__check_parse(string, xml)
 
@@ -218,10 +267,64 @@ class TestAndroidResourceUnit(test_monolingual.TestMonolingualUnit):
         mString = multistring(['one message\nwith newline', 'other message\nwith newline'])
         xml = ('<plurals name="Test String">\n\t'
                  '<item quantity="one">one message\\nwith newline</item>\n\t'
-                 '<item quantity="other">other message\\nwith newline</item>\n'
-               '</plurals>\n')
+                 '<item quantity="other">other message\\nwith newline</item>\n\n'
+               '</plurals>\n\n')
         self.__check_parse(mString, xml)
 
+    def test_parse_html_quote(self):
+        string = 'start \'here\' <b>html code \'to escape\'</b> also \'here\''
+        xml = ('<string name="Test String">start \\\'here\\\' <b>html code \\\'to escape\\\'</b> also \\\'here\\\''
+               '</string>\n\n')
+        self.__check_parse(string, xml)
+
+    def test_parse_html_leading_space(self):
+        string = ' <b>html code \'to escape\'</b> some \'here\''
+        xml = ('<string name="Test String"> <b>html code \\\'to escape\\\'</b> some \\\'here\\\''
+               '</string>\n\n')
+        self.__check_parse(string, xml)
+
+    def test_parse_html_leading_space_quoted(self):
+        string = ' <b>html code \'to escape\'</b> some \'here\''
+        xml = ('<string name="Test String">" "<b>"html code \'to escape\'"</b>" some \'here\'"'
+               '</string>\n\n')
+        self.__check_parse(string, xml)
+
+    def test_parse_html_trailing_space(self):
+        string = '<b>html code \'to escape\'</b> some \'here\' '
+        xml = ('<string name="Test String"><b>html code \\\'to escape\\\'</b> some \\\'here\\\' '
+               '</string>\n\n')
+        self.__check_parse(string, xml)
+
+    def test_parse_html_trailing_space_quoted(self):
+        string = '<b>html code \'to escape\'</b> some \'here\' '
+        xml = ('<string name="Test String"><b>"html code \'to escape\'"</b>" some \'here\' "'
+               '</string>\n\n')
+        self.__check_parse(string, xml)
+
+    def test_parse_html_with_ampersand(self):
+        string = '<b>html code \'to escape\'</b> some \'here\' with &amp; char'
+        xml = ('<string name="Test String"><b>html code \\\'to escape\\\'</b> some \\\'here\\\' with &amp; char'
+               '</string>\n\n')
+        self.__check_parse(string, xml)
+
+    def test_parse_html_double_space_quoted(self):
+        string = '<b>html code \'to  escape\'</b> some \'here\''
+        xml = ('<string name="Test String"><b>"html code \'to  escape\'"</b>" some \'here\'"'
+               '</string>\n\n')
+        self.__check_parse(string, xml)
+
+    def test_parse_html_deep_double_space_quoted(self):
+        string = '<b>html code \'to  <i>  escape</i>\'</b> some \'here\''
+        xml = ('<string name="Test String"><b>"html code \'to  "<i>"  escape"</i>\\\'</b> some \\\'here\\\''
+               '</string>\n\n')
+        self.__check_parse(string, xml)
+
+    def test_parse_complex_xml(self):
+        string = '<g:test xmlns:g="ttt" g:somevalue="aaaa  &quot;  aaa">value</g:test> outer &amp; text'
+        xml = ('<string name="Test String">'
+               '<g:test xmlns:g="ttt" g:somevalue="aaaa  &quot;  aaa">value</g:test> outer &amp; text'
+               '</string>\n\n')
+        self.__check_parse(string, xml)
 
 class TestAndroidResourceFile(test_monolingual.TestMonolingualStore):
     StoreClass = aresource.AndroidResourceFile

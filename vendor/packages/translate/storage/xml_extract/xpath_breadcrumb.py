@@ -17,7 +17,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
-#
 
 
 class XPathBreadcrumb(object):
@@ -52,7 +51,6 @@ class XPathBreadcrumb(object):
     >>> xb.xpath
     foo[0]/bar[1]
     """
-
     def __init__(self):
         self._xpath = []
         self._tagtally = [{}]
@@ -68,11 +66,9 @@ class XPathBreadcrumb(object):
         self._xpath.pop()
         self._tagtally.pop()
 
-    def _get_xpath(self):
-
+    @property
+    def xpath(self):
         def str_component(component):
             tag, pos = component
             return u"%s[%d]" % (tag, pos)
         return u"/".join(str_component(component) for component in self._xpath)
-
-    xpath = property(_get_xpath)

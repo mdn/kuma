@@ -25,13 +25,12 @@ for examples and usage instructions.
 """
 
 from translate.convert import convert
-from translate.storage import factory
+from translate.storage import factory, jsonl10n
 
 
 class rejson:
 
     def __init__(self, templatefile, inputstore):
-        from translate.storage import jsonl10n
         self.templatefile = templatefile
         self.templatestore = jsonl10n.JsonFile(templatefile)
         self.inputstore = inputstore
@@ -60,18 +59,18 @@ def convertjson(inputfile, outputfile, templatefile, includefuzzy=False,
 
     if templatefile is None:
         raise ValueError("Must have template file for JSON files")
-    else:
-        convertor = rejson(templatefile, inputstore)
+
+    convertor = rejson(templatefile, inputstore)
     outputstring = convertor.convertstore(includefuzzy)
     outputfile.write(outputstring)
-    return 1
+    return True
 
 
 def main(argv=None):
     # handle command line options
     formats = {
-               ("po", "json"): ("json", convertjson),
-              }
+        ("po", "json"): ("json", convertjson),
+    }
     parser = convert.ConvertOptionParser(formats, usetemplates=True,
                                          description=__doc__)
     parser.add_threshold_option()

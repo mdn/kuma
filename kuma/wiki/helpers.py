@@ -18,6 +18,7 @@ from django.utils.html import conditional_escape
 from constance import config
 from jingo import register
 from teamwork.shortcuts import build_policy_admin_links
+import waffle
 
 from kuma.core.urlresolvers import reverse
 from .constants import DIFF_WRAP_COLUMN
@@ -324,8 +325,12 @@ def wiki_url(context, path):
     Create a URL pointing to Kuma.
     Look for a wiki page in the current locale, or default to given path
     """
+    request = context['request']
+    if waffle.flag_is_active(request, 'dumb_wiki_urls'):
+        return reverse('wiki.document', args=[path])
+
     default_locale = settings.WIKI_DEFAULT_LANGUAGE
-    locale = getattr(context['request'], 'locale', default_locale)
+    locale = getattr(request, 'locale', default_locale)
 
     # let's first check if the cache is already filled
     url = memcache.get(u'wiki_url:%s:%s' % (locale, path))

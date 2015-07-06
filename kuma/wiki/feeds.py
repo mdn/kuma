@@ -14,6 +14,7 @@ from django.utils.translation import ugettext as _
 from kuma.core.urlresolvers import reverse
 from kuma.core.validators import valid_jsonp_callback_value
 from kuma.users.helpers import gravatar_url
+
 from .helpers import diff_table, tag_diff_table, compare_url, colorize_diff
 from .models import Document, Revision
 
@@ -29,6 +30,10 @@ class DocumentsFeed(Feed):
 
     def __call__(self, request, *args, **kwargs):
         self.request = request
+        if 'all_locales' in request.GET:
+            self.locale = None
+        else:
+            self.locale = request.locale
         return super(DocumentsFeed, self).__call__(request, *args, **kwargs)
 
     def feed_extra_kwargs(self, obj):
@@ -62,9 +67,7 @@ class DocumentsFeed(Feed):
             document.current_revision.creator.get_absolute_url())
 
     def item_link(self, document):
-        return self.request.build_absolute_uri(
-            reverse('kuma.wiki.views.document', locale=document.locale,
-                    args=(document.slug,)))
+        return self.request.build_absolute_uri(document.get_absolute_url())
 
     def item_categories(self, document):
         return document.tags.all()
@@ -122,8 +125,6 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
             if categories:
                 item_out['categories'] = categories
 
-            # TODO: What else might be useful in a JSON feed of documents?
-
             items_out.append(item_out)
 
         data = items_out
@@ -136,8 +137,9 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
 
 
 class DocumentsRecentFeed(DocumentsFeed):
-    """Feed of recently revised documents"""
-
+    """
+    Feed of recently revised documents
+    """
     title = _('MDN recent document changes')
     subtitle = _('Recent changes to MDN documents')
 
@@ -154,21 +156,28 @@ class DocumentsRecentFeed(DocumentsFeed):
                 reverse('kuma.wiki.views.list_documents'))
 
     def items(self):
-        locale = ((self.request.GET.get('all_locales', False) is False)
-                  and self.request.locale or None)
-        return (Document.objects
-                        .filter_for_list(tag_name=self.tag,
-                                         category=self.category,
-                                         locale=locale)
-                        .filter(current_revision__isnull=False)
-                        .prefetch_related('current_revision',
-                                          'current_revision__creator')
-                        .order_by('-current_revision__created')
-                [:MAX_FEED_ITEMS])
+        # Temporarily storing the selected documents PKs in a list
+        # to speed up retrieval (max MAX_FEED_ITEMS size)
+        item_pks = (Document.objects
+                            .filter_for_list(tag_name=self.tag,
+                                             category=self.category,
+                                             locale=self.locale)
+                            .filter(current_revision__isnull=False)
+                            .order_by('-current_revision__created')
+                            .values_list('pk', flat=True)[:MAX_FEED_ITEMS])
+        return (Document.objects.filter(pk__in=list(item_pks))
+                                .defer('html')
+                                .prefetch_related('current_revision',
+                                                  'current_revision__creator',
+                                                  'tags'))
 
 
 class DocumentsReviewFeed(DocumentsRecentFeed):
-    """Feed of documents in need of review"""
+    """
+    Feed of documents in need of review
+    """
+    title = _('MDN documents in need of review')
+    subtitle = _('Recent changes to MDN documents that need to be reviewed')
 
     def get_object(self, request, format, tag=None):
         super(DocumentsReviewFeed, self).get_object(request, format)
@@ -185,15 +194,18 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
         return tag
 
     def items(self, tag=None):
-        locale = ((self.request.GET.get('all_locales', False) is False)
-                  and self.request.locale or None)
-        return (Document.objects
-                        .filter_for_review(tag_name=tag, locale=locale)
-                        .filter(current_revision__isnull=False)
-                        .prefetch_related('current_revision',
-                                          'current_revision__creator')
-                        .order_by('-current_revision__created')
-                [:MAX_FEED_ITEMS])
+        # Temporarily storing the selected documents PKs in a list
+        # to speed up retrieval (max MAX_FEED_ITEMS size)
+        item_pks = (Document.objects
+                            .filter_for_review(tag_name=tag, locale=self.locale)
+                            .filter(current_revision__isnull=False)
+                            .order_by('-current_revision__created')
+                            .values_list('pk', flat=True)[:MAX_FEED_ITEMS])
+        return (Document.objects.filter(pk__in=list(item_pks))
+                                .defer('html')
+                                .prefetch_related('current_revision',
+                                                  'current_revision__creator',
+                                                  'tags'))
 
 
 class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
@@ -201,9 +213,8 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
     translation was last updated."""
 
     def get_object(self, request, format, tag=None):
-        (super(DocumentsUpdatedTranslationParentFeed, self)
-            .get_object(request, format))
-        self.locale = request.locale
+        super(DocumentsUpdatedTranslationParentFeed,
+              self).get_object(request, format)
         self.subtitle = None
         self.title = _("MDN '%s' translations in need of update" %
                        self.locale)
@@ -221,7 +232,7 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
 
     def item_description(self, item):
         # TODO: Needs to be a jinja template?
-        tmpl = _(u"""
+        template = _(u"""
             <p>
               <a href="%(parent_url)s" title="%(parent_title)s">
                  View '%(parent_locale)s' parent
@@ -235,29 +246,32 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
               (last modified at %(doc_modified)s)
             </p>
         """)
-
         doc, parent = item, item.parent
 
-        trans_based_on_rev = (Revision.objects.filter(document=parent)
-                              .filter(created__lte=doc.modified)
-                              .order_by('created')[0])
-        mod_url = compare_url(parent, trans_based_on_rev.id,
+        trans_based_on_pk = (Revision.objects.filter(document=parent)
+                                             .filter(created__lte=doc.modified)
+                                             .order_by('created')
+                                             .values_list('pk', flat=True)
+                                             .first())
+        mod_url = compare_url(parent,
+                              trans_based_on_pk,
                               parent.current_revision.id)
 
-        return tmpl % dict(
-            doc_url=self.request.build_absolute_uri(doc.get_absolute_url()),
-            doc_edit_url=self.request.build_absolute_uri(
+        context = {
+            'doc_url': self.request.build_absolute_uri(doc.get_absolute_url()),
+            'doc_edit_url': self.request.build_absolute_uri(
                 reverse('wiki.edit_document', args=[doc.slug])),
-            doc_title=doc.title,
-            doc_locale=doc.locale,
-            doc_modified=doc.modified,
-            parent_url=self.request.build_absolute_uri(
+            'doc_title': doc.title,
+            'doc_locale': doc.locale,
+            'doc_modified': doc.modified,
+            'parent_url': self.request.build_absolute_uri(
                 parent.get_absolute_url()),
-            parent_title=parent.title,
-            parent_locale=parent.locale,
-            parent_modified=parent.modified,
-            mod_url=mod_url,
-        )
+            'parent_title': parent.title,
+            'parent_locale': parent.locale,
+            'parent_modified': parent.modified,
+            'mod_url': mod_url,
+        }
+        return template % context
 
 
 class RevisionsFeed(DocumentsFeed):
@@ -278,8 +292,8 @@ class RevisionsFeed(DocumentsFeed):
         if not limit or limit > MAX_FEED_ITEMS:
             limit = MAX_FEED_ITEMS
 
-        if self.request.GET.get('all_locales', False) is False:
-            items = items.filter(document__locale=self.request.locale)
+        if self.locale:
+            items = items.filter(document__locale=self.locale)
 
         # Temporarily storing the selected revision PKs in a list
         # to speed up retrieval (max MAX_FEED_ITEMS size)

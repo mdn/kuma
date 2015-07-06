@@ -1,5 +1,6 @@
 from __future__ import with_statement
 
+import json
 import logging
 import os
 from datetime import datetime
@@ -13,7 +14,7 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
-from celery import task
+from celery import task, chord
 from constance import config
 from lxml import etree
 
@@ -126,15 +127,22 @@ def render_stale_documents(log=None):
 
 
 @task
-def build_json_data_for_document_task(pk, stale):
+def build_json_data_for_document(pk, stale):
     """Force-refresh cached JSON data after rendering."""
     document = Document.objects.get(pk=pk)
     document.get_json_data(stale=stale)
 
+    # If we're a translation, rebuild our source doc's JSON so its
+    # translation list includes our last edit date.
+    if document.parent is not None:
+        parent_json = json.dumps(document.parent.build_json_data())
+        Document.objects.filter(pk=document.parent.pk).update(json=parent_json)
+
 
 @receiver(render_done)
 def build_json_data_handler(sender, instance, **kwargs):
-    build_json_data_for_document_task.delay(instance.pk, stale=False)
+    if not instance.deleted:
+        build_json_data_for_document.delay(instance.pk, stale=False)
 
 
 @task
@@ -288,49 +296,86 @@ class WikiSitemap(GenericSitemap):
     priority = 0.5
 
 
+SITEMAP_START = u'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
 SITEMAP_ELEMENT = u'<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>'
+SITEMAP_END = u'</sitemapindex>'
 
 
 @task
-def build_sitemaps():
-    sitemap_parts = [u'<sitemapindex xmlns="http://www.sitemaps.org/'
-                     u'schemas/sitemap/0.9">']
+def build_locale_sitemap(locale):
+    """
+    For the given locale build the appropriate sitemap file and
+    returns the locale, the file names written and timestamp of the
+    build.
+    """
     now = datetime.utcnow()
     timestamp = '%s+00:00' % now.replace(microsecond=0).isoformat()
+
+    directory = os.path.join(settings.MEDIA_ROOT, 'sitemaps', locale)
+    if not os.path.isdir(directory):
+        os.makedirs(directory)
+
+    queryset = Document.objects.filter_for_list(locale=locale)
+    if queryset.exists():
+        names = []
+        info = {
+            'queryset': queryset,
+            'date_field': 'modified',
+        }
+        sitemap = WikiSitemap(info)
+        for page in range(1, sitemap.paginator.num_pages + 1):
+            urls = sitemap.get_urls(page=page)
+            if page == 1:
+                name = 'sitemap.xml'
+            else:
+                name = 'sitemap_%s.xml' % page
+            names.append(name)
+
+            rendered = smart_str(render_to_string('wiki/sitemap.xml',
+                                                  {'urls': urls}))
+            path = os.path.join(directory, name)
+            with open(path, 'w') as sitemap_file:
+                sitemap_file.write(rendered)
+
+        return locale, names, timestamp
+
+
+@task
+def build_index_sitemap(results):
+    """
+    A chord callback task that writes a sitemap index file for the
+    given results of :func:`~kuma.wiki.tasks.build_locale_sitemap` task.
+    """
+    sitemap_parts = [SITEMAP_START]
+
+    for result in results:
+        # result can be empty if no documents were found
+        if result is not None:
+            locale, names, timestamp = result
+            for name in names:
+                sitemap_url = absolutify('/sitemaps/%s/%s' % (locale, name))
+                sitemap_parts.append(SITEMAP_ELEMENT % (sitemap_url, timestamp))
+
+    sitemap_parts.append(SITEMAP_END)
+
     index_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
-
-    for locale in settings.MDN_LANGUAGES:
-        queryset = (Document.objects
-                            .filter(is_template=False,
-                                    locale=locale,
-                                    is_redirect=False)
-                            .exclude(title__startswith='User:')
-                            .exclude(slug__icontains='Talk:'))
-        if queryset.count() > 0:
-            info = {'queryset': queryset, 'date_field': 'modified'}
-
-            directory = os.path.join(settings.MEDIA_ROOT, 'sitemaps', locale)
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-
-            with open(os.path.join(directory, 'sitemap.xml'), 'w') as f:
-                f.write(smart_str(render_to_string('wiki/sitemap.xml',
-                                  {'urls': WikiSitemap(info).get_urls(page=1)})))
-
-            del info  # Force the gc to cleanup
-
-            sitemap_url = absolutify('/sitemaps/%s/sitemap.xml' % locale)
-            sitemap_parts.append(SITEMAP_ELEMENT % (sitemap_url, timestamp))
-
-        del queryset  # Force the gc to cleanup
-
-    sitemap_parts.append(u'</sitemapindex>')
-
     sitemap_tree = etree.fromstringlist(sitemap_parts)
     with open(index_path, 'w') as index_file:
         sitemap_tree.getroottree().write(index_file,
                                          encoding='utf-8',
                                          pretty_print=True)
+
+
+@task
+def build_sitemaps():
+    """
+    Build and save sitemap files for every MDN language and as a
+    callback save the sitempa index file as well.
+    """
+    tasks = [build_locale_sitemap.si(locale)
+             for locale in settings.MDN_LANGUAGES]
+    post_task = build_index_sitemap.s()
+    chord(header=tasks, body=post_task).apply_async()
 
 
 @task

@@ -67,7 +67,7 @@ class LangStore(txt.TxtFile):
         super(LangStore, self).__init__(inputfile, flavour, encoding)
 
     def parse(self, lines):
-        #Have we just seen a ';' line, and so are ready for a translation
+        # Have we just seen a ';' line, and so are ready for a translation
         readyTrans = False
         comment = ""
 
@@ -91,7 +91,8 @@ class LangStore(txt.TxtFile):
                 readyTrans = False  # We already have our translation
                 continue
 
-            if line.startswith('#'):  # A comment
+            if line.startswith('#') and not line.startswith('##'):
+                # Read comments, but not meta tags (e.g. '## TAG')
                 comment += line[1:].strip() + "\n"
 
             if line.startswith(';'):

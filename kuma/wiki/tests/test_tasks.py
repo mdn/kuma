@@ -1,6 +1,7 @@
 from __future__ import with_statement
 import os
 from django.conf import settings
+from django.test.utils import override_settings
 from nose.tools import ok_
 
 from kuma.core.cache import memcache
@@ -47,12 +48,13 @@ class UpdateCommunityStatsTests(UserTestCase):
 class SitemapsTestCase(UserTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
+    @override_settings(CELERY_ALWAYS_EAGER=True)
     def test_sitemaps_files(self):
         build_sitemaps()
-
+        locales = (Document.objects.filter_for_list()
+                                   .values_list('locale', flat=True))
         expected_sitemap_locs = []
-        for locale in Document.objects.distinct().values_list('locale',
-                                                              flat=True):
+        for locale in set(locales):
             # we'll expect to see this locale in the sitemap index file
             expected_sitemap_locs.append(
                 "<loc>https://example.com/sitemaps/%s/sitemap.xml</loc>" %
@@ -63,12 +65,10 @@ class SitemapsTestCase(UserTestCase):
             with open(sitemap_path, 'r') as sitemap_file:
                 sitemap_xml = sitemap_file.read()
 
-            docs = (Document.objects.filter(locale=locale)
-                                    .exclude(title__startswith='User:')
-                                    .exclude(slug__icontains='Talk:'))
+            docs = Document.objects.filter_for_list(locale=locale)
 
-            ok_(docs[0].modified.strftime('%Y-%m-%d') in sitemap_xml)
             for doc in docs:
+                ok_(doc.modified.strftime('%Y-%m-%d') in sitemap_xml)
                 ok_(doc.slug in sitemap_xml)
 
         sitemap_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')

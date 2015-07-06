@@ -64,7 +64,7 @@ class Test(TestCase):
             """
 
         foo
-        ''', m.Redefined)
+        ''', m.RedefinedWhileUnused)
 
     def test_importInDoctestAndAfter(self):
         self.flakes('''

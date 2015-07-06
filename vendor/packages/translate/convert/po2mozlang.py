@@ -25,7 +25,7 @@
 """
 
 from translate.convert import convert
-from translate.storage import mozilla_lang as lang, po
+from translate.storage import mozilla_lang, po
 
 
 class po2lang:
@@ -36,7 +36,7 @@ class po2lang:
 
     def convertstore(self, inputstore, includefuzzy=False):
         """converts a file to .lang format"""
-        thetargetfile = lang.LangStore(mark_active=self.mark_active)
+        thetargetfile = mozilla_lang.LangStore(mark_active=self.mark_active)
 
         # Run over the po units
         for pounit in inputstore.units:
@@ -62,11 +62,12 @@ def convertlang(inputfile, outputfile, templates, includefuzzy=False, mark_activ
         return False
 
     if inputstore.isempty():
-        return 0
+        return False
+
     convertor = po2lang(mark_active=mark_active)
     outputstore = convertor.convertstore(inputstore, includefuzzy)
     outputfile.write(str(outputstore))
-    return 1
+    return True
 
 
 formats = {

@@ -37,4 +37,4 @@ class ug(common.Common):
         u"?": u"؟",
     }
 
-    ignoretests = ["startcaps", "simplecaps"]
+    ignoretests = ["startcaps", "simplecaps", "acronyms"]

@@ -19,11 +19,13 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 """A class loader that will load C or Python implementations of the PO class
-depending on the USECPO variable.
+depending on the ``USECPO`` variable.
 
-Use the environment variable USECPO=2 (or 1) to choose the C implementation which
-uses Gettext's libgettextpo for high parsing speed.  Otherise the local
-Python based parser is used (slower but very well tested)."""
+Use the environment variable ``USECPO=2`` (or ``USECPO=1``) to choose the
+C implementation which uses Gettext's libgettextpo for high parsing speed.
+Otherwise the local Python based parser is used (slower but very well
+tested).
+"""
 
 import logging
 import os

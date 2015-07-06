@@ -25,6 +25,7 @@ from django.http import (HttpResponse, HttpResponseRedirect,
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import (get_object_or_404, get_list_or_404,
                               redirect, render)
+from django.utils.http import urlunquote_plus
 from django.utils.safestring import mark_safe
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
@@ -402,7 +403,7 @@ def _document_raw(request, doc, doc_html, rendering_params):
     response = HttpResponse(doc_html)
     response['X-Frame-Options'] = 'Allow'
     response['X-Robots-Tag'] = 'noindex'
-    absolute_url = doc.get_absolute_url()
+    absolute_url = urlunquote_plus(doc.get_absolute_url())
 
     if absolute_url in (config.KUMA_CUSTOM_CSS_PATH,
                         config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
@@ -525,12 +526,6 @@ def document(request, document_slug, document_locale):
     if rendering_params['raw']:
         return _document_raw(request, doc, doc_html, rendering_params)
 
-    # Get the contributors. (To avoid this query, we could render the
-    # the contributors right into the Document's html field.)
-    # NOTE: .only() avoids a memcache object-too-large error for large wiki
-    # pages when an attempt is made to cache all revisions
-    contributors = doc.get_contributors()
-
     # TODO: Port this kitsune feature over, eventually:
     #     https://github.com/jsocol/kitsune/commit/
     #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
@@ -565,7 +560,6 @@ def document(request, document_slug, document_locale):
         'quick_links_html': quick_links_html,
         'zone_subnav_html': zone_subnav_html,
         'body_html': body_html,
-        'contributors': contributors,
         'fallback_reason': fallback_reason,
         'kumascript_errors': ks_errors,
         'render_raw_fallback': rendering_params['render_raw_fallback'],

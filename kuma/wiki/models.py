@@ -15,11 +15,10 @@ from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
-from django.db.models import Count, signals
+from django.db.models import signals
 from django.dispatch import receiver
 from django.http import Http404
 from django.utils.decorators import available_attrs
@@ -49,7 +48,8 @@ from .content import (extract_code_sample, extract_css_classnames,
                       extract_html_attributes, extract_kumascript_macro_names,
                       get_content_sections, get_seo_description, H2TOCFilter,
                       H3TOCFilter, SectionTOCFilter)
-from .jobs import DocumentZoneStackJob, DocumentZoneURLRemapsJob
+from .jobs import (DocumentZoneStackJob, DocumentZoneURLRemapsJob,
+                   DocumentContributorsJob)
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
@@ -132,24 +132,34 @@ class DocumentTag(TagBase):
         verbose_name_plural = _("Document Tags")
 
 
+def tags_for(cls, model, instance=None, **extra_filters):
+    """
+    Sadly copied from taggit to work around the issue of not being
+    able to use the TaggedItemBase class that has tag field already
+    defined.
+    """
+    kwargs = extra_filters or {}
+    if instance is not None:
+        kwargs.update({
+            '%s__content_object' % cls.tag_relname(): instance
+        })
+        return cls.tag_model().objects.filter(**kwargs)
+    kwargs.update({
+        '%s__content_object__isnull' % cls.tag_relname(): False
+    })
+    return cls.tag_model().objects.filter(**kwargs).distinct()
+
+
 class TaggedDocument(ItemBase):
     """Through model, for tags on Documents"""
     content_object = models.ForeignKey('Document')
-    tag = models.ForeignKey(DocumentTag)
+    tag = models.ForeignKey(DocumentTag, related_name="%(app_label)s_%(class)s_items")
 
     objects = TaggedDocumentManager()
 
-    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
-    # don't like. But, it seems to be the only way to get *both* a custom tag
-    # *and* a custom through model.
-    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
     @classmethod
-    def tags_for(cls, model, instance=None):
-        if instance is not None:
-            return DocumentTag.objects.filter(
-                taggeddocument__content_object=instance)
-        return DocumentTag.objects.filter(
-            taggeddocument__content_object__isnull=False).distinct()
+    def tags_for(cls, *args, **kwargs):
+        return tags_for(cls, *args, **kwargs)
 
 
 class DocumentAttachment(models.Model):
@@ -555,17 +565,13 @@ class Document(NotificationsMixin, models.Model):
 
         self.save()
 
-        # If we're a translation, rebuild our source doc's JSON so its
-        # translation list includes our last edit date.
-        if self.parent is not None:
-            parent_json = json.dumps(self.parent.build_json_data())
-            Document.objects.filter(pk=self.parent.pk).update(json=parent_json)
-
         render_done.send(sender=self.__class__, instance=self)
 
     def get_summary(self, strip_markup=True, use_rendered=True):
-        """Attempt to get the document summary from rendered content, with
-        fallback to raw HTML"""
+        """
+        Attempt to get the document summary from rendered content, with
+        fallback to raw HTML
+        """
         if use_rendered and self.rendered_html:
             src = self.rendered_html
         else:
@@ -1505,11 +1511,9 @@ Full traceback:
     def get_document_type(self):
         return WikiDocumentType
 
-    def get_contributors(self):
-        top_creator_ids = (self.revisions.values_list('creator', flat=True)
-                                         .annotate(Count('creator'))
-                                         .order_by('-creator__count'))
-        return get_user_model().objects.filter(pk__in=list(top_creator_ids))
+    @cached_property
+    def contributors(self):
+        return DocumentContributorsJob().get(self.pk)
 
     @cached_property
     def zone_stack(self):
@@ -1561,7 +1565,7 @@ class DocumentZone(models.Model):
         super(DocumentZone, self).save(*args, **kwargs)
 
         # Refresh the cache for the locale of this zone's attached document
-        DocumentZoneURLRemapsJob().refresh(self.document.locale)
+        invalidate_zone_urls_cache(self.document)
         invalidate_zone_stack_cache(self.document)
 
 
@@ -1602,6 +1606,11 @@ def invalidate_zone_caches(sender, instance, **kwargs):
     invalidate_zone_stack_cache(instance, async=True)
 
 
+@receiver(signals.post_save, sender=Document)
+def invalidate_contributors(sender, instance, **kwargs):
+    DocumentContributorsJob().invalidate(instance.pk)
+
+
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
     class Meta:
@@ -1619,33 +1628,21 @@ class LocalizationTag(TagBase):
 class ReviewTaggedRevision(ItemBase):
     """Through model, just for review tags on revisions"""
     content_object = models.ForeignKey('Revision')
-    tag = models.ForeignKey(ReviewTag)
+    tag = models.ForeignKey(ReviewTag, related_name="%(app_label)s_%(class)s_items")
 
-    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
-    # don't like. But, it seems to be the only way to get *both* a custom tag
-    # *and* a custom through model.
-    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
     @classmethod
-    def tags_for(cls, model, instance=None):
-        if instance is not None:
-            return ReviewTag.objects.filter(
-                reviewtaggedrevision__content_object=instance)
-        return ReviewTag.objects.filter(
-            reviewtaggedrevision__content_object__isnull=False).distinct()
+    def tags_for(cls, *args, **kwargs):
+        return tags_for(cls, *args, **kwargs)
 
 
 class LocalizationTaggedRevision(ItemBase):
     """Through model, just for localization tags on revisions"""
     content_object = models.ForeignKey('Revision')
-    tag = models.ForeignKey(LocalizationTag)
+    tag = models.ForeignKey(LocalizationTag, related_name="%(app_label)s_%(class)s_items")
 
     @classmethod
-    def tags_for(cls, model, instance=None):
-        if instance is not None:
-            return LocalizationTag.objects.filter(
-                localizationtaggedrevision__content_object=instance)
-        return LocalizationTag.objects.filter(
-            localizationtaggedrevision__content_object__isnull=False).distinct()
+    def tags_for(cls, *args, **kwargs):
+        return tags_for(cls, *args, **kwargs)
 
 
 class Revision(models.Model):
@@ -1808,9 +1805,9 @@ class Revision(models.Model):
         self.document.save()
 
     def __unicode__(self):
-        return u'[%s] %s #%s: %s' % (self.document.locale,
-                                     self.document.title,
-                                     self.id, self.content[:50])
+        return u'[%s] %s #%s' % (self.document.locale,
+                                 self.document.title,
+                                 self.id)
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""

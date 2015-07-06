@@ -229,7 +229,8 @@ def convertprop(inputfile, outputfile, templatefile, personality="java",
                            remove_untranslated)
     outputprop = convertor.convertstore(includefuzzy)
     outputfile.write(outputprop)
-    return 1
+    return True
+
 
 formats = {
     ("po", "properties"): ("properties", convertprop),

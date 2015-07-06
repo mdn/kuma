@@ -1,4 +1,4 @@
-ansible==1.9.1
+ansible==1.9.2
 coveralls
-tox==2.0.2
+tox==2.1.1
 lxml==3.4.4

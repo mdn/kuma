@@ -50,7 +50,7 @@
             <li>
               <a href="{{ doc.get_absolute_url() }}">{{ doc.slug }}</a>
                 {% if not is_templates and not errors %}
-                  <small>{{ doc.get_summary() | truncate(100) }}</small>
+                  <small>{{ doc.get_summary_text() | truncate(100) }}</small>
                 {% endif %}
             </li>
           {% endfor %}

@@ -45,7 +45,7 @@ class TestLang2PO:
         assert pounit.source == "One"
         assert pounit.target == "Een"
 
-    def test_simpleentry(self):
+    def test_simplecomment(self):
         """Handle simple comments"""
         source = '# Comment\n;One\nEen\n'
         pofile = self.lang2po(source)
@@ -53,6 +53,13 @@ class TestLang2PO:
         assert pounit.source == "One"
         assert pounit.target == "Een"
         assert pounit.getnotes() == "Comment"
+
+    def test_meta_tags(self):
+        """Meta tags are not extracted"""
+        source = '## tag\n# Comment\n;One\nEen\n'
+        pofile = self.lang2po(source)
+        pounit = self.singleelement(pofile)
+        assert not "tag" in pounit.getnotes()
 
 
 class TestLang2POCommand(test_convert.TestConvertCommand, TestLang2PO):
