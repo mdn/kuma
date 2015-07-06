@@ -51,7 +51,7 @@ from kuma.core.decorators import (never_cache, login_required,
                                   permission_required, superuser_required)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import (get_object_or_none, paginate, smart_int,
-                             get_ip, limit_banned_ip_to_0)
+                             limit_banned_ip_to_0)
 from kuma.search.store import referrer_url
 from kuma.users.models import UserProfile
 
@@ -2192,7 +2192,8 @@ def _save_rev_and_notify(rev_form, request, document):
     new_rev = rev_form.save(creator, document)
 
     if waffle.switch_is_active('store_revision_ips'):
-        RevisionIP(revision=new_rev, ip=get_ip(request)).save()
+        ip = request.META.get('REMOTE_ADDR')
+        RevisionIP.objects.create(revision=new_rev, ip=ip)
 
     if first_edit:
         send_first_edit_email.delay(new_rev.pk)

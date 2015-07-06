@@ -6,7 +6,7 @@ from django.db import models
 from django.db.models import F
 from django.utils.translation import ugettext_lazy as _
 
-from .utils import get_unique
+from kuma.core.utils import get_unique
 
 
 class ActionCounterUniqueManager(models.Manager):
@@ -20,7 +20,7 @@ class ActionCounterUniqueManager(models.Manager):
         """
         content_type = ContentType.objects.get_for_model(object)
         user, ip, user_agent, unique_hash = get_unique(content_type, object.pk,
-                                                       action_name,
+                                                       name=action_name,
                                                        request=request)
         if create:
             return self.get_or_create(
@@ -69,7 +69,7 @@ class ActionCounterUnique(models.Model):
     def save(self, *args, **kwargs):
         # Ensure unique_hash is updated whenever the object is saved
         user, ip, user_agent, unique_hash = get_unique(
-            self.content_type, self.object_pk, self.name,
+            self.content_type, self.object_pk, name=self.name,
             ip=self.ip, user_agent=self.user_agent, user=self.user)
         self.unique_hash = unique_hash
         super(ActionCounterUnique, self).save(*args, **kwargs)

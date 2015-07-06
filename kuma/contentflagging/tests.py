@@ -9,14 +9,13 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from kuma.core.urlresolvers import reverse
-
+from kuma.core.utils import get_unique
 from kuma.demos.models import Submission
 from kuma.demos.tests.test_models import save_valid_submission
 from kuma.wiki.models import Document
 from kuma.users.tests import UserTransactionTestCase
 
 from .models import ContentFlag
-from .utils import get_unique
 
 
 def _mock_request(user=None, ip='192.168.123.123',
