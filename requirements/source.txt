@@ -69,7 +69,7 @@ Django==1.7.8
 
 commonware==0.4.3
 
-django-allauth==0.20.0
+django-allauth==0.21.0
 
 django-appconf==1.0.1
 
