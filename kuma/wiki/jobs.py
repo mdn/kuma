@@ -1,7 +1,9 @@
 import collections
 
 from django.contrib.auth import get_user_model
+
 from kuma.core.jobs import KumaJob
+from kuma.users.helpers import gravatar_url
 
 
 class DocumentZoneStackJob(KumaJob):
@@ -61,6 +63,7 @@ class DocumentContributorsJob(KumaJob):
     """
     lifetime = 60 * 60 * 6
     refresh_timeout = 30
+    version = 2
 
     def fetch(self, pk):
         from .models import Document
@@ -80,11 +83,17 @@ class DocumentContributorsJob(KumaJob):
             ('ordered_ids',
              'FIELD(id,%s)' % ','.join(map(str, recent_creator_ids))),
         ])
-        return (User.objects.filter(id__in=list(recent_creator_ids),
-                                    is_active=True)
-                            .only('id', 'username')
-                            .extra(select=select,
-                                   order_by=['ordered_ids']))
+        contributors = list(User.objects.filter(id__in=list(recent_creator_ids),
+                                                is_active=True)
+                                        .extra(select=select,
+                                               order_by=['ordered_ids'])
+                                        .values('id', 'username', 'email'))
+        result = []
+        for contributor in contributors:
+            contributor['gravatar_34'] = gravatar_url(contributor['email'],
+                                                      size=34)
+            result.append(contributor)
+        return result
 
     def empty(self):
         # the empty result needs to be an empty list instead of None
