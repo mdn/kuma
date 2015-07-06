@@ -8,7 +8,7 @@ from django.db import models
 from django.template import Context, loader
 from django.utils.translation import ugettext_lazy as _
 
-from .utils import get_unique
+from kuma.core.utils import get_unique
 
 
 FLAG_REASONS = getattr(settings, "FLAG_REASONS", (

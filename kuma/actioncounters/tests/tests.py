@@ -9,7 +9,7 @@ from django.test import TransactionTestCase
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
-from ..utils import get_unique
+from kuma.core.utils import get_unique
 from ..models import ActionCounterUnique
 from .models import TestModel
 
@@ -43,9 +43,11 @@ class ActionCountersTest(TransactionTestCase):
             obj_1 = self.obj_1
             obj_1_ct = ContentType.objects.get_for_model(obj_1)
 
-            request = self.mk_request(user_agent="Some\xef\xbf\xbdbrowser")
-            user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
-                                                           action_name, request)
+            request = self.mk_request(user_agent=u"Some\xef\xbf\xbdbrowser")
+            user, ip, user_agent, unique_hash = get_unique(obj_1_ct,
+                                                           obj_1.pk,
+                                                           name=action_name,
+                                                           request=request)
         except UnicodeDecodeError:
             ok_(False, "UnicodeDecodeError should not be thrown")
 
@@ -61,7 +63,8 @@ class ActionCountersTest(TransactionTestCase):
 
         request = self.mk_request()
         user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
-                                                       action_name, request)
+                                                       name=action_name,
+                                                       request=request)
 
         # Create an initial counter record directly.
         u1 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
