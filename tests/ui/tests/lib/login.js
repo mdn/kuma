@@ -141,9 +141,9 @@ define([
                                 })
 
                                 // ... and to confirm the login worked, we need to poll for either the "#id_username" element (signup page)
-                                // or the "a.user-state-signout" element (sign out link)
+                                // or the "a.oauth-logged-in-signout" element (sign out link)
                                 .then(function() {
-                                    return pollUntil('return document.querySelector("#id_username") || document.querySelector("a.user-state-signout")');
+                                    return pollUntil('return document.querySelector("#id_username") || document.querySelector("a.oauth-logged-in-signout")');
                                 })
 
                                 .end()

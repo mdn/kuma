@@ -229,7 +229,7 @@ class AllauthPersonaTestCase(UserTestCase):
                              locale=settings.WIKI_DEFAULT_LANGUAGE))
             parsed = pq(response.content)
 
-            login_info = parsed.find('.header-login .user-state')
+            login_info = parsed.find('.header-login .oauth-logged-in')
             ok_(len(login_info.children()))
 
             signed_in_message = login_info.children()[0]
@@ -315,7 +315,7 @@ class AllauthPersonaTestCase(UserTestCase):
                              locale=settings.WIKI_DEFAULT_LANGUAGE))
             parsed = pq(response.content)
 
-            login_info = parsed.find('.header-login .user-state')
+            login_info = parsed.find('.header-login .oauth-logged-in')
             ok_(len(login_info.children()))
 
             signed_in_message = login_info.children()[0]
