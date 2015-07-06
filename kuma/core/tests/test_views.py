@@ -38,7 +38,6 @@ class LoggingTests(KumaTestCase):
 
 
 class SoapboxViewsTest(KumaTestCase):
-    fixtures = ['devmo_calendar.json']
 
     def test_global_home(self):
         m = Message(message="Global", is_global=True, is_active=True, url="/")
