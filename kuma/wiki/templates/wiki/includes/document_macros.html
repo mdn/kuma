@@ -2,7 +2,7 @@
   <nav class="crumbs" role="navigation"><ol xmlns:v="http://rdf.data-vocabulary.org/#" aria-label="{{ _('breadcrumbs') }}">
     <li typeof="v:Breadcrumb"><a href="/{{ request.locale }}" rel="v:url" property="v:title">MDN</a></li>
     {% for doc in document.parents %}
-      <li class="crumb" typeof="v:Breadcrumb"><a href="{{ url('wiki.document', doc.slug) }}" rel="v:url" property="v:title">{{ doc.title }}</a></li>
+      <li class="crumb" typeof="v:Breadcrumb"><a href="{{ doc.get_absolute_url() }}" rel="v:url" property="v:title">{{ doc.title }}</a></li>
     {% endfor %}
     <li class="crumb" typeof="v:Breadcrumb" property="v:title">{{ document.title }}</li>
   </ol></nav>

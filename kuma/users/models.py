@@ -18,8 +18,8 @@ from waffle import switch_is_active
 from kuma.core.fields import LocaleField, JSONField
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.models import ModelBase
+from kuma.core.urlresolvers import reverse
 from kuma.wiki.models import Revision
-from kuma.wiki.helpers import wiki_url
 
 from .helpers import gravatar_url
 from .jobs import UserGravatarURLJob
@@ -236,8 +236,9 @@ def invalidate_gravatar_url(sender, instance, created, **kwargs):
 
 @receiver(user_signed_up)
 def on_user_signed_up(sender, request, user, **kwargs):
-    context = {'request': request}
-    msg = _('You have completed the first step of <a href="%s">getting started with MDN</a>') % wiki_url(context, 'MDN/Getting_started')
+    url = reverse('wiki.document', args=['MDN/Getting_started'])
+    msg = _('You have completed the first step of '
+            '<a href="%s">getting started with MDN</a>') % url
     messages.success(request, msg)
     if switch_is_active('welcome_email'):
         # only send if the user has already verified at least one email address
