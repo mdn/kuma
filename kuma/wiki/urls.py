@@ -107,7 +107,9 @@ urlpatterns = [
     url(r'^/get-documents$',
         views.autosuggest_documents,
         name='wiki.autosuggest_documents'),
-    url(r'^/load/$', 'load_documents', name='wiki.load_documents'),
+    url(r'^/load/$',
+        views.load_documents,
+        name='wiki.load_documents'),
 
     # Special pages
     url(r'^/templates$',
