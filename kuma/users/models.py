@@ -205,7 +205,7 @@ class UserProfile(ModelBase):
             return self.user.bans.filter(is_active=True)[:1][0]
 
     def gravatar(self):
-        return gravatar_url(self.user.email)
+        return gravatar_url(self.user)
 
     def allows_editing_by(self, user):
         if user == self.user:

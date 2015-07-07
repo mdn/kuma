@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib import admin
 
-from jinja2 import Markup, contextfunction
+from jinja2 import escape, Markup, contextfunction
 from jingo import register
 
 from allauth.account.utils import user_display
@@ -16,10 +16,10 @@ from .jobs import UserGravatarURLJob
 
 
 @register.function
-def gravatar_url(email, secure=True, size=220, rating='pg',
+def gravatar_url(user, secure=True, size=220, rating='pg',
                  default=settings.DEFAULT_AVATAR):
     job = UserGravatarURLJob()
-    return job.get(email, secure=secure, size=size,
+    return job.get(user.email, secure=secure, size=size,
                    rating=rating, default=default)
 
 
@@ -60,6 +60,15 @@ def public_email(email):
 def unicode_to_html(text):
     """Turns all unicode into html entities, e.g. &#69; -> E."""
     return ''.join([u'&#%s;' % ord(i) for i in text])
+
+
+@register.function
+def user_list(users):
+    """Turn a list of users into a list of links to their profiles."""
+    link = u'<a href="%s">%s</a>'
+    list = u', '.join([link % (escape(u.get_absolute_url()), escape(u.username)) for
+                       u in users])
+    return Markup(list)
 
 
 @register.function
