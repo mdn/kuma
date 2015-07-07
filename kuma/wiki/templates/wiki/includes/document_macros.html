@@ -238,3 +238,11 @@
     </div>
 
 {%- endmacro %}
+
+
+
+{% macro contributor_links(contributors) -%}
+    {% for contributor in contributors %}
+        <a href="{{ url('users.profile', username=contributor.username) }}">{{ contributor.username }}</a>{% if not loop.last %}, {% endif %}
+    {% endfor %}
+{%- endmacro %}

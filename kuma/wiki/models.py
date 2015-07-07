@@ -1511,8 +1511,7 @@ Full traceback:
     def get_document_type(self):
         return WikiDocumentType
 
-    @cached_property
-    def contributors(self):
+    def get_contributors(self):
         return DocumentContributorsJob().get(self.pk)
 
     @cached_property
