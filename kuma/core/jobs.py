@@ -5,17 +5,6 @@ from cacheback.base import Job, to_bytestring
 
 
 class KumaJob(Job):
-    """
-    A subclass of the cache base job class that implements an optional per job
-    version key.
-    """
-    version = None
-
-    def key(self, *args, **kwargs):
-        key = super(KumaJob, self).key(*args, **kwargs)
-        if self.version is None:
-            return key
-        return '%s#%s' % (key, self.version)
 
     def hash(self, value):
         """

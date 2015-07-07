@@ -17,7 +17,7 @@ from waffle.models import Switch
 
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import override_constance_settings, KumaTestCase
-from kuma.users.tests import UserTestCase
+from kuma.users.tests import UserTestCase, user
 
 from . import (document, revision, doc_rev, normalize_html,
                create_template_test_users, create_topical_parents_docs)
@@ -26,7 +26,9 @@ from ..constants import REDIRECT_CONTENT
 from ..exceptions import (PageMoveError,
                           DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress)
-from ..models import Document, Revision, RevisionIP, TaggedDocument
+from ..jobs import DocumentZoneStackJob
+from ..models import (Document, Revision, RevisionIP, DocumentZone,
+                      TaggedDocument)
 
 
 def _objects_eq(manager, list_):
@@ -1737,6 +1739,84 @@ class PageMoveTests(UserTestCase):
             ]
             for s in err_strings:
                 ok_(s in e.args[0])
+
+
+class DocumentZoneTests(UserTestCase):
+    """Tests for content zones in topic hierarchies"""
+
+    def test_find_roots(self):
+        """Ensure sub pages can find the content zone root"""
+        root_rev = revision(title='ZoneRoot', slug='ZoneRoot',
+                            content='This is the Zone Root',
+                            is_approved=True, save=True)
+        root_doc = root_rev.document
+
+        middle_rev = revision(title='Zonemiddle', slug='Zonemiddle',
+                              content='This is the Zone middle',
+                              is_approved=True, save=True)
+        middle_doc = middle_rev.document
+        middle_doc.parent_topic = root_doc
+        middle_doc.save()
+
+        sub_rev = revision(title='SubPage', slug='SubPage',
+                           content='This is a subpage',
+                           is_approved=True, save=True)
+        sub_doc = sub_rev.document
+        sub_doc.parent_topic = middle_doc
+        sub_doc.save()
+
+        sub_sub_rev = revision(title='SubSubPage', slug='SubSubPage',
+                               content='This is a subsubpage',
+                               is_approved=True, save=True)
+        sub_sub_doc = sub_sub_rev.document
+        sub_sub_doc.parent_topic = sub_doc
+        sub_sub_doc.save()
+
+        other_rev = revision(title='otherPage', slug='otherPage',
+                             content='This is an otherpage',
+                             is_approved=True, save=True)
+        other_doc = other_rev.document
+
+        root_zone = DocumentZone(document=root_doc)
+        root_zone.save()
+
+        middle_zone = DocumentZone(document=middle_doc)
+        middle_zone.save()
+
+        eq_(self.get_zone_stack(root_doc)[0], root_zone)
+        eq_(self.get_zone_stack(middle_doc)[0], middle_zone)
+        eq_(self.get_zone_stack(sub_doc)[0], middle_zone)
+        eq_(0, len(self.get_zone_stack(other_doc)))
+
+        zone_stack = self.get_zone_stack(sub_sub_doc)
+        eq_(zone_stack[0], middle_zone)
+        eq_(zone_stack[1], root_zone)
+
+    def get_zone_stack(self, doc):
+        return DocumentZoneStackJob().get(doc.pk)
+
+
+class DocumentContributorsTests(UserTestCase):
+
+    def test_get_contributors(self):
+        contrib_1 = user(save=True)
+        revision_1 = revision(creator=contrib_1, save=True)
+        self.assertIn(contrib_1, revision_1.document.get_contributors())
+
+    def test_get_contributors_inactive_or_banned(self):
+        contrib_2 = user(save=True)
+        contrib_3 = user(is_active=False, save=True)
+        contrib_4 = user(save=True)
+        contrib_4.bans.create(by=contrib_3, reason='because reasons')
+        revision_2 = revision(creator=contrib_2, save=True)
+
+        revision(creator=contrib_3, document=revision_2.document, save=True)
+        revision(creator=contrib_4, document=revision_2.document, save=True)
+
+        contributors = revision_2.document.get_contributors()
+        self.assertIn(contrib_2, contributors)
+        self.assertNotIn(contrib_3, contributors)
+        self.assertNotIn(contrib_4, contributors)
 
 
 class DocumentParsingTests(UserTestCase):
