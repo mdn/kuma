@@ -316,49 +316,9 @@ def absolutify(url, site=None):
 
 
 @register.function
-@jinja2.contextfunction
-def wiki_url(context, path):
+def wiki_url(path):
     """
     Create a URL pointing to Kuma.
     Look for a wiki page in the current locale, or default to given path
     """
-    request = context['request']
-    if waffle.flag_is_active(request, 'dumb_wiki_urls'):
-        return reverse('wiki.document', args=[path])
-
-    default_locale = settings.WIKI_DEFAULT_LANGUAGE
-    locale = getattr(request, 'locale', default_locale)
-
-    # let's first check if the cache is already filled
-    url = memcache.get(u'wiki_url:%s:%s' % (locale, path))
-    if url:
-        # and return the URL right away if yes
-        return url
-
-    # shortcut for when the current locale is the default one (English)
-    url = reverse('wiki.document', locale=default_locale, args=[path])
-
-    if locale != default_locale:
-        # in case the current request's locale is *not* the default, e.g. 'de'
-        try:
-            # check if there are any translated documents in the request's
-            # locale of a document with the given path and the default locale
-            translation = Document.objects.get(locale=locale,
-                                               parent__slug=path,
-                                               parent__locale=default_locale)
-
-            # look if the document is actual just a redirect
-            redirect_url = translation.redirect_url()
-            if redirect_url is None:
-                # if no, build the URL of the translation
-                url = translation.get_absolute_url()
-            else:
-                # use the redirect URL instead
-                url = redirect_url
-        except Document.DoesNotExist:
-            # otherwise use the already defined url to the English document
-            pass
-
-    # finally cache the reversed document URL for a bit
-    memcache.set(u'wiki_url:%s:%s' % (locale, path), url, 60 * 5)
-    return url
+    return reverse('wiki.document', args=[path])

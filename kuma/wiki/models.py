@@ -1515,11 +1515,6 @@ Full traceback:
         return DocumentZoneStackJob().get(self.pk)
 
 
-@receiver(render_done)
-def purge_wiki_url_cache(sender, instance, **kwargs):
-    memcache.delete(u'wiki_url:%s:%s' % (instance.locale, instance.slug))
-
-
 class DocumentDeletionLog(models.Model):
     """
     Log of who deleted a Document, when, and why.
