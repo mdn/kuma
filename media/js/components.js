@@ -31,7 +31,7 @@
             var initialized;
 
             // Find the trigger element's submenu
-            var $submenu = $self.submenu = (settings.submenu || $parent.find('.submenu'));
+            var $submenu = $self.submenu = (settings.submenu || $parent.find('.js-submenu'));
 
             // Prevent the default behavior of the trigger element if this is set
             var brick = settings.brickOnClick;
