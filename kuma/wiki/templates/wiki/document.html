@@ -41,6 +41,8 @@
   {% set content_class = 'column-main' %}
 {% endif %}
 
+{% set contributors = document.get_contributors() %}
+
 {% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
 {% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu"{% endblock body_attributes %}
 
@@ -180,7 +182,6 @@
         {% endif %}
 
         {% if waffle.flag('top_contributors') %}
-            {% set contributors = document.get_contributors() %}
             {% set contrib_count = contributors|length %}
             {% set contrib_limit = 13 %}
 
