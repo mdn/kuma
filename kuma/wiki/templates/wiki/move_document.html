@@ -65,7 +65,7 @@
             <dl>
               <dt>{{ _('Preview URL:') }}</dt>
               <dd id="preview-url" data-url="{{ settings.SITE_URL  }}/{{ document.locale }}/docs/" data-specific="{{ specific_slug }}">
-                {{ request.build_absolute_uri(url('wiki.document', document.slug)) }}
+                {{ request.build_absolute_uri(document.get_absolute_url()) }}
               </dd>
             </dl>
           </li>

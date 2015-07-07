@@ -10,19 +10,16 @@ from pyquery import PyQuery as pq
 from tidylib import tidy_document
 from tower import ugettext as _
 
-from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.html import conditional_escape
 
 from constance import config
 from jingo import register
-import waffle
 
 from kuma.core.urlresolvers import reverse
 from .constants import DIFF_WRAP_COLUMN
 from .jobs import DocumentZoneStackJob
-from .models import Document, memcache
 
 
 def compare_url(doc, from_id, to_id):

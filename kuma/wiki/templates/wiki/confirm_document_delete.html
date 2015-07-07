@@ -36,7 +36,7 @@
       <p>{{ _('Are you sure you want to continue?') }}</p>
 
       <input type="submit" value="{{ _('Delete') }}" />
-      <a href="{{ url('wiki.document', document.slug) }}">{{ _('Cancel') }}</a>
+      <a href="{{ document.get_absolute_url() }}">{{ _('Cancel') }}</a>
 
     </form>
 
