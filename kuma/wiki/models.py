@@ -15,10 +15,11 @@ from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
-from django.db.models import signals
+from django.db.models import Count, signals
 from django.dispatch import receiver
 from django.http import Http404
 from django.utils.decorators import available_attrs
@@ -47,8 +48,7 @@ from .content import (extract_code_sample, extract_css_classnames,
                       extract_html_attributes, extract_kumascript_macro_names,
                       get_content_sections, get_seo_description, H2TOCFilter,
                       H3TOCFilter, SectionTOCFilter)
-from .jobs import (DocumentZoneStackJob, DocumentZoneURLRemapsJob,
-                   DocumentContributorsJob)
+from .jobs import DocumentZoneStackJob, DocumentZoneURLRemapsJob
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
@@ -1507,9 +1507,13 @@ Full traceback:
     def get_document_type(self):
         return WikiDocumentType
 
-    @cached_property
-    def contributors(self):
-        return DocumentContributorsJob().get(self.pk)
+    def get_contributors(self):
+        top_creator_ids = (self.revisions.values_list('creator', flat=True)
+                                         .annotate(Count('creator'))
+                                         .order_by('-creator__count'))
+        return (get_user_model().objects
+                                .filter(pk__in=list(top_creator_ids),
+                                        is_active=True))
 
     @cached_property
     def zone_stack(self):
@@ -1556,7 +1560,7 @@ class DocumentZone(models.Model):
         super(DocumentZone, self).save(*args, **kwargs)
 
         # Refresh the cache for the locale of this zone's attached document
-        invalidate_zone_urls_cache(self.document)
+        DocumentZoneURLRemapsJob().refresh(self.document.locale)
         invalidate_zone_stack_cache(self.document)
 
 
@@ -1595,11 +1599,6 @@ def invalidate_zone_urls_cache(document, async=False):
 def invalidate_zone_caches(sender, instance, **kwargs):
     invalidate_zone_urls_cache(instance, async=True)
     invalidate_zone_stack_cache(instance, async=True)
-
-
-@receiver(signals.post_save, sender=Document)
-def invalidate_contributors(sender, instance, **kwargs):
-    DocumentContributorsJob().invalidate(instance.pk)
 
 
 class ReviewTag(TagBase):
@@ -1796,9 +1795,9 @@ class Revision(models.Model):
         self.document.save()
 
     def __unicode__(self):
-        return u'[%s] %s #%s' % (self.document.locale,
-                                 self.document.title,
-                                 self.id)
+        return u'[%s] %s #%s: %s' % (self.document.locale,
+                                     self.document.title,
+                                     self.id, self.content[:50])
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
