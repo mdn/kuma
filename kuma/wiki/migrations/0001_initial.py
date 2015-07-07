@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('attachments', '0002_auto_20150430_0752'),
-        ('teamwork', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -285,7 +284,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='document',
             name='team',
-            field=models.ForeignKey(blank=True, to='teamwork.Team', null=True),
+            field=models.ForeignKey(blank=True, to='wiki.DocumentTag', null=True),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(

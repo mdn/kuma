@@ -26,7 +26,6 @@ src/django-smuggler
 src/django-soapbox
 src/django-statici18n/src
 src/django-taggit
-src/django-teamwork
 src/django-tidings
 src/django-timezones
 src/django-waffle

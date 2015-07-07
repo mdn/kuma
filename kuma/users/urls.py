@@ -5,7 +5,6 @@ from django.conf.urls import include, url
 from allauth.account import views as account_views
 from allauth.socialaccount import providers, views as socialaccount_views
 
-from teamwork.views import user_roles
 from . import views
 
 
@@ -70,9 +69,6 @@ urlpatterns = [
     url(r'^profiles/(?P<username>[^/]+)/?$',
         views.profile_view,
         name='users.profile'),
-    url(r'^profiles/(?P<username>[^/]+)/roles$',
-        user_roles,
-        name='users.roles'),
     url(r'^profiles/(?P<username>[^/]+)/edit$',
         views.profile_edit,
         name='users.profile_edit'),

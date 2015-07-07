@@ -430,7 +430,6 @@ MIDDLEWARE_CLASSES = (
 # Auth
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
-    'teamwork.backends.TeamworkBackend',
 )
 AUTH_USER_MODEL = 'users.User'
 
@@ -507,7 +506,6 @@ INSTALLED_APPS = (
     'soapbox',
     'kuma.authkeys',
     'tidings',
-    'teamwork',
     'djcelery',
     'taggit',
     'dbgettext',
@@ -1164,13 +1162,6 @@ LOGGING = {
 
 CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
-
-TEAMWORK_BASE_POLICIES = {
-    'anonymous': (
-        'wiki.view_document',),
-    'authenticated': (
-        'wiki.view_document', 'wiki.add_document', 'wiki.add_revision'),
-}
 
 DBGETTEXT_PATH = 'kuma/core/'
 DBGETTEXT_ROOT = 'translations'

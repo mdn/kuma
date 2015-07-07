@@ -46,11 +46,6 @@
         </h1>
 
         <div class="profile-buttons">
-          {% if show_manage_roles_button %}
-              {# TODO: Need a method to detect whether the logged in user can manage any roles, here #}
-              <a href="{{ url('teamwork.views.user_roles', profile.user.username) }}" class="button neutral">{{ _("Manage Roles") }}<i aria-hidden="true" class="icon-users"></i></a>
-          {% endif %}
-
           {% if profile.user.id != request.user.id and request.user.has_perm('users.add_userban') %}
             {{ ban_link(profile.user, request.user) }}
           {% endif %}
