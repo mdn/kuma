@@ -76,6 +76,7 @@ CACHES = {
 }
 
 CACHEBACK_CACHE_ALIAS = 'memcache'
+PROD_DETAILS_CACHE_NAME = 'memcache'
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
