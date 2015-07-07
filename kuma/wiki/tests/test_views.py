@@ -323,6 +323,15 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get('%s?raw&summary' % d.get_absolute_url())
         eq_(resp.content, 'Foo bar <a href="http://example.com">baz</a>')
 
+    def test_footer_contributors(self):
+        d, r = doc_rev('some content')
+        resp = self.client.get(d.get_absolute_url())
+        page = pq(resp.content)
+        contributors = (page.find(":contains('Contributors to this page')")
+                            .parent())
+        # just checking if the contributor link is rendered
+        eq_(len(contributors.find('a')), 1)
+
     def test_revision_view_bleached_content(self):
         """Bug 821988: Revision content should be cleaned with bleach"""
         d, r = doc_rev("""
