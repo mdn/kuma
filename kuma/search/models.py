@@ -14,7 +14,7 @@ from taggit.managers import TaggableManager
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.search import WikiDocumentType
 
-from .jobs import AvailableFiltersJob
+from .jobs import AvailableFiltersJob, CommandFiltersJob
 from .managers import IndexManager, FilterManager
 
 
@@ -204,3 +204,10 @@ class Filter(models.Model):
 @receiver(models.signals.pre_delete, sender=Filter)
 def invalidate_filter_cache(sender, instance, **kwargs):
     AvailableFiltersJob().invalidate()
+    CommandFiltersJob().invalidate()
+
+
+@receiver(models.signals.post_save, sender=FilterGroup)
+@receiver(models.signals.pre_delete, sender=FilterGroup)
+def invalidate_filtergroup_cache(sender, instance, **kwargs):
+    CommandFiltersJob().invalidate()
