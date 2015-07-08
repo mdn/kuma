@@ -36,6 +36,7 @@ from kuma.attachments.models import Attachment
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.cache import memcache
 from kuma.core.fields import LocaleField
+from kuma.core.i18n import LANGUAGES_DICT
 from kuma.core.urlresolvers import reverse, split_path
 from kuma.search.decorators import register_live_index
 
@@ -1288,9 +1289,9 @@ Full traceback:
     def show_toc(self):
         return self.current_revision and self.current_revision.toc_depth
 
-    @property
+    @cached_property
     def language(self):
-        return settings.LANGUAGES_DICT[self.locale.lower()]
+        return LANGUAGES_DICT[self.locale.lower()]
 
     def get_absolute_url(self, ui_locale=None):
         """Build the absolute URL to this document from its full path"""

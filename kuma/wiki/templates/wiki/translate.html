@@ -19,8 +19,6 @@
 {% endblock %}
 
 {% block content %}
-  {% set language = settings.LANGUAGES_DICT[locale.lower()] %}
-
     <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="translate-document">
       {{ csrf() }}
       <input type="hidden" name="form" value="both" />
@@ -79,7 +77,6 @@
               {% endif %}
             {% endif %}
 
-            {% set default_locale = settings.LANGUAGES_DICT[settings.WIKI_DEFAULT_LANGUAGE.lower()] %}
             <div id="content-fields">
               <article class="approved text-content">
                 <header>
