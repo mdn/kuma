@@ -354,6 +354,20 @@ a.github-button {
             cursor: pointer;
         }
     }
+
+    .submenu-close {
+        display: none;
+        color: inherit;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 7px;
+        bidi-style(right, 10px, left, auto);
+
+        ${icon-selector} {
+            margin: 0;
+        }
+    }
 }
 
 .oauth-login-options {
@@ -367,14 +381,6 @@ a.github-button {
         border-color: rgba-fallback(rgba(255, 255, 255, 0.3));
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-
-        .submenu-close {
-            color: inherit;
-            margin: 0;
-            position: absolute;
-            top: 0px;
-            bidi-style(right, -6px, left, auto);
-        }
 
         .oauth-login-picker {
             display: block;
@@ -407,7 +413,6 @@ a.github-button {
 }
 
 .oauth-login-picker {
-    component-submenu-close();
     display: none;
     background: #fff;
     position: relative;
@@ -419,6 +424,7 @@ a.github-button {
         display: block;
         padding: $content-vertical-spacing $content-horizontal-spacing;
         position: relative;
+        color: $link-color !important;
 
         &:hover, &:active, &:focus {
             background: rgba-fallback(rgba($link-color, 0.1));
@@ -428,10 +434,6 @@ a.github-button {
     {$selector-icon} {
         background: none;
         bidi-style(margin-right, $icon-margin, margin-left, 0);
-    }
-
-    .submenu-close {
-        display: none;
     }
 }
 
@@ -547,6 +549,12 @@ a.github-button {
 
     .oauth-icon {
         display: none;
+    }
+
+    .oauth-login-options.active{
+        .submenu-close {
+            display: block;
+        }
     }
 }
 
