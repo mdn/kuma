@@ -30,7 +30,6 @@ class TestUserProfile(UserTestCase):
             twitter='http://twitter.com/lmorchard',
             github='http://github.com/lmorchard',
             stackoverflow='http://stackoverflow.com/users/lmorchard',
-            linkedin='https://www.linkedin.com/in/testuser',
             mozillians='https://mozillians.org/u/testuser',
             facebook='https://www.facebook.com/test.user'
         )
@@ -43,7 +42,6 @@ class TestUserProfile(UserTestCase):
         profile.websites.update(dict(
             github=test_sites['github'],
             stackoverflow=test_sites['stackoverflow'],
-            linkedin=test_sites['linkedin'],
             mozillians=test_sites['mozillians'],
             facebook=test_sites['facebook'],
         ))
@@ -59,6 +57,22 @@ class TestUserProfile(UserTestCase):
         p2.save()
         p3 = UserProfile.objects.get(user=user)
         eq_(test_sites, p3.websites)
+
+    def test_linkedin_urls(self):
+        user = self.user_model.objects.get(username='testuser')
+        profile = UserProfile.objects.get(user=user)
+
+        linkedin_urls = [
+            'https://in.linkedin.com/in/testuser',
+            'https://www.linkedin.com/in/testuser',
+            'https://www.linkedin.com/pub/testuser',
+        ]
+
+        for url in linkedin_urls:
+            profile.websites.update(dict(linkedin=url,))
+            profile.save()
+            new_profile = UserProfile.objects.get(user=user)
+            eq_(url, new_profile.websites['linkedin'])
 
     def test_irc_nickname(self):
         """We've added IRC nickname as a profile field.
