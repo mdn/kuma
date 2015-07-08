@@ -35,15 +35,16 @@ class TestWelcomeEmails(UserTestCase):
         eq_(expected_to, welcome_email.to)
         ok_(u'utm_campaign=welcome' in welcome_email.body)
 
-    @mock.patch('kuma.core.utils.strings_are_translated')
+    @mock.patch('kuma.users.tasks.strings_are_translated')
     def test_dont_send_untranslated_language_email(self,
                                                    strings_are_translated):
         strings_are_translated.return_value = False
         testuser = self.user_model.objects.get(username='testuser')
-        send_welcome_email(testuser.pk, 'tlh')  # Qapla'
+        send_welcome_email(testuser.pk, 'tlh')  # mev!
         eq_([], mail.outbox)
 
-        send_welcome_email(testuser.pk, 'de')  # Servus
+        strings_are_translated.return_value = True
+        send_welcome_email(testuser.pk, 'tlh')  # Qapla'!
         eq_(1, len(mail.outbox))
 
     def test_welcome_mail_for_verified_email(self):
