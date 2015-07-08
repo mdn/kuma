@@ -196,24 +196,9 @@ LOCALE_ALIASES = {
     'zh-Hant': 'zh-TW',
 }
 
-try:
-    DEV_LANGUAGES = [
-        loc.replace('_', '-') for loc in os.listdir(path('locale'))
-        if (os.path.isdir(path('locale', loc)) and
-            loc not in ['.svn', '.git', 'templates'])
-    ]
-    for pootle_dir in DEV_LANGUAGES:
-        if pootle_dir in DEV_POOTLE_PRODUCT_DETAILS_MAP:
-            DEV_LANGUAGES.remove(pootle_dir)
-            DEV_LANGUAGES.append(DEV_POOTLE_PRODUCT_DETAILS_MAP[pootle_dir])
-except OSError:
-    DEV_LANGUAGES = ('en-US',)
-
-PROD_LANGUAGES = MDN_LANGUAGES
-
-LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in PROD_LANGUAGES])
+LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in MDN_LANGUAGES])
 for requested_lang, delivered_lang in LOCALE_ALIASES.items():
-    if delivered_lang in PROD_LANGUAGES:
+    if delivered_lang in MDN_LANGUAGES:
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
 
 
@@ -229,35 +214,8 @@ def get_locales():
 
 LOCALES = get_locales()
 
-
-def lazy_langs():
-    """Override Django's built-in with our native names"""
-    from product_details import product_details
-    # for bug 664330
-    # from django.conf import settings
-    # langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
-    langs = PROD_LANGUAGES
-    return dict([(lang.lower(), product_details.languages[lang]['native'])
-                for lang in langs])
-
-LANGUAGES_DICT = lazy(lazy_langs, dict)()
 LANGUAGES = sorted(tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES]),
                    key=lambda lang: lang[0])
-
-
-# DEKI uses different locale keys
-def lazy_language_deki_map():
-    # for bug 664330
-    # from django.conf import settings
-    # langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
-    langs = PROD_LANGUAGES
-    lang_deki_map = dict([(i, i) for i in langs])
-    lang_deki_map['en-US'] = 'en'
-    lang_deki_map['zh-CN'] = 'cn'
-    lang_deki_map['zh-TW'] = 'zh_tw'
-    return lang_deki_map
-
-LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
 
 # List of MindTouch locales mapped to Kuma locales.
 #
