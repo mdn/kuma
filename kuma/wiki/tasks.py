@@ -120,7 +120,7 @@ def render_stale_documents(log=None):
 
     pre_task = acquire_render_lock.si()
     render_tasks = [render_document_chunk.si(pks)
-                    for pks in chunked(stale_pks, 10)]
+                    for pks in chunked(stale_pks, 5)]
     post_task = release_render_lock.si()
 
     chord_flow(pre_task, render_tasks, post_task).apply_async()
