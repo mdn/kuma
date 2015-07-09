@@ -5,7 +5,6 @@ import urllib
 
 import bleach
 import jinja2
-import pytz
 from babel import localedata
 from babel.dates import format_date, format_datetime, format_time
 from babel.numbers import format_decimal
@@ -162,19 +161,6 @@ def level_tag(message):
                                     strings_only=True))
 
 
-@library.filter
-def isotime(t):
-    """Date/Time format according to ISO 8601"""
-    if not hasattr(t, 'tzinfo'):
-        return
-    return _append_tz(t).astimezone(pytz.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-def _append_tz(t):
-    tz = pytz.timezone(settings.TIME_ZONE)
-    return tz.localize(t)
-
-
 @library.global_function
 def thisyear():
     """The current year."""
@@ -269,41 +255,44 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     if not isinstance(value, datetime.datetime):
         if isinstance(value, datetime.date):
             # Turn a date into a datetime
-            value = datetime.datetime.combine(value,
+            today = datetime.datetime.combine(value,
                                               datetime.datetime.min.time())
+            value = timezone.make_aware(today, timezone.get_default_timezone())
         else:
             # Expecting datetime value
             raise ValueError
 
-    default_tz = timezone(settings.TIME_ZONE)
-    tzvalue = default_tz.localize(value)
-
     user = context['request'].user
     try:
         if user.is_authenticated() and user.timezone:
-            user_tz = timezone(user.timezone)
-            tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
+            user_tz = user.timezone
+            value = user_tz.normalize(value.astimezone(user_tz))
     except AttributeError:
         pass
 
     locale = _babel_locale(_contextual_locale(context))
 
+    format_params = {
+        'locale': locale,
+        'tzinfo': value.tzinfo,
+    }
+
     # If within a day, 24 * 60 * 60 = 86400s
     if format == 'shortdatetime':
         # Check if the date is today
-        if value.toordinal() == datetime.date.today().toordinal():
-            formatted = _(u'Today at %s') % format_time(
-                tzvalue, format='short', locale=locale)
+        if value.toordinal() == timezone.now().toordinal():
+            formatted_time = format_time(value, format='short', **format_params)
+            formatted = _(u'Today at %s') % formatted_time
         else:
-            formatted = format_datetime(tzvalue, format='short', locale=locale)
+            formatted = format_datetime(value, format='short', **format_params)
     elif format == 'longdatetime':
-        formatted = format_datetime(tzvalue, format='long', locale=locale)
+        formatted = format_datetime(value, format='long', **format_params)
     elif format == 'date':
-        formatted = format_date(tzvalue, locale=locale)
+        formatted = format_date(value, locale=locale)
     elif format == 'time':
-        formatted = format_time(tzvalue, locale=locale)
+        formatted = format_time(value, **format_params)
     elif format == 'datetime':
-        formatted = format_datetime(tzvalue, locale=locale)
+        formatted = format_datetime(value, **format_params)
     else:
         # Unknown format
         raise DateTimeFormatError
@@ -311,7 +300,7 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     if output == 'json':
         return formatted
     return jinja2.Markup('<time datetime="%s">%s</time>' %
-                         (tzvalue.isoformat(), formatted))
+                         (value.isoformat(), formatted))
 
 
 @library.global_function
