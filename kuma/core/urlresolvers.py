@@ -5,6 +5,7 @@ from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse as django_reverse
 from django.utils.translation.trans_real import parse_accept_lang_header
 
+from waffle import switch_is_active
 
 # Thread-local storage for URL prefixes. Access with (get|set)_url_prefix.
 _locals = threading.local()
@@ -72,7 +73,7 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
     # trick.
     #
     # See apps/wiki/tests/test_middleware.py for a test exercising this hack.
-    if url.startswith('/docs/'):
+    if (not switch_is_active('dumb_doc_urls') and url.startswith('/docs/')):
         # HACK: Import here, because otherwise it's a circular reference
         from kuma.wiki.jobs import DocumentZoneURLRemapsJob
         # Work out a current locale, from some source.
