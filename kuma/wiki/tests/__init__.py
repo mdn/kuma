@@ -149,7 +149,7 @@ def normalize_html(input):
     return (kuma.wiki.content
             .parse(unicode(input))
             .filter(WhitespaceRemovalFilter)
-            .serialize())
+            .serialize(alphabetical_attributes=True))
 
 
 @nottest
