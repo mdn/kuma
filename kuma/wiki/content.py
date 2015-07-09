@@ -172,15 +172,18 @@ def extract_code_sample(id, src):
         sample = pq('<section>%s</section>' % section)
     else:
         # If no section, fall back to plain old ID lookup
-        sample = pq(src).find('#%s' % id)
+        sample = pq(src).find('[id="%s"]' % id)
+
+    selector_templates = (
+        '.%s',
+        # HACK: syntaxhighlighter (ab)uses the className as a
+        # semicolon-separated options list...
+        'pre[class*="brush:%s"]',
+        'pre[class*="%s;"]'
+    )
     for part in parts:
-        selector = ','.join(x % (part,) for x in (
-            '.%s',
-            # HACK: syntaxhighlighter (ab)uses the className as a
-            # semicolon-separated options list...
-            'pre[class*="brush:%s"]',
-            'pre[class*="%s;"]'
-        ))
+        selector = ','.join(selector_template % part
+                            for selector_template in selector_templates)
         src = sample.find(selector).text()
         if src is not None:
             # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
