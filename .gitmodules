@@ -28,6 +28,7 @@
 [submodule "vendor/src/django-memcached-hashring"]
 	path = vendor/src/django-memcached-hashring
 	url = git://github.com/jezdez/django-memcached-hashring.git
+	ignore = untracked
 [submodule "vendor/src/django-nose"]
 	path = vendor/src/django-nose
 	url = git://github.com/django-nose/django-nose.git
@@ -46,9 +47,11 @@
 [submodule "vendor/src/django-tidings"]
 	path = vendor/src/django-tidings
 	url = git://github.com/mozilla/django-tidings.git
+	ignore = untracked
 [submodule "vendor/src/django-timezones"]
 	path = vendor/src/django-timezones
 	url = git://github.com/brosner/django-timezones.git
+	ignore = untracked
 [submodule "vendor/src/django-waffle"]
 	path = vendor/src/django-waffle
 	url = git://github.com/jsocol/django-waffle.git
@@ -70,6 +73,7 @@
 [submodule "vendor/src/python-magic"]
 	path = vendor/src/python-magic
 	url = git://github.com/ahupp/python-magic.git
+	ignore = untracked
 [submodule "vendor/src/python-memcached"]
 	path = vendor/src/python-memcached
 	url = git://github.com/linsomniac/python-memcached.git
@@ -118,6 +122,7 @@
 [submodule "vendor/src/django-cacheback"]
 	path = vendor/src/django-cacheback
 	url = https://github.com/codeinthehole/django-cacheback.git
+	ignore = untracked
 [submodule "vendor/src/django-ratelimit"]
 	path = vendor/src/django-ratelimit
 	url = git://github.com/jsocol/django-ratelimit.git
