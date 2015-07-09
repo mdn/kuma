@@ -94,7 +94,8 @@ class Paginator(object):
 
 @library.filter
 def timesince(d, now=None):
-    """Take two datetime objects and return the time between d and now as a
+    """
+    Take two datetime objects and return the time between d and now as a
     nicely formatted string, e.g. "10 minutes".  If d is None or occurs after
     now, return ''.
 
@@ -106,7 +107,6 @@ def timesince(d, now=None):
     Adapted from django.utils.timesince to have better i18n (not assuming
     commas as list separators and including "ago" so order of words isn't
     assumed), show only one time unit, and include seconds.
-
     """
     if d is None:
         return u''
@@ -126,10 +126,7 @@ def timesince(d, now=None):
         (1, lambda n: ungettext('%(number)d second ago',
                                 '%(number)d seconds ago', n))]
     if not now:
-        if d.tzinfo:
-            now = datetime.datetime.now(get_default_timezone())
-        else:
-            now = datetime.datetime.now()
+        now = timezone.now()
 
     # Ignore microsecond part of 'd' since we removed it from 'now'
     delta = now - (d - datetime.timedelta(0, 0, d.microsecond))
