@@ -2,6 +2,8 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from kuma.wiki.tests import revision
+
+from ..helpers import gravatar_url
 from ..models import UserBan, UserProfile
 from . import profile, UserTestCase
 
@@ -88,8 +90,7 @@ class TestUserProfile(UserTestCase):
         user = self.user_model.objects.get(username='testuser')
         user.email = u"Someguy Dude\xc3\xaas Lastname"
         try:
-            profile = UserProfile.objects.get(user=user)
-            profile.gravatar
+            gravatar_url(user)
         except UnicodeEncodeError:
             self.fail("There should be no UnicodeEncodeError")
 
@@ -102,11 +103,10 @@ class TestUserProfile(UserTestCase):
         ok_(hasattr(profile_from_db, 'timezone'))
         ok_(str(profile_from_db.timezone) == 'US/Pacific')
 
-    def test_wiki_activity(self):
+    def test_wiki_revisions(self):
         user = self.user_model.objects.get(username='testuser')
-        profile = UserProfile.objects.get(user=user)
         rev = revision(save=True, is_approved=True)
-        ok_(rev.pk in profile.wiki_activity().values_list('pk', flat=True))
+        ok_(rev.pk in user.wiki_revisions().values_list('pk', flat=True))
 
 
 class BanTestCase(UserTestCase):

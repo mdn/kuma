@@ -1811,7 +1811,8 @@ class Revision(models.Model):
         else:
             return Document.objects.clean_content(self.content)
 
-    def get_previous(self):
+    @cached_property
+    def previous(self):
         """
         Returns the previous approved revision or None.
         """

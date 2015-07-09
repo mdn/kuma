@@ -113,12 +113,12 @@ def bugize_text(content):
 
 
 @register.function
-def format_comment(rev):
+def format_comment(rev, previous_revision=None):
     """ Massages revision comment content after the fact """
 
-    prev_rev = getattr(rev, 'previous_revision', None)
+    prev_rev = getattr(rev, 'previous_revision', previous_revision)
     if prev_rev is None:
-        prev_rev = rev.get_previous()
+        prev_rev = rev.previous
     comment = bugize_text(rev.comment if rev.comment else "")
 
     # If a page move, say so

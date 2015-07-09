@@ -640,22 +640,22 @@ class RevisionTests(UserTestCase):
         de_rev.clean()
         eq_(en_rev.document.current_revision, de_rev.based_on)
 
-    def test_get_previous(self):
-        """Revision.get_previous() should return this revision's document's
+    def test_previous(self):
+        """Revision.previous should return this revision's document's
         most recent approved revision."""
         rev = revision(is_approved=True, save=True)
-        eq_(None, rev.get_previous())
+        eq_(None, rev.previous)
         # wait a second so next revision is a different datetime
         time.sleep(1)
         next_rev = revision(document=rev.document, content="Updated",
                             is_approved=True)
         next_rev.save()
-        eq_(rev, next_rev.get_previous())
+        eq_(rev, next_rev.previous)
         time.sleep(1)
         last_rev = revision(document=rev.document, content="Finally",
                             is_approved=True)
         last_rev.save()
-        eq_(next_rev, last_rev.get_previous())
+        eq_(next_rev, last_rev.previous)
 
     @attr('toc')
     def test_show_toc(self):

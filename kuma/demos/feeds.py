@@ -13,6 +13,7 @@ import jingo
 
 from kuma.core.validators import valid_jsonp_callback_value
 from kuma.core.urlresolvers import reverse
+from kuma.users.helpers import gravatar_url
 
 from . import TAG_DESCRIPTIONS
 from .models import Submission
@@ -47,7 +48,8 @@ class SubmissionJSONFeedGenerator(SyndicationFeed):
                 'link', 'title', 'pubdate', 'author_name', 'author_link',
             ))
 
-            item_out['author_avatar'] = item['obj'].creator.profile.gravatar
+            if item['obj'].creator.email:
+                item_out['author_avatar'] = gravatar_url(item['obj'].creator)
 
             # Linkify the tags used in the feed item
             item_out['categories'] = dict(
