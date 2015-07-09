@@ -247,10 +247,11 @@ class ContentSectionTool(object):
         self.parser = html5lib.HTMLParser(tree=self.tree,
                                           namespaceHTMLElements=False)
 
-        self.serializer = html5lib.serializer.htmlserializer.HTMLSerializer(
-            omit_optional_tags=False, quote_attr_values=True,
-            escape_lt_in_attrs=True)
-
+        self._serializer = None
+        self._default_serializer_options = {
+            'omit_optional_tags': False, 'quote_attr_values': True,
+            'escape_lt_in_attrs': True}
+        self._serializer_options = None
         self.walker = html5lib.treewalkers.getTreeWalker("etree")
 
         self.src = ''
@@ -270,10 +271,19 @@ class ContentSectionTool(object):
         self.stream = self.walker(self.doc)
         return self
 
-    def serialize(self, stream=None):
+    def _get_serializer(self, **options):
+        soptions = self._default_serializer_options.copy()
+        soptions.update(options)
+        if not (self._serializer and self._serializer_options == soptions):
+            self._serializer = html5lib.serializer.htmlserializer.HTMLSerializer(
+                **soptions)
+            self._serializer_options = soptions
+        return self._serializer
+
+    def serialize(self, stream=None, **options):
         if stream is None:
             stream = self.stream
-        return u"".join(self.serializer.serialize(stream))
+        return u"".join(self._get_serializer(**options).serialize(stream))
 
     def __unicode__(self):
         return self.serialize()
