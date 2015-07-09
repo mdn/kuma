@@ -1,10 +1,9 @@
-from datetime import datetime
 import time
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
-from django.utils.text import slugify
 from django.utils import timezone
+from django.utils.text import slugify
 
 from html5lib.filters._base import Filter as html5lib_Filter
 from waffle.models import Flag
@@ -31,7 +30,7 @@ class WikiTestCase(KumaTestCase):
 def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
-    defaults = {'title': unicode(datetime.now()),
+    defaults = {'title': unicode(timezone.now()),
                 'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:

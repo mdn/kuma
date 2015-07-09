@@ -1,5 +1,4 @@
 import calendar
-from datetime import datetime
 import hashlib
 
 from django.conf import settings
@@ -70,7 +69,7 @@ def attachment_upload_to(instance, filename):
     #
     # The md5 hash here is of the full timestamp, down to the
     # microsecond, of when the path is generated.
-    now = datetime.now()
+    now = timezone.now()
     return "attachments/%(date)s/%(id)s/%(md5)s/%(filename)s" % {
         'date': now.strftime('%Y/%m/%d'),
         'id': instance.attachment.id,
