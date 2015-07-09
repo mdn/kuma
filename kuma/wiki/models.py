@@ -2,8 +2,8 @@ import hashlib
 import json
 import sys
 import traceback
-from datetime import datetime, timedelta
 from functools import wraps
+from datetime import timedelta
 
 import newrelic.agent
 import waffle
