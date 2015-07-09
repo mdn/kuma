@@ -2,6 +2,7 @@
 from urlparse import urljoin
 
 import bleach
+from cssselect.parser import SelectorSyntaxError
 from jinja2 import escape, Markup
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -664,8 +665,10 @@ class ContentSectionToolTests(UserTestCase):
         eq_(None, result['js'])
 
     def test_bug819999(self):
-        """Non-breaking spaces are turned to normal spaces in code sample
-        extraction."""
+        """
+        Non-breaking spaces are turned to normal spaces in code sample
+        extraction.
+        """
         doc_src = """
             <h2 id="bug819999">Bug 819999</h2>
             <pre class="brush: css">
@@ -680,6 +683,17 @@ class ContentSectionToolTests(UserTestCase):
         """
         result = kuma.wiki.content.extract_code_sample('bug819999', doc_src)
         ok_(result['css'].find(u'\xa0') == -1)
+
+    def test_bug1173170(self):
+        """
+        Make sure the colons in sample ids doesn't trip up the code
+        extraction due to their ambiguity with pseudo selectors
+        """
+        doc_src = """<pre id="Bug:1173170">Bug 1173170</pre>"""
+        try:
+            kuma.wiki.content.extract_code_sample('Bug:1173170', doc_src)
+        except SelectorSyntaxError:
+            self.fail("There should be no SelectorSyntaxError")
 
     def test_bugize_text(self):
         bad = 'Fixing bug #12345 again. <img src="http://davidwalsh.name" /> <a href="">javascript></a>'
