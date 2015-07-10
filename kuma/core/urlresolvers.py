@@ -5,7 +5,6 @@ from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse as django_reverse
 from django.utils.translation.trans_real import parse_accept_lang_header
 
-from waffle import switch_is_active
 
 # Thread-local storage for URL prefixes. Access with (get|set)_url_prefix.
 _locals = threading.local()
@@ -66,29 +65,6 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
         prefix = prefix or '/'
     url = django_reverse(viewname, urlconf=urlconf, args=args, kwargs=kwargs,
                          prefix=prefix, current_app=current_app)
-
-    # HACK: We rewrite URLs in apps/wiki/middleware.py, but don't have a
-    # concept for pluggable middleware in reverse() as far as I know. So, this
-    # is an app-specific override. ABSOLUTE_URL_OVERRIDES doesn't really do the
-    # trick.
-    #
-    # See apps/wiki/tests/test_middleware.py for a test exercising this hack.
-    if (not switch_is_active('dumb_doc_urls') and url.startswith('/docs/')):
-        # HACK: Import here, because otherwise it's a circular reference
-        from kuma.wiki.jobs import DocumentZoneURLRemapsJob
-        # Work out a current locale, from some source.
-        zone_locale = locale
-        if not zone_locale:
-            if prefixer:
-                zone_locale = prefixer.locale
-            else:
-                zone_locale = settings.WIKI_DEFAULT_LANGUAGE
-        # Get DocumentZone remaps for the current locale.
-        remaps = DocumentZoneURLRemapsJob().get(zone_locale)
-        for original_path, new_path in remaps:
-            if url.startswith(original_path):
-                url = url.replace(original_path, new_path, 1)
-                break
 
     if prefixer:
         return prefixer.fix(url)
