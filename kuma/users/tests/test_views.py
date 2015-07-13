@@ -462,6 +462,17 @@ class ProfileViewsTest(UserTestCase):
                 response.context['profile_form'].fields[field].label, basestring),
                 'Field %s is a string!' % field)
 
+    def test_bug_1174804(self):
+        """Test that the newsletter form field are safely rendered"""
+        testuser = self.user_model.objects.get(username='testuser')
+        self.client.login(username=testuser.username,
+                          password=TESTUSER_PASSWORD)
+
+        url = reverse('users.profile_edit', args=(testuser.username,))
+        response = self.client.get(url, follow=True)
+        doc = pq(response.content)
+        eq_(len(doc.find('input[name=newsletter-format]')), 2)
+
 
 class Test404Case(UserTestCase):
 
