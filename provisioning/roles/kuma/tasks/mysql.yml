@@ -1,4 +1,13 @@
 ---
+- name: Replace default init file
+  copy:
+    src: etc/init.d/mysql
+    dest: /etc/init.d/mysql
+    owner: root
+    group: root
+    mode: 0755
+    backup: yes
+
 - name: Find out the character sets directory
   shell: >
     /usr/bin/mysql -uroot -p{{ mysql_root_password }}
