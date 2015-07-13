@@ -18,6 +18,9 @@
                                 .attr('aria-hidden', true)
                               .end();
 
+    // Slide requires delay for designed effect
+    var openDelay = 10;
+    var closeDelay = 200;
 
     //  Usage: $('.compat-table').mozCompatTable();
     return jQuery.fn.mozCompatTable = function() {
@@ -164,14 +167,14 @@
                     } else {
                         $openCell.css('border-bottom', historyHeight + 'px solid transparent');
                     }
-                }, 10);
+                }, openDelay);
             }
 
             // Hides the history dropdown for a given cell
             function hideHistory(){
-                if(!$openCell) return;
+                var $history, $delayCloseCell;
 
-                var $history;
+                if(!$openCell) return;
 
                 $openCell.css('border-bottom', '').attr('aria-expanded', false);
                 $openCell.closest('tr').find('th, td').css('border-bottom', '');
@@ -184,8 +187,11 @@
                     $openCell.focus();
                 }
 
-                $openCell.removeClass('active');
-                $history.css('display', 'none');
+                $delayCloseCell = $openCell;
+                setTimeout(function() {
+                    $delayCloseCell.removeClass('active');
+                    $history.css('display', 'none');
+                }, closeDelay);
             }
         });
     };
