@@ -1,0 +1,26 @@
+/*
+Keyboard & screen reader skip link menu
+====================================================================== */
+
+#nav-access {
+    width: 100%;
+    position: absolute;
+    top: -20em;
+    z-index: 1001;
+
+    a {
+        background: rgba-fallback(rgba(255, 255, 255, 0.9));
+        padding: 12px 10px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        font-weight: bold;
+        text-align: center;
+
+        &:hover, &:focus {
+            box-shadow: 3px 3px 5px #aaa;
+            top: 20em;
+            text-decoration: none;
+        }
+    }
+}

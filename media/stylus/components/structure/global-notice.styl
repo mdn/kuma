@@ -1,0 +1,15 @@
+/*
+global notices (via soapbox)
+====================================================================== */
+.global-notice {
+    position: relative;
+    margin: 0 0 -1px;
+    background: $light-background-color;
+
+    .wrap {
+        set-smaller-font-size();
+        padding: 10px 24px;
+
+        prevent-last-child-spacing(p, margin-bottom);
+    }
+}

@@ -19,6 +19,14 @@
     position: relative;
     max-width: $max-width-default;
     add-center-spacing();
+
+    @media $media-query-mobile {
+        add-center-spacing(15px);
+    }
+
+    @media print {
+        remove-center-spacing();
+    }
 }
 
 /* simple hiding of elements */

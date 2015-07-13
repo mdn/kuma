@@ -1,0 +1,21 @@
+@require '../../includes/mixin_submenu';
+
+.submenu {
+    @extends $submenu;
+    submenu-set(160px, 1px, $light-background-color, $button-shadow-color);
+}
+
+@media $media-query-mobile {
+    .submenu-column,
+    .submenu-column:nth-child(even) {
+        bidi-style(border-left, 0, border-right, 0);
+        bidi-style(padding-left, 0, padding-right, 0);
+    }
+}
+
+@media $media-query-small-mobile {
+    .submenu-column {
+        width: auto;
+        display: block;
+    }
+}

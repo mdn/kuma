@@ -1,0 +1,32 @@
+/*
+Pagination
+====================================================================== */
+
+ol.pagination {
+    margin: $grid-spacing 0;
+    padding: 0 0 ($grid-spacing * 1.5) 0;
+
+    li {
+        bidi-value(float, left, right);
+        padding: 0 2px;
+
+        &.prev, &.prev a {
+            bidi-style(padding-left, 0, padding-right, inherit);
+        }
+
+        a {
+            bidi-value(float, left, right);
+            padding: 3px 8px 5px;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &.selected a {
+            background: #447bc4;
+            color: #fff;
+            border-radius: 5px;
+        }
+    }
+}

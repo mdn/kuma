@@ -12,11 +12,12 @@
         - language and admin menus
         - profile menu
     */
+
     (function() {
-         var $submenus = $('.js-submenu');
-         $submenus.prev('a, button').mozMenu();
-         $submenus.mozKeyboardNav();
-     })();
+        var $submenus = $('.js-submenu');
+        $submenus.prev('a, button').mozMenu();
+        $submenus.mozKeyboardNav();
+    })();
 
     /*
         Search animation

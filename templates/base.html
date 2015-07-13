@@ -87,29 +87,41 @@
 
     <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
-    <div class="header-login">
+    <div id="nav-sec">
         {% if not is_sphinx %}
-            {% include "includes/login.html" %}
+
+            {% if waffle.flag('header_tools') %}
+                  <ul>
+                  {% if user.is_authenticated() %}
+                      <li class="nav-tools"><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Tools') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+                      <div class="submenu submenu-cols-2 js-submenu" id="nav-tools-submenu">
+                        <div class="submenu-column">
+                          <div class="title">{{ _('Contribute to MDN') }}</div>
+                          <ul>
+                            <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Get started') }}</a></li>
+                            <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Review or localize docs') }}</a></li>
+                            <li><a href="{{ wiki_url('Inbox') }}">{{ _('Add a new page') }}</a></li>
+                          </ul>
+                        </div><div class="submenu-column last">
+                          <div class="title">{{ _('Site Tools') }}</div>
+                          <ul>
+                            <li><a href="{{ url('dashboards.revisions') }}">{{ _('Revision dashboard') }}</a></li>
+                            <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Documentation status') }}</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                   </li>{% endif %}<li>{% include "includes/login.html" %}</li>
+                </ul>
+            {% else %}
+              {% include "includes/login.html" %}
+            {% endif %}
         {% endif %}
     </div>
 
-    <nav id="main-nav" role="navigation"><ul><li><a href="{{ wiki_url('Zones') }}">{{ _('Zones') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+    <nav id="main-nav" role="navigation"><ul><li><a href="{{ wiki_url('Web') }}">{{ _('Web Platform') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
 
-        <div class="submenu js-submenu submenu-single" id="nav-zones-submenu">
-          <div class="submenu-column">
-            <ul>
-              <li><a href="{{ wiki_url('Mozilla/Add-ons') }}">{{ _('Add-ons') }}</a></li>
-              <li><a href="{{ wiki_url('Apps') }}">{{ _('App Center') }}</a></li>
-              <li><a href="{{ wiki_url('Firefox') }}">{{ _('Firefox') }}</a></li>
-              <li><a href="{{ wiki_url('Mozilla/Marketplace') }}">{{ _('Firefox Marketplace') }}</a></li>
-              <li><a href="{{ wiki_url('Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
-              <li><a href="{{ wiki_url('Persona') }}">{{ _('Persona') }}</a></li>
-            </ul>
-          </div>
-        </div>
-      </li><li><a href="{{ wiki_url('Web') }}">{{ _('Web Platform') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
-
-        <div class="submenu js-submenu" id="nav-platform-submenu">
+        <div class="submenu submenu-cols-2 js-submenu" id="nav-platform-submenu">
           <div class="submenu-column">
             <div class="title">{{ _('Technologies') }}</div>
             <ul>
@@ -134,7 +146,37 @@
             </ul>
           </div>
         </div>
-      </li><li><a href="{{ wiki_url('Tools') }}">{{ _('Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li><a href="{{ wiki_url('Mozilla/Connect') }}">{{ _('Connect') }}</a></li><li class="nav-search-link"><a href="{{ url('search') }}" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
+      </li><li><a href="{{ wiki_url('Zones') }}">{{ _('Mozilla Docs') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+        <div class="submenu js-submenu" id="nav-zones-submenu">
+          <div class="submenu-column">
+            <ul>
+              <li><a href="{{ wiki_url('Mozilla/Add-ons') }}">{{ _('Add-ons') }}</a></li>
+              <li><a href="{{ wiki_url('Firefox') }}">{{ _('Firefox') }}</a></li>
+              <li><a href="{{ wiki_url('Mozilla/Marketplace') }}">{{ _('Firefox Marketplace') }}</a></li>
+              <li><a href="{{ wiki_url('Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
+              <li><a href="{{ wiki_url('Persona') }}">{{ _('Persona') }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </li><li><a href="{{ wiki_url('Tools') }}">{{ _('Developer Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>{% if not waffle.flag('header_feedback') %}<li><a href="{{ wiki_url('Mozilla/Connect') }}">{{ _('Connect') }}</a></li>{% else %}<li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+        <div class="submenu js-submenu" id="nav-contact-submenu">
+          <div class="submenu-column">
+            <ul>
+                <li><a href="https://support.mozilla.org/">Help with Firefox<i aria-hidden="true" class="icon-external-link"></i></a></li>
+                <!-- TODO: add locale to URL -->
+                <li><a href="http://stackoverflow.com/">Help with web development<i aria-hidden="true" class="icon-external-link"></i></a></li>
+            </ul>
+            <ul>
+              <li><a href="{{ wiki_url('MDN/Community') }}">{{ _('Join the MDN community') }}</a></li>
+              <li><a href="https://bugzilla.mozilla.org/form.doc">{{ _('Report a content problem') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
+              <li><a href="https://bugzilla.mozilla.org/form.mdn">{{ _('Report a bug') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+      </li>{% endif %}<li class="nav-search-link"><a href="{{ url('search') }}" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">
           <label for="main-q" class="offscreen">{{ _('Search') }}</label>
           <input type="search" id="main-q" name="q" placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" />

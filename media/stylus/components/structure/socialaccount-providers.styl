@@ -1,0 +1,107 @@
+/*
+List of social account providers MDN has implemented displayed as
+a call to action to "Sign up with..." or "Connect account..."
+====================================================================== */
+
+.socialaccount-providers li {
+    margin: 0 $grid-spacing 0 0;
+    display: inline-block;
+
+    span.signin {
+        min-width: 140px;
+    }
+}
+
+a.persona-button, a.github-button {
+    border-radius: 3px;
+    z-index: 2;
+    display: inline-block;
+    font-weight: bold;
+
+    &:focus{
+        span{
+            text-decoration: underline;
+        }
+    }
+
+    span {
+        text-decoration: none;
+        display: block;
+        float: left;
+        set-font-size($base-font-size);
+        line-height: 24px;
+        color: white;
+        padding: 0 10px 0 20px;
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -12px;
+            width: 24px;
+            height: 24px;
+            z-index: 1;
+            vendorize(transform, scale(0.707) rotate(45deg));
+            border-radius: 0 3px 0 50px;
+        }
+
+        &.persona-icon, &.github-icon {
+            padding-left: 3px;
+            border-radius: 3px 0 0 3px;
+            create-gradient(#43a6e2, #287cc2);
+            height: 24px;
+
+            &:after {
+                create-gradient(#43a6e2, #287cc2, left top);
+            }
+
+            i {
+                position: relative;
+                top: 2px;
+                left: 5px;
+                width: 15px;
+                height: 15px;
+                display: inline-block;
+            }
+        }
+
+        &.signin {
+            text-shadow: 0px 1.5px 1px rgba(0, 0, 0, 0.35);
+            line-height: 23px;
+            padding-bottom 1px;
+
+            &:after {
+                z-index: 2;
+                create-gradient(#56565a, #3a3a3a, top left);
+            }
+
+            & {
+                create-gradient(#56565a, #3a3a3a);
+            }
+        }
+    }
+}
+
+a.persona-button {
+    i {
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAABjElEQVR4Ae3WQYQbURjA8ccwhBCGYU+5LiGUEkoJPZUQQk5LWJawLMuSUyhLCTnlVIZSQk6llKGUEIZSQsg1hBCWZZnTEMK/KqqyMcn7Zubd9vddh7+5fN9TenC54wchOws86iid0fmoQJ+IQ3NqWQRKLIg3wEoXKBNy3Hes5AGXFaf1kgdG6KkkC7xii54gWeAL+l7LAxZP6OvJA1UkZvLADRJbbGmgh0xRFrBZIfNBFqgjtZQFOsjZksAlUqHsD1wiZD7LAooWEksK8lUxRF8l2bLTNUm6rsfoqUsC8oUdpDmZA06JKKcJ2PziuFbaV8UZc+J1s3gXObGJDkoSkB//tyheApwziD3/U67IJw04NBmy5rSAe95IAmW6jJF6ZEQT53ggT5816Ux4Hxdo8kA2fNzDwDs2ZOc3uf1AiZBsfdsP+GSv9j9QxYQZ1r/AT8xo7AJFTPF3gQ6mbHH+BgLMuVDkiDDHU1Qwaa64xqSN4hNGKXzTgQZtPuLhETB9Nmv0TA/mKx4et7T/AHu690RA5bMsAAAAAElFTkSuQmCC') 0 0 no-repeat;
+        background-size: cover;
+    }
+}
+
+a.github-button {
+    span.github-icon {
+        create-gradient(#5d649a, #63397b);
+
+        &:after {
+            create-gradient(#5d649a, #63397b, left top);
+        }
+
+        {$selector-icon} {
+            margin-left: 0;
+            top: 0;
+            left: 8px;
+        }
+    }
+}

@@ -1,3 +1,5 @@
+@require '../../includes/mixin_submenu.styl';
+
 /* search navigator near article heading */
 .from-search {
     padding-left: ($grid-spacing * 2);
@@ -54,7 +56,7 @@
 }
 
 .from-search-toc {
-    component-submenu(200px, 1, $button-background, $button-shadow-color)
+    submenu-set(200px, 1px, $button-background, $button-shadow-color)
     set-smaller-font-size();
     border: 1px solid $button-shadow-color;
     left: 66px;

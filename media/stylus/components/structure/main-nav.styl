@@ -1,0 +1,186 @@
+@require '../../includes/mixin_submenu.styl';
+
+/*
+Main navigation menu
+====================================================================== */
+
+#main-nav {
+    > ul {
+        bidi-value(float, right, left);
+        bidi-value(text-align, right, left);
+        margin-top: 20px;
+        margin-bottom: $grid-spacing;
+
+        > li {
+            bidi-style(margin-left, 31px, margin-right, 0);
+            position: relative;
+            opacity: 1;
+            max-width: 1000px;
+            display: inline-block;
+            vendorize(transition-property, width);
+            vendorize(transition-duration, $default-animation-duration);
+            vendorize(transition-delay, $default-animation-duration);
+            bidi-value(text-align, left, right);
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            > a i {
+                opacity: 0.85;
+            }
+
+            > a, .search-trigger {
+                text-transform: uppercase;
+                font-weight: bold;
+                {$selector-site-font-fallback} & {
+                    font-weight: 600;
+                }
+            }
+
+            > a {
+                &:link, &:visited, &:hover, &:active {
+                    text-decoration: none;
+                }
+            }
+
+            > a, .search-wrap {
+                padding: 4px 8px;
+            }
+        }
+    }
+
+    &.expand {
+        > ul > li:not(:last-child) {
+            opacity: 0;
+            width: 0;
+            max-width: 0;
+            overflow: hidden;
+            padding: 0;
+            vendorize(transition-delay, 0);
+        }
+    }
+
+    .nav-search-link {
+        display: none;
+
+        {$selector-icon} {
+            margin: 0;
+        }
+    }
+
+    .submenu {
+        $submenu-width = 180px;
+        submenu-set(180px, 5px, #fff, $text-color);
+
+        @media $media-query-tablet-and-up {
+            bidi-value(left, auto, 50%);
+            bidi-value(right, 50%, auto);
+            margin-right: (($submenu-width / 2 ) + $grid-spacing) * -1;
+
+            &:before, &:after {
+                bidi-style(left, 98px, right, auto);
+            }
+
+            &.submenu-cols-2 {
+                margin-right: ($submenu-width + $grid-spacing) * -1;
+
+                &:before, &:after {
+                    bidi-style(left, 200px, right, auto);
+                }
+            }
+        }
+
+        @media $media-query-mobile {
+
+            & {
+                bidi-style(left, auto, right, auto);
+                bidi-style(right, auto, left, auto);
+
+                &:before, &:after {
+                    bidi-style(left, 10px, right, auto);
+                }
+            }
+        }
+
+    }
+
+}
+
+
+/* custom nav menu movement */
+@media $media-query-navigation-break {
+
+    #main-nav {
+        > ul {
+            /* drop under logo, take full width */
+            width: auto;
+            clear: both;
+
+            > li {
+                vendorize(transition-property, none);
+                bidi-style(margin-left, 21px, margin-right, 0);
+
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}
+
+
+/* break nav into blocks (own line) */
+@media $media-query-navigation-block {
+
+    #main-nav {
+        > ul {
+            float: none;
+            bidi-value(text-align, left, right);
+            /* expand the container by the width of the margins
+               and padding on the items it contains */
+            margin-left: ($content-horizontal-spacing) * -1;
+            margin-right: ($content-horizontal-spacing) * 2 * -1;
+
+            > li {
+                bidi-value(margin, $content-vertical-spacing $content-horizontal-spacing $content-vertical-spacing 0, $content-vertical-spacing 0 $content-vertical-spacing $content-horizontal-spacing);
+
+                &.nav-search-link {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}
+
+
+/* tablet updates */
+@media $media-query-tablet {
+
+    #main-nav {
+        > ul {
+            > li {
+                > a {
+                    i {
+                        set-larger-font-size();
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media $media-query-small-mobile {
+
+    #main-nav.expand {
+        ul {
+            > li:not(:last-child) {
+                width: auto;
+                max-width: none;
+                vendorize(transition-property, none);
+                overflow: visible;
+            }
+        }
+    }
+}

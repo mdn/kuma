@@ -1,0 +1,151 @@
+/* configurable declarations for the submenu extends */
+submenu-set($menu-width, $border-width, $background-color, $arrow-border-color) {
+
+    & {
+        width: $menu-width;
+        border-top: $border-width solid $arrow-border-color;
+        background: $background-color;
+    }
+
+    &:before {
+        border-bottom-color: $background-color;
+        top: -18px;
+    }
+    &:after {
+        border-bottom-color: $arrow-border-color;
+        top: (-19px - $border-width);
+    }
+
+    ul + ul {
+        border-top: 1px dotted $arrow-border-color;
+    }
+
+    /* columns */
+    @media $media-query-tablet-and-up {
+        /* modifications for second column */
+        &.submenu-cols-2 {
+            width: ($menu-width * 2) + $grid-spacing;
+
+            .submenu-column {
+                width: ((($menu-width * 2) - (2 * $grid-spacing) - 1) / 2) + ($grid-spacing / 2);
+            }
+        }
+    }
+
+    @media $media-query-mobile {
+        .submenu-column + .submenu-column {
+            margin-top: ($grid-spacing / 2);
+        }
+    }
+
+    /* media queries */
+    @media $media-query-small-mobile {
+        & {
+            padding-top: ($grid-spacing * 1.5);
+            width: auto;
+        }
+    }
+}
+
+/* submenu */
+$submenu {
+
+    position: absolute;
+    top: 40px;
+    bidi-style(left, auto, right, 0);
+    bidi-style(right, 0, left, auto);
+    z-index: 3;
+    display: none;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+    padding: $grid-spacing;
+
+    /* arrow */
+    generate-arrow();
+    &:before {
+        position: absolute;
+        z-index: 2;
+        bidi-style(left, auto, right, 10px);
+        bidi-style(right, 10px, left, auto);
+    }
+
+    &:after {
+        position: absolute;
+        z-index: 1;
+        bidi-style(left, auto, right, 10px);
+        bidi-style(right, 10px, left, auto);
+    }
+
+    /* close button */
+    component-submenu-close();
+
+    /* lists */
+    ul + ul {
+        margin-top: ($grid-spacing / 2);
+        padding-top: ($grid-spacing / 2);
+    }
+
+    /* links */
+    reverse-link-decoration();
+    a {
+        set-smaller-font-size();
+        padding: 5px 0;
+        display: block;
+
+        &:link, &:visited, &:hover, &:active {
+            /* links should be link coloured, this could be moved
+               into submenu-set if we ever need them to be something
+               that stands out better on the configurable background */
+            color: $link-color !important;
+        }
+    }
+
+    /* for language menu */
+    bdi {
+        bidi-value(text-align, left, right);
+    }
+
+    /* columns */
+    @media $media-query-tablet-and-up {
+        .submenu-column {
+            vertical-align: text-top;
+            width: 100%;
+            min-height: 90px;
+            display: inline-block;
+
+            &:nth-child(even) {
+                bidi-style(margin-left, $grid-spacing, margin-right, 0);
+                bidi-style(border-left, 1px dotted #d4dde4, border-right, 0);
+                bidi-style(padding-left, $grid-spacing, padding-right, 0);
+            }
+        }
+    }
+
+    /* close button */
+    .submenu-close {
+        display: none;
+        position: absolute;
+        top: 0;
+        margin: 0;
+        /* Too many global styles working on `button` so !importatn
+           I don't feel too bad about using it here though
+           since this button should have a bit of size and the
+           rabbit hole that lead me here is pleanty deep enough */
+        padding: 10px !important;
+        bidi-style(right, 0, left, auto);
+        color: inherit;
+
+        i {
+            margin: 0;
+        }
+
+        @media $media-query-tablet {
+            & {
+                display: block;
+            }
+        }
+    }
+}
+
+
+
+
