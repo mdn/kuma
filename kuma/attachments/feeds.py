@@ -16,7 +16,7 @@ class AttachmentsFeed(DocumentsFeed):
         return item.title
 
     def item_description(self, item):
-        if item.previous is None:
+        if item.get_previous() is None:
             return '<p>Created by: %s</p>' % item.creator.username
         return "<p>Edited by %s: %s" % (item.creator.username, item.comment)
 
