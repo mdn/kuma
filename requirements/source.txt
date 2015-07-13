@@ -85,8 +85,7 @@ django-memcached-hashring==0.1.2
 
 django-nose==1.4.1
 
-# FIXME: Heavily outdated
-djangorestframework==2.3.8
+djangorestframework==2.4.6
 
 django-smuggler==0.6.0
 
