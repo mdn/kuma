@@ -173,7 +173,7 @@
                       <h3><a href="{{ revision.document.get_absolute_url() }}">{{ revision.document.title }}</a></h3>
                       <ul class="activity-actions">
                           <li><a href="{{ url('wiki.edit_document', revision.document.slug, locale=revision.document.locale) }}" class="edit">{{ _("Edit page") }}</a></li>
-                          <li>{% if revision.previous %}<a href="{{ url('wiki.compare_revisions', revision.document.slug, locale=revision.document.locale) }}?from={{ revision.previous.id }}&amp;to={{ revision.id }}" class="diff">{{ _("View complete diff") }}</a>{% endif %}</li>
+                          <li>{% if revision.previous %}<a href="{{ url('wiki.compare_revisions', revision.document.slug, locale=revision.document.locale) }}?from={{ revision.previous.id }}&amp;to={{ revision.id }}" rel="nofollow, noindex" class="diff">{{ _("View complete diff") }}</a>{% endif %}</li>
                           <li><a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="history">{{ _("View page history") }}</a></li>
                       </ul>
                   </th>
