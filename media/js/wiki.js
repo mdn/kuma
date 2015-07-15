@@ -518,10 +518,11 @@
         $contributors.on('click', 'a', function(e) {
             var newTab = (e.metaKey || e.ctrlKey);
             var href = this.href;
+            var index = $(this).parent().index() + 1;
             var data = {
                 category: 'Top Contributors',
                 action: 'Click position',
-                label: href
+                label: index
             };
 
             if (newTab) {
