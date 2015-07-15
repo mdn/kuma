@@ -84,6 +84,7 @@
 
         $('#tagit-interests').tagit({
             availableTags: window.INTEREST_SUGGESTIONS,
+            allowSpaces: true,
             singleField: true,
             singleFieldNode: $('#id_profile-interests'),
             onTagAdded: rebuildExpertiseTaglist,
