@@ -50,6 +50,12 @@ draw-grid();
         text-indent: -9999px;
         overflow: hidden;
     }
+
+    a {
+        &:link, &:visited, &:hover, &:active {
+            color: $menu-link-color;
+        }
+    }
 }
 
 #tabzilla {
@@ -132,7 +138,6 @@ draw-grid();
 
             > a {
                 &:link, &:visited, &:hover, &:active {
-                    color: $menu-link-color;
                     text-decoration: none;
                 }
             }
@@ -141,13 +146,24 @@ draw-grid();
                 padding: 4px 8px;
             }
         }
+    }
 
-        .nav-search-link {
-                display: none;
+    &.expand {
+        > ul > li:not(:last-child) {
+            opacity: 0;
+            width: 0;
+            max-width: 0;
+            overflow: hidden;
+            padding: 0;
+            vendorize(transition-delay, 0);
+        }
+    }
 
-            {$selector-icon} {
-                margin: 0;
-            }
+    .nav-search-link {
+        display: none;
+
+        {$selector-icon} {
+            margin: 0;
         }
     }
 
@@ -181,17 +197,6 @@ draw-grid();
 
         &:before, &:after {
             bidi-style(left, 98px, right, auto);
-        }
-    }
-
-    &.expand {
-        > ul > li:not(:last-child) {
-            opacity: 0;
-            width: 0;
-            max-width: 0;
-            overflow: hidden;
-            padding: 0;
-            vendorize(transition-delay, 0);
         }
     }
 }
@@ -691,6 +696,17 @@ a.github-button {
     #main-header {
         .logo {
             width: 44px;
+        }
+    }
+
+    #main-nav.expand {
+        ul {
+            > li:not(:last-child) {
+                width: auto;
+                max-width: none;
+                vendorize(transition-property, none);
+                overflow: visible;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
     create-gradient-background($homepage-background-color, true);
     use-white-logo();
     remove-main-spacing();
-    override-main-nav-color($blue-background-text-color);
+    override-main-header-color($blue-background-text-color);
 
     #main-header {
         border-bottom-color: rgba-fallback(rgba(255, 255, 255, 0.2));
@@ -51,7 +51,6 @@
     }
 
     .zone-landing-header-preview {
-        color: $blue-background-text-color;
         margin-top: $grid-spacing;
 
         .column-strip {
@@ -91,6 +90,7 @@
 /* the zone landing page masthead    */
 .zone-landing-header {
     position: relative;
+    color: $blue-background-text-color;
 
     > .center {
         padding-top: $first-content-top-padding;
