@@ -31,7 +31,7 @@ define([
         'Changing the footer\'s language selector changes locale via URL': function() {
 
             return this.remote
-                        .findById('language')
+                        .findByCssSelector('#language')
                         .moveMouseTo(5, 5)
                         .click()
                         .type(['e', keys.RETURN])

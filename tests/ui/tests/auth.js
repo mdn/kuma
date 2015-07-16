@@ -94,13 +94,13 @@ define([
                                                 .click()
                                                 .then(function() {
                                                     return remote
-                                                                .findById('edit-profile')
+                                                                .findByCssSelector('#edit-profile')
                                                                 .click()
                                                                 .end()
-                                                                .findByCssSelector('.fm-submit button[type=submit]')
+                                                                .findByCssSelector('.submission button[type=submit]')
                                                                 .click()
                                                                 .end()
-                                                                .findByCssSelector('.memberSince')
+                                                                .findByCssSelector('.profile-since')
                                                                 .click() // Just ensuring the element is there
                                                                 .end()
                                                                 .findByCssSelector('.oauth-logged-in-signout')
@@ -108,7 +108,7 @@ define([
                                                                 .end()
                                                                 .findByCssSelector('.oauth-login-container')
                                                                 .then(dfd.callback(function() {
-                                                                    assert.isTrue(true, 'User can sign out without problems');
+                                                                    assert.ok('User can sign out without problems');
                                                                 }));
                                                 });
                                 });
@@ -118,7 +118,6 @@ define([
 
             return dfd;
         },
-
         'Clicking on the GitHub icon initializes GitHub login process': function() {
 
             return this.remote

@@ -59,7 +59,9 @@ define(['./_tests'], function(tests) {
         tunnelOptions: {
             hostname: '127.0.0.1',
             port: 4444
-        }
+        },
+
+        reporters: 'Pretty'
     };
 
 });

@@ -66,7 +66,7 @@ define([
                         .then(function(handles) {
 
                             return remote.switchToWindow(handles[1])
-                                .findById('authentication_email')
+                                .findByCssSelector('#authentication_email')
                                 .then(function() {
 
                                     // Needing do perform this "hack" instead of polling for element isDisplayed()
@@ -74,29 +74,49 @@ define([
                                     // return poll.until(element, 'isDisplayed')
                                     return remote.executeAsync(function(username, done) {
 
+                                        // If the Persona window pitches the "recently signed in accounts" list,
+                                        // click "this is not me" to get red of it and start the real login process
+                                        var notMeInterval = setInterval(function() {
+                                            var notMeButtons = document.querySelector('.thisIsNotMe');
+                                            if(notMeButtons) {
+                                                notMeButtons.click();
+                                                clearInterval(notMeInterval);
+                                            }
+                                        }, 100);
+
                                         // Delete some nodes that could get in our way (overlays)
                                         ['load', 'wait', 'error', 'delay'].forEach(function(id) {
-                                            var node = document.getElementById(id);
+                                            var node = document.querySelector('#' + id);
                                             node.parentNode.removeChild(node);
                                         });
 
                                         // Provide the email address via JS, more reliable than selenium's click()
                                         var interval = setInterval(function() {
-                                            if(document.getElementById('authentication_email').offsetHeight) {
-                                                document.getElementById('authentication_email').value = username;
+                                            var emailField = document.querySelector('#authentication_email');
+                                            var isStartButton = document.querySelector('button.isStart');
+
+                                            if(emailField.offsetHeight) {
+                                                emailField.value = username;
                                                 clearInterval(interval);
-                                                done();
+
+                                                // Delay to let the button enable itself `button.isStart`
+
+                                                interval = setInterval(function() {
+                                                    if(isStartButton.offsetHeight && !isStartButton.disabled) {
+                                                        clearInterval(interval);
+                                                        done();
+                                                    }
+                                                }, 200);
                                             }
-                                        }, 200);
+                                        }, 100);
                                     }, [username]);
                                 })
                                 .end()
                                 .findByCssSelector('button.isStart')
-
                                 // Using the [ENTER] key is more reliable than selenium's click()
                                 .type([keys.RETURN])
                                 .end()
-                                .findById('authentication_password')
+                                .findByCssSelector('#authentication_password')
                                 .then(function() {
 
                                     // Needing do perform this "hack" instead of polling for element isDisplayed()
@@ -106,8 +126,10 @@ define([
 
                                         // Provide the password via JS, more reliable than selenium's click()
                                         var interval = setInterval(function() {
-                                            if(document.getElementById('authentication_password').offsetHeight) {
-                                                document.getElementById('authentication_password').value = password;
+                                            var passworldField = document.querySelector('#authentication_password');
+
+                                            if(passworldField.offsetHeight) {
+                                                passworldField.value = password;
                                                 clearInterval(interval);
 
                                                 var button = document.querySelector('button.isTransitionToSecondary');
@@ -160,7 +182,7 @@ define([
             username = username || this.personaUsername;
             password = password || this.personaPassword;
 
-            self.openLoginWidget(remote).then(function() {
+            this.openLoginWidget(remote).then(function() {
                 self.completePersonaWindow(remote, username, password, dfd.resolve);
             });
 
@@ -169,7 +191,6 @@ define([
 
         completePersonaLogout: function(remote) {
             // Completes a "hard" logout of Persona via persona.org
-
             return remote
                         .get('https://login.persona.org/')
                         .execute('return jQuery("a.signOut").click();');

@@ -37,68 +37,73 @@ define([
                         .findByCssSelector('#main-nav a')
                         .moveMouseTo(5, 5)
                         .end()
-                        .findById('nav-zones-submenu')
+                        .findByCssSelector('#nav-platform-submenu')
                         .then(function(element) {
                             return poll.until(element, 'isDisplayed').then(function() {
                                 // Polling proves it's true :)
-                                assert.isTrue(true);
+                                assert.isTrue(true, 'Zone submenu is displayed!');
                             });
                         });
 
         },
 
         'The header search box expands and contracts correctly': function() {
-            // Possible ToDo:  Move click() call after the transitionend event listener
 
             var remote = this.remote;
-            var homeSearchBoxId = 'home-q';
             var originalWidth;
 
-            var transitionEndCallback = function() {
-                return remote.executeAsync(function(done) {
-                    var element = document.getElementById('main-q');
-                    var eventType = 'transitionend';
-
-                    var ev = element.addEventListener(eventType, function(){
-                        element.removeEventListener(eventType, ev);
-                        done();
-                    });
+            var transitionEvent = function(done) {
+                var element = document.querySelector('#main-q');
+                element.addEventListener('transitionend', function(e) {
+                    if(e.propertyName === 'width') {
+                        element.classList.toggle('boo');
+                    }
                 });
-            }
+                done();
+            };
+
+            var transitionSniffer = function(hope, done) {
+                var interval = setInterval(function() {
+                    if(document.querySelector('#main-q').classList.contains('boo') === hope) {
+                        clearInterval(interval);
+                        done();
+                    }
+                }, 200);
+            };
 
             return remote
-                            .findById(searchBoxId)
+                            .executeAsync(transitionEvent)
+                            .findByCssSelector('#' + searchBoxId)
                             .getSize()
                             .then(function(size) {
                                 originalWidth = size.width;
                             })
-                            .click() // ToDo:  Will calling click first cause a timing issue?
-                            .then(transitionEndCallback)
-                            .findById(searchBoxId)
+                            .moveMouseTo(5, 5)
+                            .click()
+                            .end()
+                            .executeAsync(transitionSniffer, [true])
+                            .findByCssSelector('#' + searchBoxId)
                             .getSize()
                             .then(function(newSize) {
-                                assert.isTrue(newSize.width > originalWidth);
+                                assert.isTrue(newSize.width > originalWidth, 'The new width (' + newSize.width + ') is larger than original width (' + originalWidth + ')');
                             })
                             .end()
-                            .then(function() {
-                                return remote
-                                            .findById(homeSearchBoxId)
-                                            .click() // ToDo:  Will calling click first cause a timing issue?
-                                            .end()
-                                            .then(transitionEndCallback)
-                                            .findById(searchBoxId)
-                                            .getSize()
-                                            .then(function(newSize) {
-                                                assert.equal(newSize.width, originalWidth);
-                                            });
+                            .findByCssSelector('body')
+                            .moveMouseTo(5, 5)
+                            .click()
+                            .end()
+                            .executeAsync(transitionSniffer, [false])
+                            .findByCssSelector('#' + searchBoxId)
+                            .getSize()
+                            .then(function(newSize) {
+                                assert.equal(newSize.width, originalWidth, 'The new width (' + newSize.width + ') is equal to the original width (' + originalWidth + ')');
                             });
-
         },
 
         'Pressing [ENTER] submits the header search box': function() {
 
             return this.remote
-                            .findById(searchBoxId)
+                            .findByCssSelector('#' + searchBoxId)
                             .click()
                             .type(['css', keys.RETURN])
                             .getCurrentUrl()
@@ -111,7 +116,7 @@ define([
 
             return this.remote.executeAsync(function(done) {
                             var interval = setInterval(function() {
-                                if(document.getElementById('tabzilla-panel')) {
+                                if(document.querySelector('#tabzilla-panel')) {
                                     clearInterval(interval);
                                     done();
                                 }

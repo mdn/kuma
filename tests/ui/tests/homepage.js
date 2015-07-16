@@ -36,7 +36,7 @@ define([
             var term = 'Hello';
 
             return this.remote
-                        .findById(Page.searchBoxId)
+                        .findByCssSelector('#' + Page.searchBoxId)
                         .click()
                         .type(term)
                         .getProperty('value')
@@ -82,7 +82,7 @@ define([
                             windowSize = size;
                         })
                         .setWindowSize(config.mediaQueries.mobile, 400)
-                        .findById(Page.searchBoxId)
+                        .findByCssSelector('#' + Page.searchBoxId)
                         .isDisplayed()
                         .then(function(bool) {
                             assert.isFalse(bool);

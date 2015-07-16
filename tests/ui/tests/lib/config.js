@@ -20,7 +20,7 @@ define(['intern'], function(intern) {
 
         // Set the default browser dimentions
         defaultWidth: 1240,
-        defaultHeight: 500,
+        defaultHeight: 800,
 
         // Important media queries
         mediaQueries: {

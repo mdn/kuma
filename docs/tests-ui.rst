@@ -16,7 +16,7 @@ Installing Dependencies
 
 Do *not* install Intern globally -- path issues may occur.
 
-Firefox appears to work out of the box, but `Chrome <https://code.google.com/p/selenium/wiki/ChromeDriver>`_ and `Safari <https://code.google.com/p/selenium/wiki/SafariDriver>`_ drivers must be downloaded and installed separately.
+Firefox appears to work out of the box, but `Chrome <https://sites.google.com/a/chromium.org/chromedriver/>`_ and `Safari <https://code.google.com/p/selenium/wiki/SafariDriver>`_ drivers must be downloaded and installed separately.
 
 Running Tests
 -------------
@@ -32,17 +32,17 @@ Running Tests
 
 The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely:
 
-* `b` to set which browsers to run in (ex: `b=chrome,firefox`)
-* `t` for which test suites to run (ex: `t=wiki,home`)
+* `b` to set which browsers to run in (ex: `b=chrome,firefox`) - omit and all browsers will run
+* `t` for which test suites to run (ex: `t=wiki,home`) - omit and all tests will run
 * `u` to provide a username for Persona
 * `p` to provide a password for Persona
 * `d` for which domain to run on (ex: `developer.allizom.org`)
-* `descructive=true` to signal real docs can be created (do not run this on production)
+* `destructive=true` to signal real docs can be created (do not run this on production)
 * `wd` which represents the slug of an existing article to test (ex: `My_Test_Doc`)
 
 An example::
 
-    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309 wd='TestDoc'
+    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309 wd='TestDoc' destructive=true
 
 The user credentials must be Persona-only (not GMail or Mozilla LDAP lookups).  User credentials are the only required custom command line arguments.
 
