@@ -662,7 +662,6 @@ MINIFY_BUNDLES = {
             'js/analytics.js',
             'js/main.js',
             'js/auth.js',
-            'js/social.js',
             'js/fonts.js',
         ),
         'home': (
@@ -676,6 +675,10 @@ MINIFY_BUNDLES = {
         'profile': (
             'js/profile.js',
             'js/moz-jquery-plugins.js',
+        ),
+        'document': (
+            'js/social.js',
+            'js/helpfulness.js',
         ),
         'demostudio': (
             'js/libs/jquery.hoverIntent.minified.js',

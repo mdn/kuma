@@ -416,4 +416,7 @@
       {# This can be removed once the social network button multivariate test is completed. #}
       mdn.optimizely.push(['activate', 2796520257]);
   </script>
+  {% if waffle.flag('share_links') or waffle.flag('helpfulness') %}
+    {{ js('document') }}
+  {% endif %}
 {% endblock %}
