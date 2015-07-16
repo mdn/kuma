@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import elasticsearch
 from nose.tools import eq_
 from . import ElasticTestCase
@@ -153,6 +154,21 @@ class ViewTests(ElasticTestCase):
             self.assertContains(response,
                                 'Search is temporarily unavailable',
                                 status_code=200)
+
+    def test_unicode_exception(self):
+        class UnicodeDecodeErrorSearchView(SearchView):
+            filter_backends = ()
+
+            def list(self, *args, **kwargs):
+                # willfully causing a UnicodeDecodeError
+                return 'coöperative'.encode('ascii')
+
+        view = UnicodeDecodeErrorSearchView.as_view()
+        request = self.get_request('/en-US/search')
+        response = view(request)
+        self.assertContains(response,
+                            'Something went wrong with the search query',
+                            status_code=404)
 
     def test_unhandled_exceptions(self):
         class RealExceptionSearchView(SearchView):
