@@ -14,6 +14,9 @@ log = logging.getLogger('kuma.search.utils')
 SEARCH_DOWN_DETAIL = _('Search is temporarily unavailable. '
                        'Please try again in a few minutes.')
 
+SEARCH_ERROR_DETAIL = _('Something went wrong with the search query. '
+                        'Please try again in a few minutes.')
+
 
 class QueryURLObject(URLObject):
 
@@ -72,13 +75,17 @@ def search_exception_handler(exc):
     # to get the standard error response.
     response = exception_handler(exc)
 
-    if (response is None and
-            isinstance(exc, elasticsearch.ElasticsearchException)):
-        # FIXME: This really should return a 503 error instead but Zeus
-        # doesn't let that through and displays a generic error page in that
-        # case which we don't want here
-        log.error('Elasticsearch exception: %s' % exc)
-        return Response({'error': SEARCH_DOWN_DETAIL},
-                        status=status.HTTP_200_OK)
+    if response is None:
+        if isinstance(exc, elasticsearch.ElasticsearchException):
+            # FIXME: This really should return a 503 error instead but Zeus
+            # doesn't let that through and displays a generic error page in that
+            # case which we don't want here
+            log.error('Elasticsearch exception: %s' % exc)
+            return Response({'detail': SEARCH_DOWN_DETAIL},
+                            status=status.HTTP_200_OK)
+        elif isinstance(exc, UnicodeDecodeError):
+            log.error('UnicodeDecodeError exception: %s' % exc)
+            return Response({'detail': SEARCH_ERROR_DETAIL},
+                            status=status.HTTP_404_NOT_FOUND)
 
     return response
