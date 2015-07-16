@@ -3,8 +3,8 @@
     // this feature requires localStorage
     if (('localStorage' in win)) {
         var ignore = localStorage.getItem('helpful-ignore') === 'true'; // true if ever clicked ignore
-        var asked_recently = parseInt(localStorage.getItem(doc.location + '#answered-helpful'), 10) > Date.now();
-        if (!ignore && !asked_recently) {
+        var askedRecently = parseInt(localStorage.getItem(doc.location + '#answered-helpful'), 10) > Date.now();
+        if (!ignore && !askedRecently) {
             // ask about helpfulness after 1 min
             setTimeout(inquire, 60000);
         }
@@ -42,7 +42,7 @@
         });
 
         // create a dropdown in case the page is unhelpful
-        var unhelpful_options = [
+        var unhelpfulOptions = [
             {val: 'Translate', text: gettext('Translate it into my language')},
             {val: 'Make-Simpler', text: gettext('Make explanations clearer')},
             {val: 'Needs-More-Info', text: gettext('Add more details')},
@@ -52,7 +52,7 @@
         var $select = $('<select />').attr({
             id: 'helpful-detail'
         }).append($('<option>').attr('selected', 'selected').text(gettext('Choose one...')));
-        $(unhelpful_options).each(function() {
+        $(unhelpfulOptions).each(function() {
             $select.append($('<option>').attr('value', this.val).text(this.text));
         });
 

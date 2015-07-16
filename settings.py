@@ -676,8 +676,10 @@ MINIFY_BUNDLES = {
             'js/profile.js',
             'js/moz-jquery-plugins.js',
         ),
-        'document': (
+        'social': (
             'js/social.js',
+        ),
+        'helpfulness': (
             'js/helpfulness.js',
         ),
         'demostudio': (
