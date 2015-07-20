@@ -1,0 +1,24 @@
+/*
+list item in #main-nav that contains the search form
+====================================================================== */
+
+/* needs #main-nav prefix to over-ride specificity of other declarations */
+#main-nav {
+
+    .main-nav-search {
+        position: relative;
+        width: 73px;
+        height: 21px;
+    }
+
+    @media $media-query-navigation-block {
+    /* move the search box under the nav */
+
+        .main-nav-search {
+            display: none;
+            padding: 0px;
+            bidi-value(margin, 10px 0 0 0, 10px 0 0 0);
+            width: auto;
+        }
+    }
+}

@@ -1,0 +1,34 @@
+/*
+Tabzilla Rar!
+====================================================================== */
+
+#tabzilla {
+    /* below copied from https://github.com/mozilla/bedrock/blob/master/media/css/tabzilla/tabzilla.less#L51-L60 */
+    bidi-value(float, right, left);
+    display: block;
+    height: 44px;
+    width: 150px;
+    overflow: hidden;
+
+    /* Prevents the "mozilla" link from displaying before tabzilla is loaded */
+    opacity: 0;
+
+    &.loaded {
+        opacity: 1;
+    }
+}
+
+#tabzilla-panel {
+    /* in case the javascript loads before the CSS */
+    height: 0;
+    overflow: hidden;
+}
+
+
+@media $media-query-mobile {
+
+    #tabzilla {
+        display: none;
+    }
+
+}

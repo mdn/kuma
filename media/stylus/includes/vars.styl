@@ -118,9 +118,15 @@ $media-query-tablet-only = 'all and (min-width: $tablet-starts) and (max-width: 
 $media-query-mobile-only = 'all and (min-width: $mobile-starts) and (max-width: $mobile-ends)';
 $media-query-small-mobile-only = $media-query-small-mobile;
 
-$media-query-navigation-break = 'all and (max-width: 970px)'; /* Moves nav items all the way to the left, moves logo above */
-$media-query-navigation-block = 'all and (max-width: 660px)'; /* Moves nav menu items to block, its own line */
+$navigation-break-ends = 1100px;
+$navigation-block-ends = 850px;
 
+$navigation-break-starts = $navigation-block-ends + 1px;
+
+$media-query-navigation-break = 'all and (max-width: $navigation-break-ends)'; /* Moves nav items all the way to the left, moves logo above */
+$media-query-navigation-block = 'all and (max-width: $navigation-block-ends)'; /* Moves nav menu items to block, its own line */
+
+$media-query-break-and-up = 'all and (min-width: $navigation-break-starts)';
 
 /*
 animation

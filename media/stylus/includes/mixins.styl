@@ -268,18 +268,20 @@ override-main-header-color(hex) {
 /* overrides the size of the navigation search box on certain pages */
 minimize-header-search() {
 
-    .main-nav-search {
-        width: 36px;
-        @media $media-query-mobile {
-            width: auto;
+    @media $media-query-break-and-up {
+        .main-nav-search {
+            width: 36px;
+            @media $media-query-mobile {
+                width: auto;
+            }
         }
-    }
 
-    .search-wrap input {
-        width: 22px;
+        .search-wrap input {
+            width: 22px;
 
-        &:focus {
-            width: 500px;
+            &:focus {
+                width: 500px;
+            }
         }
     }
 }
@@ -394,92 +396,6 @@ title-header() {
     display: block;
 }
 
-/* submenu generator: used in the main navigation and wiki */
-component-submenu(menu-width, num-columns, background-color, arrow-border-color) {
-    position: absolute;
-    padding: $grid-spacing;
-    background: background-color;
-    display: none;
-    width: menu-width;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
-
-    component-submenu-close();
-
-    .submenu-column {
-        if num-columns is 1 {
-            col-width = 100%;
-        } else {
-            col-width = ((menu-width - (num-columns * $grid-spacing) - 1) / num-columns) + ($grid-spacing / 2);
-        }
-        vertical-align: text-top;
-        width: col-width;
-        display: inline-block;
-
-        &:nth-child(even) {
-            bidi-style(border-left, 1px dotted #d4dde4, border-right, 0);
-            bidi-style(padding-left, $grid-spacing, padding-right, 0);
-        }
-    }
-
-    a {
-        set-smaller-font-size();
-        padding: 5px 0;
-        display: block;
-        color: $link-color !important;
-    }
-    reverse-link-decoration();
-
-    generate-arrow();
-    &:before {
-        border-bottom-color: background-color;
-        position: absolute;
-        z-index: 2;
-    }
-
-    &:after {
-        border-bottom-color: arrow-border-color;
-        position: absolute;
-        z-index: 1;
-    }
-
-    @media $media-query-mobile {
-        .submenu-column, .submenu-column:nth-child(even) {
-            bidi-style(border-left, 0, border-right, 0);
-            bidi-style(padding-left, 0, padding-right, 0);
-        }
-    }
-
-    @media $media-query-small-mobile {
-        & {
-            width: auto;
-
-            .submenu-column {
-                width: auto;
-                display: block;
-            }
-        }
-    }
-}
-
-component-submenu-close() {
-    .submenu-close {
-        display: none;
-        position: absolute;
-        top: 20px;
-        bidi-style(right, 0, left, auto);
-
-        i {
-            margin-left: 0;
-        }
-    }
-
-    @media $media-query-tablet {
-        .submenu-close {
-            display: block;
-        }
-    }
-
-}
 
 
 /* When an element contains a label and a checkbox in order (as on the edit
@@ -499,32 +415,6 @@ $checkbox-label-container {
 
     > p {
         clear: left;
-    }
-}
-
-
-/* Dropdown menus that hide advanced feature, such as the "This Page" menu on
-   article pages, the "Advanced" menu on profiles, etc. */
-$advanced-menu {
-    component-submenu(160px, 1, $button-background, $button-shadow-color);
-    bidi-style(right, 0, left, auto);
-    top: 40px;
-    z-index: 3;
-    border-top: 1px solid $button-shadow-color;
-    width: 160px !important; /* needs this due to overriding media query rule of component */
-
-    bdi {
-        bidi-value(text-align, left, right);
-    }
-
-    &:before {
-        bidi-style(right, 10px, left, auto);
-        top: -18px;
-    }
-
-    &:after {
-        bidi-style(right, 10px, left, auto);
-        top: -20px;
     }
 }
 

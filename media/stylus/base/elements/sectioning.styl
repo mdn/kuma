@@ -94,4 +94,18 @@ hr {
 }
 
 
+@media $media-query-mobile {
+
+   /* add bottom spacing to the footer */
+    footer {
+        padding-bottom: $grid-spacing;
+    }
+}
+
+
+@media print {
+    header, footer {
+        display: none;
+    }
+}
 

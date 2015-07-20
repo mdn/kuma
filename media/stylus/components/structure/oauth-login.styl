@@ -1,0 +1,128 @@
+/*
+Login links in secondary navigation
+====================================================================== */
+
+.oauth-login-container {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    display: inline-block;
+    min-width: 90px;
+
+    {$selector-icon} {
+        margin-left: 0;
+
+        &:before {
+            cursor: pointer;
+        }
+    }
+
+    .submenu-close {
+        display: none;
+        color: inherit;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 7px;
+        bidi-style(right, 10px, left, auto);
+
+        ${icon-selector} {
+            margin: 0;
+        }
+    }
+}
+
+.oauth-login-options {
+    padding: 4px 8px;
+    background: rgba-fallback(rgba(0, 0, 0, 0.1));
+    border-radius: 8px;
+    cursor: default;
+    position: relative;
+
+    &.active {
+        border-color: rgba-fallback(rgba(255, 255, 255, 0.3));
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        .oauth-login-picker {
+            display: block;
+        }
+    }
+}
+
+.oauth-login-options-text-no-icons {
+    display: none;
+}
+
+.oauth-icon {
+    border-radius: 4px;
+    text-align: center;
+    padding: 0px 7px;
+    font-size: $base-bump-font-size;
+    bidi-style(margin-left, 4px, margin-right, 0);
+    color: #fff;
+    display: inline-block;
+    create-gradient(#43a6e2, #287cc2);
+    cursor: pointer;
+
+    {$selector-icon} {
+    	bidi-style(margin-left, 0, margin-right, 0);
+    }
+}
+
+.oauth-github {
+    create-gradient(#5d649a, #63397b);
+}
+
+#nav-sec .oauth-login-picker {
+    display: none;
+    background: #fff;
+    position: relative;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    overflow: hidden;
+    padding: 0;
+
+    a {
+        display: block;
+        padding: $content-vertical-spacing $content-horizontal-spacing;
+        position: relative;
+        color: $link-color !important;
+
+        &:hover, &:active, &:focus {
+            background: rgba-fallback(rgba($link-color, 0.1));
+        }
+    }
+
+    {$selector-icon} {
+        background: none;
+        bidi-style(margin-right, $icon-margin, margin-left, 0);
+    }
+}
+
+
+/* tablet updates */
+@media $media-query-tablet {
+
+    .oauth-login-options-text {
+        bidi-style(padding-right, 20px, padding-left, 0);
+    }
+
+    /* remove options to click icons to sign in on smaller screens where a corse pointer is more likely to be present */
+    .oauth-login-options-text-icons {
+        display: none;
+    }
+
+    .oauth-login-options-text-no-icons {
+        display: inline;
+    }
+
+    .oauth-icon {
+        display: none;
+    }
+
+    .oauth-login-options.active{
+        .submenu-close {
+            display: block;
+        }
+    }
+}

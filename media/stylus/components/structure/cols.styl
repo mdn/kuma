@@ -1,0 +1,6 @@
+for i in (2 3 4) {
+    .cols-{i} {
+        vendorize(column-count, i);
+        vendorize(column-gap, ($grid-spacing / 2));
+    }
+}
