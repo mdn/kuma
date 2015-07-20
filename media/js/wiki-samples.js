@@ -45,7 +45,7 @@
     });
 
     function openJSFiddle(title, htmlCode, cssCode, jsCode) {
-       var $form = $('<form method="post" target="_blank" action="https://jsfiddle.net/api/mdn/" class="hidden">' +
+       var $form = $('<form method="post" action="https://jsfiddle.net/api/mdn/" class="hidden">' +
             '<input type="hidden" name="html" />' +
             '<input type="hidden" name="css" />' +
             '<input type="hidden" name="js" />' +
@@ -64,7 +64,7 @@
     }
 
     function openCodepen(title, htmlCode, cssCode, jsCode) {
-       var $form = $('<form method="post" target="_blank" action="https://codepen.io/pen/define" class="hidden">' +
+       var $form = $('<form method="post" action="https://codepen.io/pen/define" class="hidden">' +
             '<input type="hidden" name="data">' +
             '<input type="submit" />' +
         '</form>').appendTo(doc.body);
