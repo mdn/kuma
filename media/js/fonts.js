@@ -80,11 +80,11 @@
         $.each(fontsLoaded, function(){
             var isLoaded = true;
             $.each(this, function(){
-                if(!this) {
+                if(this == false) {
                     isLoaded = false;
                 }
             })
-            if(!isLoaded) {
+            if(isLoaded == false) {
                 allLoaded = false;
             }
         });
@@ -112,11 +112,11 @@
             var fontLoaded = true;
 
             $.each(this, function() {
-                if(!this) {
+                if(this == false) {
                     fontLoaded = false;
                 }
             })
-            if(fontLoaded) {
+            if(fontLoaded == true) {
                 $('html').attr('data-' + fontAttribute, true);
             }
         });
