@@ -121,9 +121,15 @@
     <div class="column-callout callout-deved">
       <a href="https://www.mozilla.org/firefox/developer/?utm_source=developer.mozilla.org&utm_medium=referral&utm_campaign=mdn-front-pg-promo"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
     </div>
-    <div class="column-callout callout-apps">
-      <a href="{{ wiki_url('Apps') }}"><span>{{ _('Build Open Web Apps') }}</span></a>
-    </div>
+    {% if waffle.flag('mdn10_tile') %}
+      <div class="column-callout callout-mdn10">
+        <a href="{{ wiki_url('MDN_at_10') }}"><span>{{ _('Celebrate ten years of documenting your Web.') }}</span></a>
+      </div>
+    {% else %}
+      <div class="column-callout callout-apps">
+        <a href="{{ wiki_url('Apps') }}"><span>{{ _('Build Open Web Apps') }}</span></a>
+      </div>
+    {% endif %}
   </div>
 </div>
 
