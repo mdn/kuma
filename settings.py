@@ -654,6 +654,9 @@ MINIFY_BUNDLES = {
         'fellowship': (
             'css/fellowship.css',
         ),
+        'mdn10': (
+            'css/mdn10.css',
+        ),
     },
     'js': {
         'main': (
