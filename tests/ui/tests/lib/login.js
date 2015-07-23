@@ -62,6 +62,9 @@ define([
                         .findByCssSelector('.oauth-login-picker .launch-persona-login')
                         .click()
                         .end()
+                        .then(function() {
+                            return poll.untilPopupWindowReady(remote);
+                        })
                         .getAllWindowHandles()
                         .then(function(handles) {
 

@@ -33,12 +33,22 @@ define(['intern/dojo/Deferred', 'base/lib/config'], function(Deferred, config) {
         },
 
         untilUrlChanges: function(remote, desired) {
-            // Shortcut method for polling until aURL changes
+            // Shortcut method for polling until a URL changes
             // Mostly needed for Chrome
 
             return this.until(remote, 'getCurrentUrl', function(url) {
                 return url.indexOf(desired) != -1;
             });
+        },
+
+        untilPopupWindowReady: function(remote, desired) {
+            // Shortcut method for polling until a popup window has launched
+            // Mostly needed for Chrome
+
+            return this.until(remote, 'getAllWindowHandles', function(handles) {
+                return handles.length === (desired || 2);
+            });
+
         }
     };
 
