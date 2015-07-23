@@ -33,9 +33,10 @@ define([
 
         'Homepage search form displays and accepts text, [ENTER] key submits form': function() {
 
+            var remote = this.remote;
             var term = 'Hello';
 
-            return this.remote
+            return remote
                         .findByCssSelector('#' + Page.searchBoxId)
                         .click()
                         .type(term)
@@ -44,9 +45,10 @@ define([
                             assert.ok(resultText.indexOf(term) > -1, term + ' is found in box');
                         })
                         .type(keys.RETURN)
-                        .getCurrentUrl()
-                        .then(function(url) {
-                            assert.isTrue(url.indexOf('/search') != -1);
+                        .then(function() {
+                            return poll.untilUrlChanges(remote, '/search').then(function() {
+                                assert.isTrue(true, 'Pressing [ENTER] submits search');
+                            });
                         });
         },
 
@@ -84,11 +86,7 @@ define([
                         .setWindowSize(config.mediaQueries.mobile, 400)
                         .findByCssSelector('#' + Page.searchBoxId)
                         .isDisplayed()
-                        .then(function(bool) {
-                            assert.isFalse(bool);
-                            // Cleanup the window sizing
-                            return remote.setWindowSize(windowSize.width, windowSize.height);
-                        });
+                        .then(assert.isFalse);
 
         },
 
