@@ -1,7 +1,7 @@
 Client-side Testing with Intern
 ===============================
 
-The client-side testing tool for the MDN front-end is `Intern <http://intern.io>`_, a Selenium WebDriver API which allows developers to write automated testing via JavaScript. Intern is an open source project created and maintained by `SitePen <http://sitepen.com>`_.
+The client-side testing tool for the MDN front-end is `Intern <https://theintern.github.io/>`_, a Selenium WebDriver API which allows developers to write automated testing via JavaScript. Intern is an open source project created and maintained by `SitePen <http://sitepen.com>`_.
 
 Installing Dependencies
 -----------------------
