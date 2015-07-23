@@ -90,20 +90,28 @@ define([
                                     return element
                                                 .click()
                                                 .then(function() {
+                                                     return poll.untilUrlChanges(remote, '/profiles');
+                                                })
+                                                .then(function() {
                                                     return remote
                                                                 .findByCssSelector('#edit-profile')
                                                                 .click()
                                                                 .end()
+                                                                .then(function() {
+                                                                     return poll.untilUrlChanges(remote, '/edit');
+                                                                })
                                                                 .findByCssSelector('.submission button[type=submit]')
                                                                 .click()
                                                                 .end()
+                                                                .then(function() {
+                                                                     return poll.untilUrlChanges(remote, '/profiles');
+                                                                })
                                                                 .findByCssSelector('.profile-since')
                                                                 .click() // Just ensuring the element is there
                                                                 .end()
                                                                 .findByCssSelector('.oauth-logged-in-signout')
                                                                 .click()
                                                                 .end()
-                                                                .findByCssSelector('.oauth-login-container')
                                                                 .then(dfd.callback(function() {
                                                                     assert.ok('User can sign out without problems');
                                                                 }));
@@ -129,7 +137,7 @@ define([
                             });
                             assert.ok(url.toLowerCase().indexOf('github.com') != -1, 'Clicking GitHub login link goes to GitHub.com. (Requires working GitHub login.)');
                         })
-                        .goBack(); // Cleanup to go back to MDN from GitHub sign in page
+                        //.goBack(); // Cleanup to go back to MDN from GitHub sign in page
 
         },
 
@@ -140,9 +148,7 @@ define([
                         .findByCssSelector('.oauth-login-options .oauth-icon')
                         .moveMouseTo(5, 5)
                         .isDisplayed()
-                        .then(function(bool) {
-                            assert.isFalse(bool);
-                        });
+                        .then(assert.isFalse);
 
         }
 
