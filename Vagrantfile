@@ -12,19 +12,21 @@ plugins.each do |plugin|
     end
 end
 
-if Vagrant::Util::Platform.windows?
-  NFS = false
-else
-  NFS = (ENV['VAGRANT_NFS'] || 'true') == 'true'
-end
-
-MEMORY_SIZE = (ENV['VAGRANT_MEMORY_SIZE'] || '2048').to_i
-CPU_CORES = (ENV['VAGRANT_CPU_CORES'] || '2').to_i
-IP = ENV['VAGRANT_IP'] || '192.168.10.55'
-GUI = (ENV['VAGRANT_GUI'] || 'false') == 'true'
-ANSIBLE_VERBOSE = (ENV['VAGRANT_ANSIBLE_VERBOSE'] || 'false') == 'true'
-
 Vagrant.configure('2') do |config|
+    config.env.enable
+
+    if Vagrant::Util::Platform.windows?
+      NFS = false
+    else
+      NFS = (ENV['VAGRANT_NFS'] || 'true') == 'true'
+    end
+
+    MEMORY_SIZE = (ENV['VAGRANT_MEMORY_SIZE'] || '2048').to_i
+    CPU_CORES = (ENV['VAGRANT_CPU_CORES'] || '2').to_i
+    IP = ENV['VAGRANT_IP'] || '192.168.10.55'
+    GUI = (ENV['VAGRANT_GUI'] || 'false') == 'true'
+    ANSIBLE_VERBOSE = (ENV['VAGRANT_ANSIBLE_VERBOSE'] || 'false') == 'true'
+
     config.package.name = 'kuma-ubuntu.box'
     config.vm.box = 'ubuntu/trusty64'
     config.vm.define 'developer-local'
@@ -32,7 +34,6 @@ Vagrant.configure('2') do |config|
     config.vm.hostname = 'developer-local.allizom.org'
     config.hostsupdater.aliases = ['mdn-local.mozillademos.org']
     config.ssh.forward_agent = true
-    config.env.enable
 
     config.cache.scope = :box
     config.cache.auto_detect = false
