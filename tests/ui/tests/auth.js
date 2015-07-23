@@ -62,17 +62,11 @@ define([
 
             libLogin.getTestPersonaLoginCredentials(function(credentials) {
                 return libLogin.completePersonaWindow(remote, credentials.email, credentials.password).then(function() {
-                    return remote
-                        .then(function() {
-                                return remote
-                                    .getCurrentUrl()
-                                    .then(function(url) {
-                                        assert.isTrue(url.indexOf('/account/signup') != -1);
-                                        return libLogin.completePersonaLogout(remote).then(dfd.resolve);
-                                    });
-                        });
+                    return poll.untilUrlChanges(remote, '/account/signup').then(function() {
+                        assert.isTrue(true, 'User sent to registration page');
+                        return libLogin.completePersonaLogout(remote).then(dfd.resolve);
+                    });
                 });
-
             });
 
             return dfd;
@@ -118,13 +112,18 @@ define([
 
             return dfd;
         },
+
         'Clicking on the GitHub icon initializes GitHub login process': function() {
 
-            return this.remote
+            var remote = this.remote;
+
+            return remote
                         .findByCssSelector('.oauth-login-picker a[data-service="GitHub"]')
                         .click()
-                        .getCurrentUrl()
-                        .then(function(url) {
+                        .then(function() {
+                            return poll.untilUrlChanges(remote, 'github.com').then(function() {
+                                assert.isTrue(true, 'User sent to GitHub.com');
+                            });
                             assert.ok(url.toLowerCase().indexOf('github.com') != -1, 'Clicking GitHub login link goes to GitHub.com. (Requires working GitHub login.)');
                         })
                         .goBack(); // Cleanup to go back to MDN from GitHub sign in page
@@ -143,6 +142,7 @@ define([
                         });
 
         }
+
     });
 
 });

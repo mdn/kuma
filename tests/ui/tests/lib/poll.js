@@ -24,12 +24,21 @@ define(['intern/dojo/Deferred', 'base/lib/config'], function(Deferred, config) {
                         setTimeout(poll, 100);
                     }
                     else {
-                        dfd.reject(new Error('timed out for ' + fn + ': ' + arguments));
+                        dfd.reject(new Error('timed out for ' + fn + ': ' + item));
                     }
                 });
             })();
 
             return dfd.promise;
+        },
+
+        untilUrlChanges: function(remote, desired) {
+            // Shortcut method for polling until aURL changes
+            // Mostly needed for Chrome
+
+            return this.until(remote, 'getCurrentUrl', function(url) {
+                return url.indexOf(desired) != -1;
+            });
         }
     };
 

@@ -102,13 +102,16 @@ define([
 
         'Pressing [ENTER] submits the header search box': function() {
 
-            return this.remote
+            var remote = this.remote;
+
+            return remote
                             .findByCssSelector('#' + searchBoxId)
                             .click()
                             .type(['css', keys.RETURN])
-                            .getCurrentUrl()
-                            .then(function(url) {
-                                assert.isTrue(url.indexOf('/search') != -1);
+                            .then(function() {
+                                return poll.untilUrlChanges(remote, '/search').then(function() {
+                                    assert.isTrue(true, 'Pressing [ENTER] submits search');
+                                });
                             });
         },
 

@@ -4,8 +4,9 @@ define([
     'intern/dojo/node!leadfoot/keys',
     'base/lib/config',
     'base/lib/assert',
-    'base/lib/POM'
-], function(registerSuite, assert, keys, config, libAssert, POM) {
+    'base/lib/POM',
+    'base/lib/poll'
+], function(registerSuite, assert, keys, config, libAssert, POM, poll) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -30,14 +31,17 @@ define([
 
         'Changing the footer\'s language selector changes locale via URL': function() {
 
-            return this.remote
+            var remote = this.remote;
+
+            return remote
                         .findByCssSelector('#language')
                         .moveMouseTo(5, 5)
                         .click()
                         .type(['e', keys.RETURN])
-                        .getCurrentUrl()
-                        .then(function(url) {
-                            assert.ok(url.indexOf('/es/') != -1, 'The URL after language selector changed in the footer is: ' + url);
+                        .then(function() {
+                            return poll.untilUrlChanges(remote, '/es/').then(function() {
+                                assert.isTrue(true, 'Locale auto-redirects');
+                            });
                         })
                         .goBack(); // Cleanup to go back to default locale
         }
