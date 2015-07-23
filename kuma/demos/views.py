@@ -297,7 +297,7 @@ def submit(request):
 def edit(request, slug):
     """Edit a demo"""
     submission = get_object_or_404(Submission, slug=slug)
-    if not submission.allows_editing_by(request.user):
+    if not submission.allows_managing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
     if request.method != "POST":
@@ -325,7 +325,7 @@ def edit(request, slug):
 def delete(request, slug):
     """Delete a submission"""
     submission = get_object_or_404(Submission, slug=slug)
-    if not submission.allows_deletion_by(request.user):
+    if not submission.allows_managing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
     if request.method == "POST":
@@ -340,7 +340,7 @@ def delete(request, slug):
 def hideshow(request, slug, hide=True):
     """Hide/show a demo"""
     submission = get_object_or_404(Submission, slug=slug)
-    if not submission.allows_hiding_by(request.user):
+    if not submission.allows_managing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
     if request.method == "POST":
