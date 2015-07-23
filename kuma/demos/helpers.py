@@ -86,9 +86,9 @@ def submission_creator(submission):
     return locals()
 
 
-@register.inclusion_tag('demos/elements/profile_link.html')
-def profile_link(user, show_gravatar=False, gravatar_size=48,
-                 gravatar_default='mm'):
+@register.inclusion_tag('demos/elements/user_link.html')
+def user_link(user, show_gravatar=False, gravatar_size=48,
+              gravatar_default='mm'):
     return locals()
 
 

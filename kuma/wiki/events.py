@@ -15,25 +15,33 @@ log = logging.getLogger('kuma.wiki.events')
 
 
 def context_dict(revision):
-    """Return a dict that fills in the blanks in notification templates."""
+    """
+    Return a dict that fills in the blanks in notification templates.
+    """
     document = revision.document
     from_revision = revision.previous
     to_revision = revision
     diff = revisions_unified_diff(from_revision, to_revision)
 
-    compare_url = ''
+    context = {
+        'document_title': document.title,
+        'creator': revision.creator,
+        'diff': diff,
+    }
+
     if from_revision:
         compare_url = (
             reverse('wiki.compare_revisions',
-                    args=[document.slug], locale=document.locale)
-            + '?from=%s&to=%s' % (from_revision.id, to_revision.id))
+                    args=[document.slug], locale=document.locale) +
+            '?from=%s&to=%s' % (from_revision.id, to_revision.id)
+        )
+    else:
+        compare_url = ''
 
     link_urls = {
-        'profile_url': revision.creator.get_absolute_url(),
+        'user_url': revision.creator.get_absolute_url(),
         'compare_url': compare_url,
-        'view_url': reverse('wiki.document',
-                            locale=document.locale,
-                            args=[document.slug]),
+        'view_url': document.get_absolute_url(),
         'edit_url': reverse('wiki.edit_document',
                             locale=document.locale,
                             args=[document.slug]),
@@ -42,22 +50,16 @@ def context_dict(revision):
                                args=[document.slug]),
     }
 
-    for name, url in link_urls.iteritems():
-        url = add_utm(url, 'Wiki Doc Edits')
-        link_urls[name] = url
-
-    context = {
-        'document_title': document.title,
-        'creator': revision.creator,
-        'diff': diff
-    }
-    context.update(link_urls)
+    for name, url in link_urls.items():
+        context[name] = add_utm(url, 'Wiki Doc Edits')
 
     return context
 
 
 class EditDocumentEvent(InstanceEvent):
-    """Event fired when a certain document is edited"""
+    """
+    Event fired when a certain document is edited
+    """
     event_type = 'wiki edit document'
     content_type = Document
 

@@ -13,7 +13,7 @@
 {% trans %}
 View User Profile:
 {% endtrans %}
- {{ profile_url|absolutify }}
+ {{ user_url|absolutify }}
 {% if compare_url %}
 {% trans %}
 Compare on MDN:

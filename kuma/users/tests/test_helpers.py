@@ -15,7 +15,7 @@ class HelperTestCase(UserTestCase):
         super(HelperTestCase, self).setUp()
         self.u = self.user_model.objects.get(username=u'testuser')
 
-    def test_profile_default_gravatar(self):
+    def test_default_gravatar(self):
         d_param = urllib.urlencode({'d': settings.DEFAULT_AVATAR})
         ok_(d_param in gravatar_url(self.u.email),
             "Bad default avatar: %s" % gravatar_url(self.u.email))

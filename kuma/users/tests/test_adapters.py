@@ -104,7 +104,7 @@ class KumaAccountAdapterTestCase(UserTestCase):
         # secondly check for the case in which the next url in the connection
         # process is the profile edit page, there should be a message
         session = self.client.session
-        next_url = reverse('users.profile_edit',
+        next_url = reverse('users.user_edit',
                            kwargs={'username': request.user.username},
                            locale=request.locale)
         session['sociallogin_next_url'] = next_url

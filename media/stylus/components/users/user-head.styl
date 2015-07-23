@@ -1,4 +1,4 @@
-.profile-head {
+.user-head {
     background: $light-background-color;
     margin-bottom: $grid-spacing;
     min-height: 200px;
@@ -7,7 +7,7 @@
     position: relative;
 }
 
-.profile-buttons {
+.user-buttons {
     position: absolute;
     top: $grid-spacing;
     right: $grid-spacing;
@@ -19,7 +19,7 @@
 }
 
 @media $media-query-tablet {
-    .profile-buttons {
+    .user-buttons {
         position: relative;
         top: auto;
         right: auto;
@@ -33,13 +33,13 @@
     }
 }
 
-.profile-info {
+.user-info {
     li {
         display: inline;
         bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
 
         &:before {
-            color: $profile-head-secondary-text-color;
+            color: $user-head-secondary-text-color;
             content: '/';
             bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
         }
@@ -51,11 +51,11 @@
     }
 }
 
-.profile-bio {
+.user-bio {
     set-smaller-font-size();
 }
 
-.profile-since {
+.user-since {
     color: #6a9412;
     set-smaller-font-size();
     font-style: italic;

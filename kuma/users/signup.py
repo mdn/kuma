@@ -20,7 +20,7 @@ class SignupForm(BaseSignupForm):
     This overrides the default error messages for the username form field
     with our own strings.
 
-    It has an additional other_email form field to handle the case of Github
+    It has an additional other_email form field to handle the case of GitHub
     which may deliver a number of emails for users to choose from upon signup.
 
     The heavy lifting happens in the view.

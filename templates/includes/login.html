@@ -2,7 +2,7 @@
     <div class="oauth-logged-in">
         {% include 'socialaccount/snippets/login_service_icon.html' %}
         <ul>
-            <li><a href="{{ request.user.get_absolute_url() }}" class="oauth-logged-in-profile">{{ user_display(request.user) }}</a></li>
+            <li><a href="{{ user.get_absolute_url() }}" class="oauth-logged-in-user">{{ user_display(user) }}</a></li>
             <li><a href="{{ url('account_logout') }}?next={{ next_url }}" class="oauth-logged-in-signout">{{ _('Sign out') }}</a></li>
         </ul>
     </div>

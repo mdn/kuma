@@ -2,18 +2,17 @@
 from collections import namedtuple
 from datetime import datetime
 
+from babel.dates import format_date, format_time, format_datetime
 import bitly_api
 import jingo
 import mock
 from nose.tools import eq_, ok_, assert_raises
+from pyquery import PyQuery as pq
+import pytz
+from soapbox.models import Message
 
 from django.conf import settings
 from django.test import RequestFactory
-
-from babel.dates import format_date, format_time, format_datetime
-from pyquery import PyQuery as pq
-from pytz import timezone
-from soapbox.models import Message
 
 from kuma.core.cache import memcache
 from kuma.core.helpers import bitly_shorten, bitly
@@ -147,7 +146,7 @@ class TestDateTimeFormat(UserTestCase):
     def test_longdatetime(self):
         """Expects long format."""
         value_test = datetime.fromordinal(733900)
-        tzvalue = timezone(settings.TIME_ZONE).localize(value_test)
+        tzvalue = pytz.timezone(settings.TIME_ZONE).localize(value_test)
         value_expected = format_datetime(tzvalue, format='long',
                                          locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
@@ -200,8 +199,8 @@ class TestDateTimeFormat(UserTestCase):
         self.context['request'].user = user
 
         # Convert tzvalue to user timezone
-        default_tz = timezone(settings.TIME_ZONE)
-        user_tz = user.profile.timezone
+        default_tz = pytz.timezone(settings.TIME_ZONE)
+        user_tz = pytz.timezone(user.timezone)
         tzvalue = default_tz.localize(value_test)
         tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
 

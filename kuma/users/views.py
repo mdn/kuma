@@ -25,8 +25,8 @@ from kuma.core.decorators import login_required
 from kuma.demos.models import Submission
 from kuma.demos.views import DEMOS_PAGE_SIZE
 
-from .forms import UserBanForm, UserProfileEditForm, NewsletterForm
-from .models import UserProfile, UserBan
+from .forms import UserBanForm, UserEditForm, NewsletterForm
+from .models import UserBan, User
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
@@ -75,27 +75,27 @@ def ban_user(request, user_id):
                    'user': user})
 
 
-def profile_view(request, username):
+def user_detail(request, username):
     """
-    The main profile view that only collects a bunch of user
+    The main user view that only collects a bunch of user
     specific data to populate the template context.
     """
-    profile = get_object_or_404(UserProfile.objects.select_related('user'),
-                                user__username=username)
+    detail_user = get_object_or_404(User, username=username)
 
-    if (profile.is_banned and not request.user.is_superuser):
+    if (detail_user.active_ban and not request.user.is_superuser):
         return render(request, '403.html',
-                      {'reason': "bannedprofile"}, status=403)
+                      {'reason': 'bannedprofile'}, status=403)
 
     sort_order = request.GET.get('sort', 'created')
     try:
         page_number = int(request.GET.get('page', 1))
     except ValueError:
         page_number = 1
-    show_hidden = (profile.user == request.user) or profile.user.is_superuser
+
+    show_hidden = detail_user == request.user or detail_user.is_superuser
 
     demos = (Submission.objects.all_sorted(sort_order)
-                               .filter(creator=profile.user))
+                               .filter(creator=detail_user))
     if not show_hidden:
         demos = demos.exclude(hidden=True)
 
@@ -105,27 +105,32 @@ def profile_view(request, username):
     docs_feed_items = None
 
     context = {
-        'profile': profile,
         'demos': demos,
         'demos_paginator': demos_paginator,
         'demos_page': demos_page,
+        'detail_user': detail_user,
         'docs_feed_items': docs_feed_items,
     }
-    return render(request, 'users/profile.html', context)
+    return render(request, 'users/user_detail.html', context)
 
 
 @login_required
-def my_profile(request):
+def my_detail_page(request):
     return redirect(request.user)
 
 
-def profile_edit(request, username):
+@login_required
+def my_edit_page(request):
+    return redirect('users.user_edit', request.user.username)
+
+
+def user_edit(request, username):
     """
     View and edit user profile
     """
-    profile = get_object_or_404(UserProfile, user__username=username)
+    edit_user = get_object_or_404(User, username=username)
 
-    if not profile.allows_editing_by(request.user):
+    if not edit_user.allows_editing_by(request.user):
         return HttpResponseForbidden()
 
     # Map of form field names to tag namespaces
@@ -134,21 +139,18 @@ def profile_edit(request, username):
         ('expertise', 'profile:expertise:')
     )
 
-    already_subscribed = NewsletterForm.is_subscribed(profile.user.email)
+    already_subscribed = NewsletterForm.is_subscribed(edit_user.email)
 
     if request.method != 'POST':
         initial = {
-            'beta': profile.beta_tester,
-            'username': profile.user.username,
+            'beta': edit_user.is_beta_tester,
+            'username': edit_user.username,
         }
-        # Load up initial websites with either user data or required base URL
-        for name, meta in UserProfile.website_choices:
-            initial['websites_%s' % name] = profile.websites.get(name, '')
 
         # Form fields to receive tags filtered by namespace.
         for field, ns in field_to_tag_ns:
-            initial[field] = ', '.join(t.name.replace(ns, '')
-                                       for t in profile.tags.all_ns(ns))
+            initial[field] = ', '.join(tag.name.replace(ns, '')
+                                       for tag in edit_user.tags.all_ns(ns))
 
         subscription_initial = {}
         if already_subscribed:
@@ -156,55 +158,30 @@ def profile_edit(request, username):
             subscription_initial['agree'] = True
 
         # Finally, set up the forms.
-        profile_form = UserProfileEditForm(instance=profile,
-                                           initial=initial,
-                                           prefix='profile')
+        user_form = UserEditForm(instance=edit_user,
+                                 initial=initial,
+                                 prefix='user')
         newsletter_form = NewsletterForm(locale=request.locale,
                                          already_subscribed=already_subscribed,
                                          prefix='newsletter',
                                          initial=subscription_initial)
     else:
-        profile_form = UserProfileEditForm(data=request.POST,
-                                           files=request.FILES,
-                                           instance=profile,
-                                           prefix='profile')
+        user_form = UserEditForm(data=request.POST,
+                                 files=request.FILES,
+                                 instance=edit_user,
+                                 prefix='user')
         newsletter_form = NewsletterForm(locale=request.locale,
                                          already_subscribed=already_subscribed,
                                          data=request.POST,
                                          prefix='newsletter')
 
-        # Don't validate if the username hasn't changed so people
-        # can keep already existing invalid usernames.
-        posted_username = request.POST.get('profile-username', None)
-        if posted_username is not None:
-            username_changed = request.user.username != posted_username
-        else:
-            username_changed = False
-
-        if profile_form.is_valid() and newsletter_form.is_valid():
-            if username_changed:
-                profile.user.username = profile_form.cleaned_data['username']
-                profile.user.save()
-
-            profile_new = profile_form.save(commit=False)
-
-            # Gather up all websites defined by the model, save them.
-            sites = {}
-            for name, meta in UserProfile.website_choices:
-                field_name = 'websites_%s' % name
-                field_value = profile_form.cleaned_data.get(field_name, '')
-                if field_value and field_value != meta['prefix']:
-                    sites[name] = field_value
-            profile_new.websites = sites
-
-            # Save the profile record now, since the rest of this deals with
-            # related resources...
-            profile_new.save()
+        if user_form.is_valid() and newsletter_form.is_valid():
+            new_user = user_form.save()
 
             try:
                 # Beta
                 beta_group = Group.objects.get(name=config.BETA_GROUP_NAME)
-                if profile_form.cleaned_data['beta']:
+                if user_form.cleaned_data['beta']:
                     beta_group.user_set.add(request.user)
                 else:
                     beta_group.user_set.remove(request.user)
@@ -214,32 +191,26 @@ def profile_edit(request, username):
 
             # Update tags from form fields
             for field, tag_ns in field_to_tag_ns:
-                tags = [t.lower()
-                        for t in parse_tags(profile_form.cleaned_data.get(field, ''))]
-                profile_new.tags.set_ns(tag_ns, *tags)
+                field_value = user_form.cleaned_data.get(field, '')
+                tags = [tag.lower() for tag in parse_tags(field_value)]
+                new_user.tags.set_ns(tag_ns, *tags)
 
-            newsletter_form.subscribe(request, profile_new.user.email)
-            return redirect(profile.user)
+            newsletter_form.subscribe(request, new_user.email)
+            return redirect(edit_user)
 
     context = {
-        'profile': profile,
-        'profile_form': profile_form,
+        'edit_user': edit_user,
+        'user_form': user_form,
         'newsletter_form': newsletter_form,
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
     }
-    return render(request, 'users/profile_edit.html', context)
-
-
-@login_required
-def my_profile_edit(request):
-    return redirect('users.profile_edit', request.user.username)
+    return render(request, 'users/user_edit.html', context)
 
 
 def apps_newsletter(request):
     """
     Just a placeholder for an old view that we used to have to handle
-    newsletter subscriptions before they were moved into the user profile
-    edit view.
+    newsletter subscriptions before they were moved into the user edit view.
     """
     return render(request, 'users/apps_newsletter.html', {})
 

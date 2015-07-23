@@ -74,11 +74,11 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             # would indicate the start of the sign-in process from the edit
             # profile page) we ignore the message "account connected" message
             # as it would be misleading
-            profile_url = reverse('users.profile_edit',
-                                  kwargs={'username': request.user.username},
-                                  locale=request.locale)
+            user_url = reverse('users.user_edit',
+                               kwargs={'username': request.user.username},
+                               locale=request.locale)
             next_url = request.session.get('sociallogin_next_url', None)
-            if next_url != profile_url:
+            if next_url != user_url:
                 return
 
         # and add an extra tag to the account messages

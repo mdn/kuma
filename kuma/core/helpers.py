@@ -310,8 +310,8 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
 
     user = context['request'].user
     try:
-        if user.is_authenticated() and user.profile.timezone:
-            user_tz = user.profile.timezone
+        if user.is_authenticated() and user.timezone:
+            user_tz = timezone(user.timezone)
             tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
     except AttributeError:
         pass

@@ -18,7 +18,7 @@ class KumaGitHubAccount(GitHubAccount):
 
 class KumaGitHubProvider(GitHubProvider):
     """
-    A custom Github provider that additionally is able to handle the
+    A custom GitHub provider that additionally is able to handle the
     list of email addresses fetched from the GitHub API and use it
     to populate the list of verified email addresses with it.
 
@@ -32,7 +32,7 @@ class KumaGitHubProvider(GitHubProvider):
         email_addresses = []
         for email_address in data.get('email_addresses', []):
             # let's ignore all email address that have not been verified at
-            # Github's side
+            # GitHub's side
             if (not email_address.get('verified', False) or
                     not email_address.get('email', '').strip()):
                 continue

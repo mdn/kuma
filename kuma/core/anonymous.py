@@ -1,6 +1,6 @@
 """
 Django middleware for identifying unauthenticated users using a cookie.
-This is used in kitsune to keep track of their actions such as voting and
+This is used in kuma to keep track of their actions such as voting and
 submitting questions.
 
 The middleware adds an `anonymous` attribute to the request object. It is

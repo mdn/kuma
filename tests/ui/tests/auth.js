@@ -83,7 +83,7 @@ define([
             libLogin.completePersonaWindow(remote).then(function() {
 
                 return remote
-                    .findByCssSelector('.oauth-logged-in-profile')
+                    .findByCssSelector('.oauth-logged-in-user')
                     .then(function(element) {
                         poll.until(element, 'isDisplayed')
                                 .then(function() {
@@ -94,7 +94,7 @@ define([
                                                 })
                                                 .then(function() {
                                                     return remote
-                                                                .findByCssSelector('#edit-profile')
+                                                                .findByCssSelector('#edit-user')
                                                                 .click()
                                                                 .end()
                                                                 .then(function() {

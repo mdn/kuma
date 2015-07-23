@@ -35,7 +35,7 @@
 
     <div class="title">
       <h1 class="demo-title"><a href="{{ submission.get_absolute_url() }}">{{ submission.title }}</a></h1>
-      <p class="byline vcard">{% trans profile_link=profile_link(submission.creator) %}by {{ profile_link }}{% endtrans %}</p>
+      <p class="byline vcard">{% trans profile_link=user_link(submission.creator) %}by {{ profile_link }}{% endtrans %}</p>
     </div>
 
     <ul class="tools">

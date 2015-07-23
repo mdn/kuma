@@ -1,0 +1,21 @@
+.user-edit {
+    h1 > {$selector-icon} {
+        margin: 0;
+    }
+
+
+    h1, fieldset {
+        clearfix();
+    }
+
+    /* Set forms to full width so that they resize with the column. */
+    .section li > input[type='text'],
+    select,
+    textarea,
+    #tagit-interests,
+    #tags-expertise,
+    legend {
+        width: 100%;
+        vendorize(box-sizing, border-box);
+    }
+}

@@ -15,7 +15,7 @@
         ga('set', 'dimension1', 'Yes');
 
         // dimension2 == "Beta Tester"
-        {% if request.user.profile.beta_tester %}
+        {% if request.user.is_beta_tester %}
             ga('set', 'dimension2', 'Yes');
         {% endif %}
     {% endif %}

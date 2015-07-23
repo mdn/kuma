@@ -165,3 +165,6 @@
 [submodule "vendor/src/django-flat-theme"]
 	path = vendor/src/django-flat-theme
 	url = https://github.com/elky/django-flat-theme.git
+[submodule "vendor/src/django-sundial"]
+	path = vendor/src/django-sundial
+	url = https://github.com/charettes/django-sundial

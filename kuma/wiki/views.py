@@ -53,7 +53,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import (get_object_or_none, paginate, smart_int,
                              limit_banned_ip_to_0)
 from kuma.search.store import referrer_url
-from kuma.users.models import UserProfile
+from kuma.users.models import User
 
 import kuma.wiki.content
 from . import kumascript
@@ -2369,20 +2369,16 @@ def flag(request, document_slug, document_locale):
             recipients = None
             if (flag_type in FLAG_NOTIFICATIONS and
                     FLAG_NOTIFICATIONS[flag_type]):
-                query = Q(user__email__isnull=True) | Q(user__email='')
-                recipients = (UserProfile.objects.exclude(query)
-                                                 .values_list('user__email',
-                                                              flat=True))
-                recipients = list(recipients)
+                query = Q(email__isnull=True) | Q(email='')
+                recipients = list(User.objects.exclude(query)
+                                              .values_list('email', flat=True))
 
             flag, created = ContentFlag.objects.flag(
                 request=request, object=doc,
                 flag_type=flag_type,
                 explanation=form.cleaned_data['explanation'],
                 recipients=recipients)
-            return HttpResponseRedirect(reverse(
-                'wiki.document', locale=document_locale,
-                args=[document_slug]))
+            return redirect(doc)
     else:
         form = DocumentContentFlagForm(data=request.GET)
 
