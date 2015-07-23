@@ -27,6 +27,15 @@ Main header, wraps all components of logo, main, and secondary navigation
             height: 55px;
             width: 153px;
             background: no-repeat bottom left url($media-url-dir + '/mdn10/logo-sprite.png');
+
+            /* this logo looks nicer on all screens, but need to protect
+                browsers that can't handle background size *cough*IE8*cough */
+            @media only screen and (-webkit-min-device-pixel-ratio: 1),
+                   only screen and (min-resolution: 100dpi) {
+
+                background-image: url($media-url-dir + '/mdn10/logo-sprite@2x.png');
+                background-size: auto 115px;
+            }
         }
     }
 
