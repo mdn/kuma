@@ -61,7 +61,7 @@ Vagrant.configure('2') do |config|
     config.vm.synced_folder '.', '/home/vagrant/src', :nfs => NFS
 
     config.vm.provider :virtualbox do |vb, override|
-        vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu']
+        vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
         vb.customize ['modifyvm', :id, '--ioapic', 'on']
         vb.customize ['modifyvm', :id, '--memory', MEMORY_SIZE]
         vb.customize ['modifyvm', :id, '--cpus', CPU_CORES]
