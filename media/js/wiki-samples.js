@@ -4,24 +4,27 @@
     var sites = ['codepen'];
     var frameLength = 'frame_'.length;
 
-    var sourceURL = $('link[rel=canonical]').attr('href') || win.location;
+    var sourceURL = $('link[rel=canonical]').attr('href') || win.location.href.split('#')[0];
     var plug = '<!-- Learn about this code on MDN: ' + sourceURL + ' -->\n\n';
 
-    // using id to get sample code section since macros discard other attributes
-    $('.sample-code-frame').after(function() {
-        var section = $(this).attr('id').substring(frameLength);
-        return createSampleButtons(section, sites);
-    });
-    $('.sample-code-table').after(function(){
-        var section = $(this).find('iframe').attr('id').substring(frameLength);
-        return createSampleButtons(section, sites);
+    // Find sample IFRAMES
+    // Some are wrapped in tables, so put the button after the table or after the iframe
+    $('.sample-code-frame').each(function() {
+        var $this = $(this);
+        var parentTable = $this.parents('.sample-code-table').get(0);
+        var section = $this.attr('id').substring(frameLength);
+
+        $(parentTable || $this).after(function() {
+            return createSampleButtons(section);
+        });
+
     });
 
+    // Listen for clicks on open buttons
     $('#wikiArticle').on('click', 'button.open-in-host', function(){
         var $button = $(this);
         var section = $button.attr('data-section');
         var sampleCodeHost = $button.attr('data-host');
-        var sampleUrl = win.location.href.split('#')[0] + '?section=' + section + '&raw=1';
 
         // track the click and sample code host
         mdn.analytics.trackEvent({
@@ -32,12 +35,13 @@
 
         // disable the button, till we open the fiddle
         $button.attr('disabled', 'disabled');
-        $.get(sampleUrl).then(function(sample) {
+        $.get(sourceURL + '?section=' + section + '&raw=1').then(function(sample) {
             var $sample = $('<div />').append(sample);
-            var htmlCode = $sample.find('.brush\\:.html, .brush\\:.html\\;').text();
-            var cssCode = $sample.find('.brush\\:.css, .brush\\:.css\\;').text();
-            var jsCode = $sample.find('.brush\\:.js, .brush\\:.js\\;').text();
+            var htmlCode = $sample.find('pre[class*=html]').text();
+            var cssCode = $sample.find('pre[class*=css]').text();
+            var jsCode = $sample.find('pre[class*=js]').text();
             var title = $sample.find('h2[name=' + section + ']').text();
+
             openSample(sampleCodeHost, title, htmlCode, cssCode, jsCode);
 
             $button.removeAttr('disabled');
@@ -82,17 +86,16 @@
         }
     }
 
-    function createSampleButtons(section, sites) {
-        var buttons = '<div>';
+    function createSampleButtons(section) {
+        var $parent = $('<div />');
+
         $.each(sites, function(){
             // convert sitename to lowercase for icon name and host identifier
             var host = this.toLowerCase();
-            buttons += '<button class="open-in-host" data-host="'+ host +'" data-section="' +
-                section + '"><i aria-hidden="true" class="icon-'+ host +'"></i> Open in ' +
-                this +'</button>';
+            $parent.append('<button class="open-in-host" data-host="'+ host +'" data-section="' + section + '"><i aria-hidden="true" class="icon-'+ host +'"></i> Open in ' + this + '</button>');
         });
-        buttons += '</div>';
-        return buttons;
+
+        return $parent;
     }
 
 })(window, document, jQuery);
