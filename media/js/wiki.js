@@ -696,13 +696,6 @@
             $youtubeIframes.each(function(i){
                 players[i] = new YT.Player($(this).get(0));
 
-                players[i].addEventListener('onReady', function(){
-                   mdn.analytics.trackEvent({
-                        category: 'YouTube',
-                        action: 'Load',
-                        label: players[i].getVideoUrl()
-                    });
-                });
                 players[i].addEventListener('onStateChange', function(event) {
                     var action;
                     switch(event.data) {
