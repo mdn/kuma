@@ -10,7 +10,14 @@ from babel.core import get_global
 import pytz
 
 
-tz_names = get_global('windows_zone_mapping')
+# When building the cldr data on windows this module gets imported.
+# Because at that point there is no global.dat yet this call will
+# fail.  We want to catch it down in that case then and just assume
+# the mapping was empty.
+try:
+    tz_names = get_global('windows_zone_mapping')
+except RuntimeError:
+    tz_names = {}
 
 
 def valuestodict(key):

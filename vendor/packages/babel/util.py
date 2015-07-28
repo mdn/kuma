@@ -80,7 +80,7 @@ def parse_encoding(fp):
                 raise SyntaxError(
                     "python refuses to compile code with both a UTF8 "
                     "byte-order-mark and a magic encoding comment")
-            return 'utf_8'
+            return 'utf-8'
         elif m:
             return m.group(1).decode('latin-1')
         else:
