@@ -281,17 +281,17 @@ def get_timezone_gmt(datetime=None, width='long', locale=LC_TIME):
     u'GMT+00:00'
 
     >>> tz = get_timezone('America/Los_Angeles')
-    >>> dt = datetime(2007, 4, 1, 15, 30, tzinfo=tz)
+    >>> dt = tz.localize(datetime(2007, 4, 1, 15, 30))
     >>> get_timezone_gmt(dt, locale='en')
-    u'GMT-08:00'
+    u'GMT-07:00'
     >>> get_timezone_gmt(dt, 'short', locale='en')
-    u'-0800'
+    u'-0700'
 
     The long format depends on the locale, for example in France the acronym
     UTC string is used instead of GMT:
 
     >>> get_timezone_gmt(dt, 'long', locale='fr_FR')
-    u'UTC-08:00'
+    u'UTC-07:00'
 
     .. versionadded:: 0.9
 
@@ -733,9 +733,9 @@ def format_timedelta(delta, granularity='second', threshold=.85,
     In addition directional information can be provided that informs
     the user if the date is in the past or in the future:
 
-    >>> format_timedelta(timedelta(hours=1), add_direction=True)
+    >>> format_timedelta(timedelta(hours=1), add_direction=True, locale='en')
     u'In 1 hour'
-    >>> format_timedelta(timedelta(hours=-1), add_direction=True)
+    >>> format_timedelta(timedelta(hours=-1), add_direction=True, locale='en')
     u'1 hour ago'
 
     :param delta: a ``timedelta`` object representing the time difference to

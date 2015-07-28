@@ -65,7 +65,7 @@ class compile_catalog(Command):
          'name of the input file'),
         ('output-file=', 'o',
          "name of the output file (default "
-         "'<output_dir>/<locale>/LC_MESSAGES/<domain>.po')"),
+         "'<output_dir>/<locale>/LC_MESSAGES/<domain>.mo')"),
         ('locale=', 'l',
          'locale of the catalog to compile'),
         ('use-fuzzy', 'f',
@@ -89,7 +89,7 @@ class compile_catalog(Command):
             raise DistutilsOptionError('you must specify either the input file '
                                        'or the base directory')
         if not self.output_file and not self.directory:
-            raise DistutilsOptionError('you must specify either the input file '
+            raise DistutilsOptionError('you must specify either the output file '
                                        'or the base directory')
 
     def run(self):
@@ -128,7 +128,7 @@ class compile_catalog(Command):
 
         for idx, (locale, po_file) in enumerate(po_files):
             mo_file = mo_files[idx]
-            infile = open(po_file, 'r')
+            infile = open(po_file, 'rb')
             try:
                 catalog = read_po(infile, locale)
             finally:
@@ -439,7 +439,7 @@ class init_catalog(Command):
         log.info('creating catalog %r based on %r', self.output_file,
                  self.input_file)
 
-        infile = open(self.input_file, 'r')
+        infile = open(self.input_file, 'rb')
         try:
             # Although reading from the catalog template, read_po must be fed
             # the locale in order to correctly calculate plurals
@@ -554,7 +554,7 @@ class update_catalog(Command):
         if not domain:
             domain = os.path.splitext(os.path.basename(self.input_file))[0]
 
-        infile = open(self.input_file, 'U')
+        infile = open(self.input_file, 'rb')
         try:
             template = read_po(infile)
         finally:
@@ -566,7 +566,7 @@ class update_catalog(Command):
         for locale, filename in po_files:
             log.info('updating catalog %r based on %r', filename,
                      self.input_file)
-            infile = open(filename, 'U')
+            infile = open(filename, 'rb')
             try:
                 catalog = read_po(infile, locale=locale, domain=domain)
             finally:
@@ -577,7 +577,7 @@ class update_catalog(Command):
             tmpname = os.path.join(os.path.dirname(filename),
                                    tempfile.gettempprefix() +
                                    os.path.basename(filename))
-            tmpfile = open(tmpname, 'w')
+            tmpfile = open(tmpname, 'wb')
             try:
                 try:
                     write_po(tmpfile, catalog,
@@ -750,7 +750,7 @@ class CommandLineInterface(object):
                 mo_files.append(options.output_file)
             else:
                 if not options.directory:
-                    parser.error('you must specify either the input file or '
+                    parser.error('you must specify either the output file or '
                                  'the base directory')
                 mo_files.append(os.path.join(options.directory, options.locale,
                                              'LC_MESSAGES',
@@ -760,7 +760,7 @@ class CommandLineInterface(object):
 
         for idx, (locale, po_file) in enumerate(po_files):
             mo_file = mo_files[idx]
-            infile = open(po_file, 'r')
+            infile = open(po_file, 'rb')
             try:
                 catalog = read_po(infile, locale)
             finally:
@@ -1121,7 +1121,7 @@ class CommandLineInterface(object):
             tmpname = os.path.join(os.path.dirname(filename),
                                    tempfile.gettempprefix() +
                                    os.path.basename(filename))
-            tmpfile = open(tmpname, 'w')
+            tmpfile = open(tmpname, 'wb')
             try:
                 try:
                     write_po(tmpfile, catalog,

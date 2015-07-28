@@ -119,6 +119,12 @@ class NoSelectableObject(RegistryException):
         return ('args: %s, kwargs: %s\ncandidates: %s'
                 % (self.args, self.kwargs.keys(), self.objects))
 
+class SelectAmbiguity(RegistryException):
+    """Raised when several objects compete at selection time with an equal
+    score.
+
+    """
+
 
 def _modname_from_path(path, extrapath=None):
     modpath = modpath_from_file(path, extrapath)
@@ -402,7 +408,7 @@ class Registry(dict):
             msg = 'select ambiguity: %s\n(args: %s, kwargs: %s)'
             if self.debugmode:
                 # raise bare exception in debug mode
-                raise Exception(msg % (winners, args, kwargs.keys()))
+                raise SelectAmbiguity(msg % (winners, args, kwargs.keys()))
             self.error(msg, winners, args, kwargs.keys())
         # return the result of calling the object
         return self.selected(winners[0], args, kwargs)

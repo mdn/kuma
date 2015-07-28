@@ -25,7 +25,7 @@
 :var STD_LIB_DIR: directory where standard modules are located
 
 :type BUILTIN_MODULES: dict
-:var BUILTIN_MODULES: dictionary with builtin module names has key
+:var BUILTIN_MODULES: dictionary with builtin module names as key
 """
 
 __docformat__ = "restructuredtext en"
@@ -62,7 +62,7 @@ else:
     PY_COMPILED_EXTS = ('so',)
 
 try:
-    STD_LIB_DIR = get_python_lib(standard_lib=1)
+    STD_LIB_DIR = get_python_lib(standard_lib=True)
 # get_python_lib(standard_lib=1) is not available on pypy, set STD_LIB_DIR to
 # non-valid path, see https://bugs.pypy.org/issue1164
 except DistutilsPlatformError:
@@ -70,8 +70,7 @@ except DistutilsPlatformError:
 
 EXT_LIB_DIR = get_python_lib()
 
-BUILTIN_MODULES = dict(zip(sys.builtin_module_names,
-                           [1]*len(sys.builtin_module_names)))
+BUILTIN_MODULES = dict.fromkeys(sys.builtin_module_names, True)
 
 
 class NoSourceFile(Exception):
@@ -101,7 +100,7 @@ class LazyObject(object):
         return self._getobj()(*args, **kwargs)
 
 
-def load_module_from_name(dotted_name, path=None, use_sys=1):
+def load_module_from_name(dotted_name, path=None, use_sys=True):
     """Load a Python module from its name.
 
     :type dotted_name: str
@@ -126,7 +125,7 @@ def load_module_from_name(dotted_name, path=None, use_sys=1):
     return load_module_from_modpath(dotted_name.split('.'), path, use_sys)
 
 
-def load_module_from_modpath(parts, path=None, use_sys=1):
+def load_module_from_modpath(parts, path=None, use_sys=True):
     """Load a python module from its splitted name.
 
     :type parts: list(str) or tuple(str)
@@ -170,14 +169,16 @@ def load_module_from_modpath(parts, path=None, use_sys=1):
         if prevmodule:
             setattr(prevmodule, part, module)
         _file = getattr(module, '__file__', '')
+        prevmodule = module
+        if not _file and _is_namespace(curname):
+            continue
         if not _file and len(modpath) != len(parts):
             raise ImportError('no module in %s' % '.'.join(parts[len(modpath):]) )
         path = [dirname( _file )]
-        prevmodule = module
     return module
 
 
-def load_module_from_file(filepath, path=None, use_sys=1, extrapath=None):
+def load_module_from_file(filepath, path=None, use_sys=True, extrapath=None):
     """Load a Python module from it's path.
 
     :type filepath: str
@@ -205,9 +206,11 @@ def load_module_from_file(filepath, path=None, use_sys=1, extrapath=None):
 
 def _check_init(path, mod_path):
     """check there are some __init__.py all along the way"""
+    modpath = []
     for part in mod_path:
+        modpath.append(part)
         path = join(path, part)
-        if not _has_init(path):
+        if not _is_namespace('.'.join(modpath)) and not _has_init(path):
             return False
     return True
 
@@ -476,7 +479,6 @@ def is_python_source(filename):
     return splitext(filename)[1][1:] in PY_SOURCE_EXTS
 
 
-
 def is_standard_module(modname, std_path=(STD_LIB_DIR,)):
     """try to guess if a module is a standard python module (by default,
     see `std_path` parameter's description)
@@ -485,7 +487,7 @@ def is_standard_module(modname, std_path=(STD_LIB_DIR,)):
     :param modname: name of the module we are interested in
 
     :type std_path: list(str) or tuple(str)
-    :param std_path: list of path considered has standard
+    :param std_path: list of path considered as standard
 
 
     :rtype: bool
@@ -493,6 +495,9 @@ def is_standard_module(modname, std_path=(STD_LIB_DIR,)):
       true if the module:
       - is located on the path listed in one of the directory in `std_path`
       - is a built-in module
+
+    Note: this function is known to return wrong values when inside virtualenv.
+    See https://www.logilab.org/ticket/294756.
     """
     modname = modname.split('.')[0]
     try:
@@ -500,17 +505,18 @@ def is_standard_module(modname, std_path=(STD_LIB_DIR,)):
     except ImportError as ex:
         # import failed, i'm probably not so wrong by supposing it's
         # not standard...
-        return 0
+        return False
     # modules which are not living in a file are considered standard
     # (sys and __builtin__ for instance)
     if filename is None:
-        return 1
+        # we assume there are no namespaces in stdlib
+        return not _is_namespace(modname)
     filename = abspath(filename)
     if filename.startswith(EXT_LIB_DIR):
-        return 0
+        return False
     for path in std_path:
         if filename.startswith(abspath(path)):
-            return 1
+            return True
     return False
 
 
@@ -585,6 +591,12 @@ try:
 except ImportError:
     pkg_resources = None
 
+
+def _is_namespace(modname):
+    return (pkg_resources is not None
+            and modname in pkg_resources._namespace_packages)
+
+
 def _module_file(modpath, path=None):
     """get a module type / file path
 
@@ -616,14 +628,13 @@ def _module_file(modpath, path=None):
     except AttributeError:
         checkeggs = False
     # pkg_resources support (aka setuptools namespace packages)
-    if (pkg_resources is not None
-            and modpath[0] in pkg_resources._namespace_packages
-            and modpath[0] in sys.modules
-            and len(modpath) > 1):
+    if (_is_namespace(modpath[0]) and modpath[0] in sys.modules):
         # setuptools has added into sys.modules a module object with proper
         # __path__, get back information from there
         module = sys.modules[modpath.pop(0)]
         path = module.__path__
+        if not modpath:
+            return C_BUILTIN, None
     imported = []
     while modpath:
         modname = modpath[0]

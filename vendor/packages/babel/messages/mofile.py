@@ -13,7 +13,7 @@ import array
 import struct
 
 from babel.messages.catalog import Catalog, Message
-from babel._compat import range_type
+from babel._compat import range_type, array_tobytes
 
 
 LE_MAGIC = 0x950412de
@@ -206,4 +206,4 @@ def write_mo(fileobj, catalog, use_fuzzy=False):
         7 * 4,                      # start of key index
         7 * 4 + len(messages) * 8,  # start of value index
         0, 0                        # size and offset of hash table
-    ) + array.array("i", offsets).tostring() + ids + strs)
+    ) + array_tobytes(array.array("i", offsets)) + ids + strs)
