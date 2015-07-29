@@ -16,7 +16,8 @@
       don't already have one.
       {% endtrans %}</p>
 
-  {% if socialaccount.providers  %}
+  {% set socialaccount_providers = get_providers() %}
+  {% if socialaccount_providers  %}
       {% with process="login" %}
         {% include "socialaccount/snippets/provider_list.html" %}
       {% endwith %}

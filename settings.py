@@ -351,9 +351,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
 
-    'allauth.account.context_processors.account',
-    'allauth.socialaccount.context_processors.socialaccount',
-
     'kuma.core.context_processors.global_settings',
     'kuma.core.context_processors.i18n',
     'kuma.core.context_processors.next_url',
