@@ -247,6 +247,11 @@ remove-center-spacing() {
 
 /* overrides the navigation menu color - zones and homepage */
 override-main-header-color(hex) {
+
+    #tabzilla:before {
+        background-color: transparent;
+    }
+
     #main-header,
     #main-header a {
         color: hex;
