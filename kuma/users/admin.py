@@ -33,22 +33,13 @@ admin.site.register(UserBan, UserBanAdmin)
 class ProfileAdmin(admin.ModelAdmin):
 
     list_display = ('user_name', 'related_user', 'fullname', 'title',
-                    'organization', 'location', 'content_flagging_email',
-                    'tags')
-
-    list_editable = ('content_flagging_email', 'tags', )
+                    'bio', 'websites', 'revisions')
 
     search_fields = ('user__username', 'homepage', 'title', 'fullname',
                      'organization', 'location', 'bio', 'misc',
                      'user__email', 'tags__name')
 
     list_filter = ()
-
-    formfield_overrides = {
-        NamespacedTaggableManager: {
-            "widget": TagWidget(attrs={"size": 45})
-        }
-    }
 
     def related_user(self, obj):
         """HTML link to related user account"""
@@ -59,6 +50,25 @@ class ProfileAdmin(admin.ModelAdmin):
                 {'link': link, 'id': obj.user.id})
     related_user.allow_tags = True
     related_user.short_description = 'User account'
+
+    def revisions(self, obj):
+        """HTML link to user's revisions with count"""
+        link = reverse('dashboards.revisions') +\
+                ('?user=%s' % obj.user.username)
+        count = obj.user.wiki_revisions().count()
+        return ('<a href="%(link)s"><strong>%(count)s</strong></a>' %
+                {'link': link, 'count': count})
+    revisions.allow_tags = True
+
+    def websites(self, obj):
+        """The 'website' element in the 'websites' hash from the misc field"""
+        if obj.websites:
+            link = obj.websites.get('website')
+            return ('<a href="%(link)s"><strong>%(link)s</strong></a>' %
+                   {'link': link, 'link': link})
+        return ""
+    websites.allow_tags = True
+    websites.short_description = 'Website'
 
     def user_name(self, obj):
         return obj.user.username
