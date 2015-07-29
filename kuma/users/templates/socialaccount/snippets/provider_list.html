@@ -1,6 +1,7 @@
-{% if socialaccount.providers %}
+{% set socialaccount_providers = get_providers() %}
+{% if socialaccount_providers %}
   <ul class="no-bullets socialaccount-providers">
-    {% for provider in socialaccount.providers %}
+    {% for provider in socialaccount_providers %}
         {% if provider.id == "openid" %}
             {% for brand in provider.get_brands() %}
               <li><a title="{{ brand.name }}"
