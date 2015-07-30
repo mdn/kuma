@@ -145,10 +145,12 @@
                 $openCell.addClass('active').attr('aria-expanded', true);
 
                 // add measured height to history and to the cell/row it is being displayed beneath (CSS handles transition)
-                windowWidth = win.innerWidth;
-                if(windowWidth > 801) {
+
+                var displayDetect = $('.bc-table thead td').css('z-index');
+
+                if(displayDetect == 'auto') {
                     $subject = $row.find('th, td');
-                } else if(windowWidth > 481) {
+                } else if(displayDetect == 1) {
                     $subject = $row.find('td');
                 } else {
                     $subject = $openCell;

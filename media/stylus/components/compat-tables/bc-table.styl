@@ -6,10 +6,11 @@ table layout
 
 .text-content table.bc-table { /* specificity to over-ride .text-content styles */
     width: 100%;
+    table-layout: fixed;
     border: none; /* to over-ride .text-content styles */
     border-collapse: separate; /* to over-ride .text-content styles */
     border-spacing: 0;
-    background-color: $header-background-color;
+    background-color: rgba-fallback(rgba($table-blue, 0.5));
 }
 
 .bc-table,
@@ -75,7 +76,7 @@ for $num in (1..14) {
 
 /* thicker border between mediums */
 .bc-mediums th + th,
-.bc-medium-border {
+.text-content .bc-medium-border {
     border-left: 4px solid $bc-color-border;
 }
 
@@ -83,14 +84,12 @@ for $num in (1..14) {
 /* th
 ----------------------------------------------------------------------  */
 
-
-for $num in (2..3) {
-    .bc-table thead th[colspan={'"' + $num + '"'}] {
-        width: (100 / $num)%;
-    }
+.text-content .bc-table th {
+    background-color: transparent
 }
 
 .bc-table .bc-mediums th {
+    width: auto;
     padding: 2px 0 5px 0;
     border-bottom: 4px solid $bc-color-border;
     font-size: 24px;
@@ -121,7 +120,6 @@ for $num in (2..3) {
 
 /* make outline more visible */
 .bc-table td:focus {
-
     z-index: 1;
 }
 
@@ -171,6 +169,7 @@ bc-table-tablet-display-block() {
 
     .bc-table thead td {
         display: none;
+        z-index: 1; /* increase z-index for js to detect tablet display */
     }
 
     .bc-table tbody th {
@@ -185,6 +184,7 @@ bc-table-tablet-display-block() {
 bc-table-tablet-display-flex() {
     /*
     Flexbox for those lucky few who can handle it
+    - enhances changes in bc-table-tablet-display-block
     - we only needs this to make equal height columns in the tablet display view
     - ie is not among those that can handle this flexbox code,
       but it doesn't supoort @support so we need to include that in the MQ
@@ -275,6 +275,10 @@ mobile display
         display: none;
     }
 
+    .bc-table thead td {
+        z-index: 2; /* increase z-index for js to detect mobile display */
+    }
+
     .bc-table tbody td {
         position: relative;
         min-width: 100%;
@@ -294,13 +298,8 @@ mobile display
        padding-bottom: 20px;
     }
 
-    /* thicker border between mediums */
-    .bc-table tbody th + td,
-    [class*=desktop] + [class*=android],
-    [class*=desktop] + [class*=mobile],
-    [class*=desktop] + [class*=fxos],
-    [class*=desktop] + [class*=mobile],
-    .bc-table tbody tr {
+    .bc-mediums th + th,
+    .text-content .bc-medium-border {
         border-top: 4px solid $bc-color-border;
         border-left: none;
     }

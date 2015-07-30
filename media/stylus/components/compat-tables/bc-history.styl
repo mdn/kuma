@@ -88,12 +88,22 @@ History
     min-width: 30px;
 }
 
-@media $media-query-mobile {
 
+bc-history-tablet-display() {
     .bc-table .bc-history {
         padding-left: 0;
         box-shadow: none;
     }
+}
+
+@media all and (min-width: 769px) {
+    .wiki-right-present.wiki-left-present {
+        bc-history-tablet-display()
+    }
+}
+
+@media $media-query-mobile {
+    bc-history-tablet-display()
 }
 
 @media $media-query-small-mobile {
