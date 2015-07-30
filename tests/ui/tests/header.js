@@ -113,22 +113,6 @@ define([
                                     assert.isTrue(true, 'Pressing [ENTER] submits search');
                                 });
                             });
-        },
-
-        'Tabzilla loads properly': function() {
-
-            return this.remote.executeAsync(function(done) {
-                            var interval = setInterval(function() {
-                                if(document.querySelector('#tabzilla-panel')) {
-                                    clearInterval(interval);
-                                    done();
-                                }
-                            }, 200);
-                        }).
-                        then(function() {
-                            return libAssert.elementExistsAndDisplayed('#tabzilla');
-                        });
-
         }
 
     });
