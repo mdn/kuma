@@ -2,12 +2,12 @@ from django.conf import settings
 from django.shortcuts import render
 from django.views import static
 
-from constance import config
-
 from kuma.core.sections import SECTION_USAGE
 from kuma.core.cache import memcache
 from kuma.demos.models import Submission
 from kuma.feeder.models import Bundle
+from kuma.search.models import FilterGroup
+from kuma.search.serializers import GroupWithFiltersSerializer
 
 
 def home(request):
@@ -23,13 +23,14 @@ def home(request):
     if not community_stats:
         community_stats = {'contributors': 5453, 'locales': 36}
 
-    devderby_tag = str(config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
+    groups = FilterGroup.objects.all()
+    serializer = GroupWithFiltersSerializer(groups, many=True)
 
     context = {
         'demos': demos,
         'updates': updates,
         'stats': community_stats,
-        'current_challenge_tag_name': devderby_tag,
+        'command_search_filters': serializer.data
     }
     return render(request, 'landing/homepage.html', context)
 

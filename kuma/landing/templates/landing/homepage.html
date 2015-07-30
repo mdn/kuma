@@ -209,6 +209,9 @@
       {{ js('home', async=True) }}
   {% endif %}
   {% if waffle.flag('search_suggestions') %}
+    <script>
+        window.mdn.searchFilters = {{ command_search_filters|jsonencode }};
+    </script>
     {{ js('search-suggestions') }}
     <script>
         jQuery('#home-search-form').searchSuggestions();
