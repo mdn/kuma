@@ -800,6 +800,12 @@ CELERY_IMPORTS = (
     'tidings.events',
 )
 
+CELERY_ANNOTATIONS = {
+    'cacheback.tasks.refresh_cache': {
+        'rate_limit': '120/m',
+    },
+}
+
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'
 WIKI_REBUILD_ON_DEMAND = False

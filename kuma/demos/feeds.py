@@ -49,7 +49,7 @@ class SubmissionJSONFeedGenerator(SyndicationFeed):
             ))
 
             if item['obj'].creator.email:
-                item_out['author_avatar'] = gravatar_url(item['obj'].creator)
+                item_out['author_avatar'] = gravatar_url(item['obj'].creator.email)
 
             # Linkify the tags used in the feed item
             item_out['categories'] = dict(

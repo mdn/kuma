@@ -109,7 +109,8 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
             else:
                 revision = document
 
-            item_out['author_avatar'] = gravatar_url(revision.creator)
+            if revision.creator.email:
+                item_out['author_avatar'] = gravatar_url(revision.creator.email)
 
             summary = revision.summary
             if summary:

@@ -90,7 +90,7 @@ class TestUserProfile(UserTestCase):
         user = self.user_model.objects.get(username='testuser')
         user.email = u"Someguy Dude\xc3\xaas Lastname"
         try:
-            gravatar_url(user)
+            gravatar_url(user.email)
         except UnicodeEncodeError:
             self.fail("There should be no UnicodeEncodeError")
 

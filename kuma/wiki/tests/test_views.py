@@ -323,6 +323,23 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get('%s?raw&summary' % d.get_absolute_url())
         eq_(resp.content, 'Foo bar <a href="http://example.com">baz</a>')
 
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    @mock.patch('waffle.flag_is_active')
+    @mock.patch('kuma.wiki.jobs.DocumentContributorsJob.get')
+    def test_footer_contributors(self, get_contributors, flag_is_active):
+        get_contributors.return_value = [
+            {'id': 1, 'username': 'ringo', 'email': 'ringo@apple.co.uk'},
+            {'id': 2, 'username': 'john', 'email': 'lennon@apple.co.uk'},
+        ]
+        flag_is_active.return_value = True
+        d, r = doc_rev('some content')
+        resp = self.client.get(d.get_absolute_url())
+        page = pq(resp.content)
+        contributors = (page.find(":contains('Contributors to this page')")
+                            .parent())
+        # just checking if the contributor link is rendered
+        eq_(len(contributors.find('a')), 2)
+
     def test_revision_view_bleached_content(self):
         """Bug 821988: Revision content should be cleaned with bleach"""
         d, r = doc_rev("""
@@ -699,11 +716,11 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=0.0)
     @mock.patch('kuma.wiki.kumascript.get')
+    @override_settings(CELERY_ALWAYS_EAGER=True)
     def test_disabled_rendering(self, mock_kumascript_get):
         """When disabled, the kumascript service should not be used
         in rendering"""
         mock_kumascript_get.return_value = (self.d.html, None)
-        settings.CELERY_ALWAYS_EAGER = True
         self.d.schedule_rendering('max-age=0')
         ok_(not mock_kumascript_get.called,
             "kumascript not should have been used")
