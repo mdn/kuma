@@ -4,8 +4,10 @@ from django.contrib import admin
 from jinja2 import escape, Markup, contextfunction
 from jingo import register
 
+from allauth.utils import get_request_param
 from allauth.account.utils import user_display
 from allauth.socialaccount import providers
+from allauth.socialaccount.templatetags.socialaccount import get_providers
 from honeypot.templatetags.honeypot import render_honeypot_field
 from tower import ugettext as _
 
@@ -70,6 +72,12 @@ def user_list(users):
                        u in users])
     return Markup(list)
 
+# Returns a string representation of a user
+register.function(user_display)
+
+# Returns a list of social authentication providers.
+register.function(get_providers)
+
 
 @register.function
 @contextfunction
@@ -80,13 +88,23 @@ def provider_login_url(context, provider_id, **params):
     """
     request = context['request']
     provider = providers.registry.by_id(provider_id)
+    auth_params = params.get('auth_params', None)
+    scope = params.get('scope', None)
+    process = params.get('process', None)
+    if scope is '':
+        del params['scope']
+    if auth_params is '':
+        del params['auth_params']
     if 'next' not in params:
-        next = request.GET.get('next')
+        next = get_request_param(request, 'next')
         if next:
             params['next'] = next
+        elif process == 'redirect':
+            params['next'] = request.get_full_path()
     else:
         if not params['next']:
             del params['next']
+    # get the login url and append params as url parameters
     return Markup(provider.get_login_url(request, **params))
 
 
@@ -123,6 +141,3 @@ def social_accounts(user):
 @register.inclusion_tag('honeypot/honeypot_field.html')
 def honeypot_field(field_name=None):
     return render_honeypot_field(field_name)
-
-
-register.function(user_display)

@@ -40,6 +40,38 @@ PYTHON_FORMAT = re.compile(r'''(?x)
 ''')
 
 
+def _parse_datetime_header(value):
+    match = re.match(r'^(?P<datetime>.*?)(?P<tzoffset>[+-]\d{4})?$', value)
+
+    tt = time.strptime(match.group('datetime'), '%Y-%m-%d %H:%M')
+    ts = time.mktime(tt)
+    dt = datetime.fromtimestamp(ts)
+
+    # Separate the offset into a sign component, hours, and # minutes
+    tzoffset = match.group('tzoffset')
+    if tzoffset is not None:
+        plus_minus_s, rest = tzoffset[0], tzoffset[1:]
+        hours_offset_s, mins_offset_s = rest[:2], rest[2:]
+
+        # Make them all integers
+        plus_minus = int(plus_minus_s + '1')
+        hours_offset = int(hours_offset_s)
+        mins_offset = int(mins_offset_s)
+
+        # Calculate net offset
+        net_mins_offset = hours_offset * 60
+        net_mins_offset += mins_offset
+        net_mins_offset *= plus_minus
+
+        # Create an offset object
+        tzoffset = FixedOffsetTimezone(net_mins_offset)
+
+        # Store the offset in a datetime object
+        dt = dt.replace(tzinfo=tzoffset)
+
+    return dt
+
+
 class Message(object):
     """Representation of a single message in a catalog."""
 
@@ -379,63 +411,11 @@ class Catalog(object):
                 self._num_plurals = int(params.get('nplurals', 2))
                 self._plural_expr = params.get('plural', '(n != 1)')
             elif name == 'pot-creation-date':
-                # FIXME: this should use dates.parse_datetime as soon as that
-                #        is ready
-                value, tzoffset, _ = re.split('([+-]\d{4})$', value, 1)
-
-                tt = time.strptime(value, '%Y-%m-%d %H:%M')
-                ts = time.mktime(tt)
-
-                # Separate the offset into a sign component, hours, and minutes
-                plus_minus_s, rest = tzoffset[0], tzoffset[1:]
-                hours_offset_s, mins_offset_s = rest[:2], rest[2:]
-
-                # Make them all integers
-                plus_minus = int(plus_minus_s + '1')
-                hours_offset = int(hours_offset_s)
-                mins_offset = int(mins_offset_s)
-
-                # Calculate net offset
-                net_mins_offset = hours_offset * 60
-                net_mins_offset += mins_offset
-                net_mins_offset *= plus_minus
-
-                # Create an offset object
-                tzoffset = FixedOffsetTimezone(net_mins_offset)
-
-                # Store the offset in a datetime object
-                dt = datetime.fromtimestamp(ts)
-                self.creation_date = dt.replace(tzinfo=tzoffset)
+                self.creation_date = _parse_datetime_header(value)
             elif name == 'po-revision-date':
                 # Keep the value if it's not the default one
                 if 'YEAR' not in value:
-                    # FIXME: this should use dates.parse_datetime as soon as
-                    #        that is ready
-                    value, tzoffset, _ = re.split('([+-]\d{4})$', value, 1)
-                    tt = time.strptime(value, '%Y-%m-%d %H:%M')
-                    ts = time.mktime(tt)
-
-                    # Separate the offset into a sign component, hours, and
-                    # minutes
-                    plus_minus_s, rest = tzoffset[0], tzoffset[1:]
-                    hours_offset_s, mins_offset_s = rest[:2], rest[2:]
-
-                    # Make them all integers
-                    plus_minus = int(plus_minus_s + '1')
-                    hours_offset = int(hours_offset_s)
-                    mins_offset = int(mins_offset_s)
-
-                    # Calculate net offset
-                    net_mins_offset = hours_offset * 60
-                    net_mins_offset += mins_offset
-                    net_mins_offset *= plus_minus
-
-                    # Create an offset object
-                    tzoffset = FixedOffsetTimezone(net_mins_offset)
-
-                    # Store the offset in a datetime object
-                    dt = datetime.fromtimestamp(ts)
-                    self.revision_date = dt.replace(tzinfo=tzoffset)
+                    self.revision_date = _parse_datetime_header(value)
 
     mime_headers = property(_get_mime_headers, _set_mime_headers, doc="""\
     The MIME headers of the catalog, used for the special ``msgid ""`` entry.

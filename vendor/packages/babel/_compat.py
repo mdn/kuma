@@ -1,4 +1,5 @@
 import sys
+import array
 
 PY2 = sys.version_info[0] == 2
 
@@ -26,6 +27,8 @@ if not PY2:
 
     cmp = lambda a, b: (a > b) - (a < b)
 
+    array_tobytes = array.array.tobytes
+
 else:
     text_type = unicode
     string_types = (str, unicode)
@@ -46,6 +49,8 @@ else:
     range_type = xrange
 
     cmp = cmp
+
+    array_tobytes = array.array.tostring
 
 
 number_types = integer_types + (float,)

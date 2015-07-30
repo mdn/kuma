@@ -120,6 +120,7 @@ import warnings
 import types
 from inspect import isgeneratorfunction, isclass
 from contextlib import contextmanager
+from random import shuffle
 
 from logilab.common.fileutils import abspath_listdir
 from logilab.common import textutils
@@ -391,7 +392,9 @@ class PyTester(object):
         return true when all tests has been executed, false if exitfirst and
         some test has failed.
         """
-        for filename in abspath_listdir(testdir):
+        files = abspath_listdir(testdir)
+        shuffle(files)
+        for filename in files:
             if this_is_a_testfile(filename):
                 if self.options.exitfirst and not self.options.restart:
                     # overwrite restart file
@@ -930,7 +933,7 @@ class SkipAwareTextTestRunner(unittest.TextTestRunner):
             if tags_pattern is not None:
                 tags = getattr(test, 'tags', testlib.Tags())
                 if tags.inherit and isinstance(test, types.MethodType):
-                    tags = tags | getattr(test.im_class, 'tags', testlib.Tags())
+                    tags = tags | getattr(test.__self__.__class__, 'tags', testlib.Tags())
                 return tags.match(tags_pattern)
         return True # no pattern
 

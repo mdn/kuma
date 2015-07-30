@@ -13,7 +13,7 @@ modify entries, comments or metadata, etc. or create new po files from scratch.
 """
 
 __author__ = 'David Jean Louis <izimobil@gmail.com>'
-__version__ = '1.0.6'
+__version__ = '1.0.7'
 __all__ = ['pofile', 'POFile', 'POEntry', 'mofile', 'MOFile', 'MOEntry',
            'default_encoding', 'escape', 'unescape', 'detect_encoding', ]
 
@@ -339,7 +339,7 @@ class _BaseFile(list):
 
     def __contains__(self, entry):
         """
-        Overriden ``list`` method to implement the membership test (in and
+        Overridden ``list`` method to implement the membership test (in and
         not in).
         The method considers that an entry is in the file if it finds an entry
         that has the same msgid (the test is **case sensitive**) and the same
@@ -358,7 +358,7 @@ class _BaseFile(list):
 
     def append(self, entry):
         """
-        Overriden method to check for duplicates entries, if a user tries to
+        Overridden method to check for duplicates entries, if a user tries to
         add an entry that is already in the file, the method will raise a
         ``ValueError`` exception.
 
@@ -373,7 +373,7 @@ class _BaseFile(list):
 
     def insert(self, index, entry):
         """
-        Overriden method to check for duplicates entries, if a user tries to
+        Overridden method to check for duplicates entries, if a user tries to
         add an entry that is already in the file, the method will raise a
         ``ValueError`` exception.
 
@@ -454,7 +454,7 @@ class _BaseFile(list):
             boolean, whether to also search in entries that are obsolete.
 
         ``msgctxt``
-            string, allows to specify a specific message context for the
+            string, allows specifying a specific message context for the
             search.
         """
         if include_obsolete_entries:
@@ -483,10 +483,10 @@ class _BaseFile(list):
             'PO-Revision-Date',
             'Last-Translator',
             'Language-Team',
-            'Language',
             'MIME-Version',
             'Content-Type',
             'Content-Transfer-Encoding',
+            'Language',
             'Plural-Forms'
         ]
         ordered_data = []
@@ -611,7 +611,9 @@ class POFile(_BaseFile):
         """
         ret, headers = '', self.header.split('\n')
         for header in headers:
-            if header[:1] in [',', ':']:
+            if not len(header):
+                ret += "#\n"
+            elif header[:1] in [',', ':']:
                 ret += '#%s\n' % header
             else:
                 ret += '# %s\n' % header
@@ -897,9 +899,8 @@ class _BaseEntry(object):
 
         ret = ['%s%s%s "%s"' % (delflag, fieldname, plural_index,
                                 escape(lines.pop(0)))]
-        for mstr in lines:
-            #import pdb; pdb.set_trace()
-            ret.append('%s"%s"' % (delflag, escape(mstr)))
+        for line in lines:
+            ret.append('%s"%s"' % (delflag, escape(line)))
         return ret
 # }}}
 # class POEntry {{{
@@ -1047,6 +1048,17 @@ class POEntry(_BaseEntry):
                 if entry1[1] > entry2[1]:
                     return 1
                 else:
+                    return -1
+        # Compare msgid_plural if set
+        if self.msgid_plural:
+            if not other.msgid_plural:
+                return 1
+            for pos in self.msgid_plural:
+                if pos not in other.msgid_plural:
+                    return 1
+                if self.msgid_plural[pos] > other.msgid_plural[pos]:
+                    return 1
+                if self.msgid_plural[pos] < other.msgid_plural[pos]:
                     return -1
         # Finally: Compare message ID
         if self.msgid > other.msgid:
@@ -1212,7 +1224,7 @@ class _POFileParser(object):
         #     * HE: Header
         #     * TC: a translation comment
         #     * GC: a generated comment
-        #     * OC: a file/line occurence
+        #     * OC: a file/line occurrence
         #     * FL: a flags line
         #     * CT: a message context
         #     * PC: a previous msgctxt
@@ -1470,7 +1482,7 @@ class _POFileParser(object):
         return True
 
     def handle_oc(self):
-        """Handle a file:num occurence."""
+        """Handle a file:num occurrence."""
         if self.current_state in ['mc', 'ms', 'mx']:
             self.instance.append(self.current_entry)
             self.current_entry = POEntry(linenum=self.current_line)
@@ -1552,7 +1564,8 @@ class _POFileParser(object):
 
     def handle_mx(self):
         """Handle a msgstr plural."""
-        index, value = self.current_token[7], self.current_token[11:-1]
+        index = self.current_token[7]
+        value = self.current_token[self.current_token.find('"') + 1:-1]
         self.current_entry.msgstr_plural[int(index)] = unescape(value)
         self.msgstr_index = int(index)
         return True
