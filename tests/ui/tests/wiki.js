@@ -145,7 +145,12 @@ define([
                         .moveMouseTo(5, 5)
                         .click()
                         .then(function() {
-                            return libAssert.windowPropertyExists(remote, 'CKEDITOR');
+                            return poll.untilUrlChanges(remote, '$edit').then(function() {
+                                assert.isTrue(true, 'Clicking edit button loads edit page');
+                            });
+                        })
+                        .then(function() {
+                            return confirmCKEditorReady(remote);
                         });
         },
 
@@ -163,10 +168,21 @@ define([
                                 return remote.findByCssSelector('#translations-add')
                                     .click()
                                     .end()
+                                    .then(function() {
+                                        return poll.untilUrlChanges(remote, '$locales').then(function() {
+                                            assert.isTrue(true, 'Clicking edit button loads edit page');
+                                        });
+                                    })
                                     .findByCssSelector('.locales a')
                                     .click()
+                                    .end()
                                     .then(function() {
-                                        return libAssert.windowPropertyExists(remote, 'CKEDITOR');
+                                        return poll.untilUrlChanges(remote, '$translate').then(function() {
+                                            assert.isTrue(true, 'Clicking translate link loads translate page');
+                                        });
+                                    })
+                                    .then(function() {
+                                        return confirmCKEditorReady(remote);
                                     });
                             });
                         });
