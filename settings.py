@@ -360,8 +360,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
-
-    'kuma.search.context_processors.search_filters',
 )
 
 MIDDLEWARE_CLASSES = (
