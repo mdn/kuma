@@ -23,6 +23,11 @@ class DocumentZoneMiddleware(object):
     incoming path_info to point at the internal wiki path
     """
     def process_request(self, request):
+        # https://bugzil.la/1189222
+        # Don't redirect POST $subscribe requests to GET zone url
+        if request.method == 'POST' and '$subscribe' in request.path:
+            return None
+
         remaps = DocumentZoneURLRemapsJob().get(request.locale)
         for original_path, new_path in remaps:
 
