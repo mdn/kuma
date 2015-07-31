@@ -59,6 +59,11 @@ $submenu {
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
     padding: $grid-spacing;
 
+    /* text should be text coloured, this could be moved
+       into submenu-set if we ever it them to be something
+       that stands out better on the configurable background */
+    color: $text-color;
+
     /* arrow */
     generate-arrow();
     &:before {
