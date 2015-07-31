@@ -102,7 +102,6 @@
 
     function ffoFinished() {
         ffoSwap();
-        tabzillaLoad();
     }
 
     function ffoSwap() {
