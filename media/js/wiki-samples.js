@@ -1,11 +1,15 @@
 (function(win, doc, $) {
     if(!win.waffle || !win.waffle.flag_is_active('wiki_samples')) return;
 
-    var sites = ['codepen'];
+    var sites = ['codepen', 'jsfiddle'];
     var frameLength = 'frame_'.length;
 
     var sourceURL = $('link[rel=canonical]').attr('href') || win.location.href.split('#')[0];
     var plug = '<!-- Learn about this code on MDN: ' + sourceURL + ' -->\n\n';
+
+    var analytics = '<input type="hidden" name="utm_source" value="mdn" />' +
+                            '<input type="hidden" name="utm_medium" value="code-sample" />' +
+                            '<input type="hidden" name="utm_campaign" value="external-samples" />';
 
     // Find sample IFRAMES
     // Some are wrapped in tables, so put the button after the table or after the iframe
@@ -17,7 +21,6 @@
         $(parentTable || $this).after(function() {
             return createSampleButtons(section);
         });
-
     });
 
     // Listen for clicks on open buttons
@@ -54,13 +57,11 @@
             '<input type="hidden" name="css" />' +
             '<input type="hidden" name="js" />' +
             '<input type="hidden" name="title" />' +
-            '<input type="hidden" name="wrap" value="b" />' +
-            '<input type="hidden" name="source" value="mdn" />' +
-            '<input type="hidden" name="medium" value="code-sample" />' +
+            '<input type="hidden" name="wrap" value="b" />' + analytics +
             '<input type="submit" />' +
         '</form>').appendTo(doc.body);
 
-       $form.find('input[name=html]').val(htmlCode);
+       $form.find('input[name=html]').val(plug + htmlCode);
        $form.find('input[name=css]').val(cssCode);
        $form.find('input[name=js]').val(jsCode);
        $form.find('input[name=title]').val(title);
@@ -69,7 +70,7 @@
 
     function openCodepen(title, htmlCode, cssCode, jsCode) {
        var $form = $('<form method="post" action="https://codepen.io/pen/define" class="hidden">' +
-            '<input type="hidden" name="data">' +
+            '<input type="hidden" name="data">' + analytics +
             '<input type="submit" />' +
         '</form>').appendTo(doc.body);
 
