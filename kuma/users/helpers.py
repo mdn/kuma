@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib import admin
 
-from jinja2 import Markup, contextfunction
+from jinja2 import escape, Markup, contextfunction
 from jingo import register
 
 from allauth.utils import get_request_param
