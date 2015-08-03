@@ -12,7 +12,7 @@ Installing Dependencies
 
 3. From the `tests/ui/` directory, use NPM or another package manager to install Intern::
 
-    npm install intern
+    npm install intern@^2.0.0
 
 Do *not* install Intern globally -- path issues may occur.
 
@@ -42,7 +42,7 @@ The above runs the entire suite of tests. Custom functionality has been added to
 
 An example::
 
-    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309 wd='TestDoc' destructive=true
+    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309 wd='Web' destructive=true
 
 The user credentials must be Persona-only (not GMail or Mozilla LDAP lookups).  User credentials are the only required custom command line arguments.
 
