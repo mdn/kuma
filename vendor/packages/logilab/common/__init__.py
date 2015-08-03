@@ -26,9 +26,17 @@
 """
 __docformat__ = "restructuredtext en"
 
-from six.moves import range
+import sys
+import types
+import pkg_resources
 
-from logilab.common.__pkginfo__ import version as __version__
+__version__ = pkg_resources.get_distribution('logilab-common').version
+
+# deprecated, but keep compatibility with pylint < 1.4.4
+__pkginfo__ = types.ModuleType('__pkginfo__')
+__pkginfo__.__package__ = __name__
+__pkginfo__.version = __version__
+sys.modules['logilab.common.__pkginfo__'] = __pkginfo__
 
 STD_BLACKLIST = ('CVS', '.svn', '.hg', 'debian', 'dist', 'build')
 
@@ -142,6 +150,7 @@ def make_domains(lists):
     >>> make_domains(['a', 'b'], ['c','d', 'e'])
     [['a', 'b', 'a', 'b', 'a', 'b'], ['c', 'c', 'd', 'd', 'e', 'e']]
     """
+    from six.moves import range
     domains = []
     for iterable in lists:
         new_domain = iterable[:]

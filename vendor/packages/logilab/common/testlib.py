@@ -94,7 +94,7 @@ __unittest = 1
 
 def with_tempdir(callable):
     """A decorator ensuring no temporary file left when the function return
-    Work only for temporary file create with the tempfile module"""
+    Work only for temporary file created with the tempfile module"""
     if isgeneratorfunction(callable):
         def proxy(*args, **kwargs):
             old_tmpdir = tempfile.gettempdir()
@@ -330,63 +330,6 @@ class _DebugResult(object): # simplify import statement among unittest flavors..
     _moduleSetUpFailed = False
     shouldStop = False
 
-from logilab.common.decorators import monkeypatch
-@monkeypatch(unittest.TestSuite)
-def _handleModuleTearDown(self, result):
-    previousModule = self._get_previous_module(result)
-    if previousModule is None:
-        return
-    if result._moduleSetUpFailed:
-        return
-    try:
-        module = sys.modules[previousModule]
-    except KeyError:
-        return
-    # add testlib specific deprecation warning and switch to new api
-    if hasattr(module, 'teardown_module'):
-        warnings.warn('Please rename teardown_module() to tearDownModule() instead.',
-                      DeprecationWarning)
-        setattr(module, 'tearDownModule', module.teardown_module)
-    # end of monkey-patching
-    tearDownModule = getattr(module, 'tearDownModule', None)
-    if tearDownModule is not None:
-        try:
-            tearDownModule()
-        except Exception as e:
-            if isinstance(result, _DebugResult):
-                raise
-            errorName = 'tearDownModule (%s)' % previousModule
-            self._addClassOrModuleLevelException(result, e, errorName)
-
-@monkeypatch(unittest.TestSuite)
-def _handleModuleFixture(self, test, result):
-    previousModule = self._get_previous_module(result)
-    currentModule = test.__class__.__module__
-    if currentModule == previousModule:
-        return
-    self._handleModuleTearDown(result)
-    result._moduleSetUpFailed = False
-    try:
-        module = sys.modules[currentModule]
-    except KeyError:
-        return
-    # add testlib specific deprecation warning and switch to new api
-    if hasattr(module, 'setup_module'):
-        warnings.warn('Please rename setup_module() to setUpModule() instead.',
-                      DeprecationWarning)
-        setattr(module, 'setUpModule', module.setup_module)
-    # end of monkey-patching
-    setUpModule = getattr(module, 'setUpModule', None)
-    if setUpModule is not None:
-        try:
-            setUpModule()
-        except Exception as e:
-            if isinstance(result, _DebugResult):
-                raise
-            result._moduleSetUpFailed = True
-            errorName = 'setUpModule (%s)' % currentModule
-            self._addClassOrModuleLevelException(result, e, errorName)
-
 # backward compatibility: TestSuite might be imported from lgc.testlib
 TestSuite = unittest.TestSuite
 
@@ -454,6 +397,9 @@ class Tags(set):
     def match(self, exp):
         return eval(exp, {}, self)
 
+    def __or__(self, other):
+        return Tags(*super(Tags, self).__or__(other))
+
 
 # duplicate definition from unittest2 of the _deprecate decorator
 def _deprecate(original_func):
@@ -484,7 +430,7 @@ class TestCase(unittest.TestCase):
 
         NOTE: this is a logilab's standard
         """
-        mod = __import__(cls.__module__)
+        mod = sys.modules[cls.__module__]
         return osp.join(osp.dirname(osp.abspath(mod.__file__)), 'data')
     # cache it (use a class method to cache on class since TestCase is
     # instantiated for each test run)
