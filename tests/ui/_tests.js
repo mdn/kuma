@@ -5,12 +5,12 @@ define({
 
     // Functional test suite(s) to run in each browser once non-functional tests are completed
     functionalSuites: [
-        'tests/auth',
+        'tests/header',
         'tests/demos',
         'tests/env',
         'tests/footer',
-        'tests/header',
         'tests/homepage',
+        'tests/auth',
         'tests/wiki'
     ]
 

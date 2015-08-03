@@ -24,12 +24,31 @@ define(['intern/dojo/Deferred', 'base/lib/config'], function(Deferred, config) {
                         setTimeout(poll, 100);
                     }
                     else {
-                        dfd.reject(new Error('timed out for ' + fn + ': ' + arguments));
+                        dfd.reject(new Error('timed out for ' + fn + ': ' + item));
                     }
                 });
             })();
 
             return dfd.promise;
+        },
+
+        untilUrlChanges: function(remote, desired) {
+            // Shortcut method for polling until a URL changes
+            // Mostly needed for Chrome
+
+            return this.until(remote, 'getCurrentUrl', function(url) {
+                return url.indexOf(desired) != -1;
+            });
+        },
+
+        untilPopupWindowReady: function(remote, desired) {
+            // Shortcut method for polling until a popup window has launched
+            // Mostly needed for Chrome
+
+            return this.until(remote, 'getAllWindowHandles', function(handles) {
+                return handles.length === (desired || 2);
+            });
+
         }
     };
 

@@ -41,9 +41,12 @@ define([
                         .findByCssSelector('.oauth-login-picker .launch-persona-login')
                         .click()
                         .end()
+                        .then(function() {
+                            return poll.untilPopupWindowReady(remote);
+                        })
                         .getAllWindowHandles()
                         .then(function(handles) {
-                            assert.equal(handles.length, 2);
+                            assert.equal(handles.length, 2, 'There are two windows upon Persona click');
 
                             return remote.switchToWindow(handles[1])
                                 .getPageTitle()
@@ -62,17 +65,11 @@ define([
 
             libLogin.getTestPersonaLoginCredentials(function(credentials) {
                 return libLogin.completePersonaWindow(remote, credentials.email, credentials.password).then(function() {
-                    return remote
-                        .then(function() {
-                                return remote
-                                    .getCurrentUrl()
-                                    .then(function(url) {
-                                        assert.isTrue(url.indexOf('/account/signup') != -1);
-                                        return libLogin.completePersonaLogout(remote).then(dfd.resolve);
-                                    });
-                        });
+                    return poll.untilUrlChanges(remote, '/account/signup').then(function() {
+                        assert.isTrue(true, 'User sent to registration page');
+                        return libLogin.completePersonaLogout(remote).then(dfd.resolve);
+                    });
                 });
-
             });
 
             return dfd;
@@ -93,22 +90,30 @@ define([
                                     return element
                                                 .click()
                                                 .then(function() {
+                                                     return poll.untilUrlChanges(remote, '/profiles');
+                                                })
+                                                .then(function() {
                                                     return remote
-                                                                .findById('edit-profile')
+                                                                .findByCssSelector('#edit-profile')
                                                                 .click()
                                                                 .end()
-                                                                .findByCssSelector('.fm-submit button[type=submit]')
+                                                                .then(function() {
+                                                                     return poll.untilUrlChanges(remote, '/edit');
+                                                                })
+                                                                .findByCssSelector('.submission button[type=submit]')
                                                                 .click()
                                                                 .end()
-                                                                .findByCssSelector('.memberSince')
+                                                                .then(function() {
+                                                                     return poll.untilUrlChanges(remote, '/profiles');
+                                                                })
+                                                                .findByCssSelector('.profile-since')
                                                                 .click() // Just ensuring the element is there
                                                                 .end()
                                                                 .findByCssSelector('.oauth-logged-in-signout')
                                                                 .click()
                                                                 .end()
-                                                                .findByCssSelector('.oauth-login-container')
                                                                 .then(dfd.callback(function() {
-                                                                    assert.isTrue(true, 'User can sign out without problems');
+                                                                    assert.ok('User can sign out without problems');
                                                                 }));
                                                 });
                                 });
@@ -121,14 +126,18 @@ define([
 
         'Clicking on the GitHub icon initializes GitHub login process': function() {
 
-            return this.remote
+            var remote = this.remote;
+
+            return remote
                         .findByCssSelector('.oauth-login-picker a[data-service="GitHub"]')
                         .click()
-                        .getCurrentUrl()
-                        .then(function(url) {
+                        .then(function() {
+                            return poll.untilUrlChanges(remote, 'github.com').then(function() {
+                                assert.isTrue(true, 'User sent to GitHub.com');
+                            });
                             assert.ok(url.toLowerCase().indexOf('github.com') != -1, 'Clicking GitHub login link goes to GitHub.com. (Requires working GitHub login.)');
                         })
-                        .goBack(); // Cleanup to go back to MDN from GitHub sign in page
+                        //.goBack(); // Cleanup to go back to MDN from GitHub sign in page
 
         },
 
@@ -139,11 +148,10 @@ define([
                         .findByCssSelector('.oauth-login-options .oauth-icon')
                         .moveMouseTo(5, 5)
                         .isDisplayed()
-                        .then(function(bool) {
-                            assert.isFalse(bool);
-                        });
+                        .then(assert.isFalse);
 
         }
+
     });
 
 });
