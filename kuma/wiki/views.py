@@ -1512,11 +1512,12 @@ def document_revisions(request, document_slug, document_locale):
 @xframe_options_sameorigin
 @process_document_path
 @prevent_indexing
+@ratelimit(key='user_or_ip', rate='60/m', block=True)
 def compare_revisions(request, document_slug, document_locale):
-    """Compare two wiki document revisions.
+    """
+    Compare two wiki document revisions.
 
     The ids are passed as query string parameters (to and from).
-
     """
     locale = request.GET.get('locale', document_locale)
     doc = get_object_or_404(Document,
