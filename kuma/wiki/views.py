@@ -1534,8 +1534,9 @@ def compare_revisions(request, document_slug, document_locale):
         # Punt any errors in parameter handling to a 404
         raise Http404
 
-    revision_from = get_object_or_404(Revision, id=from_id, document=doc)
-    revision_to = get_object_or_404(Revision, id=to_id, document=doc)
+    revisions = Revision.prefetch_related('document', 'tags')
+    revision_from = get_object_or_404(revisions, id=from_id, document=doc)
+    revision_to = get_object_or_404(revisions, id=to_id, document=doc)
 
     context = {
         'document': doc,
