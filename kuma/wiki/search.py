@@ -24,14 +24,6 @@ from kuma.core.utils import chord_flow, chunked
 log = logging.getLogger('kuma.wiki.search')
 
 
-# Configure Elasticsearch connections for connection pooling.
-connections.configure(
-    default={'hosts': settings.ES_URLS},
-    indexing={'hosts': settings.ES_URLS,
-              'timeout': settings.ES_INDEXING_TIMEOUT},
-)
-
-
 class WikiDocumentType(document.DocType):
     excerpt_fields = ['summary', 'content']
     exclude_slugs = ['Talk:', 'User:', 'User_talk:', 'Template_talk:',

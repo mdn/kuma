@@ -441,7 +441,7 @@ INSTALLED_APPS = (
     'kuma.landing',
     'kuma.search',
     'kuma.users',
-    'kuma.wiki',
+    'kuma.wiki.apps.WikiConf',
     'kuma.attachments',
     'allauth',
     'allauth.account',

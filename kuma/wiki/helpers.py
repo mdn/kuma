@@ -33,8 +33,9 @@ def compare_url(doc, from_id, to_id):
 
 # http://stackoverflow.com/q/774316/571420
 def show_diff(seqm):
-    """Unify operations between two compared strings
-seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
+    """
+    Unify operations between two compared strings
+    seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
     lines = config.FEED_DIFF_CONTEXT_LINES
     full_output = []
     for opcode, a0, a1, b0, b1 in seqm.get_opcodes():

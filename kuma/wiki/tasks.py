@@ -10,7 +10,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
 from django.core.mail import EmailMessage, mail_admins, send_mail
 from django.db import connection, transaction
-from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
@@ -27,7 +26,6 @@ from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
 from .helpers import absolutify
 from .models import Document, Revision, RevisionIP
 from .search import WikiDocumentType
-from .signals import render_done
 
 
 log = logging.getLogger('kuma.wiki.tasks')
@@ -137,12 +135,6 @@ def build_json_data_for_document(pk, stale):
     if document.parent is not None:
         parent_json = json.dumps(document.parent.build_json_data())
         Document.objects.filter(pk=document.parent.pk).update(json=parent_json)
-
-
-@receiver(render_done)
-def build_json_data_handler(sender, instance, **kwargs):
-    if not instance.deleted:
-        build_json_data_for_document.delay(instance.pk, stale=False)
 
 
 @task

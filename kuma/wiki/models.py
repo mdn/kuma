@@ -19,7 +19,6 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
 from django.db.models import signals
-from django.dispatch import receiver
 from django.http import Http404
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
@@ -1552,55 +1551,6 @@ class DocumentZone(models.Model):
     def __unicode__(self):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
                                           self.document.title)
-
-    def save(self, *args, **kwargs):
-        super(DocumentZone, self).save(*args, **kwargs)
-
-        # Refresh the cache for the locale of this zone's attached document
-        invalidate_zone_urls_cache(self.document)
-        invalidate_zone_stack_cache(self.document)
-
-
-def invalidate_zone_stack_cache(document, async=False):
-    """
-    reset the cache for the zone stack for all of the documents
-    in the document tree branch
-    """
-    pks = [document.pk] + [parent.pk
-                           for parent in document.get_topic_parents()]
-    job = DocumentZoneStackJob()
-    if async:
-        invalidator = job.invalidate
-    else:
-        invalidator = job.refresh
-    for pk in pks:
-        invalidator(pk)
-
-
-def invalidate_zone_urls_cache(document, async=False):
-    # if the document is a document zone
-    job = DocumentZoneURLRemapsJob()
-    if async:
-        invalidator = job.invalidate
-    else:
-        invalidator = job.refresh
-    try:
-        if document.zone:
-            # reset the cached list of zones of the document's locale
-            invalidator(document.locale)
-    except DocumentZone.DoesNotExist:
-        pass
-
-
-@receiver(signals.post_save, sender=Document)
-def invalidate_zone_caches(sender, instance, **kwargs):
-    invalidate_zone_urls_cache(instance, async=True)
-    invalidate_zone_stack_cache(instance, async=True)
-
-
-@receiver(signals.post_save, sender=Document)
-def invalidate_contributors(sender, instance, **kwargs):
-    DocumentContributorsJob().invalidate(instance.pk)
 
 
 class ReviewTag(TagBase):
