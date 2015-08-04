@@ -346,11 +346,13 @@ class RevisionsFeed(DocumentsFeed):
         previous_id = u'N/A'
         content_diff = u'<h3>Content changes:</h3>'
         if previous:
-            previous_content = previous.content
+            previous_content = previous.get_tidied_content()
+            current_content = item.get_tidied_content()
             previous_id = previous.id
-            if previous_content != item.content:
+            if previous_content != current_content:
                 content_diff = content_diff + diff_table(
-                    previous_content, item.content, previous_id, item.id)
+                    previous_content, current_content,
+                    previous_id, item.id)
                 content_diff = colorize_diff(content_diff)
         else:
             content_diff = content_diff + escape(item.content)

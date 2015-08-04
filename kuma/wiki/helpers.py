@@ -7,7 +7,6 @@ import urlparse
 
 import jinja2
 from pyquery import PyQuery as pq
-from tidylib import tidy_document
 from tower import ugettext as _
 
 from django.contrib.sites.models import Site
@@ -20,28 +19,13 @@ from jingo import register
 from kuma.core.urlresolvers import reverse
 from .constants import DIFF_WRAP_COLUMN
 from .jobs import DocumentZoneStackJob
+from .utils import tidy_content
 
 
 def get_compare_url(doc, from_id, to_id):
     params = urllib.urlencode({'from': from_id, 'to': to_id})
     return (reverse('wiki.compare_revisions', args=[doc.slug],
                     locale=doc.locale) + '?' + params)
-
-
-def _massage_diff_content(content):
-    tidy_options = {
-        'output-xhtml': 0,
-        'force-output': 1,
-    }
-    try:
-        content = tidy_document(content, options=tidy_options)
-    except UnicodeDecodeError:
-        # In case something happens in pytidylib we'll try again with
-        # a proper encoding
-        content = tidy_document(content.encode('utf-8'), options=tidy_options)
-        tidied, errors = content
-        content = tidied.decode('utf-8'), errors
-    return content
 
 
 @register.filter
@@ -79,12 +63,19 @@ def format_comment(rev, previous_revision=None):
 
 @register.function
 def revisions_unified_diff(from_revision, to_revision):
+    """
+    Given the two revisions generate a diff between their tidied
+    content in the unified diff format.
+    """
     if from_revision is None or to_revision is None:
         return "Diff is unavailable."
+
     fromfile = '[%s] #%s' % (from_revision.document.locale, from_revision.id)
     tofile = '[%s] #%s' % (to_revision.document.locale, to_revision.id)
-    tidy_from, errors = _massage_diff_content(from_revision.content)
-    tidy_to, errors = _massage_diff_content(to_revision.content)
+
+    tidy_from = from_revision.get_tidied_content()
+    tidy_to = to_revision.get_tidied_content()
+
     return u'\n'.join(difflib.unified_diff(
         tidy_from.splitlines(),
         tidy_to.splitlines(),
@@ -94,17 +85,20 @@ def revisions_unified_diff(from_revision, to_revision):
 
 
 @register.function
-def diff_table(content_from, content_to, prev_id, curr_id):
-    """Creates an HTML diff of the passed in content_from and content_to."""
-    tidy_from, errors = _massage_diff_content(content_from)
-    tidy_to, errors = _massage_diff_content(content_to)
+def diff_table(content_from, content_to, prev_id, curr_id, tidy=False):
+    """
+    Creates an HTML diff of the passed in content_from and content_to.
+    """
+    if tidy:
+        content_from, errors = tidy_content(content_from)
+        content_to, errors = tidy_content(content_to)
+
     html_diff = difflib.HtmlDiff(wrapcolumn=DIFF_WRAP_COLUMN)
-    from_lines = tidy_from.splitlines()
-    to_lines = tidy_to.splitlines()
     try:
-        diff = html_diff.make_table(from_lines, to_lines,
-                                    _("Revision %s") % prev_id,
-                                    _("Revision %s") % curr_id,
+        diff = html_diff.make_table(content_from.splitlines(),
+                                    content_to.splitlines(),
+                                    _('Revision %s') % prev_id,
+                                    _('Revision %s') % curr_id,
                                     context=True,
                                     numlines=config.DIFF_CONTEXT_LINES)
     except RuntimeError:
@@ -117,12 +111,10 @@ def diff_table(content_from, content_to, prev_id, curr_id):
 @register.function
 def tag_diff_table(prev_tags, curr_tags, prev_id, curr_id):
     html_diff = difflib.HtmlDiff(wrapcolumn=DIFF_WRAP_COLUMN)
-    prev_tag_lines = [prev_tags]
-    curr_tag_lines = [curr_tags]
 
-    diff = html_diff.make_table(prev_tag_lines, curr_tag_lines,
-                                _("Revision %s") % prev_id,
-                                _("Revision %s") % curr_id)
+    diff = html_diff.make_table([prev_tags], [curr_tags],
+                                _('Revision %s') % prev_id,
+                                _('Revision %s') % curr_id)
 
     # Simple formatting update: 784877
     diff = diff.replace('",', '"<br />').replace('<td', '<td valign="top"')

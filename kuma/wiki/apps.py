@@ -47,42 +47,6 @@ def invalidate_zone_urls_cache(document, async=False):
         pass
 
 
-def invalidate_zone_caches_for_document(sender, instance, **kwargs):
-    """
-    A signal handler to trigger the cache invalidation of both the zone URLs
-    and stack cache for a given document.
-    """
-    async = kwargs.get('async', True)
-    invalidate_zone_urls_cache(instance, async=async)
-    invalidate_zone_stack_cache(instance, async=async)
-
-
-def invalidate_zone_caches_for_zone(sender, instance, **kwargs):
-    """
-    A signal handler to trigger the cache invalidation of both the zone URLs
-    and stack cache for a given zone's document.
-    """
-    invalidate_zone_caches_for_document(sender=instance.document.__class__,
-                                        instance=instance.document,
-                                        async=False)
-
-
-def invalidate_contributors(sender, instance, **kwargs):
-    """
-    A signal handler to trigger the contributor bar for a given document.
-    """
-    DocumentContributorsJob().invalidate(instance.pk)
-
-
-def build_json_data(sender, instance, **kwargs):
-    """
-    A signal handler to update the given document's json field.
-    """
-    from .tasks import build_json_data_for_document
-    if not instance.deleted:
-        build_json_data_for_document.delay(instance.pk, stale=False)
-
-
 class WikiConfig(AppConfig):
     """
     The Django App Config class to store information about the wiki app
@@ -105,19 +69,59 @@ class WikiConfig(AppConfig):
             },
         )
 
-        # the list of wiki document signal handlers to connect to
+        # connect some signal handlers for the wiki models
         Document = self.get_model('Document')
-        signals.post_save.connect(invalidate_zone_caches_for_document,
+        signals.post_save.connect(self.on_document_save,
                                   sender=Document,
-                                  dispatch_uid='wiki.zones.invalidate.document')
-        signals.post_save.connect(invalidate_contributors,
-                                  sender=Document,
-                                  dispatch_uid='wiki.contributors.invalidate')
-        render_done.connect(build_json_data,
-                            dispatch_uid='wiki.document.build_json')
+                                  dispatch_uid='wiki.document.post_save')
+        render_done.connect(self.on_render_done,
+                            dispatch_uid='wiki.document.render_done')
 
-        # the list of wiki document zone signal handlers to connect to
+        Revision = self.get_model('Revision')
+        signals.post_save.connect(self.on_revision_save,
+                                  sender=Revision,
+                                  dispatch_uid='wiki.revision.post_save')
+
         DocumentZone = self.get_model('DocumentZone')
-        signals.post_save.connect(invalidate_zone_caches_for_zone,
+        signals.post_save.connect(self.on_zone_save,
                                   sender=DocumentZone,
-                                  dispatch_uid='wiki.zones.invalidate.zone')
+                                  dispatch_uid='wiki.zone.post_save')
+
+    def on_document_save(self, sender, instance, **kwargs):
+        """
+        A signal handler to be called after saving a document. Does:
+
+        - trigger the cache invalidation of both the zone URLs and stack
+          cache for the given document
+        - trigger the cache invalidation of the contributor bar for the given
+          document
+        """
+        async = kwargs.get('async', True)
+        invalidate_zone_urls_cache(instance, async=async)
+        invalidate_zone_stack_cache(instance, async=async)
+        DocumentContributorsJob().invalidate(instance.pk)
+
+    def on_zone_save(self, sender, instance, **kwargs):
+        """
+        A signal handler to trigger the cache invalidation of both the zone
+        URLs and stack cache for a given zone's document.
+        """
+        self.on_document_save(sender=instance.document.__class__,
+                              instance=instance.document,
+                              async=False)
+
+    def on_render_done(self, sender, instance, **kwargs):
+        """
+        A signal handler to update the given document's json field.
+        """
+        from .tasks import build_json_data_for_document
+        if not instance.deleted:
+            build_json_data_for_document.delay(instance.pk, stale=False)
+
+    def on_revision_save(self, sender, instance, **kwargs):
+        """
+        A signal handler to trigger the Celery task to update the
+        tidied_content field of the given revision
+        """
+        from .tasks import tidy_revision_content
+        tidy_revision_content.delay(instance.pk)
