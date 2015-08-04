@@ -1,7 +1,6 @@
 """Feeds for documents"""
 import datetime
 import json
-import urllib
 
 from django.conf import settings
 from django.db.models import F
@@ -15,7 +14,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.validators import valid_jsonp_callback_value
 from kuma.users.helpers import gravatar_url
 
-from .helpers import diff_table, tag_diff_table, compare_url, colorize_diff
+from .helpers import diff_table, tag_diff_table, get_compare_url, colorize_diff
 from .models import Document, Revision
 
 
@@ -254,9 +253,9 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
                                              .order_by('created')
                                              .values_list('pk', flat=True)
                                              .first())
-        mod_url = compare_url(parent,
-                              trans_based_on_pk,
-                              parent.current_revision.id)
+        mod_url = get_compare_url(parent,
+                                  trans_based_on_pk,
+                                  parent.current_revision.id)
 
         context = {
             'doc_url': self.request.build_absolute_uri(doc.get_absolute_url()),
@@ -357,18 +356,15 @@ class RevisionsFeed(DocumentsFeed):
             content_diff = content_diff + escape(item.content)
 
         link_cell = u'<td><a href="%s">%s</a></td>'
-        view_cell = link_cell % (reverse('wiki.document',
-                                         args=[item.document.slug]),
+        view_cell = link_cell % (item.document.get_absolute_url(),
                                  _('View Page'))
         edit_cell = link_cell % (reverse('wiki.edit_document',
                                          args=[item.document.slug]),
                                  _('Edit Page'))
         if previous:
-            compare_cell = link_cell % (reverse('wiki.compare_revisions',
-                                                args=[item.document.slug])
-                                        + '?' +
-                                        urllib.urlencode({'from': previous.id,
-                                                          'to': item.id}),
+            compare_cell = link_cell % (get_compare_url(item.document,
+                                                        previous.id,
+                                                        item.id),
                                         _('Show comparison'))
         else:
             compare_cell = ''

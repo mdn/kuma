@@ -22,67 +22,10 @@ from .constants import DIFF_WRAP_COLUMN
 from .jobs import DocumentZoneStackJob
 
 
-def compare_url(doc, from_id, to_id):
-    return (
-        reverse('wiki.compare_revisions', args=[doc.slug],
-                locale=doc.locale)
-        + '?' +
-        urllib.urlencode({'from': from_id, 'to': to_id})
-    )
-
-
-# http://stackoverflow.com/q/774316/571420
-def show_diff(seqm):
-    """
-    Unify operations between two compared strings
-    seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
-    lines = config.FEED_DIFF_CONTEXT_LINES
-    full_output = []
-    for opcode, a0, a1, b0, b1 in seqm.get_opcodes():
-        if opcode == 'equal':
-            full_output.append(seqm.a[a0:a1])
-        elif opcode == 'insert':
-            full_output.append("<ins>" + seqm.b[b0:b1] + "</ins>")
-        elif opcode == 'delete':
-            full_output.append("<del>" + seqm.a[a0:a1] + "</del>")
-        elif opcode == 'replace':
-            full_output.append("&nbsp;<del>" + seqm.a[a0:a1] + "</del>&nbsp;")
-            full_output.append("&nbsp;<ins>" + seqm.b[b0:b1] + "</ins>&nbsp;")
-        else:
-            raise RuntimeError("unexpected opcode")
-    output = []
-    whitespace_change = False
-    for piece in full_output:
-        if '<ins>' in piece or '<del>' in piece:
-            # a change
-            if re.match('<(ins|del)>\W+</(ins|del)>', piece):
-                # the change is whitespace,
-                # ignore it and remove preceding context
-                output = output[:-lines]
-                whitespace_change = True
-                continue
-            else:
-                output.append(piece)
-        else:
-            context_lines = piece.splitlines()
-            if output == []:
-                # first context only shows preceding lines for next change
-                context = ['<p>...</p>'] + context_lines[-lines:]
-            elif whitespace_change:
-                # context shows preceding lines for next change
-                context = ['<p>...</p>'] + context_lines[-lines:]
-                whitespace_change = False
-            else:
-                # context shows subsequent lines
-                # and preceding lines for next change
-                context = (context_lines[:lines]
-                           + ['<p>...</p>']
-                           + context_lines[-lines:])
-            output = output + context
-    # remove extra context from the very end, unless its the only context
-    if len(output) > lines + 1:  # context lines and the change line
-        output = output[:-lines]
-    return ''.join(output)
+def get_compare_url(doc, from_id, to_id):
+    params = urllib.urlencode({'from': from_id, 'to': to_id})
+    return (reverse('wiki.compare_revisions', args=[doc.slug],
+                    locale=doc.locale) + '?' + params)
 
 
 def _massage_diff_content(content):
@@ -104,7 +47,7 @@ def _massage_diff_content(content):
 @register.filter
 def bugize_text(content):
     content = jinja2.escape(content)
-    regex = re.compile('(bug)\s+#?(\d+)', re.IGNORECASE)
+    regex = re.compile(r'(bug)\s+#?(\d+)', re.IGNORECASE)
     content = regex.sub(
         jinja2.Markup('<a href="https://bugzilla.mozilla.org/'
                       'show_bug.cgi?id=\\2" '
@@ -115,8 +58,9 @@ def bugize_text(content):
 
 @register.function
 def format_comment(rev, previous_revision=None):
-    """ Massages revision comment content after the fact """
-
+    """
+    Massages revision comment content after the fact
+    """
     prev_rev = getattr(rev, 'previous_revision', previous_revision)
     if prev_rev is None:
         prev_rev = rev.previous
@@ -167,15 +111,6 @@ def diff_table(content_from, content_to, prev_id, curr_id):
         # some diffs hit a max recursion error
         message = _(u'There was an error generating the content.')
         diff = '<div class="warning"><p>%s</p></div>' % message
-    return jinja2.Markup(diff)
-
-
-@register.function
-def diff_inline(content_from, content_to):
-    tidy_from, errors = _massage_diff_content(content_from)
-    tidy_to, errors = _massage_diff_content(content_to)
-    sm = difflib.SequenceMatcher(None, tidy_from, tidy_to)
-    diff = show_diff(sm)
     return jinja2.Markup(diff)
 
 
