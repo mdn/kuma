@@ -6,7 +6,11 @@
     // The close button template
     var $historyCloseButton = $('<button class="bc-history-button"><abbr class="only-icon" title="' + gettext('Return to compatability table.') + '"><span>' + gettext('Close') + '</span><i class="icon-times" aria-hidden="true"></i></abbr></button>');
 
-    var animationDuration = 200;
+    var animationProps = {
+        duration: 50,
+        queue: false,
+        easing: 'linear'
+    };
 
     //  Usage: $('.compat-table').mozCompatTable();
     return jQuery.fn.mozCompatTable = function() {
@@ -20,6 +24,8 @@
 
             // This limits very quick opening and closing of cells which results in incorrect height counts
             var animating = false;
+
+            var subjectAnimation = $.extend({ complete: function() { animating = false; } }, animationProps);
 
             // Activate all history cells for keyboard;  TODO:  add "aria-controls"
             $table.find('.bc-has-history').each(function() {
@@ -128,6 +134,7 @@
                 var historyHeight;
                 var windowWidth;
                 var $subject;
+                var displayDetect;
 
                 // Add a close button if one doesn't already exist
                 if($history.find('.bc-history-button').length === 0) {
@@ -145,10 +152,9 @@
                 $openCell.addClass('active').attr('aria-expanded', true);
 
                 // add measured height to history and to the cell/row it is being displayed beneath (CSS handles transition)
+                displayDetect = $table.find('thead td:first').first().css('z-index');
 
-                var displayDetect = $('.bc-table thead td').css('z-index');
-
-                if(displayDetect == 'auto') {
+                if(displayDetect === 'auto') {
                     $subject = $row.find('th, td');
                 } else if(displayDetect == 1) {
                     $subject = $row.find('td');
@@ -157,10 +163,9 @@
                 }
 
                 animating = true;
-                $history.css('height', 0).stop().animate({ height: historyHeight }, animationDuration);
-                $subject.stop().animate({ borderBottomWidth: historyHeight }, animationDuration, function() {
-                    animating = false;
-                });
+                $history.css('height', 0).stop().animate({ height: historyHeight }, animationProps);
+
+                $subject.stop().animate({ borderBottomWidth: historyHeight }, subjectAnimation);
             }
 
             // Hides the history dropdown for a given cell
@@ -172,19 +177,24 @@
                 }
 
                 // Animate the borders back down
-                $openCell.attr('aria-expanded', false).stop().animate({ borderBottomWidth: '' }, animationDuration);
-                $openCell.closest('tr').find('th, td').stop().animate({ borderBottomWidth: '' }, animationDuration);
+                $openCell.attr('aria-expanded', false).stop().animate({ borderBottomWidth: '' }, animationProps);
+                $openCell.closest('tr').find('th, td').stop().animate({ borderBottomWidth: '' }, animationProps);
 
                 $history = $openCell.find('.bc-history');
-                $history.attr('aria-hidden', true).stop().animate({ height: '' }, animationDuration, function() {
-                    $openCell.removeClass('active');
-                    $history.css('display', 'none').css('height', 'auto');
-                    $openCell = null;
 
-                    if($td) {
-                        _open($td);
+                var historyAnimationProps = $.extend({
+                    complete: function() {
+                        $openCell.removeClass('active');
+                        $history.css('display', 'none').css('height', 'auto');
+                        $openCell = null;
+
+                        if($td) {
+                            _open($td);
+                        }
                     }
-                });
+                }, animationProps);
+
+                $history.attr('aria-hidden', true).stop().animate({ height: '' }, historyAnimationProps);
 
                 // if the focus is inside the .bc-history and we'd lose our keyboard place, move focus to parent
                 if($.contains($openCell.get(0), doc.activeElement)) {
