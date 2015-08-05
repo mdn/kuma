@@ -4,7 +4,7 @@ Override MDN standard styles
 
 .zone {
     background-color: #0952a8;
-    background-image: url($media-url-dir + 'mdn10/head.png'), url($media-url-dir + 'blueprint.png'), linear-gradient(to bottom, #153985, #044ca2 600px);
+    background-image: url($path-to-images + 'mdn10/head.png'), url($path-to-images + 'blueprint.png'), linear-gradient(to bottom, #153985, #044ca2 600px);
     background-repeat: no-repeat, repeat, repeat-x;
     background-position: center -37px;
 }
@@ -15,7 +15,7 @@ Override MDN standard styles
 
 @media $media-query-mobile-only {
     .zone {
-        background-image: url($media-url-dir + 'blueprint.png'), linear-gradient(to bottom, #153985, #044ca2 600px);
+        background-image: url($path-to-images + 'blueprint.png'), linear-gradient(to bottom, #153985, #044ca2 600px);
         background-repeat: repeat, repeat-x;
     }
 }
