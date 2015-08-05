@@ -30,8 +30,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'date_joined')
     ordering = ('-date_joined',)
     search_fields = ('username', 'homepage', 'title', 'fullname',
-                     'organization', 'location', 'bio', 'misc',
-                     'email', 'tags__name')
+                     'organization', 'location', 'bio', 'email', 'tags__name')
 
     formfield_overrides = {
         NamespacedTaggableManager: {
