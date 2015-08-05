@@ -1,4 +1,4 @@
-@require 'includes/vars';
+@require '../../includes/vars';
 
 /* Sidebar modules */
 .section-demos .module {
@@ -55,8 +55,8 @@
   right: 10px;
   top: 100px;
   border: 1px solid #cecfd2;
-  background: #c0c4c8 url("/media/img/avatar-peep.png") left 120% no-repeat;
-  background: rgba(255,255,255,0.6) url("/media/img/avatar-peep.png") left 120% no-repeat;
+  background: #c0c4c8 url($path-to-images + "avatar-peep.png") left 120% no-repeat;
+  background: rgba(255,255,255,0.6) url($path-to-images + "avatar-peep.png") left 120% no-repeat;
   -moz-border-radius: 9px;
   -webkit-border-radius: 9px;
   border-radius: 9px;
@@ -172,7 +172,7 @@ ul.sortable {
 #content ul.sortable li {
   padding: 0.25em 2px 0.25em 24px;
   margin: 0;
-  background: url("/media/img/demos/demobox-icons.png") 2px -943px no-repeat;
+  background: url($path-to-images + "demos/demobox-icons.png") 2px -943px no-repeat;
 }
 #content ul.sortable li:hover {
   background-color: #e9f0f6;
