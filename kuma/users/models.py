@@ -61,8 +61,7 @@ def delete_ban(**kwargs):
 
 class User(AbstractUser):
     """
-    Our custom user class that contains just a link to the user's profile
-    right now.
+    Our custom user class.
     """
     timezone = models.CharField(
         verbose_name=_(u'Timezone'),
