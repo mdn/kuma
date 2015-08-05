@@ -106,7 +106,7 @@ define([
                                                                 .then(function() {
                                                                      return poll.untilUrlChanges(remote, '/profiles');
                                                                 })
-                                                                .findByCssSelector('.profile-since')
+                                                                .findByCssSelector('.user-since')
                                                                 .click() // Just ensuring the element is there
                                                                 .end()
                                                                 .findByCssSelector('.oauth-logged-in-signout')
