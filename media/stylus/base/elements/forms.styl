@@ -56,18 +56,6 @@ label {
     color: $button-color;
     text-decoration: none;
 
-    &.only-icon {
-        {$selector-icon} {
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-            margin-top: -1px !important;
-        }
-
-        span {
-            offscreen();
-        }
-    }
-
     &.disabled, &[disabled] {
         box-shadow: inset 0 -1px alpha($button-shadow-color, 0.5);
     }

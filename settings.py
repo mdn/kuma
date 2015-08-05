@@ -605,6 +605,9 @@ MINIFY_BUNDLES = {
         'wiki-edit': (
             'css/wiki-edit.css',
         ),
+        'wiki-compat-tables': (
+            'css/wiki-compat-tables.css',
+        ),
         'sphinx': (
             'css/wiki.css',
             'css/sphinx.css',
@@ -727,6 +730,9 @@ MINIFY_BUNDLES = {
         ),
         'wiki-move': (
             'js/wiki-move.js',
+        ),
+        'wiki-compat-tables': (
+            'js/wiki-compat-tables.js',
         ),
         'newsletter': (
             'js/newsletter.js',
