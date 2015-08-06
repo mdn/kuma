@@ -33,7 +33,6 @@ from tidings.models import NotificationsMixin
 from kuma.attachments.models import Attachment
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.cache import memcache
-from kuma.core.fields import LocaleField
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse, split_path
 from kuma.search.decorators import register_live_index
@@ -211,7 +210,12 @@ class Document(NotificationsMixin, models.Model):
     # Is this document localizable or not?
     is_localizable = models.BooleanField(default=True, db_index=True)
 
-    locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
+    locale = models.CharField(
+        max_length=7,
+        choices=settings.LANGUAGES,
+        default=settings.WIKI_DEFAULT_LANGUAGE,
+        db_index=True,
+    )
 
     # Latest approved revision. L10n dashboard depends on this being so (rather
     # than being able to set it to earlier approved revisions). (Remove "+" to
@@ -1522,7 +1526,13 @@ class DocumentDeletionLog(models.Model):
     """
     # We store the locale/slug because it's unique, and also because a
     # ForeignKey would delete this log when the Document gets purged.
-    locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
+    locale = models.CharField(
+        max_length=7,
+        choices=settings.LANGUAGES,
+        default=settings.WIKI_DEFAULT_LANGUAGE,
+        db_index=True,
+    )
+
     slug = models.CharField(max_length=255, db_index=True)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL)

@@ -16,7 +16,6 @@ from sundial.zones import COMMON_GROUPED_CHOICES
 from tower import ugettext_lazy as _
 from waffle import switch_is_active
 
-from kuma.core.fields import LocaleField
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.urlresolvers import reverse
 
@@ -68,7 +67,10 @@ class User(AbstractUser):
         choices=COMMON_GROUPED_CHOICES,
         default=settings.TIME_ZONE,
     )
-    locale = LocaleField(
+    locale = models.CharField(
+        max_length=7,
+        default=settings.LANGUAGE_CODE,
+        choices=settings.LANGUAGES,
         verbose_name=_(u'Language'),
         blank=True,
         db_index=True,
