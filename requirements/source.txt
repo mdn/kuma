@@ -44,7 +44,7 @@ oauthlib==1.0.1
 
 python-magic==0.4.6
 
-python-memcached==1.56
+python-memcached==1.54
 
 python-openid==2.2.5
 
