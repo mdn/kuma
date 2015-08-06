@@ -48,10 +48,6 @@
 	path = vendor/src/django-tidings
 	url = git://github.com/mozilla/django-tidings.git
 	ignore = untracked
-[submodule "vendor/src/django-timezones"]
-	path = vendor/src/django-timezones
-	url = git://github.com/brosner/django-timezones.git
-	ignore = untracked
 [submodule "vendor/src/django-waffle"]
 	path = vendor/src/django-waffle
 	url = git://github.com/jsocol/django-waffle.git
