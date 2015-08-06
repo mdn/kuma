@@ -56,7 +56,7 @@ class _NamespacedTaggableManager(_TaggableManager):
             # On databases with case-insensitive collation, we can end
             # up with duplicate tags (the same tag, differing only by
             # case, like 'javascript' and 'JavaScript') in some
-            # cases. The most common instance of this is user profile
+            # cases. The most common instance of this is user
             # tags, which are coerced to lowercase on save to avoid
             # the problem, but because there are a large number of
             # these duplicates already existing, we do a quick filter

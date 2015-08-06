@@ -28,12 +28,11 @@ def uselocale(locale):
     ...     mail.send_mail(subj, msg, ...)
     ...
 
-    In Kitsune, you can get the right locale from Profile.locale and
+    In kuma, you can get the right locale from User.locale and
     also request.LANGUAGE_CODE.
 
-    If Kitsune is handling an HTTP request already, you don't have to
+    If kuma is handling an HTTP request already, you don't have to
     run uselocale---the locale will already be set correctly.
-
     """
     currlocale = translation.get_language()
     tower.activate(locale)
@@ -120,7 +119,7 @@ def emails_with_users_and_watches(subject,
     :arg context_vars: a map which becomes the Context passed in to the
         template and the subject string
     :arg from_email: the from email address
-    :arg default_local: the local to default to if not user.profile.locale
+    :arg default_local: the local to default to if not user.locale
     :arg extra_kwargs: additional kwargs to pass into EmailMessage constructor
 
     :returns: generator of EmailMessage objects
@@ -146,8 +145,8 @@ def emails_with_users_and_watches(subject,
         return msg
 
     for user, watch in users_and_watches:
-        if hasattr(user, 'profile'):
-            locale = user.profile.locale
+        if hasattr(user, 'locale'):
+            locale = user.locale
         else:
             locale = default_locale
 

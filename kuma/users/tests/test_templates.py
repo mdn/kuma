@@ -216,8 +216,8 @@ class AllauthPersonaTestCase(UserTestCase):
                                         follow=True)
             eq_(response.status_code, 200)
 
-            profile_url = reverse(
-                'users.profile',
+            user_url = reverse(
+                'users.user_detail',
                 kwargs={
                     'username': self.existing_persona_username
                 },
@@ -240,9 +240,9 @@ class AllauthPersonaTestCase(UserTestCase):
             auth_links = login_info.children()[1].getchildren()
             ok_(len(auth_links))
 
-            profile_link = auth_links[0].getchildren()[0]
-            ok_('href' in profile_link.attrib)
-            eq_(profile_url, profile_link.attrib['href'])
+            user_link = auth_links[0].getchildren()[0]
+            ok_('href' in user_link.attrib)
+            eq_(user_url, user_link.attrib['href'])
 
             signout_link = auth_links[1].getchildren()[0]
             ok_('href' in signout_link.attrib)
@@ -304,8 +304,8 @@ class AllauthPersonaTestCase(UserTestCase):
                         locale=settings.WIKI_DEFAULT_LANGUAGE),
                 data=data, follow=True)
 
-            profile_url = reverse(
-                'users.profile',
+            user_url = reverse(
+                'users.user_detail',
                 kwargs={'username': persona_signup_username},
                 locale=settings.WIKI_DEFAULT_LANGUAGE)
             signout_url = urlparams(
@@ -326,9 +326,9 @@ class AllauthPersonaTestCase(UserTestCase):
             auth_links = login_info.children()[1].getchildren()
             ok_(len(auth_links))
 
-            profile_link = auth_links[0].getchildren()[0]
-            ok_('href' in profile_link.attrib)
-            eq_(profile_url, profile_link.attrib['href'])
+            user_link = auth_links[0].getchildren()[0]
+            ok_('href' in user_link.attrib)
+            eq_(user_url, user_link.attrib['href'])
 
             signout_link = auth_links[1].getchildren()[0]
             ok_('href' in signout_link.attrib)

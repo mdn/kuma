@@ -25,6 +25,7 @@ src/django-rest-framework
 src/django-smuggler
 src/django-soapbox
 src/django-statici18n/src
+src/django-sundial
 src/django-taggit
 src/django-tidings
 src/django-timezones

@@ -59,7 +59,7 @@
               <a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a>
           </h2>
           <p class="byline vcard">
-            {{ profile_link(submission.creator, show_gravatar=True) }}
+            {{ user_link(submission.creator, show_gravatar=True) }}
           </p>
           <p class="desc">
             <span class="descText">{{ submission.summary }}</span>

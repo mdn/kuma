@@ -25,7 +25,7 @@ class HumansTXT(object):
 
         with open(path, 'w') as target:
             self.write_to_file(githubbers, target,
-                               "Contributors on Github", "Developer")
+                               "Contributors on GitHub", "Developer")
             self.write_to_file(localizers, target,
                                "Localization Contributors", "Localizer")
 

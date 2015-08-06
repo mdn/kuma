@@ -142,7 +142,7 @@ The ``ngettext`` function is also available::
 Using ``{% trans %}`` Blocks for Long Strings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When a string is very long, i.e. long enough to make Github scroll sideways, it
+When a string is very long, i.e. long enough to make GitHub scroll sideways, it
 should be line-broken and put in a ``{% trans %}`` block. ``{% trans %}``
 blocks work like other block-level tags in Jinja2, except they cannot have
 other tags, except strings, inside them.

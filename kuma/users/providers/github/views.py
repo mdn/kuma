@@ -31,7 +31,7 @@ class KumaOAuth2LoginView(OAuth2LoginView):
 
     def dispatch(self, request):
         next_url = (get_next_redirect_url(request) or
-                    reverse('users.my_profile_edit',
+                    reverse('users.my_edit_page',
                             locale=request.locale))
         request.session['sociallogin_next_url'] = next_url
         request.session.modified = True

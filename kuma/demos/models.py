@@ -613,32 +613,17 @@ class Submission(models.Model):
 
     @classmethod
     def allows_listing_hidden_by(cls, user):
-        if user.is_staff or user.is_superuser:
-            return True
-        return False
-
-    def allows_hiding_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        return False
+        return user.is_staff or user.is_superuser
 
     def allows_viewing_by(self, user):
         if not self.censored:
-            if user.is_staff or user.is_superuser or user == self.creator:
-                return True
-            if not self.hidden:
-                return True
-        return False
+            return (user.is_staff or
+                    user.is_superuser or
+                    user.pk == self.creator.pk or
+                    not self.hidden)
 
-    def allows_editing_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        return False
-
-    def allows_deletion_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        return False
+    def allows_managing_by(self, user):
+        return user.is_staff or user.is_superuser or user.pk == self.creator.pk
 
     @classmethod
     def get_valid_demo_zipfile_entries(cls, zf):

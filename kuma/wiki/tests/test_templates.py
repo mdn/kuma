@@ -484,8 +484,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                              r.content.strip())
 
     @override_settings(CELERY_ALWAYS_EAGER=True)
+    @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False)
     @mock.patch.object(Site.objects, 'get_current')
-    @mock.patch.object(settings._wrapped, 'TIDINGS_CONFIRM_ANONYMOUS_WATCHES', False)
     def test_new_revision_POST_document_with_current(self, get_current):
         """HTTP POST to new revision URL creates the revision on a document.
 
@@ -502,11 +502,17 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
 
         # Edit a document (pause for get_previous)
         time.sleep(1)
-        response = self.client.post(
-            reverse('wiki.edit_document', args=[self.d.slug]),
-            {'summary': 'A brief summary', 'content': 'The article content',
-             'keywords': 'keyword1 keyword2', 'slug': self.d.slug, 'toc_depth': 1,
-             'based_on': self.d.current_revision.id, 'form': 'rev'})
+        data = {
+            'summary': 'A brief summary',
+            'content': 'The article content',
+            'keywords': 'keyword1 keyword2',
+            'slug': self.d.slug,
+            'toc_depth': 1,
+            'based_on': self.d.current_revision.id,
+            'form': 'rev',
+        }
+        edit_url = reverse('wiki.edit_document', args=[self.d.slug])
+        response = self.client.post(edit_url, data)
         ok_(response.status_code in (200, 302))
         eq_(2, self.d.revisions.count())
         new_rev = self.d.revisions.order_by('-id')[0]

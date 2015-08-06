@@ -128,7 +128,7 @@ class SubmissionsFeed(Feed):
 
     def item_author_link(self, submission):
         return self.request.build_absolute_uri(
-            reverse('kuma.demos.views.profile_detail',
+            reverse('demos_profile_detail',
                     args=(submission.creator.username,)))
 
     def item_link(self, submission):

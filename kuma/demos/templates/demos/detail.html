@@ -173,34 +173,21 @@
         <section class="column-8 demo-more">
 
           {# only shown to admins and the demo owner #}
-          {# TODO: The whole UL should be hidden if none of the conditions are met. Logged-out users get served an empty list, which is invalid HTML and can trigger layout weirdness. #}
-          {% set p_edit = submission.allows_editing_by(request.user) %}
-          {% set p_delete = submission.allows_deletion_by(request.user) %}
-          {% set p_hide = submission.allows_hiding_by(request.user) %}
-          {% set show_buttons = ( p_edit or p_delete or p_hide ) %}
+          {% set show_buttons = submission.allows_managing_by(request.user) %}
 
           {% if show_buttons %}
           <ul id="demo-manage">
-
-            {% if p_edit %}
-                <li><a href="{{ url('demos_edit', slug=submission.slug) }}"
-                    class="button edit">{{_('Edit Demo')}}</a></li>
+            <li><a href="{{ url('demos_edit', slug=submission.slug) }}"
+                class="button edit">{{_('Edit Demo')}}</a></li>
+            <li><a href="{{ url('demos_delete', slug=submission.slug) }}"
+                class="button remove modal">{{_("Remove demo")}}</a></li>
+            {% if submission.hidden %}
+                <li><form id="demo-show" method="post" action="{{ url('demos_show', slug=submission.slug) }}">{{ csrf() }}
+                    <button type="submit"><span class="button remove">{{_("Show demo")}}</span></button></form></li>
+            {% else %}
+                <li><form id="demo-hide" method="post" action="{{ url('demos_hide', slug=submission.slug) }}">{{ csrf() }}
+                    <button type="submit"><span class="button remove">{{_("Hide demo")}}</span></button></form></li>
             {% endif %}
-
-            {% if p_delete %}
-                <li><a href="{{ url('demos_delete', slug=submission.slug) }}"
-                    class="button remove modal">{{_("Remove demo")}}</a></li>
-            {% endif %}
-            {% if p_hide %}
-                {% if submission.hidden %}
-                    <li><form id="demo-show" method="post" action="{{ url('demos_show', slug=submission.slug) }}">{{ csrf() }}
-                        <button type="submit"><span class="button remove">{{_("Show demo")}}</span></button></form></li>
-                {% else %}
-                    <li><form id="demo-hide" method="post" action="{{ url('demos_hide', slug=submission.slug) }}">{{ csrf() }}
-                        <button type="submit"><span class="button remove">{{_("Hide demo")}}</span></button></form></li>
-                {% endif %}
-            {% endif %}
-
           </ul>
           {% endif %}
 

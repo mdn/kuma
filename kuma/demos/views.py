@@ -14,7 +14,7 @@ from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from kuma.contentflagging.forms import ContentFlagForm
 from kuma.core.utils import parse_tags
 from kuma.core.cache import memcache
-from kuma.users.models import UserProfile
+from kuma.users.models import User
 
 from . import DEMOS_CACHE_NS_KEY
 from .models import Submission
@@ -196,7 +196,7 @@ class SearchView(ListView):
 
 
 def profile_detail(request, username):
-    return redirect('users.profile', username)
+    return redirect('users.user_detail', username)
 
 
 def like(request, slug):
@@ -235,9 +235,8 @@ def flag(request, slug):
             recipients = None
             if (flag_type in FLAG_NOTIFICATIONS and
                     FLAG_NOTIFICATIONS[flag_type]):
-                recipients = [profile.user.email for profile in
-                              UserProfile.objects.filter(
-                                  content_flagging_email=True)]
+                recipients = list(User.objects.filter(content_flagging_email=True)
+                                              .values_list('email', flat=True))
             flag, created = ContentFlag.objects.flag(
                 request=request, object=submission,
                 flag_type=flag_type,
@@ -297,7 +296,7 @@ def submit(request):
 def edit(request, slug):
     """Edit a demo"""
     submission = get_object_or_404(Submission, slug=slug)
-    if not submission.allows_editing_by(request.user):
+    if not submission.allows_managing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
     if request.method != "POST":
@@ -325,7 +324,7 @@ def edit(request, slug):
 def delete(request, slug):
     """Delete a submission"""
     submission = get_object_or_404(Submission, slug=slug)
-    if not submission.allows_deletion_by(request.user):
+    if not submission.allows_managing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
     if request.method == "POST":
@@ -340,7 +339,7 @@ def delete(request, slug):
 def hideshow(request, slug, hide=True):
     """Hide/show a demo"""
     submission = get_object_or_404(Submission, slug=slug)
-    if not submission.allows_hiding_by(request.user):
+    if not submission.allows_managing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
     if request.method == "POST":

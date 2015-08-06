@@ -3,6 +3,7 @@ import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import AbstractUser
+from django.core import validators
 from django.core.exceptions import ObjectDoesNotExist
 from django.dispatch import receiver
 from django.db import models
@@ -12,6 +13,7 @@ from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.socialaccount.signals import social_account_removed
 from constance import config
 from timezones.fields import TimeZoneField
+from sundial.zones import COMMON_GROUPED_CHOICES
 from tower import ugettext_lazy as _
 from waffle import switch_is_active
 
@@ -20,6 +22,7 @@ from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.models import ModelBase
 from kuma.core.urlresolvers import reverse
 
+from .constants import USERNAME_REGEX
 from .jobs import UserGravatarURLJob
 from .tasks import send_welcome_email
 
@@ -58,24 +61,165 @@ def delete_ban(**kwargs):
 
 class User(AbstractUser):
     """
-    Our custom user class that contains just a link to the user's profile
-    right now.
+    Our custom user class.
     """
+    timezone = models.CharField(
+        verbose_name=_(u'Timezone'),
+        max_length=42,
+        blank=True,
+        choices=COMMON_GROUPED_CHOICES,
+        default=settings.TIME_ZONE,
+    )
+    locale = LocaleField(
+        verbose_name=_(u'Language'),
+        blank=True,
+        db_index=True,
+    )
+    homepage = models.URLField(
+        verbose_name=_(u'Homepage'),
+        max_length=255,
+        blank=True,
+        error_messages={
+            'invalid': _(u'This URL has an invalid format. '
+                         u'Valid URLs look like http://example.com/my_page.')
+        },
+    )
+    title = models.CharField(
+        verbose_name=_(u'Title'),
+        max_length=255,
+        blank=True,
+    )
+    fullname = models.CharField(
+        verbose_name=_(u'Name'),
+        max_length=255,
+        blank=True,
+    )
+    organization = models.CharField(
+        verbose_name=_(u'Organization'),
+        max_length=255,
+        blank=True,
+    )
+    location = models.CharField(
+        verbose_name=_(u'Location'),
+        max_length=255,
+        blank=True,
+    )
+    bio = models.TextField(
+        verbose_name=_(u'About Me'),
+        blank=True,
+    )
+    irc_nickname = models.CharField(
+        verbose_name=_(u'IRC nickname'),
+        max_length=255,
+        blank=True,
+    )
+
+    tags = NamespacedTaggableManager(verbose_name=_(u'Tags'), blank=True)
+
+    # should this user receive contentflagging emails?
+    content_flagging_email = models.BooleanField(default=False)
+
+    WEBSITE_VALIDATORS = {
+        'website': validators.RegexValidator(
+            r'^https?://',
+            _('Enter a valid website URL.'),
+            'invalid',
+        ),
+        'twitter': validators.RegexValidator(
+            r'^https?://twitter\.com/',
+            _('Enter a valid Twitter URL.'),
+            'invalid',
+        ),
+        'github': validators.RegexValidator(
+            r'^https?://github\.com/',
+            _('Enter a valid GitHub URL.'),
+            'invalid',
+        ),
+        'stackoverflow': validators.RegexValidator(
+            r'^https?://stackoverflow\.com/users/',
+            _('Enter a valid Stack Overflow URL.'),
+            'invalid',
+        ),
+        'linkedin': validators.RegexValidator(
+            r'^https?://((www|\w\w)\.)?linkedin.com/((in/[^/]+/?)|(pub/[^/]+/((\w|\d)+/?){3}))$',
+            _('Enter a valid LinkedIn URL.'),
+            'invalid',
+        ),
+        'mozillians': validators.RegexValidator(
+            r'^https?://mozillians\.org/u/',
+            _('Enter a valid Mozillians URL.'),
+            'invalid',
+        ),
+        'facebook': validators.RegexValidator(
+            r'^https?://www\.facebook\.com/',
+            _('Enter a valid Facebook URL.'),
+            'invalid',
+        )
+    }
+
+    # a bunch of user URLs
+    website_url = models.TextField(
+        _(u'Website'),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS['website']],
+    )
+    mozillians_url = models.TextField(
+        _(u'Mozillians'),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS['mozillians']],
+    )
+    github_url = models.TextField(
+        _(u'GitHub'),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS['github']],
+    )
+    twitter_url = models.TextField(
+        _(u'Twitter'),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS['twitter']],
+    )
+    linkedin_url = models.TextField(
+        _(u'LinkedIn'),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS['linkedin']],
+    )
+    facebook_url = models.TextField(
+        _(u'Facebook'),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS['facebook']],
+    )
+    stackoverflow_url = models.TextField(
+        _(u'Stack Overflow'),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS['stackoverflow']],
+    )
+
     class Meta:
         db_table = 'auth_user'
+
+    @property
+    def has_legacy_username(self):
+        return not USERNAME_REGEX.search(self.username)
+
+    @cached_property
+    def is_beta_tester(self):
+        return (config.BETA_GROUP_NAME in
+                self.groups.values_list('name', flat=True))
+
+    @cached_property
+    def active_ban(self):
+        """
+        Returns the first active ban for the user or None.
+        """
+        return self.bans.filter(is_active=True).first()
 
     def wiki_revisions(self, count=5):
         return (self.created_revisions.prefetch_related('document')
                                       .defer('content', 'summary')
                                       .order_by('-created')[:count])
 
-    @cached_property
-    def profile(self):
-        """
-        Returns site-specific profile for this user. Is locally cached.
-        """
-        return (UserProfile.objects.using(self._state.db)
-                                   .get(user__id__exact=self.id))
+    def allows_editing_by(self, user):
+        return user.is_staff or user.is_superuser or user.pk == self.pk
 
 
 class UserProfile(ModelBase):
@@ -86,53 +230,6 @@ class UserProfile(ModelBase):
 
     timezone and language fields are syndicated to Dekiwiki
     """
-    # Website fields defined for the profile form
-    # TODO: Someday this will probably need to allow arbitrary per-profile
-    # entries, and these will just be suggestions.
-    website_choices = [
-        ('website', dict(
-            label=_(u'Website'),
-            prefix='http://',
-            regex='^https?://',
-            fa_icon='icon-link',
-        )),
-        ('twitter', dict(
-            label=_(u'Twitter'),
-            prefix='https://twitter.com/',
-            regex='^https?://twitter.com/',
-            fa_icon='icon-twitter',
-        )),
-        ('github', dict(
-            label=_(u'GitHub'),
-            prefix='https://github.com/',
-            regex='^https?://github.com/',
-            fa_icon='icon-github',
-        )),
-        ('stackoverflow', dict(
-            label=_(u'Stack Overflow'),
-            prefix='https://stackoverflow.com/users/',
-            regex='^https?://stackoverflow.com/users/',
-            fa_icon='icon-stackexchange',
-        )),
-        ('linkedin', dict(
-            label=_(u'LinkedIn'),
-            prefix='https://www.linkedin.com/',
-            regex='^https?://((www|\w\w)\.)?linkedin.com/((in/[^/]+/?)|(pub/[^/]+/((\w|\d)+/?){3}))$',
-            fa_icon='icon-linkedin',
-        )),
-        ('mozillians', dict(
-            label=_(u'Mozillians'),
-            prefix='https://mozillians.org/u/',
-            regex='^https?://mozillians.org/u/',
-            fa_icon='icon-group',
-        )),
-        ('facebook', dict(
-            label=_(u'Facebook'),
-            prefix='https://www.facebook.com/',
-            regex='^https?://www.facebook.com/',
-            fa_icon='icon-facebook',
-        ))
-    ]
     # This could be a ForeignKey, except wikidb might be
     # a different db
     deki_user_id = models.PositiveIntegerField(default=0,
@@ -175,15 +272,6 @@ class UserProfile(ModelBase):
     # easier.
     misc = JSONField(blank=True, null=True)
 
-    class Meta:
-        db_table = 'user_profiles'
-
-    def __unicode__(self):
-        return '%s: %s' % (self.id, self.deki_user_id)
-
-    def get_absolute_url(self):
-        return self.user.get_absolute_url()
-
     @property
     def websites(self):
         if 'websites' not in self.misc:
@@ -194,31 +282,14 @@ class UserProfile(ModelBase):
     def websites(self, value):
         self.misc['websites'] = value
 
-    @cached_property
-    def beta_tester(self):
-        return (config.BETA_GROUP_NAME in
-                self.user.groups.values_list('name', flat=True))
+    class Meta:
+        db_table = 'user_profiles'
 
-    @property
-    def is_banned(self):
-        return self.user.bans.filter(is_active=True).exists()
+    def __unicode__(self):
+        return '%s: %s' % (self.id, self.deki_user_id)
 
-    def active_ban(self):
-        if self.is_banned:
-            return self.user.bans.filter(is_active=True)[:1][0]
-
-    def allows_editing_by(self, user):
-        if user == self.user:
-            return True
-        if user.is_staff or user.is_superuser:
-            return True
-        return False
-
-
-@receiver(models.signals.post_save, sender=settings.AUTH_USER_MODEL)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created and not kwargs.get('raw', False):
-        p, created = UserProfile.objects.get_or_create(user=instance)
+    def get_absolute_url(self):
+        return self.user.get_absolute_url()
 
 
 @receiver(models.signals.post_save, sender=settings.AUTH_USER_MODEL)

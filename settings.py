@@ -399,8 +399,8 @@ USER_AVATAR_PATH = 'uploads/avatars/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
 AVATAR_SIZES = [  # in pixels
     34,   # wiki document page
-    48,   # profile_link helper
-    200,  # profile pages
+    48,   # user_link helper
+    200,  # user pages
     220,  # default, e.g. used in feeds
 ]
 ACCOUNT_ACTIVATION_DAYS = 30
@@ -631,9 +631,6 @@ MINIFY_BUNDLES = {
         'calendar': (
             'css/calendar.css',
         ),
-        'profile': (
-            'css/profile.css',
-        ),
         'dashboards': (
             'css/dashboards.css',
             'css/diff.css',
@@ -674,8 +671,8 @@ MINIFY_BUNDLES = {
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
         ),
-        'profile': (
-            'js/profile.js',
+        'users': (
+            'js/users.js',
             'js/moz-jquery-plugins.js',
         ),
         'social': (
@@ -1149,7 +1146,7 @@ DBGETTEXT_ROOT = 'translations'
 
 def get_user_url(user):
     from kuma.core.urlresolvers import reverse
-    return reverse('users.profile', args=[user.username])
+    return reverse('users.user_detail', args=[user.username])
 
 ABSOLUTE_URL_OVERRIDES = {
     'users.user': get_user_url

@@ -435,10 +435,10 @@ class DemoPackageTest(UserTestCase):
         s = self.submission
         s.hidden = True
 
-        assert_false(s.allows_hiding_by(self.other_user))
+        assert_false(s.allows_managing_by(self.other_user))
         assert_false(s.allows_viewing_by(self.other_user))
-        ok_(s.allows_hiding_by(self.user))
-        ok_(s.allows_hiding_by(self.admin_user))
+        ok_(s.allows_managing_by(self.user))
+        ok_(s.allows_managing_by(self.admin_user))
 
     def test_censored_demo_shows_only_in_admin_interface(self):
         s = self.submission

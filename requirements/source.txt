@@ -110,3 +110,5 @@ django-mozilla-product-details==0.7.1
 django-ratelimit==0.5.0
 
 django-flat-theme==0.9.5
+
+django-sundial==1.0.1

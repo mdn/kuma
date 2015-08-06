@@ -20,7 +20,7 @@ from kuma.core.tests import mock_lookup_user
 from kuma.core.urlresolvers import reverse
 
 from . import UserTestCase, user, email
-from ..models import UserProfile, UserBan
+from ..models import UserBan
 from ..signup import SignupForm
 from ..providers.github.provider import KumaGitHubProvider
 
@@ -86,12 +86,12 @@ class BanTestCase(UserTestCase):
         ok_(bans.count())
 
     @attr('bans')
-    def test_bug_811751_banned_profile(self):
-        """A banned user's profile should not be viewable"""
+    def test_bug_811751_banned_user(self):
+        """A banned user should not be viewable"""
         testuser = self.user_model.objects.get(username='testuser')
-        url = reverse('users.profile', args=(testuser.username,))
+        url = reverse('users.user_detail', args=(testuser.username,))
 
-        # Profile viewable if not banned
+        # User viewable if not banned
         response = self.client.get(url, follow=True)
         self.assertNotEqual(response.status_code, 403)
 
@@ -102,21 +102,21 @@ class BanTestCase(UserTestCase):
                                reason='Banned by unit test.',
                                is_active=True)
 
-        # Profile not viewable if banned
+        # User not viewable if banned
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 403)
 
-        # Admin can view banned user's profile
+        # Admin can view banned user
         self.client.login(username='admin', password='testpass')
         response = self.client.get(url, follow=True)
         self.assertNotEqual(response.status_code, 403)
 
 
-class ProfileViewsTest(UserTestCase):
+class UserViewsTest(UserTestCase):
     localizing_client = True
 
     def setUp(self):
-        super(ProfileViewsTest, self).setUp()
+        super(UserViewsTest, self).setUp()
         self.old_debug = settings.DEBUG
         settings.DEBUG = True
         self.client.logout()
@@ -129,48 +129,48 @@ class ProfileViewsTest(UserTestCase):
         form = dict()
         for fn in ('username', 'email', 'fullname', 'title', 'organization',
                    'location', 'irc_nickname', 'bio', 'interests'):
-            form[fn] = doc.find('#profile-edit *[name="profile-%s"]' %
+            form[fn] = doc.find('#user-edit *[name="user-%s"]' %
                                 fn).val()
         form['country'] = 'us'
         form['format'] = 'html'
         return form
 
     @attr('docs_activity')
-    def test_profile_view(self):
-        """A user profile can be viewed"""
-        profile = UserProfile.objects.get(user__username='testuser')
-        url = reverse('users.profile', args=(profile.user.username,))
+    def test_user_detail_view(self):
+        """A user can be viewed"""
+        testuser = self.user_model.objects.get(username='testuser')
+        url = reverse('users.user_detail', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
 
-        eq_(profile.user.username,
-            doc.find('#profile-head.vcard .nickname').text())
-        eq_(profile.fullname,
-            doc.find('#profile-head.vcard .fn').text())
-        eq_(profile.title,
-            doc.find('#profile-head.vcard .title').text())
-        eq_(profile.organization,
-            doc.find('#profile-head.vcard .org').text())
-        eq_(profile.location,
-            doc.find('#profile-head.vcard .loc').text())
-        eq_('IRC: ' + profile.irc_nickname,
-            doc.find('#profile-head.vcard .irc').text())
-        eq_(profile.bio,
-            doc.find('#profile-head.vcard .profile-bio').text())
+        eq_(testuser.username,
+            doc.find('#user-head.vcard .nickname').text())
+        eq_(testuser.fullname,
+            doc.find('#user-head.vcard .fn').text())
+        eq_(testuser.title,
+            doc.find('#user-head.vcard .title').text())
+        eq_(testuser.organization,
+            doc.find('#user-head.vcard .org').text())
+        eq_(testuser.location,
+            doc.find('#user-head.vcard .loc').text())
+        eq_('IRC: ' + testuser.irc_nickname,
+            doc.find('#user-head.vcard .irc').text())
+        eq_(testuser.bio,
+            doc.find('#user-head.vcard .user-bio').text())
 
-    def test_my_profile_view(self):
+    def test_my_user_page(self):
         u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
-        resp = self.client.get(reverse('users.my_profile'))
+        resp = self.client.get(reverse('users.my_detail_page'))
         eq_(302, resp.status_code)
-        ok_(reverse('users.profile', args=(u.username,)) in
+        ok_(reverse('users.user_detail', args=(u.username,)) in
             resp['Location'])
 
     def test_bug_698971(self):
         """A non-numeric page number should not cause an error"""
         testuser = self.user_model.objects.get(username='testuser')
 
-        url = '%s?page=asdf' % reverse('users.profile',
+        url = '%s?page=asdf' % reverse('users.user_detail',
                                        args=(testuser.username,))
 
         try:
@@ -181,78 +181,78 @@ class ProfileViewsTest(UserTestCase):
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
-    def test_profile_edit(self, unsubscribe, subscribe, lookup_user):
+    def test_user_edit(self, unsubscribe, subscribe, lookup_user):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
-        profile = UserProfile.objects.get(user__username='testuser')
-        url = reverse('users.profile', args=(profile.user.username,))
+        testuser = self.user_model.objects.get(username='testuser')
+        url = reverse('users.user_detail', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
-        eq_(0, doc.find('#profile-head .edit .button').length)
+        eq_(0, doc.find('#user-head .edit .button').length)
 
-        self.client.login(username=profile.user.username,
+        self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
-        url = reverse('users.profile', args=(profile.user.username,))
+        url = reverse('users.user_detail', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
 
-        edit_button = doc.find('#profile-head .profile-buttons #edit-profile')
+        edit_button = doc.find('#user-head .user-buttons #edit-user')
         eq_(1, edit_button.length)
 
         url = edit_button.attr('href')
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
 
-        eq_(profile.fullname,
-            doc.find('#profile-edit input[name="profile-fullname"]').val())
-        eq_(profile.title,
-            doc.find('#profile-edit input[name="profile-title"]').val())
-        eq_(profile.organization,
-            doc.find('#profile-edit input[name="profile-organization"]').val())
-        eq_(profile.location,
-            doc.find('#profile-edit input[name="profile-location"]').val())
-        eq_(profile.irc_nickname,
-            doc.find('#profile-edit input[name="profile-irc_nickname"]').val())
+        eq_(testuser.fullname,
+            doc.find('#user-edit input[name="user-fullname"]').val())
+        eq_(testuser.title,
+            doc.find('#user-edit input[name="user-title"]').val())
+        eq_(testuser.organization,
+            doc.find('#user-edit input[name="user-organization"]').val())
+        eq_(testuser.location,
+            doc.find('#user-edit input[name="user-location"]').val())
+        eq_(testuser.irc_nickname,
+            doc.find('#user-edit input[name="user-irc_nickname"]').val())
 
         new_attrs = {
-            'profile-email': 'testuser@test.com',
-            'profile-fullname': "Another Name",
-            'profile-title': "Another title",
-            'profile-organization': "Another org",
-            'profile-country': "us",
-            'profile-format': "html"
+            'user-email': 'testuser@test.com',
+            'user-fullname': "Another Name",
+            'user-title': "Another title",
+            'user-organization': "Another org",
+            'user-country': "us",
+            'user-format': "html"
         }
 
         response = self.client.post(url, new_attrs, follow=True)
         doc = pq(response.content)
 
-        eq_(1, doc.find('#profile-head').length)
-        eq_(new_attrs['profile-fullname'],
-            doc.find('#profile-head .fn').text())
-        eq_(new_attrs['profile-title'],
-            doc.find('#profile-head .profile-info .title').text())
-        eq_(new_attrs['profile-organization'],
-            doc.find('#profile-head .profile-info .org').text())
+        eq_(1, doc.find('#user-head').length)
+        eq_(new_attrs['user-fullname'],
+            doc.find('#user-head .fn').text())
+        eq_(new_attrs['user-title'],
+            doc.find('#user-head .user-info .title').text())
+        eq_(new_attrs['user-organization'],
+            doc.find('#user-head .user-info .org').text())
 
-        profile = UserProfile.objects.get(user__username=profile.user.username)
-        eq_(new_attrs['profile-fullname'], profile.fullname)
-        eq_(new_attrs['profile-title'], profile.title)
-        eq_(new_attrs['profile-organization'], profile.organization)
+        testuser = self.user_model.objects.get(username=testuser.username)
+        eq_(new_attrs['user-fullname'], testuser.fullname)
+        eq_(new_attrs['user-title'], testuser.title)
+        eq_(new_attrs['user-organization'], testuser.organization)
 
-    def test_my_profile_edit(self):
+    def test_my_user_edit(self):
         u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
-        resp = self.client.get(reverse('users.my_profile_edit'))
+        resp = self.client.get(reverse('users.my_edit_page'))
         eq_(302, resp.status_code)
-        ok_(reverse('users.profile_edit', args=(u.username,)) in
+        ok_(reverse('users.user_edit', args=(u.username,)) in
             resp['Location'])
 
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
-    def test_profile_edit_beta(self, unsubscribe, subscribe, lookup_user):
+    def test_user_edit_beta(self, unsubscribe, subscribe, lookup_user):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
@@ -260,27 +260,25 @@ class ProfileViewsTest(UserTestCase):
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
-        url = reverse('users.profile_edit',
-                      args=(testuser.username,))
+        url = reverse('users.user_edit', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
-        eq_(None, doc.find('input#id_profile-beta').attr('checked'))
+        eq_(None, doc.find('input#id_user-beta').attr('checked'))
 
         form = self._get_current_form_field_values(doc)
-        form['profile-beta'] = True
+        form['user-beta'] = True
 
         self.client.post(url, form, follow=True)
 
-        url = reverse('users.profile_edit',
-                      args=(testuser.username,))
+        url = reverse('users.user_edit', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
-        eq_('checked', doc.find('input#id_profile-beta').attr('checked'))
+        eq_('checked', doc.find('input#id_user-beta').attr('checked'))
 
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
-    def test_profile_edit_websites(self, unsubscribe, subscribe, lookup_user):
+    def test_user_edit_websites(self, unsubscribe, subscribe, lookup_user):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
@@ -289,71 +287,66 @@ class ProfileViewsTest(UserTestCase):
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
-        url = reverse('users.profile_edit',
-                      args=(testuser.username,))
+        url = reverse('users.user_edit', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
 
         test_sites = {
-            u'website': u'http://example.com/',
-            u'twitter': u'http://twitter.com/lmorchard',
-            u'github': u'http://github.com/lmorchard',
-            u'stackoverflow': u'http://stackoverflow.com/users/lmorchard',
-            u'linkedin': u'https://www.linkedin.com/in/testuser',
-            u'mozillians': u'https://mozillians.org/u/testuser',
-            u'facebook': u'https://www.facebook.com/test.user'
+            'website': 'http://example.com/',
+            'twitter': 'http://twitter.com/lmorchard',
+            'github': 'http://github.com/lmorchard',
+            'stackoverflow': 'http://stackoverflow.com/users/lmorchard',
+            'linkedin': 'https://www.linkedin.com/in/testuser',
+            'mozillians': 'https://mozillians.org/u/testuser',
+            'facebook': 'https://www.facebook.com/test.user'
         }
 
         form = self._get_current_form_field_values(doc)
 
         # Fill out the form with websites.
-        form.update(dict(('profile-websites_%s' % k, v)
-                    for k, v in test_sites.items()))
+        form.update(dict(('user-%s_url' % k, v)
+                         for k, v in test_sites.items()))
 
-        # Submit the form, verify redirect to profile detail
+        # Submit the form, verify redirect to user detail
         response = self.client.post(url, form, follow=True)
         doc = pq(response.content)
-        eq_(1, doc.find('#profile-head').length)
+        eq_(1, doc.find('#user-head').length)
 
-        profile = UserProfile.objects.get(user=testuser)
+        testuser = self.user_model.objects.get(pk=testuser.pk)
 
-        # Verify the websites are saved in the profile.
-        eq_(test_sites, profile.websites)
+        # Verify the websites are saved in the user.
+        for site, url in test_sites.items():
+            url_attr_name = '%s_url' % site
+            eq_(getattr(testuser, url_attr_name), url)
 
         # Verify the saved websites appear in the editing form
-        url = reverse('users.profile_edit',
-                      args=(testuser.username,))
+        url = reverse('users.user_edit', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
         for k, v in test_sites.items():
-            eq_(v,
-                doc.find('#profile-edit *[name="profile-websites_%s"]' %
-                         k).val())
+            eq_(v, doc.find('#user-edit *[name="user-%s_url"]' % k).val())
 
         # Come up with some bad sites, either invalid URL or bad URL prefix
         bad_sites = {
-            u'website': u'HAHAHA WHAT IS A WEBSITE',
-            u'twitter': u'http://facebook.com/lmorchard',
-            u'stackoverflow': u'http://overqueueblah.com/users/lmorchard',
+            'website': 'HAHAHA WHAT IS A WEBSITE',
+            'twitter': 'http://facebook.com/lmorchard',
+            'stackoverflow': 'http://overqueueblah.com/users/lmorchard',
         }
-        form.update(dict(('profile-websites_%s' % k, v)
-                    for k, v in bad_sites.items()))
+        form.update(dict(('user-%s_url' % k, v)
+                         for k, v in bad_sites.items()))
 
         # Submit the form, verify errors for all of the bad sites
         response = self.client.post(url, form, follow=True)
         doc = pq(response.content)
-        eq_(1, doc.find('#profile-edit').length)
-        tmpl = '#profile-edit #profiles .%s .errorlist'
+        eq_(1, doc.find('#user-edit').length)
+        tmpl = '#user-edit #users .%s .errorlist'
         for n in ('website', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
-    def test_profile_edit_interests(self,
-                                    unsubscribe,
-                                    subscribe,
-                                    lookup_user):
+    def test_user_edit_interests(self, unsubscribe, subscribe, lookup_user):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
@@ -362,8 +355,7 @@ class ProfileViewsTest(UserTestCase):
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
-        url = reverse('users.profile_edit',
-                      args=(testuser.username,))
+        url = reverse('users.user_edit', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
 
@@ -371,42 +363,38 @@ class ProfileViewsTest(UserTestCase):
 
         form = self._get_current_form_field_values(doc)
 
-        form['profile-interests'] = ', '.join(test_tags)
+        form['user-interests'] = ', '.join(test_tags)
 
         response = self.client.post(url, form, follow=True)
         doc = pq(response.content)
-        eq_(1, doc.find('#profile-head').length)
-
-        profile = UserProfile.objects.get(user=testuser)
+        eq_(1, doc.find('#user-head').length)
 
         result_tags = [t.name.replace('profile:interest:', '')
-                       for t in profile.tags.all_ns('profile:interest:')]
+                       for t in testuser.tags.all_ns('profile:interest:')]
         result_tags.sort()
         test_tags.sort()
         eq_(test_tags, result_tags)
 
         test_expertise = ['css', 'canvas']
-        form['profile-expertise'] = ', '.join(test_expertise)
+        form['user-expertise'] = ', '.join(test_expertise)
         response = self.client.post(url, form, follow=True)
         doc = pq(response.content)
 
-        eq_(1, doc.find('#profile-head').length)
-
-        profile = UserProfile.objects.get(user=testuser)
+        eq_(1, doc.find('#user-head').length)
 
         result_tags = [t.name.replace('profile:expertise:', '')
-                       for t in profile.tags.all_ns('profile:expertise')]
+                       for t in testuser.tags.all_ns('profile:expertise')]
         result_tags.sort()
         test_expertise.sort()
         eq_(test_expertise, result_tags)
 
         # Now, try some expertise tags not covered in interests
         test_expertise = ['css', 'canvas', 'mobile', 'movies']
-        form['profile-expertise'] = ', '.join(test_expertise)
+        form['user-expertise'] = ', '.join(test_expertise)
         response = self.client.post(url, form, follow=True)
         doc = pq(response.content)
 
-        eq_(1, doc.find('.error #id_profile-expertise').length)
+        eq_(1, doc.find('.error #id_user-expertise').length)
 
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
@@ -419,7 +407,7 @@ class ProfileViewsTest(UserTestCase):
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
-        url = reverse('users.profile_edit', args=(testuser.username,))
+        url = reverse('users.user_edit', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
 
@@ -432,7 +420,7 @@ class ProfileViewsTest(UserTestCase):
 
         form = self._get_current_form_field_values(doc)
 
-        form['profile-interests'] = test_tags
+        form['user-interests'] = test_tags
 
         response = self.client.post(url, form, follow=True)
         eq_(200, response.status_code)
@@ -453,13 +441,12 @@ class ProfileViewsTest(UserTestCase):
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
-        url = reverse('users.profile_edit',
-                      args=(testuser.username,))
+        url = reverse('users.user_edit', args=(testuser.username,))
         response = self.client.get(url, follow=True)
-        for field in response.context['profile_form'].fields:
+        for field in response.context['user_form'].fields:
             # if label is localized it's a lazy proxy object
             ok_(not isinstance(
-                response.context['profile_form'].fields[field].label, basestring),
+                response.context['user_form'].fields[field].label, basestring),
                 'Field %s is a string!' % field)
 
     def test_bug_1174804(self):
@@ -468,7 +455,7 @@ class ProfileViewsTest(UserTestCase):
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
-        url = reverse('users.profile_edit', args=(testuser.username,))
+        url = reverse('users.user_edit', args=(testuser.username,))
         response = self.client.get(url, follow=True)
         doc = pq(response.content)
         eq_(len(doc.find('input[name=newsletter-format]')), 2)
