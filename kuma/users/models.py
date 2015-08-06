@@ -1,27 +1,18 @@
 import datetime
 
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth.models import AbstractUser
 from django.core import validators
-from django.core.exceptions import ObjectDoesNotExist
-from django.dispatch import receiver
 from django.db import models
 from django.utils.functional import cached_property
 
-from allauth.account.signals import user_signed_up, email_confirmed
-from allauth.socialaccount.signals import social_account_removed
 from constance import config
 from sundial.zones import COMMON_GROUPED_CHOICES
 from tower import ugettext_lazy as _
-from waffle import switch_is_active
 
 from kuma.core.managers import NamespacedTaggableManager
-from kuma.core.urlresolvers import reverse
 
 from .constants import USERNAME_REGEX
-from .jobs import UserGravatarURLJob
-from .tasks import send_welcome_email
 
 
 class UserBan(models.Model):
@@ -40,20 +31,6 @@ class UserBan(models.Model):
         if not self.is_active:
             message = _(u"%s (no longer active)") % message
         return message
-
-    def save(self, *args, **kwargs):
-        super(UserBan, self).save(*args, **kwargs)
-        self.user.is_active = not self.is_active
-        self.user.save()
-
-
-@receiver(models.signals.post_delete,
-          sender=UserBan, dispatch_uid='users.user_ban.delete')
-def delete_ban(**kwargs):
-    ban = kwargs.get('instance', None)
-    if ban is not None:
-        ban.user.is_active = True
-        ban.user.save()
 
 
 class User(AbstractUser):
@@ -220,58 +197,3 @@ class User(AbstractUser):
 
     def allows_editing_by(self, user):
         return user.is_staff or user.is_superuser or user.pk == self.pk
-
-
-@receiver(models.signals.post_save, sender=settings.AUTH_USER_MODEL)
-def invalidate_gravatar_url(sender, instance, created, **kwargs):
-    job = UserGravatarURLJob()
-    if instance.email:
-        handler = job.invalidate
-    elif instance.email is None:
-        handler = job.delete
-    else:
-        return
-    # do the heavy-lifting for all avatar sizes
-    for size in settings.AVATAR_SIZES:
-        handler(instance.email, size=size)
-
-
-@receiver(user_signed_up)
-def on_user_signed_up(sender, request, user, **kwargs):
-    url = reverse('wiki.document', args=['MDN/Getting_started'])
-    msg = _('You have completed the first step of '
-            '<a href="%s">getting started with MDN</a>') % url
-    messages.success(request, msg)
-    if switch_is_active('welcome_email'):
-        # only send if the user has already verified at least one email address
-        if user.emailaddress_set.filter(verified=True).exists():
-            send_welcome_email.delay(user.pk, request.locale)
-
-
-@receiver(email_confirmed)
-def on_email_confirmed(sender, request, email_address, **kwargs):
-    if switch_is_active('welcome_email'):
-        # only send if the user has exactly one verified (the given)
-        # email address, in other words if it was just confirmed
-        if not (email_address.user
-                             .emailaddress_set.exclude(pk=email_address.pk)
-                                              .exists()):
-            send_welcome_email.delay(email_address.user.pk, request.locale)
-
-
-@receiver(social_account_removed)
-def on_social_account_removed(sender, request, socialaccount, **kwargs):
-    """
-    Invoked just after a user successfully removed a social account
-
-    We use it to reset the name of the socialaccount provider in
-    the user's session to one that he also has.
-    """
-    user = socialaccount.user
-    try:
-        all_socialaccounts = user.socialaccount_set.all()
-        next_socialaccount = all_socialaccounts[0]
-        request.session['sociallogin_provider'] = next_socialaccount.provider
-        request.session.modified = True
-    except (ObjectDoesNotExist, IndexError):
-        pass
