@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
                 ('bio', models.TextField(verbose_name='About Me', blank=True)),
                 ('irc_nickname', models.CharField(default=b'', max_length=255, verbose_name='IRC nickname', blank=True)),
                 ('content_flagging_email', models.BooleanField(default=False)),
-                ('misc', kuma.core.fields.JSONField(null=True, blank=True)),
+                ('misc', models.TextField(null=True, blank=True)),
                 ('tags', kuma.core.managers.NamespacedTaggableManager(to='taggit.Tag', through='taggit.TaggedItem', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags')),
                 ('user', models.ForeignKey(blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
             ],

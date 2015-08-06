@@ -12,14 +12,12 @@ from django.utils.functional import cached_property
 from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.socialaccount.signals import social_account_removed
 from constance import config
-from timezones.fields import TimeZoneField
 from sundial.zones import COMMON_GROUPED_CHOICES
 from tower import ugettext_lazy as _
 from waffle import switch_is_active
 
-from kuma.core.fields import LocaleField, JSONField
+from kuma.core.fields import LocaleField
 from kuma.core.managers import NamespacedTaggableManager
-from kuma.core.models import ModelBase
 from kuma.core.urlresolvers import reverse
 
 from .constants import USERNAME_REGEX
@@ -220,76 +218,6 @@ class User(AbstractUser):
 
     def allows_editing_by(self, user):
         return user.is_staff or user.is_superuser or user.pk == self.pk
-
-
-class UserProfile(ModelBase):
-    """
-    The UserProfile *must* exist for each
-    django.contrib.auth.models.User object. This may be relaxed
-    once Dekiwiki isn't the definitive db for user info.
-
-    timezone and language fields are syndicated to Dekiwiki
-    """
-    # This could be a ForeignKey, except wikidb might be
-    # a different db
-    deki_user_id = models.PositiveIntegerField(default=0,
-                                               editable=False)
-    timezone = TimeZoneField(null=True, blank=True,
-                             verbose_name=_(u'Timezone'))
-    locale = LocaleField(null=True, blank=True, db_index=True,
-                         verbose_name=_(u'Language'))
-    homepage = models.URLField(
-        max_length=255, blank=True, default='',
-        error_messages={
-            'invalid': _(u'This URL has an invalid format. '
-                         u'Valid URLs look like '
-                         u'http://example.com/my_page.')})
-    title = models.CharField(_(u'Title'), max_length=255, default='',
-                             blank=True)
-    fullname = models.CharField(_(u'Name'), max_length=255, default='',
-                                blank=True)
-    organization = models.CharField(_(u'Organization'), max_length=255,
-                                    default='', blank=True)
-    location = models.CharField(_(u'Location'), max_length=255, default='',
-                                blank=True)
-    bio = models.TextField(_(u'About Me'), blank=True)
-
-    irc_nickname = models.CharField(_(u'IRC nickname'), max_length=255,
-                                    default='', blank=True)
-
-    tags = NamespacedTaggableManager(_(u'Tags'), blank=True)
-
-    # should this user receive contentflagging emails?
-    content_flagging_email = models.BooleanField(default=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             null=True, editable=False, blank=True)
-
-    # HACK: Grab-bag field for future expansion in profiles
-    # We can store arbitrary data in here and later migrate to relational
-    # tables if the data ever needs to be indexed & queried. Otherwise,
-    # this keeps things nicely denormalized. Ideally, access to this field
-    # should be gated through accessors on the model to make that transition
-    # easier.
-    misc = JSONField(blank=True, null=True)
-
-    @property
-    def websites(self):
-        if 'websites' not in self.misc:
-            self.misc['websites'] = {}
-        return self.misc['websites']
-
-    @websites.setter
-    def websites(self, value):
-        self.misc['websites'] = value
-
-    class Meta:
-        db_table = 'user_profiles'
-
-    def __unicode__(self):
-        return '%s: %s' % (self.id, self.deki_user_id)
-
-    def get_absolute_url(self):
-        return self.user.get_absolute_url()
 
 
 @receiver(models.signals.post_save, sender=settings.AUTH_USER_MODEL)
