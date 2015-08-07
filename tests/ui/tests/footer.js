@@ -40,10 +40,9 @@ define([
                         .type(['e', keys.RETURN])
                         .then(function() {
                             return poll.untilUrlChanges(remote, '/es/').then(function() {
-                                assert.isTrue(true, 'Locale auto-redirects');
+                                assert.ok('Locale auto-redirects');
                             });
-                        })
-                        .goBack(); // Cleanup to go back to default locale
+                        });
         }
 
     });
