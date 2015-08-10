@@ -2,6 +2,21 @@
     'use strict';
 
     var $doc = $(doc);
+    var $loginForm = $('#_persona_login');
+
+    /*
+        Async loading of the persona resource
+    */
+    (function() {
+        var scriptUrl = $loginForm.data('persona-script');
+        var personaElements = $('.wait-for-persona');
+
+        if(personaElements.length && scriptUrl) {
+            $.getScript(scriptUrl).done(function() {
+                personaElements.removeClass('disabled');
+            });
+        }
+    })();
 
     /*
         Persona Login via Django AllAuth
@@ -10,8 +25,6 @@
         // The actual form HTML code is within auth.html in the users app
         // The form must be populated with information provided gathered from
         // The link which triggered the login process
-
-        var $loginForm = $('#_persona_login');
         $('#_persona_next_url').val(nextUrl || '');
         $('#_persona_process').val(process);
 

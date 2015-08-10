@@ -48,8 +48,8 @@ define(['intern/dojo/Deferred', 'base/lib/config'], function(Deferred, config) {
             return this.until(remote, 'getAllWindowHandles', function(handles) {
                 return handles.length === (desired || 2);
             });
-
         }
+
     };
 
 });

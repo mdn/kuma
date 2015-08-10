@@ -55,10 +55,14 @@ define([
             // Provided a username and passwords, clicks the Persona link in the site
             // header, waits for the window to load, and logs the user into Persona
 
+            var self = this;
             username = username || this.personaUsername;
             password = password || this.personaPassword;
 
             return remote
+                        .then(function() {
+                            return self.pollForPersonaLoaded(remote);
+                        })
                         .findByCssSelector('.oauth-login-picker .launch-persona-login')
                         .click()
                         .end()
@@ -197,6 +201,17 @@ define([
             return remote
                         .get('https://login.persona.org/')
                         .execute('return jQuery("a.signOut").click();');
+        },
+
+        pollForPersonaLoaded: function(remote) {
+            return remote.executeAsync(function(done) {
+                var interval = setInterval(function() {
+                    if(document.querySelector('.wait-for-persona.disabled') === null) {
+                        done();
+                        clearInterval(interval);
+                    }
+                }, 200);
+            });
         }
     };
 
