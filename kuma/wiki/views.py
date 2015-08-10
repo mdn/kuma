@@ -45,7 +45,7 @@ from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json, full_attachment_url
-from kuma.core.i18n import LANGUAGES_DICT
+from kuma.core.i18n import get_language_mapping
 from kuma.core.cache import memcache
 from kuma.core.decorators import (never_cache, login_required,
                                   permission_required, superuser_required)
@@ -1771,8 +1771,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
     if doc and doc.attachments:
         attachments = attachments_json(doc.attachments)
 
-    language = LANGUAGES_DICT[document_locale.lower()]
-    default_locale = LANGUAGES_DICT[settings.WIKI_DEFAULT_LANGUAGE.lower()]
+    language_mapping = get_language_mapping()
+    language = language_mapping[document_locale.lower()]
+    default_locale = language_mapping[settings.WIKI_DEFAULT_LANGUAGE.lower()]
 
     context = {
         'parent': parent_doc,

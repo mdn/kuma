@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.utils import translation
 
-from .i18n import LANGUAGES_DICT
+from .i18n import get_language_mapping
 
 
 def global_settings(request):
@@ -11,7 +11,7 @@ def global_settings(request):
 
 def i18n(request):
     return {
-        'LANGUAGES': LANGUAGES_DICT,
+        'LANGUAGES': get_language_mapping(),
         'LANG': (settings.LANGUAGE_URL_MAP.get(translation.get_language()) or
                  translation.get_language()),
         'DIR': 'rtl' if translation.get_language_bidi() else 'ltr',

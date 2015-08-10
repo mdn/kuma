@@ -20,7 +20,8 @@ Name of the cookie to use
 ANONYMOUS_COOKIE_MAX_AGE
 Maximum age of the cookie, in seconds.
 """
-
+from django.conf import settings
+from django.utils.http import cookie_date
 
 import time
 import os
@@ -31,9 +32,6 @@ if hasattr(random, 'SystemRandom'):
     randrange = random.SystemRandom().randrange
 else:
     randrange = random.randrange
-
-from django.conf import settings
-from django.utils.http import cookie_date
 
 
 MAX_ANONYMOUS_ID = 18446744073709551616L     # 2 << 63
