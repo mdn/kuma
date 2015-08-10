@@ -157,10 +157,10 @@ rgba-fallback($color, $bg = #fff) {
 /* generates a background property for header and zones */
 create-gradient-background(color = '', use-gradient = false) {
     if use-gradient {
-        background-image: url($media-url-dir + 'header-background.png'), url($media-url-dir + 'mdn-header-gradient.png');
+        background-image: url($path-to-images + 'header-background.png'), url($path-to-images + 'mdn-header-gradient.png');
         background-repeat: repeat, repeat-x;
     } else {
-        background-image: url($media-url-dir + 'header-background.png');
+        background-image: url($path-to-images + 'header-background.png');
         background-repeat: repeat;
     }
     background-position: 0 0, 0 0, 0 0;
@@ -171,7 +171,7 @@ create-gradient-background(color = '', use-gradient = false) {
 
 create-home-gradient-background(color) {
     create-gradient-background(color);
-    background-image: url($media-url-dir + 'header-background.png'), url($media-url-dir + 'blueprint.png'), url($media-url-dir + 'mdn-header-gradient.png');
+    background-image: url($path-to-images + 'header-background.png'), url($path-to-images + 'blueprint.png'), url($path-to-images + 'mdn-header-gradient.png');
     background-repeat: repeat, repeat, repeat-x;
 }
 
@@ -436,7 +436,7 @@ $right-icons {
 $code-block {
     background: $code-block-background-color;
     border-left: $code-block-border-width $code-block-border-style $code-block-border-color;
-    background-image:  url($media-url-dir + 'blueprint-dark.png');
+    background-image:  url($path-to-images + 'blueprint-dark.png');
     background-position: top center;
     background-repeat: repeat;
     color: $text-color;

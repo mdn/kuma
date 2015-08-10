@@ -1,3 +1,5 @@
+@require '../../includes/vars';
+
 $nav-slide-button-width = 65px;
 $nav-slide-button-height = $nav-slide-button-width;
 
@@ -16,7 +18,7 @@ $nav-slide-button-height = $nav-slide-button-width;
   height: $nav-slide-button-height;
   text-indent: -999em;
   overflow: hidden;
-  background: transparent url("/media/img/demos/nav-slide.png") no-repeat;
+  background: transparent url($path-to-images + "demos/nav-slide.png") no-repeat;
 }
 #featured-demos .nav-slide .next {
   right: -(($nav-slide-button-width / 2) - 10);
@@ -53,7 +55,7 @@ $nav-slide-button-height = $nav-slide-button-width;
   height: $nav-slide-button-height;
   text-indent: -999em;
   overflow: hidden;
-  background: transparent url("/media/img/demos/nav-slide.png") no-repeat;
+  background: transparent url($path-to-images + "demos/nav-slide.png") no-repeat;
 }
 #demobox .nav-slide .next {
   right: -($nav-slide-button-width);
