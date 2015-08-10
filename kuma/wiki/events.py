@@ -7,7 +7,7 @@ from kuma.core.helpers import add_utm
 from kuma.core.urlresolvers import reverse
 from tidings.events import InstanceEvent
 
-from .helpers import revisions_unified_diff
+from .helpers import revisions_unified_diff, get_compare_url
 from .models import Document
 
 
@@ -30,11 +30,9 @@ def context_dict(revision):
     }
 
     if from_revision:
-        compare_url = (
-            reverse('wiki.compare_revisions',
-                    args=[document.slug], locale=document.locale) +
-            '?from=%s&to=%s' % (from_revision.id, to_revision.id)
-        )
+        compare_url = get_compare_url(document,
+                                      from_revision.id,
+                                      to_revision.id)
     else:
         compare_url = ''
 

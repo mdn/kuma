@@ -1,3 +1,4 @@
+import tidylib
 from django.conf import settings
 
 
@@ -40,3 +41,21 @@ def locale_and_slug_from_path(path, request=None, path_locale=None):
         locale = getattr(settings, 'WIKI_DEFAULT_LANGUAGE', 'en-US')
 
     return (locale, slug, needs_redirect)
+
+
+def tidy_content(content):
+    options = {
+        'output-xhtml': 0,
+        'force-output': 1,
+    }
+    try:
+        content = tidylib.tidy_document(content, options=options)
+    except UnicodeDecodeError:
+        # In case something happens in pytidylib we'll try again with
+        # a proper encoding
+        content = tidylib.tidy_document(content.encode('utf-8'),
+                                        options=options)
+        tidied, errors = content
+        return tidied.decode('utf-8'), errors
+    else:
+        return content

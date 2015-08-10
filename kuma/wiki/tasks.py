@@ -10,7 +10,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
 from django.core.mail import EmailMessage, mail_admins, send_mail
 from django.db import connection, transaction
-from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
@@ -27,7 +26,7 @@ from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
 from .helpers import absolutify
 from .models import Document, Revision, RevisionIP
 from .search import WikiDocumentType
-from .signals import render_done
+from .utils import tidy_content
 
 
 log = logging.getLogger('kuma.wiki.tasks')
@@ -137,12 +136,6 @@ def build_json_data_for_document(pk, stale):
     if document.parent is not None:
         parent_json = json.dumps(document.parent.build_json_data())
         Document.objects.filter(pk=document.parent.pk).update(json=parent_json)
-
-
-@receiver(render_done)
-def build_json_data_handler(sender, instance, **kwargs):
-    if not instance.deleted:
-        build_json_data_for_document.delay(instance.pk, stale=False)
 
 
 @task
@@ -423,10 +416,25 @@ def unindex_documents(ids, index_pk):
 
     :arg ids: Iterable of `Document` pks to remove.
     :arg index_pk: The `Index` pk of the index to remove items from.
-
     """
     cls = WikiDocumentType
     es = cls.get_connection('indexing')
     index = Index.objects.get(pk=index_pk)
 
     cls.bulk_delete(ids, es=es, index=index.prefixed_name)
+
+
+@task(rate_limit='120/m')
+def tidy_revision_content(pk):
+    """
+    Run tidy over the given revision's content and save it to the
+    tidy_content field if the content is not equal to the current value.
+
+    :arg pk: Primary key of `Revision` whose content needs tidying.
+    """
+    revision = Revision.objects.get(pk=pk)
+    tidied_content, errors = tidy_content(revision.content)
+    if tidied_content != revision.tidied_content:
+        Revision.objects.filter(pk=pk).update(tidied_content=tidied_content)
+    # return the errors so we can look them up in the Celery task result store
+    return errors

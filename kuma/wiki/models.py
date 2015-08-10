@@ -19,7 +19,6 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
 from django.db.models import signals
-from django.dispatch import receiver
 from django.http import Http404
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
@@ -48,8 +47,7 @@ from .content import (extract_code_sample, extract_css_classnames,
                       extract_html_attributes, extract_kumascript_macro_names,
                       get_content_sections, get_seo_description, H2TOCFilter,
                       H3TOCFilter, SectionTOCFilter)
-from .jobs import (DocumentZoneStackJob, DocumentZoneURLRemapsJob,
-                   DocumentContributorsJob)
+from .jobs import DocumentZoneStackJob, DocumentContributorsJob
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
@@ -58,6 +56,7 @@ from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        TaggedDocumentManager, TransformManager)
 from .search import WikiDocumentType
 from .signals import render_done
+from .utils import tidy_content
 
 
 def cache_with_field(field_name):
@@ -1553,55 +1552,6 @@ class DocumentZone(models.Model):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
                                           self.document.title)
 
-    def save(self, *args, **kwargs):
-        super(DocumentZone, self).save(*args, **kwargs)
-
-        # Refresh the cache for the locale of this zone's attached document
-        invalidate_zone_urls_cache(self.document)
-        invalidate_zone_stack_cache(self.document)
-
-
-def invalidate_zone_stack_cache(document, async=False):
-    """
-    reset the cache for the zone stack for all of the documents
-    in the document tree branch
-    """
-    pks = [document.pk] + [parent.pk
-                           for parent in document.get_topic_parents()]
-    job = DocumentZoneStackJob()
-    if async:
-        invalidator = job.invalidate
-    else:
-        invalidator = job.refresh
-    for pk in pks:
-        invalidator(pk)
-
-
-def invalidate_zone_urls_cache(document, async=False):
-    # if the document is a document zone
-    job = DocumentZoneURLRemapsJob()
-    if async:
-        invalidator = job.invalidate
-    else:
-        invalidator = job.refresh
-    try:
-        if document.zone:
-            # reset the cached list of zones of the document's locale
-            invalidator(document.locale)
-    except DocumentZone.DoesNotExist:
-        pass
-
-
-@receiver(signals.post_save, sender=Document)
-def invalidate_zone_caches(sender, instance, **kwargs):
-    invalidate_zone_urls_cache(instance, async=True)
-    invalidate_zone_stack_cache(instance, async=True)
-
-
-@receiver(signals.post_save, sender=Document)
-def invalidate_contributors(sender, instance, **kwargs):
-    DocumentContributorsJob().invalidate(instance.pk)
-
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
@@ -1663,6 +1613,7 @@ class Revision(models.Model):
 
     summary = models.TextField()  # wiki markup
     content = models.TextField()  # wiki markup
+    tidied_content = models.TextField(blank=True)  # wiki markup tidied up
 
     # Keywords are used mostly to affect search rankings. Moderators may not
     # have the language expertise to translate keywords, so we put them in the
@@ -1804,6 +1755,30 @@ class Revision(models.Model):
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
         return self.document.extract_section(self.content, section_id)
+
+    def get_tidied_content(self):
+        """
+        Return the revision content parsed and cleaned by tidy.
+
+        This will first check for a denormalized field,
+        """
+        # we may be lucky and have the tidied content already denormalized
+        # in the database, if so return it
+        if self.tidied_content:
+            return self.tidied_content
+        else:
+            from .tasks import tidy_revision_content
+            tidying_scheduled_cache_key = 'kuma:tidying_scheduled:%s' % self.pk
+            # if there isn't already a task scheduled for the revision
+            tidying_already_scheduled = memcache.get(tidying_scheduled_cache_key)
+            if not tidying_already_scheduled:
+                tidy_revision_content.delay(self.pk)
+                # we temporarily set a flag that we've scheduled a task
+                # already and don't need to schedule it the next time
+                # we use 3 days as a limit to try it again
+                memcache.set(tidying_scheduled_cache_key, 1, 60 * 60 * 24 * 3)
+                tidied_content, errors = tidy_content(self.content)
+            return tidied_content
 
     @property
     def content_cleaned(self):

@@ -194,7 +194,7 @@
         {% endif %}
 
         <dt>{{ _('Content:') }}</dt>
-        <dd>{{ diff_table(revision_from.content, revision_to.content, revision_from.id, revision_to.id) }}</dd>
+        <dd>{{ diff_table(revision_from.get_tidied_content(), revision_to.get_tidied_content(), revision_from.id, revision_to.id) }}</dd>
       </dl>
     </section>
   {% endif %}
