@@ -852,7 +852,7 @@ GOOGLE_MAPS_API_KEY = "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKc
 # Filesystem path where files uploaded for demos will be written
 DEMO_UPLOADS_ROOT = path('media/uploads/demos')
 # Base URL from where files uploaded for demos will be linked and served
-DEMO_UPLOADS_URL = '/media/uploads/demos/'
+DEMO_UPLOADS_URL = MEDIA_URL + 'uploads/demos/'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 # must be an entry in the CACHES setting!
@@ -1182,7 +1182,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUDIENCE': 'https://developer.mozilla.org',
         'REQUEST_PARAMETERS': {
             'siteName': 'Mozilla Developer Network',
-            'siteLogo': '/media/img/opengraph-logo.png',
+            'siteLogo': MEDIA_URL + 'img/opengraph-logo.png',
         }
     }
 }

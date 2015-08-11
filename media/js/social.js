@@ -19,7 +19,7 @@
             track('Twitter');
         }
         else if($this.hasClass('facebook')) {
-            open('http://facebook.com/sharer.php?s=100&p[url]=' + url + '&p[images][0]=/media/redesign/img/favicon144.png&p[title]=' + title, 'facebook-share', 'height=380,width=660,resizable=0,toolbar=0,menubar=0,status=0,location=0,scrollbars=0');
+            open('http://facebook.com/sharer.php?s=100&p[url]=' + url, 'facebook-share', 'height=380,width=660,resizable=0,toolbar=0,menubar=0,status=0,location=0,scrollbars=0');
             track('Facebook');
         }
         else if($this.hasClass('gplus')) {

@@ -32,7 +32,7 @@
     var ffoTimeout = 2000;
 
     // load the observer plug in
-    $.getScript('/media/js/fontfaceobserver-min.js')
+    $.getScript(mdn.mediaPath + 'js/fontfaceobserver-min.js')
       .done(ffoLoad)
       .fail(ffoFinished);
 

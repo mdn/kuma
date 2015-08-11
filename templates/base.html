@@ -25,7 +25,7 @@
   {% endblock %}
 
   <!-- common social tags -->
-  {% set social_logo = request.build_absolute_uri('/media/img/opengraph-logo.png') %}
+  {% set social_logo = request.build_absolute_uri(MEDIA_URL + 'img/opengraph-logo.png') %}
   <meta property="og:type" content="website">
   <meta property="og:image" content="{{ social_logo }}">
   <meta property="og:site_name" content="{{ _('Mozilla Developer Network') }}">
@@ -226,7 +226,7 @@
   {% endif %}
 
   {% block site_js %}
-    <!--[if lte IE 8]><script src="/media/js/libs/selectivizr-1.0.2/selectivizr-build.js"></script><![endif]-->
+    <!--[if lte IE 8]><script src="{{ MEDIA_URL }}js/libs/selectivizr-1.0.2/selectivizr-build.js"></script><![endif]-->
 
     {{ providers_media_js() }}
     {{ js('main') }}
