@@ -1765,7 +1765,7 @@ class Revision(models.Model):
         # we may be lucky and have the tidied content already denormalized
         # in the database, if so return it
         if self.tidied_content:
-            return self.tidied_content
+            tidied_content = self.tidied_content
         else:
             from .tasks import tidy_revision_content
             tidying_scheduled_cache_key = 'kuma:tidying_scheduled:%s' % self.pk
@@ -1777,8 +1777,8 @@ class Revision(models.Model):
                 # already and don't need to schedule it the next time
                 # we use 3 days as a limit to try it again
                 memcache.set(tidying_scheduled_cache_key, 1, 60 * 60 * 24 * 3)
-                tidied_content, errors = tidy_content(self.content)
-            return tidied_content
+            tidied_content, errors = tidy_content(self.content)
+        return tidied_content
 
     @property
     def content_cleaned(self):
