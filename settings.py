@@ -43,16 +43,20 @@ DATABASES = {
         'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {
             'sql_mode': 'TRADITIONAL',
-            'charset': 'utf8',
+            'charset': 'utf8mb4',
             'init_command': 'SET '
                 'storage_engine=INNODB,'
-                'character_set_connection=utf8,'
-                'collation_connection=utf8_general_ci',
+                'character_set_client=utf8mb4,'
+                'character_set_server=utf8mb4,'
+                'character_set_database=utf8mb4,'
+                'collation_connection=utf8mb4_unicode_ci,'
+                'collation_server=utf8mb4_unicode_ci,'
+                'collation_database=utf8mb4_unicode_ci'
         },
         'ATOMIC_REQUESTS': True,
         'TEST': {
-            'CHARSET': 'utf8',
-            'COLLATION': 'utf8_general_ci',
+            'CHARSET': 'utf8mb4',
+            'COLLATION': 'utf8mb4_unicode_ci',
         },
     },
 }
