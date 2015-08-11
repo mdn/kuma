@@ -41,7 +41,7 @@ define([
                         .then(function(element) {
                             return poll.until(element, 'isDisplayed').then(function() {
                                 // Polling proves it's true :)
-                                assert.isTrue(true, 'Zone submenu is displayed!');
+                                assert.ok('Zone submenu is displayed!');
                             });
                         });
 
@@ -110,7 +110,7 @@ define([
                             .type(['css', keys.RETURN])
                             .then(function() {
                                 return poll.untilUrlChanges(remote, '/search').then(function() {
-                                    assert.isTrue(true, 'Pressing [ENTER] submits search');
+                                    assert.ok('Pressing [ENTER] submits search');
                                 });
                             });
         }

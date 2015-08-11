@@ -66,7 +66,7 @@ define([
             libLogin.getTestPersonaLoginCredentials(function(credentials) {
                 return libLogin.completePersonaWindow(remote, credentials.email, credentials.password).then(function() {
                     return poll.untilUrlChanges(remote, '/account/signup').then(function() {
-                        assert.isTrue(true, 'User sent to registration page');
+                        assert.ok('User sent to registration page');
                         return libLogin.completePersonaLogout(remote).then(dfd.resolve);
                     });
                 });
@@ -133,12 +133,9 @@ define([
                         .click()
                         .then(function() {
                             return poll.untilUrlChanges(remote, 'github.com').then(function() {
-                                assert.isTrue(true, 'User sent to GitHub.com');
+                                assert.ok('User sent to GitHub.com');
                             });
-                            assert.ok(url.toLowerCase().indexOf('github.com') != -1, 'Clicking GitHub login link goes to GitHub.com. (Requires working GitHub login.)');
-                        })
-                        //.goBack(); // Cleanup to go back to MDN from GitHub sign in page
-
+                        });
         },
 
         'Sign in icons are hidden from header widget on smaller screens': function() {
@@ -149,7 +146,6 @@ define([
                         .moveMouseTo(5, 5)
                         .isDisplayed()
                         .then(assert.isFalse);
-
         }
 
     });

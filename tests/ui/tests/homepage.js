@@ -47,7 +47,7 @@ define([
                         .type(keys.RETURN)
                         .then(function() {
                             return poll.untilUrlChanges(remote, '/search').then(function() {
-                                assert.isTrue(true, 'Pressing [ENTER] submits search');
+                                assert.ok('Pressing [ENTER] submits search');
                             });
                         });
         },

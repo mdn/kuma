@@ -146,7 +146,7 @@ define([
                         .click()
                         .then(function() {
                             return poll.untilUrlChanges(remote, '$edit').then(function() {
-                                assert.isTrue(true, 'Clicking edit button loads edit page');
+                                assert.ok('Clicking edit button loads edit page');
                             });
                         })
                         .then(function() {
@@ -170,7 +170,7 @@ define([
                                     .end()
                                     .then(function() {
                                         return poll.untilUrlChanges(remote, '$locales').then(function() {
-                                            assert.isTrue(true, 'Clicking edit button loads edit page');
+                                            assert.ok('Clicking edit button loads edit page');
                                         });
                                     })
                                     .findByCssSelector('.locales a')
@@ -178,7 +178,7 @@ define([
                                     .end()
                                     .then(function() {
                                         return poll.untilUrlChanges(remote, '$translate').then(function() {
-                                            assert.isTrue(true, 'Clicking translate link loads translate page');
+                                            assert.ok('Clicking translate link loads translate page');
                                         });
                                     })
                                     .then(function() {
