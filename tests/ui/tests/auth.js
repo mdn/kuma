@@ -38,6 +38,9 @@ define([
             var remote = this.remote;
 
             return remote
+                        .then(function() {
+                            return libLogin.pollForPersonaLoaded(remote);
+                        })
                         .findByCssSelector('.oauth-login-picker .launch-persona-login')
                         .click()
                         .end()
