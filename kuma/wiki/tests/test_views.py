@@ -1303,23 +1303,20 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                              reverse('wiki.document', args=[data['slug']],
                                      locale=settings.WIKI_DEFAULT_LANGUAGE))
 
-        # Slashes should not be acceptable via form input
-        data['title'] = 'valid with slash'
-        data['slug'] = 'va/lid'
-        response = self.client.post(reverse('wiki.new_document'), data)
-        self.assertContains(response, 'The slug provided is not valid.')
-
-        # Dollar sign is reserved for verbs
-        data['title'] = 'invalid with dollars'
-        data['slug'] = 'inva$lid'
-        response = self.client.post(reverse('wiki.new_document'), data)
-        self.assertContains(response, 'The slug provided is not valid.')
-
-        # Question mark is reserved for query params
-        data['title'] = 'invalid with questions'
-        data['slug'] = 'inva?lid'
-        response = self.client.post(reverse('wiki.new_document'), data)
-        self.assertContains(response, 'The slug provided is not valid.')
+        new_url = reverse('wiki.new_document')
+        invalid_slugs = [
+            'va/lid',  # slashes
+            'inva$lid',  # dollar signs
+            'inva?lid',  # question marks
+            'inva%lid',  # percentage sign
+            '"invalid\'',  # quotes
+            'in valid',  # whitespace
+        ]
+        for invalid_slug in invalid_slugs:
+            data['title'] = 'invalid with %s' % invalid_slug
+            data['slug'] = invalid_slug
+            response = self.client.post(new_url, data)
+            self.assertContains(response, 'The slug provided is not valid.')
 
     def test_invalid_reserved_term_slug(self):
         """Slugs should not collide with reserved URL patterns"""
@@ -1361,9 +1358,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             locale = settings.WIKI_DEFAULT_LANGUAGE
             foreign_locale = 'es'
             new_doc_url = reverse('wiki.new_document')
-            invalid_slug = invalid_slug1 = "some/thing"
-            invalid_slug2 = "some?thing"
-            invalid_slug3 = "some thing"
+            invalid_slug = "some/thing"
+            invalid_slugs = [
+                "some/thing",
+                "some?thing",
+                "some thing",
+                "some%thing",
+                "$omething",
+            ]
+
             child_slug = 'kiddy'
             grandchild_slug = 'grandkiddy'
 
@@ -1408,15 +1411,10 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 self.assertContains(response,
                                     'The slug provided is not valid.')
 
-            test_invalid_slug(invalid_slug1,
-                              new_doc_url + '?parent=' + str(doc.id),
-                              child_data, doc)
-            test_invalid_slug(invalid_slug2,
-                              new_doc_url + '?parent=' + str(doc.id),
-                              child_data, doc)
-            test_invalid_slug(invalid_slug3,
-                              new_doc_url + '?parent=' + str(doc.id),
-                              child_data, doc)
+            for invalid_slug in invalid_slugs:
+                test_invalid_slug(invalid_slug,
+                                  new_doc_url + '?parent=' + str(doc.id),
+                                  child_data, doc)
 
             # Attempt to create the child with *valid* slug,
             # should succeed and redirect
@@ -1456,8 +1454,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             # Attempt to create the child with *valid* slug,
             # should succeed and redirect
             grandchild_data['slug'] = grandchild_slug
-            full_grandchild_slug = (full_child_slug
-                                    + '/' + grandchild_data['slug'])
+            full_grandchild_slug = (full_child_slug + '/' +
+                                    grandchild_data['slug'])
             response = self.client.post(
                 new_doc_url + '?parent=' + str(child_doc.id),
                 grandchild_data)
@@ -1527,9 +1525,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
                 foreign_url = (reverse('wiki.translate',
                                        args=[translate_doc.slug],
-                                       locale=locale)
-                               + '?tolocale='
-                               + foreign_locale)
+                                       locale=locale) +
+                               '?tolocale=' + foreign_locale)
                 foreign_doc_url = reverse('wiki.document',
                                           args=[translate_doc.slug],
                                           locale=foreign_locale)
