@@ -18,8 +18,6 @@ TEMPLATE_DEBUG = DEBUG
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
 
-ROOT_PACKAGE = os.path.basename(ROOT)
-
 ADMINS = (
     ('MDN devs', 'mdn-dev@mozilla.com'),
 )
@@ -546,6 +544,7 @@ DOMAIN_METHODS = {
 STANDALONE_DOMAINS = [
     'javascript',
 ]
+STATICI18N_DOMAIN = 'javascript'
 
 # If you have trouble extracting strings with Tower, try setting this
 # to True

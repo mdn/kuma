@@ -1,6 +1,5 @@
 import datetime
 import HTMLParser
-import os
 import urllib
 import hashlib
 import bitly_api
@@ -18,17 +17,15 @@ from tower import ugettext_lazy as _lazy, ungettext
 
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
 from django.utils.encoding import smart_str, force_text
 from django.utils.html import strip_tags
-from django.utils.safestring import mark_safe
 from django.utils.timezone import get_default_timezone
 
 from soapbox.models import Message
-from statici18n.utils import get_filename
 
 from .cache import memcache
+from .jobs import StaticI18nJob
 from .exceptions import DateTimeFormatError
 from .urlresolvers import reverse, split_path
 
@@ -175,14 +172,7 @@ def entity_decode(str):
 
 @register.function
 def inlinei18n(locale):
-    key = 'statici18n:%s' % locale
-    path = memcache.get(key)
-    if path is None:
-        path = os.path.join(settings.STATICI18N_OUTPUT_DIR,
-                            get_filename(locale, settings.STATICI18N_DOMAIN))
-        memcache.set(key, path, 60 * 60 * 24 * 30)
-    with staticfiles_storage.open(path) as i18n_file:
-        return mark_safe(i18n_file.read())
+    return StaticI18nJob().get(locale)
 
 
 @register.function
