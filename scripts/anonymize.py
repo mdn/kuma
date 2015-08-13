@@ -13,6 +13,7 @@ from datetime import datetime
 import os
 import os.path
 import sys
+from subprocess import call
 from textwrap import dedent
 from optparse import OptionParser
 
@@ -24,8 +25,13 @@ from optparse import OptionParser
 # then add the table here.
 #
 TABLES_TO_DUMP=[x.strip() for x in """
+    account_emailaddress
+    account_emailconfirmation
     actioncounters_actioncounterunique
     actioncounters_testmodel
+    attachments_attachment
+    attachments_attachmentrevision
+    attachments_documentattachment
     auth_group
     auth_group_permissions
     auth_message
@@ -35,15 +41,16 @@ TABLES_TO_DUMP=[x.strip() for x in """
     auth_user_user_permissions
     authkeys_key
     authkeys_keyaction
+    celery_taskmeta
+    celery_tasksetmeta
     constance_config
     contentflagging_contentflag
-    dashboards_wikidocumentvisits
+    core_ipban
     demos_submission
-    devmo_calendar
-    devmo_event
     django_admin_log
     django_cache
     django_content_type
+    django_migrations
     django_session
     django_site
     djcelery_crontabschedule
@@ -56,34 +63,40 @@ TABLES_TO_DUMP=[x.strip() for x in """
     feeder_bundle_feeds
     feeder_entry
     feeder_feed
-    gallery_image
-    gallery_video
-    schema_version
+    search_filter
+    search_filtergroup
+    search_index
+    search_outdatedobject
     soapbox_message
+    socialaccount_socialaccount
+    socialaccount_socialapp
+    socialaccount_socialapp_sites
+    socialaccount_socialtoken
     tagging_tag
     tagging_taggeditem
     taggit_tag
     taggit_taggeditem
-    threadedcomments_freethreadedcomment
-    threadedcomments_testmodel
-    threadedcomments_threadedcomment
     tidings_watch
+    tidings_watchfilter
     user_profiles
+    users_userban
     waffle_flag
     waffle_flag_groups
     waffle_flag_users
     waffle_sample
     waffle_switch
-    wiki_attachment
-    wiki_attachmentrevision
     wiki_document
-    wiki_documentattachment
+    wiki_documentdeletionlog
     wiki_documenttag
+    wiki_documentzone
     wiki_editortoolbar
     wiki_helpfulvote
+    wiki_localizationtag
+    wiki_localizationtaggedrevision
     wiki_reviewtag
     wiki_reviewtaggedrevision
     wiki_revision
+    wiki_revisionip
     wiki_taggeddocument
 """.splitlines() if x.strip()]
 
@@ -96,10 +109,23 @@ def print_debug(s):
     if not opts.quiet and opts.debug: print s
 
 
+has_error = False
+
 def sysprint(command):
     """ Helper to print all system commands in debug mode """
+    global has_error
     print_debug("command: %s" % command)
-    os.system(command)
+    try:
+        retcode = call(command, shell=True)
+        if retcode < 0:
+            print >>sys.stderr, "Command was terminated by signal", -retcode
+        elif retcode > 0:
+            print >>sys.stderr, "Command errored with code", retcode
+    except OSError as e:
+        print >>sys.stderr, "Command failed:", e
+        retcode = 255
+    has_error = has_error or retcode != 0
+    return retcode
 
 
 def main():
@@ -211,8 +237,10 @@ def main():
 
     if not opts.skip_temp_create:
         print_info('Creating temporary DB %s' % temp_db)
-        sysprint('mysqladmin %(mysql_conn)s -f drop %(temp_db)s' %
+        sysprint(('mysql %(mysql_conn)s -e'
+                  '"DROP DATABASE IF EXISTS %(temp_db)s;"') %
                   dict(mysql_conn=mysql_conn, temp_db=temp_db))
+
         sysprint('mysqladmin %(mysql_conn)s create %(temp_db)s' %
                   dict(mysql_conn=mysql_conn, temp_db=temp_db))
 
@@ -255,3 +283,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    if has_error:
+        print >>sys.stderr, "ERRORS: Check output of commands!"
+        sys.exit(1)
