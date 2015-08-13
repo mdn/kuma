@@ -1,7 +1,7 @@
 //
 // User detail and edit view enhancements
 //
-(function () {
+(function ($) {
     'use strict';
 
     var DEBOUNCE_DELAY = 25;
@@ -138,4 +138,4 @@
         // Update "Other users", preventing "blank" submissions
         $('#users input').mozPlaceholder();
     });
-})();
+})(jQuery);
