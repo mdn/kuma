@@ -22,7 +22,6 @@
 {% block site_js %}
   {{ super() }}
   {{ js('demostudio') }}
-  {{ js('libs/tagit') }}
   {{ js('users', async=True) }}
   {{ js('newsletter', async=True) }}
 {% endblock %}

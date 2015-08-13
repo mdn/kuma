@@ -671,6 +671,7 @@ MINIFY_BUNDLES = {
             'js/modal-control.js',
         ),
         'users': (
+            'js/libs/tag-it.js',
             'js/users.js',
             'js/moz-jquery-plugins.js',
         ),
@@ -693,9 +694,6 @@ MINIFY_BUNDLES = {
         'jquery-ui': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/moz-jquery-plugins.js',
-        ),
-        'libs/tagit': (
-            'js/libs/tag-it.js',
         ),
         'search': (
             'js/search.js',
