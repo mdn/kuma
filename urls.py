@@ -3,8 +3,6 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.shortcuts import redirect
-from django.views.i18n import javascript_catalog
-from django.views.decorators.cache import cache_page
 from django.views.static import serve
 import jingo.monkey
 
@@ -44,13 +42,6 @@ urlpatterns = [
         attachment_views.list_files,
         name='attachments.list_files'),
     url(r'^docs', include('kuma.wiki.urls')),
-
-    # Javascript translations.
-    url(r'^jsi18n/.*$',
-        cache_page(60 * 60 * 24 * 365)(javascript_catalog),
-        {'domain': 'javascript',
-         'packages': [settings.ROOT_PACKAGE]},
-        name='jsi18n'),
 
     url(r'^files/', include('kuma.attachments.urls')),
     url(r'^', include('kuma.dashboards.urls')),

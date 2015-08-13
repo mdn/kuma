@@ -1,12 +1,11 @@
 <script type="text/javascript">
+    {{ inlinei18n(request.locale) }}
+
     (function(win) {
         'use strict';
 
         {% if not is_sphinx %}
             {{ waffle.wafflejs() }}
-        {% endif %}
-        {% if waffle.flag('static-i18njs') %}
-            {{ inlinei18n(request.locale) }}
         {% endif %}
 
         // This represents the site configuration
@@ -33,10 +32,5 @@
                 autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
             }
         };
-
-        // Ensures gettext always returns something, is always set
-        win.gettext = function(x) {
-            return x;
-        }
-    })(window);
+    })(this);
 </script>

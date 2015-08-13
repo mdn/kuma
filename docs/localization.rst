@@ -263,6 +263,10 @@ you need them for something, they're pretty easy to get::
 
 if you're a git fan.)
 
+Then run the Django management command to update the static JavaScript
+translation catalogs::
+
+    python manage.py compilejsi18n
 
 Updating the Localizations
 ==========================
