@@ -58,7 +58,7 @@ from kuma.users.models import User
 import kuma.wiki.content
 from . import kumascript
 from .constants import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
-                        SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS_DEFAULT,
+                        SLUG_CLEANSING_RE, REVIEW_FLAG_TAGS_DEFAULT,
                         DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         REDIRECT_CONTENT, ALLOWED_TAGS)
 from .decorators import (check_readonly, process_document_path,
@@ -1271,7 +1271,7 @@ def move(request, document_slug, document_locale):
                     'descendants': descendants,
                     'descendants_count': len(descendants),
                     'conflicts': conflicts,
-                    'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
+                    'SLUG_CLEANSING_RE': SLUG_CLEANSING_RE,
                 })
             move_page.delay(document_locale, document_slug,
                             form.cleaned_data['slug'],
@@ -1288,7 +1288,7 @@ def move(request, document_slug, document_locale):
         'document': doc,
         'descendants': descendants,
         'descendants_count': len(descendants),
-        'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
+        'SLUG_CLEANSING_RE': SLUG_CLEANSING_RE,
         'specific_slug': slug_split['specific']
     })
 

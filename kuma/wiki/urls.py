@@ -3,8 +3,8 @@ from django.views.generic import TemplateView
 
 from kuma.attachments.feeds import AttachmentsFeed
 
-from . import feeds
-from . import views
+from . import feeds, views
+from .constants import DOCUMENT_PATH_RE
 
 
 # These patterns inherit (?P<document_path>[^\$]+).
@@ -178,5 +178,6 @@ urlpatterns = [
         AttachmentsFeed(),
         name="attachments.feeds.recent_files"),
 
-    url(r'^/(?P<document_path>[^\$]+)', include(document_patterns)),
+    url(r'^/(?P<document_path>%s)' % DOCUMENT_PATH_RE.pattern,
+        include(document_patterns)),
 ]

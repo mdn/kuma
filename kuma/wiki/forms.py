@@ -1,5 +1,3 @@
-import re
-
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
@@ -11,8 +9,10 @@ from django.forms.widgets import CheckboxSelectMultiple
 from kuma.contentflagging.forms import ContentFlagForm
 import kuma.wiki.content
 from kuma.core.form_fields import StrippedCharField
-from .constants import (SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS,
-                        LOCALIZATION_FLAG_TAGS, RESERVED_SLUGS)
+from .constants import (SLUG_CLEANSING_RE, SLUG_INVALID_CHARS_RE,
+                        SLUG_INVALID_CHARS_VALIDATION_RE,
+                        DOCUMENT_PATH_RE, REVIEW_FLAG_TAGS,
+                        LOCALIZATION_FLAG_TAGS, RESERVED_SLUGS_RES)
 from .models import (Document, Revision,
                      valid_slug_parent)
 
@@ -95,15 +95,13 @@ class DocumentForm(forms.ModelForm):
         if slug == '':
             # Default to the title, if missing.
             slug = self.cleaned_data['title']
-        # "?", " ", quote disallowed in slugs altogether
-        if '?' in slug or ' ' in slug or '"' in slug or "'" in slug:
-            raise forms.ValidationError(SLUG_INVALID)
-        # Pattern copied from urls.py
-        if not re.compile(r'^[^\$]+$').match(slug):
+        # check both for disallowed characters and match for the allowed
+        if (SLUG_INVALID_CHARS_RE.search(slug) or
+                not DOCUMENT_PATH_RE.search(slug)):
             raise forms.ValidationError(SLUG_INVALID)
         # Guard against slugs that match urlpatterns
-        for pat in RESERVED_SLUGS:
-            if re.compile(pat).match(slug):
+        for pattern in RESERVED_SLUGS_RES:
+            if pattern.match(slug):
                 raise forms.ValidationError(SLUG_INVALID)
         return slug
 
@@ -369,31 +367,22 @@ class RevisionForm(forms.ModelForm):
 
 
 class RevisionValidationForm(RevisionForm):
-    """Created primarily to disallow slashes in slugs during validation"""
-
+    """
+    Created primarily to disallow slashes in slugs during validation
+    """
     def clean_slug(self):
-        is_valid = True
         original = self.cleaned_data['slug']
-
-        # "/", "?", and " " disallowed in form input
-        if (u'' == original or
-                '/' in original or
-                '?' in original or
-                ' ' in original):
-            is_valid = False
+        if (original == u'' or
+                SLUG_INVALID_CHARS_VALIDATION_RE.search(original)):
             raise forms.ValidationError(SLUG_INVALID)
 
         # Append parent slug data, call super, ensure still valid
         self.cleaned_data['slug'] = self.data['slug'] = (self.parent_slug +
                                                          '/' +
                                                          original)
-        is_valid = (is_valid and
-                    super(RevisionValidationForm, self).clean_slug())
-
-        # Set the slug back to original
-        # if not is_valid:
+        # run the parent clean method, checking for collisions
+        super(RevisionValidationForm, self).clean_slug()
         self.cleaned_data['slug'] = self.data['slug'] = original
-
         return self.cleaned_data['slug']
 
 
@@ -427,8 +416,7 @@ class TreeMoveForm(forms.Form):
         # Removes leading slash and {locale/docs/} if necessary
         # IMPORTANT: This exact same regex is used on the client side, so
         # update both if doing so
-        self.cleaned_data['slug'] = re.sub(re.compile(SLUG_CLEANSING_REGEX),
-                                           '', self.cleaned_data['slug'])
+        self.cleaned_data['slug'] = SLUG_CLEANSING_RE.sub('', self.cleaned_data['slug'])
 
         # Remove the trailing slash if one is present, because it
         # will screw up the page move, which doesn't expect one.
