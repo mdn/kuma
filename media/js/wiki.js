@@ -94,6 +94,16 @@
     });
 
     /*
+        Document search helper
+    */
+    (function() {
+        var searchUrl = $(doc.body).data('search-url');
+        if(searchUrl) {
+            $('.from-search-toc').mozSearchResults(searchUrl);
+        }
+    })();
+
+    /*
         Set up the "from search" buttons if user came from search
     */
     var fromSearchNav = $('.from-search-navigate');
@@ -590,41 +600,6 @@
             $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
         }
     })();
-
-
-    /*
-        jQuery extensions used within the wiki.
-    */
-    $.extend({
-        // Currently used within CKEDitor YouTube plugin
-        parseQuerystring: function(str){
-            var nvpair = {};
-            var qs = (str || location.search).replace('?', '');
-            var pairs = qs.split('&');
-
-            $.each(pairs, function(i, v){
-                var pair = v.split('=');
-                nvpair[pair[0]] = pair[1];
-            });
-
-            return nvpair;
-        },
-        // Used within the wiki new/move pages
-        slugifyString: function(str, allowSlash, allowMultipleUnderscores) {
-            var regex = new RegExp('[?&\"\'#*$' + (allowSlash ? '' : '\/') + ' +?]', 'g');
-
-            // Remove anything from the slug that could cause big problems
-            // "$" is used for verb delimiter in URLs
-            var result = str.replace(regex, '_').replace(/\$/g, '');
-
-            // Don't allow "_____" mess
-            if(!allowMultipleUnderscores) {
-                result = result.replace(/_+/g, '_');
-            }
-
-            return result;
-        }
-    });
 
     /*
       Make Compare selected revisions button sticky when scrolling history page
