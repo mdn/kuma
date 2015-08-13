@@ -20,7 +20,6 @@
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demos_wrap.css">
   {{ css('jquery-ui') }}
-  <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
 
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
@@ -89,6 +88,9 @@
       </ul>
     </nav>
 
+    <script type="text/javascript">
+        {{ inlinei18n(request.locale) }}
+    </script>
 
     {{ js('main') }}
     {{ js('popup') }}

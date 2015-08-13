@@ -29,7 +29,9 @@
 {% block content %}{% endblock %}
 
 {# js #}
-<script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
+<script type="text/javascript">
+    {{ inlinei18n(request.locale) }}
+</script>
 
 {% block site_js %}
 
