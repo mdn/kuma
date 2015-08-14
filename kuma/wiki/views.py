@@ -363,15 +363,15 @@ def _filter_doc_html(request, doc, doc_html, rendering_params):
 def _get_seo_parent_title(slug_dict, document_locale):
     """
     Get parent-title information for SEO purposes.
-
     """
     if slug_dict['seo_root']:
-        seo_root_doc = get_object_or_404(Document,
-                                         locale=document_locale,
-                                         slug=slug_dict['seo_root'])
-        return u' - %s' % seo_root_doc.title
-    else:
-        return ''
+        try:
+            seo_root_doc = Document.objects.get(locale=document_locale,
+                                                slug=slug_dict['seo_root'])
+            return u' - %s' % seo_root_doc.title
+        except Document.DoesNotExist:
+            pass
+    return ''
 
 
 #####################################################################

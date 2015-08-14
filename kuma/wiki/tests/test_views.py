@@ -39,6 +39,7 @@ from ..events import EditDocumentEvent
 from ..forms import MIDAIR_COLLISION
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       DocumentTag, DocumentDeletionLog)
+from ..views import _get_seo_parent_title
 from . import (doc_rev, document, new_document_data, revision,
                normalize_html, create_template_test_users,
                make_translation, WikiTestCase, FakeResponse)
@@ -945,6 +946,15 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 class DocumentSEOTests(UserTestCase, WikiTestCase):
     """Tests for the document seo logic"""
     localizing_client = True
+
+    @attr('bug1190212')
+    def test_get_seo_parent_doesnt_throw_404(self):
+        slug_dict = {'seo_root': 'Root/Does/Not/Exist'}
+        try:
+            _get_seo_parent_title(slug_dict, 'bn-BD')
+        except Http404:
+            self.fail('Missing parent should not cause 404 from '
+                      '_get_seo_parent_title')
 
     def test_seo_title(self):
         self.client.login(username='admin', password='testpass')
