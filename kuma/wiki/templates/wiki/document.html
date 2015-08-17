@@ -42,7 +42,7 @@
 {% endif %}
 
 {% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
-{% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu"{% endblock body_attributes %}
+{% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu" data-search-url="{{ search_url|safe }}"{% endblock body_attributes %}
 
 {% block main_content_id %}document-main{% endblock %}
 
@@ -412,8 +412,6 @@
 
 {% block js %}
   <script type="text/javascript">
-      if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
-
       {# This can be removed once the social network button multivariate test is completed. #}
       mdn.optimizely.push(['activate', 2796520257]);
   </script>

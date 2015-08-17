@@ -11,15 +11,15 @@
 {% block title %}{{ page_title(detail_user) }}{% endblock %}
 
 {% block site_css %}
-    {{ super() }}
-    {{ css('demostudio') }}
-    {{ css('jquery-ui') }}
-    {{ css('users') }}
+  {{ super() }}
+  {{ css('demostudio') }}
+  {{ css('jquery-ui') }}
+  {{ css('users') }}
 {% endblock %}
 
 {% block site_js %}
-    {{ super() }}
-    {{ js('demostudio') }}
+  {{ super() }}
+  {{ js('demostudio', async=True) }}
 {% endblock %}
 
 {% block content %}

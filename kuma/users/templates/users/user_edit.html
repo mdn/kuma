@@ -11,20 +11,19 @@
 {% block title %}{{ page_title(_('Edit Your Profile')) }}{% endblock %}
 
 {% block site_css %}
-    {{ super() }}
-    {{ css('demostudio') }}
-    {{ css('jquery-ui') }}
-    {{ css('users') }}
-    {{ css('newsletter') }}
-    {{ css('submission') }}
+  {{ super() }}
+  {{ css('demostudio') }}
+  {{ css('jquery-ui') }}
+  {{ css('users') }}
+  {{ css('newsletter') }}
+  {{ css('submission') }}
 {% endblock %}
 
 {% block site_js %}
-    {{ super() }}
-    {{ js('demostudio') }}
-    {{ js('libs/tagit') }}
-    {{ js('users') }}
-    {{ js('newsletter',) }}
+  {{ super() }}
+  {{ js('demostudio') }}
+  {{ js('users', async=True) }}
+  {{ js('newsletter', async=True) }}
 {% endblock %}
 
 {% block content %}
