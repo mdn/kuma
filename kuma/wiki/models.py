@@ -1042,7 +1042,6 @@ class Document(NotificationsMixin, models.Model):
         Given a new slug to be assigned to this document, return a
         list of documents (if any) which would be overwritten by
         moving this document or any of its children in that fashion.
-
         """
         conflicts = []
         try:
@@ -1292,11 +1291,11 @@ Full traceback:
     def language(self):
         return get_language_mapping()[self.locale.lower()]
 
-    def get_absolute_url(self, ui_locale=None):
-        """Build the absolute URL to this document from its full path"""
-        if not ui_locale:
-            ui_locale = self.locale
-        return reverse('wiki.document', locale=ui_locale, args=[self.slug])
+    def get_absolute_url(self):
+        """
+        Build the absolute URL to this document from its full path
+        """
+        return reverse('wiki.document', locale=self.locale, args=[self.slug])
 
     @staticmethod
     def from_url(url, required_locale=None, id_only=False):

@@ -39,7 +39,7 @@ from ..events import EditDocumentEvent
 from ..forms import MIDAIR_COLLISION
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       DocumentTag, DocumentDeletionLog)
-from ..views import _get_seo_parent_title
+from ..views.document import _get_seo_parent_title
 from . import (doc_rev, document, new_document_data, revision,
                normalize_html, create_template_test_users,
                make_translation, WikiTestCase, FakeResponse)
@@ -264,7 +264,7 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         Switch.objects.create(name='application_ACAO', active=True)
         for expand in (True, False):
-            url = reverse('wiki.get_children', args=['Root'],
+            url = reverse('wiki.children', args=['Root'],
                           locale=settings.WIKI_DEFAULT_LANGUAGE)
             if expand:
                 url = '%s?expand' % url
@@ -289,7 +289,7 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         # Depth parameter testing
         def _depth_test(depth, aught):
-            url = reverse('wiki.get_children', args=['Root'],
+            url = reverse('wiki.children', args=['Root'],
                           locale=settings.WIKI_DEFAULT_LANGUAGE) + '?depth=' + str(depth)
             resp = self.client.get(url)
             json_obj = json.loads(resp.content)
@@ -303,13 +303,13 @@ class ViewTests(UserTestCase, WikiTestCase):
         sort_root_doc = _make_doc('Sort Root', 'Sort_Root')
         _make_doc('B Child', 'Sort_Root/B_Child', sort_root_doc)
         _make_doc('A Child', 'Sort_Root/A_Child', sort_root_doc)
-        resp = self.client.get(reverse('wiki.get_children', args=['Sort_Root'],
+        resp = self.client.get(reverse('wiki.children', args=['Sort_Root'],
                                        locale=settings.WIKI_DEFAULT_LANGUAGE))
         json_obj = json.loads(resp.content)
         eq_(json_obj['subpages'][0]['title'], 'A Child')
 
         # Test if we are serving an error json if document does not exist
-        no_doc_url = reverse('wiki.get_children', args=['nonexistentDocument'],
+        no_doc_url = reverse('wiki.children', args=['nonexistentDocument'],
                              locale=settings.WIKI_DEFAULT_LANGUAGE)
         resp = self.client.get(no_doc_url)
         result = json.loads(resp.content)
@@ -2534,13 +2534,13 @@ class DocumentWatchTests(UserTestCase, WikiTestCase):
 
     def test_watch_GET_405(self):
         """Watch document with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.subscribe_document',
+        response = get(self.client, 'wiki.subscribe',
                        args=[self.document.slug])
         eq_(405, response.status_code)
 
     def test_unwatch_GET_405(self):
         """Unwatch document with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.subscribe_document',
+        response = get(self.client, 'wiki.subscribe',
                        args=[self.document.slug])
         eq_(405, response.status_code)
 
@@ -2549,13 +2549,13 @@ class DocumentWatchTests(UserTestCase, WikiTestCase):
         user = self.user_model.objects.get(username='testuser')
 
         # Subscribe
-        response = post(self.client, 'wiki.subscribe_document', args=[self.document.slug])
+        response = post(self.client, 'wiki.subscribe', args=[self.document.slug])
         eq_(200, response.status_code)
         assert EditDocumentEvent.is_notifying(user, self.document), \
             'Watch was not created'
 
         # Unsubscribe
-        response = post(self.client, 'wiki.subscribe_document', args=[self.document.slug])
+        response = post(self.client, 'wiki.subscribe', args=[self.document.slug])
         eq_(200, response.status_code)
         assert not EditDocumentEvent.is_notifying(user, self.document), \
             'Watch was not destroyed'
