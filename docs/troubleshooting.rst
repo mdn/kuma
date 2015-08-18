@@ -17,7 +17,7 @@ Kuma that are described below::
   # open https://www.youtube.com/watch?v=ckIMuvumYrg
   cd /path/to/kuma
   vagrant halt
-  find . -name "*.pyc" -exec rm -rf {} \; &&\
+  make clean
   git submodule sync --recursive && git submodule update --init --recursive
   vagrant up && vagrant provision
   popd

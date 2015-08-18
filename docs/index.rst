@@ -17,5 +17,6 @@ Contents:
    ckeditor
    tests
    tests-ui
+   tests-performance
 
    troubleshooting
