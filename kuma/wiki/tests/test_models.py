@@ -446,7 +446,7 @@ class UserDocumentTests(UserTestCase):
         """ % (escape(sample_html), escape(sample_css), escape(sample_js))
 
         d1, r1 = doc_rev(doc_src)
-        result = d1.extract_code_sample('s2')
+        result = d1.extract.code_sample('s2')
         eq_(sample_html.strip(), result['html'].strip())
         eq_(sample_css.strip(), result['css'].strip())
         eq_(sample_js.strip(), result['js'].strip())

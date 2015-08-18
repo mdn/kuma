@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from elasticsearch_dsl.connections import connections as es_connections
 
 from .jobs import (DocumentContributorsJob, DocumentZoneStackJob,
-                   DocumentZoneURLRemapsJob)
+                   DocumentZoneURLRemapsJob, DocumentCodeSampleJob)
 from .signals import render_done
 
 
@@ -100,15 +100,16 @@ class WikiConfig(AppConfig):
           cache for the given document
         - trigger the cache invalidation of the contributor bar for the given
           document
+        - trigger the renewal of the code sample job generation
         """
-        # cleanup document zones
         async = kwargs.get('async', True)
 
         invalidate_zone_urls_cache(instance, async=async)
         invalidate_zone_stack_cache(instance, async=async)
 
-        # refresh the document's contributor bar data
         DocumentContributorsJob().invalidate(instance.pk)
+
+        DocumentCodeSampleJob(generation_args=[instance.pk]).renew()
 
     def on_zone_save(self, sender, instance, **kwargs):
         """

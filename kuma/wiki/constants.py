@@ -261,3 +261,11 @@ SPAM_SUBMISSION_REVISION_FIELDS = [
     'tags',
     'keywords',
 ]
+
+CODE_SAMPLE_MACROS = [
+    'LiveSampleURL',
+    'EmbedDistLiveSample',
+    'EmbedLiveSample',
+    'LiveSampleLink',
+    'FXOSUXLiveSampleEmbed',
+]

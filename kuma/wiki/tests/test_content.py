@@ -5,6 +5,7 @@ import bleach
 import pytest
 from cssselect.parser import SelectorSyntaxError
 from jinja2 import escape, Markup
+import mock
 from pyquery import PyQuery as pq
 
 import kuma.wiki.content
@@ -587,7 +588,7 @@ class ContentSectionToolTests(UserTestCase):
         sample_js = u"""
             window.alert("Hi there!");
         """
-        doc_src = u"""
+        doc, rev = doc_rev(u"""
             <p>This is a page. Deal with it.</p>
 
             <h3 id="sample0">This is a section</h3>
@@ -631,34 +632,34 @@ class ContentSectionToolTests(UserTestCase):
             </div>
 
             <p>Yadda yadda</p>
-        """ % (escape(sample_html), escape(sample_css), escape(sample_js))
+        """ % (escape(sample_html), escape(sample_css), escape(sample_js)))
 
         # live sample using the section logic
-        result = kuma.wiki.content.extract_code_sample('sample0', doc_src)
+        result = doc.extract.code_sample('sample0')
         eq_('section html', result['html'].strip())
         eq_('section css', result['css'].strip())
         eq_('section js', result['js'].strip())
 
         # pull out a complete sample.
-        result = kuma.wiki.content.extract_code_sample('sample2', doc_src)
+        result = doc.extract.code_sample('sample2')
         eq_(sample_html.strip(), result['html'].strip())
         eq_(sample_css.strip(), result['css'].strip())
         eq_(sample_js.strip(), result['js'].strip())
 
         # a sample missing one part.
-        result = kuma.wiki.content.extract_code_sample('sample3', doc_src)
+        result = doc.extract.code_sample('sample3')
         eq_('Ignore me', result['html'].strip())
         eq_(None, result['css'])
         eq_('Ignore me', result['js'].strip())
 
         # a sample with only one part.
-        result = kuma.wiki.content.extract_code_sample('sample4', doc_src)
+        result = doc.extract.code_sample('sample4')
         eq_(None, result['html'])
         eq_(None, result['css'])
         eq_('Ignore me', result['js'].strip())
 
         # a "sample" with no code listings.
-        result = kuma.wiki.content.extract_code_sample('not-a-sample', doc_src)
+        result = doc.extract.code_sample('not-a-sample')
         eq_(None, result['html'])
         eq_(None, result['css'])
         eq_(None, result['js'])
@@ -668,7 +669,7 @@ class ContentSectionToolTests(UserTestCase):
         Non-breaking spaces are turned to normal spaces in code sample
         extraction.
         """
-        doc_src = """
+        doc, rev = doc_rev("""
             <h2 id="bug819999">Bug 819999</h2>
             <pre class="brush: css">
             .widget select,
@@ -679,8 +680,8 @@ class ContentSectionToolTests(UserTestCase):
             &nbsp; overflow : hidden;
             }
             </pre>
-        """
-        result = kuma.wiki.content.extract_code_sample('bug819999', doc_src)
+        """)
+        result = doc.extract.code_sample('bug819999')
         ok_(result['css'].find(u'\xa0') == -1)
 
     def test_bug1173170(self):
@@ -688,9 +689,9 @@ class ContentSectionToolTests(UserTestCase):
         Make sure the colons in sample ids doesn't trip up the code
         extraction due to their ambiguity with pseudo selectors
         """
-        doc_src = """<pre id="Bug:1173170">Bug 1173170</pre>"""
+        doc, rev = doc_rev("""<pre id="Bug:1173170">Bug 1173170</pre>""")
         try:
-            kuma.wiki.content.extract_code_sample('Bug:1173170', doc_src)
+            doc.extract.code_sample('Bug:1173170')
         except SelectorSyntaxError:
             self.fail("There should be no SelectorSyntaxError")
 
@@ -1093,6 +1094,24 @@ class ExtractorTests(UserTestCase):
         """ % expected)
         result = doc.extract.macro_names()
         eq_(sorted(expected), sorted(result))
+
+    @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
+    def test_code_samples(self):
+        expected = {
+            'html': 'Some HTML',
+            'css': '.some-css { color: red; }',
+            'js': 'window.alert("HI THERE")',
+        }
+        doc, rev = doc_rev("""
+            <div id="sample" class="code-sample">
+                <pre class="brush: html">%(html)s</pre>
+                <pre class="brush: css">%(css)s</pre>
+                <pre class="brush: js">%(js)s</pre>
+            </div>
+            {{ LinkCodeSample('sample1') }}
+        """ % expected)
+        result = doc.extract.code_sample('sample')
+        eq_(expected, result)
 
 
 class GetSEODescriptionTests(KumaTestCase):

@@ -12,8 +12,6 @@ from html5lib.filters._base import Filter as html5lib_Filter
 from lxml import etree
 from pyquery import PyQuery as pq
 
-from django.utils.text import unescape_string_literal
-
 from kuma.core.urlresolvers import reverse
 
 from .utils import locale_and_slug_from_path
@@ -82,20 +80,6 @@ class Extractor(object):
         return list(names)
 
     @newrelic.agent.function_trace()
-    def macro_parameters(self, macro_name):
-        """
-        Extra a list of parameters passed to the macro with the given name.
-        """
-        matches = re.findall(r'\{\{\s*%s\s*\(([\s\S]*?)\)\s*\}\}' % macro_name,
-                             self.document.html,
-                             re.MULTILINE | re.UNICODE)
-        results = []
-        for match in matches:
-            results.append([unescape_string_literal(part.strip())
-                            for part in match.split(',')])
-        return results
-
-    @newrelic.agent.function_trace()
     def css_classnames(self):
         """
         Extract the unique set of class names used in the content
@@ -121,6 +105,61 @@ class Extractor(object):
             return ['%s="%s"' % (k, v) for k, v in attribs]
         except:
             return []
+
+    @newrelic.agent.function_trace()
+    def code_sample(self, name):
+        """
+        Extract a dict containing the html, css, and js listings for a given
+        code sample identified by a name.
+
+        This should be pretty agnostic to markup patterns, since it just
+        requires a parent container with an DID and 3 child elements somewhere
+        within with class names "html", "css", and "js" - and our syntax
+        highlighting already does that with <pre>'s
+
+        Given the name of a code sample, attempt to extract it from rendered
+        HTML with a fallback to non-rendered in case of errors.
+        """
+        parts = ('html', 'css', 'js')
+        data = dict((x, None) for x in parts)
+
+        try:
+            src, errors = self.document.get_rendered()
+            if errors:
+                src = self.document.html
+        except:
+            src = self.document.html
+
+        if not src:
+            return data
+
+        section = parse(src).extractSection(name).serialize()
+        if section:
+            # HACK: Ensure the extracted section has a container, in case it
+            # consists of a single element.
+            sample = pq('<section>%s</section>' % section)
+        else:
+            # If no section, fall back to plain old ID lookup
+            sample = pq(src).find('[id="%s"]' % name)
+
+        selector_templates = (
+            '.%s',
+            # HACK: syntaxhighlighter (ab)uses the className as a
+            # semicolon-separated options list...
+            'pre[class*="brush:%s"]',
+            'pre[class*="%s;"]'
+        )
+        for part in parts:
+            selector = ','.join(selector_template % part
+                                for selector_template in selector_templates)
+            src = sample.find(selector).text()
+            if src is not None:
+                # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
+                src = src.replace(u'\xa0', u' ')
+            if src:
+                data[part] = src
+
+        return data
 
 
 @newrelic.agent.function_trace()
@@ -220,51 +259,6 @@ def filter_out_noinclude(src):
     doc = pq(src)
     doc.remove('*[class=noinclude]')
     return doc.html()
-
-
-@newrelic.agent.function_trace()
-def extract_code_sample(id, src):
-    """
-    Extract a dict containing the html, css, and js listings for a given
-    code sample identified by ID.
-
-    This should be pretty agnostic to markup patterns, since it just requires a
-    parent container with an DID and 3 child elements somewhere within with
-    class names "html", "css", and "js" - and our syntax highlighting already
-    does that with <pre>'s
-    """
-    parts = ('html', 'css', 'js')
-    data = dict((x, None) for x in parts)
-    if not src:
-        return data
-
-    section = parse(src).extractSection(id).serialize()
-    if section:
-        # HACK: Ensure the extracted section has a container, in case it
-        # consists of a single element.
-        sample = pq('<section>%s</section>' % section)
-    else:
-        # If no section, fall back to plain old ID lookup
-        sample = pq(src).find('[id="%s"]' % id)
-
-    selector_templates = (
-        '.%s',
-        # HACK: syntaxhighlighter (ab)uses the className as a
-        # semicolon-separated options list...
-        'pre[class*="brush:%s"]',
-        'pre[class*="%s;"]'
-    )
-    for part in parts:
-        selector = ','.join(selector_template % part
-                            for selector_template in selector_templates)
-        src = sample.find(selector).text()
-        if src is not None:
-            # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
-            src = src.replace(u'\xa0', u' ')
-        if src:
-            data[part] = src
-
-    return data
 
 
 class ContentSectionTool(object):

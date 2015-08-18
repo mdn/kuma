@@ -35,7 +35,7 @@ from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
 from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
-                      extract_code_sample, get_content_sections, get_seo_description)
+                      get_content_sections, get_seo_description)
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
@@ -703,17 +703,6 @@ class Document(NotificationsMixin, models.Model):
             Document.objects.filter(pk=self.pk).update(json=self.json)
 
         return self._json_data
-
-    def extract_code_sample(self, id):
-        """Given the id of a code sample, attempt to extract it from rendered
-        HTML with a fallback to non-rendered in case of errors."""
-        try:
-            src, errors = self.get_rendered()
-            if errors:
-                src = self.html
-        except:
-            src = self.html
-        return extract_code_sample(id, src)
 
     @cached_property
     def extract(self):
