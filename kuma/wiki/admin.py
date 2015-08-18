@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib import admin
 from django.contrib import messages
+from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -201,8 +202,8 @@ def document_link(self):
     """Public link to the document"""
     link = self.get_absolute_url()
     return ('<a target="_blank" href="%s">'
-            '<img src="/media/img/icons/link_external.png"> View</a>' %
-            (link,))
+            '<img src="%simg/icons/link_external.png"> View</a>' %
+            (link, settings.MEDIA_URL))
 
 document_link.allow_tags = True
 document_link.short_description = "Public"

@@ -57,7 +57,7 @@
           <td colspan="4">
             <input type="submit" name="submit" value="Upload" />
 
-            {% set spinner_path = '/media/img/upload-spinner.gif' %}
+            {% set spinner_path = MEDIA_URL + 'img/upload-spinner.gif' %}
             <img src="{{ spinner_path }}" id="page-attachments-spinner" alt="{{ _('Uploading') }}" />
           </td>
         </tr>
