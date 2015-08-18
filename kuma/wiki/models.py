@@ -679,17 +679,6 @@ class Document(NotificationsMixin, models.Model):
 
         return self._json_data
 
-    def extract_code_sample(self, id):
-        """Given the id of a code sample, attempt to extract it from rendered
-        HTML with a fallback to non-rendered in case of errors."""
-        try:
-            src, errors = self.get_rendered()
-            if errors:
-                src = self.html
-        except:
-            src = self.html
-        return extract_code_sample(id, src)
-
     @cached_property
     def extract(self):
         return Extractor(self)

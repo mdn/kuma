@@ -3190,7 +3190,7 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
         KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/testserver')
     def test_code_sample_1(self):
         """The raw source for a document can be requested"""
-        d, r = doc_rev("""
+        doc, rev = doc_rev("""
             <p>This is a page. Deal with it.</p>
             <div id="sample1" class="code-sample">
                 <pre class="brush: html">Some HTML</pre>
@@ -3198,6 +3198,7 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
                 <pre class="brush: js">window.alert("HI THERE")</pre>
             </div>
             <p>test</p>
+            {{ EmbedLiveSample('sample1') }}
         """)
         expecteds = (
             '<style type="text/css">.some-css { color: red; }</style>',
@@ -3207,7 +3208,7 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
 
         Switch.objects.create(name='application_ACAO', active=True)
         response = self.client.get(reverse('wiki.code_sample',
-                                           args=[d.slug, 'sample1']),
+                                           args=[doc.slug, 'sample1']),
                                    HTTP_HOST='testserver')
         ok_('Access-Control-Allow-Origin' in response)
         eq_('*', response['Access-Control-Allow-Origin'])
@@ -3333,7 +3334,7 @@ class CodeSampleViewFileServingTests(UserTestCase, WikiTestCase):
         # and then we try if a redirect by the file serving view redirects
         # to the main file serving view
         response = self.client.get(reverse('wiki.raw_code_sample_file',
-                                           args=[doc.slug,
+                                           args=[rev.document.slug,
                                                  'sample1',
                                                  attachment.id,
                                                  filename],

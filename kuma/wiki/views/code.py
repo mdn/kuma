@@ -9,6 +9,7 @@ from django.views.decorators.http import require_GET
 from constance import config
 
 from kuma.attachments.utils import full_attachment_url
+from ..jobs import DocumentCodeSampleJob
 from ..decorators import process_document_path, allow_CORS_GET
 from ..models import Document
 
@@ -17,7 +18,7 @@ from ..models import Document
 @allow_CORS_GET
 @xframe_options_exempt
 @process_document_path
-def code_sample(request, document_slug, document_locale, sample_id):
+def code_sample(request, document_slug, document_locale, sample_name):
     """
     Extract a code sample from a document and render it as a standalone
     HTML document
@@ -29,7 +30,8 @@ def code_sample(request, document_slug, document_locale, sample_id):
 
     document = get_object_or_404(Document, slug=document_slug,
                                  locale=document_locale)
-    data = document.extract_code_sample(sample_id)
+    job = DocumentCodeSampleJob(generation_args=[document.pk])
+    data = job.get(document.pk, sample_name)
     data['document'] = document
     return render(request, 'wiki/code_sample.html', data)
 
@@ -39,7 +41,7 @@ def code_sample(request, document_slug, document_locale, sample_id):
 @xframe_options_exempt
 @process_document_path
 def raw_code_sample_file(request, document_slug, document_locale,
-                         sample_id, attachment_id, filename):
+                         sample_name, attachment_id, filename):
     """
     A view redirecting to the real file serving view of the attachments app.
     This exists so the writers can use relative paths to files in the
