@@ -51,7 +51,6 @@ from .exceptions import (DocumentRenderedContentNotAvailable,
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
-from .search import WikiDocumentType
 from .signals import render_done
 from .utils import tidy_content
 
@@ -1345,27 +1344,22 @@ Full traceback:
                 if len(url) > 1:
                     if url.startswith(settings.SITE_URL):
                         return url
-                    elif (url[0] == '/' and url[1] != '/'):
+                    elif url[0] == '/' and url[1] != '/':
                         return url
-                elif (len(url) == 1 and url[0] == '/'):
+                elif len(url) == 1 and url[0] == '/':
                     return url
                 else:
                     return None
 
     def redirect_document(self):
-        """If I am a redirect to a Document, return that Document.
+        """
+        If I am a redirect to a Document, return that Document.
 
         Otherwise, return None.
-
         """
         url = self.redirect_url()
         if url:
             return self.from_url(url)
-
-    def filter_permissions(self, user, permissions):
-        """Filter permissions with custom logic"""
-        # No-op, for now.
-        return permissions
 
     def get_topic_parents(self):
         """Build a list of parent topics from self to root"""
@@ -1379,11 +1373,11 @@ Full traceback:
         return self.get_topic_parents()
 
     def allows_revision_by(self, user):
-        """Return whether `user` is allowed to create new revisions of me.
+        """
+        Return whether `user` is allowed to create new revisions of me.
 
         The motivation behind this method is that templates and other types of
         docs may have different permissions.
-
         """
         if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.change_template_document')):
@@ -1391,12 +1385,12 @@ Full traceback:
         return True
 
     def allows_editing_by(self, user):
-        """Return whether `user` is allowed to edit document-level metadata.
+        """
+        Return whether `user` is allowed to edit document-level metadata.
 
         If the Document doesn't have a current_revision (nothing approved) then
         all the Document fields are still editable. Once there is an approved
         Revision, the Document fields can only be edited by privileged users.
-
         """
         if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.change_template_document')):
@@ -1405,10 +1399,10 @@ Full traceback:
                 user.has_perm('wiki.change_document'))
 
     def translated_to(self, locale):
-        """Return the translation of me to the given locale.
+        """
+        Return the translation of me to the given locale.
 
         If there is no such Document, return None.
-
         """
         if self.locale != settings.WIKI_DEFAULT_LANGUAGE:
             raise NotImplementedError('translated_to() is implemented only on'
@@ -1421,12 +1415,16 @@ Full traceback:
 
     @property
     def original(self):
-        """Return the document I was translated from or, if none, myself."""
+        """
+        Return the document I was translated from or, if none, myself.
+        """
         return self.parent or self
 
     @cached_property
     def other_translations(self):
-        """Return a list of Documents - other translations of this Document"""
+        """
+        Return a list of Documents - other translations of this Document
+        """
         if self.parent is None:
             return self.translations.all().order_by('locale')
         else:
@@ -1438,8 +1436,10 @@ Full traceback:
 
     @property
     def parents(self):
-        """Return the list of topical parent documents above this one,
-        or an empty list if none exist."""
+        """
+        Return the list of topical parent documents above this one,
+        or an empty list if none exist.
+        """
         if self.parent_topic is None:
             return []
         current_parent = self.parent_topic
@@ -1476,7 +1476,9 @@ Full traceback:
         return results
 
     def has_voted(self, request):
-        """Did the user already vote for this document?"""
+        """
+        Did the user already vote for this document?
+        """
         if request.user.is_authenticated():
             qs = HelpfulVote.objects.filter(document=self,
                                             creator=request.user)
@@ -1490,12 +1492,11 @@ Full traceback:
         return qs.exists()
 
     def is_watched_by(self, user):
-        """Return whether `user` is notified of edits to me."""
+        """
+        Return whether `user` is notified of edits to me.
+        """
         from .events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
-
-    def get_document_type(self):
-        return WikiDocumentType
 
     @cached_property
     def contributors(self):
@@ -1730,7 +1731,9 @@ class Revision(models.Model):
             self.make_current()
 
     def make_current(self):
-        """Make this revision the current one for the document"""
+        """
+        Make this revision the current one for the document
+        """
         self.document.title = self.title
         self.document.slug = self.slug
         self.document.html = self.content_cleaned

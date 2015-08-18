@@ -793,8 +793,6 @@ class ContentSectionToolTests(UserTestCase):
 
     def test_link_annotation(self):
         d, r = doc_rev("This document exists")
-        d.save()
-        r.save()
 
         document(title=u'Héritée', locale=u'fr', slug=u'CSS/Héritage',
                  save=True)

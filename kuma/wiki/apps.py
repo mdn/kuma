@@ -94,9 +94,12 @@ class WikiConfig(AppConfig):
         - trigger the cache invalidation of the contributor bar for the given
           document
         """
+        # cleanup document zones
         async = kwargs.get('async', True)
         invalidate_zone_urls_cache(instance, async=async)
         invalidate_zone_stack_cache(instance, async=async)
+
+        # refresh the document's contributor bar data
         DocumentContributorsJob().invalidate(instance.pk)
 
     def on_zone_save(self, sender, instance, **kwargs):
