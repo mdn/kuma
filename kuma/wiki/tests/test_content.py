@@ -12,12 +12,11 @@ from kuma.core.tests import KumaTestCase, eq_, ok_
 from kuma.users.tests import UserTestCase
 
 from . import doc_rev, document, normalize_html
+
 from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_TAGS
 from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
                        H3TOCFilter, SectionIDFilter, SectionTOCFilter,
-                       extract_css_classnames, extract_html_attributes,
-                       extract_kumascript_macro_names, get_content_sections,
-                       get_seo_description)
+                       get_content_sections, get_seo_description)
 from ..models import Document
 from ..templatetags.jinja_helpers import bugize_text
 
@@ -1056,42 +1055,45 @@ class AllowedHTMLTests(KumaTestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class SearchParserTests(KumaTestCase):
-    """Tests for document parsers that extract content for search indexing"""
+class ExtractorTests(UserTestCase):
+    """Tests for document parsers that extract content"""
 
     def test_css_classname_extraction(self):
         expected = ('foobar', 'barfoo', 'bazquux')
-        content = """
+        doc, rev = doc_rev("""
             <p class="%s">Test</p>
             <p class="%s">Test</p>
             <div class="%s">Test</div>
-        """ % expected
-        result = extract_css_classnames(content)
+        """ % expected)
+        doc.render()
+        result = doc.extract.css_classnames()
         eq_(sorted(expected), sorted(result))
 
     def test_html_attribute_extraction(self):
         expected = (
             'class="foobar"',
             'id="frazzy"',
-            'data-boof="farb"'
+            'lang="farb"',
         )
-        content = """
+        doc, rev = doc_rev("""
             <p %s>Test</p>
             <p %s>Test</p>
             <div %s>Test</div>
-        """ % expected
-        result = extract_html_attributes(content)
+        """ % expected)
+        doc.render()
+        doc = Document.objects.get(pk=doc.pk)
+        result = doc.extract.html_attributes()
         eq_(sorted(expected), sorted(result))
 
     def test_kumascript_macro_extraction(self):
         expected = ('foobar', 'barfoo', 'bazquux', 'banana')
-        content = """
+        doc, rev = doc_rev("""
             <p>{{ %s }}</p>
             <p>{{ %s("foo", "bar", "baz") }}</p>
             <p>{{ %s    ("quux") }}</p>
             <p>{{%s}}</p>
-        """ % expected
-        result = extract_kumascript_macro_names(content)
+        """ % expected)
+        result = doc.extract.macro_names()
         eq_(sorted(expected), sorted(result))
 
 
