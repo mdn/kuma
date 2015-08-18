@@ -43,7 +43,6 @@ from .jobs import DocumentContributorsJob, DocumentZoneStackJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
-from .search import WikiDocumentType
 from .signals import render_done
 from .templatetags.jinja_helpers import absolutify
 from .utils import tidy_content
@@ -1361,11 +1360,6 @@ Full traceback:
                 elif len(url) == 1 and url[0] == '/':
                     return url
 
-    def filter_permissions(self, user, permissions):
-        """Filter permissions with custom logic"""
-        # No-op, for now.
-        return permissions
-
     def get_topic_parents(self):
         """Build a list of parent topics from self to root"""
         curr, parents = self, []
@@ -1417,12 +1411,16 @@ Full traceback:
 
     @property
     def original(self):
-        """Return the document I was translated from or, if none, myself."""
+        """
+        Return the document I was translated from or, if none, myself.
+        """
         return self.parent or self
 
     @cached_property
     def other_translations(self):
-        """Return a list of Documents - other translations of this Document"""
+        """
+        Return a list of Documents - other translations of this Document
+        """
         if self.parent is None:
             return self.translations.all().order_by('locale')
         else:
@@ -1434,8 +1432,10 @@ Full traceback:
 
     @property
     def parents(self):
-        """Return the list of topical parent documents above this one,
-        or an empty list if none exist."""
+        """
+        Return the list of topical parent documents above this one,
+        or an empty list if none exist.
+        """
         if self.parent_topic is None:
             return []
         current_parent = self.parent_topic
@@ -1472,7 +1472,9 @@ Full traceback:
         return results
 
     def is_watched_by(self, user):
-        """Return whether `user` is notified of edits to me."""
+        """
+        Return whether `user` is notified of edits to me.
+        """
         from .events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
 
@@ -1487,9 +1489,6 @@ Full traceback:
         given user.
         """
         return [doc for doc in self.parents if doc.tree_is_watched_by(user)]
-
-    def get_document_type(self):
-        return WikiDocumentType
 
     @cached_property
     def contributors(self):
@@ -1727,7 +1726,9 @@ class Revision(models.Model):
             self.make_current()
 
     def make_current(self):
-        """Make this revision the current one for the document"""
+        """
+        Make this revision the current one for the document
+        """
         self.document.title = self.title
         self.document.slug = self.slug
         self.document.html = self.content_cleaned

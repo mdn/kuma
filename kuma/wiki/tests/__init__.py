@@ -132,17 +132,19 @@ def new_document_data(tags=None):
     }
 
 
+class WhitespaceRemovalFilter(html5lib_Filter):
+    def __iter__(self):
+        for token in html5lib_Filter.__iter__(self):
+            if 'SpaceCharacters' == token['type']:
+                continue
+            yield token
+
+
 def normalize_html(input):
-    """Normalize HTML5 input, discarding parts not significant for
-    equivalence in tests"""
-
-    class WhitespaceRemovalFilter(html5lib_Filter):
-        def __iter__(self):
-            for token in html5lib_Filter.__iter__(self):
-                if 'SpaceCharacters' == token['type']:
-                    continue
-                yield token
-
+    """
+    Normalize HTML5 input, discarding parts not significant for
+    equivalence in tests
+    """
     return (kuma.wiki.content
             .parse(unicode(input))
             .filter(WhitespaceRemovalFilter)
