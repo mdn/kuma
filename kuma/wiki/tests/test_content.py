@@ -14,9 +14,7 @@ import kuma.wiki.content
 from ..constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
 from ..content import (CodeSyntaxFilter, SectionTOCFilter, SectionIDFilter,
                        H2TOCFilter, H3TOCFilter, SECTION_TAGS,
-                       get_seo_description, get_content_sections,
-                       extract_css_classnames, extract_html_attributes,
-                       extract_kumascript_macro_names)
+                       get_seo_description, get_content_sections)
 from ..helpers import bugize_text
 from ..models import Document
 from . import normalize_html, doc_rev, document
@@ -588,7 +586,7 @@ class ContentSectionToolTests(UserTestCase):
         sample_js = u"""
             window.alert("Hi there!");
         """
-        doc_src = u"""
+        doc, rev = doc_rev(u"""
             <p>This is a page. Deal with it.</p>
 
             <h3 id="sample0">This is a section</h3>
@@ -632,7 +630,7 @@ class ContentSectionToolTests(UserTestCase):
             </div>
 
             <p>Yadda yadda</p>
-        """ % (escape(sample_html), escape(sample_css), escape(sample_js))
+        """ % (escape(sample_html), escape(sample_css), escape(sample_js)))
 
         # live sample using the section logic
         result = kuma.wiki.content.extract_code_sample('sample0', doc_src)
@@ -669,7 +667,7 @@ class ContentSectionToolTests(UserTestCase):
         Non-breaking spaces are turned to normal spaces in code sample
         extraction.
         """
-        doc_src = """
+        doc, rev = doc_rev("""
             <h2 id="bug819999">Bug 819999</h2>
             <pre class="brush: css">
             .widget select,
@@ -1044,42 +1042,45 @@ class AllowedHTMLTests(KumaTestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class SearchParserTests(KumaTestCase):
-    """Tests for document parsers that extract content for search indexing"""
+class ExtractorTests(UserTestCase):
+    """Tests for document parsers that extract content"""
 
     def test_css_classname_extraction(self):
         expected = ('foobar', 'barfoo', 'bazquux')
-        content = """
+        doc, rev = doc_rev("""
             <p class="%s">Test</p>
             <p class="%s">Test</p>
             <div class="%s">Test</div>
-        """ % expected
-        result = extract_css_classnames(content)
+        """ % expected)
+        doc.render()
+        result = doc.extract.css_classnames()
         eq_(sorted(expected), sorted(result))
 
     def test_html_attribute_extraction(self):
         expected = (
             'class="foobar"',
             'id="frazzy"',
-            'data-boof="farb"'
+            'lang="farb"',
         )
-        content = """
+        doc, rev = doc_rev("""
             <p %s>Test</p>
             <p %s>Test</p>
             <div %s>Test</div>
-        """ % expected
-        result = extract_html_attributes(content)
+        """ % expected)
+        doc.render()
+        doc = Document.objects.get(pk=doc.pk)
+        result = doc.extract.html_attributes()
         eq_(sorted(expected), sorted(result))
 
     def test_kumascript_macro_extraction(self):
         expected = ('foobar', 'barfoo', 'bazquux', 'banana')
-        content = """
+        doc, rev = doc_rev("""
             <p>{{ %s }}</p>
             <p>{{ %s("foo", "bar", "baz") }}</p>
             <p>{{ %s    ("quux") }}</p>
             <p>{{%s}}</p>
-        """ % expected
-        result = extract_kumascript_macro_names(content)
+        """ % expected)
+        result = doc.extract.macro_names()
         eq_(sorted(expected), sorted(result))
 
 

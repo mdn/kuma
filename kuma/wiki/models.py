@@ -42,10 +42,8 @@ from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         KUMA_FILE_URL, REDIRECT_CONTENT, REDIRECT_HTML,
                         TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
-from .content import (extract_code_sample, extract_css_classnames,
-                      extract_html_attributes, extract_kumascript_macro_names,
-                      get_content_sections, get_seo_description, H2TOCFilter,
-                      H3TOCFilter, SectionTOCFilter)
+from .content import (Extractor, get_content_sections, get_seo_description,
+                      H2TOCFilter, H3TOCFilter, SectionTOCFilter)
 from .jobs import DocumentZoneStackJob, DocumentContributorsJob
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
@@ -375,12 +373,6 @@ class Document(NotificationsMixin, models.Model):
             if src:
                 return src
 
-    def extract_section(self, content, section_id, ignore_heading=False):
-        parsed_content = parse_content(content)
-        extracted = parsed_content.extractSection(section_id,
-                                                  ignore_heading=ignore_heading)
-        return extracted.serialize()
-
     def get_section_content(self, section_id, ignore_heading=True):
         """
         Convenience method to extract the rendered content for a single section
@@ -389,14 +381,14 @@ class Document(NotificationsMixin, models.Model):
             content = self.rendered_html
         else:
             content = self.html
-        return self.extract_section(content, section_id, ignore_heading)
+        return self.extract.section(content, section_id, ignore_heading)
 
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""
         if not section_id:
             content = self.html
         else:
-            content = self.extract_section(self.html, section_id)
+            content = self.extract.section(self.html, section_id)
         return '"%s"' % hashlib.sha1(content.encode('utf8')).hexdigest()
 
     def current_or_latest_revision(self):
@@ -699,14 +691,9 @@ class Document(NotificationsMixin, models.Model):
             src = self.html
         return extract_code_sample(id, src)
 
-    def extract_kumascript_macro_names(self):
-        return extract_kumascript_macro_names(self.html)
-
-    def extract_css_classnames(self):
-        return extract_css_classnames(self.rendered_html)
-
-    def extract_html_attributes(self):
-        return extract_html_attributes(self.rendered_html)
+    @cached_property
+    def extract(self):
+        return Extractor(self)
 
     def natural_key(self):
         return (self.locale, self.slug)
@@ -1763,7 +1750,7 @@ class Revision(models.Model):
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
-        return self.document.extract_section(self.content, section_id)
+        return self.document.extract.section(self.content, section_id)
 
     def get_tidied_content(self):
         """

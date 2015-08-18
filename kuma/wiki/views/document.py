@@ -490,13 +490,13 @@ def _document_raw(request, doc, doc_html, rendering_params):
     return _set_common_headers(doc, rendering_params['section'], response)
 
 
+@newrelic.agent.function_trace()
 @csrf_exempt
 @require_http_methods(['GET', 'PUT', 'HEAD'])
 @allow_CORS_GET
 @accepts_auth_key
 @process_document_path
 @condition(last_modified_func=document_last_modified)
-@newrelic.agent.function_trace()
 def document(request, document_slug, document_locale):
     """
     View a wiki document.

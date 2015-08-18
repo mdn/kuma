@@ -10,8 +10,9 @@ from html5lib.filters._base import Filter as html5lib_Filter
 import newrelic.agent
 from lxml import etree
 from pyquery import PyQuery as pq
-
 from tower import ugettext as _
+
+from django.utils.text import unescape_string_literal
 
 from kuma.core.urlresolvers import reverse
 from .utils import locale_and_slug_from_path
@@ -48,6 +49,76 @@ TAGS_IN_TOC = ('code')
 # purposes of link annotation. Doesn't include everything from urls.py, but
 # just the likely candidates for links.
 DOC_SPECIAL_PATHS = ('new', 'tag', 'feeds', 'templates', 'needs-review')
+
+
+class Extractor(object):
+
+    def __init__(self, document):
+        self.document = document
+
+    def section(self, content, section_id, ignore_heading=False):
+        parsed_content = parse(content)
+        extracted = parsed_content.extractSection(section_id,
+                                                  ignore_heading=ignore_heading)
+        return extracted.serialize()
+
+    @newrelic.agent.function_trace()
+    def macro_names(self):
+        """
+        Extract a unique set of KumaScript macro names used in the content
+        """
+        names = set()
+        try:
+            txt = []
+            for token in parse(self.document.html).stream:
+                if token['type'] in ('Characters', 'SpaceCharacters'):
+                    txt.append(token['data'])
+            txt = ''.join(txt)
+            names.update(MACRO_RE.findall(txt))
+        except:
+            pass
+        return list(names)
+
+    @newrelic.agent.function_trace()
+    def macro_parameters(self, macro_name):
+        """
+        Extra a list of parameters passed to the macro with the given name.
+        """
+        matches = re.findall(r'\{\{\s*%s\s*\(([\s\S]*?)\)\s*\}\}' % macro_name,
+                             self.document.html,
+                             re.MULTILINE | re.UNICODE)
+        results = []
+        for match in matches:
+            results.append([unescape_string_literal(part.strip())
+                            for part in match.split(',')])
+        return results
+
+    @newrelic.agent.function_trace()
+    def css_classnames(self):
+        """
+        Extract the unique set of class names used in the content
+        """
+        classnames = set()
+        for element in pq(self.document.rendered_html).find('*'):
+            css_classes = element.attrib.get('class')
+            if css_classes:
+                classnames.update(css_classes.split(' '))
+        return list(classnames)
+
+    @newrelic.agent.function_trace()
+    def html_attributes(self):
+        """
+        Extract the unique set of HTML attributes used in the content
+        """
+        try:
+            attribs = []
+            for token in parse(self.document.rendered_html).stream:
+                if token['type'] == 'StartTag':
+                    for (namespace, name), value in token['data'].items():
+                        attribs.append((name, value))
+            return ['%s="%s"' % (k, v) for k, v in attribs]
+        except:
+            return []
 
 
 @newrelic.agent.function_trace()
@@ -192,53 +263,6 @@ def extract_code_sample(id, src):
             data[part] = src
 
     return data
-
-
-@newrelic.agent.function_trace()
-def extract_css_classnames(content):
-    """
-    Extract the unique set of class names used in the content
-    """
-    classnames = set()
-    for element in pq(content).find('*'):
-        css_classes = element.attrib.get('class')
-        if css_classes:
-            classnames.update(css_classes.split(' '))
-    return list(classnames)
-
-
-@newrelic.agent.function_trace()
-def extract_html_attributes(content):
-    """
-    Extract the unique set of HTML attributes used in the content
-    """
-    try:
-        attribs = []
-        for token in parse(content).stream:
-            if token['type'] == 'StartTag':
-                for (namespace, name), value in token['data'].items():
-                    attribs.append((name, value))
-        return ['%s="%s"' % (k, v) for k, v in attribs]
-    except:
-        return []
-
-
-@newrelic.agent.function_trace()
-def extract_kumascript_macro_names(content):
-    """
-    Extract a unique set of KumaScript macro names used in the content
-    """
-    names = set()
-    try:
-        txt = []
-        for token in parse(content).stream:
-            if token['type'] in ('Characters', 'SpaceCharacters'):
-                txt.append(token['data'])
-        txt = ''.join(txt)
-        names.update(MACRO_RE.findall(txt))
-    except:
-        pass
-    return list(names)
 
 
 class ContentSectionTool(object):
