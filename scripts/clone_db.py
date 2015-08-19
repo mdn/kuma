@@ -18,11 +18,25 @@ from textwrap import dedent
 from optparse import OptionParser
 
 #
-# We don't just dump everything, because every new table needs to be reviewed
-# with regards to santizing.
-#
 # Whenever a new table is created, add appropriate steps to anonymize.sql and
-# then add the table here.
+# then add the table here.  anonymize.sql may be run independantly, instead of
+# this script, so make sure anonymize.sql performs sanitization as well.
+#
+# To remove a table from the anonymized database:
+# Remove it from TABLES_TO_DUMP
+# Add DROP TABLE IF EXISTS {table name}; to anonymize.sql
+#
+# To ensure an empty table in the anonymized database:
+# Add to TABLES_TO_DUMP
+# Add TRUNCATE {table name}; to anonymize.sql
+#
+# To anonymize records:
+# Add to TABLES_TO_DUMP
+# Add UPDATE {table name} ...; to anonymize.sql
+#
+# To keep production records:
+# Add to TABLES_TO_DUMP
+# Add a comment to anonymize.sql so future devs know you considered the table
 #
 TABLES_TO_DUMP=[x.strip() for x in """
     account_emailaddress
