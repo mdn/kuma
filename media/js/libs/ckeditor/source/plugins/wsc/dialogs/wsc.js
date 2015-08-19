@@ -909,17 +909,22 @@
 
 		},
 		ReplaceText: function(response) {
+
 			delete response.id;
 			NS.div_overlay.setEnable();
 
 			NS.dataTemp = response.text;
 			NS.selectingLang = response.currentLang;
 
-			window.setTimeout(function() {
-				try {
-					NS.div_overlay.setDisable();
-				} catch(e) {}
-			}, 500);
+			if (response.cmd = 'spell' && response.len !== '0' && response.len) {
+				NS.div_overlay.setDisable();
+			} else {
+				window.setTimeout(function() {
+					try {
+						NS.div_overlay.setDisable();
+					} catch(e) {}
+				}, 500);
+			}
 
 			SetLocalizationButton(NS.LocalizationButton);
 			SetLocalizationLabel(NS.LocalizationLabel);
@@ -1366,7 +1371,6 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 				new_word = NS.textNode[currentTabId].getValue(),
 				cmd = this.getElement().getAttribute("title-cmd");
 
-
 			appTools.postMessage.send({
 				'message': {
 					'cmd': cmd,
@@ -1777,9 +1781,9 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 
 			editor.lockSelection(editor.getSelection());
 
-			NS.TextAreaNumber = 'cke_textarea_' + CKEDITOR.currentInstance.name;
+			NS.TextAreaNumber = 'cke_textarea_' + editor.name;
 			appTools.postMessage.init(handlerIncomingData);
-			NS.dataTemp = CKEDITOR.currentInstance.getData();
+			NS.dataTemp = editor.getData();
 			//NS.div_overlay.setDisable();
 			NS.OverlayPlace = NS.dialog.parts.tabs.getParent().$;
 			if(CKEDITOR && CKEDITOR.config){

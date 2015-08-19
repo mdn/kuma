@@ -37,7 +37,7 @@ CKEDITOR.plugins.add('scayt', {
 				// check if scayt is created
 				if(editor.scayt) {
 					// check if scayt is enabled
-					if(plugin.state[editor.name]) {
+					if(plugin.state.scayt[editor.name]) {
 						buttonState = CKEDITOR.TRISTATE_ON;
 					} else {
 						buttonState = CKEDITOR.TRISTATE_OFF;
@@ -58,7 +58,7 @@ CKEDITOR.plugins.add('scayt', {
 			onMenu : function() {
 				var scaytInstance = editor.scayt;
 
-				editor.getMenuItem('scaytToggle').label = editor.lang.scayt[(scaytInstance ? plugin.state[editor.name] : false) ? 'btn_disable' : 'btn_enable'];
+				editor.getMenuItem('scaytToggle').label = editor.lang.scayt[(scaytInstance ? plugin.state.scayt[editor.name] : false) ? 'btn_disable' : 'btn_enable'];
 
 				// If UI tab is disabled we shouldn't show menu item
 				var menuDefinition = {
@@ -89,23 +89,15 @@ CKEDITOR.plugins.add('scayt', {
 		// If the 'contextmenu' plugin is loaded, register the listeners.
 		if(editor.contextMenu && editor.addMenuItems) {
 			editor.contextMenu.addListener(function(element, selection) {
-				var scaytInstance = editor.scayt;
-				var result;
+				var scaytInstance = editor.scayt,
+					result, selectionNode;
 
 				if(scaytInstance) {
-					// TODO: implement right lang getter
-					var selectionNode = scaytInstance.getSelectionNode(),
-						word;
+					selectionNode = scaytInstance.getSelectionNode();
 
+					// SCAYT shouldn't build context menu if instance isnot created or word is without misspelling or grammar problem
 					if(selectionNode) {
-						word = selectionNode.getAttribute(scaytInstance.getNodeAttribute());
-					} else {
-						word = selectionNode;
-					}
-
-					// SCAYT shouldn't build context menu if instance isnot created or word is without misspelling
-					if(word) {
-						var items = self.menuGenerator(editor, word, self);
+						var items = self.menuGenerator(editor, selectionNode);
 
 						scaytInstance.showBanner('.' + editor.contextMenu._.definition.panel.className.split(' ').join(' .'));
 						result = items;
@@ -131,15 +123,21 @@ CKEDITOR.plugins.add('scayt', {
 	addMenuItems: function(editor) {
 		var self = this,
 			plugin = CKEDITOR.plugins.scayt,
+			graytGroups = ['grayt_description', 'grayt_suggest', 'grayt_control'],
 			menuGroup = 'scaytButton';
 
 		editor.addMenuGroup(menuGroup);
 
 		var items_order = editor.config.scayt_contextMenuItemsOrder.split('|');
 
+		for(var pos = 0 ; pos < items_order.length ; pos++) {
+			items_order[pos] = 'scayt_' + items_order[pos];
+		}
+		items_order = graytGroups.concat(items_order);
+
 		if(items_order && items_order.length) {
 			for(var pos = 0 ; pos < items_order.length ; pos++) {
-				editor.addMenuGroup('scayt_' + items_order[pos], pos - 10);
+				editor.addMenuGroup(items_order[pos], pos - 10);
 			}
 		}
 
@@ -147,9 +145,9 @@ CKEDITOR.plugins.add('scayt', {
 			exec: function(editor) {
 				var scaytInstance = editor.scayt;
 
-				plugin.state[editor.name] = !plugin.state[editor.name];
+				plugin.state.scayt[editor.name] = !plugin.state.scayt[editor.name];
 
-				if(plugin.state[editor.name] === true) {
+				if(plugin.state.scayt[editor.name] === true) {
 					if(!scaytInstance) {
 						plugin.createScayt(editor);
 					}
@@ -242,7 +240,7 @@ CKEDITOR.plugins.add('scayt', {
 					text = text.replace(/\s/g, '');
 
 					if(text) {
-						if(scaytInstance && plugin.state[editor.name] && scaytInstance.setMarkupPaused) {
+						if(scaytInstance && plugin.state.scayt[editor.name] && scaytInstance.setMarkupPaused) {
 							scaytInstance.setMarkupPaused(true);
 						}
 
@@ -268,7 +266,7 @@ CKEDITOR.plugins.add('scayt', {
 
 		var contentDomReady = function() {
 			// The event is fired when editable iframe node was reinited so we should restart our service
-			if (plugin.state[editor.name] && !editor.readOnly && !editor.scayt) {
+			if (plugin.state.scayt[editor.name] && !editor.readOnly && !editor.scayt) {
 				plugin.createScayt(editor);
 			}
 		};
@@ -281,7 +279,7 @@ CKEDITOR.plugins.add('scayt', {
 					setTimeout(contentDomReady, 0); // we need small timeout in order to correctly set initial 'focused' option value in SCAYT core
 				}
 
-				var pluginStatus = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state[editor.name] && editor.scayt,
+				var pluginStatus = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state.scayt[editor.name] && editor.scayt,
 					selectedElement, ranges, textLength, range;
 
 				if((inline_mode ? true : pluginStatus) && editor._.savedSelection) {
@@ -323,21 +321,47 @@ CKEDITOR.plugins.add('scayt', {
 		editor.on('contentDom', contentDomHandler);
 
 		editor.on('beforeCommandExec', function(ev) {
-			var scaytInstance;
+			var scaytInstance = editor.scayt,
+				forceBookmark = false,
+				removeMarkupInsideSelection = true;
 
 			// TODO: after switching in source mode not recreate SCAYT instance, try to just rerun markuping to don't make requests to server
 			if(ev.data.name in plugin.options.disablingCommandExec && editor.mode == 'wysiwyg') {
-				scaytInstance = editor.scayt;
 				if(scaytInstance) {
 					plugin.destroy(editor);
 					editor.fire('scaytButtonState', CKEDITOR.TRISTATE_DISABLED);
 				}
-			} else if(ev.data.name === 'bold' || ev.data.name === 'italic' || ev.data.name === 'underline' || ev.data.name === 'strike' || ev.data.name === 'subscript' || ev.data.name === 'superscript' || ev.data.name === 'enter') {
-				scaytInstance = editor.scayt;
+			} else if(	ev.data.name === 'bold' || ev.data.name === 'italic' || ev.data.name === 'underline' ||
+						ev.data.name === 'strike' || ev.data.name === 'subscript' || ev.data.name === 'superscript' ||
+						ev.data.name === 'enter' || ev.data.name === 'cut') {
 				if(scaytInstance) {
-					scaytInstance.removeMarkupInSelectionNode();
+					if(ev.data.name === 'cut') {
+						removeMarkupInsideSelection = false;
+						// We need to force bookmark before we remove our markup.
+						// Otherwise we will get issues with cutting text via context menu.
+						forceBookmark = true;
+					}
+					scaytInstance.removeMarkupInSelectionNode({
+						removeInside: removeMarkupInsideSelection,
+						forceBookmark: forceBookmark
+					});
+
 					setTimeout(function() {
-						scaytInstance.fire('startSpellCheck');
+						scaytInstance.fire('startSpellCheck, startGrammarCheck');
+					}, 0);
+				}
+			}
+
+			// We need to remove all SCAYT markup from 'lang' node before it will be deleted.
+			// We need to remove SCAYT markup from selected text before creating 'lang' node as well.
+			if(ev.data.name === 'language') {
+				var selectedLangElement = editor.plugins.language.getCurrentLangElement(editor);
+
+				if(scaytInstance) {
+					scaytInstance.removeMarkupInSelectionNode({selectionNode: selectedLangElement && selectedLangElement.$});
+
+					setTimeout(function() {
+						scaytInstance.fire('startSpellCheck, startGrammarCheck');
 					}, 0);
 				}
 			}
@@ -364,13 +388,12 @@ CKEDITOR.plugins.add('scayt', {
 		});
 
 		editor.on('afterCommandExec', function(ev) {
-			var scaytInstance;
+			var scaytInstance = editor.scayt;
 
 			if(editor.mode == 'wysiwyg' && (ev.data.name == 'undo' || ev.data.name == 'redo')) {
-				scaytInstance = editor.scayt;
 				if(scaytInstance) {
 					setTimeout(function() {
-						scaytInstance.fire('startSpellCheck');
+						scaytInstance.fire('startSpellCheck, startGrammarCheck');
 					}, 250);
 				}
 			}
@@ -389,8 +412,8 @@ CKEDITOR.plugins.add('scayt', {
 					}
 				} else {
 					if(scaytInstance) {
-						scaytInstance.fire('startSpellCheck');
-					} else if(ev.editor.mode == 'wysiwyg' && plugin.state[ev.editor.name] === true) {
+						scaytInstance.fire('startSpellCheck, startGrammarCheck');
+					} else if(ev.editor.mode == 'wysiwyg' && plugin.state.scayt[ev.editor.name] === true) {
 						plugin.createScayt(editor);
 						ev.editor.fire('scaytButtonState', CKEDITOR.TRISTATE_ON);
 					}
@@ -417,7 +440,7 @@ CKEDITOR.plugins.add('scayt', {
 
 			if (scaytInstance) {
 				scaytInstance.removeMarkupInSelectionNode();
-				scaytInstance.fire('startSpellCheck');
+				scaytInstance.fire('startSpellCheck, startGrammarCheck');
 			}
 		}
 
@@ -461,7 +484,8 @@ CKEDITOR.plugins.add('scayt', {
 		}, null, null, 0);
 	},
 	parseConfig: function(editor) {
-		var plugin = CKEDITOR.plugins.scayt;
+		var plugin = CKEDITOR.plugins.scayt,
+			inlineMode = (editor.elementMode == CKEDITOR.ELEMENT_MODE_INLINE);
 
 		// preprocess config for backward compatibility
 		plugin.replaceOldOptionsNames(editor.config);
@@ -470,7 +494,12 @@ CKEDITOR.plugins.add('scayt', {
 		if(typeof editor.config.scayt_autoStartup !== 'boolean') {
 			editor.config.scayt_autoStartup = false;
 		}
-		plugin.state[editor.name] = editor.config.scayt_autoStartup;
+		plugin.state.scayt[editor.name] = editor.config.scayt_autoStartup;
+
+		if(typeof editor.config.grayt_autoStartup !== 'boolean' || inlineMode || editor.plugins.divarea) {
+			editor.config.grayt_autoStartup = false;
+		}
+		plugin.state.grayt[editor.name] = editor.config.grayt_autoStartup;
 
 		if(!editor.config.scayt_contextCommands) {
 			editor.config.scayt_contextCommands = 'ignore|ignoreall|add';
@@ -500,7 +529,7 @@ CKEDITOR.plugins.add('scayt', {
 			editor.config.scayt_userDictionaryName = null;
 		}
 
-		if (typeof editor.config.scayt_uiTabs === 'string' && editor.config.scayt_uiTabs.split(',').length === 3) {
+		if(typeof editor.config.scayt_uiTabs === 'string' && editor.config.scayt_uiTabs.split(',').length === 3) {
 			var scayt_uiTabs = [], _tempUITabs = [];
 			editor.config.scayt_uiTabs = editor.config.scayt_uiTabs.split(',');
 
@@ -562,6 +591,14 @@ CKEDITOR.plugins.add('scayt', {
 			CKEDITOR.config.scayt_handleUndoRedo = true;
 		}
 
+		if(typeof editor.config.scayt_multiLanguageMode !== 'boolean') {
+			editor.config.scayt_multiLanguageMode = false;
+		}
+
+		if(typeof editor.config.scayt_multiLanguageStyles !== 'object') {
+			editor.config.scayt_multiLanguageStyles = {};
+		}
+
 		if( editor.config.scayt_disableOptionsStorage ) {
 			var userOptions = CKEDITOR.tools.isArray( editor.config.scayt_disableOptionsStorage ) ? editor.config.scayt_disableOptionsStorage : ( typeof editor.config.scayt_disableOptionsStorage === 'string' ) ? [ editor.config.scayt_disableOptionsStorage ] : undefined,
 				availableValue = [ 'all', 'options', 'lang', 'ignore-all-caps-words', 'ignore-domain-names', 'ignore-words-with-mixed-cases', 'ignore-words-with-numbers'],
@@ -606,25 +643,24 @@ CKEDITOR.plugins.add('scayt', {
 		}
 	},
 	addRule: function(editor) {
-		var dataProcessor = editor.dataProcessor,
+		var plugin = CKEDITOR.plugins.scayt,
+			dataProcessor = editor.dataProcessor,
 			htmlFilter = dataProcessor && dataProcessor.htmlFilter,
 			pathFilters = editor._.elementsPath && editor._.elementsPath.filters,
 			dataFilter = dataProcessor && dataProcessor.dataFilter,
 			removeFormatFilter = editor.addRemoveFormatFilter,
-			scaytFilter = function scaytFilter(element) {
-				var plugin = CKEDITOR.plugins.scayt,
-					scaytInstance = editor.scayt;
+			pathFilter = function(element) {
+				var scaytInstance = editor.scayt;
 
-				if(scaytInstance && element.hasAttribute(plugin.options.data_attribute_name)) {
+				if( scaytInstance && (element.hasAttribute(plugin.options.data_attribute_name) || element.hasAttribute(plugin.options.problem_grammar_data_attribute)) ) {
 					return false;
 				}
 			},
 			removeFormatFilterTemplate = function(element) {
-				var plugin = CKEDITOR.plugins.scayt,
-					scaytInstance = editor.scayt,
+				var scaytInstance = editor.scayt,
 					result = true;
 
-				if(scaytInstance && element.hasAttribute(plugin.options.data_attribute_name)) {
+				if( scaytInstance && (element.hasAttribute(plugin.options.data_attribute_name) || element.hasAttribute(plugin.options.problem_grammar_data_attribute)) ) {
 					result = false;
 				}
 
@@ -632,23 +668,27 @@ CKEDITOR.plugins.add('scayt', {
 			};
 
 		if(pathFilters) {
-			pathFilters.push(scaytFilter);
+			pathFilters.push(pathFilter);
 		}
 
 		if(dataFilter) {
 			var dataFilterRules = {
 				elements: {
 					span: function(element) {
+						var scaytState = plugin.state.scayt[editor.name],
+							graytState = plugin.state.grayt[editor.name];
 
-						var plugin = CKEDITOR.plugins.scayt;
-
-						if(plugin && plugin.state[editor.name] && element.classes && CKEDITOR.tools.search(element.classes, plugin.options.misspelled_word_class)) {
+						if( plugin && element.classes && (
+							  (scaytState && CKEDITOR.tools.search(element.classes, plugin.options.misspelled_word_class)) ||
+							  (graytState && CKEDITOR.tools.search(element.classes, plugin.options.problem_grammar_class))
+						  ) ) {
 
 							if (element.classes && element.parent.type === CKEDITOR.NODE_DOCUMENT_FRAGMENT) {
 								delete element.attributes['style'];
 								delete element.name;
 							} else {
 								delete element.classes[CKEDITOR.tools.indexOf(element.classes, plugin.options.misspelled_word_class)];
+								delete element.classes[CKEDITOR.tools.indexOf(element.classes, plugin.options.problem_grammar_class)];
 							}
 
 						}
@@ -665,12 +705,15 @@ CKEDITOR.plugins.add('scayt', {
 			var htmlFilterRules = {
 				elements: {
 					span: function(element) {
-						var plugin = CKEDITOR.plugins.scayt;
+						var scaytState = plugin.state.scayt[editor.name] && element.hasClass(plugin.options.misspelled_word_class) && element.attributes[plugin.options.data_attribute_name],
+							graytState = plugin.state.grayt[editor.name] && element.hasClass(plugin.options.problem_grammar_class) && element.attributes[plugin.options.problem_grammar_data_attribute];
 
-						if(plugin && plugin.state[editor.name] && element.hasClass(plugin.options.misspelled_word_class) && element.attributes[plugin.options.data_attribute_name]) {
+						if(plugin && (scaytState || graytState)) {
 
 							element.removeClass(plugin.options.misspelled_word_class);
+							element.removeClass(plugin.options.problem_grammar_class);
 							delete element.attributes[plugin.options.data_attribute_name];
+							delete element.attributes[plugin.options.problem_grammar_data_attribute];
 							delete element.name;
 						}
 
@@ -690,148 +733,194 @@ CKEDITOR.plugins.add('scayt', {
 		var self = this,
 			plugin = CKEDITOR.plugins.scayt,
 			scayt_instance =  editor.scayt;
+
 		return {
-			scayt_ignore: {
-				label:  scayt_instance.getLocal('btn_ignore'),
-				group : 'scayt_control',
-				order : 1,
-				exec: function(editor) {
-					var scaytInstance = editor.scayt;
-					scaytInstance.ignoreWord();
-				}
-			},
-			scayt_ignoreall: {
-				label : scayt_instance.getLocal('btn_ignoreAll'),
-				group : 'scayt_control',
-				order : 2,
-				exec: function(editor) {
-					var scaytInstance = editor.scayt;
-					scaytInstance.ignoreAllWords();
-				}
-			},
-			scayt_add: {
-				label : scayt_instance.getLocal('btn_addWord'),
-				group : 'scayt_control',
-				order : 3,
-				exec : function(editor) {
-					var scaytInstance = editor.scayt;
-
-					// @TODO: We need to add set/restore bookmark logic to 'addWordToUserDictionary' method inside dictionarymanager.
-					// Timeout is used as tmp fix for IE9, when after hitting 'Add word' menu item, document container was blurred.
-					setTimeout(function() {
-						scaytInstance.addWordToUserDictionary();
-					}, 10);
-				}
-			},
-			option:{
-				label : scayt_instance.getLocal('btn_options'),
-				group : 'scayt_control',
-				order : 4,
-				exec: function(editor) {
-					var scaytInstance = editor.scayt;
-
-					scaytInstance.tabToOpen = 'options';
-					editor.lockSelection();
-					editor.openDialog(self.dialogName);
+			scayt: {
+				scayt_ignore: {
+					label:  scayt_instance.getLocal('btn_ignore'),
+					group : 'scayt_control',
+					order : 1,
+					exec: function(editor) {
+						var scaytInstance = editor.scayt;
+						scaytInstance.ignoreWord();
+					}
 				},
-				verification: function(editor) {
-					return (editor.config.scayt_uiTabs[0] == 1) ? true : false;
-				}
-			},
-			language: {
-				label : scayt_instance.getLocal('btn_langs'),
-				group : 'scayt_control',
-				order : 5,
-				exec: function(editor) {
-					var scaytInstance = editor.scayt;
-
-					scaytInstance.tabToOpen = 'langs';
-					editor.lockSelection();
-					editor.openDialog(self.dialogName);
+				scayt_ignoreall: {
+					label : scayt_instance.getLocal('btn_ignoreAll'),
+					group : 'scayt_control',
+					order : 2,
+					exec: function(editor) {
+						var scaytInstance = editor.scayt;
+						scaytInstance.ignoreAllWords();
+					}
 				},
-				verification: function(editor) {
-					return (editor.config.scayt_uiTabs[1] == 1) ? true : false;
-				}
-			},
-			dictionary: {
-				label : scayt_instance.getLocal('btn_dictionaries'),
-				group : 'scayt_control',
-				order : 6,
-				exec: function(editor) {
-					var scaytInstance = editor.scayt;
+				scayt_add: {
+					label : scayt_instance.getLocal('btn_addWord'),
+					group : 'scayt_control',
+					order : 3,
+					exec : function(editor) {
+						var scaytInstance = editor.scayt;
 
-					scaytInstance.tabToOpen = 'dictionaries';
-					editor.lockSelection();
-					editor.openDialog(self.dialogName);
+						// @TODO: We need to add set/restore bookmark logic to 'addWordToUserDictionary' method inside dictionarymanager.
+						// Timeout is used as tmp fix for IE9, when after hitting 'Add word' menu item, document container was blurred.
+						setTimeout(function() {
+							scaytInstance.addWordToUserDictionary();
+						}, 10);
+					}
 				},
-				verification: function(editor) {
-					return (editor.config.scayt_uiTabs[2] == 1) ? true : false;
+				scayt_option: {
+					label : scayt_instance.getLocal('btn_options'),
+					group : 'scayt_control',
+					order : 4,
+					exec: function(editor) {
+						var scaytInstance = editor.scayt;
+
+						scaytInstance.tabToOpen = 'options';
+						editor.lockSelection();
+						editor.openDialog(self.dialogName);
+					},
+					verification: function(editor) {
+						return (editor.config.scayt_uiTabs[0] == 1) ? true : false;
+					}
+				},
+				scayt_language: {
+					label : scayt_instance.getLocal('btn_langs'),
+					group : 'scayt_control',
+					order : 5,
+					exec: function(editor) {
+						var scaytInstance = editor.scayt;
+
+						scaytInstance.tabToOpen = 'langs';
+						editor.lockSelection();
+						editor.openDialog(self.dialogName);
+					},
+					verification: function(editor) {
+						return (editor.config.scayt_uiTabs[1] == 1) ? true : false;
+					}
+				},
+				scayt_dictionary: {
+					label : scayt_instance.getLocal('btn_dictionaries'),
+					group : 'scayt_control',
+					order : 6,
+					exec: function(editor) {
+						var scaytInstance = editor.scayt;
+
+						scaytInstance.tabToOpen = 'dictionaries';
+						editor.lockSelection();
+						editor.openDialog(self.dialogName);
+					},
+					verification: function(editor) {
+						return (editor.config.scayt_uiTabs[2] == 1) ? true : false;
+					}
+				},
+				scayt_about: {
+					label : scayt_instance.getLocal('btn_about'),
+					group : 'scayt_control',
+					order : 7,
+					exec: function(editor) {
+						var scaytInstance = editor.scayt;
+
+						scaytInstance.tabToOpen = 'about';
+						editor.lockSelection();
+						editor.openDialog(self.dialogName);
+					}
 				}
 			},
-			about: {
-				label : scayt_instance.getLocal('btn_about'),
-				group : 'scayt_control',
-				order : 7,
-				exec: function(editor) {
-					var scaytInstance = editor.scayt;
+			grayt: {
+				grayt_problemdescription: {
+					label : 'Grammar problem description',
+					group : 'grayt_description', // look at addMenuItems method for further info
+					order : 1,
+					state : CKEDITOR.TRISTATE_DISABLED,
+					exec: function(editor) {}
+				},
+				grayt_ignore: {
+					label : scayt_instance.getLocal('btn_ignore'),
+					group : 'grayt_control',
+					order : 2,
+					exec: function(editor) {
+						var scaytInstance = editor.scayt;
 
-					scaytInstance.tabToOpen = 'about';
-					editor.lockSelection();
-					editor.openDialog(self.dialogName);
+						scaytInstance.ignorePhrase();
+					}
 				}
 			}
 		};
 	},
-	buildSuggestionMenuItems: function(editor, suggestions) {
+	buildSuggestionMenuItems: function(editor, suggestions, isScaytNode) {
 		var self = this,
 			itemList = {},
 			subItemList = {},
+			replaceKeyName = isScaytNode ? 'word' : 'phrase',
+			updateEventName = isScaytNode ? 'startGrammarCheck' : 'startSpellCheck',
 			plugin = CKEDITOR.plugins.scayt,
 			scayt_instance = editor.scayt;
 
 		if(suggestions.length > 0 && suggestions[0] !== 'no_any_suggestions') {
-			for(var i = 0; i < suggestions.length; i++) {
 
-				var commandName = 'scayt_suggest_' + CKEDITOR.plugins.scayt.suggestions[i].replace(' ', '_');
-				editor.addCommand(commandName, self.createCommand(CKEDITOR.plugins.scayt.suggestions[i]));
+			if(isScaytNode) {
+				// build SCAYT suggestions
+				for(var i = 0; i < suggestions.length; i++) {
 
-				if(i < editor.config.scayt_maxSuggestions) {
+					var commandName = 'scayt_suggest_' + CKEDITOR.plugins.scayt.suggestions[i].replace(' ', '_');
+
+					editor.addCommand(commandName, self.createCommand(CKEDITOR.plugins.scayt.suggestions[i], replaceKeyName, updateEventName));
+
+					if(i < editor.config.scayt_maxSuggestions) {
+
+						// mainSuggestions
+						editor.addMenuItem(commandName, {
+							label: suggestions[i],
+							command: commandName,
+							group: 'scayt_suggest',
+							order: i + 1
+						});
+
+						itemList[commandName] = CKEDITOR.TRISTATE_OFF;
+
+					} else {
+
+						// moreSuggestions
+						editor.addMenuItem(commandName, {
+							label: suggestions[i],
+							command: commandName,
+							group: 'scayt_moresuggest',
+							order: i + 1
+						});
+
+						subItemList[commandName] = CKEDITOR.TRISTATE_OFF;
+
+						if(editor.config.scayt_moreSuggestions === 'on') {
+
+							editor.addMenuItem('scayt_moresuggest', {
+								label : scayt_instance.getLocal('btn_moreSuggestions'),
+								group : 'scayt_moresuggest',
+								order : 10,
+								getItems : function() {
+									return subItemList;
+								}
+							});
+
+							itemList['scayt_moresuggest'] = CKEDITOR.TRISTATE_OFF;
+						}
+					}
+				}
+			} else {
+				// build GRAYT suggestions
+				for(var i = 0; i < suggestions.length; i++) {
+					var commandName = 'grayt_suggest_' + CKEDITOR.plugins.scayt.suggestions[i].replace(' ', '_');
+
+					editor.addCommand(commandName, self.createCommand(CKEDITOR.plugins.scayt.suggestions[i], replaceKeyName, updateEventName));
 
 					// mainSuggestions
 					editor.addMenuItem(commandName, {
 						label: suggestions[i],
 						command: commandName,
-						group: 'scayt_suggest',
+						group: 'grayt_suggest',
 						order: i + 1
 					});
 
 					itemList[commandName] = CKEDITOR.TRISTATE_OFF;
-
-				} else {
-
-					// moreSuggestions
-					editor.addMenuItem(commandName, {
-						label: suggestions[i],
-						command: commandName,
-						group: 'scayt_moresuggest',
-						order: i + 1
-					});
-
-					subItemList[commandName] = CKEDITOR.TRISTATE_OFF;
-
-					if(editor.config.scayt_moreSuggestions === 'on') {
-
-						editor.addMenuItem('scayt_moresuggest', {
-							label : scayt_instance.getLocal('btn_moreSuggestions'),
-							group : 'scayt_moresuggest',
-							order : 10,
-							getItems : function() {
-								return subItemList;
-							}
-						});
-
-						itemList['scayt_moresuggest'] = CKEDITOR.TRISTATE_OFF;
-					}
 				}
 			}
 		} else {
@@ -854,58 +943,110 @@ CKEDITOR.plugins.add('scayt', {
 
 		return itemList;
 	},
-	menuGenerator: function(editor, word) {
+	menuGenerator: function(editor, selectionNode) {
 		var self = this,
 			scaytInstance = editor.scayt,
-			menuItem = this.scaytMenuDefinition(editor),
+			menuItems = this.scaytMenuDefinition(editor),
 			itemList = {},
-			allowedOption = editor.config.scayt_contextCommands.split('|');
+			allowedOption = editor.config.scayt_contextCommands.split('|'),
+			lang = selectionNode.getAttribute(scaytInstance.getLangAttribute()) || scaytInstance.getLang(),
+			word, grammarPhrase, isScaytNode, isGrammarNode, problemDescriptionText;
 
-		scaytInstance.fire('getSuggestionsList', {lang: scaytInstance.getLang(), word: word});
-		itemList = this.buildSuggestionMenuItems(editor, CKEDITOR.plugins.scayt.suggestions);
 
-		if(editor.config.scayt_contextCommands == 'off') {
+		isScaytNode = scaytInstance.isScaytNode(selectionNode);
+		isGrammarNode = scaytInstance.isGraytNode(selectionNode);
+
+		if(isScaytNode) {
+			// we clicked scayt misspelling
+			// get suggestions
+			menuItems = menuItems.scayt;
+
+			word = selectionNode.getAttribute(scaytInstance.getScaytNodeAttributeName());
+
+			scaytInstance.fire('getSuggestionsList', {
+				lang: lang,
+				word: word
+			});
+
+			itemList = this.buildSuggestionMenuItems(editor, CKEDITOR.plugins.scayt.suggestions, isScaytNode);
+		} else if(isGrammarNode) {
+			// we clicked grammar problem
+			// get suggestions
+			menuItems = menuItems.grayt;
+			grammarPhrase = selectionNode.getAttribute(scaytInstance.getGraytNodeAttributeName());
+
+			// setup grammar problem description
+			problemDescriptionText = scaytInstance.getProblemDescriptionText(grammarPhrase, lang);
+			if(menuItems.grayt_problemdescription && problemDescriptionText) {
+				menuItems.grayt_problemdescription.label = problemDescriptionText;
+			}
+
+			scaytInstance.fire('getGrammarSuggestionsList', {
+				lang: lang,
+				phrase: grammarPhrase
+			});
+
+			itemList = this.buildSuggestionMenuItems(editor, CKEDITOR.plugins.scayt.suggestions, isScaytNode);
+		}
+
+		if(isScaytNode && editor.config.scayt_contextCommands == 'off') {
 			return itemList;
 		}
 
-		for(var key in menuItem) {
-			if(CKEDITOR.tools.indexOf(allowedOption, key.replace('scayt_', '')) == -1 && editor.config.scayt_contextCommands != 'all') {
+		for(var key in menuItems) {
+			if(isScaytNode && CKEDITOR.tools.indexOf(allowedOption, key.replace('scayt_', '')) == -1 && editor.config.scayt_contextCommands != 'all') {
 				continue;
 			}
 
-			itemList[key] = CKEDITOR.TRISTATE_OFF;
+			if(typeof menuItems[key].state != 'undefined') {
+				itemList[key] = menuItems[key].state;
+			} else {
+				itemList[key] = CKEDITOR.TRISTATE_OFF;
+			}
+
 			// delete item from context menu if its state isn't verified as allowed
-			if(typeof menuItem[key].verification === 'function' && !menuItem[key].verification(editor)) {
-				// itemList[key] = (menuItem[key].verification(editor)) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED;
+			if(typeof menuItems[key].verification === 'function' && !menuItems[key].verification(editor)) {
+				// itemList[key] = (menuItems[key].verification(editor)) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED;
 				delete itemList[key];
 			}
 
 			editor.addCommand(key, {
-				exec: menuItem[key].exec
+				exec: menuItems[key].exec
 			});
 
 			editor.addMenuItem(key, {
-				label : editor.lang.scayt[menuItem[key].label] || menuItem[key].label,
+				label : editor.lang.scayt[menuItems[key].label] || menuItems[key].label,
 				command: key,
-				group : menuItem[key].group,
-				order : menuItem[key].order
+				group : menuItems[key].group,
+				order : menuItems[key].order
 			});
 		}
 
 		return itemList;
 	},
-	createCommand: function(suggestion) {
+	createCommand: function(suggestion, replaceKeyName, updateEventName) {
 		return {
 			exec: function(editor) {
-				var scaytInstance = editor.scayt;
-				scaytInstance.replaceSelectionNode({word: suggestion});
+				var scaytInstance = editor.scayt,
+					eventObject = {};
+
+				eventObject[replaceKeyName] = suggestion;
+				scaytInstance.replaceSelectionNode(eventObject);
+				// we need to remove markup from selection node here in case that there are still our markup - grayt or scayt
+				scaytInstance.removeMarkupInSelectionNode();
+				// for grayt problem replacement we need to fire 'startSpellCheck'
+				// for scayt misspelling replacement we need to fire 'startGrammarCheck'
+				scaytInstance.fire(updateEventName);
 			}
 		};
 	}
 });
 
 CKEDITOR.plugins.scayt = {
-	state: {},
+	state: {
+		scayt: {},
+		grayt: {}
+	},
 	suggestions: [],
 	loadingHelper: {
 		loadOrder: []
@@ -918,7 +1059,9 @@ CKEDITOR.plugins.scayt = {
 			templates: true
 		},
 		data_attribute_name: 'data-scayt-word',
-		misspelled_word_class: 'scayt-misspell-word'
+		misspelled_word_class: 'scayt-misspell-word',
+		problem_grammar_data_attribute: 'data-grayt-phrase',
+		problem_grammar_class: 'gramm-problem'
 	},
 	backCompatibilityMap: {
 		'scayt_service_protocol': 'scayt_serviceProtocol',
@@ -936,49 +1079,63 @@ CKEDITOR.plugins.scayt = {
 		}
 	},
 	createScayt : function(editor) {
-		var self = this;
+		var self = this,
+			plugin = CKEDITOR.plugins.scayt;
 
 		this.loadScaytLibrary(editor, function(_editor) {
-			var _scaytInstanceOptions = {
-				lang 				: _editor.config.scayt_sLang,
-				container 			: _editor.editable().$.nodeName == 'BODY' ? _editor.document.getWindow().$.frameElement : _editor.editable().$,
-				customDictionary 	: _editor.config.scayt_customDictionaryIds,
-				userDictionaryName 	: _editor.config.scayt_userDictionaryName,
-				localization 		: _editor.langCode,
-				customer_id 		: _editor.config.scayt_customerId,
-				debug 				: _editor.config.scayt_debug,
-				data_attribute_name : self.options.data_attribute_name,
-				misspelled_word_class: self.options.misspelled_word_class,
-				'options-to-restore':  _editor.config.scayt_disableOptionsStorage,
-				focused 			: _editor.editable().hasFocus, // #30260 we need to set focused=true if CKEditor is focused before SCAYT initialization
-				ignoreElementsRegex : _editor.config.scayt_elementsToIgnore,
-				minWordLength 		: _editor.config.scayt_minWordLength
-			};
+			var container = _editor.editable().$.nodeName == 'BODY' ? _editor.document.getWindow().$.frameElement : _editor.editable().$,
+				scaytInstanceOptions = {
+					lang 				: _editor.config.scayt_sLang,
+					container 			: _editor.editable().$.nodeName == 'BODY' ? _editor.document.getWindow().$.frameElement : _editor.editable().$,
+					customDictionary 	: _editor.config.scayt_customDictionaryIds,
+					userDictionaryName 	: _editor.config.scayt_userDictionaryName,
+					localization 		: _editor.langCode,
+					customer_id 		: _editor.config.scayt_customerId,
+					debug 				: _editor.config.scayt_debug,
+					data_attribute_name : self.options.data_attribute_name,
+					misspelled_word_class: self.options.misspelled_word_class,
+					problem_grammar_data_attribute: self.options.problem_grammar_data_attribute,
+					problem_grammar_class: self.options.problem_grammar_class,
+					'options-to-restore':  _editor.config.scayt_disableOptionsStorage,
+					focused 			: _editor.editable().hasFocus, // #30260 we need to set focused=true if CKEditor is focused before SCAYT initialization
+					ignoreElementsRegex : _editor.config.scayt_elementsToIgnore,
+					minWordLength 		: _editor.config.scayt_minWordLength,
+					multiLanguageMode 	: _editor.config.scayt_multiLanguageMode,
+					multiLanguageStyles	: _editor.config.scayt_multiLanguageStyles,
+					graytAutoStartup	: plugin.state.grayt[_editor.name]
+				},
+				contcontainerID;
 
 			if(_editor.config.scayt_serviceProtocol) {
-				_scaytInstanceOptions['service_protocol'] = _editor.config.scayt_serviceProtocol;
+				scaytInstanceOptions['service_protocol'] = _editor.config.scayt_serviceProtocol;
 			}
 
 			if(_editor.config.scayt_serviceHost) {
-				_scaytInstanceOptions['service_host'] = _editor.config.scayt_serviceHost;
+				scaytInstanceOptions['service_host'] = _editor.config.scayt_serviceHost;
 			}
 
 			if(_editor.config.scayt_servicePort) {
-				_scaytInstanceOptions['service_port'] = _editor.config.scayt_servicePort;
+				scaytInstanceOptions['service_port'] = _editor.config.scayt_servicePort;
 			}
 
 			if(_editor.config.scayt_servicePath) {
-				_scaytInstanceOptions['service_path'] = _editor.config.scayt_servicePath;
+				scaytInstanceOptions['service_path'] = _editor.config.scayt_servicePath;
 			}
 
-			var _scaytInstance = new SCAYT.CKSCAYT(_scaytInstanceOptions, function() {
+			// Fix bug with getting wrong uid after re-creating SCAYT instance.
+			// And as result - restoring options for wrong instance
+			if(!container.id) {
+				container.id = _editor.element.getAttribute('id');
+			}
+
+			var scaytInstance = new SCAYT.CKSCAYT(scaytInstanceOptions, function() {
 					// success callback
 				}, function() {
 					// error callback
 				}),
 				wordsPrefix = 'word_';
 
-			_scaytInstance.subscribe('suggestionListSend', function(data) {
+			scaytInstance.subscribe('suggestionListSend', function(data) {
 				// TODO: 1. Maybe store suggestions for specific editor
 				// TODO: 2. Fix issue with suggestion duplicates on on server
 				//CKEDITOR.plugins.scayt.suggestions = data.suggestionList;
@@ -996,7 +1153,7 @@ CKEDITOR.plugins.scayt = {
 			});
 
 			// if selection has changed programmatically by SCAYT we need to react appropriately
-			_scaytInstance.subscribe('selectionIsChanged', function(data) {
+			scaytInstance.subscribe('selectionIsChanged', function(data) {
 				var selection = _editor.getSelection();
 
 				if(selection.isLocked) {
@@ -1004,7 +1161,11 @@ CKEDITOR.plugins.scayt = {
 				}
 			});
 
-			_editor.scayt = _scaytInstance;
+			scaytInstance.subscribe('graytStateChanged', function(data) {
+				plugin.state.grayt[_editor.name] = data.state;
+			});
+
+			_editor.scayt = scaytInstance;
 
 			_editor.fire('scaytButtonState', _editor.readOnly ? CKEDITOR.TRISTATE_DISABLED : CKEDITOR.TRISTATE_ON);
 		});
@@ -1037,22 +1198,27 @@ CKEDITOR.plugins.scayt = {
 			timestamp = date.getTime();
 			scaytUrl = editor.config.scayt_srcUrl + '?' + timestamp;
 
-			CKEDITOR.scriptLoader.load(scaytUrl, function(success) {
-				var editorName;
+			if (!this.loadingHelper.ckscaytLoading) {
+				CKEDITOR.scriptLoader.load(scaytUrl, function(success) {
+					var editorName;
 
-				CKEDITOR.fireOnce('scaytReady');
+					CKEDITOR.fireOnce('scaytReady');
 
-				for(var i = 0; i < self.loadingHelper.loadOrder.length; i++) {
-					editorName = self.loadingHelper.loadOrder[i];
+					for(var i = 0; i < self.loadingHelper.loadOrder.length; i++) {
+						editorName = self.loadingHelper.loadOrder[i];
 
-					if(typeof self.loadingHelper[editorName] === 'function') {
-						self.loadingHelper[editorName](CKEDITOR.instances[editorName]);
+						if(typeof self.loadingHelper[editorName] === 'function') {
+							self.loadingHelper[editorName](CKEDITOR.instances[editorName]);
+						}
+
+						delete self.loadingHelper[editorName];
 					}
+					self.loadingHelper.loadOrder = [];
+				});
+				this.loadingHelper.ckscaytLoading = true;
+			}
 
-					delete self.loadingHelper[editorName];
-				}
-				self.loadingHelper.loadOrder = [];
-			});
+
 		} else if(window.SCAYT && typeof window.SCAYT.CKSCAYT === 'function') {
 			CKEDITOR.fireOnce('scaytReady');
 
@@ -1087,7 +1253,7 @@ CKEDITOR.on('scaytReady', function() {
 
 			return function() {
 				var retval = null,
-					pluginStatus = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state[this.name] && this.scayt,
+					pluginStatus = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state.scayt[this.name] && this.scayt,
 					scaytInstance = this.scayt;
 
 				if(!pluginStatus) {
@@ -1109,7 +1275,7 @@ CKEDITOR.on('scaytReady', function() {
 
 		editorCheckDirty.resetDirty = CKEDITOR.tools.override(editorCheckDirty.resetDirty, function(org) {
 			return function() {
-				var pluginStatus = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state[this.name] && this.scayt,
+				var pluginStatus = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state.scayt[this.name] && this.scayt,
 					scaytInstance = this.scayt;//CKEDITOR.plugins.scayt.getScayt(this);
 
 				if(!pluginStatus) {
@@ -1129,7 +1295,7 @@ CKEDITOR.on('scaytReady', function() {
 
 		undoImagePrototype[equalsContentMethodName] = CKEDITOR.tools.override(undoImagePrototype[equalsContentMethodName], function(org) {
 			return function(otherImage) {
-				var pluginState = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state[otherImage.editor.name] && otherImage.editor.scayt,
+				var pluginState = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state.scayt[otherImage.editor.name] && otherImage.editor.scayt,
 					scaytInstance = otherImage.editor.scayt,
 					thisContents = this.contents,
 					otherContents = otherImage.contents,
@@ -1158,6 +1324,15 @@ CKEDITOR.on('scaytReady', function() {
  *		config.scayt_autoStartup = true;
  *
  * @cfg {Boolean} [scayt_autoStartup=false]
+ * @member CKEDITOR.config
+ */
+
+/**
+ * The parameter turns on/off Grammar As You Type (GRAYT) on the SCAYT startup. If 'true', turns on GRAYT automatically after SCAYT started.
+ *
+ *		config.grayt_autoStartup = true;
+ *
+ * @cfg {Boolean} [grayt_autoStartup=false]
  * @member CKEDITOR.config
  */
 
@@ -1405,7 +1580,7 @@ CKEDITOR.on('scaytReady', function() {
  *  	config.scayt_disableOptionsStorage = ['lang', 'ignore-domain-names', 'ignore-words-with-numbers'];
  *
  *
- * @cfg {String|Array} [scayt_disableOptionsStorage ='']
+ * @cfg {String|Array} [scayt_disableOptionsStorage = '']
  * @member CKEDITOR.config
  */
 
@@ -1416,5 +1591,35 @@ CKEDITOR.on('scaytReady', function() {
  *		config.scayt_elementsToIgnore = 'del,pre';
  *
  * @cfg {String} [scayt_elementsToIgnore='style']
+ * @member CKEDITOR.config
+ */
+
+ /**
+ * The parameter turns on/off multi language support in SCAYT. If 'true', turns on SCAYT multi language support after loading the editor.
+ *
+ *		config.scayt_multiLanguageMode = true;
+ *
+ * @cfg {Boolean} [scayt_multiLanguageMode=false]
+ * @member CKEDITOR.config
+ */
+
+ /**
+ * Defines additional styles for misspellings for specified languages. Styles will be applied only if 'scayt_multiLanguageMode' parameter is set to 'true'
+ * and 'language' plugin included and loaded into editor.  All misspellings still will be underlined with red waveline by default.
+ *
+ * Example:
+ *
+ *		// Display misspellings in French language with green color and underlined with red waveline
+ *		config.scayt_multiLanguageStyles = {
+ *			'fr': 'color: green'
+ *		};
+ *
+ *		// Display misspellings in Italian language with green color and underlined with red waveline and German misspellings with red color only
+ *		config.scayt_multiLanguageStyles = {
+ *			'it': 'color: green',
+ *			'de': 'background-image: none; color: red'
+ *		};
+ *
+ * @cfg {Object} [scayt_multiLanguageStyles = {}]
  * @member CKEDITOR.config
  */

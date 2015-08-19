@@ -104,7 +104,7 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 					{
 						type: 'html',
 						id: 'langBox',
-						style: 'overflow: hidden; white-space: normal;',
+						style: 'overflow: hidden; white-space: normal;margin-bottom:15px;',
 						html: '<div><div style="float:left;width:45%;margin-left:5px;" id="left-col-' + editor.name + '"></div><div style="float:left;width:45%;margin-left:15px;" id="right-col-' + editor.name + '"></div></div>',
 						onShow: function() {
 							var scayt_instance =  editor.scayt;
@@ -114,9 +114,13 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 
 							radio.$.checked = true;
 						}
+					},
+					{
+						type: 'html',
+						id: 'graytLanguagesHint',
+						html: '<div style="margin:5px auto; width:95%;white-space:normal;"><span style="width:10px;height:10px;display:inline-block;background:#02b620;vertical-align:top;margin-top:2px;"></span> - This languages are supported by Grammar As You Type(GRAYT).</div>'
 					}
 				]
-
 			}
 		]
 	},
@@ -463,10 +467,9 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 
 			return changedOption;
 		},
-		buildRadioInputs: function(key, value) {
+		buildRadioInputs: function(key, value, isSupportedByGrayt) {
 			var divContainer = new CKEDITOR.dom.element( 'div' ),
 				doc = CKEDITOR.document,
-				div = doc.createElement( 'div' ),
 				id = "scaytLang_" + value,
 				radio = CKEDITOR.dom.element.createFromHtml( '<input id="' +
 					id + '" type="radio" ' +
@@ -481,19 +484,23 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 				'padding-bottom': '2px'
 			});
 
-
 			radio.on( 'click', function(data) {
 				languageModelState.newLang = data.sender.getValue();
 			});
 
 			radioLabel.appendText(key);
 			radioLabel.setAttribute("for", id);
+			if(isSupportedByGrayt) {
+				radioLabel.setStyles({
+					'color': '#02b620'
+				});
+			}
 
 			divContainer.append(radio);
 			divContainer.append(radioLabel);
 
 			if(value === scayt_instance.getLang()) {
-					radio.setAttribute("checked", true);
+				radio.setAttribute("checked", true);
 				radio.setAttribute('defaultChecked', 'defaultChecked');
 			}
 
@@ -503,18 +510,20 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 			var dialog = this,
 				leftCol = langBoxes.find('#left-col-' + editor.name).getItem(0),
 				rightCol = langBoxes.find('#right-col-' + editor.name).getItem(0),
-				langList = scayt_instance.getLangList(),
+				scaytLangList = scayt_instance.getScaytLangList(),
+				graytLangList = scayt_instance.getGraytLangList(),
 				mergedLangList = {},
 				sortable = [],
 				counter = 0,
+				isSupportedByGrayt = false,
 				half, lang;
 
-			for(lang in langList.ltr) {
-				mergedLangList[lang] = langList.ltr[lang];
+			for(lang in scaytLangList.ltr) {
+				mergedLangList[lang] = scaytLangList.ltr[lang];
 			}
 
-			for(lang in langList.rtl) {
-				mergedLangList[lang] = langList.rtl[lang];
+			for(lang in scaytLangList.rtl) {
+				mergedLangList[lang] = scaytLangList.rtl[lang];
 			}
 
 			// sort alphabetically lang list
@@ -539,7 +548,8 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 
 			for(lang in mergedLangList) {
 				counter++;
-				dialog.buildRadioInputs(mergedLangList[lang], lang).appendTo(counter <= half ? leftCol : rightCol);
+				isSupportedByGrayt = (lang in graytLangList.ltr) || (lang in graytLangList.rtl);
+				dialog.buildRadioInputs(mergedLangList[lang], lang, isSupportedByGrayt).appendTo(counter <= half ? leftCol : rightCol);
 			}
 		},
 		getLangBoxes: function() {
