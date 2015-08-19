@@ -78,7 +78,6 @@ TABLES_TO_DUMP=[x.strip() for x in """
     taggit_taggeditem
     tidings_watch
     tidings_watchfilter
-    user_profiles
     users_userban
     waffle_flag
     waffle_flag_groups
