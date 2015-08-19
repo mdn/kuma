@@ -198,10 +198,8 @@
             </ul>
         </div>
         {% endif %}
-
       </div>
       {% endif %}
-
       <!-- start the main content container -->
         <div id="wiki-column-container" class="{% if show_right %}wiki-right-present{% else %}wiki-right-closed wiki-right-none{% endif %} {% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
 
@@ -408,9 +406,13 @@
     <menuitem data-action="{{ url('wiki.edit_document', document.slug, locale=document.locale) }}" label="{{_('Edit page')}}"></menuitem>
     <menuitem data-action="{{ url('wiki.document_revisions', document.slug) }}" label="{{_('View page history')}}"></menuitem>
   </menu>
+
 {% endblock %}
 
 {% block js %}
+  {% if waffle.flag('scrollback_widget') %}
+    {{ js('scrollback', async=True) }}
+  {% endif %}
   <script type="text/javascript">
       {# This can be removed once the social network button multivariate test is completed. #}
       mdn.optimizely.push(['activate', 2796520257]);

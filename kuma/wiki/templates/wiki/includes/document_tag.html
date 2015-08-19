@@ -4,7 +4,14 @@
     <strong>{{_('Tags:')}}</strong>&nbsp;
     <ul class="tags tags-small">
       {% for tag in tags %}
-        <li><a href="{{ url('wiki.tag', tag) }}">{{ tag }}</a></li>
+        <li><a href="{{ url('wiki.tag', tag) }}">{{ tag }}</a>
+          {% if waffle.flag('scrollback_widget') %}
+            {% set lower_name = tag.name.lower() %}
+            {% if settings.SCROLLBACK_ROOM_MAP[lower_name] %}
+              <button class="scrollback-button only-icon transparent" data-username="{{ request.user.username }}" data-room="{{ settings.SCROLLBACK_ROOM_MAP[lower_name] }}"><i class="icon-users" aria-hidden="true"></i><span>{{ _('Chat about {tag}')|f(tag=tag.name) }}</span></button>
+            {% endif %}
+          {% endif %}
+        </li>
       {% endfor %}
     </ul>
   </div>
