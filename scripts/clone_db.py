@@ -12,8 +12,8 @@ This script performs all the steps needed to produce an anonymized DB dump:
 from datetime import datetime
 import os
 import os.path
+import subprocess
 import sys
-from subprocess import call
 from textwrap import dedent
 from optparse import OptionParser
 
@@ -108,23 +108,23 @@ def print_debug(s):
     if not opts.quiet and opts.debug: print s
 
 
-has_error = False
+class NotFound(Exception):
+    pass
 
 def sysprint(command):
     """ Helper to print all system commands in debug mode """
-    global has_error
     print_debug("command: %s" % command)
-    try:
-        retcode = call(command, shell=True)
-        if retcode < 0:
-            print >>sys.stderr, "Command was terminated by signal", -retcode
-        elif retcode > 0:
-            print >>sys.stderr, "Command errored with code", retcode
-    except OSError as e:
-        print >>sys.stderr, "Command failed:", e
-        retcode = 255
-    has_error = has_error or retcode != 0
-    return retcode
+    output = subprocess.check_output(
+        command, shell=True, stderr=subprocess.STDOUT)
+    for line in output.splitlines():
+        if line.endswith("command not found"):
+            raise NotFound(output)
+        elif line == (
+                'Warning: Using a password on the command line interface can'
+                ' be insecure.'):
+            pass
+        else:
+            print(line)
 
 
 def main():
@@ -281,7 +281,23 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
-    if has_error:
-        print >>sys.stderr, "ERRORS: Check output of commands!"
-        sys.exit(1)
+    retcode = None
+    error = None
+    try:
+        main()
+    except subprocess.CalledProcessError as e:
+        if e.retcode < 0:
+            error = "Command was terminated by signal"
+            retcode = -e.retcode
+        else:
+            error = "Command errored with code %s" % e.retcode
+            retcode = e.retcode
+    except (NotFound, OSError) as e:
+        error = "Command failed: %s" % e
+        retcode = 127
+    if error:
+        print >>sys.stderr, error
+        print >>sys.stderr, "Clone FAILED."
+        sys.exit(retcode)
+    else:
+        print >>sys.stderr, "Clone complete."
