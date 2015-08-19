@@ -3,12 +3,15 @@
   tags: [setup]
 
 - include: mysql.yml
-  tags: [setup, mysql]
+  tags: [setup, travis]
+
+- include: elasticsearch.yml
+  tags: [travis]
 
 - include: apache.yml
   tags: [setup]
 
-- include: vagrant.yml
+- include: home.yml
   tags: [setup]
 
 - include: node.yml

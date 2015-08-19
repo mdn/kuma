@@ -358,4 +358,4 @@ Adding a new Locale
     `product_details_json.tar.gz`
 
 
-.. _our Travis install script: https://github.com/mozilla/kuma/blob/master/scripts/travis-install
+.. _our Travis install script: https://github.com/mozilla/kuma/blob/master/provisioning/travis.yml

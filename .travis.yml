@@ -8,8 +8,6 @@ cache:
 language: python
 python:
     - "2.7"
-services:
-    - memcached
 env:
     matrix:
         - TOXENV=py27
@@ -19,14 +17,14 @@ env:
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive
         - CFLAGS=-O0
-before_install:
-    - scripts/travis-install
-    - pip install -U pip
+before_install: pip install -U pip
 install:
     - pip install -r requirements/travis.txt
-    - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
-script: tox -v
+    - if [[ $TOXENV == 'py27' ]]; then ansible-playbook --tags=travis --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
+script:
+    - tox -v
 after_failure:
+    - curl http://localhost:9200/
     - dmesg | tail
 after_success:
     - codecov
