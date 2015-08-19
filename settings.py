@@ -142,6 +142,7 @@ MDN_LANGUAGES = (
     'ta',
     'th',
     'tl',
+    'tn',
     'tr',
     'vi',
     'wo',
