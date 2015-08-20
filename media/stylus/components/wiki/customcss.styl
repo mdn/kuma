@@ -421,36 +421,7 @@ table.HTMLElmNav td {
     color: #888;
     font-weight: normal;
 }
-/* version compatibility banners and notes */
-.geckoVersionNote {
-    background-color: #e0e0ff;
-    background-image: -moz-radial-gradient(0px 0 45deg, circle farthest-corner, #e0e0ff 0, #f8f8ff 80%);
-    border-left: 5px solid #008;
-}
-.geckoVersionNote p {
-    padding-left: 4px;
-    border: 0;
-}
-.geckoVersionHeading {
-    background-color: #008;
-    background-image: -moz-linear-gradient(left, #008 50%, #e0e0ff 80%);
-    color: #fff;
-    font: 16px/1.7 Verdana, Tahoma, sans-serif;
-    margin-top: 0;
-    margin-left: 0;
-    margin-bottom: 4px;
-    height: 42px;
-}
-.geckoVersionHeading a:link {
-    color: #ddd;
-}
-.geckoVersionHeading a:visited {
-    color: #eee;
-}
-.geckoVersionHeading a:hover,
-.geckoVersionHeading a:focus {
-    color: #fdd;
-}
+
 .experimentalIcon {
     display: inline-block;
     width: 4px;
@@ -504,148 +475,6 @@ table.HTMLElmNav td {
     padding-left: 6px;
     margin-right: 6px;
 }
-.badge {
-    position: relative;
-    top: -2px;
-    display: inline-block;
-    cursor: default;
-    border: 1px solid #aaa;
-    border-radius: 8px;
-    padding: 0.1em 0.6em;
-    font-size: 70%;
-    font-weight: 700;
-    height: 1.4em;
-    vertical-align: middle;
-    line-height: 1.3;
-}
-.badgeText {
-    vendorize(hyphens, none);
-}
-.banner {
-    display: block;
-    overflow: hidden;
-    font-size: 12px;
-    font-weight: normal;
-    margin: 10px 0px;
-    padding: 2px 10px;
-}
-.bannerHeading {
-    text-align: inherit;
-    font-weight: bold;
-    padding-bottom: 2px;
-}
-.bannerText {
-    text-align: center;
-    font-weight: normal;
-}
-.icon {
-    padding-left: 3.1em;
-}
-[dir=rtl] .icon {
-    padding-left: 0.8em;
-    padding-right: 3.1em;
-}
-.icon:before {
-    content: "";
-    position: absolute;
-    left: -2px;
-    top: 50%;
-    margin-top: -1.5em;
-    width: 2.8em;
-    height: 2.8em;
-    background: #fff no-repeat center center;
-    background-size: 2.6em;
-    border-radius: 100%;
-    border: 1px solid #aaa;
-    border-right: none;
-    vendorize(box-sizing, border-box);
-}
-[dir=rtl] .icon:before {
-    left: auto;
-    right: -2px;
-    border: 1px solid #aaa;
-    border-left: none;
-}
-/* Used for badging obsolete APIs */
-.nonstandardBadge {
-    background: linear-gradient(to right, #f0de00 30%, #f0ff19);
-    color: #000;
-    text-shadow: 1px 1px 0 #ddd;
-}
-/* Used for badging Gecko minimum version requirements */
-.geckoVersionBadge {
-    background: rgba-fallback(rgba(117,195,165,0.44));
-    color: #000;
-    text-shadow: 1px 1px 0 #ddd;
-    border: 5px solid rgba-fallback(rgba(0,0,0,0.05));
-}
-/* Used for badging Firefox minimum version requirements */
-.firefoxVersionBadge {
-    background-color: #fedf9e;
-    background-image: linear-gradient(to right, #fedf9e 30%, #fef1d4);
-    background-repeat: no-repeat;
-    background-size: contain;
-    overflow: hidden;
-    color: #000;
-    text-shadow: 1px 1px 0 #ccc;
-    white-space: nowrap;
-}
-.firefoxVersionBadge a:link {
-    color: #000;
-    text-decoration: underline;
-}
-.firefoxVersionBadge a:visited {
-    color: #000;
-    text-decoration: underline;
-}
-.firefoxVersionBadge a:hover {
-    color: #853;
-    text-decoration: none;
-}
-.firefoxVersionBadge a:active {
-    color: #858;
-    text-decoration: none;
-}
-/* Used for badging APIs not implemented in Firefox */
-.unimplementedBadge {
-    background-color: #ffb6c1;
-    color: #000;
-    text-shadow: 1px 1px 0 #ddd;
-    border-color: #ff1493;
-}
-/* Used for badging non-standard APIs */
-.obsoleteBadge {
-    background: linear-gradient(to right, #febcbc 30%, #fffff0);
-    color: #000;
-    text-shadow: 1px 1px 0 #ddd;
-    border-color: #f00;
-}
-/* Used for badging deprecated APIs */
-.deprecatedBadge {
-    background: linear-gradient(to right, #ccf 30%, #eef);
-    color: #000;
-    text-shadow: 1px 1px 0 #ddd;
-    border-color: #00f;
-}
-/* Used for badging experimental APIs */
-.experimentalBadge {
-    background: linear-gradient(to right, #ffefd9 40%, #fffde0);
-    color: #000;
-    text-shadow: 1px 1px 0 #ddd;
-}
-/* Used for badging privileged APIs */
-.privilegedBadge {
-    background: linear-gradient(to right, #ffbd19 30%, #ffb200);
-    color: #000;
-    text-shadow: 1px 1px 0 #ddd;
-}
-[dir=rtl] .privilegedBadge {
-    background: linear-gradient(to left, #ffbd19 30%, #ffb200);
-}
-.icon.privilegedBadge:before {
-    background-color: #ffa500;
-    background-image: url("https://mdn.mozillademos.org/files/5061/firefoxos-logo-sm.png");
-}
 
 /* Compatibility tables */
 table.compat-table {
@@ -696,13 +525,6 @@ div.action-driven > div {
     {$selector-heading-font-fallback} {
         font-family: $heading-font-family-fallback;
     }
-}
-/* standard coloring */
-.notice.experimental {
-    background-color: rgba-fallback(rgba(255,203,0,0.5));
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-    border-style: solid !important;
-    border-width: 5px !important;
 }
 /* New theme action-driven */
 .card-grid > li > span:first-of-type {
@@ -791,144 +613,14 @@ ul.card-grid li {
 dl {
     margin-bottom: 20px;
 }
-
-/* ----------------------------
-        Styles for Indicator
-*/
-
-.headingWithIndicator {
-    clearfix();
-
-    h1, h2, h3, h4, h5, h6 {
-        float:left;
-    }
-}
-
-.inlineIndicator,
-.indicatorInHeadline,
-.blockIndicator,
-.overheadIndicator {
-/*box-shadow: 1px 1px 1px #CCC*/
-    margin: 0px 0px 1.5em;
-    border: 5px solid;
-    padding: 10px 10px 0px 10px;
-    background: none repeat scroll 0 0;
-    font-size: 12px;
-}
-.redesign .inlineIndicator,
-.redesign .indicatorInHeadline,
-.redesign .blockIndicator,
-.redesign .overheadIndicator {
-/* background-color:rgba-fallback(rgba(255,203,0,0.75); *)/
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-    border-style: solid !important;
-/* font-size: 11px; */
-    padding: 10px;
-}
-
-.blockIndicator,
-.overheadIndicator {
-    prevent-last-child-bottom-spacing();
-
-    pre {
-        color: $text-color;
-    }
-}
-
-.redesign .inlineIndicator,
-.redesign .indicatorInHeadline {
-    border-width: 0;
-    border-left-width: 4px;
-    font-size: 10px;
-    font-family: Helvetica, Arial, sans-serif;
-    min-width: 20px;
-    border-radius: 2px;
-    letter-spacing: 1px;
-    padding: 6px 6px 4px 6px;
-    display: inline-block;
-    vertical-align: top;
-    margin-left: 11px;
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    font-weight: normal;
-    line-height: normal;
-}
-/* styles for inline indicator */
-.inlineIndicator /* This class is base of inlineIndicator */,
-.megaWarningInline {
-    border-width: 1px;
-    border-style: solid;
-    font-size: 12px;
-    white-space: nowrap;
-    padding: 0 2px;
-    margin: 0 2px;
-}
-.todoInline {
-    border-left-width: 8px;
-    white-space: normal;
-}
-.megaWarningInline {
-    background: #f00;
-    border-color: #818151;
-    color: #fff;
-    font-size: small;
-    font-weight: 700;
-    float: right;
-    vertical-align: middle;
-/* Mega warnings: deep red backgrounds etc */
-}
-.notXPCOMInline,
-.noscriptInline {
-    font-weight: 700;
-}
-/* styles for overhead indicator */
-/*.overheadIndicator */
-/* This class is base of overheadIndicator */
-.standardNoteHeader,
-.standardNoteBlock {
-    border: 1px solid #000;
-    overflow: hidden;
-    margin: 10px 0;
-    padding: 0 10px;
-    text-align: center;
-}
-/*.overheadIndicator p,*/
-.blockIndicator p {
-    margin: 4px 0;
-}
-.draftHeader strong {
-    display: block;
-    padding-top: 10px;
-}
-.draftHeader div {
-    font-size: x-small;
-    padding-bottom: 10px;
-}
-html[dir="rtl"] .warningHeader {
-    padding: 1em 130px 1em 1em !important;
-    background-position: 99% 10px !important;
-}
-/* styles for Method indicator */
-.indicatorInHeadline,
-.standardNoteMethod {
-    border: 1px solid #000;
-    padding: 1px 2px;
-    white-space: nowrap;
-    vertical-align: middle;
-    font-size: 12px;
-    float: right;
-}
-[dir="rtl"] .indicatorInHeadline,
-[dir="rtl"] .standardNoteMethod {
-    float: left;
-}
+/* */
 .renamedMethod,
 .noscriptMethod,
 .deprecatedMethod,
 .unimplementedMethod {
     font-weight: 700;
 }
+
 /* color setting */
 #wikiArticle i.icon-beaker {
     color: #09d;
@@ -948,96 +640,6 @@ html[dir="rtl"] .warningHeader {
 /* obsolete */
 #wikiArticle i.icon-stethoscope {
     color: #483d8b;
-}
-/* unimplemented */
-.draft {
-    background: #ffc;
-    border-color: #990;
-}
-.redesign .draft {
-    background: rgba-fallback(rgba(255,203,0,0.5));
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-}
-.htmlVer {
-    background: #cee;
-    border-color: #267373;
-}
-.redesign .htmlVer {
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-}
-.nonStandard {
-    background: rgba-fallback(rgba(193,56,50,0.85));
-    color: #fff;
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-}
-.nonStandard a,
-.nonStandard a:hover,
-.nonStandard a:visited,
-.warning a,
-.warning a:hover,
-.warning a:visited {
-    color: #ff0;
-    border-bottom: 1px solid #ff0;
-    text-decoration: none;
-}
-.unimplemented {
-    background: rgba-fallback(rgba(193,56,50,0.35));
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-}
-.deprecated {
-    background: rgba-fallback(rgba(0,0,0,0.1));
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-}
-.domLevel {
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-}
-.todo {
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-}
-.minVer,
-.jsMinVer,
-.mbMinVer {
-    background: #ffffe1;
-    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
-}
-.mobileOnly {
-    background: #ffe1be;
-    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
-}
-.renamed {
-    background: #d4f3ff;
-    border-color: #818151;
-}
-.projectSpecific {
-    background: #ffe1be;
-    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
-}
-.prefixBox {
-    background: #e4edf7;
-    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
-}
-.experimental {
-    background: #ffefd9;
-    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
-}
-.readOnly {
-    background: rgba-fallback(rgba(0,0,0,0.65));
-    border-color: rgba-fallback(rgba(0,0,0,0.15), #000);
-    color: #fff;
-}
-.noscript {
-    background: #f00;
-    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
-    color: #fff;
-}
-.projectSpecific {
-    background: #ffe1be;
-    border-color: #818151;
-}
-/* Banner used to indicate support only in specific Gecko projects */
-.translationInProgress {
-    background: #a3f5a3;
-    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
 }
 /* style for next and previous pages in tutorial */
 
@@ -1397,17 +999,6 @@ dd.landingPageList {
     text-decoration: underline;
 }
 
-.redesign .standardNote,
-.redesign .optional,
-.renamed {
-    background: rgba-fallback(rgba(0,83,159,0.2));
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-}
-.redesign .obsolete,
-.redesign .notXPCOM {
-    background: rgba-fallback(rgba(230,96,0,0.45));
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-}
 /* new community box */
 .communitybox {
     background-color: $homepage-background-color;
