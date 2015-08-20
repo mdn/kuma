@@ -31,10 +31,8 @@
     // timout for all observers
     var ffoTimeout = 2000;
 
-    // load the observer plug in
-    $.getScript(mdn.mediaPath + 'js/fontfaceobserver-min.js')
-      .done(ffoLoad)
-      .fail(ffoFinished);
+    // run the observer plug in
+    ffoLoad();
 
     // starts observers for all fonts in fonts array
     function ffoLoad() {

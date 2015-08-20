@@ -661,6 +661,7 @@ MINIFY_BUNDLES = {
             'js/analytics.js',
             'js/main.js',
             'js/auth.js',
+            'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
             'js/fonts.js',
         ),
         'home': (
@@ -734,9 +735,6 @@ MINIFY_BUNDLES = {
         ),
         'fellowship': (
             'js/fellowship.js',
-        ),
-        'fontfaceobserver': (
-            'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
         ),
     },
 }
