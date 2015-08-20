@@ -48,6 +48,9 @@
             <div class="home-search-form search-form">
                 <div class="search-filter-wrapper">
                     <label for="home-q" class="offscreen">{{ _('Search') }}</label>
+                    <span class="search-icon">
+                        <i class="icon-search" aria-hidden="true"></i>
+                    </span>
                     <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
                     <div class="filters"></div>
                     <button class="show-topics only-icon" type="button">
@@ -62,6 +65,9 @@
         <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
             <div class="home-search-form search-form">
                 <label for="home-q" class="offscreen">{{ _('Search') }}</label>
+                <span class="search-icon">
+                    <i class="icon-search" aria-hidden="true"></i>
+                </span>
                 <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
                 <button type="submit" class="offscreen">{{ _('Search') }}</button>
             </div>

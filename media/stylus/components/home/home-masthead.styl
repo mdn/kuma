@@ -17,7 +17,11 @@ homepage masthead (search, feature callouts)
 }
 
 .search-form {
+    display: block;
+    margin: 0 auto;
     padding: ($grid-spacing * 2) 0;
+    position: relative;
+    width: 60%;
 
     /* Only use the "big search" style when the search filter feature
     is not enabled. */
@@ -25,11 +29,17 @@ homepage masthead (search, feature callouts)
         big-search();
     }
 
+    .search-icon {
+    		position: absolute;
+    		top: ($grid-spacing * 2 + 7);
+    }
+
     input#home-q {
         set-placeholder-style(letter-spacing, -1px);
         set-placeholder-style(color, $text-color);
         color: $text-color;
         background-color: #fff;
+        bidi-style(padding-left, 30px, padding-right, 0);
     }
 }
 

@@ -13,6 +13,12 @@
         position: relative;
         background-color: #fff;
         clearfix();
+        bidi-style(padding-left, 35px, padding-right, 0);
+    }
+
+    .search-icon {
+    		bidi-style(left, 0, right, 0);
+    		top: 8px;
     }
 
     input#home-q {
@@ -27,11 +33,11 @@
 
     .show-topics {
         background-color: rgba-fallback(rgba(255, 255, 255, 0)) !important;
+        bidi-style(right, 0, left, auto);
         box-shadow: none;
         color: $text-color !important;
         font-size: 1.2em !important;
         position: absolute;
-        bidi-style(right, 0, left, auto);
         top: 6px;
      }
 
