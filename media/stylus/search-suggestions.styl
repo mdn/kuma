@@ -13,6 +13,7 @@
         position: relative;
         background-color: #fff;
         clearfix();
+        bidi-style(padding-left, 35px, padding-right, 0);
     }
 
     .search-icon {
@@ -24,7 +25,6 @@
         border: none;
         display: inline-block;
         padding: 3px 0;
-        bidi-style(padding-left, 25px, padding-right, 0);
         margin-bottom: 0;
         outline: none;
         max-width: 100%;
@@ -33,11 +33,11 @@
 
     .show-topics {
         background-color: rgba-fallback(rgba(255, 255, 255, 0)) !important;
+        bidi-style(right, 0, left, auto);
         box-shadow: none;
         color: $text-color !important;
         font-size: 1.2em !important;
         position: absolute;
-        bidi-style(right, 0, left, auto);
         top: 6px;
      }
 
