@@ -12,20 +12,40 @@ This script performs all the steps needed to produce an anonymized DB dump:
 from datetime import datetime
 import os
 import os.path
+import subprocess
 import sys
 from textwrap import dedent
 from optparse import OptionParser
 
 #
-# We don't just dump everything, because every new table needs to be reviewed
-# with regards to santizing.
-#
 # Whenever a new table is created, add appropriate steps to anonymize.sql and
-# then add the table here.
+# then add the table here.  anonymize.sql may be run independantly, instead of
+# this script, so make sure anonymize.sql performs sanitization as well.
+#
+# To remove a table from the anonymized database:
+# Remove it from TABLES_TO_DUMP
+# Add DROP TABLE IF EXISTS {table name}; to anonymize.sql
+#
+# To ensure an empty table in the anonymized database:
+# Add to TABLES_TO_DUMP
+# Add TRUNCATE {table name}; to anonymize.sql
+#
+# To anonymize records:
+# Add to TABLES_TO_DUMP
+# Add UPDATE {table name} ...; to anonymize.sql
+#
+# To keep production records:
+# Add to TABLES_TO_DUMP
+# Add a comment to anonymize.sql so future devs know you considered the table
 #
 TABLES_TO_DUMP=[x.strip() for x in """
+    account_emailaddress
+    account_emailconfirmation
     actioncounters_actioncounterunique
     actioncounters_testmodel
+    attachments_attachment
+    attachments_attachmentrevision
+    attachments_documentattachment
     auth_group
     auth_group_permissions
     auth_message
@@ -35,15 +55,16 @@ TABLES_TO_DUMP=[x.strip() for x in """
     auth_user_user_permissions
     authkeys_key
     authkeys_keyaction
+    celery_taskmeta
+    celery_tasksetmeta
     constance_config
     contentflagging_contentflag
-    dashboards_wikidocumentvisits
+    core_ipban
     demos_submission
-    devmo_calendar
-    devmo_event
     django_admin_log
     django_cache
     django_content_type
+    django_migrations
     django_session
     django_site
     djcelery_crontabschedule
@@ -56,34 +77,39 @@ TABLES_TO_DUMP=[x.strip() for x in """
     feeder_bundle_feeds
     feeder_entry
     feeder_feed
-    gallery_image
-    gallery_video
-    schema_version
+    search_filter
+    search_filtergroup
+    search_index
+    search_outdatedobject
     soapbox_message
+    socialaccount_socialaccount
+    socialaccount_socialapp
+    socialaccount_socialapp_sites
+    socialaccount_socialtoken
     tagging_tag
     tagging_taggeditem
     taggit_tag
     taggit_taggeditem
-    threadedcomments_freethreadedcomment
-    threadedcomments_testmodel
-    threadedcomments_threadedcomment
     tidings_watch
-    user_profiles
+    tidings_watchfilter
+    users_userban
     waffle_flag
     waffle_flag_groups
     waffle_flag_users
     waffle_sample
     waffle_switch
-    wiki_attachment
-    wiki_attachmentrevision
     wiki_document
-    wiki_documentattachment
+    wiki_documentdeletionlog
     wiki_documenttag
+    wiki_documentzone
     wiki_editortoolbar
     wiki_helpfulvote
+    wiki_localizationtag
+    wiki_localizationtaggedrevision
     wiki_reviewtag
     wiki_reviewtaggedrevision
     wiki_revision
+    wiki_revisionip
     wiki_taggeddocument
 """.splitlines() if x.strip()]
 
@@ -96,10 +122,23 @@ def print_debug(s):
     if not opts.quiet and opts.debug: print s
 
 
+class NotFound(Exception):
+    pass
+
 def sysprint(command):
     """ Helper to print all system commands in debug mode """
     print_debug("command: %s" % command)
-    os.system(command)
+    output = subprocess.check_output(
+        command, shell=True, stderr=subprocess.STDOUT)
+    for line in output.splitlines():
+        if line.endswith("command not found"):
+            raise NotFound(output)
+        elif line == (
+                'Warning: Using a password on the command line interface can'
+                ' be insecure.'):
+            pass
+        else:
+            print(line)
 
 
 def main():
@@ -211,8 +250,10 @@ def main():
 
     if not opts.skip_temp_create:
         print_info('Creating temporary DB %s' % temp_db)
-        sysprint('mysqladmin %(mysql_conn)s -f drop %(temp_db)s' %
+        sysprint(('mysql %(mysql_conn)s -e'
+                  '"DROP DATABASE IF EXISTS %(temp_db)s;"') %
                   dict(mysql_conn=mysql_conn, temp_db=temp_db))
+
         sysprint('mysqladmin %(mysql_conn)s create %(temp_db)s' %
                   dict(mysql_conn=mysql_conn, temp_db=temp_db))
 
@@ -254,4 +295,23 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    retcode = None
+    error = None
+    try:
+        main()
+    except subprocess.CalledProcessError as e:
+        if e.retcode < 0:
+            error = "Command was terminated by signal"
+            retcode = -e.retcode
+        else:
+            error = "Command errored with code %s" % e.retcode
+            retcode = e.retcode
+    except (NotFound, OSError) as e:
+        error = "Command failed: %s" % e
+        retcode = 127
+    if error:
+        print >>sys.stderr, error
+        print >>sys.stderr, "Clone FAILED."
+        sys.exit(retcode)
+    else:
+        print >>sys.stderr, "Clone complete."
