@@ -1,4 +1,6 @@
 (function(win, doc, $) {
+    "use strict";
+
     if(!win.waffle || !win.waffle.flag_is_active('wiki_samples')) return;
 
     var sites = ['codepen', 'jsfiddle'];
@@ -8,8 +10,8 @@
     var plug = '<!-- Learn about this code on MDN: ' + sourceURL + ' -->\n\n';
 
     var analytics = '<input type="hidden" name="utm_source" value="mdn" />' +
-                            '<input type="hidden" name="utm_medium" value="code-sample" />' +
-                            '<input type="hidden" name="utm_campaign" value="external-samples" />';
+                    '<input type="hidden" name="utm_medium" value="code-sample" />' +
+                    '<input type="hidden" name="utm_campaign" value="external-samples" />';
 
     // Find sample IFRAMES
     // Some are wrapped in tables, so put the button after the table or after the iframe
@@ -17,9 +19,11 @@
         var $this = $(this);
         var parentTable = $this.parents('.sample-code-table').get(0);
         var section = $this.attr('id').substring(frameLength);
+        var source = $this.attr('src').replace(/^https?:\/\//,'');
+        source = source.slice(source.indexOf('/'), source.indexOf('$'));
 
         $(parentTable || $this).after(function() {
-            return createSampleButtons(section);
+            return createSampleButtons(section, source);
         });
     });
 
@@ -27,6 +31,7 @@
     $('#wikiArticle').on('click', 'button.open-in-host', function(){
         var $button = $(this);
         var section = $button.attr('data-section');
+        var source  = $button.attr('data-source');
         var sampleCodeHost = $button.attr('data-host');
 
         // track the click and sample code host
@@ -38,7 +43,7 @@
 
         // disable the button, till we open the fiddle
         $button.attr('disabled', 'disabled');
-        $.get(sourceURL + '?section=' + section + '&raw=1').then(function(sample) {
+        $.get(source + '?section=' + section + '&raw=1').then(function(sample) {
             var $sample = $('<div />').append(sample);
             var htmlCode = $sample.find('pre[class*=html]').text();
             var cssCode = $sample.find('pre[class*=css]').text();
@@ -87,13 +92,21 @@
         }
     }
 
-    function createSampleButtons(section) {
+    function createSampleButtons(section, source) {
         var $parent = $('<div />');
 
         $.each(sites, function(){
             // convert sitename to lowercase for icon name and host identifier
             var host = this.toLowerCase();
-            $parent.append('<button class="open-in-host" data-host="'+ host +'" data-section="' + section + '"><i aria-hidden="true" class="icon-'+ host +'"></i> Open in ' + this + '</button>');
+            $parent.append([
+                '<button class="open-in-host" ',
+                        'data-host="', host, '" ',
+                        'data-section="', section, '"',
+                        'data-source="', source, '">',
+                    '<i aria-hidden="true" class="icon-', host,'"></i> ',
+                    'Open in ', this,
+                '</button>'
+            ].join(''));
         });
 
         return $parent;
