@@ -107,15 +107,6 @@ def wait_add_rev(document):
     return document
 
 
-# I don't like this thing. revision() is more flexible. All this adds is
-# is_approved=True, but it doesn't even mention approval in its name.
-# TODO: Remove.
-def doc_rev(content=''):
-    """Save a document and an approved revision with the given content."""
-    r = revision(content=content, is_approved=True)
-    r.save()
-    return r.document, r
-
 # End model makers.
 
 

@@ -3,7 +3,7 @@ from nose.plugins.attrib import attr
 
 from kuma.users.tests import UserTestCase
 from ..forms import RevisionForm, RevisionValidationForm, TreeMoveForm
-from ..tests import doc_rev, normalize_html
+from ..tests import revision, normalize_html
 
 
 class FormEditorSafetyFilterTests(UserTestCase):
@@ -12,10 +12,10 @@ class FormEditorSafetyFilterTests(UserTestCase):
     def test_form_onload_attr_filter(self):
         """RevisionForm should strip out any harmful onload attributes from
         input markup"""
-        d, r = doc_rev("""
+        rev = revision(is_approved=True, save=True, content="""
             <svg><circle onload=confirm(3)>
         """)
-        rev_form = RevisionForm(instance=r)
+        rev_form = RevisionForm(instance=rev)
         ok_('onload' not in rev_form.initial['content'])
 
 
@@ -24,7 +24,7 @@ class FormSectionEditingTests(UserTestCase):
     def test_form_loaded_with_section(self):
         """RevisionForm given section_id should load initial content for only
         one section"""
-        d, r = doc_rev("""
+        rev = revision(is_approved=True, save=True, content="""
             <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
@@ -42,12 +42,12 @@ class FormSectionEditingTests(UserTestCase):
             <p>test</p>
             <p>test</p>
         """
-        rev_form = RevisionForm(instance=r, section_id="s2")
+        rev_form = RevisionForm(instance=rev, section_id="s2")
         eq_(normalize_html(expected),
             normalize_html(rev_form.initial['content']))
 
     def test_form_save_section(self):
-        d, r = doc_rev("""
+        rev = revision(is_approved=True, save=True, content="""
             <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
@@ -77,9 +77,9 @@ class FormSectionEditingTests(UserTestCase):
             <p>test</p>
         """
         rev_form = RevisionForm({"content": replace_content},
-                                instance=r,
+                                instance=rev,
                                 section_id="s2")
-        new_rev = rev_form.save(r.creator, d)
+        new_rev = rev_form.save(rev.creator, rev.document)
         eq_(normalize_html(expected),
             normalize_html(new_rev.content))
 
