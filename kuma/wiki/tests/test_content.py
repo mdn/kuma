@@ -12,7 +12,7 @@ import kuma.wiki.content
 from kuma.core.tests import KumaTestCase, eq_, ok_
 from kuma.users.tests import UserTestCase
 
-from . import doc_rev, document, normalize_html
+from . import document, normalize_html, revision
 
 from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_TAGS
 from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
@@ -588,7 +588,7 @@ class ContentSectionToolTests(UserTestCase):
         sample_js = u"""
             window.alert("Hi there!");
         """
-        doc, rev = doc_rev(u"""
+        rev = revision(is_approved=True, save=True, content=u"""
             <p>This is a page. Deal with it.</p>
 
             <h3 id="sample0">This is a section</h3>
@@ -635,31 +635,31 @@ class ContentSectionToolTests(UserTestCase):
         """ % (escape(sample_html), escape(sample_css), escape(sample_js)))
 
         # live sample using the section logic
-        result = doc.extract.code_sample('sample0')
+        result = rev.document.extract.code_sample('sample0')
         eq_('section html', result['html'].strip())
         eq_('section css', result['css'].strip())
         eq_('section js', result['js'].strip())
 
         # pull out a complete sample.
-        result = doc.extract.code_sample('sample2')
+        result = rev.document.extract.code_sample('sample2')
         eq_(sample_html.strip(), result['html'].strip())
         eq_(sample_css.strip(), result['css'].strip())
         eq_(sample_js.strip(), result['js'].strip())
 
         # a sample missing one part.
-        result = doc.extract.code_sample('sample3')
+        result = rev.document.extract.code_sample('sample3')
         eq_('Ignore me', result['html'].strip())
         eq_(None, result['css'])
         eq_('Ignore me', result['js'].strip())
 
         # a sample with only one part.
-        result = doc.extract.code_sample('sample4')
+        result = rev.document.extract.code_sample('sample4')
         eq_(None, result['html'])
         eq_(None, result['css'])
         eq_('Ignore me', result['js'].strip())
 
         # a "sample" with no code listings.
-        result = doc.extract.code_sample('not-a-sample')
+        result = rev.document.extract.code_sample('not-a-sample')
         eq_(None, result['html'])
         eq_(None, result['css'])
         eq_(None, result['js'])
@@ -669,7 +669,7 @@ class ContentSectionToolTests(UserTestCase):
         Non-breaking spaces are turned to normal spaces in code sample
         extraction.
         """
-        doc, rev = doc_rev("""
+        rev = revision(is_approved=True, save=True, content="""
             <h2 id="bug819999">Bug 819999</h2>
             <pre class="brush: css">
             .widget select,
@@ -681,7 +681,7 @@ class ContentSectionToolTests(UserTestCase):
             }
             </pre>
         """)
-        result = doc.extract.code_sample('bug819999')
+        result = rev.document.extract.code_sample('bug819999')
         ok_(result['css'].find(u'\xa0') == -1)
 
     def test_bug1173170(self):
@@ -689,9 +689,10 @@ class ContentSectionToolTests(UserTestCase):
         Make sure the colons in sample ids doesn't trip up the code
         extraction due to their ambiguity with pseudo selectors
         """
-        doc, rev = doc_rev("""<pre id="Bug:1173170">Bug 1173170</pre>""")
+        rev = revision(is_approved=True, save=True,
+                       content="""<pre id="Bug:1173170">Bug 1173170</pre>""")
         try:
-            doc.extract.code_sample('Bug:1173170')
+            rev.document.extract.code_sample('Bug:1173170')
         except SelectorSyntaxError:
             self.fail("There should be no SelectorSyntaxError")
 
@@ -807,7 +808,8 @@ class ContentSectionToolTests(UserTestCase):
         eq_(page.find('#ok').attr('href'), '/docs/ok/test')
 
     def test_link_annotation(self):
-        d, r = doc_rev("This document exists")
+        rev = revision(is_approved=True, save=True,
+                       content="This document exists")
 
         document(title=u'Héritée', locale=u'fr', slug=u'CSS/Héritage',
                  save=True)
@@ -815,11 +817,13 @@ class ContentSectionToolTests(UserTestCase):
                  slug=u'DOM/StyleSheet', save=True)
 
         base_url = u'https://testserver'
+        doc_url = rev.document.get_absolute_url()
         vars = dict(
             base_url=base_url,
-            exist_url=d.get_absolute_url(),
-            exist_url_with_base=urljoin(base_url, d.get_absolute_url()),
-            uilocale_url=u'/en-US/docs/%s/%s' % (d.locale, d.slug),
+            exist_url=doc_url,
+            exist_url_with_base=urljoin(base_url, doc_url),
+            uilocale_url=u'/en-US/docs/%s/%s' % (rev.document.locale,
+                                                 rev.document.slug),
             noexist_url=u'/en-US/docs/no-such-doc',
             noexist_url_with_base=urljoin(base_url,
                                           u'/en-US/docs/no-such-doc'),
@@ -1059,13 +1063,13 @@ class ExtractorTests(UserTestCase):
 
     def test_css_classname_extraction(self):
         expected = ('foobar', 'barfoo', 'bazquux')
-        doc, rev = doc_rev("""
+        rev = revision(is_approved=True, save=True, content="""
             <p class="%s">Test</p>
             <p class="%s">Test</p>
             <div class="%s">Test</div>
         """ % expected)
-        doc.render()
-        result = doc.extract.css_classnames()
+        rev.document.render()
+        result = rev.document.extract.css_classnames()
         eq_(sorted(expected), sorted(result))
 
     def test_html_attribute_extraction(self):
@@ -1074,25 +1078,25 @@ class ExtractorTests(UserTestCase):
             'id="frazzy"',
             'lang="farb"',
         )
-        doc, rev = doc_rev("""
+        rev = revision(is_approved=True, save=True, content="""
             <p %s>Test</p>
             <p %s>Test</p>
             <div %s>Test</div>
         """ % expected)
-        doc.render()
-        doc = Document.objects.get(pk=doc.pk)
+        rev.document.render()
+        doc = Document.objects.get(pk=rev.document.pk)
         result = doc.extract.html_attributes()
         eq_(sorted(expected), sorted(result))
 
     def test_kumascript_macro_extraction(self):
         expected = ('foobar', 'barfoo', 'bazquux', 'banana')
-        doc, rev = doc_rev("""
+        rev = revision(is_approved=True, save=True, content="""
             <p>{{ %s }}</p>
             <p>{{ %s("foo", "bar", "baz") }}</p>
             <p>{{ %s    ("quux") }}</p>
             <p>{{%s}}</p>
         """ % expected)
-        result = doc.extract.macro_names()
+        result = rev.document.extract.macro_names()
         eq_(sorted(expected), sorted(result))
 
     @mock.patch('kuma.wiki.constants.CODE_SAMPLE_MACROS', ['LinkCodeSample'])
@@ -1102,7 +1106,7 @@ class ExtractorTests(UserTestCase):
             'css': '.some-css { color: red; }',
             'js': 'window.alert("HI THERE")',
         }
-        doc, rev = doc_rev("""
+        rev = revision(is_approved=True, save=True, content="""
             <div id="sample" class="code-sample">
                 <pre class="brush: html">%(html)s</pre>
                 <pre class="brush: css">%(css)s</pre>
@@ -1110,7 +1114,7 @@ class ExtractorTests(UserTestCase):
             </div>
             {{ LinkCodeSample('sample1') }}
         """ % expected)
-        result = doc.extract.code_sample('sample')
+        result = rev.document.extract.code_sample('sample')
         eq_(expected, result)
 
 

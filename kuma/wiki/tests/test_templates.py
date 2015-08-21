@@ -1082,7 +1082,6 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
             len(doc('#select-locale ul.locales li')))
 
 
-# TODO: Merge with wiki.tests.doc_rev()?
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',

@@ -19,7 +19,7 @@ from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.users.tests import UserTestCase
 
 from . import (create_document_tree, create_template_test_users,
-               create_topical_parents_docs, doc_rev, document, normalize_html,
+               create_topical_parents_docs, document, normalize_html,
                revision)
 from .. import tasks
 from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
@@ -51,8 +51,8 @@ class DocumentTests(UserTestCase):
     def test_json_data(self):
         """bug 875349"""
         # Set up a doc with tags
-        doc, rev = doc_rev('Sample document')
-        doc.save()
+        rev = revision(is_approved=True, save=True, content='Sample document')
+        doc = rev.document
         expected_tags = sorted(['foo', 'bar', 'baz'])
         expected_review_tags = sorted(['tech', 'editorial'])
         doc.tags.set(*expected_tags)
@@ -445,8 +445,8 @@ class UserDocumentTests(UserTestCase):
             <p>More content shows up here.</p>
         """ % (escape(sample_html), escape(sample_css), escape(sample_js))
 
-        d1, r1 = doc_rev(doc_src)
-        result = d1.extract.code_sample('s2')
+        rev = revision(is_approved=True, save=True, content=doc_src)
+        result = rev.document.extract.code_sample('s2')
         eq_(sample_html.strip(), result['html'].strip())
         eq_(sample_css.strip(), result['css'].strip())
         eq_(sample_js.strip(), result['js'].strip())
@@ -474,19 +474,19 @@ class TaggedDocumentTests(UserTestCase):
     @pytest.mark.tags
     def test_revision_tags(self):
         """Change tags on Document by creating Revisions"""
-        d, _ = doc_rev('Sample document')
+        rev = revision(is_approved=True, save=True, content='Sample document')
 
         eq_(0, Document.objects.filter(tags__name='foo').count())
         eq_(0, Document.objects.filter(tags__name='alpha').count())
 
-        r = revision(document=d, content='Update to document',
+        r = revision(document=rev.document, content='Update to document',
                      is_approved=True, tags="foo, bar, baz")
         r.save()
 
         eq_(1, Document.objects.filter(tags__name='foo').count())
         eq_(0, Document.objects.filter(tags__name='alpha').count())
 
-        r = revision(document=d, content='Another update',
+        r = revision(document=rev.document, content='Another update',
                      is_approved=True, tags="alpha, beta, gamma")
         r.save()
 
@@ -499,37 +499,40 @@ class RevisionTests(UserTestCase):
 
     def test_approved_revision_updates_html(self):
         """Creating an approved revision updates document.html"""
-        d, _ = doc_rev('Replace document html')
+        rev = revision(is_approved=True, save=True,
+                       content='Replace document html')
 
-        assert 'Replace document html' in d.html, \
-               '"Replace document html" not in %s' % d.html
+        assert 'Replace document html' in rev.document.html, \
+               '"Replace document html" not in %s' % rev.document.html
 
         # Creating another approved revision replaces it again
-        r = revision(document=d, content='Replace html again',
+        r = revision(document=rev.document, content='Replace html again',
                      is_approved=True)
         r.save()
 
-        assert 'Replace html again' in d.html, \
-               '"Replace html again" not in %s' % d.html
+        assert 'Replace html again' in rev.document.html, \
+               '"Replace html again" not in %s' % rev.document.html
 
     def test_unapproved_revision_not_updates_html(self):
         """Creating an unapproved revision does not update document.html"""
-        d, _ = doc_rev('Here to stay')
+        rev = revision(is_approved=True, save=True, content='Here to stay')
 
-        assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
+        assert 'Here to stay' in rev.document.html, \
+               '"Here to stay" not in %s' % rev.document.html
 
         # Creating another approved revision keeps initial content
-        r = revision(document=d, content='Fail to replace html',
+        r = revision(document=rev.document, content='Fail to replace html',
                      is_approved=False)
         r.save()
 
-        assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
+        assert 'Here to stay' in rev.document.html, \
+               '"Here to stay" not in %s' % rev.document.html
 
     def test_revision_unicode(self):
         """Revision containing unicode characters is saved successfully."""
-        str = u'Firefox informa\xe7\xf5es \u30d8\u30eb'
-        _, r = doc_rev(str)
-        eq_(str, r.content)
+        content = u'Firefox informa\xe7\xf5es \u30d8\u30eb'
+        rev = revision(is_approved=True, save=True, content=content)
+        eq_(content, rev.content)
 
     def test_save_bad_based_on(self):
         """Saving a Revision with a bad based_on value raises an error."""
@@ -583,55 +586,52 @@ class RevisionTests(UserTestCase):
     def test_show_toc(self):
         """Setting toc_depth appropriately affects the Document's
         show_toc property."""
-        d, r = doc_rev('Toggle table of contents.')
-        assert (r.toc_depth != 0)
-        assert d.show_toc
+        rev = revision(is_approved=True, save=True,
+                       content='Toggle table of contents.')
+        assert (rev.toc_depth != 0)
+        assert rev.document.show_toc
 
-        r = revision(document=d, content=r.content, toc_depth=0,
+        r = revision(document=rev.document, content=rev.content, toc_depth=0,
                      is_approved=True)
         r.save()
-        assert not d.show_toc
+        assert not rev.document.show_toc
 
-        r = revision(document=d, content=r.content, toc_depth=1,
+        r = revision(document=rev.document, content=r.content, toc_depth=1,
                      is_approved=True)
         r.save()
-        assert d.show_toc
+        assert rev.document.show_toc
 
     def test_revert(self):
         """Reverting to a specific revision."""
-        d, r = doc_rev('Test reverting')
-        old_id = r.id
+        rev = revision(is_approved=True, save=True, content='Test reverting')
+        old_id = rev.id
 
-        time.sleep(1)
-
-        revision(document=d,
+        revision(document=rev.document,
                  title='Test reverting',
                  content='An edit to revert',
                  comment='This edit gets reverted',
                  is_approved=True)
-        r.save()
+        rev.save()
 
-        time.sleep(1)
-
-        reverted = d.revert(r, r.creator)
+        reverted = rev.document.revert(rev, rev.creator)
         ok_('Revert to' in reverted.comment)
         ok_('Test reverting' == reverted.content)
         ok_(old_id != reverted.id)
 
     def test_revert_review_tags(self):
-        d, r = doc_rev('Test reverting with review tags')
-        r.review_tags.set('technical')
+        rev = revision(is_approved=True, save=True,
+                       content='Test reverting with review tags')
+        rev.review_tags.set('technical')
 
-        time.sleep(1)
-
-        r2 = revision(document=d, title='Test reverting with review tags',
+        r2 = revision(document=rev.document,
+                      title='Test reverting with review tags',
                       content='An edit to revert',
                       comment='This edit gets reverted',
                       is_approved=True)
         r2.save()
         r2.review_tags.set('editorial')
 
-        reverted = d.revert(r, r.creator)
+        reverted = rev.document.revert(rev, rev.creator)
         reverted_tags = [t.name for t in reverted.review_tags.all()]
         ok_('technical' in reverted_tags)
         ok_('editorial' not in reverted_tags)
@@ -639,19 +639,20 @@ class RevisionTests(UserTestCase):
     def test_get_tidied_content_uses_model_field_first(self):
         content = '<h1>  Test get_tidied_content.  </h1>'
         fake_tidied = '<h1>  Fake tidied.  </h1>'
-        d, r = doc_rev(content)
-        r.tidied_content = fake_tidied
-        eq_(fake_tidied, r.get_tidied_content())
+        rev = revision(is_approved=True, save=True, content=content,
+                       tidied_content=fake_tidied)
+        eq_(fake_tidied, rev.get_tidied_content())
 
     def test_get_tidied_content_tidies_in_process_by_default(self):
         content = '<h1>  Test get_tidied_content.  </h1>'
-        d, r = doc_rev(content)
+        rev = revision(is_approved=True, save=True, content=content)
         tidied_content, errors = tidy_content(content)
-        eq_(tidied_content, r.get_tidied_content())
+        eq_(tidied_content, rev.get_tidied_content())
 
     def test_get_tidied_content_returns_none_on_allow_none(self):
-        d, r = doc_rev('Test get_tidied_content can return None.')
-        eq_(None, r.get_tidied_content(allow_none=True))
+        rev = revision(is_approved=True, save=True,
+                       content='Test get_tidied_content can return None.')
+        eq_(None, rev.get_tidied_content(allow_none=True))
 
 
 class GetCurrentOrLatestRevisionTests(UserTestCase):
@@ -680,16 +681,16 @@ class DumpAndLoadJsonTests(UserTestCase):
 
     def test_roundtrip(self):
         # Create some documents and revisions here, rather than use a fixture
-        d1, r1 = doc_rev('Doc 1')
-        d2, r2 = doc_rev('Doc 2')
-        d3, r3 = doc_rev('Doc 3')
-        d4, r4 = doc_rev('Doc 4')
-        d5, r5 = doc_rev('Doc 5')
+        r1 = revision(is_approved=True, save=True, content='Doc 1')
+        r2 = revision(is_approved=True, save=True, content='Doc 2')
+        r3 = revision(is_approved=True, save=True, content='Doc 3')
+        r4 = revision(is_approved=True, save=True, content='Doc 4')
+        r5 = revision(is_approved=True, save=True, content='Doc 5')
 
         # Since this happens in dev sometimes, break a doc by deleting its
         # current revision and leaving it with none.
-        d5.current_revision = None
-        d5.save()
+        r5.document.current_revision = None
+        r5.document.save()
         r5.delete()
 
         # The same creator will be used for all the revs, so let's also get a
@@ -739,7 +740,7 @@ class DumpAndLoadJsonTests(UserTestCase):
 
         # Ensure the current revisions of the documents have changed, and that
         # the creator matches the uploader.
-        for d_orig in (d1, d2, d3, d4):
+        for d_orig in (r1.document, r2.document, r3.document, r4.document):
             d_curr = Document.objects.get(pk=d_orig.pk)
             eq_(2, d_curr.revisions.count())
             ok_(d_orig.current_revision.id != d_curr.current_revision.id)
@@ -761,7 +762,7 @@ class DumpAndLoadJsonTests(UserTestCase):
         eq_(loaded_cnt / 2, Revision.objects.count())
 
         # The originals should be gone, now.
-        for d_orig in (d1, d2, d3, d4):
+        for d_orig in (r1.document, r2.document, r3.document, r4.document):
 
             # The original primary key should have gone away.
             try:
@@ -786,7 +787,10 @@ class DeferredRenderingTests(UserTestCase):
         super(DeferredRenderingTests, self).setUp()
         self.rendered_content = 'THIS IS RENDERED'
         self.raw_content = 'THIS IS NOT RENDERED CONTENT'
-        self.d1, self.r1 = doc_rev('Doc 1')
+        self.r1 = revision(is_approved=True, save=True, content='Doc 1')
+        self.d1 = self.r1.document
+        config.KUMA_DOCUMENT_RENDER_TIMEOUT = 600.0
+        config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 7.0
 
     def tearDown(self):
         super(DeferredRenderingTests, self).tearDown()
