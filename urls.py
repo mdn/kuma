@@ -10,7 +10,7 @@ from kuma.attachments import views as attachment_views
 from kuma.contentflagging.views import flagged
 from kuma.core import views as core_views
 from kuma.wiki.admin import purge_view
-from kuma.wiki.views import mindtouch_to_kuma_redirect
+from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
 
 jingo.monkey.patch()
 admin.autodiscover()

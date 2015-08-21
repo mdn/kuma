@@ -39,7 +39,7 @@ from ..events import EditDocumentEvent
 from ..forms import MIDAIR_COLLISION
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       DocumentTag, DocumentDeletionLog)
-from ..views import _get_seo_parent_title
+from ..views.document import _get_seo_parent_title
 from . import (doc_rev, document, new_document_data, revision,
                normalize_html, create_template_test_users,
                make_translation, WikiTestCase, FakeResponse)
