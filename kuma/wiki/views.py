@@ -1377,7 +1377,7 @@ def _make_doc_structure(document, level, expand, depth):
 @require_GET
 @allow_CORS_GET
 @process_document_path
-def get_children(request, document_slug, document_locale):
+def children(request, document_slug, document_locale):
     """Retrieves a document and returns its children in a JSON structure"""
     expand = 'expand' in request.GET
     max_depth = 5

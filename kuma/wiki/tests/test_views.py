@@ -264,7 +264,7 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         Switch.objects.create(name='application_ACAO', active=True)
         for expand in (True, False):
-            url = reverse('wiki.get_children', args=['Root'],
+            url = reverse('wiki.children', args=['Root'],
                           locale=settings.WIKI_DEFAULT_LANGUAGE)
             if expand:
                 url = '%s?expand' % url
@@ -289,7 +289,7 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         # Depth parameter testing
         def _depth_test(depth, aught):
-            url = reverse('wiki.get_children', args=['Root'],
+            url = reverse('wiki.children', args=['Root'],
                           locale=settings.WIKI_DEFAULT_LANGUAGE) + '?depth=' + str(depth)
             resp = self.client.get(url)
             json_obj = json.loads(resp.content)
@@ -303,13 +303,13 @@ class ViewTests(UserTestCase, WikiTestCase):
         sort_root_doc = _make_doc('Sort Root', 'Sort_Root')
         _make_doc('B Child', 'Sort_Root/B_Child', sort_root_doc)
         _make_doc('A Child', 'Sort_Root/A_Child', sort_root_doc)
-        resp = self.client.get(reverse('wiki.get_children', args=['Sort_Root'],
+        resp = self.client.get(reverse('wiki.children', args=['Sort_Root'],
                                        locale=settings.WIKI_DEFAULT_LANGUAGE))
         json_obj = json.loads(resp.content)
         eq_(json_obj['subpages'][0]['title'], 'A Child')
 
         # Test if we are serving an error json if document does not exist
-        no_doc_url = reverse('wiki.get_children', args=['nonexistentDocument'],
+        no_doc_url = reverse('wiki.children', args=['nonexistentDocument'],
                              locale=settings.WIKI_DEFAULT_LANGUAGE)
         resp = self.client.get(no_doc_url)
         result = json.loads(resp.content)
