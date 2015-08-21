@@ -118,8 +118,7 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
             # Linkify the tags used in the feed item
             categories = dict(
                 (x, request.build_absolute_uri(
-                    reverse('kuma.wiki.views.list_documents',
-                            kwargs={'tag': x})))
+                    reverse('wiki.tag', kwargs={'tag': x})))
                 for x in item['categories']
             )
             if categories:
@@ -153,7 +152,7 @@ class DocumentsRecentFeed(DocumentsFeed):
                 reverse('wiki.tag', args=(tag,)))
         else:
             self.link = self.request.build_absolute_uri(
-                reverse('kuma.wiki.views.list_documents'))
+                reverse('wiki.all_documents'))
 
     def items(self):
         # Temporarily storing the selected documents PKs in a list
@@ -185,12 +184,11 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
         if tag:
             self.title = _('MDN documents for %s review' % tag)
             self.link = self.request.build_absolute_uri(
-                reverse('kuma.wiki.views.list_documents_for_review',
-                        args=(tag,)))
+                reverse('wiki.list_review_tag', args=(tag,)))
         else:
             self.title = _('MDN documents for review')
             self.link = self.request.build_absolute_uri(
-                reverse('kuma.wiki.views.list_documents_for_review'))
+                reverse('wiki.list_review'))
         return tag
 
     def items(self, tag=None):
@@ -220,7 +218,7 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
                        self.locale)
         # TODO: Need an HTML / dashboard version of this feed
         self.link = self.request.build_absolute_uri(
-            reverse('kuma.wiki.views.list_documents'))
+            reverse('wiki.all_documents'))
 
     def items(self):
         return (Document.objects

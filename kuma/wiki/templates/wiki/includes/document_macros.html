@@ -51,7 +51,7 @@
                 {% if user.is_authenticated() and document %}
                   <li class="page-watch">
                     {% set subscribe_status = _('Updating subscription status') %}
-                    <form action="{{ url('wiki.subscribe_document', document.slug, locale=document.locale) }}" method="post">
+                    <form action="{{ url('wiki.subscribe', document.slug, locale=document.locale) }}" method="post">
                         {{ csrf() }}
                         <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ _('Subscribe to this article') }}" data-unsubscribe-text="{{ _('Unsubscribe from this article') }}" data-subscribe-message="{{ _('You are now subscribed to this article.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from this article.') }}">
                         {% if document.is_watched_by(user) %}{{ _('Unsubscribe from this article') }}{% else %}{{ _('Subscribe to this article') }}{% endif %}
@@ -60,7 +60,7 @@
 
                     {% if document.parent %}
                     {% set parent_language = document.parent.language %}
-                    <form action="{{ url('wiki.subscribe_document', document.parent.slug, locale=document.parent.locale) }}" method="post">
+                    <form action="{{ url('wiki.subscribe', document.parent.slug, locale=document.parent.locale) }}" method="post">
                         {{ csrf() }}
                         <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ _('Subscribe to {language} version')|f(language=parent_language) }}" data-unsubscribe-text="{{ _('Unsubscribe from {language} version')|f(language=parent_language) }}" data-subscribe-message="{{ _('You are now subscribed to the {language} version of this article.')|f(language=parent_language) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from the {language} version of this article.')|f(language=parent_language) }}">
                         {% if document.parent.is_watched_by(user) %}{{ _('Unsubscribe from {language} version')|f(language=parent_language) }}{% else %}{{ _('Subscribe to {language} version')|f(language=parent_language) }}{% endif %}
