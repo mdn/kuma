@@ -17,8 +17,8 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'figcaption',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
-    'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
-    'address', 'font',
+    'progress', 'audio', 'video', 'details', 'summary', 'datagrid', 'datalist',
+    'table', 'address', 'font',
     'bdi', 'bdo', 'del', 'ins', 'kbd', 'samp', 'var',
     'ruby', 'rp', 'rt', 'q',
     # MathML
@@ -51,6 +51,7 @@ ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
 ALLOWED_ATTRIBUTES['video'] = ['style', 'id', 'class', 'lang', 'src',
                                'controls', 'dir']
 ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size', 'dir']
+ALLOWED_ATTRIBUTES['details'] = ['open']
 ALLOWED_ATTRIBUTES['select'] = ['name', 'dir']
 ALLOWED_ATTRIBUTES['option'] = ['value', 'selected', 'dir']
 ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id', 'lang', 'start', 'dir']
