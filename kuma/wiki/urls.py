@@ -78,8 +78,8 @@ document_patterns = [
 
     # Un/Subscribe to document edit notifications.
     url(r'^\$subscribe$',
-        views.subscribe_document,
-        name='wiki.subscribe_document'),
+        views.subscribe,
+        name='wiki.subscribe'),
 
     # Vote helpful/not helpful
     url(r'^\$vote',

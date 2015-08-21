@@ -1802,7 +1802,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 @require_POST
 @login_required
 @process_document_path
-def subscribe_document(request, document_slug, document_locale):
+def subscribe(request, document_slug, document_locale):
     """Stop watching a document for edits."""
     document = get_object_or_404(
         Document, locale=document_locale, slug=document_slug)
