@@ -334,10 +334,14 @@ Adding a new Locale
 
 5.  Add the locale to `MDN_LANGUAGES` in `settings.py`
 
-6.  Verify django loads new locale without errors by visiting the locale's home
+6. Create the `jsi18n` file for the new locale::
+
+        $ ./manage.py compilejsi18n
+
+7.  Verify django loads new locale without errors by visiting the locale's home
     page. E.g., https://developer-local.allizom.org/ml/
 
-7.  BONUS: Use `podebug` to test a fake translation of the locale::
+8.  BONUS: Use `podebug` to test a fake translation of the locale::
 
         $ cd locale
         $ podebug --rewrite=bracket templates/LC_MESSAGES/messages.pot
@@ -347,14 +351,14 @@ Adding a new Locale
     Restart the django server and re-visit the new locale to verify it shows
     "translated" strings in the locale.
 
-8.  Update the `locale.tar.gz` and `product_details_json.tar.gz` files used by
+9.  Update the `locale.tar.gz` and `product_details_json.tar.gz` files used by
     `our Travis install script`_::
 
         $ python manage.py update_product_details
         $ tar -czf etc/data/product_details_json.tar.gz ../product_details_json/
         $ tar -czf etc/data/locale.tar.gz locale/
 
-9.  Commit the changes to `settings.py`, `locale.tar.gz`, and
+10.  Commit the changes to `settings.py`, `locale.tar.gz`, and
     `product_details_json.tar.gz`
 
 
