@@ -1,9 +1,9 @@
-Load Testing with Locust
-========================
+Performance Testing with Locust
+===============================
 
-We use Locust for load-testing MDN. We write locust test files for different
-behavior patterns on MDN, and run the tests to simulate those behaviors
-against other environments.
+We use Locust for performance-testing MDN. We write locust test files for
+different behavior patterns on MDN, and run the tests to simulate those
+behaviors against other environments.
 
 .. note:: **DO NOT RUN LOCUST TESTS AGAINST PRODUCTION**
 
@@ -12,10 +12,10 @@ Running Tests
 
 .. note:: **DO NOT RUN LOCUST TESTS AGAINST PRODUCTION**
 
-1. Start locust from the development vm::
+1. Start locust from the development VM::
 
     vagrant ssh
-    make load-smoke-test
+    make performance-tests
 
 2. Go to `http://developer-local.allizom.org:8089/ <http://developer-local.allizom.org:8089/>`_ UI for controlling:
 

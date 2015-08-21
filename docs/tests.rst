@@ -6,7 +6,6 @@ Kuma has a fairly comprehensive Python test suite. Changes should not break
 tests--only change a test if there is a good reason to change the expected
 behavior--and new code should come with tests.
 
-
 Running the Test Suite
 ======================
 
