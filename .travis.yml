@@ -20,13 +20,20 @@ env:
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive
         - CFLAGS=-O0
+        #- secure: "SnWizKd9zRohcjRO7Dpslz2VHLo3pYruz5p1KWcHDa3ttVxMXGhNz1jBUD/Lazn1uifqSoI8o8nMC503VXc+hu9Gq33wDjjoQRAU4srz13Acr6uRe7mNnGt3P9dKqODucMMqn0FvcZv+7z9vD73KNWLYk8n70Bd3+Wsmcre4kyE="
+        #- secure: "fR75lloHnd0VT1pWuFy0Z4eExjb4/q+SPoC77xWiPXLmojsPUQYEZaGQCB4EPGioIHI4TWxM5dBkwyNrp+rOjJaWeZv3IIhpQshAtdbcckyET3Ang4CtJK/900SoS1ZyDag1kKg28vXYvJKyxcx6p0uUI+E1exTtCydjyLNp8rk="
 before_install:
     - scripts/travis-install
     - pip install -U pip
+    - cd tests/ui && npm install intern@2.2.2 && cd ../../
 install:
     - pip install -r requirements/travis.txt
     - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
-script: tox -v
+script:
+    #- if [ "$TRAVIS_SECURE_VARS" = 1 ]; then cd tests/ui && node_modules/.bin/intern-runner config=intern-sauce-labs destructive=true wd=Web fi;
+    - cd tests/ui && node_modules/.bin/intern-runner config=intern-sauce-labs destructive=true wd=Web
+    #- tox -v
+
 after_failure:
     - dmesg | tail
 after_success:

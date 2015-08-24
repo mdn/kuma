@@ -53,6 +53,9 @@ define({
             console.log('Command line arguments have forced a grep to skip tests:  ' + args.grep);
         }
 
+        // Debug for Travis
+        console.log('Running on node version: ' + process.version);
+
         return config;
     }
 });
