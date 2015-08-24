@@ -28,7 +28,6 @@ src/django-statici18n/src
 src/django-sundial
 src/django-taggit
 src/django-tidings
-src/django-timezones
 src/django-waffle
 src/elasticsearch-dsl-py
 src/elasticsearch-py
