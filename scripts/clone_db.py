@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 """
 This script performs all the steps needed to produce an anonymized DB dump:
 
@@ -176,6 +176,8 @@ def main():
     options.add_option('-H', '--host',
                        default='127.0.0.1',
                        help='MySQL host')
+    options.add_option('-S', '--socket',
+                       help='MySQL socket')
     options.add_option('-i', '--input',
                        help='Input SQL dump filename')
     options.add_option('-o', '--output',
@@ -225,6 +227,18 @@ def main():
         password=opts.password and ('-p%s' % opts.password) or '',
         host=opts.host,
     )
+    if opts.socket:
+        mysql_conn = '-u%(user)s %(password)s -S%(socket)s' % dict(
+            user=opts.user,
+             password=opts.password and ('-p%s' % opts.password) or '',
+             socket=opts.socket,
+        )
+    else:
+        mysql_conn = '-u%(user)s %(password)s -h%(host)s' % dict(
+            user=opts.user,
+            password=opts.password and ('-p%s' % opts.password) or '',
+            host=opts.host,
+        )
 
     if opts.input:
         input_dump_fn = opts.input
