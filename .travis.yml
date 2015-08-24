@@ -13,20 +13,32 @@ services:
     - elasticsearch
 env:
     matrix:
-        - TOXENV=py27
-        - TOXENV=flake8
-        - TOXENV=docs
+        #- TOXENV=py27
+        #- TOXENV=flake8
+        #- TOXENV=docs
+        - TOXENV=intern
     global:
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive
         - CFLAGS=-O0
+        - secure: "SnWizKd9zRohcjRO7Dpslz2VHLo3pYruz5p1KWcHDa3ttVxMXGhNz1jBUD/Lazn1uifqSoI8o8nMC503VXc+hu9Gq33wDjjoQRAU4srz13Acr6uRe7mNnGt3P9dKqODucMMqn0FvcZv+7z9vD73KNWLYk8n70Bd3+Wsmcre4kyE="
+        - secure: "fR75lloHnd0VT1pWuFy0Z4eExjb4/q+SPoC77xWiPXLmojsPUQYEZaGQCB4EPGioIHI4TWxM5dBkwyNrp+rOjJaWeZv3IIhpQshAtdbcckyET3Ang4CtJK/900SoS1ZyDag1kKg28vXYvJKyxcx6p0uUI+E1exTtCydjyLNp8rk="
+        - secure: "dL/CjES/gLzxvCeLoznUT8gHMHP1xp6dDVdEAgWb8SBIqAD+mAT8cFm+OWw9J265GD4rexHTx9H1z2j6WZED92r8aAcU04CsQkxuGCQQ9CK0FTi6LlRVpCYE7ObmVqYnONhPyuCFZJgAU5QybQo+oKZPhYEUXl5fk5WvJLL6Kyw="
+        - secure: "bqIXjLiFoIaSUOtHv0sJ1lxvy1N7PIOSWfUgyNi4ryVgUySDBfE8OfyTPuMXLMxbNRq3y9Ft34tA6p6k9q1EwiW9z1i1xIcrgzMnbabhcCcDK+khLxeYsF49L3bvqn9A84pHkQDIaobjCZzpGbw4tP03EE4snmZkUHgs7h37Atw="
 before_install:
     - scripts/travis-install
     - pip install -U pip
+    - cd tests/ui && npm install intern@2.2.2 && cd ../../
 install:
     - pip install -r requirements/travis.txt
+    - pip install -r requirements/compiled.txt # Make me conditional for intern
     - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
-script: tox -v
+    - if [[ $TOXENV == 'intern' ]]; then ansible-playbook -vvv --tags=mysql --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
+before_script:
+    #- python manage.py runserver 0.0.0.0:80 # Make me conditional for intern
+    #- node kumascript/run.js # Make me conditional for intern
+script:
+    - tox -v
 after_failure:
     - dmesg | tail
 after_success:

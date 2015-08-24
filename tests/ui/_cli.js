@@ -28,6 +28,9 @@ define({
 
         // Set a username and password if present
         // If we weren't provided username and password, let's set a grep to avoid login tests
+        args.u = args.u || process.env.INTERN_USERNAME;
+        args.p = args.p || process.env.INTERN_PASSWORD
+
         if(args.u == undefined && args.p == undefined) {
             greps.push('requires-login');
             console.log('No username (-u) and password (-p) provided.  Tests requiring login will be skipped.');

@@ -37,6 +37,12 @@ define(['./_tests'], function(tests) {
         // Name of the tunnel class to use for WebDriver tests
         tunnel: 'NullTunnel',
 
+        // Options to pass to the WebDriver server tunnel
+        tunnelOptions: {
+            hostname: '127.0.0.1',
+            port: 4444
+        },
+
         // The desired AMD loader to use when running unit tests (client.html/client.js). Omit to use the default Dojo
         // loader
         useLoader: {
@@ -54,14 +60,7 @@ define(['./_tests'], function(tests) {
         },
 
         // A regular expression matching URLs to files that should not be included in code coverage analysis
-        excludeInstrumentation: /^(?:.\/*.js|node_modules)\//,
-
-        tunnelOptions: {
-            hostname: '127.0.0.1',
-            port: 4444
-        },
-
-        reporters: 'Pretty'
+        excludeInstrumentation: /^(?:.\/*.js|node_modules)\//
     };
 
 });
