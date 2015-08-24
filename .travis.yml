@@ -10,6 +10,7 @@ python:
     - "2.7"
 services:
     - memcached
+    - elasticsearch
 env:
     matrix:
         - TOXENV=py27
