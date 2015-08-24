@@ -2,19 +2,11 @@
 - hosts: all
   sudo: true
   vars_files:
+    - vars/elasticsearch.yml
     - vars/mysql.yml
-  pre_tasks:
-    - name: Get MySQL GPG key
-      apt_key:
-        id: 5072E1F5
-        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x8C718D3B5072E1F5"
-      tags: [mysql]
-    - name: Add MySQL deb repository
-      apt_repository: repo='deb http://repo.mysql.com/apt/ubuntu/ precise mysql-5.6' state=present
-      tags: [mysql]
-    - name: Update APT cache
-      apt: update_cache=yes
-      tags: [mysql]
   roles:
-    - { role: geerlingguy.mysql, tags: [mysql] }
+    - { role: travis, tags: ['travis'] }
+    - { role: geerlingguy.memcached, tags: ['travis'] }
+    - { role: geerlingguy.mysql, tags: ['travis'] }
+    - { role: Stouts.elasticsearch, tags: ['travis'] }
     - kuma

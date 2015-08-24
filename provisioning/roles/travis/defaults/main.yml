@@ -1,0 +1,18 @@
+travis_packages:
+  - build-essential
+  - libxml2-dev
+  - libxslt-dev
+  - libjpeg8
+  - libjpeg8-dev
+  - libfreetype6
+  - libfreetype6-dev
+  - zlib1g-dev
+  - sqlite3
+  - tidy
+  - libtidy-dev
+  - libtidy-0.99-0
+travis_shell:
+  - tar -C .. -zxf etc/data/product_details_json.tar.gz
+  - tar xvfz etc/data/locale.tar.gz
+  - ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
+  - ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib

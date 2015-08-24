@@ -1,0 +1,3 @@
+---
+- name: Ensure Elasticsearch is restarted.
+  service: "name=elasticsearch state=restarted sleep=10"
