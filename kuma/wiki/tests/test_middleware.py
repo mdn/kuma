@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from nose.plugins.attrib import attr
 from nose.tools import eq_
 
 from kuma.core.cache import memcache
@@ -110,5 +111,31 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
     def test_blank_url_root(self):
         """Ensure a blank url_root does not trigger URL remap"""
         url = '/en-US/docs/%s?raw=1' % self.other_doc.slug
+        response = self.client.get(url, follow=False)
+        eq_(200, response.status_code)
+
+    @attr('bug1189596')
+    def test_zone_url_ends_with_slash(self):
+        """Ensure urls only rewrite with a '/' at the end of url_root"""
+        zone_url_root = 'Firéfox'
+        zone_root_content = 'This is the Firéfox zone'
+
+        root_rev = revision(title='Firéfox', slug='Mozilla/Firéfox',
+                            content=zone_root_content,
+                            is_approved=True, save=True)
+        root_doc = root_rev.document
+
+        root_zone = DocumentZone(document=root_doc)
+        root_zone.url_root = zone_url_root
+        root_zone.save()
+
+        none_zone_rev = revision(title='Firéfox for iOS',
+                                 slug='Mozilla/Firéfox_for_iOS',
+                                 content='Page outside zone with same prefix',
+                                 is_approved=True, save=True)
+        non_zone_doc = none_zone_rev.document
+        non_zone_doc.save()
+
+        url = '/en-US/docs/%s' % non_zone_doc.slug
         response = self.client.get(url, follow=False)
         eq_(200, response.status_code)

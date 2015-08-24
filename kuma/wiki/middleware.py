@@ -31,7 +31,10 @@ class DocumentZoneMiddleware(object):
         remaps = DocumentZoneURLRemapsJob().get(request.locale)
         for original_path, new_path in remaps:
 
-            if request.path_info.startswith(original_path):
+            if (
+                request.path_info == original_path or
+                request.path_info.startswith(u''.join([original_path, '/']))
+            ):
                 # Is this a request for the "original" wiki path? Redirect to
                 # new URL root, if so.
                 new_path = request.path_info.replace(original_path,
