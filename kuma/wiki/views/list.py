@@ -69,7 +69,7 @@ def tags(request):
     """
     tags = DocumentTag.objects.order_by('name')
     tags = paginate(request, tags, per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_tags.html', {'tags': tags})
+    return render(request, 'wiki/list/tags.html', {'tags': tags})
 
 
 @require_GET
