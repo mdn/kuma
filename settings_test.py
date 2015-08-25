@@ -12,3 +12,9 @@ INSTALLED_APPS += (
 BANISH_ENABLED = False
 
 DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
+
+LOGGING['loggers']['django.db.backends.schema'] = {
+    'handlers': ['console'],
+    'propagate': True,
+    'level': 'WARNING',
+}
