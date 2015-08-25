@@ -297,11 +297,11 @@
                 {% endif %}
                 {% if document.current_revision.localization_in_progress %}
                   {% if document.current_revision.translation_age >= 10 %}
-                      <div class="warning warning-review"><p>{% trans translate_url=url('wiki.edit_document', document.slug, locale=document.locale) %}
+                      <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=url('wiki.edit_document', document.slug, locale=document.locale) %}
                         This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
                       {% endtrans %}</p></div>
                   {% else %}
-                      <div class="warning warning-review"><p>
+                      <div class="overheadIndicator translationInProgress"><p>
                         {{ _('This translation is in progress.') }}
                       </p></div>
                   {% endif %}
