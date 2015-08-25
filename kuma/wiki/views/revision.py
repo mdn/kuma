@@ -42,15 +42,22 @@ def preview(request):
     """
     Create an HTML fragment preview of the posted wiki syntax.
     """
-    wiki_content = request.POST.get('content', '')
     kumascript_errors = []
+    doc = None
+    render_preview = True
+
+    wiki_content = request.POST.get('content', '')
     doc_id = request.POST.get('doc_id')
     if doc_id:
         doc = Document.objects.get(id=doc_id)
-    else:
-        doc = None
 
-    if kumascript.should_use_rendered(doc, request.GET, html=wiki_content):
+    if doc and doc.defer_rendering:
+        render_preview = False
+    else:
+        render_preview = kumascript.should_use_rendered(doc,
+                                                        request.GET,
+                                                        html=wiki_content)
+    if render_preview:
         wiki_content, kumascript_errors = kumascript.post(request,
                                                           wiki_content,
                                                           request.locale)
