@@ -8,3 +8,4 @@ Disallow: /*type=feed
 Disallow: /skins
 Disallow: /template:
 Disallow: /media
+Disallow: /*/docs/Archive
