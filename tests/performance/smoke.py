@@ -1,3 +1,5 @@
+import os
+
 from locust import HttpLocust, TaskSet, task
 
 
@@ -8,6 +10,10 @@ class SmokeBehavior(TaskSet):
     generated later.
     See https://bugzil.la/1186085
     """
+
+    def on_start(self):
+        locust_host = os.environ.get('LOCUST_HOST', 'developer.allizom.org')
+        self.client.headers['Host'] = locust_host
 
     @task(weight=265)
     def home(self):
