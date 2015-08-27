@@ -107,7 +107,7 @@
                       {% for persona_account in accounts.persona %}{{ persona_account.uid }}{% if not loop.last %}, {% endif %}{% endfor %}
                     </div>
                     {% else %}
-                    <a href="{{ url('account_login') }}" class="field-management launch-persona-login" data-next="{{ next_url }}" data-service="Persona" data-process="connect">
+                    <a href="{{ url('account_login') }}" class="field-management launch-persona-login wait-for-persona disabled" data-next="{{ next_url }}" data-service="Persona" data-process="connect">
                       {{ _('Use your Persona account to sign in.') }}
                     </a>
                     <div class="field-account"></div>
