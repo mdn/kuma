@@ -90,7 +90,7 @@ def compare(request, document_slug, document_locale):
         # Punt any errors in parameter handling to a 404
         raise Http404
 
-    revisions = Revision.objects.prefetch_related('document')
+    revisions = Revision.objects.select_related('document')
     revision_from = get_object_or_404(revisions, id=from_id, document=doc)
     revision_to = get_object_or_404(revisions, id=to_id, document=doc)
 
