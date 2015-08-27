@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from json import loads
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models, migrations
@@ -36,19 +37,20 @@ def move_to_user(apps, schema_editor):
             user.title = profile.title
             user.tags = profile.tags
 
-            websites = profile.misc.get('websites', {})
-            for name, url in websites.iteritems():
-                # make sure the stuff in the websites blob
-                # matches the field names we expect
-                try:
-                    field_name = '%s_url' % name
-                    user._meta.get_field(field_name)
-                except models.FieldDoesNotExist:
-                    print('Tried porting profile %s and field %s' %
-                          (profile.id, name))
-                    raise
-                else:
-                    setattr(user, field_name, url)
+            if profile.misc:
+                websites = loads(profile.misc).get('websites', {})
+                for name, url in websites.iteritems():
+                    # make sure the stuff in the websites blob
+                    # matches the field names we expect
+                    try:
+                        field_name = '%s_url' % name
+                        user._meta.get_field(field_name)
+                    except models.FieldDoesNotExist:
+                        print('Tried porting profile %s and field %s' %
+                            (profile.id, name))
+                        raise
+                    else:
+                        setattr(user, field_name, url)
             user.save()
         else:
             unknowns.append(user.id)
