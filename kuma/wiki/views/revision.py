@@ -63,6 +63,7 @@ def preview(request):
     return render(request, 'wiki/preview.html', context)
 
 
+@prevent_indexing
 @require_GET
 @xframe_options_sameorigin
 @process_document_path

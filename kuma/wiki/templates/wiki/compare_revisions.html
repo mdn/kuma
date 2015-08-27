@@ -3,6 +3,7 @@
 
 {% set title = _('Compare Revisions | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
+{% set meta = [('robots', 'noindex, nofollow')] %}
 {% set classes = 'compare' %}
 
 {% block content %}
