@@ -942,6 +942,27 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         except UnicodeDecodeError:
             self.fail("Data wasn't posted as utf8")
 
+    @attr('bug1197971')
+    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0,
+                                 KUMASCRIPT_MAX_AGE=600)
+    @mock.patch('kuma.wiki.kumascript.post')
+    def test_dont_render_previews_for_deferred_docs(self, mock_post):
+        """
+        When a user previews a document with deferred rendering,
+        we want to force the preview to skip the kumascript POST,
+        so that big previews can't use up too many kumascript connections.
+        """
+        self.d.defer_rendering = True
+        self.d.save()
+
+        def should_not_post(*args, **kwargs):
+            self.fail("Preview doc with deferred rendering should not "
+                      "post to KumaScript.")
+        mock_post.side_effect = should_not_post
+
+        self.client.login(username='admin', password='testpass')
+        self.client.post(reverse('wiki.preview'), {'doc_id': self.d.id})
+
 
 class DocumentSEOTests(UserTestCase, WikiTestCase):
     """Tests for the document seo logic"""
