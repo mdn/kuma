@@ -242,7 +242,7 @@ define([
                         })
                         .executeAsync(function(done) {
                             scrollTo(0, 1200);
-                            done();
+                            setTimeout(done, 1000);
                         })
                         .end()
                         .findByCssSelector(tocSelector)
@@ -252,7 +252,7 @@ define([
                         })
                         .getComputedStyle('position')
                         .then(function(position) {
-                            assert.isTrue(position == 'fixed', 'Testing position is fixed: ' + position);
+                            assert.isTrue(position === 'fixed', 'Testing position is fixed: ' + position);
                         });
 
         },
