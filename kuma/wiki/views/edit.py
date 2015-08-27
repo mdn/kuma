@@ -19,7 +19,7 @@ from ratelimit.decorators import ratelimit
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json
-from kuma.core.decorators import never_cache, login_required
+from kuma.core.decorators import never_cache, login_required, block_user_agents
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import limit_banned_ip_to_0
 
@@ -81,6 +81,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     return render(request, 'wiki/edit_document.html', context)
 
 
+@block_user_agents
 @require_http_methods(['GET', 'POST'])
 @login_required  # TODO: Stop repeating this knowledge here and in Document.allows_editing_by.
 @ratelimit(key='user', rate=limit_banned_ip_to_0, block=True)

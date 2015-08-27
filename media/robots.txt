@@ -10,6 +10,15 @@ Disallow: /*docs/feeds
 Disallow: /*docs/templates
 Disallow: /*docs*Template:
 Disallow: /media
+Disallow: /*docs/all
+Disallow: /*docs/tag*
+Disallow: /*docs/needs-review*
+Disallow: /*docs/localization-tag*
+Disallow: /*docs/with-errors
+Disallow: /*docs/without-parent
+Disallow: /*docs/top-level
+Disallow: /*docs/get-documents
+Disallow: /*docs/load*
 Disallow: /*docs*$compare
 Disallow: /*docs*$revision
 Disallow: /*docs*$history

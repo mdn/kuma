@@ -9,7 +9,7 @@ from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 from ratelimit.decorators import ratelimit
-from kuma.core.decorators import login_required
+from kuma.core.decorators import login_required, block_user_agents
 from kuma.core.utils import smart_int
 
 from .. import kumascript
@@ -18,6 +18,7 @@ from ..helpers import format_comment
 from ..models import Document, Revision
 
 
+@block_user_agents
 @prevent_indexing
 @process_document_path
 @newrelic.agent.function_trace()
@@ -70,7 +71,7 @@ def preview(request):
     return render(request, 'wiki/preview.html', context)
 
 
-@prevent_indexing
+@block_user_agents
 @require_GET
 @xframe_options_sameorigin
 @process_document_path

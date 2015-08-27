@@ -2,7 +2,7 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 
-from kuma.core.decorators import login_required, permission_required
+from kuma.core.decorators import login_required, permission_required, block_user_agents
 from kuma.core.urlresolvers import reverse
 
 from ..decorators import check_readonly, process_document_path
@@ -11,6 +11,7 @@ from ..models import Document, Revision, DocumentDeletionLog
 from ..utils import locale_and_slug_from_path
 
 
+@block_user_agents
 @login_required
 @check_readonly
 def revert_document(request, document_path, revision_id):
@@ -37,6 +38,7 @@ def revert_document(request, document_path, revision_id):
         return redirect('wiki.document_revisions', revision.document.slug)
 
 
+@block_user_agents
 @login_required
 @permission_required('wiki.delete_document')
 @check_readonly
@@ -79,6 +81,7 @@ def delete_document(request, document_slug, document_locale):
     return render(request, 'wiki/confirm_document_delete.html', context)
 
 
+@block_user_agents
 @login_required
 @permission_required('wiki.restore_document')
 @check_readonly
@@ -94,6 +97,7 @@ def restore_document(request, document_slug, document_locale):
     return redirect(document)
 
 
+@block_user_agents
 @login_required
 @permission_required('wiki.purge_document')
 @check_readonly

@@ -3,6 +3,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.views.decorators.http import require_GET
 
+from kuma.core.decorators import block_user_agents
 from kuma.core.utils import paginate
 
 from ..constants import DOCUMENTS_PER_PAGE
@@ -12,6 +13,7 @@ from ..models import (Document, DocumentTag, Revision, ReviewTag,
 from ..queries import MultiQuerySet
 
 
+@block_user_agents
 @require_GET
 def documents(request, category=None, tag=None):
     """
@@ -47,6 +49,7 @@ def documents(request, category=None, tag=None):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@block_user_agents
 @require_GET
 def templates(request):
     """
@@ -62,6 +65,7 @@ def templates(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@block_user_agents
 @require_GET
 def tags(request):
     """
@@ -72,6 +76,7 @@ def tags(request):
     return render(request, 'wiki/list/tags.html', {'tags': tags})
 
 
+@block_user_agents
 @require_GET
 def needs_review(request, tag=None):
     """
@@ -90,6 +95,7 @@ def needs_review(request, tag=None):
     return render(request, 'wiki/list/needs_review.html', context)
 
 
+@block_user_agents
 @require_GET
 def with_localization_tag(request, tag=None):
     """
@@ -108,6 +114,7 @@ def with_localization_tag(request, tag=None):
     return render(request, 'wiki/list/with_localization_tags.html', context)
 
 
+@block_user_agents
 @require_GET
 def with_errors(request):
     """
@@ -123,6 +130,7 @@ def with_errors(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@block_user_agents
 @require_GET
 def without_parent(request):
     """Lists wiki documents without parent (no English source document)"""
@@ -137,6 +145,7 @@ def without_parent(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@block_user_agents
 @require_GET
 def top_level(request):
     """Lists documents directly under /docs/"""
@@ -151,6 +160,7 @@ def top_level(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@block_user_agents
 @require_GET
 @process_document_path
 @prevent_indexing

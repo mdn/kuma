@@ -9,7 +9,7 @@ from constance import config
 
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
-from kuma.core.decorators import never_cache, login_required
+from kuma.core.decorators import never_cache, login_required, block_user_agents
 from kuma.core.urlresolvers import reverse
 
 from ..constants import (TEMPLATE_TITLE_PREFIX,
@@ -20,6 +20,7 @@ from ..models import Document, Revision
 from .utils import save_revision_and_notify
 
 
+@block_user_agents
 @login_required
 @check_readonly
 @prevent_indexing

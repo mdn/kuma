@@ -13,7 +13,7 @@ from smuggler.forms import ImportForm
 
 from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 
-from kuma.core.decorators import superuser_required
+from kuma.core.decorators import superuser_required, block_user_agents
 from kuma.users.models import User
 
 from ..constants import REDIRECT_CONTENT, ALLOWED_TAGS
@@ -42,6 +42,7 @@ def ckeditor_config(request):
                   content_type='application/x-javascript')
 
 
+@block_user_agents
 @require_GET
 @allow_CORS_GET
 @newrelic.agent.function_trace()
@@ -87,6 +88,7 @@ def autosuggest_documents(request):
     return JsonResponse(docs_list, safe=False)
 
 
+@block_user_agents
 @xframe_options_sameorigin
 @process_document_path
 def flag(request, document_slug, document_locale):
@@ -120,6 +122,7 @@ def flag(request, document_slug, document_locale):
     return render(request, 'wiki/flag.html', {'form': form, 'doc': doc})
 
 
+@block_user_agents
 @require_POST
 def helpful_vote(request, document_path):
     """
@@ -157,6 +160,7 @@ def helpful_vote(request, document_path):
     return redirect(document)
 
 
+@block_user_agents
 @superuser_required
 def load_documents(request):
     """
