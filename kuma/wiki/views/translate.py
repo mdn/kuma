@@ -261,7 +261,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
         'attachment_form': AttachmentRevisionForm(),
         'attachment_data': attachments,
         'attachment_data_json': json.dumps(attachments),
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'specific_slug': parent_split['specific'],
         'parent_slug': parent_split['parent'],
         'revision_from': revision_from,

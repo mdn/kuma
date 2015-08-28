@@ -5,7 +5,6 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from constance import config
 
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
@@ -113,7 +112,6 @@ def new_document(request):
             'parent_id': initial_parent_id,
             'document_form': doc_form,
             'revision_form': rev_form,
-            'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
             'initial_tags': initial_tags,
             'allow_add_attachment': allow_add_attachment,
             'attachment_form': AttachmentRevisionForm(),
@@ -158,7 +156,6 @@ def new_document(request):
         'is_template': is_template,
         'document_form': doc_form,
         'revision_form': rev_form,
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
         'parent_slug': parent_slug,

@@ -12,12 +12,10 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_http_methods
 
-from constance import config
 from jingo.helpers import urlparams
 from ratelimit.decorators import ratelimit
 
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json
 from kuma.core.decorators import never_cache, login_required, block_user_agents
 from kuma.core.urlresolvers import reverse
@@ -296,7 +294,6 @@ def edit(request, document_slug, document_locale, revision_id=None):
         'document': doc,
         'attachment_form': AttachmentRevisionForm(),
         'attachment_data': attachments,
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'attachment_data_json': json.dumps(attachments)
     }
     return render(request, 'wiki/edit_document.html', context)
