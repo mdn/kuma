@@ -284,8 +284,6 @@ def edit(request, document_slug, document_locale, revision_id=None):
         parent_slug = parent_doc.slug
 
     attachments = attachments_json(doc.attachments)
-    allow_add_attachment = (
-        Attachment.objects.allow_add_attachment_by(request.user))
 
     context = {
         'revision_form': rev_form,
@@ -296,7 +294,6 @@ def edit(request, document_slug, document_locale, revision_id=None):
         'parent_path': parent_path,
         'revision': rev,
         'document': doc,
-        'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
         'attachment_data': attachments,
         'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,

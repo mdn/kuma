@@ -238,8 +238,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
         revision_from = revision_to = None
 
     parent_split = split_slug(parent_doc.slug)
-    allow_add_attachment = (
-        Attachment.objects.allow_add_attachment_by(request.user))
 
     attachments = []
     if doc and doc.attachments:
@@ -260,7 +258,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
         'based_on': based_on_rev,
         'disclose_description': disclose_description,
         'discard_href': discard_href,
-        'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
         'attachment_data': attachments,
         'attachment_data_json': json.dumps(attachments),

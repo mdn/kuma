@@ -23,7 +23,8 @@ from kuma.wiki.models import Document
 
 from .forms import AttachmentRevisionForm
 from .models import Attachment
-from .utils import attachments_json, convert_to_http_date
+from .utils import (attachments_json, convert_to_http_date,
+                    allow_add_attachment_by)
 
 
 # Mime types used on MDN
@@ -110,7 +111,7 @@ def new_attachment(request):
     revision."""
 
     # No access if no permissions to upload
-    if not Attachment.objects.allow_add_attachment_by(request.user):
+    if not allow_add_attachment_by(request.user):
         raise PermissionDenied
 
     document = None

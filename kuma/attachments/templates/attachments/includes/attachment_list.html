@@ -1,4 +1,4 @@
-{% set show_attach_button = allow_add_attachment %}
+{% set show_attach_button = allow_add_attachment_by(request.user) %}
 <section id="page-attachments" class="wiki-block">
 
   <h3><i aria-hidden="true" class="icon-paperclip"></i>{{ _('Attachments') }} <a href="{{ wiki_url('Project:MDN/Contributing/Editor_guide/Editing#The_attachments_box') }}"><i aria-hidden="true" title="{{ _('Learn how to use Attachments') }}" class="icon-question-sign editor-help-icon"></i></a></h3>
