@@ -190,15 +190,9 @@ class RevisionForm(forms.ModelForm):
                   'render_max_age')
 
     def __init__(self, *args, **kwargs):
+        self.section_id = kwargs.pop('section_id', None)
+        self.is_iframe_target = kwargs.pop('is_iframe_target', None)
 
-        # Snag some optional kwargs and delete them before calling
-        # super-constructor.
-        for n in ('section_id', 'is_iframe_target'):
-            if n not in kwargs:
-                setattr(self, n, None)
-            else:
-                setattr(self, n, kwargs[n])
-                del kwargs[n]
 
         super(RevisionForm, self).__init__(*args, **kwargs)
         self.fields['based_on'].widget = forms.HiddenInput()
