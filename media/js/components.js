@@ -374,6 +374,7 @@
         return this.each(function() {
             var $img = $('<img />');
             var alt = $(this).data('alt');
+
             $img.on('load', function() {
                 $(this)
                     .attr('alt', alt)
