@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render
 from django.views import static
+from django.views.decorators.cache import cache_page
 
 from kuma.core.sections import SECTION_USAGE
 from kuma.core.cache import memcache
@@ -10,6 +11,7 @@ from kuma.search.models import FilterGroup
 from kuma.search.serializers import GroupWithFiltersSerializer
 
 
+@cache_page(HOMEPAGE_CACHE_TIMEOUT, key_prefix=HOMEPAGE_CACHE_PREFIX)
 def home(request):
     """Home page."""
     demos = Submission.objects.all_sorted(sort='recentfeatured', max=12)
@@ -30,7 +32,8 @@ def home(request):
         'demos': demos,
         'updates': updates,
         'stats': community_stats,
-        'command_search_filters': serializer.data
+        'command_search_filters': serializer.data,
+        'hide_header_login': True,
     }
     return render(request, 'landing/homepage.html', context)
 

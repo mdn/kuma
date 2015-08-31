@@ -74,6 +74,10 @@ CACHES = {
 }
 
 CACHEBACK_CACHE_ALIAS = 'memcache'
+CACHE_MIDDLEWARE_ALIAS = 'memcache'
+
+HOMEPAGE_CACHE_TIMEOUT = 60 * 15
+HOMEPAGE_CACHE_PREFIX = 'v1'
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
