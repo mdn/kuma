@@ -192,7 +192,7 @@
             {% for contributor in contributors %}
                 <li class="{% if loop.index > contributors_limit %}hidden{% else %}shown{% endif %}">
                 <a href="{{ url('users.user_detail', username=contributor.username) }}" title="{% trans username=contributor.username %}View profile: {{ username }}{% endtrans %}">
-                <noscript data-class="avatar" data-alt="{{ contributor.username }}" data-src="{{ contributor.gravatar_34 }}">{{ contributor.username }}</noscript></a>
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="{{ contributor.username }}" data-src="{{ contributor.gravatar_34 }}">{{ contributor.username }}</noscript></a>
                 </li>
             {% endfor %}
             </ul>
