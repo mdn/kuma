@@ -187,7 +187,6 @@
         Fire off events when the user logs in and logs out.
     */
     if('localStorage' in win) (function() {
-        var login, logout;
         var serviceKey = 'login-service';
         var serviceStored = localStorage.getItem(serviceKey);
         var serviceCurrent = $(doc.body).data(serviceKey);

@@ -1,30 +1,20 @@
-(function (win, $) {
+(function ($) {
     'use strict';
 
-        var $cta = $('.cta:not(a)');
-        var $cta_links = $cta.find('a');
-        // allow focus
-        $cta.attr('tabindex', 0).addClass('js');
-        // when activated add the class to show and remove listeners which preventDefault
-        function activate(caller) {
-            var $caller = $(caller);
-            var $calling_cta;
-            if($caller.hasClass('cta')){
-                $calling_cta = $caller;
-            } else {
-                $calling_cta = $caller.parents('.cta');
-            }
-            $calling_cta.addClass('active').off();
-            $calling_cta.find('a').off();
-        }
-        // listen for tap
-        $cta.on('focus', function() {
-            activate(this);
-        });
-        // listen for focus
-        $cta_links.on('touchstart', function(event) {
-            event.preventDefault();
+    // allow focus and listen for tap
+    $('.cta:not(a)').attr('tabindex', 0)
+        .addClass('js')
+        .on('focus touchstart', function(ev) {
+            ev.preventDefault();
             activate(this);
         });
 
-})(window, jQuery);
+    // when activated add the class to show and remove listeners which preventDefault
+    function activate(caller) {
+        var $caller = $(caller);
+        var $callingCta = $caller.hasClass('cta') ? $caller : $caller.parents('.cta');
+        $callingCta.addClass('active').off();
+        $callingCta.find('a').off();
+    }
+
+})(jQuery);
