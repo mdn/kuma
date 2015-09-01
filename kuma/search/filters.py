@@ -100,7 +100,7 @@ class SearchQueryBackend(BaseFilterBackend):
                 functions=[query.SF('field_value_factor', field='boost')],
             )
 
-        if flag_is_active(request, 'search_explanation'):
+        if request.user.is_superuser:
             queryset = queryset.extra(explain=True)
 
         return queryset
