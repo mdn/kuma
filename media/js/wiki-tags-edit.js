@@ -26,12 +26,10 @@
             hiddenTags.val(itemTexts.join(','));
 
             // Check whether there are net changes in tags
-            if(window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
-                if (undefined !== originalTags && hiddenTags.val() !== originalTags) {
-                    $('#page-tags').addClass('dirty').trigger('mdn:dirty');
-                } else {
-                    $('#page-tags').removeClass('dirty').trigger('mdn:clean');
-                }
+            if (undefined !== originalTags && hiddenTags.val() !== originalTags) {
+                $('#page-tags').addClass('dirty').trigger('mdn:dirty');
+            } else {
+                $('#page-tags').removeClass('dirty').trigger('mdn:clean');
             }
         };
     }
@@ -53,11 +51,9 @@
     $idTagsField.remove();
 
     // Keep track of tag dirtiness
-    if(window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
-        var originalTags = hiddenTags.val();
-        $form.on('mdn:save-success', function() {
-            originalTags = hiddenTags.val();
-        });
-    }
+    var originalTags = hiddenTags.val();
+    $form.on('mdn:save-success', function() {
+        originalTags = hiddenTags.val();
+    });
 
 })(jQuery);

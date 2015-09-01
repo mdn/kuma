@@ -216,7 +216,7 @@
         if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
             initSaveAndEditButtons();
-            if(!$body.is('.is-template') && window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
+            if(!$body.is('.is-template')) {
                 initDirtinessTracking();
             }
             initArticlePreview();
@@ -518,9 +518,7 @@
             // Re-enable the form; it gets disabled to prevent double-POSTs
             $form.data('disabled', false).removeClass('disabled');
             // Trigger a `mdn:save-success` event so dirtiness can be reset throughout the page
-            if(window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
-                $form.trigger('mdn:save-success');
-            }
+            $form.trigger('mdn:save-success');
             return true;
         });
 
