@@ -629,9 +629,6 @@ MINIFY_BUNDLES = {
             'css/error.css',
             'css/error-404.css',
         ),
-        'calendar': (
-            'css/calendar.css',
-        ),
         'dashboards': (
             'css/dashboards.css',
             'css/diff.css',
