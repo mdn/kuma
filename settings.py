@@ -348,6 +348,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
+    'django.core.context_processors.static',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
@@ -396,7 +397,7 @@ PASSWORD_HASHERS = (
 )
 
 USER_AVATAR_PATH = 'uploads/avatars/'
-DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
+DEFAULT_AVATAR = STATIC_URL + 'img/avatar.png'
 AVATAR_SIZES = [  # in pixels
     34,   # wiki document page
     48,   # user_link helper
@@ -418,6 +419,10 @@ TEMPLATE_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
+)
+
+STATICFILES_DIRS = (
+    path('kuma', 'static'),
 )
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
@@ -1179,7 +1184,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUDIENCE': 'https://developer.mozilla.org',
         'REQUEST_PARAMETERS': {
             'siteName': 'Mozilla Developer Network',
-            'siteLogo': MEDIA_URL + 'img/opengraph-logo.png',
+            'siteLogo': STATIC_URL + 'img/opengraph-logo.png',
         }
     }
 }

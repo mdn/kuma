@@ -15,7 +15,7 @@
 
     <h1 class="page-title">Permission Denied</h1>
 
-    <img src="{{ MEDIA_URL }}img/beast-403.png" alt="" class="beast 403">
+    <img src="{{ static('img/beast-403.png') }}" alt="" class="beast 403">
 
     {% if user.username %}
       {% trans name=user.username %}

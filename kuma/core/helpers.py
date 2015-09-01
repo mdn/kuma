@@ -17,6 +17,7 @@ from tower import ugettext_lazy as _lazy, ungettext
 
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
 from django.utils.encoding import smart_str, force_text
 from django.utils.html import strip_tags
@@ -345,3 +346,8 @@ def number(context, n):
     if n is None:
         return ''
     return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
+
+
+@register.function
+def static(path):
+    return staticfiles_storage.url(path)
