@@ -14,15 +14,15 @@ $summary-box-indent = ($grid-spacing * 2) - $summary-box-item-spacing;
 .summary-box-events {
     display: table;
     margin: 0 0 $grid-spacing 0;
-    border: 0 solid transparent;
+    border-style: solid;
     bidi-value(clear, left, right);
     background: $code-block-background-alt-color;
-    border-color: $code-block-border-color;
 
     .text-content & { /* need to override default text-content styles */
         border-collapse: separate;
         bidi-value(padding, $summary-box-spacing $summary-box-indent $summary-box-spacing $summary-box-spacing, $summary-box-spacing $summary-box-spacing $summary-box-spacing $summary-box-indent);
         bidi-value(border-width, 0 0 0 $border-width, 0 $border-width 0 0);
+        border-color: $code-block-border-color;
 
         @media $media-query-small-mobile {
             bidi-value(padding, $summary-box-item-spacing, $summary-box-item-spacing);
