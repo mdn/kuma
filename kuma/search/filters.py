@@ -4,7 +4,6 @@ from django.conf import settings
 
 from elasticsearch_dsl import F, Q, query
 from rest_framework.filters import BaseFilterBackend
-from waffle import flag_is_active
 
 from kuma.wiki.search import WikiDocumentType
 

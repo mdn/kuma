@@ -157,7 +157,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
 
         Also check the backlink to the redirect page.
         """
-        Flag.objects.create(name='redirect_messages', everyone=True)
         target = document(save=True)
         target_url = target.get_absolute_url()
 
@@ -167,7 +166,8 @@ class DocumentTests(UserTestCase, WikiTestCase):
         redirect = document(html=redirect_html)
         redirect.save()
         redirect_url = redirect.get_absolute_url()
-        response = self.client.get(redirect_url)
+
+        self.client.login(username='admin', password='testpass')
         response = self.client.get(redirect_url, follow=True)
         self.assertRedirects(response, urlparams(target_url), status_code=301)
         self.assertContains(response, redirect_url)

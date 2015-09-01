@@ -26,7 +26,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from constance import config
 from jingo.helpers import urlparams
-import waffle
 
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.attachments.utils import attachments_json
