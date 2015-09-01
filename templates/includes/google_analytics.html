@@ -20,11 +20,6 @@
         {% endif %}
     {% endif %}
 
-    {% if waffle.flag('top_contributors') %}
-        // dimension4 == "top contributors"
-        ga('set', 'dimension4', 'Yes');
-    {% endif %}
-
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
         var win = window;

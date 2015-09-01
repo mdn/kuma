@@ -44,7 +44,6 @@ other advanced criteria.
 * ``kumaediting`` - enable/disable wiki editing
 * ``kumabanned`` - (deprecated) added to users to mark them as banned
 * ``enable_customcss`` - enable/disable Template:CustomCSS styles in wiki pages
-* ``top_contributors`` - enable/disable the "Top Contributors" feature on wiki
   pages
 * ``page_move`` - enable/disable page move feature
 
