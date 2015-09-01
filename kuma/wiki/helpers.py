@@ -6,7 +6,6 @@ import urllib
 import urlparse
 
 import jinja2
-from pyquery import PyQuery as pq
 from tower import ugettext as _
 
 from django.contrib.sites.models import Site
@@ -138,20 +137,6 @@ def colorize_diff(diff):
 def wiki_bleach(val):
     from kuma.wiki.models import Document
     return jinja2.Markup(Document.objects.clean_content(val))
-
-
-@register.filter
-def selector_content_find(document, selector):
-    """
-    Provided a selector, returns the relevant content from the document
-    """
-    summary = ''
-    try:
-        page = pq(document.rendered_html)
-        summary = page.find(selector).text()
-    except:
-        pass
-    return summary
 
 
 def _recursive_escape(value, esc=conditional_escape):
