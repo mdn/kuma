@@ -25,11 +25,6 @@
         ga('set', 'dimension4', 'Yes');
     {% endif %}
 
-    {% if waffle.flag('wiki_spellcheck') %}
-        // dimension3 == "Wiki Spellchecker"
-        ga('set', 'dimension3', 'Yes');
-    {% endif %}
-
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
         var win = window;
