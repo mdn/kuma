@@ -4,7 +4,6 @@ from django.conf import settings
 
 from elasticsearch_dsl import F, Q, query
 from rest_framework.filters import BaseFilterBackend
-from waffle import flag_is_active
 
 from kuma.wiki.search import WikiDocumentType
 
@@ -100,7 +99,7 @@ class SearchQueryBackend(BaseFilterBackend):
                 functions=[query.SF('field_value_factor', field='boost')],
             )
 
-        if flag_is_active(request, 'search_explanation'):
+        if request.user.is_superuser:
             queryset = queryset.extra(explain=True)
 
         return queryset

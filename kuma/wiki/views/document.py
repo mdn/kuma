@@ -26,7 +26,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from constance import config
 from jingo.helpers import urlparams
-import waffle
 
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.attachments.utils import attachments_json
@@ -625,10 +624,7 @@ def document(request, document_slug, document_locale):
 
     share_text = _('I learned about %(title)s on MDN.') % {"title": doc.title}
 
-    if waffle.flag_is_active(request, 'top_contributors'):
-        contributors = doc.contributors
-    else:
-        contributors = []
+    contributors = doc.contributors
     contributors_count = len(contributors)
     has_contributors = contributors_count > 0
 

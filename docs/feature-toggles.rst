@@ -33,7 +33,6 @@ Flags
 other advanced criteria.
 
 * ``events_map`` - show the map on the events page
-* ``search_explanation`` - show search results scoring details
 * ``search_doc_navigator`` - show the search doc navigator feature
 * ``search_drilldown_faceting`` - treat search filters as "drill-down" filters
   - i.e., combine them with "AND" logic
@@ -45,7 +44,6 @@ other advanced criteria.
 * ``kumaediting`` - enable/disable wiki editing
 * ``kumabanned`` - (deprecated) added to users to mark them as banned
 * ``enable_customcss`` - enable/disable Template:CustomCSS styles in wiki pages
-* ``top_contributors`` - enable/disable the "Top Contributors" feature on wiki
   pages
 * ``page_move`` - enable/disable page move feature
 
