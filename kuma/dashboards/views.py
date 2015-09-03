@@ -21,7 +21,7 @@ def revisions(request):
     filter_form = RevisionDashboardForm(request.GET)
     page = request.GET.get('page', 1)
 
-    revisions = (Revision.objects.select_related('creator')
+    revisions = (Revision.objects.prefetch_related('creator')
                                  .order_by('-created')
                                  .defer('content'))
 
