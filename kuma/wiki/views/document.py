@@ -30,7 +30,8 @@ from jingo.helpers import urlparams
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.attachments.utils import attachments_json
 from kuma.core.decorators import (login_required,
-                                  permission_required, superuser_required)
+                                  permission_required, superuser_required,
+                                  block_user_agents)
 from kuma.core.urlresolvers import reverse
 from kuma.search.store import referrer_url
 
@@ -247,6 +248,7 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
     return doc, fallback_reason
 
 
+@block_user_agents
 @require_GET
 @allow_CORS_GET
 @process_document_path
@@ -271,6 +273,7 @@ def children(request, document_slug, document_locale):
     return JsonResponse(result)
 
 
+@block_user_agents
 @require_http_methods(['GET', 'POST'])
 @permission_required('wiki.move_tree')
 @process_document_path
@@ -320,6 +323,7 @@ def move(request, document_slug, document_locale):
     })
 
 
+@block_user_agents
 @process_document_path
 @check_readonly
 @superuser_required
@@ -361,6 +365,7 @@ def toc(request, document_slug=None, document_locale=None):
     return HttpResponse(toc_html)
 
 
+@block_user_agents
 @require_GET
 @allow_CORS_GET
 @process_document_path
@@ -400,6 +405,7 @@ def as_json(request, document_slug=None, document_locale=None):
     return JsonResponse(data)
 
 
+@block_user_agents
 @require_GET
 @allow_CORS_GET
 @process_document_path
@@ -414,6 +420,7 @@ def styles(request, document_slug=None, document_locale=None):
     return HttpResponse(zone.styles, content_type='text/css')
 
 
+@block_user_agents
 @require_POST
 @login_required
 @process_document_path

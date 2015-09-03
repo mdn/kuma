@@ -13,7 +13,7 @@ from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json
 from kuma.core.i18n import get_language_mapping
-from kuma.core.decorators import never_cache, login_required
+from kuma.core.decorators import never_cache, login_required, block_user_agents
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import get_object_or_none, smart_int
 
@@ -26,6 +26,7 @@ from .utils import (split_slug, join_slug, document_form_initial,
                     save_revision_and_notify)
 
 
+@block_user_agents
 @login_required
 @process_document_path
 def select_locale(request, document_slug, document_locale):
@@ -38,6 +39,7 @@ def select_locale(request, document_slug, document_locale):
     return render(request, 'wiki/select_locale.html', {'document': doc})
 
 
+@block_user_agents
 @login_required
 @process_document_path
 @check_readonly
