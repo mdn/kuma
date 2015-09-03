@@ -246,3 +246,11 @@ DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'
 
 DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
 KUMA_FILE_URL = re.compile(r'/files/(?P<file_id>\d+)/.+\..+')
+
+CODE_SAMPLE_MACROS = [
+    'LiveSampleURL',
+    'EmbedDistLiveSample',
+    'EmbedLiveSample',
+    'LiveSampleLink',
+    'FXOSUXLiveSampleEmbed',
+]

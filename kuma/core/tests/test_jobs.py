@@ -1,7 +1,7 @@
 from django.utils import six
 from kuma.core.tests import KumaTestCase
 
-from ..jobs import KumaJob
+from ..jobs import KumaJob, GenerationJob
 
 
 class JobsTests(KumaTestCase):
@@ -11,6 +11,19 @@ class JobsTests(KumaTestCase):
         test_key = job.key('test')
         job.version = 2
         self.assertNotEqual(test_key, job.key('test'))
+
+    def test_job_generation(self):
+        job = GenerationJob()
+        first_gen = job.generation()
+        first_gen_key = job.key('test')
+        self.assertTrue(job.generation_key.endswith('generation'))
+        self.assertIn(first_gen, first_gen_key)
+
+        second_gen = job.renew()
+        self.assertEqual(second_gen, job.generation())
+        self.assertNotEqual(first_gen, second_gen)
+        second_gen_key = job.key('test')
+        self.assertNotEqual(first_gen_key, second_gen_key)
 
 
 class EncodingJob(KumaJob):

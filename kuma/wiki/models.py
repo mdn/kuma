@@ -42,10 +42,8 @@ from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         KUMA_FILE_URL, REDIRECT_CONTENT, REDIRECT_HTML,
                         TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
-from .content import (extract_code_sample, extract_css_classnames,
-                      extract_html_attributes, extract_kumascript_macro_names,
-                      get_content_sections, get_seo_description, H2TOCFilter,
-                      H3TOCFilter, SectionTOCFilter)
+from .content import (Extractor, get_content_sections, get_seo_description,
+                      H2TOCFilter, H3TOCFilter, SectionTOCFilter)
 from .jobs import DocumentZoneStackJob, DocumentContributorsJob
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
@@ -53,7 +51,6 @@ from .exceptions import (DocumentRenderedContentNotAvailable,
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
-from .search import WikiDocumentType
 from .signals import render_done
 from .utils import tidy_content
 
@@ -375,12 +372,6 @@ class Document(NotificationsMixin, models.Model):
             if src:
                 return src
 
-    def extract_section(self, content, section_id, ignore_heading=False):
-        parsed_content = parse_content(content)
-        extracted = parsed_content.extractSection(section_id,
-                                                  ignore_heading=ignore_heading)
-        return extracted.serialize()
-
     def get_section_content(self, section_id, ignore_heading=True):
         """
         Convenience method to extract the rendered content for a single section
@@ -389,14 +380,14 @@ class Document(NotificationsMixin, models.Model):
             content = self.rendered_html
         else:
             content = self.html
-        return self.extract_section(content, section_id, ignore_heading)
+        return self.extract.section(content, section_id, ignore_heading)
 
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""
         if not section_id:
             content = self.html
         else:
-            content = self.extract_section(self.html, section_id)
+            content = self.extract.section(self.html, section_id)
         return '"%s"' % hashlib.sha1(content.encode('utf8')).hexdigest()
 
     def current_or_latest_revision(self):
@@ -688,25 +679,9 @@ class Document(NotificationsMixin, models.Model):
 
         return self._json_data
 
-    def extract_code_sample(self, id):
-        """Given the id of a code sample, attempt to extract it from rendered
-        HTML with a fallback to non-rendered in case of errors."""
-        try:
-            src, errors = self.get_rendered()
-            if errors:
-                src = self.html
-        except:
-            src = self.html
-        return extract_code_sample(id, src)
-
-    def extract_kumascript_macro_names(self):
-        return extract_kumascript_macro_names(self.html)
-
-    def extract_css_classnames(self):
-        return extract_css_classnames(self.rendered_html)
-
-    def extract_html_attributes(self):
-        return extract_html_attributes(self.rendered_html)
+    @cached_property
+    def extract(self):
+        return Extractor(self)
 
     def natural_key(self):
         return (self.locale, self.slug)
@@ -1358,27 +1333,22 @@ Full traceback:
                 if len(url) > 1:
                     if url.startswith(settings.SITE_URL):
                         return url
-                    elif (url[0] == '/' and url[1] != '/'):
+                    elif url[0] == '/' and url[1] != '/':
                         return url
-                elif (len(url) == 1 and url[0] == '/'):
+                elif len(url) == 1 and url[0] == '/':
                     return url
                 else:
                     return None
 
     def redirect_document(self):
-        """If I am a redirect to a Document, return that Document.
+        """
+        If I am a redirect to a Document, return that Document.
 
         Otherwise, return None.
-
         """
         url = self.redirect_url()
         if url:
             return self.from_url(url)
-
-    def filter_permissions(self, user, permissions):
-        """Filter permissions with custom logic"""
-        # No-op, for now.
-        return permissions
 
     def get_topic_parents(self):
         """Build a list of parent topics from self to root"""
@@ -1392,11 +1362,11 @@ Full traceback:
         return self.get_topic_parents()
 
     def allows_revision_by(self, user):
-        """Return whether `user` is allowed to create new revisions of me.
+        """
+        Return whether `user` is allowed to create new revisions of me.
 
         The motivation behind this method is that templates and other types of
         docs may have different permissions.
-
         """
         if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.change_template_document')):
@@ -1404,12 +1374,12 @@ Full traceback:
         return True
 
     def allows_editing_by(self, user):
-        """Return whether `user` is allowed to edit document-level metadata.
+        """
+        Return whether `user` is allowed to edit document-level metadata.
 
         If the Document doesn't have a current_revision (nothing approved) then
         all the Document fields are still editable. Once there is an approved
         Revision, the Document fields can only be edited by privileged users.
-
         """
         if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.change_template_document')):
@@ -1418,10 +1388,10 @@ Full traceback:
                 user.has_perm('wiki.change_document'))
 
     def translated_to(self, locale):
-        """Return the translation of me to the given locale.
+        """
+        Return the translation of me to the given locale.
 
         If there is no such Document, return None.
-
         """
         if self.locale != settings.WIKI_DEFAULT_LANGUAGE:
             raise NotImplementedError('translated_to() is implemented only on'
@@ -1434,12 +1404,16 @@ Full traceback:
 
     @property
     def original(self):
-        """Return the document I was translated from or, if none, myself."""
+        """
+        Return the document I was translated from or, if none, myself.
+        """
         return self.parent or self
 
     @cached_property
     def other_translations(self):
-        """Return a list of Documents - other translations of this Document"""
+        """
+        Return a list of Documents - other translations of this Document
+        """
         if self.parent is None:
             return self.translations.all().order_by('locale')
         else:
@@ -1451,8 +1425,10 @@ Full traceback:
 
     @property
     def parents(self):
-        """Return the list of topical parent documents above this one,
-        or an empty list if none exist."""
+        """
+        Return the list of topical parent documents above this one,
+        or an empty list if none exist.
+        """
         if self.parent_topic is None:
             return []
         current_parent = self.parent_topic
@@ -1489,7 +1465,9 @@ Full traceback:
         return results
 
     def has_voted(self, request):
-        """Did the user already vote for this document?"""
+        """
+        Did the user already vote for this document?
+        """
         if request.user.is_authenticated():
             qs = HelpfulVote.objects.filter(document=self,
                                             creator=request.user)
@@ -1503,12 +1481,11 @@ Full traceback:
         return qs.exists()
 
     def is_watched_by(self, user):
-        """Return whether `user` is notified of edits to me."""
+        """
+        Return whether `user` is notified of edits to me.
+        """
         from .events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
-
-    def get_document_type(self):
-        return WikiDocumentType
 
     @cached_property
     def contributors(self):
@@ -1743,7 +1720,9 @@ class Revision(models.Model):
             self.make_current()
 
     def make_current(self):
-        """Make this revision the current one for the document"""
+        """
+        Make this revision the current one for the document
+        """
         self.document.title = self.title
         self.document.slug = self.slug
         self.document.html = self.content_cleaned
@@ -1763,7 +1742,7 @@ class Revision(models.Model):
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
-        return self.document.extract_section(self.content, section_id)
+        return self.document.extract.section(self.content, section_id)
 
     def get_tidied_content(self):
         """

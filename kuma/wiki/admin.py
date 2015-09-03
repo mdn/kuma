@@ -325,16 +325,16 @@ class RevisionAdmin(admin.ModelAdmin):
     fields = ('title', 'summary', 'content', 'keywords', 'tags',
               'comment', 'is_approved')
     list_display = ('id', 'slug', 'title', 'is_approved', 'created',
-                    'creator',)
+                    'creator')
     list_display_links = ('id', 'slug')
-    list_filter = ('is_approved', )
+    list_filter = ('is_approved',)
     ordering = ('-created',)
     search_fields = ('title', 'slug', 'summary', 'content', 'tags')
 
 
 class RevisionIPAdmin(admin.ModelAdmin):
-    readonly_fields = ('revision', 'ip',)
-    list_display = ('revision', 'ip',)
+    readonly_fields = ('revision', 'ip')
+    list_display = ('revision', 'ip')
 
 
 class DocumentTagAdmin(admin.ModelAdmin):

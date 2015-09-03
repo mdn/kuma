@@ -10,7 +10,6 @@ from html5lib.filters._base import Filter as html5lib_Filter
 import newrelic.agent
 from lxml import etree
 from pyquery import PyQuery as pq
-
 from tower import ugettext as _
 
 from kuma.core.urlresolvers import reverse
@@ -48,6 +47,117 @@ TAGS_IN_TOC = ('code')
 # purposes of link annotation. Doesn't include everything from urls.py, but
 # just the likely candidates for links.
 DOC_SPECIAL_PATHS = ('new', 'tag', 'feeds', 'templates', 'needs-review')
+
+
+class Extractor(object):
+
+    def __init__(self, document):
+        self.document = document
+
+    def section(self, content, section_id, ignore_heading=False):
+        parsed_content = parse(content)
+        extracted = parsed_content.extractSection(section_id,
+                                                  ignore_heading=ignore_heading)
+        return extracted.serialize()
+
+    @newrelic.agent.function_trace()
+    def macro_names(self):
+        """
+        Extract a unique set of KumaScript macro names used in the content
+        """
+        names = set()
+        try:
+            txt = []
+            for token in parse(self.document.html).stream:
+                if token['type'] in ('Characters', 'SpaceCharacters'):
+                    txt.append(token['data'])
+            txt = ''.join(txt)
+            names.update(MACRO_RE.findall(txt))
+        except:
+            pass
+        return list(names)
+
+    @newrelic.agent.function_trace()
+    def css_classnames(self):
+        """
+        Extract the unique set of class names used in the content
+        """
+        classnames = set()
+        for element in pq(self.document.rendered_html).find('*'):
+            css_classes = element.attrib.get('class')
+            if css_classes:
+                classnames.update(css_classes.split(' '))
+        return list(classnames)
+
+    @newrelic.agent.function_trace()
+    def html_attributes(self):
+        """
+        Extract the unique set of HTML attributes used in the content
+        """
+        try:
+            attribs = []
+            for token in parse(self.document.rendered_html).stream:
+                if token['type'] == 'StartTag':
+                    for (namespace, name), value in token['data'].items():
+                        attribs.append((name, value))
+            return ['%s="%s"' % (k, v) for k, v in attribs]
+        except:
+            return []
+
+    @newrelic.agent.function_trace()
+    def code_sample(self, name):
+        """
+        Extract a dict containing the html, css, and js listings for a given
+        code sample identified by a name.
+
+        This should be pretty agnostic to markup patterns, since it just
+        requires a parent container with an DID and 3 child elements somewhere
+        within with class names "html", "css", and "js" - and our syntax
+        highlighting already does that with <pre>'s
+
+        Given the name of a code sample, attempt to extract it from rendered
+        HTML with a fallback to non-rendered in case of errors.
+        """
+        parts = ('html', 'css', 'js')
+        data = dict((x, None) for x in parts)
+
+        try:
+            src, errors = self.document.get_rendered()
+            if errors:
+                src = self.document.html
+        except:
+            src = self.document.html
+
+        if not src:
+            return data
+
+        section = parse(src).extractSection(name).serialize()
+        if section:
+            # HACK: Ensure the extracted section has a container, in case it
+            # consists of a single element.
+            sample = pq('<section>%s</section>' % section)
+        else:
+            # If no section, fall back to plain old ID lookup
+            sample = pq(src).find('[id="%s"]' % name)
+
+        selector_templates = (
+            '.%s',
+            # HACK: syntaxhighlighter (ab)uses the className as a
+            # semicolon-separated options list...
+            'pre[class*="brush:%s"]',
+            'pre[class*="%s;"]'
+        )
+        for part in parts:
+            selector = ','.join(selector_template % part
+                                for selector_template in selector_templates)
+            src = sample.find(selector).text()
+            if src is not None:
+                # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
+                src = src.replace(u'\xa0', u' ')
+            if src:
+                data[part] = src
+
+        return data
 
 
 @newrelic.agent.function_trace()
@@ -147,98 +257,6 @@ def filter_out_noinclude(src):
     doc = pq(src)
     doc.remove('*[class=noinclude]')
     return doc.html()
-
-
-@newrelic.agent.function_trace()
-def extract_code_sample(id, src):
-    """
-    Extract a dict containing the html, css, and js listings for a given
-    code sample identified by ID.
-
-    This should be pretty agnostic to markup patterns, since it just requires a
-    parent container with an DID and 3 child elements somewhere within with
-    class names "html", "css", and "js" - and our syntax highlighting already
-    does that with <pre>'s
-    """
-    parts = ('html', 'css', 'js')
-    data = dict((x, None) for x in parts)
-    if not src:
-        return data
-
-    section = parse(src).extractSection(id).serialize()
-    if section:
-        # HACK: Ensure the extracted section has a container, in case it
-        # consists of a single element.
-        sample = pq('<section>%s</section>' % section)
-    else:
-        # If no section, fall back to plain old ID lookup
-        sample = pq(src).find('[id="%s"]' % id)
-
-    selector_templates = (
-        '.%s',
-        # HACK: syntaxhighlighter (ab)uses the className as a
-        # semicolon-separated options list...
-        'pre[class*="brush:%s"]',
-        'pre[class*="%s;"]'
-    )
-    for part in parts:
-        selector = ','.join(selector_template % part
-                            for selector_template in selector_templates)
-        src = sample.find(selector).text()
-        if src is not None:
-            # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
-            src = src.replace(u'\xa0', u' ')
-        if src:
-            data[part] = src
-
-    return data
-
-
-@newrelic.agent.function_trace()
-def extract_css_classnames(content):
-    """
-    Extract the unique set of class names used in the content
-    """
-    classnames = set()
-    for element in pq(content).find('*'):
-        css_classes = element.attrib.get('class')
-        if css_classes:
-            classnames.update(css_classes.split(' '))
-    return list(classnames)
-
-
-@newrelic.agent.function_trace()
-def extract_html_attributes(content):
-    """
-    Extract the unique set of HTML attributes used in the content
-    """
-    try:
-        attribs = []
-        for token in parse(content).stream:
-            if token['type'] == 'StartTag':
-                for (namespace, name), value in token['data'].items():
-                    attribs.append((name, value))
-        return ['%s="%s"' % (k, v) for k, v in attribs]
-    except:
-        return []
-
-
-@newrelic.agent.function_trace()
-def extract_kumascript_macro_names(content):
-    """
-    Extract a unique set of KumaScript macro names used in the content
-    """
-    names = set()
-    try:
-        txt = []
-        for token in parse(content).stream:
-            if token['type'] in ('Characters', 'SpaceCharacters'):
-                txt.append(token['data'])
-        txt = ''.join(txt)
-        names.update(MACRO_RE.findall(txt))
-    except:
-        pass
-    return list(names)
 
 
 class ContentSectionTool(object):

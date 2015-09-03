@@ -18,9 +18,9 @@ from ..helpers import format_comment
 from ..models import Document, Revision
 
 
+@newrelic.agent.function_trace()
 @prevent_indexing
 @process_document_path
-@newrelic.agent.function_trace()
 def revision(request, document_slug, document_locale, revision_id):
     """
     View a wiki document revision.

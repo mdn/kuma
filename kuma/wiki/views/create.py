@@ -20,11 +20,11 @@ from ..models import Document, Revision
 from .utils import save_revision_and_notify
 
 
+@newrelic.agent.function_trace()
 @login_required
 @check_readonly
 @prevent_indexing
 @never_cache
-@newrelic.agent.function_trace()
 def new_document(request):
     """Create a new wiki document."""
 

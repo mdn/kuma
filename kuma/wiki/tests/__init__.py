@@ -107,15 +107,6 @@ def wait_add_rev(document):
     return document
 
 
-# I don't like this thing. revision() is more flexible. All this adds is
-# is_approved=True, but it doesn't even mention approval in its name.
-# TODO: Remove.
-def doc_rev(content=''):
-    """Save a document and an approved revision with the given content."""
-    r = revision(content=content, is_approved=True)
-    r.save()
-    return r.document, r
-
 # End model makers.
 
 
@@ -135,17 +126,19 @@ def new_document_data(tags=None):
     }
 
 
+class WhitespaceRemovalFilter(html5lib_Filter):
+    def __iter__(self):
+        for token in html5lib_Filter.__iter__(self):
+            if 'SpaceCharacters' == token['type']:
+                continue
+            yield token
+
+
 def normalize_html(input):
-    """Normalize HTML5 input, discarding parts not significant for
-    equivalence in tests"""
-
-    class WhitespaceRemovalFilter(html5lib_Filter):
-        def __iter__(self):
-            for token in html5lib_Filter.__iter__(self):
-                if 'SpaceCharacters' == token['type']:
-                    continue
-                yield token
-
+    """
+    Normalize HTML5 input, discarding parts not significant for
+    equivalence in tests
+    """
     return (kuma.wiki.content
             .parse(unicode(input))
             .filter(WhitespaceRemovalFilter)
