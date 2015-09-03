@@ -518,6 +518,9 @@
             return $contributors.find(selector).mozLazyloadImage();
         }
 
+        // Don't bother with contributor bar if it starts hidden
+        if($contributors.css('display') === 'none') return;
+
         // Start displaying first contributors in list
         loadImages('li.shown noscript');
 
