@@ -4,7 +4,7 @@
 {% if waffle.switch('store_revision_ips') and user.is_superuser %}
     {% set show_ips = True %}
 {% endif %}
-{% if total %}
+{% if revisions.count %}
     <table class="dashboard-table" width="100%">
         <thead>
             <tr>
