@@ -432,9 +432,17 @@ def tidy_revision_content(pk):
 
     :arg pk: Primary key of `Revision` whose content needs tidying.
     """
-    revision = Revision.objects.get(pk=pk)
-    tidied_content, errors = tidy_content(revision.content)
-    if tidied_content != revision.tidied_content:
-        Revision.objects.filter(pk=pk).update(tidied_content=tidied_content)
-    # return the errors so we can look them up in the Celery task result store
-    return errors
+    try:
+        revision = Revision.objects.get(pk=pk)
+    except Revision.DoesNotExist as exc:
+        # Retry in 2 minutes
+        log.error('Tidy was unable to get revision id: %d. Retrying.', pk)
+        tidy_revision_content.retry(countdown=60 * 2, max_retries=5, exc=exc)
+    else:
+        tidied_content, errors = tidy_content(revision.content)
+        if tidied_content != revision.tidied_content:
+            Revision.objects.filter(pk=pk).update(
+                tidied_content=tidied_content
+            )
+        # return the errors so we can look them up in the Celery task result
+        return errors
