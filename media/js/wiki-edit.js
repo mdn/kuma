@@ -319,7 +319,7 @@
                 // metadata, since that can change the URL of the page and
                 // tangle up where the iframe posts.
                 ev.preventDefault();
-                $('#article-head .title').hide();
+                $('#article-head .doc-title').hide();
                 $('#article-head .metadata').show();
                 $('#article-head .metadata #id_title').focus();
             }
