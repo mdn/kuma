@@ -29,40 +29,14 @@ main {
 }
 
 footer {
-
     background: #fff;
     padding:  $first-content-top-padding 0 0 0;
+    font-style: italic;
 
     set-smaller-font-size();
     {$selector-heading-font-fallback} {
         letter-spacing: -0.01em;
         word-spacing: 0;
-    }
-
-    p, label {
-        font-style: italic;
-    }
-
-    p {
-        bidi-style(padding-left, 92px, padding-right, 0, true);
-        padding-top: 10px;
-        padding-bottom: 0;
-        position: relative;
-        min-height: 62px;
-
-        &:after {
-            bidi-style(left, 0, right, 0);
-            content: '';
-            display: block;
-            width: 65px;
-            height: 60px
-            background-image: url($logo-sprite-url);
-            background-position: 0px -83px;
-            background-size: 205px auto;
-            background-repeat: no-repeat;
-            position: absolute;
-            top: 0;
-        }
     }
 
     .column-strip {
@@ -71,6 +45,10 @@ footer {
 
     label {
         padding-right: 4px;
+    }
+
+    select {
+        font-style: normal;
     }
 }
 
@@ -94,25 +72,16 @@ hr {
     margin: $grid-spacing 0;
 }
 
+@media $media-query-tablet {
+    footer {
+        border-top: 1px solid $button-background;
+    }
+}
 
 @media $media-query-mobile {
-
    /* add bottom spacing to the footer */
     footer {
         padding-bottom: $grid-spacing;
-
-        p {
-            bidi-style(padding-left, 0, padding-right, 0, true);
-
-            &:after {
-                display: none;
-            }
-
-            a {
-                display: inline-block;
-                padding: 6px;
-            }
-        }
     }
 }
 
