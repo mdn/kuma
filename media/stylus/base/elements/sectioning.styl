@@ -100,6 +100,19 @@ hr {
    /* add bottom spacing to the footer */
     footer {
         padding-bottom: $grid-spacing;
+
+        p {
+            bidi-style(padding-left, 0, padding-right, 0, true);
+
+            &:after {
+                display: none;
+            }
+
+            a {
+                display: inline-block;
+                padding: 6px;
+            }
+        }
     }
 }
 
