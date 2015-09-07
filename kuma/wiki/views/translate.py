@@ -124,15 +124,19 @@ def translate(request, document_slug, document_locale, revision_id=None):
             discard_href = parent_doc.get_absolute_url()
             doc_initial = {'title': based_on_rev.title,
                            'slug': slug_dict['specific']}
-        doc_form = DocumentForm(initial=doc_initial)
+        doc_form = DocumentForm(initial=doc_initial,
+                                parent_slug=slug_dict['parent'])
 
     if user_has_rev_perm:
-        initial = {'based_on': based_on_rev.id, 'comment': '',
-                   'toc_depth': based_on_rev.toc_depth,
-                   'localization_tags': ['inprogress']}
+        initial = {
+            'based_on': based_on_rev.id,
+            'comment': '',
+            'toc_depth': based_on_rev.toc_depth,
+            'localization_tags': ['inprogress'],
+        }
         content = None
-        if revision_id:
-            content = Revision.objects.get(pk=revision_id).content
+        if revision is not None:
+            content = revision.content
         elif not doc:
             content = based_on_rev.content
         if content:
@@ -140,7 +144,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                                     .filterEditorSafety()
                                                     .serialize())
         instance = doc and doc.current_or_latest_revision()
-        rev_form = RevisionForm(instance=instance, initial=initial)
+        rev_form = RevisionForm(instance=instance,
+                                initial=initial,
+                                parent_slug=slug_dict['parent'])
 
     if request.method == 'POST':
         which_form = request.POST.get('form', 'both')
@@ -148,39 +154,33 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
         # Grab the posted slug value in case it's invalid
         posted_slug = request.POST.get('slug', slug_dict['specific'])
-        destination_slug = join_slug(slug_dict['parent_split'], posted_slug)
 
         if user_has_doc_perm and which_form in ['doc', 'both']:
             disclose_description = True
             post_data = request.POST.copy()
 
             post_data.update({'locale': document_locale})
-            post_data.update({'slug': destination_slug})
 
-            doc_form = DocumentForm(post_data, instance=doc)
+            doc_form = DocumentForm(post_data, instance=doc,
+                                    parent_slug=slug_dict['parent'])
             doc_form.instance.locale = document_locale
             doc_form.instance.parent = parent_doc
+
             if which_form == 'both':
                 # Sending a new copy of post so the slug change above
                 # doesn't cause problems during validation
-                rev_form = RevisionValidationForm(request.POST.copy())
-                rev_form.parent_slug = slug_dict['parent']
+                rev_form = RevisionForm(request.POST,
+                                        parent_slug=slug_dict['parent'])
 
             # If we are submitting the whole form, we need to check that
             # the Revision is valid before saving the Document.
             if doc_form.is_valid() and (which_form == 'doc' or
                                         rev_form.is_valid()):
-                rev_form = RevisionForm(post_data)
+                doc = doc_form.save(parent=parent_doc)
 
-                if rev_form.is_valid():
-                    doc = doc_form.save(parent_doc)
-
-                    if which_form == 'doc':
-                        url = urlparams(doc.get_edit_url(), opendescription=1)
-                        return redirect(url)
-                else:
-                    doc_form.data['slug'] = posted_slug
-                    doc_form_invalid = True
+                if which_form == 'doc':
+                    url = urlparams(doc.get_edit_url(), opendescription=1)
+                    return redirect(url)
             else:
                 doc_form.data['slug'] = posted_slug
                 doc_form_invalid = True
@@ -190,36 +190,27 @@ def translate(request, document_slug, document_locale, revision_id=None):
             if 'slug' not in post_data:
                 post_data['slug'] = posted_slug
 
-            rev_form = RevisionValidationForm(post_data)
-            rev_form.parent_slug = slug_dict['parent']
+            # update the post data with the toc_depth of original
+            post_data['toc_depth'] = based_on_rev.toc_depth
+
+            rev_form = RevisionForm(post_data, parent_slug=slug_dict['parent'])
             rev_form.instance.document = doc  # for rev_form.clean()
 
             if rev_form.is_valid() and not doc_form_invalid:
-                # append final slug
-                post_data['slug'] = destination_slug
+                parent_id = request.POST.get('parent_id', '')
 
-                # update the post data with the toc_depth of original
-                post_data['toc_depth'] = based_on_rev.toc_depth
+                # Attempt to set a parent
+                if parent_id:
+                    try:
+                        parent_doc = get_object_or_404(Document, id=parent_id)
+                        rev_form.instance.document.parent = parent_doc
+                        doc.parent = parent_doc
+                        rev_form.instance.based_on.document = doc.original
+                    except Document.DoesNotExist:
+                        pass
 
-                rev_form = RevisionForm(post_data)
-                rev_form.instance.document = doc  # for rev_form.clean()
-
-                if rev_form.is_valid():
-                    parent_id = request.POST.get('parent_id', '')
-
-                    # Attempt to set a parent
-                    if parent_id:
-                        try:
-                            parent_doc = get_object_or_404(Document,
-                                                           id=parent_id)
-                            rev_form.instance.document.parent = parent_doc
-                            doc.parent = parent_doc
-                            rev_form.instance.based_on.document = doc.original
-                        except Document.DoesNotExist:
-                            pass
-
-                    save_revision_and_notify(rev_form, request, doc)
-                    return redirect(doc)
+                rev_form.save(request, doc)
+                return redirect(doc)
 
     if doc:
         from_id = smart_int(request.GET.get('from'), None)

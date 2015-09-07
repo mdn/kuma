@@ -483,8 +483,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         self.assertHTMLEqual(doc('#id_content')[0].value.strip(),
                              r.content.strip())
 
-    @override_settings(CELERY_ALWAYS_EAGER=True)
-    @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False)
+    @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False,
+                       CELERY_ALWAYS_EAGER=True)
     @mock.patch.object(Site.objects, 'get_current')
     def test_new_revision_POST_document_with_current(self, get_current):
         """HTTP POST to new revision URL creates the revision on a document.
@@ -493,15 +493,13 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         the document document fields are not editable.
 
         Also assert that the edited and reviewable notifications go out.
-
         """
         get_current.return_value.domain = 'testserver'
 
         # Sign up for notifications:
         EditDocumentEvent.notify('sam@example.com', self.d).activate().save()
 
-        # Edit a document (pause for get_previous)
-        time.sleep(1)
+        # Edit a document
         data = {
             'summary': 'A brief summary',
             'content': 'The article content',
@@ -525,6 +523,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         # messing with context processors can
         # cause notification emails to error
         # and stop being sent.
+        time.sleep(1)
         eq_(2, len(mail.outbox))
         first_edit_email = mail.outbox[0]
         expected_to = [config.EMAIL_LIST_FOR_FIRST_EDITS]

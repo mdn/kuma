@@ -908,6 +908,8 @@ class DeferredRenderingTests(UserTestCase):
         self.d1.save()
         self.d1.delete()
         self.d1.render()
+
+        time.sleep(1.0)  # Small clock-tick to age the results.
         self.d1 = Document.objects.get(pk=self.d1.pk)
         ok_(deleted_title != self.d1.get_json_data()['title'])
 

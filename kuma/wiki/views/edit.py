@@ -27,8 +27,7 @@ from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
 
 from .translate import translate
-from .utils import (document_form_initial, join_slug, split_slug,
-                    save_revision_and_notify)
+from .utils import document_form_initial, split_slug
 
 
 @xframe_options_sameorigin
@@ -166,11 +165,11 @@ def edit(request, document_slug, document_locale, revision_id=None):
                 if doc_form.is_valid():
                     # if must be here for section edits
                     if 'slug' in post_data:
-                        post_data['slug'] = join_slug(
-                            slug_dict['parent_split'], post_data['slug'])
+                        post_data['slug'] = u'/'.join([slug_dict['parent'],
+                                                       post_data['slug']])
 
                     # Get the possibly new slug for the imminent redirection:
-                    doc = doc_form.save(None)
+                    doc = doc_form.save(parent=None)
 
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just
@@ -220,7 +219,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
                             rev, doc)
 
                 if rev_form.is_valid():
-                    save_revision_and_notify(rev_form, request, doc)
+                    rev_form.save(request, doc)
 
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just
