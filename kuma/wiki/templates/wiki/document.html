@@ -1,7 +1,9 @@
 {% extends "wiki/base.html" %}
 {% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
 
-{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, get_approvals_html, document_watch, share_links, contributor_links with context %}
+{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_subnav, document_watch, share_links, contributor_links with context %}
+{% from "wiki/includes/buttons.html" import get_document_buttons with context %}
+{% from "wiki/includes/approvals.html" import get_approvals_html with context %}
 
 {% if fallback_reason == 'no_translation' %}
   {% set help_link = url('wiki.translate', document_path=document.slug, locale=document.locale)|urlparams(tolocale=request.locale) %}

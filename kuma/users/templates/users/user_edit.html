@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% from 'includes/common_macros.html' import newsletter_widget, li_field %}
+{% from 'includes/newsletter.html' import newsletter_widget with context %}
+{% from 'includes/common_macros.html' import li_field %}
 
 {% set accounts = social_accounts(edit_user) %}
 {% set is_me = user.pk == edit_user.pk %}
