@@ -3,6 +3,7 @@ from __future__ import with_statement
 import json
 import logging
 import os
+import textwrap
 from datetime import datetime
 
 from django.conf import settings
@@ -149,52 +150,60 @@ def move_page(locale, slug, new_slug, email):
         logging.error('Page move failed: no user with email address %s' %
                       email)
         return
+
     try:
         doc = Document.objects.get(locale=locale, slug=slug)
     except Document.DoesNotExist:
         transaction.rollback()
         message = """
-    Page move failed.
+            Page move failed.
 
-    Move was requested for document with slug %(slug)s in locale
-    %(locale)s, but no such document exists.
-    """ % {'slug': slug, 'locale': locale}
+            Move was requested for document with slug %(slug)s in locale
+            %(locale)s, but no such document exists.
+        """ % {'slug': slug, 'locale': locale}
         logging.error(message)
-        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+        send_mail('Page move failed',
+                  textwrap.dedent(message),
+                  settings.DEFAULT_FROM_EMAIL,
                   [user.email])
         transaction.set_autocommit(True)
         return
+
     try:
         doc._move_tree(new_slug, user=user)
     except PageMoveError as e:
         transaction.rollback()
         message = """
-    Page move failed.
+            Page move failed.
 
-    Move was requested for document with slug %(slug)s in locale
-    %(locale)s, but could not be completed.
+            Move was requested for document with slug %(slug)s in locale
+            %(locale)s, but could not be completed.
 
-    Diagnostic info:
+            Diagnostic info:
 
-    %(message)s
-    """ % {'slug': slug, 'locale': locale, 'message': e.message}
+            %(message)s
+        """ % {'slug': slug, 'locale': locale, 'message': e.message}
         logging.error(message)
-        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+        send_mail('Page move failed',
+                  textwrap.dedent(message),
+                  settings.DEFAULT_FROM_EMAIL,
                   [user.email])
         transaction.set_autocommit(True)
         return
     except Exception as e:
         transaction.rollback()
         message = """
-    Page move failed.
+            Page move failed.
 
-    Move was requested for document with slug %(slug)s in locale %(locale)s,
-    but could not be completed.
+            Move was requested for document with slug %(slug)s in locale %(locale)s,
+            but could not be completed.
 
-    %(info)s
-    """ % {'slug': slug, 'locale': locale, 'info': e}
+            %(info)s
+        """ % {'slug': slug, 'locale': locale, 'info': e}
         logging.error(message)
-        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+        send_mail('Page move failed',
+                  textwrap.dedent(message),
+                  settings.DEFAULT_FROM_EMAIL,
                   [user.email])
         transaction.set_autocommit(True)
         return
@@ -207,16 +216,21 @@ def move_page(locale, slug, new_slug, email):
         moved_doc.schedule_rendering('max-age=0')
 
     subject = 'Page move completed: ' + slug + ' (' + locale + ')'
+
     full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
+
     message = """
-Page move completed.
+        Page move completed.
 
-The move requested for the document with slug %(slug)s in locale
-%(locale)s, and all its children, has been completed.
+        The move requested for the document with slug %(slug)s in locale
+        %(locale)s, and all its children, has been completed.
 
-You can now view this document at its new location: %(full_url)s.
+        You can now view this document at its new location: %(full_url)s.
     """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
+
+    send_mail(subject,
+              textwrap.dedent(message),
+              settings.DEFAULT_FROM_EMAIL,
               [user.email])
 
 
