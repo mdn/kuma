@@ -252,7 +252,7 @@ class RevisionForm(forms.ModelForm):
                 locale=self.instance.document.locale,
                 **{name: value})
             if self.instance and self.instance.document:
-                if (not existing_doc.redirect_url() and
+                if (not existing_doc.get_redirect_url() and
                         existing_doc.pk != self.instance.document.pk):
                     # There's another document with this value,
                     # and we're not a revision of it.

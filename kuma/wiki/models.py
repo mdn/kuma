@@ -898,13 +898,13 @@ class Document(NotificationsMixin, models.Model):
 
     def save(self, *args, **kwargs):
         self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
-        self.is_redirect = 1 if self.redirect_url() else 0
+        self.is_redirect = bool(self.get_redirect_url())
 
         try:
             # Check if the slug would collide with an existing doc
             self._raise_if_collides('slug', SlugCollision)
         except UniqueCollision as err:
-            if err.existing.redirect_url() is not None:
+            if err.existing.get_redirect_url() is not None:
                 # If the existing doc is a redirect, delete it and clobber it.
                 err.existing.delete()
             else:
@@ -1059,7 +1059,7 @@ class Document(NotificationsMixin, models.Model):
             try:
                 slug = '/'.join([new_slug, child_title])
                 existing = Document.objects.get(locale=self.locale, slug=slug)
-                if not existing.redirect_url():
+                if not existing.get_redirect_url():
                     conflicts.append(existing)
             except Document.DoesNotExist:
                 pass
@@ -1302,6 +1302,29 @@ Full traceback:
         """
         return reverse('wiki.document', locale=self.locale, args=[self.slug])
 
+    def get_redirect_url(self):
+        """
+        If I am a redirect, return the absolute URL to which I redirect.
+
+        Otherwise, return None.
+        """
+        # If a document starts with REDIRECT_HTML and contains any <a> tags
+        # with hrefs, return the href of the first one. This trick saves us
+        # from having to parse the HTML every time.
+        if REDIRECT_HTML in self.html:
+            anchors = PyQuery(self.html)('a[href].redirect')
+            if anchors:
+                url = anchors[0].get('href')
+                # allow explicit domain and *not* '//'
+                # i.e allow "https://developer...." and "/en-US/docs/blah"
+                if len(url) > 1:
+                    if url.startswith(settings.SITE_URL):
+                        return url
+                    elif url[0] == '/' and url[1] != '/':
+                        return url
+                elif len(url) == 1 and url[0] == '/':
+                    return url
+
     @staticmethod
     def from_url(url, required_locale=None, id_only=False):
         """
@@ -1341,36 +1364,13 @@ Full traceback:
         except Document.DoesNotExist:
             return None
 
-    def redirect_url(self):
-        """
-        If I am a redirect, return the absolute URL to which I redirect.
-
-        Otherwise, return None.
-        """
-        # If a document starts with REDIRECT_HTML and contains any <a> tags
-        # with hrefs, return the href of the first one. This trick saves us
-        # from having to parse the HTML every time.
-        if REDIRECT_HTML in self.html:
-            anchors = PyQuery(self.html)('a[href].redirect')
-            if anchors:
-                url = anchors[0].get('href')
-                # allow explicit domain and *not* '//'
-                # i.e allow "https://developer...." and "/en-US/docs/blah"
-                if len(url) > 1:
-                    if url.startswith(settings.SITE_URL):
-                        return url
-                    elif url[0] == '/' and url[1] != '/':
-                        return url
-                elif len(url) == 1 and url[0] == '/':
-                    return url
-
     def redirect_document(self):
         """If I am a redirect to a Document, return that Document.
 
         Otherwise, return None.
 
         """
-        url = self.redirect_url()
+        url = self.get_redirect_url()
         if url:
             return self.from_url(url)
 

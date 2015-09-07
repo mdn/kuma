@@ -305,7 +305,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(href, d.redirect_url())
+        eq_(href, d.get_redirect_url())
 
     @attr('redirect')
     def test_redirect_url_allows_domain_relative_url(self):
@@ -313,7 +313,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(href, d.redirect_url())
+        eq_(href, d.get_redirect_url())
 
     @attr('redirect')
     def test_redirect_url_rejects_protocol_relative_url(self):
@@ -321,7 +321,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(None, d.redirect_url())
+        eq_(None, d.get_redirect_url())
 
     @attr('bug1082034')
     @attr('redirect')
@@ -330,7 +330,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(href, d.redirect_url())
+        eq_(href, d.get_redirect_url())
 
 
 class PermissionTests(KumaTestCase):
@@ -1327,7 +1327,7 @@ class PageMoveTests(UserTestCase):
             moved_top.current_revision.slug)
         ok_(old_top_id != moved_top.current_revision.id)
         ok_(moved_top.current_revision.slug in
-            Document.objects.get(slug='first-level/parent').redirect_url())
+            Document.objects.get(slug='first-level/parent').get_redirect_url())
 
         moved_child1 = Document.objects.get(pk=child1_doc.id)
         eq_('new-prefix/first-level/parent/child1',
@@ -1336,7 +1336,7 @@ class PageMoveTests(UserTestCase):
         ok_(moved_child1.current_revision.slug in
             Document.objects.get(
                 slug='first-level/second-level/child1'
-            ).redirect_url())
+            ).get_redirect_url())
 
         moved_child2 = Document.objects.get(pk=child2_doc.id)
         eq_('new-prefix/first-level/parent/child2',
@@ -1345,7 +1345,7 @@ class PageMoveTests(UserTestCase):
         ok_(moved_child2.current_revision.slug in
             Document.objects.get(
                 slug='first-level/second-level/child2'
-            ).redirect_url())
+            ).get_redirect_url())
 
         moved_grandchild = Document.objects.get(pk=grandchild_doc.id)
         eq_('new-prefix/first-level/parent/child2/grandchild',
@@ -1354,7 +1354,7 @@ class PageMoveTests(UserTestCase):
         ok_(moved_grandchild.current_revision.slug in
             Document.objects.get(
                 slug='first-level/second-level/third-level/grandchild'
-            ).redirect_url())
+            ).get_redirect_url())
 
     @attr('move')
     def test_conflicts(self):

@@ -569,7 +569,7 @@ def document(request, document_slug, document_locale):
     # redirected-to-page back to a "Redirected from..." link, so you can edit
     # the redirect.
     redirect_url = (None if request.GET.get('redirect') == 'no'
-                    else doc.redirect_url())
+                    else doc.get_redirect_url())
 
     if redirect_url and redirect_url != doc.get_absolute_url():
         url = urlparams(redirect_url, query_dict=request.GET)
