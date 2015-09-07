@@ -294,7 +294,7 @@ def move(request, document_slug, document_locale):
         if form.is_valid():
             conflicts = doc._tree_conflicts(form.cleaned_data['slug'])
             if conflicts:
-                return render(request, 'wiki/move_document.html', {
+                return render(request, 'wiki/move.html', {
                     'form': form,
                     'document': doc,
                     'descendants': descendants,
@@ -312,7 +312,7 @@ def move(request, document_slug, document_locale):
     else:
         form = TreeMoveForm()
 
-    return render(request, 'wiki/move_document.html', {
+    return render(request, 'wiki/move.html', {
         'form': form,
         'document': doc,
         'descendants': descendants,

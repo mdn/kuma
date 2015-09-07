@@ -1068,7 +1068,6 @@ class Document(NotificationsMixin, models.Model):
     def _move_tree(self, new_slug, user=None, title=None):
         """
         Move this page and all its children.
-
         """
         # Page move is a 10-step process.
         #
