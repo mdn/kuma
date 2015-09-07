@@ -70,8 +70,8 @@
 
                 </li>{% endif %}
                 {% if user.is_authenticated() and not document.is_template %}
-                  <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}" rel="nofollow, noindex">{{ _('New sub-page') }}</a></li>
-                  <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}{% if document.parent_topic %}&parent={{ document.parent_topic.id }}{% endif %}" rel="nofollow, noindex">{{ _('Clone this page') }}</a></li>
+                  <li><a href="{{ url('wiki.create') }}?parent={{ document.id }}" rel="nofollow, noindex">{{ _('New sub-page') }}</a></li>
+                  <li><a href="{{ url('wiki.create') }}?clone={{ document.id }}{% if document.parent_topic %}&amp;parent={{ document.parent_topic.id }}{% endif %}" rel="nofollow, noindex">{{ _('Clone this page') }}</a></li>
                 {% endif %}
                 {% if user.is_authenticated() and user.has_perm('wiki.move_tree') %}
                   <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}" rel="nofollow, noindex">{{ _('Move this page') }}</a></li>

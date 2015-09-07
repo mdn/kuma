@@ -448,7 +448,7 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
     When a Document doesn't exist but the user can create it, return
     the creation URL to redirect to.
     """
-    url = reverse('wiki.new_document', locale=document_locale)
+    url = reverse('wiki.create', locale=document_locale)
     if slug_dict['length'] > 1:
         parent_doc = get_object_or_404(Document,
                                        locale=document_locale,

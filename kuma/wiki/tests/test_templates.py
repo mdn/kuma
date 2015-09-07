@@ -270,7 +270,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
     def test_new_document_GET_with_perm(self):
         """HTTP GET to new document URL renders the form."""
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.new_document'))
+        response = self.client.get(reverse('wiki.create'))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('form#wiki-page-edit input[name="title"]')))
@@ -282,7 +282,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         https://bugzil.la/1052047
         """
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.new_document'))
+        response = self.client.get(reverse('wiki.create'))
 
         test_strings = ['Review needed?', 'Technical', 'Editorial']
         eq_(200, response.status_code)
@@ -295,12 +295,12 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         """HTTP GET to new document URL shows preview button for basic doc
         and not for template doc"""
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.new_document'))
+        response = self.client.get(reverse('wiki.create'))
         eq_(200, response.status_code)
         doc = pq(response.content)
         ok_(len(doc('.btn-preview')) > 0)
 
-        response = self.client.get(reverse('wiki.new_document') +
+        response = self.client.get(reverse('wiki.create') +
                                    '?slug=' + TEMPLATE_TITLE_PREFIX)
         doc = pq(response.content)
         eq_(0, len(doc('.btn-preview')))
@@ -309,7 +309,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         """The new document form should have all all 'Relevant to' options
         checked by default."""
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.new_document'))
+        response = self.client.get(reverse('wiki.create'))
         doc = pq(response.content)
         eq_("Name Your Article", doc('input#id_title').attr('placeholder'))
         eq_("10", doc('input#id_category').attr('value'))
@@ -322,7 +322,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         tags = ['tag1', 'tag2']
         data = new_document_data(tags)
-        response = self.client.post(reverse('wiki.new_document'), data,
+        response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         d = Document.objects.get(title=data['title'])
         eq_([('http://testserver/en-US/docs/%s' % d.slug, 302)],
@@ -346,7 +346,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data(['tag1', 'tag2'])
         locale = 'es'
-        self.client.post(reverse('wiki.new_document', locale=locale),
+        self.client.post(reverse('wiki.create', locale=locale),
                          data, follow=True)
         d = Document.objects.get(title=data['title'])
         eq_(locale, d.locale)
@@ -356,7 +356,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data(['tag1', 'tag2'])
         data['title'] = ''
-        response = self.client.post(reverse('wiki.new_document'), data,
+        response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         doc = pq(response.content)
         ul = doc('article > ul.errorlist')
@@ -368,7 +368,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data(['tag1', 'tag2'])
         data['content'] = ''
-        response = self.client.post(reverse('wiki.new_document'), data,
+        response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         doc = pq(response.content)
         ul = doc('article > ul.errorlist')
@@ -380,7 +380,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data(['tag1', 'tag2'])
         data['category'] = 963
-        response = self.client.post(reverse('wiki.new_document'), data,
+        response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         doc = pq(response.content)
         ul = doc('article > ul.errorlist')
@@ -399,7 +399,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
         del data['category']
-        response = self.client.post(reverse('wiki.new_document'), data,
+        response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         self.assertContains(response, 'Please choose a category.')
 
@@ -410,7 +410,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
         data['slug'] = d.slug
-        response = self.client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.create'), data)
         eq_(200, response.status_code)
         doc = pq(response.content)
         ul = doc('article > ul.errorlist')
@@ -425,7 +425,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
         data['slug'] = '%s-once-more-with-feeling' % d.slug
-        response = self.client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.create'), data)
         eq_(302, response.status_code)
 
     def test_slug_3_chars(self):
@@ -433,7 +433,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
         data['slug'] = 'ask'
-        response = self.client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.create'), data)
         eq_(302, response.status_code)
         eq_('ask', Document.objects.all()[0].slug)
 

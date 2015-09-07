@@ -25,9 +25,10 @@ from .utils import save_revision_and_notify
 @prevent_indexing
 @never_cache
 @newrelic.agent.function_trace()
-def new_document(request):
-    """Create a new wiki document."""
-
+def create(request):
+    """
+    Create a new wiki page, which is a document and a revision.
+    """
     initial_slug = request.GET.get('slug', '')
     initial_title = initial_slug.replace('_', ' ')
 
@@ -155,4 +156,4 @@ def new_document(request):
         'parent_slug': parent_slug,
         'parent_path': parent_path,
     }
-    return render(request, 'wiki/new_document.html', context)
+    return render(request, 'wiki/create.html', context)

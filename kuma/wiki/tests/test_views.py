@@ -458,7 +458,7 @@ class PermissionTests(UserTestCase, WikiTestCase):
                     data.update({"title": slug, "slug": slug})
 
                     if is_add:
-                        url = reverse('wiki.new_document', locale=locale)
+                        url = reverse('wiki.create', locale=locale)
                         resp = self.client.post(url, data, follow=False)
                     else:
                         data['form'] = 'rev'
@@ -1017,7 +1017,7 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
             # Create the doc
             data = new_document_data()
             data.update({'title': 'blah', 'slug': slug, 'content': content})
-            response = self.client.post(reverse('wiki.new_document',
+            response = self.client.post(reverse('wiki.create',
                                                 locale=settings.WIKI_DEFAULT_LANGUAGE),
                                         data)
             eq_(302, response.status_code)
@@ -1079,7 +1079,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
 
         # Go to new document page to ensure no-index header works
-        response = self.client.get(reverse('wiki.new_document', args=[],
+        response = self.client.get(reverse('wiki.create', args=[],
                                            locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(response['X-Robots-Tag'], 'noindex')
 
@@ -1149,7 +1149,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Create a new doc.
         data = new_document_data()
         data.update({'slug': slug, 'comment': comment})
-        self.client.post(reverse('wiki.new_document'), data)
+        self.client.post(reverse('wiki.create'), data)
         doc = Document.objects.get(slug=slug, locale=loc)
         eq_(comment, doc.current_revision.comment)
 
@@ -1157,7 +1157,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
     def test_toc_initial(self):
         self.client.login(username='admin', password='testpass')
 
-        resp = self.client.get(reverse('wiki.new_document'))
+        resp = self.client.get(reverse('wiki.create'))
         eq_(200, resp.status_code)
 
         page = pq(resp.content)
@@ -1263,13 +1263,13 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Create a new doc.
         data = new_document_data()
         data.update({"slug": exist_slug})
-        resp = self.client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.create'), data)
         eq_(302, resp.status_code)
 
         # Create another new doc.
         data = new_document_data()
         data.update({"slug": 'some-new-title'})
-        resp = self.client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.create'), data)
         eq_(302, resp.status_code)
 
         # Now, post an update with duplicate slug
@@ -1301,7 +1301,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Create a new doc.
         data = new_document_data()
         data.update({"title": exist_title, "slug": exist_slug})
-        resp = self.client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.create'), data)
         eq_(302, resp.status_code)
 
         # Change title and slug
@@ -1329,12 +1329,12 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         data['title'] = 'valid slug'
         data['slug'] = 'valid'
-        response = self.client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.create'), data)
         self.assertRedirects(response,
                              reverse('wiki.document', args=[data['slug']],
                                      locale=settings.WIKI_DEFAULT_LANGUAGE))
 
-        new_url = reverse('wiki.new_document')
+        new_url = reverse('wiki.create')
         invalid_slugs = [
             'va/lid',  # slashes
             'inva$lid',  # dollar signs
@@ -1377,7 +1377,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         for term in reserved_slugs:
             data['title'] = 'invalid with %s' % term
             data['slug'] = term
-            response = self.client.post(reverse('wiki.new_document'), data)
+            response = self.client.post(reverse('wiki.create'), data)
             self.assertContains(response, 'The slug provided is not valid.')
 
     def test_slug_revamp(self):
@@ -1388,7 +1388,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             # Create some vars
             locale = settings.WIKI_DEFAULT_LANGUAGE
             foreign_locale = 'es'
-            new_doc_url = reverse('wiki.new_document')
+            new_doc_url = reverse('wiki.create')
             invalid_slug = "some/thing"
             invalid_slugs = [
                 "some/thing",
@@ -1695,7 +1695,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         child_data['slug'] = 'length'
         child_data['content'] = 'This is the content'
         child_data['is_localizable'] = True
-        child_url = (reverse('wiki.new_document') +
+        child_url = (reverse('wiki.create') +
                      '?parent=' +
                      str(parent_doc.id))
         response = self.client.post(child_url, child_data)
@@ -1931,7 +1931,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                  content=content)
         document = test_revision.document
 
-        response = self.client.get(reverse('wiki.new_document',
+        response = self.client.get(reverse('wiki.create',
                                            args=[],
                                            locale=settings.WIKI_DEFAULT_LANGUAGE) + '?clone=' + str(document.id))
         page = pq(response.content)
@@ -1959,14 +1959,14 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Create english doc
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
-        self.client.post(reverse('wiki.new_document'), data)
+        self.client.post(reverse('wiki.create'), data)
         en_d = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
         # Create french doc
         data.update({'locale': 'fr',
                      'title': 'A Tést Articlé',
                      'content': "C'ést bon."})
-        self.client.post(reverse('wiki.new_document', locale='fr'), data)
+        self.client.post(reverse('wiki.create', locale='fr'), data)
         fr_d = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
         # Check edit doc page for choose parent box
@@ -1990,13 +1990,13 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         """Allow users to change "translation source" settings"""
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
-        self.client.post(reverse('wiki.new_document'), data)
+        self.client.post(reverse('wiki.create'), data)
         parent = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
         data.update({'title': 'Another Test Article',
                      'content': "Yahoooo!",
                      'parent_id': parent.id})
-        self.client.post(reverse('wiki.new_document'), data)
+        self.client.post(reverse('wiki.create'), data)
         child = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
         url = reverse('wiki.edit_document', args=[child.slug])
@@ -2057,7 +2057,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Create a new doc with tags
         data.update({'slug': slug, 'tags': ','.join(ts1)})
-        self.client.post(reverse('wiki.new_document'), data)
+        self.client.post(reverse('wiki.create'), data)
         assert_tag_state(ts1, ts2)
 
         # Now, update the tags.
@@ -2076,7 +2076,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Create a new doc with one review tag
         data = new_document_data()
         data.update({'review_tags': ['technical']})
-        response = self.client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.create'), data)
 
         # Ensure there's now a doc with that expected tag in its newest
         # revision
@@ -2208,7 +2208,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             data = new_document_data()
             data.update({'review_tags': ['editorial', 'technical'],
                          'slug': slug})
-            resp = self.client.post(reverse('wiki.new_document'), data)
+            resp = self.client.post(reverse('wiki.create'), data)
 
             doc = Document.objects.get(slug=slug)
             rev = doc.revisions.order_by('-id').all()[0]
@@ -2235,7 +2235,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Post a new document.
         data = new_document_data()
-        resp = self.client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.create'), data)
         doc = Document.objects.get(slug=data['slug'])
 
         # Edit #1 starts...
@@ -2319,7 +2319,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         data['title'] = 'Replicated local storage'
         data['parent_topic'] = d.id
-        resp = self.client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.create'), data)
         eq_(302, resp.status_code)
         ok_(d.children.count() == 1)
         ok_(d.children.all()[0].title == 'Replicated local storage')
@@ -2417,10 +2417,10 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                     locale=foreign_doc.locale))
 
         # Test new
-        response = self.client.get(reverse('wiki.new_document',
+        response = self.client.get(reverse('wiki.create',
                                            locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(pq(response.content).find('.btn-discard').attr('href'),
-            reverse('wiki.new_document',
+            reverse('wiki.create',
                     locale=settings.WIKI_DEFAULT_LANGUAGE))
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
@@ -2434,7 +2434,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         data['title'] = 'A Test Article For Reverting'
         data['slug'] = 'test-article-for-reverting'
-        response = self.client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.create'), data)
 
         doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug='test-article-for-reverting')
@@ -2475,7 +2475,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         slug = 'test-article-for-storing-revision-ip'
         data.update({'title': 'A Test Article For Storing Revision IP',
                      'slug': slug})
-        self.client.post(reverse('wiki.new_document'), data)
+        self.client.post(reverse('wiki.create'), data)
 
         doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug=slug)
@@ -2509,7 +2509,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         slug = 'test-article-for-storing-revision-ip'
         data.update({'title': 'A Test Article For First Edit Emails',
                      'slug': slug})
-        self.client.post(reverse('wiki.new_document'), data)
+        self.client.post(reverse('wiki.create'), data)
         eq_(1, len(mail.outbox))
 
         doc = Document.objects.get(

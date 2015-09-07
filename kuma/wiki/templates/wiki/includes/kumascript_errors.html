@@ -34,7 +34,7 @@
                     {% if '$' not in template_name %}
                         {% set template_slug = 'Template:{name}' | f(name=template_name) %}
                         {% set edit_url = url('wiki.edit_document', template_slug) %}
-                        {% set new_url = url('wiki.new_document') + '?slug=Template:{name}' | f(name=template_name) %}
+                        {% set new_url = url('wiki.create') + '?slug=Template:{name}' | f(name=template_name) %}
                     {% endif %}
 
                     {{ _('In macro:') }} <code>{{ template_name }}</code>
