@@ -57,7 +57,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
     parent_doc = get_object_or_404(Document,
                                    locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug=document_slug)
-    user = request.user
 
     if not revision_id:
         # HACK: Seems weird, but sticking the translate-to locale in a query

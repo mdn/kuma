@@ -1,3 +1,4 @@
+import json
 import datetime
 import HTMLParser
 import urllib
@@ -219,7 +220,6 @@ def urlencode(txt):
 
 @register.filter
 def jsonencode(data):
-    import json
     return jinja2.Markup(json.dumps(data))
 
 
@@ -231,7 +231,11 @@ def get_soapbox_messages(url):
 
 @register.function
 def get_webfont_attributes(request):
-    """Return data attributes based on assumptions about if user has them cached"""
+    """
+    Return data attributes based on assumptions about if user has them cached
+    """
+    if not request:
+        return ''
     assume_loaded = 'true'
     if request.META.get('HTTP_PRAGMA') == 'no-cache':
         assume_loaded = 'false'

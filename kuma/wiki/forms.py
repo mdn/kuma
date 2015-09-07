@@ -56,9 +56,12 @@ MOVE_REQUIRED = _lazy(u"Changing this document's slug requires "
 
 
 class DocumentForm(forms.ModelForm):
-    """Form to create/edit a document."""
-
-    title = StrippedCharField(min_length=1, max_length=255,
+    """
+    Used for managing the wiki document data model that houses general
+    data of a wiki page.
+    """
+    title = StrippedCharField(min_length=1,
+                              max_length=255,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
                               label=_lazy(u'Title:'),
@@ -67,7 +70,8 @@ class DocumentForm(forms.ModelForm):
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
 
-    slug = StrippedCharField(min_length=1, max_length=255,
+    slug = StrippedCharField(min_length=1,
+                             max_length=255,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
                              help_text=_lazy(u'Article URL'),
@@ -90,6 +94,10 @@ class DocumentForm(forms.ModelForm):
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
+    class Meta:
+        model = Document
+        fields = ('title', 'slug', 'category', 'locale')
+
     def clean_slug(self):
         slug = self.cleaned_data['slug']
         if slug == '':
@@ -105,10 +113,6 @@ class DocumentForm(forms.ModelForm):
                 raise forms.ValidationError(SLUG_INVALID)
         return slug
 
-    class Meta:
-        model = Document
-        fields = ('title', 'slug', 'category', 'locale')
-
     def save(self, parent_doc, **kwargs):
         """Persist the Document form, and return the saved Document."""
         doc = super(DocumentForm, self).save(commit=False, **kwargs)
@@ -123,9 +127,11 @@ class DocumentForm(forms.ModelForm):
 
 
 class RevisionForm(forms.ModelForm):
-    """Form to create new revisions."""
-
-    title = StrippedCharField(min_length=1, max_length=255,
+    """
+    Form to create new revisions.
+    """
+    title = StrippedCharField(min_length=1,
+                              max_length=255,
                               required=False,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
@@ -134,7 +140,8 @@ class RevisionForm(forms.ModelForm):
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
-    slug = StrippedCharField(min_length=1, max_length=255,
+    slug = StrippedCharField(min_length=1,
+                             max_length=255,
                              required=False,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
@@ -152,7 +159,8 @@ class RevisionForm(forms.ModelForm):
 
     summary = StrippedCharField(
         required=False,
-        min_length=5, max_length=1000,
+        min_length=5,
+        max_length=1000,
         widget=forms.Textarea(),
         label=_lazy(u'Search result summary:'),
         help_text=_lazy(u'Only displayed on search results page'),
@@ -161,7 +169,8 @@ class RevisionForm(forms.ModelForm):
                         'max_length': SUMMARY_LONG})
 
     content = StrippedCharField(
-        min_length=5, max_length=300000,
+        min_length=5,
+        max_length=300000,
         label=_lazy(u'Content:'),
         widget=forms.Textarea(),
         error_messages={'required': CONTENT_REQUIRED,
@@ -172,12 +181,14 @@ class RevisionForm(forms.ModelForm):
 
     review_tags = forms.MultipleChoiceField(
         label=_("Tag this revision for review?"),
-        widget=CheckboxSelectMultiple, required=False,
+        widget=CheckboxSelectMultiple,
+        required=False,
         choices=REVIEW_FLAG_TAGS)
 
     localization_tags = forms.MultipleChoiceField(
         label=_("Tag this revision for localization?"),
-        widget=CheckboxSelectMultiple, required=False,
+        widget=CheckboxSelectMultiple,
+        required=False,
         choices=LOCALIZATION_FLAG_TAGS)
 
     current_rev = forms.CharField(required=False,
@@ -195,12 +206,12 @@ class RevisionForm(forms.ModelForm):
 
 
         super(RevisionForm, self).__init__(*args, **kwargs)
+
         self.fields['based_on'].widget = forms.HiddenInput()
 
         if self.instance and self.instance.pk:
-
-            # Ensure both title and slug are populated from parent document, if
-            # last revision didn't have them
+            # Ensure both title and slug are populated from parent document,
+            # if last revision didn't have them
             if not self.instance.title:
                 self.initial['title'] = self.instance.document.title
             if not self.instance.slug:
@@ -208,12 +219,12 @@ class RevisionForm(forms.ModelForm):
 
             content = self.instance.content
             if not self.instance.document.is_template:
-                tool = kuma.wiki.content.parse(content)
-                tool.injectSectionIDs()
+                parsed_content = kuma.wiki.content.parse(content)
+                parsed_content.injectSectionIDs()
                 if self.section_id:
-                    tool.extractSection(self.section_id)
-                tool.filterEditorSafety()
-                content = tool.serialize()
+                    parsed_content.extractSection(self.section_id)
+                parsed_content.filterEditorSafety()
+                content = parsed_content.serialize()
             self.initial['content'] = content
 
             self.initial['review_tags'] = list(self.instance.review_tags
@@ -267,7 +278,9 @@ class RevisionForm(forms.ModelForm):
         return cleaned_slug
 
     def clean_content(self):
-        """Validate the content, performing any section editing if necessary"""
+        """
+        Validate the content, performing any section editing if necessary
+        """
         content = self.cleaned_data['content']
 
         # If we're editing a section, we need to replace the section content
@@ -276,17 +289,19 @@ class RevisionForm(forms.ModelForm):
             # Make sure we start with content form the latest revision.
             full_content = self.instance.document.current_revision.content
             # Replace the section content with the form content.
-            tool = kuma.wiki.content.parse(full_content)
-            tool.replaceSection(self.section_id, content)
-            content = tool.serialize()
+            parsed_content = kuma.wiki.content.parse(full_content)
+            parsed_content.replaceSection(self.section_id, content)
+            content = parsed_content.serialize()
 
         return content
 
     def clean_current_rev(self):
-        """If a current revision is supplied in the form, compare it against
+        """
+        If a current revision is supplied in the form, compare it against
         what the document claims is the current revision. If there's a
         difference, then an edit has occurred since the form was constructed
-        and we treat it as a mid-air collision."""
+        and we treat it as a mid-air collision.
+        """
         current_rev = self.cleaned_data.get('current_rev', None)
 
         if not current_rev:
@@ -302,10 +317,12 @@ class RevisionForm(forms.ModelForm):
                     # This is a section edit. So, even though the revision has
                     # changed, it still might not be a collision if the section
                     # in particular hasn't changed.
-                    orig_ct = (Revision.objects.get(pk=current_rev)
-                               .get_section_content(self.section_id))
-                    curr_ct = (self.instance.document.current_revision
-                               .get_section_content(self.section_id))
+                    orig_ct = (Revision.objects
+                                       .get(pk=current_rev)
+                                       .get_section_content(self.section_id))
+                    curr_ct = (self.instance
+                                   .document.current_revision
+                                   .get_section_content(self.section_id))
                     if orig_ct != curr_ct:
                         # Oops. Looks like the section did actually get
                         # changed, so yeah this is a collision.
@@ -322,12 +339,13 @@ class RevisionForm(forms.ModelForm):
             return current_rev
 
     def save_section(self, creator, document, **kwargs):
-        """Save a section edit."""
+        """
+        Save a section edit.
+        """
         # This is separate because the logic is slightly different and
         # may need to evolve over time; a section edit doesn't submit
         # all the fields, and we need to account for that when we
         # construct the new Revision.
-
         old_rev = Document.objects.get(pk=self.instance.document.id).current_revision
         new_rev = super(RevisionForm, self).save(commit=False, **kwargs)
         new_rev.document = document
@@ -339,11 +357,11 @@ class RevisionForm(forms.ModelForm):
         return new_rev
 
     def save(self, creator, document, **kwargs):
-        """Persist me, and return the saved Revision.
+        """
+        Persist me, and return the saved Revision.
 
         Take several other necessary pieces of data that aren't from the
         form.
-
         """
         if (self.section_id and self.instance and
                 self.instance.document):

@@ -52,9 +52,7 @@
             {% include 'wiki/includes/document_toc_field.html' %}
           {% endif %}
         </ul>
-        <input type="hidden" name="parent_topic" value="{{ parent_id | safe }}" />
-        <div class="hidden" id="parentSlugPrefix">{{ parent_slug | safe }}</div>
-
+        <input type="hidden" name="parent_topic" value="{{ parent_id|safe }}" />
       </header>
 
       {% include 'wiki/includes/guide_links.html' %}

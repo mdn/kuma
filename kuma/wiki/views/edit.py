@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
+import textwrap
 from urllib import urlencode
 
 import newrelic.agent
@@ -16,7 +16,6 @@ from jingo.helpers import urlparams
 from ratelimit.decorators import ratelimit
 
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.attachments.utils import attachments_json
 from kuma.core.decorators import never_cache, login_required, block_user_agents
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import limit_banned_ip_to_0
@@ -35,8 +34,9 @@ from .utils import (document_form_initial, join_slug, split_slug,
 @xframe_options_sameorigin
 def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
                              is_raw, rev_form, doc_form, section_id, rev, doc):
-    """Handle when a mid-air collision is detected upon submission"""
-
+    """
+    Handle when a mid-air collision is detected upon submission
+    """
     # Process the content as if it were about to be saved, so that the
     # html_diff is close as possible.
     content = (kuma.wiki.content.parse(request.POST['content'])
@@ -48,11 +48,11 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     if doc.is_template:
         curr_content = curr_rev.content
     else:
-        tool = kuma.wiki.content.parse(curr_rev.content)
-        tool.injectSectionIDs()
+        parsed_content = kuma.wiki.content.parse(curr_rev.content)
+        parsed_content.injectSectionIDs()
         if section_id:
-            tool.extractSection(section_id)
-        curr_content = tool.serialize()
+            parsed_content.extractSection(section_id)
+        curr_content = parsed_content.serialize()
 
     if is_raw:
         # When dealing with the raw content API, we need to signal the conflict
@@ -89,11 +89,12 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 @never_cache
 @newrelic.agent.function_trace()
 def edit(request, document_slug, document_locale, revision_id=None):
-    """Create a new revision of a wiki document, or edit document metadata."""
+    """
+    Create a new revision of a wiki document, or edit document metadata.
+    """
     doc = get_object_or_404(Document,
                             locale=document_locale,
                             slug=document_slug)
-    user = request.user
 
     # If this document has a parent, then the edit is handled by the
     # translate view. Pass it on.
@@ -119,13 +120,13 @@ def edit(request, document_slug, document_locale, revision_id=None):
     disclose_description = bool(request.GET.get('opendescription'))
 
     doc_form = rev_form = None
-    if doc.allows_revision_by(user):
+    if doc.allows_revision_by(request.user):
         rev_form = RevisionForm(instance=rev,
                                 initial={'based_on': rev.id,
                                          'current_rev': rev.id,
                                          'comment': ''},
                                 section_id=section_id)
-    if doc.allows_editing_by(user):
+    if doc.allows_editing_by(request.user):
         doc_form = DocumentForm(initial=document_form_initial(doc))
 
     # Need to make check *here* to see if this could have a translation parent
@@ -157,7 +158,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
         which_form = request.POST.get('form')
 
         if which_form == 'doc':
-            if doc.allows_editing_by(user):
+            if doc.allows_editing_by(request.user):
                 post_data = request.POST.copy()
 
                 post_data.update({'locale': document_locale})
@@ -174,11 +175,11 @@ def edit(request, document_slug, document_locale, revision_id=None):
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just
                         # shoehorning data into a single HTML element.
-                        response = HttpResponse("""
+                        response = HttpResponse(textwrap.dedent("""
                             <span id="iframe-response"
                                   data-status="OK"
                                   data-current-revision="%s">OK</span>
-                        """ % doc.current_revision.id)
+                        """ % doc.current_revision.id))
                         response['X-Frame-Options'] = 'SAMEORIGIN'
                         return response
 
@@ -191,7 +192,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
                 raise PermissionDenied
 
         elif which_form == 'rev':
-            if not doc.allows_revision_by(user):
+            if not doc.allows_revision_by(request.user):
                 raise PermissionDenied
             else:
                 post_data = request.POST.copy()

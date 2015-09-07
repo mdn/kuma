@@ -109,10 +109,10 @@ class DocumentTests(UserTestCase, WikiTestCase):
         # HACK: fr doc has different message if locale/ is updated
         ok_(
             ("This article doesn't have approved content yet." in
-                doc('article#wikiArticle').text())
-            or
+                doc('article#wikiArticle').text()) or
             ("Cet article n'a pas encore de contenu" in
-                doc('article#wikiArticle').text()))
+                doc('article#wikiArticle').text())
+        )
 
     def test_document_fallback_with_translation(self):
         """The document template falls back to English if translation exists
@@ -801,10 +801,9 @@ class TranslateTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
 
     def _translate_uri(self):
-        translate_path = self.d.slug
         translate_uri = reverse('wiki.translate',
                                 locale='en-US',
-                                args=[translate_path])
+                                args=[self.d.slug])
         return '%s?tolocale=%s' % (translate_uri, 'es')
 
     def test_translate_GET_logged_out(self):
@@ -926,9 +925,11 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(0, len(doc('form input[name="slug"]')))
 
     def test_translate_form_maintains_based_on_rev(self):
-        """Revision.based_on should be the rev that was current when the
+        """
+        Revision.based_on should be the rev that was current when the
         Translate button was clicked, even if other revisions happen while the
-        user is editing."""
+        user is editing.
+        """
         raise SkipTest("Figure out WTF is going on with this one.")
         _test_form_maintains_based_on_rev(self.client,
                                           self.d,
@@ -938,8 +939,10 @@ class TranslateTests(UserTestCase, WikiTestCase):
                                           locale='en-US')
 
     def test_translate_update_doc_only(self):
-        """Submitting the document form should update document. No new
-        revisions should be created."""
+        """
+        Submitting the document form should update document.
+        No new revisions should be created.
+        """
         rev_es = self._create_and_approve_first_translation()
         translate_uri = self._translate_uri()
         data = _translation_data()
@@ -957,8 +960,10 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(new_title, d.title)  # Title is updated
 
     def test_translate_update_rev_and_doc(self):
-        """Submitting the revision form should create a new revision.
-        And since Kuma docs default to approved, should update doc too."""
+        """
+        Submitting the revision form should create a new revision.
+        And since Kuma docs default to approved, should update doc too.
+        """
         rev_es = self._create_and_approve_first_translation()
         translate_uri = self._translate_uri()
         data = _translation_data()
@@ -975,8 +980,10 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(data['title'], d.title)  # Title isn't updated
 
     def test_translate_form_content_fallback(self):
-        """If there are existing but unapproved translations, prefill
-        content with latest."""
+        """
+        If there are existing but unapproved translations, prefill
+        content with latest.
+        """
         self.test_first_translation_to_locale()
         translate_uri = self._translate_uri()
         response = self.client.get(translate_uri)
@@ -1166,9 +1173,11 @@ def _create_document(title='Test Document', parent=None,
 
 def _translation_data():
     return {
-        'title': 'Un Test Articulo', 'slug': 'un-test-articulo',
+        'title': 'Un Test Articulo',
+        'slug': 'un-test-articulo',
         'tags': 'tagUno,tagDos,tagTres',
         'keywords': 'keyUno, keyDos, keyTres',
         'summary': 'lipsumo',
         'content': 'loremo ipsumo doloro sito ameto',
-        'toc_depth': Revision.TOC_DEPTH_H4}
+        'toc_depth': Revision.TOC_DEPTH_H4,
+    }

@@ -9,11 +9,12 @@ from .models import Key
 
 
 def accepts_auth_key(func):
-    """Enable a view to accept an auth key via HTTP Basic Auth.
+    """
+    Enable a view to accept an auth key via HTTP Basic Auth.
     Key ID expected as username, secret as password.
     On successful auth, the request will be set with the authkey and the user
-    owning the key"""
-
+    owning the key
+    """
     @wraps(func)
     def process(request, *args, **kwargs):
         request.authkey = None
