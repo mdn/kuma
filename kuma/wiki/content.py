@@ -701,7 +701,7 @@ class SectionEditLinkFilter(html5lib_Filter):
                                                   'raw': 'true'})
                                    ),
                                    (None, u'href'): u'%s?%s' % (
-                                       reverse('wiki.edit_document',
+                                       reverse('wiki.edit',
                                                args=[self.slug],
                                                locale=self.locale),
                                        urlencode({'section': value.encode('utf-8'),

@@ -258,7 +258,7 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
         context = {
             'doc_url': self.request.build_absolute_uri(doc.get_absolute_url()),
             'doc_edit_url': self.request.build_absolute_uri(
-                reverse('wiki.edit_document', args=[doc.slug])),
+                doc.get_edit_url()),
             'doc_title': doc.title,
             'doc_locale': doc.locale,
             'doc_modified': doc.modified,
@@ -358,8 +358,7 @@ class RevisionsFeed(DocumentsFeed):
         link_cell = u'<td><a href="%s">%s</a></td>'
         view_cell = link_cell % (item.document.get_absolute_url(),
                                  _('View Page'))
-        edit_cell = link_cell % (reverse('wiki.edit_document',
-                                         args=[item.document.slug]),
+        edit_cell = link_cell % (item.document.get_edit_url(),
                                  _('Edit Page'))
         if previous:
             compare_cell = link_cell % (get_compare_url(item.document,

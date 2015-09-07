@@ -20,7 +20,7 @@ document_patterns = [
         name='wiki.document_revisions'),
     url(r'^\$edit$',
         views.edit.edit,
-        name='wiki.edit_document'),
+        name='wiki.edit'),
     url(r'^\$edit/(?P<revision_id>\d+)$',
         views.edit.edit,
         name='wiki.new_revision_based_on'),

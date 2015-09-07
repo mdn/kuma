@@ -452,13 +452,13 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         """Creating a revision without being logged in redirects to login page.
         """
         self.client.logout()
-        response = self.client.get(reverse('wiki.edit_document',
+        response = self.client.get(reverse('wiki.edit',
                                            args=[self.d.slug]))
         eq_(302, response.status_code)
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
-        response = self.client.get(reverse('wiki.edit_document',
+        response = self.client.get(reverse('wiki.edit',
                                            args=[self.d.slug]))
         eq_(200, response.status_code)
         doc = pq(response.content)
@@ -511,7 +511,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
             'based_on': self.d.current_revision.id,
             'form': 'rev',
         }
-        edit_url = reverse('wiki.edit_document', args=[self.d.slug])
+        edit_url = reverse('wiki.edit', args=[self.d.slug])
         response = self.client.post(edit_url, data)
         ok_(response.status_code in (200, 302))
         eq_(2, self.d.revisions.count())
@@ -561,7 +561,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         tags = ['tag1', 'tag2', 'tag3']
         data = new_document_data(tags)
         data['form'] = 'rev'
-        response = self.client.post(reverse('wiki.edit_document',
+        response = self.client.post(reverse('wiki.edit',
                                     args=[self.d.slug]), data)
         eq_(302, response.status_code)
         eq_(2, self.d.revisions.count())
@@ -584,7 +584,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         tags = [u'tag1', u'tag4']
         data = new_document_data(tags)
         data['form'] = 'rev'
-        self.client.post(reverse('wiki.edit_document',
+        self.client.post(reverse('wiki.edit',
                                  args=[self.d.slug]),
                          data)
         result_tags = list(self.d.tags.values_list('name', flat=True))
@@ -596,7 +596,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         button was clicked, even if other revisions happen while the user is
         editing."""
         _test_form_maintains_based_on_rev(
-            self.client, self.d, 'wiki.edit_document',
+            self.client, self.d, 'wiki.edit',
             {'summary': 'Windy', 'content': 'gerbils', 'form': 'rev',
              'slug': self.d.slug, 'toc_depth': 1},
             locale='en-US')
@@ -617,7 +617,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         _create_document(title='Document Prueba', parent=self.d,
                          locale='es')
         # Make sure is_localizable hidden field is rendered
-        response = get(self.client, 'wiki.edit_document',
+        response = get(self.client, 'wiki.edit',
                        args=[self.d.slug])
         eq_(200, response.status_code)
         doc = pq(response.content)
@@ -626,7 +626,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         data.update(title=new_title)
         data.update(form='doc')
         data.update(is_localizable='True')
-        response = post(self.client, 'wiki.edit_document', data,
+        response = post(self.client, 'wiki.edit', data,
                         args=[self.d.slug])
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
@@ -638,7 +638,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         new_slug = 'Test-Document'
         data.update(slug=new_slug)
         data.update(form='doc')
-        response = post(self.client, 'wiki.edit_document', data,
+        response = post(self.client, 'wiki.edit', data,
                         args=[self.d.slug])
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
@@ -650,7 +650,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         new_title = 'TeST DoCuMent'
         data.update(title=new_title)
         data.update(form='doc')
-        response = post(self.client, 'wiki.edit_document', data,
+        response = post(self.client, 'wiki.edit', data,
                         args=[self.d.slug])
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)

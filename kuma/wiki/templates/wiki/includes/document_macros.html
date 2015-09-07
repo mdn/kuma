@@ -18,7 +18,7 @@
   {% endif %}
 
   {% if not edit_link %}
-    {% set edit_link = url('wiki.edit_document', document.slug, locale=document.locale) %}
+    {% set edit_link = document.get_edit_url() %}
   {% endif %}
 
 

@@ -1293,11 +1293,14 @@ Full traceback:
     def language(self):
         return get_language_mapping()[self.locale.lower()]
 
-    def get_absolute_url(self):
+    def get_absolute_url(self, endpoint='wiki.document'):
         """
         Build the absolute URL to this document from its full path
         """
-        return reverse('wiki.document', locale=self.locale, args=[self.slug])
+        return reverse(endpoint, locale=self.locale, args=[self.slug])
+
+    def get_edit_url(self):
+        return self.get_absolute_url(endpoint='wiki.edit')
 
     def get_redirect_url(self):
         """

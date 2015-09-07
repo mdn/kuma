@@ -296,7 +296,7 @@
                 {% endif %}
                 {% if document.current_revision.localization_in_progress %}
                   {% if document.current_revision.translation_age >= 10 %}
-                      <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=url('wiki.edit_document', document.slug, locale=document.locale) %}
+                      <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=document.get_edit_url() %}
                         This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
                       {% endtrans %}</p></div>
                   {% else %}
@@ -404,7 +404,7 @@
     </div> <!-- ends "main-content" -->
 
   <menu type="context" id="edit-history-menu">
-    <menuitem data-action="{{ url('wiki.edit_document', document.slug, locale=document.locale) }}" label="{{_('Edit page')}}"></menuitem>
+    <menuitem data-action="{{ document.get_edit_url() }}" label="{{_('Edit page')}}"></menuitem>
     <menuitem data-action="{{ url('wiki.document_revisions', document.slug) }}" label="{{_('View page history')}}"></menuitem>
   </menu>
 {% endblock %}

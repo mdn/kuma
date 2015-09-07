@@ -7,8 +7,8 @@ from tower import ugettext as _
 
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_http_methods
 
@@ -76,7 +76,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
         'revision': rev,
         'document': doc,
     }
-    return render(request, 'wiki/edit_document.html', context)
+    return render(request, 'wiki/edit.html', context)
 
 
 @block_user_agents
@@ -183,10 +183,8 @@ def edit(request, document_slug, document_locale, revision_id=None):
                         response['X-Frame-Options'] = 'SAMEORIGIN'
                         return response
 
-                    return HttpResponseRedirect(
-                        urlparams(reverse('wiki.edit_document',
-                                          args=[doc.slug]),
-                                  opendescription=1))
+                    return redirect(urlparams(doc.get_edit_url(),
+                                              opendescription=1))
                 disclose_description = True
             else:
                 raise PermissionDenied
@@ -271,7 +269,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
                         # if we're not getting raw content.
                         url = '%s#%s' % (url, section_id)
 
-                    return HttpResponseRedirect(url)
+                    return redirect(url)
 
     parent_path = parent_slug = ''
     if slug_dict['parent']:
@@ -293,4 +291,4 @@ def edit(request, document_slug, document_locale, revision_id=None):
         'document': doc,
         'attachment_form': AttachmentRevisionForm(),
     }
-    return render(request, 'wiki/edit_document.html', context)
+    return render(request, 'wiki/edit.html', context)

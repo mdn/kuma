@@ -131,7 +131,7 @@ class BaseDocumentSerializer(serializers.Serializer):
     slug = serializers.CharField(read_only=True, max_length=255)
     locale = serializers.CharField(read_only=True, max_length=7)
     url = SiteURLField('wiki.document', args=['slug'])
-    edit_url = SiteURLField('wiki.edit_document', args=['slug'])
+    edit_url = SiteURLField('wiki.edit', args=['slug'])
 
     def field_to_native(self, obj, field_name):
         if field_name == 'parent' and not getattr(obj, 'parent', None):

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 from tower import ugettext_lazy as _lazy
 
 from django.conf import settings
@@ -9,8 +8,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from jingo.helpers import urlparams
 
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.attachments.models import Attachment
-from kuma.attachments.utils import attachments_json
 from kuma.core.i18n import get_language_mapping
 from kuma.core.decorators import never_cache, login_required, block_user_agents
 from kuma.core.urlresolvers import reverse
@@ -71,7 +68,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
     if settings.WIKI_DEFAULT_LANGUAGE == document_locale:
         # Don't translate to the default language.
         return redirect(reverse(
-            'wiki.edit_document', locale=settings.WIKI_DEFAULT_LANGUAGE,
+            'wiki.edit', locale=settings.WIKI_DEFAULT_LANGUAGE,
             args=[parent_doc.slug]))
 
     if not parent_doc.is_localizable:
@@ -179,10 +176,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                     doc = doc_form.save(parent_doc)
 
                     if which_form == 'doc':
-                        url = urlparams(reverse('wiki.edit_document',
-                                                args=[doc.slug],
-                                                locale=doc.locale),
-                                        opendescription=1)
+                        url = urlparams(doc.get_edit_url(), opendescription=1)
                         return redirect(url)
                 else:
                     doc_form.data['slug'] = posted_slug
