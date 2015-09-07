@@ -4,10 +4,9 @@ import random
 
 from django.conf import settings
 from django.db import models
-
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-
+from django.utils.crypto import constant_time_compare
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -47,7 +46,9 @@ class Key(models.Model):
         return secret
 
     def check_secret(self, secret):
-        return hash_secret(secret) == self.hashed_secret
+        if not self.hashed_secret:
+            return False
+        return constant_time_compare(hash_secret(secret), self.hashed_secret)
 
     def log(self, action, content_object=None, notes=None):
         action = KeyAction(key=self, action=action,
