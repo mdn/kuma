@@ -281,8 +281,6 @@ def edit(request, document_slug, document_locale, revision_id=None):
         parent_path = parent_doc.get_absolute_url()
         parent_slug = parent_doc.slug
 
-    attachments = attachments_json(doc.attachments)
-
     context = {
         'revision_form': rev_form,
         'document_form': doc_form,
@@ -293,7 +291,5 @@ def edit(request, document_slug, document_locale, revision_id=None):
         'revision': rev,
         'document': doc,
         'attachment_form': AttachmentRevisionForm(),
-        'attachment_data': attachments,
-        'attachment_data_json': json.dumps(attachments)
     }
     return render(request, 'wiki/edit_document.html', context)

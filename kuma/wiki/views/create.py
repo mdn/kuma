@@ -104,8 +104,6 @@ def new_document(request):
             'toc_depth': initial_toc
         })
 
-        allow_add_attachment = (
-            Attachment.objects.allow_add_attachment_by(request.user))
         context = {
             'is_template': is_template,
             'parent_slug': parent_slug,
@@ -113,7 +111,6 @@ def new_document(request):
             'document_form': doc_form,
             'revision_form': rev_form,
             'initial_tags': initial_tags,
-            'allow_add_attachment': allow_add_attachment,
             'attachment_form': AttachmentRevisionForm(),
             'parent_path': parent_path}
 
@@ -149,14 +146,11 @@ def new_document(request):
     else:
         doc_form.data['slug'] = posted_slug
 
-    allow_add_attachment = (
-        Attachment.objects.allow_add_attachment_by(request.user))
 
     context = {
         'is_template': is_template,
         'document_form': doc_form,
         'revision_form': rev_form,
-        'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
         'parent_slug': parent_slug,
         'parent_path': parent_path,

@@ -1260,7 +1260,7 @@ Full traceback:
             }
         return files
 
-    @property
+    @cached_property
     def attachments(self):
         # Is there a more elegant way to do this?
         #
@@ -1284,8 +1284,9 @@ Full traceback:
             params = models.Q(id__in=kuma_files)
         if params:
             return Attachment.objects.filter(params)
-        # If no files found, return an empty Attachment queryset.
-        return Attachment.objects.none()
+        else:
+            # If no files found, return an empty Attachment queryset.
+            return Attachment.objects.none()
 
     @property
     def show_toc(self):

@@ -243,10 +243,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
     parent_split = split_slug(parent_doc.slug)
 
-    attachments = []
-    if doc and doc.attachments:
-        attachments = attachments_json(doc.attachments)
-
     language_mapping = get_language_mapping()
     language = language_mapping[document_locale.lower()]
     default_locale = language_mapping[settings.WIKI_DEFAULT_LANGUAGE.lower()]
@@ -263,8 +259,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
         'disclose_description': disclose_description,
         'discard_href': discard_href,
         'attachment_form': AttachmentRevisionForm(),
-        'attachment_data': attachments,
-        'attachment_data_json': json.dumps(attachments),
         'specific_slug': parent_split['specific'],
         'parent_slug': parent_split['parent'],
         'revision_from': revision_from,

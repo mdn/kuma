@@ -28,7 +28,6 @@ from constance import config
 from jingo.helpers import urlparams
 
 from kuma.authkeys.decorators import accepts_auth_key
-from kuma.attachments.utils import attachments_json
 from kuma.core.decorators import (login_required,
                                   permission_required, superuser_required,
                                   block_user_agents)
@@ -617,9 +616,6 @@ def document(request, document_slug, document_locale):
     # Get the additional title information, if necessary.
     seo_parent_title = _get_seo_parent_title(slug_dict, document_locale)
 
-    # Retrieve file attachments
-    attachments = attachments_json(doc.attachments)
-
     # Retrieve pre-parsed content hunks
     if doc.is_template:
         quick_links_html, zone_subnav_html = None, None
@@ -653,8 +649,6 @@ def document(request, document_slug, document_locale):
         'seo_summary': seo_summary,
         'seo_parent_title': seo_parent_title,
         'share_text': share_text,
-        'attachment_data': attachments,
-        'attachment_data_json': json.dumps(attachments),
         'search_url': referrer_url(request) or '',
     }
     response = render(request, 'wiki/document.html', context)

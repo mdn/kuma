@@ -79,31 +79,30 @@ def attachment_upload_to(instance, filename):
     }
 
 
-def attachments_json(attachments):
+def attachments_payload(attachments):
     """
     Given a list of Attachments (e.g., from a Document), make some
     nice JSON out of them for easy display.
-
     """
     attachments_list = []
     for attachment in attachments:
+        current_revision = attachment.current_revision
         obj = {
             'title': attachment.title,
-            'date': str(attachment.current_revision.created),
-            'description': attachment.current_revision.description,
+            'date': str(current_revision.created),
+            'description': current_revision.description,
             'url': attachment.get_file_url(),
-            'size': 0,
-            'creator': attachment.current_revision.creator.username,
-            'creator_url': attachment.current_revision.creator.get_absolute_url(),
-            'revision': attachment.current_revision.id,
+            'creator': current_revision.creator.username,
+            'creator_url': current_revision.creator.get_absolute_url(),
+            'revision': current_revision.id,
             'id': attachment.id,
-            'mime': attachment.current_revision.mime_type
+            'mime': current_revision.mime_type
         }
         # Adding this to prevent "UnicodeEncodeError" for certain media
         try:
-            obj['size'] = attachment.current_revision.file.size
-        except:
-            pass
+            obj['size'] = current_revision.file.size
+        except UnicodeEncodeError:
+            obj['size'] = 0
 
         obj['html'] = mark_safe(loader.render_to_string('attachments/includes/attachment_row.html',
                                                         {'attachment': obj}))
