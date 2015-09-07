@@ -62,10 +62,10 @@ def purge_view(request):
                             {'to_purge': to_purge})
 
 
-def undelete_documents(self, request, queryset):
+def restore_documents(self, request, queryset):
     for doc in queryset:
-        doc.undelete()
-undelete_documents.short_description = "Undelete deleted documents"
+        doc.restore()
+restore_documents.short_description = "Restore deleted documents"
 
 
 def enable_deferred_rendering_for_documents(self, request, queryset):
@@ -266,7 +266,7 @@ class DocumentAdmin(admin.ModelAdmin):
                disable_deferred_rendering_for_documents,
                repair_breadcrumbs,
                purge_documents,
-               undelete_documents)
+               restore_documents)
     change_list_template = 'admin/wiki/document/change_list.html'
     fields = ('locale', 'title', 'defer_rendering', 'render_expires',
               'render_max_age', 'parent', 'parent_topic', 'category',)

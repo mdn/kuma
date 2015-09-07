@@ -93,7 +93,7 @@ def restore_document(request, document_slug, document_locale):
     document = get_object_or_404(Document.deleted_objects.all(),
                                  slug=document_slug,
                                  locale=document_locale)
-    document.undelete()
+    document.restore()
     return redirect(document)
 
 
