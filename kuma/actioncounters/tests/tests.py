@@ -3,6 +3,7 @@ from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.contenttypes.models import ContentType
+from django.db import IntegrityError
 from django.http import HttpRequest
 from django.test import TransactionTestCase
 
@@ -79,7 +80,7 @@ class ActionCountersTest(TransactionTestCase):
                                      user_agent=user_agent, user=user)
             u2.save()
             ok_(False, "This should have triggered an IntegrityError")
-        except:
+        except IntegrityError:
             pass
 
         # Try get_unique_for_request, which should turn up the single unique

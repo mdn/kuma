@@ -459,7 +459,7 @@ class Document(NotificationsMixin, models.Model):
                 self.schedule_rendering(cache_control, base_url)
             except DocumentRenderingInProgress:
                 # Unable to trigger a rendering right now, so we bail.
-                raise DocumentRenderedContentNotAvailable()
+                raise DocumentRenderedContentNotAvailable
 
         # If we have a cache_control directive, try scheduling a render.
         if cache_control:
@@ -482,7 +482,7 @@ class Document(NotificationsMixin, models.Model):
                 return ('', errors)
             else:
                 # But, no such luck, so bail out.
-                raise DocumentRenderedContentNotAvailable()
+                raise DocumentRenderedContentNotAvailable
 
         return (self.rendered_html, errors)
 

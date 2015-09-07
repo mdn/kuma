@@ -425,7 +425,7 @@ class TreeMoveForm(forms.Form):
             slug, locale = cleaned_data['slug'], cleaned_data['locale']
             try:
                 valid_slug_parent(slug, locale)
-            except Exception, e:
+            except Exception as e:
                 raise forms.ValidationError(e.args[0])
         return cleaned_data
 

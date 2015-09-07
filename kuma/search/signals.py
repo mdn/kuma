@@ -26,7 +26,7 @@ def render_done_handler(**kwargs):
         doc_pks.add(doc.id)
         try:
             index_documents.delay(list(doc_pks), current_index.pk)
-        except:
+        except Exception:
             log.error('Search indexing task failed', exc_info=True)
     else:
         log.info('Ignoring wiki document %r while updating search index',

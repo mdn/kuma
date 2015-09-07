@@ -28,7 +28,7 @@ def accepts_auth_key(func):
                     if key.check_secret(secret):
                         request.authkey = key
                         request.user = key.user
-            except:
+            except (ValueError, Key.DoesNotExist):
                 pass
         return func(request, *args, **kwargs)
 

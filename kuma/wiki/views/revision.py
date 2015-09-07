@@ -84,19 +84,15 @@ def compare(request, document_slug, document_locale):
     The ids are passed as query string parameters (to and from).
     """
     locale = request.GET.get('locale', document_locale)
+    if 'from' not in request.GET or 'to' not in request.GET:
+        raise Http404
+
     doc = get_object_or_404(Document,
                             locale=locale,
                             slug=document_slug)
 
-    if 'from' not in request.GET or 'to' not in request.GET:
-        raise Http404
-
-    try:
-        from_id = smart_int(request.GET.get('from'))
-        to_id = smart_int(request.GET.get('to'))
-    except:
-        # Punt any errors in parameter handling to a 404
-        raise Http404
+    from_id = smart_int(request.GET.get('from'))
+    to_id = smart_int(request.GET.get('to'))
 
     revisions = Revision.objects.prefetch_related('document')
     revision_from = get_object_or_404(revisions, id=from_id, document=doc)

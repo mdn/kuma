@@ -3,10 +3,9 @@ import json
 from tower import ugettext_lazy as _lazy
 
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, redirect, render
 
-from constance import config
 from jingo.helpers import urlparams
 
 from kuma.attachments.forms import AttachmentRevisionForm
@@ -20,10 +19,9 @@ from kuma.core.utils import get_object_or_none, smart_int
 import kuma.wiki.content
 from ..decorators import (check_readonly, process_document_path,
                           prevent_indexing)
-from ..forms import DocumentForm, RevisionForm, RevisionValidationForm
+from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
-from .utils import (split_slug, join_slug, document_form_initial,
-                    save_revision_and_notify)
+from .utils import split_slug, document_form_initial
 
 
 @block_user_agents
@@ -54,6 +52,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
     """
     # TODO: Refactor this view into two views? (new, edit)
     # That might help reduce the headache-inducing branchiness.
+
+    # The parent document to translate from
     parent_doc = get_object_or_404(Document,
                                    locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug=document_slug)
@@ -81,7 +81,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
         return render(request, 'handlers/400.html', context, status=400)
 
     if revision_id:
-        get_object_or_404(Revision, pk=revision_id)
+        revision = get_object_or_404(Revision, pk=revision_id)
+    else:
+        revision = None
 
     based_on_rev = parent_doc.current_or_latest_revision()
 
@@ -96,17 +98,19 @@ def translate(request, document_slug, document_locale, revision_id=None):
         slug_dict = split_slug(document_slug)
 
         # Find the "real" parent topic, which is its translation
-        try:
-            parent_topic_translated_doc = (
-                parent_doc.parent_topic.translations.get(
-                    locale=document_locale))
-            slug_dict = split_slug(
-                parent_topic_translated_doc.slug + '/' + slug_dict['specific'])
-        except:
-            pass
+        if parent_doc.parent_topic:
+            try:
+                parent_topic_translated_doc = (parent_doc.parent_topic
+                                                         .translations
+                                                         .get(locale=document_locale))
+                slug_dict = split_slug(parent_topic_translated_doc.slug +
+                                       '/' +
+                                       slug_dict['specific'])
+            except ObjectDoesNotExist:
+                pass
 
-    user_has_doc_perm = ((not doc) or (doc and doc.allows_editing_by(user)))
-    user_has_rev_perm = ((not doc) or (doc and doc.allows_revision_by(user)))
+    user_has_doc_perm = (not doc) or (doc and doc.allows_editing_by(request.user))
+    user_has_rev_perm = (not doc) or (doc and doc.allows_revision_by(request.user))
     if not user_has_doc_perm and not user_has_rev_perm:
         # User has no perms, bye.
         raise PermissionDenied

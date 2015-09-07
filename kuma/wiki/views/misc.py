@@ -186,7 +186,7 @@ def load_documents(request):
                 user_msg = (_('%(obj_count)d object(s) loaded.') %
                             {'obj_count': counter, })
                 messages.add_message(request, messages.INFO, user_msg)
-            except Exception, e:
+            except Exception as e:
                 err_msg = (_('Failed to import data: %(error)s') %
                            {'error': '%s' % e, })
                 messages.add_message(request, messages.ERROR, err_msg)

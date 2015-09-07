@@ -1,13 +1,18 @@
-from django.conf.urls import patterns, url
+from django.http import HttpResponseServerError
+from django.conf.urls import url
+from django.core.exceptions import SuspiciousOperation
 
 
-def exception_raiser(request):
-    raise Exception('Raising exception to test logging.')
+def handler500(request):
+    return HttpResponseServerError('error')
 
 
-urlpatterns = patterns(
-    '',
-    url(r'^test_exception/$',
-        exception_raiser,
-        name='logging.exception_raiser'),
-)
+def suspicious(request):
+    raise SuspiciousOperation('Raising exception to test logging.')
+
+
+urlpatterns = [
+    url(r'^suspicious/$',
+        suspicious,
+        name='suspicious'),
+]

@@ -3,7 +3,7 @@ import json
 
 try:
     from cStringIO import cStringIO as StringIO
-except:
+except ImportError:
     from StringIO import StringIO
 
 import newrelic.agent
@@ -694,7 +694,7 @@ def _document_PUT(request, document_slug, document_locale):
                 body_content = doc.find('body')
                 if body_content.length > 0:
                     data['content'] = body_content.html()
-            except:
+            except Exception:
                 pass
 
         else:
@@ -703,7 +703,7 @@ def _document_PUT(request, document_slug, document_locale):
             resp.content = _("Unsupported content-type: %s") % content_type
             return resp
 
-    except Exception, e:
+    except Exception as e:
         resp = HttpResponse()
         resp.status_code = 400
         resp.content = _("Request parsing error: %s") % e

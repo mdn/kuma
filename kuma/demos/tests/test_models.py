@@ -148,7 +148,7 @@ class DemoPackageTest(UserTestCase):
 
         try:
             s.clean()
-        except:
+        except ValidationError:
             self.fail("The last zip file should have been okay")
 
         unlink(s.demo_package.path)
@@ -165,7 +165,7 @@ class DemoPackageTest(UserTestCase):
 
         try:
             s.clean()
-        except:
+        except ValidationError:
             self.fail("The last zip file should have been okay")
 
         unlink(s.demo_package.path)

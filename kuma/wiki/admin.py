@@ -90,9 +90,8 @@ def force_render_documents(self, request, queryset):
         try:
             doc.render(cache_control='no-cache')
             count += 1
-        except:
+        except Exception:
             bad_count += 1
-            pass
     self.message_user(request, "Rendered %s documents, failed on %s "
                                "documents." % (count, bad_count))
 force_render_documents.short_description = (

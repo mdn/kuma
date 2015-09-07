@@ -122,7 +122,7 @@ class LocaleRedirectTests(UserTestCase, WikiTestCase):
             self.client.get(url, follow=True)
         except Http404, e:
             pass
-        except Exception, e:
+        except Exception as e:
             self.fail("The only exception should be a 404, not this: %s" % e)
 
     def _create_en_and_de_docs(self):

@@ -203,7 +203,7 @@ def get(document, cache_control, base_url, timeout=None):
                 },
             ]
 
-    except Exception, exc:
+    except Exception as exc:
         # Last resort: Something went really haywire. Kumascript server died
         # mid-request, or something. Try to report at least some hint.
         errors = [
@@ -262,7 +262,7 @@ def process_errors(response):
         if len(msgs):
             errors = msgs
 
-    except Exception, exc:
+    except Exception as exc:
         errors = [
             {
                 "level": "error",

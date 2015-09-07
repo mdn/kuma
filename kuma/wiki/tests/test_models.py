@@ -1513,7 +1513,7 @@ class PageMoveTests(UserTestCase):
         try:
             doc._move_tree('slug-that-doesnt-exist/doc1')
             ok_(False, "Moving page under non-existing doc should error.")
-        except:
+        except Exception:
             pass
 
     @attr('move')
