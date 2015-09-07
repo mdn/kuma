@@ -3,7 +3,6 @@ import json
 import sys
 import traceback
 from datetime import datetime, timedelta
-from urlparse import urlparse
 
 try:
     from functools import wraps
@@ -16,10 +15,8 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import resolve
 from django.db import models
 from django.db.models import signals
-from django.http import Http404
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 
@@ -34,7 +31,7 @@ from kuma.attachments.models import Attachment
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.cache import memcache
 from kuma.core.i18n import get_language_mapping
-from kuma.core.urlresolvers import reverse, split_path
+from kuma.core.urlresolvers import reverse
 from kuma.search.decorators import register_live_index
 
 from . import kumascript
@@ -1324,55 +1321,6 @@ Full traceback:
                         return url
                 elif len(url) == 1 and url[0] == '/':
                     return url
-
-    @staticmethod
-    def from_url(url, required_locale=None, id_only=False):
-        """
-        Return the approved Document the URL represents, None if there isn't
-        one.
-
-        Return None if the URL is a 404, the URL doesn't point to the right
-        view, or the indicated document doesn't exist.
-
-        To limit the universe of discourse to a certain locale, pass in a
-        `required_locale`. To fetch only the ID of the returned Document, set
-        `id_only` to True.
-        """
-        # Extract locale and path from URL:
-        path = urlparse(url)[2]  # never has errors AFAICT
-        locale, path = split_path(path)
-        if required_locale and locale != required_locale:
-            return None
-        path = '/' + path
-
-        try:
-            view, view_args, view_kwargs = resolve(path)
-        except Http404:
-            return None
-
-        from . import views  # Views import models; models import views.
-        if view != views.document:
-            return None
-
-        # Map locale-slug pair to Document ID:
-        doc_query = Document.objects.exclude(current_revision__isnull=True)
-        if id_only:
-            doc_query = doc_query.only('id')
-        try:
-            return doc_query.get(locale=locale,
-                                 slug=view_kwargs['document_slug'])
-        except Document.DoesNotExist:
-            return None
-
-    def redirect_document(self):
-        """If I am a redirect to a Document, return that Document.
-
-        Otherwise, return None.
-
-        """
-        url = self.get_redirect_url()
-        if url:
-            return self.from_url(url)
 
     def filter_permissions(self, user, permissions):
         """Filter permissions with custom logic"""

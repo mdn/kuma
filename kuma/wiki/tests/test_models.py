@@ -386,22 +386,6 @@ class PermissionTests(KumaTestCase):
 class DocumentTestsWithFixture(UserTestCase):
     """Document tests which need the users fixture"""
 
-    def test_redirect_document_non_redirect(self):
-        """Assert redirect_document on non-redirects returns None."""
-        eq_(None, document().redirect_document())
-
-    def test_redirect_document_external_redirect(self):
-        """Assert redirects to external pages return None."""
-        eq_(None, revision(content='REDIRECT [http://example.com]',
-                           is_approved=True,
-                           save=True).document.redirect_document())
-
-    def test_redirect_document_nonexistent(self):
-        """Assert redirects to non-existent pages return None."""
-        eq_(None, revision(content='REDIRECT [[kersmoo]]',
-                           is_approved=True,
-                           save=True).document.redirect_document())
-
     def test_default_topic_parents_for_translation(self):
         """A translated document with no topic parent should by default use
         the translation of its translation parent's topic parent."""
