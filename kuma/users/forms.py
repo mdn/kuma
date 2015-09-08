@@ -245,7 +245,7 @@ class UserEditForm(forms.ModelForm):
                   'locale', 'timezone', 'bio', 'irc_nickname', 'interests',
                   'website_url', 'twitter_url', 'github_url',
                   'stackoverflow_url', 'linkedin_url', 'mozillians_url',
-                  'facebook_url')
+                  'facebook_url', 'username')
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)
