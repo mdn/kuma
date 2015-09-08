@@ -4,7 +4,7 @@
 {% if waffle.switch('store_revision_ips') and user.is_superuser %}
     {% set show_ips = True %}
 {% endif %}
-{% if total %}
+{% if revisions.count %}
     <table class="dashboard-table" width="100%">
         <thead>
             <tr>
@@ -49,10 +49,9 @@
                     <br/><a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a>
                     </span>
                     {% endif %}
-                    {% set active_ban = revision.creator.active_ban %}
-                    {% if request.user.is_superuser and active_ban %}
+                    {% if request.user.is_superuser and revision.creator.active_ban %}
                         <div class="banned">
-                            banned {{ datetimeformat(active_ban.date, format='date') }}
+                            banned {{ datetimeformat(revision.creator.active_ban.date, format='date') }}
                             by {{ active_ban.by }}
                         </div>
                     {% endif %}

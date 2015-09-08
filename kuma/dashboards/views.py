@@ -21,7 +21,8 @@ def revisions(request):
     filter_form = RevisionDashboardForm(request.GET)
     page = request.GET.get('page', 1)
 
-    revisions = (Revision.objects.select_related('creator')
+    revisions = (Revision.objects.prefetch_related('creator',
+                                                   'document')
                                  .order_by('-created')
                                  .defer('content'))
 
@@ -69,18 +70,10 @@ def revisions(request):
 
     if query_kwargs:
         revisions = revisions.filter(**query_kwargs)
-        total = revisions.count()
-    else:
-        # If no filters, just do a straight count(). It's the same
-        # result, but much faster to compute.
-        total = Revision.objects.count()
 
-    # Only bother with this if we're actually going to get
-    # some revisions from it. Otherwise it's a pointless but
-    # potentially complex query.
     revisions = paginate(request, revisions, per_page=PAGE_SIZE)
 
-    context = {'revisions': revisions, 'page': page, 'total': total}
+    context = {'revisions': revisions, 'page': page}
 
     # Serve the response HTML conditionally upon reques type
     if request.is_ajax():
