@@ -65,6 +65,7 @@ class TestUserEditForm(KumaTestCase):
             for name, site in sites:
                 url = '%s%s' % (proto, site)
                 data = {
+                    'username': edit_user.username,
                     'email': 'lorchard@mozilla.com',
                     '%s_url' % name: url,
                 }

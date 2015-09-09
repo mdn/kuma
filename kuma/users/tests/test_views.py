@@ -220,6 +220,7 @@ class UserViewsTest(UserTestCase):
             doc.find('#user-edit input[name="user-irc_nickname"]').val())
 
         new_attrs = {
+            'user-username': testuser.username,
             'user-email': 'testuser@test.com',
             'user-fullname': "Another Name",
             'user-title': "Another title",
