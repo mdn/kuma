@@ -18,6 +18,10 @@
         var brush = defaultBrush;
         var lineSearch;
 
+        // If the PRE has a "language-" class, it's a copy/pasted of already-prism'd
+        // code samples.  Bail to avoid an error
+        if(klass.indexOf('language-') !== -1) return;
+
         // Parse classname to look for brush
         var brushSearch = klass.match(/brush: ?(.*)/);
         if(brushSearch && brushSearch[1]) {
