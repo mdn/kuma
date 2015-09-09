@@ -328,7 +328,7 @@
 
 
     /*
-        Track Clicks on TOC links
+        Track clicks on TOC links
     */
     $('#toc').on('click', 'a', function() {
         var $thisLink = $(this);
@@ -337,6 +337,21 @@
             category: 'TOC Links',
             action: $thisLink.text(),
             label: $thisLink.attr('href')
+        });
+    });
+
+    /*
+        Track clicks on Crumb links
+    */
+    $('.crumbs').on('click', 'a', function() {
+        var url = this.href;
+
+        mdn.analytics.trackEvent({
+            category: 'Wiki',
+            action: 'Crumbs',
+            label: url
+        }, function() {
+            window.location = url;
         });
     });
 
