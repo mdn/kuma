@@ -270,6 +270,9 @@ class UserEditForm(forms.ModelForm):
     def clean_username(self):
         new_username = self.cleaned_data['username']
 
+        if not new_username:
+            raise forms.ValidationError(_('This field cannot be blank.'))
+
         if (self.instance is not None and
                 User.objects.exclude(pk=self.instance.pk)
                             .filter(username=new_username)

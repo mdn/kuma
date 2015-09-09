@@ -55,6 +55,15 @@ class TestUserEditForm(KumaTestCase):
         eq_(form.is_valid(), False)
         eq_(form.errors, {'username': [USERNAME_CHARACTERS]})
 
+    def test_blank_username_invalid(self):
+        test_user = user(save=True)
+        data = {
+            'username': '',
+        }
+        form = UserEditForm(data, instance=test_user)
+        eq_(form.is_valid(), False)
+        eq_(form.errors, {'username': ['This field cannot be blank.']})
+
     def test_https_user_urls(self):
         """bug 733610: User URLs should allow https"""
         protos = (
