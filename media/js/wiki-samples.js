@@ -93,7 +93,7 @@
     }
 
     function createSampleButtons(section, source) {
-        var $parent = $('<div />');
+        var $parent = $('<div class="open-in-host-container" />');
 
         $.each(sites, function(){
             // convert sitename to lowercase for icon name and host identifier
