@@ -477,7 +477,7 @@
         $('.btn-save-and-edit').show();
 
         $('#save-and-edit-target').on('load', function () {
-            notifications[0].success(null, 2000);
+            if(notifications[0]) notifications[0].success(null, 2000);
             notifications.shift();
 
             if (supportsLocalStorage) {
