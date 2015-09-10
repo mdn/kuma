@@ -49,9 +49,10 @@
                     <br/><a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a>
                     </span>
                     {% endif %}
-                    {% if request.user.is_superuser and revision.creator.active_ban %}
+                    {% set active_ban = revision.creator.active_ban %}
+                    {% if request.user.is_superuser and active_ban %}
                         <div class="banned">
-                            banned {{ datetimeformat(revision.creator.active_ban.date, format='date') }}
+                            banned {{ datetimeformat(active_ban.date, format='date') }}
                             by {{ active_ban.by }}
                         </div>
                     {% endif %}
