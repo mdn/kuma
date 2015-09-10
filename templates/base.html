@@ -201,13 +201,21 @@
     <div class="column-container">
       <div class="column-main">
         {% block footer_copyright_redesign %}
-        <p>
-          {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', about_url='/docs/MDN/About', thisyear=thisyear() %}
-          <bdi>&copy; 2005-{{ thisyear }} Mozilla Developer Network and individual contributors<br />
-          Content is available under <a href="{{ copyright_url }}">these licenses</a> &middot; <a href="{{ about_url }}">About MDN</a> &middot; <a href="//www.mozilla.org/about/legal/terms/mozilla">Terms</a> &middot; <a href="//www.mozilla.org/privacy/websites/">Privacy</a> &middot; <a href="//www.mozilla.org/privacy/websites/#cookies">Cookies</a> &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a></bdi>
+        <div class="contentinfo">
+          {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
+            <p>&copy; 2005-{{ thisyear }} Mozilla Developer Network and individual contributors.</p>
+            <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
           {% endtrans %}
+          <ul>
+            <li><a href="/docs/MDN/About">{{ _('About MDN') }}</a></li>
+            <li><a href="//www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
+            <li><a href="//www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
+            <li><a href="//www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
+            <li><a href="//github.com/mozilla/kuma">{{ _('Contribute to the code') }}</a></li>
+          </ul>
         </p>
         {% endblock %}
+        </div>
       </div>
       <div class="column-strip">
         {% if not is_sphinx %}
