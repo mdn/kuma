@@ -126,13 +126,16 @@ class UserViewsTest(UserTestCase):
 
     def _get_current_form_field_values(self, doc):
         # Scrape out the existing significant form field values.
+        fields = ('username', 'email', 'fullname', 'title', 'organization',
+                  'location', 'irc_nickname', 'bio', 'interests')
         form = dict()
-        for fn in ('username', 'email', 'fullname', 'title', 'organization',
-                   'location', 'irc_nickname', 'bio', 'interests'):
-            form[fn] = doc.find('#user-edit *[name="user-%s"]' %
-                                fn).val()
-        form['country'] = 'us'
-        form['format'] = 'html'
+        lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
+        prefix = 'user-'
+        for field in fields:
+            lookup = lookup_pattern.format(prefix=prefix, field=field)
+            form[prefix + field] = doc.find(lookup).val()
+        form[prefix + 'country'] = 'us'
+        form[prefix + 'format'] = 'html'
         return form
 
     @attr('docs_activity')
@@ -217,6 +220,7 @@ class UserViewsTest(UserTestCase):
             doc.find('#user-edit input[name="user-irc_nickname"]').val())
 
         new_attrs = {
+            'user-username': testuser.username,
             'user-email': 'testuser@test.com',
             'user-fullname': "Another Name",
             'user-title': "Another title",

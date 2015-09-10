@@ -245,7 +245,7 @@ class UserEditForm(forms.ModelForm):
                   'locale', 'timezone', 'bio', 'irc_nickname', 'interests',
                   'website_url', 'twitter_url', 'github_url',
                   'stackoverflow_url', 'linkedin_url', 'mozillians_url',
-                  'facebook_url')
+                  'facebook_url', 'username')
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)
@@ -269,6 +269,9 @@ class UserEditForm(forms.ModelForm):
 
     def clean_username(self):
         new_username = self.cleaned_data['username']
+
+        if not new_username:
+            raise forms.ValidationError(_('This field cannot be blank.'))
 
         if (self.instance is not None and
                 User.objects.exclude(pk=self.instance.pk)
