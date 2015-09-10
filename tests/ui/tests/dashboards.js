@@ -31,12 +31,8 @@ define([
 
         'Revision dashboard renders': function() {
 
-            var remote = this.remote;
-
-            return remote.get(config.url + 'dashboards/revisions').then(function() {
-                return remote.findByTagName('h1').getVisibleText().then(function(text) {
-                    assert.strictEqual(text, 'Revision Dashboard');
-                });
+            return this.remote.findByTagName('h1').getVisibleText().then(function(text) {
+                assert.strictEqual(text, 'Revision Dashboard');
             });
         },
 
@@ -45,27 +41,29 @@ define([
             var dfd = this.async(config.testTimeout);
             var remote = this.remote;
 
-            return libLogin.completePersonaWindow(remote).then(function() {
-                return remote.get(config.url + 'dashboards/revisions').then(function() {
-                    return remote.findById('show_ips_btn').then(function(element) {
-                        return element.getVisibleText().then(function(text) {
-                            assert.strictEqual(text, 'TOGGLE IPS');
+                return libLogin.openLoginWidget(remote).then(function() {
+                    return libLogin.completePersonaWindow(remote).then(function() {
+                            return remote.findById('show_ips_btn').then(function(element) {
+                                return element.getVisibleText().then(function(text) {
+                                    assert.strictEqual(text, 'TOGGLE IPS');
 
-                            return element.click().then(function(element) {
-                                return poll.until(element, 'isDisplayed').then(function() {
-                                    return remote.findByCssSelector('a.dashboard-ban-ip-link').then(function(element){
-                                        return element.click().then(function() {
-                                            return remote.getCurrentUrl().then(dfd.callback(function(url) {
-                                                assert.isTrue(url.indexOf('ipban/add') != -1);
-                                            }));
+                                    return element.click().then(function(element) {
+                                        return poll.until(element, 'isDisplayed').then(function() {
+                                            return remote.findByCssSelector('a.dashboard-ban-ip-link').then(function(element){
+                                                return element.click().then(function() {
+                                                    return remote.getCurrentUrl().then(dfd.callback(function(url) {
+                                                        assert.isTrue(url.indexOf('ipban/add') != -1);
+                                                    }));
+                                                });
+                                            });
                                         });
                                     });
                                 });
                             });
                         });
                     });
-                });
-            });
+
         },
+
     });
 });

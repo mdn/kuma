@@ -18,7 +18,6 @@ define([
             // Simply hovers over the top login widget so that login links can be clicked
 
             return remote
-                        .get(config.homepageUrl)
                         .findByCssSelector('.oauth-login-options')
                         .moveMouseTo(5, 5)
                         .end()
