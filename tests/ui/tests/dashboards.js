@@ -31,39 +31,38 @@ define([
 
         'Revision dashboard renders': function() {
 
-            return this.remote.findByTagName('h1').getVisibleText().then(function(text) {
+            return this.remote.findByCssSelector('h1').getVisibleText().then(function(text) {
                 assert.strictEqual(text, 'Revision Dashboard');
             });
         },
 
         '[requires-login][requires-destructive] Revision dashboard banning': function() {
-
-            var dfd = this.async(config.testTimeout);
             var remote = this.remote;
+            var element;
 
-                return libLogin.openLoginWidget(remote).then(function() {
-                    return libLogin.completePersonaWindow(remote).then(function() {
-                            return remote.findById('show_ips_btn').then(function(element) {
-                                return element.getVisibleText().then(function(text) {
-                                    assert.strictEqual(text, 'TOGGLE IPS');
-
-                                    return element.click().then(function(element) {
-                                        return poll.until(element, 'isDisplayed').then(function() {
-                                            return remote.findByCssSelector('a.dashboard-ban-ip-link').then(function(element){
-                                                return element.click().then(function() {
-                                                    return remote.getCurrentUrl().then(dfd.callback(function(url) {
-                                                        assert.isTrue(url.indexOf('ipban/add') != -1);
-                                                    }));
-                                                });
-                                            });
-                                        });
+            return libLogin.openLoginWidget(remote).then(function() {
+                return libLogin.completePersonaWindow(remote);
+            }).then(function() {
+                return remote
+                    .findByCssSelector('#show_ips_btn')
+                    .click()
+                    .end()
+                    .findByCssSelector('a.dashboard-ban-ip-link')
+                    .click()
+                    .end()
+                    .then(function() {
+                        return poll.untilPopupWindowReady(remote);
+                    })
+                    .getAllWindowHandles().then(function(handles) {
+                        return remote
+                                    .switchToWindow(handles[1])
+                                    .getCurrentUrl()
+                                    .then(function(url) {
+                                        assert.isTrue(url.indexOf('ipban/add') != -1);
                                     });
-                                });
-                            });
-                        });
                     });
+                });
 
-        },
-
+        }
     });
 });
