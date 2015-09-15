@@ -35,7 +35,7 @@
             <header>
               <div>
                   <h3>{{ _('Your Changes') }}</h3>
-                <p>{{ _('Revision {id} by {user} on {date}')|fe(id=original_revision.id, user=original_revision.creator, date=datetimeformat(original_revision.created, format='longdatetime')) }}</p>
+                  <p>{{ _('Revision {id} by <a href="{user_profile_url}">{user}</a> on {date}')|fe(id=original_revision.id, user_profile_url=original_revision.creator.get_absolute_url(), user=original_revision.creator, date=datetimeformat(original_revision.created, format='longdatetime')) }}</p>
               </div>
               <div>
                 <h3>
@@ -43,7 +43,7 @@
                       {{ _('Current Revision:')|f(num=current_revision.id) }}
                     </a>
                 </h3>
-                <p>{{ _('Revision {id} by {user} on {date}')|fe(id=current_revision.id, user=current_revision.creator, date=datetimeformat(current_revision.created, format='longdatetime')) }}</p>
+                <p>{{ _('Revision {id} by <a href="{user_profile_url}">{user}</a> on {date}')|fe(id=current_revision.id, user_profile_url=current_revision.creator.get_absolute_url(), user=current_revision.creator, date=datetimeformat(current_revision.created, format='longdatetime')) }}</p>
               </div>
             </header>
 
