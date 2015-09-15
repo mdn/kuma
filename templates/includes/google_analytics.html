@@ -20,6 +20,11 @@
         {% endif %}
     {% endif %}
 
+    // dimension9 == "Section editing"
+    {% if waffle.flag('section_edit') %}
+        ga('set', 'dimension9', 'Enabled');
+    {% endif %}
+
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
         var win = window;
