@@ -3,7 +3,7 @@ import json
 
 try:
     from cStringIO import cStringIO as StringIO
-except:
+except ImportError:
     from StringIO import StringIO
 
 import newrelic.agent
@@ -28,7 +28,6 @@ from constance import config
 from jingo.helpers import urlparams
 
 from kuma.authkeys.decorators import accepts_auth_key
-from kuma.attachments.utils import attachments_json
 from kuma.core.decorators import (login_required,
                                   permission_required, superuser_required,
                                   block_user_agents)
@@ -295,7 +294,7 @@ def move(request, document_slug, document_locale):
         if form.is_valid():
             conflicts = doc._tree_conflicts(form.cleaned_data['slug'])
             if conflicts:
-                return render(request, 'wiki/move_document.html', {
+                return render(request, 'wiki/move.html', {
                     'form': form,
                     'document': doc,
                     'descendants': descendants,
@@ -313,7 +312,7 @@ def move(request, document_slug, document_locale):
     else:
         form = TreeMoveForm()
 
-    return render(request, 'wiki/move_document.html', {
+    return render(request, 'wiki/move.html', {
         'form': form,
         'document': doc,
         'descendants': descendants,
@@ -449,7 +448,7 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
     When a Document doesn't exist but the user can create it, return
     the creation URL to redirect to.
     """
-    url = reverse('wiki.new_document', locale=document_locale)
+    url = reverse('wiki.create', locale=document_locale)
     if slug_dict['length'] > 1:
         parent_doc = get_object_or_404(Document,
                                        locale=document_locale,
@@ -570,7 +569,7 @@ def document(request, document_slug, document_locale):
     # redirected-to-page back to a "Redirected from..." link, so you can edit
     # the redirect.
     redirect_url = (None if request.GET.get('redirect') == 'no'
-                    else doc.redirect_url())
+                    else doc.get_redirect_url())
 
     if redirect_url and redirect_url != doc.get_absolute_url():
         url = urlparams(redirect_url, query_dict=request.GET)
@@ -617,9 +616,6 @@ def document(request, document_slug, document_locale):
     # Get the additional title information, if necessary.
     seo_parent_title = _get_seo_parent_title(slug_dict, document_locale)
 
-    # Retrieve file attachments
-    attachments = attachments_json(doc.attachments)
-
     # Retrieve pre-parsed content hunks
     if doc.is_template:
         quick_links_html, zone_subnav_html = None, None
@@ -653,8 +649,6 @@ def document(request, document_slug, document_locale):
         'seo_summary': seo_summary,
         'seo_parent_title': seo_parent_title,
         'share_text': share_text,
-        'attachment_data': attachments,
-        'attachment_data_json': json.dumps(attachments),
         'search_url': referrer_url(request) or '',
     }
     response = render(request, 'wiki/document.html', context)
@@ -694,7 +688,7 @@ def _document_PUT(request, document_slug, document_locale):
                 body_content = doc.find('body')
                 if body_content.length > 0:
                     data['content'] = body_content.html()
-            except:
+            except Exception:
                 pass
 
         else:
@@ -703,7 +697,7 @@ def _document_PUT(request, document_slug, document_locale):
             resp.content = _("Unsupported content-type: %s") % content_type
             return resp
 
-    except Exception, e:
+    except Exception as e:
         resp = HttpResponse()
         resp.status_code = 400
         resp.content = _("Request parsing error: %s") % e

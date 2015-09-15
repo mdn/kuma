@@ -3,7 +3,6 @@ import json
 import sys
 import traceback
 from datetime import datetime, timedelta
-from urlparse import urlparse
 
 try:
     from functools import wraps
@@ -16,10 +15,8 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import resolve
 from django.db import models
 from django.db.models import signals
-from django.http import Http404
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 
@@ -34,7 +31,7 @@ from kuma.attachments.models import Attachment
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.cache import memcache
 from kuma.core.i18n import get_language_mapping
-from kuma.core.urlresolvers import reverse, split_path
+from kuma.core.urlresolvers import reverse
 from kuma.search.decorators import register_live_index
 
 from . import kumascript
@@ -459,7 +456,7 @@ class Document(NotificationsMixin, models.Model):
                 self.schedule_rendering(cache_control, base_url)
             except DocumentRenderingInProgress:
                 # Unable to trigger a rendering right now, so we bail.
-                raise DocumentRenderedContentNotAvailable()
+                raise DocumentRenderedContentNotAvailable
 
         # If we have a cache_control directive, try scheduling a render.
         if cache_control:
@@ -482,7 +479,7 @@ class Document(NotificationsMixin, models.Model):
                 return ('', errors)
             else:
                 # But, no such luck, so bail out.
-                raise DocumentRenderedContentNotAvailable()
+                raise DocumentRenderedContentNotAvailable
 
         return (self.rendered_html, errors)
 
@@ -898,13 +895,13 @@ class Document(NotificationsMixin, models.Model):
 
     def save(self, *args, **kwargs):
         self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
-        self.is_redirect = 1 if self.redirect_url() else 0
+        self.is_redirect = bool(self.get_redirect_url())
 
         try:
             # Check if the slug would collide with an existing doc
             self._raise_if_collides('slug', SlugCollision)
         except UniqueCollision as err:
-            if err.existing.redirect_url() is not None:
+            if err.existing.get_redirect_url() is not None:
                 # If the existing doc is a redirect, delete it and clobber it.
                 err.existing.delete()
             else:
@@ -957,14 +954,17 @@ class Document(NotificationsMixin, models.Model):
                                 (self.id, self.title))
             self.delete(purge=True)
 
-    def undelete(self):
+    def restore(self):
+        """
+        Restores a logically deleted document by reverting the deleted
+        boolean to False. Sends pre_save and post_save Django signals to
+        follow ducktyping best practices.
+        """
         if not self.deleted:
-            raise Exception("Document is not deleted, cannot be undeleted.")
-        signals.pre_save.send(sender=self.__class__,
-                              instance=self)
+            raise Exception("Document is not deleted, cannot be restored.")
+        signals.pre_save.send(sender=self.__class__, instance=self)
         Document.deleted_objects.filter(pk=self.pk).update(deleted=False)
-        signals.post_save.send(sender=self.__class__,
-                               instance=self)
+        signals.post_save.send(sender=self.__class__, instance=self)
 
     def _post_move_redirects(self, new_slug, user, title):
         """
@@ -1059,7 +1059,7 @@ class Document(NotificationsMixin, models.Model):
             try:
                 slug = '/'.join([new_slug, child_title])
                 existing = Document.objects.get(locale=self.locale, slug=slug)
-                if not existing.redirect_url():
+                if not existing.get_redirect_url():
                     conflicts.append(existing)
             except Document.DoesNotExist:
                 pass
@@ -1068,7 +1068,6 @@ class Document(NotificationsMixin, models.Model):
     def _move_tree(self, new_slug, user=None, title=None):
         """
         Move this page and all its children.
-
         """
         # Page move is a 10-step process.
         #
@@ -1260,7 +1259,7 @@ Full traceback:
             }
         return files
 
-    @property
+    @cached_property
     def attachments(self):
         # Is there a more elegant way to do this?
         #
@@ -1284,8 +1283,9 @@ Full traceback:
             params = models.Q(id__in=kuma_files)
         if params:
             return Attachment.objects.filter(params)
-        # If no files found, return an empty Attachment queryset.
-        return Attachment.objects.none()
+        else:
+            # If no files found, return an empty Attachment queryset.
+            return Attachment.objects.none()
 
     @property
     def show_toc(self):
@@ -1295,52 +1295,16 @@ Full traceback:
     def language(self):
         return get_language_mapping()[self.locale.lower()]
 
-    def get_absolute_url(self):
+    def get_absolute_url(self, endpoint='wiki.document'):
         """
         Build the absolute URL to this document from its full path
         """
-        return reverse('wiki.document', locale=self.locale, args=[self.slug])
+        return reverse(endpoint, locale=self.locale, args=[self.slug])
 
-    @staticmethod
-    def from_url(url, required_locale=None, id_only=False):
-        """
-        Return the approved Document the URL represents, None if there isn't
-        one.
+    def get_edit_url(self):
+        return self.get_absolute_url(endpoint='wiki.edit')
 
-        Return None if the URL is a 404, the URL doesn't point to the right
-        view, or the indicated document doesn't exist.
-
-        To limit the universe of discourse to a certain locale, pass in a
-        `required_locale`. To fetch only the ID of the returned Document, set
-        `id_only` to True.
-        """
-        # Extract locale and path from URL:
-        path = urlparse(url)[2]  # never has errors AFAICT
-        locale, path = split_path(path)
-        if required_locale and locale != required_locale:
-            return None
-        path = '/' + path
-
-        try:
-            view, view_args, view_kwargs = resolve(path)
-        except Http404:
-            return None
-
-        from . import views  # Views import models; models import views.
-        if view != views.document:
-            return None
-
-        # Map locale-slug pair to Document ID:
-        doc_query = Document.objects.exclude(current_revision__isnull=True)
-        if id_only:
-            doc_query = doc_query.only('id')
-        try:
-            return doc_query.get(locale=locale,
-                                 slug=view_kwargs['document_slug'])
-        except Document.DoesNotExist:
-            return None
-
-    def redirect_url(self):
+    def get_redirect_url(self):
         """
         If I am a redirect, return the absolute URL to which I redirect.
 
@@ -1358,22 +1322,10 @@ Full traceback:
                 if len(url) > 1:
                     if url.startswith(settings.SITE_URL):
                         return url
-                    elif (url[0] == '/' and url[1] != '/'):
+                    elif url[0] == '/' and url[1] != '/':
                         return url
-                elif (len(url) == 1 and url[0] == '/'):
+                elif len(url) == 1 and url[0] == '/':
                     return url
-                else:
-                    return None
-
-    def redirect_document(self):
-        """If I am a redirect to a Document, return that Document.
-
-        Otherwise, return None.
-
-        """
-        url = self.redirect_url()
-        if url:
-            return self.from_url(url)
 
     def filter_permissions(self, user, permissions):
         """Filter permissions with custom logic"""
@@ -1388,15 +1340,12 @@ Full traceback:
             parents.append(curr)
         return parents
 
-    def get_permission_parents(self):
-        return self.get_topic_parents()
-
     def allows_revision_by(self, user):
-        """Return whether `user` is allowed to create new revisions of me.
+        """
+        Return whether `user` is allowed to create new revisions of me.
 
         The motivation behind this method is that templates and other types of
         docs may have different permissions.
-
         """
         if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.change_template_document')):
@@ -1404,12 +1353,12 @@ Full traceback:
         return True
 
     def allows_editing_by(self, user):
-        """Return whether `user` is allowed to edit document-level metadata.
+        """
+        Return whether `user` is allowed to edit document-level metadata.
 
         If the Document doesn't have a current_revision (nothing approved) then
         all the Document fields are still editable. Once there is an approved
         Revision, the Document fields can only be edited by privileged users.
-
         """
         if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.change_template_document')):
@@ -1418,10 +1367,10 @@ Full traceback:
                 user.has_perm('wiki.change_document'))
 
     def translated_to(self, locale):
-        """Return the translation of me to the given locale.
+        """
+        Return the translation of me to the given locale.
 
         If there is no such Document, return None.
-
         """
         if self.locale != settings.WIKI_DEFAULT_LANGUAGE:
             raise NotImplementedError('translated_to() is implemented only on'

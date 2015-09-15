@@ -1,20 +1,22 @@
-from tower import ugettext_lazy as _lazy
-from tower import ugettext as _
+from tower import ugettext as _, ugettext_lazy as _lazy
+import waffle
 
 from django import forms
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.forms.widgets import CheckboxSelectMultiple
 
 
 from kuma.contentflagging.forms import ContentFlagForm
 import kuma.wiki.content
 from kuma.core.form_fields import StrippedCharField
-from .constants import (SLUG_CLEANSING_RE, SLUG_INVALID_CHARS_RE,
-                        SLUG_INVALID_CHARS_VALIDATION_RE,
+from .constants import (SLUG_CLEANSING_RE, INVALID_DOC_SLUG_CHARS_RE,
+                        INVALID_REV_SLUG_CHARS_RE,
                         DOCUMENT_PATH_RE, REVIEW_FLAG_TAGS,
                         LOCALIZATION_FLAG_TAGS, RESERVED_SLUGS_RES)
-from .models import (Document, Revision,
-                     valid_slug_parent)
+from .events import EditDocumentEvent
+from .models import Document, Revision, RevisionIP, valid_slug_parent
+from .tasks import send_first_edit_email
 
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -56,9 +58,12 @@ MOVE_REQUIRED = _lazy(u"Changing this document's slug requires "
 
 
 class DocumentForm(forms.ModelForm):
-    """Form to create/edit a document."""
-
-    title = StrippedCharField(min_length=1, max_length=255,
+    """
+    Used for managing the wiki document data model that houses general
+    data of a wiki page.
+    """
+    title = StrippedCharField(min_length=1,
+                              max_length=255,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
                               label=_lazy(u'Title:'),
@@ -67,7 +72,8 @@ class DocumentForm(forms.ModelForm):
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
 
-    slug = StrippedCharField(min_length=1, max_length=255,
+    slug = StrippedCharField(min_length=1,
+                             max_length=255,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
                              help_text=_lazy(u'Article URL'),
@@ -90,13 +96,25 @@ class DocumentForm(forms.ModelForm):
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
+    class Meta:
+        model = Document
+        fields = ('title', 'slug', 'category', 'locale')
+
+    def __init__(self, *args, **kwargs):
+        # when creating a new document with a parent, this will be set
+        self.parent_slug = kwargs.pop('parent_slug', None)
+        super(DocumentForm, self).__init__(*args, **kwargs)
+
     def clean_slug(self):
         slug = self.cleaned_data['slug']
         if slug == '':
             # Default to the title, if missing.
             slug = self.cleaned_data['title']
+        elif self.parent_slug:
+            # Prepend parent slug if given from view
+            slug = self.parent_slug + '/' + slug
         # check both for disallowed characters and match for the allowed
-        if (SLUG_INVALID_CHARS_RE.search(slug) or
+        if (INVALID_DOC_SLUG_CHARS_RE.search(slug) or
                 not DOCUMENT_PATH_RE.search(slug)):
             raise forms.ValidationError(SLUG_INVALID)
         # Guard against slugs that match urlpatterns
@@ -105,14 +123,10 @@ class DocumentForm(forms.ModelForm):
                 raise forms.ValidationError(SLUG_INVALID)
         return slug
 
-    class Meta:
-        model = Document
-        fields = ('title', 'slug', 'category', 'locale')
-
-    def save(self, parent_doc, **kwargs):
+    def save(self, parent=None, *args, **kwargs):
         """Persist the Document form, and return the saved Document."""
-        doc = super(DocumentForm, self).save(commit=False, **kwargs)
-        doc.parent = parent_doc
+        doc = super(DocumentForm, self).save(commit=False, *args, **kwargs)
+        doc.parent = parent
         if 'parent_topic' in self.cleaned_data:
             doc.parent_topic = self.cleaned_data['parent_topic']
         doc.save()
@@ -123,9 +137,11 @@ class DocumentForm(forms.ModelForm):
 
 
 class RevisionForm(forms.ModelForm):
-    """Form to create new revisions."""
-
-    title = StrippedCharField(min_length=1, max_length=255,
+    """
+    Form to create new revisions.
+    """
+    title = StrippedCharField(min_length=1,
+                              max_length=255,
                               required=False,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
@@ -134,7 +150,8 @@ class RevisionForm(forms.ModelForm):
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
-    slug = StrippedCharField(min_length=1, max_length=255,
+    slug = StrippedCharField(min_length=1,
+                             max_length=255,
                              required=False,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
@@ -152,7 +169,8 @@ class RevisionForm(forms.ModelForm):
 
     summary = StrippedCharField(
         required=False,
-        min_length=5, max_length=1000,
+        min_length=5,
+        max_length=1000,
         widget=forms.Textarea(),
         label=_lazy(u'Search result summary:'),
         help_text=_lazy(u'Only displayed on search results page'),
@@ -161,7 +179,8 @@ class RevisionForm(forms.ModelForm):
                         'max_length': SUMMARY_LONG})
 
     content = StrippedCharField(
-        min_length=5, max_length=300000,
+        min_length=5,
+        max_length=300000,
         label=_lazy(u'Content:'),
         widget=forms.Textarea(),
         error_messages={'required': CONTENT_REQUIRED,
@@ -172,12 +191,14 @@ class RevisionForm(forms.ModelForm):
 
     review_tags = forms.MultipleChoiceField(
         label=_("Tag this revision for review?"),
-        widget=CheckboxSelectMultiple, required=False,
+        widget=CheckboxSelectMultiple,
+        required=False,
         choices=REVIEW_FLAG_TAGS)
 
     localization_tags = forms.MultipleChoiceField(
         label=_("Tag this revision for localization?"),
-        widget=CheckboxSelectMultiple, required=False,
+        widget=CheckboxSelectMultiple,
+        required=False,
         choices=LOCALIZATION_FLAG_TAGS)
 
     current_rev = forms.CharField(required=False,
@@ -190,23 +211,19 @@ class RevisionForm(forms.ModelForm):
                   'render_max_age')
 
     def __init__(self, *args, **kwargs):
+        self.section_id = kwargs.pop('section_id', None)
+        self.is_iframe_target = kwargs.pop('is_iframe_target', None)
 
-        # Snag some optional kwargs and delete them before calling
-        # super-constructor.
-        for n in ('section_id', 'is_iframe_target'):
-            if n not in kwargs:
-                setattr(self, n, None)
-            else:
-                setattr(self, n, kwargs[n])
-                del kwargs[n]
+        # when creating a new document with a parent, this will be set
+        self.parent_slug = kwargs.pop('parent_slug', None)
 
         super(RevisionForm, self).__init__(*args, **kwargs)
+
         self.fields['based_on'].widget = forms.HiddenInput()
 
         if self.instance and self.instance.pk:
-
-            # Ensure both title and slug are populated from parent document, if
-            # last revision didn't have them
+            # Ensure both title and slug are populated from parent document,
+            # if last revision didn't have them
             if not self.instance.title:
                 self.initial['title'] = self.instance.document.title
             if not self.instance.slug:
@@ -214,12 +231,12 @@ class RevisionForm(forms.ModelForm):
 
             content = self.instance.content
             if not self.instance.document.is_template:
-                tool = kuma.wiki.content.parse(content)
-                tool.injectSectionIDs()
+                parsed_content = kuma.wiki.content.parse(content)
+                parsed_content.injectSectionIDs()
                 if self.section_id:
-                    tool.extractSection(self.section_id)
-                tool.filterEditorSafety()
-                content = tool.serialize()
+                    parsed_content.extractSection(self.section_id)
+                parsed_content.filterEditorSafety()
+                content = parsed_content.serialize()
             self.initial['content'] = content
 
             self.initial['review_tags'] = list(self.instance.review_tags
@@ -233,47 +250,55 @@ class RevisionForm(forms.ModelForm):
         if self.section_id:
             self.fields['toc_depth'].required = False
 
-    def _clean_collidable(self, name):
-        value = self.cleaned_data[name]
-
+    def clean_slug(self):
+        # Since this form can change the URL of the page on which the editing
+        # happens, changes to the slug are ignored for an iframe submissions
         if self.is_iframe_target:
-            # Since these collidables can change the URL of the page, changes
-            # to them are ignored for an iframe submission
-            return getattr(self.instance.document, name)
+            return self.instance.document.slug
 
-        error_message = {'slug': SLUG_COLLIDES}.get(name, OTHER_COLLIDES)
+        # Get the cleaned slug
+        slug = self.cleaned_data['slug']
+
+        # first check if the given slug doesn't contain slashes and other
+        # characters not allowed in a revision slug component (without parent)
+        if slug and INVALID_REV_SLUG_CHARS_RE.search(slug):
+            raise forms.ValidationError(SLUG_INVALID)
+
+        # edits can come in without a slug, so default to the current doc slug
+        if not slug:
+            try:
+                slug = self.instance.slug = self.instance.document.slug
+            except ObjectDoesNotExist:
+                pass
+
+        # then if there is a parent document we prefix the slug with its slug
+        if self.parent_slug:
+            slug = u'/'.join([self.parent_slug, slug])
+
         try:
-            existing_doc = Document.objects.get(
-                locale=self.instance.document.locale,
-                **{name: value})
+            doc = Document.objects.get(locale=self.instance.document.locale,
+                                       slug=slug)
             if self.instance and self.instance.document:
-                if (not existing_doc.redirect_url() and
-                        existing_doc.pk != self.instance.document.pk):
+                if (not doc.get_redirect_url() and
+                        doc.pk != self.instance.document.pk):
                     # There's another document with this value,
                     # and we're not a revision of it.
-                    raise forms.ValidationError(error_message)
+                    raise forms.ValidationError(SLUG_COLLIDES)
             else:
                 # This document-and-revision doesn't exist yet, so there
                 # shouldn't be any collisions at all.
-                raise forms.ValidationError(error_message)
+                raise forms.ValidationError(SLUG_COLLIDES)
 
         except Document.DoesNotExist:
             # No existing document for this value, so we're good here.
             pass
 
-        return value
-
-    def clean_slug(self):
-        # TODO: move this check somewhere else?
-        # edits can come in without a slug, so default to the current doc slug
-        if not self.cleaned_data['slug']:
-            existing_slug = self.instance.document.slug
-            self.cleaned_data['slug'] = self.instance.slug = existing_slug
-        cleaned_slug = self._clean_collidable('slug')
-        return cleaned_slug
+        return slug
 
     def clean_content(self):
-        """Validate the content, performing any section editing if necessary"""
+        """
+        Validate the content, performing any section editing if necessary
+        """
         content = self.cleaned_data['content']
 
         # If we're editing a section, we need to replace the section content
@@ -282,17 +307,19 @@ class RevisionForm(forms.ModelForm):
             # Make sure we start with content form the latest revision.
             full_content = self.instance.document.current_revision.content
             # Replace the section content with the form content.
-            tool = kuma.wiki.content.parse(full_content)
-            tool.replaceSection(self.section_id, content)
-            content = tool.serialize()
+            parsed_content = kuma.wiki.content.parse(full_content)
+            parsed_content.replaceSection(self.section_id, content)
+            content = parsed_content.serialize()
 
         return content
 
     def clean_current_rev(self):
-        """If a current revision is supplied in the form, compare it against
+        """
+        If a current revision is supplied in the form, compare it against
         what the document claims is the current revision. If there's a
         difference, then an edit has occurred since the form was constructed
-        and we treat it as a mid-air collision."""
+        and we treat it as a mid-air collision.
+        """
         current_rev = self.cleaned_data.get('current_rev', None)
 
         if not current_rev:
@@ -308,10 +335,12 @@ class RevisionForm(forms.ModelForm):
                     # This is a section edit. So, even though the revision has
                     # changed, it still might not be a collision if the section
                     # in particular hasn't changed.
-                    orig_ct = (Revision.objects.get(pk=current_rev)
-                               .get_section_content(self.section_id))
-                    curr_ct = (self.instance.document.current_revision
-                               .get_section_content(self.section_id))
+                    orig_ct = (Revision.objects
+                                       .get(pk=current_rev)
+                                       .get_section_content(self.section_id))
+                    curr_ct = (self.instance
+                                   .document.current_revision
+                                   .get_section_content(self.section_id))
                     if orig_ct != curr_ct:
                         # Oops. Looks like the section did actually get
                         # changed, so yeah this is a collision.
@@ -327,63 +356,58 @@ class RevisionForm(forms.ModelForm):
             # If there's no document yet, just bail.
             return current_rev
 
-    def save_section(self, creator, document, **kwargs):
-        """Save a section edit."""
-        # This is separate because the logic is slightly different and
-        # may need to evolve over time; a section edit doesn't submit
-        # all the fields, and we need to account for that when we
-        # construct the new Revision.
-
-        old_rev = Document.objects.get(pk=self.instance.document.id).current_revision
-        new_rev = super(RevisionForm, self).save(commit=False, **kwargs)
-        new_rev.document = document
-        new_rev.creator = creator
-        new_rev.toc_depth = old_rev.toc_depth
-        new_rev.save()
-        new_rev.review_tags.set(*list(old_rev.review_tags
-                                             .values_list('name', flat=True)))
-        return new_rev
-
-    def save(self, creator, document, **kwargs):
-        """Persist me, and return the saved Revision.
-
-        Take several other necessary pieces of data that aren't from the
-        form.
-
+    def save(self, request, document, **kwargs):
         """
-        if (self.section_id and self.instance and
-                self.instance.document):
-            return self.save_section(creator, document, **kwargs)
-        # Throws a TypeError if somebody passes in a commit kwarg:
-        new_rev = super(RevisionForm, self).save(commit=False, **kwargs)
+        Persists the revision and returns it.
+        Takes the view request and document of the revision.
+        Does some specific things when the revision is fully saved.
+        """
+        # have to check for first edit before we save
+        is_first_edit = request.user.wiki_revisions().count() == 0
 
-        new_rev.document = document
-        new_rev.creator = creator
-        new_rev.toc_depth = self.cleaned_data['toc_depth']
-        new_rev.save()
-        new_rev.review_tags.set(*self.cleaned_data['review_tags'])
-        new_rev.localization_tags.set(*self.cleaned_data['localization_tags'])
+        # Making sure we don't commit the saving right away since we
+        # want to do other things here.
+        kwargs['commit'] = False
+
+        if self.section_id and self.instance and self.instance.document:
+            # The logic to save a section is slightly different and may
+            # need to evolve over time; a section edit doesn't submit
+            # all the fields, and we need to account for that when we
+            # construct the new Revision.
+            old_rev = Document.objects.get(pk=self.instance.document.id).current_revision
+            new_rev = super(RevisionForm, self).save(**kwargs)
+            new_rev.document = document
+            new_rev.creator = request.user
+            new_rev.toc_depth = old_rev.toc_depth
+            new_rev.save()
+            new_rev.review_tags.set(*list(old_rev.review_tags
+                                                 .values_list('name', flat=True)))
+
+        else:
+            new_rev = super(RevisionForm, self).save(**kwargs)
+            new_rev.document = document
+            new_rev.creator = request.user
+            new_rev.toc_depth = self.cleaned_data['toc_depth']
+            new_rev.save()
+            new_rev.review_tags.set(*self.cleaned_data['review_tags'])
+            new_rev.localization_tags.set(*self.cleaned_data['localization_tags'])
+
+            # when enabled store the user's IP address
+            if waffle.switch_is_active('store_revision_ips'):
+                ip = request.META.get('REMOTE_ADDR')
+                RevisionIP.objects.create(revision=new_rev, ip=ip)
+
+            # send first edit emails
+            if is_first_edit:
+                send_first_edit_email.delay(new_rev.pk)
+
+            # schedule a document rendering
+            document.schedule_rendering('max-age=0')
+
+            # schedule event notifications
+            EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
+
         return new_rev
-
-
-class RevisionValidationForm(RevisionForm):
-    """
-    Created primarily to disallow slashes in slugs during validation
-    """
-    def clean_slug(self):
-        original = self.cleaned_data['slug']
-        if (original == u'' or
-                SLUG_INVALID_CHARS_VALIDATION_RE.search(original)):
-            raise forms.ValidationError(SLUG_INVALID)
-
-        # Append parent slug data, call super, ensure still valid
-        self.cleaned_data['slug'] = self.data['slug'] = (self.parent_slug +
-                                                         '/' +
-                                                         original)
-        # run the parent clean method, checking for collisions
-        super(RevisionValidationForm, self).clean_slug()
-        self.cleaned_data['slug'] = self.data['slug'] = original
-        return self.cleaned_data['slug']
 
 
 class TreeMoveForm(forms.Form):
@@ -407,22 +431,21 @@ class TreeMoveForm(forms.Form):
                                widget=forms.HiddenInput())
 
     def clean_slug(self):
+        slug = self.cleaned_data['slug']
         # We only want the slug here; inputting a full URL would lead
         # to disaster.
-        if '://' in self.cleaned_data['slug']:
+        if '://' in slug:
             raise forms.ValidationError('Please enter only the slug to move '
                                         'to, not the full URL.')
 
         # Removes leading slash and {locale/docs/} if necessary
         # IMPORTANT: This exact same regex is used on the client side, so
         # update both if doing so
-        self.cleaned_data['slug'] = SLUG_CLEANSING_RE.sub('', self.cleaned_data['slug'])
+        slug = SLUG_CLEANSING_RE.sub('', slug)
 
         # Remove the trailing slash if one is present, because it
         # will screw up the page move, which doesn't expect one.
-        self.cleaned_data['slug'] = self.cleaned_data['slug'].rstrip('/')
-
-        return self.cleaned_data['slug']
+        return slug.rstrip('/')
 
     def clean(self):
         cleaned_data = super(TreeMoveForm, self).clean()
@@ -430,7 +453,7 @@ class TreeMoveForm(forms.Form):
             slug, locale = cleaned_data['slug'], cleaned_data['locale']
             try:
                 valid_slug_parent(slug, locale)
-            except Exception, e:
+            except Exception as e:
                 raise forms.ValidationError(e.args[0])
         return cleaned_data
 

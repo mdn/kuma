@@ -71,5 +71,5 @@ class Command(BaseCommand):
                 pre_cnt += 1
                 logging.info("\t(%s/%s) %s" % (pre_cnt, pre_total, full_url))
                 requests.get(full_url)
-            except Exception, e:
+            except Exception as e:
                 logging.error("\t\tFAILED: %s; %s" % (full_url, e))

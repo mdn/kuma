@@ -48,8 +48,10 @@ class BaseDocumentManager(models.Manager):
                     .filter(render_expires__lte=datetime.now()))
 
     def allows_add_by(self, user, slug):
-        """Determine whether the user can create a document with the given
-        slug. Mainly for enforcing Template: editing permissions"""
+        """
+        Determine whether the user can create a document with the given
+        slug. Mainly for enforcing Template: editing permissions
+        """
         if (slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.add_template_document')):
             return False

@@ -97,7 +97,7 @@ class Command(NoArgsCommand):
 
         except KeyboardInterrupt:
             raise
-        except Exception, e:
+        except Exception as e:
             log.error("General Error starting loop: %s", e)
             log.exception(e)
 
@@ -245,6 +245,6 @@ class Command(NoArgsCommand):
 
         except KeyboardInterrupt:
             raise
-        except Exception, e:
+        except Exception as e:
             log.error('General Error on %s: %s', feed.url, e)
             log.exception(e)

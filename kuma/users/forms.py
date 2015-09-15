@@ -95,7 +95,7 @@ class NewsletterForm(forms.Form):
             api_key = config.BASKET_API_KEY
             subscription_details = basket.lookup_user(email=email,
                                                       api_key=api_key)
-        except BasketException, e:
+        except BasketException as e:
             if e.code == BASKET_UNKNOWN_EMAIL:
                 # pass - unknown email is just a new subscriber
                 pass

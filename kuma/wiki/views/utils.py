@@ -2,14 +2,11 @@
 from datetime import datetime
 
 import newrelic.agent
-import waffle
 
 from kuma.core.cache import memcache
 
 from ..constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
-from ..events import EditDocumentEvent
-from ..models import Document, RevisionIP
-from ..tasks import send_first_edit_email
+from ..models import Document
 
 
 def split_slug(slug):
@@ -36,20 +33,15 @@ def split_slug(slug):
 
     parent = '/'.join(slug_split)
 
-    return {
-        'specific': specific,
-        'parent': parent,
-        'full': slug,
-        'parent_split': slug_split,
-        'length': length,
-        'root': root,
-        'seo_root': seo_root,
+    return {                         # with this given: "some/kind/of/Path"
+        'specific': specific,        # 'Path'
+        'parent': parent,            # 'some/kind/of'
+        'full': slug,                # 'some/kind/of/Path'
+        'parent_split': slug_split,  # ['some', 'kind', 'of']
+        'length': length,            # 4
+        'root': root,                # 'some'
+        'seo_root': seo_root,        # 'some'
     }
-
-
-def join_slug(parent_split, slug):
-    parent_split.append(slug)
-    return '/'.join(parent_split)
 
 
 @newrelic.agent.function_trace()
@@ -87,26 +79,3 @@ def document_form_initial(document):
         'is_localizable': document.is_localizable,
         'tags': list(document.tags.values_list('name', flat=True))
     }
-
-
-def save_revision_and_notify(rev_form, request, document):
-    """
-    Save the given RevisionForm and send notifications.
-    """
-    creator = request.user
-    # have to check for first edit before we rev_form.save
-    first_edit = creator.wiki_revisions().count() == 0
-
-    new_rev = rev_form.save(creator, document)
-
-    if waffle.switch_is_active('store_revision_ips'):
-        ip = request.META.get('REMOTE_ADDR')
-        RevisionIP.objects.create(revision=new_rev, ip=ip)
-
-    if first_edit:
-        send_first_edit_email.delay(new_rev.pk)
-
-    document.schedule_rendering('max-age=0')
-
-    # Enqueue notifications
-    EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)

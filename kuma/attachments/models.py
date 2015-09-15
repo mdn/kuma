@@ -5,7 +5,6 @@ from django.db import models
 
 import jingo
 
-from .managers import AttachmentManager
 from .utils import attachment_upload_to, full_attachment_url
 
 
@@ -21,8 +20,6 @@ class Attachment(models.Model):
         permissions = (
             ("disallow_add_attachment", "Cannot upload attachment"),
         )
-
-    objects = AttachmentManager()
 
     current_revision = models.ForeignKey('AttachmentRevision', null=True,
                                          related_name='current_rev')

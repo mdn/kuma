@@ -1,9 +1,7 @@
+from constance import config
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
-
-from constance import config
-from django.conf import settings
 
 from kuma.users.tests import UserTestCase
 from kuma.wiki.tests import revision, WikiTestCase
@@ -46,8 +44,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
                        save=True)
 
         # view it and verify markup is escaped
-        response = self.client.get(reverse('wiki.edit_document', args=(rev.slug,),
-                                           locale=settings.WIKI_DEFAULT_LANGUAGE))
+        response = self.client.get(rev.document.get_edit_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_('%s xss' % title,

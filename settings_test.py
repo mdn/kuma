@@ -13,8 +13,15 @@ BANISH_ENABLED = False
 
 DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
 
-LOGGING['loggers']['django.db.backends.schema'] = {
-    'handlers': ['console'],
-    'propagate': True,
-    'level': 'WARNING',
-}
+LOGGING['loggers'].update({
+    'django.db.backends': {
+        'handlers': ['console'],
+        'propagate': True,
+        'level': 'WARNING',
+    },
+    'kuma.search.utils': {
+        'handlers': [],
+        'propagate': False,
+        'level': 'CRITICAL',
+    },
+})

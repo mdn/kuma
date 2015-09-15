@@ -52,7 +52,7 @@ def delete_document(request, document_slug, document_locale):
                                  slug=document_slug)
 
     # HACK: https://bugzil.la/972545 - Don't delete pages that have children
-    # TODO: https://bugzil.la/972541 -  Deleting a page that has subpages
+    # TODO: https://bugzil.la/972541 - Deleting a page that has subpages
     prevent = document.children.exists()
 
     first_revision = document.revisions.all()[0]
@@ -93,7 +93,7 @@ def restore_document(request, document_slug, document_locale):
     document = get_object_or_404(Document.deleted_objects.all(),
                                  slug=document_slug,
                                  locale=document_locale)
-    document.undelete()
+    document.restore()
     return redirect(document)
 
 

@@ -305,7 +305,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(href, d.redirect_url())
+        eq_(href, d.get_redirect_url())
 
     @attr('redirect')
     def test_redirect_url_allows_domain_relative_url(self):
@@ -313,7 +313,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(href, d.redirect_url())
+        eq_(href, d.get_redirect_url())
 
     @attr('redirect')
     def test_redirect_url_rejects_protocol_relative_url(self):
@@ -321,7 +321,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(None, d.redirect_url())
+        eq_(None, d.get_redirect_url())
 
     @attr('bug1082034')
     @attr('redirect')
@@ -330,7 +330,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(href, d.redirect_url())
+        eq_(href, d.get_redirect_url())
 
 
 class PermissionTests(KumaTestCase):
@@ -385,22 +385,6 @@ class PermissionTests(KumaTestCase):
 
 class DocumentTestsWithFixture(UserTestCase):
     """Document tests which need the users fixture"""
-
-    def test_redirect_document_non_redirect(self):
-        """Assert redirect_document on non-redirects returns None."""
-        eq_(None, document().redirect_document())
-
-    def test_redirect_document_external_redirect(self):
-        """Assert redirects to external pages return None."""
-        eq_(None, revision(content='REDIRECT [http://example.com]',
-                           is_approved=True,
-                           save=True).document.redirect_document())
-
-    def test_redirect_document_nonexistent(self):
-        """Assert redirects to non-existent pages return None."""
-        eq_(None, revision(content='REDIRECT [[kersmoo]]',
-                           is_approved=True,
-                           save=True).document.redirect_document())
 
     def test_default_topic_parents_for_translation(self):
         """A translated document with no topic parent should by default use
@@ -924,6 +908,8 @@ class DeferredRenderingTests(UserTestCase):
         self.d1.save()
         self.d1.delete()
         self.d1.render()
+
+        time.sleep(1.0)  # Small clock-tick to age the results.
         self.d1 = Document.objects.get(pk=self.d1.pk)
         ok_(deleted_title != self.d1.get_json_data()['title'])
 
@@ -1327,7 +1313,7 @@ class PageMoveTests(UserTestCase):
             moved_top.current_revision.slug)
         ok_(old_top_id != moved_top.current_revision.id)
         ok_(moved_top.current_revision.slug in
-            Document.objects.get(slug='first-level/parent').redirect_url())
+            Document.objects.get(slug='first-level/parent').get_redirect_url())
 
         moved_child1 = Document.objects.get(pk=child1_doc.id)
         eq_('new-prefix/first-level/parent/child1',
@@ -1336,7 +1322,7 @@ class PageMoveTests(UserTestCase):
         ok_(moved_child1.current_revision.slug in
             Document.objects.get(
                 slug='first-level/second-level/child1'
-            ).redirect_url())
+            ).get_redirect_url())
 
         moved_child2 = Document.objects.get(pk=child2_doc.id)
         eq_('new-prefix/first-level/parent/child2',
@@ -1345,7 +1331,7 @@ class PageMoveTests(UserTestCase):
         ok_(moved_child2.current_revision.slug in
             Document.objects.get(
                 slug='first-level/second-level/child2'
-            ).redirect_url())
+            ).get_redirect_url())
 
         moved_grandchild = Document.objects.get(pk=grandchild_doc.id)
         eq_('new-prefix/first-level/parent/child2/grandchild',
@@ -1354,7 +1340,7 @@ class PageMoveTests(UserTestCase):
         ok_(moved_grandchild.current_revision.slug in
             Document.objects.get(
                 slug='first-level/second-level/third-level/grandchild'
-            ).redirect_url())
+            ).get_redirect_url())
 
     @attr('move')
     def test_conflicts(self):
@@ -1513,7 +1499,7 @@ class PageMoveTests(UserTestCase):
         try:
             doc._move_tree('slug-that-doesnt-exist/doc1')
             ok_(False, "Moving page under non-existing doc should error.")
-        except:
+        except Exception:
             pass
 
     @attr('move')

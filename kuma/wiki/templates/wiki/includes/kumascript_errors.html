@@ -33,8 +33,8 @@
 
                     {% if '$' not in template_name %}
                         {% set template_slug = 'Template:{name}' | f(name=template_name) %}
-                        {% set edit_url = url('wiki.edit_document', template_slug) %}
-                        {% set new_url = url('wiki.new_document') + '?slug=Template:{name}' | f(name=template_name) %}
+                        {% set edit_url = url('wiki.edit', template_slug) %}
+                        {% set new_url = url('wiki.create') + '?slug=Template:{name}' | f(name=template_name) %}
                     {% endif %}
 
                     {{ _('In macro:') }} <code>{{ template_name }}</code>
@@ -47,7 +47,7 @@
                         (<a href="{{ edit_url }}">{{ _('Edit Template') }}</a>)
                     {% endif %}<br>
 
-                    {{ _('Parsing macro:') }} <code>{{ template_name }}({% if error_meta.token %}{{ error_meta.token.args }}{% endif %})</code> {% if document %}(<a href="{{ url('wiki.edit_document', document.slug) }}">{{ _('Edit Document') }}</a>){% endif %}
+                    {{ _('Parsing macro:') }} <code>{{ template_name }}({% if error_meta.token %}{{ error_meta.token.args }}{% endif %})</code> {% if document %}(<a href="{{ document.get_edit_url() }}">{{ _('Edit Document') }}</a>){% endif %}
                 {% endif %}
             {% endif %}
 

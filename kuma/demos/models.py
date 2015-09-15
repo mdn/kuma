@@ -563,7 +563,7 @@ class Submission(models.Model):
         """Fetch the screenshot URL for a given index, swallowing errors"""
         try:
             return getattr(self, 'screenshot_%s' % index).url
-        except:
+        except (AttributeError, ValueError):
             return ''
 
     def thumbnail_url(self, index='1'):
@@ -571,7 +571,7 @@ class Submission(models.Model):
         errors"""
         try:
             return getattr(self, 'screenshot_%s' % index).thumbnail_url()
-        except:
+        except (AttributeError, ValueError):
             return ''
 
     def get_flags(self):
@@ -641,7 +641,7 @@ class Submission(models.Model):
         # TODO: Move to zip file field?
         try:
             zf = zipfile.ZipFile(file)
-        except:
+        except IOError:
             raise ValidationError(_('ZIP file contains no acceptable files'))
 
         if zf.testzip():

@@ -1,8 +1,10 @@
+from django.test import RequestFactory
+
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from kuma.users.tests import UserTestCase
-from ..forms import RevisionForm, RevisionValidationForm, TreeMoveForm
+from ..forms import RevisionForm, TreeMoveForm
 from ..tests import doc_rev, normalize_html
 
 
@@ -19,7 +21,7 @@ class FormEditorSafetyFilterTests(UserTestCase):
         ok_('onload' not in rev_form.initial['content'])
 
 
-class FormSectionEditingTests(UserTestCase):
+class RevisionFormTests(UserTestCase):
 
     def test_form_loaded_with_section(self):
         """RevisionForm given section_id should load initial content for only
@@ -79,20 +81,23 @@ class FormSectionEditingTests(UserTestCase):
         rev_form = RevisionForm({"content": replace_content},
                                 instance=r,
                                 section_id="s2")
-        new_rev = rev_form.save(r.creator, d)
+        request = RequestFactory().get('/')
+        request.user = r.creator
+        new_rev = rev_form.save(request, d)
         eq_(normalize_html(expected),
             normalize_html(new_rev.content))
 
-
-class RevisionValidationTests(UserTestCase):
-
     def test_form_rejects_empty_slugs_with_parent(self):
-        """RevisionValidationForm should reject empty slugs, even if there
-        is a parent slug portion"""
-        data = {'parent_slug': 'User:groovecoder',
-                'slug': '', 'title': 'Title', 'content': 'Content'}
-        rev_form = RevisionValidationForm(data)
-        rev_form.parent_slug = 'User:groovecoder'
+        """
+        RevisionForm should reject empty slugs, even if there
+        is a parent slug portion
+        """
+        data = {
+            'slug': '',
+            'title': 'Title',
+            'content': 'Content',
+        }
+        rev_form = RevisionForm(data, parent_slug='User:groovecoder')
         ok_(not rev_form.is_valid())
 
 

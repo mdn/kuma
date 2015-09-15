@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
+import textwrap
 from urllib import urlencode
 
 import newrelic.agent
@@ -7,18 +7,15 @@ from tower import ugettext as _
 
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_http_methods
 
-from constance import config
 from jingo.helpers import urlparams
 from ratelimit.decorators import ratelimit
 
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.attachments.models import Attachment
-from kuma.attachments.utils import attachments_json
 from kuma.core.decorators import never_cache, login_required, block_user_agents
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import limit_banned_ip_to_0
@@ -30,15 +27,15 @@ from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
 
 from .translate import translate
-from .utils import (document_form_initial, join_slug, split_slug,
-                    save_revision_and_notify)
+from .utils import document_form_initial, split_slug
 
 
 @xframe_options_sameorigin
 def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
                              is_raw, rev_form, doc_form, section_id, rev, doc):
-    """Handle when a mid-air collision is detected upon submission"""
-
+    """
+    Handle when a mid-air collision is detected upon submission
+    """
     # Process the content as if it were about to be saved, so that the
     # html_diff is close as possible.
     content = (kuma.wiki.content.parse(request.POST['content'])
@@ -50,11 +47,11 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     if doc.is_template:
         curr_content = curr_rev.content
     else:
-        tool = kuma.wiki.content.parse(curr_rev.content)
-        tool.injectSectionIDs()
+        parsed_content = kuma.wiki.content.parse(curr_rev.content)
+        parsed_content.injectSectionIDs()
         if section_id:
-            tool.extractSection(section_id)
-        curr_content = tool.serialize()
+            parsed_content.extractSection(section_id)
+        curr_content = parsed_content.serialize()
 
     if is_raw:
         # When dealing with the raw content API, we need to signal the conflict
@@ -78,7 +75,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
         'revision': rev,
         'document': doc,
     }
-    return render(request, 'wiki/edit_document.html', context)
+    return render(request, 'wiki/edit.html', context)
 
 
 @block_user_agents
@@ -91,11 +88,12 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 @never_cache
 @newrelic.agent.function_trace()
 def edit(request, document_slug, document_locale, revision_id=None):
-    """Create a new revision of a wiki document, or edit document metadata."""
+    """
+    Create a new revision of a wiki document, or edit document metadata.
+    """
     doc = get_object_or_404(Document,
                             locale=document_locale,
                             slug=document_slug)
-    user = request.user
 
     # If this document has a parent, then the edit is handled by the
     # translate view. Pass it on.
@@ -121,13 +119,13 @@ def edit(request, document_slug, document_locale, revision_id=None):
     disclose_description = bool(request.GET.get('opendescription'))
 
     doc_form = rev_form = None
-    if doc.allows_revision_by(user):
+    if doc.allows_revision_by(request.user):
         rev_form = RevisionForm(instance=rev,
                                 initial={'based_on': rev.id,
                                          'current_rev': rev.id,
                                          'comment': ''},
                                 section_id=section_id)
-    if doc.allows_editing_by(user):
+    if doc.allows_editing_by(request.user):
         doc_form = DocumentForm(initial=document_form_initial(doc))
 
     # Need to make check *here* to see if this could have a translation parent
@@ -159,7 +157,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
         which_form = request.POST.get('form')
 
         if which_form == 'doc':
-            if doc.allows_editing_by(user):
+            if doc.allows_editing_by(request.user):
                 post_data = request.POST.copy()
 
                 post_data.update({'locale': document_locale})
@@ -167,33 +165,31 @@ def edit(request, document_slug, document_locale, revision_id=None):
                 if doc_form.is_valid():
                     # if must be here for section edits
                     if 'slug' in post_data:
-                        post_data['slug'] = join_slug(
-                            slug_dict['parent_split'], post_data['slug'])
+                        post_data['slug'] = u'/'.join([slug_dict['parent'],
+                                                       post_data['slug']])
 
                     # Get the possibly new slug for the imminent redirection:
-                    doc = doc_form.save(None)
+                    doc = doc_form.save(parent=None)
 
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just
                         # shoehorning data into a single HTML element.
-                        response = HttpResponse("""
+                        response = HttpResponse(textwrap.dedent("""
                             <span id="iframe-response"
                                   data-status="OK"
                                   data-current-revision="%s">OK</span>
-                        """ % doc.current_revision.id)
+                        """ % doc.current_revision.id))
                         response['X-Frame-Options'] = 'SAMEORIGIN'
                         return response
 
-                    return HttpResponseRedirect(
-                        urlparams(reverse('wiki.edit_document',
-                                          args=[doc.slug]),
-                                  opendescription=1))
+                    return redirect(urlparams(doc.get_edit_url(),
+                                              opendescription=1))
                 disclose_description = True
             else:
                 raise PermissionDenied
 
         elif which_form == 'rev':
-            if not doc.allows_revision_by(user):
+            if not doc.allows_revision_by(request.user):
                 raise PermissionDenied
             else:
                 post_data = request.POST.copy()
@@ -223,7 +219,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
                             rev, doc)
 
                 if rev_form.is_valid():
-                    save_revision_and_notify(rev_form, request, doc)
+                    rev_form.save(request, doc)
 
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just
@@ -272,7 +268,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
                         # if we're not getting raw content.
                         url = '%s#%s' % (url, section_id)
 
-                    return HttpResponseRedirect(url)
+                    return redirect(url)
 
     parent_path = parent_slug = ''
     if slug_dict['parent']:
@@ -283,10 +279,6 @@ def edit(request, document_slug, document_locale, revision_id=None):
         parent_path = parent_doc.get_absolute_url()
         parent_slug = parent_doc.slug
 
-    attachments = attachments_json(doc.attachments)
-    allow_add_attachment = (
-        Attachment.objects.allow_add_attachment_by(request.user))
-
     context = {
         'revision_form': rev_form,
         'document_form': doc_form,
@@ -296,10 +288,6 @@ def edit(request, document_slug, document_locale, revision_id=None):
         'parent_path': parent_path,
         'revision': rev,
         'document': doc,
-        'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
-        'attachment_data': attachments,
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
-        'attachment_data_json': json.dumps(attachments)
     }
-    return render(request, 'wiki/edit_document.html', context)
+    return render(request, 'wiki/edit.html', context)

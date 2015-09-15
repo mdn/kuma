@@ -234,8 +234,8 @@ RESERVED_SLUGS = (
 RESERVED_SLUGS_RES = [re.compile(pattern) for pattern in RESERVED_SLUGS]
 SLUG_CLEANSING_RE = re.compile(r'^\/?(([A-z-]+)?\/?docs\/)?')
 # ?, whitespace, percentage, quote disallowed in slugs altogether
-SLUG_INVALID_CHARS_RE = re.compile(r"""[\s'"%%\?\$]+""")
-SLUG_INVALID_CHARS_VALIDATION_RE = re.compile(r"""[\s\?\/%%]+""")
+INVALID_DOC_SLUG_CHARS_RE = re.compile(r"""[\s'"%%\?\$]+""")
+INVALID_REV_SLUG_CHARS_RE = re.compile(r"""[\s\?\/%%]+""")
 DOCUMENT_PATH_RE = re.compile(r'[^\$]+')
 
 # how a redirect looks as rendered HTML

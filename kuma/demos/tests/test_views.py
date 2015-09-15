@@ -68,7 +68,7 @@ class DemoListViewsTest(UserTestCase):
     def test_search_view(self):
         try:
             self.client.get(reverse('demos_search'))
-        except:
+        except Exception:
             self.fail("Search should not ISE.")
 
 
@@ -376,7 +376,7 @@ class DemoViewsTest(UserTestCase):
             self.client.get(reverse('demos_detail', args=[s.slug]))
             self.client.get(reverse('demos_feed_recent', args=['atom']))
             self.client.get(reverse('demos_feed_featured', args=['json']))
-        except:
+        except Exception:
             self.fail("No exceptions should have been thrown")
 
         # Forcibly delete the screenshot - should not be possible from
@@ -393,7 +393,7 @@ class DemoViewsTest(UserTestCase):
             self.client.get(reverse('demos_detail', args=[s.slug]))
             self.client.get(reverse('demos_feed_recent', args=['atom']))
             self.client.get(reverse('demos_feed_featured', args=['json']))
-        except:
+        except Exception:
             self.fail("No exceptions should have been thrown")
 
     @attr('bug745902')

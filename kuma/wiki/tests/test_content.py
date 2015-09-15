@@ -572,7 +572,7 @@ class ContentSectionToolTests(UserTestCase):
         try:
             result = kuma.wiki.content.filter_out_noinclude(doc_src)
             eq_('', result)
-        except:
+        except Exception:
             self.fail("There should not have been an exception")
 
     def test_sample_code_extraction(self):
