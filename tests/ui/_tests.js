@@ -11,7 +11,8 @@ define({
         'tests/footer',
         'tests/homepage',
         'tests/auth',
-        'tests/wiki'
+        'tests/wiki',
+        'tests/dashboards'
     ]
 
 });
