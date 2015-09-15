@@ -2469,6 +2469,21 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(mock_kumascript_get.called,
             "kumascript should have been used")
 
+    def test_revert_moved(self):
+        doc = document(slug='move-me', save=True)
+        rev = revision(document=doc, save=True)
+        prev_rev_id = rev.id
+        doc._move_tree('moved-doc')
+        self.client.login(username='admin', password='testpass')
+
+        resp = self.client.post(reverse('wiki.revert_document',
+                                        args=[doc.slug, prev_rev_id],
+                                        locale=doc.locale),
+                                follow=True)
+
+        eq_(200, resp.status_code)
+        ok_("cannot revert a document that has been moved" in resp.content)
+
     def test_store_revision_ip(self):
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()

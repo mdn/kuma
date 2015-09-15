@@ -9,6 +9,12 @@
 
         <h1>{{ _('Are you sure you want to revert to this revision?') }}</h1>
 
+        {% if error %}
+        <ul class="errorlist">
+          <li>{{ error }}</li>
+        </ul>
+        {% endif %}
+
         <label><strong>{{ _('Document') }}</strong></label>
         <div>{{ document.title }}</div>
 
