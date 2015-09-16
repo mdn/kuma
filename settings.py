@@ -558,7 +558,7 @@ STATICI18N_DOMAIN = 'javascript'
 TOWER_ADD_HEADERS = True
 
 # Bundles for JS/CSS Minification
-JINGO_MINIFY_USE_STATIC = False
+JINGO_MINIFY_USE_STATIC = True
 CLEANCSS_BIN = '/usr/local/bin/cleancss'
 UGLIFY_BIN = '/usr/bin/uglifyjs'
 

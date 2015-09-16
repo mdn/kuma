@@ -11,10 +11,6 @@ nosetests.xml
 .noserc
 .noseids
 build.py
-**-all.css
-**-min.css
-**-all.js
-**-min.js
 media/uploads
 media/attachments
 media/sitemap*
@@ -29,13 +25,13 @@ kumascript.log
 kumascript_settings_local.json
 .DS_Store
 node_modules/
-media/css/*.css
+kuma/static/css/*.css
 docs/_build/
 wheelhouse
 .awsconfig
 james.ini
 celeryev.pid
-media/js/libs/ckeditor/source/ckbuilder
+kuma/static/js/libs/ckeditor/source/ckbuilder
 .tox
 .env
 *devmo*.sql*
