@@ -18,7 +18,8 @@ build.py
 media/uploads
 media/attachments
 media/sitemap*
-/static/
+/static/*
+!/static/.htaccess
 locale
 xfers/*
 humans.txt
