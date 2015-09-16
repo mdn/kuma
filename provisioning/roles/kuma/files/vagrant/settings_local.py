@@ -3,6 +3,9 @@ import logging
 
 INTERNAL_IPS = ('127.0.0.1', '192.168.10.1',)
 
+# ALLOWED_HOSTS must be set whenever DEBUG = False
+ALLOWED_HOSTS = '*'
+
 DEBUG = True
 DEV = True
 TEMPLATE_DEBUG = DEBUG
