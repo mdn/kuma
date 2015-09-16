@@ -194,7 +194,7 @@
         var syntaxScript = doc.createElement('script');
         syntaxScript.setAttribute('data-manual', '');
         syntaxScript.async = 'true';
-        syntaxScript.src = mdn.mediaPath + 'js/syntax-prism-min.js?build=' + mdn.build;
+        syntaxScript.src = mdn.jsPath + 'syntax-prism-min.js?build=' + mdn.build;
         doc.body.appendChild(syntaxScript);
     })();
 
@@ -308,13 +308,13 @@
         if(!$compatTables.length) return;
 
         $('<link />').attr({
-                href: mdn.mediaPath + 'css/wiki-compat-tables-min.css',
+                href: mdn.cssPath + 'wiki-compat-tables-min.css',
                 type: 'text/css',
                 rel: 'stylesheet'
             }).on('load', function() {
 
                 $.ajax({
-                    url: mdn.mediaPath + 'js/wiki-compat-tables-min.js',
+                    url: mdn.jsPath + 'wiki-compat-tables-min.js',
                     dataType: 'script',
                     cache: true
                 }).then(function() {
@@ -612,7 +612,7 @@
         var supportsMathML = Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
         if (!supportsMathML) {
             // Add CSS fallback
-            $('<link href="' + mdn.mediaPath + 'css/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(doc.head);
+            $('<link href="' + mdn.cssPath + 'libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(doc.head);
 
             // Add notification
             $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
