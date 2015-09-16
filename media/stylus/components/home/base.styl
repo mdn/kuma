@@ -103,7 +103,6 @@ Override MDN standard styles
 
 @media $media-query-mobile {
     #home { /* needs spcificity to over ride use of #home earlier */
-        .home-demos h2,
         .home-contribute h2,
         .column-hacks > h2 {
             set-font-size(20px);
@@ -113,14 +112,6 @@ Override MDN standard styles
             }
 
         }
-    }
-}
-
-@media $media-query-small-mobile {
-    .owl-theme .owl-controls .owl-page span {
-        width: 8px;
-        height: 8px;
-        margin: 5px;
     }
 }
 
