@@ -12,5 +12,12 @@ define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
         { browserName: 'safari' }
     ];
 
+    config.reporters = 'Pretty';
+
+    config.tunnelOptions = {
+        hostname: '127.0.0.1',
+        port: 4444
+    };
+
     return cli.mixinArgs(intern.args, config);
 });

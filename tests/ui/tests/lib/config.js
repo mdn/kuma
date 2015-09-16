@@ -4,7 +4,7 @@ define(['intern'], function(intern) {
     var httpsAddress = 'https://' + domain + '/';
     var defaultLocale = 'en-US';
 
-    var timeouts = 22000;
+    var timeouts = 40000;
 
     return {
 
