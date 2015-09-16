@@ -1,7 +1,8 @@
-<FilesMatch "\.(ttf|woff|eot)$">
+<FilesMatch "\.(ttf|woff|woff2|eot)$">
     Header append vary "Origin"
     ExpiresActive On
     ExpiresDefault "access plus 2 weeks"
 </FilesMatch>
 
 AddType application/font-woff .woff
+AddType application/font-woff2 .woff2
