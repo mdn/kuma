@@ -45,10 +45,4 @@ Development
 Getting Started
 ===============
 
-Want to help make MDN great? Here are some options:
-
-1. Contribute to `our selenium test suite
-   <https://github.com/mozilla/kuma/tree/master/tests/ui>`_
-2. Contribute to the platform itself. Our `contribution guide
-   <CONTRIBUTING.md>`_ lists some good first projects and offers direction on
-   submitting code.
+Want to help make MDN great? Our `contribution guide <CONTRIBUTING.md>`_ lists some good first projects and offers direction on submitting code.
