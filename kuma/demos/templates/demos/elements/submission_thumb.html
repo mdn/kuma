@@ -1,8 +1,3 @@
-{% if is_homepage %}
-<div class="home-demos-list-item">
-  <a href="{{ url('demos_detail', slug=submission.slug) }}"><img data-src="{{ submission.thumbnail_url(1) }}" alt="" width="{{thumb_width}}" height="{{thumb_height}}" class="lazyOwl"><noscript><img src="{{ submission.thumbnail_url(1) }}" alt="" width="{{thumb_width}}" height="{{thumb_height}}"></noscript>{{ submission.title }}</a>
-</div>
-{% else %}
 <li class="demo{{extra_class.next()}} {{main_flag_class}}">
     <h2 class="demo-title">
         <a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.thumbnail_url(1) }}" alt="" width="{{thumb_width}}" height="{{thumb_height}}">{{ submission.title }}</a>
@@ -28,4 +23,3 @@
       <p class="launch"><a href="{{ url('demos_launch', slug=submission.slug) }}" target="{{ "_blank" if submission.navbar_optout }}" class="button" title="{{ _('Launch {title}') | f(title=submission.title) }}">Launch</a></p>
     </div>
 </li>
-{% endif %}

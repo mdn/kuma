@@ -161,22 +161,6 @@
   </div>
 </div></div>
 
-<!-- demos and dev derby -->
-{% if demos %}
-<div class="home-demos"><div class="center">
-
-<h2><i aria-hidden="true" class="icon-magic blue"></i> {{ _('See & submit demos') }}
-    <a href="{{ url('demos') }}" class="heading-link">{{ _('MDN Demo Studio <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
-</h2>
-<div class="home-demos-list">
-  {% set extra_class = cycler(' row-first', '')%}
-  {% for submission in demos %}
-      {{ submission_thumb(submission, extra_class, thumb_width="180", thumb_height="133", is_homepage=True) }}
-  {% endfor %}
-  </div>
-</div></div>
-{% endif %}
-
 <!-- contributions section -->
 <div class="home-contribute"><div class="center">
   <h2><i aria-hidden="true" class="icon-smile-o"></i> {{ _('Help improve MDN') }}</h2>
@@ -210,9 +194,11 @@
 {% block js %}
   {{ super() }}
   {% if settings.TEMPLATE_DEBUG %}
-      {{ js('home') }}
-  {% else %}
-      {{ js('home', async=True) }}
+      <script>
+        jQuery('#home-search-form').on('submit', function() {
+            mdn.optimizely.push(['trackEvent', 'submit-homepage-search-form']);
+        });
+      </script>
   {% endif %}
   {% if waffle.flag('search_suggestions') %}
     <script>

@@ -584,8 +584,6 @@ MINIFY_BUNDLES = {
         ),
         'home': (
             'css/home.css',
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
-            'js/libs/owl.carousel/owl-carousel/owl.theme.css',
         ),
         'search': (
             'css/search.css',
@@ -666,10 +664,6 @@ MINIFY_BUNDLES = {
             'js/auth.js',
             'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
             'js/fonts.js',
-        ),
-        'home': (
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
-            'js/home.js'
         ),
         'popup': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
