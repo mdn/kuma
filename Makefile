@@ -19,6 +19,23 @@ browser-tests: on_host
 clean:
 	find kuma -name '*.pyc' -exec rm {} \;
 
+# On host: run coverage and display HTML
+# On VM: run coverage
+coverage:
+	echo ${USER}
+	if [ ${IN_VAGRANT} -eq 0 ]; then \
+		vagrant ssh --command "\
+		coverage erase; \
+		coverage run ./manage.py test; \
+		coverage report; \
+		coverage html"; \
+		python -c "import webbrowser, os.path; name='file://' + os.path.abspath('htmlcov/index.html'); webbrowser.open(name)"; \
+	else \
+		coverage erase; \
+		coverage run ./manage.py test; \
+		coverage report; \
+		coverage html; \
+	fi
 
 in_vagrant:
 	@if [ ${IN_VAGRANT} -eq 0 ]; then echo "*** Run in vagrant ***"; exit 1; fi
@@ -27,4 +44,4 @@ on_host:
 	@if [ ${IN_VAGRANT} -eq 1 ]; then echo "*** Run on host ***"; exit 1; fi
 
 # Those tasks don't have file targets
-.PHONY: django-tests performance-tests browser-tests clean in_vagrant on_host
+.PHONY: django-tests performance-tests browser-tests clean in_vagrant on_host coverage
