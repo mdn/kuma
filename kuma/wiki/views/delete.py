@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from tower import ugettext as _
+
 from django.core.exceptions import PermissionDenied
+from django.db import IntegrityError, transaction
 from django.shortcuts import get_object_or_404, redirect, render
 
 from kuma.core.decorators import login_required, permission_required, block_user_agents
@@ -34,7 +37,21 @@ def revert_document(request, document_path, revision_id):
                       {'revision': revision, 'document': revision.document})
     else:
         comment = request.POST.get('comment')
-        revision.document.revert(revision, request.user, comment)
+        try:
+            with transaction.atomic():
+                revision.document.revert(revision, request.user, comment)
+        except IntegrityError:
+            return render(
+                request,
+                'wiki/confirm_revision_revert.html',
+                {
+                    'revision': revision,
+                    'document': revision.document,
+                    'error': _("Document already exists. Note: You cannot "
+                               "revert a document that has been moved until you "
+                               "delete its redirect.")
+                }
+            )
         return redirect('wiki.document_revisions', revision.document.slug)
 
 
