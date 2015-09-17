@@ -1,0 +1,4 @@
+The compress_assets script will fail if this directory does not exist. We can
+remove it once the switch to django-pipeline [1] is completed.
+
+[1] https://bugzilla.mozilla.org/show_bug.cgi?id=1139490
