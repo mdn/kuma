@@ -27,6 +27,7 @@ from ..exceptions import (PageMoveError,
                           DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress)
 from ..models import Document, Revision, RevisionIP, TaggedDocument
+from ..utils import tidy_content
 
 
 def _objects_eq(manager, list_):
@@ -695,6 +696,23 @@ class RevisionTests(UserTestCase):
         reverted_tags = [t.name for t in reverted.review_tags.all()]
         ok_('technical' in reverted_tags)
         ok_('editorial' not in reverted_tags)
+
+    def test_get_tidied_content_uses_model_field_first(self):
+        content = '<h1>  Test get_tidied_content.  </h1>'
+        fake_tidied = '<h1>  Fake tidied.  </h1>'
+        d, r = doc_rev(content)
+        r.tidied_content = fake_tidied
+        eq_(fake_tidied, r.get_tidied_content())
+
+    def test_get_tidied_content_tidies_in_process_by_default(self):
+        content = '<h1>  Test get_tidied_content.  </h1>'
+        d, r = doc_rev(content)
+        tidied_content, errors = tidy_content(content)
+        eq_(tidied_content, r.get_tidied_content())
+
+    def test_get_tidied_content_returns_none_on_allow_none(self):
+        d, r = doc_rev('Test get_tidied_content can return None.')
+        eq_(None, r.get_tidied_content(allow_none=True))
 
 
 class GetCurrentOrLatestRevisionTests(UserTestCase):
