@@ -62,16 +62,6 @@ define([
 
         },
 
-        'Demo slider displays properly': function() {
-
-            return this.remote
-                        .findAllByCssSelector('.owl-item')
-                        .then(function(arr) {
-                            assert.ok(arr.length > 0, 'If this fails, you may need to upload featured demos via the demo studio to ensure this works');
-                        });
-
-        },
-
         'Large search field does not display on mobile and lower': function() {
             // Starting with a "getWindowSize" to do cleanup on this test's resize to mobile
 

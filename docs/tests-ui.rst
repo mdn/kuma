@@ -12,7 +12,7 @@ Installing Dependencies
 
 3. From the `tests/ui/` directory, use NPM or another package manager to install Intern::
 
-    npm install intern@^2.0.0
+    npm install intern@^3.0
 
 Do *not* install Intern globally -- path issues may occur.
 

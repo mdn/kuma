@@ -1,4 +1,4 @@
-define(['intern/dojo/Deferred', 'base/lib/config'], function(Deferred, config) {
+define(['intern/dojo/Promise', 'base/lib/config'], function(Promise, config) {
 
     return {
         until: function(item, fn, callbackFn, timeout) {
@@ -11,7 +11,7 @@ define(['intern/dojo/Deferred', 'base/lib/config'], function(Deferred, config) {
                 return result === true;
             };
 
-            var dfd = new Deferred();
+            var dfd = new Promise.Deferred();
             var endTime = Number(new Date()) + timeout;
 
             (function poll() {

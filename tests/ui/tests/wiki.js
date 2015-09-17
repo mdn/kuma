@@ -218,11 +218,12 @@ define([
                                                     .then(function() {
 
                                                         return remote
-                                                                .findAllByCssSelector('.page-buttons .btn-save')
+                                                                .findByCssSelector('.page-buttons .btn-save')
                                                                 .type([keys.RETURN])
-                                                                .getCurrentUrl()
-                                                                .then(function(url) {
-                                                                    assert.isTrue(url.indexOf(Page.documentCreatedSlug) != -1);
+                                                                .then(function() {
+                                                                    return poll.untilUrlChanges(remote, Page.documentCreatedSlug).then(function() {
+                                                                        assert.ok('New page is created successfully');
+                                                                    });
                                                                 });
                                                     });
                                     });
