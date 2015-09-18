@@ -1,6 +1,6 @@
 {% if revision_from.id != revision_to.id %}
-	{% set from_content = revision_from.get_tidied_content() %}
+	{% set from_content = revision_from.get_tidied_content(allow_none=True) %}
 {% else %}
 	{% set from_content = '' %}
 {% endif %}
-{{ diff_table(from_content, revision_to.get_tidied_content(), revision_from.id, revision_to.id) }}
+{{ diff_table(from_content, revision_to.get_tidied_content(allow_none=True), revision_from.id, revision_to.id) }}

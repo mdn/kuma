@@ -1714,11 +1714,15 @@ class Revision(models.Model):
         """Convenience method to extract the content for a single section"""
         return self.document.extract_section(self.content, section_id)
 
-    def get_tidied_content(self):
+    def get_tidied_content(self, allow_none=False):
         """
         Return the revision content parsed and cleaned by tidy.
 
-        This will first check for a denormalized field,
+        First, check in denormalized db field. If it's not available, schedule
+        an asynchronous task to store it.
+
+        allow_none -- To prevent CPU-hogging calls, return None instead of
+                      calling tidy_content in-process.
         """
         # we may be lucky and have the tidied content already denormalized
         # in the database, if so return it
@@ -1735,7 +1739,10 @@ class Revision(models.Model):
                 # already and don't need to schedule it the next time
                 # we use 3 days as a limit to try it again
                 memcache.set(tidying_scheduled_cache_key, 1, 60 * 60 * 24 * 3)
-            tidied_content, errors = tidy_content(self.content)
+            if allow_none:
+                tidied_content = None
+            else:
+                tidied_content, errors = tidy_content(self.content)
         return tidied_content
 
     @property
