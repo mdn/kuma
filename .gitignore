@@ -39,3 +39,4 @@ media/js/libs/ckeditor/source/ckbuilder
 .tox
 .env
 *_devmo.sql*
+htmlcov/
