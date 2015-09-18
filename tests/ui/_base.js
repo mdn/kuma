@@ -33,11 +33,6 @@ define(['./_tests'], function(tests) {
         // A regular expression matching URLs to files that should not be included in code coverage analysis
         excludeInstrumentation: /^(?:.\/*.js|node_modules)\//,
 
-        tunnelOptions: {
-            hostname: '127.0.0.1',
-            port: 4444
-        },
-
         reporters: ['Pretty']
     };
 
