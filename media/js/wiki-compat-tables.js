@@ -1,5 +1,21 @@
 (function(win, doc, $) {
 
+    var $compatWrapper = $('.bc-api');
+    // show tables
+    $compatWrapper.removeClass('hidden');
+
+    // hide old style compat table and any footnotes
+    // go back up DOM to find section heading
+    var $sectionHead = $compatWrapper.prevAll('h2').first();
+    var sectionHeadIsMatch = $sectionHead.filter(function() {
+            return $(this).text().match(/(browser )?compat[i|a]bility/i);
+        });
+    // is it a browser compat section?
+    if(sectionHeadIsMatch) {
+        // come back down DOM hiding things until we reach the comapt table.
+        $sectionHead.nextUntil('.bc-api').hide();
+    }
+
     // Private var to assign IDs to history for accessibility purposes
     var historyCount = 0;
 
