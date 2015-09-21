@@ -4,11 +4,6 @@
 define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
 
     config.environments = [
-        { browserName: 'firefox', version: ['40', '39', '38'], platform: [ 'MAC' ] },
-        { browserName: 'chrome', version: ['44', '45'], platform: [ 'MAC' ] },
-    ];
-
-    config.environments = [
         { browserName: 'firefox', version: ['40'], platform: [ 'MAC' ] },
         { browserName: 'chrome', version: ['44'], platform: [ 'MAC' ] },
     ];
