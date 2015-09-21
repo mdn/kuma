@@ -1,12 +1,12 @@
 define([
     'intern/dojo/node!http',
-    'intern/dojo/Deferred',
+    'intern/dojo/Promise',
     'base/lib/config',
     'base/lib/poll',
     'intern/dojo/node!leadfoot/helpers/pollUntil',
     'intern/chai!assert',
     'intern/dojo/node!leadfoot/keys'
-], function(http, Deferred, config, poll, pollUntil, assert, keys) {
+], function(http, Promise, config, poll, pollUntil, assert, keys) {
 
     return {
 
@@ -182,7 +182,7 @@ define([
         completePersonaLogin: function(remote, username, password) {
             // Opens the login widget, completes the personal login, done
 
-            var dfd = new Deferred();
+            var dfd = new Promise.Deferred();
             var self = this;
 
             username = username || this.personaUsername;
@@ -198,8 +198,17 @@ define([
         completePersonaLogout: function(remote) {
             // Completes a "hard" logout of Persona via persona.org
             return remote
-                        .get('https://login.persona.org/')
-                        .execute('return jQuery("a.signOut").click();');
+                        .findAllByCssSelector('.oauth-logged-in-signout')
+                        .then(function(elements) {
+                            if(elements.length) {
+                                return elements[0].click().end();
+                            }
+                            else {
+                                return remote.get('https://login.persona.org/')
+                                        .findByCssSelector('a.signOut')
+                                        .click().end();
+                            }
+                        });
         },
 
         pollForPersonaLoaded: function(remote) {
