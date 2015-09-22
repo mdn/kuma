@@ -32,7 +32,7 @@ CELERY_ALWAYS_EAGER = False
 
 INSTALLED_APPS = INSTALLED_APPS + (
     "django_extensions",
-    "debug_toolbar",
+#    "debug_toolbar",
     "devserver",
 )
 
