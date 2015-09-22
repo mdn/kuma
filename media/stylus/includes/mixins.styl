@@ -32,12 +32,15 @@ set-font-size(value) {
 
 remify(value) {
     u = unit(value);
+    v = 0;
 
     if (u is 'px') {
-        return unit(value/$base-font-size, 'rem')
+        v = unit(value/$base-font-size, 'rem')
     } else {
-        return unit(value, u)
+        v = unit(value, u)
     }
+
+    return round(v, 3);
 }
 
 set-smaller-font-size() {
