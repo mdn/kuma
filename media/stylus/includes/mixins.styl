@@ -141,7 +141,9 @@ rgba-fallback($color, $bg = #fff) {
             // replace the rgba with the hex  in the value of the property
             $hex-val = replace($val, '__CALL__', $fallback-hex);
             // add a duplicate property with the fallback value
-            add-property(current-property[0], $hex-val);
+            if($color != $fallback-hex) {
+                add-property(current-property[0], $hex-val);
+            }
         } else {
             error('rgba-fallback() must be given an rgba value');
         }
