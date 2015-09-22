@@ -222,12 +222,21 @@ set your ``settings_local.py`` with the following::
     TEMPLATE_DEBUG = DEBUG
     SERVE_MEDIA = True
 
-Setting ``DEBUG = False`` will put the installation in production mode
-and ask for minified assets. In that case, you will need to generate
-CSS from stylus and compress resource::
+Production assets
+*****************
 
-    ./scripts/compile-stylesheets
-    ./manage.py compress_assets
+Assets are minified on production. To emulate production and test minified
+assets locally, follow these steps:
+
+#. In settings_local.py, set ``DEBUG = False``
+#. In settings_local.py, set ``DEV = False``
+#. Run ``vagrant ssh`` to enter the virtual machine
+#. Run ``./scripts/compile-stylesheets``
+#. Run ``./manage.py collectstatic``
+#. Run ``./manage.py compress_assets``
+#. Edit the file /etc/apache2/sites-enabled/kuma.conf and uncomment any lines
+   pertaining to hosting static files
+#. Restart Apache
 
 
 Mozilla Product Details
