@@ -1,5 +1,7 @@
 (function(win, doc, $) {
 
+    $('#compat-api').removeClass('hidden');
+
     // Private var to assign IDs to history for accessibility purposes
     var historyCount = 0;
 
