@@ -57,7 +57,7 @@ define([
             return this.remote
                         .findAllByCssSelector('.home-hacks .entry-title')
                         .then(function(arr) {
-                            assert.ok(arr.length > 0, 'If this fails, Hacks posts are not displaying on the homepage');
+                            assert.ok(arr.length, 'If this fails, Hacks posts are not displaying on the homepage');
                         });
 
         },
@@ -65,14 +65,7 @@ define([
         'Large search field does not display on mobile and lower': function() {
             // Starting with a "getWindowSize" to do cleanup on this test's resize to mobile
 
-            var remote = this.remote;
-            var windowSize;
-
-            return remote
-                        .getWindowSize()
-                        .then(function(size) {
-                            windowSize = size;
-                        })
+            return this.remote
                         .setWindowSize(config.mediaQueries.mobile, 400)
                         .findByCssSelector('#' + Page.searchBoxId)
                         .isDisplayed()

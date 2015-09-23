@@ -43,10 +43,10 @@ define([
                         })
                         .findByCssSelector('.oauth-login-picker .launch-persona-login')
                         .click()
-                        .end()
                         .then(function() {
                             return poll.untilPopupWindowReady(remote);
                         })
+                        .end()
                         .getAllWindowHandles()
                         .then(function(handles) {
                             assert.equal(handles.length, 2, 'There are two windows upon Persona click');
