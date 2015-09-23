@@ -79,6 +79,7 @@ define([
 
             var remote = this.remote;
 
+
             return remote.get(config.url + 'docs/new')
                         .then(function() {
                             return confirmCKEditorReady(remote);
@@ -87,17 +88,16 @@ define([
                             // Go into source mode, add an IFRAME, go back into view mode, ensure iframe isn't there
                             return remote.executeAsync(function(done) {
                                 var editor = CKEDITOR.instances.id_content;
-                                var interval;
+                                var interval, html;
 
                                 editor.on('mode', function() {
                                     if(editor.mode == 'source') {
                                         document.querySelector('.cke_source').value = '<p>Hi!</p><iframe src="http://davidwalsh.name"></iframe><img src="javascript:;" onerror="alert(1);">';
                                     }
                                     else {
-                                        clearInterval(interval);
-
-                                        var html = editor.getData().toLowerCase();
+                                        html = editor.getData().toLowerCase();
                                         done(html.indexOf('<iframe') === -1 && html.indexOf('onerror') === -1);
+                                        clearInterval(interval);
                                     }
                                 });
 
@@ -167,12 +167,12 @@ define([
                             return poll.until(element, 'isDisplayed').then(function() {
                                 return remote.findByCssSelector('#translations-add')
                                     .click()
-                                    .end()
                                     .then(function() {
                                         return poll.untilUrlChanges(remote, '$locales').then(function() {
                                             assert.ok('Clicking edit button loads edit page');
                                         });
                                     })
+                                    .end()
                                     .findByCssSelector('.locales a')
                                     .click()
                                     .end()

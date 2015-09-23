@@ -201,7 +201,7 @@ define([
                         .findAllByCssSelector('.oauth-logged-in-signout')
                         .then(function(elements) {
                             if(elements.length) {
-                                return elements[0].click().end();
+                                return elements[0].click();
                             }
                             else {
                                 return remote.get('https://login.persona.org/')

@@ -37,8 +37,8 @@ define([
         },
 
         '[requires-login][requires-destructive] Revision dashboard banning': function() {
+
             var remote = this.remote;
-            var element;
 
             return libLogin.openLoginWidget(remote).then(function() {
                 return libLogin.completePersonaWindow(remote);
