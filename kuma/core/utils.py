@@ -7,6 +7,7 @@ import tempfile
 import time
 from itertools import islice
 
+import bitly_api
 import lockfile
 from celery import chain, chord
 from polib import pofile
@@ -24,6 +25,10 @@ from .jobs import IPBanJob
 
 
 log = logging.getLogger('kuma.core.utils')
+
+
+bitly = bitly_api.Connection(login=getattr(settings, 'BITLY_USERNAME', ''),
+                             api_key=getattr(settings, 'BITLY_API_KEY', ''))
 
 
 def paginate(request, queryset, per_page=20):
@@ -72,8 +77,8 @@ def strings_are_translated(strings, locale):
     all_strings_translated = True
     for string in strings:
         if not any(e for e in po if e.msgid == string and
-                   (e.translated() and 'fuzzy' not in e.flags)
-                   and not e.obsolete):
+                   (e.translated() and 'fuzzy' not in e.flags) and
+                   not e.obsolete):
             all_strings_translated = False
     return all_strings_translated
 

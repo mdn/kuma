@@ -1,10 +1,11 @@
+from django.test import TestCase
+
 from nose.tools import eq_
 
-from kuma.core.tests import KumaTestCase
 from ..utils import smart_int
 
 
-class SmartIntTestCase(KumaTestCase):
+class SmartIntTestCase(TestCase):
     def test_sanity(self):
         eq_(10, smart_int('10'))
         eq_(10, smart_int('10.5'))

@@ -5,7 +5,6 @@ import logging
 import os
 import platform
 
-from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 
@@ -836,8 +835,8 @@ WIKI_FLAG_REASONS = (
 FLAG_REASONS = DEMO_FLAG_REASONS + WIKI_FLAG_REASONS
 
 # bit.ly
-BITLY_API_KEY = "SET ME IN SETTINGS_LOCAL"
-BITLY_USERNAME = "SET ME IN SETTINGS_LOCAL"
+BITLY_API_KEY = None  # Set me in settings_local.py.
+BITLY_USERNAME = None  # Set me in settings_local.py.
 
 GOOGLE_MAPS_API_KEY = "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ"
 

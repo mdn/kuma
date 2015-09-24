@@ -14,12 +14,13 @@ from django.db import connection, transaction
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
-from celery import task, chord
+import bitly_api
+from celery import chord, task
 from constance import config
 from lxml import etree
 
 from kuma.core.cache import memcache
-from kuma.core.utils import chord_flow, chunked, MemcacheLock
+from kuma.core.utils import MemcacheLock, bitly, chord_flow, chunked
 from kuma.search.models import Index
 
 from .events import context_dict
@@ -460,3 +461,31 @@ def tidy_revision_content(pk):
             )
         # return the errors so we can look them up in the Celery task result
         return errors
+
+
+@task(rate_limit='10/m')
+def update_document_share_url(pk):
+    """
+    Get the shortened URL for the given Document.
+
+    :arg pk: Primary key of the `Document`.
+    """
+    if settings.BITLY_API_KEY is None or settings.BITLY_USERNAME is None:
+        return
+
+    try:
+        doc = Document.objects.get(pk=pk)
+    except Document.DoesNotExist:
+        log.error('Document not found (pk:%s)' % pk)
+        return
+
+    doc_url = absolutify(doc.get_absolute_url())
+    try:
+        share_url = bitly.shorten(doc_url)['url']
+    except (bitly_api.BitlyError, KeyError):
+        # If bit.ly service fails or the API key isn't configured.
+        log.exception('Bitly URL shortening failed.')
+        return
+
+    doc.share_url = share_url
+    doc.save(update_fields=['share_url'])

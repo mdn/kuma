@@ -20,16 +20,16 @@ from django.db.models import signals
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 
-from constance import config
 import waffle
+from constance import config
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
 from tidings.models import NotificationsMixin
 
 from kuma.attachments.models import Attachment
-from kuma.core.exceptions import ProgrammingError
 from kuma.core.cache import memcache
+from kuma.core.exceptions import ProgrammingError
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
 from kuma.search.decorators import register_live_index
@@ -39,14 +39,15 @@ from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         KUMA_FILE_URL, REDIRECT_CONTENT, REDIRECT_HTML,
                         TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
-from .content import (extract_code_sample, extract_css_classnames,
+from .content import (H2TOCFilter, H3TOCFilter, SectionTOCFilter,
+                      extract_code_sample, extract_css_classnames,
                       extract_html_attributes, extract_kumascript_macro_names,
-                      get_content_sections, get_seo_description, H2TOCFilter,
-                      H3TOCFilter, SectionTOCFilter)
-from .jobs import DocumentZoneStackJob, DocumentContributorsJob
+                      get_content_sections, get_seo_description)
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
+from .helpers import absolutify
+from .jobs import DocumentContributorsJob, DocumentZoneStackJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
@@ -286,6 +287,8 @@ class Document(NotificationsMixin, models.Model):
     summary_html = models.TextField(editable=False, blank=True, null=True)
 
     summary_text = models.TextField(editable=False, blank=True, null=True)
+
+    share_url = models.URLField(blank=True, null=True)
 
     class Meta(object):
         unique_together = (
@@ -894,6 +897,7 @@ class Document(NotificationsMixin, models.Model):
         return modified_epoch
 
     def save(self, *args, **kwargs):
+
         self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
         self.is_redirect = bool(self.get_redirect_url())
 
@@ -1069,6 +1073,8 @@ class Document(NotificationsMixin, models.Model):
         """
         Move this page and all its children.
         """
+        from . import tasks
+
         # Page move is a 10-step process.
         #
         # Step 1: Sanity check. Has a page been created at this slug
@@ -1109,7 +1115,11 @@ class Document(NotificationsMixin, models.Model):
 
         # Step 6: Save this Document.
         self.slug = new_slug
+        # Clear share_url since URL changed.
+        self.share_url = None
         self.save()
+        # Call task to get new share_url.
+        tasks.update_document_share_url.delay(self.pk)
 
         # Step 7: Save the Revision that actually moves us.
         moved_rev.save(force_insert=True)
@@ -1466,6 +1476,21 @@ Full traceback:
     @cached_property
     def zone_stack(self):
         return DocumentZoneStackJob().get(self.pk)
+
+    def get_share_url(self):
+        """
+        Returns the ``share_url``.
+
+        If not present, it spawns a task to set it and falls back to the full
+        document URL.
+        """
+        from . import tasks
+
+        if self.share_url:
+            return self.share_url
+        else:
+            tasks.update_document_share_url.delay(self.pk)
+            return absolutify(self.get_absolute_url())
 
 
 class DocumentDeletionLog(models.Model):

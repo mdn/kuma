@@ -2,31 +2,28 @@ import json
 import datetime
 import HTMLParser
 import urllib
-import hashlib
-import bitly_api
 
-from babel import localedata
-from babel.dates import format_date, format_time, format_datetime
-from babel.numbers import format_decimal
 import bleach
-import pytz
-from urlobject import URLObject
-from jingo import register, env
 import jinja2
+import pytz
+from babel import localedata
+from babel.dates import format_date, format_datetime, format_time
+from babel.numbers import format_decimal
+from jingo import env, register
 from pytz import timezone
-from tower import ugettext_lazy as _lazy, ungettext
+from soapbox.models import Message
+from tower import ugettext_lazy as _lazy
+from tower import ungettext
+from urlobject import URLObject
 
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
-from django.utils.encoding import smart_str, force_text
+from django.utils.encoding import force_text
 from django.utils.html import strip_tags
 from django.utils.timezone import get_default_timezone
 
-from soapbox.models import Message
-
-from .cache import memcache
 from .jobs import StaticI18nJob
 from .exceptions import DateTimeFormatError
 from .urlresolvers import reverse, split_path
@@ -52,25 +49,6 @@ def url(viewname, *args, **kwargs):
     """Helper for Django's ``reverse`` in templates."""
     locale = kwargs.pop('locale', None)
     return reverse(viewname, args=args, kwargs=kwargs, locale=locale)
-
-bitly = bitly_api.Connection(login=getattr(settings, 'BITLY_USERNAME', ''),
-                             api_key=getattr(settings, 'BITLY_API_KEY', ''))
-
-
-@register.filter
-def bitly_shorten(url):
-    """Attempt to shorten a given URL through bit.ly / mzl.la"""
-    cache_key = 'bitly:%s' % hashlib.md5(smart_str(url)).hexdigest()
-    short_url = memcache.get(cache_key)
-    if short_url is None:
-        try:
-            short_url = bitly.shorten(url)['url']
-            memcache.set(cache_key, short_url, 60 * 60 * 24 * 30 * 12)
-        except (bitly_api.BitlyError, KeyError):
-            # Just in case the bit.ly service fails or the API key isn't
-            # configured, fall back to using the original URL.
-            return url
-    return short_url
 
 
 class Paginator(object):
