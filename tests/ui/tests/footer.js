@@ -34,15 +34,15 @@ define([
             var remote = this.remote;
 
             return remote
-                        .findByCssSelector('#language')
-                        .moveMouseTo(5, 5)
-                        .click()
-                        .type(['e', keys.RETURN])
-                        .then(function() {
-                            return poll.untilUrlChanges(remote, '/es/').then(function() {
-                                assert.ok('Locale auto-redirects');
-                            });
+                    .findByCssSelector('#language')
+                    .moveMouseTo(5, 5)
+                    .click()
+                    .type(['e', keys.RETURN])
+                    .then(function() {
+                        return poll.untilUrlChanges(remote, '/es/').then(function() {
+                            assert.ok('Locale auto-redirects');
                         });
+                    });
         }
 
     });

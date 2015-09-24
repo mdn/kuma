@@ -55,24 +55,24 @@ define([
             var remote = this.remote;
 
             return remote.get(config.url + 'docs/new')
-                        .then(function() {
-                            // Ensure that CKEditor loaded properly
-                            return libAssert.windowPropertyExists(remote, 'CKEDITOR')
-                                        // Ensure the tagit plugin is loaded for dynamic tag creation
-                                        .then(function() { return libAssert.windowPropertyExists(remote, 'jQuery.fn.tagit'); })
-                                        // Ensure that populating the title populates the slug field correctly
-                                        .then(function() {
-                                            return remote
-                                                        .findByCssSelector('#id_title')
-                                                        .click()
-                                                        .type('Hello$ World')
-                                                        .end()
-                                                        .findByCssSelector('#id_slug')
-                                                        .getSpecAttribute('value').then(function(value) {
-                                                                assert.ok(value === 'Hello__World', 'The slugify function is working properly');
-                                                        });
-                                        });
-                        });
+                    .then(function() {
+                        // Ensure that CKEditor loaded properly
+                        return libAssert.windowPropertyExists(remote, 'CKEDITOR')
+                                // Ensure the tagit plugin is loaded for dynamic tag creation
+                                .then(function() { return libAssert.windowPropertyExists(remote, 'jQuery.fn.tagit'); })
+                                // Ensure that populating the title populates the slug field correctly
+                                .then(function() {
+                                    return remote
+                                            .findByCssSelector('#id_title')
+                                            .click()
+                                            .type('Hello$ World')
+                                            .end()
+                                            .findByCssSelector('#id_slug')
+                                            .getSpecAttribute('value').then(function(value) {
+                                                    assert.ok(value === 'Hello__World', 'The slugify function is working properly');
+                                            });
+                                });
+                    });
         },
 
         '[requires-login] IFRAME elements are not allowed by CKEditor': function() {
@@ -81,32 +81,32 @@ define([
 
 
             return remote.get(config.url + 'docs/new')
-                        .then(function() {
-                            return confirmCKEditorReady(remote);
+                    .then(function() {
+                        return confirmCKEditorReady(remote);
+                    })
+                    .then(function() {
+                        // Go into source mode, add an IFRAME, go back into view mode, ensure iframe isn't there
+                        return remote.executeAsync(function(done) {
+                            var editor = CKEDITOR.instances.id_content;
+                            var interval, html;
+
+                            editor.on('mode', function() {
+                                if(editor.mode == 'source') {
+                                    document.querySelector('.cke_source').value = '<p>Hi!</p><iframe src="http://davidwalsh.name"></iframe><img src="javascript:;" onerror="alert(1);">';
+                                }
+                                else {
+                                    html = editor.getData().toLowerCase();
+                                    done(html.indexOf('<iframe') === -1 && html.indexOf('onerror') === -1);
+                                    clearInterval(interval);
+                                }
+                            });
+
+                            interval = setInterval(function() {
+                                editor.execCommand('source');
+                            }, 300);
                         })
-                        .then(function() {
-                            // Go into source mode, add an IFRAME, go back into view mode, ensure iframe isn't there
-                            return remote.executeAsync(function(done) {
-                                var editor = CKEDITOR.instances.id_content;
-                                var interval, html;
-
-                                editor.on('mode', function() {
-                                    if(editor.mode == 'source') {
-                                        document.querySelector('.cke_source').value = '<p>Hi!</p><iframe src="http://davidwalsh.name"></iframe><img src="javascript:;" onerror="alert(1);">';
-                                    }
-                                    else {
-                                        html = editor.getData().toLowerCase();
-                                        done(html.indexOf('<iframe') === -1 && html.indexOf('onerror') === -1);
-                                        clearInterval(interval);
-                                    }
-                                });
-
-                                interval = setInterval(function() {
-                                    editor.execCommand('source');
-                                }, 300);
-                            })
-                            .then(assert.isTrue);
-                        });
+                        .then(assert.isTrue);
+                    });
         },
 
         '[requires-login] The new document-template screen passes all the checks': function() {
@@ -114,10 +114,10 @@ define([
             var remote = this.remote;
 
             return remote.get(config.url + 'docs/new?slug=Template:')
-                        .then(function() {
-                            // Ensure that Ace loaded properly
-                            return libAssert.windowPropertyExists(remote, 'ace_editor');
-                        });
+                    .then(function() {
+                        // Ensure that Ace loaded properly
+                        return libAssert.windowPropertyExists(remote, 'ace_editor');
+                    });
 
         },
 
@@ -141,17 +141,17 @@ define([
             var remote = this.remote;
 
             return remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
-                        .findByCssSelector('#edit-button')
-                        .moveMouseTo(5, 5)
-                        .click()
-                        .then(function() {
-                            return poll.untilUrlChanges(remote, '$edit').then(function() {
-                                assert.ok('Clicking edit button loads edit page');
-                            });
-                        })
-                        .then(function() {
-                            return confirmCKEditorReady(remote);
+                    .findByCssSelector('#edit-button')
+                    .moveMouseTo(5, 5)
+                    .click()
+                    .then(function() {
+                        return poll.untilUrlChanges(remote, '$edit').then(function() {
+                            assert.ok('Clicking edit button loads edit page');
                         });
+                    })
+                    .then(function() {
+                        return confirmCKEditorReady(remote);
+                    });
         },
 
         '[requires-login][requires-doc] Clicking the "translate button" allows for translation and CKEditor loads': function() {
@@ -159,13 +159,13 @@ define([
             var remote = this.remote;
 
             return remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
-                        .findByCssSelector('#languages-menu')
-                        .moveMouseTo(5, 5)
-                        .end()
-                        .findByCssSelector('#languages-menu-submenu')
-                        .then(function(element) {
-                            return poll.until(element, 'isDisplayed').then(function() {
-                                return remote.findByCssSelector('#translations-add')
+                    .findByCssSelector('#languages-menu')
+                    .moveMouseTo(5, 5)
+                    .end()
+                    .findByCssSelector('#languages-menu-submenu')
+                    .then(function(element) {
+                        return poll.until(element, 'isDisplayed').then(function() {
+                            return remote.findByCssSelector('#translations-add')
                                     .click()
                                     .then(function() {
                                         return poll.untilUrlChanges(remote, '$locales').then(function() {
@@ -184,8 +184,8 @@ define([
                                     .then(function() {
                                         return confirmCKEditorReady(remote);
                                     });
-                            });
                         });
+                    });
         },
 
         '[requires-login][requires-destructive] Can create a document, button becomes enabled as soon as updates made': function() {
@@ -194,40 +194,40 @@ define([
             var title = 'Intern Test ' + new Date().getTime();
 
             return remote.get(config.url + 'docs/new')
-                        .then(function() {
-                            return confirmCKEditorReady(remote);
-                        })
-                        .then(function() {
-                                return remote
-                                            .findByCssSelector('#id_title')
-                                            .click()
-                                            .type(title)
-                                            .end()
-                                            .findByCssSelector('#id_slug')
-                                            .getSpecAttribute('value')
-                                            .then(function(value) {
-                                                Page.documentCreatedSlug = value;
+                    .then(function() {
+                        return confirmCKEditorReady(remote);
+                    })
+                    .then(function() {
+                            return remote
+                                    .findByCssSelector('#id_title')
+                                    .click()
+                                    .type(title)
+                                    .end()
+                                    .findByCssSelector('#id_slug')
+                                    .getSpecAttribute('value')
+                                    .then(function(value) {
+                                        Page.documentCreatedSlug = value;
 
-                                                return remote.executeAsync(function(html, done) {
-                                                        var interval = setInterval(function() {
-                                                            CKEDITOR.instances.id_content.setData(html);
-                                                            clearInterval(interval);
-                                                            done();
-                                                        }, 200);
-                                                    }, [inContentTemplate])
-                                                    .then(function() {
+                                        return remote.executeAsync(function(html, done) {
+                                                var interval = setInterval(function() {
+                                                    CKEDITOR.instances.id_content.setData(html);
+                                                    clearInterval(interval);
+                                                    done();
+                                                }, 200);
+                                            }, [inContentTemplate])
+                                            .then(function() {
 
-                                                        return remote
-                                                                .findByCssSelector('.page-buttons .btn-save')
-                                                                .type([keys.RETURN])
-                                                                .then(function() {
-                                                                    return poll.untilUrlChanges(remote, Page.documentCreatedSlug).then(function() {
-                                                                        assert.ok('New page is created successfully');
-                                                                    });
-                                                                });
-                                                    });
+                                                return remote
+                                                        .findByCssSelector('.page-buttons .btn-save')
+                                                        .type([keys.RETURN])
+                                                        .then(function() {
+                                                            return poll.untilUrlChanges(remote, Page.documentCreatedSlug).then(function() {
+                                                                assert.ok('New page is created successfully');
+                                                            });
+                                                        });
+                                            });
                                     });
-                        });
+                    });
 
         },
 
@@ -238,23 +238,23 @@ define([
             var tocSelector = '#toc';
 
             return remote.get(config.url + '/docs/' + Page.documentCreatedSlug)
-                        .then(function() {
-                            return libAssert.elementExistsAndDisplayed(tocSelector);
-                        })
-                        .executeAsync(function(done) {
-                            scrollTo(0, 1200);
-                            setTimeout(done, 1000);
-                        })
-                        .end()
-                        .findByCssSelector(tocSelector)
-                        .getComputedStyle('top')
-                        .then(function(y) {
-                            assert.isTrue(y == '0' || y == '0px', 'Testing y value: ' + y);
-                        })
-                        .getComputedStyle('position')
-                        .then(function(position) {
-                            assert.isTrue(position === 'fixed', 'Testing position is fixed: ' + position);
-                        });
+                    .then(function() {
+                        return libAssert.elementExistsAndDisplayed(tocSelector);
+                    })
+                    .executeAsync(function(done) {
+                        scrollTo(0, 1200);
+                        setTimeout(done, 1000);
+                    })
+                    .end()
+                    .findByCssSelector(tocSelector)
+                    .getComputedStyle('top')
+                    .then(function(y) {
+                        assert.isTrue(y == '0' || y == '0px', 'Testing y value: ' + y);
+                    })
+                    .getComputedStyle('position')
+                    .then(function(position) {
+                        assert.isTrue(position === 'fixed', 'Testing position is fixed: ' + position);
+                    });
 
         },
 

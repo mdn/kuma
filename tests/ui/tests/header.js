@@ -72,32 +72,32 @@ define([
             };
 
             return remote
-                            .executeAsync(transitionEvent)
-                            .findByCssSelector('#' + searchBoxId)
-                            .getSize()
-                            .then(function(size) {
-                                originalWidth = size.width;
-                            })
-                            .moveMouseTo(5, 5)
-                            .click()
-                            .end()
-                            .executeAsync(transitionSniffer, [true])
-                            .findByCssSelector('#' + searchBoxId)
-                            .getSize()
-                            .then(function(newSize) {
-                                assert.isTrue(newSize.width > originalWidth, 'The new width (' + newSize.width + ') is larger than original width (' + originalWidth + ')');
-                            })
-                            .end()
-                            .findByCssSelector('body')
-                            .moveMouseTo(5, 5)
-                            .click()
-                            .end()
-                            .executeAsync(transitionSniffer, [false])
-                            .findByCssSelector('#' + searchBoxId)
-                            .getSize()
-                            .then(function(newSize) {
-                                assert.equal(newSize.width, originalWidth, 'The new width (' + newSize.width + ') is equal to the original width (' + originalWidth + ')');
-                            });
+                    .executeAsync(transitionEvent)
+                    .findByCssSelector('#' + searchBoxId)
+                    .getSize()
+                    .then(function(size) {
+                        originalWidth = size.width;
+                    })
+                    .moveMouseTo(5, 5)
+                    .click()
+                    .end()
+                    .executeAsync(transitionSniffer, [true])
+                    .findByCssSelector('#' + searchBoxId)
+                    .getSize()
+                    .then(function(newSize) {
+                        assert.isTrue(newSize.width > originalWidth, 'The new width (' + newSize.width + ') is larger than original width (' + originalWidth + ')');
+                    })
+                    .end()
+                    .findByCssSelector('body')
+                    .moveMouseTo(5, 5)
+                    .click()
+                    .end()
+                    .executeAsync(transitionSniffer, [false])
+                    .findByCssSelector('#' + searchBoxId)
+                    .getSize()
+                    .then(function(newSize) {
+                        assert.equal(newSize.width, originalWidth, 'The new width (' + newSize.width + ') is equal to the original width (' + originalWidth + ')');
+                    });
         },
 
         'Pressing [ENTER] submits the header search box': function() {
@@ -105,14 +105,14 @@ define([
             var remote = this.remote;
 
             return remote
-                            .findByCssSelector('#' + searchBoxId)
-                            .click()
-                            .type(['css', keys.RETURN])
-                            .then(function() {
-                                return poll.untilUrlChanges(remote, '/search').then(function() {
-                                    assert.ok('Pressing [ENTER] submits search');
-                                });
-                            });
+                    .findByCssSelector('#' + searchBoxId)
+                    .click()
+                    .type(['css', keys.RETURN])
+                    .then(function() {
+                        return poll.untilUrlChanges(remote, '/search').then(function() {
+                            assert.ok('Pressing [ENTER] submits search');
+                        });
+                    });
         }
 
     });

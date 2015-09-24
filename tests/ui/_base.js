@@ -1,39 +1,41 @@
 // Learn more about configuring this file at <https://github.com/theintern/intern/wiki/Configuring-Intern>.
-// These default settings work OK for most people. The options that *must* be changed below are the
-// packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
-define(['./_tests'], function(tests) {
+define({
 
-    return {
-        // Non-functional test suite(s) to run in each browser
-        suites: tests.suites,
+    // Non-functional test suite(s) to run in each browser (unit tests)
+    suites: [],
 
-        // Functional test suite(s) to run in each browser once non-functional tests are completed
-        functionalSuites: tests.functionalSuites,
+    // Functional test suite(s) to run in each browser once non-functional tests are completed
+    functionalSuites: [
+        'tests/header',
+        'tests/demos',
+        'tests/env',
+        'tests/footer',
+        'tests/homepage',
+        'tests/auth',
+        'tests/wiki',
+        'tests/dashboards'
+    ],
 
-        // Browsers to run integration testing against. Note that version numbers must be strings if used with Sauce
-        // OnDemand. Options that will be permutated are browserName, version, platform, and platformVersion; any other
-        // capabilities options specified for an environment will be copied as-is
-        environments: [],
+    // Browsers to run integration testing against.
+    environments: [],
 
-        // Maximum number of simultaneous integration tests that should be executed on the remote WebDriver service
-        maxConcurrency: 1,
+    // Maximum number of simultaneous integration tests that should be executed on the remote WebDriver service
+    maxConcurrency: 1,
 
-        // Name of the tunnel class to use for WebDriver tests
-        tunnel: 'NullTunnel',
+    // Name of the tunnel class to use for WebDriver tests
+    tunnel: 'NullTunnel',
 
-        // Configuration options for the module loader; any AMD configuration options supported by the specified AMD loader
-        // can be used here
-        loaderOptions: {
-            // Packages that should be registered with the loader in each testing environment
-            packages: [
-                { name: 'base', location: './tests' }
-            ]
-        },
+    // Configuration options for the module loader
+    loaderOptions: {
+        // Packages that should be registered with the loader in each testing environment
+        packages: [
+            { name: 'base', location: './tests' }
+        ]
+    },
 
-        // A regular expression matching URLs to files that should not be included in code coverage analysis
-        excludeInstrumentation: /^(?:.\/*.js|node_modules)\//,
+    // A regular expression matching URLs to files that should not be included in code coverage analysis
+    excludeInstrumentation: /^(_cli\.js|node_modules|tests\/lib)/,
 
-        reporters: ['Pretty']
-    };
+    reporters: ['Pretty']
 
 });
