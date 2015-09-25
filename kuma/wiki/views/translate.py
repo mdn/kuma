@@ -130,7 +130,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             'based_on': based_on_rev.id,
             'comment': '',
             'toc_depth': based_on_rev.toc_depth,
-            'localization_tags': ['inprogress'],
+            'localization_in_progress': True,
         }
         content = None
         if revision is not None:

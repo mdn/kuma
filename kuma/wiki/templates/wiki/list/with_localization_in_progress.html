@@ -1,9 +1,5 @@
 {% extends "wiki/base.html" %}
-{% if tag %}
-  {% set title = _('Localized articles tagged with: %(tag)s', tag=tag) %}
-{% else %}
-  {% set title = _('Articles tagged with any localization tags') %}
-{% endif %}
+{% set title = _('Localized articles in progress') %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(None, title)] %}
 

@@ -208,10 +208,6 @@ REVIEW_FLAG_TAGS = (
 )
 REVIEW_FLAG_TAGS_DEFAULT = ['technical', 'editorial']
 
-LOCALIZATION_FLAG_TAGS = (
-    ('inprogress', _('Localization in progress - not completely translated yet.')),
-)
-
 # TODO: This is info derived from urls.py, but unsure how to DRY it
 RESERVED_SLUGS = (
     r'ckeditor_config\.js$',

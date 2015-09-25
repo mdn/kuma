@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.http import Http404
-from django.shortcuts import get_object_or_404, get_list_or_404, render
+from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.views.decorators.http import require_GET
 
 from kuma.core.decorators import block_user_agents
 from kuma.core.utils import paginate
 
 from ..constants import DOCUMENTS_PER_PAGE
-from ..decorators import process_document_path, prevent_indexing
-from ..models import (Document, DocumentTag, Revision, ReviewTag,
-                      LocalizationTag)
+from ..decorators import prevent_indexing, process_document_path
+from ..models import Document, DocumentTag, ReviewTag, Revision
 from ..queries import MultiQuerySet
 
 
@@ -87,21 +86,19 @@ def needs_review(request, tag=None):
 
 @block_user_agents
 @require_GET
-def with_localization_tag(request, tag=None):
+def with_localization_in_progress(request):
     """
-    Lists wiki documents with localization tag
+    Lists wiki documents with localization in progress
     """
-    tag_obj = tag and get_object_or_404(LocalizationTag, name=tag) or None
-    docs = Document.objects.filter_with_localization_tag(
-        locale=request.LANGUAGE_CODE, tag=tag_obj)
+    docs = Document.objects.filter(locale=request.LANGUAGE_CODE,
+                                   revision__localization_in_progress=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
         'count': docs.count(),
-        'tag': tag_obj,
-        'tag_name': tag,
     }
-    return render(request, 'wiki/list/with_localization_tags.html', context)
+    return render(request, 'wiki/list/with_localization_in_progress.html',
+                  context)
 
 
 @block_user_agents

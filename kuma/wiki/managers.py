@@ -103,19 +103,6 @@ class BaseDocumentManager(models.Manager):
             query['locale'] = locale
         return self.filter(**query).distinct()
 
-    def filter_with_localization_tag(self, locale=None, tag=None, tag_name=None):
-        """Filter for documents with a localization tag on current revision"""
-        query = 'current_revision__localization_tags__%s'
-        if tag_name:
-            query = {query % 'name': tag_name}
-        elif tag:
-            query = {query % 'in': [tag]}
-        else:
-            query = {query % 'name__isnull': False}
-        if locale:
-            query['locale'] = locale
-        return self.filter(**query).distinct()
-
     def dump_json(self, queryset, stream):
         """Export a stream of JSON-serialized Documents and Revisions
 

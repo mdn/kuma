@@ -1,5 +1,4 @@
 import logging
-
 import waffle
 from django import forms
 from django.conf import settings
@@ -18,9 +17,9 @@ from kuma.core.form_fields import StrippedCharField
 from kuma.spam.forms import AkismetFormMixin
 
 from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
-                        INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
-                        RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
-                        SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG)
+                        INVALID_REV_SLUG_CHARS_RE, RESERVED_SLUGS_RES,
+                        REVIEW_FLAG_TAGS, SLUG_CLEANSING_RE,
+                        SPAM_EXEMPTED_FLAG)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
                      RevisionIP, valid_slug_parent)
@@ -226,12 +225,9 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
         choices=REVIEW_FLAG_TAGS,
     )
 
-    localization_tags = forms.MultipleChoiceField(
-        label=ugettext("Tag this revision for localization?"),
-        widget=CheckboxSelectMultiple,
-        required=False,
-        choices=LOCALIZATION_FLAG_TAGS,
-    )
+    localization_in_progress = forms.BooleanField(
+        label=_("Tag this revision for localization?"),
+        required=False)
 
     current_rev = forms.CharField(
         required=False,
@@ -241,8 +237,8 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
     class Meta(object):
         model = Revision
         fields = ('title', 'slug', 'tags', 'keywords', 'summary', 'content',
-                  'comment', 'based_on', 'toc_depth',
-                  'render_max_age')
+                  'comment', 'based_on', 'toc_depth', 'render_max_age',
+                  'localization_in_progress')
 
     def __init__(self, *args, **kwargs):
         self.section_id = kwargs.pop('section_id', None)
@@ -276,9 +272,6 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
             self.initial['review_tags'] = list(self.instance
                                                    .review_tags
                                                    .names())
-            self.initial['localization_tags'] = list(self.instance
-                                                         .localization_tags
-                                                         .names())
 
         if self.section_id:
             self.fields['toc_depth'].required = False
@@ -514,9 +507,10 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
             new_rev.document = document
             new_rev.creator = self.request.user
             new_rev.toc_depth = self.cleaned_data['toc_depth']
+            new_rev.localization_in_progress = (
+                self.cleaned_data['localization_in_progress'])
             new_rev.save()
             new_rev.review_tags.set(*self.cleaned_data['review_tags'])
-            new_rev.localization_tags.set(*self.cleaned_data['localization_tags'])
 
             # when enabled store the user's IP address
             if waffle.switch_is_active('store_revision_ips'):
