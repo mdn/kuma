@@ -43,7 +43,7 @@ define({
         // DO NOT DO ON PRODUCTION
         if(args.destructive == true && config.productionDomain != config.domain) {
             greps.push('requires-destructive');
-            console.log('No destructive permission provided.  Some wiki tests will be skipped.');
+            console.log('No destructive permission provided or allowed.  Some wiki tests will be skipped.');
         }
 
         // Set the final GREP value
