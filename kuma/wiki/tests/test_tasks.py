@@ -1,14 +1,20 @@
 from __future__ import with_statement
+
 import os
+
 from django.conf import settings
-from django.test.utils import override_settings
-from nose.tools import ok_
+from django.test import override_settings
+
+import bitly_api
+import mock
+from nose.tools import eq_, ok_
 
 from kuma.core.cache import memcache
 from kuma.users.tests import UserTestCase, user
 
 from . import revision, document
-from ..tasks import build_sitemaps, update_community_stats
+from ..tasks import (build_sitemaps, update_community_stats,
+                     update_document_share_url)
 from ..models import Document
 
 
@@ -76,3 +82,32 @@ class SitemapsTestCase(UserTestCase):
             index_xml = sitemap_file.read()
         for loc in expected_sitemap_locs:
             ok_(loc in index_xml)
+
+
+@override_settings(BITLY_API_KEY='test', BITLY_USERNAME='test')
+class BitlyTestCase(UserTestCase):
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+
+    def setUp(self):
+        super(BitlyTestCase, self).setUp()
+        self.long_url = 'http://example.com/long-url'
+        self.short_url = 'http://bit.ly/short-url'
+        self.doc = Document.objects.get(pk=1)
+
+    @mock.patch('kuma.wiki.tasks.bitly')
+    def test_update_document_share_url(self, bitly):
+        bitly.shorten.return_value = {'url': self.short_url}
+        update_document_share_url(self.doc.pk)
+        eq_(Document.objects.get(pk=self.doc.pk).share_url, self.short_url)
+
+    @mock.patch('kuma.wiki.tasks.bitly')
+    def test_update_document_share_url_invalid(self, bitly):
+        bitly.shorten.return_value = {}
+        update_document_share_url(self.doc.pk)
+        eq_(self.doc.share_url, None)
+
+    @mock.patch('kuma.wiki.tasks.bitly')
+    def test_update_document_share_url_error(self, bitly):
+        bitly.shorten.side_effect = bitly_api.BitlyError('500', 'fail')
+        update_document_share_url(self.doc.pk)
+        eq_(self.doc.share_url, None)

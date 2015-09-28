@@ -3,22 +3,25 @@ import functools
 import hashlib
 import random
 
-from babel import localedata
-import jinja2
-
 from django.conf import settings
-
+from django.utils.encoding import smart_str
 from django.utils.timezone import get_default_timezone
 
+import bitly_api
 import jingo
+import jinja2
+from babel import localedata
 from jingo import register
-from tower import ungettext, ugettext as _
 from taggit.models import TaggedItem
+from tower import ugettext as _
+from tower import ungettext
 
 from kuma.core.cache import memcache
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import bitly
+
+from . import DEMO_LICENSES, DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS
 from .models import Submission
-from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
 
 
 TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
@@ -345,3 +348,20 @@ def _contextual_locale(context):
     if not localedata.exists(locale):
         locale = settings.LANGUAGE_CODE
     return locale
+
+
+# Note: Deprecated. Only used in kuma/demos/.
+@register.filter
+def bitly_shorten(url):
+    """Attempt to shorten a given URL through bit.ly / mzl.la"""
+    cache_key = 'bitly:%s' % hashlib.md5(smart_str(url)).hexdigest()
+    short_url = memcache.get(cache_key)
+    if short_url is None:
+        try:
+            short_url = bitly.shorten(url)['url']
+            memcache.set(cache_key, short_url, 60 * 60 * 24 * 30 * 12)
+        except (bitly_api.BitlyError, KeyError):
+            # Just in case the bit.ly service fails or the API key isn't
+            # configured, fall back to using the original URL.
+            return url
+    return short_url

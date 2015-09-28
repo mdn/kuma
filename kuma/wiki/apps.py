@@ -94,10 +94,19 @@ class WikiConfig(AppConfig):
         - trigger the cache invalidation of the contributor bar for the given
           document
         """
+        from . import tasks
+
         async = kwargs.get('async', True)
+        created = kwargs.get('created', False)
+
         invalidate_zone_urls_cache(instance, async=async)
         invalidate_zone_stack_cache(instance, async=async)
         DocumentContributorsJob().invalidate(instance.pk)
+
+        # Set the shortened URL (e.g. bit.ly). Note: We do this only for new
+        # documents that aren't templates or redirects.
+        if created and not instance.is_template and not instance.is_redirect:
+            tasks.update_document_share_url.delay(instance.pk)
 
     def on_zone_save(self, sender, instance, **kwargs):
         """

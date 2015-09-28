@@ -1,31 +1,30 @@
-from cStringIO import StringIO
-from datetime import date, datetime, timedelta
 import json
 import time
+from cStringIO import StringIO
+from datetime import date, datetime, timedelta
 from xml.sax.saxutils import escape
 
 import mock
-from nose.tools import eq_, ok_
+from constance import config
 from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
+from waffle.models import Switch
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.test.utils import override_settings
 
-from constance import config
-from waffle.models import Switch
-
 from kuma.core.exceptions import ProgrammingError
-from kuma.core.tests import override_constance_settings, KumaTestCase
+from kuma.core.tests import KumaTestCase, override_constance_settings
 from kuma.users.tests import UserTestCase
 
-from . import (document, revision, doc_rev, normalize_html,
-               create_template_test_users, create_topical_parents_docs)
+from . import (create_template_test_users, create_topical_parents_docs,
+               doc_rev, document, normalize_html, revision)
 from .. import tasks
-from ..constants import REDIRECT_CONTENT
-from ..exceptions import (PageMoveError,
-                          DocumentRenderedContentNotAvailable,
-                          DocumentRenderingInProgress)
+from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
+from ..exceptions import (DocumentRenderedContentNotAvailable,
+                          DocumentRenderingInProgress, PageMoveError)
+from ..helpers import absolutify
 from ..models import Document, Revision, RevisionIP, TaggedDocument
 from ..utils import tidy_content
 
@@ -113,7 +112,7 @@ class DocumentTests(UserTestCase):
 
         assert not d.is_template
 
-        d.slug = 'Template:test'
+        d.slug = '%stest' % TEMPLATE_TITLE_PREFIX
         d.save()
 
         assert d.is_template
@@ -332,6 +331,39 @@ class DocumentTests(UserTestCase):
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
         eq_(href, d.get_redirect_url())
+
+    @mock.patch('kuma.wiki.tasks.update_document_share_url')
+    def test_get_share_url_empty(self, task):
+        doc = document(title='test', share_url=None)
+        ok_(doc.get_share_url(), absolutify(doc.get_absolute_url()))
+        ok_(task.delay.called)
+
+    @mock.patch('kuma.wiki.tasks.update_document_share_url')
+    def test_get_share_url(self, task):
+        expected = 'http://hy.fr/short'
+        doc = document(title='test', share_url=expected)
+        eq_(doc.get_share_url(), expected)
+        ok_(not task.delay.called)
+
+    @mock.patch('kuma.wiki.tasks.update_document_share_url')
+    def test_no_get_share_url_on_save(self, task):
+        # Templates shouldn't have short URLs.
+        doc = document(title='test', slug='%sTest' % TEMPLATE_TITLE_PREFIX)
+        doc.save()
+        ok_(not task.delay.called)
+
+        # Redirects shouldn't have short URLs.
+        doc = document(title='test')
+        task.reset_mock()
+        doc.html = REDIRECT_CONTENT % {'href': '/', 'title': 'test'}
+        doc.save()
+        ok_(not task.delay.called)
+
+        # Documents with PKs shouldn't try to get a short URL again.
+        doc = document(save=True, title='test')
+        task.reset_mock()
+        doc.save()
+        ok_(not task.delay.called)
 
 
 class PermissionTests(KumaTestCase):

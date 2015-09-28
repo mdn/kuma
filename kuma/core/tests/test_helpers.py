@@ -2,28 +2,23 @@
 from collections import namedtuple
 from datetime import datetime
 
-from babel.dates import format_date, format_time, format_datetime
-import bitly_api
 import jingo
-import mock
-from nose.tools import eq_, ok_, assert_raises
-from pyquery import PyQuery as pq
 import pytz
+from babel.dates import format_date, format_datetime, format_time
+from nose.tools import assert_raises, eq_, ok_
+from pyquery import PyQuery as pq
 from soapbox.models import Message
 
 from django.conf import settings
 from django.test import RequestFactory
 
-from kuma.core.cache import memcache
-from kuma.core.helpers import bitly_shorten, bitly
 from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
-from ..helpers import (timesince, yesno, urlencode,
-                       soapbox_messages, get_soapbox_messages,
-                       datetimeformat, jsonencode, number)
+from ..helpers import (datetimeformat, get_soapbox_messages, jsonencode,
+                       number, soapbox_messages, timesince, urlencode, yesno)
 
 
 def render(s, context={}):
@@ -209,30 +204,3 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime')
         eq_(pq(value_returned)('time').text(), value_expected)
-
-
-class BitlyTestCase(KumaTestCase):
-    @mock.patch.object(memcache, 'set')  # prevent caching
-    @mock.patch.object(bitly, 'shorten')
-    def test_bitly_shorten(self, shorten, cache_set):
-        long_url = 'http://example.com/long-url'
-        short_url = 'http://bit.ly/short-url'
-
-        # the usual case of returning a dict with a URL
-        def short_mock(*args, **kwargs):
-            return {'url': short_url}
-        shorten.side_effect = short_mock
-
-        eq_(bitly_shorten(long_url), short_url)
-        shorten.assert_called_with(long_url)
-
-        # in case of a key error
-        def short_mock(*args, **kwargs):
-            return {}
-        shorten.side_effect = short_mock
-        eq_(bitly_shorten(long_url), long_url)
-        shorten.assert_called_with(long_url)
-
-        # in case of an upstream error
-        shorten.side_effect = bitly_api.BitlyError('500', 'fail fail fail')
-        eq_(bitly_shorten(long_url), long_url)
