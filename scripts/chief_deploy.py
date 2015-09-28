@@ -37,9 +37,9 @@ def update_locales(ctx):
 @task
 def update_assets(ctx):
     with ctx.lcd(settings.SRC_DIR):
+        ctx.local("./scripts/compile-stylesheets")
         ctx.local("python2.7 manage.py collectstatic --noinput")
         ctx.local("python2.7 manage.py compilejsi18n")
-        ctx.local("./scripts/compile-stylesheets")
         ctx.local("LANG=en_US.UTF-8 python2.7 manage.py compress_assets")
 
 
