@@ -1,7 +1,7 @@
 {% extends "wiki/base.html" %}
 {% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
 
-{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_subnav, document_watch, share_links, contributor_links with context %}
+{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_subnav, document_watch, build_share_links, contributor_links with context %}
 {% from "wiki/includes/buttons.html" import get_document_buttons with context %}
 {% from "wiki/includes/approvals.html" import get_approvals_html with context %}
 
@@ -35,6 +35,8 @@
 
 {% set buttons = get_document_buttons(document, help_link) %}
 {% set crumbs = build_document_crumbs(document) %}
+
+{% set share_links = build_share_links(document) %}
 
 {% set content_class = 'column-all' %}
 {% if show_left and show_right %}
@@ -177,7 +179,7 @@
         <h1>{{ document.title }}</h1>
 
         {% if waffle.flag('share_links') %}
-          {{ share_links(document) }}
+          {{ share_links }}
         {% endif %}
 
         {% if has_contributors %}
@@ -234,7 +236,7 @@
                   {{ toc_html|safe }}
                 </ol>
                 {% if waffle.flag('share_links') %}
-                  {{ share_links(document) }}
+                  {{ share_links }}
                 {% endif %}
               </div>
               {% endif %}
@@ -342,7 +344,7 @@
               </article>
 
             {% if waffle.flag('share_links') %}
-              {{ share_links(document) }}
+              {{ share_links }}
             {% endif %}
 
 

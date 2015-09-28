@@ -84,7 +84,7 @@
 
 
 
-{% macro share_links(document) -%}
+{% macro build_share_links(document) -%}
     {% set share_url = document.get_share_url() %}
 
     {% set share_url_twitter = share_url|urlparams(utm_campaign='share', utm_source='twitter.com', utm_medium='doc share link') %}
