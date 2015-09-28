@@ -12,6 +12,9 @@ define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
         { browserName: 'safari' }
     ];
 
+    // Name of the tunnel class to use for WebDriver tests
+    config.tunnel = 'NullTunnel';
+
     config.tunnelOptions = {
         hostname: '127.0.0.1',
         port: 4444
