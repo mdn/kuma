@@ -65,7 +65,7 @@ URLObject==2.4.0
 
 pyquery==1.2.9
 
-Django==1.7.10
+Django==1.8.4
 
 commonware==0.4.3
 
