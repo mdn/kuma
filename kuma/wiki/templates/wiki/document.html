@@ -36,7 +36,9 @@
 {% set buttons = get_document_buttons(document, help_link) %}
 {% set crumbs = build_document_crumbs(document) %}
 
-{% set share_links = build_share_links(document) %}
+{% if waffle.flag('share_links') %}
+  {% set share_links = build_share_links(document) %}
+{% endif %}
 
 {% set content_class = 'column-all' %}
 {% if show_left and show_right %}
