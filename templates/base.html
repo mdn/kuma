@@ -95,8 +95,6 @@
 
     <div id="nav-sec">
         {% if not is_sphinx %}
-
-            {% if waffle.flag('header_tools') %}
                   <ul>
                   {% if user.is_authenticated() %}
                       <li class="nav-tools"><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Tools') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
@@ -119,9 +117,6 @@
                       </div>
                    </li>{% endif %}<li>{% include "includes/login.html" %}</li>
                 </ul>
-            {% else %}
-              {% include "includes/login.html" %}
-            {% endif %}
         {% endif %}
     </div>
 
