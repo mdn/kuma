@@ -10,12 +10,14 @@ import mock
 from nose.tools import eq_, ok_
 
 from kuma.core.cache import memcache
+from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase, user
 
-from . import revision, document
+from . import document, revision
+from ..helpers import absolutify
+from ..models import Document
 from ..tasks import (build_sitemaps, update_community_stats,
                      update_document_share_url)
-from ..models import Document
 
 
 class UpdateCommunityStatsTests(UserTestCase):
@@ -98,6 +100,8 @@ class BitlyTestCase(UserTestCase):
     def test_update_document_share_url(self, bitly):
         bitly.shorten.return_value = {'url': self.short_url}
         update_document_share_url(self.doc.pk)
+        eq_(bitly.shorten.call_args[0][0],
+            absolutify(reverse('wiki.document', args=[self.doc.slug])))
         eq_(Document.objects.get(pk=self.doc.pk).share_url, self.short_url)
 
     @mock.patch('kuma.wiki.tasks.bitly')
