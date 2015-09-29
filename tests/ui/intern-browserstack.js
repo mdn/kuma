@@ -3,6 +3,7 @@
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
 define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
 
+    // Browsers to run integration testing against.
     config.environments = [
         { browserName: 'firefox', version: ['40'], platform: [ 'MAC' ] },
         { browserName: 'chrome', version: ['44'], platform: [ 'MAC' ] },

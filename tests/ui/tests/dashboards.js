@@ -44,23 +44,23 @@ define([
                 return libLogin.completePersonaWindow(remote);
             }).then(function() {
                 return remote
-                    .findByCssSelector('#show_ips_btn')
-                    .click()
-                    .end()
-                    .findByCssSelector('a.dashboard-ban-ip-link')
-                    .click()
-                    .end()
-                    .then(function() {
-                        return poll.untilPopupWindowReady(remote);
-                    })
-                    .getAllWindowHandles().then(function(handles) {
-                        return remote
+                        .findByCssSelector('#show_ips_btn')
+                        .click()
+                        .end()
+                        .findByCssSelector('a.dashboard-ban-ip-link')
+                        .click()
+                        .end()
+                        .then(function() {
+                            return poll.untilPopupWindowReady(remote);
+                        })
+                        .getAllWindowHandles().then(function(handles) {
+                            return remote
                                     .switchToWindow(handles[1])
                                     .getCurrentUrl()
                                     .then(function(url) {
                                         assert.isTrue(url.indexOf('ipban/add') != -1);
                                     });
-                    });
+                        });
                 });
 
         }

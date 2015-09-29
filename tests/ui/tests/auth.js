@@ -38,26 +38,26 @@ define([
             var remote = this.remote;
 
             return remote
-                        .then(function() {
-                            return libLogin.pollForPersonaLoaded(remote);
-                        })
-                        .findByCssSelector('.oauth-login-picker .launch-persona-login')
-                        .click()
-                        .then(function() {
-                            return poll.untilPopupWindowReady(remote);
-                        })
-                        .end()
-                        .getAllWindowHandles()
-                        .then(function(handles) {
-                            assert.equal(handles.length, 2, 'There are two windows upon Persona click');
+                    .then(function() {
+                        return libLogin.pollForPersonaLoaded(remote);
+                    })
+                    .findByCssSelector('.oauth-login-picker .launch-persona-login')
+                    .click()
+                    .then(function() {
+                        return poll.untilPopupWindowReady(remote);
+                    })
+                    .end()
+                    .getAllWindowHandles()
+                    .then(function(handles) {
+                        assert.equal(handles.length, 2, 'There are two windows upon Persona click');
 
-                            return remote.switchToWindow(handles[1])
-                                .getPageTitle()
-                                .then(function(title) {
-                                    assert.ok(title.toLowerCase().indexOf('persona') != -1, 'Persona window opens upon login click');
-                                    return remote.closeCurrentWindow().switchToWindow(handles[0]);
-                                });
-                        });
+                        return remote.switchToWindow(handles[1])
+                            .getPageTitle()
+                            .then(function(title) {
+                                assert.ok(title.toLowerCase().indexOf('persona') != -1, 'Persona window opens upon login click');
+                                return remote.closeCurrentWindow().switchToWindow(handles[0]);
+                            });
+                    });
 
         },
 
@@ -86,41 +86,41 @@ define([
             libLogin.completePersonaWindow(remote).then(function() {
 
                 return remote
-                    .findByCssSelector('.oauth-logged-in-user')
-                    .then(function(element) {
-                        poll.until(element, 'isDisplayed')
-                                .then(function() {
-                                    return element
+                        .findByCssSelector('.oauth-logged-in-user')
+                        .then(function(element) {
+                            return poll.until(element, 'isDisplayed')
+                                    .then(function() {
+                                        return element
                                                 .click()
                                                 .then(function() {
                                                      return poll.untilUrlChanges(remote, '/profiles');
                                                 })
                                                 .then(function() {
                                                     return remote
-                                                                .findByCssSelector('#edit-user')
-                                                                .click()
-                                                                .end()
-                                                                .then(function() {
-                                                                     return poll.untilUrlChanges(remote, '/edit');
-                                                                })
-                                                                .findByCssSelector('.submission button[type=submit]')
-                                                                .click()
-                                                                .end()
-                                                                .then(function() {
-                                                                     return poll.untilUrlChanges(remote, '/profiles');
-                                                                })
-                                                                .findByCssSelector('.user-since')
-                                                                .click() // Just ensuring the element is there
-                                                                .end()
-                                                                .findByCssSelector('.oauth-logged-in-signout')
-                                                                .click()
-                                                                .end()
-                                                                .then(dfd.callback(function() {
-                                                                    assert.ok('User can sign out without problems');
-                                                                }));
+                                                            .findByCssSelector('#edit-user')
+                                                            .click()
+                                                            .end()
+                                                            .then(function() {
+                                                                 return poll.untilUrlChanges(remote, '/edit');
+                                                            })
+                                                            .findByCssSelector('.submission button[type=submit]')
+                                                            .click()
+                                                            .end()
+                                                            .then(function() {
+                                                                 return poll.untilUrlChanges(remote, '/profiles');
+                                                            })
+                                                            .findByCssSelector('.user-since')
+                                                            .click() // Just ensuring the element is there
+                                                            .end()
+                                                            .findByCssSelector('.oauth-logged-in-signout')
+                                                            .click()
+                                                            .end()
+                                                            .then(dfd.callback(function() {
+                                                                assert.ok('User can sign out without problems');
+                                                            }));
                                                 });
-                                });
-                    });
+                                    });
+                        });
 
             });
 
@@ -132,13 +132,13 @@ define([
             var remote = this.remote;
 
             return remote
-                        .findByCssSelector('.oauth-login-picker a[data-service="GitHub"]')
-                        .click()
-                        .then(function() {
-                            return poll.untilUrlChanges(remote, 'github.com').then(function() {
-                                assert.ok('User sent to GitHub.com');
-                            });
+                    .findByCssSelector('.oauth-login-picker a[data-service="GitHub"]')
+                    .click()
+                    .then(function() {
+                        return poll.untilUrlChanges(remote, 'github.com').then(function() {
+                            assert.ok('User sent to GitHub.com');
                         });
+                    });
         },
 
         'Sign in icons are hidden from header widget on smaller screens': function() {

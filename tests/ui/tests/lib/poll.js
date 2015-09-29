@@ -16,7 +16,6 @@ define(['intern/dojo/Promise', 'base/lib/config'], function(Promise, config) {
 
             (function poll() {
                 item[fn]().then(function() {
-
                     if(callbackFn.apply(this, arguments)) {
                         dfd.resolve();
                     }

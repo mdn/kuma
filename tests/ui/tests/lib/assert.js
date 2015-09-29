@@ -18,6 +18,7 @@ define(['intern/chai!assert'], function(assert) {
         },
 
         windowPropertyExists: function(remote, property) {
+            // Checks the window namespace to ensure a given key is set
 
             return remote.executeAsync(function(property, done) {
                 var interval = setInterval(function() {

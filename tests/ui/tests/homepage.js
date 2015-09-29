@@ -37,19 +37,19 @@ define([
             var term = 'Hello';
 
             return remote
-                        .findByCssSelector('#' + Page.searchBoxId)
-                        .click()
-                        .type(term)
-                        .getProperty('value')
-                        .then(function(resultText) {
-                            assert.ok(resultText.indexOf(term) > -1, term + ' is found in box');
-                        })
-                        .type(keys.RETURN)
-                        .then(function() {
-                            return poll.untilUrlChanges(remote, '/search').then(function() {
-                                assert.ok('Pressing [ENTER] submits search');
-                            });
+                    .findByCssSelector('#' + Page.searchBoxId)
+                    .click()
+                    .type(term)
+                    .getProperty('value')
+                    .then(function(resultText) {
+                        assert.ok(resultText.indexOf(term) > -1, term + ' is found in box');
+                    })
+                    .type(keys.RETURN)
+                    .then(function() {
+                        return poll.untilUrlChanges(remote, '/search').then(function() {
+                            assert.ok('Pressing [ENTER] submits search');
                         });
+                    });
         },
 
         'Hacks posts display properly': function() {
