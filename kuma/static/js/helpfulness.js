@@ -3,8 +3,13 @@
     // this feature requires localStorage
     if (('localStorage' in win)) {
         var ignore = localStorage.getItem('helpful-ignore') === 'true'; // true if ever clicked ignore
-        var askedRecently = parseInt(localStorage.getItem(doc.location + '#answered-helpful'), 10) > Date.now();
-        if (!ignore && !askedRecently) {
+        var articleAskedRecently = parseInt(localStorage.getItem(doc.location + '#answered-helpful'), 10) > Date.now();
+        var lastAsked = localStorage.getItem('helpful-asked-last');
+        var today = new Date();
+        today.setHours(0,0,0,0);
+        var askedToday = String(lastAsked) === String(today);
+
+        if (!ignore && !articleAskedRecently && !askedToday) {
             // ask about helpfulness after 1 min
             setTimeout(inquire, 60000);
         }
@@ -14,6 +19,9 @@
     function inquire() {
         // dimension7 is "helpfulness"
         if(win.ga) ga('set', 'dimension7', 'Yes');
+
+        // note that we asked today
+        localStorage.setItem('helpful-asked-last', today);
 
         // ask a simple question
         var ask = gettext('Did this page help you?') +
@@ -47,6 +55,8 @@
             {val: 'Make-Simpler', text: gettext('Make explanations clearer')},
             {val: 'Needs-More-Info', text: gettext('Add more details')},
             {val: 'Needs-Correction', text: gettext('Fix incorrect information')},
+            {val: 'Needs-Examples', text: gettext('Add or improve examples')},
+            {val: 'SEO', text: gettext('My search should have lead to a different article.')},
             {val: 'Other', text: gettext('Something else')}
         ]
         var $select = $('<select />').attr({
