@@ -9,7 +9,7 @@
 
     <div class="dashboard">
         <h1><a href="{{ url('dashboards.revisions') }}">{{ title }}</a></h1>
-        <form method="get" id="revision-filter">
+        <form method="get" id="revision-filter" action="{{ url('dashboards.revisions') }}">
             <div class="revision-field">
                 <label for="id_locale">{{ _('Locale:') }}</label>
                 {{ form.locale }}
@@ -153,7 +153,7 @@
     // AJAX loads for pagination
     $revisionReplaceBlock.on('click', '.pagination a', function (e) {
         e.preventDefault();
-        $pageInput.val(this.href.split('page=')[1]);
+        $pageInput.val(/page=([^&#]*)/.exec(this.href)[1]);
         $filterForm.submit();
     });
 
