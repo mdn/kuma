@@ -123,6 +123,12 @@ def deploy(ctx):
     ping_newrelic()
 #    prime_app()
     update_celery()
+    run_ui_tests()
+
+@task
+def run_ui_tests(ctx):
+    with ctx.lcd(os.path.join(settings.SRC_DIR, 'tests/ui')):
+        ctx.local("./node_modules/.bin/intern-runner config=intern-browserstack destructive=true wd=User:Intern u=%s p=%s" % (os.environ['INTERN_PERSONA_USERNAME'], os.environ['INTERN_PERSONA_PASSWORD']))
 
 
 @task
