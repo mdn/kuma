@@ -25,7 +25,7 @@ kumascript.log
 kumascript_settings_local.json
 .DS_Store
 node_modules/
-kuma/assets/css/*.css
+kuma/static/css/*.css
 docs/_build/
 wheelhouse
 .awsconfig
