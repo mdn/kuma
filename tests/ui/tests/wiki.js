@@ -219,7 +219,7 @@ define([
 
                                                         return remote
                                                                 .findByCssSelector('.page-buttons .btn-save')
-                                                                .type([keys.RETURN])
+                                                                .click()
                                                                 .then(function() {
                                                                     return poll.untilUrlChanges(remote, Page.documentCreatedSlug).then(function() {
                                                                         assert.ok('New page is created successfully');

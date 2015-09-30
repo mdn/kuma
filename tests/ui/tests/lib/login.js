@@ -72,6 +72,13 @@ define([
                         .then(function(handles) {
 
                             return remote.switchToWindow(handles[1])
+
+
+                                // FOR SAFARI Added this for Safari -- it isn't finding the #authentication_email without it
+                                .sleep(2000)
+
+
+
                                 .findByCssSelector('#authentication_email')
                                 .then(function() {
 
@@ -121,6 +128,15 @@ define([
                                 .findByCssSelector('button.isStart')
                                 // Using the [ENTER] key is more reliable than selenium's click()
                                 .type([keys.RETURN])
+
+
+                                /* FOR SAFARI BUT BREAKS FIREFOX */
+                                .click()
+
+
+
+
+
                                 .end()
                                 .findByCssSelector('#authentication_password')
                                 .then(function() {
@@ -152,6 +168,16 @@ define([
 
                                 // Using the [ENTER] key is more reliable than selenium's click()
                                 .type([keys.RETURN])
+
+
+
+
+                                /* FOR SAFARI BUT BREAKS FIREFOX */
+                                .click()
+
+
+
+
                                 .switchToWindow(handles[0])
 
                                 // A bit crazy, but since we need to wait for Persona to (1) close the login window and
@@ -168,12 +194,16 @@ define([
                                     });
                                 })
 
+
+
+                                .sleep(4000) /* FOR SAFARI */
+
+
                                 // ... and to confirm the login worked, we need to poll for either the "#id_username" element (signup page)
                                 // or the "a.oauth-logged-in-signout" element (sign out link)
                                 .then(function() {
                                     return pollUntil('return document.querySelector("#id_username") || document.querySelector("a.oauth-logged-in-signout")');
                                 })
-
                                 .end()
                                 .then(callback);
                     });

@@ -21,7 +21,7 @@ define(['intern/dojo/Promise', 'base/lib/config'], function(Promise, config) {
                         dfd.resolve();
                     }
                     else if (Number(new Date()) < endTime) {
-                        setTimeout(poll, 100);
+                        setTimeout(poll, 200);
                     }
                     else {
                         dfd.reject(new Error('timed out for ' + fn + ': ' + item));
