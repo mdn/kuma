@@ -20,6 +20,7 @@ from constance import config
 from lxml import etree
 
 from kuma.core.cache import memcache
+from kuma.core.urlresolvers import reverse
 from kuma.core.utils import MemcacheLock, bitly, chord_flow, chunked
 from kuma.search.models import Index
 
@@ -479,7 +480,7 @@ def update_document_share_url(pk):
         log.error('Document not found (pk:%s)' % pk)
         return
 
-    doc_url = absolutify(doc.get_absolute_url())
+    doc_url = absolutify(reverse('wiki.document', args=[doc.slug]))
     try:
         share_url = bitly.shorten(doc_url)['url']
     except (bitly_api.BitlyError, KeyError):
