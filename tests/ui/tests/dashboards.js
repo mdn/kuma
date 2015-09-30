@@ -4,8 +4,9 @@ define([
     'base/lib/config',
     'base/lib/login',
     'base/lib/POM',
-    'base/lib/poll'
-], function(registerSuite, assert, config, libLogin, POM, poll) {
+    'base/lib/poll',
+    'base/lib/capabilities'
+], function(registerSuite, assert, config, libLogin, POM, poll, capabilities) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -56,6 +57,7 @@ define([
                         .getAllWindowHandles().then(function(handles) {
                             return remote
                                     .switchToWindow(handles[1])
+                                    .sleep(capabilities.getBrowserSleepShim(remote))
                                     .getCurrentUrl()
                                     .then(function(url) {
                                         assert.isTrue(url.indexOf('ipban/add') != -1);

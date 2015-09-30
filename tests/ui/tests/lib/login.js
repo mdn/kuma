@@ -3,10 +3,10 @@ define([
     'intern/dojo/Promise',
     'base/lib/config',
     'base/lib/poll',
+    'base/lib/capabilities',
     'intern/dojo/node!leadfoot/helpers/pollUntil',
     'intern/chai!assert',
-    'intern/dojo/node!leadfoot/keys'
-], function(http, Promise, config, poll, pollUntil, assert, keys) {
+], function(http, Promise, config, poll, capabilities, pollUntil, assert) {
 
     return {
 
@@ -72,6 +72,12 @@ define([
                     .then(function(handles) {
 
                         return remote.switchToWindow(handles[1])
+
+                            // FOR SAFARI Added this for Safari -- it isn't finding the #authentication_email without it
+                            // Safari has a history with popup issues
+                            // https://code.google.com/p/selenium/issues/detail?id=5195
+                            .sleep(capabilities.getBrowserSleepShim(remote))
+
                             .findByCssSelector('#authentication_email')
                             .then(function() {
 
@@ -119,8 +125,7 @@ define([
                             })
                             .end()
                             .findByCssSelector('button.isStart')
-                            // Using the [ENTER] key is more reliable than selenium's click()
-                            .type([keys.RETURN])
+                            .then(capabilities.crossbrowserConfirm(remote))
                             .end()
                             .findByCssSelector('#authentication_password')
                             .then(function() {
@@ -149,9 +154,7 @@ define([
                             })
                             .end()
                             .findByCssSelector('button.isTransitionToSecondary')
-
-                            // Using the [ENTER] key is more reliable than selenium's click()
-                            .type([keys.RETURN])
+                            .then(capabilities.crossbrowserConfirm(remote))
                             .switchToWindow(handles[0])
 
                             // A bit crazy, but since we need to wait for Persona to (1) close the login window and
@@ -167,6 +170,8 @@ define([
                                     var listener = window.addEventListener(eventType, asyncCallback);
                                 });
                             })
+
+                            .sleep(capabilities.getBrowserSleepShim(remote))
 
                             // ... and to confirm the login worked, we need to poll for either the "#id_username" element (signup page)
                             // or the "a.oauth-logged-in-signout" element (sign out link)
