@@ -1,50 +1,88 @@
 Client-side Testing with Intern
 ===============================
 
-The client-side testing tool for the MDN front-end is `Intern <https://theintern.github.io/>`_, a Selenium WebDriver API which allows developers to write automated testing via JavaScript. Intern is an open source project created and maintained by `SitePen <http://sitepen.com>`_.
+We use `Intern <https://theintern.github.io/>`_ for client-side testing. It uses Selenium WebDriver API which lets us write automated testing via JavaScript. Intern is an open source project created and maintained by `SitePen <http://sitepen.com>`_.
 
 Installing Dependencies
 -----------------------
 
-1. Install `JDK <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_
+1. Go to the ``tests/ui/`` directory::
 
-2. Download the most current release of Selenium `WebDriver <http://selenium-release.storage.googleapis.com/index.html>`_. Download the current standalone version which is a `.jar` file.
+    cd tests/ui
 
-3. From the `tests/ui/` directory, use NPM or another package manager to install Intern::
+2. Use ``npm`` to install Intern::
 
     npm install intern@^3.0
 
-Do *not* install Intern globally -- path issues may occur.
-
-Firefox appears to work out of the box, but `Chrome <https://sites.google.com/a/chromium.org/chromedriver/>`_ and `Safari <https://code.google.com/p/selenium/wiki/SafariDriver>`_ drivers must be downloaded and installed separately.
+.. warning:: Do *not* install Intern globally -- path issues may occur.
 
 Running Tests
 -------------
 
-1. From the command line, start WebDriver::
+On your machine
+~~~~~~~~~~~~~~~
+
+1. Install `JDK <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_
+
+2. Download the most current `release of Selenium <http://selenium-release.storage.googleapis.com/index.html>`_ standalone server. (It's the ``.jar`` file.)
+
+.. note:: Firefox should work out of the box. You need to install `Chrome <https://sites.google.com/a/chromium.org/chromedriver/>`_ and `Safari <https://code.google.com/p/selenium/wiki/SafariDriver>`_ drivers yourself.
+
+3. From the command line, start WebDriver::
 
     # Substitute your WebDriver version in the `#` chars
     java -jar /path/to/selenium-server-standalone-#.#.#.jar
 
-2. From within the `tests/ui/` directory, run intern on your local intern config file (omitting the `.js`)::
+4. Go to the ``tests/ui/`` directory::
 
-    node_modules/.bin/intern-runner config=intern-local
+    cd tests/ui
 
-The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely:
+5. Run intern with the ``intern-local`` config file (omit the ``.js``)::
 
-* `b` to set which browsers to run in (ex: `b=chrome,firefox`) - omit and all browsers will run
-* `t` for which test suites to run (ex: `t=wiki,home`) - omit and all tests will run
-* `u` to provide a username for Persona
-* `p` to provide a password for Persona
-* `d` for which domain to run on (ex: `developer.allizom.org`)
-* `destructive=true` to signal real docs can be created (do not run this on production)
-* `wd` which represents the slug of an existing article to test (ex: `My_Test_Doc`)
+    ./node_modules/.bin/intern-runner config=intern-local b=firefox
 
-An example::
+The above tries to run the entire suite of tests. You can change the behavior with `command line arguments`_. E.g., ::
 
     node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309 wd='Web' destructive=true
 
 The user credentials must be Persona-only (not GMail or Mozilla LDAP lookups).  User credentials are the only required custom command line arguments.
+
+On a Cloud Provider
+~~~~~~~~~~~~~~~~~~~
+
+We have tested running the Intern test suite with BrowserStack and SauceLabs.
+We have better luck with BrowserStack, and it's the provider MDN staff devs
+use.
+
+1. Sign up for either `BrowserStack <http://www.browserstack.com/>`_ or `SauceLabs <https://saucelabs.com/>`_.
+
+2. Go to the ``tests/ui/`` directory::
+
+    cd tests/ui
+
+3. Set the `appropriate environment variables
+   <https://theintern.github.io/intern/#hosted-selenium>`_ with your provider credentials.
+   E.g., ::
+
+    export BROWSERSTACK_USERNAME='fakeuser'
+    export BROWSERSTACK_ACCESS_KEY='fakeaccesskey'
+
+3. Run intern with the appropriate config file (omitting the ``.js``). E.g., ::
+
+    ./node_modules/.bin/intern-runner config=intern-browserstack
+
+.. _command line arguments:
+
+Command-Line Arguments
+~~~~~~~~~~~~~~~~~~~~~~
+
+* ``b`` - browsers to run (e.g., ``b=chrome,firefox``)
+* ``t`` - test suites to run (e.g., ``t=wiki,homepage``)
+* ``d`` - domain to run against (e.g., ``d=developer.allizom.org``)
+* ``u`` - username for Persona (e.g., ``u=testuser@example.com``)
+* ``p`` - password for Persona (e.g., ``p=testpass``)
+* ``wd`` - slug of existing article to test (e.g., ``wd=My_Test_Doc``)
+* ``destructive=true`` - create real docs (do not run this on production)
 
 Adding a Test Suite
 -------------------
