@@ -236,7 +236,7 @@ assets locally, follow these steps:
 #. Run ``./manage.py compress_assets``
 #. Edit the file /etc/apache2/sites-enabled/kuma.conf and uncomment any lines
    pertaining to hosting static files
-#. Restart Apache
+#. Run ``sudo service apache2 restart``
 
 
 Mozilla Product Details
