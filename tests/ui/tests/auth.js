@@ -5,8 +5,9 @@ define([
     'base/lib/login',
     'base/lib/assert',
     'base/lib/poll',
-    'base/lib/POM'
-], function(registerSuite, assert, config, libLogin, libAssert, poll, POM) {
+    'base/lib/POM',
+    'base/lib/capabilities'
+], function(registerSuite, assert, config, libLogin, libAssert, poll, POM, capabilities) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -133,7 +134,7 @@ define([
             // "Yikes! Safari history navigation does not work.
             // We can go forward or back, but once we do, we can no longer communicate
             // with the page... (WARNING: The server did not provide any stacktrace information)"
-            if(this.remote.session.capabilities.browserName === 'safari') {
+            if(capabilities.getBrowserName(remote) === 'safari') {
                 return remote;
             }
 

@@ -5,8 +5,9 @@ define([
     'base/lib/config',
     'base/lib/assert',
     'base/lib/POM',
-    'base/lib/poll'
-], function(registerSuite, assert, keys, config, libAssert, POM, poll) {
+    'base/lib/poll',
+    'base/lib/capabilities'
+], function(registerSuite, assert, keys, config, libAssert, POM, poll, capabilities) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -33,11 +34,16 @@ define([
 
             var remote = this.remote;
 
+            // Safari doesn't bubble the onchange so this test wont work
+            if(capabilities.getBrowserName(remote) === 'safari') {
+                return remote;
+            }
+
             return remote
                         .findByCssSelector('#language')
                         .moveMouseTo(5, 5)
                         .click()
-                        .type(['e', keys.RETURN])
+                        .type(['e', 's', keys.RETURN])
                         .then(function() {
                             return poll.untilUrlChanges(remote, '/es/').then(function() {
                                 assert.ok('Locale auto-redirects');
