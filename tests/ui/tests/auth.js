@@ -122,6 +122,33 @@ define([
             return dfd;
         },
 
+        // Due to Safari having issues with selenium + history, this test must appear last
+        'Clicking on the GitHub icon initializes GitHub login process': function() {
+
+            var remote = this.remote;
+
+            // Safari hangs on this test because we cross domains to GitHub.com
+            // Unfortunately Safari has history issues
+
+            // "Yikes! Safari history navigation does not work.
+            // We can go forward or back, but once we do, we can no longer communicate
+            // with the page... (WARNING: The server did not provide any stacktrace information)"
+            if(this.remote.session.capabilities.browserName === 'safari') {
+                return remote;
+            }
+
+            return remote
+                        .findByCssSelector('.oauth-login-picker a[data-service="GitHub"]')
+                        .click()
+                        .then(function() {
+                            return poll.untilUrlChanges(remote, 'github.com');
+                        })
+                        .then(function() {
+                            assert.ok('User sent to GitHub.com');
+                            return remote.goBack();
+                        });
+        },
+
         'Sign in icons are hidden from header widget on smaller screens': function() {
 
             return this.remote
@@ -131,28 +158,6 @@ define([
                         .isDisplayed()
                         .then(assert.isFalse);
         },
-
-        // Due to Safari having issues with selenium + history, this test must appear last
-        'Clicking on the GitHub icon initializes GitHub login process': function() {
-
-            var remote = this.remote;
-
-            // Safari hangs on this test because we cross domains to GitHub.com
-            // Unfortunately Safari has history issues
-            if(this.remote.session.capabilities.browserName === 'safari') {
-                return remote;
-            }
-
-            return remote
-                        .findByCssSelector('.oauth-login-picker a[data-service="GitHub"]')
-                        .click()
-                        .then(function() {
-                            return poll.untilUrlChanges(remote, 'demos');
-                        })
-                        .then(function() {
-                            assert.ok('User sent to GitHub.com');
-                        });
-        }
 
     });
 
