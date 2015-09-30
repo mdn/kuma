@@ -421,7 +421,7 @@ STATICFILES_FINDERS = (
 )
 
 STATICFILES_DIRS = (
-    path('kuma', 'static'),
+    path('kuma', 'assets'),
 )
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
