@@ -324,9 +324,10 @@
     */
     (function() {
         // don't run if no compat table on page with min 1 row
-        var $compatTables = $('.bc-api table tbody tr');
+        var $compatFeatureRows = $('.bc-table tbody tr');
+        if(!$compatFeatureRows.length) return;
+
         var compatCSS, compatJS;
-        if(!$compatTables.length) return;
 
         // don't run if waffle not active
         if(!win.waffle || !win.waffle.flag_is_active('compat_api')) return;
@@ -349,7 +350,7 @@
                     dataType: 'script',
                     cache: true
                 }).then(function() {
-                    $compatTables.mozCompatTable();
+                    $('.bc-table').mozCompatTable();
                 });
 
             }).appendTo(doc.head);
