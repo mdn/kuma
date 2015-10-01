@@ -5,8 +5,8 @@ define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
 
     // Browsers to run integration testing against.
     config.environments = [
-        { browserName: 'firefox', version: ['40'], platform: [ 'MAC' ] },
-        { browserName: 'chrome', version: ['44'], platform: [ 'MAC' ] },
+        { browserName: 'firefox', platform: [ 'MAC', 'WIN8' ] },
+        { browserName: 'chrome', platform: [ 'MAC', 'WIN8' ] },
     ];
 
     // Name of the tunnel class to use for WebDriver tests
