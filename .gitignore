@@ -14,8 +14,9 @@ build.py
 media/uploads
 media/attachments
 media/sitemap*
-/static/*
+/static/*/*
 !/static/.htaccess
+!/static/fonts/.htaccess
 locale
 xfers/*
 humans.txt
