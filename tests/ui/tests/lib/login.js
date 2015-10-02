@@ -73,7 +73,7 @@ define([
 
                         return remote.switchToWindow(handles[1])
 
-                            // FOR SAFARI Added this for Safari -- it isn't finding the #authentication_email without it
+                            // Added this for Safari -- it isn't finding the #authentication_email without it
                             // Safari has a history with popup issues
                             // https://code.google.com/p/selenium/issues/detail?id=5195
                             .sleep(capabilities.getBrowserSleepShim(remote))
@@ -96,11 +96,15 @@ define([
                                         }
                                     }, 100);
 
-                                    // Delete some nodes that could get in our way (overlays)
-                                    ['load', 'wait', 'error', 'delay'].forEach(function(id) {
-                                        var node = document.querySelector('#' + id);
-                                        node.parentNode.removeChild(node);
-                                    });
+                                    // If the Persona window pitches session length stuff,
+                                    // click "this session" only
+                                    var sessionInterval = setInterval(function() {
+                                        var sessionButtons = document.querySelector('#this_is_not_my_computer');
+                                        if(sessionButtons) {
+                                            sessionButtons.click();
+                                            clearInterval(sessionInterval);
+                                        }
+                                    }, 100);
 
                                     // Provide the email address via JS, more reliable than selenium's click()
                                     var interval = setInterval(function() {
@@ -112,7 +116,6 @@ define([
                                             clearInterval(interval);
 
                                             // Delay to let the button enable itself `button.isStart`
-
                                             interval = setInterval(function() {
                                                 if(isStartButton.offsetHeight && !isStartButton.disabled) {
                                                     clearInterval(interval);
@@ -200,23 +203,38 @@ define([
             return dfd.promise;
         },
 
-        completePersonaLogout: function(remote) {
+        completePersonaLogout: function(remote, ignorePersonaOrg) {
             // Completes a "hard" logout of Persona via persona.org
+
             return remote
                     .findAllByCssSelector('.oauth-logged-in-signout')
                     .then(function(elements) {
+
+                        // Click MDN's logout link, then go to Persona to clear cookies
                         if(elements.length) {
-                            return elements[0].click();
+                            return elements[0].click().then(function() {
+                                remote.get('https://login.persona.org/').clearCookies();
+                            });
                         }
                         else {
-                            return remote.get('https://login.persona.org/')
+                            if(ignorePersonaOrg) {
+                                return remote;
+                            }
+                            else {
+                                // Go to Persona's site immediately to log out
+                                return remote.get('https://login.persona.org/')
+                                    .clearCookies()
+                                    .sleep(capabilities.getBrowserSleepShim(remote))
                                     .findByCssSelector('a.signOut')
                                     .click().end();
+                            }
                         }
                     });
         },
 
         pollForPersonaLoaded: function(remote) {
+            // Since we load Persona async we should wait for it to be loaded before trying to log in
+
             return remote.executeAsync(function(done) {
                 var interval = setInterval(function() {
                     if(document.querySelector('.wait-for-persona.disabled') === null) {

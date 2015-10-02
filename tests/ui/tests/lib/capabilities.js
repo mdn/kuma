@@ -8,10 +8,11 @@ define(['intern/dojo/node!leadfoot/keys'], function(keys) {
             return remote.session.capabilities.browserName.toLowerCase();
         },
 
-        // Safari is whack with popups so we need to shim it with sleeps;
-        // Polling for elements is not fruitful
         getBrowserSleepShim: function(remote) {
-            return this.getBrowserName(remote) === 'safari' ? 3000 : 0;
+            // Safari and Chrome are whack with popups and crossing domains so we need to shim it with sleeps;
+            // Polling for elements is not fruitful, so simply waiting is the best solution
+
+            return 3000;
         },
 
         crossbrowserConfirm: function(remote) {

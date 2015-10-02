@@ -4,7 +4,7 @@ define(['intern'], function(intern) {
     var httpsAddress = 'https://' + domain + '/';
     var defaultLocale = 'en-US';
 
-    var timeouts = 60000;
+    var testTimeout = 90000;
 
     return {
 
@@ -35,8 +35,7 @@ define(['intern'], function(intern) {
         personaPassword: intern.args.p || '',
 
         // Async testing in milliseconds
-        testTimeout: timeouts,
-        asyncExecutionTimeout: timeouts,
+        testTimeout: testTimeout,
 
         // Wiki-specific
         wikiDocumentSlug: intern.args.wd || ''
