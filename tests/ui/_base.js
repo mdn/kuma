@@ -34,8 +34,6 @@ define({
     },
 
     // A regular expression matching URLs to files that should not be included in code coverage analysis
-    excludeInstrumentation: /^(_cli\.js|node_modules|tests\/lib)/,
-
-    reporters: ['Pretty']
+    excludeInstrumentation: /^(_cli\.js|node_modules|tests\/lib)/
 
 });

@@ -12,5 +12,8 @@ define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
     // Name of the tunnel class to use for WebDriver tests
     config.tunnel = 'BrowserStackTunnel';
 
+    // Format for outputting test results
+    config.reporters = ['Pretty'];
+
     return cli.mixinArgs(intern.args, config);
 });

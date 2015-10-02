@@ -47,6 +47,12 @@ The above tries to run the entire suite of tests. You can change the behavior wi
 
 The user credentials must be Persona-only (not GMail or Mozilla LDAP lookups).  User credentials are the only required custom command line arguments.
 
+Safari requires some special configuration to ensure tests run correctly:
+
+1.  Open your Safari browser's preferences dialog and disable the popup blocker
+
+2.  You must download and manually install the `Safari Selenium Extension <https://github.com/SeleniumHQ/selenium/blob/master/javascript/safari-driver/prebuilt/SafariDriver.safariextz>`_.  Once downloaded, drag the extension into the Safari extensions list within the Preferences dialog.
+
 On a Cloud Provider
 ~~~~~~~~~~~~~~~~~~~
 

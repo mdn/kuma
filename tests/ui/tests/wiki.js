@@ -5,9 +5,9 @@ define([
     'base/lib/assert',
     'base/lib/POM',
     'base/lib/poll',
-    'intern/dojo/node!leadfoot/keys',
+    'base/lib/capabilities',
     'intern/dojo/text!tests/fixtures/in-content.html'
-], function(registerSuite, assert, config, libAssert, POM, poll, keys, inContentTemplate) {
+], function(registerSuite, assert, config, libAssert, POM, poll, capabilities, inContentTemplate) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -219,7 +219,7 @@ define([
 
                                                 return remote
                                                         .findByCssSelector('.page-buttons .btn-save')
-                                                        .type([keys.RETURN])
+                                                        .then(capabilities.crossbrowserConfirm(remote))
                                                         .then(function() {
                                                             return poll.untilUrlChanges(remote, Page.documentCreatedSlug).then(function() {
                                                                 assert.ok('New page is created successfully');
