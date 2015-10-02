@@ -92,6 +92,12 @@
     // Don't use HTML entities in the output except basic ones (config.basicEntities).
     config.entities = false;
 
+    // Allows section editing to be used immediately and not lose focus on desired element
+    // http://docs.ckeditor.com/#!/guide/dev_autogrow
+    if(window.waffle && window.waffle.flag_is_active('section_edit')) {
+        config.autoGrow_onStartup = true;
+    }
+
     config.startupFocus = true;
     config.bodyClass = 'text-content redesign';
     config.contentsCss = [
@@ -102,7 +108,7 @@
       mdn.staticPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}'
     ];
 
-    if (window.waffle && waffle.FLAGS.enable_customcss) {
+    if(window.waffle && window.waffle.flag_is_active('enable_customcss')) {
       config.contentsCss.push('{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1');
     }
 
