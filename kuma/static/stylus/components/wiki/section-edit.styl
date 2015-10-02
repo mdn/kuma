@@ -1,0 +1,15 @@
+.section-edit {
+    float: right;
+    margin-left: 20px;
+    set-smaller-font-size();
+    opacity: 0;
+
+    @media $media-query-mobile {
+        display: none;
+    }
+
+    &:focus,
+    h2:hover & {
+        opacity: 1;
+    }
+}
