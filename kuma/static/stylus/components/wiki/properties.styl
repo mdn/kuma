@@ -1,12 +1,13 @@
 
 /*
-Summary boxes
+Property definition boxes
 ====================================================================== */
 
-$summary-box-item-spacing = $content-horizontal-spacing;
-$summary-box-spacing = ($grid-spacing) - $summary-box-item-spacing;
-$summary-box-indent = ($grid-spacing * 2) - $summary-box-item-spacing;
+$properties-item-spacing = $content-horizontal-spacing;
+$properties-spacing = ($grid-spacing) - $properties-item-spacing;
+$properties-indent = ($grid-spacing * 2) - $properties-item-spacing;
 
+.properties, /* writing team is transitioning to use only this class - bug 1207344 */
 .cssprop,
 .htmlelt,
 .audionodebox,
@@ -20,14 +21,16 @@ $summary-box-indent = ($grid-spacing * 2) - $summary-box-item-spacing;
 
     .text-content & { /* need to override default text-content styles */
         border-collapse: separate;
-        bidi-value(padding, $summary-box-spacing $summary-box-indent $summary-box-spacing $summary-box-spacing, $summary-box-spacing $summary-box-spacing $summary-box-spacing $summary-box-indent);
+        bidi-value(padding, $properties-spacing $properties-indent $properties-spacing $properties-spacing, $properties-spacing $properties-spacing $properties-spacing $properties-indent);
         bidi-value(border-width, 0 0 0 $border-width, 0 $border-width 0 0);
         border-color: $code-block-border-color;
 
         @media $media-query-small-mobile {
-            bidi-value(padding, $summary-box-item-spacing, $summary-box-item-spacing);
+            bidi-value(padding, $properties-item-spacing, $properties-item-spacing);
         }
     }
+
+    /* writing team is transitioning to use table element only - bug 1207344 */
 
    li {
         display: table-row;
@@ -36,7 +39,7 @@ $summary-box-indent = ($grid-spacing * 2) - $summary-box-item-spacing;
 
     li dfn {
         display: table-cell;
-        bidi-value(padding, $summary-box-item-spacing ($summary-box-item-spacing * 2) $summary-box-item-spacing $summary-box-item-spacing, $summary-box-item-spacing $summary-box-item-spacing $summary-box-item-spacing ($summary-box-item-spacing* 2 ));
+        bidi-value(padding, $properties-item-spacing ($properties-item-spacing * 2) $properties-item-spacing $properties-item-spacing, $properties-item-spacing $properties-item-spacing $properties-item-spacing ($properties-item-spacing* 2 ));
         border-bottom: none;
         font-weight: bold;
         white-space: pre;
