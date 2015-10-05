@@ -14,6 +14,7 @@ from django.utils.html import conditional_escape
 
 from constance import config
 from jingo import register
+from jingo_minify.helpers import get_js_urls, get_css_urls
 
 from kuma.core.urlresolvers import reverse
 from .constants import DIFF_WRAP_COLUMN
@@ -232,3 +233,57 @@ def wiki_url(path):
     Look for a wiki page in the current locale, or default to given path
     """
     return reverse('wiki.document', args=[path])
+
+
+def asset_url_array(asset_urls):
+    """
+    Return a JS array of asset URLs.
+    """
+    url_array = '[' + ', '.join('"%s"' % url for url in asset_urls) + ']'
+    return jinja2.Markup(url_array)
+
+
+@register.function
+def js_url_array(bundle, debug=None):
+    """
+    Return a JS array of the URLS for a minified and bundled JS file.
+
+    In production, the array will have one item, the URL of the minified,
+    bundled JS file.  In development, each bundled item will be present, and
+    it will be the unminified versions.
+
+    For example, in production, 'main' returns CDN paths like:
+    ["https://developer.cdn.mozilla.net/static/js/main-min.js?build=97c12a9"]
+
+    In development, 'main' returns local paths like:
+    [
+      "/static/js/libs/jquery-2.1.0.js?build=1443476862,
+      "/static/js/components.js?build=1443476862",
+      "/static/js/analytics.js?build=1443476862",
+      "/static/js/main.js?build=1443476862",
+      "/static/js/auth.js?build=1443476862",
+      "/static/js/libs/fontfaceobserver/" +
+        "fontfaceobserver-standalone.js?build=1443476862",
+      "/static/js/fonts.js?build=1443476862"
+    ]
+    """
+    return asset_url_array(get_js_urls(bundle, debug))
+
+
+@register.function
+def css_url_array(bundle, debug=None):
+    """
+    Return a JS array of the URLS for a minified and bundled CSS file.
+
+    Similar to js_url_array, the array will have one item in production, and
+    potentially many items in development.  For example, in production 'mdn'
+    returns something like:
+    ["https://developer.cdn.mozilla.net/static/js/main-min.js?build=97c12a9"]
+
+    In development, 'mdn' returns something like:
+    [
+      "/static/css/font-awesome.css?build=1443558726",
+      "/static/css/main.css?build=1443563109"
+    ]
+    """
+    return asset_url_array(get_css_urls(bundle, debug))

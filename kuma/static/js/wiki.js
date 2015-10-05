@@ -191,11 +191,30 @@
         Syntax highlighting scripts
     */
     if($('article pre').length && ('querySelectorAll' in doc)) (function() {
-        var syntaxScript = doc.createElement('script');
-        syntaxScript.setAttribute('data-manual', '');
-        syntaxScript.async = 'true';
-        syntaxScript.src = mdn.staticPath + 'js/syntax-prism-min.js?build=' + mdn.build;
-        doc.body.appendChild(syntaxScript);
+        if (mdn.assets && mdn.assets.js.hasOwnProperty('syntax-prism')) {
+            mdn.assets.js['syntax-prism'].forEach(function(url, index, array) {
+                /*
+                   Note: In development, five scripts are loaded, and the
+                   later scripts use Prism, which is declared in the first
+                   script.  This means syntax highlighting often doesn't work
+                   on the first page load. Refresh, and syntax highlighing
+                   should work.
+
+                   To fix this, we'd have to use something like require.js or
+                   in-client merging of JS files.  Maybe django-pipeline will
+                   help as well.
+                 */
+                var syntaxScript = doc.createElement('script');
+                syntaxScript.setAttribute('data-manual', '');
+                syntaxScript.src = url;
+                if (array.length === 1) {
+                    syntaxScript.async = 'true';
+                } else {
+                    syntaxScript.defer = 'true';
+                }
+                doc.body.appendChild(syntaxScript);
+            });
+        }
     })();
 
     /*
@@ -306,19 +325,27 @@
     (function() {
         // don't run if no compat table on page with min 1 row
         var $compatTables = $('.bc-api table tbody tr');
+        var compatCSS, compatJS;
         if(!$compatTables.length) return;
 
         // don't run if waffle not active
         if(!win.waffle || !win.waffle.flag_is_active('compat_api')) return;
 
+        if(!win.mdn || !mdn.assets) return;
+        /*
+           This chaining logic will break in development if these assets are
+           split into multiple files.
+         */
+        compatCSS = mdn.assets.css['wiki-compat-tables'][0];
+        compatJS = mdn.assets.js['wiki-compat-tables'][0];
         $('<link />').attr({
-                href: mdn.staticPath + 'css/wiki-compat-tables-min.css',
+                href: compatCSS,
                 type: 'text/css',
                 rel: 'stylesheet'
             }).on('load', function() {
 
                 $.ajax({
-                    url: mdn.staticPath + 'js/wiki-compat-tables-min.js',
+                    url: compatJS,
                     dataType: 'script',
                     cache: true
                 }).then(function() {
