@@ -3,14 +3,19 @@
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
 define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
 
-    // Browsers to run integration testing against.
-    config.environments = [
-        { browserName: 'firefox', version: ['40'], platform: [ 'MAC' ] },
-        { browserName: 'chrome', version: ['44'], platform: [ 'MAC' ] },
-    ];
-
     // Name of the tunnel class to use for WebDriver tests
     config.tunnel = 'BrowserStackTunnel';
+
+    config.capabilities = {
+        'browserstack.ie.noFlash': true,
+        'browserstack.ie.enablePopups': true
+    };
+
+    // Browsers to run integration testing against.
+    config.environments = [
+        { browserName: 'firefox', platform: ['WIN8'] },
+        { browserName: 'chrome', platform: ['MAC'] },
+    ];
 
     // Format for outputting test results
     config.reporters = ['Pretty'];
