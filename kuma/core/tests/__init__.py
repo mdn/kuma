@@ -14,11 +14,7 @@ from nose.tools import eq_
 
 from ..cache import memcache
 from ..exceptions import FixtureMissingError
-from ..urlresolvers import split_path, reverse
-
-
-get = lambda c, v, **kw: c.get(reverse(v, **kw), follow=True)
-post = lambda c, v, data={}, **kw: c.post(reverse(v, **kw), data, follow=True)
+from ..urlresolvers import split_path
 
 
 def attrs_eq(received, **expected):

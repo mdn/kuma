@@ -20,7 +20,7 @@ from constance import config
 from jingo.helpers import urlparams
 from waffle.models import Flag
 
-from kuma.core.tests import SkippedTestCase, post, get
+from kuma.core.tests import SkippedTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 from ..events import EditDocumentEvent
@@ -616,8 +616,8 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         _create_document(title='Document Prueba', parent=self.d,
                          locale='es')
         # Make sure is_localizable hidden field is rendered
-        response = get(self.client, 'wiki.edit',
-                       args=[self.d.slug])
+        response = self.client.get(reverse('wiki.edit', args=[self.d.slug]),
+                                   follow=True)
         eq_(200, response.status_code)
         doc = pq(response.content)
         data = new_document_data()
@@ -625,8 +625,8 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         data.update(title=new_title)
         data.update(form='doc')
         data.update(is_localizable='True')
-        response = post(self.client, 'wiki.edit', data,
-                        args=[self.d.slug])
+        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
+                                    data, follow=True)
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
         eq_(new_title, doc.title)
@@ -637,8 +637,8 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         new_slug = 'Test-Document'
         data.update(slug=new_slug)
         data.update(form='doc')
-        response = post(self.client, 'wiki.edit', data,
-                        args=[self.d.slug])
+        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
+                                    data, follow=True)
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
         eq_(new_slug, doc.slug)
@@ -649,8 +649,8 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         new_title = 'TeST DoCuMent'
         data.update(title=new_title)
         data.update(form='doc')
-        response = post(self.client, 'wiki.edit', data,
-                        args=[self.d.slug])
+        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
+                                    data, follow=True)
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
         eq_(new_title, doc.title)
@@ -1078,13 +1078,14 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
 
     def test_preview_GET_405(self):
         """Preview with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.preview')
+        response = self.client.get(reverse('wiki.preview'), follow=True)
         eq_(405, response.status_code)
 
     def test_preview(self):
         """Preview the wiki syntax content."""
-        response = post(self.client, 'wiki.preview',
-                        {'content': '<h1>Test Content</h1>'})
+        response = self.client.post(reverse('wiki.preview'),
+                                    {'content': '<h1>Test Content</h1>'},
+                                    follow=True)
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_('Test Content', doc('article#wikiArticle h1').text())
@@ -1116,8 +1117,10 @@ class HelpfulVoteTests(UserTestCase, SkippedTestCase):
         d = self.document
         user = self.user_model.objects.get(username='testuser')
         self.client.login(username='testuser', password='testpass')
-        response = post(self.client, 'wiki.document_vote',
-                        {'helpful': 'Yes'}, args=[self.document.slug])
+        response = self.client.post(reverse('wiki.document_vote',
+                                            args=[self.document.slug]),
+                                    {'helpful': 'Yes'}, follow=True)
+
         eq_(200, response.status_code)
         votes = HelpfulVote.objects.filter(document=d, creator=user)
         eq_(1, votes.count())
@@ -1128,8 +1131,8 @@ class HelpfulVoteTests(UserTestCase, SkippedTestCase):
         d = self.document
         user = self.user_model.objects.get(username='testuser')
         self.client.login(username='testuser', password='testpass')
-        response = post(self.client, 'wiki.document_vote',
-                        {'not-helpful': 'No'}, args=[d.slug])
+        response = self.client.post(reverse('wiki.document_vote', args=[d.slug]),
+                                    {'not-helpful': 'No'}, follow=True)
         eq_(200, response.status_code)
         votes = HelpfulVote.objects.filter(document=d, creator=user)
         eq_(1, votes.count())
@@ -1138,8 +1141,8 @@ class HelpfulVoteTests(UserTestCase, SkippedTestCase):
     def test_vote_anonymous(self):
         """Test that voting works for anonymous user."""
         d = self.document
-        response = post(self.client, 'wiki.document_vote',
-                        {'helpful': 'Yes'}, args=[d.slug])
+        response = self.client.post(reverse('wiki.document_vote', args=[d.slug]),
+                                    {'helpful': 'Yes'}, follow=True)
         eq_(200, response.status_code)
         votes = HelpfulVote.objects.filter(document=d, creator=None)
         votes = votes.exclude(anonymous_id=None)
@@ -1171,8 +1174,10 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
 
     def test_page_renders_locales(self):
         """Load the page and verify it contains all the locales for l10n."""
-        response = get(self.client, 'wiki.select_locale',
-                       args=[self.d.slug])
+        response = self.client.get(reverse('wiki.select_locale',
+                                           args=[self.d.slug]),
+                                   follow=True)
+
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(len(settings.LANGUAGES) - 1,  # All except for 1 (en-US)

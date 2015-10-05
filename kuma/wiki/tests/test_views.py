@@ -2569,14 +2569,16 @@ class DocumentWatchTests(UserTestCase, WikiTestCase):
 
     def test_watch_GET_405(self):
         """Watch document with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.subscribe',
-                       args=[self.document.slug])
+        response = self.client.get(reverse('wiki.subscribe',
+                                           args=[self.document.slug]),
+                                   follow=True)
         eq_(405, response.status_code)
 
     def test_unwatch_GET_405(self):
         """Unwatch document with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.subscribe',
-                       args=[self.document.slug])
+        response = self.client.get(reverse('wiki.subscribe',
+                                           args=[self.document.slug]),
+                                   follow=True)
         eq_(405, response.status_code)
 
     def test_watch_unwatch(self):
@@ -2584,13 +2586,18 @@ class DocumentWatchTests(UserTestCase, WikiTestCase):
         user = self.user_model.objects.get(username='testuser')
 
         # Subscribe
-        response = post(self.client, 'wiki.subscribe', args=[self.document.slug])
+        response = self.client.post(reverse('wiki.subscribe',
+                                            args=[self.document.slug]),
+                                    follow=True)
+
         eq_(200, response.status_code)
         assert EditDocumentEvent.is_notifying(user, self.document), \
             'Watch was not created'
 
         # Unsubscribe
-        response = post(self.client, 'wiki.subscribe', args=[self.document.slug])
+        response = self.client.post(reverse('wiki.subscribe',
+                                            args=[self.document.slug]),
+                                    follow=True)
         eq_(200, response.status_code)
         assert not EditDocumentEvent.is_notifying(user, self.document), \
             'Watch was not destroyed'
