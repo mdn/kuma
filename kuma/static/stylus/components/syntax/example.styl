@@ -5,18 +5,22 @@ $bg-bad = blend(rgba($negative, 0.05), #fff);
 Pseudo element for icons
 -------------------------------------------------------------- */
 
-:not(pre)>code.example-good[class*='language-']:before,
-pre.example-good[class*='language-']:before,
-:not(pre)>code.example-bad[class*='language-']:before,
-pre.example-bad[class*='language-']:before {
-    border-radius: 100%; /* make it into a circle so bgcolor doesn't show */
-    font-family: 'FontAwesome';
-    font-size: $larger-font-size ;
-    position: absolute;
-    top: 14px;
-    left: 6px;
-    z-index: 10;
-    speak: none;
+:not(pre)>code.example-good[class*='language-'],
+pre.example-good[class*='language-'],
+:not(pre)>code.example-bad[class*='language-'],
+pre.example-bad[class*='language-'] {
+    position: relative;
+
+    &:before{
+        border-radius: 100%; /* make it into a circle so bgcolor doesn't show */
+        font-family: 'FontAwesome';
+        font-size: $larger-font-size ;
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        z-index: 10;
+        speak: none;
+    }
 }
 
 :not(pre)>code.example-good[class*='language-']:before,
