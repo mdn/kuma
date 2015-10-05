@@ -272,13 +272,12 @@ class RevisionForm(forms.ModelForm):
                 content = parsed_content.serialize()
             self.initial['content'] = content
 
-            self.initial['review_tags'] = list(self.instance.review_tags
-                                                            .values_list('name',
-                                                                         flat=True))
+            self.initial['review_tags'] = list(self.instance
+                                                   .review_tags
+                                                   .names())
             self.initial['localization_tags'] = list(self.instance
                                                          .localization_tags
-                                                         .values_list('name',
-                                                                      flat=True))
+                                                         .names())
 
         if self.section_id:
             self.fields['toc_depth'].required = False
@@ -443,8 +442,7 @@ class RevisionForm(forms.ModelForm):
             new_rev.creator = request.user
             new_rev.toc_depth = old_rev.toc_depth
             new_rev.save()
-            new_rev.review_tags.set(*list(old_rev.review_tags
-                                                 .values_list('name', flat=True)))
+            new_rev.review_tags.set(*list(old_rev.review_tags.names()))
 
         else:
             new_rev = super(RevisionForm, self).save(**kwargs)

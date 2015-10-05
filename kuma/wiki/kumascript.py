@@ -152,10 +152,8 @@ def get(document, cache_control, base_url, timeout=None):
             files=files,
             attachments=files,  # Just for sake of verbiage?
             slug=document.slug,
-            tags=list(document.tags.values_list('name', flat=True)),
-            review_tags=list(document.current_revision
-                                     .review_tags
-                                     .values_list('name', flat=True)),
+            tags=list(document.tags.names()),
+            review_tags=list(document.current_revision.review_tags.names()),
             modified=time.mktime(document.modified.timetuple()),
             cache_control=cache_control,
         )

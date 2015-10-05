@@ -593,25 +593,19 @@ class Document(NotificationsMixin, models.Model):
                     'last_edit': revision.created.isoformat(),
                     'locale': translation.locale,
                     'localization_tags': list(revision.localization_tags
-                                                      .values_list('name',
-                                                                   flat=True)),
-                    'review_tags': list(revision.review_tags
-                                                .values_list('name',
-                                                             flat=True)),
+                                                      .names()),
+                    'review_tags': list(revision.review_tags.names()),
                     'summary': summary,
-                    'tags': list(translation.tags
-                                            .values_list('name', flat=True)),
+                    'tags': list(translation.tags.names()),
                     'title': translation.title,
                     'url': translation.get_absolute_url(),
                 })
 
         if self.current_revision:
-            review_tags = list(self.current_revision
-                                   .review_tags
-                                   .values_list('name', flat=True))
+            review_tags = list(self.current_revision.review_tags.names())
             localization_tags = list(self.current_revision
                                          .localization_tags
-                                         .values_list('name', flat=True))
+                                         .names())
             last_edit = self.current_revision.created.isoformat()
             if self.current_revision.summary:
                 summary = self.current_revision.summary
@@ -626,7 +620,7 @@ class Document(NotificationsMixin, models.Model):
         if not self.pk:
             tags = []
         else:
-            tags = list(self.tags.values_list('name', flat=True))
+            tags = list(self.tags.names())
 
         now_iso = datetime.now().isoformat()
 
@@ -810,8 +804,7 @@ class Document(NotificationsMixin, models.Model):
             return unique_attr()
 
     def revert(self, revision, user, comment=None):
-        old_review_tags = list(revision.review_tags
-                                       .values_list('name', flat=True))
+        old_review_tags = list(revision.review_tags.names())
         if revision.document.original == self:
             revision.based_on = revision
         revision.id = None
@@ -1085,9 +1078,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Step 2: stash our current review tags, since we want to
         # preserve them.
-        review_tags = list(self.current_revision
-                               .review_tags
-                               .values_list('name', flat=True))
+        review_tags = list(self.current_revision.review_tags.names())
 
         # Step 3: Create (but don't yet save) a copy of our current
         # revision, but with the new slug and title (if title is

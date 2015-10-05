@@ -577,7 +577,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         self.d.save()
         tags = [u'tag1', u'tag2', u'tag3']
         self.d.tags.add(*tags)
-        result_tags = list(self.d.tags.values_list('name', flat=True))
+        result_tags = list(self.d.tags.names())
         result_tags.sort()
         eq_(tags, result_tags)
         tags = [u'tag1', u'tag4']
@@ -586,7 +586,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         self.client.post(reverse('wiki.edit',
                                  args=[self.d.slug]),
                          data)
-        result_tags = list(self.d.tags.values_list('name', flat=True))
+        result_tags = list(self.d.tags.names())
         result_tags.sort()
         eq_(tags, result_tags)
 

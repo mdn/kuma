@@ -77,5 +77,5 @@ def document_form_initial(document):
         'slug': document.slug,
         'category': document.category,
         'is_localizable': document.is_localizable,
-        'tags': list(document.tags.values_list('name', flat=True))
+        'tags': list(document.tags.names())
     }
