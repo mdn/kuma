@@ -3,4 +3,9 @@
 {% else %}
 	{% set from_content = '' %}
 {% endif %}
-{{ diff_table(from_content, revision_to.get_tidied_content(allow_none=True), revision_from.id, revision_to.id) }}
+{% set to_content = revision_to.get_tidied_content(allow_none=True) %}
+{% if from_content == None or to_content == None %}
+    {% trans %}The server is rendering the content comparison. Please refresh this page in a few minutes.{% endtrans %}
+{% else %}
+    {{ diff_table(from_content, revision_to.get_tidied_content(allow_none=True), revision_from.id, revision_to.id) }}
+{% endif %}

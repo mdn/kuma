@@ -741,6 +741,30 @@ class CompareRevisionTests(UserTestCase, WikiTestCase):
         response = self.client.get(url)
         eq_(404, response.status_code)
 
+    def test_no_tidied_content(self):
+        """
+        Verify revisions without tidied content show appropriate message.
+        """
+
+        # update() to skip the tidy_revision_content post_save signal handler
+        Revision.objects.filter(
+            id__in=[self.revision1.id, self.revision2.id]
+        ).update(
+            tidied_content=''
+        )
+
+        url = reverse('wiki.compare_revisions', args=[self.document.slug])
+        query = {'from': self.revision1.id, 'to': self.revision2.id}
+        url = urlparams(url, **query)
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+        ok_('Please refresh this page in a few minutes.' in response.content)
+
+        url = url + '&raw=1'
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+        ok_('Please refresh this page in a few minutes.' in response.content)
+
     def test_compare_revisions(self):
         """Compare two revisions"""
         url = reverse('wiki.compare_revisions', args=[self.document.slug])

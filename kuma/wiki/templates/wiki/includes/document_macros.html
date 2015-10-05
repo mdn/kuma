@@ -71,7 +71,7 @@
 
         <dt>{{ _('Content:') }}</dt>
         {% if revision_from.get_tidied_content(allow_none=True) == None or revision_to.get_tidied_content(allow_none=True) == None %}
-        <dd id="doc-rendering-scheduled" class="warning">{% trans %}Server is rendering the content comparison. Please refresh this page in a few minutes.{% endtrans %}</dd>
+        <dd id="doc-rendering-scheduled" class="warning">{% trans %}The server is rendering the content comparison. Please refresh this page in a few minutes.{% endtrans %}</dd>
         {% else %}
         <dd>{{ diff_table(revision_from.get_tidied_content(), revision_to.get_tidied_content(), revision_from.id, revision_to.id) }}</dd>
         {% endif %}
