@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import logging
 
-from django.db import models, migrations
+from django.db import migrations
 
 
 logger = logging.getLogger(__name__)
@@ -14,6 +14,7 @@ tables = [
     'wiki_localizationtag',
     'wiki_reviewtag',
 ]
+
 
 def alter_collation(cursor, collation):
     for table in tables:

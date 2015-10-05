@@ -47,7 +47,7 @@ def move_to_user(apps, schema_editor):
                         user._meta.get_field(field_name)
                     except models.FieldDoesNotExist:
                         print('Tried porting profile %s and field %s' %
-                            (profile.id, name))
+                              (profile.id, name))
                         raise
                     else:
                         setattr(user, field_name, url)
