@@ -796,6 +796,93 @@ CELERY_IMPORTS = (
 CELERY_ANNOTATIONS = {
     'cacheback.tasks.refresh_cache': {
         'rate_limit': '120/m',
+    }
+}
+
+CELERY_ROUTES = {
+    'cacheback.tasks.refresh_cache': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.actioncounters.tasks.update_actioncounter_counts': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.core.tasks.clean_sessions': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.core.tasks.delete_old_ip_bans': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.humans.tasks.humans_txt': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.build_index_sitemap': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.build_locale_sitemap': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.build_sitemaps': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.delete_old_revision_ips': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.tidy_revision_content': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.update_community_stats': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.update_document_share_url': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.search.tasks.prepare_index': {
+        'queue': 'mdn_search'
+    },
+    'kuma.search.tasks.finalize_index': {
+        'queue': 'mdn_search'
+    },
+    'kuma.wiki.tasks.index_documents': {
+        'queue': 'mdn_search'
+    },
+    'kuma.wiki.tasks.unindex_documents': {
+        'queue': 'mdn_search'
+    },
+    'kuma.users.tasks.send_welcome_email': {
+        'queue': 'mdn_emails'
+    },
+    'kuma.users.tasks.email_render_document_progress': {
+        'queue': 'mdn_emails'
+    },
+    'kuma.wiki.tasks.send_first_edit_email': {
+        'queue': 'mdn_emails'
+    },
+    'tidings.events._fire_task': {
+        'queue': 'mdn_emails'
+    },
+    'tidings.events.claim_watches': {
+        'queue': 'mdn_emails'
+    },
+    'kuma.wiki.tasks.move_page': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.acquire_render_lock': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.release_render_lock': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.render_document': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.render_document_chunk': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.render_stale_documents': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.build_json_data_for_document': {
+        'queue': 'mdn_wiki'
     },
 }
 
