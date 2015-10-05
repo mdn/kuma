@@ -15,27 +15,28 @@ define(['base/lib/config', 'base/lib/login'], function(config, libLogin) {
     }
 
     POM.prototype.init = function(remote, url) {
+        var self = this;
+
         this.remote = remote;
         this.url = url;
 
-        return this;
+        // Get rid of cookies -- they may cause login issues
+        return this.goTo().clearCookies().then(function() {
+            // Don't allow starting any test set logged in
+            return self.logout(true);
+        });
     };
 
     // Setup the page.  This is a *must* for ensuring consistency in testing
-    POM.prototype.setup = function() {
+    POM.prototype.setup = function(testObj) {
         var remote = this.remote;
 
-        remote.setExecuteAsyncTimeout(config.asyncExecutionTimeout);
+        // Set async timeout and test-wide timeouts
+        remote.setExecuteAsyncTimeout(config.testTimeout);
+        testObj.timeout = config.testTimeout;
 
         // Go to the homepage, set the default size of the window
         return this.goTo()
-                // Acts as a normalizer for each test:  ensure page load is complete before running tests
-                // Mostly for Chrome
-                .executeAsync(function(done) {
-                    if(document && document.readyState === 'complete') {
-                        done();
-                    }
-                })
                 .then(function() {
                     return remote.setWindowSize(config.defaultWidth, config.defaultHeight);
                 });
@@ -62,10 +63,10 @@ define(['base/lib/config', 'base/lib/login'], function(config, libLogin) {
     };
 
     // Shortcut method to log out
-    POM.prototype.logout = function() {
-        if(!this.loggedIn) return;
+    POM.prototype.logout = function(force) {
+        if(!force && !this.loggedIn) return;
 
-        return libLogin.completePersonaLogout(this.remote);
+        return libLogin.completePersonaLogout(this.remote, true);
     };
 
     return POM;

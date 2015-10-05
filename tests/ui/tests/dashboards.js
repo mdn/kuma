@@ -19,11 +19,11 @@ define([
         name: 'dashboards',
 
         before: function() {
-            Page.init(this.remote, config.url + 'dashboards/revisions');
+            return Page.init(this.remote, config.url + 'dashboards/revisions');
         },
 
         beforeEach: function() {
-            return Page.setup();
+            return Page.setup(this);
         },
 
         after: function() {

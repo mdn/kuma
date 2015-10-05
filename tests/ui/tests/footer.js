@@ -23,7 +23,7 @@ define([
         },
 
         beforeEach: function() {
-            return Page.setup();
+            return Page.setup(this);
         },
 
         after: function() {

@@ -19,11 +19,11 @@ define([
         name: 'auth',
 
         before: function() {
-            Page.init(this.remote, config.homepageUrl);
+            return Page.init(this.remote, config.homepageUrl);
         },
 
         beforeEach: function() {
-            return Page.setup().then(function() {
+            return Page.setup(this).then(function() {
                 return libLogin.openLoginWidget(Page.remote);
             });
         },
