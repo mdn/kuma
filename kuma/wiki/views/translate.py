@@ -144,7 +144,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                                     .filterEditorSafety()
                                                     .serialize())
         instance = doc and doc.current_or_latest_revision()
-        rev_form = RevisionForm(instance=instance,
+        rev_form = RevisionForm(request=request,
+                                instance=instance,
                                 initial=initial,
                                 parent_slug=slug_dict['parent'])
 
@@ -169,7 +170,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
             if which_form == 'both':
                 # Sending a new copy of post so the slug change above
                 # doesn't cause problems during validation
-                rev_form = RevisionForm(request.POST,
+                rev_form = RevisionForm(request=request,
+                                        data=request.POST,
                                         parent_slug=slug_dict['parent'])
 
             # If we are submitting the whole form, we need to check that
@@ -193,7 +195,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
             # update the post data with the toc_depth of original
             post_data['toc_depth'] = based_on_rev.toc_depth
 
-            rev_form = RevisionForm(post_data, parent_slug=slug_dict['parent'])
+            rev_form = RevisionForm(request=request,
+                                    data=post_data,
+                                    parent_slug=slug_dict['parent'])
             rev_form.instance.document = doc  # for rev_form.clean()
 
             if rev_form.is_valid() and not doc_form_invalid:
@@ -209,7 +213,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                     except Document.DoesNotExist:
                         pass
 
-                rev_form.save(request, doc)
+                rev_form.save(doc)
                 return redirect(doc)
 
     if doc:

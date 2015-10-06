@@ -164,3 +164,10 @@
 [submodule "vendor/src/pipeline"]
 	path = vendor/src/pipeline
 	url = https://github.com/cyberdelia/django-pipeline.git
+[submodule "vendor/src/responses"]
+	path = vendor/src/responses
+	url = https://github.com/getsentry/responses.git
+[submodule "vendor/src/cookies"]
+	path = vendor/src/cookies
+	url = https://gitlab.com/sashahart/cookies.git
+	ignore = untracked

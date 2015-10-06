@@ -33,6 +33,7 @@ from kuma.core.exceptions import ProgrammingError
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
 from kuma.search.decorators import register_live_index
+from kuma.spam.models import SpamAttempt
 
 from . import kumascript
 from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
@@ -1807,3 +1808,30 @@ class EditorToolbar(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class DocumentSpamAttempt(SpamAttempt):
+    """
+    The wiki document specific spam attempt.
+
+    Stores title, slug and locale of the documet revision to be able
+    to see where it happens.
+    """
+    title = models.CharField(
+        verbose_name=_('Title'),
+        max_length=255,
+    )
+    slug = models.CharField(
+        verbose_name=_('Slug'),
+        max_length=255,
+    )
+    document = models.ForeignKey(
+        Document,
+        related_name='spam_attempts',
+        null=True,
+        blank=True,
+        verbose_name=_('Document (optional)')
+    )
+
+    def __unicode__(self):
+        return u'%s (%s)' % (self.slug, self.title)
