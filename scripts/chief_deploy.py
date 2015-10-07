@@ -89,6 +89,22 @@ def ping_newrelic(ctx):
     ctx.local('curl --silent -H "x-api-key:%s" -d "deployment[app_name]=%s" -d "deployment[revision]=%s" -d "deployment[user]=Chief" https://rpm.newrelic.com/deployments.xml' % (settings.NEWRELIC_API_KEY, settings.REMOTE_HOSTNAME, tag))
 
 
+def intern_settings():
+    keys = ['BROWSERSTACK_ACCESS_KEY',
+            'INTERN_DOMAIN',
+            'INTERN_USERNAME',
+            'INTERN_PASSWORD']
+    for key in keys:
+        if not settings.get(key, False):
+            return False
+    return (
+          settings.BROWSERSTACK_ACCESS_KEY,
+          settings.INTERN_DOMAIN,
+          settings.INTERN_USERNAME,
+          settings.INTERN_PASSWORD
+    )
+
+
 @task
 def run_ui_tests(ctx):
     ctx.local('BROWSERSTACK_USERNAME="mdndev1" '
@@ -97,12 +113,7 @@ def run_ui_tests(ctx):
               'wd=User:Intern'
               'd=%s '
               'u=%s '
-              'p=%s ' % (
-                  settings.BROWSERSTACK_ACCESS_KEY,
-                  settings.INTERN_DOMAIN,
-                  settings.INTERN_USERNAME,
-                  settings.INTERN_PASSWORD
-              ))
+              'p=%s ' % intern_settings())
 
 
 @task
@@ -145,7 +156,8 @@ def deploy(ctx):
     ping_newrelic()
 #    prime_app()
     update_celery()
-    run_ui_tests()
+    if intern_settings():
+        run_ui_tests()
 
 
 @task
