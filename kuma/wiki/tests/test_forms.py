@@ -4,8 +4,9 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from kuma.users.tests import UserTestCase
+
 from ..forms import RevisionForm, TreeMoveForm
-from ..tests import doc_rev, normalize_html
+from ..tests import normalize_html, revision
 
 
 class FormEditorSafetyFilterTests(UserTestCase):
@@ -14,10 +15,10 @@ class FormEditorSafetyFilterTests(UserTestCase):
     def test_form_onload_attr_filter(self):
         """RevisionForm should strip out any harmful onload attributes from
         input markup"""
-        d, r = doc_rev("""
+        rev = revision(save=True, is_approved=True, content="""
             <svg><circle onload=confirm(3)>
         """)
-        rev_form = RevisionForm(instance=r)
+        rev_form = RevisionForm(instance=rev)
         ok_('onload' not in rev_form.initial['content'])
 
 
@@ -26,7 +27,7 @@ class RevisionFormTests(UserTestCase):
     def test_form_loaded_with_section(self):
         """RevisionForm given section_id should load initial content for only
         one section"""
-        d, r = doc_rev("""
+        rev = revision(save=True, is_approved=True, content="""
             <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
@@ -44,12 +45,12 @@ class RevisionFormTests(UserTestCase):
             <p>test</p>
             <p>test</p>
         """
-        rev_form = RevisionForm(instance=r, section_id="s2")
+        rev_form = RevisionForm(instance=rev, section_id="s2")
         eq_(normalize_html(expected),
             normalize_html(rev_form.initial['content']))
 
     def test_form_save_section(self):
-        d, r = doc_rev("""
+        rev = revision(save=True, is_approved=True, content="""
             <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
@@ -79,11 +80,11 @@ class RevisionFormTests(UserTestCase):
             <p>test</p>
         """
         rev_form = RevisionForm({"content": replace_content},
-                                instance=r,
+                                instance=rev,
                                 section_id="s2")
         request = RequestFactory().get('/')
-        request.user = r.creator
-        new_rev = rev_form.save(request, d)
+        request.user = rev.creator
+        new_rev = rev_form.save(request, rev.document)
         eq_(normalize_html(expected),
             normalize_html(new_rev.content))
 
@@ -99,6 +100,21 @@ class RevisionFormTests(UserTestCase):
         }
         rev_form = RevisionForm(data, parent_slug='User:groovecoder')
         ok_(not rev_form.is_valid())
+
+    def test_case_sensitive_tags(self):
+        """
+        RevisionForm should reject new tags that are the same as existing tags
+        that only differ by case.
+        """
+        rev = revision(save=True, tags='JavaScript')
+        data = {
+            'content': 'Content',
+            'toc_depth': 1,
+            'tags': 'Javascript',  # Note the lower-case "S".
+        }
+        rev_form = RevisionForm(data, instance=rev)
+        ok_(not rev_form.is_valid())
+        ok_('use these tag(s) instead' in rev_form.errors['tags'][0])
 
 
 class TreeMoveFormTests(UserTestCase):

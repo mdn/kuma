@@ -1,21 +1,27 @@
-from tower import ugettext as _, ugettext_lazy as _lazy
+import logging
+
 import waffle
+from taggit.utils import parse_tags
+from tower import ugettext as _
+from tower import ugettext_lazy as _lazy
 
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.widgets import CheckboxSelectMultiple
+from django.utils.text import get_text_list
 
-
-from kuma.contentflagging.forms import ContentFlagForm
 import kuma.wiki.content
+from kuma.contentflagging.forms import ContentFlagForm
 from kuma.core.form_fields import StrippedCharField
-from .constants import (SLUG_CLEANSING_RE, INVALID_DOC_SLUG_CHARS_RE,
-                        INVALID_REV_SLUG_CHARS_RE,
-                        DOCUMENT_PATH_RE, REVIEW_FLAG_TAGS,
-                        LOCALIZATION_FLAG_TAGS, RESERVED_SLUGS_RES)
+
+from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
+                        INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
+                        RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
+                        SLUG_CLEANSING_RE)
 from .events import EditDocumentEvent
-from .models import Document, Revision, RevisionIP, valid_slug_parent
+from .models import (Document, DocumentTag, Revision, RevisionIP,
+                     valid_slug_parent)
 from .tasks import send_first_edit_email
 
 
@@ -55,6 +61,11 @@ MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
                          'editing it.')
 MOVE_REQUIRED = _lazy(u"Changing this document's slug requires "
                       u"moving it and its children.")
+TAG_DUPE = _lazy(u'There is another tag matching this tag that only differs '
+                 u'by case. Please use these tag(s) instead: %(tag)s.')
+
+
+log = logging.getLogger('kuma.wiki.forms')
 
 
 class DocumentForm(forms.ModelForm):
@@ -294,6 +305,36 @@ class RevisionForm(forms.ModelForm):
             pass
 
         return slug
+
+    def clean_tags(self):
+        """
+        Validate the tags ensuring we have no case-sensitive duplicates.
+        """
+        tags = self.cleaned_data['tags']
+        dupe_tags = []
+
+        if tags:
+            for tag in parse_tags(tags):
+                # Note: The exact match query doesn't work correctly with
+                # MySQL with regards to case-sensitivity. If we move to
+                # Postgresql in the future this code may need to change.
+                doc_tag = (DocumentTag.objects.filter(name__exact=tag)
+                                              .values_list('name', flat=True))
+
+                if doc_tag:
+                    if doc_tag[0] != tag and doc_tag[0].lower() == tag.lower():
+                        dupe_tags.append(doc_tag[0])
+
+                # Write a log we can grep to help find pre-existing duplicate
+                # document tags for cleanup.
+                if len(doc_tag) > 1:
+                    log.warn('Found duplicate document tags: %s' % doc_tag)
+
+            if dupe_tags:
+                raise forms.ValidationError(
+                    TAG_DUPE % {'tag': get_text_list(dupe_tags)})
+
+        return tags
 
     def clean_content(self):
         """
