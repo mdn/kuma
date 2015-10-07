@@ -118,7 +118,14 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 					{
 						type: 'html',
 						id: 'graytLanguagesHint',
-						html: '<div style="margin:5px auto; width:95%;white-space:normal;"><span style="width:10px;height:10px;display:inline-block;background:#02b620;vertical-align:top;margin-top:2px;"></span> - This languages are supported by Grammar As You Type(GRAYT).</div>'
+						html: '<div style="margin:5px auto; width:95%;white-space:normal;" id="' + editor.name + 'graytLanguagesHint"><span style="width:10px;height:10px;display: inline-block; background:#02b620;vertical-align:top;margin-top:2px;"></span> - This languages are supported by Grammar As You Type(GRAYT).</div>',
+						onShow: function() {
+							var graytLanguagesHint = doc.getById(editor.name + 'graytLanguagesHint');
+
+							if (!editor.config.grayt_autoStartup) {
+								graytLanguagesHint.$.style.display = 'none';
+							}
+						}
 					}
 				]
 			}
@@ -490,7 +497,8 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 
 			radioLabel.appendText(key);
 			radioLabel.setAttribute("for", id);
-			if(isSupportedByGrayt) {
+
+			if(isSupportedByGrayt && editor.config.grayt_autoStartup) {
 				radioLabel.setStyles({
 					'color': '#02b620'
 				});

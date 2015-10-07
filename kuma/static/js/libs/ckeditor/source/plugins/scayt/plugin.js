@@ -302,12 +302,18 @@ CKEDITOR.plugins.add('scayt', {
 
 		var contentDomHandler = function() {
 			if(inline_mode) {
-				editor.on('blur', scaytDestroy);
-				editor.on('focus', contentDomReady);
 
-				// We need to check if editor has focus(created) right now.
-				// If editor is active - make attempt to create scayt
-				if(editor.focusManager.hasFocus) {
+				if (!editor.config.scayt_inlineModeImmediateMarkup) {
+					editor.on('blur', scaytDestroy);
+					editor.on('focus', contentDomReady);
+
+					// We need to check if editor has focus(created) right now.
+					// If editor is active - make attempt to create scayt
+					if(editor.focusManager.hasFocus) {
+						contentDomReady();
+					}
+
+				} else {
 					contentDomReady();
 				}
 
@@ -322,6 +328,7 @@ CKEDITOR.plugins.add('scayt', {
 
 		editor.on('beforeCommandExec', function(ev) {
 			var scaytInstance = editor.scayt,
+				selectedLangElement = null,
 				forceBookmark = false,
 				removeMarkupInsideSelection = true;
 
@@ -333,7 +340,7 @@ CKEDITOR.plugins.add('scayt', {
 				}
 			} else if(	ev.data.name === 'bold' || ev.data.name === 'italic' || ev.data.name === 'underline' ||
 						ev.data.name === 'strike' || ev.data.name === 'subscript' || ev.data.name === 'superscript' ||
-						ev.data.name === 'enter' || ev.data.name === 'cut') {
+						ev.data.name === 'enter' || ev.data.name === 'cut' || ev.data.name === 'language') {
 				if(scaytInstance) {
 					if(ev.data.name === 'cut') {
 						removeMarkupInsideSelection = false;
@@ -341,28 +348,25 @@ CKEDITOR.plugins.add('scayt', {
 						// Otherwise we will get issues with cutting text via context menu.
 						forceBookmark = true;
 					}
-					scaytInstance.removeMarkupInSelectionNode({
-						removeInside: removeMarkupInsideSelection,
-						forceBookmark: forceBookmark
+
+					// We need to remove all SCAYT markup from 'lang' node before it will be deleted.
+					// We need to remove SCAYT markup from selected text before creating 'lang' node as well.
+					if(ev.data.name === 'language') {
+						selectedLangElement = editor.plugins.language.getCurrentLangElement(editor);
+						selectedLangElement = selectedLangElement && selectedLangElement.$;
+						// We need to force bookmark before we remove our markup.
+						// Otherwise we will get issues with cutting text via language plugin menu.
+						forceBookmark = true;
+					}
+
+					editor.fire('reloadMarkupScayt', {
+						removeOptions: {
+							removeInside: removeMarkupInsideSelection,
+							forceBookmark: forceBookmark,
+							selectionNode: selectedLangElement
+						},
+						timeout: 0
 					});
-
-					setTimeout(function() {
-						scaytInstance.fire('startSpellCheck, startGrammarCheck');
-					}, 0);
-				}
-			}
-
-			// We need to remove all SCAYT markup from 'lang' node before it will be deleted.
-			// We need to remove SCAYT markup from selected text before creating 'lang' node as well.
-			if(ev.data.name === 'language') {
-				var selectedLangElement = editor.plugins.language.getCurrentLangElement(editor);
-
-				if(scaytInstance) {
-					scaytInstance.removeMarkupInSelectionNode({selectionNode: selectedLangElement && selectedLangElement.$});
-
-					setTimeout(function() {
-						scaytInstance.fire('startSpellCheck, startGrammarCheck');
-					}, 0);
 				}
 			}
 		});
@@ -435,36 +439,35 @@ CKEDITOR.plugins.add('scayt', {
 			}
 		}, this, null, 50);
 
-		function reloadMarkupScayt() {
-			var scaytInstance = editor.scayt;
+		editor.on('reloadMarkupScayt', function(ev) {
+			var scaytInstance = editor.scayt,
+				removeOptions = ev.data && ev.data.removeOptions,
+				timeout = ev.data && ev.data.timeout;
 
 			if (scaytInstance) {
-				scaytInstance.removeMarkupInSelectionNode();
-				scaytInstance.fire('startSpellCheck, startGrammarCheck');
+				scaytInstance.removeMarkupInSelectionNode(removeOptions);
+				if(typeof timeout === 'number') {
+					setTimeout(function() {
+						scaytInstance.fire('startSpellCheck, startGrammarCheck');
+					}, timeout);
+				} else {
+					scaytInstance.fire('startSpellCheck, startGrammarCheck');
+				}
 			}
-		}
+		});
 
 		// Reload spell-checking for current word after insertion completed.
 		editor.on('insertElement', function() {
-
 			// IE bug: we need wait here to make sure that focus is returned to editor, and we can store the selection before we proceed with markup
-			if ( CKEDITOR.env.ie ) {
-				setTimeout(function() {
-					reloadMarkupScayt();
-				}, 50);
-			} else {
-				reloadMarkupScayt();
-			}
-
-
+			editor.fire('reloadMarkupScayt', {removeOptions: {forceBookmark: true}});
 		}, this, null, 50);
 
 		editor.on('insertHtml', function() {
-			reloadMarkupScayt();
+			editor.fire('reloadMarkupScayt');
 		}, this, null, 50);
 
 		editor.on('insertText', function() {
-			reloadMarkupScayt();
+			editor.fire('reloadMarkupScayt');
 		}, this, null, 50);
 
 		// The event is listening to open necessary dialog tab
@@ -498,6 +501,9 @@ CKEDITOR.plugins.add('scayt', {
 
 		if(typeof editor.config.grayt_autoStartup !== 'boolean' || inlineMode || editor.plugins.divarea) {
 			editor.config.grayt_autoStartup = false;
+		}
+		if(typeof editor.config.scayt_inlineModeImmediateMarkup !== 'boolean') {
+			editor.config.scayt_inlineModeImmediateMarkup = false;
 		}
 		plugin.state.grayt[editor.name] = editor.config.grayt_autoStartup;
 
@@ -675,22 +681,12 @@ CKEDITOR.plugins.add('scayt', {
 			var dataFilterRules = {
 				elements: {
 					span: function(element) {
-						var scaytState = plugin.state.scayt[editor.name],
-							graytState = plugin.state.grayt[editor.name];
 
-						if( plugin && element.classes && (
-							  (scaytState && CKEDITOR.tools.search(element.classes, plugin.options.misspelled_word_class)) ||
-							  (graytState && CKEDITOR.tools.search(element.classes, plugin.options.problem_grammar_class))
-						  ) ) {
+						var scaytState = element.hasClass(plugin.options.misspelled_word_class) && element.attributes[plugin.options.data_attribute_name],
+							graytState = element.hasClass(plugin.options.problem_grammar_class) && element.attributes[plugin.options.problem_grammar_data_attribute];
 
-							if (element.classes && element.parent.type === CKEDITOR.NODE_DOCUMENT_FRAGMENT) {
-								delete element.attributes['style'];
-								delete element.name;
-							} else {
-								delete element.classes[CKEDITOR.tools.indexOf(element.classes, plugin.options.misspelled_word_class)];
-								delete element.classes[CKEDITOR.tools.indexOf(element.classes, plugin.options.problem_grammar_class)];
-							}
-
+						if(plugin && (scaytState || graytState)) {
+							delete element.name;
 						}
 
 						return element;
@@ -705,15 +701,11 @@ CKEDITOR.plugins.add('scayt', {
 			var htmlFilterRules = {
 				elements: {
 					span: function(element) {
-						var scaytState = plugin.state.scayt[editor.name] && element.hasClass(plugin.options.misspelled_word_class) && element.attributes[plugin.options.data_attribute_name],
-							graytState = plugin.state.grayt[editor.name] && element.hasClass(plugin.options.problem_grammar_class) && element.attributes[plugin.options.problem_grammar_data_attribute];
+
+						var scaytState = element.hasClass(plugin.options.misspelled_word_class) && element.attributes[plugin.options.data_attribute_name],
+							graytState = element.hasClass(plugin.options.problem_grammar_class) && element.attributes[plugin.options.problem_grammar_data_attribute];
 
 						if(plugin && (scaytState || graytState)) {
-
-							element.removeClass(plugin.options.misspelled_word_class);
-							element.removeClass(plugin.options.problem_grammar_class);
-							delete element.attributes[plugin.options.data_attribute_name];
-							delete element.attributes[plugin.options.problem_grammar_data_attribute];
 							delete element.name;
 						}
 
@@ -1032,8 +1024,11 @@ CKEDITOR.plugins.add('scayt', {
 
 				eventObject[replaceKeyName] = suggestion;
 				scaytInstance.replaceSelectionNode(eventObject);
-				// we need to remove markup from selection node here in case that there are still our markup - grayt or scayt
-				scaytInstance.removeMarkupInSelectionNode();
+
+				// we need to remove grammar markup from selection node if we just performed replace action for misspelling
+				if(updateEventName === 'startGrammarCheck') {
+					scaytInstance.removeMarkupInSelectionNode({grammarOnly: true});
+				}
 				// for grayt problem replacement we need to fire 'startSpellCheck'
 				// for scayt misspelling replacement we need to fire 'startGrammarCheck'
 				scaytInstance.fire(updateEventName);
@@ -1124,7 +1119,7 @@ CKEDITOR.plugins.scayt = {
 
 			// Fix bug with getting wrong uid after re-creating SCAYT instance.
 			// And as result - restoring options for wrong instance
-			if(!container.id) {
+			if(!container.id && _editor.element.getAttribute('id')) {
 				container.id = _editor.element.getAttribute('id');
 			}
 
@@ -1184,10 +1179,14 @@ CKEDITOR.plugins.scayt = {
 			timestamp,
 			scaytUrl;
 
+		// no need to process load requests from same editor as it can cause bugs with
+		// loading ckscayt app due to subsequent calls of some events
+		// need to be before 'if' statement, because of timing issue in CKEDITOR.scriptLoader
+		// when callback executing is delayed for a few milliseconds, and scayt can be created twise
+		// on one instance
+		if(this.loadingHelper[editor.name]) return;
+
 		if(typeof window.SCAYT === 'undefined' || typeof window.SCAYT.CKSCAYT !== 'function') {
-			// no need to process load requests from same editor as it can cause bugs with
-			// loading ckscayt app due to subsequent calls of some events
-			if(this.loadingHelper[editor.name]) return;
 
 			// add onLoad callbacks for editors while SCAYT is loading
 			this.loadingHelper[editor.name] = callback;
@@ -1196,7 +1195,10 @@ CKEDITOR.plugins.scayt = {
 			//creating unique timestamp for SCAYT URL
 			date = new Date();
 			timestamp = date.getTime();
-			scaytUrl = editor.config.scayt_srcUrl + '?' + timestamp;
+			scaytUrl = editor.config.scayt_srcUrl;
+
+			//if there already implemented timstamp for scayr_srcURL use it, if not use our timestamp
+			scaytUrl = scaytUrl + (scaytUrl.indexOf('?') >= 0 ? '' : '?' + timestamp);
 
 			if (!this.loadingHelper.ckscaytLoading) {
 				CKEDITOR.scriptLoader.load(scaytUrl, function(success) {
@@ -1232,14 +1234,32 @@ CKEDITOR.plugins.scayt = {
 };
 
 CKEDITOR.on('dialogDefinition', function(dialogDefinitionEvent) {
+	var dialogName = dialogDefinitionEvent.data.name,
+		dialogDefinition = dialogDefinitionEvent.data.definition,
+		dialog = dialogDefinition.dialog;
 
-	if (dialogDefinitionEvent.data.name === 'scaytDialog') {
-
-		var dialogDefinition = dialogDefinitionEvent.data.definition;
-
-		dialogDefinition.dialog.on('cancel', function(cancelEvent) {
+	if (dialogName === 'scaytDialog') {
+		dialog.on('cancel', function(cancelEvent) {
 			return false;
 		}, this, null, -1);
+	}
+
+	if (dialogName === 'link') {
+		dialog.on('ok', function(okEvent) {
+			var editor = okEvent.sender && okEvent.sender.getParentEditor();
+
+			if(editor) {
+				setTimeout(function() {
+					editor.fire('reloadMarkupScayt', {
+						removeOptions: {
+							removeInside: true,
+							forceBookmark: true
+						},
+						timeout: 0
+					});
+				}, 0);
+			}
+		});
 	}
 });
 
@@ -1287,7 +1307,7 @@ CKEDITOR.on('scaytReady', function() {
 		});
 	}
 
-	if(CKEDITOR.config.scayt_handleUndoRedo === true) {
+	if (CKEDITOR.config.scayt_handleUndoRedo === true) {
 		var undoImagePrototype = CKEDITOR.plugins.undo.Image.prototype;
 
 		// add backword compatibility for CKEDITOR 4.2. method equals was repleced on other method
@@ -1335,6 +1355,17 @@ CKEDITOR.on('scaytReady', function() {
  * @cfg {Boolean} [grayt_autoStartup=false]
  * @member CKEDITOR.config
  */
+
+/**
+ * The parameter turns on/off SCAYT initiation when Inline CKEditor is not focused. SCAYT markup is taken place (SCAYT instance is not destroyed)
+ * in both Inline CKEditor's states, focused and unfocused.
+ *
+ *		 config.scayt_inlineModeImmediateMarkup = true;
+ *
+ * @cfg {Boolean} [scayt_inlineModeImmediateMarkup=false]
+ * @member CKEDITOR.config
+ */
+
 
 /**
  * The parameter defines the number of SCAYT suggestions to show in the main context menu.
