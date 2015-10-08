@@ -168,14 +168,14 @@
                 $openCell.addClass('active').attr('aria-expanded', true);
 
                 // add measured height to history and to the cell/row it is being displayed beneath (CSS handles transition)
-                displayDetect = $table.find('thead td:first').first().css('z-index');
+                displayDetect = $table.find('thead td').first().css('z-index');
 
-                if(displayDetect === 'auto') {
-                    $subject = $row.find('th, td');
-                } else if(displayDetect == 1) {
+                if(displayDetect == 1 ) {
                     $subject = $row.find('td');
-                } else {
+                } else if(displayDetect == 2) {
                     $subject = $openCell;
+                } else {
+                    $subject = $row.find('th, td');
                 }
 
                 animating = true;
