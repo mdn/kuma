@@ -91,17 +91,15 @@ def ping_newrelic(ctx):
 
 def intern_settings():
     keys = ['BROWSERSTACK_ACCESS_KEY',
-            'INTERN_DOMAIN',
             'INTERN_USERNAME',
             'INTERN_PASSWORD']
     for key in keys:
-        if not settings.get(key, False):
+        if not getattr(settings, key, False):
             return False
     return (
-          settings.BROWSERSTACK_ACCESS_KEY,
-          settings.INTERN_DOMAIN,
-          settings.INTERN_USERNAME,
-          settings.INTERN_PASSWORD
+        settings.BROWSERSTACK_ACCESS_KEY,
+        settings.INTERN_USERNAME,
+        settings.INTERN_PASSWORD
     )
 
 
@@ -111,9 +109,10 @@ def run_ui_tests(ctx):
               'BROWSERSTACK_ACCESS_KEY="%s" '
               './node_modules/.bin/intern-runner config="intern-browserstack" '
               'wd=User:Intern'
-              'd=%s '
               'u=%s '
-              'p=%s ' % intern_settings())
+              'p=%s '
+              'd=%s '
+              % (intern_settings() + (settings.REMOTE_HOSTNAME,)))
 
 
 @task
