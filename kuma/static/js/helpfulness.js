@@ -1,12 +1,18 @@
 (function(win, doc, $) {
 
+    var waitBeforeAsking = 60000;
+    var articleTracker = doc.location.pathname + '#answered-helpful';
     // this feature requires localStorage
     if (('localStorage' in win)) {
         var ignore = localStorage.getItem('helpful-ignore') === 'true'; // true if ever clicked ignore
-        var askedRecently = parseInt(localStorage.getItem(doc.location + '#answered-helpful'), 10) > Date.now();
-        if (!ignore && !askedRecently) {
+        var articleAskedRecently = parseInt(localStorage.getItem(articleTracker), 10) > Date.now();
+        var lastAsked = localStorage.getItem('helpful-asked-last');
+        var today = new Date().setHours(0,0,0,0);
+        var askedToday = String(lastAsked) === String(today);
+
+        if (!ignore && !articleAskedRecently && !askedToday) {
             // ask about helpfulness after 1 min
-            setTimeout(inquire, 60000);
+            setTimeout(inquire, waitBeforeAsking);
         }
     }
 
@@ -14,6 +20,9 @@
     function inquire() {
         // dimension7 is "helpfulness"
         if(win.ga) ga('set', 'dimension7', 'Yes');
+
+        // note that we asked today
+        localStorage.setItem('helpful-asked-last', today);
 
         // ask a simple question
         var ask = gettext('Did this page help you?') +
@@ -47,6 +56,8 @@
             {val: 'Make-Simpler', text: gettext('Make explanations clearer')},
             {val: 'Needs-More-Info', text: gettext('Add more details')},
             {val: 'Needs-Correction', text: gettext('Fix incorrect information')},
+            {val: 'Needs-Examples', text: gettext('Add or improve examples')},
+            {val: 'SEO', text: gettext('My search should have lead to a different article.')},
             {val: 'Other', text: gettext('Something else')}
         ]
         var $select = $('<select />').attr({
@@ -85,7 +96,7 @@
 
     // set a date (180 days ahead) for asking again
     function askAgainLater() {
-        localStorage.setItem(doc.location + '#answered-helpful', Date.now() + (1000*60*60*24)*180);
+        localStorage.setItem(articleTracker, Date.now() + (1000*60*60*24)*180);
     }
 
 })(window, document, jQuery);
