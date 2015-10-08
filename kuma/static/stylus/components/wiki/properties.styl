@@ -59,5 +59,29 @@ $properties-indent = ($grid-spacing * 2) - $properties-item-spacing;
     td {
         border-width: 0;
         vertical-align: top;
+
+        li {
+            display: list-item;
+            list-style-type: disc;
+            line-height: 1;
+        }
+    }
+}
+
+/* small screen improvments to table display, only need to apply to .properties
+because we can be sure that is implemented with a table element */
+@media $media-query-small-mobile {
+    .properties {
+        th,
+        td {
+            display:block;
+        }
+        th {
+            padding-bottom: 0;
+        }
+        td {
+            padding-top: 0;
+            padding-left: $grid-spacing * 2;
+        }
     }
 }
