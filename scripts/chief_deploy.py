@@ -105,14 +105,15 @@ def intern_settings():
 
 @task
 def run_ui_tests(ctx):
-    ctx.local('BROWSERSTACK_USERNAME="mdndev1" '
-              'BROWSERSTACK_ACCESS_KEY="%s" '
-              './node_modules/.bin/intern-runner config="intern-browserstack" '
-              'wd=User:Intern'
-              'u=%s '
-              'p=%s '
-              'd=%s '
-              % (intern_settings() + (settings.REMOTE_HOSTNAME,)))
+    with ctx.lcd(os.path.join(settings.SRC_DIR, 'tests/ui')):
+        ctx.local('BROWSERSTACK_USERNAME="mdndev1" '
+                  'BROWSERSTACK_ACCESS_KEY="%s" '
+                  './node_modules/.bin/intern-runner config="intern-browserstack" '
+                  'wd=User:Intern'
+                  'u=%s '
+                  'p=%s '
+                  'd=%s '
+                  % (intern_settings() + (settings.REMOTE_HOSTNAME,)))
 
 
 @task
