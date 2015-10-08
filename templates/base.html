@@ -160,7 +160,7 @@
             </ul>
           </div>
         </div>
-      </li><li><a href="{{ wiki_url('Tools') }}">{{ _('Developer Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>{% if not waffle.flag('header_feedback') %}<li><a href="{{ wiki_url('Mozilla/Connect') }}">{{ _('Connect') }}</a></li>{% else %}<li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+      </li><li><a href="{{ wiki_url('Tools') }}">{{ _('Developer Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
 
         <div class="submenu js-submenu" id="nav-contact-submenu">
           <div class="submenu-column">
@@ -176,7 +176,7 @@
           </div>
         </div>
 
-      </li>{% endif %}<li class="nav-search-link"><a href="{{ url('search') }}" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
+      </li><li class="nav-search-link"><a href="{{ url('search') }}" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">
           <label for="main-q" class="offscreen">{{ _('Search') }}</label>
           <input type="search" id="main-q" name="q" placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" />
