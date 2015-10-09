@@ -5,7 +5,6 @@ define(['intern'], function(intern) {
     var defaultLocale = 'en-US';
 
     return {
-
         // URLs
         domain: domain,
         url: httpsAddress,

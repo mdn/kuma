@@ -37,7 +37,7 @@ define([
             });
         },
 
-        '[requires-login][requires-destructive] Revision dashboard banning': function() {
+        '[requires-login][requires-admin] Revision dashboard banning': function() {
 
             var remote = this.remote;
 
