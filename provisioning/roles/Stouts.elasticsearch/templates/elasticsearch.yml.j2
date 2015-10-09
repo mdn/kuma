@@ -45,6 +45,7 @@
 #
 # node.master: true
 {% if elasticsearch_node_master is defined %}node.master: {{ elasticsearch_node_master }}{% endif %}
+
 #
 # Allow this node to store data (enabled by default):
 #
@@ -482,3 +483,10 @@ action.disable_delete_all_indices: {{ elasticsearch_misc_disable_delete_all_indi
 script.groovy.sandbox.enabled: {{ elasticsearch_script_groovy_sandbox_enabled }}
 {% endif %}
 
+{% if elasticsearch_indices_cache_filter_size is defined %}
+indices.cache.filter.size: {{ elasticsearch_indices_cache_filter_size }}
+{% endif %}
+
+{% if elasticsearch_yml is defined %}
+{{ elasticsearch_yml }}
+{% endif %}

@@ -1,7 +1,13 @@
 ---
 
+- include_vars: "{{ansible_distribution}}.yml"
+
+- name: elasticsearch-install | Add repository keys
+  apt_key: keyserver="{{item.server}}" id="{{item.key}}" state=present
+  with_items: elasticsearch_apt_repo_keys
+
 - name: elasticsearch-install | Add repositories
-  apt_repository: repo={{item}} update_cache=yes
+  apt_repository: repo="{{item}}" update_cache=yes
   with_items: elasticsearch_apt_repos
 
 - name: elasticsearch-install | Accept Oracle license

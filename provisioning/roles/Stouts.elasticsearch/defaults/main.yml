@@ -1,11 +1,15 @@
 ---
 
 elasticsearch_enabled: yes                      # The role is enabled
-elasticsearch_version: 1.5.2                    # Elasticsearch version
+elasticsearch_version: 1.7.2                    # Elasticsearch version
 elasticsearch_download_url: https://download.elastic.co/elasticsearch/elasticsearch
 elasticsearch_apt_repos:
 - 'ppa:webupd8team/java'
-elasticsearch_apt_java_package: oracle-java7-installer
+elasticsearch_apt_repo_keys: []                 # Install APT keys
+                                                # Ex. elasticsearch_apt_repo_keys:
+                                                #       - server: <server name>
+                                                #         key: <key id>
+elasticsearch_apt_java_package: oracle-java8-installer
 
 elasticsearch_user: elasticsearch               # Elasticsearch user
 elasticsearch_group: elasticsearch              # Elasticsearch group

@@ -4,6 +4,10 @@
   when: ansible_os_family == 'Debian'
   tags: [elasticsearch, elasticsearch-install]
 
+- include: install.yum.yml
+  when: ansible_os_family == 'RedHat'
+  tags: [elasticsearch, elasticsearch-install]
+
 - include: configure.yml
   tags: [elasticsearch, elasticsearch-configure]
 

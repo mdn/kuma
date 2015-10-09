@@ -1,0 +1,8 @@
+---
+
+elasticsearch_apt_repos:
+  - 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main'
+  - 'deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main'
+elasticsearch_apt_repo_keys:
+  - server: 'hkp://keyserver.ubuntu.com:80'
+    key: 'EEA14886'
