@@ -201,12 +201,3 @@ def create_topical_parents_docs():
     d2.parent_topic = d1
     d2.save()
     return d1, d2
-
-
-class FakeResponse:
-    """Quick and dirty mocking stand-in for a response object"""
-    def __init__(self, **entries):
-        self.__dict__.update(entries)
-
-    def read(self):
-        return self.text
