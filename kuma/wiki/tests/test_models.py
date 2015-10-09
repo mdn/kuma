@@ -332,38 +332,9 @@ class DocumentTests(UserTestCase):
         d = document(is_redirect=True, html=html)
         eq_(href, d.get_redirect_url())
 
-    @mock.patch('kuma.wiki.tasks.update_document_share_url')
-    def test_get_share_url_empty(self, task):
-        doc = document(title='test', share_url=None)
-        ok_(doc.get_share_url(), absolutify(doc.get_absolute_url()))
-        ok_(task.delay.called)
-
-    @mock.patch('kuma.wiki.tasks.update_document_share_url')
-    def test_get_share_url(self, task):
-        expected = 'http://hy.fr/short'
-        doc = document(title='test', share_url=expected)
-        eq_(doc.get_share_url(), expected)
-        ok_(not task.delay.called)
-
-    @mock.patch('kuma.wiki.tasks.update_document_share_url')
-    def test_no_get_share_url_on_save(self, task):
-        # Templates shouldn't have short URLs.
-        doc = document(title='test', slug='%sTest' % TEMPLATE_TITLE_PREFIX)
-        doc.save()
-        ok_(not task.delay.called)
-
-        # Redirects shouldn't have short URLs.
-        doc = document(title='test')
-        task.reset_mock()
-        doc.html = REDIRECT_CONTENT % {'href': '/', 'title': 'test'}
-        doc.save()
-        ok_(not task.delay.called)
-
-        # Documents with PKs shouldn't try to get a short URL again.
-        doc = document(save=True, title='test')
-        task.reset_mock()
-        doc.save()
-        ok_(not task.delay.called)
+    def test_get_full_url(self):
+        doc = document()
+        eq_(doc.get_full_url(), absolutify(doc.get_absolute_url()))
 
 
 class PermissionTests(KumaTestCase):

@@ -288,8 +288,6 @@ class Document(NotificationsMixin, models.Model):
 
     summary_text = models.TextField(editable=False, blank=True, null=True)
 
-    share_url = models.URLField(blank=True, null=True)
-
     class Meta(object):
         unique_together = (
             ('parent', 'locale'),
@@ -1073,8 +1071,6 @@ class Document(NotificationsMixin, models.Model):
         """
         Move this page and all its children.
         """
-        from . import tasks
-
         # Page move is a 10-step process.
         #
         # Step 1: Sanity check. Has a page been created at this slug
@@ -1115,11 +1111,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Step 6: Save this Document.
         self.slug = new_slug
-        # Clear share_url since URL changed.
-        self.share_url = None
         self.save()
-        # Call task to get new share_url.
-        tasks.update_document_share_url.delay(self.pk)
 
         # Step 7: Save the Revision that actually moves us.
         moved_rev.save(force_insert=True)
@@ -1477,20 +1469,8 @@ Full traceback:
     def zone_stack(self):
         return DocumentZoneStackJob().get(self.pk)
 
-    def get_share_url(self):
-        """
-        Returns the ``share_url``.
-
-        If not present, it spawns a task to set it and falls back to the full
-        document URL.
-        """
-        from . import tasks
-
-        if self.share_url:
-            return self.share_url
-        else:
-            tasks.update_document_share_url.delay(self.pk)
-            return absolutify(self.get_absolute_url())
+    def get_full_url(self):
+        return absolutify(self.get_absolute_url())
 
 
 class DocumentDeletionLog(models.Model):
