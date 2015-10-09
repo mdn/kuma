@@ -1,8 +1,9 @@
 ---
 
+- group: name={{elasticsearch_group}}
+
 - name: elasticsearch-configure | Ensure Elasticsearch user and group exists
   user: name={{elasticsearch_user}} group={{elasticsearch_group}} createhome=no system=yes
-- group: name={{elasticsearch_group}}
 
 - name: elasticsearch-configure | Chown Elasticsearch home
   file: path={{elasticsearch_home}} state=directory owner={{elasticsearch_user}} group={{elasticsearch_group}} recurse=yes
@@ -25,6 +26,8 @@
 
 - lineinfile: dest=/etc/pam.d/su regexp='^session    required   pam_limits.so' insertafter=EOF line='session    required   pam_limits.so'
 - lineinfile: dest=/etc/pam.d/common-session regexp='^session    required   pam_limits.so' insertafter=EOF line='session    required   pam_limits.so'
+  when: ansible_os_family == 'Debian'
 - lineinfile: dest=/etc/pam.d/common-session-noninteractive regexp='^session    required   pam_limits.so' insertafter=EOF line='session    required   pam_limits.so'
+  when: ansible_os_family == 'Debian'
 - lineinfile: dest=/etc/pam.d/sudo regexp='^session    required   pam_limits.so' insertafter=EOF line='session    required   pam_limits.so'
 - lineinfile: dest=/etc/init.d/elasticsearch regexp='^(DAEMON_OPTS=".*-Des.max-open-files=true")$' insertafter='^(DAEMON_OPTS=".*CONF_DIR")$' line='DAEMON_OPTS="$DAEMON_OPTS -Des.max-open-files=true"'

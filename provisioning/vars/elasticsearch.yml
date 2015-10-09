@@ -1,6 +1,6 @@
-elasticsearch_apt_java_package: openjdk-7-jre-headless
+elasticsearch_apt_java_package: oracle-java8-installer
 elasticsearch_apt_repos: []
-elasticsearch_version: 1.3.7
+elasticsearch_version: 1.7.2
 elasticsearch_network_host: 0.0.0.0
 
 elasticsearch_node_name: kuma

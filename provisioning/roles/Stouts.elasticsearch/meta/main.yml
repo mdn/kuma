@@ -12,6 +12,12 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - all
+  - name: Debian
+    versions:
+    - all
+  - name: EL
+    versions:
+    - all
   categories:
   - cloud
   - development

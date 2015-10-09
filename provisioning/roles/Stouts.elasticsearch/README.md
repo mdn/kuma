@@ -27,6 +27,10 @@ elasticsearch_version: 1.1.1                    # Elasticsearch version
 elasticsearch_download_url: https://download.elasticsearch.org/elasticsearch/elasticsearch
 elasticsearch_apt_repos:
 - 'ppa:webupd8team/java'
+elasticsearch_apt_repo_keys: []                 # Install APT keys
+                                                # Ex. elasticsearch_apt_repo_keys:
+                                                #       - server: <server name>
+                                                #         key: <key id>
 elasticsearch_apt_java_package: oracle-java7-installer
 
 elasticsearch_user: elasticsearch               # Elasticsearch user
@@ -80,6 +84,7 @@ elasticsearch_index_mapper_dynamic:
 elasticsearch_index_number_of_replicas:
 elasticsearch_index_number_of_shards:
 elasticsearch_index_query_bool_max_clause_count:
+elasticsearch_indices_cache_filter_size:
 elasticsearch_java_opts:
 elasticsearch_max_locked_memory:
 elasticsearch_network_bind_host:
@@ -101,6 +106,15 @@ elasticsearch_transport_tcp_port:
 elasticsearch_use_gc_logging:
 ```
 
+Additional variables eg. for plugins can be defined with `elasticsearch_yml`:
+```yaml
+elasticsearch_yml: |
+  cloud.aws.access_key: {{ cloud_aws_access_key }}
+  cloud.aws.secret_key: {{ cloud_aws_secret_key }}
+```
+
+`elasticsearch_yml` will be appended to the end of `elasticsearch.yml` file.
+
 #### Usage
 
 Add `Stouts.elasticsearch` to your roles and setup the variables in your playbook file.
@@ -118,6 +132,8 @@ Example:
     - name: lukas-vlcek/bigdesk
 ```
 
+Refer to [here](http://www.webupd8.org/2012/06/how-to-install-oracle-java-7-in-debian.html) for more information.
+
 #### License
 
 Licensed under the MIT License. See the LICENSE file for details.
@@ -125,3 +141,11 @@ Licensed under the MIT License. See the LICENSE file for details.
 #### Feedback, bug-reports, requests, ...
 
 Are [welcome](https://github.com/Stouts/Stouts.elasticsearch/issues)!
+
+If you wish to express your appreciation for the role, you are welcome to send
+a postcard to:
+
+    Kirill Klenov
+    pos. Severny 8-3
+    MO, Istra, 143500
+    Russia
