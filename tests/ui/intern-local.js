@@ -15,5 +15,8 @@ define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
         port: 4444
     };
 
+    // Format for outputting test results
+    config.reporters = ['Pretty'];
+
     return cli.mixinArgs(intern.args, config);
 });
