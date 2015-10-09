@@ -85,11 +85,11 @@
 
 
 {% macro build_share_links(document) -%}
-    {% set share_url = document.get_share_url() %}
+    {% set full_url = document.get_full_url() %}
 
-    {% set share_url_twitter = share_url|urlparams(utm_campaign='share', utm_source='twitter.com', utm_medium='doc share link') %}
-    {% set share_url_facebook = share_url|urlparams(utm_campaign='share', utm_source='facebook.com', utm_medium='doc share link')%}
-    {% set share_url_gplus = share_url|urlparams(utm_campaign='share', utm_source='plus.google.com', utm_medium='doc share link')%}
+    {% set share_url_twitter = full_url|urlparams(utm_campaign='share', utm_source='twitter.com', utm_medium='doc share link') %}
+    {% set share_url_facebook = full_url|urlparams(utm_campaign='share', utm_source='facebook.com', utm_medium='doc share link')%}
+    {% set share_url_gplus = full_url|urlparams(utm_campaign='share', utm_source='plus.google.com', utm_medium='doc share link')%}
 
     {% set twitter_url = 'http://twitter.com/share'|urlparams(url=share_url_twitter, text=share_text) %}
     {% set facebook_url = 'http://facebook.com/sharer.php?s=100&p[url]=' + share_url_facebook %}

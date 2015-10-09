@@ -833,9 +833,6 @@ CELERY_ROUTES = {
     'kuma.wiki.tasks.update_community_stats': {
         'queue': 'mdn_purgeable'
     },
-    'kuma.wiki.tasks.update_document_share_url': {
-        'queue': 'mdn_purgeable'
-    },
     'kuma.search.tasks.prepare_index': {
         'queue': 'mdn_search'
     },
