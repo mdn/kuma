@@ -4,4 +4,4 @@ geerlingguy.memcached,1.0.2
 geerlingguy.mysql,1.5.0
 Mayeu.RabbitMQ,1.4.0
 nodesource.node
-Stouts.elasticsearch,2.0.5
+Stouts.elasticsearch,2.5.0
