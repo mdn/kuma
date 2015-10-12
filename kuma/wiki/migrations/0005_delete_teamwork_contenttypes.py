@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations
+
 
 def remove_content_type(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')

@@ -75,7 +75,7 @@ django-appconf==1.0.1
 
 django-celery==3.1.16
 
-django-constance==1.0.1
+django-constance==1.1.1
 
 django-extensions==1.5.5
 

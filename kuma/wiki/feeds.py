@@ -324,9 +324,8 @@ class RevisionsFeed(DocumentsFeed):
         content_diff = u''
 
         if previous:
-            prev_review_tags = previous.review_tags.values_list('name',
-                                                                flat=True)
-            curr_review_tags = item.review_tags.values_list('name', flat=True)
+            prev_review_tags = previous.review_tags.names()
+            curr_review_tags = item.review_tags.names()
             if set(prev_review_tags) != set(curr_review_tags):
                 table = tag_diff_table(u','.join(prev_review_tags),
                                        u','.join(curr_review_tags),

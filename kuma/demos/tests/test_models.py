@@ -17,8 +17,8 @@ from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
 
 from constance import config
+from constance.test import override_config
 
-from kuma.core.tests import override_constance_settings
 from kuma.users.tests import UserTestCase
 
 from ..models import Submission
@@ -340,7 +340,7 @@ class DemoPackageTest(UserTestCase):
         ok_(not isfile('%s/js/main.js' % path))
         ok_(not isdir(path))
 
-    @override_constance_settings(DEMO_MAX_FILESIZE_IN_ZIP=1024 * 1024)
+    @override_config(DEMO_MAX_FILESIZE_IN_ZIP=1024 * 1024)
     def test_demo_file_size_limit(self):
         """Demo package with any individual file >1MB in size is invalid"""
         s = self.submission
@@ -400,7 +400,7 @@ class DemoPackageTest(UserTestCase):
                                      'ZIP file contains an unacceptable file: badfile',
                                      s.clean)
 
-    @override_constance_settings(DEMO_BLACKLIST_OVERRIDE_EXTENSIONS="yada")
+    @override_config(DEMO_BLACKLIST_OVERRIDE_EXTENSIONS="yada")
     def test_demo_blacklist_override(self):
         """bug 1095649"""
         sub_fout = StringIO()

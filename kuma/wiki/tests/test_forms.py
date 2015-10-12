@@ -13,8 +13,10 @@ class FormEditorSafetyFilterTests(UserTestCase):
 
     @attr('bug821986')
     def test_form_onload_attr_filter(self):
-        """RevisionForm should strip out any harmful onload attributes from
-        input markup"""
+        """
+        RevisionForm should strip out any harmful onload attributes from
+        input markup
+        """
         rev = revision(save=True, is_approved=True, content="""
             <svg><circle onload=confirm(3)>
         """)
@@ -25,8 +27,10 @@ class FormEditorSafetyFilterTests(UserTestCase):
 class RevisionFormTests(UserTestCase):
 
     def test_form_loaded_with_section(self):
-        """RevisionForm given section_id should load initial content for only
-        one section"""
+        """
+        RevisionForm given section_id should load initial content for only
+        one section
+        """
         rev = revision(save=True, is_approved=True, content="""
             <h1 id="s1">s1</h1>
             <p>test</p>

@@ -22,6 +22,7 @@ from django.http import Http404
 from django.utils.encoding import smart_str
 
 from constance import config
+from constance.test import override_config
 from jingo.helpers import urlparams
 from waffle.models import Flag, Switch
 
@@ -30,7 +31,6 @@ from kuma.attachments.utils import make_test_file
 from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.models import IPBan
-from kuma.core.tests import post, get, override_constance_settings
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase, user
 
@@ -696,7 +696,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
         # self.mock_kumascript_get.stop()
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_basic_view(self, mock_kumascript_get):
         """When kumascript timeout is non-zero, the service should be used"""
@@ -705,7 +705,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         ok_(mock_kumascript_get.called,
             "kumascript should have been used")
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=0.0)
+    @override_config(KUMASCRIPT_TIMEOUT=0.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_disabled(self, mock_kumascript_get):
         """When disabled, the kumascript service should not be used"""
@@ -714,7 +714,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         ok_(not mock_kumascript_get.called,
             "kumascript not should have been used")
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=0.0)
+    @override_config(KUMASCRIPT_TIMEOUT=0.0)
     @mock.patch('kuma.wiki.kumascript.get')
     @override_settings(CELERY_ALWAYS_EAGER=True)
     def test_disabled_rendering(self, mock_kumascript_get):
@@ -725,7 +725,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         ok_(not mock_kumascript_get.called,
             "kumascript not should have been used")
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_nomacros(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.d.html, None)
@@ -733,7 +733,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         ok_(not mock_kumascript_get.called,
             "kumascript should not have been used")
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_raw(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.d.html, None)
@@ -741,7 +741,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         ok_(not mock_kumascript_get.called,
             "kumascript should not have been used")
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_raw_macros(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.d.html, None)
@@ -749,8 +749,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         ok_(mock_kumascript_get.called,
             "kumascript should have been used")
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0,
-                                 KUMASCRIPT_MAX_AGE=1234)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0,
+                     KUMASCRIPT_MAX_AGE=1234)
     @mock.patch('requests.get')
     def test_ua_max_age_zero(self, mock_requests_get):
         """Authenticated users can request a zero max-age for kumascript"""
@@ -772,8 +772,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
                         HTTP_CACHE_CONTROL='no-cache')
         eq_('no-cache', trap['headers']['Cache-Control'])
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0,
-                                 KUMASCRIPT_MAX_AGE=1234)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0,
+                     KUMASCRIPT_MAX_AGE=1234)
     @mock.patch('requests.get')
     def test_ua_no_cache(self, mock_requests_get):
         """Authenticated users can request no-cache for kumascript"""
@@ -795,8 +795,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
                         HTTP_CACHE_CONTROL='no-cache')
         eq_('no-cache', trap['headers']['Cache-Control'])
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0,
-                                 KUMASCRIPT_MAX_AGE=1234)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0,
+                     KUMASCRIPT_MAX_AGE=1234)
     @mock.patch('requests.get')
     def test_conditional_get(self, mock_requests_get):
         """Ensure conditional GET in requests to kumascript work as expected"""
@@ -844,8 +844,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         response = self.client.get(self.url)
         ok_(expected_content in response.content)
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0,
-                                 KUMASCRIPT_MAX_AGE=600)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0,
+                     KUMASCRIPT_MAX_AGE=600)
     @mock.patch('requests.get')
     def test_error_reporting(self, mock_requests_get):
         """Kumascript reports errors in HTTP headers, Kuma should display"""
@@ -920,8 +920,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
             ok_(error['message'] in response.content)
             eq_(response.status_code, 200)
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0,
-                                 KUMASCRIPT_MAX_AGE=600)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0,
+                     KUMASCRIPT_MAX_AGE=600)
     @mock.patch('requests.post')
     def test_preview_nonascii(self, mock_post):
         """POSTing non-ascii to kumascript should encode to utf8"""
@@ -942,8 +942,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
             self.fail("Data wasn't posted as utf8")
 
     @attr('bug1197971')
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0,
-                                 KUMASCRIPT_MAX_AGE=600)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0,
+                     KUMASCRIPT_MAX_AGE=600)
     @mock.patch('kuma.wiki.kumascript.post')
     def test_dont_render_previews_for_deferred_docs(self, mock_post):
         """
@@ -1802,7 +1802,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         es_d = Document.objects.get(locale=foreign_locale, slug=foreign_slug)
         eq_(r.toc_depth, es_d.current_revision.toc_depth)
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0)
     def test_translate_rebuilds_source_json(self):
         self.client.login(username='admin', password='testpass')
         # Create an English original and a Spanish translation.
@@ -2422,7 +2422,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             reverse('wiki.create',
                     locale=settings.WIKI_DEFAULT_LANGUAGE))
 
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_revert(self, mock_kumascript_get):
         self.client.login(username='admin', password='testpass')
@@ -2569,14 +2569,16 @@ class DocumentWatchTests(UserTestCase, WikiTestCase):
 
     def test_watch_GET_405(self):
         """Watch document with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.subscribe',
-                       args=[self.document.slug])
+        response = self.client.get(reverse('wiki.subscribe',
+                                           args=[self.document.slug]),
+                                   follow=True)
         eq_(405, response.status_code)
 
     def test_unwatch_GET_405(self):
         """Unwatch document with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.subscribe',
-                       args=[self.document.slug])
+        response = self.client.get(reverse('wiki.subscribe',
+                                           args=[self.document.slug]),
+                                   follow=True)
         eq_(405, response.status_code)
 
     def test_watch_unwatch(self):
@@ -2584,13 +2586,18 @@ class DocumentWatchTests(UserTestCase, WikiTestCase):
         user = self.user_model.objects.get(username='testuser')
 
         # Subscribe
-        response = post(self.client, 'wiki.subscribe', args=[self.document.slug])
+        response = self.client.post(reverse('wiki.subscribe',
+                                            args=[self.document.slug]),
+                                    follow=True)
+
         eq_(200, response.status_code)
         assert EditDocumentEvent.is_notifying(user, self.document), \
             'Watch was not created'
 
         # Unsubscribe
-        response = post(self.client, 'wiki.subscribe', args=[self.document.slug])
+        response = self.client.post(reverse('wiki.subscribe',
+                                            args=[self.document.slug]),
+                                    follow=True)
         eq_(200, response.status_code)
         assert not EditDocumentEvent.is_notifying(user, self.document), \
             'Watch was not destroyed'
@@ -3221,7 +3228,7 @@ class AutosuggestDocumentsTests(WikiTestCase):
 class CodeSampleViewTests(UserTestCase, WikiTestCase):
     localizing_client = True
 
-    @override_constance_settings(
+    @override_config(
         KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/testserver')
     def test_code_sample_1(self):
         """The raw source for a document can be requested"""
@@ -3254,7 +3261,7 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
         for item in expecteds:
             ok_(item in normalized)
 
-    @override_constance_settings(
+    @override_config(
         KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/sampleserver')
     def test_code_sample_host_restriction(self):
         d, r = doc_rev("""
@@ -3277,7 +3284,7 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
                                    HTTP_HOST='sampleserver')
         eq_(200, response.status_code)
 
-    @override_constance_settings(
+    @override_config(
         KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/sampleserver')
     def test_code_sample_iframe_embed(self):
         slug = 'test-code-embed'
@@ -3322,7 +3329,7 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
 
 class CodeSampleViewFileServingTests(UserTestCase, WikiTestCase):
 
-    @override_constance_settings(
+    @override_config(
         KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/testserver',
         WIKI_ATTACHMENT_ALLOWED_TYPES='text/plain')
     @override_settings(ATTACHMENT_HOST='testserver')

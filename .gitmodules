@@ -21,7 +21,7 @@
 	url = git://github.com/jezdez/django-appconf.git
 [submodule "vendor/src/django-constance"]
 	path = vendor/src/django-constance
-	url = git://github.com/comoga/django-constance.git
+	url = git://github.com/jezdez/django-constance.git
 [submodule "vendor/src/django-extensions"]
 	path = vendor/src/django-extensions
 	url = git://github.com/django-extensions/django-extensions.git

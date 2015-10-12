@@ -7,20 +7,14 @@ from django.core.cache import cache
 from django import test
 from django.test import TestCase, TransactionTestCase
 from django.test.client import Client
-from django.utils.functional import wraps
 from django.utils.translation import trans_real
 
-from constance import config
 from nose import SkipTest
 from nose.tools import eq_
 
 from ..cache import memcache
 from ..exceptions import FixtureMissingError
-from ..urlresolvers import split_path, reverse
-
-
-get = lambda c, v, **kw: c.get(reverse(v, **kw), follow=True)
-post = lambda c, v, data={}, **kw: c.post(reverse(v, **kw), data, follow=True)
+from ..urlresolvers import split_path
 
 
 def attrs_eq(received, **expected):
@@ -38,56 +32,6 @@ def get_user(username='testuser'):
         raise FixtureMissingError(
             'Username "%s" not found. You probably forgot to import a'
             ' users fixture.' % username)
-
-
-class overrider(object):
-    """
-    See http://djangosnippets.org/snippets/2437/
-
-    Acts as either a decorator, or a context manager.  If it's a decorator it
-    takes a function and returns a wrapped function.  If it's a contextmanager
-    it's used with the ``with`` statement.  In either event entering/exiting
-    are called before and after, respectively, the function/block is executed.
-    """
-    def __init__(self, **kwargs):
-        self.options = kwargs
-
-    def __enter__(self):
-        self.enable()
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.disable()
-
-    def __call__(self, func):
-        @wraps(func)
-        def inner(*args, **kwargs):
-            with self:
-                return func(*args, **kwargs)
-        return inner
-
-    def enable(self):
-        pass
-
-    def disable(self):
-        pass
-
-
-class override_constance_settings(overrider):
-    """Decorator / context manager to override constance settings and defeat
-    its caching."""
-
-    def enable(self):
-        self.old_cache = config._backend._cache
-        config._backend._cache = None
-        self.old_settings = dict((k, getattr(config, k))
-                                 for k in dir(config))
-        for k, v in self.options.items():
-            config._backend.set(k, v)
-
-    def disable(self):
-        for k, v in self.old_settings.items():
-            config._backend.set(k, v)
-        config._backend._cache = self.old_cache
 
 
 def mock_lookup_user():

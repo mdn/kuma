@@ -151,32 +151,44 @@ class RevisionForm(forms.ModelForm):
     """
     Form to create new revisions.
     """
-    title = StrippedCharField(min_length=1,
-                              max_length=255,
-                              required=False,
-                              widget=forms.TextInput(
-                                  attrs={'placeholder': TITLE_PLACEHOLDER}),
-                              label=_lazy(u'Title:'),
-                              help_text=_lazy(u'Title of article'),
-                              error_messages={'required': TITLE_REQUIRED,
-                                              'min_length': TITLE_SHORT,
-                                              'max_length': TITLE_LONG})
-    slug = StrippedCharField(min_length=1,
-                             max_length=255,
-                             required=False,
-                             widget=forms.TextInput(),
-                             label=_lazy(u'Slug:'),
-                             help_text=_lazy(u'Article URL'),
-                             error_messages={'required': SLUG_REQUIRED,
-                                             'min_length': SLUG_SHORT,
-                                             'max_length': SLUG_LONG})
+    title = StrippedCharField(
+        min_length=1,
+        max_length=255,
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': TITLE_PLACEHOLDER}),
+        label=_lazy(u'Title:'),
+        help_text=_lazy(u'Title of article'),
+        error_messages={
+            'required': TITLE_REQUIRED,
+            'min_length': TITLE_SHORT,
+            'max_length': TITLE_LONG,
+        }
+    )
 
-    tags = StrippedCharField(required=False,
-                             label=_lazy(u'Tags:'))
+    slug = StrippedCharField(
+        min_length=1,
+        max_length=255,
+        required=False,
+        widget=forms.TextInput(),
+        label=_lazy(u'Slug:'),
+        help_text=_lazy(u'Article URL'),
+        error_messages={
+            'required': SLUG_REQUIRED,
+            'min_length': SLUG_SHORT,
+            'max_length': SLUG_LONG,
+        }
+    )
 
-    keywords = StrippedCharField(required=False,
-                                 label=_lazy(u'Keywords:'),
-                                 help_text=_lazy(u'Affects search results'))
+    tags = StrippedCharField(
+        required=False,
+        label=_lazy(u'Tags:'),
+    )
+
+    keywords = StrippedCharField(
+        required=False,
+        label=_lazy(u'Keywords:'),
+        help_text=_lazy(u'Affects search results'),
+    )
 
     summary = StrippedCharField(
         required=False,
@@ -185,18 +197,24 @@ class RevisionForm(forms.ModelForm):
         widget=forms.Textarea(),
         label=_lazy(u'Search result summary:'),
         help_text=_lazy(u'Only displayed on search results page'),
-        error_messages={'required': SUMMARY_REQUIRED,
-                        'min_length': SUMMARY_SHORT,
-                        'max_length': SUMMARY_LONG})
+        error_messages={
+            'required': SUMMARY_REQUIRED,
+            'min_length': SUMMARY_SHORT,
+            'max_length': SUMMARY_LONG
+        },
+    )
 
     content = StrippedCharField(
         min_length=5,
         max_length=300000,
         label=_lazy(u'Content:'),
         widget=forms.Textarea(),
-        error_messages={'required': CONTENT_REQUIRED,
-                        'min_length': CONTENT_SHORT,
-                        'max_length': CONTENT_LONG})
+        error_messages={
+            'required': CONTENT_REQUIRED,
+            'min_length': CONTENT_SHORT,
+            'max_length': CONTENT_LONG,
+        }
+    )
 
     comment = StrippedCharField(required=False, label=_lazy(u'Comment:'))
 
@@ -204,16 +222,20 @@ class RevisionForm(forms.ModelForm):
         label=_("Tag this revision for review?"),
         widget=CheckboxSelectMultiple,
         required=False,
-        choices=REVIEW_FLAG_TAGS)
+        choices=REVIEW_FLAG_TAGS,
+    )
 
     localization_tags = forms.MultipleChoiceField(
         label=_("Tag this revision for localization?"),
         widget=CheckboxSelectMultiple,
         required=False,
-        choices=LOCALIZATION_FLAG_TAGS)
+        choices=LOCALIZATION_FLAG_TAGS,
+    )
 
-    current_rev = forms.CharField(required=False,
-                                  widget=forms.HiddenInput())
+    current_rev = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput(),
+    )
 
     class Meta(object):
         model = Revision
@@ -250,13 +272,12 @@ class RevisionForm(forms.ModelForm):
                 content = parsed_content.serialize()
             self.initial['content'] = content
 
-            self.initial['review_tags'] = list(self.instance.review_tags
-                                                            .values_list('name',
-                                                                         flat=True))
+            self.initial['review_tags'] = list(self.instance
+                                                   .review_tags
+                                                   .names())
             self.initial['localization_tags'] = list(self.instance
                                                          .localization_tags
-                                                         .values_list('name',
-                                                                      flat=True))
+                                                         .names())
 
         if self.section_id:
             self.fields['toc_depth'].required = False
@@ -421,8 +442,7 @@ class RevisionForm(forms.ModelForm):
             new_rev.creator = request.user
             new_rev.toc_depth = old_rev.toc_depth
             new_rev.save()
-            new_rev.review_tags.set(*list(old_rev.review_tags
-                                                 .values_list('name', flat=True)))
+            new_rev.review_tags.set(*list(old_rev.review_tags.names()))
 
         else:
             new_rev = super(RevisionForm, self).save(**kwargs)
