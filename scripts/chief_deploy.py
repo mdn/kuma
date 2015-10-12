@@ -97,6 +97,7 @@ def update_info(ctx):
             ctx.local("svn status")
 
         ctx.local("git rev-parse HEAD > media/revision.txt")
+        ctx.local("git show --format='%ai' > media/deploytime.txt")
 
 
 @task
