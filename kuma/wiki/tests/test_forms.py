@@ -117,8 +117,8 @@ class RevisionFormTests(UserTestCase):
             'tags': 'Javascript',  # Note the lower-case "S".
         }
         rev_form = RevisionForm(data, instance=rev)
-        ok_(not rev_form.is_valid())
-        ok_('use these tag(s) instead' in rev_form.errors['tags'][0])
+        ok_(rev_form.is_valid())
+        eq_(rev_form.cleaned_data['tags'], 'JavaScript')
 
 
 class TreeMoveFormTests(UserTestCase):

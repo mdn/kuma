@@ -9,7 +9,6 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.widgets import CheckboxSelectMultiple
-from django.utils.text import get_text_list
 
 import kuma.wiki.content
 from kuma.contentflagging.forms import ContentFlagForm
@@ -61,8 +60,6 @@ MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
                          'editing it.')
 MOVE_REQUIRED = _lazy(u"Changing this document's slug requires "
                       u"moving it and its children.")
-TAG_DUPE = _lazy(u'There is another tag matching this tag that only differs '
-                 u'by case. Please use these tag(s) instead: %(tag)s.')
 
 
 log = logging.getLogger('kuma.wiki.forms')
@@ -332,7 +329,7 @@ class RevisionForm(forms.ModelForm):
         Validate the tags ensuring we have no case-sensitive duplicates.
         """
         tags = self.cleaned_data['tags']
-        dupe_tags = []
+        cleaned_tags = []
 
         if tags:
             for tag in parse_tags(tags):
@@ -342,20 +339,21 @@ class RevisionForm(forms.ModelForm):
                 doc_tag = (DocumentTag.objects.filter(name__exact=tag)
                                               .values_list('name', flat=True))
 
-                if doc_tag:
-                    if doc_tag[0] != tag and doc_tag[0].lower() == tag.lower():
-                        dupe_tags.append(doc_tag[0])
-
                 # Write a log we can grep to help find pre-existing duplicate
                 # document tags for cleanup.
                 if len(doc_tag) > 1:
                     log.warn('Found duplicate document tags: %s' % doc_tag)
 
-            if dupe_tags:
-                raise forms.ValidationError(
-                    TAG_DUPE % {'tag': get_text_list(dupe_tags)})
+                if doc_tag:
+                    if doc_tag[0] != tag and doc_tag[0].lower() == tag.lower():
+                        # The tag differs only by case. Do not add a new one,
+                        # add the existing one.
+                        cleaned_tags.append(doc_tag[0])
+                        continue
 
-        return tags
+                cleaned_tags.append(tag)
+
+        return ' '.join(cleaned_tags)
 
     def clean_content(self):
         """
