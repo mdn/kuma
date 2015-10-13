@@ -6,8 +6,8 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki-edit') }}
-    {{ css('jquery-ui') }}
+    {% stylesheet 'wiki-edit' %}
+    {% stylesheet 'jquery-ui' %}
 {% endblock %}
 
 {% block content %}
@@ -109,6 +109,6 @@
 {% endblock %}
 
 {% block js %}
-  {{ js('jquery-ui') }}
-  {{ js('wiki-move', async=True) }}
+  {% javascript 'jquery-ui' %}
+  {% javascript 'wiki-move' %}
 {% endblock %}

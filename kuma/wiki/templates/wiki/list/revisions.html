@@ -4,7 +4,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki-revisions') }}
+    {% stylesheet 'wiki-revisions' %}
 {% endblock %}
 
 {% block content %}
@@ -88,7 +88,7 @@
 
  {% block site_js %}
   {{ super() }}
-  {{ js('framebuster') }}
+  {% javascript 'framebuster' %}
 
   <script type="text/javascript">
     $(document).ready(function() {

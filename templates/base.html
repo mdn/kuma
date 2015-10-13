@@ -17,10 +17,10 @@
   <link rel="copyright" href="#copyright">
 
   {% block site_css %}
-    {{ css('mdn', 'all') }}
+    {% stylesheet 'mdn' %}
 
     {% for style in styles %}
-      {{ css(style) }}
+      {% stylesheet style %}
     {% endfor %}
   {% endblock %}
 
@@ -55,7 +55,7 @@
   <link rel="shortcut icon" href="{{ static('img/favicon32' + favicon_suffix + '.png') }}">
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
-  <script src="{{ static('js/libs/html5.js') }}"></script>
+  <script src="{% javascript 'html5' %}"></script>
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
@@ -224,17 +224,17 @@
 
   <!-- site js -->
   {% block site_js %}
-    <!--[if lte IE 8]><script src="{{ static('js/libs/selectivizr-1.0.2/selectivizr-build.js') }}"></script><![endif]-->
+    <!--[if lte IE 8]><script src="{% javascript 'selectivizr' %}"></script><![endif]-->
 
     {{ providers_media_js() }}
-    {{ js('main') }}
+    {% javascript 'main' %}
 
       <script>
         if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
       </script>
 
     {% for script in scripts %}
-      {{ js(script) }}
+      {% javascript script %}
     {% endfor %}
   {% endblock %}
 

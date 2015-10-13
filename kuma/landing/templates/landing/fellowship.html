@@ -4,7 +4,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('fellowship') }}
+    {% stylesheet 'fellowship' %}
 {% endblock %}
 
 {% block extrahead %}
@@ -193,5 +193,5 @@
 
 {% block js %}
   {{ super() }}
-  {{ js('fellowship', async=True) }}
+  {% javascript 'fellowship' %}
 {% endblock %}

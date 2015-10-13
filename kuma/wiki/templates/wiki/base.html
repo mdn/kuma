@@ -2,7 +2,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki', 'all') }}
+    {% stylesheet 'wiki' %}
 
     {% if config.KUMA_CUSTOM_CSS_PATH and waffle.flag('enable_customcss') %}
       <link rel="stylesheet" type="text/css"
@@ -12,5 +12,5 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('wiki', async=True) }}
+    {% javascript 'wiki' %}
 {% endblock %}
