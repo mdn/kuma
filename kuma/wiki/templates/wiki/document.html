@@ -422,11 +422,11 @@
   </script>
 
   {% if waffle.flag('share_links') %}
-    {{ js('social', async=True) }}
+    {% javascript 'social' %}
   {% endif %}
 
   {% if waffle.flag('helpfulness') %}
-    {{ js('helpfulness', async=True) }}
+    {% javascript 'helpfulness' %}
   {% endif %}
 
   {% if waffle.flag('section_edit') %}

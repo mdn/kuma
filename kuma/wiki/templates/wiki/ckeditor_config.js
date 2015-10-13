@@ -41,8 +41,6 @@
   CKEDITOR.dtd.$block['i'] = 1;
   delete CKEDITOR.dtd.$removeEmpty['i'];
 
-  CKEDITOR.timestamp = '{{ BUILD_ID_JS }}';
-
   CKEDITOR.editorConfig = function(config) {
     // Should be kept in sync with the list in ckeditor/source/build-config.js.
     // Defining plugins list explicitly lets us to switch easily between dev and build versions.
@@ -100,13 +98,7 @@
 
     config.startupFocus = true;
     config.bodyClass = 'text-content redesign';
-    config.contentsCss = [
-      mdn.staticPath + 'css/main.css?{{ BUILD_ID_JS }}',
-      mdn.staticPath + 'css/wiki.css?{{ BUILD_ID_JS }}',
-      mdn.staticPath + 'css/wiki-wysiwyg.css?{{ BUILD_ID_JS }}',
-      mdn.staticPath + 'css/wiki-syntax.css?{{ BUILD_ID_JS }}',
-      mdn.staticPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}'
-    ];
+    config.contentsCss = mdn.assets.css['editor-content'];
 
     if(window.waffle && window.waffle.flag_is_active('enable_customcss')) {
       config.contentsCss.push('{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1');

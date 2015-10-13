@@ -26,6 +26,7 @@ before_install:
 install:
     - pip install -r requirements/travis.txt
     - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
+    - python manage.py collectstatic --noinput
 script: tox -v
 after_failure:
     - dmesg | tail

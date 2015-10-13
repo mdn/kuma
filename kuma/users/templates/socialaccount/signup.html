@@ -7,13 +7,13 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('newsletter') }}
-    {{ css('submission') }}
+    {% stylesheet 'newsletter' %}
+    {% stylesheet 'submission' %}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
-    {{ js('newsletter', async=True) }}
+    {% javascript 'newsletter' %}
 {% endblock %}
 
 {% set provider = account.get_provider() %}

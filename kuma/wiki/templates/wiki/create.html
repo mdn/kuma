@@ -9,8 +9,8 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki-edit') }}
-    {{ css('jquery-ui') }}
+    {% stylesheet 'wiki-edit' %}
+    {% stylesheet 'jquery-ui' %}
 {% endblock %}
 
 {% block content %}
@@ -93,7 +93,7 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('jquery-ui') }}
+    {% javascript 'jquery-ui' %}
 
     {% include 'wiki/includes/tag_suggestions.html' %}
 
@@ -102,6 +102,6 @@
     {% else %}
       {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
-    {{ js('wiki-edit') }}
+    {% javascript 'wiki-edit' %}
 
 {% endblock %}
