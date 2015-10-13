@@ -575,8 +575,12 @@
         if ($contributors.data('has-hidden')) {
             $showAllContributors = $('<button type="button" class="transparent">' + $contributors.data('all-text') + '</button>');
 
-            $showAllContributors.on('click', function(e) {
-                e.preventDefault();
+            $showAllContributors.on('keypress click', function(e) {
+                var isKeyPress = e.type === 'keypress';
+                var isEnterKey = isKeyPress && e.which === 13;
+
+                // Ignore keypresses that aren't the ENTER key
+                if(isKeyPress && !isEnterKey) return;
 
                 mdn.analytics.trackEvent({
                     category: 'Top Contributors',
@@ -591,7 +595,9 @@
                 loadImages('noscript');
 
                 // Focus on the first hidden element
-                $($hiddenContributors.get(0)).find('a').get(0).focus();
+                if(isEnterKey) {
+                    $($hiddenContributors.get(0)).find('a').get(0).focus();
+                }
 
                 // Remove the "Show all" button
                 $(this).remove();
