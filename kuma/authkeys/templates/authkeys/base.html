@@ -4,8 +4,8 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('users') }}
-    {{ css('submission') }}
+    {% stylesheet 'users' %}
+    {% stylesheet 'submission' %}
 {% endblock %}
 
 {% block content %}

@@ -12,14 +12,14 @@
 
 {% block site_css %}
   {{ super() }}
-  {{ css('demostudio') }}
-  {{ css('jquery-ui') }}
-  {{ css('users') }}
+  {% stylesheet 'demostudio' %}
+  {% stylesheet 'jquery-ui' %}
+  {% stylesheet 'users' %}
 {% endblock %}
 
 {% block site_js %}
   {{ super() }}
-  {{ js('demostudio', async=True) }}
+  {% javascript 'demostudio' %}
 {% endblock %}
 
 {% block content %}

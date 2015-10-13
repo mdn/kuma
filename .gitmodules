@@ -60,9 +60,6 @@
 [submodule "vendor/src/jingo"]
 	path = vendor/src/jingo
 	url = git://github.com/jbalogh/jingo.git
-[submodule "vendor/src/jingo-minify"]
-	path = vendor/src/jingo-minify
-	url = git://github.com/jsocol/jingo-minify.git
 [submodule "vendor/src/oauthlib"]
 	path = vendor/src/oauthlib
 	url = git://github.com/idan/oauthlib.git
@@ -164,3 +161,6 @@
 [submodule "vendor/src/django-sundial"]
 	path = vendor/src/django-sundial
 	url = https://github.com/charettes/django-sundial
+[submodule "vendor/src/pipeline"]
+	path = vendor/src/pipeline
+	url = https://github.com/cyberdelia/django-pipeline.git

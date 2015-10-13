@@ -10,7 +10,6 @@
 
         // This represents the site configuration
         win.mdn = {
-            build: '{{ BUILD_ID_JS }}',
             // Properties and settings for CKEditor will go here
             ckeditor: {},
             // Feature test results and methods will be placed here
@@ -31,14 +30,15 @@
             wiki: {
                 autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
             },
-            // Just-in-time asset paths
+            // Assets that need to be dynamically injected
             assets: {
                 css: {
-                    'wiki-compat-tables': {{ css_url_array('wiki-compat-tables') }}
+                    'editor-content': [{% stylesheet 'editor-content' %}],
+                    'wiki-compat-tables': [{% stylesheet 'wiki-compat-tables' %}]
                 },
                 js: {
-                    'syntax-prism': {{ js_url_array('syntax-prism') }},
-                    'wiki-compat-tables': {{ js_url_array('wiki-compat-tables') }}
+                    'syntax-prism': [{% javascript 'syntax-prism' %}],
+                    'wiki-compat-tables': [{% javascript 'wiki-compat-tables' %}]
                 }
             }
         };
