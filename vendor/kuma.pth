@@ -52,3 +52,4 @@ src/tower
 src/urllib3
 src/urlobject
 src/werkzeug
+src/pipeline

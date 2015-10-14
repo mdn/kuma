@@ -3,7 +3,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('submission',) }}
+    {% stylesheet 'submission' %}
 {% endblock %}
 
 {% block body_attributes %}id="submit"{% endblock %}

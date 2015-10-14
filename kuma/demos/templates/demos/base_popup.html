@@ -2,10 +2,10 @@
 
 {% block site_css %}
   {{ super() }}
-  {{ css('demostudio') }}
+  {% stylesheet 'demostudio' %}
 {% endblock %}
 
 {% block site_js %}
   {{ super() }}
-  {{ js('demostudio') }}
+  {% javascript 'demostudio' %}
 {% endblock %}

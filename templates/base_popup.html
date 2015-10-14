@@ -14,12 +14,12 @@
   <link rel="shortcut icon" href="{{ static('img/favicon.ico') }}"/>
 
   {% block site_css %}
-  {{ css('mdn') }}
+  {% stylesheet 'mdn' %}
   {% endblock %}
 
     <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
-  <script src="{{ static('js/libs/html5.js') }}"></script>
+  <script src="{% javascript 'html5' %}"></script>
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
@@ -35,9 +35,9 @@
 
 {% block site_js %}
 
-  {{ js('main') }}
+  {% javascript 'main' %}
 
-  {{ js('popup') }}
+  {% javascript 'popup' %}
 
 {% endblock %}
 {% block js %}{% endblock %}

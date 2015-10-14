@@ -6,7 +6,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('error-403-alternate') }}
+    {% stylesheet 'error-403-alternate' %}
 {% endblock %}
 
 {% block content %}
@@ -68,5 +68,5 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('framebuster') }}
+    {% javascript 'framebuster' %}
 {% endblock %}

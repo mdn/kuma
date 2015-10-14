@@ -54,19 +54,6 @@ If you're changing Kumascript, be sure to run its tests too.
 See https://github.com/mozilla/kumascript
 
 
-Compiling Stylus Files
-======================
-
-If you're updating the Stylus CSS files, you'll need to compile them before
-you can see your updates within the browser. To compile stylus files,
-run the following from the command line::
-
-    ./scripts/compile-stylesheets
-
-The relevant CSS files will be generated and placed within the `media/css`
-directory. You can add a ``-w`` flag to that call to compile stylesheets
-upon save.
-
 Database Migrations
 ===================
 
@@ -225,15 +212,13 @@ set your ``settings_local.py`` with the following::
 Production assets
 *****************
 
-Assets are minified on production. To emulate production and test minified
+Assets are compressed on production. To emulate production and test compressed
 assets locally, follow these steps:
 
 #. In settings_local.py, set ``DEBUG = False``
 #. In settings_local.py, set ``DEV = False``
 #. Run ``vagrant ssh`` to enter the virtual machine
-#. Run ``./scripts/compile-stylesheets``
 #. Run ``./manage.py collectstatic``
-#. Run ``./manage.py compress_assets``
 #. Edit the file /etc/apache2/sites-enabled/kuma.conf and uncomment any lines
    pertaining to hosting static files
 #. Run ``sudo service apache2 restart``

@@ -2,3 +2,4 @@ ansible==1.9.2
 codecov
 tox==2.1.1
 lxml==3.4.4
+Pillow==2.9.0

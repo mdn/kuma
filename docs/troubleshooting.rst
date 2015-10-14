@@ -86,24 +86,6 @@ running it. (See `Running individual processes`_.)
 -  If you see ``Kumascript service failed unexpectedly: HTTPConnectionPool``,
    make sure you enabled :ref:`KumaScript <enable KumaScript>`.
 
-Errors with styles
-------------------
-
--  If you don't see your ``styl`` changes on the site, make sure you've
-   compiled the ``.styl`` files into ``.css``, either manually::
-
-       ./scripts/compile-stylesheets
-
-   Or with the automatic watch process::
-
-       ./scripts/compile-stylesheets --watch
-
--  Some MDN features (e.g., prism or ckeditor) make explicit requests for
-   compressed assets. If you notice styles are broken and the page is getting
-   404s on ``.css``, generate the compressed assets for these features::
-
-       python manage.py compress_assets
-
 .. _more-help:
 
 Getting more help

@@ -17,14 +17,13 @@
 
   <meta name="description" content="{{ submission.summary }}" />
 
-  <link rel="stylesheet" type="text/css" media="all" href="{{ static('css/demowrap.css') }}">
-  <link rel="stylesheet" type="text/css" media="all" href="{{ static('css/demos_wrap.css') }}">
-  {{ css('jquery-ui') }}
+  {% stylesheet 'demowrap' %}
+  {% stylesheet 'jquery-ui' %}
 
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <script src="{{ static('js/libs/html5.js') }}"></script>
+  <script src="{% javascript 'html5' %}"></script>
   <![endif]-->
 
 </head>
@@ -92,8 +91,8 @@
         {{ inlinei18n(request.locale) }}
     </script>
 
-    {{ js('main') }}
-    {{ js('popup') }}
+    {% javascript 'main' %}
+    {% javascript 'popup' %}
 
     <script type="text/javascript">
 
@@ -188,8 +187,8 @@
   </script>
 
   <!-- provide "report" functionality -->
-  <script type="text/javascript" src="{{ static('js/libs/jquery.hoverIntent.minified.js') }}"></script>
-  <script type="text/javascript" src="{{ static('js/modal-control.js') }}"></script>
+  {% javascript 'hoverIntent' %}
+  {% javascript 'modal-control' %}
 
 </body>
 </html>

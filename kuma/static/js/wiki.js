@@ -644,7 +644,7 @@
         var supportsMathML = Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
         if (!supportsMathML) {
             // Add CSS fallback
-            $('<link href="' + mdn.staticPath + 'css/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(doc.head);
+            $('<link href="' + mdn.staticPath + 'styles/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(doc.head);
 
             // Add notification
             $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
