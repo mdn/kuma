@@ -55,7 +55,7 @@
   <link rel="shortcut icon" href="{{ static('img/favicon32' + favicon_suffix + '.png') }}">
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
-  <script src="{% javascript 'html5' %}"></script>
+  {% javascript 'html5' %}
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
@@ -224,7 +224,7 @@
 
   <!-- site js -->
   {% block site_js %}
-    <!--[if lte IE 8]><script src="{% javascript 'selectivizr' %}"></script><![endif]-->
+    <!--[if lte IE 8]>{% javascript 'selectivizr' %}<![endif]-->
 
     {{ providers_media_js() }}
     {% javascript 'main' %}
