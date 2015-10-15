@@ -16,6 +16,10 @@
       apt: update_cache=yes
       tags: [mysql]
   roles:
-    - { role: geerlingguy.mysql, tags: [mysql] }
+    - { role: geerlingguy.mysql, tags: [mysql], mysql_innodb_log_file_size: 64M }
+    # TravisCI includes node/npm under nvm
+    # However, kuma/tasks/node.yaml would need to be modified to:
+    # use the nvm-configured npm (executable=path/to/nvm)
+    # not symlink from /usr/bin to /usr/local/bin in TravisCI
     - { role: nodesource.node, tags: [pipeline] }
     - kuma
