@@ -19,6 +19,8 @@
     // Private var to assign IDs to history for accessibility purposes
     var historyCount = 0;
 
+    // The open button template
+    var $historyLink = $('<button title="' + gettext('Open') + '" class="bc-history-link only-icon" tabindex="-1"><span>' + gettext('Open') + '</span><i class="ic-history" aria-hidden="true"></i></button>');
     // The close button template
     var $historyCloseButton = $('<button class="bc-history-button"><abbr class="only-icon" title="' + gettext('Return to compatability table.') + '"><span>' + gettext('Close') + '</span><i class="icon-times" aria-hidden="true"></i></abbr></button>');
 
@@ -43,18 +45,21 @@
 
             var subjectAnimation = $.extend({ complete: function() { animating = false; } }, animationProps);
 
-            // Activate all history cells for keyboard;  TODO:  add "aria-controls"
+            // Activate all history cells for keyboard
             $table.find('.bc-has-history').each(function() {
                 var historyId = 'bc-history-' + (++historyCount);
                 var $td = $(this);
+                var $history = $td.find('.bc-history');
 
                 $td.attr({
                     tabIndex: 0,
                     'aria-expanded': false,
                     'aria-controls': historyId
                 });
-                $td.find('.bc-history').attr('id', historyId);
-                $td.find('.bc-history-link').attr('tabIndex', -1);
+
+                $history.attr('id', historyId);
+                // generate and add button to open history tray
+                $historyLink.clone().insertBefore($history);
             });
 
             // Listen for clicks on "history" cells

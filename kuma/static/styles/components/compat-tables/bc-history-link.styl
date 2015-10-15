@@ -16,11 +16,12 @@ History-link
     font-size: 12px;
     border-top: 1px solid rgba($bc-color-border, 0.3);
     line-height: 1;
-
-    /* needs additional specificity to over ride rule giving it an underline */
-    a& {
-        text-decoration: none;
-    }
+    // override MDN defaults
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    background-color: transparent;
+    color: #fff;
 }
 
 /* increases hit area of the history link, making it easier to click/tap/etc, only necisary if JS is off */
