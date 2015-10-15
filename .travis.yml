@@ -13,10 +13,11 @@ services:
     - elasticsearch
 env:
     matrix:
-        - TOXENV=py27
-        - TOXENV=flake8
-        - TOXENV=docs
-        - TOXENV=dennis
+        - TOXENV=py27-tests
+        - TOXENV=py27-flake8
+        - TOXENV=py27-docs
+        - TOXENV=py27-isort
+        - TOXENV=py27-dennis
     global:
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive
@@ -29,7 +30,7 @@ before_install:
     - pip install -U pip
 install:
     - pip install -r requirements/travis.txt
-    - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
+    - if [[ $TOXENV == 'py27-tests' ]]; then ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
 script: tox -v
 after_failure:
     - dmesg | tail
