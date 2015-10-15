@@ -17,4 +17,5 @@
       tags: [mysql]
   roles:
     - { role: geerlingguy.mysql, tags: [mysql] }
+    - { role: nodesource.node, tags: [pipeline] }
     - kuma
