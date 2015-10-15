@@ -12,13 +12,16 @@ $properties-indent = ($grid-spacing * 2) - $properties-item-spacing;
 .htmlelt,
 .summary-box-js,
 .summary-box-events {
-    display: table;
-    margin: 0 0 $grid-spacing 0;
-    border-style: solid;
-    bidi-value(clear, left, right);
-    background: $code-block-background-alt-color;
 
-    .text-content & { /* need to override default text-content styles */
+    .text-content & {
+        /* could be defined one level up but that creates duplicate classes in output */
+        display: table;
+        margin: 0 0 $grid-spacing 0;
+        border-style: solid;
+        bidi-value(clear, left, right);
+        background: $code-block-background-alt-color;
+
+        /* need extra level of specificity to override default text-content styles */
         border-collapse: separate;
         bidi-value(padding, $properties-spacing $properties-indent $properties-spacing $properties-spacing, $properties-spacing $properties-spacing $properties-spacing $properties-indent);
         bidi-value(border-width, 0 0 0 $border-width, 0 $border-width 0 0);
@@ -52,6 +55,7 @@ $properties-indent = ($grid-spacing * 2) - $properties-item-spacing;
     }
 
     th {
+        min-width: 150px;
         font-weight: bold;
     }
 
