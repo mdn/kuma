@@ -13,14 +13,14 @@
 
   {% if show_attach_button and attachment_form and attachments_given %}
   <p class="add">
-      <button type="button" id="page-attachments-button" class="neutral">Attach Files<i aria-hidden="true" class="icon-paperclip"></i></button>
+      <button type="button" id="page-attachments-button" class="neutral">{{ _('Attach Files') }}<i aria-hidden="true" class="icon-paperclip"></i></button>
   </p>
   {% endif %}
 
   <p id="page-attachments-no-message" class="{% if attachments_given %}hidden{% endif %}">
     {{ _('This document has no attachments. Images can be attached, and then embedded in the article.') }}
     {% if show_attach_button and attachment_form and not attachments_given %}
-      <button id="page-attachments-button" class="neutral">Attach Files<i aria-hidden="true" class="icon-paperclip"></i></button>
+      <button id="page-attachments-button" class="neutral">{{ _('Attach Files') }}<i aria-hidden="true" class="icon-paperclip"></i></button>
     {% endif %}
   </p>
 
