@@ -18,7 +18,7 @@
 
 {% block extrahead %}
   {% if waffle.flag('search_suggestions') %}
-  {{ css('search-suggestions') }}
+  {% stylesheet 'search-suggestions' %}
   {% endif %}
 {% endblock %}
 
@@ -223,7 +223,7 @@
   </script>
   {% endif %}
   {% if waffle.flag('search_suggestions') %}
-  {{ js('search-suggestions') }}
+  {% javascript 'search-suggestions' %}
   <script>
   (function($) {
     var get_filters = function() {

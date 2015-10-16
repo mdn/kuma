@@ -12,7 +12,7 @@
   tags: [setup]
 
 - include: node.yml
-  tags: [setup]
+  tags: [setup, pipeline]
 
 - include: ruby.yml
   tags: [setup]

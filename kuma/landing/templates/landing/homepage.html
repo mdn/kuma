@@ -4,7 +4,7 @@
 
 {% block site_css %}
 	{{ super() }}
-	{{ css('home', 'all') }}
+	{% stylesheet 'home' %}
 {% endblock %}
 
 {% block extrahead %}
@@ -20,7 +20,7 @@
   <meta property="og:title" content="{{ social_title }}">
 
   {% if waffle.flag('search_suggestions') %}
-  {{ css('search-suggestions') }}
+  {% stylesheet 'search-suggestions' %}
   {% endif %}
 
 {% endblock %}
@@ -204,7 +204,7 @@
     <script>
         window.mdn.searchFilters = {{ command_search_filters|jsonencode }};
     </script>
-    {{ js('search-suggestions') }}
+    {% javascript 'search-suggestions' %}
     <script>
         jQuery('#home-search-form').searchSuggestions();
     </script>

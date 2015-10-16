@@ -21,4 +21,8 @@ then
     sudo rm -rf /var/lib/mysql
     sudo truncate -s 0 /var/log/mysql/error.log
 
+    # limit elasticsearch / java memory usage to avoid OOM Killer
+    sudo service elasticsearch stop;
+    echo "ES_HEAP_SIZE=256m" | sudo tee --append /etc/default/elasticsearch
+    sudo service elasticsearch start;
 fi
