@@ -105,6 +105,17 @@ class RevisionFormTests(UserTestCase):
         rev_form = RevisionForm(data, parent_slug='User:groovecoder')
         ok_(not rev_form.is_valid())
 
+    def test_multiword_tags(self):
+        rev = revision(save=True)
+        data = {
+            'content': 'Content',
+            'toc_depth': 1,
+            'tags': '"MDN Meta"',  # Note the lower-case "S".
+        }
+        rev_form = RevisionForm(data, instance=rev)
+        ok_(rev_form.is_valid())
+        eq_(rev_form.cleaned_data['tags'], '"MDN Meta"')
+
     def test_case_sensitive_tags(self):
         """
         RevisionForm should reject new tags that are the same as existing tags
@@ -118,7 +129,7 @@ class RevisionFormTests(UserTestCase):
         }
         rev_form = RevisionForm(data, instance=rev)
         ok_(rev_form.is_valid())
-        eq_(rev_form.cleaned_data['tags'], 'JavaScript')
+        eq_(rev_form.cleaned_data['tags'], '"JavaScript"')
 
 
 class TreeMoveFormTests(UserTestCase):

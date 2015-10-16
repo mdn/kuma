@@ -353,7 +353,7 @@ class RevisionForm(forms.ModelForm):
 
                 cleaned_tags.append(tag)
 
-        return ' '.join(cleaned_tags)
+        return ' '.join([u'"%s"' % t for t in cleaned_tags])
 
     def clean_content(self):
         """
