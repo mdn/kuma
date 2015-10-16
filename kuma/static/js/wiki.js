@@ -375,16 +375,24 @@
     /*
         Track clicks on Crumb links
     */
-    $('.crumbs').on('click', 'a', function() {
+    $('.crumbs').on('click', 'a', function(e) {
         var url = this.href;
-
-        mdn.analytics.trackEvent({
+        var newTab = (e.metaKey || e.ctrlKey);
+        var data = {
             category: 'Wiki',
             action: 'Crumbs',
             label: url
-        }, function() {
-            window.location = url;
-        });
+        };
+
+        if(newTab) {
+            mdn.analytics.trackEvent(data);
+        }
+        else {
+            e.preventDefault();
+            mdn.analytics.trackEvent(data, function() {
+                window.location = url;
+            });
+        }
     });
 
 
@@ -623,7 +631,9 @@
               mdn.analytics.trackEvent(data);
             } else {
               e.preventDefault();
-              mdn.analytics.trackEvent(data, function() { win.location = href; });
+              mdn.analytics.trackEvent(data, function() {
+                win.location = href;
+              });
             }
         });
 
