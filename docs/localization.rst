@@ -6,7 +6,8 @@ Kuma is localized with `gettext <http://www.gnu.org/software/gettext/>`_.
 User-facing strings in the code or templates need to be marked for gettext
 localization.
 
-We use `Verbatim <http://localize.mozilla.org/>`_ to provide an easy interface
+We use `Pontoon <https://pontoon.mozilla.org/>`_ or
+`Verbatim <http://localize.mozilla.org/>`_ to provide an easy interface
 to localizing these files. Localizers are also free to download the PO files
 and use whatever tool they are comfortable with.
 
@@ -25,7 +26,7 @@ Interpolation
 A string is often a combination of a fixed string and something changing, for
 example, ``Welcome, James`` is a combination of the fixed part ``Welcome,``,
 and the changing part ``James``. The naive solution is to localize the first
-part and the follow it with the name::
+part and then follow it with the name::
 
     _('Welcome, ') + username
 
@@ -174,30 +175,30 @@ Strings in Python are more complex for two reasons:
 
 Here's how you might localize a string in a view::
 
-    from tower import ugettext as _
+    from tower import ugettext
 
     def my_view(request):
         if request.user.is_superuser:
-            msg = _(u'Oh hi, staff!')
+            msg = ugettext(u'Oh hi, staff!')
         else:
-            msg = _(u'You are not staff!')
+            msg = ugettext(u'You are not staff!')
 
 Interpolation is done through normal Python string formatting::
 
-    msg = _(u'Oh, hi, {user}').format(user=request.user.username)
+    msg = ugettext(u'Oh, hi, {user}').format(user=request.user.username)
 
 ``ugettext`` supports context, too::
 
-    msg = _('Search', 'context')
+    msg = ugettext('Search', 'context')
 
 L10n comments are normal one-line Python comments::
 
     # L10n: A message to users.
-    msg = _(u'Oh, hi there!')
+    msg = ugettext(u'Oh, hi there!')
 
 If you need to use plurals, import the function ``ungettext`` from Tower::
 
-    from tower import ungettext, ugettext as _
+    from tower import ungettext
 
     n = len(results)
     msg = ungettext('Found {0} result', 'Found {0} results', n).format(n)
@@ -208,8 +209,7 @@ Lazily Translated Strings
 
 You can use ``ugettext`` or ``ungettext`` only in views or functions called
 from views. If the function will be evaluated when the module is loaded, then
-the string may end up in English or the locale of the last request! (We're
-tracking down that issue.)
+the string may end up in English or the locale of the last request!
 
 Examples include strings in module-level code, arguments to functions in class
 definitions, strings in functions called from outside the context of a view. To
@@ -218,52 +218,23 @@ methods, ``ugettext_lazy`` and ``ungettext_lazy``. The result doesn't get
 translated until it is evaluated as a string, for example by being output or
 passed to ``unicode()``::
 
-    from tower import ugettext_lazy as _lazy
+    from tower import ugettext_lazy as _
 
-    PAGE_TITLE = _lazy(u'Page Title')
+    PAGE_TITLE = _(u'Page Title')
 
 ``ugettext_lazy`` also supports context.
 
-It is very important to pass Unicode objects to the ``_lazy`` versions of these
-functions. Failure to do so results in significant issues when they are
-evaluated as strings.
-
-If you need to work with a lazily-translated string, you'll first need to
-convert it to a ``unicode`` object::
-
-    from tower import ugettext_lazy as _lazy
-
-    WELCOME = _lazy(u'Welcome, %s')
-
-    def my_view(request):
-        # Fails:
-        WELCOME % request.user.username
-
-        # Works:
-        unicode(WELCOME) % request.user.username
+.. note:: Please be consistent in how you alias the gettext methods.
 
 .. _get-localizations:
+
 
 Getting the Localizations
 =========================
 
-Localizations are not stored in this repository, but are in Mozilla's SVN::
+Localizations are found in this repository under the ``locale`` folder.
 
-    http://svn.mozilla.org/projects/mdn/trunk/locale
-
-You don't need the localization files for general development. However, if
-you need them for something, they're pretty easy to get::
-
-    $ cd kuma
-    $ svn checkout https://svn.mozilla.org/projects/mdn/trunk/locale
-
-(Alternatively, you can do yourself a favor and use::
-
-    $ git svn clone -r HEAD https://svn.mozilla.org/projects/mdn/trunk/locale
-
-if you're a git fan.)
-
-Then run the Django management command to update the static JavaScript
+Run the Django management command to update the static JavaScript
 translation catalogs::
 
     python manage.py compilejsi18n
@@ -271,42 +242,30 @@ translation catalogs::
 Updating the Localizations
 ==========================
 When we add or update strings, we need to update `Verbatim <http://localize.mozilla.org/>`_
-templates and PO files for localizers. If you commit changes to SVN without
-updating Verbatim, localizers will have merge head-aches.
+templates and PO files for localizers. If you commit changes to the
+locale files without updating Verbatim, localizers will have merge head-aches.
 
-1.  Check out the localizations (See `get-localizations`_)
-
-2.  Run the following in the virtual machine (see :doc:`installation`)::
+#.  Run the following in the virtual machine (see :doc:`installation`)::
 
         $ python manage.py extract
 
-3.  Commit the POT file.
-
-    If you used ``svn checkout`` above::
+#.  Commit the POT file.
 
         $ cd locale
-        $ svn up
-        $ svn ci -m "MDN string update YYYY-MM-DD"
-
-    If you used ``git svn clone`` above::
-
-        $ cd locale
-        $ git svn fetch
         $ git add -A
         $ git commit -m "MDN string update YYYY-MM-DD"
-        $ git svn dcommit
 
 .. note:: You need verbatim permissions for the following. If you don't have permissions, email `groovecoder <mailto:lcrouch@mozilla.com>`_ or `mathjazz <mailto:matjaz@mozilla.com>`_ to do the following ...
 
-4.  Go to the `MDN templates on Verbatim
+#.  Go to the `MDN templates on Verbatim
     <https://localize.mozilla.org/templates/mdn/>`_
 
-5.  Click 'Update all from VCS'
+#.  Click 'Update all from VCS'
 
-6.  ssh to sm-verbatim01 (See `L10n:Verbtim
+#.  ssh to sm-verbatim01 (See `L10n:Verbtim
     <https://wiki.mozilla.org/L10n:Verbatim>`_ on wiki.mozilla.org)
 
-7.  Update all locales against templates::
+#.  Update all locales against templates::
 
         sudo su verbatim
         cd /data/www/localize.mozilla.org/verbatim/pootle_env/Pootle
@@ -316,32 +275,24 @@ updating Verbatim, localizers will have merge head-aches.
 Adding a new Locale
 ===================
 
-1.  Check out the localizations (See `get-localizations`_)
-
-2.  Follow `the "Add locale" instructions on wiki.mozilla.org
+#.  Follow `the "Add locale" instructions on wiki.mozilla.org
     <https://wiki.mozilla.org/L10n:Verbatim#Adding_a_locale_to_a_Verbatim_project>`_.
 
-3.  Update your locale repo to get the new locale::
-
-        $ cd locale
-        $ svn up
-        $ cd ..
-
-4.  Update `languages.json` file via product details::
+#.  Update `languages.json` file via product details::
 
         $ ./manage.py update_product_details
         $ cp ../product_details_json/languages.json kuma/languages.json
 
-5.  Add the locale to `MDN_LANGUAGES` in `settings.py`
+#.  Add the locale to `MDN_LANGUAGES` in `settings.py`
 
-6. Create the `jsi18n` file for the new locale::
+#. Create the `jsi18n` file for the new locale::
 
         $ ./manage.py compilejsi18n
 
-7.  Verify django loads new locale without errors by visiting the locale's home
+#.  Verify django loads new locale without errors by visiting the locale's home
     page. E.g., https://developer-local.allizom.org/ml/
 
-8.  BONUS: Use `podebug` to test a fake translation of the locale::
+#.  BONUS: Use `podebug` to test a fake translation of the locale::
 
         $ cd locale
         $ podebug --rewrite=bracket templates/LC_MESSAGES/messages.pot
@@ -351,14 +302,14 @@ Adding a new Locale
     Restart the django server and re-visit the new locale to verify it shows
     "translated" strings in the locale.
 
-9.  Update the `locale.tar.gz` and `product_details_json.tar.gz` files used by
+#.  Update the `locale.tar.gz` and `product_details_json.tar.gz` files used by
     `our Travis install script`_::
 
         $ python manage.py update_product_details
         $ tar -czf etc/data/product_details_json.tar.gz ../product_details_json/
         $ tar -czf etc/data/locale.tar.gz locale/
 
-10.  Commit the changes to `settings.py`, `locale.tar.gz`, and
+#.  Commit the changes to `settings.py`, `locale.tar.gz`, and
     `product_details_json.tar.gz`
 
 
