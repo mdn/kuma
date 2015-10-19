@@ -110,7 +110,7 @@ class RevisionFormTests(UserTestCase):
         data = {
             'content': 'Content',
             'toc_depth': 1,
-            'tags': '"MDN Meta"',  # Note the lower-case "S".
+            'tags': '"MDN Meta"',
         }
         rev_form = RevisionForm(data, instance=rev)
         ok_(rev_form.is_valid())
