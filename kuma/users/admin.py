@@ -1,10 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from taggit.forms import TagWidget
-
-from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.urlresolvers import reverse
+from jingo.helpers import urlparams
 from .models import User, UserBan
 
 
@@ -33,19 +31,19 @@ class UserAdmin(BaseUserAdmin):
                      'organization', 'location', 'bio', 'email', 'tags__name')
 
     def revisions(self, obj):
-        """HTML link to user's revisions with count""" 
-        link = reverse('dashboards.revisions') +\
-            ('?user=%s' % obj.username)
+        """HTML link to user's revisions with count"""
+        link = urlparams(reverse('dashboards.revisions'),
+                         user=obj.username)
         count = obj.wiki_revisions().count()
         return ('<a href="%(link)s"><strong>%(count)s</strong></a>' %
-            {'link': link, 'count': count})
+                {'link': link, 'count': count})
 
     revisions.allow_tags = True
 
     def website(self, obj):
-        """HTML link to user's website""" 
+        """HTML link to user's website"""
         return ('<a href="%(url)s"><strong>%(url)s</strong></a>' %
-            {'url': obj.website_url})
+                {'url': obj.website_url})
 
     website.allow_tags = True
 
