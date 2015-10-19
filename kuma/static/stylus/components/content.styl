@@ -253,6 +253,13 @@ div.tip {
     vendorize(column-count, 3);
 }
 
+@media $media-query-small-mobile {
+   .twocolumns,
+   .threecolumns {
+        vendorize(column-count, 1);
+    }
+}
+
 /* apply to any container to restrict width to 60em */
 .readable-line-length {
     max-width: 60em;
