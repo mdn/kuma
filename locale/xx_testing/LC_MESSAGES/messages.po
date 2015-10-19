@@ -1,0 +1,5171 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-01 11:50-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 1.6.0\n"
+
+#: apps/actioncounters/models.py:71
+#: apps/contentflagging/models.py:100
+msgid "object ID"
+msgstr "ǿƀĵḗƈŧ ĪḒ"
+
+#: apps/actioncounters/models.py:75
+msgid "name of the action"
+msgstr "ƞȧḿḗ ǿƒ ŧħḗ ȧƈŧīǿƞ"
+
+#: apps/actioncounters/models.py:90
+#: apps/contentflagging/models.py:121
+#: apps/demos/models.py:507
+msgid "date last modified"
+msgstr "ḓȧŧḗ ŀȧşŧ ḿǿḓīƒīḗḓ"
+
+#: apps/contentflagging/models.py:26
+msgid "This is not working for me"
+msgstr "Ŧħīş īş ƞǿŧ ẇǿřķīƞɠ ƒǿř ḿḗ"
+
+#: apps/contentflagging/models.py:27
+msgid "This contains inappropriate content"
+msgstr "Ŧħīş ƈǿƞŧȧīƞş īƞȧƥƥřǿƥřīȧŧḗ ƈǿƞŧḗƞŧ"
+
+#: apps/contentflagging/models.py:28
+msgid "This was not created by the author"
+msgstr "Ŧħīş ẇȧş ƞǿŧ ƈřḗȧŧḗḓ ƀẏ ŧħḗ ȧŭŧħǿř"
+
+#: apps/contentflagging/models.py:29
+msgid "The author is fake"
+msgstr "Ŧħḗ ȧŭŧħǿř īş ƒȧķḗ"
+
+#: apps/contentflagging/models.py:33
+msgid "Flagged"
+msgstr "Ƒŀȧɠɠḗḓ"
+
+#: apps/contentflagging/models.py:34
+msgid "Flag rejected by moderator"
+msgstr "Ƒŀȧɠ řḗĵḗƈŧḗḓ ƀẏ ḿǿḓḗřȧŧǿř"
+
+#: apps/contentflagging/models.py:35
+msgid "Creator notified"
+msgstr "Ƈřḗȧŧǿř ƞǿŧīƒīḗḓ"
+
+#: apps/contentflagging/models.py:36
+msgid "Content hidden by moderator"
+msgstr "Ƈǿƞŧḗƞŧ ħīḓḓḗƞ ƀẏ ḿǿḓḗřȧŧǿř"
+
+#: apps/contentflagging/models.py:37
+msgid "Content deleted by moderator"
+msgstr "Ƈǿƞŧḗƞŧ ḓḗŀḗŧḗḓ ƀẏ ḿǿḓḗřȧŧǿř"
+
+#: apps/contentflagging/models.py:65
+msgid "{object} Flagged"
+msgstr "{ǿƀĵḗƈŧ} Ƒŀȧɠɠḗḓ"
+
+#: apps/contentflagging/models.py:87
+msgid "current status of flag review"
+msgstr "ƈŭřřḗƞŧ şŧȧŧŭş ǿƒ ƒŀȧɠ řḗṽīḗẇ"
+
+#: apps/contentflagging/models.py:90
+msgid "reason for flagging the content"
+msgstr "řḗȧşǿƞ ƒǿř ƒŀȧɠɠīƞɠ ŧħḗ ƈǿƞŧḗƞŧ"
+
+#: apps/contentflagging/models.py:93
+msgid "please explain what content you feel is inappropriate"
+msgstr "ƥŀḗȧşḗ ḗẋƥŀȧīƞ ẇħȧŧ ƈǿƞŧḗƞŧ ẏǿŭ ƒḗḗŀ īş īƞȧƥƥřǿƥřīȧŧḗ"
+
+#: apps/contentflagging/models.py:118
+msgid "date submitted"
+msgstr "ḓȧŧḗ şŭƀḿīŧŧḗḓ"
+
+#: apps/demos/__init__.py:45
+msgid "Winner of the June 2011 Dev Derby Challenge - CSS3 Animations"
+msgstr "Ẇīƞƞḗř ǿƒ ŧħḗ Ĵŭƞḗ 2011 Ḓḗṽ Ḓḗřƀẏ Ƈħȧŀŀḗƞɠḗ - ƇŞŞ3 Ȧƞīḿȧŧīǿƞş"
+
+#: apps/demos/__init__.py:46
+#: apps/demos/__init__.py:52
+#: apps/demos/__init__.py:58
+#: apps/demos/__init__.py:64
+#: apps/demos/__init__.py:72
+msgid "Show us what CSS can really do! Make the Web move with CSS3 Animations."
+msgstr "Şħǿẇ ŭş ẇħȧŧ ƇŞŞ ƈȧƞ řḗȧŀŀẏ ḓǿ! Ḿȧķḗ ŧħḗ Ẇḗƀ ḿǿṽḗ ẇīŧħ ƇŞŞ3 Ȧƞīḿȧŧīǿƞş."
+
+#: apps/demos/__init__.py:51
+msgid "Winner of the July 2011 Dev Derby Challenge - HTML5 <video>"
+msgstr "Ẇīƞƞḗř ǿƒ ŧħḗ Ĵŭŀẏ 2011 Ḓḗṽ Ḓḗřƀẏ Ƈħȧŀŀḗƞɠḗ - ĦŦḾĿ5 <video>"
+
+#: apps/demos/__init__.py:57
+msgid "Winner of the August 2011 Dev Derby Challenge - Touch on Mobile"
+msgstr "Ẇīƞƞḗř ǿƒ ŧħḗ Ȧŭɠŭşŧ 2011 Ḓḗṽ Ḓḗřƀẏ Ƈħȧŀŀḗƞɠḗ - Ŧǿŭƈħ ǿƞ Ḿǿƀīŀḗ"
+
+#: apps/demos/__init__.py:63
+msgid "Winner of the September 2011 Dev Derby Challenge - History API"
+msgstr "Ẇīƞƞḗř ǿƒ ŧħḗ Şḗƥŧḗḿƀḗř 2011 Ḓḗṽ Ḓḗřƀẏ Ƈħȧŀŀḗƞɠḗ - Ħīşŧǿřẏ ȦƤĪ"
+
+#: apps/demos/__init__.py:71
+msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
+msgstr "Ĵŭƞḗ 2011 Ḓḗṽ Ḓḗřƀẏ Ƈħȧŀŀḗƞɠḗ - ƇŞŞ3 Ȧƞīḿȧŧīǿƞş"
+
+#: apps/demos/__init__.py:77
+msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
+msgstr "Ĵŭŀẏ 2011 Ḓḗṽ Ḓḗřƀẏ Ƈħȧŀŀḗƞɠḗ - ĦŦḾĿ5 <video>"
+
+#: apps/demos/__init__.py:78
+#: apps/demos/templates/demos/devderby_landing.html:54
+msgid ""
+"The HTML5 <video> element lets you embed and control video media directly in "
+"web pages, without resorting to plug-ins."
+msgstr ""
+"Ŧħḗ ĦŦḾĿ5 <video> ḗŀḗḿḗƞŧ ŀḗŧş ẏǿŭ ḗḿƀḗḓ ȧƞḓ ƈǿƞŧřǿŀ ṽīḓḗǿ ḿḗḓīȧ ḓīřḗƈŧŀẏ īƞ "
+"ẇḗƀ ƥȧɠḗş, ẇīŧħǿŭŧ řḗşǿřŧīƞɠ ŧǿ ƥŀŭɠ-īƞş."
+
+#: apps/demos/__init__.py:83
+msgid "August 2011 Dev Derby Challenge - Touch on Mobile"
+msgstr "Ȧŭɠŭşŧ 2011 Ḓḗṽ Ḓḗřƀẏ Ƈħȧŀŀḗƞɠḗ - Ŧǿŭƈħ ǿƞ Ḿǿƀīŀḗ"
+
+#: apps/demos/__init__.py:84
+#: apps/demos/templates/demos/devderby_landing.html:60
+msgid ""
+"Touch events let you track the movements of a user's fingers on a touch "
+"screen."
+msgstr ""
+"Ŧǿŭƈħ ḗṽḗƞŧş ŀḗŧ ẏǿŭ ŧřȧƈķ ŧħḗ ḿǿṽḗḿḗƞŧş ǿƒ ȧ ŭşḗř'ş ƒīƞɠḗřş ǿƞ ȧ ŧǿŭƈħ "
+"şƈřḗḗƞ."
+
+#: apps/demos/__init__.py:89
+msgid "September 2011 Dev Derby Challenge - History API"
+msgstr "Şḗƥŧḗḿƀḗř 2011 Ḓḗṽ Ḓḗřƀẏ Ƈħȧŀŀḗƞɠḗ - Ħīşŧǿřẏ ȦƤĪ"
+
+#: apps/demos/__init__.py:90
+#: apps/demos/templates/demos/devderby_landing.html:66
+msgid ""
+"The History API in modern browsers enables live changes to the document "
+"without breaking the back button and allows apps to be bookmarked."
+msgstr ""
+"Ŧħḗ Ħīşŧǿřẏ ȦƤĪ īƞ ḿǿḓḗřƞ ƀřǿẇşḗřş ḗƞȧƀŀḗş ŀīṽḗ ƈħȧƞɠḗş ŧǿ ŧħḗ ḓǿƈŭḿḗƞŧ "
+"ẇīŧħǿŭŧ ƀřḗȧķīƞɠ ŧħḗ ƀȧƈķ ƀŭŧŧǿƞ ȧƞḓ ȧŀŀǿẇş ȧƥƥş ŧǿ ƀḗ ƀǿǿķḿȧřķḗḓ."
+
+#: apps/demos/__init__.py:97
+#: apps/docs/templates/docs/glossary.html:15
+#: templates/base.html:81
+msgid "Audio"
+msgstr "Ȧŭḓīǿ"
+
+#: apps/demos/__init__.py:98
+msgid ""
+"Mozilla's Audio Data API extends the current HTML5 API and allows web "
+"developers to read and write raw audio data."
+msgstr ""
+"Ḿǿzīŀŀȧ'ş Ȧŭḓīǿ Ḓȧŧȧ ȦƤĪ ḗẋŧḗƞḓş ŧħḗ ƈŭřřḗƞŧ ĦŦḾĿ5 ȦƤĪ ȧƞḓ ȧŀŀǿẇş ẇḗƀ "
+"ḓḗṽḗŀǿƥḗřş ŧǿ řḗȧḓ ȧƞḓ ẇřīŧḗ řȧẇ ȧŭḓīǿ ḓȧŧȧ."
+
+#: apps/demos/__init__.py:100
+#: apps/demos/__init__.py:110
+#: apps/demos/__init__.py:120
+#: apps/demos/__init__.py:130
+#: apps/demos/__init__.py:139
+#: apps/demos/__init__.py:148
+#: apps/demos/__init__.py:158
+#: apps/demos/__init__.py:168
+#: apps/demos/__init__.py:178
+#: apps/demos/__init__.py:188
+#: apps/demos/__init__.py:198
+#: apps/demos/__init__.py:208
+#: apps/demos/__init__.py:218
+#: apps/demos/__init__.py:228
+#: apps/demos/__init__.py:238
+#: apps/demos/__init__.py:248
+#: apps/demos/__init__.py:258
+#: apps/demos/__init__.py:268
+#: apps/demos/__init__.py:278
+#: apps/demos/__init__.py:288
+#: apps/demos/__init__.py:298
+msgid "MDN Documentation"
+msgstr "ḾḒȠ Ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#: apps/demos/__init__.py:100
+msgid "https://developer.mozilla.org/en/Introducing_the_Audio_API_Extension"
+msgstr "https://developer.mozilla.org/en/Introducing_the_Audio_API_Extension"
+
+#: apps/demos/__init__.py:101
+#: apps/demos/__init__.py:111
+#: apps/demos/__init__.py:121
+#: apps/demos/__init__.py:149
+#: apps/demos/__init__.py:159
+#: apps/demos/__init__.py:169
+#: apps/demos/__init__.py:179
+#: apps/demos/__init__.py:189
+#: apps/demos/__init__.py:199
+#: apps/demos/__init__.py:209
+#: apps/demos/__init__.py:219
+#: apps/demos/__init__.py:229
+#: apps/demos/__init__.py:239
+#: apps/demos/__init__.py:249
+#: apps/demos/__init__.py:259
+#: apps/demos/__init__.py:269
+#: apps/demos/__init__.py:279
+#: apps/demos/__init__.py:289
+#: apps/demos/__init__.py:299
+msgid "Wikipedia Article"
+msgstr "Ẇīķīƥḗḓīȧ Ȧřŧīƈŀḗ"
+
+#: apps/demos/__init__.py:101
+msgid "http://en.wikipedia.org/wiki/HTML5_audio"
+msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
+
+#: apps/demos/__init__.py:102
+#: apps/demos/__init__.py:112
+#: apps/demos/__init__.py:122
+#: apps/demos/__init__.py:131
+#: apps/demos/__init__.py:140
+#: apps/demos/__init__.py:150
+#: apps/demos/__init__.py:160
+#: apps/demos/__init__.py:170
+#: apps/demos/__init__.py:190
+#: apps/demos/__init__.py:200
+#: apps/demos/__init__.py:210
+#: apps/demos/__init__.py:220
+#: apps/demos/__init__.py:230
+#: apps/demos/__init__.py:240
+#: apps/demos/__init__.py:250
+#: apps/demos/__init__.py:270
+#: apps/demos/__init__.py:280
+#: apps/demos/__init__.py:290
+#: apps/demos/__init__.py:300
+msgid "W3C Spec"
+msgstr "Ẇ3Ƈ Şƥḗƈ"
+
+#: apps/demos/__init__.py:102
+msgid "http://www.w3.org/TR/html5/video.html#audio"
+msgstr "http://www.w3.org/TR/html5/video.html#audio"
+
+#: apps/demos/__init__.py:107
+#: apps/docs/templates/docs/glossary.html:10
+#: templates/base.html:110
+msgid "Canvas"
+msgstr "Ƈȧƞṽȧş"
+
+#: apps/demos/__init__.py:108
+msgid ""
+"The HTML5 canvas element allows you to display scriptable renderings of 2D "
+"shapes and bitmap images."
+msgstr ""
+"Ŧħḗ ĦŦḾĿ5 ƈȧƞṽȧş ḗŀḗḿḗƞŧ ȧŀŀǿẇş ẏǿŭ ŧǿ ḓīşƥŀȧẏ şƈřīƥŧȧƀŀḗ řḗƞḓḗřīƞɠş ǿƒ 2Ḓ "
+"şħȧƥḗş ȧƞḓ ƀīŧḿȧƥ īḿȧɠḗş."
+
+#: apps/demos/__init__.py:110
+msgid "https://developer.mozilla.org/en/HTML/Canvas"
+msgstr "https://developer.mozilla.org/en/HTML/Canvas"
+
+#: apps/demos/__init__.py:111
+msgid "http://en.wikipedia.org/wiki/Canvas_element"
+msgstr "http://en.wikipedia.org/wiki/Canvas_element"
+
+#: apps/demos/__init__.py:112
+msgid "http://www.w3.org/TR/html5/the-canvas-element.html"
+msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
+
+#: apps/demos/__init__.py:117
+msgid "CSS3"
+msgstr "ƇŞŞ3"
+
+#: apps/demos/__init__.py:118
+msgid ""
+"Cascading Style Sheets level 3 (CSS3) provide serveral new features and "
+"properties to enhance the formatting and look of documents written in "
+"different kinds of markup languages like HTML or XML."
+msgstr ""
+"Ƈȧşƈȧḓīƞɠ Şŧẏŀḗ Şħḗḗŧş ŀḗṽḗŀ 3 (ƇŞŞ3) ƥřǿṽīḓḗ şḗřṽḗřȧŀ ƞḗẇ ƒḗȧŧŭřḗş ȧƞḓ "
+"ƥřǿƥḗřŧīḗş ŧǿ ḗƞħȧƞƈḗ ŧħḗ ƒǿřḿȧŧŧīƞɠ ȧƞḓ ŀǿǿķ ǿƒ ḓǿƈŭḿḗƞŧş ẇřīŧŧḗƞ īƞ "
+"ḓīƒƒḗřḗƞŧ ķīƞḓş ǿƒ ḿȧřķŭƥ ŀȧƞɠŭȧɠḗş ŀīķḗ ĦŦḾĿ ǿř ẊḾĿ."
+
+#: apps/demos/__init__.py:120
+msgid "https://developer.mozilla.org/en/CSS"
+msgstr "https://developer.mozilla.org/en/CSS"
+
+#: apps/demos/__init__.py:121
+msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
+msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
+
+#: apps/demos/__init__.py:122
+msgid "http://www.w3.org/TR/css3-roadmap/"
+msgstr "http://www.w3.org/TR/css3-roadmap/"
+
+#: apps/demos/__init__.py:127
+msgid "Device"
+msgstr "Ḓḗṽīƈḗ"
+
+#: apps/demos/__init__.py:128
+msgid ""
+"Media queries and orientation events let authors adjust their layout on "
+"hand-held devices such as mobile phones."
+msgstr ""
+"Ḿḗḓīȧ ɋŭḗřīḗş ȧƞḓ ǿřīḗƞŧȧŧīǿƞ ḗṽḗƞŧş ŀḗŧ ȧŭŧħǿřş ȧḓĵŭşŧ ŧħḗīř ŀȧẏǿŭŧ ǿƞ "
+"ħȧƞḓ-ħḗŀḓ ḓḗṽīƈḗş şŭƈħ ȧş ḿǿƀīŀḗ ƥħǿƞḗş."
+
+#: apps/demos/__init__.py:130
+msgid "https://developer.mozilla.org/en/Detecting_device_orientation"
+msgstr "https://developer.mozilla.org/en/Detecting_device_orientation"
+
+#: apps/demos/__init__.py:131
+msgid "http://www.w3.org/TR/css3-mediaqueries/"
+msgstr "http://www.w3.org/TR/css3-mediaqueries/"
+
+#: apps/demos/__init__.py:136
+#: apps/docs/templates/docs/glossary.html:18
+msgid "Files"
+msgstr "Ƒīŀḗş"
+
+#: apps/demos/__init__.py:137
+msgid ""
+"The File API allows web developers to use file objects in web applications, "
+"as well as selecting and accessing their data."
+msgstr ""
+"Ŧħḗ Ƒīŀḗ ȦƤĪ ȧŀŀǿẇş ẇḗƀ ḓḗṽḗŀǿƥḗřş ŧǿ ŭşḗ ƒīŀḗ ǿƀĵḗƈŧş īƞ ẇḗƀ ȧƥƥŀīƈȧŧīǿƞş, "
+"ȧş ẇḗŀŀ ȧş şḗŀḗƈŧīƞɠ ȧƞḓ ȧƈƈḗşşīƞɠ ŧħḗīř ḓȧŧȧ."
+
+#: apps/demos/__init__.py:139
+msgid "https://developer.mozilla.org/en/using_files_from_web_applications"
+msgstr "https://developer.mozilla.org/en/using_files_from_web_applications"
+
+#: apps/demos/__init__.py:140
+msgid "http://www.w3.org/TR/FileAPI/"
+msgstr "http://www.w3.org/TR/FileAPI/"
+
+#: apps/demos/__init__.py:145
+msgid "Fonts & Type"
+msgstr "Ƒǿƞŧş & Ŧẏƥḗ"
+
+#: apps/demos/__init__.py:146
+msgid ""
+"The CSS3-Font specification contains enhanced features for fonts and "
+"typography like embedding own fonts via @font-face or controlling OpenType "
+"font features directly via CSS."
+msgstr ""
+"Ŧħḗ ƇŞŞ3-Ƒǿƞŧ şƥḗƈīƒīƈȧŧīǿƞ ƈǿƞŧȧīƞş ḗƞħȧƞƈḗḓ ƒḗȧŧŭřḗş ƒǿř ƒǿƞŧş ȧƞḓ "
+"ŧẏƥǿɠřȧƥħẏ ŀīķḗ ḗḿƀḗḓḓīƞɠ ǿẇƞ ƒǿƞŧş ṽīȧ @ƒǿƞŧ-ƒȧƈḗ ǿř ƈǿƞŧřǿŀŀīƞɠ ǾƥḗƞŦẏƥḗ "
+"ƒǿƞŧ ƒḗȧŧŭřḗş ḓīřḗƈŧŀẏ ṽīȧ ƇŞŞ."
+
+#: apps/demos/__init__.py:148
+msgid "https://developer.mozilla.org/en/css/@font-face"
+msgstr "https://developer.mozilla.org/en/css/@font-face"
+
+#: apps/demos/__init__.py:149
+msgid "http://en.wikipedia.org/wiki/Web_typography"
+msgstr "http://en.wikipedia.org/wiki/Web_typography"
+
+#: apps/demos/__init__.py:150
+msgid "http://www.w3.org/TR/css3-fonts/"
+msgstr "http://www.w3.org/TR/css3-fonts/"
+
+#: apps/demos/__init__.py:155
+msgid "Forms"
+msgstr "Ƒǿřḿş"
+
+#: apps/demos/__init__.py:156
+msgid ""
+"Form elements and attributes in HTML5 provide a greater degree of semantic "
+"mark-up than HTML4 and remove a great deal of the need for tedious scripting "
+"and styling that was required in HTML4."
+msgstr ""
+"Ƒǿřḿ ḗŀḗḿḗƞŧş ȧƞḓ ȧŧŧřīƀŭŧḗş īƞ ĦŦḾĿ5 ƥřǿṽīḓḗ ȧ ɠřḗȧŧḗř ḓḗɠřḗḗ ǿƒ şḗḿȧƞŧīƈ "
+"ḿȧřķ-ŭƥ ŧħȧƞ ĦŦḾĿ4 ȧƞḓ řḗḿǿṽḗ ȧ ɠřḗȧŧ ḓḗȧŀ ǿƒ ŧħḗ ƞḗḗḓ ƒǿř ŧḗḓīǿŭş şƈřīƥŧīƞɠ "
+"ȧƞḓ şŧẏŀīƞɠ ŧħȧŧ ẇȧş řḗɋŭīřḗḓ īƞ ĦŦḾĿ4."
+
+#: apps/demos/__init__.py:158
+msgid "https://developer.mozilla.org/en/HTML/HTML5/Forms_in_HTML5"
+msgstr "https://developer.mozilla.org/en/HTML/HTML5/Forms_in_HTML5"
+
+#: apps/demos/__init__.py:159
+msgid "http://en.wikipedia.org/wiki/HTML_forms"
+msgstr "http://en.wikipedia.org/wiki/HTML_forms"
+
+#: apps/demos/__init__.py:160
+msgid "http://www.w3.org/TR/html5/forms.html"
+msgstr "http://www.w3.org/TR/html5/forms.html"
+
+#: apps/demos/__init__.py:165
+#: templates/base.html:111
+msgid "Geolocation"
+msgstr "Ɠḗǿŀǿƈȧŧīǿƞ"
+
+#: apps/demos/__init__.py:166
+msgid ""
+"The Geolocation API allows web applications to access the user's "
+"geographical location."
+msgstr ""
+"Ŧħḗ Ɠḗǿŀǿƈȧŧīǿƞ ȦƤĪ ȧŀŀǿẇş ẇḗƀ ȧƥƥŀīƈȧŧīǿƞş ŧǿ ȧƈƈḗşş ŧħḗ ŭşḗř'ş "
+"ɠḗǿɠřȧƥħīƈȧŀ ŀǿƈȧŧīǿƞ."
+
+#: apps/demos/__init__.py:168
+msgid "https://developer.mozilla.org/En/Using_geolocation"
+msgstr "https://developer.mozilla.org/En/Using_geolocation"
+
+#: apps/demos/__init__.py:169
+msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
+msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
+
+#: apps/demos/__init__.py:170
+msgid "http://dev.w3.org/geo/api/spec-source.html"
+msgstr "http://dev.w3.org/geo/api/spec-source.html"
+
+#: apps/demos/__init__.py:175
+#: apps/docs/templates/docs/docs.html:40
+#: apps/docs/templates/docs/glossary.html:6
+#: apps/landing/templates/landing/learn.html:38
+#: apps/landing/templates/landing/promote_buttons.html:112
+#: apps/landing/templates/landing/web.html:69
+#: templates/base.html:108
+msgid "JavaScript"
+msgstr "ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/demos/__init__.py:176
+msgid ""
+"JavaScript is a lightweight, object-oriented programming language, commonly "
+"used for scripting interactive behavior on web pages and in web "
+"applications."
+msgstr ""
+"ĴȧṽȧŞƈřīƥŧ īş ȧ ŀīɠħŧẇḗīɠħŧ, ǿƀĵḗƈŧ-ǿřīḗƞŧḗḓ ƥřǿɠřȧḿḿīƞɠ ŀȧƞɠŭȧɠḗ, ƈǿḿḿǿƞŀẏ "
+"ŭşḗḓ ƒǿř şƈřīƥŧīƞɠ īƞŧḗřȧƈŧīṽḗ ƀḗħȧṽīǿř ǿƞ ẇḗƀ ƥȧɠḗş ȧƞḓ īƞ ẇḗƀ "
+"ȧƥƥŀīƈȧŧīǿƞş."
+
+#: apps/demos/__init__.py:178
+msgid "https://developer.mozilla.org/en/javascript"
+msgstr "https://developer.mozilla.org/en/javascript"
+
+#: apps/demos/__init__.py:179
+msgid "http://en.wikipedia.org/wiki/JavaScript"
+msgstr "http://en.wikipedia.org/wiki/JavaScript"
+
+#: apps/demos/__init__.py:180
+msgid "ECMA Spec"
+msgstr "ḖƇḾȦ Şƥḗƈ"
+
+#: apps/demos/__init__.py:180
+msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+
+#: apps/demos/__init__.py:185
+#: apps/docs/templates/docs/docs.html:36
+#: apps/docs/templates/docs/glossary.html:7
+#: apps/landing/templates/landing/web.html:65
+#: templates/base.html:88
+msgid "HTML5"
+msgstr "ĦŦḾĿ5"
+
+#: apps/demos/__init__.py:186
+msgid ""
+"HTML5 is the newest version of the HTML standard, currently under "
+"development."
+msgstr ""
+"ĦŦḾĿ5 īş ŧħḗ ƞḗẇḗşŧ ṽḗřşīǿƞ ǿƒ ŧħḗ ĦŦḾĿ şŧȧƞḓȧřḓ, ƈŭřřḗƞŧŀẏ ŭƞḓḗř "
+"ḓḗṽḗŀǿƥḿḗƞŧ."
+
+#: apps/demos/__init__.py:188
+msgid "https://developer.mozilla.org/en/HTML/HTML5"
+msgstr "https://developer.mozilla.org/en/HTML/HTML5"
+
+#: apps/demos/__init__.py:189
+msgid "http://en.wikipedia.org/wiki/Html5"
+msgstr "http://en.wikipedia.org/wiki/Html5"
+
+#: apps/demos/__init__.py:190
+msgid "http://dev.w3.org/html5/spec/Overview.html"
+msgstr "http://dev.w3.org/html5/spec/Overview.html"
+
+#: apps/demos/__init__.py:195
+#: apps/docs/templates/docs/glossary.html:23
+#: templates/base.html:92
+msgid "IndexedDB"
+msgstr "ĪƞḓḗẋḗḓḒƁ"
+
+#: apps/demos/__init__.py:196
+msgid ""
+"IndexedDB is an API for client-side storage of significant amounts of "
+"structured data and for high performance searches on this data using "
+"indexes."
+msgstr ""
+"ĪƞḓḗẋḗḓḒƁ īş ȧƞ ȦƤĪ ƒǿř ƈŀīḗƞŧ-şīḓḗ şŧǿřȧɠḗ ǿƒ şīɠƞīƒīƈȧƞŧ ȧḿǿŭƞŧş ǿƒ "
+"şŧřŭƈŧŭřḗḓ ḓȧŧȧ ȧƞḓ ƒǿř ħīɠħ ƥḗřƒǿřḿȧƞƈḗ şḗȧřƈħḗş ǿƞ ŧħīş ḓȧŧȧ ŭşīƞɠ "
+"īƞḓḗẋḗş."
+
+#: apps/demos/__init__.py:198
+msgid "https://developer.mozilla.org/en/IndexedDB"
+msgstr "https://developer.mozilla.org/en/IndexedDB"
+
+#: apps/demos/__init__.py:199
+msgid "http://en.wikipedia.org/wiki/IndexedDB"
+msgstr "http://en.wikipedia.org/wiki/IndexedDB"
+
+#: apps/demos/__init__.py:200
+msgid "http://www.w3.org/TR/IndexedDB/"
+msgstr "http://www.w3.org/TR/IndexedDB/"
+
+#: apps/demos/__init__.py:205
+#: apps/docs/templates/docs/glossary.html:19
+msgid "Drag and Drop"
+msgstr "Ḓřȧɠ ȧƞḓ Ḓřǿƥ"
+
+#: apps/demos/__init__.py:206
+msgid ""
+"Drag and Drop features allow the user to move elements on the screen using "
+"the mouse pointer."
+msgstr ""
+"Ḓřȧɠ ȧƞḓ Ḓřǿƥ ƒḗȧŧŭřḗş ȧŀŀǿẇ ŧħḗ ŭşḗř ŧǿ ḿǿṽḗ ḗŀḗḿḗƞŧş ǿƞ ŧħḗ şƈřḗḗƞ ŭşīƞɠ "
+"ŧħḗ ḿǿŭşḗ ƥǿīƞŧḗř."
+
+#: apps/demos/__init__.py:208
+msgid "https://developer.mozilla.org/en/DragDrop/Drag_and_Drop"
+msgstr "https://developer.mozilla.org/en/DragDrop/Drag_and_Drop"
+
+#: apps/demos/__init__.py:209
+msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
+msgstr "http://en.wikipedia.org/wiki/Drag-and-drop"
+
+#: apps/demos/__init__.py:210
+msgid "http://www.w3.org/TR/html5/dnd.html"
+msgstr "http://www.w3.org/TR/html5/dnd.html"
+
+#: apps/demos/__init__.py:215
+#: apps/devmo/__init__.py:18
+#: apps/docs/templates/docs/docs.html:69
+#: apps/docs/templates/docs/docs.html:78
+#: apps/landing/templates/landing/mobile.html:11
+#: apps/landing/templates/landing/mobile.html:17
+#: templates/base.html:67
+#: templates/global/menu_links.html:12
+msgid "Mobile"
+msgstr "Ḿǿƀīŀḗ"
+
+#: apps/demos/__init__.py:216
+msgid ""
+"Firefox Mobile brings the true Web experience to mobile phones and other "
+"non-PC devices."
+msgstr ""
+"Ƒīřḗƒǿẋ Ḿǿƀīŀḗ ƀřīƞɠş ŧħḗ ŧřŭḗ Ẇḗƀ ḗẋƥḗřīḗƞƈḗ ŧǿ ḿǿƀīŀḗ ƥħǿƞḗş ȧƞḓ ǿŧħḗř "
+"ƞǿƞ-ƤƇ ḓḗṽīƈḗş."
+
+#: apps/demos/__init__.py:218
+msgid "https://developer.mozilla.org/En/Mobile"
+msgstr "https://developer.mozilla.org/En/Mobile"
+
+#: apps/demos/__init__.py:219
+msgid "http://en.wikipedia.org/wiki/Mobile_web"
+msgstr "http://en.wikipedia.org/wiki/Mobile_web"
+
+#: apps/demos/__init__.py:220
+msgid "http://www.w3.org/Mobile/"
+msgstr "http://www.w3.org/Mobile/"
+
+#: apps/demos/__init__.py:225
+msgid "Offline Support"
+msgstr "Ǿƒƒŀīƞḗ Şŭƥƥǿřŧ"
+
+#: apps/demos/__init__.py:226
+msgid ""
+"Offline caching of web applications' resources using the application cache "
+"and local storage."
+msgstr ""
+"Ǿƒƒŀīƞḗ ƈȧƈħīƞɠ ǿƒ ẇḗƀ ȧƥƥŀīƈȧŧīǿƞş' řḗşǿŭřƈḗş ŭşīƞɠ ŧħḗ ȧƥƥŀīƈȧŧīǿƞ ƈȧƈħḗ "
+"ȧƞḓ ŀǿƈȧŀ şŧǿřȧɠḗ."
+
+#: apps/demos/__init__.py:228
+msgid "https://developer.mozilla.org/en/dom/storage#localStorage"
+msgstr "https://developer.mozilla.org/en/dom/storage#localStorage"
+
+#: apps/demos/__init__.py:229
+msgid "http://en.wikipedia.org/wiki/Web_Storage"
+msgstr "http://en.wikipedia.org/wiki/Web_Storage"
+
+#: apps/demos/__init__.py:230
+msgid "http://dev.w3.org/html5/webstorage/"
+msgstr "http://dev.w3.org/html5/webstorage/"
+
+#: apps/demos/__init__.py:235
+#: apps/docs/templates/docs/glossary.html:9
+#: templates/base.html:82
+msgid "SVG"
+msgstr "ŞṼƓ"
+
+#: apps/demos/__init__.py:236
+msgid ""
+"Scalable Vector Graphics (SVG) is an XML based language for describing two-"
+"dimensional vector graphics."
+msgstr ""
+"Şƈȧŀȧƀŀḗ Ṽḗƈŧǿř Ɠřȧƥħīƈş (ŞṼƓ) īş ȧƞ ẊḾĿ ƀȧşḗḓ ŀȧƞɠŭȧɠḗ ƒǿř ḓḗşƈřīƀīƞɠ "
+"ŧẇǿ-ḓīḿḗƞşīǿƞȧŀ ṽḗƈŧǿř ɠřȧƥħīƈş."
+
+#: apps/demos/__init__.py:238
+msgid "https://developer.mozilla.org/en/SVG"
+msgstr "https://developer.mozilla.org/en/SVG"
+
+#: apps/demos/__init__.py:239
+msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+msgstr "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+
+#: apps/demos/__init__.py:240
+msgid "http://www.w3.org/TR/SVG11/"
+msgstr "http://www.w3.org/TR/SVG11/"
+
+#: apps/demos/__init__.py:245
+#: apps/docs/templates/docs/glossary.html:16
+#: templates/base.html:80
+msgid "Video"
+msgstr "Ṽīḓḗǿ"
+
+#: apps/demos/__init__.py:246
+msgid ""
+"The HTML5 video element provides integrated support for playing video media "
+"without requiring plug-ins."
+msgstr ""
+"Ŧħḗ ĦŦḾĿ5 ṽīḓḗǿ ḗŀḗḿḗƞŧ ƥřǿṽīḓḗş īƞŧḗɠřȧŧḗḓ şŭƥƥǿřŧ ƒǿř ƥŀȧẏīƞɠ ṽīḓḗǿ ḿḗḓīȧ "
+"ẇīŧħǿŭŧ řḗɋŭīřīƞɠ ƥŀŭɠ-īƞş."
+
+#: apps/demos/__init__.py:248
+msgid "https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox"
+msgstr "https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox"
+
+#: apps/demos/__init__.py:249
+msgid "http://en.wikipedia.org/wiki/HTML5_video"
+msgstr "http://en.wikipedia.org/wiki/HTML5_video"
+
+#: apps/demos/__init__.py:250
+msgid "http://www.w3.org/TR/html5/video.html"
+msgstr "http://www.w3.org/TR/html5/video.html"
+
+#: apps/demos/__init__.py:255
+#: apps/docs/templates/docs/glossary.html:13
+#: templates/base.html:83
+msgid "WebGL"
+msgstr "ẆḗƀƓĿ"
+
+#: apps/demos/__init__.py:256
+msgid ""
+"In the context of the HTML canvas element WebGL provides an API for 3D "
+"graphics in the browser."
+msgstr ""
+"Īƞ ŧħḗ ƈǿƞŧḗẋŧ ǿƒ ŧħḗ ĦŦḾĿ ƈȧƞṽȧş ḗŀḗḿḗƞŧ ẆḗƀƓĿ ƥřǿṽīḓḗş ȧƞ ȦƤĪ ƒǿř 3Ḓ "
+"ɠřȧƥħīƈş īƞ ŧħḗ ƀřǿẇşḗř."
+
+#: apps/demos/__init__.py:258
+msgid "https://developer.mozilla.org/en/WebGL"
+msgstr "https://developer.mozilla.org/en/WebGL"
+
+#: apps/demos/__init__.py:259
+msgid "http://en.wikipedia.org/wiki/WebGL"
+msgstr "http://en.wikipedia.org/wiki/WebGL"
+
+#: apps/demos/__init__.py:260
+msgid "Khronos Spec"
+msgstr "Ķħřǿƞǿş Şƥḗƈ"
+
+#: apps/demos/__init__.py:260
+msgid "http://www.khronos.org/webgl/"
+msgstr "http://www.khronos.org/webgl/"
+
+#: apps/demos/__init__.py:265
+#: templates/base.html:89
+msgid "WebSockets"
+msgstr "ẆḗƀŞǿƈķḗŧş"
+
+#: apps/demos/__init__.py:266
+msgid ""
+"WebSockets is a technology that makes it possible to open an interactive "
+"communication session between the user's browser and a server."
+msgstr ""
+"ẆḗƀŞǿƈķḗŧş īş ȧ ŧḗƈħƞǿŀǿɠẏ ŧħȧŧ ḿȧķḗş īŧ ƥǿşşīƀŀḗ ŧǿ ǿƥḗƞ ȧƞ īƞŧḗřȧƈŧīṽḗ "
+"ƈǿḿḿŭƞīƈȧŧīǿƞ şḗşşīǿƞ ƀḗŧẇḗḗƞ ŧħḗ ŭşḗř'ş ƀřǿẇşḗř ȧƞḓ ȧ şḗřṽḗř."
+
+#: apps/demos/__init__.py:268
+msgid "https://developer.mozilla.org/en/WebSockets"
+msgstr "https://developer.mozilla.org/en/WebSockets"
+
+#: apps/demos/__init__.py:269
+msgid "http://en.wikipedia.org/wiki/Web_Sockets"
+msgstr "http://en.wikipedia.org/wiki/Web_Sockets"
+
+#: apps/demos/__init__.py:270
+msgid "http://dev.w3.org/html5/websockets/"
+msgstr "http://dev.w3.org/html5/websockets/"
+
+#: apps/demos/__init__.py:275
+#: apps/docs/templates/docs/glossary.html:17
+#: templates/base.html:113
+msgid "Web Workers"
+msgstr "Ẇḗƀ Ẇǿřķḗřş"
+
+#: apps/demos/__init__.py:276
+msgid ""
+"Web Workers provide a simple means for web content to run scripts in "
+"background threads."
+msgstr ""
+"Ẇḗƀ Ẇǿřķḗřş ƥřǿṽīḓḗ ȧ şīḿƥŀḗ ḿḗȧƞş ƒǿř ẇḗƀ ƈǿƞŧḗƞŧ ŧǿ řŭƞ şƈřīƥŧş īƞ "
+"ƀȧƈķɠřǿŭƞḓ ŧħřḗȧḓş."
+
+#: apps/demos/__init__.py:278
+msgid "https://developer.mozilla.org/En/Using_web_workers"
+msgstr "https://developer.mozilla.org/En/Using_web_workers"
+
+#: apps/demos/__init__.py:279
+msgid "http://en.wikipedia.org/wiki/Web_Workers"
+msgstr "http://en.wikipedia.org/wiki/Web_Workers"
+
+#: apps/demos/__init__.py:280
+msgid "http://www.w3.org/TR/workers/"
+msgstr "http://www.w3.org/TR/workers/"
+
+#: apps/demos/__init__.py:285
+msgid "XMLHttpRequest"
+msgstr "ẊḾĿĦŧŧƥŘḗɋŭḗşŧ"
+
+#: apps/demos/__init__.py:286
+msgid ""
+"XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver "
+"and load the response data directly back into the script."
+msgstr ""
+"ẊḾĿĦŧŧƥŘḗɋŭḗşŧ (ẊĦŘ) īş ŭşḗḓ ŧǿ şḗƞḓ ĦŦŦƤ řḗɋŭḗşŧş ḓīřḗƈŧŀẏ ŧǿ ȧ ẇḗƀşḗřṽḗř "
+"ȧƞḓ ŀǿȧḓ ŧħḗ řḗşƥǿƞşḗ ḓȧŧȧ ḓīřḗƈŧŀẏ ƀȧƈķ īƞŧǿ ŧħḗ şƈřīƥŧ."
+
+#: apps/demos/__init__.py:288
+msgid "https://developer.mozilla.org/En/XMLHttpRequest/Using_XMLHttpRequest"
+msgstr "https://developer.mozilla.org/En/XMLHttpRequest/Using_XMLHttpRequest"
+
+#: apps/demos/__init__.py:289
+msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
+msgstr "http://en.wikipedia.org/wiki/XMLHttpRequest"
+
+#: apps/demos/__init__.py:290
+msgid "http://www.w3.org/TR/XMLHttpRequest/"
+msgstr "http://www.w3.org/TR/XMLHttpRequest/"
+
+#: apps/demos/__init__.py:295
+msgid "Multi-touch"
+msgstr "Ḿŭŀŧī-ŧǿŭƈħ"
+
+#: apps/demos/__init__.py:296
+msgid ""
+"Track the movement of the user's finger on a touch screen, monitoring the "
+"raw touch events generated by the system."
+msgstr ""
+"Ŧřȧƈķ ŧħḗ ḿǿṽḗḿḗƞŧ ǿƒ ŧħḗ ŭşḗř'ş ƒīƞɠḗř ǿƞ ȧ ŧǿŭƈħ şƈřḗḗƞ, ḿǿƞīŧǿřīƞɠ ŧħḗ "
+"řȧẇ ŧǿŭƈħ ḗṽḗƞŧş ɠḗƞḗřȧŧḗḓ ƀẏ ŧħḗ şẏşŧḗḿ."
+
+#: apps/demos/__init__.py:298
+msgid "https://developer.mozilla.org/en/DOM/Touch_events"
+msgstr "https://developer.mozilla.org/en/DOM/Touch_events"
+
+#: apps/demos/__init__.py:299
+msgid "http://en.wikipedia.org/wiki/Multi-touch"
+msgstr "http://en.wikipedia.org/wiki/Multi-touch"
+
+#: apps/demos/__init__.py:300
+msgid "http://www.w3.org/2010/webevents/charter/"
+msgstr "http://www.w3.org/2010/webevents/charter/"
+
+#: apps/demos/__init__.py:309
+msgid "MPL/GPL/LGPL"
+msgstr "ḾƤĿ/GPL/LGPL"
+
+#: apps/demos/__init__.py:310
+msgid "http://www.mozilla.org/MPL/"
+msgstr "http://www.mozilla.org/MPL/"
+
+#: apps/demos/__init__.py:315
+msgid "GPL"
+msgstr "ƓƤĿ"
+
+#: apps/demos/__init__.py:316
+msgid "http://www.opensource.org/licenses/gpl-license.php"
+msgstr "http://www.opensource.org/licenses/gpl-license.php"
+
+#: apps/demos/__init__.py:321
+msgid "BSD"
+msgstr "ƁŞḒ"
+
+#: apps/demos/__init__.py:322
+msgid "http://www.opensource.org/licenses/bsd-license.php"
+msgstr "http://www.opensource.org/licenses/bsd-license.php"
+
+#: apps/demos/__init__.py:327
+msgid "Apache"
+msgstr "Ȧƥȧƈħḗ"
+
+#: apps/demos/__init__.py:328
+msgid "http://www.apache.org/licenses/"
+msgstr "http://www.apache.org/licenses/"
+
+#: apps/demos/__init__.py:333
+msgid "Public Domain (where applicable by law)"
+msgstr "Ƥŭƀŀīƈ Ḓǿḿȧīƞ (ẇħḗřḗ ȧƥƥŀīƈȧƀŀḗ ƀẏ ŀȧẇ)"
+
+#: apps/demos/__init__.py:334
+msgid "http://creativecommons.org/publicdomain/zero/1.0/"
+msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
+
+#: apps/demos/feeds.py:91
+msgid "MDN demos"
+msgstr "ḾḒȠ ḓḗḿǿş"
+
+#: apps/demos/feeds.py:92
+msgid "Demos submitted by MDN users"
+msgstr "Ḓḗḿǿş şŭƀḿīŧŧḗḓ ƀẏ ḾḒȠ ŭşḗřş"
+
+#: apps/demos/feeds.py:158
+msgid "MDN recent demos"
+msgstr "ḾḒȠ řḗƈḗƞŧ ḓḗḿǿş"
+
+#: apps/demos/feeds.py:159
+msgid "Demos recently submitted to MDN"
+msgstr "Ḓḗḿǿş řḗƈḗƞŧŀẏ şŭƀḿīŧŧḗḓ ŧǿ ḾḒȠ"
+
+#: apps/demos/feeds.py:170
+msgid "MDN featured demos"
+msgstr "ḾḒȠ ƒḗȧŧŭřḗḓ ḓḗḿǿş"
+
+#: apps/demos/feeds.py:171
+msgid "Demos featured on MDN"
+msgstr "Ḓḗḿǿş ƒḗȧŧŭřḗḓ ǿƞ ḾḒȠ"
+
+#: apps/demos/feeds.py:185
+msgid "MDN demos tagged %s"
+msgstr "ḾḒȠ ḓḗḿǿş ŧȧɠɠḗḓ %s"
+
+#: apps/demos/feeds.py:188
+msgid "MDN demos tagged \"%s\""
+msgstr "ḾḒȠ ḓḗḿǿş ŧȧɠɠḗḓ \"%s\""
+
+#: apps/demos/feeds.py:204
+msgid "%s's MDN demos"
+msgstr "%s'ş ḾḒȠ ḓḗḿǿş"
+
+#: apps/demos/feeds.py:219
+msgid "MDN demo search for \"%s\""
+msgstr "ḾḒȠ ḓḗḿǿ şḗȧřƈħ ƒǿř \"%s\""
+
+#: apps/demos/feeds.py:220
+msgid "Search results for demo submissions matching \"%s\""
+msgstr "Şḗȧřƈħ řḗşŭŀŧş ƒǿř ḓḗḿǿ şŭƀḿīşşīǿƞş ḿȧŧƈħīƞɠ \"%s\""
+
+#: apps/demos/forms.py:206
+msgid "Show us you're human"
+msgstr "Şħǿẇ ŭş ẏǿŭ'řḗ ħŭḿȧƞ"
+
+#: apps/demos/helpers.py:210
+msgid "year"
+msgid_plural "years"
+msgstr[0] "ẏḗȧř"
+msgstr[1] "ẏḗȧřş"
+
+#: apps/demos/helpers.py:211
+msgid "month"
+msgid_plural "months"
+msgstr[0] "ḿǿƞŧħ"
+msgstr[1] "ḿǿƞŧħş"
+
+#: apps/demos/helpers.py:212
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] "ẇḗḗķ"
+msgstr[1] "ẇḗḗķş"
+
+#: apps/demos/helpers.py:213
+msgid "day"
+msgid_plural "days"
+msgstr[0] "ḓȧẏ"
+msgstr[1] "ḓȧẏş"
+
+#: apps/demos/helpers.py:221
+msgid "%(number)d %(type)s"
+msgstr "%(number)d %(type)s"
+
+#: apps/demos/helpers.py:289
+msgid "%(number)d year ago"
+msgid_plural "%(number)d years ago"
+msgstr[0] "%(number)d ẏḗȧř ȧɠǿ"
+msgstr[1] "%(number)d ẏḗȧřş ȧɠǿ"
+
+#: apps/demos/helpers.py:291
+msgid "%(number)d month ago"
+msgid_plural "%(number)d months ago"
+msgstr[0] "%(number)d ḿǿƞŧħ ȧɠǿ"
+msgstr[1] "%(number)d ḿǿƞŧħş ȧɠǿ"
+
+#: apps/demos/helpers.py:293
+msgid "%(number)d week ago"
+msgid_plural "%(number)d weeks ago"
+msgstr[0] "%(number)d ẇḗḗķ ȧɠǿ"
+msgstr[1] "%(number)d ẇḗḗķş ȧɠǿ"
+
+#: apps/demos/helpers.py:295
+msgid "%(number)d day ago"
+msgid_plural "%(number)d days ago"
+msgstr[0] "%(number)d ḓȧẏ ȧɠǿ"
+msgstr[1] "%(number)d ḓȧẏş ȧɠǿ"
+
+#: apps/demos/helpers.py:297
+msgid "%(number)d hour ago"
+msgid_plural "%(number)d hours ago"
+msgstr[0] "%(number)d ħǿŭř ȧɠǿ"
+msgstr[1] "%(number)d ħǿŭřş ȧɠǿ"
+
+#: apps/demos/helpers.py:299
+msgid "%(number)d minute ago"
+msgid_plural "%(number)d minutes ago"
+msgstr[0] "%(number)d ḿīƞŭŧḗ ȧɠǿ"
+msgstr[1] "%(number)d ḿīƞŭŧḗş ȧɠǿ"
+
+#: apps/demos/helpers.py:301
+msgid "%(number)d second ago"
+msgid_plural "%(number)d seconds ago"
+msgstr[0] "%(number)d şḗƈǿƞḓ ȧɠǿ"
+msgstr[1] "%(number)d şḗƈǿƞḓş ȧɠǿ"
+
+#: apps/demos/models.py:152
+msgid "Maximum of %s tags allowed"
+msgstr "Ḿȧẋīḿŭḿ ǿƒ %s ŧȧɠş ȧŀŀǿẇḗḓ"
+
+#: apps/demos/models.py:158
+msgid "Tag \"%s\" is not in the set of described tags"
+msgstr "Ŧȧɠ \"%s\" īş ƞǿŧ īƞ ŧħḗ şḗŧ ǿƒ ḓḗşƈřīƀḗḓ ŧȧɠş"
+
+#: apps/demos/models.py:250
+msgid "Please keep filesize under %s. Current filesize %s"
+msgstr "Ƥŀḗȧşḗ ķḗḗƥ ƒīŀḗşīzḗ ŭƞḓḗř %s. Ƈŭřřḗƞŧ ƒīŀḗşīzḗ %s"
+
+#: apps/demos/models.py:324
+msgid "Cannot process image"
+msgstr "Ƈȧƞƞǿŧ ƥřǿƈḗşş īḿȧɠḗ"
+
+#: apps/demos/models.py:417
+msgid "what is your demo's name?"
+msgstr "ẇħȧŧ īş ẏǿŭř ḓḗḿǿ'ş ƞȧḿḗ?"
+
+#: apps/demos/models.py:419
+msgid "slug"
+msgstr "şŀŭɠ"
+
+#: apps/demos/models.py:422
+msgid "describe your demo in one line"
+msgstr "ḓḗşƈřīƀḗ ẏǿŭř ḓḗḿǿ īƞ ǿƞḗ ŀīƞḗ"
+
+#: apps/demos/models.py:425
+msgid "describe your demo in more detail (optional)"
+msgstr "ḓḗşƈřīƀḗ ẏǿŭř ḓḗḿǿ īƞ ḿǿřḗ ḓḗŧȧīŀ (ǿƥŧīǿƞȧŀ)"
+
+#: apps/demos/models.py:430
+msgid "Hide this demo from others?"
+msgstr "Ħīḓḗ ŧħīş ḓḗḿǿ ƒřǿḿ ǿŧħḗřş?"
+
+#: apps/demos/models.py:434
+msgid "control how your demo is launched"
+msgstr "ƈǿƞŧřǿŀ ħǿẇ ẏǿŭř ḓḗḿǿ īş ŀȧŭƞƈħḗḓ"
+
+#: apps/demos/models.py:436
+msgid "Disable navigation bar, launch demo in a new window"
+msgstr "Ḓīşȧƀŀḗ ƞȧṽīɠȧŧīǿƞ ƀȧř, ŀȧŭƞƈħ ḓḗḿǿ īƞ ȧ ƞḗẇ ẇīƞḓǿẇ"
+
+#: apps/demos/models.py:437
+msgid "Use navigation bar, display demo in <iframe>"
+msgstr "Ŭşḗ ƞȧṽīɠȧŧīǿƞ ƀȧř, ḓīşƥŀȧẏ ḓḗḿǿ īƞ <iframe>"
+
+#: apps/demos/models.py:447
+msgid "select up to 5 tags that describe your demo"
+msgstr "şḗŀḗƈŧ ŭƥ ŧǿ 5 ŧȧɠş ŧħȧŧ ḓḗşƈřīƀḗ ẏǿŭř ḓḗḿǿ"
+
+#: apps/demos/models.py:453
+msgid "Screenshot #1"
+msgstr "Şƈřḗḗƞşħǿŧ #1"
+
+#: apps/demos/models.py:459
+msgid "Screenshot #2"
+msgstr "Şƈřḗḗƞşħǿŧ #2"
+
+#: apps/demos/models.py:465
+msgid "Screenshot #3"
+msgstr "Şƈřḗḗƞşħǿŧ #3"
+
+#: apps/demos/models.py:471
+msgid "Screenshot #4"
+msgstr "Şƈřḗḗƞşħǿŧ #4"
+
+#: apps/demos/models.py:477
+msgid "Screenshot #5"
+msgstr "Şƈřḗḗƞşħǿŧ #5"
+
+#: apps/demos/models.py:484
+msgid "have a video of your demo in action? (optional)"
+msgstr "ħȧṽḗ ȧ ṽīḓḗǿ ǿƒ ẏǿŭř ḓḗḿǿ īƞ ȧƈŧīǿƞ? (ǿƥŧīǿƞȧŀ)"
+
+#: apps/demos/models.py:488
+msgid "select a ZIP file containing your demo"
+msgstr "şḗŀḗƈŧ ȧ ẐĪƤ ƒīŀḗ ƈǿƞŧȧīƞīƞɠ ẏǿŭř ḓḗḿǿ"
+
+#: apps/demos/models.py:496
+msgid ""
+"Is your source code also available somewhere else on the web (e.g., github)? "
+"Please share the link."
+msgstr ""
+"Īş ẏǿŭř şǿŭřƈḗ ƈǿḓḗ ȧŀşǿ ȧṽȧīŀȧƀŀḗ şǿḿḗẇħḗřḗ ḗŀşḗ ǿƞ ŧħḗ ẇḗƀ (ḗ.ɠ., ɠīŧħŭƀ)? "
+"Ƥŀḗȧşḗ şħȧřḗ ŧħḗ ŀīƞķ."
+
+#: apps/demos/models.py:499
+msgid "Select the license that applies to your source code."
+msgstr "Şḗŀḗƈŧ ŧħḗ ŀīƈḗƞşḗ ŧħȧŧ ȧƥƥŀīḗş ŧǿ ẏǿŭř şǿŭřƈḗ ƈǿḓḗ."
+
+#: apps/demos/models.py:505
+msgid "date created"
+msgstr "ḓȧŧḗ ƈřḗȧŧḗḓ"
+
+#: apps/demos/models.py:651
+#: apps/demos/models.py:658
+msgid "ZIP file contains no acceptable files"
+msgstr "ẐĪƤ ƒīŀḗ ƈǿƞŧȧīƞş ƞǿ ȧƈƈḗƥŧȧƀŀḗ ƒīŀḗş"
+
+#: apps/demos/models.py:654
+msgid "ZIP file corrupted"
+msgstr "ẐĪƤ ƒīŀḗ ƈǿřřŭƥŧḗḓ"
+
+#: apps/demos/models.py:673
+msgid "ZIP file contains a file that is too large: %(filename)s"
+msgstr "ẐĪƤ ƒīŀḗ ƈǿƞŧȧīƞş ȧ ƒīŀḗ ŧħȧŧ īş ŧǿǿ ŀȧřɠḗ: %(filename)s"
+
+#: apps/demos/models.py:683
+msgid "ZIP file contains an unacceptable file: %(filename)s"
+msgstr "ẐĪƤ ƒīŀḗ ƈǿƞŧȧīƞş ȧƞ ŭƞȧƈƈḗƥŧȧƀŀḗ ƒīŀḗ: %(filename)s"
+
+#: apps/demos/models.py:688
+msgid "HTML index not found in ZIP"
+msgstr "ĦŦḾĿ īƞḓḗẋ ƞǿŧ ƒǿŭƞḓ īƞ ẐĪƤ"
+
+#: apps/demos/views.py:83
+#: apps/demos/views.py:257
+#: apps/demos/views.py:281
+#: apps/demos/views.py:320
+#: apps/demos/views.py:333
+msgid "access denied"
+msgstr "ȧƈƈḗşş ḓḗƞīḗḓ"
+
+#: apps/demos/templates/demos/base.html:4
+#: apps/demos/templates/demos/devderby_landing.html:247
+#: apps/landing/templates/landing/base_learn.html:9
+#: apps/landing/templates/landing/base_promote.html:9
+#: apps/landing/templates/landing/home.html:102
+#: templates/base.html:120
+msgid "Demos"
+msgstr "Ḓḗḿǿş"
+
+#: apps/demos/templates/demos/delete.html:10
+#: apps/demos/templates/demos/delete_comment.html:10
+#: apps/demos/templates/demos/detail.html:8
+#: apps/demos/templates/demos/flag.html:10
+#: apps/demos/templates/demos/launch.html:6
+#: apps/demos/templates/demos/listing_all.html:5
+#: apps/demos/templates/demos/listing_search.html:10
+#: apps/demos/templates/demos/listing_tag.html:5
+#: apps/demos/templates/demos/profile_detail.html:8
+#: apps/demos/templates/demos/submit.html:8
+#: apps/demos/templates/demos/submit.html:10
+#: apps/demos/templates/demos/submit_noauth.html:10
+#: apps/demos/templates/demos/terms.html:10
+msgid "{subtitle} | Demo Studio"
+msgstr "{şŭƀŧīŧŀḗ} | Ḓḗḿǿ Şŧŭḓīǿ"
+
+#: apps/demos/templates/demos/delete.html:20
+#: apps/demos/templates/demos/delete_comment.html:20
+#: apps/demos/templates/demos/flag.html:20
+#: apps/demos/templates/demos/listing_all.html:17
+#: apps/demos/templates/demos/listing_search.html:23
+#: apps/demos/templates/demos/listing_tag.html:18
+#: apps/demos/templates/demos/profile_detail.html:22
+#: apps/demos/templates/demos/submit.html:42
+#: apps/demos/templates/demos/submit_noauth.html:18
+#: apps/landing/templates/landing/learn_html.html:62
+#: apps/landing/templates/landing/learn_html.html:73
+#: apps/landing/templates/landing/learn_html.html:98
+msgid "MDN"
+msgstr "ḾḒȠ"
+
+#: apps/demos/templates/demos/delete.html:21
+#: apps/demos/templates/demos/delete_comment.html:21
+#: apps/demos/templates/demos/detail.html:14
+#: apps/demos/templates/demos/flag.html:21
+#: apps/demos/templates/demos/home.html:14
+#: apps/demos/templates/demos/launch.html:15
+#: apps/demos/templates/demos/listing_all.html:18
+#: apps/demos/templates/demos/listing_search.html:24
+#: apps/demos/templates/demos/listing_tag.html:19
+#: apps/demos/templates/demos/profile_detail.html:23
+#: apps/demos/templates/demos/submit.html:43
+#: apps/demos/templates/demos/submit_noauth.html:19
+#: apps/landing/templates/landing/web.html:47
+msgid "Demo Studio"
+msgstr "Ḓḗḿǿ Şŧŭḓīǿ"
+
+#: apps/demos/templates/demos/delete.html:26
+#: apps/demos/templates/demos/delete_comment.html:26
+#: apps/demos/templates/demos/detail.html:38
+#: apps/demos/templates/demos/flag.html:26
+#: apps/demos/templates/demos/home.html:35
+#: apps/demos/templates/demos/listing_all.html:22
+#: apps/demos/templates/demos/listing_search.html:28
+#: apps/demos/templates/demos/listing_tag.html:23
+#: apps/demos/templates/demos/profile_detail.html:27
+msgid "Submit a Demo"
+msgstr "Şŭƀḿīŧ ȧ Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/delete.html:38
+msgid "Remove this demo?"
+msgstr "Řḗḿǿṽḗ ŧħīş ḓḗḿǿ?"
+
+#: apps/demos/templates/demos/delete.html:40
+msgid ""
+"<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo "
+"Studio.</p> <p>The Demo's listing, source code, and statistics will be "
+"<strong>deleted</strong>.</p> <p>This action <strong>cannot be "
+"undone</strong>."
+msgstr ""
+"<p>Ẏǿŭ ȧřḗ ȧƀǿŭŧ ŧǿ řḗḿǿṽḗ <strong>%(demo_title)s</strong> ƒřǿḿ ŧħḗ Ḓḗḿǿ "
+"Şŧŭḓīǿ.</p> <p>Ŧħḗ Ḓḗḿǿ'ş ŀīşŧīƞɠ, şǿŭřƈḗ ƈǿḓḗ, ȧƞḓ şŧȧŧīşŧīƈş ẇīŀŀ ƀḗ "
+"<strong>ḓḗŀḗŧḗḓ</strong>.</p> <p>Ŧħīş ȧƈŧīǿƞ <strong>ƈȧƞƞǿŧ ƀḗ "
+"ŭƞḓǿƞḗ</strong>."
+
+#: apps/demos/templates/demos/delete.html:48
+#: apps/demos/templates/demos/detail.html:180
+msgid "Remove demo"
+msgstr "Řḗḿǿṽḗ ḓḗḿǿ"
+
+#: apps/demos/templates/demos/delete.html:49
+#: apps/demos/templates/demos/delete_comment.html:52
+#: apps/demos/templates/demos/flag.html:44
+#: apps/notifications/templates/notifications/remove.html:16
+msgid "Cancel"
+msgstr "Ƈȧƞƈḗŀ"
+
+#: apps/demos/templates/demos/delete_comment.html:10
+#: apps/demos/templates/demos/delete_comment.html:22
+msgid "Delete Comment"
+msgstr "Ḓḗŀḗŧḗ Ƈǿḿḿḗƞŧ"
+
+#: apps/demos/templates/demos/delete_comment.html:38
+msgid "Delete this comment?"
+msgstr "Ḓḗŀḗŧḗ ŧħīş ƈǿḿḿḗƞŧ?"
+
+#: apps/demos/templates/demos/delete_comment.html:39
+msgid "<p>Are you sure that you would like to delete this comment?</p>"
+msgstr "<p>Ȧřḗ ẏǿŭ şŭřḗ ŧħȧŧ ẏǿŭ ẇǿŭŀḓ ŀīķḗ ŧǿ ḓḗŀḗŧḗ ŧħīş ƈǿḿḿḗƞŧ?</p>"
+
+#: apps/demos/templates/demos/delete_comment.html:51
+msgid "Delete comment"
+msgstr "Ḓḗŀḗŧḗ ƈǿḿḿḗƞŧ"
+
+#: apps/demos/templates/demos/detail.html:24
+#: apps/demos/templates/demos/devderby_landing.html:36
+#: apps/demos/templates/demos/devderby_rules.html:32
+#: apps/demos/templates/demos/home.html:21
+msgid "Mozilla Demo Studio"
+msgstr "Ḿǿzīŀŀȧ Ḓḗḿǿ Şŧŭḓīǿ"
+
+#: apps/demos/templates/demos/detail.html:26
+#: apps/demos/templates/demos/home.html:23
+#: apps/demos/templates/demos/listing_tag.html:39
+msgid "Learn More"
+msgstr "Ŀḗȧřƞ Ḿǿřḗ"
+
+#: apps/demos/templates/demos/detail.html:28
+#: apps/demos/templates/demos/home.html:25
+msgid ""
+"<p>Welcome to the Mozilla Demo Studio, where developers like you can "
+"develop, share, demonstrate, and learn all about Web technologies. See "
+"what's possible by exploring Demo Studio:</p> <ul> <li>View demos that "
+"showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source "
+"code for those demos so you can see how they work.</li> <li>Read "
+"documentation to learn about the open standards and technologies that power "
+"the Web.</li> </ul>"
+msgstr ""
+"<p>Ẇḗŀƈǿḿḗ ŧǿ ŧħḗ Ḿǿzīŀŀȧ Ḓḗḿǿ Şŧŭḓīǿ, ẇħḗřḗ ḓḗṽḗŀǿƥḗřş ŀīķḗ ẏǿŭ ƈȧƞ "
+"ḓḗṽḗŀǿƥ, şħȧřḗ, ḓḗḿǿƞşŧřȧŧḗ, ȧƞḓ ŀḗȧřƞ ȧŀŀ ȧƀǿŭŧ Ẇḗƀ ŧḗƈħƞǿŀǿɠīḗş. Şḗḗ "
+"ẇħȧŧ'ş ƥǿşşīƀŀḗ ƀẏ ḗẋƥŀǿřīƞɠ Ḓḗḿǿ Şŧŭḓīǿ:</p> <ul> <li>Ṽīḗẇ ḓḗḿǿş ŧħȧŧ "
+"şħǿẇƈȧşḗ ẇħȧŧ ĦŦḾĿ, ƇŞŞ, ȧƞḓ ĴȧṽȧŞƈřīƥŧ ƈȧƞ ḓǿ.</li> <li>Īƞşƥḗƈŧ ŧħḗ şǿŭřƈḗ "
+"ƈǿḓḗ ƒǿř ŧħǿşḗ ḓḗḿǿş şǿ ẏǿŭ ƈȧƞ şḗḗ ħǿẇ ŧħḗẏ ẇǿřķ.</li> <li>Řḗȧḓ "
+"ḓǿƈŭḿḗƞŧȧŧīǿƞ ŧǿ ŀḗȧřƞ ȧƀǿŭŧ ŧħḗ ǿƥḗƞ şŧȧƞḓȧřḓş ȧƞḓ ŧḗƈħƞǿŀǿɠīḗş ŧħȧŧ ƥǿẇḗř "
+"ŧħḗ Ẇḗƀ.</li> </ul>"
+
+#: apps/demos/templates/demos/detail.html:45
+#: apps/demos/templates/demos/launch.html:67
+msgid "Go to the previous demo, {demo_title}"
+msgstr "Ɠǿ ŧǿ ŧħḗ ƥřḗṽīǿŭş ḓḗḿǿ, {ḓḗḿǿ_ŧīŧŀḗ}"
+
+#: apps/demos/templates/demos/detail.html:45
+#: apps/demos/templates/demos/launch.html:67
+msgid "Prev"
+msgstr "Ƥřḗṽ"
+
+#: apps/demos/templates/demos/detail.html:49
+#: apps/demos/templates/demos/launch.html:71
+msgid "Go to the next demo, {demo_title}"
+msgstr "Ɠǿ ŧǿ ŧħḗ ƞḗẋŧ ḓḗḿǿ, {ḓḗḿǿ_ŧīŧŀḗ}"
+
+#: apps/demos/templates/demos/detail.html:49
+#: apps/demos/templates/demos/detail.html:132
+#: apps/demos/templates/demos/home.html:50
+#: apps/demos/templates/demos/launch.html:71
+#: apps/demos/templates/demos/elements/submission_listing.html:57
+#: templates/layout/paginator.html:31
+msgid "Next"
+msgstr "Ƞḗẋŧ"
+
+#: apps/demos/templates/demos/detail.html:61
+msgid "By %(creator_link)s on %(create_date)s"
+msgstr "Ɓẏ %(creator_link)s ǿƞ %(create_date)s"
+
+#: apps/demos/templates/demos/detail.html:76
+msgid "Launch Demo"
+msgstr "Ŀȧŭƞƈħ Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/detail.html:83
+#: apps/demos/templates/demos/launch.html:44
+msgid "You like this demo. Undo?"
+msgstr "Ẏǿŭ ŀīķḗ ŧħīş ḓḗḿǿ. Ŭƞḓǿ?"
+
+#: apps/demos/templates/demos/detail.html:83
+#: apps/demos/templates/demos/launch.html:44
+msgid "You Like"
+msgstr "Ẏǿŭ Ŀīķḗ"
+
+#: apps/demos/templates/demos/detail.html:89
+#: apps/demos/templates/demos/launch.html:50
+msgid "Do you like this demo?"
+msgstr "Ḓǿ ẏǿŭ ŀīķḗ ŧħīş ḓḗḿǿ?"
+
+#: apps/demos/templates/demos/detail.html:89
+#: apps/demos/templates/demos/launch.html:50
+msgid "Like It"
+msgstr "Ŀīķḗ Īŧ"
+
+#: apps/demos/templates/demos/detail.html:94
+#: apps/demos/templates/demos/launch.html:54
+msgid "Share this demo with your social network"
+msgstr "Şħȧřḗ ŧħīş ḓḗḿǿ ẇīŧħ ẏǿŭř şǿƈīȧŀ ƞḗŧẇǿřķ"
+
+#: apps/demos/templates/demos/detail.html:94
+#: apps/demos/templates/demos/detail.html:96
+#: apps/demos/templates/demos/launch.html:54
+msgid "Share It"
+msgstr "Şħȧřḗ Īŧ"
+
+#: apps/demos/templates/demos/detail.html:97
+#: apps/demos/templates/demos/launch.html:56
+msgid "Share on Twitter"
+msgstr "Şħȧřḗ ǿƞ Ŧẇīŧŧḗř"
+
+#: apps/demos/templates/demos/detail.html:98
+#: apps/demos/templates/demos/launch.html:57
+msgid "Share on Facebook"
+msgstr "Şħȧřḗ ǿƞ Ƒȧƈḗƀǿǿķ"
+
+#: apps/demos/templates/demos/detail.html:111
+msgid "Built using"
+msgstr "Ɓŭīŀŧ ŭşīƞɠ"
+
+#: apps/demos/templates/demos/detail.html:114
+msgid "See more demos made with {tag_title}"
+msgstr "Şḗḗ ḿǿřḗ ḓḗḿǿş ḿȧḓḗ ẇīŧħ {ŧȧɠ_ŧīŧŀḗ}"
+
+#: apps/demos/templates/demos/detail.html:123
+#: apps/demos/templates/demos/elements/submission_thumb.html:14
+msgid "This demo has been viewed {count} time"
+msgid_plural "This demo has been viewed {count} times"
+msgstr[0] "Ŧħīş ḓḗḿǿ ħȧş ƀḗḗƞ ṽīḗẇḗḓ {ƈǿŭƞŧ} ŧīḿḗ"
+msgstr[1] "Ŧħīş ḓḗḿǿ ħȧş ƀḗḗƞ ṽīḗẇḗḓ {ƈǿŭƞŧ} ŧīḿḗş"
+
+#: apps/demos/templates/demos/detail.html:123
+msgid "{count} view"
+msgid_plural "{count} views"
+msgstr[0] "{ƈǿŭƞŧ} ṽīḗẇ"
+msgstr[1] "{ƈǿŭƞŧ} ṽīḗẇş"
+
+#: apps/demos/templates/demos/detail.html:124
+#: apps/demos/templates/demos/elements/submission_thumb.html:15
+msgid "{count} person liked this demo"
+msgid_plural "{count} people liked this demo"
+msgstr[0] "{ƈǿŭƞŧ} ƥḗřşǿƞ ŀīķḗḓ ŧħīş ḓḗḿǿ"
+msgstr[1] "{ƈǿŭƞŧ} ƥḗǿƥŀḗ ŀīķḗḓ ŧħīş ḓḗḿǿ"
+
+#: apps/demos/templates/demos/detail.html:124
+msgid "{count} like"
+msgid_plural "{count} likes"
+msgstr[0] "{ƈǿŭƞŧ} ŀīķḗ"
+msgstr[1] "{ƈǿŭƞŧ} ŀīķḗş"
+
+#: apps/demos/templates/demos/detail.html:125
+#: apps/demos/templates/demos/elements/submission_thumb.html:16
+msgid "There is {count} comment for this demo"
+msgid_plural "There are {count} comments for this demo"
+msgstr[0] "Ŧħḗřḗ īş {ƈǿŭƞŧ} ƈǿḿḿḗƞŧ ƒǿř ŧħīş ḓḗḿǿ"
+msgstr[1] "Ŧħḗřḗ ȧřḗ {ƈǿŭƞŧ} ƈǿḿḿḗƞŧş ƒǿř ŧħīş ḓḗḿǿ"
+
+#: apps/demos/templates/demos/detail.html:125
+msgid "{comment_count} comments"
+msgstr "{ƈǿḿḿḗƞŧ_ƈǿŭƞŧ} ƈǿḿḿḗƞŧş"
+
+#: apps/demos/templates/demos/detail.html:131
+msgid "See the previous image"
+msgstr "Şḗḗ ŧħḗ ƥřḗṽīǿŭş īḿȧɠḗ"
+
+#: apps/demos/templates/demos/detail.html:131
+#: apps/demos/templates/demos/home.html:49
+#: apps/demos/templates/demos/elements/submission_listing.html:54
+#: templates/layout/paginator.html:7
+msgid "Previous"
+msgstr "Ƥřḗṽīǿŭş"
+
+#: apps/demos/templates/demos/detail.html:132
+msgid "See the next image"
+msgstr "Şḗḗ ŧħḗ ƞḗẋŧ īḿȧɠḗ"
+
+#: apps/demos/templates/demos/detail.html:175
+msgid "Edit Demo"
+msgstr "Ḗḓīŧ Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/detail.html:185
+msgid "Show demo"
+msgstr "Şħǿẇ ḓḗḿǿ"
+
+#: apps/demos/templates/demos/detail.html:188
+msgid "Hide demo"
+msgstr "Ħīḓḗ ḓḗḿǿ"
+
+#: apps/demos/templates/demos/detail.html:197
+msgid "More About This Demo From The Author"
+msgstr "Ḿǿřḗ Ȧƀǿŭŧ Ŧħīş Ḓḗḿǿ Ƒřǿḿ Ŧħḗ Ȧŭŧħǿř"
+
+#: apps/demos/templates/demos/detail.html:205
+msgid "No comments yet."
+msgstr "Ƞǿ ƈǿḿḿḗƞŧş ẏḗŧ."
+
+#: apps/demos/templates/demos/detail.html:207
+msgid "{comments_total} comment so far"
+msgid_plural "{comments_total} comments so far"
+msgstr[0] "{ƈǿḿḿḗƞŧş_ŧǿŧȧŀ} ƈǿḿḿḗƞŧ şǿ ƒȧř"
+msgstr[1] "{ƈǿḿḿḗƞŧş_ŧǿŧȧŀ} ƈǿḿḿḗƞŧş şǿ ƒȧř"
+
+#: apps/demos/templates/demos/detail.html:210
+msgid "<p>Why not <a href=\"#comment-post\">Add your own</a>?</p>"
+msgstr "<p>Ẇħẏ ƞǿŧ <a href=\"#comment-post\">Ȧḓḓ ẏǿŭř ǿẇƞ</a>?</p>"
+
+#: apps/demos/templates/demos/detail.html:214
+msgid ""
+"<p><a href=\"/Special:UserRegistration\">Register</a> or <a "
+"href=\"/Special:UserLogin\">log in</a> to add your own.</p>"
+msgstr ""
+"<p><a href=\"/Special:UserRegistration\">Řḗɠīşŧḗř</a> ǿř <a "
+"href=\"/Special:UserLogin\">ŀǿɠ īƞ</a> ŧǿ ȧḓḓ ẏǿŭř ǿẇƞ.</p>"
+
+#: apps/demos/templates/demos/detail.html:231
+msgid "Add your comment"
+msgstr "Ȧḓḓ ẏǿŭř ƈǿḿḿḗƞŧ"
+
+#: apps/demos/templates/demos/detail.html:233
+#: apps/demos/templates/demos/elements/comments_tree.html:50
+msgid "Comment"
+msgstr "Ƈǿḿḿḗƞŧ"
+
+#: apps/demos/templates/demos/detail.html:244
+msgid "Get the Source Code"
+msgstr "Ɠḗŧ ŧħḗ Şǿŭřƈḗ Ƈǿḓḗ"
+
+#: apps/demos/templates/demos/detail.html:245
+msgid ""
+"Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP "
+"File</span>"
+msgstr ""
+"Ḓǿẇƞŀǿȧḓ ŧħḗ Şǿŭřƈḗ <span class=\"note\">%(file_ksize)s ĶƁ &middot; ẐĪƤ "
+"Ƒīŀḗ</span>"
+
+#: apps/demos/templates/demos/detail.html:263
+msgid ""
+"This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
+msgstr ""
+"Ŧħīş ḓḗḿǿ īş řḗŀḗȧşḗḓ ŭƞḓḗř ŧħḗ <a href=\"%(link)s\">%(title)s</a> ŀīƈḗƞşḗ."
+
+#: apps/demos/templates/demos/detail.html:283
+msgid "Demo is not working"
+msgstr "Ḓḗḿǿ īş ƞǿŧ ẇǿřķīƞɠ"
+
+#: apps/demos/templates/demos/detail.html:284
+msgid "Demo is inappropriate"
+msgstr "Ḓḗḿǿ īş īƞȧƥƥřǿƥřīȧŧḗ"
+
+#: apps/demos/templates/demos/detail.html:285
+msgid "Demo is not by this author"
+msgstr "Ḓḗḿǿ īş ƞǿŧ ƀẏ ŧħīş ȧŭŧħǿř"
+
+#: apps/demos/templates/demos/devderby_landing.html:9
+msgid "Dev Derby Submissions"
+msgstr "Ḓḗṽ Ḓḗřƀẏ Şŭƀḿīşşīǿƞş"
+
+#: apps/demos/templates/demos/devderby_landing.html:13
+#: apps/demos/templates/demos/devderby_landing.html:37
+msgid "Dev Derby"
+msgstr "Ḓḗṽ Ḓḗřƀẏ"
+
+#: apps/demos/templates/demos/devderby_landing.html:24
+msgid "Home"
+msgstr "Ħǿḿḗ"
+
+#: apps/demos/templates/demos/devderby_landing.html:25
+msgid "Challenges"
+msgstr "Ƈħȧŀŀḗƞɠḗş"
+
+#: apps/demos/templates/demos/devderby_landing.html:26
+#: apps/demos/templates/demos/devderby_landing.html:75
+msgid "Rules"
+msgstr "Řŭŀḗş"
+
+#: apps/demos/templates/demos/devderby_landing.html:27
+#: apps/demos/templates/demos/devderby_landing.html:76
+msgid "Judging"
+msgstr "Ĵŭḓɠīƞɠ"
+
+#: apps/demos/templates/demos/devderby_landing.html:28
+msgid "Prizes"
+msgstr "Ƥřīzḗş"
+
+#: apps/demos/templates/demos/devderby_landing.html:29
+#: apps/demos/templates/demos/devderby_landing.html:244
+msgid "Resources"
+msgstr "Řḗşǿŭřƈḗş"
+
+#: apps/demos/templates/demos/devderby_landing.html:36
+#: apps/demos/templates/demos/devderby_rules.html:32
+msgid "presents"
+msgstr "ƥřḗşḗƞŧş"
+
+#: apps/demos/templates/demos/devderby_landing.html:38
+msgid "Show us what you can do with CSS animations"
+msgstr "Şħǿẇ ŭş ẇħȧŧ ẏǿŭ ƈȧƞ ḓǿ ẇīŧħ ƇŞŞ ȧƞīḿȧŧīǿƞş"
+
+#: apps/demos/templates/demos/devderby_landing.html:39
+msgid ""
+"Join the Dev Derby now and submit your demo to win an Android phone or other "
+"prizes."
+msgstr ""
+"Ĵǿīƞ ŧħḗ Ḓḗṽ Ḓḗřƀẏ ƞǿẇ ȧƞḓ şŭƀḿīŧ ẏǿŭř ḓḗḿǿ ŧǿ ẇīƞ ȧƞ Ȧƞḓřǿīḓ ƥħǿƞḗ ǿř ǿŧħḗř "
+"ƥřīzḗş."
+
+#: apps/demos/templates/demos/devderby_landing.html:40
+msgid "<a href=\"%(submit_url)s\"><b>Submit</b> Your Demo</a>"
+msgstr "<a href=\"%(submit_url)s\"><b>Şŭƀḿīŧ</b> Ẏǿŭř Ḓḗḿǿ</a>"
+
+#: apps/demos/templates/demos/devderby_landing.html:46
+msgid "Upcoming Challenges for 2011"
+msgstr "Ŭƥƈǿḿīƞɠ Ƈħȧŀŀḗƞɠḗş ƒǿř 2011"
+
+#: apps/demos/templates/demos/devderby_landing.html:50
+#: apps/demos/templates/demos/devderby_landing.html:81
+msgid "HTML5 <video>"
+msgstr "ĦŦḾĿ5 <video>"
+
+#: apps/demos/templates/demos/devderby_landing.html:51
+#: apps/demos/templates/demos/devderby_landing.html:82
+msgid "July"
+msgstr "Ĵŭŀẏ"
+
+#: apps/demos/templates/demos/devderby_landing.html:52
+msgid "Lights, camera, action!"
+msgstr "Ŀīɠħŧş, ƈȧḿḗřȧ, ȧƈŧīǿƞ!"
+
+#: apps/demos/templates/demos/devderby_landing.html:53
+msgid "<span><b>Current</b> Derby</span>"
+msgstr "<span><b>Ƈŭřřḗƞŧ</b> Ḓḗřƀẏ</span>"
+
+#: apps/demos/templates/demos/devderby_landing.html:57
+msgid "Touch"
+msgstr "Ŧǿŭƈħ"
+
+#: apps/demos/templates/demos/devderby_landing.html:58
+msgid "August"
+msgstr "Ȧŭɠŭşŧ"
+
+#: apps/demos/templates/demos/devderby_landing.html:59
+msgid "Touch and go"
+msgstr "Ŧǿŭƈħ ȧƞḓ ɠǿ"
+
+#: apps/demos/templates/demos/devderby_landing.html:63
+msgid "History API"
+msgstr "Ħīşŧǿřẏ ȦƤĪ"
+
+#: apps/demos/templates/demos/devderby_landing.html:64
+msgid "September"
+msgstr "Şḗƥŧḗḿƀḗř"
+
+#: apps/demos/templates/demos/devderby_landing.html:65
+msgid "A browser never forgets"
+msgstr "Ȧ ƀřǿẇşḗř ƞḗṽḗř ƒǿřɠḗŧş"
+
+#: apps/demos/templates/demos/devderby_landing.html:73
+msgid "Current Challenge"
+msgstr "Ƈŭřřḗƞŧ Ƈħȧŀŀḗƞɠḗ"
+
+#: apps/demos/templates/demos/devderby_landing.html:74
+msgid "Submissions"
+msgstr "Şŭƀḿīşşīǿƞş"
+
+#: apps/demos/templates/demos/devderby_landing.html:84
+msgid "Lights! Camera! HTML5 video action!"
+msgstr "Ŀīɠħŧş! Ƈȧḿḗřȧ! ĦŦḾĿ5 ṽīḓḗǿ ȧƈŧīǿƞ!"
+
+#: apps/demos/templates/demos/devderby_landing.html:85
+msgid ""
+"<p>The support for video in HTML5 enables web-based interactive video like "
+"nothing else before:</p> <ul> <li>No need for plug-ins that users must "
+"install and keep updated</li> <li>Video content that integrates with the "
+"rest of the web page</li> <li>Better performance</li> <li>Better "
+"accessibility</li> <li>Better maintainability</li> </ul> <p>Use CSS to "
+"transform, filter, or mask the video container. You can even perform real-"
+"time changes to the video content, such as green-screen effects, dynamic "
+"content injection, or edge or movement detection.</p> <p>You don’t have to "
+"code completely from scratch, either. <a "
+"href=\"http://popcornjs.org/\">Popcorn.js</a> is an open-source event "
+"framework for integrating HTML5 media (audio as well as video) with other "
+"web-based content, with a plug-in system for adding web service "
+"integrations. Popcorn.js is a project of the <a "
+"href=\"http://webmademovies.org/\">Web Made Movies</a> video lab.</p> <p>The "
+"possibilities are unbounded, so show us what you can do!</p> <p><a href=\"%"
+"(submit_url)s\">Submit your HTML5 video demo</a> for the July Dev Derby "
+"today!</p>"
+msgstr ""
+"<p>Ŧħḗ şŭƥƥǿřŧ ƒǿř ṽīḓḗǿ īƞ ĦŦḾĿ5 ḗƞȧƀŀḗş ẇḗƀ-ƀȧşḗḓ īƞŧḗřȧƈŧīṽḗ ṽīḓḗǿ ŀīķḗ "
+"ƞǿŧħīƞɠ ḗŀşḗ ƀḗƒǿřḗ:</p> <ul> <li>Ƞǿ ƞḗḗḓ ƒǿř ƥŀŭɠ-īƞş ŧħȧŧ ŭşḗřş ḿŭşŧ "
+"īƞşŧȧŀŀ ȧƞḓ ķḗḗƥ ŭƥḓȧŧḗḓ</li> <li>Ṽīḓḗǿ ƈǿƞŧḗƞŧ ŧħȧŧ īƞŧḗɠřȧŧḗş ẇīŧħ ŧħḗ "
+"řḗşŧ ǿƒ ŧħḗ ẇḗƀ ƥȧɠḗ</li> <li>Ɓḗŧŧḗř ƥḗřƒǿřḿȧƞƈḗ</li> <li>Ɓḗŧŧḗř "
+"ȧƈƈḗşşīƀīŀīŧẏ</li> <li>Ɓḗŧŧḗř ḿȧīƞŧȧīƞȧƀīŀīŧẏ</li> </ul> <p>Ŭşḗ ƇŞŞ ŧǿ "
+"ŧřȧƞşƒǿřḿ, ƒīŀŧḗř, ǿř ḿȧşķ ŧħḗ ṽīḓḗǿ ƈǿƞŧȧīƞḗř. Ẏǿŭ ƈȧƞ ḗṽḗƞ ƥḗřƒǿřḿ "
+"řḗȧŀ-ŧīḿḗ ƈħȧƞɠḗş ŧǿ ŧħḗ ṽīḓḗǿ ƈǿƞŧḗƞŧ, şŭƈħ ȧş ɠřḗḗƞ-şƈřḗḗƞ ḗƒƒḗƈŧş, "
+"ḓẏƞȧḿīƈ ƈǿƞŧḗƞŧ īƞĵḗƈŧīǿƞ, ǿř ḗḓɠḗ ǿř ḿǿṽḗḿḗƞŧ ḓḗŧḗƈŧīǿƞ.</p> <p>Ẏǿŭ ḓǿƞ’ŧ "
+"ħȧṽḗ ŧǿ ƈǿḓḗ ƈǿḿƥŀḗŧḗŀẏ ƒřǿḿ şƈřȧŧƈħ, ḗīŧħḗř. <a "
+"href=\"http://popcornjs.org/\">Ƥǿƥƈǿřƞ.ĵş</a> īş ȧƞ ǿƥḗƞ-şǿŭřƈḗ ḗṽḗƞŧ "
+"ƒřȧḿḗẇǿřķ ƒǿř īƞŧḗɠřȧŧīƞɠ ĦŦḾĿ5 ḿḗḓīȧ (ȧŭḓīǿ ȧş ẇḗŀŀ ȧş ṽīḓḗǿ) ẇīŧħ ǿŧħḗř "
+"ẇḗƀ-ƀȧşḗḓ ƈǿƞŧḗƞŧ, ẇīŧħ ȧ ƥŀŭɠ-īƞ şẏşŧḗḿ ƒǿř ȧḓḓīƞɠ ẇḗƀ şḗřṽīƈḗ "
+"īƞŧḗɠřȧŧīǿƞş. Ƥǿƥƈǿřƞ.ĵş īş ȧ ƥřǿĵḗƈŧ ǿƒ ŧħḗ <a "
+"href=\"http://webmademovies.org/\">Ẇḗƀ Ḿȧḓḗ Ḿǿṽīḗş</a> ṽīḓḗǿ ŀȧƀ.</p> <p>Ŧħḗ "
+"ƥǿşşīƀīŀīŧīḗş ȧřḗ ŭƞƀǿŭƞḓḗḓ, şǿ şħǿẇ ŭş ẇħȧŧ ẏǿŭ ƈȧƞ ḓǿ!</p> <p><a href=\"%"
+"(submit_url)s\">Şŭƀḿīŧ ẏǿŭř ĦŦḾĿ5 ṽīḓḗǿ ḓḗḿǿ</a> ƒǿř ŧħḗ Ĵŭŀẏ Ḓḗṽ Ḓḗřƀẏ "
+"ŧǿḓȧẏ!</p>"
+
+#: apps/demos/templates/demos/devderby_landing.html:117
+msgid ""
+"Developers must be busy tinkering with their demos. No submissions yet. Be "
+"the first!"
+msgstr ""
+"Ḓḗṽḗŀǿƥḗřş ḿŭşŧ ƀḗ ƀŭşẏ ŧīƞķḗřīƞɠ ẇīŧħ ŧħḗīř ḓḗḿǿş. Ƞǿ şŭƀḿīşşīǿƞş ẏḗŧ. Ɓḗ "
+"ŧħḗ ƒīřşŧ!"
+
+#: apps/demos/templates/demos/devderby_landing.html:118
+msgid "Submit Your Demo"
+msgstr "Şŭƀḿīŧ Ẏǿŭř Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/devderby_landing.html:130
+msgid ""
+"<p>A summary of the rules can be found below. For a complete look at the "
+"terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby "
+"Contest Official Rules</a>.</p> <ul> <li>Almost anyone can enter (<a href=\"%"
+"(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a "
+"new contest every month.</li> <li>Your entry must meet certain criteria; <a "
+"href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the "
+"Current Challenge section for any special criteria for each contest.</li> "
+"<li>Each contest runs from the first day of the month to the last day of the "
+"month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be "
+"judged by a panel of qualified reviewers, who may or may not take into "
+"account how many &ldquo;likes&rdquo; your entry receives.</li> <li>The "
+"winners of each month's contest will be announced by the <strong>20th of the "
+"following month</strong>.</li> <li>You can't win more than once in the same "
+"calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby "
+"Contest Official Rules</a> before submitting your entry.</li> </ul>"
+msgstr ""
+"<p>Ȧ şŭḿḿȧřẏ ǿƒ ŧħḗ řŭŀḗş ƈȧƞ ƀḗ ƒǿŭƞḓ ƀḗŀǿẇ. Ƒǿř ȧ ƈǿḿƥŀḗŧḗ ŀǿǿķ ȧŧ ŧħḗ "
+"ŧḗřḿş ǿƒ ŧħḗ ƈǿƞŧḗşŧ ƥŀḗȧşḗ şḗḗ ŧħḗ <a href=\"%(rules_url)s\">Ḓḗṽ Ḓḗřƀẏ "
+"Ƈǿƞŧḗşŧ Ǿƒƒīƈīȧŀ Řŭŀḗş</a>.</p> <ul> <li>Ȧŀḿǿşŧ ȧƞẏǿƞḗ ƈȧƞ ḗƞŧḗř (<a href=\"%"
+"(rules_url)s\">şḗḗ ŧħḗ řŭŀḗş</a> ƒǿř ḗẋƈḗƥŧīǿƞş).</li> <li>Ŧħḗřḗ ẇīŀŀ ƀḗ ȧ "
+"ƞḗẇ ƈǿƞŧḗşŧ ḗṽḗřẏ ḿǿƞŧħ.</li> <li>Ẏǿŭř ḗƞŧřẏ ḿŭşŧ ḿḗḗŧ ƈḗřŧȧīƞ ƈřīŧḗřīȧ; <a "
+"href=\"%(rules_url)s\">şḗḗ ŧħḗ řŭŀḗş</a> ƒǿř ŧħḗ ǿṽḗřȧŀŀ ƈřīŧḗřīȧ ȧƞḓ ŧħḗ "
+"Ƈŭřřḗƞŧ Ƈħȧŀŀḗƞɠḗ şḗƈŧīǿƞ ƒǿř ȧƞẏ şƥḗƈīȧŀ ƈřīŧḗřīȧ ƒǿř ḗȧƈħ ƈǿƞŧḗşŧ.</li> "
+"<li>Ḗȧƈħ ƈǿƞŧḗşŧ řŭƞş ƒřǿḿ ŧħḗ ƒīřşŧ ḓȧẏ ǿƒ ŧħḗ ḿǿƞŧħ ŧǿ ŧħḗ ŀȧşŧ ḓȧẏ ǿƒ ŧħḗ "
+"ḿǿƞŧħ (ƀȧşḗḓ ǿƞ <strong>ŬŞ Ƥȧƈīƒīƈ ŧīḿḗ</strong>).</li> <li>Ḗƞŧřīḗş ẇīŀŀ ƀḗ "
+"ĵŭḓɠḗḓ ƀẏ ȧ ƥȧƞḗŀ ǿƒ ɋŭȧŀīƒīḗḓ řḗṽīḗẇḗřş, ẇħǿ ḿȧẏ ǿř ḿȧẏ ƞǿŧ ŧȧķḗ īƞŧǿ "
+"ȧƈƈǿŭƞŧ ħǿẇ ḿȧƞẏ &ldquo;ŀīķḗş&rdquo; ẏǿŭř ḗƞŧřẏ řḗƈḗīṽḗş.</li> <li>Ŧħḗ "
+"ẇīƞƞḗřş ǿƒ ḗȧƈħ ḿǿƞŧħ'ş ƈǿƞŧḗşŧ ẇīŀŀ ƀḗ ȧƞƞǿŭƞƈḗḓ ƀẏ ŧħḗ <strong>20ŧħ ǿƒ ŧħḗ "
+"ƒǿŀŀǿẇīƞɠ ḿǿƞŧħ</strong>.</li> <li>Ẏǿŭ ƈȧƞ'ŧ ẇīƞ ḿǿřḗ ŧħȧƞ ǿƞƈḗ īƞ ŧħḗ şȧḿḗ "
+"ƈȧŀḗƞḓȧř ẏḗȧř.</li> <li>Ƥŀḗȧşḗ řḗȧḓ ŧħḗ <a href=\"%(rules_url)s\">Ḓḗṽ Ḓḗřƀẏ "
+"Ƈǿƞŧḗşŧ Ǿƒƒīƈīȧŀ Řŭŀḗş</a> ƀḗƒǿřḗ şŭƀḿīŧŧīƞɠ ẏǿŭř ḗƞŧřẏ.</li> </ul>"
+
+#: apps/demos/templates/demos/devderby_landing.html:146
+msgid ""
+"<p>Entries will be reviewed by a panel of qualified judges, including "
+"members of the Mozilla team and outside experts. We will rate the demos "
+"across 4 dimensions:</p> <ul> <li><strong>Technology</strong> &ndash; Does "
+"the demo showcase the power of open Web technologies?</li> "
+"<li><strong>Originality</strong> &ndash; How innovative and unique is the "
+"demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual "
+"design and interaction experience?</li> <li><strong>Practicality</strong> "
+"&ndash; How useful is this demo in enhancing the Web today?</li> </ul> "
+"<p>The judges will use all four dimensions in scoring each entry, and any "
+"additional criteria specified for a particular contest.</p> <p>The judges "
+"may also take into account how many &ldquo;likes&rdquo; the entries have "
+"received from the community. So make sure to share your demo with others and "
+"encourage them to visit Dev Derby to &ldquo;vote.&rdquo;</p> <h2>Expert "
+"Judges</h2> <ul class=\"judges\"> <li class=\"vcard\"> <h3><a "
+"href=\"http://leaverou.me\" class=\"fn url\">Lea Verou <img src=\"%"
+"(MEDIA_URL)simg/devderby/judges/leaverou.jpg\" alt=\"\" class=\"photo\" "
+"width=\"100\" height=\"100\"></a></h3> <h4 class=\"title\">Web developer, Co-"
+"founder of Fresset Ltd.</h4> <p class=\"twitter\"><a "
+"href=\"http://twitter.com/leaverou\" class=\"url nickname\">@leaverou</a></p> "
+"<p>Lea Verou is the lead web developer and designer of Fresset Ltd, which "
+"she co-founded in 2008. Fresset owns and manages some of the largest greek "
+"community websites. Lea has a long-standing passion for open web standards, "
+"especially CSS and JavaScript. She loves researching new ways to use them "
+"and shares her findings through her blog, <a "
+"href=\"http://leaverou.me\">leaverou.me</a>. She speaks at a number of the "
+"largest web development conferences and writes for leading industry "
+"publications. Lea also co-organized and occasionally lectures the web "
+"development course at the Athens University of Economics and Business.</p> "
+"</li> <li class=\"vcard\"> <h3><a href=\"http://ethanmarcotte.com\" class=\"fn "
+"url\">Ethan Marcotte <img src=\"%"
+"(MEDIA_URL)simg/devderby/judges/ethanmarcotte.jpg\" alt=\"\" class=\"photo\" "
+"width=\"100\" height=\"100\" title=\"Photo by Anton Peck\"></a></h3> <h4 "
+"class=\"title\">Web designer, author</h4> <p class=\"twitter\"><a "
+"href=\"http://twitter.com/beep\" class=\"url nickname\">@beep</a></p> <p>Ethan "
+"Marcotte is a web designer &amp; developer who cares deeply about beautiful "
+"design, elegant code, and the intersection of the two. Over the years, Ethan "
+"has enjoyed working with such clients as the Sundance Film Festival, "
+"Stanford University, <cite>New&nbsp;York Magazine</cite> and The Today Show. "
+"He swears profusely <a href=\"http://twitter.com/beep\">on Twitter</a>, and "
+"would like to be an <a href=\"http://unstoppablerobotninja.com/\" "
+"class=\"url\">unstoppable robot ninja</a> when he grows up. His most recent "
+"book is <cite><a href=\"http://www.abookapart.com/products/responsive-web-"
+"design\">Responsive Web Design</a></cite>.</p> </li> <li class=\"vcard\"> "
+"<h3><a href=\"http://nimbupani.com\" class=\"fn url\">Divya Manian <img src=\"%"
+"(MEDIA_URL)simg/devderby/judges/divyamanian.jpg\" alt=\"\" class=\"photo\" "
+"width=\"100\" height=\"100\"></a></h3> <h4 class=\"title\">Web Opener at Opera, "
+"Open Web Vigilante</h4> <p class=\"twitter\"><a "
+"href=\"http://twitter.com/divya\" class=\"url nickname\">@divya</a></p> <p>Divya "
+"Manian is a Web Opener for Opera Software in Seattle. She made the jump "
+"from developing device drivers for Motorola phones to designing websites and "
+"has not looked back since. She takes her duties as an Open Web vigilante "
+"seriously which has resulted in collaborative projects such as <a "
+"href=\"http://html5readiness.com\">HTML5 Readiness</a> and <a "
+"href=\"http://html5boilerplate.com\">HTML5 Boilerplate</a>.</p> </li> </ul>"
+msgstr ""
+"<p>Ḗƞŧřīḗş ẇīŀŀ ƀḗ řḗṽīḗẇḗḓ ƀẏ ȧ ƥȧƞḗŀ ǿƒ ɋŭȧŀīƒīḗḓ ĵŭḓɠḗş, īƞƈŀŭḓīƞɠ "
+"ḿḗḿƀḗřş ǿƒ ŧħḗ Ḿǿzīŀŀȧ ŧḗȧḿ ȧƞḓ ǿŭŧşīḓḗ ḗẋƥḗřŧş. Ẇḗ ẇīŀŀ řȧŧḗ ŧħḗ ḓḗḿǿş "
+"ȧƈřǿşş 4 ḓīḿḗƞşīǿƞş:</p> <ul> <li><strong>Ŧḗƈħƞǿŀǿɠẏ</strong> &ndash; Ḓǿḗş "
+"ŧħḗ ḓḗḿǿ şħǿẇƈȧşḗ ŧħḗ ƥǿẇḗř ǿƒ ǿƥḗƞ Ẇḗƀ ŧḗƈħƞǿŀǿɠīḗş?</li> "
+"<li><strong>Ǿřīɠīƞȧŀīŧẏ</strong> &ndash; Ħǿẇ īƞƞǿṽȧŧīṽḗ ȧƞḓ ŭƞīɋŭḗ īş ŧħḗ "
+"ḓḗḿǿ?</li> <li><strong>Ȧḗşŧħḗŧīƈş</strong> &ndash; Ħǿẇ ɠǿǿḓ īş ŧħḗ ṽīşŭȧŀ "
+"ḓḗşīɠƞ ȧƞḓ īƞŧḗřȧƈŧīǿƞ ḗẋƥḗřīḗƞƈḗ?</li> <li><strong>Ƥřȧƈŧīƈȧŀīŧẏ</strong> "
+"&ndash; Ħǿẇ ŭşḗƒŭŀ īş ŧħīş ḓḗḿǿ īƞ ḗƞħȧƞƈīƞɠ ŧħḗ Ẇḗƀ ŧǿḓȧẏ?</li> </ul> "
+"<p>Ŧħḗ ĵŭḓɠḗş ẇīŀŀ ŭşḗ ȧŀŀ ƒǿŭř ḓīḿḗƞşīǿƞş īƞ şƈǿřīƞɠ ḗȧƈħ ḗƞŧřẏ, ȧƞḓ ȧƞẏ "
+"ȧḓḓīŧīǿƞȧŀ ƈřīŧḗřīȧ şƥḗƈīƒīḗḓ ƒǿř ȧ ƥȧřŧīƈŭŀȧř ƈǿƞŧḗşŧ.</p> <p>Ŧħḗ ĵŭḓɠḗş "
+"ḿȧẏ ȧŀşǿ ŧȧķḗ īƞŧǿ ȧƈƈǿŭƞŧ ħǿẇ ḿȧƞẏ &ldquo;ŀīķḗş&rdquo; ŧħḗ ḗƞŧřīḗş ħȧṽḗ "
+"řḗƈḗīṽḗḓ ƒřǿḿ ŧħḗ ƈǿḿḿŭƞīŧẏ. Şǿ ḿȧķḗ şŭřḗ ŧǿ şħȧřḗ ẏǿŭř ḓḗḿǿ ẇīŧħ ǿŧħḗřş ȧƞḓ "
+"ḗƞƈǿŭřȧɠḗ ŧħḗḿ ŧǿ ṽīşīŧ Ḓḗṽ Ḓḗřƀẏ ŧǿ &ldquo;ṽǿŧḗ.&rdquo;</p> <h2>Ḗẋƥḗřŧ "
+"Ĵŭḓɠḗş</h2> <ul class=\"judges\"> <li class=\"vcard\"> <h3><a "
+"href=\"http://leaverou.me\" class=\"fn url\">Ŀḗȧ Ṽḗřǿŭ <img src=\"%"
+"(MEDIA_URL)simg/devderby/judges/leaverou.jpg\" alt=\"\" class=\"photo\" "
+"width=\"100\" height=\"100\"></a></h3> <h4 class=\"title\">Ẇḗƀ ḓḗṽḗŀǿƥḗř, "
+"Ƈǿ-ƒǿŭƞḓḗř ǿƒ Ƒřḗşşḗŧ Ŀŧḓ.</h4> <p class=\"twitter\"><a "
+"href=\"http://twitter.com/leaverou\" class=\"url nickname\">@ŀḗȧṽḗřǿŭ</a></p> "
+"<p>Ŀḗȧ Ṽḗřǿŭ īş ŧħḗ ŀḗȧḓ ẇḗƀ ḓḗṽḗŀǿƥḗř ȧƞḓ ḓḗşīɠƞḗř ǿƒ Ƒřḗşşḗŧ Ŀŧḓ, ẇħīƈħ "
+"şħḗ ƈǿ-ƒǿŭƞḓḗḓ īƞ 2008. Ƒřḗşşḗŧ ǿẇƞş ȧƞḓ ḿȧƞȧɠḗş şǿḿḗ ǿƒ ŧħḗ ŀȧřɠḗşŧ ɠřḗḗķ "
+"ƈǿḿḿŭƞīŧẏ ẇḗƀşīŧḗş. Ŀḗȧ ħȧş ȧ ŀǿƞɠ-şŧȧƞḓīƞɠ ƥȧşşīǿƞ ƒǿř ǿƥḗƞ ẇḗƀ şŧȧƞḓȧřḓş, "
+"ḗşƥḗƈīȧŀŀẏ ƇŞŞ ȧƞḓ ĴȧṽȧŞƈřīƥŧ. Şħḗ ŀǿṽḗş řḗşḗȧřƈħīƞɠ ƞḗẇ ẇȧẏş ŧǿ ŭşḗ ŧħḗḿ "
+"ȧƞḓ şħȧřḗş ħḗř ƒīƞḓīƞɠş ŧħřǿŭɠħ ħḗř ƀŀǿɠ, <a "
+"href=\"http://leaverou.me\">ŀḗȧṽḗřǿŭ.ḿḗ</a>. Şħḗ şƥḗȧķş ȧŧ ȧ ƞŭḿƀḗř ǿƒ ŧħḗ "
+"ŀȧřɠḗşŧ ẇḗƀ ḓḗṽḗŀǿƥḿḗƞŧ ƈǿƞƒḗřḗƞƈḗş ȧƞḓ ẇřīŧḗş ƒǿř ŀḗȧḓīƞɠ īƞḓŭşŧřẏ "
+"ƥŭƀŀīƈȧŧīǿƞş. Ŀḗȧ ȧŀşǿ ƈǿ-ǿřɠȧƞīzḗḓ ȧƞḓ ǿƈƈȧşīǿƞȧŀŀẏ ŀḗƈŧŭřḗş ŧħḗ ẇḗƀ "
+"ḓḗṽḗŀǿƥḿḗƞŧ ƈǿŭřşḗ ȧŧ ŧħḗ Ȧŧħḗƞş Ŭƞīṽḗřşīŧẏ ǿƒ Ḗƈǿƞǿḿīƈş ȧƞḓ Ɓŭşīƞḗşş.</p> "
+"</li> <li class=\"vcard\"> <h3><a href=\"http://ethanmarcotte.com\" class=\"fn "
+"url\">Ḗŧħȧƞ Ḿȧřƈǿŧŧḗ <img src=\"%"
+"(MEDIA_URL)simg/devderby/judges/ethanmarcotte.jpg\" alt=\"\" class=\"photo\" "
+"width=\"100\" height=\"100\" title=\"Photo by Anton Peck\"></a></h3> <h4 "
+"class=\"title\">Ẇḗƀ ḓḗşīɠƞḗř, ȧŭŧħǿř</h4> <p class=\"twitter\"><a "
+"href=\"http://twitter.com/beep\" class=\"url nickname\">@ƀḗḗƥ</a></p> <p>Ḗŧħȧƞ "
+"Ḿȧřƈǿŧŧḗ īş ȧ ẇḗƀ ḓḗşīɠƞḗř &amp; ḓḗṽḗŀǿƥḗř ẇħǿ ƈȧřḗş ḓḗḗƥŀẏ ȧƀǿŭŧ ƀḗȧŭŧīƒŭŀ "
+"ḓḗşīɠƞ, ḗŀḗɠȧƞŧ ƈǿḓḗ, ȧƞḓ ŧħḗ īƞŧḗřşḗƈŧīǿƞ ǿƒ ŧħḗ ŧẇǿ. Ǿṽḗř ŧħḗ ẏḗȧřş, Ḗŧħȧƞ "
+"ħȧş ḗƞĵǿẏḗḓ ẇǿřķīƞɠ ẇīŧħ şŭƈħ ƈŀīḗƞŧş ȧş ŧħḗ Şŭƞḓȧƞƈḗ Ƒīŀḿ Ƒḗşŧīṽȧŀ, "
+"Şŧȧƞƒǿřḓ Ŭƞīṽḗřşīŧẏ, <cite>Ƞḗẇ&nbsp;Ẏǿřķ Ḿȧɠȧzīƞḗ</cite> ȧƞḓ Ŧħḗ Ŧǿḓȧẏ Şħǿẇ. "
+"Ħḗ şẇḗȧřş ƥřǿƒŭşḗŀẏ <a href=\"http://twitter.com/beep\">ǿƞ Ŧẇīŧŧḗř</a>, ȧƞḓ "
+"ẇǿŭŀḓ ŀīķḗ ŧǿ ƀḗ ȧƞ <a href=\"http://unstoppablerobotninja.com/\" "
+"class=\"url\">ŭƞşŧǿƥƥȧƀŀḗ řǿƀǿŧ ƞīƞĵȧ</a> ẇħḗƞ ħḗ ɠřǿẇş ŭƥ. Ħīş ḿǿşŧ řḗƈḗƞŧ "
+"ƀǿǿķ īş <cite><a href=\"http://www.abookapart.com/products/responsive-web-"
+"design\">Řḗşƥǿƞşīṽḗ Ẇḗƀ Ḓḗşīɠƞ</a></cite>.</p> </li> <li class=\"vcard\"> "
+"<h3><a href=\"http://nimbupani.com\" class=\"fn url\">Ḓīṽẏȧ Ḿȧƞīȧƞ <img src=\"%"
+"(MEDIA_URL)simg/devderby/judges/divyamanian.jpg\" alt=\"\" class=\"photo\" "
+"width=\"100\" height=\"100\"></a></h3> <h4 class=\"title\">Ẇḗƀ Ǿƥḗƞḗř ȧŧ Ǿƥḗřȧ, "
+"Ǿƥḗƞ Ẇḗƀ Ṽīɠīŀȧƞŧḗ</h4> <p class=\"twitter\"><a "
+"href=\"http://twitter.com/divya\" class=\"url nickname\">@ḓīṽẏȧ</a></p> <p>Ḓīṽẏȧ "
+"Ḿȧƞīȧƞ īş ȧ Ẇḗƀ Ǿƥḗƞḗř ƒǿř Ǿƥḗřȧ Şǿƒŧẇȧřḗ īƞ Şḗȧŧŧŀḗ. Şħḗ ḿȧḓḗ ŧħḗ ĵŭḿƥ "
+"ƒřǿḿ ḓḗṽḗŀǿƥīƞɠ ḓḗṽīƈḗ ḓřīṽḗřş ƒǿř Ḿǿŧǿřǿŀȧ ƥħǿƞḗş ŧǿ ḓḗşīɠƞīƞɠ ẇḗƀşīŧḗş ȧƞḓ "
+"ħȧş ƞǿŧ ŀǿǿķḗḓ ƀȧƈķ şīƞƈḗ. Şħḗ ŧȧķḗş ħḗř ḓŭŧīḗş ȧş ȧƞ Ǿƥḗƞ Ẇḗƀ ṽīɠīŀȧƞŧḗ "
+"şḗřīǿŭşŀẏ ẇħīƈħ ħȧş řḗşŭŀŧḗḓ īƞ ƈǿŀŀȧƀǿřȧŧīṽḗ ƥřǿĵḗƈŧş şŭƈħ ȧş <a "
+"href=\"http://html5readiness.com\">ĦŦḾĿ5 Řḗȧḓīƞḗşş</a> ȧƞḓ <a "
+"href=\"http://html5boilerplate.com\">ĦŦḾĿ5 Ɓǿīŀḗřƥŀȧŧḗ</a>.</p> </li> </ul>"
+
+#: apps/demos/templates/demos/devderby_landing.html:211
+msgid "Previous Winner"
+msgstr "Ƥřḗṽīǿŭş Ẇīƞƞḗř"
+
+#: apps/demos/templates/demos/devderby_landing.html:216
+msgid "See the Demo"
+msgstr "Şḗḗ ŧħḗ Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/devderby_landing.html:221
+msgid ""
+"<h1>Prizes</h1> <img src=\"%(MEDIA_URL)simg/devderby/prize-androids.png\" "
+"alt=\"Android mobile device\" width=\"135\" height=\"150\" class=\"prize\"/> <ol> "
+"<li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android "
+"mobile device from <a rel=\"external\" href=\"http://www.motorola.com/Consumers"
+"/US-EN/Consumer-Product-and-Services/Mobile-Phones/\">Motorola</a> or <a "
+"rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
+"phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop "
+"bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a "
+"rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-"
+"bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> "
+"</li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited "
+"edition MDN t-shirt to show off their geek cred.</p> </li> </ol>"
+msgstr ""
+"<h1>Ƥřīzḗş</h1> <img src=\"%(MEDIA_URL)simg/devderby/prize-androids.png\" "
+"alt=\"Android mobile device\" width=\"135\" height=\"150\" class=\"prize\"/> <ol> "
+"<li class=\"first\"> <h3>Ȧƞḓřǿīḓ ḿǿƀīŀḗ ḓḗṽīƈḗ</h3> <p>Ẇīƞƞḗř ɠḗŧş ȧƞ Ȧƞḓřǿīḓ "
+"ḿǿƀīŀḗ ḓḗṽīƈḗ ƒřǿḿ <a rel=\"external\" href=\"http://www.motorola.com/Consumers"
+"/US-EN/Consumer-Product-and-Services/Mobile-Phones/\">Ḿǿŧǿřǿŀȧ</a> ǿř <a "
+"rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
+"phones\">Şȧḿşŭƞɠ</a>.</p> </li> <li class=\"second\"> <h3>Řīƈķşħȧẇ ŀȧƥŧǿƥ "
+"ƀȧɠ</h3> <p>Řŭƞƞḗř-ŭƥ ɠḗŧş ȧ ħȧƞḓ-ƈřȧƒŧḗḓ ŀȧƥŧǿƥ ḿḗşşḗƞɠḗř ƀȧɠ ƒřǿḿ <a "
+"rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-"
+"bag/standard/standard-commuter-laptop-bag-black.html\">Řīƈķşħȧẇ</a>.</p> "
+"</li> <li class=\"third\"> <h3>ḾḒȠ ŧ-şħīřŧ</h3> <p>3řḓ ƥŀȧƈḗ ɠḗŧş ȧ ŀīḿīŧḗḓ "
+"ḗḓīŧīǿƞ ḾḒȠ ŧ-şħīřŧ ŧǿ şħǿẇ ǿƒƒ ŧħḗīř ɠḗḗķ ƈřḗḓ.</p> </li> </ol>"
+
+#: apps/demos/templates/demos/devderby_landing.html:246
+#: apps/landing/templates/landing/base_learn.html:8
+#: apps/landing/templates/landing/base_promote.html:8
+#: templates/base.html:73
+msgid "Docs"
+msgstr "Ḓǿƈş"
+
+#: apps/demos/templates/demos/devderby_landing.html:248
+msgid "Articles"
+msgstr "Ȧřŧīƈŀḗş"
+
+#: apps/demos/templates/demos/devderby_rules.html:11
+msgid "Dev Derby Rules"
+msgstr "Ḓḗṽ Ḓḗřƀẏ Řŭŀḗş"
+
+#: apps/demos/templates/demos/feed_item_description.html:7
+msgid "Submitted by:"
+msgstr "Şŭƀḿīŧŧḗḓ ƀẏ:"
+
+#: apps/demos/templates/demos/feed_item_description.html:9
+msgid "Tagged as:"
+msgstr "Ŧȧɠɠḗḓ ȧş:"
+
+#: apps/demos/templates/demos/flag.html:37
+msgid "Flag this demo?"
+msgstr "Ƒŀȧɠ ŧħīş ḓḗḿǿ?"
+
+#: apps/demos/templates/demos/flag.html:43
+msgid "Flag content"
+msgstr "Ƒŀȧɠ ƈǿƞŧḗƞŧ"
+
+#: apps/demos/templates/demos/home.html:8
+#: apps/demos/templates/demos/listing_all.html:7
+msgid "Recent demos"
+msgstr "Řḗƈḗƞŧ ḓḗḿǿş"
+
+#: apps/demos/templates/demos/home.html:10
+msgid "Featured demos"
+msgstr "Ƒḗȧŧŭřḗḓ ḓḗḿǿş"
+
+#: apps/demos/templates/demos/home.html:38
+msgid ""
+"<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn "
+"More</strong>"
+msgstr ""
+"<span>Ĵǿīƞ ŧħḗ</span> <em>Ḓḗṽ Ḓḗřƀẏ</em> &amp; Ẇīƞ Ƥřīzḗş <br/><strong>Ŀḗȧřƞ "
+"Ḿǿřḗ</strong>"
+
+#: apps/demos/templates/demos/home.html:45
+msgid "Featured Demos"
+msgstr "Ƒḗȧŧŭřḗḓ Ḓḗḿǿş"
+
+#: apps/demos/templates/demos/home.html:49
+msgid "See the previous demo"
+msgstr "Şḗḗ ŧħḗ ƥřḗṽīǿŭş ḓḗḿǿ"
+
+#: apps/demos/templates/demos/home.html:50
+msgid "See the next demo"
+msgstr "Şḗḗ ŧħḗ ƞḗẋŧ ḓḗḿǿ"
+
+#: apps/demos/templates/demos/home.html:66
+msgid "Launch"
+msgstr "Ŀȧŭƞƈħ"
+
+#: apps/demos/templates/demos/home.html:102
+#: apps/demos/templates/demos/home.html:103
+#: apps/demos/templates/demos/elements/search_form.html:6
+#: apps/docs/templates/docs/docs.html:18
+#: templates/base.html:54
+#: templates/includes/common_macros.html:13
+#: templates/includes/common_macros.html:14
+msgid "Search"
+msgstr "Şḗȧřƈħ"
+
+#: apps/demos/templates/demos/home.html:107
+msgid "<b>or</b>"
+msgstr "<b>ǿř</b>"
+
+#: apps/demos/templates/demos/home.html:110
+#: apps/demos/templates/demos/elements/tech_tags_list.html:2
+msgid "Browse by Technology"
+msgstr "Ɓřǿẇşḗ ƀẏ Ŧḗƈħƞǿŀǿɠẏ"
+
+#: apps/demos/templates/demos/home.html:122
+#: apps/demos/templates/demos/listing_tag.html:53
+msgid "Subscribe to a feed of {tag_title} demos"
+msgstr "Şŭƀşƈřīƀḗ ŧǿ ȧ ƒḗḗḓ ǿƒ {ŧȧɠ_ŧīŧŀḗ} ḓḗḿǿş"
+
+#: apps/demos/templates/demos/home.html:122
+msgid "recent"
+msgstr "řḗƈḗƞŧ"
+
+#: apps/demos/templates/demos/launch.html:30
+#: templates/base.html:4
+#: templates/base_popup.html:4
+msgid "Mozilla Developer Network"
+msgstr "Ḿǿzīŀŀȧ Ḓḗṽḗŀǿƥḗř Ƞḗŧẇǿřķ"
+
+#: apps/demos/templates/demos/launch.html:34
+msgid "by %(profile_link)s"
+msgstr "ƀẏ %(profile_link)s"
+
+#: apps/demos/templates/demos/launch.html:76
+msgid "Remove this toolbar"
+msgstr "Řḗḿǿṽḗ ŧħīş ŧǿǿŀƀȧř"
+
+#: apps/demos/templates/demos/launch.html:76
+msgid "Remove toolbar"
+msgstr "Řḗḿǿṽḗ ŧǿǿŀƀȧř"
+
+#: apps/demos/templates/demos/listing_all.html:5
+#: apps/demos/templates/demos/listing_all.html:19
+#: apps/demos/templates/demos/listing_all.html:31
+msgid "Browse all demos"
+msgstr "Ɓřǿẇşḗ ȧŀŀ ḓḗḿǿş"
+
+#: apps/demos/templates/demos/listing_all.html:38
+msgid "Subscribe to a feed of all demos"
+msgstr "Şŭƀşƈřīƀḗ ŧǿ ȧ ƒḗḗḓ ǿƒ ȧŀŀ ḓḗḿǿş"
+
+#: apps/demos/templates/demos/listing_search.html:10
+msgid "Search for \"{q}\""
+msgstr "Şḗȧřƈħ ƒǿř \"{ɋ}\""
+
+#: apps/demos/templates/demos/listing_search.html:14
+msgid "Search results for \"{q}\""
+msgstr "Şḗȧřƈħ řḗşŭŀŧş ƒǿř \"{ɋ}\""
+
+#: apps/demos/templates/demos/listing_search.html:25
+#: apps/demos/templates/demos/listing_search.html:37
+msgid "Search demos for \"{q}\""
+msgstr "Şḗȧřƈħ ḓḗḿǿş ƒǿř \"{ɋ}\""
+
+#: apps/demos/templates/demos/listing_search.html:44
+msgid "Subscribe to a feed of search results for \"{q}\""
+msgstr "Şŭƀşƈřīƀḗ ŧǿ ȧ ƒḗḗḓ ǿƒ şḗȧřƈħ řḗşŭŀŧş ƒǿř \"{ɋ}\""
+
+#: apps/demos/templates/demos/listing_tag.html:5
+msgid "{tag_title} Demos"
+msgstr "{ŧȧɠ_ŧīŧŀḗ} Ḓḗḿǿş"
+
+#: apps/demos/templates/demos/listing_tag.html:8
+msgid "Demos tagged {tag}"
+msgstr "Ḓḗḿǿş ŧȧɠɠḗḓ {ŧȧɠ}"
+
+#: apps/demos/templates/demos/profile_detail.html:8
+msgid "{display_name}"
+msgstr "{ḓīşƥŀȧẏ_ƞȧḿḗ}"
+
+#: apps/demos/templates/demos/profile_detail.html:12
+msgid "Demos for {display_name}"
+msgstr "Ḓḗḿǿş ƒǿř {ḓīşƥŀȧẏ_ƞȧḿḗ}"
+
+#: apps/demos/templates/demos/profile_detail.html:55
+msgid "Subscribe to a feed of {display_name}'s demos"
+msgstr "Şŭƀşƈřīƀḗ ŧǿ ȧ ƒḗḗḓ ǿƒ {ḓīşƥŀȧẏ_ƞȧḿḗ}'ş ḓḗḿǿş"
+
+#: apps/demos/templates/demos/submit.html:8
+#: apps/demos/templates/demos/submit.html:45
+#: apps/demos/templates/demos/submit.html:60
+msgid "Edit {demo_title}"
+msgstr "Ḗḓīŧ {ḓḗḿǿ_ŧīŧŀḗ}"
+
+#: apps/demos/templates/demos/submit.html:10
+#: apps/demos/templates/demos/submit.html:47
+#: apps/demos/templates/demos/submit.html:62
+#: apps/demos/templates/demos/submit_noauth.html:10
+#: apps/demos/templates/demos/submit_noauth.html:20
+#: apps/demos/templates/demos/submit_noauth.html:30
+msgid "Submit a New Demo"
+msgstr "Şŭƀḿīŧ ȧ Ƞḗẇ Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/submit.html:67
+msgid ""
+"<p>Whether you are creating an amazing new way to experience the Web or just "
+"experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p> <p>Please "
+"complete the form below to ensure your demo is submitted to the Demo Studio "
+"successfully.</p>"
+msgstr ""
+"<p>Ẇħḗŧħḗř ẏǿŭ ȧřḗ ƈřḗȧŧīƞɠ ȧƞ ȧḿȧzīƞɠ ƞḗẇ ẇȧẏ ŧǿ ḗẋƥḗřīḗƞƈḗ ŧħḗ Ẇḗƀ ǿř ĵŭşŧ "
+"ḗẋƥḗřīḿḗƞŧīƞɠ ẇīŧħ ŧħḗ ŀȧŧḗşŧ ŧḗƈħƞǿŀǿɠīḗş, ẇḗ īƞṽīŧḗ ẏǿŭ ŧǿ şŭƀḿīŧ ẏǿŭř "
+"ǿẇƞ ḓḗḿǿş ŧǿ şħȧřḗ ẇīŧħ (ǿř şħǿẇ ǿƒƒ ŧǿ) ǿŧħḗř ẇḗƀ ḓḗṽḗŀǿƥḗřş.</p> <p>Ƥŀḗȧşḗ "
+"ƈǿḿƥŀḗŧḗ ŧħḗ ƒǿřḿ ƀḗŀǿẇ ŧǿ ḗƞşŭřḗ ẏǿŭř ḓḗḿǿ īş şŭƀḿīŧŧḗḓ ŧǿ ŧħḗ Ḓḗḿǿ Şŧŭḓīǿ "
+"şŭƈƈḗşşƒŭŀŀẏ.</p>"
+
+#: apps/demos/templates/demos/submit.html:79
+msgid "Describe Your Demo"
+msgstr "Ḓḗşƈřīƀḗ Ẏǿŭř Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/submit.html:81
+msgid ""
+"<p>Tell us more about your demo, including the name, description and the "
+"technologies used. Please list the browsers you have tested it with.</p>"
+msgstr ""
+"<p>Ŧḗŀŀ ŭş ḿǿřḗ ȧƀǿŭŧ ẏǿŭř ḓḗḿǿ, īƞƈŀŭḓīƞɠ ŧħḗ ƞȧḿḗ, ḓḗşƈřīƥŧīǿƞ ȧƞḓ ŧħḗ "
+"ŧḗƈħƞǿŀǿɠīḗş ŭşḗḓ. Ƥŀḗȧşḗ ŀīşŧ ŧħḗ ƀřǿẇşḗřş ẏǿŭ ħȧṽḗ ŧḗşŧḗḓ īŧ ẇīŧħ.</p>"
+
+#: apps/demos/templates/demos/submit.html:94
+msgid "Select up to five technologies used in your demo."
+msgstr "Şḗŀḗƈŧ ŭƥ ŧǿ ƒīṽḗ ŧḗƈħƞǿŀǿɠīḗş ŭşḗḓ īƞ ẏǿŭř ḓḗḿǿ."
+
+#: apps/demos/templates/demos/submit.html:102
+msgid ""
+"Submit your demo to the <a href=\"%(derby_url)s\" "
+"onclick=\"window.open(this.href);return false;\">Dev Derby</a>!"
+msgstr ""
+"Şŭƀḿīŧ ẏǿŭř ḓḗḿǿ ŧǿ ŧħḗ <a href=\"%(derby_url)s\" "
+"onclick=\"window.open(this.href);return false;\">Ḓḗṽ Ḓḗřƀẏ</a>!"
+
+#: apps/demos/templates/demos/submit.html:109
+msgid ""
+"Check the appropriate Dev Derby box and make sure you select the relevant "
+"technologies above to be considered for the developer challenge."
+msgstr ""
+"Ƈħḗƈķ ŧħḗ ȧƥƥřǿƥřīȧŧḗ Ḓḗṽ Ḓḗřƀẏ ƀǿẋ ȧƞḓ ḿȧķḗ şŭřḗ ẏǿŭ şḗŀḗƈŧ ŧħḗ řḗŀḗṽȧƞŧ "
+"ŧḗƈħƞǿŀǿɠīḗş ȧƀǿṽḗ ŧǿ ƀḗ ƈǿƞşīḓḗřḗḓ ƒǿř ŧħḗ ḓḗṽḗŀǿƥḗř ƈħȧŀŀḗƞɠḗ."
+
+#: apps/demos/templates/demos/submit.html:120
+msgid "Show Off Your Demo"
+msgstr "Şħǿẇ Ǿƒƒ Ẏǿŭř Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/submit.html:124
+msgid "Provide at least one screenshot of your demo in action"
+msgstr "Ƥřǿṽīḓḗ ȧŧ ŀḗȧşŧ ǿƞḗ şƈřḗḗƞşħǿŧ ǿƒ ẏǿŭř ḓḗḿǿ īƞ ȧƈŧīǿƞ"
+
+#: apps/demos/templates/demos/submit.html:133
+msgid "JPEG and PNG supported. Minimum size of 480x360."
+msgstr "ĴƤḖƓ ȧƞḓ ƤȠƓ şŭƥƥǿřŧḗḓ. Ḿīƞīḿŭḿ şīzḗ ǿƒ 480ẋ360."
+
+#: apps/demos/templates/demos/submit.html:135
+msgid "We support YouTube and Vimeo"
+msgstr "Ẇḗ şŭƥƥǿřŧ ẎǿŭŦŭƀḗ ȧƞḓ Ṽīḿḗǿ"
+
+#: apps/demos/templates/demos/submit.html:136
+msgid ""
+"If your demo has problems when displayed in an <iframe>, try changing this."
+msgstr ""
+"Īƒ ẏǿŭř ḓḗḿǿ ħȧş ƥřǿƀŀḗḿş ẇħḗƞ ḓīşƥŀȧẏḗḓ īƞ ȧƞ <iframe>, ŧřẏ ƈħȧƞɠīƞɠ ŧħīş."
+
+#: apps/demos/templates/demos/submit.html:141
+#: apps/demos/templates/demos/submit_noauth.html:52
+msgid "Preparing Your Demo"
+msgstr "Ƥřḗƥȧřīƞɠ Ẏǿŭř Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/submit.html:142
+msgid ""
+"<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> "
+"<li>The main page of your demo should be a file named "
+"<code>index.html</code> in the root of the ZIP.</li> <li>Your demo should be "
+"built on client-side technology (HTML, CSS, JavaScript). Server-side "
+"languages like PHP and Ruby are not supported.</li> <li>If your demo "
+"requires external resources, it should use AJAX to access them.</li> <li>To "
+"submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> "
+"<li>Please identify in the demo details box any 3rd party content that "
+"can't be licensed under the CC-BY-SA license and include links to the "
+"authors' websites.</li> </ul>"
+msgstr ""
+"<ul> <li>Ẏǿŭř ḓḗḿǿ'ş şǿŭřƈḗ ƈǿḓḗ şħǿŭŀḓ ƀḗ ƥȧƈķȧɠḗḓ īƞşīḓḗ ȧ ẐĪƤ ƒīŀḗ.</li> "
+"<li>Ŧħḗ ḿȧīƞ ƥȧɠḗ ǿƒ ẏǿŭř ḓḗḿǿ şħǿŭŀḓ ƀḗ ȧ ƒīŀḗ ƞȧḿḗḓ "
+"<code>īƞḓḗẋ.ħŧḿŀ</code> īƞ ŧħḗ řǿǿŧ ǿƒ ŧħḗ ẐĪƤ.</li> <li>Ẏǿŭř ḓḗḿǿ şħǿŭŀḓ ƀḗ "
+"ƀŭīŀŧ ǿƞ ƈŀīḗƞŧ-şīḓḗ ŧḗƈħƞǿŀǿɠẏ (ĦŦḾĿ, ƇŞŞ, ĴȧṽȧŞƈřīƥŧ). Şḗřṽḗř-şīḓḗ "
+"ŀȧƞɠŭȧɠḗş ŀīķḗ ƤĦƤ ȧƞḓ Řŭƀẏ ȧřḗ ƞǿŧ şŭƥƥǿřŧḗḓ.</li> <li>Īƒ ẏǿŭř ḓḗḿǿ "
+"řḗɋŭīřḗş ḗẋŧḗřƞȧŀ řḗşǿŭřƈḗş, īŧ şħǿŭŀḓ ŭşḗ ȦĴȦẊ ŧǿ ȧƈƈḗşş ŧħḗḿ.</li> <li>Ŧǿ "
+"şŭƀḿīŧ ẏǿŭř ḓḗḿǿ, ẏǿŭ ƞḗḗḓ ȧƞ <a href=\"%(signup_url)s\">ḾḒȠ ȧƈƈǿŭƞŧ</a>.</li> "
+"<li>Ƥŀḗȧşḗ īḓḗƞŧīƒẏ īƞ ŧħḗ ḓḗḿǿ ḓḗŧȧīŀş ƀǿẋ ȧƞẏ 3řḓ ƥȧřŧẏ ƈǿƞŧḗƞŧ ŧħȧŧ "
+"ƈȧƞ'ŧ ƀḗ ŀīƈḗƞşḗḓ ŭƞḓḗř ŧħḗ ƇƇ-ƁẎ-ŞȦ ŀīƈḗƞşḗ ȧƞḓ īƞƈŀŭḓḗ ŀīƞķş ŧǿ ŧħḗ "
+"ȧŭŧħǿřş' ẇḗƀşīŧḗş.</li> </ul>"
+
+#: apps/demos/templates/demos/submit.html:155
+msgid "Provide the Source Code"
+msgstr "Ƥřǿṽīḓḗ ŧħḗ Şǿŭřƈḗ Ƈǿḓḗ"
+
+#: apps/demos/templates/demos/submit.html:156
+msgid ""
+"<p>Upload a ZIP file of your source code, in which the main page of your "
+"demo is named <code>index.html</code> in the root directory.</p>"
+msgstr ""
+"<p>Ŭƥŀǿȧḓ ȧ ẐĪƤ ƒīŀḗ ǿƒ ẏǿŭř şǿŭřƈḗ ƈǿḓḗ, īƞ ẇħīƈħ ŧħḗ ḿȧīƞ ƥȧɠḗ ǿƒ ẏǿŭř "
+"ḓḗḿǿ īş ƞȧḿḗḓ <code>īƞḓḗẋ.ħŧḿŀ</code> īƞ ŧħḗ řǿǿŧ ḓīřḗƈŧǿřẏ.</p>"
+
+#: apps/demos/templates/demos/submit.html:164
+msgid "Source code ZIP file"
+msgstr "Şǿŭřƈḗ ƈǿḓḗ ẐĪƤ ƒīŀḗ"
+
+#: apps/demos/templates/demos/submit.html:165
+msgid "Upload demo file&hellip;"
+msgstr "Ŭƥŀǿȧḓ ḓḗḿǿ ƒīŀḗ&hellip;"
+
+#: apps/demos/templates/demos/submit.html:183
+msgid ""
+"I accept the Mozilla Demo Studio <a href=\"%(terms_url)s#tfc\">Terms for "
+"Contributors</a> and <a href=\"%(terms_url)s#rrd\">Rights Representation "
+"Details</a>"
+msgstr ""
+"Ī ȧƈƈḗƥŧ ŧħḗ Ḿǿzīŀŀȧ Ḓḗḿǿ Şŧŭḓīǿ <a href=\"%(terms_url)s#tfc\">Ŧḗřḿş ƒǿř "
+"Ƈǿƞŧřīƀŭŧǿřş</a> ȧƞḓ <a href=\"%(terms_url)s#rrd\">Řīɠħŧş Řḗƥřḗşḗƞŧȧŧīǿƞ "
+"Ḓḗŧȧīŀş</a>"
+
+#: apps/demos/templates/demos/submit.html:198
+msgid "Submit demo"
+msgstr "Şŭƀḿīŧ ḓḗḿǿ"
+
+#: apps/demos/templates/demos/submit.html:199
+msgid "Discard Demo"
+msgstr "Ḓīşƈȧřḓ Ḓḗḿǿ"
+
+#: apps/demos/templates/demos/submit.html:201
+msgid "Save changes"
+msgstr "Şȧṽḗ ƈħȧƞɠḗş"
+
+#: apps/demos/templates/demos/submit.html:202
+msgid "Discard Changes"
+msgstr "Ḓīşƈȧřḓ Ƈħȧƞɠḗş"
+
+#: apps/demos/templates/demos/submit_noauth.html:32
+msgid ""
+"<p>Whether you are creating an amazing new way to experience the Web or just "
+"experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p>"
+msgstr ""
+"<p>Ẇħḗŧħḗř ẏǿŭ ȧřḗ ƈřḗȧŧīƞɠ ȧƞ ȧḿȧzīƞɠ ƞḗẇ ẇȧẏ ŧǿ ḗẋƥḗřīḗƞƈḗ ŧħḗ Ẇḗƀ ǿř ĵŭşŧ "
+"ḗẋƥḗřīḿḗƞŧīƞɠ ẇīŧħ ŧħḗ ŀȧŧḗşŧ ŧḗƈħƞǿŀǿɠīḗş, ẇḗ īƞṽīŧḗ ẏǿŭ ŧǿ şŭƀḿīŧ ẏǿŭř "
+"ǿẇƞ ḓḗḿǿş ŧǿ şħȧřḗ ẇīŧħ (ǿř şħǿẇ ǿƒƒ ŧǿ) ǿŧħḗř ẇḗƀ ḓḗṽḗŀǿƥḗřş.</p>"
+
+#: apps/demos/templates/demos/submit_noauth.html:40
+msgid "Before You Begin"
+msgstr "Ɓḗƒǿřḗ Ẏǿŭ Ɓḗɠīƞ"
+
+#: apps/demos/templates/demos/submit_noauth.html:41
+msgid ""
+"<ul> <li>You must be prepared to <strong>provide the source code</strong> "
+"for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your "
+"demo's source code must be available under an <strong>open license</strong>, "
+"such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open "
+"web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should "
+"support a wide range of <strong>modern web browsers</strong>, like Firefox, "
+"Chrome, Safari, and Opera.</li> </ul>"
+msgstr ""
+"<ul> <li>Ẏǿŭ ḿŭşŧ ƀḗ ƥřḗƥȧřḗḓ ŧǿ <strong>ƥřǿṽīḓḗ ŧħḗ şǿŭřƈḗ ƈǿḓḗ</strong> "
+"ƒǿř ẏǿŭř ḓḗḿǿ. Ḓḗḿǿş ȧřḗ ħǿşŧḗḓ ǿƞ ŧħḗ Ḓḗḿǿ Şŧŭḓīǿ'ş şḗřṽḗřş.</li> <li>Ẏǿŭř "
+"ḓḗḿǿ'ş şǿŭřƈḗ ƈǿḓḗ ḿŭşŧ ƀḗ ȧṽȧīŀȧƀŀḗ ŭƞḓḗř ȧƞ <strong>ǿƥḗƞ ŀīƈḗƞşḗ</strong>, "
+"şŭƈħ ȧş ḾƤĿ, ƓƤĿ, ǿř ƁŞḒ.</li> <li>Ẏǿŭř ḓḗḿǿ şħǿŭŀḓ şħǿẇƈȧşḗ <strong>ǿƥḗƞ "
+"ẇḗƀ ŧḗƈħƞǿŀǿɠīḗş</strong>, şŭƈħ ȧş ĦŦḾĿ5 ȧƞḓ ƇŞŞ3.</li> <li>Ẏǿŭř ḓḗḿǿ şħǿŭŀḓ "
+"şŭƥƥǿřŧ ȧ ẇīḓḗ řȧƞɠḗ ǿƒ <strong>ḿǿḓḗřƞ ẇḗƀ ƀřǿẇşḗřş</strong>, ŀīķḗ Ƒīřḗƒǿẋ, "
+"Ƈħřǿḿḗ, Şȧƒȧřī, ȧƞḓ Ǿƥḗřȧ.</li> </ul>"
+
+#: apps/demos/templates/demos/submit_noauth.html:53
+msgid ""
+"<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP "
+"file</strong>.</li> <li>The main page of your demo should be a file named "
+"<strong><code>index.html</code></strong> in the root of the ZIP.</li> "
+"<li>Your demo should be built on <strong>client-side technology</strong> "
+"(HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not "
+"supported.</li> <li>If your demo requires external resources, it should use "
+"<strong>AJAX</strong> to access them.</li> <li>Please identify in the demo "
+"details box any 3rd party content that can't be licensed under the CC-BY-SA "
+"license and include links to the authors' websites.</li> </ul>"
+msgstr ""
+"<ul> <li>Ẏǿŭř ḓḗḿǿ'ş şǿŭřƈḗ ƈǿḓḗ şħǿŭŀḓ ƀḗ ƥȧƈķȧɠḗḓ īƞşīḓḗ ȧ <strong>ẐĪƤ "
+"ƒīŀḗ</strong>.</li> <li>Ŧħḗ ḿȧīƞ ƥȧɠḗ ǿƒ ẏǿŭř ḓḗḿǿ şħǿŭŀḓ ƀḗ ȧ ƒīŀḗ ƞȧḿḗḓ "
+"<strong><code>īƞḓḗẋ.ħŧḿŀ</code></strong> īƞ ŧħḗ řǿǿŧ ǿƒ ŧħḗ ẐĪƤ.</li> "
+"<li>Ẏǿŭř ḓḗḿǿ şħǿŭŀḓ ƀḗ ƀŭīŀŧ ǿƞ <strong>ƈŀīḗƞŧ-şīḓḗ ŧḗƈħƞǿŀǿɠẏ</strong> "
+"(ĦŦḾĿ, ƇŞŞ, ĴȧṽȧŞƈřīƥŧ). Şḗřṽḗř-şīḓḗ ŀȧƞɠŭȧɠḗş ŀīķḗ ƤĦƤ ȧƞḓ Řŭƀẏ ȧřḗ ƞǿŧ "
+"şŭƥƥǿřŧḗḓ.</li> <li>Īƒ ẏǿŭř ḓḗḿǿ řḗɋŭīřḗş ḗẋŧḗřƞȧŀ řḗşǿŭřƈḗş, īŧ şħǿŭŀḓ ŭşḗ "
+"<strong>ȦĴȦẊ</strong> ŧǿ ȧƈƈḗşş ŧħḗḿ.</li> <li>Ƥŀḗȧşḗ īḓḗƞŧīƒẏ īƞ ŧħḗ ḓḗḿǿ "
+"ḓḗŧȧīŀş ƀǿẋ ȧƞẏ 3řḓ ƥȧřŧẏ ƈǿƞŧḗƞŧ ŧħȧŧ ƈȧƞ'ŧ ƀḗ ŀīƈḗƞşḗḓ ŭƞḓḗř ŧħḗ ƇƇ-ƁẎ-ŞȦ "
+"ŀīƈḗƞşḗ ȧƞḓ īƞƈŀŭḓḗ ŀīƞķş ŧǿ ŧħḗ ȧŭŧħǿřş' ẇḗƀşīŧḗş.</li> </ul>"
+
+#: apps/demos/templates/demos/submit_noauth.html:65
+msgid ""
+"<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN "
+"account</a></strong>.</p>"
+msgstr ""
+"<p>Ŧǿ şŭƀḿīŧ ẏǿŭř ḓḗḿǿ, ẏǿŭ ƞḗḗḓ ȧƞ <strong><a href=\"%(signup_url)s\">ḾḒȠ "
+"ȧƈƈǿŭƞŧ</a></strong>.</p>"
+
+#: apps/demos/templates/demos/submit_noauth.html:70
+msgid "Create an Account"
+msgstr "Ƈřḗȧŧḗ ȧƞ Ȧƈƈǿŭƞŧ"
+
+#: apps/demos/templates/demos/submit_noauth.html:71
+msgid "Log In to Account"
+msgstr "Ŀǿɠ Īƞ ŧǿ Ȧƈƈǿŭƞŧ"
+
+#: apps/demos/templates/demos/terms.html:10
+#: apps/demos/templates/demos/terms.html:35
+msgid "Terms for Contributors"
+msgstr "Ŧḗřḿş ƒǿř Ƈǿƞŧřīƀŭŧǿřş"
+
+#: apps/demos/templates/demos/terms.html:21
+msgid "Terms of Use"
+msgstr "Ŧḗřḿş ǿƒ Ŭşḗ"
+
+#: apps/demos/templates/demos/terms.html:122
+msgid "Rights Representation Details"
+msgstr "Řīɠħŧş Řḗƥřḗşḗƞŧȧŧīǿƞ Ḓḗŧȧīŀş"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:9
+msgid "<cite class=\"author fn\">%(comment_profile_link)s</cite> said,"
+msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> şȧīḓ,"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:19
+msgid ""
+"Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent "
+"link to this comment by %(display_name)s\"><time class=\"published\" "
+"pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\" title=\"%"
+"(comment_isotime)s\">%(comment_timesince)s</time></a>"
+msgstr ""
+"Ƥǿşŧḗḓ <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent "
+"link to this comment by %(display_name)s\"><time class=\"published\" "
+"pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\" title=\"%"
+"(comment_isotime)s\">%(comment_timesince)s</time></a>"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:31
+msgid "Reply to this comment by {full_name}"
+msgstr "Řḗƥŀẏ ŧǿ ŧħīş ƈǿḿḿḗƞŧ ƀẏ {ƒŭŀŀ_ƞȧḿḗ}"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:31
+msgid "Reply"
+msgstr "Řḗƥŀẏ"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:34
+msgid "Report this comment"
+msgstr "Řḗƥǿřŧ ŧħīş ƈǿḿḿḗƞŧ"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:34
+msgid "Report"
+msgstr "Řḗƥǿřŧ"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:37
+msgid "Edit this comment"
+msgstr "Ḗḓīŧ ŧħīş ƈǿḿḿḗƞŧ"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:37
+msgid "Edit"
+msgstr "Ḗḓīŧ"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:40
+msgid "Delete this comment"
+msgstr "Ḓḗŀḗŧḗ ŧħīş ƈǿḿḿḗƞŧ"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:40
+msgid "Delete"
+msgstr "Ḓḗŀḗŧḗ"
+
+#: apps/demos/templates/demos/elements/profile_link.html:2
+#: apps/demos/templates/demos/elements/submission_creator.html:2
+msgid "See {display_name}'s profile"
+msgstr "Şḗḗ {ḓīşƥŀȧẏ_ƞȧḿḗ}'ş ƥřǿƒīŀḗ"
+
+#: apps/demos/templates/demos/elements/search_form.html:4
+msgid "Search the Demo Studio"
+msgstr "Şḗȧřƈħ ŧħḗ Ḓḗḿǿ Şŧŭḓīǿ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:5
+msgid "{count} Demo"
+msgid_plural "{count} Demos"
+msgstr[0] "{ƈǿŭƞŧ} Ḓḗḿǿ"
+msgstr[1] "{ƈǿŭƞŧ} Ḓḗḿǿş"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:8
+msgid "Sort demos by most recent likes and views"
+msgstr "Şǿřŧ ḓḗḿǿş ƀẏ ḿǿşŧ řḗƈḗƞŧ ŀīķḗş ȧƞḓ ṽīḗẇş"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:8
+msgid "You are viewing demos by most recent likes and views"
+msgstr "Ẏǿŭ ȧřḗ ṽīḗẇīƞɠ ḓḗḿǿş ƀẏ ḿǿşŧ řḗƈḗƞŧ ŀīķḗş ȧƞḓ ṽīḗẇş"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:8
+msgid "Up and Coming"
+msgstr "Ŭƥ ȧƞḓ Ƈǿḿīƞɠ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:9
+msgid "Sort demos by most views"
+msgstr "Şǿřŧ ḓḗḿǿş ƀẏ ḿǿşŧ ṽīḗẇş"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:9
+msgid "You are viewing demos by most views"
+msgstr "Ẏǿŭ ȧřḗ ṽīḗẇīƞɠ ḓḗḿǿş ƀẏ ḿǿşŧ ṽīḗẇş"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:9
+msgid "Most Viewed"
+msgstr "Ḿǿşŧ Ṽīḗẇḗḓ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:10
+msgid "Sort demos by most likes"
+msgstr "Şǿřŧ ḓḗḿǿş ƀẏ ḿǿşŧ ŀīķḗş"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:10
+msgid "You are viewing demos by most likes"
+msgstr "Ẏǿŭ ȧřḗ ṽīḗẇīƞɠ ḓḗḿǿş ƀẏ ḿǿşŧ ŀīķḗş"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:10
+msgid "Most Liked"
+msgstr "Ḿǿşŧ Ŀīķḗḓ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:11
+msgid "Sort demos by most recently submitted"
+msgstr "Şǿřŧ ḓḗḿǿş ƀẏ ḿǿşŧ řḗƈḗƞŧŀẏ şŭƀḿīŧŧḗḓ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:11
+msgid "You are viewing demos by most recently submitted"
+msgstr "Ẏǿŭ ȧřḗ ṽīḗẇīƞɠ ḓḗḿǿş ƀẏ ḿǿşŧ řḗƈḗƞŧŀẏ şŭƀḿīŧŧḗḓ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:11
+msgid "Most Recent"
+msgstr "Ḿǿşŧ Řḗƈḗƞŧ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:47
+msgid "{start}&ndash;{end} of {total}"
+msgstr "{şŧȧřŧ}&ndash;{ḗƞḓ} ǿƒ {ŧǿŧȧŀ}"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:52
+msgid "Go to the first page"
+msgstr "Ɠǿ ŧǿ ŧħḗ ƒīřşŧ ƥȧɠḗ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:54
+msgid "Go to the previous page"
+msgstr "Ɠǿ ŧǿ ŧħḗ ƥřḗṽīǿŭş ƥȧɠḗ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:57
+msgid "Go to the next page"
+msgstr "Ɠǿ ŧǿ ŧħḗ ƞḗẋŧ ƥȧɠḗ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:59
+msgid "Go to the last page"
+msgstr "Ɠǿ ŧǿ ŧħḗ ŀȧşŧ ƥȧɠḗ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:59
+msgid "Last"
+msgstr "Ŀȧşŧ"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:63
+msgid "Feed"
+msgstr "Ƒḗḗḓ"
+
+#: apps/demos/templates/demos/elements/submission_thumb.html:19
+msgid "Launch {title}"
+msgstr "Ŀȧŭƞƈħ {ŧīŧŀḗ}"
+
+#: apps/devmo/__init__.py:6
+#: apps/docs/templates/docs/docs.html:70
+#: apps/docs/templates/docs/docs.html:86
+#: apps/landing/templates/landing/addons.html:11
+#: apps/landing/templates/landing/addons.html:17
+#: templates/base.html:68
+#: templates/global/menu_links.html:26
+msgid "Add-ons"
+msgstr "Ȧḓḓ-ǿƞş"
+
+#: apps/devmo/__init__.py:12
+#: apps/docs/templates/docs/docs.html:71
+#: apps/docs/templates/docs/docs.html:97
+#: apps/landing/templates/landing/learn_html.html:118
+#: apps/landing/templates/landing/learn_html.html:123
+#: apps/landing/templates/landing/mozilla.html:11
+#: apps/landing/templates/landing/mozilla.html:17
+#: templates/base.html:69
+msgid "Mozilla"
+msgstr "Ḿǿzīŀŀȧ"
+
+#: apps/devmo/__init__.py:24
+#: apps/landing/templates/landing/promote_buttons.html:118
+#: apps/landing/templates/landing/web.html:11
+#: apps/landing/templates/landing/web.html:17
+#: templates/base.html:66
+msgid "Web"
+msgstr "Ẇḗƀ"
+
+#: apps/devmo/models.py:41
+msgid ""
+"This URL has an invalid format. Valid URLs look like "
+"http://example.com/my_page."
+msgstr ""
+"Ŧħīş ŬŘĿ ħȧş ȧƞ īƞṽȧŀīḓ ƒǿřḿȧŧ. Ṽȧŀīḓ ŬŘĿş ŀǿǿķ ŀīķḗ "
+"http://example.com/my_page."
+
+#: apps/devmo/templates/devmo/calendar.html:7
+#: apps/devmo/templates/devmo/calendar.html:16
+msgid "Where is Mozilla?"
+msgstr "Ẇħḗřḗ īş Ḿǿzīŀŀȧ?"
+
+#: apps/devmo/templates/devmo/calendar.html:17
+msgid ""
+"Here you can see where Mozilla will be in the nearer future and what we are "
+"going to talk about. If you organize an event and you want a Mozillian to "
+"come around, please <a href=\"https://spreadsheets.google.com/viewform?formke"
+"y=dGo5UGpIcG80Rm5wZ1BiTXNTQ2RWaUE6MQ&theme=0AX42CRMsmRFbUy04ZWQwMDYwMS02YjZh"
+"LTQ2ZjMtYjcyNy0zYWNlMzlmYTAxNmY&ifq\">send us the information via this "
+"form</a>. If you are a Mozillian speaking at an event that's not listed "
+"here, <a href=\"mailto:dev-events@mozilla.com\">let us know</a>!"
+msgstr ""
+"Ħḗřḗ ẏǿŭ ƈȧƞ şḗḗ ẇħḗřḗ Ḿǿzīŀŀȧ ẇīŀŀ ƀḗ īƞ ŧħḗ ƞḗȧřḗř ƒŭŧŭřḗ ȧƞḓ ẇħȧŧ ẇḗ ȧřḗ "
+"ɠǿīƞɠ ŧǿ ŧȧŀķ ȧƀǿŭŧ. Īƒ ẏǿŭ ǿřɠȧƞīzḗ ȧƞ ḗṽḗƞŧ ȧƞḓ ẏǿŭ ẇȧƞŧ ȧ Ḿǿzīŀŀīȧƞ ŧǿ "
+"ƈǿḿḗ ȧřǿŭƞḓ, ƥŀḗȧşḗ <a href=\"https://spreadsheets.google.com/viewform?formke"
+"y=dGo5UGpIcG80Rm5wZ1BiTXNTQ2RWaUE6MQ&theme=0AX42CRMsmRFbUy04ZWQwMDYwMS02YjZh"
+"LTQ2ZjMtYjcyNy0zYWNlMzlmYTAxNmY&ifq\">şḗƞḓ ŭş ŧħḗ īƞƒǿřḿȧŧīǿƞ ṽīȧ ŧħīş "
+"ƒǿřḿ</a>. Īƒ ẏǿŭ ȧřḗ ȧ Ḿǿzīŀŀīȧƞ şƥḗȧķīƞɠ ȧŧ ȧƞ ḗṽḗƞŧ ŧħȧŧ'ş ƞǿŧ ŀīşŧḗḓ "
+"ħḗřḗ, <a href=\"mailto:dev-events@mozilla.com\">ŀḗŧ ŭş ķƞǿẇ</a>!"
+
+#: apps/devmo/templates/devmo/calendar.html:26
+msgid "Upcoming Conferences"
+msgstr "Ŭƥƈǿḿīƞɠ Ƈǿƞƒḗřḗƞƈḗş"
+
+#: apps/devmo/templates/devmo/calendar.html:27
+msgid "Upcoming conferences featuring Mozilla speakers"
+msgstr "Ŭƥƈǿḿīƞɠ ƈǿƞƒḗřḗƞƈḗş ƒḗȧŧŭřīƞɠ Ḿǿzīŀŀȧ şƥḗȧķḗřş"
+
+#: apps/devmo/templates/devmo/calendar.html:29
+#: apps/devmo/templates/devmo/calendar.html:53
+msgid "Date"
+msgstr "Ḓȧŧḗ"
+
+#: apps/devmo/templates/devmo/calendar.html:30
+#: apps/devmo/templates/devmo/calendar.html:54
+msgid "Conference"
+msgstr "Ƈǿƞƒḗřḗƞƈḗ"
+
+#: apps/devmo/templates/devmo/calendar.html:31
+#: apps/devmo/templates/devmo/calendar.html:55
+msgid "Location"
+msgstr "Ŀǿƈȧŧīǿƞ"
+
+#: apps/devmo/templates/devmo/calendar.html:32
+#: apps/devmo/templates/devmo/calendar.html:56
+msgid "People present"
+msgstr "Ƥḗǿƥŀḗ ƥřḗşḗƞŧ"
+
+#: apps/devmo/templates/devmo/calendar.html:33
+#: apps/devmo/templates/devmo/calendar.html:57
+msgid "Description"
+msgstr "Ḓḗşƈřīƥŧīǿƞ"
+
+#: apps/devmo/templates/devmo/calendar.html:50
+msgid "Past Conferences"
+msgstr "Ƥȧşŧ Ƈǿƞƒḗřḗƞƈḗş"
+
+#: apps/devmo/templates/devmo/calendar.html:51
+msgid "Past conferences that featured Mozilla speakers"
+msgstr "Ƥȧşŧ ƈǿƞƒḗřḗƞƈḗş ŧħȧŧ ƒḗȧŧŭřḗḓ Ḿǿzīŀŀȧ şƥḗȧķḗřş"
+
+#: apps/devmo/templates/devmo/calendar.html:58
+msgid "Presentation Materials"
+msgstr "Ƥřḗşḗƞŧȧŧīǿƞ Ḿȧŧḗřīȧŀş"
+
+#: apps/docs/views.py:33
+msgid "(multiple)"
+msgstr "(ḿŭŀŧīƥŀḗ)"
+
+#: apps/docs/templates/docs/docs.html:7
+msgid "Doc Center"
+msgstr "Ḓǿƈ Ƈḗƞŧḗř"
+
+#: apps/docs/templates/docs/docs.html:17
+msgid "Search MDN Documentation"
+msgstr "Şḗȧřƈħ ḾḒȠ Ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/docs/templates/docs/docs.html:28
+msgid "Popular Topics for <span class=\"web\">Web</span> Developers"
+msgstr "Ƥǿƥŭŀȧř Ŧǿƥīƈş ƒǿř <span class=\"web\">Ẇḗƀ</span> Ḓḗṽḗŀǿƥḗřş"
+
+#: apps/docs/templates/docs/docs.html:32
+#: apps/docs/templates/docs/glossary.html:4
+#: apps/landing/templates/landing/home.html:36
+#: templates/base.html:78
+msgid "/en/HTML"
+msgstr "/en/HTML"
+
+#: apps/docs/templates/docs/docs.html:32
+#: apps/docs/templates/docs/glossary.html:4
+#: apps/landing/templates/landing/learn.html:26
+#: apps/landing/templates/landing/promote_buttons.html:106
+#: templates/base.html:78
+msgid "HTML"
+msgstr "ĦŦḾĿ"
+
+#: apps/docs/templates/docs/docs.html:33
+msgid "HyperText Markup Language, the core language of the web."
+msgstr "ĦẏƥḗřŦḗẋŧ Ḿȧřķŭƥ Ŀȧƞɠŭȧɠḗ, ŧħḗ ƈǿřḗ ŀȧƞɠŭȧɠḗ ǿƒ ŧħḗ ẇḗƀ."
+
+#: apps/docs/templates/docs/docs.html:36
+#: apps/docs/templates/docs/glossary.html:7
+#: apps/landing/templates/landing/home.html:37
+#: apps/landing/templates/landing/web.html:65
+#: templates/base.html:88
+msgid "/en/HTML/HTML5"
+msgstr "/en/HTML/HTML5"
+
+#: apps/docs/templates/docs/docs.html:37
+msgid ""
+"The next generation of HTML, HTML5 adds powerful new capabilities for web "
+"sites and web applications."
+msgstr ""
+"Ŧħḗ ƞḗẋŧ ɠḗƞḗřȧŧīǿƞ ǿƒ ĦŦḾĿ, ĦŦḾĿ5 ȧḓḓş ƥǿẇḗřƒŭŀ ƞḗẇ ƈȧƥȧƀīŀīŧīḗş ƒǿř ẇḗƀ "
+"şīŧḗş ȧƞḓ ẇḗƀ ȧƥƥŀīƈȧŧīǿƞş."
+
+#: apps/docs/templates/docs/docs.html:40
+#: apps/docs/templates/docs/glossary.html:6
+#: apps/landing/templates/landing/home.html:39
+#: apps/landing/templates/landing/web.html:69
+#: templates/base.html:108
+msgid "/en/JavaScript"
+msgstr "/en/JavaScript"
+
+#: apps/docs/templates/docs/docs.html:41
+msgid "The scripting language that powers modern web applications."
+msgstr "Ŧħḗ şƈřīƥŧīƞɠ ŀȧƞɠŭȧɠḗ ŧħȧŧ ƥǿẇḗřş ḿǿḓḗřƞ ẇḗƀ ȧƥƥŀīƈȧŧīǿƞş."
+
+#: apps/docs/templates/docs/docs.html:44
+#: apps/docs/templates/docs/glossary.html:5
+#: apps/landing/templates/landing/home.html:38
+#: apps/landing/templates/landing/web.html:73
+#: templates/base.html:98
+msgid "/en/CSS"
+msgstr "/en/CSS"
+
+#: apps/docs/templates/docs/docs.html:44
+#: apps/docs/templates/docs/glossary.html:5
+#: apps/landing/templates/landing/learn.html:32
+#: apps/landing/templates/landing/promote_buttons.html:100
+#: apps/landing/templates/landing/web.html:73
+#: templates/base.html:98
+msgid "CSS"
+msgstr "ƇŞŞ"
+
+#: apps/docs/templates/docs/docs.html:45
+msgid ""
+"Cascading Style Sheets provide advanced layout and formatting of web "
+"content."
+msgstr ""
+"Ƈȧşƈȧḓīƞɠ Şŧẏŀḗ Şħḗḗŧş ƥřǿṽīḓḗ ȧḓṽȧƞƈḗḓ ŀȧẏǿŭŧ ȧƞḓ ƒǿřḿȧŧŧīƞɠ ǿƒ ẇḗƀ "
+"ƈǿƞŧḗƞŧ."
+
+#: apps/docs/templates/docs/docs.html:48
+#: apps/docs/templates/docs/glossary.html:8
+#: apps/landing/templates/landing/home.html:40
+#: apps/landing/templates/landing/web.html:77
+#: templates/base.html:79
+msgid "/en/DOM"
+msgstr "/en/DOM"
+
+#: apps/docs/templates/docs/docs.html:48
+#: apps/docs/templates/docs/glossary.html:8
+#: apps/landing/templates/landing/web.html:77
+#: templates/base.html:79
+msgid "DOM"
+msgstr "ḒǾḾ"
+
+#: apps/docs/templates/docs/docs.html:49
+msgid ""
+"The Document Object Model describes the structure and content of web pages."
+msgstr ""
+"Ŧħḗ Ḓǿƈŭḿḗƞŧ Ǿƀĵḗƈŧ Ḿǿḓḗŀ ḓḗşƈřīƀḗş ŧħḗ şŧřŭƈŧŭřḗ ȧƞḓ ƈǿƞŧḗƞŧ ǿƒ ẇḗƀ ƥȧɠḗş."
+
+#: apps/docs/templates/docs/docs.html:52
+#: apps/docs/templates/docs/glossary.html:11
+#: templates/base.html:109
+msgid "/en/AJAX"
+msgstr "/en/AJAX"
+
+#: apps/docs/templates/docs/docs.html:52
+#: apps/docs/templates/docs/glossary.html:11
+#: templates/base.html:109
+msgid "AJAX"
+msgstr "ȦĴȦẊ"
+
+#: apps/docs/templates/docs/docs.html:53
+msgid ""
+"\"Asynchronous JavaScript and XML\" is a term that describes the use of all "
+"these technologies together to create powerful web applications."
+msgstr ""
+"\"Ȧşẏƞƈħřǿƞǿŭş ĴȧṽȧŞƈřīƥŧ ȧƞḓ ẊḾĿ\" īş ȧ ŧḗřḿ ŧħȧŧ ḓḗşƈřīƀḗş ŧħḗ ŭşḗ ǿƒ ȧŀŀ "
+"ŧħḗşḗ ŧḗƈħƞǿŀǿɠīḗş ŧǿɠḗŧħḗř ŧǿ ƈřḗȧŧḗ ƥǿẇḗřƒŭŀ ẇḗƀ ȧƥƥŀīƈȧŧīǿƞş."
+
+#. Please escape HTML entities here, like &amp;
+#: apps/docs/templates/docs/docs.html:59
+msgid "Key Topics for <span class=\"web\">Web</span> Developers"
+msgstr "Ķḗẏ Ŧǿƥīƈş ƒǿř <span class=\"web\">Ẇḗƀ</span> Ḓḗṽḗŀǿƥḗřş"
+
+#: apps/docs/templates/docs/docs.html:60
+msgid ""
+"A comprehensive list of terms to help Web developers find the documentation "
+"they need."
+msgstr ""
+"Ȧ ƈǿḿƥřḗħḗƞşīṽḗ ŀīşŧ ǿƒ ŧḗřḿş ŧǿ ħḗŀƥ Ẇḗƀ ḓḗṽḗŀǿƥḗřş ƒīƞḓ ŧħḗ ḓǿƈŭḿḗƞŧȧŧīǿƞ "
+"ŧħḗẏ ƞḗḗḓ."
+
+#: apps/docs/templates/docs/docs.html:69
+msgid ""
+"Get involved in the %(mobile_link)s, %(addons_link)s, & %(apps_link)s "
+"Developer Communities:"
+msgstr ""
+"Ɠḗŧ īƞṽǿŀṽḗḓ īƞ ŧħḗ %(mobile_link)s, %(addons_link)s, & %(apps_link)s "
+"Ḓḗṽḗŀǿƥḗř Ƈǿḿḿŭƞīŧīḗş:"
+
+#: apps/docs/templates/docs/docs.html:80
+#: apps/landing/templates/landing/mobile.html:88
+msgid "/en/Mobile"
+msgstr "/en/Mobile"
+
+#: apps/docs/templates/docs/docs.html:80
+msgid "Firefox Mobile for developers"
+msgstr "Ƒīřḗƒǿẋ Ḿǿƀīŀḗ ƒǿř ḓḗṽḗŀǿƥḗřş"
+
+#: apps/docs/templates/docs/docs.html:81
+msgid "/en/Detecting_device_orientation"
+msgstr "/en/Detecting_device_orientation"
+
+#: apps/docs/templates/docs/docs.html:81
+msgid "Detecting device orientation"
+msgstr "Ḓḗŧḗƈŧīƞɠ ḓḗṽīƈḗ ǿřīḗƞŧȧŧīǿƞ"
+
+#: apps/docs/templates/docs/docs.html:82
+#: apps/landing/templates/landing/home.html:72
+#: apps/landing/templates/landing/mobile.html:69
+#: templates/base.html:111
+msgid "/en/Using_geolocation"
+msgstr "/en/Using_geolocation"
+
+#: apps/docs/templates/docs/docs.html:82
+msgid "Using geolocation"
+msgstr "Ŭşīƞɠ ɠḗǿŀǿƈȧŧīǿƞ"
+
+#: apps/docs/templates/docs/docs.html:88
+msgid "AMO Developer Hub"
+msgstr "ȦḾǾ Ḓḗṽḗŀǿƥḗř Ħŭƀ"
+
+#: apps/docs/templates/docs/docs.html:89
+#: apps/landing/templates/landing/addons.html:63
+msgid "/en/Extensions"
+msgstr "/en/Extensions"
+
+#: apps/docs/templates/docs/docs.html:89
+#: apps/landing/templates/landing/addons.html:63
+#: templates/global/menu_links.html:30
+msgid "Extensions"
+msgstr "Ḗẋŧḗƞşīǿƞş"
+
+#: apps/docs/templates/docs/docs.html:90
+msgid "/en/Plugins"
+msgstr "/en/Plugins"
+
+#: apps/docs/templates/docs/docs.html:90
+msgid "Plugins"
+msgstr "Ƥŀŭɠīƞş"
+
+#: apps/docs/templates/docs/docs.html:91
+msgid "Add-ons Builder"
+msgstr "Ȧḓḓ-ǿƞş Ɓŭīŀḓḗř"
+
+#: apps/docs/templates/docs/docs.html:92
+msgid "/en/Themes"
+msgstr "/en/Themes"
+
+#: apps/docs/templates/docs/docs.html:92
+#: templates/global/menu_links.html:31
+msgid "Themes"
+msgstr "Ŧħḗḿḗş"
+
+#: apps/docs/templates/docs/docs.html:93
+msgid "/en/Creating_OpenSearch_plugins_for_Firefox"
+msgstr "/en/Creating_OpenSearch_plugins_for_Firefox"
+
+#: apps/docs/templates/docs/docs.html:93
+msgid "Search engine plugins"
+msgstr "Şḗȧřƈħ ḗƞɠīƞḗ ƥŀŭɠīƞş"
+
+#: apps/docs/templates/docs/docs.html:99
+msgid "/en/Participating_in_the_Mozilla_project"
+msgstr "/en/Participating_in_the_Mozilla_project"
+
+#: apps/docs/templates/docs/docs.html:99
+msgid "Participating in the Mozilla project"
+msgstr "Ƥȧřŧīƈīƥȧŧīƞɠ īƞ ŧħḗ Ḿǿzīŀŀȧ ƥřǿĵḗƈŧ"
+
+#: apps/docs/templates/docs/docs.html:100
+#: apps/landing/templates/landing/mozilla.html:61
+msgid "/en/Using_Mozilla_code_in_other_projects"
+msgstr "/en/Using_Mozilla_code_in_other_projects"
+
+#: apps/docs/templates/docs/docs.html:100
+#: apps/landing/templates/landing/mozilla.html:61
+msgid "Using Mozilla code in other projects"
+msgstr "Ŭşīƞɠ Ḿǿzīŀŀȧ ƈǿḓḗ īƞ ǿŧħḗř ƥřǿĵḗƈŧş"
+
+#: apps/docs/templates/docs/docs.html:101
+#: apps/landing/templates/landing/mozilla.html:81
+msgid "/en/Localization"
+msgstr "/en/Localization"
+
+#: apps/docs/templates/docs/docs.html:101
+#: apps/landing/templates/landing/mozilla.html:81
+msgid "Localization"
+msgstr "Ŀǿƈȧŀīzȧŧīǿƞ"
+
+#: apps/docs/templates/docs/docs.html:102
+msgid "/en/QA"
+msgstr "/en/QA"
+
+#: apps/docs/templates/docs/docs.html:102
+msgid "Quality Assurance"
+msgstr "Ɋŭȧŀīŧẏ Ȧşşŭřȧƞƈḗ"
+
+#: apps/docs/templates/docs/docs.html:112
+msgid "Most Active Docs"
+msgstr "Ḿǿşŧ Ȧƈŧīṽḗ Ḓǿƈş"
+
+#: apps/docs/templates/docs/docs.html:117
+msgid "Last edited by:"
+msgstr "Ŀȧşŧ ḗḓīŧḗḓ ƀẏ:"
+
+#: apps/docs/templates/docs/docs.html:124
+msgid "Doc Of The Day"
+msgstr "Ḓǿƈ Ǿƒ Ŧħḗ Ḓȧẏ"
+
+#: apps/docs/templates/docs/docs.html:129
+msgid "Modified by %(author)s on %(updated)s"
+msgstr "Ḿǿḓīƒīḗḓ ƀẏ %(author)s ǿƞ %(updated)s"
+
+#: apps/docs/templates/docs/glossary.html:9
+#: apps/landing/templates/landing/home.html:46
+#: templates/base.html:82
+msgid "/en/SVG"
+msgstr "/en/SVG"
+
+#: apps/docs/templates/docs/glossary.html:10
+msgid "/en/HTML/Element/canvas"
+msgstr "/en/HTML/Element/canvas"
+
+#: apps/docs/templates/docs/glossary.html:12
+#: apps/landing/templates/landing/home.html:58
+#: templates/base.html:103
+msgid "/en/CSS/Media_queries"
+msgstr "/en/CSS/Media_queries"
+
+#: apps/docs/templates/docs/glossary.html:12
+#: templates/base.html:103
+msgid "Media Queries"
+msgstr "Ḿḗḓīȧ Ɋŭḗřīḗş"
+
+#: apps/docs/templates/docs/glossary.html:13
+#: apps/landing/templates/landing/home.html:47
+#: templates/base.html:83
+msgid "/en/WebGL"
+msgstr "/en/WebGL"
+
+#: apps/docs/templates/docs/glossary.html:14
+#: apps/landing/templates/landing/home.html:66
+#: templates/base.html:91
+msgid "/en/DOM/Storage"
+msgstr "/en/DOM/Storage"
+
+#: apps/docs/templates/docs/glossary.html:14
+msgid "Web Storage"
+msgstr "Ẇḗƀ Şŧǿřȧɠḗ"
+
+#: apps/docs/templates/docs/glossary.html:15
+#: apps/docs/templates/docs/glossary.html:16
+#: apps/landing/templates/landing/home.html:48
+#: apps/landing/templates/landing/home.html:49
+#: templates/base.html:80
+#: templates/base.html:81
+msgid "/en/Using_audio_and_video_in_Firefox"
+msgstr "/en/Using_audio_and_video_in_Firefox"
+
+#: apps/docs/templates/docs/glossary.html:17
+#: apps/landing/templates/landing/home.html:75
+#: templates/base.html:113
+msgid "/en/Using_web_workers"
+msgstr "/en/Using_web_workers"
+
+#: apps/docs/templates/docs/glossary.html:18
+#: apps/landing/templates/landing/home.html:74
+#: templates/base.html:93
+msgid "/en/Using_files_from_web_applications"
+msgstr "/en/Using_files_from_web_applications"
+
+#: apps/docs/templates/docs/glossary.html:19
+#: apps/landing/templates/landing/home.html:73
+#: templates/base.html:112
+msgid "/en/DragDrop/Drag_and_Drop"
+msgstr "/en/DragDrop/Drag_and_Drop"
+
+#: apps/docs/templates/docs/glossary.html:20
+#: apps/landing/templates/landing/home.html:55
+#: templates/base.html:100
+msgid "/en/CSS/Using_CSS_transforms"
+msgstr "/en/CSS/Using_CSS_transforms"
+
+#: apps/docs/templates/docs/glossary.html:20
+msgid "CSS Transforms"
+msgstr "ƇŞŞ Ŧřȧƞşƒǿřḿş"
+
+#: apps/docs/templates/docs/glossary.html:21
+#: apps/landing/templates/landing/home.html:54
+#: templates/base.html:99
+msgid "/en/Using_gradients"
+msgstr "/en/Using_gradients"
+
+#: apps/docs/templates/docs/glossary.html:21
+msgid "CSS Gradients"
+msgstr "ƇŞŞ Ɠřȧḓīḗƞŧş"
+
+#: apps/docs/templates/docs/glossary.html:22
+msgid "/en/Security"
+msgstr "/en/Security"
+
+#: apps/docs/templates/docs/glossary.html:22
+#: templates/global/menu_links.html:5
+msgid "Security"
+msgstr "Şḗƈŭřīŧẏ"
+
+#: apps/docs/templates/docs/glossary.html:23
+#: apps/landing/templates/landing/home.html:67
+#: templates/base.html:92
+msgid "/en/IndexedDB"
+msgstr "/en/IndexedDB"
+
+#: apps/landing/templates/landing/addons.html:16
+msgid "Welcome to the Add-ons Developer Community:"
+msgstr "Ẇḗŀƈǿḿḗ ŧǿ ŧħḗ Ȧḓḓ-ǿƞş Ḓḗṽḗŀǿƥḗř Ƈǿḿḿŭƞīŧẏ:"
+
+#: apps/landing/templates/landing/addons.html:20
+#: apps/landing/templates/landing/mozilla.html:20
+msgid "Are you ready to make browsing better?"
+msgstr "Ȧřḗ ẏǿŭ řḗȧḓẏ ŧǿ ḿȧķḗ ƀřǿẇşīƞɠ ƀḗŧŧḗř?"
+
+#: apps/landing/templates/landing/addons.html:22
+#: apps/landing/templates/landing/mobile.html:22
+#: apps/landing/templates/landing/mozilla.html:22
+#: apps/landing/templates/landing/web.html:22
+msgid "Twitter"
+msgstr "Ŧẇīŧŧḗř"
+
+#: apps/landing/templates/landing/addons.html:23
+#: apps/landing/templates/landing/mobile.html:23
+#: apps/landing/templates/landing/mozilla.html:23
+#: apps/landing/templates/landing/web.html:23
+msgid "Subscribe"
+msgstr "Şŭƀşƈřīƀḗ"
+
+#: apps/landing/templates/landing/addons.html:24
+msgid "Join the Add-ons discussions!"
+msgstr "Ĵǿīƞ ŧħḗ Ȧḓḓ-ǿƞş ḓīşƈŭşşīǿƞş!"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:38
+msgid "Popular <span class=\"addons\">Add-ons</span> Documentation"
+msgstr "Ƥǿƥŭŀȧř <span class=\"addons\">Ȧḓḓ-ǿƞş</span> Ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#: apps/landing/templates/landing/addons.html:43
+msgid "https://addons.mozilla.org/en-US/developers/builder"
+msgstr "https://addons.mozilla.org/en-US/developers/builder"
+
+#: apps/landing/templates/landing/addons.html:43
+msgid "Add-on SDK and Builder"
+msgstr "Ȧḓḓ-ǿƞ ŞḒĶ ȧƞḓ Ɓŭīŀḓḗř"
+
+#: apps/landing/templates/landing/addons.html:45
+msgid ""
+"Using the Add-on SDK and Builder, you don't have to work with XUL and XPCOM "
+"any more, but can develop Firefox add-ons using only JavaScript, HTML, and "
+"CSS. The SDK and Builder also simplify running, testing, and packaging your "
+"add-on, leaving you free to concentrate on writing the code."
+msgstr ""
+"Ŭşīƞɠ ŧħḗ Ȧḓḓ-ǿƞ ŞḒĶ ȧƞḓ Ɓŭīŀḓḗř, ẏǿŭ ḓǿƞ'ŧ ħȧṽḗ ŧǿ ẇǿřķ ẇīŧħ ẊŬĿ ȧƞḓ ẊƤƇǾḾ "
+"ȧƞẏ ḿǿřḗ, ƀŭŧ ƈȧƞ ḓḗṽḗŀǿƥ Ƒīřḗƒǿẋ ȧḓḓ-ǿƞş ŭşīƞɠ ǿƞŀẏ ĴȧṽȧŞƈřīƥŧ, ĦŦḾĿ, ȧƞḓ "
+"ƇŞŞ. Ŧħḗ ŞḒĶ ȧƞḓ Ɓŭīŀḓḗř ȧŀşǿ şīḿƥŀīƒẏ řŭƞƞīƞɠ, ŧḗşŧīƞɠ, ȧƞḓ ƥȧƈķȧɠīƞɠ ẏǿŭř "
+"ȧḓḓ-ǿƞ, ŀḗȧṽīƞɠ ẏǿŭ ƒřḗḗ ŧǿ ƈǿƞƈḗƞŧřȧŧḗ ǿƞ ẇřīŧīƞɠ ŧħḗ ƈǿḓḗ."
+
+#: apps/landing/templates/landing/addons.html:55
+msgid "How-to Library"
+msgstr "Ħǿẇ-ŧǿ Ŀīƀřȧřẏ"
+
+#: apps/landing/templates/landing/addons.html:56
+msgid ""
+"Get add-on development guidance in a top-notch collection of tutorials, "
+"articles, and more."
+msgstr ""
+"Ɠḗŧ ȧḓḓ-ǿƞ ḓḗṽḗŀǿƥḿḗƞŧ ɠŭīḓȧƞƈḗ īƞ ȧ ŧǿƥ-ƞǿŧƈħ ƈǿŀŀḗƈŧīǿƞ ǿƒ ŧŭŧǿřīȧŀş, "
+"ȧřŧīƈŀḗş, ȧƞḓ ḿǿřḗ."
+
+#: apps/landing/templates/landing/addons.html:59
+msgid "API & Language Reference"
+msgstr "ȦƤĪ & Ŀȧƞɠŭȧɠḗ Řḗƒḗřḗƞƈḗ"
+
+#: apps/landing/templates/landing/addons.html:60
+msgid ""
+"The official documentation on APIs and languages. What you need, when you "
+"need it, to create your masterpiece."
+msgstr ""
+"Ŧħḗ ǿƒƒīƈīȧŀ ḓǿƈŭḿḗƞŧȧŧīǿƞ ǿƞ ȦƤĪş ȧƞḓ ŀȧƞɠŭȧɠḗş. Ẇħȧŧ ẏǿŭ ƞḗḗḓ, ẇħḗƞ ẏǿŭ "
+"ƞḗḗḓ īŧ, ŧǿ ƈřḗȧŧḗ ẏǿŭř ḿȧşŧḗřƥīḗƈḗ."
+
+#: apps/landing/templates/landing/addons.html:64
+msgid ""
+"Complete documentation for developing extensions for Mozilla applications."
+msgstr ""
+"Ƈǿḿƥŀḗŧḗ ḓǿƈŭḿḗƞŧȧŧīǿƞ ƒǿř ḓḗṽḗŀǿƥīƞɠ ḗẋŧḗƞşīǿƞş ƒǿř Ḿǿzīŀŀȧ ȧƥƥŀīƈȧŧīǿƞş."
+
+#: apps/landing/templates/landing/addons.html:67
+msgid "Case Studies"
+msgstr "Ƈȧşḗ Şŧŭḓīḗş"
+
+#: apps/landing/templates/landing/addons.html:68
+msgid ""
+"Start-to-finish success stories. See how add-on developers made magic with "
+"Mozilla."
+msgstr ""
+"Şŧȧřŧ-ŧǿ-ƒīƞīşħ şŭƈƈḗşş şŧǿřīḗş. Şḗḗ ħǿẇ ȧḓḓ-ǿƞ ḓḗṽḗŀǿƥḗřş ḿȧḓḗ ḿȧɠīƈ ẇīŧħ "
+"Ḿǿzīŀŀȧ."
+
+#: apps/landing/templates/landing/addons.html:71
+msgid "All add-ons development documentation"
+msgstr "Ȧŀŀ ȧḓḓ-ǿƞş ḓḗṽḗŀǿƥḿḗƞŧ ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#: apps/landing/templates/landing/addons.html:76
+msgid "Watch <span class=\"addons\">Add-on</span> Videos"
+msgstr "Ẇȧŧƈħ <span class=\"addons\">Ȧḓḓ-ǿƞ</span> Ṽīḓḗǿş"
+
+#: apps/landing/templates/landing/addons.html:82
+#: apps/landing/templates/landing/mobile.html:99
+#: apps/landing/templates/landing/mobile.html:115
+msgid "Watch this video"
+msgstr "Ẇȧŧƈħ ŧħīş ṽīḓḗǿ"
+
+#: apps/landing/templates/landing/addons.html:85
+msgid "Build Add-on in 5 Minutes"
+msgstr "Ɓŭīŀḓ Ȧḓḓ-ǿƞ īƞ 5 Ḿīƞŭŧḗş"
+
+#: apps/landing/templates/landing/addons.html:88
+msgid ""
+"Watch Myk Melez create an Add-on in 5 minutes using the new Add-on Builder!"
+msgstr ""
+"Ẇȧŧƈħ Ḿẏķ Ḿḗŀḗz ƈřḗȧŧḗ ȧƞ Ȧḓḓ-ǿƞ īƞ 5 ḿīƞŭŧḗş ŭşīƞɠ ŧħḗ ƞḗẇ Ȧḓḓ-ǿƞ Ɓŭīŀḓḗř!"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:99
+msgid "Favorite <span class=\"addons\">Add-on</span> Tools"
+msgstr "Ƒȧṽǿřīŧḗ <span class=\"addons\">Ȧḓḓ-ǿƞ</span> Ŧǿǿŀş"
+
+#: apps/landing/templates/landing/addons.html:103
+msgid "Add-on Builder"
+msgstr "Ȧḓḓ-ǿƞ Ɓŭīŀḓḗř"
+
+#: apps/landing/templates/landing/addons.html:104
+msgid ""
+"Use Add-on Builder to quickly and easily develop an extension for Firefox "
+"using common web technologies."
+msgstr ""
+"Ŭşḗ Ȧḓḓ-ǿƞ Ɓŭīŀḓḗř ŧǿ ɋŭīƈķŀẏ ȧƞḓ ḗȧşīŀẏ ḓḗṽḗŀǿƥ ȧƞ ḗẋŧḗƞşīǿƞ ƒǿř Ƒīřḗƒǿẋ "
+"ŭşīƞɠ ƈǿḿḿǿƞ ẇḗƀ ŧḗƈħƞǿŀǿɠīḗş."
+
+#: apps/landing/templates/landing/addons.html:107
+msgid "Add-on Packager"
+msgstr "Ȧḓḓ-ǿƞ Ƥȧƈķȧɠḗř"
+
+#: apps/landing/templates/landing/addons.html:108
+msgid ""
+"Auto-generate add-on packaging by entering basic info and picking UI parts. "
+"Get working without setup."
+msgstr ""
+"Ȧŭŧǿ-ɠḗƞḗřȧŧḗ ȧḓḓ-ǿƞ ƥȧƈķȧɠīƞɠ ƀẏ ḗƞŧḗřīƞɠ ƀȧşīƈ īƞƒǿ ȧƞḓ ƥīƈķīƞɠ ŬĪ ƥȧřŧş. "
+"Ɠḗŧ ẇǿřķīƞɠ ẇīŧħǿŭŧ şḗŧŭƥ."
+
+#: apps/landing/templates/landing/addons.html:111
+msgid "Add-on Validator"
+msgstr "Ȧḓḓ-ǿƞ Ṽȧŀīḓȧŧǿř"
+
+#: apps/landing/templates/landing/addons.html:112
+msgid ""
+"Check your add-on for common problems and errors. Open to anyone, not just "
+"add-ons hosted here."
+msgstr ""
+"Ƈħḗƈķ ẏǿŭř ȧḓḓ-ǿƞ ƒǿř ƈǿḿḿǿƞ ƥřǿƀŀḗḿş ȧƞḓ ḗřřǿřş. Ǿƥḗƞ ŧǿ ȧƞẏǿƞḗ, ƞǿŧ ĵŭşŧ "
+"ȧḓḓ-ǿƞş ħǿşŧḗḓ ħḗřḗ."
+
+#: apps/landing/templates/landing/addons.html:114
+msgid "All add-on development tools"
+msgstr "Ȧŀŀ ȧḓḓ-ǿƞ ḓḗṽḗŀǿƥḿḗƞŧ ŧǿǿŀş"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:121
+msgid "Recent <span class=\"addons\">Add-ons</span> News &amp; Updates"
+msgstr "Řḗƈḗƞŧ <span class=\"addons\">Ȧḓḓ-ǿƞş</span> Ƞḗẇş &amp; Ŭƥḓȧŧḗş"
+
+#: apps/landing/templates/landing/addons.html:126
+msgid "All add-ons development entries"
+msgstr "Ȧŀŀ ȧḓḓ-ǿƞş ḓḗṽḗŀǿƥḿḗƞŧ ḗƞŧřīḗş"
+
+#: apps/landing/templates/landing/addons.html:133
+msgid "Correspondence on Twitter from the Add-ons developer community."
+msgstr "Ƈǿřřḗşƥǿƞḓḗƞƈḗ ǿƞ Ŧẇīŧŧḗř ƒřǿḿ ŧħḗ Ȧḓḓ-ǿƞş ḓḗṽḗŀǿƥḗř ƈǿḿḿŭƞīŧẏ."
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:145
+msgid "Latest <span class=\"addons\">Add-ons</span> Discussions from Our Forums:"
+msgstr "Ŀȧŧḗşŧ <span class=\"addons\">Ȧḓḓ-ǿƞş</span> Ḓīşƈŭşşīǿƞş ƒřǿḿ Ǿŭř Ƒǿřŭḿş:"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:153
+msgid "Latest <span class=\"addons\">Add-ons</span> Comments from Our Community:"
+msgstr "Ŀȧŧḗşŧ <span class=\"addons\">Ȧḓḓ-ǿƞş</span> Ƈǿḿḿḗƞŧş ƒřǿḿ Ǿŭř Ƈǿḿḿŭƞīŧẏ:"
+
+#: apps/landing/templates/landing/base_learn.html:4
+#: templates/base.html:121
+msgid "Learning"
+msgstr "Ŀḗȧřƞīƞɠ"
+
+#: apps/landing/templates/landing/base_learn.html:10
+#: apps/landing/templates/landing/base_promote.html:10
+#: templates/base.html:125
+msgid "Forums"
+msgstr "Ƒǿřŭḿş"
+
+#: apps/landing/templates/landing/base_promote.html:4
+#: templates/base.html:126
+msgid "Promote"
+msgstr "Ƥřǿḿǿŧḗ"
+
+#: apps/landing/templates/landing/discussions.html:6
+msgid "%(authorlink)s wrote %(summary)s"
+msgstr "%(authorlink)s ẇřǿŧḗ %(summary)s"
+
+#: apps/landing/templates/landing/home.html:14
+msgid "It's the Web. <b>You drive.</b>"
+msgstr "Īŧ'ş ŧħḗ Ẇḗƀ. <b>Ẏǿŭ ḓřīṽḗ.</b>"
+
+#: apps/landing/templates/landing/home.html:15
+msgid "Welcome to the Mozilla Developer Network."
+msgstr "Ẇḗŀƈǿḿḗ ŧǿ ŧħḗ Ḿǿzīŀŀȧ Ḓḗṽḗŀǿƥḗř Ƞḗŧẇǿřķ."
+
+#: apps/landing/templates/landing/home.html:16
+msgid ""
+"We are an open community of developers building resources for a better web, "
+"regardless of brand, browser or platform. Anyone can contribute and each "
+"person who does makes us stronger. Together we can continue to drive "
+"innovation on the Web to serve the greater good. It starts here, with you."
+msgstr ""
+"Ẇḗ ȧřḗ ȧƞ ǿƥḗƞ ƈǿḿḿŭƞīŧẏ ǿƒ ḓḗṽḗŀǿƥḗřş ƀŭīŀḓīƞɠ řḗşǿŭřƈḗş ƒǿř ȧ ƀḗŧŧḗř ẇḗƀ, "
+"řḗɠȧřḓŀḗşş ǿƒ ƀřȧƞḓ, ƀřǿẇşḗř ǿř ƥŀȧŧƒǿřḿ. Ȧƞẏǿƞḗ ƈȧƞ ƈǿƞŧřīƀŭŧḗ ȧƞḓ ḗȧƈħ "
+"ƥḗřşǿƞ ẇħǿ ḓǿḗş ḿȧķḗş ŭş şŧřǿƞɠḗř. Ŧǿɠḗŧħḗř ẇḗ ƈȧƞ ƈǿƞŧīƞŭḗ ŧǿ ḓřīṽḗ "
+"īƞƞǿṽȧŧīǿƞ ǿƞ ŧħḗ Ẇḗƀ ŧǿ şḗřṽḗ ŧħḗ ɠřḗȧŧḗř ɠǿǿḓ. Īŧ şŧȧřŧş ħḗřḗ, ẇīŧħ ẏǿŭ."
+
+#: apps/landing/templates/landing/home.html:21
+#: templates/includes/video_player.html:3
+msgid "Close"
+msgstr "Ƈŀǿşḗ"
+
+#: apps/landing/templates/landing/home.html:32
+msgid "Browse Thousands of Docs for <b>Web Developers</b>"
+msgstr "Ɓřǿẇşḗ Ŧħǿŭşȧƞḓş ǿƒ Ḓǿƈş ƒǿř <b>Ẇḗƀ Ḓḗṽḗŀǿƥḗřş</b>"
+
+#: apps/landing/templates/landing/home.html:45
+#: templates/base.html:110
+msgid "/en/HTML/Canvas"
+msgstr "/en/HTML/Canvas"
+
+#: apps/landing/templates/landing/home.html:56
+#: apps/landing/templates/landing/learn_css.html:119
+#: templates/base.html:101
+msgid "/en/CSS/CSS_transitions"
+msgstr "/en/CSS/CSS_transitions"
+
+#: apps/landing/templates/landing/home.html:57
+#: templates/base.html:102
+msgid "/en/CSS/CSS_animations"
+msgstr "/en/CSS/CSS_animations"
+
+#: apps/landing/templates/landing/home.html:63
+msgid "/en/Ajax"
+msgstr "/en/Ajax"
+
+#: apps/landing/templates/landing/home.html:64
+#: templates/base.html:89
+msgid "/en/WebSockets"
+msgstr "/en/WebSockets"
+
+#: apps/landing/templates/landing/home.html:65
+#: templates/base.html:90
+msgid "/en/Offline_resources_in_Firefox"
+msgstr "/en/Offline_resources_in_Firefox"
+
+#: apps/landing/templates/landing/home.html:76
+msgid "and more"
+msgstr "ȧƞḓ ḿǿřḗ"
+
+#: apps/landing/templates/landing/home.html:81
+msgid ""
+"And even more resources for: <a href=\"%(mobile_url)s\">Mobile Web Apps</a> "
+"&middot; <a href=\"%(addons_url)s\">Firefox Add-ons</a> &middot; <a href=\"%"
+"(mozilla_url)s\">Mozilla Applications</a>"
+msgstr ""
+"Ȧƞḓ ḗṽḗƞ ḿǿřḗ řḗşǿŭřƈḗş ƒǿř: <a href=\"%(mobile_url)s\">Ḿǿƀīŀḗ Ẇḗƀ Ȧƥƥş</a> "
+"&middot; <a href=\"%(addons_url)s\">Ƒīřḗƒǿẋ Ȧḓḓ-ǿƞş</a> &middot; <a href=\"%"
+"(mozilla_url)s\">Ḿǿzīŀŀȧ Ȧƥƥŀīƈȧŧīǿƞş</a>"
+
+#: apps/landing/templates/landing/home.html:94
+msgid "Learn"
+msgstr "Ŀḗȧřƞ"
+
+#: apps/landing/templates/landing/home.html:95
+msgid ""
+"Our collection of resources shows you how to use the technologies that power "
+"the Web."
+msgstr ""
+"Ǿŭř ƈǿŀŀḗƈŧīǿƞ ǿƒ řḗşǿŭřƈḗş şħǿẇş ẏǿŭ ħǿẇ ŧǿ ŭşḗ ŧħḗ ŧḗƈħƞǿŀǿɠīḗş ŧħȧŧ ƥǿẇḗř "
+"ŧħḗ Ẇḗƀ."
+
+#: apps/landing/templates/landing/home.html:103
+msgid ""
+"Check out what developers are doing with the latest Web standards and open "
+"technologies."
+msgstr ""
+"Ƈħḗƈķ ǿŭŧ ẇħȧŧ ḓḗṽḗŀǿƥḗřş ȧřḗ ḓǿīƞɠ ẇīŧħ ŧħḗ ŀȧŧḗşŧ Ẇḗƀ şŧȧƞḓȧřḓş ȧƞḓ ǿƥḗƞ "
+"ŧḗƈħƞǿŀǿɠīḗş."
+
+#: apps/landing/templates/landing/home.html:109
+msgid "/en/Firefox_for_developers"
+msgstr "/en/Firefox_for_developers"
+
+#: apps/landing/templates/landing/home.html:110
+msgid "Firefox for Devs"
+msgstr "Ƒīřḗƒǿẋ ƒǿř Ḓḗṽş"
+
+#: apps/landing/templates/landing/home.html:111
+msgid "See what's new for Web developers in the latest version of Firefox."
+msgstr "Şḗḗ ẇħȧŧ'ş ƞḗẇ ƒǿř Ẇḗƀ ḓḗṽḗŀǿƥḗřş īƞ ŧħḗ ŀȧŧḗşŧ ṽḗřşīǿƞ ǿƒ Ƒīřḗƒǿẋ."
+
+#: apps/landing/templates/landing/home.html:117
+msgid "http://www.mozilla.com/en-US/firefox/channel/"
+msgstr "http://www.mozilla.com/en-US/firefox/channel/"
+
+#: apps/landing/templates/landing/home.html:118
+msgid "Aurora"
+msgstr "Ȧŭřǿřȧ"
+
+#: apps/landing/templates/landing/home.html:119
+msgid ""
+"Experience the very latest features before they go to beta by trying out the "
+"new Aurora builds."
+msgstr ""
+"Ḗẋƥḗřīḗƞƈḗ ŧħḗ ṽḗřẏ ŀȧŧḗşŧ ƒḗȧŧŭřḗş ƀḗƒǿřḗ ŧħḗẏ ɠǿ ŧǿ ƀḗŧȧ ƀẏ ŧřẏīƞɠ ǿŭŧ ŧħḗ "
+"ƞḗẇ Ȧŭřǿřȧ ƀŭīŀḓş."
+
+#: apps/landing/templates/landing/home.html:127
+msgid "Latest News & Updates"
+msgstr "Ŀȧŧḗşŧ Ƞḗẇş & Ŭƥḓȧŧḗş"
+
+#: apps/landing/templates/landing/home.html:132
+msgid "Awesome Demos"
+msgstr "Ȧẇḗşǿḿḗ Ḓḗḿǿş"
+
+#: apps/landing/templates/landing/home.html:133
+msgid "More Demos&hellip;"
+msgstr "Ḿǿřḗ Ḓḗḿǿş&hellip;"
+
+#: apps/landing/templates/landing/home.html:141
+msgid "Have an awesome demo of your own? <strong>Submit It</strong>"
+msgstr "Ħȧṽḗ ȧƞ ȧẇḗşǿḿḗ ḓḗḿǿ ǿƒ ẏǿŭř ǿẇƞ? <strong>Şŭƀḿīŧ Īŧ</strong>"
+
+#: apps/landing/templates/landing/learn.html:5
+#: apps/landing/templates/landing/learn.html:10
+msgid "Learn How to Make Websites"
+msgstr "Ŀḗȧřƞ Ħǿẇ ŧǿ Ḿȧķḗ Ẇḗƀşīŧḗş"
+
+#: apps/landing/templates/landing/learn.html:11
+msgid ""
+"<p>Want to learn to use the technologies that power the Web? <br>We've put "
+"together a great collection of resources to get you started.</p>"
+msgstr ""
+"<p>Ẇȧƞŧ ŧǿ ŀḗȧřƞ ŧǿ ŭşḗ ŧħḗ ŧḗƈħƞǿŀǿɠīḗş ŧħȧŧ ƥǿẇḗř ŧħḗ Ẇḗƀ? <br>Ẇḗ'ṽḗ ƥŭŧ "
+"ŧǿɠḗŧħḗř ȧ ɠřḗȧŧ ƈǿŀŀḗƈŧīǿƞ ǿƒ řḗşǿŭřƈḗş ŧǿ ɠḗŧ ẏǿŭ şŧȧřŧḗḓ.</p>"
+
+#: apps/landing/templates/landing/learn.html:27
+msgid ""
+"<p><strong>HyperText Markup Language</strong> is the core syntax for putting "
+"information on the worldwide web. If you want to create or modify web "
+"pages, it's best if you learn HTML.</p>"
+msgstr ""
+"<p><strong>ĦẏƥḗřŦḗẋŧ Ḿȧřķŭƥ Ŀȧƞɠŭȧɠḗ</strong> īş ŧħḗ ƈǿřḗ şẏƞŧȧẋ ƒǿř ƥŭŧŧīƞɠ "
+"īƞƒǿřḿȧŧīǿƞ ǿƞ ŧħḗ ẇǿřŀḓẇīḓḗ ẇḗƀ. Īƒ ẏǿŭ ẇȧƞŧ ŧǿ ƈřḗȧŧḗ ǿř ḿǿḓīƒẏ ẇḗƀ "
+"ƥȧɠḗş, īŧ'ş ƀḗşŧ īƒ ẏǿŭ ŀḗȧřƞ ĦŦḾĿ.</p>"
+
+#: apps/landing/templates/landing/learn.html:33
+msgid ""
+"<p><strong>Cascading Style Sheets</strong> is a language for describing the "
+"appearance of web pages. To create good-looking web pages, you need to learn "
+"CSS in order to define the appearance and location of the HTML elements "
+"within the pages.</p>"
+msgstr ""
+"<p><strong>Ƈȧşƈȧḓīƞɠ Şŧẏŀḗ Şħḗḗŧş</strong> īş ȧ ŀȧƞɠŭȧɠḗ ƒǿř ḓḗşƈřīƀīƞɠ ŧħḗ "
+"ȧƥƥḗȧřȧƞƈḗ ǿƒ ẇḗƀ ƥȧɠḗş. Ŧǿ ƈřḗȧŧḗ ɠǿǿḓ-ŀǿǿķīƞɠ ẇḗƀ ƥȧɠḗş, ẏǿŭ ƞḗḗḓ ŧǿ ŀḗȧřƞ "
+"ƇŞŞ īƞ ǿřḓḗř ŧǿ ḓḗƒīƞḗ ŧħḗ ȧƥƥḗȧřȧƞƈḗ ȧƞḓ ŀǿƈȧŧīǿƞ ǿƒ ŧħḗ ĦŦḾĿ ḗŀḗḿḗƞŧş "
+"ẇīŧħīƞ ŧħḗ ƥȧɠḗş.</p>"
+
+#: apps/landing/templates/landing/learn.html:39
+msgid ""
+"<p><strong>JavaScript</strong> (JS for short) is the programming language "
+"that enables web pages to respond to user interaction beyond the basic level "
+"provided by HTML links and forms.</p>"
+msgstr ""
+"<p><strong>ĴȧṽȧŞƈřīƥŧ</strong> (ĴŞ ƒǿř şħǿřŧ) īş ŧħḗ ƥřǿɠřȧḿḿīƞɠ ŀȧƞɠŭȧɠḗ "
+"ŧħȧŧ ḗƞȧƀŀḗş ẇḗƀ ƥȧɠḗş ŧǿ řḗşƥǿƞḓ ŧǿ ŭşḗř īƞŧḗřȧƈŧīǿƞ ƀḗẏǿƞḓ ŧħḗ ƀȧşīƈ ŀḗṽḗŀ "
+"ƥřǿṽīḓḗḓ ƀẏ ĦŦḾĿ ŀīƞķş ȧƞḓ ƒǿřḿş.</p>"
+
+#: apps/landing/templates/landing/learn.html:47
+msgid ""
+"<h2>Are you tired of learning on your own?<br>Do you want to join a "
+"community of people learning about open web technologies?</h2> <p>Consider "
+"signing up for free online peer study groups through <a "
+"href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer "
+"University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-"
+"listing\">School of Webcraft</a>. Share your discoveries, struggles, and "
+"victories with others who are learning the same things.</p>"
+msgstr ""
+"<h2>Ȧřḗ ẏǿŭ ŧīřḗḓ ǿƒ ŀḗȧřƞīƞɠ ǿƞ ẏǿŭř ǿẇƞ?<br>Ḓǿ ẏǿŭ ẇȧƞŧ ŧǿ ĵǿīƞ ȧ "
+"ƈǿḿḿŭƞīŧẏ ǿƒ ƥḗǿƥŀḗ ŀḗȧřƞīƞɠ ȧƀǿŭŧ ǿƥḗƞ ẇḗƀ ŧḗƈħƞǿŀǿɠīḗş?</h2> <p>Ƈǿƞşīḓḗř "
+"şīɠƞīƞɠ ŭƥ ƒǿř ƒřḗḗ ǿƞŀīƞḗ ƥḗḗř şŧŭḓẏ ɠřǿŭƥş ŧħřǿŭɠħ <a "
+"href=\"http://p2pu.org/\">Ƥḗḗř-ŧǿ-Ƥḗḗř Ŭƞīṽḗřşīŧẏ'ş<span title=\"Peer-to-Peer "
+"University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-"
+"listing\">Şƈħǿǿŀ ǿƒ Ẇḗƀƈřȧƒŧ</a>. Şħȧřḗ ẏǿŭř ḓīşƈǿṽḗřīḗş, şŧřŭɠɠŀḗş, ȧƞḓ "
+"ṽīƈŧǿřīḗş ẇīŧħ ǿŧħḗřş ẇħǿ ȧřḗ ŀḗȧřƞīƞɠ ŧħḗ şȧḿḗ ŧħīƞɠş.</p>"
+
+#: apps/landing/templates/landing/learn.html:54
+#: apps/landing/templates/landing/learn_css.html:148
+#: apps/landing/templates/landing/learn_javascript.html:144
+msgid ""
+"<p>These resources are created by forward-thinking companies and web "
+"developers who have embraced open standards and best practices for web "
+"development. If you think we've omitted a great resource, please tell us "
+"about it in the <a "
+"href=\"https://developer.mozilla.org/forums/viewforum.php?f=4\">Open Web "
+"Forum</a>. We want to share these resources with our international "
+"community, so we prefer ones that provide or allow translations, through an "
+"open content license such as <a href=\"http://creativecommons.org\" "
+"rel=\"external\">Creative Commons</a>.</p>"
+msgstr ""
+"<p>Ŧħḗşḗ řḗşǿŭřƈḗş ȧřḗ ƈřḗȧŧḗḓ ƀẏ ƒǿřẇȧřḓ-ŧħīƞķīƞɠ ƈǿḿƥȧƞīḗş ȧƞḓ ẇḗƀ "
+"ḓḗṽḗŀǿƥḗřş ẇħǿ ħȧṽḗ ḗḿƀřȧƈḗḓ ǿƥḗƞ şŧȧƞḓȧřḓş ȧƞḓ ƀḗşŧ ƥřȧƈŧīƈḗş ƒǿř ẇḗƀ "
+"ḓḗṽḗŀǿƥḿḗƞŧ. Īƒ ẏǿŭ ŧħīƞķ ẇḗ'ṽḗ ǿḿīŧŧḗḓ ȧ ɠřḗȧŧ řḗşǿŭřƈḗ, ƥŀḗȧşḗ ŧḗŀŀ ŭş "
+"ȧƀǿŭŧ īŧ īƞ ŧħḗ <a "
+"href=\"https://developer.mozilla.org/forums/viewforum.php?f=4\">Ǿƥḗƞ Ẇḗƀ "
+"Ƒǿřŭḿ</a>. Ẇḗ ẇȧƞŧ ŧǿ şħȧřḗ ŧħḗşḗ řḗşǿŭřƈḗş ẇīŧħ ǿŭř īƞŧḗřƞȧŧīǿƞȧŀ "
+"ƈǿḿḿŭƞīŧẏ, şǿ ẇḗ ƥřḗƒḗř ǿƞḗş ŧħȧŧ ƥřǿṽīḓḗ ǿř ȧŀŀǿẇ ŧřȧƞşŀȧŧīǿƞş, ŧħřǿŭɠħ ȧƞ "
+"ǿƥḗƞ ƈǿƞŧḗƞŧ ŀīƈḗƞşḗ şŭƈħ ȧş <a href=\"http://creativecommons.org\" "
+"rel=\"external\">Ƈřḗȧŧīṽḗ Ƈǿḿḿǿƞş</a>.</p>"
+
+#: apps/landing/templates/landing/learn_css.html:5
+#: apps/landing/templates/landing/learn_css.html:11
+msgid "Learn CSS"
+msgstr "Ŀḗȧřƞ ƇŞŞ"
+
+#: apps/landing/templates/landing/learn_css.html:10
+#: apps/landing/templates/landing/learn_html.html:10
+#: apps/landing/templates/landing/learn_javascript.html:10
+msgid "Back to Home"
+msgstr "Ɓȧƈķ ŧǿ Ħǿḿḗ"
+
+#: apps/landing/templates/landing/learn_css.html:12
+msgid ""
+"<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language "
+"for describing the appearance of web pages. To create good-looking web "
+"pages, you need to learn CSS in order to define the appearance and location "
+"of the HTML elements within the pages.</p> <p>The links on this page lead to "
+"a variety of CSS tutorials and CSS training materials. Whether you are just "
+"starting out, learning the basics of CSS, or are an experienced web "
+"developer wanting to learn <strong>CSS3</strong> (the newest version of the "
+"standard) and CSS best practices, you can find helpful resources here.</p>"
+msgstr ""
+"<p class=\"intro\">ƇŞŞ (<strong>Ƈȧşƈȧḓīƞɠ Şŧẏŀḗ Şħḗḗŧş</strong>) īş ȧ ŀȧƞɠŭȧɠḗ "
+"ƒǿř ḓḗşƈřīƀīƞɠ ŧħḗ ȧƥƥḗȧřȧƞƈḗ ǿƒ ẇḗƀ ƥȧɠḗş. Ŧǿ ƈřḗȧŧḗ ɠǿǿḓ-ŀǿǿķīƞɠ ẇḗƀ "
+"ƥȧɠḗş, ẏǿŭ ƞḗḗḓ ŧǿ ŀḗȧřƞ ƇŞŞ īƞ ǿřḓḗř ŧǿ ḓḗƒīƞḗ ŧħḗ ȧƥƥḗȧřȧƞƈḗ ȧƞḓ ŀǿƈȧŧīǿƞ "
+"ǿƒ ŧħḗ ĦŦḾĿ ḗŀḗḿḗƞŧş ẇīŧħīƞ ŧħḗ ƥȧɠḗş.</p> <p>Ŧħḗ ŀīƞķş ǿƞ ŧħīş ƥȧɠḗ ŀḗȧḓ ŧǿ "
+"ȧ ṽȧřīḗŧẏ ǿƒ ƇŞŞ ŧŭŧǿřīȧŀş ȧƞḓ ƇŞŞ ŧřȧīƞīƞɠ ḿȧŧḗřīȧŀş. Ẇħḗŧħḗř ẏǿŭ ȧřḗ ĵŭşŧ "
+"şŧȧřŧīƞɠ ǿŭŧ, ŀḗȧřƞīƞɠ ŧħḗ ƀȧşīƈş ǿƒ ƇŞŞ, ǿř ȧřḗ ȧƞ ḗẋƥḗřīḗƞƈḗḓ ẇḗƀ "
+"ḓḗṽḗŀǿƥḗř ẇȧƞŧīƞɠ ŧǿ ŀḗȧřƞ <strong>ƇŞŞ3</strong> (ŧħḗ ƞḗẇḗşŧ ṽḗřşīǿƞ ǿƒ ŧħḗ "
+"şŧȧƞḓȧřḓ) ȧƞḓ ƇŞŞ ƀḗşŧ ƥřȧƈŧīƈḗş, ẏǿŭ ƈȧƞ ƒīƞḓ ħḗŀƥƒŭŀ řḗşǿŭřƈḗş ħḗřḗ.</p>"
+
+#: apps/landing/templates/landing/learn_css.html:29
+#: apps/landing/templates/landing/learn_html.html:28
+#: apps/landing/templates/landing/learn_javascript.html:27
+msgid "Introductory Level"
+msgstr "Īƞŧřǿḓŭƈŧǿřẏ Ŀḗṽḗŀ"
+
+#: apps/landing/templates/landing/learn_css.html:32
+msgid "CSS Getting Started"
+msgstr "ƇŞŞ Ɠḗŧŧīƞɠ Şŧȧřŧḗḓ"
+
+#: apps/landing/templates/landing/learn_css.html:34
+msgid ""
+"This tutorial introduces you to Cascading Style Sheets (CSS). It guides you "
+"through the basic features of CSS with practical examples that you can try "
+"for yourself on your own computer."
+msgstr ""
+"Ŧħīş ŧŭŧǿřīȧŀ īƞŧřǿḓŭƈḗş ẏǿŭ ŧǿ Ƈȧşƈȧḓīƞɠ Şŧẏŀḗ Şħḗḗŧş (ƇŞŞ). Īŧ ɠŭīḓḗş ẏǿŭ "
+"ŧħřǿŭɠħ ŧħḗ ƀȧşīƈ ƒḗȧŧŭřḗş ǿƒ ƇŞŞ ẇīŧħ ƥřȧƈŧīƈȧŀ ḗẋȧḿƥŀḗş ŧħȧŧ ẏǿŭ ƈȧƞ ŧřẏ "
+"ƒǿř ẏǿŭřşḗŀƒ ǿƞ ẏǿŭř ǿẇƞ ƈǿḿƥŭŧḗř."
+
+#: apps/landing/templates/landing/learn_css.html:37
+msgid "CSS Basics"
+msgstr "ƇŞŞ Ɓȧşīƈş"
+
+#: apps/landing/templates/landing/learn_css.html:39
+msgid ""
+"What CSS is, how to apply it to HTML, and what basic CSS syntax looks like."
+msgstr ""
+"Ẇħȧŧ ƇŞŞ īş, ħǿẇ ŧǿ ȧƥƥŀẏ īŧ ŧǿ ĦŦḾĿ, ȧƞḓ ẇħȧŧ ƀȧşīƈ ƇŞŞ şẏƞŧȧẋ ŀǿǿķş ŀīķḗ."
+
+#: apps/landing/templates/landing/learn_css.html:42
+msgid "CSS Selector Classes"
+msgstr "ƇŞŞ Şḗŀḗƈŧǿř Ƈŀȧşşḗş"
+
+#: apps/landing/templates/landing/learn_css.html:44
+msgid "What are classes in CSS?"
+msgstr "Ẇħȧŧ ȧřḗ ƈŀȧşşḗş īƞ ƇŞŞ?"
+
+#: apps/landing/templates/landing/learn_css.html:47
+msgid "External CSS"
+msgstr "Ḗẋŧḗřƞȧŀ ƇŞŞ"
+
+#: apps/landing/templates/landing/learn_css.html:49
+msgid "Using CSS from an external style sheet."
+msgstr "Ŭşīƞɠ ƇŞŞ ƒřǿḿ ȧƞ ḗẋŧḗřƞȧŀ şŧẏŀḗ şħḗḗŧ."
+
+#: apps/landing/templates/landing/learn_css.html:52
+msgid "Adding a Touch of Style"
+msgstr "Ȧḓḓīƞɠ ȧ Ŧǿŭƈħ ǿƒ Şŧẏŀḗ"
+
+#: apps/landing/templates/landing/learn_css.html:54
+msgid "A brief beginner's guide to styling web pages with CSS."
+msgstr "Ȧ ƀřīḗƒ ƀḗɠīƞƞḗř'ş ɠŭīḓḗ ŧǿ şŧẏŀīƞɠ ẇḗƀ ƥȧɠḗş ẇīŧħ ƇŞŞ."
+
+#: apps/landing/templates/landing/learn_css.html:57
+msgid "CSS From the Ground Up"
+msgstr "ƇŞŞ Ƒřǿḿ ŧħḗ Ɠřǿŭƞḓ Ŭƥ"
+
+#: apps/landing/templates/landing/learn_css.html:59
+msgid "Video tutorial on styling pages with CSS."
+msgstr "Ṽīḓḗǿ ŧŭŧǿřīȧŀ ǿƞ şŧẏŀīƞɠ ƥȧɠḗş ẇīŧħ ƇŞŞ."
+
+#: apps/landing/templates/landing/learn_css.html:62
+msgid "/en/Common_CSS_Questions"
+msgstr "/en/Common_CSS_Questions"
+
+#: apps/landing/templates/landing/learn_css.html:62
+msgid "Common CSS Questions"
+msgstr "Ƈǿḿḿǿƞ ƇŞŞ Ɋŭḗşŧīǿƞş"
+
+#: apps/landing/templates/landing/learn_css.html:64
+msgid "Common questions and answers for beginners."
+msgstr "Ƈǿḿḿǿƞ ɋŭḗşŧīǿƞş ȧƞḓ ȧƞşẇḗřş ƒǿř ƀḗɠīƞƞḗřş."
+
+#: apps/landing/templates/landing/learn_css.html:70
+#: apps/landing/templates/landing/learn_javascript.html:63
+msgid "Intermediate Level"
+msgstr "Īƞŧḗřḿḗḓīȧŧḗ Ŀḗṽḗŀ"
+
+#: apps/landing/templates/landing/learn_css.html:73
+msgid "/en/CSS_Reference"
+msgstr "/en/CSS_Reference"
+
+#: apps/landing/templates/landing/learn_css.html:73
+msgid "CSS Reference"
+msgstr "ƇŞŞ Řḗƒḗřḗƞƈḗ"
+
+#: apps/landing/templates/landing/learn_css.html:75
+msgid ""
+"Complete reference to CSS, with details on support by Firefox and other "
+"browsers."
+msgstr ""
+"Ƈǿḿƥŀḗŧḗ řḗƒḗřḗƞƈḗ ŧǿ ƇŞŞ, ẇīŧħ ḓḗŧȧīŀş ǿƞ şŭƥƥǿřŧ ƀẏ Ƒīřḗƒǿẋ ȧƞḓ ǿŧħḗř "
+"ƀřǿẇşḗřş."
+
+#: apps/landing/templates/landing/learn_css.html:78
+msgid "CSS Challenges"
+msgstr "ƇŞŞ Ƈħȧŀŀḗƞɠḗş"
+
+#: apps/landing/templates/landing/learn_css.html:80
+msgid "Flex your CSS skills, and see where you need more practice."
+msgstr "Ƒŀḗẋ ẏǿŭř ƇŞŞ şķīŀŀş, ȧƞḓ şḗḗ ẇħḗřḗ ẏǿŭ ƞḗḗḓ ḿǿřḗ ƥřȧƈŧīƈḗ."
+
+#: apps/landing/templates/landing/learn_css.html:83
+msgid "Intermediate CSS Concepts"
+msgstr "Īƞŧḗřḿḗḓīȧŧḗ ƇŞŞ Ƈǿƞƈḗƥŧş"
+
+#: apps/landing/templates/landing/learn_css.html:85
+msgid "Grouping, pseudo-classes, and more."
+msgstr "Ɠřǿŭƥīƞɠ, ƥşḗŭḓǿ-ƈŀȧşşḗş, ȧƞḓ ḿǿřḗ."
+
+#: apps/landing/templates/landing/learn_css.html:88
+msgid "CSS Positioning 101"
+msgstr "ƇŞŞ Ƥǿşīŧīǿƞīƞɠ 101"
+
+#: apps/landing/templates/landing/learn_css.html:90
+msgid "Using positioning for standards-compliant, table-free layout."
+msgstr "Ŭşīƞɠ ƥǿşīŧīǿƞīƞɠ ƒǿř şŧȧƞḓȧřḓş-ƈǿḿƥŀīȧƞŧ, ŧȧƀŀḗ-ƒřḗḗ ŀȧẏǿŭŧ."
+
+#: apps/landing/templates/landing/learn_css.html:93
+msgid "Progressive Enhancement with CSS"
+msgstr "Ƥřǿɠřḗşşīṽḗ Ḗƞħȧƞƈḗḿḗƞŧ ẇīŧħ ƇŞŞ"
+
+#: apps/landing/templates/landing/learn_css.html:95
+msgid "Integrate progressive enhancement into your web pages with CSS."
+msgstr "Īƞŧḗɠřȧŧḗ ƥřǿɠřḗşşīṽḗ ḗƞħȧƞƈḗḿḗƞŧ īƞŧǿ ẏǿŭř ẇḗƀ ƥȧɠḗş ẇīŧħ ƇŞŞ."
+
+#: apps/landing/templates/landing/learn_css.html:98
+msgid "Fluid Grids"
+msgstr "Ƒŀŭīḓ Ɠřīḓş"
+
+#: apps/landing/templates/landing/learn_css.html:100
+msgid ""
+"Design layouts that fluidly resize with the browser window, while still "
+"using a typographic grid."
+msgstr ""
+"Ḓḗşīɠƞ ŀȧẏǿŭŧş ŧħȧŧ ƒŀŭīḓŀẏ řḗşīzḗ ẇīŧħ ŧħḗ ƀřǿẇşḗř ẇīƞḓǿẇ, ẇħīŀḗ şŧīŀŀ "
+"ŭşīƞɠ ȧ ŧẏƥǿɠřȧƥħīƈ ɠřīḓ."
+
+#: apps/landing/templates/landing/learn_css.html:106
+#: apps/landing/templates/landing/learn_html.html:69
+#: apps/landing/templates/landing/learn_javascript.html:93
+msgid "Advanced Level"
+msgstr "Ȧḓṽȧƞƈḗḓ Ŀḗṽḗŀ"
+
+#: apps/landing/templates/landing/learn_css.html:109
+msgid "CSS3 in Under 5 Minutes"
+msgstr "ƇŞŞ3 īƞ Ŭƞḓḗř 5 Ḿīƞŭŧḗş"
+
+#: apps/landing/templates/landing/learn_css.html:109
+#: apps/landing/templates/landing/learn_css.html:114
+#: apps/landing/templates/landing/learn_css.html:119
+#: apps/landing/templates/landing/learn_css.html:126
+#: apps/landing/templates/landing/learn_css.html:131
+msgid "This site features CSS3"
+msgstr "Ŧħīş şīŧḗ ƒḗȧŧŭřḗş ƇŞŞ3"
+
+#: apps/landing/templates/landing/learn_css.html:111
+msgid "A quick introduction to some of the core features introduced in CSS3."
+msgstr "Ȧ ɋŭīƈķ īƞŧřǿḓŭƈŧīǿƞ ŧǿ şǿḿḗ ǿƒ ŧħḗ ƈǿřḗ ƒḗȧŧŭřḗş īƞŧřǿḓŭƈḗḓ īƞ ƇŞŞ3."
+
+#: apps/landing/templates/landing/learn_css.html:114
+msgid "/En/CSS/Using_CSS_transforms"
+msgstr "/En/CSS/Using_CSS_transforms"
+
+#: apps/landing/templates/landing/learn_css.html:114
+msgid "Using CSS Transforms"
+msgstr "Ŭşīƞɠ ƇŞŞ Ŧřȧƞşƒǿřḿş"
+
+#: apps/landing/templates/landing/learn_css.html:116
+msgid "Apply rotation, skewing, scaling, and translation using CSS."
+msgstr "Ȧƥƥŀẏ řǿŧȧŧīǿƞ, şķḗẇīƞɠ, şƈȧŀīƞɠ, ȧƞḓ ŧřȧƞşŀȧŧīǿƞ ŭşīƞɠ ƇŞŞ."
+
+#: apps/landing/templates/landing/learn_css.html:119
+msgid "CSS Transitions"
+msgstr "ƇŞŞ Ŧřȧƞşīŧīǿƞş"
+
+#: apps/landing/templates/landing/learn_css.html:121
+msgid ""
+"CSS transitions, part of the draft CSS3 specification, provide a way to "
+"animate changes to CSS properties, instead of having the changes take effect "
+"instantly."
+msgstr ""
+"ƇŞŞ ŧřȧƞşīŧīǿƞş, ƥȧřŧ ǿƒ ŧħḗ ḓřȧƒŧ ƇŞŞ3 şƥḗƈīƒīƈȧŧīǿƞ, ƥřǿṽīḓḗ ȧ ẇȧẏ ŧǿ "
+"ȧƞīḿȧŧḗ ƈħȧƞɠḗş ŧǿ ƇŞŞ ƥřǿƥḗřŧīḗş, īƞşŧḗȧḓ ǿƒ ħȧṽīƞɠ ŧħḗ ƈħȧƞɠḗş ŧȧķḗ ḗƒƒḗƈŧ "
+"īƞşŧȧƞŧŀẏ."
+
+#: apps/landing/templates/landing/learn_css.html:126
+msgid "Understanding CSS3 Transitions"
+msgstr "Ŭƞḓḗřşŧȧƞḓīƞɠ ƇŞŞ3 Ŧřȧƞşīŧīǿƞş"
+
+#: apps/landing/templates/landing/learn_css.html:128
+msgid ""
+"Start using CSS3 transitions by carefully choosing the situations in which "
+"to use them."
+msgstr ""
+"Şŧȧřŧ ŭşīƞɠ ƇŞŞ3 ŧřȧƞşīŧīǿƞş ƀẏ ƈȧřḗƒŭŀŀẏ ƈħǿǿşīƞɠ ŧħḗ şīŧŭȧŧīǿƞş īƞ ẇħīƈħ "
+"ŧǿ ŭşḗ ŧħḗḿ."
+
+#: apps/landing/templates/landing/learn_css.html:131
+msgid "Quick Guide to Implement Web Fonts with @font-face"
+msgstr "Ɋŭīƈķ Ɠŭīḓḗ ŧǿ Īḿƥŀḗḿḗƞŧ Ẇḗƀ Ƒǿƞŧş ẇīŧħ @ƒǿƞŧ-ƒȧƈḗ"
+
+#: apps/landing/templates/landing/learn_css.html:133
+msgid ""
+"The @font-face feature from CSS3 allows you to use custom typefaces on the "
+"web in an accessible, manipulable, and scalable way."
+msgstr ""
+"Ŧħḗ @ƒǿƞŧ-ƒȧƈḗ ƒḗȧŧŭřḗ ƒřǿḿ ƇŞŞ3 ȧŀŀǿẇş ẏǿŭ ŧǿ ŭşḗ ƈŭşŧǿḿ ŧẏƥḗƒȧƈḗş ǿƞ ŧħḗ "
+"ẇḗƀ īƞ ȧƞ ȧƈƈḗşşīƀŀḗ, ḿȧƞīƥŭŀȧƀŀḗ, ȧƞḓ şƈȧŀȧƀŀḗ ẇȧẏ."
+
+#: apps/landing/templates/landing/learn_css.html:141
+msgid ""
+"<h2>Are you tired of learning CSS on your own?<br> Do you want to join a "
+"community of people who are learning CSS and other open web "
+"technologies?</h2> <p>Consider signing up for free online peer study groups "
+"through <a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title"
+"=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft"
+"/course-listing\">School of Webcraft</a>. Share your discoveries, struggles, "
+"and victories with others who are learning the same things.</p>"
+msgstr ""
+"<h2>Ȧřḗ ẏǿŭ ŧīřḗḓ ǿƒ ŀḗȧřƞīƞɠ ƇŞŞ ǿƞ ẏǿŭř ǿẇƞ?<br> Ḓǿ ẏǿŭ ẇȧƞŧ ŧǿ ĵǿīƞ ȧ "
+"ƈǿḿḿŭƞīŧẏ ǿƒ ƥḗǿƥŀḗ ẇħǿ ȧřḗ ŀḗȧřƞīƞɠ ƇŞŞ ȧƞḓ ǿŧħḗř ǿƥḗƞ ẇḗƀ "
+"ŧḗƈħƞǿŀǿɠīḗş?</h2> <p>Ƈǿƞşīḓḗř şīɠƞīƞɠ ŭƥ ƒǿř ƒřḗḗ ǿƞŀīƞḗ ƥḗḗř şŧŭḓẏ ɠřǿŭƥş "
+"ŧħřǿŭɠħ <a href=\"http://p2pu.org/\">Ƥḗḗř-ŧǿ-Ƥḗḗř Ŭƞīṽḗřşīŧẏ'ş<span title"
+"=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft"
+"/course-listing\">Şƈħǿǿŀ ǿƒ Ẇḗƀƈřȧƒŧ</a>. Şħȧřḗ ẏǿŭř ḓīşƈǿṽḗřīḗş, şŧřŭɠɠŀḗş, "
+"ȧƞḓ ṽīƈŧǿřīḗş ẇīŧħ ǿŧħḗřş ẇħǿ ȧřḗ ŀḗȧřƞīƞɠ ŧħḗ şȧḿḗ ŧħīƞɠş.</p>"
+
+#: apps/landing/templates/landing/learn_css.html:155
+msgid ""
+"This site discusses <strong>CSS3</strong>, latest, still-evolving version of "
+"CSS. Many CSS3 features are supported in various ways by modern browsers, "
+"but many users still have older browsers and so can't take advantage."
+msgstr ""
+"Ŧħīş şīŧḗ ḓīşƈŭşşḗş <strong>ƇŞŞ3</strong>, ŀȧŧḗşŧ, şŧīŀŀ-ḗṽǿŀṽīƞɠ ṽḗřşīǿƞ ǿƒ "
+"ƇŞŞ. Ḿȧƞẏ ƇŞŞ3 ƒḗȧŧŭřḗş ȧřḗ şŭƥƥǿřŧḗḓ īƞ ṽȧřīǿŭş ẇȧẏş ƀẏ ḿǿḓḗřƞ ƀřǿẇşḗřş, "
+"ƀŭŧ ḿȧƞẏ ŭşḗřş şŧīŀŀ ħȧṽḗ ǿŀḓḗř ƀřǿẇşḗřş ȧƞḓ şǿ ƈȧƞ'ŧ ŧȧķḗ ȧḓṽȧƞŧȧɠḗ."
+
+#: apps/landing/templates/landing/learn_html.html:5
+#: apps/landing/templates/landing/learn_html.html:11
+msgid "Learn HTML"
+msgstr "Ŀḗȧřƞ ĦŦḾĿ"
+
+#: apps/landing/templates/landing/learn_html.html:12
+msgid ""
+"<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the "
+"core syntax for putting information on the worldwide web. If you want to "
+"create or modify web pages, it's best if you learn HTML.</p> <p>The links on "
+"this page lead to a variety of HTML tutorials and HTML training materials. "
+"Whether you are just starting out, learning the basics of HTML, or are an "
+"old hand at web development wanting to learn <strong>HTML5</strong> (the "
+"newest version of the standard), you can find helpful resources here for "
+"HTML best practices.</p>"
+msgstr ""
+"<p class=\"intro\">ĦŦḾĿ (<strong>ĦẏƥḗřŦḗẋŧ Ḿȧřķŭƥ Ŀȧƞɠŭȧɠḗ</strong>) īş ŧħḗ "
+"ƈǿřḗ şẏƞŧȧẋ ƒǿř ƥŭŧŧīƞɠ īƞƒǿřḿȧŧīǿƞ ǿƞ ŧħḗ ẇǿřŀḓẇīḓḗ ẇḗƀ. Īƒ ẏǿŭ ẇȧƞŧ ŧǿ "
+"ƈřḗȧŧḗ ǿř ḿǿḓīƒẏ ẇḗƀ ƥȧɠḗş, īŧ'ş ƀḗşŧ īƒ ẏǿŭ ŀḗȧřƞ ĦŦḾĿ.</p> <p>Ŧħḗ ŀīƞķş ǿƞ "
+"ŧħīş ƥȧɠḗ ŀḗȧḓ ŧǿ ȧ ṽȧřīḗŧẏ ǿƒ ĦŦḾĿ ŧŭŧǿřīȧŀş ȧƞḓ ĦŦḾĿ ŧřȧīƞīƞɠ ḿȧŧḗřīȧŀş. "
+"Ẇħḗŧħḗř ẏǿŭ ȧřḗ ĵŭşŧ şŧȧřŧīƞɠ ǿŭŧ, ŀḗȧřƞīƞɠ ŧħḗ ƀȧşīƈş ǿƒ ĦŦḾĿ, ǿř ȧřḗ ȧƞ "
+"ǿŀḓ ħȧƞḓ ȧŧ ẇḗƀ ḓḗṽḗŀǿƥḿḗƞŧ ẇȧƞŧīƞɠ ŧǿ ŀḗȧřƞ <strong>ĦŦḾĿ5</strong> (ŧħḗ "
+"ƞḗẇḗşŧ ṽḗřşīǿƞ ǿƒ ŧħḗ şŧȧƞḓȧřḓ), ẏǿŭ ƈȧƞ ƒīƞḓ ħḗŀƥƒŭŀ řḗşǿŭřƈḗş ħḗřḗ ƒǿř "
+"ĦŦḾĿ ƀḗşŧ ƥřȧƈŧīƈḗş.</p>"
+
+#: apps/landing/templates/landing/learn_html.html:31
+msgid "The Basics of HTML"
+msgstr "Ŧħḗ Ɓȧşīƈş ǿƒ ĦŦḾĿ"
+
+#: apps/landing/templates/landing/learn_html.html:33
+msgid ""
+"What HTML is, what it does, its history in brief, and what the structure of "
+"an HTML document looks like. The articles that follow this one look at each "
+"individual part of HTML in much greater depth."
+msgstr ""
+"Ẇħȧŧ ĦŦḾĿ īş, ẇħȧŧ īŧ ḓǿḗş, īŧş ħīşŧǿřẏ īƞ ƀřīḗƒ, ȧƞḓ ẇħȧŧ ŧħḗ şŧřŭƈŧŭřḗ ǿƒ "
+"ȧƞ ĦŦḾĿ ḓǿƈŭḿḗƞŧ ŀǿǿķş ŀīķḗ. Ŧħḗ ȧřŧīƈŀḗş ŧħȧŧ ƒǿŀŀǿẇ ŧħīş ǿƞḗ ŀǿǿķ ȧŧ ḗȧƈħ "
+"īƞḓīṽīḓŭȧŀ ƥȧřŧ ǿƒ ĦŦḾĿ īƞ ḿŭƈħ ɠřḗȧŧḗř ḓḗƥŧħ."
+
+#: apps/landing/templates/landing/learn_html.html:36
+msgid "Basic Structure of a Web Page"
+msgstr "Ɓȧşīƈ Şŧřŭƈŧŭřḗ ǿƒ ȧ Ẇḗƀ Ƥȧɠḗ"
+
+#: apps/landing/templates/landing/learn_html.html:38
+msgid "Learn how HTML elements fit together into the bigger picture."
+msgstr "Ŀḗȧřƞ ħǿẇ ĦŦḾĿ ḗŀḗḿḗƞŧş ƒīŧ ŧǿɠḗŧħḗř īƞŧǿ ŧħḗ ƀīɠɠḗř ƥīƈŧŭřḗ."
+
+#: apps/landing/templates/landing/learn_html.html:41
+msgid "Fundamental HTML Elements"
+msgstr "Ƒŭƞḓȧḿḗƞŧȧŀ ĦŦḾĿ Ḗŀḗḿḗƞŧş"
+
+#: apps/landing/templates/landing/learn_html.html:43
+msgid ""
+"Describes the different types of elements you can use to write an HTML "
+"document."
+msgstr ""
+"Ḓḗşƈřīƀḗş ŧħḗ ḓīƒƒḗřḗƞŧ ŧẏƥḗş ǿƒ ḗŀḗḿḗƞŧş ẏǿŭ ƈȧƞ ŭşḗ ŧǿ ẇřīŧḗ ȧƞ ĦŦḾĿ "
+"ḓǿƈŭḿḗƞŧ."
+
+#: apps/landing/templates/landing/learn_html.html:46
+msgid "HTML Beginner Tutorial"
+msgstr "ĦŦḾĿ Ɓḗɠīƞƞḗř Ŧŭŧǿřīȧŀ"
+
+#: apps/landing/templates/landing/learn_html.html:48
+msgid "A tutorial and exercises that take you through the basics."
+msgstr "Ȧ ŧŭŧǿřīȧŀ ȧƞḓ ḗẋḗřƈīşḗş ŧħȧŧ ŧȧķḗ ẏǿŭ ŧħřǿŭɠħ ŧħḗ ƀȧşīƈş."
+
+#: apps/landing/templates/landing/learn_html.html:51
+msgid "HTML From the Ground Up"
+msgstr "ĦŦḾĿ Ƒřǿḿ ŧħḗ Ɠřǿŭƞḓ Ŭƥ"
+
+#: apps/landing/templates/landing/learn_html.html:52
+msgid "Google Code University"
+msgstr "Ɠǿǿɠŀḗ Ƈǿḓḗ Ŭƞīṽḗřşīŧẏ"
+
+#: apps/landing/templates/landing/learn_html.html:53
+msgid ""
+"Video tutorial on best practices and approaches for how to write good HTML "
+"code."
+msgstr ""
+"Ṽīḓḗǿ ŧŭŧǿřīȧŀ ǿƞ ƀḗşŧ ƥřȧƈŧīƈḗş ȧƞḓ ȧƥƥřǿȧƈħḗş ƒǿř ħǿẇ ŧǿ ẇřīŧḗ ɠǿǿḓ ĦŦḾĿ "
+"ƈǿḓḗ."
+
+#: apps/landing/templates/landing/learn_html.html:56
+msgid "HTML Challenges"
+msgstr "ĦŦḾĿ Ƈħȧŀŀḗƞɠḗş"
+
+#: apps/landing/templates/landing/learn_html.html:58
+msgid ""
+"Use these challenges to hone your HTML skills (for example, \"Should I use an "
+"&lt;h2&gt; element or a &lt;strong&gt; element?\"), focusing on meaningful "
+"mark-up."
+msgstr ""
+"Ŭşḗ ŧħḗşḗ ƈħȧŀŀḗƞɠḗş ŧǿ ħǿƞḗ ẏǿŭř ĦŦḾĿ şķīŀŀş (ƒǿř ḗẋȧḿƥŀḗ, \"Şħǿŭŀḓ Ī ŭşḗ ȧƞ "
+"&lt;ħ2&gt; ḗŀḗḿḗƞŧ ǿř ȧ &lt;şŧřǿƞɠ&gt; ḗŀḗḿḗƞŧ?\"), ƒǿƈŭşīƞɠ ǿƞ ḿḗȧƞīƞɠƒŭŀ "
+"ḿȧřķ-ŭƥ."
+
+#: apps/landing/templates/landing/learn_html.html:61
+msgid "/en/HTML/Element"
+msgstr "/en/HTML/Element"
+
+#: apps/landing/templates/landing/learn_html.html:63
+msgid ""
+"A comprehensive reference for HTML elements, and how Firefox and other "
+"browsers support them."
+msgstr ""
+"Ȧ ƈǿḿƥřḗħḗƞşīṽḗ řḗƒḗřḗƞƈḗ ƒǿř ĦŦḾĿ ḗŀḗḿḗƞŧş, ȧƞḓ ħǿẇ Ƒīřḗƒǿẋ ȧƞḓ ǿŧħḗř "
+"ƀřǿẇşḗřş şŭƥƥǿřŧ ŧħḗḿ."
+
+#: apps/landing/templates/landing/learn_html.html:72
+msgid "/en/Tips_for_Authoring_Fast-loading_HTML_Pages"
+msgstr "/en/Tips_for_Authoring_Fast-loading_HTML_Pages"
+
+#: apps/landing/templates/landing/learn_html.html:72
+msgid "Tips for Authoring Fast-loading HTML Pages"
+msgstr "Ŧīƥş ƒǿř Ȧŭŧħǿřīƞɠ Ƒȧşŧ-ŀǿȧḓīƞɠ ĦŦḾĿ Ƥȧɠḗş"
+
+#: apps/landing/templates/landing/learn_html.html:74
+msgid ""
+"Optimize web pages to provide a more responsive site for visitors and reduce "
+"the load on your web server and Internet connection."
+msgstr ""
+"Ǿƥŧīḿīzḗ ẇḗƀ ƥȧɠḗş ŧǿ ƥřǿṽīḓḗ ȧ ḿǿřḗ řḗşƥǿƞşīṽḗ şīŧḗ ƒǿř ṽīşīŧǿřş ȧƞḓ řḗḓŭƈḗ "
+"ŧħḗ ŀǿȧḓ ǿƞ ẏǿŭř ẇḗƀ şḗřṽḗř ȧƞḓ Īƞŧḗřƞḗŧ ƈǿƞƞḗƈŧīǿƞ."
+
+#: apps/landing/templates/landing/learn_html.html:77
+msgid "Dive into HTML5"
+msgstr "Ḓīṽḗ īƞŧǿ ĦŦḾĿ5"
+
+#: apps/landing/templates/landing/learn_html.html:77
+#: apps/landing/templates/landing/learn_html.html:82
+#: apps/landing/templates/landing/learn_html.html:87
+#: apps/landing/templates/landing/learn_html.html:92
+#: apps/landing/templates/landing/learn_html.html:97
+#: apps/landing/templates/landing/learn_html.html:102
+#: apps/landing/templates/landing/learn_html.html:106
+#: apps/landing/templates/landing/learn_html.html:129
+#: apps/landing/templates/landing/learn_html.html:134
+msgid "This site features HTML5"
+msgstr "Ŧħīş şīŧḗ ƒḗȧŧŭřḗş ĦŦḾĿ5"
+
+#: apps/landing/templates/landing/learn_html.html:78
+msgid "From Mark Pilgrim"
+msgstr "Ƒřǿḿ Ḿȧřķ Ƥīŀɠřīḿ"
+
+#: apps/landing/templates/landing/learn_html.html:79
+msgid ""
+"Learn about a selection of features of HTML5, the newest version of the HTML "
+"specification."
+msgstr ""
+"Ŀḗȧřƞ ȧƀǿŭŧ ȧ şḗŀḗƈŧīǿƞ ǿƒ ƒḗȧŧŭřḗş ǿƒ ĦŦḾĿ5, ŧħḗ ƞḗẇḗşŧ ṽḗřşīǿƞ ǿƒ ŧħḗ ĦŦḾĿ "
+"şƥḗƈīƒīƈȧŧīǿƞ."
+
+#: apps/landing/templates/landing/learn_html.html:82
+msgid "Get Ready for HTML5"
+msgstr "Ɠḗŧ Řḗȧḓẏ ƒǿř ĦŦḾĿ5"
+
+#: apps/landing/templates/landing/learn_html.html:83
+#: apps/landing/templates/landing/learn_html.html:93
+msgid "A List Apart"
+msgstr "Ȧ Ŀīşŧ Ȧƥȧřŧ"
+
+#: apps/landing/templates/landing/learn_html.html:84
+msgid "Some suggestions to help you get on board with HTML5."
+msgstr "Şǿḿḗ şŭɠɠḗşŧīǿƞş ŧǿ ħḗŀƥ ẏǿŭ ɠḗŧ ǿƞ ƀǿȧřḓ ẇīŧħ ĦŦḾĿ5."
+
+#: apps/landing/templates/landing/learn_html.html:87
+msgid "HTML5 Tutorials"
+msgstr "ĦŦḾĿ5 Ŧŭŧǿřīȧŀş"
+
+#: apps/landing/templates/landing/learn_html.html:88
+msgid "HTML5 Rocks"
+msgstr "ĦŦḾĿ5 Řǿƈķş"
+
+#: apps/landing/templates/landing/learn_html.html:89
+msgid "Take a guided tour through code that uses HTML5 features."
+msgstr "Ŧȧķḗ ȧ ɠŭīḓḗḓ ŧǿŭř ŧħřǿŭɠħ ƈǿḓḗ ŧħȧŧ ŭşḗş ĦŦḾĿ5 ƒḗȧŧŭřḗş."
+
+#: apps/landing/templates/landing/learn_html.html:92
+msgid "Semantics in HTML5"
+msgstr "Şḗḿȧƞŧīƈş īƞ ĦŦḾĿ5"
+
+#: apps/landing/templates/landing/learn_html.html:94
+msgid ""
+"Learn meaningful mark-up that is extensible and backwards- and forwards-"
+"compatible."
+msgstr ""
+"Ŀḗȧřƞ ḿḗȧƞīƞɠƒŭŀ ḿȧřķ-ŭƥ ŧħȧŧ īş ḗẋŧḗƞşīƀŀḗ ȧƞḓ ƀȧƈķẇȧřḓş- ȧƞḓ "
+"ƒǿřẇȧřḓş-ƈǿḿƥȧŧīƀŀḗ."
+
+#: apps/landing/templates/landing/learn_html.html:97
+msgid "/en/Canvas_tutorial"
+msgstr "/en/Canvas_tutorial"
+
+#: apps/landing/templates/landing/learn_html.html:97
+msgid "Canvas Tutorial"
+msgstr "Ƈȧƞṽȧş Ŧŭŧǿřīȧŀ"
+
+#: apps/landing/templates/landing/learn_html.html:99
+msgid ""
+"Learn how to draw graphics using scripting using the &lt;canvas&gt; element."
+msgstr ""
+"Ŀḗȧřƞ ħǿẇ ŧǿ ḓřȧẇ ɠřȧƥħīƈş ŭşīƞɠ şƈřīƥŧīƞɠ ŭşīƞɠ ŧħḗ &lt;ƈȧƞṽȧş&gt; ḗŀḗḿḗƞŧ."
+
+#: apps/landing/templates/landing/learn_html.html:102
+msgid "HTML5 Doctor"
+msgstr "ĦŦḾĿ5 Ḓǿƈŧǿř"
+
+#: apps/landing/templates/landing/learn_html.html:103
+msgid "Articles about using HTML5 right now."
+msgstr "Ȧřŧīƈŀḗş ȧƀǿŭŧ ŭşīƞɠ ĦŦḾĿ5 řīɠħŧ ƞǿẇ."
+
+#: apps/landing/templates/landing/learn_html.html:106
+msgid "The Joy of HTML5 Audio"
+msgstr "Ŧħḗ Ĵǿẏ ǿƒ ĦŦḾĿ5 Ȧŭḓīǿ"
+
+#: apps/landing/templates/landing/learn_html.html:108
+msgid ""
+"Learn how to use the HTML audio element to embed sounds in your web pages "
+"easily. Lots of code examples are included in the tutorial."
+msgstr ""
+"Ŀḗȧřƞ ħǿẇ ŧǿ ŭşḗ ŧħḗ ĦŦḾĿ ȧŭḓīǿ ḗŀḗḿḗƞŧ ŧǿ ḗḿƀḗḓ şǿŭƞḓş īƞ ẏǿŭř ẇḗƀ ƥȧɠḗş "
+"ḗȧşīŀẏ. Ŀǿŧş ǿƒ ƈǿḓḗ ḗẋȧḿƥŀḗş ȧřḗ īƞƈŀŭḓḗḓ īƞ ŧħḗ ŧŭŧǿřīȧŀ."
+
+#: apps/landing/templates/landing/learn_html.html:114
+msgid "HTML5 Examples"
+msgstr "ĦŦḾĿ5 Ḗẋȧḿƥŀḗş"
+
+#: apps/landing/templates/landing/learn_html.html:117
+msgid "Web o' Wonder"
+msgstr "Ẇḗƀ ǿ' Ẇǿƞḓḗř"
+
+#: apps/landing/templates/landing/learn_html.html:119
+msgid "Demos from Mozilla developers and evangelists."
+msgstr "Ḓḗḿǿş ƒřǿḿ Ḿǿzīŀŀȧ ḓḗṽḗŀǿƥḗřş ȧƞḓ ḗṽȧƞɠḗŀīşŧş."
+
+#: apps/landing/templates/landing/learn_html.html:122
+msgid "MDN Demo Studio"
+msgstr "ḾḒȠ Ḓḗḿǿ Şŧŭḓīǿ"
+
+#: apps/landing/templates/landing/learn_html.html:124
+msgid ""
+"Run, inspect, and submit demos that show what HTML, CSS, and JavaScript can "
+"do."
+msgstr ""
+"Řŭƞ, īƞşƥḗƈŧ, ȧƞḓ şŭƀḿīŧ ḓḗḿǿş ŧħȧŧ şħǿẇ ẇħȧŧ ĦŦḾĿ, ƇŞŞ, ȧƞḓ ĴȧṽȧŞƈřīƥŧ ƈȧƞ "
+"ḓǿ."
+
+#: apps/landing/templates/landing/learn_html.html:129
+msgid "HTML5 Demos and Examples"
+msgstr "ĦŦḾĿ5 Ḓḗḿǿş ȧƞḓ Ḗẋȧḿƥŀḗş"
+
+#: apps/landing/templates/landing/learn_html.html:130
+msgid "Remy Sharp"
+msgstr "Řḗḿẏ Şħȧřƥ"
+
+#: apps/landing/templates/landing/learn_html.html:131
+msgid "Demos that you can filter by technology or browser support."
+msgstr "Ḓḗḿǿş ŧħȧŧ ẏǿŭ ƈȧƞ ƒīŀŧḗř ƀẏ ŧḗƈħƞǿŀǿɠẏ ǿř ƀřǿẇşḗř şŭƥƥǿřŧ."
+
+#: apps/landing/templates/landing/learn_html.html:134
+msgid "HTML5 Gallery"
+msgstr "ĦŦḾĿ5 Ɠȧŀŀḗřẏ"
+
+#: apps/landing/templates/landing/learn_html.html:135
+msgid "Richard Clark"
+msgstr "Řīƈħȧřḓ Ƈŀȧřķ"
+
+#: apps/landing/templates/landing/learn_html.html:136
+msgid ""
+"Showcase of sites that use HTML5 to help you learn about how it should be "
+"used."
+msgstr ""
+"Şħǿẇƈȧşḗ ǿƒ şīŧḗş ŧħȧŧ ŭşḗ ĦŦḾĿ5 ŧǿ ħḗŀƥ ẏǿŭ ŀḗȧřƞ ȧƀǿŭŧ ħǿẇ īŧ şħǿŭŀḓ ƀḗ "
+"ŭşḗḓ."
+
+#: apps/landing/templates/landing/learn_html.html:143
+msgid ""
+"<h2>Tired of learning on your own?<br>Want to join a community of people "
+"learning HTML and other open web technologies?</h2> <p>Consider signing up "
+"for free online peer study groups through <a href=\"http://p2pu.org/\">Peer-"
+"to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a "
+"href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. Share "
+"your discoveries, struggles, and victories with others who are learning the "
+"same things.</p>"
+msgstr ""
+"<h2>Ŧīřḗḓ ǿƒ ŀḗȧřƞīƞɠ ǿƞ ẏǿŭř ǿẇƞ?<br>Ẇȧƞŧ ŧǿ ĵǿīƞ ȧ ƈǿḿḿŭƞīŧẏ ǿƒ ƥḗǿƥŀḗ "
+"ŀḗȧřƞīƞɠ ĦŦḾĿ ȧƞḓ ǿŧħḗř ǿƥḗƞ ẇḗƀ ŧḗƈħƞǿŀǿɠīḗş?</h2> <p>Ƈǿƞşīḓḗř şīɠƞīƞɠ ŭƥ "
+"ƒǿř ƒřḗḗ ǿƞŀīƞḗ ƥḗḗř şŧŭḓẏ ɠřǿŭƥş ŧħřǿŭɠħ <a "
+"href=\"http://p2pu.org/\">Ƥḗḗř-ŧǿ-Ƥḗḗř Ŭƞīṽḗřşīŧẏ'ş<span title=\"Peer-to-Peer "
+"University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-"
+"listing\">Şƈħǿǿŀ ǿƒ Ẇḗƀƈřȧƒŧ</a>. Şħȧřḗ ẏǿŭř ḓīşƈǿṽḗřīḗş, şŧřŭɠɠŀḗş, ȧƞḓ "
+"ṽīƈŧǿřīḗş ẇīŧħ ǿŧħḗřş ẇħǿ ȧřḗ ŀḗȧřƞīƞɠ ŧħḗ şȧḿḗ ŧħīƞɠş.</p>"
+
+#: apps/landing/templates/landing/learn_html.html:150
+msgid ""
+"<p>These resources are created by forward-thinking companies and web "
+"developers who have embraced open standards and best practices for web "
+"development. If you think we've omitted a great resource, please tell us "
+"about it in the <a href=\"/forums/viewforum.php?f=4\">Open Web Forum</a>. We "
+"want to share these resources with our international community, so we prefer "
+"ones that provide or allow translations, through an open content license "
+"such as a <a href=\"http://creativecommons.org/licenses/\">Creative Commons "
+"license</a>.</p>"
+msgstr ""
+"<p>Ŧħḗşḗ řḗşǿŭřƈḗş ȧřḗ ƈřḗȧŧḗḓ ƀẏ ƒǿřẇȧřḓ-ŧħīƞķīƞɠ ƈǿḿƥȧƞīḗş ȧƞḓ ẇḗƀ "
+"ḓḗṽḗŀǿƥḗřş ẇħǿ ħȧṽḗ ḗḿƀřȧƈḗḓ ǿƥḗƞ şŧȧƞḓȧřḓş ȧƞḓ ƀḗşŧ ƥřȧƈŧīƈḗş ƒǿř ẇḗƀ "
+"ḓḗṽḗŀǿƥḿḗƞŧ. Īƒ ẏǿŭ ŧħīƞķ ẇḗ'ṽḗ ǿḿīŧŧḗḓ ȧ ɠřḗȧŧ řḗşǿŭřƈḗ, ƥŀḗȧşḗ ŧḗŀŀ ŭş "
+"ȧƀǿŭŧ īŧ īƞ ŧħḗ <a href=\"/forums/viewforum.php?f=4\">Ǿƥḗƞ Ẇḗƀ Ƒǿřŭḿ</a>. Ẇḗ "
+"ẇȧƞŧ ŧǿ şħȧřḗ ŧħḗşḗ řḗşǿŭřƈḗş ẇīŧħ ǿŭř īƞŧḗřƞȧŧīǿƞȧŀ ƈǿḿḿŭƞīŧẏ, şǿ ẇḗ ƥřḗƒḗř "
+"ǿƞḗş ŧħȧŧ ƥřǿṽīḓḗ ǿř ȧŀŀǿẇ ŧřȧƞşŀȧŧīǿƞş, ŧħřǿŭɠħ ȧƞ ǿƥḗƞ ƈǿƞŧḗƞŧ ŀīƈḗƞşḗ "
+"şŭƈħ ȧş ȧ <a href=\"http://creativecommons.org/licenses/\">Ƈřḗȧŧīṽḗ Ƈǿḿḿǿƞş "
+"ŀīƈḗƞşḗ</a>.</p>"
+
+#: apps/landing/templates/landing/learn_html.html:157
+msgid ""
+"This site discusses <strong>HTML5</strong>, the upcoming latest version of "
+"the standard. Many HTML5 features are supported by modern browsers, but many "
+"users still have older browsers and so can't take advantage."
+msgstr ""
+"Ŧħīş şīŧḗ ḓīşƈŭşşḗş <strong>ĦŦḾĿ5</strong>, ŧħḗ ŭƥƈǿḿīƞɠ ŀȧŧḗşŧ ṽḗřşīǿƞ ǿƒ "
+"ŧħḗ şŧȧƞḓȧřḓ. Ḿȧƞẏ ĦŦḾĿ5 ƒḗȧŧŭřḗş ȧřḗ şŭƥƥǿřŧḗḓ ƀẏ ḿǿḓḗřƞ ƀřǿẇşḗřş, ƀŭŧ ḿȧƞẏ "
+"ŭşḗřş şŧīŀŀ ħȧṽḗ ǿŀḓḗř ƀřǿẇşḗřş ȧƞḓ şǿ ƈȧƞ'ŧ ŧȧķḗ ȧḓṽȧƞŧȧɠḗ."
+
+#: apps/landing/templates/landing/learn_javascript.html:5
+#: apps/landing/templates/landing/learn_javascript.html:11
+msgid "Learn JavaScript"
+msgstr "Ŀḗȧřƞ ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/landing/templates/landing/learn_javascript.html:12
+msgid ""
+"<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the "
+"programming language that enables web pages to respond to user interaction "
+"beyond the basic level provided by HTML links and forms.</p> <p>The links on "
+"this page lead to a variety of JavaScript tutorials and JavaScript training "
+"materials. Whether you are just starting out, wanting to learn JS basics, "
+"or are an old hand, wanting to sharpen your skills, you can find helpful "
+"resources here for JS best practices.</p>"
+msgstr ""
+"<p class=\"intro\"><strong>ĴȧṽȧŞƈřīƥŧ</strong> (ĴŞ ƒǿř şħǿřŧ) īş ŧħḗ "
+"ƥřǿɠřȧḿḿīƞɠ ŀȧƞɠŭȧɠḗ ŧħȧŧ ḗƞȧƀŀḗş ẇḗƀ ƥȧɠḗş ŧǿ řḗşƥǿƞḓ ŧǿ ŭşḗř īƞŧḗřȧƈŧīǿƞ "
+"ƀḗẏǿƞḓ ŧħḗ ƀȧşīƈ ŀḗṽḗŀ ƥřǿṽīḓḗḓ ƀẏ ĦŦḾĿ ŀīƞķş ȧƞḓ ƒǿřḿş.</p> <p>Ŧħḗ ŀīƞķş ǿƞ "
+"ŧħīş ƥȧɠḗ ŀḗȧḓ ŧǿ ȧ ṽȧřīḗŧẏ ǿƒ ĴȧṽȧŞƈřīƥŧ ŧŭŧǿřīȧŀş ȧƞḓ ĴȧṽȧŞƈřīƥŧ ŧřȧīƞīƞɠ "
+"ḿȧŧḗřīȧŀş. Ẇħḗŧħḗř ẏǿŭ ȧřḗ ĵŭşŧ şŧȧřŧīƞɠ ǿŭŧ, ẇȧƞŧīƞɠ ŧǿ ŀḗȧřƞ ĴŞ ƀȧşīƈş, "
+"ǿř ȧřḗ ȧƞ ǿŀḓ ħȧƞḓ, ẇȧƞŧīƞɠ ŧǿ şħȧřƥḗƞ ẏǿŭř şķīŀŀş, ẏǿŭ ƈȧƞ ƒīƞḓ ħḗŀƥƒŭŀ "
+"řḗşǿŭřƈḗş ħḗřḗ ƒǿř ĴŞ ƀḗşŧ ƥřȧƈŧīƈḗş.</p>"
+
+#: apps/landing/templates/landing/learn_javascript.html:30
+msgid "/en/JavaScript/Getting_Started"
+msgstr "/en/JavaScript/Getting_Started"
+
+#: apps/landing/templates/landing/learn_javascript.html:30
+msgid "Getting Started with JavaScript"
+msgstr "Ɠḗŧŧīƞɠ Şŧȧřŧḗḓ ẇīŧħ ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/landing/templates/landing/learn_javascript.html:32
+msgid "What is JavaScript and how can it help you?"
+msgstr "Ẇħȧŧ īş ĴȧṽȧŞƈřīƥŧ ȧƞḓ ħǿẇ ƈȧƞ īŧ ħḗŀƥ ẏǿŭ?"
+
+#: apps/landing/templates/landing/learn_javascript.html:37
+msgid "Learn the basics of programming with JavaScript"
+msgstr "Ŀḗȧřƞ ŧħḗ ƀȧşīƈş ǿƒ ƥřǿɠřȧḿḿīƞɠ ẇīŧħ ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/landing/templates/landing/learn_javascript.html:42
+msgid ""
+"Basic fundamentals of programming. Following articles introduce what you can "
+"do with JavaScript, best practices for using it, and more."
+msgstr ""
+"Ɓȧşīƈ ƒŭƞḓȧḿḗƞŧȧŀş ǿƒ ƥřǿɠřȧḿḿīƞɠ. Ƒǿŀŀǿẇīƞɠ ȧřŧīƈŀḗş īƞŧřǿḓŭƈḗ ẇħȧŧ ẏǿŭ ƈȧƞ "
+"ḓǿ ẇīŧħ ĴȧṽȧŞƈřīƥŧ, ƀḗşŧ ƥřȧƈŧīƈḗş ƒǿř ŭşīƞɠ īŧ, ȧƞḓ ḿǿřḗ."
+
+#: apps/landing/templates/landing/learn_javascript.html:45
+msgid "JavaScript From the Ground Up"
+msgstr "ĴȧṽȧŞƈřīƥŧ Ƒřǿḿ ŧħḗ Ɠřǿŭƞḓ Ŭƥ"
+
+#: apps/landing/templates/landing/learn_javascript.html:47
+msgid "Video tutorial on making pages interactive with JavaScript"
+msgstr "Ṽīḓḗǿ ŧŭŧǿřīȧŀ ǿƞ ḿȧķīƞɠ ƥȧɠḗş īƞŧḗřȧƈŧīṽḗ ẇīŧħ ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/landing/templates/landing/learn_javascript.html:50
+msgid "/en/JavaScript/Guide"
+msgstr "/en/JavaScript/Guide"
+
+#: apps/landing/templates/landing/learn_javascript.html:50
+msgid "JavaScript Guide"
+msgstr "ĴȧṽȧŞƈřīƥŧ Ɠŭīḓḗ"
+
+#: apps/landing/templates/landing/learn_javascript.html:52
+msgid ""
+"A comprehensive, regularly updated guide to JavaScript for all levels of "
+"learning from beginner to advanced."
+msgstr ""
+"Ȧ ƈǿḿƥřḗħḗƞşīṽḗ, řḗɠŭŀȧřŀẏ ŭƥḓȧŧḗḓ ɠŭīḓḗ ŧǿ ĴȧṽȧŞƈřīƥŧ ƒǿř ȧŀŀ ŀḗṽḗŀş ǿƒ "
+"ŀḗȧřƞīƞɠ ƒřǿḿ ƀḗɠīƞƞḗř ŧǿ ȧḓṽȧƞƈḗḓ."
+
+#: apps/landing/templates/landing/learn_javascript.html:55
+msgid "JavaScript Best Practices"
+msgstr "ĴȧṽȧŞƈřīƥŧ Ɓḗşŧ Ƥřȧƈŧīƈḗş"
+
+#: apps/landing/templates/landing/learn_javascript.html:57
+msgid ""
+"Learn about some of the obvious and (not so) obvious best practices when "
+"writing JavaScript."
+msgstr ""
+"Ŀḗȧřƞ ȧƀǿŭŧ şǿḿḗ ǿƒ ŧħḗ ǿƀṽīǿŭş ȧƞḓ (ƞǿŧ şǿ) ǿƀṽīǿŭş ƀḗşŧ ƥřȧƈŧīƈḗş ẇħḗƞ "
+"ẇřīŧīƞɠ ĴȧṽȧŞƈřīƥŧ."
+
+#: apps/landing/templates/landing/learn_javascript.html:66
+msgid "/en/A_re-introduction_to_JavaScript"
+msgstr "/en/A_re-introduction_to_JavaScript"
+
+#: apps/landing/templates/landing/learn_javascript.html:66
+msgid "A Re-introduction to JavaScript"
+msgstr "Ȧ Řḗ-īƞŧřǿḓŭƈŧīǿƞ ŧǿ ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/landing/templates/landing/learn_javascript.html:68
+msgid ""
+"A recap of the JavaScript programming language aimed at intermediate-level "
+"developers."
+msgstr ""
+"Ȧ řḗƈȧƥ ǿƒ ŧħḗ ĴȧṽȧŞƈřīƥŧ ƥřǿɠřȧḿḿīƞɠ ŀȧƞɠŭȧɠḗ ȧīḿḗḓ ȧŧ īƞŧḗřḿḗḓīȧŧḗ-ŀḗṽḗŀ "
+"ḓḗṽḗŀǿƥḗřş."
+
+#: apps/landing/templates/landing/learn_javascript.html:71
+msgid "Eloquent JavaScript"
+msgstr "Ḗŀǿɋŭḗƞŧ ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/landing/templates/landing/learn_javascript.html:72
+msgid ""
+"A comprehensive guide to intermediate and advanced JavaScript methodologies."
+msgstr ""
+"Ȧ ƈǿḿƥřḗħḗƞşīṽḗ ɠŭīḓḗ ŧǿ īƞŧḗřḿḗḓīȧŧḗ ȧƞḓ ȧḓṽȧƞƈḗḓ ĴȧṽȧŞƈřīƥŧ ḿḗŧħǿḓǿŀǿɠīḗş."
+
+#: apps/landing/templates/landing/learn_javascript.html:75
+msgid "Essential JavaScript Design Patterns"
+msgstr "Ḗşşḗƞŧīȧŀ ĴȧṽȧŞƈřīƥŧ Ḓḗşīɠƞ Ƥȧŧŧḗřƞş"
+
+#: apps/landing/templates/landing/learn_javascript.html:77
+msgid "An introduction to essential JavaScript design patterns."
+msgstr "Ȧƞ īƞŧřǿḓŭƈŧīǿƞ ŧǿ ḗşşḗƞŧīȧŀ ĴȧṽȧŞƈřīƥŧ ḓḗşīɠƞ ƥȧŧŧḗřƞş."
+
+#: apps/landing/templates/landing/learn_javascript.html:80
+msgid "The JavaScript Programming Language"
+msgstr "Ŧħḗ ĴȧṽȧŞƈřīƥŧ Ƥřǿɠřȧḿḿīƞɠ Ŀȧƞɠŭȧɠḗ"
+
+#: apps/landing/templates/landing/learn_javascript.html:82
+msgid ""
+"Douglas Crockford explores the language as it is today, and how it came to "
+"be."
+msgstr ""
+"Ḓǿŭɠŀȧş Ƈřǿƈķƒǿřḓ ḗẋƥŀǿřḗş ŧħḗ ŀȧƞɠŭȧɠḗ ȧş īŧ īş ŧǿḓȧẏ, ȧƞḓ ħǿẇ īŧ ƈȧḿḗ ŧǿ "
+"ƀḗ."
+
+#: apps/landing/templates/landing/learn_javascript.html:85
+msgid "/en/Introduction_to_Object-Oriented_JavaScript"
+msgstr "/en/Introduction_to_Object-Oriented_JavaScript"
+
+#: apps/landing/templates/landing/learn_javascript.html:85
+msgid "Introduction to Object-oriented JavaScript"
+msgstr "Īƞŧřǿḓŭƈŧīǿƞ ŧǿ Ǿƀĵḗƈŧ-ǿřīḗƞŧḗḓ ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/landing/templates/landing/learn_javascript.html:87
+msgid "Learn about the JavaScript object model."
+msgstr "Ŀḗȧřƞ ȧƀǿŭŧ ŧħḗ ĴȧṽȧŞƈřīƥŧ ǿƀĵḗƈŧ ḿǿḓḗŀ."
+
+#: apps/landing/templates/landing/learn_javascript.html:96
+msgid "Learning Advanced JavaScript"
+msgstr "Ŀḗȧřƞīƞɠ Ȧḓṽȧƞƈḗḓ ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/landing/templates/landing/learn_javascript.html:98
+msgid "John Resig's guide to advanced JavaScript."
+msgstr "Ĵǿħƞ Řḗşīɠ'ş ɠŭīḓḗ ŧǿ ȧḓṽȧƞƈḗḓ ĴȧṽȧŞƈřīƥŧ."
+
+#: apps/landing/templates/landing/learn_javascript.html:101
+msgid "Introducing the JavaScript DOM"
+msgstr "Īƞŧřǿḓŭƈīƞɠ ŧħḗ ĴȧṽȧŞƈřīƥŧ ḒǾḾ"
+
+#: apps/landing/templates/landing/learn_javascript.html:103
+msgid ""
+"What is the Document Object Model, and why is it useful? This article gives "
+"you a gentle introduction to this powerful JavaScript feature."
+msgstr ""
+"Ẇħȧŧ īş ŧħḗ Ḓǿƈŭḿḗƞŧ Ǿƀĵḗƈŧ Ḿǿḓḗŀ, ȧƞḓ ẇħẏ īş īŧ ŭşḗƒŭŀ? Ŧħīş ȧřŧīƈŀḗ ɠīṽḗş "
+"ẏǿŭ ȧ ɠḗƞŧŀḗ īƞŧřǿḓŭƈŧīǿƞ ŧǿ ŧħīş ƥǿẇḗřƒŭŀ ĴȧṽȧŞƈřīƥŧ ƒḗȧŧŭřḗ."
+
+#: apps/landing/templates/landing/learn_javascript.html:106
+msgid "An Inconvenient API: The Theory of the DOM"
+msgstr "Ȧƞ Īƞƈǿƞṽḗƞīḗƞŧ ȦƤĪ: Ŧħḗ Ŧħḗǿřẏ ǿƒ ŧħḗ ḒǾḾ"
+
+#: apps/landing/templates/landing/learn_javascript.html:108
+msgid "Douglas Crockford explains the Document Object Model."
+msgstr "Ḓǿŭɠŀȧş Ƈřǿƈķƒǿřḓ ḗẋƥŀȧīƞş ŧħḗ Ḓǿƈŭḿḗƞŧ Ǿƀĵḗƈŧ Ḿǿḓḗŀ."
+
+#: apps/landing/templates/landing/learn_javascript.html:111
+msgid "Advanced JavaScript"
+msgstr "Ȧḓṽȧƞƈḗḓ ĴȧṽȧŞƈřīƥŧ"
+
+#: apps/landing/templates/landing/learn_javascript.html:113
+msgid ""
+"Douglas Crockford looks closely at code patterns from which JavaScript "
+"programmers can choose in authoring their applications."
+msgstr ""
+"Ḓǿŭɠŀȧş Ƈřǿƈķƒǿřḓ ŀǿǿķş ƈŀǿşḗŀẏ ȧŧ ƈǿḓḗ ƥȧŧŧḗřƞş ƒřǿḿ ẇħīƈħ ĴȧṽȧŞƈřīƥŧ "
+"ƥřǿɠřȧḿḿḗřş ƈȧƞ ƈħǿǿşḗ īƞ ȧŭŧħǿřīƞɠ ŧħḗīř ȧƥƥŀīƈȧŧīǿƞş."
+
+#: apps/landing/templates/landing/learn_javascript.html:118
+msgid "JavaScript Garden"
+msgstr "ĴȧṽȧŞƈřīƥŧ Ɠȧřḓḗƞ"
+
+#: apps/landing/templates/landing/learn_javascript.html:119
+msgid "Documentation of the most quirky parts of JavaScript."
+msgstr "Ḓǿƈŭḿḗƞŧȧŧīǿƞ ǿƒ ŧħḗ ḿǿşŧ ɋŭīřķẏ ƥȧřŧş ǿƒ ĴȧṽȧŞƈřīƥŧ."
+
+#: apps/landing/templates/landing/learn_javascript.html:122
+msgid "Which JavaScript Framework?"
+msgstr "Ẇħīƈħ ĴȧṽȧŞƈřīƥŧ Ƒřȧḿḗẇǿřķ?"
+
+#: apps/landing/templates/landing/learn_javascript.html:124
+msgid "Advice on choosing a JavaScript framework."
+msgstr "Ȧḓṽīƈḗ ǿƞ ƈħǿǿşīƞɠ ȧ ĴȧṽȧŞƈřīƥŧ ƒřȧḿḗẇǿřķ."
+
+#: apps/landing/templates/landing/learn_javascript.html:127
+msgid "Non-blocking JavaScript Downloads"
+msgstr "Ƞǿƞ-ƀŀǿƈķīƞɠ ĴȧṽȧŞƈřīƥŧ Ḓǿẇƞŀǿȧḓş"
+
+#: apps/landing/templates/landing/learn_javascript.html:129
+msgid ""
+"Tips on improving the download performance of pages containing JavaScript."
+msgstr ""
+"Ŧīƥş ǿƞ īḿƥřǿṽīƞɠ ŧħḗ ḓǿẇƞŀǿȧḓ ƥḗřƒǿřḿȧƞƈḗ ǿƒ ƥȧɠḗş ƈǿƞŧȧīƞīƞɠ ĴȧṽȧŞƈřīƥŧ."
+
+#: apps/landing/templates/landing/learn_javascript.html:137
+msgid ""
+"<h2>Are you tired of learning JS on your own?<br>Do you want to join a "
+"community of people who are learning JavaScript and other open web "
+"technologies?</h2> <p>Consider signing up for free online peer study groups "
+"through <a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title"
+"=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft"
+"/course-listing\">School of Webcraft</a>. Share your discoveries, struggles, "
+"and victories with others who are learning the same things.</p>"
+msgstr ""
+"<h2>Ȧřḗ ẏǿŭ ŧīřḗḓ ǿƒ ŀḗȧřƞīƞɠ ĴŞ ǿƞ ẏǿŭř ǿẇƞ?<br>Ḓǿ ẏǿŭ ẇȧƞŧ ŧǿ ĵǿīƞ ȧ "
+"ƈǿḿḿŭƞīŧẏ ǿƒ ƥḗǿƥŀḗ ẇħǿ ȧřḗ ŀḗȧřƞīƞɠ ĴȧṽȧŞƈřīƥŧ ȧƞḓ ǿŧħḗř ǿƥḗƞ ẇḗƀ "
+"ŧḗƈħƞǿŀǿɠīḗş?</h2> <p>Ƈǿƞşīḓḗř şīɠƞīƞɠ ŭƥ ƒǿř ƒřḗḗ ǿƞŀīƞḗ ƥḗḗř şŧŭḓẏ ɠřǿŭƥş "
+"ŧħřǿŭɠħ <a href=\"http://p2pu.org/\">Ƥḗḗř-ŧǿ-Ƥḗḗř Ŭƞīṽḗřşīŧẏ'ş<span title"
+"=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft"
+"/course-listing\">Şƈħǿǿŀ ǿƒ Ẇḗƀƈřȧƒŧ</a>. Şħȧřḗ ẏǿŭř ḓīşƈǿṽḗřīḗş, şŧřŭɠɠŀḗş, "
+"ȧƞḓ ṽīƈŧǿřīḗş ẇīŧħ ǿŧħḗřş ẇħǿ ȧřḗ ŀḗȧřƞīƞɠ ŧħḗ şȧḿḗ ŧħīƞɠş.</p>"
+
+#: apps/landing/templates/landing/mobile.html:16
+msgid "Welcome to the Mobile Developer Community:"
+msgstr "Ẇḗŀƈǿḿḗ ŧǿ ŧħḗ Ḿǿƀīŀḗ Ḓḗṽḗŀǿƥḗř Ƈǿḿḿŭƞīŧẏ:"
+
+#: apps/landing/templates/landing/mobile.html:20
+msgid "You took back the Web. Now take it with you."
+msgstr "Ẏǿŭ ŧǿǿķ ƀȧƈķ ŧħḗ Ẇḗƀ. Ƞǿẇ ŧȧķḗ īŧ ẇīŧħ ẏǿŭ."
+
+#: apps/landing/templates/landing/mobile.html:24
+msgid "Join the Mobile discussions!"
+msgstr "Ĵǿīƞ ŧħḗ Ḿǿƀīŀḗ ḓīşƈŭşşīǿƞş!"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mobile.html:38
+msgid "Popular <span class=\"mobile\">Mobile</span> Documentation"
+msgstr "Ƥǿƥŭŀȧř <span class=\"mobile\">Ḿǿƀīŀḗ</span> Ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#: apps/landing/templates/landing/mobile.html:43
+msgid "Mobile Wiki"
+msgstr "Ḿǿƀīŀḗ Ẇīķī"
+
+#: apps/landing/templates/landing/mobile.html:45
+msgid ""
+"Get the latest news, status and developer documentation on the Mozilla "
+"mobile project. Check out the mobile project's goals, and how you can help "
+"out and get involved!"
+msgstr ""
+"Ɠḗŧ ŧħḗ ŀȧŧḗşŧ ƞḗẇş, şŧȧŧŭş ȧƞḓ ḓḗṽḗŀǿƥḗř ḓǿƈŭḿḗƞŧȧŧīǿƞ ǿƞ ŧħḗ Ḿǿzīŀŀȧ "
+"ḿǿƀīŀḗ ƥřǿĵḗƈŧ. Ƈħḗƈķ ǿŭŧ ŧħḗ ḿǿƀīŀḗ ƥřǿĵḗƈŧ'ş ɠǿȧŀş, ȧƞḓ ħǿẇ ẏǿŭ ƈȧƞ ħḗŀƥ "
+"ǿŭŧ ȧƞḓ ɠḗŧ īƞṽǿŀṽḗḓ!"
+
+#: apps/landing/templates/landing/mobile.html:53
+msgid "Build Great Mobile Add-ons"
+msgstr "Ɓŭīŀḓ Ɠřḗȧŧ Ḿǿƀīŀḗ Ȧḓḓ-ǿƞş"
+
+#: apps/landing/templates/landing/mobile.html:55
+msgid ""
+"Firefox is the world's first Web browser to support mobile add-ons. Learn "
+"about <a href=\"%(basics_url)s\">Extension Basics</a>, <a href=\"%"
+"(best_practices_url)s\">Extension Best Practices</a>, helpful <a href=\"%"
+"(snippets_url)s\">Code Snippets</a>, and more so you can build innovative "
+"add-ons for Firefox on Android and Firefox on Nokia's Meego platform."
+msgstr ""
+"Ƒīřḗƒǿẋ īş ŧħḗ ẇǿřŀḓ'ş ƒīřşŧ Ẇḗƀ ƀřǿẇşḗř ŧǿ şŭƥƥǿřŧ ḿǿƀīŀḗ ȧḓḓ-ǿƞş. Ŀḗȧřƞ "
+"ȧƀǿŭŧ <a href=\"%(basics_url)s\">Ḗẋŧḗƞşīǿƞ Ɓȧşīƈş</a>, <a href=\"%"
+"(best_practices_url)s\">Ḗẋŧḗƞşīǿƞ Ɓḗşŧ Ƥřȧƈŧīƈḗş</a>, ħḗŀƥƒŭŀ <a href=\"%"
+"(snippets_url)s\">Ƈǿḓḗ Şƞīƥƥḗŧş</a>, ȧƞḓ ḿǿřḗ şǿ ẏǿŭ ƈȧƞ ƀŭīŀḓ īƞƞǿṽȧŧīṽḗ "
+"ȧḓḓ-ǿƞş ƒǿř Ƒīřḗƒǿẋ ǿƞ Ȧƞḓřǿīḓ ȧƞḓ Ƒīřḗƒǿẋ ǿƞ Ƞǿķīȧ'ş Ḿḗḗɠǿ ƥŀȧŧƒǿřḿ."
+
+#: apps/landing/templates/landing/mobile.html:67
+msgid "Location-Aware Applications"
+msgstr "Ŀǿƈȧŧīǿƞ-Ȧẇȧřḗ Ȧƥƥŀīƈȧŧīǿƞş"
+
+#: apps/landing/templates/landing/mobile.html:69
+msgid ""
+"Learn how to use the <a href=\"%(geo_url)s\">Geolocation API</a> and put "
+"people on the right path. Location-Aware Browsing is a must when you're out "
+"and about on your mobile. Learn how to build innovative apps that delight "
+"your audience."
+msgstr ""
+"Ŀḗȧřƞ ħǿẇ ŧǿ ŭşḗ ŧħḗ <a href=\"%(geo_url)s\">Ɠḗǿŀǿƈȧŧīǿƞ ȦƤĪ</a> ȧƞḓ ƥŭŧ "
+"ƥḗǿƥŀḗ ǿƞ ŧħḗ řīɠħŧ ƥȧŧħ. Ŀǿƈȧŧīǿƞ-Ȧẇȧřḗ Ɓřǿẇşīƞɠ īş ȧ ḿŭşŧ ẇħḗƞ ẏǿŭ'řḗ ǿŭŧ "
+"ȧƞḓ ȧƀǿŭŧ ǿƞ ẏǿŭř ḿǿƀīŀḗ. Ŀḗȧřƞ ħǿẇ ŧǿ ƀŭīŀḓ īƞƞǿṽȧŧīṽḗ ȧƥƥş ŧħȧŧ ḓḗŀīɠħŧ "
+"ẏǿŭř ȧŭḓīḗƞƈḗ."
+
+#: apps/landing/templates/landing/mobile.html:77
+msgid "Help build Firefox for Mobile"
+msgstr "Ħḗŀƥ ƀŭīŀḓ Ƒīřḗƒǿẋ ƒǿř Ḿǿƀīŀḗ"
+
+#: apps/landing/templates/landing/mobile.html:79
+msgid ""
+"Your help is vital to the success of Firefox. Provide feedback on our <a "
+"href=\"%(irc_url)s\">IRC channel</a>, <a href=\"%(meeting_url)s\">join our "
+"Wednesday development meeting</a>, or even <a href=\"%(bugzilla_url)s\">file "
+"some bugs</a>."
+msgstr ""
+"Ẏǿŭř ħḗŀƥ īş ṽīŧȧŀ ŧǿ ŧħḗ şŭƈƈḗşş ǿƒ Ƒīřḗƒǿẋ. Ƥřǿṽīḓḗ ƒḗḗḓƀȧƈķ ǿƞ ǿŭř <a "
+"href=\"%(irc_url)s\">ĪŘƇ ƈħȧƞƞḗŀ</a>, <a href=\"%(meeting_url)s\">ĵǿīƞ ǿŭř "
+"Ẇḗḓƞḗşḓȧẏ ḓḗṽḗŀǿƥḿḗƞŧ ḿḗḗŧīƞɠ</a>, ǿř ḗṽḗƞ <a href=\"%(bugzilla_url)s\">ƒīŀḗ "
+"şǿḿḗ ƀŭɠş</a>."
+
+#: apps/landing/templates/landing/mobile.html:88
+msgid "All mobile development documentation"
+msgstr "Ȧŀŀ ḿǿƀīŀḗ ḓḗṽḗŀǿƥḿḗƞŧ ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#: apps/landing/templates/landing/mobile.html:93
+msgid "Watch <span class=\"mobile\">Mobile</span> Videos"
+msgstr "Ẇȧŧƈħ <span class=\"mobile\">Ḿǿƀīŀḗ</span> Ṽīḓḗǿş"
+
+#: apps/landing/templates/landing/mobile.html:103
+msgid "Firefox Sync"
+msgstr "Ƒīřḗƒǿẋ Şẏƞƈ"
+
+#: apps/landing/templates/landing/mobile.html:107
+msgid "Why Sync up, Security and More"
+msgstr "Ẇħẏ Şẏƞƈ ŭƥ, Şḗƈŭřīŧẏ ȧƞḓ Ḿǿřḗ"
+
+#: apps/landing/templates/landing/mobile.html:108
+msgid ""
+"See Ragavan demo Firefox Sync on his Android phone. Learn about purpose and "
+"goals behind the development of Firefox Sync."
+msgstr ""
+"Şḗḗ Řȧɠȧṽȧƞ ḓḗḿǿ Ƒīřḗƒǿẋ Şẏƞƈ ǿƞ ħīş Ȧƞḓřǿīḓ ƥħǿƞḗ. Ŀḗȧřƞ ȧƀǿŭŧ ƥŭřƥǿşḗ ȧƞḓ "
+"ɠǿȧŀş ƀḗħīƞḓ ŧħḗ ḓḗṽḗŀǿƥḿḗƞŧ ǿƒ Ƒīřḗƒǿẋ Şẏƞƈ."
+
+#: apps/landing/templates/landing/mobile.html:119
+msgid "Fennec"
+msgstr "Ƒḗƞƞḗƈ"
+
+#: apps/landing/templates/landing/mobile.html:123
+msgid "Pre-Alpha Fennec and HTML5 Demos"
+msgstr "Ƥřḗ-Ȧŀƥħȧ Ƒḗƞƞḗƈ ȧƞḓ ĦŦḾĿ5 Ḓḗḿǿş"
+
+#: apps/landing/templates/landing/mobile.html:124
+msgid ""
+"See Stuart demo HTML5 capabilities on pre-alpha Fennec. Learn about the "
+"purpose and goals behind the development of Firefox 4 for mobile."
+msgstr ""
+"Şḗḗ Şŧŭȧřŧ ḓḗḿǿ ĦŦḾĿ5 ƈȧƥȧƀīŀīŧīḗş ǿƞ ƥřḗ-ȧŀƥħȧ Ƒḗƞƞḗƈ. Ŀḗȧřƞ ȧƀǿŭŧ ŧħḗ "
+"ƥŭřƥǿşḗ ȧƞḓ ɠǿȧŀş ƀḗħīƞḓ ŧħḗ ḓḗṽḗŀǿƥḿḗƞŧ ǿƒ Ƒīřḗƒǿẋ 4 ƒǿř ḿǿƀīŀḗ."
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mobile.html:136
+msgid "Favorite <span class=\"mobile\">Mobile</span> Articles"
+msgstr "Ƒȧṽǿřīŧḗ <span class=\"mobile\">Ḿǿƀīŀḗ</span> Ȧřŧīƈŀḗş"
+
+#: apps/landing/templates/landing/mobile.html:140
+msgid "Firefox for mobile: What's coming next"
+msgstr "Ƒīřḗƒǿẋ ƒǿř ḿǿƀīŀḗ: Ẇħȧŧ'ş ƈǿḿīƞɠ ƞḗẋŧ"
+
+#: apps/landing/templates/landing/mobile.html:142
+msgid ""
+"The projects and planning never stops. We're cooking up some amazing new "
+"features and improvements for our next major release. Check it out and see "
+"how you can help us continue to make the world's best mobile Web browser."
+msgstr ""
+"Ŧħḗ ƥřǿĵḗƈŧş ȧƞḓ ƥŀȧƞƞīƞɠ ƞḗṽḗř şŧǿƥş. Ẇḗ'řḗ ƈǿǿķīƞɠ ŭƥ şǿḿḗ ȧḿȧzīƞɠ ƞḗẇ "
+"ƒḗȧŧŭřḗş ȧƞḓ īḿƥřǿṽḗḿḗƞŧş ƒǿř ǿŭř ƞḗẋŧ ḿȧĵǿř řḗŀḗȧşḗ. Ƈħḗƈķ īŧ ǿŭŧ ȧƞḓ şḗḗ "
+"ħǿẇ ẏǿŭ ƈȧƞ ħḗŀƥ ŭş ƈǿƞŧīƞŭḗ ŧǿ ḿȧķḗ ŧħḗ ẇǿřŀḓ'ş ƀḗşŧ ḿǿƀīŀḗ Ẇḗƀ ƀřǿẇşḗř."
+
+#: apps/landing/templates/landing/mobile.html:150
+msgid "\"HTML5 is Great for Mobile, Developers Say\""
+msgstr "\"ĦŦḾĿ5 īş Ɠřḗȧŧ ƒǿř Ḿǿƀīŀḗ, Ḓḗṽḗŀǿƥḗřş Şȧẏ\""
+
+#: apps/landing/templates/landing/mobile.html:152
+msgid ""
+"Hear from other developers about the advantages of HTML5 and developing for "
+"the mobile Web in this article from ReadWriteWeb:"
+msgstr ""
+"Ħḗȧř ƒřǿḿ ǿŧħḗř ḓḗṽḗŀǿƥḗřş ȧƀǿŭŧ ŧħḗ ȧḓṽȧƞŧȧɠḗş ǿƒ ĦŦḾĿ5 ȧƞḓ ḓḗṽḗŀǿƥīƞɠ ƒǿř "
+"ŧħḗ ḿǿƀīŀḗ Ẇḗƀ īƞ ŧħīş ȧřŧīƈŀḗ ƒřǿḿ ŘḗȧḓẆřīŧḗẆḗƀ:"
+
+#: apps/landing/templates/landing/mobile.html:158
+msgid ""
+"\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger "
+"[and] there is no download attrition. You simply point people at a URL and "
+"there you go -- it's installed.' The fact that apps can be directly "
+"installed by URL rather than by waiting for an App Store download means that "
+"developers reduce barriers to virality.\""
+msgstr ""
+"\"'Ħȧƞḓş ḓǿẇƞ, ŧħḗ ḓḗṽḗŀǿƥḗř ƥǿǿŀ ƒǿř ĦŦḾĿ / ĴŞ řǿƈķ şŧȧřş īş ŧḗƞƒǿŀḓ ŀȧřɠḗř "
+"[ȧƞḓ] ŧħḗřḗ īş ƞǿ ḓǿẇƞŀǿȧḓ ȧŧŧřīŧīǿƞ. Ẏǿŭ şīḿƥŀẏ ƥǿīƞŧ ƥḗǿƥŀḗ ȧŧ ȧ ŬŘĿ ȧƞḓ "
+"ŧħḗřḗ ẏǿŭ ɠǿ -- īŧ'ş īƞşŧȧŀŀḗḓ.' Ŧħḗ ƒȧƈŧ ŧħȧŧ ȧƥƥş ƈȧƞ ƀḗ ḓīřḗƈŧŀẏ "
+"īƞşŧȧŀŀḗḓ ƀẏ ŬŘĿ řȧŧħḗř ŧħȧƞ ƀẏ ẇȧīŧīƞɠ ƒǿř ȧƞ Ȧƥƥ Şŧǿřḗ ḓǿẇƞŀǿȧḓ ḿḗȧƞş ŧħȧŧ "
+"ḓḗṽḗŀǿƥḗřş řḗḓŭƈḗ ƀȧřřīḗřş ŧǿ ṽīřȧŀīŧẏ.\""
+
+#: apps/landing/templates/landing/mobile.html:168
+msgid "Android APIs"
+msgstr "Ȧƞḓřǿīḓ ȦƤĪş"
+
+#: apps/landing/templates/landing/mobile.html:170
+msgid "Access Android APIs on this Android Developer page."
+msgstr "Ȧƈƈḗşş Ȧƞḓřǿīḓ ȦƤĪş ǿƞ ŧħīş Ȧƞḓřǿīḓ Ḓḗṽḗŀǿƥḗř ƥȧɠḗ."
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mobile.html:181
+msgid "Recent <span class=\"mobile\">Mobile</span> News &amp; Updates"
+msgstr "Řḗƈḗƞŧ <span class=\"mobile\">Ḿǿƀīŀḗ</span> Ƞḗẇş &amp; Ŭƥḓȧŧḗş"
+
+#: apps/landing/templates/landing/mobile.html:186
+msgid "All mobile development entries"
+msgstr "Ȧŀŀ ḿǿƀīŀḗ ḓḗṽḗŀǿƥḿḗƞŧ ḗƞŧřīḗş"
+
+#: apps/landing/templates/landing/mobile.html:193
+msgid "Correspondence on Twitter from the Mobile developer community."
+msgstr "Ƈǿřřḗşƥǿƞḓḗƞƈḗ ǿƞ Ŧẇīŧŧḗř ƒřǿḿ ŧħḗ Ḿǿƀīŀḗ ḓḗṽḗŀǿƥḗř ƈǿḿḿŭƞīŧẏ."
+
+#: apps/landing/templates/landing/mozilla.html:16
+msgid "Welcome to the Mozilla Developer Community:"
+msgstr "Ẇḗŀƈǿḿḗ ŧǿ ŧħḗ Ḿǿzīŀŀȧ Ḓḗṽḗŀǿƥḗř Ƈǿḿḿŭƞīŧẏ:"
+
+#: apps/landing/templates/landing/mozilla.html:24
+msgid "Join the Mozilla discussions!"
+msgstr "Ĵǿīƞ ŧħḗ Ḿǿzīŀŀȧ ḓīşƈŭşşīǿƞş!"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mozilla.html:38
+msgid "Popular <span class=\"mozilla\">Mozilla</span> Documentation"
+msgstr "Ƥǿƥŭŀȧř <span class=\"mozilla\">Ḿǿzīŀŀȧ</span> Ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#: apps/landing/templates/landing/mozilla.html:43
+msgid "/en/Developer_Guide"
+msgstr "/en/Developer_Guide"
+
+#: apps/landing/templates/landing/mozilla.html:43
+msgid "Mozilla Developer Guide"
+msgstr "Ḿǿzīŀŀȧ Ḓḗṽḗŀǿƥḗř Ɠŭīḓḗ"
+
+#: apps/landing/templates/landing/mozilla.html:45
+msgid ""
+"Whether you're an old hand or just getting started, this is the best way to "
+"get started with Mozilla development."
+msgstr ""
+"Ẇħḗŧħḗř ẏǿŭ'řḗ ȧƞ ǿŀḓ ħȧƞḓ ǿř ĵŭşŧ ɠḗŧŧīƞɠ şŧȧřŧḗḓ, ŧħīş īş ŧħḗ ƀḗşŧ ẇȧẏ ŧǿ "
+"ɠḗŧ şŧȧřŧḗḓ ẇīŧħ Ḿǿzīŀŀȧ ḓḗṽḗŀǿƥḿḗƞŧ."
+
+#: apps/landing/templates/landing/mozilla.html:52
+msgid "/en/The_Mozilla_platform"
+msgstr "/en/The_Mozilla_platform"
+
+#: apps/landing/templates/landing/mozilla.html:52
+msgid "The Mozilla Platform"
+msgstr "Ŧħḗ Ḿǿzīŀŀȧ Ƥŀȧŧƒǿřḿ"
+
+#: apps/landing/templates/landing/mozilla.html:54
+msgid ""
+"Learn more about the technologies at the core of Mozilla products and "
+"services."
+msgstr ""
+"Ŀḗȧřƞ ḿǿřḗ ȧƀǿŭŧ ŧħḗ ŧḗƈħƞǿŀǿɠīḗş ȧŧ ŧħḗ ƈǿřḗ ǿƒ Ḿǿzīŀŀȧ ƥřǿḓŭƈŧş ȧƞḓ "
+"şḗřṽīƈḗş."
+
+#: apps/landing/templates/landing/mozilla.html:63
+msgid ""
+"There are several ways you can use Mozilla code in your own project. Find "
+"everything you need to develop \"powered by Mozilla\" applications."
+msgstr ""
+"Ŧħḗřḗ ȧřḗ şḗṽḗřȧŀ ẇȧẏş ẏǿŭ ƈȧƞ ŭşḗ Ḿǿzīŀŀȧ ƈǿḓḗ īƞ ẏǿŭř ǿẇƞ ƥřǿĵḗƈŧ. Ƒīƞḓ "
+"ḗṽḗřẏŧħīƞɠ ẏǿŭ ƞḗḗḓ ŧǿ ḓḗṽḗŀǿƥ \"ƥǿẇḗřḗḓ ƀẏ Ḿǿzīŀŀȧ\" ȧƥƥŀīƈȧŧīǿƞş."
+
+#: apps/landing/templates/landing/mozilla.html:71
+msgid "/en/Debugging"
+msgstr "/en/Debugging"
+
+#: apps/landing/templates/landing/mozilla.html:71
+msgid "Debugging"
+msgstr "Ḓḗƀŭɠɠīƞɠ"
+
+#: apps/landing/templates/landing/mozilla.html:73
+msgid ""
+"Mozilla developers have come up with not just technologies and features to "
+"help you debug code, but have devised tips and techniques that can help too."
+msgstr ""
+"Ḿǿzīŀŀȧ ḓḗṽḗŀǿƥḗřş ħȧṽḗ ƈǿḿḗ ŭƥ ẇīŧħ ƞǿŧ ĵŭşŧ ŧḗƈħƞǿŀǿɠīḗş ȧƞḓ ƒḗȧŧŭřḗş ŧǿ "
+"ħḗŀƥ ẏǿŭ ḓḗƀŭɠ ƈǿḓḗ, ƀŭŧ ħȧṽḗ ḓḗṽīşḗḓ ŧīƥş ȧƞḓ ŧḗƈħƞīɋŭḗş ŧħȧŧ ƈȧƞ ħḗŀƥ ŧǿǿ."
+
+#: apps/landing/templates/landing/mozilla.html:83
+msgid ""
+"Localization (L10n) is the process of translating software user interfaces "
+"from one language to another and adapting it to suit a foreign culture. "
+"These resources are about making Mozilla-based applications/extensions "
+"localizable."
+msgstr ""
+"Ŀǿƈȧŀīzȧŧīǿƞ (Ŀ10ƞ) īş ŧħḗ ƥřǿƈḗşş ǿƒ ŧřȧƞşŀȧŧīƞɠ şǿƒŧẇȧřḗ ŭşḗř īƞŧḗřƒȧƈḗş "
+"ƒřǿḿ ǿƞḗ ŀȧƞɠŭȧɠḗ ŧǿ ȧƞǿŧħḗř ȧƞḓ ȧḓȧƥŧīƞɠ īŧ ŧǿ şŭīŧ ȧ ƒǿřḗīɠƞ ƈŭŀŧŭřḗ. "
+"Ŧħḗşḗ řḗşǿŭřƈḗş ȧřḗ ȧƀǿŭŧ ḿȧķīƞɠ Ḿǿzīŀŀȧ-ƀȧşḗḓ ȧƥƥŀīƈȧŧīǿƞş/extensions "
+"ŀǿƈȧŀīzȧƀŀḗ."
+
+#: apps/landing/templates/landing/mozilla.html:92
+#: apps/landing/templates/landing/mozilla.html:109
+msgid "/en/Tools"
+msgstr "/en/Tools"
+
+#: apps/landing/templates/landing/mozilla.html:92
+msgid "All applications development documentation"
+msgstr "Ȧŀŀ ȧƥƥŀīƈȧŧīǿƞş ḓḗṽḗŀǿƥḿḗƞŧ ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mozilla.html:98
+msgid "Favorite <span class=\"mozilla\">Mozilla</span> Tools"
+msgstr "Ƒȧṽǿřīŧḗ <span class=\"mozilla\">Ḿǿzīŀŀȧ</span> Ŧǿǿŀş"
+
+#: apps/landing/templates/landing/mozilla.html:102
+msgid "Bugzilla"
+msgstr "Ɓŭɠzīŀŀȧ"
+
+#: apps/landing/templates/landing/mozilla.html:103
+msgid "The main issue-tracker for Mozilla projects."
+msgstr "Ŧħḗ ḿȧīƞ īşşŭḗ-ŧřȧƈķḗř ƒǿř Ḿǿzīŀŀȧ ƥřǿĵḗƈŧş."
+
+#: apps/landing/templates/landing/mozilla.html:106
+msgid "MXR"
+msgstr "ḾẊŘ"
+
+#: apps/landing/templates/landing/mozilla.html:107
+msgid "A Mozilla source tree browser."
+msgstr "Ȧ Ḿǿzīŀŀȧ şǿŭřƈḗ ŧřḗḗ ƀřǿẇşḗř."
+
+#: apps/landing/templates/landing/mozilla.html:109
+msgid "All application development tools"
+msgstr "Ȧŀŀ ȧƥƥŀīƈȧŧīǿƞ ḓḗṽḗŀǿƥḿḗƞŧ ŧǿǿŀş"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mozilla.html:116
+msgid "Recent <span class=\"mozilla\">Mozilla</span> News &amp; Updates"
+msgstr "Řḗƈḗƞŧ <span class=\"mozilla\">Ḿǿzīŀŀȧ</span> Ƞḗẇş &amp; Ŭƥḓȧŧḗş"
+
+#: apps/landing/templates/landing/mozilla.html:121
+msgid "All application development entries"
+msgstr "Ȧŀŀ ȧƥƥŀīƈȧŧīǿƞ ḓḗṽḗŀǿƥḿḗƞŧ ḗƞŧřīḗş"
+
+#: apps/landing/templates/landing/mozilla.html:128
+msgid "Correspondence on Twitter from the Mozilla developer community."
+msgstr "Ƈǿřřḗşƥǿƞḓḗƞƈḗ ǿƞ Ŧẇīŧŧḗř ƒřǿḿ ŧħḗ Ḿǿzīŀŀȧ ḓḗṽḗŀǿƥḗř ƈǿḿḿŭƞīŧẏ."
+
+#: apps/landing/templates/landing/newsfeed.html:9
+msgid "Posted %(entrydate)s by %(authorlink)s"
+msgstr "Ƥǿşŧḗḓ %(entrydate)s ƀẏ %(authorlink)s"
+
+#: apps/landing/templates/landing/promote_buttons.html:5
+#: apps/landing/templates/landing/promote_buttons.html:19
+msgid "Promote MDN"
+msgstr "Ƥřǿḿǿŧḗ ḾḒȠ"
+
+#: apps/landing/templates/landing/promote_buttons.html:20
+msgid "Spread some developer love."
+msgstr "Şƥřḗȧḓ şǿḿḗ ḓḗṽḗŀǿƥḗř ŀǿṽḗ."
+
+#: apps/landing/templates/landing/promote_buttons.html:21
+msgid ""
+"<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a "
+"custom button and source code to promote MDN on your website or blog.</li> "
+"<li><strong>Post Buttons:</strong> Copy the source code and paste it "
+"anywhere on your website or blog to help people click through to MDN.</li> "
+"<li><strong>Feel Good:</strong> Take pride in knowing you're making "
+"developers lives just a little bit better by sharing MDN with the "
+"world.</li> </ol>"
+msgstr ""
+"<ol> <li><strong>Ɠḗŧ Ɓŭŧŧǿƞş:</strong> Ŭşḗ ǿŭř şīḿƥŀḗ ƒǿřḿ ƀḗŀǿẇ ŧǿ ƈřḗȧŧḗ ȧ "
+"ƈŭşŧǿḿ ƀŭŧŧǿƞ ȧƞḓ şǿŭřƈḗ ƈǿḓḗ ŧǿ ƥřǿḿǿŧḗ ḾḒȠ ǿƞ ẏǿŭř ẇḗƀşīŧḗ ǿř ƀŀǿɠ.</li> "
+"<li><strong>Ƥǿşŧ Ɓŭŧŧǿƞş:</strong> Ƈǿƥẏ ŧħḗ şǿŭřƈḗ ƈǿḓḗ ȧƞḓ ƥȧşŧḗ īŧ "
+"ȧƞẏẇħḗřḗ ǿƞ ẏǿŭř ẇḗƀşīŧḗ ǿř ƀŀǿɠ ŧǿ ħḗŀƥ ƥḗǿƥŀḗ ƈŀīƈķ ŧħřǿŭɠħ ŧǿ ḾḒȠ.</li> "
+"<li><strong>Ƒḗḗŀ Ɠǿǿḓ:</strong> Ŧȧķḗ ƥřīḓḗ īƞ ķƞǿẇīƞɠ ẏǿŭ'řḗ ḿȧķīƞɠ "
+"ḓḗṽḗŀǿƥḗřş ŀīṽḗş ĵŭşŧ ȧ ŀīŧŧŀḗ ƀīŧ ƀḗŧŧḗř ƀẏ şħȧřīƞɠ ḾḒȠ ẇīŧħ ŧħḗ "
+"ẇǿřŀḓ.</li> </ol>"
+
+#: apps/landing/templates/landing/promote_buttons.html:36
+msgid "Preview"
+msgstr "Ƥřḗṽīḗẇ"
+
+#: apps/landing/templates/landing/promote_buttons.html:41
+msgid "Pick your button style"
+msgstr "Ƥīƈķ ẏǿŭř ƀŭŧŧǿƞ şŧẏŀḗ"
+
+#: apps/landing/templates/landing/promote_buttons.html:46
+msgid "Better Docs"
+msgstr "Ɓḗŧŧḗř Ḓǿƈş"
+
+#: apps/landing/templates/landing/promote_buttons.html:52
+msgid "Developer Powered"
+msgstr "Ḓḗṽḗŀǿƥḗř Ƥǿẇḗřḗḓ"
+
+#: apps/landing/templates/landing/promote_buttons.html:58
+msgid "For Developers, By Developers"
+msgstr "Ƒǿř Ḓḗṽḗŀǿƥḗřş, Ɓẏ Ḓḗṽḗŀǿƥḗřş"
+
+#: apps/landing/templates/landing/promote_buttons.html:64
+msgid "Web Developer Toolbox"
+msgstr "Ẇḗƀ Ḓḗṽḗŀǿƥḗř Ŧǿǿŀƀǿẋ"
+
+#: apps/landing/templates/landing/promote_buttons.html:71
+msgid "Choose a color"
+msgstr "Ƈħǿǿşḗ ȧ ƈǿŀǿř"
+
+#: apps/landing/templates/landing/promote_buttons.html:76
+msgid "Gray"
+msgstr "Ɠřȧẏ"
+
+#: apps/landing/templates/landing/promote_buttons.html:82
+msgid "Orange"
+msgstr "Ǿřȧƞɠḗ"
+
+#: apps/landing/templates/landing/promote_buttons.html:88
+msgid "Red"
+msgstr "Řḗḓ"
+
+#: apps/landing/templates/landing/promote_buttons.html:95
+msgid "Replace <FOO> with"
+msgstr "Řḗƥŀȧƈḗ <FOO> ẇīŧħ"
+
+#: apps/landing/templates/landing/promote_buttons.html:125
+msgid "Add your custom button to your website"
+msgstr "Ȧḓḓ ẏǿŭř ƈŭşŧǿḿ ƀŭŧŧǿƞ ŧǿ ẏǿŭř ẇḗƀşīŧḗ"
+
+#: apps/landing/templates/landing/promote_buttons.html:126
+msgid "Your source code:"
+msgstr "Ẏǿŭř şǿŭřƈḗ ƈǿḓḗ:"
+
+#: apps/landing/templates/landing/promote_buttons.html:128
+msgid "Your button will take people to:"
+msgstr "Ẏǿŭř ƀŭŧŧǿƞ ẇīŀŀ ŧȧķḗ ƥḗǿƥŀḗ ŧǿ:"
+
+#: apps/landing/templates/landing/promote_buttons.html:163
+#: apps/landing/templates/landing/promote_buttons.html:167
+#: apps/landing/templates/landing/promote_buttons.html:171
+msgid "Better CSS docs for a better Web on MDN"
+msgstr "Ɓḗŧŧḗř ƇŞŞ ḓǿƈş ƒǿř ȧ ƀḗŧŧḗř Ẇḗƀ ǿƞ ḾḒȠ"
+
+#: apps/landing/templates/landing/promote_buttons.html:164
+#: apps/landing/templates/landing/promote_buttons.html:168
+#: apps/landing/templates/landing/promote_buttons.html:172
+msgid "Better HTML docs for a better Web on MDN"
+msgstr "Ɓḗŧŧḗř ĦŦḾĿ ḓǿƈş ƒǿř ȧ ƀḗŧŧḗř Ẇḗƀ ǿƞ ḾḒȠ"
+
+#: apps/landing/templates/landing/promote_buttons.html:165
+#: apps/landing/templates/landing/promote_buttons.html:169
+#: apps/landing/templates/landing/promote_buttons.html:173
+msgid "Better JavaScript docs for a better Web on MDN"
+msgstr "Ɓḗŧŧḗř ĴȧṽȧŞƈřīƥŧ ḓǿƈş ƒǿř ȧ ƀḗŧŧḗř Ẇḗƀ ǿƞ ḾḒȠ"
+
+#: apps/landing/templates/landing/promote_buttons.html:166
+#: apps/landing/templates/landing/promote_buttons.html:170
+#: apps/landing/templates/landing/promote_buttons.html:174
+msgid "Better Web docs for a better Web on MDN"
+msgstr "Ɓḗŧŧḗř Ẇḗƀ ḓǿƈş ƒǿř ȧ ƀḗŧŧḗř Ẇḗƀ ǿƞ ḾḒȠ"
+
+#: apps/landing/templates/landing/promote_buttons.html:175
+#: apps/landing/templates/landing/promote_buttons.html:179
+#: apps/landing/templates/landing/promote_buttons.html:183
+msgid "MDN is Developer Powered for CSS docs, demos and more."
+msgstr "ḾḒȠ īş Ḓḗṽḗŀǿƥḗř Ƥǿẇḗřḗḓ ƒǿř ƇŞŞ ḓǿƈş, ḓḗḿǿş ȧƞḓ ḿǿřḗ."
+
+#: apps/landing/templates/landing/promote_buttons.html:176
+#: apps/landing/templates/landing/promote_buttons.html:180
+#: apps/landing/templates/landing/promote_buttons.html:184
+msgid "MDN is Developer Powered for HTML docs, demos and more."
+msgstr "ḾḒȠ īş Ḓḗṽḗŀǿƥḗř Ƥǿẇḗřḗḓ ƒǿř ĦŦḾĿ ḓǿƈş, ḓḗḿǿş ȧƞḓ ḿǿřḗ."
+
+#: apps/landing/templates/landing/promote_buttons.html:177
+#: apps/landing/templates/landing/promote_buttons.html:181
+#: apps/landing/templates/landing/promote_buttons.html:185
+msgid "MDN is Developer Powered for JavaScript docs, demos and more."
+msgstr "ḾḒȠ īş Ḓḗṽḗŀǿƥḗř Ƥǿẇḗřḗḓ ƒǿř ĴȧṽȧŞƈřīƥŧ ḓǿƈş, ḓḗḿǿş ȧƞḓ ḿǿřḗ."
+
+#: apps/landing/templates/landing/promote_buttons.html:178
+#: apps/landing/templates/landing/promote_buttons.html:182
+#: apps/landing/templates/landing/promote_buttons.html:186
+msgid "MDN is Developer Powered for Web docs, demos and more."
+msgstr "ḾḒȠ īş Ḓḗṽḗŀǿƥḗř Ƥǿẇḗřḗḓ ƒǿř Ẇḗƀ ḓǿƈş, ḓḗḿǿş ȧƞḓ ḿǿřḗ."
+
+#: apps/landing/templates/landing/promote_buttons.html:187
+#: apps/landing/templates/landing/promote_buttons.html:191
+#: apps/landing/templates/landing/promote_buttons.html:195
+msgid "CSS docs by developers, for developers on MDN"
+msgstr "ƇŞŞ ḓǿƈş ƀẏ ḓḗṽḗŀǿƥḗřş, ƒǿř ḓḗṽḗŀǿƥḗřş ǿƞ ḾḒȠ"
+
+#: apps/landing/templates/landing/promote_buttons.html:188
+#: apps/landing/templates/landing/promote_buttons.html:192
+#: apps/landing/templates/landing/promote_buttons.html:196
+msgid "HTML docs by developers, for developers on MDN"
+msgstr "ĦŦḾĿ ḓǿƈş ƀẏ ḓḗṽḗŀǿƥḗřş, ƒǿř ḓḗṽḗŀǿƥḗřş ǿƞ ḾḒȠ"
+
+#: apps/landing/templates/landing/promote_buttons.html:189
+#: apps/landing/templates/landing/promote_buttons.html:193
+#: apps/landing/templates/landing/promote_buttons.html:197
+msgid "JavaScript docs by developers, for developers on MDN"
+msgstr "ĴȧṽȧŞƈřīƥŧ ḓǿƈş ƀẏ ḓḗṽḗŀǿƥḗřş, ƒǿř ḓḗṽḗŀǿƥḗřş ǿƞ ḾḒȠ"
+
+#: apps/landing/templates/landing/promote_buttons.html:190
+#: apps/landing/templates/landing/promote_buttons.html:194
+#: apps/landing/templates/landing/promote_buttons.html:198
+msgid "Web docs by developers, for developers on MDN"
+msgstr "Ẇḗƀ ḓǿƈş ƀẏ ḓḗṽḗŀǿƥḗřş, ƒǿř ḓḗṽḗŀǿƥḗřş ǿƞ ḾḒȠ"
+
+#: apps/landing/templates/landing/promote_buttons.html:199
+#: apps/landing/templates/landing/promote_buttons.html:200
+#: apps/landing/templates/landing/promote_buttons.html:201
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+"ḾḒȠ īş ẏǿŭř Ẇḗƀ Ḓḗṽḗŀǿƥḗř Ŧǿǿŀƀǿẋ ƒǿř ḓǿƈş, ḓḗḿǿş ȧƞḓ ḿǿřḗ ǿƞ ĦŦḾĿ, ƇŞŞ, "
+"ĴȧṽȧŞƈřīƥŧ ȧƞḓ ǿŧħḗř Ẇḗƀ şŧȧƞḓȧřḓş ȧƞḓ ǿƥḗƞ ŧḗƈħƞǿŀǿɠīḗş."
+
+#: apps/landing/templates/landing/searchresults.html:7
+msgid "Search Results"
+msgstr "Şḗȧřƈħ Řḗşŭŀŧş"
+
+#: apps/landing/templates/landing/web.html:16
+msgid "Welcome to the Web Developer Community:"
+msgstr "Ẇḗŀƈǿḿḗ ŧǿ ŧħḗ Ẇḗƀ Ḓḗṽḗŀǿƥḗř Ƈǿḿḿŭƞīŧẏ:"
+
+#: apps/landing/templates/landing/web.html:20
+msgid "Develop for an open and participatory Web."
+msgstr "Ḓḗṽḗŀǿƥ ƒǿř ȧƞ ǿƥḗƞ ȧƞḓ ƥȧřŧīƈīƥȧŧǿřẏ Ẇḗƀ."
+
+#: apps/landing/templates/landing/web.html:24
+msgid "Join the Web discussions!"
+msgstr "Ĵǿīƞ ŧħḗ Ẇḗƀ ḓīşƈŭşşīǿƞş!"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/web.html:38
+msgid "Awesome <span class=\"web\">Web</span> Demos"
+msgstr "Ȧẇḗşǿḿḗ <span class=\"web\">Ẇḗƀ</span> Ḓḗḿǿş"
+
+#: apps/landing/templates/landing/web.html:43
+msgid "Web O' Wonder"
+msgstr "Ẇḗƀ Ǿ' Ẇǿƞḓḗř"
+
+#: apps/landing/templates/landing/web.html:44
+msgid ""
+"Want to see what the Web is really capable of? Explore the Web o' Wonder "
+"website and prepare to be amazed!"
+msgstr ""
+"Ẇȧƞŧ ŧǿ şḗḗ ẇħȧŧ ŧħḗ Ẇḗƀ īş řḗȧŀŀẏ ƈȧƥȧƀŀḗ ǿƒ? Ḗẋƥŀǿřḗ ŧħḗ Ẇḗƀ ǿ' Ẇǿƞḓḗř "
+"ẇḗƀşīŧḗ ȧƞḓ ƥřḗƥȧřḗ ŧǿ ƀḗ ȧḿȧzḗḓ!"
+
+#: apps/landing/templates/landing/web.html:48
+msgid ""
+"Do you want to show the world what the Web can do? Demo Studio is your place "
+"for sharing awesome demos and experiments with the latest Web standards and "
+"open technologies."
+msgstr ""
+"Ḓǿ ẏǿŭ ẇȧƞŧ ŧǿ şħǿẇ ŧħḗ ẇǿřŀḓ ẇħȧŧ ŧħḗ Ẇḗƀ ƈȧƞ ḓǿ? Ḓḗḿǿ Şŧŭḓīǿ īş ẏǿŭř ƥŀȧƈḗ "
+"ƒǿř şħȧřīƞɠ ȧẇḗşǿḿḗ ḓḗḿǿş ȧƞḓ ḗẋƥḗřīḿḗƞŧş ẇīŧħ ŧħḗ ŀȧŧḗşŧ Ẇḗƀ şŧȧƞḓȧřḓş ȧƞḓ "
+"ǿƥḗƞ ŧḗƈħƞǿŀǿɠīḗş."
+
+#: apps/landing/templates/landing/web.html:51
+msgid "Hacks Blog"
+msgstr "Ħȧƈķş Ɓŀǿɠ"
+
+#: apps/landing/templates/landing/web.html:52
+msgid ""
+"Learn more about developer features and the latest technologies through "
+"articles and demos on the Hacks Blog."
+msgstr ""
+"Ŀḗȧřƞ ḿǿřḗ ȧƀǿŭŧ ḓḗṽḗŀǿƥḗř ƒḗȧŧŭřḗş ȧƞḓ ŧħḗ ŀȧŧḗşŧ ŧḗƈħƞǿŀǿɠīḗş ŧħřǿŭɠħ "
+"ȧřŧīƈŀḗş ȧƞḓ ḓḗḿǿş ǿƞ ŧħḗ Ħȧƈķş Ɓŀǿɠ."
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/web.html:60
+msgid "Popular <span class=\"web\">Web</span> Documentation"
+msgstr "Ƥǿƥŭŀȧř <span class=\"web\">Ẇḗƀ</span> Ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#: apps/landing/templates/landing/web.html:66
+msgid ""
+"Find out what HTML5 is really all about and how you can develop for a better "
+"Web through open standards."
+msgstr ""
+"Ƒīƞḓ ǿŭŧ ẇħȧŧ ĦŦḾĿ5 īş řḗȧŀŀẏ ȧŀŀ ȧƀǿŭŧ ȧƞḓ ħǿẇ ẏǿŭ ƈȧƞ ḓḗṽḗŀǿƥ ƒǿř ȧ ƀḗŧŧḗř "
+"Ẇḗƀ ŧħřǿŭɠħ ǿƥḗƞ şŧȧƞḓȧřḓş."
+
+#: apps/landing/templates/landing/web.html:70
+msgid "A great resource for anyone working with JS."
+msgstr "Ȧ ɠřḗȧŧ řḗşǿŭřƈḗ ƒǿř ȧƞẏǿƞḗ ẇǿřķīƞɠ ẇīŧħ ĴŞ."
+
+#: apps/landing/templates/landing/web.html:74
+msgid ""
+"You'll find everything you need in the CSS reference and helpful tutorials "
+"to build pretty websites."
+msgstr ""
+"Ẏǿŭ'ŀŀ ƒīƞḓ ḗṽḗřẏŧħīƞɠ ẏǿŭ ƞḗḗḓ īƞ ŧħḗ ƇŞŞ řḗƒḗřḗƞƈḗ ȧƞḓ ħḗŀƥƒŭŀ ŧŭŧǿřīȧŀş "
+"ŧǿ ƀŭīŀḓ ƥřḗŧŧẏ ẇḗƀşīŧḗş."
+
+#: apps/landing/templates/landing/web.html:78
+msgid ""
+"The DOM is the architecture for Web documents; learn how to use the DOM and "
+"its API to look at and manipulate Web content."
+msgstr ""
+"Ŧħḗ ḒǾḾ īş ŧħḗ ȧřƈħīŧḗƈŧŭřḗ ƒǿř Ẇḗƀ ḓǿƈŭḿḗƞŧş; ŀḗȧřƞ ħǿẇ ŧǿ ŭşḗ ŧħḗ ḒǾḾ ȧƞḓ "
+"īŧş ȦƤĪ ŧǿ ŀǿǿķ ȧŧ ȧƞḓ ḿȧƞīƥŭŀȧŧḗ Ẇḗƀ ƈǿƞŧḗƞŧ."
+
+#: apps/landing/templates/landing/web.html:81
+msgid "/en/Web_Development"
+msgstr "/en/Web_Development"
+
+#: apps/landing/templates/landing/web.html:81
+msgid "All web development documentation"
+msgstr "Ȧŀŀ ẇḗƀ ḓḗṽḗŀǿƥḿḗƞŧ ḓǿƈŭḿḗƞŧȧŧīǿƞ"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/web.html:87
+msgid "Favorite <span class=\"web\">Web</span> Developer Tools"
+msgstr "Ƒȧṽǿřīŧḗ <span class=\"web\">Ẇḗƀ</span> Ḓḗṽḗŀǿƥḗř Ŧǿǿŀş"
+
+#: apps/landing/templates/landing/web.html:92
+msgid "The most popular and powerful web development tool."
+msgstr "Ŧħḗ ḿǿşŧ ƥǿƥŭŀȧř ȧƞḓ ƥǿẇḗřƒŭŀ ẇḗƀ ḓḗṽḗŀǿƥḿḗƞŧ ŧǿǿŀ."
+
+#: apps/landing/templates/landing/web.html:93
+msgid ""
+"\"An absolute necessity for anyone doing serious web development. "
+"Awesome!!!!\""
+msgstr ""
+"\"Ȧƞ ȧƀşǿŀŭŧḗ ƞḗƈḗşşīŧẏ ƒǿř ȧƞẏǿƞḗ ḓǿīƞɠ şḗřīǿŭş ẇḗƀ ḓḗṽḗŀǿƥḿḗƞŧ. "
+"Ȧẇḗşǿḿḗ!!!!\""
+
+#: apps/landing/templates/landing/web.html:93
+msgid "geckoday via AMO"
+msgstr "ɠḗƈķǿḓȧẏ ṽīȧ ȦḾǾ"
+
+#: apps/landing/templates/landing/web.html:97
+msgid ""
+"Firefox Add-on that adds a lot of great developer tools that are just a "
+"click away."
+msgstr ""
+"Ƒīřḗƒǿẋ Ȧḓḓ-ǿƞ ŧħȧŧ ȧḓḓş ȧ ŀǿŧ ǿƒ ɠřḗȧŧ ḓḗṽḗŀǿƥḗř ŧǿǿŀş ŧħȧŧ ȧřḗ ĵŭşŧ ȧ "
+"ƈŀīƈķ ȧẇȧẏ."
+
+#: apps/landing/templates/landing/web.html:101
+msgid "Evaluate performance of web pages with this Firefox/Firebug Add-on"
+msgstr "Ḗṽȧŀŭȧŧḗ ƥḗřƒǿřḿȧƞƈḗ ǿƒ ẇḗƀ ƥȧɠḗş ẇīŧħ ŧħīş Ƒīřḗƒǿẋ/Firebug Ȧḓḓ-ǿƞ"
+
+#: apps/landing/templates/landing/web.html:105
+msgid ""
+"Another great Firefox/Firebug Add-on that helps you view and manage cookies "
+"in your browser."
+msgstr ""
+"Ȧƞǿŧħḗř ɠřḗȧŧ Ƒīřḗƒǿẋ/Firebug Ȧḓḓ-ǿƞ ŧħȧŧ ħḗŀƥş ẏǿŭ ṽīḗẇ ȧƞḓ ḿȧƞȧɠḗ ƈǿǿķīḗş "
+"īƞ ẏǿŭř ƀřǿẇşḗř."
+
+#: apps/landing/templates/landing/web.html:107
+msgid "All web development tools"
+msgstr "Ȧŀŀ ẇḗƀ ḓḗṽḗŀǿƥḿḗƞŧ ŧǿǿŀş"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/web.html:114
+msgid "Recent <span class=\"web\">Web</span> News &amp; Updates"
+msgstr "Řḗƈḗƞŧ <span class=\"web\">Ẇḗƀ</span> Ƞḗẇş &amp; Ŭƥḓȧŧḗş"
+
+#: apps/landing/templates/landing/web.html:119
+msgid "All web development entries"
+msgstr "Ȧŀŀ ẇḗƀ ḓḗṽḗŀǿƥḿḗƞŧ ḗƞŧřīḗş"
+
+#: apps/landing/templates/landing/web.html:126
+msgid "Correspondence on Twitter from the Web developer community."
+msgstr "Ƈǿřřḗşƥǿƞḓḗƞƈḗ ǿƞ Ŧẇīŧŧḗř ƒřǿḿ ŧħḗ Ẇḗƀ ḓḗṽḗŀǿƥḗř ƈǿḿḿŭƞīŧẏ."
+
+#: apps/landing/templates/sidebar/twitter.html:3
+msgid "MDN on Twitter"
+msgstr "ḾḒȠ ǿƞ Ŧẇīŧŧḗř"
+
+#: apps/landing/templates/sidebar/twitter.html:9
+msgid "%(author)s from %(section)s says:"
+msgstr "%(author)s ƒřǿḿ %(section)s şȧẏş:"
+
+#: apps/landing/templates/sidebar/twitter.html:16
+msgid "{timedelta} ago"
+msgstr "{ŧīḿḗḓḗŀŧȧ} ȧɠǿ"
+
+#: apps/notifications/templates/notifications/gone.html:3
+msgid "Unsubscribed"
+msgstr "Ŭƞşŭƀşƈřīƀḗḓ"
+
+#: apps/notifications/templates/notifications/gone.html:10
+msgid "You have been unsubscribed from this notification."
+msgstr "Ẏǿŭ ħȧṽḗ ƀḗḗƞ ŭƞşŭƀşƈřīƀḗḓ ƒřǿḿ ŧħīş ƞǿŧīƒīƈȧŧīǿƞ."
+
+#: apps/notifications/templates/notifications/remove.html:3
+msgid "Unsubscribe"
+msgstr "Ŭƞşŭƀşƈřīƀḗ"
+
+#. {0} is an object title, {1} is an object type.
+#: apps/notifications/templates/notifications/remove.html:11
+msgid ""
+"Do you want to stop receiving email notifications from the {1} "
+"<strong>{0}</strong>?"
+msgstr ""
+"Ḓǿ ẏǿŭ ẇȧƞŧ ŧǿ şŧǿƥ řḗƈḗīṽīƞɠ ḗḿȧīŀ ƞǿŧīƒīƈȧŧīǿƞş ƒřǿḿ ŧħḗ {1} "
+"<strong>{0}</strong>?"
+
+#: templates/404.html:3
+#: templates/404.html:5
+msgid "Not Found"
+msgstr "Ƞǿŧ Ƒǿŭƞḓ"
+
+#: templates/500.html:3
+#: templates/500.html:5
+msgid "Internal Server Error"
+msgstr "Īƞŧḗřƞȧŀ Şḗřṽḗř Ḗřřǿř"
+
+#: templates/base.html:53
+msgid "Search MDN"
+msgstr "Şḗȧřƈħ ḾḒȠ"
+
+#: templates/base.html:64
+msgid "Topics"
+msgstr "Ŧǿƥīƈş"
+
+#: templates/base.html:90
+msgid "Offline Cache"
+msgstr "Ǿƒƒŀīƞḗ Ƈȧƈħḗ"
+
+#: templates/base.html:91
+msgid "Local Storage"
+msgstr "Ŀǿƈȧŀ Şŧǿřȧɠḗ"
+
+#: templates/base.html:93
+msgid "File API"
+msgstr "Ƒīŀḗ ȦƤĪ"
+
+#: templates/base.html:99
+msgid "Gradients"
+msgstr "Ɠřȧḓīḗƞŧş"
+
+#: templates/base.html:100
+msgid "Transforms"
+msgstr "Ŧřȧƞşƒǿřḿş"
+
+#: templates/base.html:101
+msgid "Transitions"
+msgstr "Ŧřȧƞşīŧīǿƞş"
+
+#: templates/base.html:102
+msgid "Animations"
+msgstr "Ȧƞīḿȧŧīǿƞş"
+
+#: templates/base.html:112
+msgid "Drag &amp; Drop"
+msgstr "Ḓřȧɠ &amp; Ḓřǿƥ"
+
+#: templates/base.html:122
+msgid "Community"
+msgstr "Ƈǿḿḿŭƞīŧẏ"
+
+#: templates/base.html:124
+msgid "Events"
+msgstr "Ḗṽḗƞŧş"
+
+#: templates/base.html:144
+msgid ""
+"What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share "
+"your feedback</a> with us."
+msgstr ""
+"Ẇħȧŧ ḓǿ ẏǿŭ ŧħīƞķ ǿƒ ŧħḗ ƞḗẇ ḾḒȠ? Ƥŀḗȧşḗ <a href=\"%(uservoice_url)s\">şħȧřḗ "
+"ẏǿŭř ƒḗḗḓƀȧƈķ</a> ẇīŧħ ŭş."
+
+#: templates/base.html:157
+msgid ""
+"Content is available under <a href=\"%(copyright_url)s\">these licenses</a>"
+msgstr ""
+"Ƈǿƞŧḗƞŧ īş ȧṽȧīŀȧƀŀḗ ŭƞḓḗř <a href=\"%(copyright_url)s\">ŧħḗşḗ ŀīƈḗƞşḗş</a>"
+
+#: templates/base.html:157
+msgid "/Project:Copyrights"
+msgstr "/Project:Copyrights"
+
+#: templates/base.html:160
+msgid "/Project:en/About"
+msgstr "/Project:en/About"
+
+#: templates/base.html:160
+msgid "About MDN"
+msgstr "Ȧƀǿŭŧ ḾḒȠ"
+
+#: templates/base.html:162
+msgid "Help"
+msgstr "Ħḗŀƥ"
+
+#: templates/global/footer.html:6
+msgid "Back to home page"
+msgstr "Ɓȧƈķ ŧǿ ħǿḿḗ ƥȧɠḗ"
+
+#: templates/global/footer.html:6
+#: templates/global/header.html:7
+msgid "Firefox"
+msgstr "Ƒīřḗƒǿẋ"
+
+#: templates/global/footer.html:17
+msgid "Privacy Policy"
+msgstr "Ƥřīṽȧƈẏ Ƥǿŀīƈẏ"
+
+#: templates/global/footer.html:18
+msgid "Legal Notices"
+msgstr "Ŀḗɠȧŀ Ƞǿŧīƈḗş"
+
+#: templates/global/footer.html:19
+msgid "Report Trademark Abuse"
+msgstr "Řḗƥǿřŧ Ŧřȧḓḗḿȧřķ Ȧƀŭşḗ"
+
+#: templates/global/footer.html:22
+msgid ""
+"Except where otherwise <a "
+"href=\"http://mozilla.com/about/legal.html#site\">noted</a>, content on this "
+"site is licensed under the <br /> <a "
+"href=\"http://creativecommons.org/licenses/by-sa/3.0/\"> Creative Commons "
+"Attribution Share-Alike License v3.0 </a> or any later version."
+msgstr ""
+"Ḗẋƈḗƥŧ ẇħḗřḗ ǿŧħḗřẇīşḗ <a "
+"href=\"http://mozilla.com/about/legal.html#site\">ƞǿŧḗḓ</a>, ƈǿƞŧḗƞŧ ǿƞ ŧħīş "
+"şīŧḗ īş ŀīƈḗƞşḗḓ ŭƞḓḗř ŧħḗ <br /> <a "
+"href=\"http://creativecommons.org/licenses/by-sa/3.0/\"> Ƈřḗȧŧīṽḗ Ƈǿḿḿǿƞş "
+"Ȧŧŧřīƀŭŧīǿƞ Şħȧřḗ-Ȧŀīķḗ Ŀīƈḗƞşḗ ṽ3.0 </a> ǿř ȧƞẏ ŀȧŧḗř ṽḗřşīǿƞ."
+
+#: templates/global/header.html:3
+msgid "skip to navigation"
+msgstr "şķīƥ ŧǿ ƞȧṽīɠȧŧīǿƞ"
+
+#: templates/global/header.html:4
+msgid "switch language"
+msgstr "şẇīŧƈħ ŀȧƞɠŭȧɠḗ"
+
+#: templates/global/header.html:7
+msgid "Back to Mozilla.com"
+msgstr "Ɓȧƈķ ŧǿ Ḿǿzīŀŀȧ.ƈǿḿ"
+
+#: templates/global/header.html:8
+#: templates/global/minimal-header.html:2
+msgid "visit <span>mozilla.org</span>"
+msgstr "ṽīşīŧ <span>ḿǿzīŀŀȧ.ǿřɠ</span>"
+
+#: templates/global/menu_links.html:2
+#: templates/global/menu_links.html:4
+#: templates/global/menu_links.html:16
+msgid "Features"
+msgstr "Ƒḗȧŧŭřḗş"
+
+#: templates/global/menu_links.html:6
+msgid "Performance"
+msgstr "Ƥḗřƒǿřḿȧƞƈḗ"
+
+#: templates/global/menu_links.html:7
+msgid "Customization"
+msgstr "Ƈŭşŧǿḿīzȧŧīǿƞ"
+
+#: templates/global/menu_links.html:8
+msgid "Videos"
+msgstr "Ṽīḓḗǿş"
+
+#: templates/global/menu_links.html:9
+msgid "Tour"
+msgstr "Ŧǿŭř"
+
+#: templates/global/menu_links.html:14
+msgid "Mobile Overview"
+msgstr "Ḿǿƀīŀḗ Ǿṽḗřṽīḗẇ"
+
+#: templates/global/menu_links.html:15
+msgid "Download"
+msgstr "Ḓǿẇƞŀǿȧḓ"
+
+#: templates/global/menu_links.html:17
+msgid "Customize"
+msgstr "Ƈŭşŧǿḿīzḗ"
+
+#: templates/global/menu_links.html:18
+msgid "Sync"
+msgstr "Şẏƞƈ"
+
+#: templates/global/menu_links.html:19
+msgid "Develop"
+msgstr "Ḓḗṽḗŀǿƥ"
+
+#: templates/global/menu_links.html:20
+msgid "Get Involved"
+msgstr "Ɠḗŧ Īƞṽǿŀṽḗḓ"
+
+#: templates/global/menu_links.html:21
+msgid "FAQ"
+msgstr "ƑȦɊ"
+
+#: templates/global/menu_links.html:22
+#: templates/global/menu_links.html:59
+msgid "Blog"
+msgstr "Ɓŀǿɠ"
+
+#: templates/global/menu_links.html:28
+msgid "Firefox Add-ons"
+msgstr "Ƒīřḗƒǿẋ Ȧḓḓ-ǿƞş"
+
+#: templates/global/menu_links.html:29
+msgid "Featured Add-ons"
+msgstr "Ƒḗȧŧŭřḗḓ Ȧḓḓ-ǿƞş"
+
+#: templates/global/menu_links.html:32
+msgid "Personas"
+msgstr "Ƥḗřşǿƞȧş"
+
+#: templates/global/menu_links.html:33
+msgid "Search Tools"
+msgstr "Şḗȧřƈħ Ŧǿǿŀş"
+
+#: templates/global/menu_links.html:34
+msgid "Language Support"
+msgstr "Ŀȧƞɠŭȧɠḗ Şŭƥƥǿřŧ"
+
+#: templates/global/menu_links.html:35
+msgid "Collections"
+msgstr "Ƈǿŀŀḗƈŧīǿƞş"
+
+#: templates/global/menu_links.html:36
+msgid "Mobile Add-ons"
+msgstr "Ḿǿƀīŀḗ Ȧḓḓ-ǿƞş"
+
+#: templates/global/menu_links.html:37
+msgid "Developer Hub"
+msgstr "Ḓḗṽḗŀǿƥḗř Ħŭƀ"
+
+#: templates/global/menu_links.html:42
+#: templates/layout/menu_links.html:5
+msgid "Support"
+msgstr "Şŭƥƥǿřŧ"
+
+#: templates/global/menu_links.html:44
+#: templates/layout/menu_links.html:7
+msgid "Firefox Support"
+msgstr "Ƒīřḗƒǿẋ Şŭƥƥǿřŧ"
+
+#: templates/global/menu_links.html:45
+#: templates/layout/menu_links.html:8
+msgid "Mobile Support"
+msgstr "Ḿǿƀīŀḗ Şŭƥƥǿřŧ"
+
+#: templates/global/menu_links.html:46
+#: templates/layout/menu_links.html:9
+msgid "Thunderbird Support"
+msgstr "Ŧħŭƞḓḗřƀīřḓ Şŭƥƥǿřŧ"
+
+#: templates/global/menu_links.html:50
+msgid "About"
+msgstr "Ȧƀǿŭŧ"
+
+#: templates/global/menu_links.html:52
+msgid "About Firefox"
+msgstr "Ȧƀǿŭŧ Ƒīřḗƒǿẋ"
+
+#: templates/global/menu_links.html:53
+msgid "Participate"
+msgstr "Ƥȧřŧīƈīƥȧŧḗ"
+
+#: templates/global/menu_links.html:54
+msgid "Communications"
+msgstr "Ƈǿḿḿŭƞīƈȧŧīǿƞş"
+
+#: templates/global/menu_links.html:55
+msgid "Careers"
+msgstr "Ƈȧřḗḗřş"
+
+#: templates/global/menu_links.html:56
+msgid "Partnerships"
+msgstr "Ƥȧřŧƞḗřşħīƥş"
+
+#: templates/global/menu_links.html:57
+msgid "Legal"
+msgstr "Ŀḗɠȧŀ"
+
+#: templates/global/menu_links.html:58
+msgid "Contact Us"
+msgstr "Ƈǿƞŧȧƈŧ Ŭş"
+
+#: templates/handlers/403.html:3
+#: templates/handlers/403.html:5
+msgid "Permission Denied"
+msgstr "Ƥḗřḿīşşīǿƞ Ḓḗƞīḗḓ"
+
+#: templates/handlers/403.html:9
+msgid "<p>I'm sorry %(name)s, I'm afraid I can't do that.</p>"
+msgstr "<p>Ī'ḿ şǿřřẏ %(name)s, Ī'ḿ ȧƒřȧīḓ Ī ƈȧƞ'ŧ ḓǿ ŧħȧŧ.</p>"
+
+#: templates/handlers/403.html:13
+msgid "<p>I'm sorry, I'm afraid I can't do that.</p>"
+msgstr "<p>Ī'ḿ şǿřřẏ, Ī'ḿ ȧƒřȧīḓ Ī ƈȧƞ'ŧ ḓǿ ŧħȧŧ.</p>"
+
+#: templates/handlers/403.html:19
+msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
+msgstr "<li><a href=\"/logout\">Ŀǿɠ ǿŭŧ</a> ŧǿ ŧřẏ ȧɠȧīƞ.</li>"
+
+#: templates/handlers/403.html:23
+msgid ""
+"<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Log in</a> to "
+"try again.</li> <li><a href=\"/Special:UserRegistration\">Register</a> to edit "
+"docs, submit demos, and post to forums.</li>"
+msgstr ""
+"<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Ŀǿɠ īƞ</a> ŧǿ "
+"ŧřẏ ȧɠȧīƞ.</li> <li><a href=\"/Special:UserRegistration\">Řḗɠīşŧḗř</a> ŧǿ ḗḓīŧ "
+"ḓǿƈş, şŭƀḿīŧ ḓḗḿǿş, ȧƞḓ ƥǿşŧ ŧǿ ƒǿřŭḿş.</li>"
+
+#: templates/handlers/403.html:28
+msgid ""
+"<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
+msgstr ""
+"<li><a href=\"/demos\">Ṽīḗẇ ḓḗḿǿş</a> ǿř <a href=\"/docs\">ƀřǿẇşḗ ḓǿƈş</a></li>"
+
+#: templates/handlers/403.html:32
+msgid ""
+"<p>No computer has ever made a mistake or distorted information. We are all, "
+"by any practical definition of the words, foolproof and incapable of error. "
+"So it can only be attributable to human error. If so, <a "
+"href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer"
+"%20Network&component=Website\">file a bug</a> for my human operators.</p>"
+msgstr ""
+"<p>Ƞǿ ƈǿḿƥŭŧḗř ħȧş ḗṽḗř ḿȧḓḗ ȧ ḿīşŧȧķḗ ǿř ḓīşŧǿřŧḗḓ īƞƒǿřḿȧŧīǿƞ. Ẇḗ ȧřḗ ȧŀŀ, "
+"ƀẏ ȧƞẏ ƥřȧƈŧīƈȧŀ ḓḗƒīƞīŧīǿƞ ǿƒ ŧħḗ ẇǿřḓş, ƒǿǿŀƥřǿǿƒ ȧƞḓ īƞƈȧƥȧƀŀḗ ǿƒ ḗřřǿř. "
+"Şǿ īŧ ƈȧƞ ǿƞŀẏ ƀḗ ȧŧŧřīƀŭŧȧƀŀḗ ŧǿ ħŭḿȧƞ ḗřřǿř. Īƒ şǿ, <a "
+"href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer"
+"%20Network&component=Website\">ƒīŀḗ ȧ ƀŭɠ</a> ƒǿř ḿẏ ħŭḿȧƞ ǿƥḗřȧŧǿřş.</p>"
+
+#: templates/includes/common_macros.html:5
+msgid "Search Firefox Help"
+msgstr "Şḗȧřƈħ Ƒīřḗƒǿẋ Ħḗŀƥ"
+
+#: templates/includes/common_macros.html:23
+msgid "Welcome, <span class=\"user\">{user}</span>."
+msgstr "Ẇḗŀƈǿḿḗ, <span class=\"user\">{ŭşḗř}</span>."
+
+#: templates/includes/common_macros.html:25
+msgid "Profile"
+msgstr "Ƥřǿƒīŀḗ"
+
+#: templates/includes/common_macros.html:27
+msgid "Sign Out"
+msgstr "Şīɠƞ Ǿŭŧ"
+
+#: templates/includes/common_macros.html:31
+msgid ""
+"Want to contribute?<br /> <a href=\"%(login_url)s\">Sign In</a> or <a href=\"%"
+"(register_url)s\">Register</a>"
+msgstr ""
+"Ẇȧƞŧ ŧǿ ƈǿƞŧřīƀŭŧḗ?<br /> <a href=\"%(login_url)s\">Şīɠƞ Īƞ</a> ǿř <a href=\"%"
+"(register_url)s\">Řḗɠīşŧḗř</a>"
+
+#: templates/includes/lang_switcher.html:2
+msgid "Other languages:"
+msgstr "Ǿŧħḗř ŀȧƞɠŭȧɠḗş:"
+
+#: templates/includes/lang_switcher.html:10
+msgid "Go"
+msgstr "Ɠǿ"
+
+#: templates/includes/login.html:2
+#: templates/includes/login.html:9
+msgid "Welcome back"
+msgstr "Ẇḗŀƈǿḿḗ ƀȧƈķ"
+
+#: templates/includes/login.html:3
+#: templates/includes/login.html:10
+msgid "Log out"
+msgstr "Ŀǿɠ ǿŭŧ"
+
+#: templates/includes/login.html:6
+msgid "Join MDN"
+msgstr "Ĵǿīƞ ḾḒȠ"
+
+#: templates/includes/login.html:7
+#: templates/layout/login.html:5
+#: templates/layout/login.html:20
+msgid "Log in"
+msgstr "Ŀǿɠ īƞ"
+
+#: templates/includes/sidebar_modules.html:5
+msgid "For Contributors"
+msgstr "Ƒǿř Ƈǿƞŧřīƀŭŧǿřş"
+
+#: templates/includes/sidebar_modules.html:7
+msgid "Contributor Home Page"
+msgstr "Ƈǿƞŧřīƀŭŧǿř Ħǿḿḗ Ƥȧɠḗ"
+
+#: templates/includes/sidebar_modules.html:8
+msgid "Knowledge Base Dashboard"
+msgstr "Ķƞǿẇŀḗḓɠḗ Ɓȧşḗ Ḓȧşħƀǿȧřḓ"
+
+#: templates/includes/sidebar_modules.html:9
+msgid "Media Gallery"
+msgstr "Ḿḗḓīȧ Ɠȧŀŀḗřẏ"
+
+#: templates/includes/sidebar_modules.html:10
+msgid "Help on Twitter"
+msgstr "Ħḗŀƥ ǿƞ Ŧẇīŧŧḗř"
+
+#: templates/includes/sidebar_modules.html:11
+msgid "Answer Support Questions"
+msgstr "Ȧƞşẇḗř Şŭƥƥǿřŧ Ɋŭḗşŧīǿƞş"
+
+#: templates/includes/sidebar_modules.html:12
+msgid "Help with Live Chat"
+msgstr "Ħḗŀƥ ẇīŧħ Ŀīṽḗ Ƈħȧŧ"
+
+#: templates/includes/sidebar_modules.html:13
+msgid "Improve the Knowledge Base"
+msgstr "Īḿƥřǿṽḗ ŧħḗ Ķƞǿẇŀḗḓɠḗ Ɓȧşḗ"
+
+#: templates/includes/sidebar_modules.html:14
+msgid "Translate Articles"
+msgstr "Ŧřȧƞşŀȧŧḗ Ȧřŧīƈŀḗş"
+
+#: templates/includes/sidebar_modules.html:15
+msgid "Contributors Forums"
+msgstr "Ƈǿƞŧřīƀŭŧǿřş Ƒǿřŭḿş"
+
+#: templates/includes/sidebar_modules.html:25
+msgid "Firefox Help Home"
+msgstr "Ƒīřḗƒǿẋ Ħḗŀƥ Ħǿḿḗ"
+
+#: templates/includes/sidebar_modules.html:28
+msgid "Ask a Question"
+msgstr "Ȧşķ ȧ Ɋŭḗşŧīǿƞ"
+
+#. Label used before a list of links to download the video
+#: templates/includes/video_player.html:5
+msgid "Download Formats:"
+msgstr "Ḓǿẇƞŀǿȧḓ Ƒǿřḿȧŧş:"
+
+#. Browsers and Plugins useful for viewing video content
+#: templates/includes/video_player.html:7
+msgid ""
+"This video requires a browser with support for open video: <ul> <li><a "
+"href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> "
+"<li><a href=\"http://www.apple.com/safari/\">Safari</a> 3.1 or greater</li> "
+"</ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash "
+"Player</a>. Alternatively, you may use the video download links provided."
+msgstr ""
+"Ŧħīş ṽīḓḗǿ řḗɋŭīřḗş ȧ ƀřǿẇşḗř ẇīŧħ şŭƥƥǿřŧ ƒǿř ǿƥḗƞ ṽīḓḗǿ: <ul> <li><a "
+"href=\"http://www.mozilla.com/firefox/\">Ƒīřḗƒǿẋ</a> 3.5 ǿř ɠřḗȧŧḗř</li> "
+"<li><a href=\"http://www.apple.com/safari/\">Şȧƒȧřī</a> 3.1 ǿř ɠřḗȧŧḗř</li> "
+"</ul> ǿř ŧħḗ <a href=\"http://www.adobe.com/go/getflashplayer\">Ȧḓǿƀḗ Ƒŀȧşħ "
+"Ƥŀȧẏḗř</a>. Ȧŀŧḗřƞȧŧīṽḗŀẏ, ẏǿŭ ḿȧẏ ŭşḗ ŧħḗ ṽīḓḗǿ ḓǿẇƞŀǿȧḓ ŀīƞķş ƥřǿṽīḓḗḓ."
+
+#: templates/layout/footer.html:11
+msgid "Other Languages"
+msgstr "Ǿŧħḗř Ŀȧƞɠŭȧɠḗş"
+
+#: templates/layout/login.html:8
+msgid "Username:"
+msgstr "Ŭşḗřƞȧḿḗ:"
+
+#: templates/layout/login.html:11
+msgid "Password:"
+msgstr "Ƥȧşşẇǿřḓ:"
+
+#: templates/layout/login.html:16
+msgid "Remember me"
+msgstr "Řḗḿḗḿƀḗř ḿḗ"
+
+#: templates/layout/login.html:23
+msgid "Click here to register"
+msgstr "Ƈŀīƈķ ħḗřḗ ŧǿ řḗɠīşŧḗř"
+
+#: templates/layout/login.html:24
+msgid "Register"
+msgstr "Řḗɠīşŧḗř"
+
+#: templates/layout/login.html:26
+msgid "Click here if you've forgotten your password"
+msgstr "Ƈŀīƈķ ħḗřḗ īƒ ẏǿŭ'ṽḗ ƒǿřɠǿŧŧḗƞ ẏǿŭř ƥȧşşẇǿřḓ"
+
+#: templates/layout/login.html:26
+msgid "I forgot my password"
+msgstr "Ī ƒǿřɠǿŧ ḿẏ ƥȧşşẇǿřḓ"

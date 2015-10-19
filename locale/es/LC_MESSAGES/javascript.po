@@ -1,0 +1,27 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-09 11:45-0700\n"
+"PO-Revision-Date: 2014-03-16 16:58+0000\n"
+"Last-Translator: Inma <inma.barrios@mozilla-hispano.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Translate Toolkit 1.6.0\n"
+"X-POOTLE-MTIME: 1394989095.0\n"
+
+#: media/js/libs/ckeditor/plugins/mdn-link/plugin.js:155
+msgid "Launch"
+msgstr "Lanzar"
+
+#: media/js/libs/ckeditor/plugins/mdn-link/dialogs/link.js:462
+msgid "Article Title Lookup / Link Text"
+msgstr "Búsqueda del título del artículo / texto del vínculo"
+
+#: media/js/libs/ckeditor/plugins/mdn-link/dialogs/link.js:500
+msgid "Attachments"
+msgstr "Archivos adjuntos"

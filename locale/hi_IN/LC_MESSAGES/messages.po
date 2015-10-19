@@ -1,0 +1,6991 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-24 11:47-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: hi_IN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 1.6.0\n"
+
+#: apps/actioncounters/models.py:69
+#: apps/contentflagging/models.py:105
+msgid "object ID"
+msgstr ""
+
+#: apps/actioncounters/models.py:73
+msgid "name of the action"
+msgstr ""
+
+#: apps/actioncounters/models.py:92
+#: apps/contentflagging/models.py:129
+#: apps/demos/models.py:448
+msgid "date last modified"
+msgstr ""
+
+#: apps/authkeys/models.py:38
+msgid "Lookup key"
+msgstr ""
+
+#: apps/authkeys/models.py:40
+msgid "Hashed secret"
+msgstr ""
+
+#: apps/authkeys/models.py:42
+msgid "Description of intended use"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/delete.html:7
+#: apps/authkeys/templates/authkeys/history.html:8
+#: apps/authkeys/templates/authkeys/new.html:34
+msgid "Created"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/delete.html:9
+#: apps/authkeys/templates/authkeys/history.html:10
+#: apps/authkeys/templates/authkeys/new.html:36
+#: apps/devmo/templates/devmo/calendar.html:45
+#: apps/devmo/templates/devmo/calendar.html:71
+#: apps/wiki/templates/wiki/includes/attachment_list.html:45
+msgid "Description"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/delete.html:15
+#: apps/demos/templates/demos/elements/comments_tree.html:40
+#: apps/wiki/templates/wiki/confirm_document_delete.html:15
+#: apps/wiki/templates/wiki/confirm_document_delete.html:32
+#: apps/wiki/templates/wiki/confirm_revision_delete.html:24
+#: apps/wiki/templates/wiki/includes/attachment_list.html:50
+msgid "Delete"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/delete.html:16
+#: apps/authkeys/templates/authkeys/new.html:17
+#: apps/notifications/templates/notifications/remove.html:16
+#: apps/users/templates/users/confirm_avatar_delete.html:23
+#: apps/wiki/templates/wiki/confirm_document_delete.html:33
+#: apps/wiki/templates/wiki/confirm_revision_delete.html:25
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:35
+#: apps/wiki/templates/wiki/includes/review_form.html:35
+#: apps/wiki/templates/wiki/includes/review_form.html:49
+#: apps/wiki/templates/wiki/includes/submit_revision_modal.html:19
+msgid "Cancel"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/history.html:14
+msgid "This key has not been used yet."
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/list.html:6
+msgid ""
+"These are your API keys. They're useful for building applications that "
+"perform tasks on MDN on your behalf. If you have stopped using any of them, "
+"or suspect one has been exposed to parties you don't trust with your "
+"account, click the <span class=\"button\">X</span> to delete the key. It's "
+"easy to create a replacement key at any time."
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/list.html:13
+msgid "Create a new key"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/list.html:15
+msgid "You have no API keys, yet."
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/list.html:22
+msgid "Delete key"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/list.html:23
+msgid "X"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/list.html:25
+msgid "View key usage history"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/list.html:26
+msgid "History ({count})"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/new.html:7
+msgid ""
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> "
+"This will be your only means of identifying this key later, other than the "
+"date and time of its creation. So, be as clear as you can.</p>"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/new.html:16
+msgid "Create"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/new.html:20
+msgid ""
+"<p>Your new key has been created. Please make a note of the details below "
+"(e.g. by copying them into your application's settings). This information "
+"will never be displayed again, and cannot be recovered if lost.</p> "
+"<p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%"
+"(list_url)s\">return to the key list</a>. Reloading this page will create a "
+"new key.</p>"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/new.html:30
+msgid "Key ID"
+msgstr ""
+
+#: apps/authkeys/templates/authkeys/new.html:32
+msgid "Secret"
+msgstr ""
+
+#: apps/contentflagging/models.py:28
+msgid "This is not working for me"
+msgstr ""
+
+#: apps/contentflagging/models.py:29
+msgid "This contains inappropriate content"
+msgstr ""
+
+#: apps/contentflagging/models.py:30
+msgid "This was not created by the author"
+msgstr ""
+
+#: apps/contentflagging/models.py:31
+msgid "The author is fake"
+msgstr ""
+
+#: apps/contentflagging/models.py:35
+msgid "Flagged"
+msgstr ""
+
+#: apps/contentflagging/models.py:36
+msgid "Flag rejected by moderator"
+msgstr ""
+
+#: apps/contentflagging/models.py:37
+msgid "Creator notified"
+msgstr ""
+
+#: apps/contentflagging/models.py:38
+msgid "Content hidden by moderator"
+msgstr ""
+
+#: apps/contentflagging/models.py:39
+msgid "Content deleted by moderator"
+msgstr ""
+
+#: apps/contentflagging/models.py:71
+msgid "{object} Flagged"
+msgstr ""
+
+#: apps/contentflagging/models.py:91
+msgid "current status of flag review"
+msgstr ""
+
+#: apps/contentflagging/models.py:94
+msgid "reason for flagging the content"
+msgstr ""
+
+#: apps/contentflagging/models.py:97
+msgid "please explain what content you feel is inappropriate"
+msgstr ""
+
+#: apps/contentflagging/models.py:126
+msgid "date submitted"
+msgstr ""
+
+#: apps/demos/__init__.py:34
+msgid "None"
+msgstr ""
+
+#: apps/demos/__init__.py:35
+msgid "Removed from Derby"
+msgstr ""
+
+#: apps/demos/__init__.py:39
+msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
+msgstr ""
+
+#: apps/demos/__init__.py:40
+msgid "CSS3 Animations"
+msgstr ""
+
+#: apps/demos/__init__.py:41
+msgid "June 2011"
+msgstr ""
+
+#: apps/demos/__init__.py:44
+msgid ""
+"CSS3 Animations let you change property values over time, to animate the "
+"appearance or position of elements, with no or minimal JavaScript, and with "
+"greater control than transitions."
+msgstr ""
+
+#: apps/demos/__init__.py:45
+msgid ""
+"CSS3 Animations are a new feature of modern browsers like Firefox, which add "
+"even more flexibility and control to the style and experience of the Web. "
+"CSS3 Animations let you change property values over time with no or minimal "
+"JavaScript, and with greater control than CSS Transitions. Go beyond static "
+"properties to animate the appearance and positions of HTML elements. You can "
+"achieve these effects without Flash or Silverlight, to make creative "
+"dynamic interfaces and engaging animations with CSS3."
+msgstr ""
+
+#: apps/demos/__init__.py:50
+msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
+msgstr ""
+
+#: apps/demos/__init__.py:51
+msgid "HTML5 <video>"
+msgstr ""
+
+#: apps/demos/__init__.py:52
+msgid "July 2011"
+msgstr ""
+
+#: apps/demos/__init__.py:55
+#: apps/demos/__init__.py:56
+msgid ""
+"The HTML5 <video> element lets you embed and control video media directly in "
+"web pages, without resorting to plug-ins."
+msgstr ""
+
+#: apps/demos/__init__.py:61
+msgid "August 2011 Dev Derby Challenge - History API"
+msgstr ""
+
+#: apps/demos/__init__.py:62
+msgid "History API"
+msgstr ""
+
+#: apps/demos/__init__.py:63
+msgid "August 2011"
+msgstr ""
+
+#: apps/demos/__init__.py:66
+#: apps/demos/__init__.py:67
+msgid ""
+"The History API in modern browsers enables live changes to the document "
+"without breaking the back button and allows apps to be bookmarked."
+msgstr ""
+
+#: apps/demos/__init__.py:72
+msgid "September 2011 Dev Derby Challenge - Geolocation"
+msgstr ""
+
+#: apps/demos/__init__.py:73
+#: apps/demos/__init__.py:456
+msgid "Geolocation"
+msgstr ""
+
+#: apps/demos/__init__.py:74
+msgid "September 2011"
+msgstr ""
+
+#: apps/demos/__init__.py:77
+#: apps/demos/__init__.py:78
+#: apps/demos/__init__.py:235
+#: apps/demos/__init__.py:236
+msgid ""
+"With Geolocation, you can get the user's physical location (with permission) "
+"and use it to enhance the browsing experience or enable advanced location-"
+"aware features."
+msgstr ""
+
+#: apps/demos/__init__.py:86
+msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
+msgstr ""
+
+#: apps/demos/__init__.py:87
+msgid "CSS Media Queries"
+msgstr ""
+
+#: apps/demos/__init__.py:88
+msgid "October 2011"
+msgstr ""
+
+#: apps/demos/__init__.py:91
+#: apps/demos/__init__.py:92
+msgid ""
+"CSS Media Queries allow Web developers to create responsive Web designs, "
+"tailoring the user experience for a range of screen sizes, including "
+"desktops, tablets, and mobiles."
+msgstr ""
+
+#: apps/demos/__init__.py:99
+msgid "November 2011 Dev Derby Challenge - Canvas"
+msgstr ""
+
+#: apps/demos/__init__.py:100
+#: apps/demos/__init__.py:398
+#: apps/translations/search/filter/canvas/name.py:2
+msgid "Canvas"
+msgstr ""
+
+#: apps/demos/__init__.py:101
+msgid "November 2011"
+msgstr ""
+
+#: apps/demos/__init__.py:104
+#: apps/demos/__init__.py:105
+msgid ""
+"Canvas lets you paint the Web using JavaScript to render 2D shapes, "
+"bitmapped images, and advanced graphical effects. Each <canvas> element "
+"provides a graphics context with its own state and methods that make it easy "
+"to control and draw in."
+msgstr ""
+
+#: apps/demos/__init__.py:111
+msgid "December 2011 Dev Derby Challenge - IndexedDB"
+msgstr ""
+
+#: apps/demos/__init__.py:112
+#: apps/demos/__init__.py:486
+msgid "IndexedDB"
+msgstr ""
+
+#: apps/demos/__init__.py:113
+msgid "December 2011"
+msgstr ""
+
+#: apps/demos/__init__.py:116
+#: apps/demos/__init__.py:117
+msgid ""
+"IndexedDB lets web applications store significant amounts of structured data "
+"locally, for faster access, online or offline."
+msgstr ""
+
+#: apps/demos/__init__.py:123
+msgid "January 2012 Dev Derby Challenge - Orientation"
+msgstr ""
+
+#: apps/demos/__init__.py:124
+msgid "Orientation"
+msgstr ""
+
+#: apps/demos/__init__.py:125
+msgid "January 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:128
+#: apps/demos/__init__.py:129
+msgid ""
+"Orientation features in HTML5 access the motion and orientation data of "
+"devices with accelerometers."
+msgstr ""
+
+#: apps/demos/__init__.py:135
+msgid "February 2012 Dev Derby Challenge - Touch Events"
+msgstr ""
+
+#: apps/demos/__init__.py:136
+msgid "Touch Events"
+msgstr ""
+
+#: apps/demos/__init__.py:137
+msgid "February 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:140
+#: apps/demos/__init__.py:141
+msgid ""
+"Touch Events help you make websites and applications more engaging by "
+"responding appropriately when users interact with touch screens."
+msgstr ""
+
+#: apps/demos/__init__.py:147
+msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
+msgstr ""
+
+#: apps/demos/__init__.py:148
+msgid "CSS 3D Transforms"
+msgstr ""
+
+#: apps/demos/__init__.py:149
+msgid "March 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:152
+#: apps/demos/__init__.py:153
+msgid ""
+"CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS "
+"to be transformed in three-dimensional space."
+msgstr ""
+
+#: apps/demos/__init__.py:159
+msgid "April 2012 Dev Derby Challenge - Audio"
+msgstr ""
+
+#: apps/demos/__init__.py:160
+#: apps/demos/__init__.py:388
+msgid "Audio"
+msgstr ""
+
+#: apps/demos/__init__.py:161
+msgid "April 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:164
+#: apps/demos/__init__.py:165
+msgid ""
+"The HTML5 audio element lets you embed sound in webpages without requiring "
+"your users to rely on plug-ins."
+msgstr ""
+
+#: apps/demos/__init__.py:171
+msgid "May 2012 Dev Derby Challenge - WebSockets API"
+msgstr ""
+
+#: apps/demos/__init__.py:172
+msgid "WebSockets API"
+msgstr ""
+
+#: apps/demos/__init__.py:173
+msgid "May 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:176
+#: apps/demos/__init__.py:177
+msgid ""
+"With the Websocket API and protocol, you can open a two-way channel between "
+"the browser and a server, for scalable and real-time data flow. No more "
+"server polling!"
+msgstr ""
+
+#: apps/demos/__init__.py:187
+msgid "June 2012 Dev Derby Challenge - WebGL"
+msgstr ""
+
+#: apps/demos/__init__.py:188
+#: apps/demos/__init__.py:546
+#: apps/translations/search/filter/webgl/name.py:2
+msgid "WebGL"
+msgstr ""
+
+#: apps/demos/__init__.py:189
+msgid "June 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:192
+#: apps/demos/__init__.py:193
+#: apps/demos/__init__.py:364
+#: apps/demos/__init__.py:365
+msgid ""
+"WebGL brings the power of OpenGL, for creating interactive 3D graphics, to "
+"the Web, with no plug-ins required."
+msgstr ""
+
+#: apps/demos/__init__.py:202
+msgid "July 2012 Dev Derby Challenge - No JavaScript"
+msgstr ""
+
+#: apps/demos/__init__.py:203
+msgid "No JavaScript"
+msgstr ""
+
+#: apps/demos/__init__.py:204
+msgid "July 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:207
+#: apps/demos/__init__.py:208
+msgid ""
+"Creating rich user experiences for the Web has never been easier. Today's "
+"open Web standards put some of the most powerful features right at your "
+"fingertips. Animate pages with CSS, validate user input with HTML, and more. "
+"What else can you do without JavaScript?"
+msgstr ""
+
+#: apps/demos/__init__.py:216
+msgid "August 2012 Dev Derby Challenge - Camera API"
+msgstr ""
+
+#: apps/demos/__init__.py:217
+msgid "Camera API"
+msgstr ""
+
+#: apps/demos/__init__.py:218
+msgid "August 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:221
+#: apps/demos/__init__.py:222
+msgid ""
+"The Camera API lets you access (with permission) the cameras of mobile "
+"devices. With the Camera API, users can easily take pictures and upload them "
+"to your web page."
+msgstr ""
+
+#: apps/demos/__init__.py:230
+msgid "September 2012 Dev Derby Challenge - Geolocation II"
+msgstr ""
+
+#: apps/demos/__init__.py:231
+msgid "Geolocation II"
+msgstr ""
+
+#: apps/demos/__init__.py:232
+msgid "September 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:244
+msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
+msgstr ""
+
+#: apps/demos/__init__.py:245
+msgid "CSS Media Queries II"
+msgstr ""
+
+#: apps/demos/__init__.py:246
+msgid "October 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:249
+#: apps/demos/__init__.py:250
+msgid ""
+"CSS Media Queries are now a common tool for responsive, mobile-first web "
+"design. They are now even a W3C Recommendation! They can tell you a lot more "
+"about a display than just its width. What can you do with Media Queries?"
+msgstr ""
+
+#: apps/demos/__init__.py:258
+msgid "November 2012 Dev Derby Challenge - Fullscreen API"
+msgstr ""
+
+#: apps/demos/__init__.py:259
+msgid "Fullscreen API"
+msgstr ""
+
+#: apps/demos/__init__.py:260
+msgid "November 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:263
+#: apps/demos/__init__.py:264
+msgid ""
+"With the Fullscreen API, you can escape the confines of the browser window. "
+"You can even detect full screen state changes and style full screen pages "
+"specially. Talk about immersive!"
+msgstr ""
+
+#: apps/demos/__init__.py:273
+msgid "December 2012 Dev Derby Challenge - Offline"
+msgstr ""
+
+#: apps/demos/__init__.py:274
+msgid "Offline"
+msgstr ""
+
+#: apps/demos/__init__.py:275
+msgid "December 2012"
+msgstr ""
+
+#: apps/demos/__init__.py:278
+#: apps/demos/__init__.py:279
+msgid ""
+"With the maturing offline capabilities of the open Web, you can build apps "
+"that work with or without an Internet connection. With offline technologies, "
+"you can better support travelers and mobile users, improve performance, and "
+"more."
+msgstr ""
+
+#: apps/demos/__init__.py:289
+msgid "January 2013 Dev Derby Challenge - Drag and Drop"
+msgstr ""
+
+#: apps/demos/__init__.py:290
+#: apps/demos/__init__.py:496
+msgid "Drag and Drop"
+msgstr ""
+
+#: apps/demos/__init__.py:291
+msgid "January 2013"
+msgstr ""
+
+#: apps/demos/__init__.py:294
+#: apps/demos/__init__.py:295
+msgid ""
+"The Drag and Drop API brings an age-old interaction to the Web, making rich, "
+"natural, and familiar user experiences possible."
+msgstr ""
+
+#: apps/demos/__init__.py:303
+msgid "February 2013 Dev Derby Challenge - Multi-touch"
+msgstr ""
+
+#: apps/demos/__init__.py:304
+#: apps/demos/__init__.py:586
+msgid "Multi-touch"
+msgstr ""
+
+#: apps/demos/__init__.py:305
+msgid "February 2013"
+msgstr ""
+
+#: apps/demos/__init__.py:308
+#: apps/demos/__init__.py:309
+msgid ""
+"The Touch Events API lets you track multiple touches at the same time on "
+"devices that support them. Build complex games, support pinch-to-zoom and "
+"more. By using multi-touch, your app can respond to all the interactions "
+"users have come to expect."
+msgstr ""
+
+#: apps/demos/__init__.py:317
+msgid "March 2013 Dev Derby Challenge - Mobile"
+msgstr ""
+
+#: apps/demos/__init__.py:318
+#: apps/demos/__init__.py:506
+#: apps/devmo/__init__.py:24
+#: apps/translations/search/filter/mobile/name.py:2
+msgid "Mobile"
+msgstr ""
+
+#: apps/demos/__init__.py:319
+msgid "March 2013"
+msgstr ""
+
+#: apps/demos/__init__.py:322
+#: apps/demos/__init__.py:323
+msgid ""
+"The mobile Web is becoming more important every day. This time, the only "
+"limit is your creativity. What amazing experiences can you build for users "
+"on the go?"
+msgstr ""
+
+#: apps/demos/__init__.py:331
+msgid "April 2013 Dev Derby Challenge - Web Workers"
+msgstr ""
+
+#: apps/demos/__init__.py:332
+#: apps/demos/__init__.py:566
+msgid "Web Workers"
+msgstr ""
+
+#: apps/demos/__init__.py:333
+msgid "April 2013"
+msgstr ""
+
+#: apps/demos/__init__.py:336
+#: apps/demos/__init__.py:337
+msgid ""
+"Web Workers make it easy for you to run scripts in the background. By using "
+"Web Workers, you can create dazzling user interfaces that are not hindered "
+"by even the most computationally-intensive tasks."
+msgstr ""
+
+#: apps/demos/__init__.py:345
+msgid "May 2013 Dev Derby Challenge - getUserMedia"
+msgstr ""
+
+#: apps/demos/__init__.py:346
+msgid "getUserMedia"
+msgstr ""
+
+#: apps/demos/__init__.py:347
+msgid "May 2013"
+msgstr ""
+
+#: apps/demos/__init__.py:348
+msgid "May"
+msgstr ""
+
+#: apps/demos/__init__.py:349
+msgid "Action!"
+msgstr ""
+
+#: apps/demos/__init__.py:350
+#: apps/demos/__init__.py:351
+msgid ""
+"The getUserMedia function lets you access (with permission) the cameras and "
+"microphones of your users. No plugins needed! What can you do once you have "
+"this media? The possibilities are endless."
+msgstr ""
+
+#: apps/demos/__init__.py:359
+msgid "June 2013 Dev Derby Challenge - WebGL II"
+msgstr ""
+
+#: apps/demos/__init__.py:360
+msgid "WebGL II"
+msgstr ""
+
+#: apps/demos/__init__.py:361
+msgid "June 2013"
+msgstr ""
+
+#: apps/demos/__init__.py:362
+msgid "June"
+msgstr ""
+
+#: apps/demos/__init__.py:363
+msgid "Twice the 3D!"
+msgstr ""
+
+#: apps/demos/__init__.py:373
+msgid "July 2013 Dev Derby Challenge - File API"
+msgstr ""
+
+#: apps/demos/__init__.py:374
+msgid "File API"
+msgstr ""
+
+#: apps/demos/__init__.py:375
+msgid "July 2013"
+msgstr ""
+
+#: apps/demos/__init__.py:376
+msgid "July"
+msgstr ""
+
+#: apps/demos/__init__.py:377
+msgid "File found"
+msgstr ""
+
+#: apps/demos/__init__.py:378
+#: apps/demos/__init__.py:379
+msgid ""
+"The File API lets you read the contents of files submitted by your users, "
+"making natural and familiar data operations possible."
+msgstr ""
+
+#: apps/demos/__init__.py:389
+msgid ""
+"Mozilla's Audio Data API extends the current HTML5 API and allows web "
+"developers to read and write raw audio data."
+msgstr ""
+
+#: apps/demos/__init__.py:391
+#: apps/demos/__init__.py:401
+#: apps/demos/__init__.py:411
+#: apps/demos/__init__.py:421
+#: apps/demos/__init__.py:430
+#: apps/demos/__init__.py:439
+#: apps/demos/__init__.py:449
+#: apps/demos/__init__.py:459
+#: apps/demos/__init__.py:469
+#: apps/demos/__init__.py:479
+#: apps/demos/__init__.py:489
+#: apps/demos/__init__.py:499
+#: apps/demos/__init__.py:509
+#: apps/demos/__init__.py:519
+#: apps/demos/__init__.py:529
+#: apps/demos/__init__.py:539
+#: apps/demos/__init__.py:549
+#: apps/demos/__init__.py:559
+#: apps/demos/__init__.py:569
+#: apps/demos/__init__.py:579
+#: apps/demos/__init__.py:589
+msgid "MDN Documentation"
+msgstr ""
+
+#: apps/demos/__init__.py:391
+msgid ""
+"https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
+msgstr ""
+
+#: apps/demos/__init__.py:392
+#: apps/demos/__init__.py:402
+#: apps/demos/__init__.py:412
+#: apps/demos/__init__.py:440
+#: apps/demos/__init__.py:450
+#: apps/demos/__init__.py:460
+#: apps/demos/__init__.py:470
+#: apps/demos/__init__.py:480
+#: apps/demos/__init__.py:490
+#: apps/demos/__init__.py:500
+#: apps/demos/__init__.py:510
+#: apps/demos/__init__.py:520
+#: apps/demos/__init__.py:530
+#: apps/demos/__init__.py:540
+#: apps/demos/__init__.py:550
+#: apps/demos/__init__.py:560
+#: apps/demos/__init__.py:570
+#: apps/demos/__init__.py:580
+#: apps/demos/__init__.py:590
+msgid "Wikipedia Article"
+msgstr ""
+
+#: apps/demos/__init__.py:392
+msgid "http://en.wikipedia.org/wiki/HTML5_audio"
+msgstr ""
+
+#: apps/demos/__init__.py:393
+#: apps/demos/__init__.py:403
+#: apps/demos/__init__.py:413
+#: apps/demos/__init__.py:422
+#: apps/demos/__init__.py:431
+#: apps/demos/__init__.py:441
+#: apps/demos/__init__.py:451
+#: apps/demos/__init__.py:461
+#: apps/demos/__init__.py:481
+#: apps/demos/__init__.py:491
+#: apps/demos/__init__.py:501
+#: apps/demos/__init__.py:511
+#: apps/demos/__init__.py:521
+#: apps/demos/__init__.py:531
+#: apps/demos/__init__.py:541
+#: apps/demos/__init__.py:561
+#: apps/demos/__init__.py:571
+#: apps/demos/__init__.py:581
+#: apps/demos/__init__.py:591
+msgid "W3C Spec"
+msgstr ""
+
+#: apps/demos/__init__.py:393
+msgid "http://www.w3.org/TR/html5/video.html#audio"
+msgstr ""
+
+#: apps/demos/__init__.py:399
+msgid ""
+"The HTML5 canvas element allows you to display scriptable renderings of 2D "
+"shapes and bitmap images."
+msgstr ""
+
+#: apps/demos/__init__.py:401
+msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
+msgstr ""
+
+#: apps/demos/__init__.py:402
+msgid "http://en.wikipedia.org/wiki/Canvas_element"
+msgstr ""
+
+#: apps/demos/__init__.py:403
+msgid "http://www.w3.org/TR/html5/the-canvas-element.html"
+msgstr ""
+
+#: apps/demos/__init__.py:408
+#: apps/landing/templates/landing/homepage.html:43
+msgid "CSS3"
+msgstr ""
+
+#: apps/demos/__init__.py:409
+msgid ""
+"Cascading Style Sheets level 3 (CSS3) provide serveral new features and "
+"properties to enhance the formatting and look of documents written in "
+"different kinds of markup languages like HTML or XML."
+msgstr ""
+
+#: apps/demos/__init__.py:411
+msgid "https://developer.mozilla.org/en-US/docs/Web/CSS"
+msgstr ""
+
+#: apps/demos/__init__.py:412
+msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
+msgstr ""
+
+#: apps/demos/__init__.py:413
+msgid "http://www.w3.org/TR/css3-roadmap/"
+msgstr ""
+
+#: apps/demos/__init__.py:418
+msgid "Device"
+msgstr ""
+
+#: apps/demos/__init__.py:419
+msgid ""
+"Media queries and orientation events let authors adjust their layout on "
+"hand-held devices such as mobile phones."
+msgstr ""
+
+#: apps/demos/__init__.py:421
+msgid ""
+"https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
+msgstr ""
+
+#: apps/demos/__init__.py:422
+msgid "http://www.w3.org/TR/css3-mediaqueries/"
+msgstr ""
+
+#: apps/demos/__init__.py:427
+msgid "Files"
+msgstr ""
+
+#: apps/demos/__init__.py:428
+msgid ""
+"The File API allows web developers to use file objects in web applications, "
+"as well as selecting and accessing their data."
+msgstr ""
+
+#: apps/demos/__init__.py:430
+msgid ""
+"https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
+msgstr ""
+
+#: apps/demos/__init__.py:431
+msgid "http://www.w3.org/TR/FileAPI/"
+msgstr ""
+
+#: apps/demos/__init__.py:436
+msgid "Fonts & Type"
+msgstr ""
+
+#: apps/demos/__init__.py:437
+msgid ""
+"The CSS3-Font specification contains enhanced features for fonts and "
+"typography like embedding own fonts via @font-face or controlling OpenType "
+"font features directly via CSS."
+msgstr ""
+
+#: apps/demos/__init__.py:439
+msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
+msgstr ""
+
+#: apps/demos/__init__.py:440
+msgid "http://en.wikipedia.org/wiki/Web_typography"
+msgstr ""
+
+#: apps/demos/__init__.py:441
+msgid "http://www.w3.org/TR/css3-fonts/"
+msgstr ""
+
+#: apps/demos/__init__.py:446
+msgid "Forms"
+msgstr ""
+
+#: apps/demos/__init__.py:447
+msgid ""
+"Form elements and attributes in HTML5 provide a greater degree of semantic "
+"mark-up than HTML4 and remove a great deal of the need for tedious scripting "
+"and styling that was required in HTML4."
+msgstr ""
+
+#: apps/demos/__init__.py:449
+msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
+msgstr ""
+
+#: apps/demos/__init__.py:450
+msgid "http://en.wikipedia.org/wiki/HTML_forms"
+msgstr ""
+
+#: apps/demos/__init__.py:451
+msgid "http://www.w3.org/TR/html5/forms.html"
+msgstr ""
+
+#: apps/demos/__init__.py:457
+msgid ""
+"The Geolocation API allows web applications to access the user's "
+"geographical location."
+msgstr ""
+
+#: apps/demos/__init__.py:459
+msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
+msgstr ""
+
+#: apps/demos/__init__.py:460
+msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
+msgstr ""
+
+#: apps/demos/__init__.py:461
+msgid "http://dev.w3.org/geo/api/spec-source.html"
+msgstr ""
+
+#: apps/demos/__init__.py:466
+#: apps/landing/templates/landing/homepage.html:44
+#: apps/landing/templates/landing/learn.html:38
+#: apps/landing/templates/landing/promote_buttons.html:111
+#: apps/translations/search/filter/js/name.py:2
+#: templates/base.html:115
+msgid "JavaScript"
+msgstr ""
+
+#: apps/demos/__init__.py:467
+msgid ""
+"JavaScript is a lightweight, object-oriented programming language, commonly "
+"used for scripting interactive behavior on web pages and in web "
+"applications."
+msgstr ""
+
+#: apps/demos/__init__.py:469
+msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+msgstr ""
+
+#: apps/demos/__init__.py:470
+msgid "http://en.wikipedia.org/wiki/JavaScript"
+msgstr ""
+
+#: apps/demos/__init__.py:471
+msgid "ECMA Spec"
+msgstr ""
+
+#: apps/demos/__init__.py:471
+msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+msgstr ""
+
+#: apps/demos/__init__.py:476
+#: apps/landing/templates/landing/homepage.html:42
+msgid "HTML5"
+msgstr ""
+
+#: apps/demos/__init__.py:477
+msgid ""
+"HTML5 is the newest version of the HTML standard, currently under "
+"development."
+msgstr ""
+
+#: apps/demos/__init__.py:479
+msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
+msgstr ""
+
+#: apps/demos/__init__.py:480
+msgid "http://en.wikipedia.org/wiki/Html5"
+msgstr ""
+
+#: apps/demos/__init__.py:481
+msgid "http://dev.w3.org/html5/spec/Overview.html"
+msgstr ""
+
+#: apps/demos/__init__.py:487
+msgid ""
+"IndexedDB is an API for client-side storage of significant amounts of "
+"structured data and for high performance searches on this data using "
+"indexes."
+msgstr ""
+
+#: apps/demos/__init__.py:489
+msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
+msgstr ""
+
+#: apps/demos/__init__.py:490
+msgid "http://en.wikipedia.org/wiki/IndexedDB"
+msgstr ""
+
+#: apps/demos/__init__.py:491
+msgid "http://www.w3.org/TR/IndexedDB/"
+msgstr ""
+
+#: apps/demos/__init__.py:497
+msgid ""
+"Drag and Drop features allow the user to move elements on the screen using "
+"the mouse pointer."
+msgstr ""
+
+#: apps/demos/__init__.py:499
+msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
+msgstr ""
+
+#: apps/demos/__init__.py:500
+msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
+msgstr ""
+
+#: apps/demos/__init__.py:501
+msgid "http://www.w3.org/TR/html5/dnd.html"
+msgstr ""
+
+#: apps/demos/__init__.py:507
+msgid ""
+"Firefox Mobile brings the true Web experience to mobile phones and other "
+"non-PC devices."
+msgstr ""
+
+#: apps/demos/__init__.py:509
+msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
+msgstr ""
+
+#: apps/demos/__init__.py:510
+msgid "http://en.wikipedia.org/wiki/Mobile_web"
+msgstr ""
+
+#: apps/demos/__init__.py:511
+msgid "http://www.w3.org/Mobile/"
+msgstr ""
+
+#: apps/demos/__init__.py:516
+msgid "Offline Support"
+msgstr ""
+
+#: apps/demos/__init__.py:517
+msgid ""
+"Offline caching of web applications' resources using the application cache "
+"and local storage."
+msgstr ""
+
+#: apps/demos/__init__.py:519
+msgid ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
+msgstr ""
+
+#: apps/demos/__init__.py:520
+msgid "http://en.wikipedia.org/wiki/Web_Storage"
+msgstr ""
+
+#: apps/demos/__init__.py:521
+msgid "http://dev.w3.org/html5/webstorage/"
+msgstr ""
+
+#: apps/demos/__init__.py:526
+#: apps/translations/search/filter/svg/name.py:2
+msgid "SVG"
+msgstr ""
+
+#: apps/demos/__init__.py:527
+msgid ""
+"Scalable Vector Graphics (SVG) is an XML based language for describing two-"
+"dimensional vector graphics."
+msgstr ""
+
+#: apps/demos/__init__.py:529
+msgid "https://developer.mozilla.org/en-US/docs/Web/SVG"
+msgstr ""
+
+#: apps/demos/__init__.py:530
+msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+msgstr ""
+
+#: apps/demos/__init__.py:531
+msgid "http://www.w3.org/TR/SVG11/"
+msgstr ""
+
+#: apps/demos/__init__.py:536
+msgid "Video"
+msgstr ""
+
+#: apps/demos/__init__.py:537
+msgid ""
+"The HTML5 video element provides integrated support for playing video media "
+"without requiring plug-ins."
+msgstr ""
+
+#: apps/demos/__init__.py:539
+msgid ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/HTML/Using_HTML5_audio_and_video"
+msgstr ""
+
+#: apps/demos/__init__.py:540
+msgid "http://en.wikipedia.org/wiki/HTML5_video"
+msgstr ""
+
+#: apps/demos/__init__.py:541
+msgid "http://www.w3.org/TR/html5/video.html"
+msgstr ""
+
+#: apps/demos/__init__.py:547
+msgid ""
+"In the context of the HTML canvas element WebGL provides an API for 3D "
+"graphics in the browser."
+msgstr ""
+
+#: apps/demos/__init__.py:549
+msgid "https://developer.mozilla.org/en-US/docs/Web/WebGL"
+msgstr ""
+
+#: apps/demos/__init__.py:550
+msgid "http://en.wikipedia.org/wiki/WebGL"
+msgstr ""
+
+#: apps/demos/__init__.py:551
+msgid "Khronos Spec"
+msgstr ""
+
+#: apps/demos/__init__.py:551
+msgid "http://www.khronos.org/webgl/"
+msgstr ""
+
+#: apps/demos/__init__.py:556
+msgid "WebSockets"
+msgstr ""
+
+#: apps/demos/__init__.py:557
+msgid ""
+"WebSockets is a technology that makes it possible to open an interactive "
+"communication session between the user's browser and a server."
+msgstr ""
+
+#: apps/demos/__init__.py:559
+msgid "https://developer.mozilla.org/en-US/docs/WebSockets"
+msgstr ""
+
+#: apps/demos/__init__.py:560
+msgid "http://en.wikipedia.org/wiki/Web_Sockets"
+msgstr ""
+
+#: apps/demos/__init__.py:561
+msgid "http://dev.w3.org/html5/websockets/"
+msgstr ""
+
+#: apps/demos/__init__.py:567
+msgid ""
+"Web Workers provide a simple means for web content to run scripts in "
+"background threads."
+msgstr ""
+
+#: apps/demos/__init__.py:569
+msgid ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/Guide/Performance/Using_web_workers"
+msgstr ""
+
+#: apps/demos/__init__.py:570
+msgid "http://en.wikipedia.org/wiki/Web_Workers"
+msgstr ""
+
+#: apps/demos/__init__.py:571
+msgid "http://www.w3.org/TR/workers/"
+msgstr ""
+
+#: apps/demos/__init__.py:576
+msgid "XMLHttpRequest"
+msgstr ""
+
+#: apps/demos/__init__.py:577
+msgid ""
+"XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver "
+"and load the response data directly back into the script."
+msgstr ""
+
+#: apps/demos/__init__.py:579
+msgid ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
+msgstr ""
+
+#: apps/demos/__init__.py:580
+msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
+msgstr ""
+
+#: apps/demos/__init__.py:581
+msgid "http://www.w3.org/TR/XMLHttpRequest/"
+msgstr ""
+
+#: apps/demos/__init__.py:587
+msgid ""
+"Track the movement of the user's finger on a touch screen, monitoring the "
+"raw touch events generated by the system."
+msgstr ""
+
+#: apps/demos/__init__.py:589
+msgid ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
+msgstr ""
+
+#: apps/demos/__init__.py:590
+msgid "http://en.wikipedia.org/wiki/Multi-touch"
+msgstr ""
+
+#: apps/demos/__init__.py:591
+msgid "http://www.w3.org/2010/webevents/charter/"
+msgstr ""
+
+#: apps/demos/__init__.py:600
+msgid "MPL/GPL/LGPL"
+msgstr ""
+
+#: apps/demos/__init__.py:601
+msgid "http://www.mozilla.org/MPL/"
+msgstr ""
+
+#: apps/demos/__init__.py:606
+msgid "GPL"
+msgstr ""
+
+#: apps/demos/__init__.py:607
+msgid "http://www.opensource.org/licenses/gpl-license.php"
+msgstr ""
+
+#: apps/demos/__init__.py:612
+msgid "BSD"
+msgstr ""
+
+#: apps/demos/__init__.py:613
+msgid "http://www.opensource.org/licenses/bsd-license.php"
+msgstr ""
+
+#: apps/demos/__init__.py:618
+msgid "Apache"
+msgstr ""
+
+#: apps/demos/__init__.py:619
+msgid "http://www.apache.org/licenses/"
+msgstr ""
+
+#: apps/demos/__init__.py:624
+msgid "Public Domain (where applicable by law)"
+msgstr ""
+
+#: apps/demos/__init__.py:625
+msgid "http://creativecommons.org/publicdomain/zero/1.0/"
+msgstr ""
+
+#: apps/demos/admin.py:37
+msgid "Censored %(item)s"
+msgstr ""
+
+#: apps/demos/admin.py:41
+msgid "Successfully censored %(count)d %(items)s."
+msgstr ""
+
+#: apps/demos/admin.py:48
+#: apps/demos/admin.py:108
+msgid "Are you sure?"
+msgstr ""
+
+#: apps/demos/admin.py:97
+msgid "Deleted and uploaded files for %(item)s"
+msgstr ""
+
+#: apps/demos/admin.py:101
+msgid "Successfully deleted %(count)d %(items)s."
+msgstr ""
+
+#: apps/demos/feeds.py:92
+msgid "MDN demos"
+msgstr ""
+
+#: apps/demos/feeds.py:93
+msgid "Demos submitted by MDN users"
+msgstr ""
+
+#: apps/demos/feeds.py:159
+msgid "MDN recent demos"
+msgstr ""
+
+#: apps/demos/feeds.py:160
+msgid "Demos recently submitted to MDN"
+msgstr ""
+
+#: apps/demos/feeds.py:171
+msgid "MDN featured demos"
+msgstr ""
+
+#: apps/demos/feeds.py:172
+msgid "Demos featured on MDN"
+msgstr ""
+
+#: apps/demos/feeds.py:186
+msgid "MDN demos tagged %s"
+msgstr ""
+
+#: apps/demos/feeds.py:189
+msgid "MDN demos tagged \"%s\""
+msgstr ""
+
+#: apps/demos/feeds.py:205
+msgid "%s's MDN demos"
+msgstr ""
+
+#: apps/demos/feeds.py:220
+msgid "MDN demo search for \"%s\""
+msgstr ""
+
+#: apps/demos/feeds.py:221
+msgid "Search results for demo submissions matching \"%s\""
+msgstr ""
+
+#: apps/demos/forms.py:204
+msgid "Show us you're human"
+msgstr ""
+
+#: apps/demos/helpers.py:114
+msgid "First Place"
+msgstr ""
+
+#: apps/demos/helpers.py:115
+msgid "Second Place"
+msgstr ""
+
+#: apps/demos/helpers.py:116
+msgid "Third Place"
+msgstr ""
+
+#: apps/demos/helpers.py:117
+msgid "Finalist"
+msgstr ""
+
+#: apps/demos/helpers.py:118
+msgid "Featured"
+msgstr ""
+
+#: apps/demos/helpers.py:298
+msgid "year"
+msgid_plural "years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:299
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:300
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:301
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:309
+msgid "%(number)d %(type)s"
+msgstr ""
+
+#: apps/demos/helpers.py:389
+msgid "%(number)d year ago"
+msgid_plural "%(number)d years ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:391
+msgid "%(number)d month ago"
+msgid_plural "%(number)d months ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:393
+msgid "%(number)d week ago"
+msgid_plural "%(number)d weeks ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:395
+msgid "%(number)d day ago"
+msgid_plural "%(number)d days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:397
+msgid "%(number)d hour ago"
+msgid_plural "%(number)d hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:399
+msgid "%(number)d minute ago"
+msgid_plural "%(number)d minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/helpers.py:401
+msgid "%(number)d second ago"
+msgid_plural "%(number)d seconds ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/models.py:186
+msgid "Please keep filesize under %s. Current filesize %s"
+msgstr ""
+
+#: apps/demos/models.py:263
+msgid "Cannot process image"
+msgstr ""
+
+#: apps/demos/models.py:359
+msgid "what is your demo's name?"
+msgstr ""
+
+#: apps/demos/models.py:361
+msgid "slug"
+msgstr ""
+
+#: apps/demos/models.py:364
+msgid "describe your demo in one line"
+msgstr ""
+
+#: apps/demos/models.py:367
+msgid "describe your demo in more detail (optional)"
+msgstr ""
+
+#: apps/demos/models.py:372
+msgid "Hide this demo from others?"
+msgstr ""
+
+#: apps/demos/models.py:375
+msgid "Redirect URL for censorship."
+msgstr ""
+
+#: apps/demos/models.py:379
+msgid "control how your demo is launched"
+msgstr ""
+
+#: apps/demos/models.py:381
+msgid "Disable navigation bar, launch demo in a new window"
+msgstr ""
+
+#: apps/demos/models.py:382
+msgid "Use navigation bar, display demo in <iframe>"
+msgstr ""
+
+#: apps/demos/models.py:394
+msgid "Screenshot #1"
+msgstr ""
+
+#: apps/demos/models.py:400
+msgid "Screenshot #2"
+msgstr ""
+
+#: apps/demos/models.py:406
+msgid "Screenshot #3"
+msgstr ""
+
+#: apps/demos/models.py:412
+msgid "Screenshot #4"
+msgstr ""
+
+#: apps/demos/models.py:418
+msgid "Screenshot #5"
+msgstr ""
+
+#: apps/demos/models.py:425
+msgid "have a video of your demo in action? (optional)"
+msgstr ""
+
+#: apps/demos/models.py:429
+msgid "select a ZIP file containing your demo"
+msgstr ""
+
+#: apps/demos/models.py:437
+msgid ""
+"Is your source code also available somewhere else on the web (e.g., github)? "
+"Please share the link."
+msgstr ""
+
+#: apps/demos/models.py:440
+msgid "Select the license that applies to your source code."
+msgstr ""
+
+#: apps/demos/models.py:446
+msgid "date created"
+msgstr ""
+
+#: apps/demos/models.py:653
+#: apps/demos/models.py:660
+msgid "ZIP file contains no acceptable files"
+msgstr ""
+
+#: apps/demos/models.py:656
+msgid "ZIP file corrupted"
+msgstr ""
+
+#: apps/demos/models.py:675
+msgid "ZIP file contains a file that is too large: %(filename)s"
+msgstr ""
+
+#: apps/demos/models.py:685
+msgid "ZIP file contains an unacceptable file: %(filename)s"
+msgstr ""
+
+#: apps/demos/models.py:690
+msgid "HTML index not found in ZIP"
+msgstr ""
+
+#: apps/demos/views.py:97
+#: apps/demos/views.py:336
+#: apps/demos/views.py:364
+#: apps/demos/views.py:406
+#: apps/demos/views.py:421
+msgid "access denied"
+msgstr ""
+
+#: apps/demos/templates/demos/delete.html:10
+#: apps/demos/templates/demos/delete_comment.html:10
+#: apps/demos/templates/demos/detail.html:9
+#: apps/demos/templates/demos/devderby_tag.html:5
+#: apps/demos/templates/demos/flag.html:10
+#: apps/demos/templates/demos/launch.html:6
+#: apps/demos/templates/demos/listing_all.html:4
+#: apps/demos/templates/demos/listing_search.html:9
+#: apps/demos/templates/demos/listing_tag.html:4
+#: apps/demos/templates/demos/profile_detail.html:8
+#: apps/demos/templates/demos/submit.html:8
+#: apps/demos/templates/demos/submit.html:10
+#: apps/demos/templates/demos/submit_noauth.html:11
+#: apps/demos/templates/demos/terms.html:10
+msgid "{subtitle} | Demo Studio"
+msgstr ""
+
+#: apps/demos/templates/demos/delete.html:20
+#: apps/demos/templates/demos/delete_comment.html:20
+#: apps/landing/templates/landing/learn_html.html:62
+#: apps/landing/templates/landing/learn_html.html:73
+#: apps/landing/templates/landing/learn_html.html:98
+msgid "MDN"
+msgstr ""
+
+#: apps/demos/templates/demos/delete.html:21
+#: apps/demos/templates/demos/delete_comment.html:21
+#: apps/demos/templates/demos/detail.html:14
+#: apps/demos/templates/demos/home.html:14
+#: apps/demos/templates/demos/launch.html:15
+msgid "Demo Studio"
+msgstr ""
+
+#: apps/demos/templates/demos/delete.html:26
+#: apps/demos/templates/demos/delete_comment.html:26
+#: apps/demos/templates/demos/detail.html:32
+#: apps/demos/templates/demos/home.html:23
+#: apps/demos/templates/demos/elements/demos_head.html:4
+msgid "Submit a Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/delete.html:38
+msgid "Remove this demo?"
+msgstr ""
+
+#: apps/demos/templates/demos/delete.html:40
+msgid ""
+"<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo "
+"Studio.</p> <p>The Demo's listing, source code, and statistics will be "
+"<strong>deleted</strong>.</p> <p>This action <strong>cannot be "
+"undone</strong>."
+msgstr ""
+
+#: apps/demos/templates/demos/delete.html:49
+msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
+msgstr ""
+
+#: apps/demos/templates/demos/delete_comment.html:10
+#: apps/demos/templates/demos/delete_comment.html:22
+msgid "Delete Comment"
+msgstr ""
+
+#: apps/demos/templates/demos/delete_comment.html:38
+msgid "Delete this comment?"
+msgstr ""
+
+#: apps/demos/templates/demos/delete_comment.html:39
+msgid "<p>Are you sure that you would like to delete this comment?</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/delete_comment.html:53
+msgid ""
+"<button type=\"submit\" class=\"remove\"><span>Delete comment</span></button>"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:30
+#: apps/demos/templates/demos/devderby_landing.html:38
+#: apps/demos/templates/demos/devderby_rules.html:31
+#: apps/demos/templates/demos/devderby_tag.html:33
+#: apps/demos/templates/demos/home.html:21
+#: apps/demos/templates/demos/submit.html:40
+#: apps/demos/templates/demos/submit_noauth.html:20
+#: apps/demos/templates/demos/elements/demos_head.html:2
+msgid "Mozilla Demo Studio"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:33
+#: apps/demos/templates/demos/home.html:24
+#: apps/demos/templates/demos/listing_tag.html:28
+#: apps/demos/templates/demos/elements/demos_head.html:5
+msgid "Learn More"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:35
+#: apps/demos/templates/demos/home.html:26
+#: apps/demos/templates/demos/elements/demos_head.html:7
+msgid ""
+"<p>Welcome to the Mozilla Demo Studio, where developers like you can "
+"develop, share, demonstrate, and learn all about Web technologies. See "
+"what's possible by exploring Demo Studio:</p> <ul> <li>View demos that "
+"showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source "
+"code for those demos so you can see how they work.</li> <li>Read "
+"documentation to learn about the open standards and technologies that power "
+"the Web.</li> </ul>"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:51
+#: apps/demos/templates/demos/launch.html:80
+msgid "Go to the previous demo, {demo_title}"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:51
+#: apps/demos/templates/demos/launch.html:80
+msgid "Prev"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:55
+#: apps/demos/templates/demos/launch.html:84
+msgid "Go to the next demo, {demo_title}"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:55
+#: apps/demos/templates/demos/detail.html:140
+#: apps/demos/templates/demos/home.html:50
+#: apps/demos/templates/demos/launch.html:84
+#: apps/demos/templates/demos/elements/submission_listing.html:64
+#: apps/search/templates/search/results.html:136
+#: templates/badger/includes/pagination.html:14
+#: templates/layout/paginator.html:31
+msgid "Next"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:67
+msgid "By %(creator_link)s on %(create_date)s"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:82
+msgid "Launch Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:89
+#: apps/demos/templates/demos/launch.html:47
+msgid "You like this demo. Undo?"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:89
+#: apps/demos/templates/demos/launch.html:47
+msgid "You Like"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:95
+#: apps/demos/templates/demos/launch.html:53
+msgid "Do you like this demo?"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:95
+#: apps/demos/templates/demos/launch.html:53
+msgid "Like It"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:100
+#: apps/demos/templates/demos/launch.html:57
+msgid "Share this demo with your social network"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:100
+#: apps/demos/templates/demos/detail.html:102
+#: apps/demos/templates/demos/launch.html:57
+msgid "Share It"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:103
+#: apps/demos/templates/demos/launch.html:59
+msgid "Share on Twitter"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:104
+#: apps/demos/templates/demos/launch.html:60
+msgid "Share on Facebook"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:118
+msgid "Built using"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:121
+msgid "See more demos made with {tag_title}"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:131
+#: apps/demos/templates/demos/elements/submission_thumb.html:21
+msgid "This demo has been viewed {count} time"
+msgid_plural "This demo has been viewed {count} times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/templates/demos/detail.html:131
+msgid "{count} view"
+msgid_plural "{count} views"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/templates/demos/detail.html:132
+#: apps/demos/templates/demos/elements/submission_thumb.html:22
+msgid "{count} person liked this demo"
+msgid_plural "{count} people liked this demo"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/templates/demos/detail.html:132
+msgid "{count} like"
+msgid_plural "{count} likes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/templates/demos/detail.html:133
+#: apps/demos/templates/demos/elements/submission_thumb.html:23
+msgid "There is {count} comment for this demo"
+msgid_plural "There are {count} comments for this demo"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/templates/demos/detail.html:133
+msgid "{comment_count} comments"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:139
+msgid "See the previous image"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:139
+#: apps/demos/templates/demos/devderby_landing.html:101
+#: apps/demos/templates/demos/home.html:49
+#: apps/demos/templates/demos/elements/submission_listing.html:61
+#: apps/search/templates/search/results.html:131
+#: templates/badger/includes/pagination.html:11
+#: templates/layout/paginator.html:7
+msgid "Previous"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:140
+msgid "See the next image"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:184
+msgid "Edit Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:189
+msgid "Remove demo"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:194
+msgid "Show demo"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:197
+msgid "Hide demo"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:206
+msgid "More About This Demo From The Author"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:214
+msgid "No comments yet."
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:216
+msgid "{comments_total} comment so far"
+msgid_plural "{comments_total} comments so far"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/templates/demos/detail.html:219
+msgid "<p>Why not <a href=\"#comment-post\">Add your own</a>?</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:223
+msgid ""
+"<p><a href=\"%(register_url)s\">Register</a> or <a href=\"%(login_url)s\">log "
+"in</a> to add your own.</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:240
+msgid "Add your comment"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:242
+#: apps/demos/templates/demos/elements/comments_tree.html:50
+#: apps/devmo/templates/devmo/profile.html:149
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:27
+#: apps/wiki/templates/wiki/revision.html:60
+msgid "Comment"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:253
+msgid "Get the Source Code"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:254
+msgid ""
+"Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP "
+"File</span>"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:272
+msgid ""
+"This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:280
+msgid "More by {creator}"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:292
+#: apps/demos/templates/demos/launch.html:64
+msgid "Report a Problem"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:294
+#: apps/demos/templates/demos/detail.html:295
+#: apps/demos/templates/demos/detail.html:296
+msgid "Flag Content"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:294
+msgid "Demo is not working"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:295
+msgid "Demo is inappropriate"
+msgstr ""
+
+#: apps/demos/templates/demos/detail.html:296
+msgid "Demo is not by this author"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:10
+msgid "Dev Derby Submissions"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:15
+#: apps/demos/templates/demos/devderby_landing.html:39
+#: apps/demos/templates/demos/devderby_tag.html:34
+msgid "Dev Derby"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:26
+#: apps/demos/templates/demos/devderby_rules.html:19
+#: apps/demos/templates/demos/devderby_tag.html:21
+msgid "Home"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:27
+#: apps/demos/templates/demos/devderby_rules.html:20
+#: apps/demos/templates/demos/devderby_tag.html:22
+msgid "Challenges"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:28
+#: apps/demos/templates/demos/devderby_landing.html:99
+#: apps/demos/templates/demos/devderby_rules.html:21
+#: apps/demos/templates/demos/devderby_tag.html:23
+msgid "Rules"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:29
+#: apps/demos/templates/demos/devderby_landing.html:100
+#: apps/demos/templates/demos/devderby_rules.html:22
+#: apps/demos/templates/demos/devderby_tag.html:24
+msgid "Judging"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:30
+#: apps/demos/templates/demos/devderby_rules.html:23
+#: apps/demos/templates/demos/devderby_tag.html:25
+msgid "Prizes"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:31
+#: apps/demos/templates/demos/devderby_landing.html:286
+#: apps/demos/templates/demos/devderby_rules.html:24
+#: apps/demos/templates/demos/devderby_tag.html:26
+msgid "Resources"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:38
+#: apps/demos/templates/demos/devderby_rules.html:31
+#: apps/demos/templates/demos/devderby_tag.html:33
+msgid "presents"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:42
+msgid "Show us what you can do with %(title)s"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:43
+msgid ""
+"Join the Dev Derby now and submit your demo to win an Android phone or other "
+"prizes."
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:44
+msgid "<a href=\"%(submit_url)s\"><b>Submit</b> Your Demo</a>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:46
+msgid "Dev Derby on Hiatus"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:47
+msgid "The Dev Derby is on hiatus, but will return soon."
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:56
+msgid "Upcoming Challenges"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:58
+msgid "Recent Challenges"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:67
+#: apps/demos/templates/demos/devderby_landing.html:74
+msgid "<span><b>Current</b> Derby</span>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:97
+msgid "Current"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:98
+#: apps/demos/templates/demos/devderby_tag.html:53
+msgid "Submissions"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:111
+msgid ""
+"<p class=\"demo-submit\"><a href=\"%(submit_url)s\" class=\"button\">Submit your "
+"demo</a> for the %(month)s Dev Derby today!</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:119
+msgid ""
+"Developers must be busy tinkering with their demos. No submissions yet. Be "
+"the first!"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:120
+msgid "Submit Your Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:132
+msgid ""
+"<p>A summary of the rules can be found below. For a complete look at the "
+"terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby "
+"Contest Official Rules</a>.</p> <ul class=\"prose\"> <li>Almost anyone can "
+"enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> "
+"<li>There will be a new contest every month.</li> <li>Your entry must meet "
+"certain criteria; <a href=\"%(rules_url)s\">see the rules</a> for the overall "
+"criteria and the Current Challenge section for any special criteria for each "
+"contest.</li> <li>Each contest runs from the first day of the month to the "
+"last day of the month (based on <strong>US Pacific time</strong>).</li> "
+"<li>Entries will be judged by a panel of qualified reviewers, who may or may "
+"not take into account how many &ldquo;likes&rdquo; your entry "
+"receives.</li> <li>The winners of each month's contest will be announced by "
+"the <strong>20th of the following month</strong>.</li> <li>You can't win "
+"more than once in the same calendar year.</li> <li>Please read the <a href=\""
+"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your "
+"entry.</li> </ul>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:148
+msgid ""
+"<p>Entries will be reviewed by a panel of qualified judges, including "
+"members of the Mozilla team and outside experts. We will rate the demos "
+"across 4 dimensions:</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:153
+msgid ""
+"<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo "
+"showcase the power of open Web technologies?</li> "
+"<li><strong>Originality</strong> &ndash; How innovative and unique is the "
+"demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual "
+"design and interaction experience?</li> <li><strong>Practicality</strong> "
+"&ndash; How useful is this demo in enhancing the Web today?</li> </ul>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:161
+msgid ""
+"<p>The judges will use all four dimensions in scoring each entry, and any "
+"additional criteria specified for a particular contest.</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:165
+msgid ""
+"<p>The judges may also take into account how many &ldquo;likes&rdquo; the "
+"entries have received from the community. So make sure to share your demo "
+"with others and encourage them to visit Dev Derby to &ldquo;vote.&rdquo;</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:171
+msgid "Expert Judges"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:175
+msgid "UI Developer, CTO at Storygami"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:178
+msgid ""
+"James is a London-based UI Developer with a passion for JavaScript, HTML5 "
+"and anything that enables him and others to create stuff of value. He's "
+"currently freelancing and working on interactive media at Storygami, a new "
+"startup that he's the CTO of. James shares opinionated technical articles "
+"and code on his website and github."
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:190
+msgid "Developer Engagement Community Organizer, Mozilla"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:193
+msgid ""
+"Janet has been wandering around software development since the twentieth "
+"century, and around open source software and documentation since 2004. She "
+"started working for Mozilla on developer documentation in 2010, and recently "
+"became Community Manager for Developer Engagement. Her superpower is taking "
+"things literally."
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:208
+#: apps/demos/templates/demos/devderby_landing.html:233
+msgid "Previous Dev Derby Challenges"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:222
+msgid ""
+"<div style=\"padding-right: 20px;\"> <h2>Dev Derby on Hiatus</h2> <p>The Dev "
+"Derby is on hiatus while we work on revamping the contest series. When it "
+"returns, you may see some changes in the contest format. However, the Dev "
+"Derby mission remains unchanged: to provide a platform that helps web "
+"developers learn, share, and push the web forward.</p> <p>See you soon!</p> "
+"</div>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:253
+msgid "Previous Winner"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:258
+msgid "See the Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:263
+msgid ""
+"<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> "
+"<p>Winner gets an Android mobile device from <a rel=\"external\" "
+"href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a>.</p> </li> "
+"<li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-"
+"crafted laptop messenger bag from <a rel=\"external\" "
+"href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard"
+"/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li "
+"class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited edition MDN "
+"t-shirt to show off their geek cred.</p> </li> </ol>"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:288
+#: apps/search/templates/search/results.html:118
+msgid "Docs"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:289
+#: templates/base.html:128
+#: templates/base.html:137
+msgid "Demos"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_landing.html:290
+msgid "Articles"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_rules.html:10
+msgid "Dev Derby Rules"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_tag.html:8
+#: apps/demos/templates/demos/listing_tag.html:7
+msgid "Demos tagged {tag}"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_tag.html:42
+msgid "Derby Winners"
+msgstr ""
+
+#: apps/demos/templates/demos/devderby_tag.html:56
+#: apps/demos/templates/demos/home.html:129
+#: apps/demos/templates/demos/listing_tag.html:41
+msgid "Subscribe to a feed of {tag_title} demos"
+msgstr ""
+
+#: apps/demos/templates/demos/feed_item_description.html:7
+msgid "Submitted by:"
+msgstr ""
+
+#: apps/demos/templates/demos/feed_item_description.html:9
+msgid "Tagged as:"
+msgstr ""
+
+#: apps/demos/templates/demos/flag.html:19
+msgid "Flag this demo?"
+msgstr ""
+
+#: apps/demos/templates/demos/flag.html:25
+msgid "<button type=\"submit\" name=\"action_create\">Flag content</button>"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:8
+#: apps/demos/templates/demos/listing_all.html:6
+msgid "Recent demos"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:10
+msgid "Featured demos"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:38
+msgid ""
+"<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn "
+"More</strong>"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:45
+msgid "Featured Demos"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:49
+msgid "See the previous demo"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:50
+msgid "See the next demo"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:69
+#: apps/demos/templates/demos/elements/submission_thumb.html:28
+msgid "Details"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:72
+msgid "Launch"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:109
+#: apps/demos/templates/demos/home.html:110
+#: apps/demos/templates/demos/elements/demos_head.html:33
+#: apps/demos/templates/demos/elements/search_form.html:6
+#: apps/landing/templates/landing/homepage.html:29
+#: apps/landing/templates/landing/homepage.html:31
+#: apps/search/templates/search/base.html:3
+#: apps/search/templates/search/results.html:13
+#: apps/search/templates/search/results.html:46
+#: apps/search/templates/search/results.html:48
+#: apps/search/templates/search/results.html:50
+#: templates/base.html:139
+#: templates/base.html:142
+#: templates/includes/common_macros.html:27
+#: templates/includes/common_macros.html:28
+msgid "Search"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:114
+msgid "<b>or</b>"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:117
+#: apps/demos/templates/demos/elements/demos_head.html:18
+#: apps/demos/templates/demos/elements/tech_tags_list.html:2
+msgid "Browse by Technology"
+msgstr ""
+
+#: apps/demos/templates/demos/home.html:129
+msgid "recent"
+msgstr ""
+
+#: apps/demos/templates/demos/launch.html:33
+#: apps/search/templates/search/plugin.html:3
+#: templates/base.html:11
+#: templates/base.html:35
+#: templates/base.html:87
+#: templates/base_popup.html:5
+msgid "Mozilla Developer Network"
+msgstr ""
+
+#: apps/demos/templates/demos/launch.html:37
+msgid "by %(profile_link)s"
+msgstr ""
+
+#: apps/demos/templates/demos/launch.html:89
+msgid "Remove this toolbar"
+msgstr ""
+
+#: apps/demos/templates/demos/launch.html:89
+msgid "Remove toolbar"
+msgstr ""
+
+#: apps/demos/templates/demos/listing_all.html:4
+#: apps/demos/templates/demos/listing_all.html:20
+msgid "Browse all demos"
+msgstr ""
+
+#: apps/demos/templates/demos/listing_all.html:26
+msgid "Subscribe to a feed of all demos"
+msgstr ""
+
+#: apps/demos/templates/demos/listing_search.html:9
+msgid "Search for \"{q}\""
+msgstr ""
+
+#: apps/demos/templates/demos/listing_search.html:13
+msgid "Search results for \"{q}\""
+msgstr ""
+
+#: apps/demos/templates/demos/listing_search.html:27
+msgid "Search demos for \"{q}\""
+msgstr ""
+
+#: apps/demos/templates/demos/listing_search.html:33
+msgid "Subscribe to a feed of search results for \"{q}\""
+msgstr ""
+
+#: apps/demos/templates/demos/listing_tag.html:4
+msgid "{tag_title} Demos"
+msgstr ""
+
+#: apps/demos/templates/demos/profile_detail.html:8
+msgid "{display_name}"
+msgstr ""
+
+#: apps/demos/templates/demos/profile_detail.html:12
+msgid "Demos for {display_name}"
+msgstr ""
+
+#: apps/demos/templates/demos/profile_detail.html:36
+#: apps/devmo/templates/devmo/profile.html:59
+#: apps/users/templates/users/edit_profile.html:3
+msgid "Edit Profile"
+msgstr ""
+
+#: apps/demos/templates/demos/profile_detail.html:43
+#: apps/devmo/templates/devmo/profile.html:126
+msgid "Subscribe to a feed of {display_name}'s demos"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:8
+#: apps/demos/templates/demos/submit.html:48
+msgid "Edit {demo_title}"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:10
+#: apps/demos/templates/demos/submit.html:50
+#: apps/demos/templates/demos/submit_noauth.html:11
+#: apps/demos/templates/demos/submit_noauth.html:25
+msgid "Submit a New Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:55
+msgid ""
+"<p>Whether you are creating an amazing new way to experience the Web or just "
+"experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p> <p>Please "
+"complete the form below to ensure your demo is submitted to the Demo Studio "
+"successfully.</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:67
+msgid "Describe Your Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:69
+msgid ""
+"<p>Tell us more about your demo, including the name, description and the "
+"technologies used. Please list the browsers you have tested it with.</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:82
+msgid "Select up to five technologies used in your demo."
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:91
+msgid ""
+"Submit your demo to the <a href=\"%(derby_url)s\" "
+"onclick=\"window.open(this.href);return false;\">Dev Derby</a>!"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:98
+msgid ""
+"Check the appropriate Dev Derby box and make sure you select the relevant "
+"technologies above to be considered for the developer challenge."
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:113
+msgid "Show Off Your Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:117
+msgid "Provide at least one screenshot of your demo in action"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:126
+msgid "JPEG and PNG supported. Minimum size of 480x360."
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:128
+msgid "We support YouTube and Vimeo"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:129
+msgid ""
+"If your demo has problems when displayed in an &lt;iframe&gt;, try changing "
+"this."
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:134
+#: apps/demos/templates/demos/submit_noauth.html:48
+msgid "Preparing Your Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:135
+msgid ""
+"<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> "
+"<li>The main page of your demo should be a file named "
+"<code>index.html</code> in the root of the ZIP.</li> <li>Your demo should be "
+"built on client-side technology (HTML, CSS, JavaScript). Server-side "
+"languages like PHP and Ruby are not supported.</li> <li>If your demo "
+"requires external resources, it should use AJAX to access them.</li> <li>To "
+"submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> "
+"<li>Please identify in the demo details box any 3rd party content that "
+"can't be licensed under the CC-BY-SA license and include links to the "
+"authors' websites.</li> </ul>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:148
+msgid "Provide the Source Code"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:150
+msgid ""
+"<p>Upload a ZIP file of your source code, in which the main page of your "
+"demo is named <code>index.html</code> in the root directory.</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:178
+msgid ""
+"I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a "
+"href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:193
+msgid "Submit demo"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:194
+msgid "or"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:194
+msgid "Discard Demo"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:196
+msgid "Save changes"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:197
+#: apps/wiki/templates/wiki/includes/page_buttons.html:13
+msgid "Discard Changes"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:205
+msgid "Update Your Profile"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:206
+msgid ""
+"<p>Share your developer interests and areas of expertise with the MDN "
+"community. We'll be able to bring you a better, more customized experience "
+"and you will have a place to show off the amazing work you do.</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit.html:211
+msgid "Go to your profile"
+msgstr ""
+
+#: apps/demos/templates/demos/submit_noauth.html:27
+msgid ""
+"<p>Whether you are creating an amazing new way to experience the Web or just "
+"experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit_noauth.html:36
+msgid "Before You Begin"
+msgstr ""
+
+#: apps/demos/templates/demos/submit_noauth.html:37
+msgid ""
+"<ul> <li>You must be prepared to <strong>provide the source code</strong> "
+"for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your "
+"demo's source code must be available under an <strong>open license</strong>, "
+"such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open "
+"web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should "
+"support a wide range of <strong>modern web browsers</strong>, like Firefox, "
+"Chrome, Safari, and Opera.</li> </ul>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit_noauth.html:49
+msgid ""
+"<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP "
+"file</strong>.</li> <li>The main page of your demo should be a file named "
+"<strong><code>index.html</code></strong> in the root of the ZIP.</li> "
+"<li>Your demo should be built on <strong>client-side technology</strong> "
+"(HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not "
+"supported.</li> <li>If your demo requires external resources, it should use "
+"<strong>AJAX</strong> to access them.</li> <li>Please identify in the demo "
+"details box any 3rd party content that can't be licensed under the CC-BY-SA "
+"license and include links to the authors' websites.</li> </ul>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit_noauth.html:61
+msgid ""
+"<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN "
+"account</a></strong>.</p>"
+msgstr ""
+
+#: apps/demos/templates/demos/submit_noauth.html:66
+msgid "Log In to Account"
+msgstr ""
+
+#: apps/demos/templates/demos/terms.html:10
+#: apps/demos/templates/demos/terms.html:35
+msgid "Terms for Contributors"
+msgstr ""
+
+#: apps/demos/templates/demos/terms.html:21
+msgid "Terms of Use"
+msgstr ""
+
+#: apps/demos/templates/demos/terms.html:122
+msgid "Rights Representation Details"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/comments_tree.html:9
+msgid "<cite class=\"author fn\">%(comment_profile_link)s</cite> said,"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/comments_tree.html:19
+msgid ""
+"Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent "
+"link to this comment by %(display_name)s\"><time class=\"published\" "
+"pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\" title=\"%"
+"(comment_isotime)s\">%(comment_timesince)s</time></a>"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/comments_tree.html:31
+msgid "Reply to this comment by {full_name}"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/comments_tree.html:31
+msgid "Reply"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/comments_tree.html:34
+msgid "Report this comment"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/comments_tree.html:34
+msgid "Report"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/comments_tree.html:37
+msgid "Edit this comment"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/comments_tree.html:37
+#: apps/wiki/content.py:645
+#: apps/wiki/templates/wiki/includes/document_macros.html:54
+msgid "Edit"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/comments_tree.html:40
+msgid "Delete this comment"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/demos_head.html:31
+#: apps/demos/templates/demos/elements/search_form.html:4
+msgid "Search the Demo Studio"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/profile_link.html:2
+#: apps/demos/templates/demos/elements/submission_creator.html:2
+msgid "See {display_name}'s profile"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:6
+msgid "{count} Demo"
+msgid_plural "{count} Demos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:9
+msgid "Sort demos by most recent likes and views"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:9
+msgid "You are viewing demos by most recent likes and views"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:9
+msgid "Up and Coming"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:10
+msgid "Sort demos by most views"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:10
+msgid "You are viewing demos by most views"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:10
+msgid "Most Viewed"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:11
+msgid "Sort demos by most likes"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:11
+msgid "You are viewing demos by most likes"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:11
+msgid "Most Liked"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:12
+msgid "Sort demos by most recently submitted"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:12
+msgid "You are viewing demos by most recently submitted"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:12
+msgid "Most Recent"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:49
+#: templates/badger/includes/pagination.html:3
+msgid "{start}&ndash;{end} of {total}"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:58
+#: templates/badger/includes/pagination.html:8
+msgid "Go to the first page"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:61
+#: templates/badger/includes/pagination.html:11
+msgid "Go to the previous page"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:64
+#: templates/badger/includes/pagination.html:14
+msgid "Go to the next page"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:67
+#: templates/badger/includes/pagination.html:17
+msgid "Go to the last page"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:67
+#: templates/badger/includes/pagination.html:17
+msgid "Last"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_listing.html:72
+msgid "Feed"
+msgstr ""
+
+#: apps/demos/templates/demos/elements/submission_thumb.html:30
+msgid "Launch {title}"
+msgstr ""
+
+#: apps/devmo/__init__.py:6
+#: apps/landing/templates/landing/homepage.html:55
+#: templates/base.html:94
+msgid "Add-ons"
+msgstr ""
+
+#: apps/devmo/__init__.py:12
+#: apps/landing/templates/landing/learn_html.html:118
+#: apps/landing/templates/landing/learn_html.html:123
+msgid "Mozilla"
+msgstr ""
+
+#: apps/devmo/__init__.py:18
+#: templates/base.html:118
+msgid "Apps"
+msgstr ""
+
+#: apps/devmo/__init__.py:30
+#: apps/landing/templates/landing/promote_buttons.html:117
+msgid "Web"
+msgstr ""
+
+#: apps/devmo/__init__.py:36
+msgid "Moz Hacks"
+msgstr ""
+
+#: apps/devmo/forms.py:19
+#: apps/users/forms.py:24
+msgid "Email address is required."
+msgstr ""
+
+#: apps/devmo/forms.py:20
+#: apps/users/forms.py:25
+msgid ""
+"Email address is too short (%(show_value)s characters). It must be at least "
+"%(limit_value)s characters."
+msgstr ""
+
+#: apps/devmo/forms.py:22
+#: apps/users/forms.py:27
+msgid ""
+"Email address is too long (%(show_value)s characters). It must be %"
+"(limit_value)s characters or less."
+msgstr ""
+
+#: apps/devmo/forms.py:24
+msgid "You must agree to the privacy policy."
+msgstr ""
+
+#: apps/devmo/forms.py:31
+msgid "E-mail address"
+msgstr ""
+
+#: apps/devmo/forms.py:38
+#: apps/devmo/forms.py:89
+#: apps/users/forms.py:119
+msgid "Preferred format"
+msgstr ""
+
+#: apps/devmo/forms.py:44
+#: apps/devmo/forms.py:95
+#: apps/users/forms.py:125
+msgid "I agree"
+msgstr ""
+
+#: apps/devmo/forms.py:59
+#: apps/devmo/forms.py:122
+#: apps/users/forms.py:153
+msgid "Your country"
+msgstr ""
+
+#: apps/devmo/forms.py:73
+msgid "Beta tester"
+msgstr ""
+
+#: apps/devmo/forms.py:76
+#: apps/devmo/templates/devmo/profile_edit.html:56
+#: apps/users/templates/users/edit_profile.html:31
+msgid "Email"
+msgstr ""
+
+#: apps/devmo/forms.py:78
+#: apps/devmo/templates/devmo/profile.html:81
+msgid "Interests"
+msgstr ""
+
+#: apps/devmo/forms.py:80
+msgid "Expertise"
+msgstr ""
+
+#: apps/devmo/forms.py:83
+#: apps/users/forms.py:113
+msgid "Send me the newsletter"
+msgstr ""
+
+#: apps/devmo/forms.py:138
+msgid "Areas of expertise must be a subset of interests"
+msgstr ""
+
+#: apps/devmo/models.py:64
+#: apps/users/models.py:41
+msgid "Website"
+msgstr ""
+
+#: apps/devmo/models.py:70
+msgid "Twitter"
+msgstr ""
+
+#: apps/devmo/models.py:76
+msgid "GitHub"
+msgstr ""
+
+#: apps/devmo/models.py:82
+msgid "Stack Overflow"
+msgstr ""
+
+#: apps/devmo/models.py:88
+msgid "LinkedIn"
+msgstr ""
+
+#: apps/devmo/models.py:94
+msgid "Mozillians"
+msgstr ""
+
+#: apps/devmo/models.py:100
+msgid "Facebook"
+msgstr ""
+
+#: apps/devmo/models.py:115
+#: apps/users/models.py:49
+msgid "Timezone"
+msgstr ""
+
+#: apps/devmo/models.py:117
+msgid "Language"
+msgstr ""
+
+#: apps/devmo/models.py:120
+msgid ""
+"This URL has an invalid format. Valid URLs look like "
+"http://example.com/my_page."
+msgstr ""
+
+#: apps/devmo/models.py:123
+#: apps/wiki/templates/wiki/includes/attachment_list.html:44
+msgid "Title"
+msgstr ""
+
+#: apps/devmo/models.py:125
+msgid "Name"
+msgstr ""
+
+#: apps/devmo/models.py:127
+msgid "Organization"
+msgstr ""
+
+#: apps/devmo/models.py:129
+#: apps/devmo/templates/devmo/calendar.html:43
+#: apps/devmo/templates/devmo/calendar.html:69
+msgid "Location"
+msgstr ""
+
+#: apps/devmo/models.py:131
+msgid "About Me"
+msgstr ""
+
+#: apps/devmo/models.py:133
+#: apps/users/models.py:47
+msgid "IRC nickname"
+msgstr ""
+
+#: apps/devmo/models.py:136
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:22
+#: apps/wiki/templates/wiki/edit_document.html:147
+#: apps/wiki/templates/wiki/new_document.html:66
+#: apps/wiki/templates/wiki/translate.html:104
+#: apps/wiki/templates/wiki/translate.html:142
+msgid "Tags"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:5
+#: apps/devmo/templates/devmo/calendar.html:17
+msgid "Where is Mozilla?"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:19
+msgid ""
+"Here you can see some of the developer events at which Mozilla will be "
+"participating, and the topics on which our Mozillians will be speaking. If "
+"you are organizing an event and would like a Mozillian to participate, "
+"please <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">file "
+"a bug</a>. If you are a Mozillian speaking at an event that's not listed "
+"here, or if an existing event entry needs updating, <a href=\"mailto:dev-"
+"events@mozilla.com\">let us know</a>! You can also check out the <a "
+"href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps "
+"events</a> page to find a Mozilla Reps event near you!"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:37
+msgid "Upcoming Conferences"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:38
+msgid "Upcoming conferences featuring Mozilla speakers"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:40
+#: apps/devmo/templates/devmo/calendar.html:66
+msgid "Start Date"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:41
+#: apps/devmo/templates/devmo/calendar.html:67
+msgid "End Date"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:42
+#: apps/devmo/templates/devmo/calendar.html:68
+msgid "Conference"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:44
+#: apps/devmo/templates/devmo/calendar.html:70
+msgid "Attendees"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:63
+msgid "Past Conferences"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:64
+msgid "Past conferences that featured Mozilla speakers"
+msgstr ""
+
+#: apps/devmo/templates/devmo/calendar.html:72
+msgid "Presentation Materials"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:54
+msgid "Manage Roles"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:58
+msgid "Manage API Keys"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:94
+msgid "Areas of Expertise"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:103
+msgid "Member since {date}"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:110
+msgid "Recent Badge Awards"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:112
+#: templates/badger/badge_detail.html:53
+msgid "More..."
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:134
+msgid "No Demos"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:136
+msgid ""
+"You haven't submitted any web technology demos. Build something awesome and "
+"<a class=\"button positive\" href=\"%(submit_url)s\">Submit a Demo</a>"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:143
+#: apps/devmo/templates/devmo/profile.html:183
+msgid "Recent Docs Activity"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:147
+msgid "Page"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:148
+#: apps/wiki/templates/wiki/confirm_revision_delete.html:14
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:18
+#: apps/wiki/templates/wiki/includes/attachment_list.html:26
+msgid "Date"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:157
+msgid "Edit page"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:158
+msgid "View complete diff"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:159
+msgid "View page history"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile.html:186
+msgid ""
+"<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%"
+"(docs_url)s\">Pitch in!</a></p>"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:7
+msgid "Edit Your Profile"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:37
+msgid "Change your avatar at"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:42
+msgid "View profile"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:57
+#: apps/users/templates/users/edit_profile.html:28
+#: apps/users/templates/users/edit_profile.html:33
+#: apps/wiki/templates/wiki/translate.html:36
+msgid "Change"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:70
+msgid "About me"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:70
+msgid "words remaining"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:76
+msgid "Interests (tags)"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:77
+msgid ""
+"Separate tags with commas or spaces. Join multi-word tags with double "
+"quotes, like \"web standards\"."
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:84
+msgid "Areas of expertise"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:85
+msgid ""
+"Add your interests first, then declare yourself an expert in selected "
+"topics."
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:93
+msgid "My Other Profiles"
+msgstr ""
+
+#: apps/devmo/templates/devmo/profile_edit.html:113
+#: apps/devmo/templates/devmo/profile_edit.html:121
+#: apps/wiki/templates/wiki/includes/page_buttons.html:13
+msgid "Save Changes"
+msgstr ""
+
+#: apps/landing/templates/landing/apps_newsletter.html:7
+#: templates/includes/common_macros.html:72
+msgid "Firefox Apps & Hacks Newsletter"
+msgstr ""
+
+#: apps/landing/templates/landing/apps_newsletter.html:14
+msgid "<a href=\"/profile/edit\">Edit your profile</a> to join the newsletter."
+msgstr ""
+
+#: apps/landing/templates/landing/forum_archive.html:3
+msgid "Forum Archive"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:9
+msgid ""
+"The Mozilla Developer Network (MDN) provides information about Open Web "
+"technologies including HTML, CSS, and APIs for both Web sites and HTML5 "
+"Apps. It also documents Mozilla products, like Firefox OS."
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:25
+msgid "Shared knowledge <span>for the Open Web</span>"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:30
+#: apps/search/templates/search/results.html:49
+msgid "Search the docs"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:36
+msgid "Web Technologies"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:39
+msgid "Web<br />Platform"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:41
+msgid "Web APIs &amp; DOM"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:42
+#: apps/landing/templates/landing/learn.html:26
+#: apps/landing/templates/landing/promote_buttons.html:105
+#: apps/translations/search/filter/html/name.py:2
+#: templates/base.html:113
+msgid "HTML"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:43
+#: apps/landing/templates/landing/learn.html:32
+#: apps/landing/templates/landing/promote_buttons.html:99
+#: apps/translations/search/filter/css/name.py:2
+#: templates/base.html:114
+msgid "CSS"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:45
+#: apps/landing/templates/landing/homepage.html:65
+msgid "more..."
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:49
+#: templates/base.html:89
+msgid "Zones"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:51
+#: apps/translations/search/filter/firefox/name.py:2
+#: templates/base.html:96
+msgid "Firefox"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:52
+#: apps/translations/search/filter/firefox-os/name.py:2
+#: templates/base.html:98
+msgid "Firefox OS"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:53
+#: templates/base.html:97
+msgid "Firefox Marketplace"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:54
+#: templates/base.html:95
+msgid "App Center"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:59
+msgid "Developer<br />Tools"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:61
+msgid "Firefox OS App Manager"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:62
+msgid "Page Inspector"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:63
+msgid "JavaScript Debugger"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:64
+msgid "Web Console"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:69
+msgid "Developer<br />Program"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:71
+msgid ""
+"Get Web technology news from Mozilla, get help from other developers, and "
+"more!"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:72
+msgid "Learn more and sign up!"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:81
+msgid "Open Web and Mobile"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:84
+msgid "Create<br />Web Apps"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:87
+msgid "Develop<br />Firefox for Android"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:90
+msgid "Build<br />Firefox OS"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:98
+msgid ""
+"<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-"
+"hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:103
+msgid "Get Involved"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:105
+msgid ""
+"<span class=\"row1\">Join <span class=\"number\">3,414</span> "
+"contributors</span> <span class=\"row2\">in <span class=\"number\">31</span> "
+"languages and locales</span> <span class=\"row3\">around the world.</span>"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:106
+#: apps/landing/templates/landing/homepage.html:140
+msgid "Help improve MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:117
+msgid "Next Dev Derby: <strong>July 2013</strong>"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:118
+msgid "Subject: <strong>File API</strong>"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:122
+msgid "See & submit demos"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:124
+msgid "MDN Dev Derby <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i>"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:126
+msgid "MDN Demo Studio <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i>"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:144
+msgid ""
+"All parts of MDN (docs, demos, and the site itself) are created by an open "
+"community of developers. Please join us! Pick one of these ways to help:"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:150
+msgid "Editorial review"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:151
+msgid "Technical review"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:152
+msgid "Creating new docs"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:157
+msgid "Translating (L10N)"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:158
+msgid "Promoting MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/homepage.html:159
+msgid "Contributing to the MDN codebase"
+msgstr ""
+
+#: apps/landing/templates/landing/learn.html:5
+#: apps/landing/templates/landing/learn.html:10
+msgid "Learn How to Make Websites"
+msgstr ""
+
+#: apps/landing/templates/landing/learn.html:11
+msgid ""
+"<p>Want to learn to use the technologies that power the Web? <br>We've put "
+"together a great collection of resources to get you started.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn.html:27
+msgid ""
+"<p><strong>HyperText Markup Language</strong> is the core syntax for putting "
+"information on the worldwide web. If you want to create or modify web "
+"pages, it's best if you learn HTML.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn.html:33
+msgid ""
+"<p><strong>Cascading Style Sheets</strong> is a language for describing the "
+"appearance of web pages. To create good-looking web pages, you need to learn "
+"CSS in order to define the appearance and location of the HTML elements "
+"within the pages.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn.html:39
+msgid ""
+"<p><strong>JavaScript</strong> (JS for short) is the programming language "
+"that enables web pages to respond to user interaction beyond the basic level "
+"provided by HTML links and forms.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn.html:47
+msgid ""
+"<h2>Are you tired of learning on your own?<br>Do you want to join a "
+"community of people learning about open web technologies?</h2> <p>Consider "
+"signing up for free online peer study groups through Peer-to-Peer "
+"University's<span title=\"Peer-to-Peer University\"></span> <a "
+"href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of "
+"Webcraft</a>. Share your discoveries, struggles, and victories with others "
+"who are learning the same things.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:5
+#: apps/landing/templates/landing/learn_css.html:11
+msgid "Learn CSS"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:10
+#: apps/landing/templates/landing/learn_html.html:10
+#: apps/landing/templates/landing/learn_javascript.html:10
+msgid "Back to Home"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:12
+msgid ""
+"<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language "
+"for describing the appearance of web pages. To create good-looking web "
+"pages, you need to learn CSS in order to define the appearance and location "
+"of the HTML elements within the pages.</p> <p>The links on this page lead to "
+"a variety of CSS tutorials and CSS training materials. Whether you are just "
+"starting out, learning the basics of CSS, or are an experienced web "
+"developer wanting to learn <strong>CSS3</strong> (the newest version of the "
+"standard) and CSS best practices, you can find helpful resources here.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:29
+#: apps/landing/templates/landing/learn_html.html:28
+#: apps/landing/templates/landing/learn_javascript.html:27
+msgid "Introductory Level"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:32
+msgid "CSS Getting Started"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:34
+msgid ""
+"This tutorial introduces you to Cascading Style Sheets (CSS). It guides you "
+"through the basic features of CSS with practical examples that you can try "
+"for yourself on your own computer."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:37
+msgid "CSS Basics"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:39
+msgid ""
+"What CSS is, how to apply it to HTML, and what basic CSS syntax looks like."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:42
+msgid "CSS Selector Classes"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:44
+msgid "What are classes in CSS?"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:47
+msgid "External CSS"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:49
+msgid "Using CSS from an external style sheet."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:52
+msgid "Adding a Touch of Style"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:54
+msgid "A brief beginner's guide to styling web pages with CSS."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:57
+msgid "CSS From the Ground Up"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:59
+msgid "Video tutorial on styling pages with CSS."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:62
+msgid "Common CSS Questions"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:64
+msgid "Common questions and answers for beginners."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:70
+#: apps/landing/templates/landing/learn_javascript.html:58
+msgid "Intermediate Level"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:73
+msgid "CSS Reference"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:75
+msgid ""
+"Complete reference to CSS, with details on support by Firefox and other "
+"browsers."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:78
+msgid "CSS Challenges"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:80
+msgid "Flex your CSS skills, and see where you need more practice."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:83
+msgid "Intermediate CSS Concepts"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:85
+msgid "Grouping, pseudo-classes, and more."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:88
+msgid "CSS Positioning 101"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:90
+msgid "Using positioning for standards-compliant, table-free layout."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:93
+msgid "Progressive Enhancement with CSS"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:95
+msgid "Integrate progressive enhancement into your web pages with CSS."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:98
+msgid "Fluid Grids"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:100
+msgid ""
+"Design layouts that fluidly resize with the browser window, while still "
+"using a typographic grid."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:106
+#: apps/landing/templates/landing/learn_html.html:69
+#: apps/landing/templates/landing/learn_javascript.html:88
+msgid "Advanced Level"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:109
+msgid "CSS3 in Under 5 Minutes"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:109
+#: apps/landing/templates/landing/learn_css.html:114
+#: apps/landing/templates/landing/learn_css.html:119
+#: apps/landing/templates/landing/learn_css.html:126
+#: apps/landing/templates/landing/learn_css.html:131
+msgid "This site features CSS3"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:111
+msgid "A quick introduction to some of the core features introduced in CSS3."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:114
+msgid "Using CSS Transforms"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:116
+msgid "Apply rotation, skewing, scaling, and translation using CSS."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:119
+msgid "CSS Transitions"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:121
+msgid ""
+"CSS transitions, part of the draft CSS3 specification, provide a way to "
+"animate changes to CSS properties, instead of having the changes take effect "
+"instantly."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:126
+msgid "Understanding CSS3 Transitions"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:128
+msgid ""
+"Start using CSS3 transitions by carefully choosing the situations in which "
+"to use them."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:131
+msgid "Quick Guide to Implement Web Fonts with @font-face"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:133
+msgid ""
+"The @font-face feature from CSS3 allows you to use custom typefaces on the "
+"web in an accessible, manipulable, and scalable way."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:141
+msgid ""
+"<h2>Are you tired of learning CSS on your own?<br> Do you want to join a "
+"community of people who are learning CSS and other open web "
+"technologies?</h2> <p>Consider signing up for free online peer study groups "
+"through Peer-to-Peer University's<span title=\"Peer-to-Peer "
+"University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-"
+"webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
+"victories with others who are learning the same things.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_css.html:151
+msgid ""
+"This site discusses <strong>CSS3</strong>, latest, still-evolving version of "
+"CSS. Many CSS3 features are supported in various ways by modern browsers, "
+"but many users still have older browsers and so can't take advantage."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_fineprint.html:2
+msgid ""
+"<p>These resources are created by forward-thinking companies and web "
+"developers who have embraced open standards and best practices for web "
+"development. If you think we've omitted a great resource, please <a href=\"%"
+"(feedback_url)s\">tell us about it</a>. We want to share these resources with "
+"our international community, so we prefer ones that provide or allow "
+"translations, through an open content license such as <a "
+"href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:5
+#: apps/landing/templates/landing/learn_html.html:11
+msgid "Learn HTML"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:12
+msgid ""
+"<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the "
+"core syntax for putting information on the worldwide web. If you want to "
+"create or modify web pages, it's best if you learn HTML.</p> <p>The links on "
+"this page lead to a variety of HTML tutorials and HTML training materials. "
+"Whether you are just starting out, learning the basics of HTML, or are an "
+"old hand at web development wanting to learn <strong>HTML5</strong> (the "
+"newest version of the standard), you can find helpful resources here for "
+"HTML best practices.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:31
+msgid "The Basics of HTML"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:33
+msgid ""
+"What HTML is, what it does, its history in brief, and what the structure of "
+"an HTML document looks like. The articles that follow this one look at each "
+"individual part of HTML in much greater depth."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:36
+msgid "Basic Structure of a Web Page"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:38
+msgid "Learn how HTML elements fit together into the bigger picture."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:41
+msgid "Fundamental HTML Elements"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:43
+msgid ""
+"Describes the different types of elements you can use to write an HTML "
+"document."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:46
+msgid "HTML Beginner Tutorial"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:48
+msgid "A tutorial and exercises that take you through the basics."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:51
+msgid "HTML From the Ground Up"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:52
+msgid "Google Code University"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:53
+msgid ""
+"Video tutorial on best practices and approaches for how to write good HTML "
+"code."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:56
+msgid "HTML Challenges"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:58
+msgid ""
+"Use these challenges to hone your HTML skills (for example, \"Should I use an "
+"&lt;h2&gt; element or a &lt;strong&gt; element?\"), focusing on meaningful "
+"mark-up."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:63
+msgid ""
+"A comprehensive reference for HTML elements, and how Firefox and other "
+"browsers support them."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:72
+msgid "Tips for Authoring Fast-loading HTML Pages"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:74
+msgid ""
+"Optimize web pages to provide a more responsive site for visitors and reduce "
+"the load on your web server and Internet connection."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:77
+msgid "Dive into HTML5"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:77
+#: apps/landing/templates/landing/learn_html.html:82
+#: apps/landing/templates/landing/learn_html.html:87
+#: apps/landing/templates/landing/learn_html.html:92
+#: apps/landing/templates/landing/learn_html.html:97
+#: apps/landing/templates/landing/learn_html.html:102
+#: apps/landing/templates/landing/learn_html.html:106
+#: apps/landing/templates/landing/learn_html.html:129
+#: apps/landing/templates/landing/learn_html.html:134
+msgid "This site features HTML5"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:78
+msgid "From Mark Pilgrim"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:79
+msgid ""
+"Learn about a selection of features of HTML5, the newest version of the HTML "
+"specification."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:82
+msgid "Get Ready for HTML5"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:83
+#: apps/landing/templates/landing/learn_html.html:93
+msgid "A List Apart"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:84
+msgid "Some suggestions to help you get on board with HTML5."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:87
+msgid "HTML5 Tutorials"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:88
+msgid "HTML5 Rocks"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:89
+msgid "Take a guided tour through code that uses HTML5 features."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:92
+msgid "Semantics in HTML5"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:94
+msgid ""
+"Learn meaningful mark-up that is extensible and backwards- and forwards-"
+"compatible."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:97
+msgid "Canvas Tutorial"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:99
+msgid ""
+"Learn how to draw graphics using scripting using the &lt;canvas&gt; element."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:102
+msgid "HTML5 Doctor"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:103
+msgid "Articles about using HTML5 right now."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:106
+msgid "The Joy of HTML5 Audio"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:108
+msgid ""
+"Learn how to use the HTML audio element to embed sounds in your web pages "
+"easily. Lots of code examples are included in the tutorial."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:114
+msgid "HTML5 Examples"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:117
+msgid "Web o' Wonder"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:119
+msgid "Demos from Mozilla developers and evangelists."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:122
+msgid "MDN Demo Studio"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:124
+msgid ""
+"Run, inspect, and submit demos that show what HTML, CSS, and JavaScript can "
+"do."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:129
+msgid "HTML5 Demos and Examples"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:130
+msgid "Remy Sharp"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:131
+msgid "Demos that you can filter by technology or browser support."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:134
+msgid "HTML5 Gallery"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:135
+msgid "Richard Clark"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:136
+msgid ""
+"Showcase of sites that use HTML5 to help you learn about how it should be "
+"used."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:143
+msgid ""
+"<h2>Tired of learning on your own?<br>Want to join a community of people "
+"learning HTML and other open web technologies?</h2> <p>Consider signing up "
+"for free online peer study groups through Peer-to-Peer University's<span "
+"title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools"
+"/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, "
+"struggles, and victories with others who are learning the same things.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_html.html:153
+msgid ""
+"This site discusses <strong>HTML5</strong>, the upcoming latest version of "
+"the standard. Many HTML5 features are supported by modern browsers, but many "
+"users still have older browsers and so can't take advantage."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:5
+#: apps/landing/templates/landing/learn_javascript.html:11
+msgid "Learn JavaScript"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:12
+msgid ""
+"<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the "
+"programming language that enables web pages to respond to user interaction "
+"beyond the basic level provided by HTML links and forms.</p> <p>The links on "
+"this page lead to a variety of JavaScript tutorials and JavaScript training "
+"materials. Whether you are just starting out, wanting to learn JS basics, "
+"or are an old hand, wanting to sharpen your skills, you can find helpful "
+"resources here for JS best practices.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:30
+msgid "Codecademy"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:32
+msgid ""
+"Codecademy is the easiest way to learn how to code JavaScript. It's "
+"interactive, fun, and you can do it with your friends."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:35
+msgid "Getting Started with JavaScript"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:37
+msgid "What is JavaScript and how can it help you?"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:40
+msgid "Programming &ndash; The Real Basics"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:42
+msgid ""
+"Basic fundamentals of programming. Following articles introduce what you can "
+"do with JavaScript, best practices for using it, and more."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:45
+msgid "JavaScript From the Ground Up"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:47
+msgid "Video tutorial on making pages interactive with JavaScript"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:50
+msgid "JavaScript Best Practices"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:52
+msgid ""
+"Learn about some of the obvious and (not so) obvious best practices when "
+"writing JavaScript."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:61
+msgid "A Re-introduction to JavaScript"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:63
+msgid ""
+"A recap of the JavaScript programming language aimed at intermediate-level "
+"developers."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:66
+msgid "Eloquent JavaScript"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:67
+msgid ""
+"A comprehensive guide to intermediate and advanced JavaScript methodologies."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:70
+msgid "Essential JavaScript Design Patterns"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:72
+msgid "An introduction to essential JavaScript design patterns."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:75
+msgid "The JavaScript Programming Language"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:77
+msgid ""
+"Douglas Crockford explores the language as it is today, and how it came to "
+"be."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:80
+msgid "Introduction to Object-oriented JavaScript"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:82
+msgid "Learn about the JavaScript object model."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:91
+msgid "Learning Advanced JavaScript"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:93
+msgid "John Resig's guide to advanced JavaScript."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:96
+msgid "Introducing the JavaScript DOM"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:98
+msgid ""
+"What is the Document Object Model, and why is it useful? This article gives "
+"you a gentle introduction to this powerful JavaScript feature."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:101
+msgid "An Inconvenient API: The Theory of the DOM"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:103
+msgid "Douglas Crockford explains the Document Object Model."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:106
+msgid "Advanced JavaScript"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:108
+msgid ""
+"Douglas Crockford looks closely at code patterns from which JavaScript "
+"programmers can choose in authoring their applications."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:113
+msgid "JavaScript Garden"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:114
+msgid "Documentation of the most quirky parts of JavaScript."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:117
+msgid "Which JavaScript Framework?"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:119
+msgid "Advice on choosing a JavaScript framework."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:122
+msgid "Non-blocking JavaScript Downloads"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:124
+msgid ""
+"Tips on improving the download performance of pages containing JavaScript."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:127
+msgid "JavaScript Guide"
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:129
+msgid ""
+"A comprehensive, regularly updated guide to JavaScript for all levels of "
+"learning from beginner to advanced."
+msgstr ""
+
+#: apps/landing/templates/landing/learn_javascript.html:137
+msgid ""
+"<h2>Are you tired of learning JS on your own?<br>Do you want to join a "
+"community of people who are learning JavaScript and other open web "
+"technologies?</h2> <p>Consider signing up for free online peer study groups "
+"through Peer-to-Peer University's<span title=\"Peer-to-Peer "
+"University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-"
+"webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
+"victories with others who are learning the same things.</p>"
+msgstr ""
+
+#: apps/landing/templates/landing/newsfeed.html:9
+msgid "Posted %(entrydate)s by %(authorlink)s"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:5
+#: apps/landing/templates/landing/promote_buttons.html:17
+msgid "Promote MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:19
+msgid "Spread some developer love."
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:20
+msgid ""
+"<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a "
+"custom button and source code to promote MDN on your website or blog.</li> "
+"<li><strong>Post Buttons:</strong> Copy the source code and paste it "
+"anywhere on your website or blog to help people click through to MDN.</li> "
+"<li><strong>Feel Good:</strong> Take pride in knowing you're making "
+"developers lives just a little bit better by sharing MDN with the "
+"world.</li> </ol>"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:35
+msgid "Preview"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:40
+msgid "Choose a button style"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:45
+msgid "Better Docs"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:51
+msgid "Developer Powered"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:57
+msgid "For Developers, By Developers"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:63
+msgid "Web Developer Toolbox"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:70
+msgid "Choose a color"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:75
+msgid "Gray"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:81
+msgid "Orange"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:87
+msgid "Red"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:94
+msgid "Replace &lt;FOO&gt; with"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:124
+msgid "Add your custom button to your website"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:125
+msgid "Your source code:"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:127
+msgid "Your button will take people to:"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:162
+#: apps/landing/templates/landing/promote_buttons.html:166
+#: apps/landing/templates/landing/promote_buttons.html:170
+msgid "Better CSS docs for a better Web on MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:163
+#: apps/landing/templates/landing/promote_buttons.html:167
+#: apps/landing/templates/landing/promote_buttons.html:171
+msgid "Better HTML docs for a better Web on MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:164
+#: apps/landing/templates/landing/promote_buttons.html:168
+#: apps/landing/templates/landing/promote_buttons.html:172
+msgid "Better JavaScript docs for a better Web on MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:165
+#: apps/landing/templates/landing/promote_buttons.html:169
+#: apps/landing/templates/landing/promote_buttons.html:173
+msgid "Better Web docs for a better Web on MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:174
+#: apps/landing/templates/landing/promote_buttons.html:178
+#: apps/landing/templates/landing/promote_buttons.html:182
+msgid "MDN is Developer Powered for CSS docs, demos and more."
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:175
+#: apps/landing/templates/landing/promote_buttons.html:179
+#: apps/landing/templates/landing/promote_buttons.html:183
+msgid "MDN is Developer Powered for HTML docs, demos and more."
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:176
+#: apps/landing/templates/landing/promote_buttons.html:180
+#: apps/landing/templates/landing/promote_buttons.html:184
+msgid "MDN is Developer Powered for JavaScript docs, demos and more."
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:177
+#: apps/landing/templates/landing/promote_buttons.html:181
+#: apps/landing/templates/landing/promote_buttons.html:185
+msgid "MDN is Developer Powered for Web docs, demos and more."
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:186
+#: apps/landing/templates/landing/promote_buttons.html:190
+#: apps/landing/templates/landing/promote_buttons.html:194
+msgid "CSS docs by developers, for developers on MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:187
+#: apps/landing/templates/landing/promote_buttons.html:191
+#: apps/landing/templates/landing/promote_buttons.html:195
+msgid "HTML docs by developers, for developers on MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:188
+#: apps/landing/templates/landing/promote_buttons.html:192
+#: apps/landing/templates/landing/promote_buttons.html:196
+msgid "JavaScript docs by developers, for developers on MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:189
+#: apps/landing/templates/landing/promote_buttons.html:193
+#: apps/landing/templates/landing/promote_buttons.html:197
+msgid "Web docs by developers, for developers on MDN"
+msgstr ""
+
+#: apps/landing/templates/landing/promote_buttons.html:198
+#: apps/landing/templates/landing/promote_buttons.html:199
+#: apps/landing/templates/landing/promote_buttons.html:200
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+
+#: apps/landing/templates/landing/searchresults.html:7
+#: apps/landing/templates/landing/searchresults.html:13
+#: apps/search/templates/search/results.html:11
+msgid "Search Results for \"{query}\""
+msgstr ""
+
+#: apps/notifications/templates/notifications/gone.html:3
+msgid "Unsubscribed"
+msgstr ""
+
+#: apps/notifications/templates/notifications/gone.html:10
+msgid "You have been unsubscribed from this notification."
+msgstr ""
+
+#: apps/notifications/templates/notifications/remove.html:3
+#: apps/wiki/templates/wiki/includes/document_macros.html:7
+#: apps/wiki/templates/wiki/includes/document_macros.html:67
+msgid "Unsubscribe"
+msgstr ""
+
+#. {0} is an object title, {1} is an object type.
+#: apps/notifications/templates/notifications/remove.html:11
+msgid ""
+"Do you want to stop receiving email notifications from the {1} "
+"<strong>{0}</strong>?"
+msgstr ""
+
+#: apps/search/queries.py:80
+msgid "name"
+msgstr ""
+
+#: apps/search/queries.py:81
+msgid "groupname"
+msgstr ""
+
+#: apps/search/templates/search/basic-form.html:4
+msgid "Enter your terms in the form below and click <strong>Search</strong>"
+msgstr ""
+
+#: apps/search/templates/search/basic-form.html:7
+#: apps/search/templates/search/form.html:62
+msgctxt "button"
+msgid "Search"
+msgstr ""
+
+#: apps/search/templates/search/down.html:6
+msgid "Search Unavailable"
+msgstr ""
+
+#: apps/search/templates/search/down.html:8
+msgid "Search is temporarily unavailable. Please try again in a few minutes."
+msgstr ""
+
+#: apps/search/templates/search/form.html:18
+msgid "Article contains"
+msgstr ""
+
+#: apps/search/templates/search/form.html:19
+msgid "crashes on youtube"
+msgstr ""
+
+#: apps/search/templates/search/form.html:52
+msgid ""
+"Note: Searching for \"tag1, tag2\" returns articles tagged with both tag1 and "
+"tag2"
+msgstr ""
+
+#: apps/search/templates/search/form.html:68
+msgid "Use basic search"
+msgstr ""
+
+#: apps/search/templates/search/form.html:72
+msgid "Use advanced search"
+msgstr ""
+
+#. Search Mozilla Developer Network documentation
+#: apps/search/templates/search/plugin.html:5
+msgid "Search Mozilla Developer Network documentation"
+msgstr ""
+
+#: apps/search/templates/search/results.html:43
+msgid "MDN Site Search"
+msgstr ""
+
+#: apps/search/templates/search/results.html:60
+msgid "Results"
+msgstr ""
+
+#: apps/search/templates/search/results.html:64
+msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
+msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/search/templates/search/results.html:70
+msgid "%(count)s document found in %(locale_native)s."
+msgid_plural "%(count)s documents found in %(locale_native)s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/search/templates/search/results.html:78
+msgid "%(count)s document found for \"%(query)s\"."
+msgid_plural "%(count)s documents found for \"%(query)s\"."
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/search/templates/search/results.html:84
+msgid "%(count)s document found."
+msgid_plural "%(count)s documents found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/search/templates/search/results.html:94
+msgid "Displaying all results."
+msgstr ""
+
+#: apps/search/templates/search/results.html:96
+msgid "Displaying %(count)s search result."
+msgid_plural "Displaying %(start)s-%(end)s of %(count)s search results."
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/search/templates/search/results.html:107
+msgid "Search again in %(default_locale_native)s"
+msgstr ""
+
+#: apps/translations/search/filter/addons/name.py:2
+msgid "Add-ons & Extensions"
+msgstr ""
+
+#: apps/translations/search/filter/advanced/name.py:2
+msgid "I'm an Expert"
+msgstr ""
+
+#: apps/translations/search/filter/api/name.py:2
+msgid "APIs and DOM"
+msgstr ""
+
+#: apps/translations/search/filter/apps/name.py:2
+msgid "Open Web Apps"
+msgstr ""
+
+#: apps/translations/search/filter/beginner/name.py:2
+msgid "I'm Learning"
+msgstr ""
+
+#: apps/translations/search/filter/code/name.py:2
+msgid "Code Samples"
+msgstr ""
+
+#: apps/translations/search/filter/firefox-desktop/name.py:2
+msgid "Firefox for Desktop"
+msgstr ""
+
+#: apps/translations/search/filter/firefox-mobile/name.py:2
+msgid "Firefox for Android"
+msgstr ""
+
+#: apps/translations/search/filter/games/name.py:2
+msgid "Games"
+msgstr ""
+
+#: apps/translations/search/filter/howto/name.py:2
+msgid "How-To & Tutorial"
+msgstr ""
+
+#: apps/translations/search/filter/intermediate/name.py:2
+msgid "Intermediate"
+msgstr ""
+
+#: apps/translations/search/filter/marketplace/name.py:2
+msgid "Marketplace"
+msgstr ""
+
+#: apps/translations/search/filter/mathml/name.py:2
+#: templates/base.html:119
+msgid "MathML"
+msgstr ""
+
+#: apps/translations/search/filter/tools/name.py:2
+#: templates/base.html:137
+msgid "Tools"
+msgstr ""
+
+#: apps/translations/search/filter/webdev/name.py:2
+msgid "Web Development"
+msgstr ""
+
+#: apps/translations/search/filter/xul/name.py:2
+msgid "XUL"
+msgstr ""
+
+#: apps/translations/search/filtergroup/document-type/name.py:2
+msgid "Document type"
+msgstr ""
+
+#: apps/translations/search/filtergroup/skill-level/name.py:2
+msgid "Skill level"
+msgstr ""
+
+#: apps/translations/search/filtergroup/topics/name.py:2
+msgid "Topics"
+msgstr ""
+
+#: apps/users/backends.py:35
+msgid "algorithm"
+msgstr ""
+
+#: apps/users/backends.py:36
+msgid "salt"
+msgstr ""
+
+#: apps/users/backends.py:37
+msgid "hash"
+msgstr ""
+
+#: apps/users/forms.py:17
+msgid "Username may contain only letters, numbers and ./-/_ characters."
+msgstr ""
+
+#: apps/users/forms.py:19
+msgid "Username is required."
+msgstr ""
+
+#: apps/users/forms.py:20
+msgid ""
+"Username is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: apps/users/forms.py:22
+msgid ""
+"Username is too long (%(show_value)s characters). It must be %(limit_value)s "
+"characters or less."
+msgstr ""
+
+#: apps/users/forms.py:29
+msgid "Password is required."
+msgstr ""
+
+#: apps/users/forms.py:30
+msgid "Please enter your password twice."
+msgstr ""
+
+#: apps/users/forms.py:31
+msgid ""
+"To use this password, you need to initiate a password reset. Please use the "
+"\"forgot my password\" link below."
+msgstr ""
+
+#: apps/users/forms.py:38
+#: apps/users/templates/users/browserid_register.html:55
+#: apps/users/templates/users/browserid_register.html:83
+#: apps/users/templates/users/login_form.html:11
+msgid "Username"
+msgstr ""
+
+#: apps/users/forms.py:40
+msgid "Required. 30 characters or fewer. Letters, digits and ./-/_ only."
+msgstr ""
+
+#: apps/users/forms.py:59
+#: apps/users/forms.py:241
+#: apps/users/forms.py:252
+msgid "Email address"
+msgstr ""
+
+#: apps/users/forms.py:63
+#: apps/users/forms.py:166
+#: apps/users/templates/users/edit_profile.html:27
+#: apps/users/templates/users/login_form.html:15
+msgid "Password"
+msgstr ""
+
+#: apps/users/forms.py:67
+msgid "Repeat password"
+msgstr ""
+
+#: apps/users/forms.py:71
+msgid "Enter the same password as above, for verification."
+msgstr ""
+
+#: apps/users/forms.py:84
+msgid "Passwords must match."
+msgstr ""
+
+#: apps/users/forms.py:91
+#: apps/users/forms.py:263
+msgid "A user with that email address already exists."
+msgstr ""
+
+#: apps/users/forms.py:99
+#: apps/users/forms.py:137
+msgid "The username you entered already exists."
+msgstr ""
+
+#: apps/users/forms.py:186
+msgid ""
+"Please enter a correct username and password. Note that both fields are "
+"case-sensitive."
+msgstr ""
+
+#: apps/users/forms.py:189
+msgid "This account is inactive."
+msgstr ""
+
+#: apps/users/forms.py:194
+msgid ""
+"Your Web browser doesn't appear to have cookies enabled. Cookies are "
+"required for logging in."
+msgstr ""
+
+#: apps/users/forms.py:214
+msgid "Please enter a twitter.com URL."
+msgstr ""
+
+#: apps/users/forms.py:220
+msgid "Please enter a facebook.com URL."
+msgstr ""
+
+#: apps/users/forms.py:261
+msgid "This is your current email."
+msgstr ""
+
+#: apps/users/helpers.py:47
+msgid "Ban User"
+msgstr ""
+
+#: apps/users/models.py:30
+msgid "User"
+msgstr ""
+
+#: apps/users/models.py:32
+msgid "Display name"
+msgstr ""
+
+#: apps/users/models.py:34
+msgid "Make my email public"
+msgstr ""
+
+#: apps/users/models.py:36
+#: apps/users/templates/users/edit_profile.html:13
+msgid "Avatar"
+msgstr ""
+
+#: apps/users/models.py:39
+msgid "Biography"
+msgstr ""
+
+#: apps/users/models.py:43
+msgid "Twitter URL"
+msgstr ""
+
+#: apps/users/models.py:45
+msgid "Facebook URL"
+msgstr ""
+
+#: apps/users/models.py:51
+msgid "Country"
+msgstr ""
+
+#: apps/users/models.py:54
+msgid "City"
+msgstr ""
+
+#: apps/users/models.py:57
+msgid "Livechat ID"
+msgstr ""
+
+#: apps/users/models.py:165
+#: apps/users/models.py:199
+msgid "Please confirm your email address"
+msgstr ""
+
+#: apps/users/models.py:215
+#: apps/users/models.py:257
+msgid "user"
+msgstr ""
+
+#: apps/users/models.py:216
+#: apps/users/models.py:258
+msgid "activation key"
+msgstr ""
+
+#: apps/users/models.py:222
+msgid "registration profile"
+msgstr ""
+
+#: apps/users/models.py:223
+msgid "registration profiles"
+msgstr ""
+
+#: apps/users/models.py:276
+msgid "%s banned by %s"
+msgstr ""
+
+#: apps/users/models.py:278
+msgid "%s (no longer active)"
+msgstr ""
+
+#: apps/users/utils.py:43
+msgid "Email Address Reminder"
+msgstr ""
+
+#: apps/users/templates/users/activate.html:4
+msgid "Account successfully verified!"
+msgstr ""
+
+#: apps/users/templates/users/activate.html:6
+msgid "Something is wrong"
+msgstr ""
+
+#: apps/users/templates/users/activate.html:17
+msgid ""
+"You've confirmed your email address and activated your account! You can now "
+"log in, and go edit your profile."
+msgstr ""
+
+#: apps/users/templates/users/activate.html:22
+msgid "Your question is now visible on the site!"
+msgid_plural "Your questions are now visible on the site!"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/users/templates/users/activate.html:33
+msgid ""
+"We could not activate your account. Please make sure that you have clicked "
+"the correct link in your email or typed in the correct address."
+msgstr ""
+
+#: apps/users/templates/users/browserid_explanation.html:1
+msgid ""
+"<h3>What's this?</h3> <p>MDN has switched to <a href=\"%(browserid_href)s\" "
+"target=\"_blank\" rel=\"external\">Persona</a>, a safe and simple way to sign in "
+"with just your e-mail address. <a href=\"%(why_browserid)s\" "
+"rel=\"external\">Learn more about why Mozilla is using Persona</a>.</p> "
+"<p><strong>Returning members:</strong> sign in with Persona and you'll be "
+"connected to your MDN profile (all your information is still here).</p> "
+"<p><strong>New members:</strong> sign in with Persona first, then you'll be "
+"able to set up your new MDN profile.</p>"
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:5
+#: apps/users/templates/users/register.html:4
+#: apps/users/templates/users/register.html:12
+#: apps/users/templates/users/register.html:26
+#: templates/layout/login.html:24
+msgid "Register"
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:25
+msgid "Persona is here!"
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:26
+msgid ""
+"MDN has switched to <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a>, "
+"a safe and simple way to sign in with just your e-mail address. <a href=\"%"
+"(why_browserid)s\" rel=\"external\">Learn more about it.</a>"
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:31
+msgid ""
+"<strong>Having trouble logging in? <a href=\"%(bug_href)s\" rel=\"external\">Let "
+"us know.</a></strong>"
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:38
+msgid "New MDN Members"
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:39
+msgid ""
+"We couldn't find an MDN profile for your Persona. If you're new here, you "
+"can pick an MDN username now and complete your registration."
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:43
+#: apps/users/templates/users/register.html:13
+msgid ""
+"You can access everything on the MDN website even without an account, but "
+"when you join you'll be able to edit docs, submit demos, and have your own "
+"profile page."
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:57
+msgid ""
+"Please enter the name you'd like to display to other users to identify your "
+"contributions."
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:63
+msgid "Create a New Profile"
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:70
+msgid "Forgot your email?"
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:71
+msgid ""
+"If you have an MDN account, but you've forgotten which email address you use "
+"on MDN, enter your username below and we'll send you an email reminder."
+msgstr ""
+
+#: apps/users/templates/users/browserid_register.html:87
+msgid "Send a reminder"
+msgstr ""
+
+#: apps/users/templates/users/browserid_signin.html:4
+msgid "Sign In with Persona"
+msgstr ""
+
+#: apps/users/templates/users/browserid_signin.html:14
+#: templates/404.html:30
+#: templates/includes/login.html:20
+msgid "Sign in with Persona"
+msgstr ""
+
+#: apps/users/templates/users/change_email.html:4
+msgid "Change Email Address"
+msgstr ""
+
+#: apps/users/templates/users/change_email.html:12
+msgid "Change email with Persona"
+msgstr ""
+
+#: apps/users/templates/users/change_email.html:16
+msgid ""
+"<h3>What's this?</h3> <p>MDN has switched to <a href=\"%(browserid_href)s\" "
+"target=\"_blank\" rel=\"external\">Persona</a>, a safe and simple way to sign in "
+"with just your e-mail address. <a href=\"%(why_browserid)s\" "
+"rel=\"external\">Learn more about why Mozilla is using Persona</a>.</p>"
+msgstr ""
+
+#: apps/users/templates/users/change_email.html:21
+msgid ""
+"To change your MDN email, simply sign in below with the new email address."
+msgstr ""
+
+#: apps/users/templates/users/change_email_complete.html:4
+msgid "Unable to change email for user {username}"
+msgstr ""
+
+#: apps/users/templates/users/change_email_complete.html:6
+msgid "Email changed for user {username}"
+msgstr ""
+
+#: apps/users/templates/users/change_email_complete.html:18
+msgid ""
+"The email you entered ({new_email}) already exists in the system. The "
+"current email for your account is still {old_email}."
+msgstr ""
+
+#: apps/users/templates/users/change_email_complete.html:21
+msgid "Your email has been changed from {old_email} to {new_email}."
+msgstr ""
+
+#: apps/users/templates/users/change_email_done.html:4
+msgid "Confirmation Email Sent"
+msgstr ""
+
+#: apps/users/templates/users/change_email_done.html:14
+msgid ""
+"We've sent a confirmation to %(new_email)s. Please follow the link in the "
+"confirmation to change your account's email."
+msgstr ""
+
+#: apps/users/templates/users/confirm_avatar_delete.html:3
+#: apps/users/templates/users/confirm_avatar_delete.html:24
+msgid "Delete avatar"
+msgstr ""
+
+#: apps/users/templates/users/confirm_avatar_delete.html:8
+msgid "Are you sure you want to delete your avatar?"
+msgstr ""
+
+#: apps/users/templates/users/confirm_avatar_delete.html:16
+msgid ""
+"You are about to permanently delete your avatar. <strong>This cannot be "
+"undone!</strong> You can always <a href=\"%(upload_url)s\">upload another "
+"avatar</a> to replace your current one."
+msgstr ""
+
+#: apps/users/templates/users/edit_avatar.html:3
+msgid "Change Avatar"
+msgstr ""
+
+#: apps/users/templates/users/edit_avatar.html:14
+msgctxt "avatar"
+msgid "Upload"
+msgstr ""
+
+#: apps/users/templates/users/edit_profile.html:17
+msgctxt "avatar"
+msgid "Change"
+msgstr ""
+
+#: apps/users/templates/users/edit_profile.html:21
+msgctxt "avatar"
+msgid "Delete"
+msgstr ""
+
+#: apps/users/templates/users/edit_profile.html:36
+#: apps/users/templates/users/pw_reset_confirm.html:28
+msgid "Update"
+msgstr ""
+
+#: apps/users/templates/users/login.html:4
+msgid "Log In"
+msgstr ""
+
+#: apps/users/templates/users/login.html:13
+msgid "You are already logged in."
+msgstr ""
+
+#: apps/users/templates/users/login_form.html:18
+#: templates/layout/login.html:5
+#: templates/layout/login.html:20
+msgid "Log in"
+msgstr ""
+
+#: apps/users/templates/users/login_form.html:24
+msgid "Login Problems?"
+msgstr ""
+
+#: apps/users/templates/users/login_form.html:26
+msgid "I don't have an account."
+msgstr ""
+
+#: apps/users/templates/users/login_form.html:27
+msgid "I forgot my password."
+msgstr ""
+
+#: apps/users/templates/users/login_form.html:28
+msgid "My account is inactive."
+msgstr ""
+
+#: apps/users/templates/users/profile.html:3
+msgid "{user} | Profile"
+msgstr ""
+
+#: apps/users/templates/users/profile.html:19
+msgid "{city}, {country}"
+msgstr ""
+
+#: apps/users/templates/users/profile.html:35
+msgid "Email:"
+msgstr ""
+
+#: apps/users/templates/users/profile.html:41
+msgid "Website:"
+msgstr ""
+
+#: apps/users/templates/users/profile.html:47
+msgid "Twitter:"
+msgstr ""
+
+#: apps/users/templates/users/profile.html:53
+msgid "Facebook:"
+msgstr ""
+
+#: apps/users/templates/users/profile.html:59
+msgid "IRC:"
+msgstr ""
+
+#: apps/users/templates/users/profile.html:65
+msgid "Livechat ID: {livechat_id}"
+msgstr ""
+
+#: apps/users/templates/users/profile.html:72
+msgid "About {user}"
+msgstr ""
+
+#: apps/users/templates/users/pw_change.html:4
+msgid "Change Password"
+msgstr ""
+
+#: apps/users/templates/users/pw_change.html:19
+msgid "Change my password"
+msgstr ""
+
+#: apps/users/templates/users/pw_change_complete.html:3
+msgid "Password changed successful!"
+msgstr ""
+
+#: apps/users/templates/users/pw_change_complete.html:12
+msgid ""
+"You have successfully changed your password. <a href=\"%(profile_url)s\">Go "
+"back to edit profile page.</a>"
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_complete.html:3
+msgid "Password successfully reset."
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_complete.html:12
+msgid "You can now log in."
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_confirm.html:4
+#: apps/users/templates/users/pw_reset_form.html:4
+#: apps/users/templates/users/pw_reset_sent.html:4
+msgid "Password Reset"
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_confirm.html:20
+msgid "New password"
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_confirm.html:24
+msgid "Confirm password"
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_confirm.html:34
+msgid "Password reset unsuccessful"
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_confirm.html:35
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a new password reset."
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_form.html:14
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll send you "
+"instructions for setting a new one."
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_form.html:24
+msgid "Email Address"
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_form.html:27
+msgid "Send password reset link"
+msgstr ""
+
+#: apps/users/templates/users/pw_reset_sent.html:14
+msgid ""
+"We've sent an email to any account using this address. Please follow the "
+"link in the email to reset your password."
+msgstr ""
+
+#: apps/users/templates/users/register_done.html:4
+#: apps/users/templates/users/register_done.html:12
+msgid "Thank you for registering!"
+msgstr ""
+
+#. This string appears on the 'thank you for registering' page.
+#: apps/users/templates/users/register_done.html:14
+msgid "Thank you for being awesome!"
+msgstr ""
+
+#: apps/users/templates/users/register_done.html:15
+msgid ""
+"Before you can log in, you need to confirm your email address. We've sent "
+"you an email with a confirmation link in it. Just click the link and you'll "
+"be ready to go!"
+msgstr ""
+
+#: apps/users/templates/users/resend_confirmation.html:4
+#: apps/users/templates/users/resend_confirmation.html:24
+msgid "Resend confirmation email"
+msgstr ""
+
+#: apps/users/templates/users/resend_confirmation.html:13
+msgid ""
+"To activate your account you must first confirm your email address. Enter "
+"your email and submit the form below, and we will resend the confirmation "
+"email."
+msgstr ""
+
+#: apps/users/templates/users/resend_confirmation_done.html:4
+msgid "Confirmation email sent successfully."
+msgstr ""
+
+#: apps/users/templates/users/resend_confirmation_done.html:13
+msgid ""
+"Before you can log in, you need to confirm your email address. We've sent a "
+"new confirmation email to any account using <strong>%(email)s</strong>. To "
+"confirm the email address, just follow the link in the email."
+msgstr ""
+
+#: apps/users/templates/users/send_email_reminder_done.html:12
+msgid "No email found for this account"
+msgstr ""
+
+#: apps/users/templates/users/send_email_reminder_done.html:14
+msgid ""
+"Could not find email for <strong>%(username)s</strong>. Please <a href=\"%"
+"(bug_url)s\">file a bug</a> to restore your account."
+msgstr ""
+
+#: apps/users/templates/users/send_email_reminder_done.html:17
+msgid "Reminder email sent."
+msgstr ""
+
+#: apps/users/templates/users/send_email_reminder_done.html:19
+msgid ""
+"We've sent a reminder email to the address registered for <strong>%"
+"(username)s</strong>."
+msgstr ""
+
+#: apps/users/templates/users/user_banned.html:3
+msgid "You've Been Banned"
+msgstr ""
+
+#: apps/users/templates/users/user_banned.html:14
+msgid "You have been banned for the following reason:"
+msgstr ""
+
+#: apps/users/templates/users/user_banned.html:24
+msgid ""
+"<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> "
+"to appeal this ban.</p>"
+msgstr ""
+
+#: apps/wiki/content.py:627
+msgid "Edit section"
+msgstr ""
+
+#: apps/wiki/events.py:102
+msgid "[MDN] Page \"{document_title}\" changed by {creator}"
+msgstr ""
+
+#: apps/wiki/events.py:142
+msgid "{title} is ready for review ({creator})"
+msgstr ""
+
+#: apps/wiki/events.py:161
+msgid "{title} ({locale}) has a new approved revision"
+msgstr ""
+
+#: apps/wiki/feeds.py:27
+msgid "MDN documents"
+msgstr ""
+
+#: apps/wiki/feeds.py:28
+msgid "Documents authored by MDN users"
+msgstr ""
+
+#: apps/wiki/feeds.py:29
+msgid "/"
+msgstr ""
+
+#: apps/wiki/feeds.py:145
+msgid "MDN recent document changes"
+msgstr ""
+
+#: apps/wiki/feeds.py:146
+msgid "Recent changes to MDN documents"
+msgstr ""
+
+#: apps/wiki/feeds.py:153
+msgid "MDN recent changes to documents tagged %s"
+msgstr ""
+
+#: apps/wiki/feeds.py:179
+msgid "MDN documents for %s review"
+msgstr ""
+
+#: apps/wiki/feeds.py:184
+msgid "MDN documents for review"
+msgstr ""
+
+#: apps/wiki/feeds.py:208
+msgid "MDN '%s' translations in need of update"
+msgstr ""
+
+#: apps/wiki/feeds.py:224
+msgid ""
+"<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%"
+"(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %"
+"(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s\" title=\"%"
+"(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %"
+"(doc_modified)s) </p>"
+msgstr ""
+
+#: apps/wiki/feeds.py:266
+msgid "MDN recent revisions"
+msgstr ""
+
+#: apps/wiki/feeds.py:267
+msgid "Recent revisions to MDN documents"
+msgstr ""
+
+#: apps/wiki/feeds.py:334
+msgid "View Page"
+msgstr ""
+
+#: apps/wiki/feeds.py:337
+msgid "Edit Page"
+msgstr ""
+
+#: apps/wiki/feeds.py:345
+msgid "Show comparison"
+msgstr ""
+
+#: apps/wiki/feeds.py:348
+#: apps/wiki/templates/wiki/includes/document_macros.html:61
+msgid "History"
+msgstr ""
+
+#: apps/wiki/feeds.py:380
+msgid "MDN recent file changes"
+msgstr ""
+
+#: apps/wiki/feeds.py:381
+msgid "Recent revisions to MDN file attachments"
+msgstr ""
+
+#: apps/wiki/forms.py:27
+msgid "Please provide a title."
+msgstr ""
+
+#: apps/wiki/forms.py:28
+msgid ""
+"The title is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: apps/wiki/forms.py:30
+msgid ""
+"Please keep the length of the title to %(limit_value)s characters or less. "
+"It is currently %(show_value)s characters."
+msgstr ""
+
+#: apps/wiki/forms.py:33
+msgid "Name Your Article"
+msgstr ""
+
+#: apps/wiki/forms.py:34
+msgid "Please provide a slug."
+msgstr ""
+
+#: apps/wiki/forms.py:35
+msgid "The slug provided is not valid."
+msgstr ""
+
+#: apps/wiki/forms.py:36
+msgid ""
+"The slug is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: apps/wiki/forms.py:38
+msgid ""
+"Please keep the length of the slug to %(limit_value)s characters or less. It "
+"is currently %(show_value)s characters."
+msgstr ""
+
+#: apps/wiki/forms.py:41
+msgid "Please provide a summary."
+msgstr ""
+
+#: apps/wiki/forms.py:42
+msgid ""
+"The summary is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: apps/wiki/forms.py:44
+msgid ""
+"Please keep the length of the summary to %(limit_value)s characters or less. "
+"It is currently %(show_value)s characters."
+msgstr ""
+
+#: apps/wiki/forms.py:47
+msgid "Please provide content."
+msgstr ""
+
+#: apps/wiki/forms.py:48
+msgid ""
+"The content is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: apps/wiki/forms.py:50
+msgid ""
+"Please keep the length of the content to %(limit_value)s characters or less. "
+"It is currently %(show_value)s characters."
+msgstr ""
+
+#: apps/wiki/forms.py:53
+msgid ""
+"Please keep the length of the comment to %(limit_value)s characters or less. "
+"It is currently %(show_value)s characters."
+msgstr ""
+
+#: apps/wiki/forms.py:56
+msgid "Another document with this slug already exists."
+msgstr ""
+
+#: apps/wiki/forms.py:57
+msgid "Another document with this metadata already exists."
+msgstr ""
+
+#: apps/wiki/forms.py:59
+msgid "This document was modified while you were editing it."
+msgstr ""
+
+#: apps/wiki/forms.py:61
+msgid "Files of this type are not permitted."
+msgstr ""
+
+#: apps/wiki/forms.py:62
+msgid "Changing this document's slug requires moving it and its children."
+msgstr ""
+
+#: apps/wiki/forms.py:71
+#: apps/wiki/forms.py:174
+#: apps/wiki/forms.py:500
+#: apps/wiki/templates/wiki/edit_document.html:53
+#: apps/wiki/templates/wiki/edit_document.html:107
+#: apps/wiki/templates/wiki/move_document.html:49
+#: apps/wiki/templates/wiki/new_document.html:33
+#: apps/wiki/templates/wiki/includes/revision_diff.html:33
+#: apps/wiki/templates/wiki/includes/translate_description.html:11
+#: templates/badger/includes/badge_full.html:4
+msgid "Title:"
+msgstr ""
+
+#: apps/wiki/forms.py:72
+#: apps/wiki/forms.py:175
+#: apps/wiki/forms.py:501
+msgid "Title of article"
+msgstr ""
+
+#: apps/wiki/forms.py:78
+#: apps/wiki/forms.py:182
+#: apps/wiki/templates/wiki/new_document.html:34
+#: apps/wiki/templates/wiki/includes/revision_diff.html:37
+#: apps/wiki/templates/wiki/includes/translate_description.html:22
+msgid "Slug:"
+msgstr ""
+
+#: apps/wiki/forms.py:79
+#: apps/wiki/forms.py:183
+msgid "Article URL"
+msgstr ""
+
+#: apps/wiki/forms.py:85
+msgid "Firefox version:"
+msgstr ""
+
+#: apps/wiki/forms.py:94
+msgid "Operating systems:"
+msgstr ""
+
+#: apps/wiki/forms.py:107
+msgid "Category:"
+msgstr ""
+
+#: apps/wiki/forms.py:108
+msgid "Type of article"
+msgstr ""
+
+#: apps/wiki/forms.py:113
+#: apps/wiki/templates/wiki/new_document.html:36
+#: apps/wiki/templates/wiki/includes/translate_description.html:33
+msgid "Parent:"
+msgstr ""
+
+#: apps/wiki/forms.py:189
+#: apps/wiki/templates/wiki/edit_document.html:59
+#: apps/wiki/templates/wiki/includes/document_content.html:279
+#: apps/wiki/templates/wiki/includes/revision_diff.html:42
+#: templates/badger/includes/badge_full.html:14
+msgid "Tags:"
+msgstr ""
+
+#: apps/wiki/forms.py:192
+#: apps/wiki/templates/wiki/edit_document.html:65
+#: apps/wiki/templates/wiki/review_revision.html:40
+msgid "Keywords:"
+msgstr ""
+
+#: apps/wiki/forms.py:193
+msgid "Affects search results"
+msgstr ""
+
+#: apps/wiki/forms.py:197
+msgid "Search result summary:"
+msgstr ""
+
+#: apps/wiki/forms.py:198
+msgid "Only displayed on search results page"
+msgstr ""
+
+#: apps/wiki/forms.py:213
+#: apps/wiki/templates/wiki/edit_document.html:77
+#: apps/wiki/templates/wiki/includes/revision_diff.html:47
+msgid "Content:"
+msgstr ""
+
+#: apps/wiki/forms.py:220
+#: apps/wiki/forms.py:417
+msgid "Comment:"
+msgstr ""
+
+#: apps/wiki/forms.py:223
+msgid "Tag this revision for review?"
+msgstr ""
+
+#: apps/wiki/forms.py:228
+msgid "Tag this revision for localization?"
+msgstr ""
+
+#: apps/wiki/forms.py:421
+msgid "Significance:"
+msgstr ""
+
+#: apps/wiki/forms.py:507
+msgid "New slug:"
+msgstr ""
+
+#: apps/wiki/forms.py:508
+msgid "New article URL"
+msgstr ""
+
+#: apps/wiki/helpers.py:154
+#: apps/wiki/helpers.py:155
+#: apps/wiki/helpers.py:182
+#: apps/wiki/helpers.py:183
+msgid "Revision %s"
+msgstr ""
+
+#: apps/wiki/helpers.py:161
+msgid "There was an error generating the content."
+msgstr ""
+
+#: apps/wiki/models.py:239
+msgid "Minor details like punctuation and spelling errors"
+msgstr ""
+
+#: apps/wiki/models.py:241
+msgid "Content changes that don't require immediate translation"
+msgstr ""
+
+#: apps/wiki/models.py:243
+msgid "Major content changes that will make older translations inaccurate"
+msgstr ""
+
+#: apps/wiki/models.py:248
+msgid "Uncategorized"
+msgstr ""
+
+#: apps/wiki/models.py:249
+msgid "Reference"
+msgstr ""
+
+#: apps/wiki/models.py:260
+msgid "No table of contents"
+msgstr ""
+
+#: apps/wiki/models.py:261
+msgid "All levels"
+msgstr ""
+
+#: apps/wiki/models.py:262
+msgid "H2 and higher"
+msgstr ""
+
+#: apps/wiki/models.py:263
+msgid "H3 and higher"
+msgstr ""
+
+#: apps/wiki/models.py:264
+msgid "H4 and higher"
+msgstr ""
+
+#: apps/wiki/models.py:279
+msgid "Desktop:"
+msgstr ""
+
+#: apps/wiki/models.py:282
+#: apps/wiki/models.py:283
+msgid "Firefox 3.5-3.6"
+msgstr ""
+
+#: apps/wiki/models.py:284
+#: apps/wiki/models.py:285
+#: apps/wiki/models.py:289
+msgid "Firefox 4"
+msgstr ""
+
+#: apps/wiki/models.py:286
+#: apps/wiki/models.py:287
+msgid "Firefox 3.0"
+msgstr ""
+
+#: apps/wiki/models.py:288
+msgid "Mobile:"
+msgstr ""
+
+#: apps/wiki/models.py:290
+msgid "Firefox 4 for Mobile"
+msgstr ""
+
+#: apps/wiki/models.py:299
+msgid "Desktop OS:"
+msgstr ""
+
+#: apps/wiki/models.py:300
+msgid "Windows"
+msgstr ""
+
+#: apps/wiki/models.py:301
+msgid "Mac OS X"
+msgstr ""
+
+#: apps/wiki/models.py:302
+msgid "Linux"
+msgstr ""
+
+#: apps/wiki/models.py:303
+msgid "Mobile OS:"
+msgstr ""
+
+#: apps/wiki/models.py:304
+msgid "Android"
+msgstr ""
+
+#: apps/wiki/models.py:305
+msgid "Maemo"
+msgstr ""
+
+#: apps/wiki/models.py:315
+msgid "%(old)s Redirect %(number)i"
+msgstr ""
+
+#: apps/wiki/models.py:316
+msgid "%(old)s-redirect-%(number)i"
+msgstr ""
+
+#: apps/wiki/models.py:321
+msgid "Technical - code samples, APIs, or technologies"
+msgstr ""
+
+#: apps/wiki/models.py:322
+msgid "Editorial - prose, grammar, or content"
+msgstr ""
+
+#: apps/wiki/models.py:323
+msgid "Template - KumaScript code"
+msgstr ""
+
+#: apps/wiki/models.py:328
+msgid "Localization in Progress"
+msgstr ""
+
+#: apps/wiki/models.py:396
+msgid "Parent %s/%s does not exist."
+msgstr ""
+
+#: apps/wiki/models.py:589
+msgid "Document Tag"
+msgstr ""
+
+#: apps/wiki/models.py:590
+msgid "Document Tags"
+msgstr ""
+
+#: apps/wiki/models.py:1075
+msgid "Please choose a category."
+msgstr ""
+
+#: apps/wiki/models.py:1899
+msgid "Review Tag"
+msgstr ""
+
+#: apps/wiki/models.py:1900
+msgid "Review Tags"
+msgstr ""
+
+#: apps/wiki/models.py:1906
+msgid "Localization Tag"
+msgstr ""
+
+#: apps/wiki/models.py:1907
+msgid "Localization Tags"
+msgstr ""
+
+#: apps/wiki/models.py:2045
+msgid ""
+"A revision must be based on a revision of the %(locale)s document. Revision "
+"ID %(id)s does not fit those criteria."
+msgstr ""
+
+#: apps/wiki/tasks.py:37
+msgid "Your revision has been approved: {title}"
+msgstr ""
+
+#: apps/wiki/tasks.py:39
+msgid "Your revision has been rejected: {title}"
+msgstr ""
+
+#: apps/wiki/views.py:415
+msgid "Redirected from %(url)s"
+msgstr ""
+
+#: apps/wiki/views.py:643
+msgid "Unsupported content-type: %s"
+msgstr ""
+
+#: apps/wiki/views.py:649
+msgid "Request parsing error: %s"
+msgstr ""
+
+#: apps/wiki/views.py:669
+msgid "ETag precondition failed"
+msgstr ""
+
+#: apps/wiki/views.py:984
+msgid "Sections may only be edited inline."
+msgstr ""
+
+#: apps/wiki/views.py:1375
+msgid ""
+"Autosuggest requires a partial title. For a full document index, see the "
+"main page."
+msgstr ""
+
+#: apps/wiki/views.py:1560
+msgid "The URL you provided could not be reached."
+msgstr ""
+
+#: apps/wiki/views.py:1601
+msgid "You cannot translate this document."
+msgstr ""
+
+#: apps/wiki/views.py:1961
+msgid "Glad to hear it &mdash; thanks for the feedback!"
+msgstr ""
+
+#: apps/wiki/views.py:1963
+msgid "Sorry to hear that. Perhaps one of the solutions below can help."
+msgstr ""
+
+#: apps/wiki/views.py:1973
+msgid "You already voted on this Article."
+msgstr ""
+
+#: apps/wiki/views.py:2154
+msgid "Document has been edited; please re-review."
+msgstr ""
+
+#: apps/wiki/views.py:2345
+msgid "%(obj_count)d object(s) loaded."
+msgstr ""
+
+#: apps/wiki/views.py:2349
+msgid "Failed to import data: %(error)s"
+msgstr ""
+
+#: apps/wiki/views.py:2455
+msgid "The file provided is not valid. File must be one of these types: ."
+msgstr ""
+
+#. {n} is the revision number, {t} is the title of the document. {c} is the category.
+#: apps/wiki/templates/wiki/attachment_detail.html:4
+msgid "Attachment {n} | {t}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:16
+msgid "Attachment Information"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:20
+#: apps/wiki/templates/wiki/revision.html:18
+msgid "Revision slug:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:24
+#: apps/wiki/templates/wiki/revision.html:22
+msgid "Revision title:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:28
+#: apps/wiki/templates/wiki/revision.html:26
+msgid "Revision id:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:32
+#: apps/wiki/templates/wiki/revision.html:30
+#: templates/badger/includes/badge_full.html:26
+msgid "Created:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:36
+#: apps/wiki/templates/wiki/revision.html:34
+#: templates/badger/includes/badge_full.html:22
+msgid "Creator:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:40
+#: apps/wiki/templates/wiki/attachment_detail.html:44
+msgid "MIME Type:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:45
+#: apps/wiki/templates/wiki/includes/attachment_row.html:6
+msgid "%s bytes"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:50
+#: apps/wiki/templates/wiki/revision.html:44
+msgid "Reviewed:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:54
+#: apps/wiki/templates/wiki/revision.html:48
+msgid "Reviewed by:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:58
+#: apps/wiki/templates/wiki/revision.html:52
+msgid "Is approved?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:62
+#: apps/wiki/templates/wiki/revision.html:56
+msgid "Is current revision?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:71
+msgid "Attachment Preview"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_detail.html:76
+msgid "No preview is available."
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_modal.html:3
+msgid "Attach Files"
+msgstr ""
+
+#: apps/wiki/templates/wiki/attachment_modal.html:5
+msgid "Provide the file to be uploaded below."
+msgstr ""
+
+#: apps/wiki/templates/wiki/compare_revisions.html:3
+msgid "Compare Revisions | {document}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/compare_revisions.html:11
+msgid "Compare Revisions"
+msgstr ""
+
+#: apps/wiki/templates/wiki/compare_revisions.html:15
+#: apps/wiki/templates/wiki/review_revision.html:13
+#: apps/wiki/templates/wiki/review_translation.html:11
+#: apps/wiki/templates/wiki/includes/review_form.html:4
+msgid "Back to History"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_document_delete.html:3
+msgid "Delete Document | {document}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_document_delete.html:9
+msgid "Cannot delete pages with children until we fix this bug:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_document_delete.html:15
+#: apps/wiki/templates/wiki/document_revisions.html:10
+msgid "{title}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_document_delete.html:17
+#: apps/wiki/templates/wiki/confirm_revision_delete.html:12
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:16
+msgid "Creator"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_document_delete.html:20
+msgid "Creation Date"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_document_delete.html:23
+msgid ""
+"You are about to delete this document and all of its revisions. Please let "
+"us know why this page should be deleted."
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_document_delete.html:30
+msgid "Are you sure you want to continue?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_delete.html:3
+msgid "Delete Revision | {document}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_delete.html:10
+msgid "Are you sure you want to delete this revision?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_delete.html:16
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:20
+msgid "Content"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_delete.html:21
+msgid ""
+"You are about to permanently delete this revision. <strong>This cannot be "
+"undone!</strong> Are you sure you want to continue?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:3
+msgid "Revert Revision | {document}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:11
+msgid "Are you sure you want to revert to this revision?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:13
+msgid "Document"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:28
+msgid "Why are you reverting to this revision?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:31
+msgid ""
+"You are about to revert the document to this revision. Click \"submit\" to "
+"revert to the content&nbsp;above."
+msgstr ""
+
+#: apps/wiki/templates/wiki/confirm_revision_revert.html:34
+msgid "Revert"
+msgstr ""
+
+#: apps/wiki/templates/wiki/deletion_log.html:2
+#: apps/wiki/templates/wiki/deletion_log.html:7
+msgid "Document Deleted"
+msgstr ""
+
+#: apps/wiki/templates/wiki/deletion_log.html:9
+msgid ""
+"This document was deleted by <a href=\"%(url)s\">%(username)s</a> on %(when)s."
+msgstr ""
+
+#: apps/wiki/templates/wiki/deletion_log.html:14
+msgid "Reason for Deletion"
+msgstr ""
+
+#: apps/wiki/templates/wiki/deletion_log.html:18
+msgid "Restore this document"
+msgstr ""
+
+#: apps/wiki/templates/wiki/document.html:62
+#: templates/includes/lang_switcher.html:2
+msgid "Other languages:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/document.html:73
+#: templates/includes/lang_switcher.html:10
+msgid "Go"
+msgstr ""
+
+#: apps/wiki/templates/wiki/document_revisions.html:3
+msgid "Revision History | {document}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/document_revisions.html:10
+msgid "History of"
+msgstr ""
+
+#: apps/wiki/templates/wiki/document_revisions.html:13
+msgid "Revision history for:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/document_revisions.html:30
+#: apps/wiki/templates/wiki/document_revisions.html:75
+msgid "Compare Selected Translations"
+msgstr ""
+
+#: apps/wiki/templates/wiki/document_revisions.html:30
+#: apps/wiki/templates/wiki/document_revisions.html:75
+msgid "Compare Selected Revisions"
+msgstr ""
+
+#: apps/wiki/templates/wiki/document_revisions.html:67
+msgid "Revert to this revision"
+msgstr ""
+
+#: apps/wiki/templates/wiki/document_revisions.html:80
+msgid "This document has no revisions."
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:24
+msgid ""
+"Please review the differences between your changes and the changes saved "
+"since you started editing. You may save again, but try to resolve any "
+"conflicts by hand so that the changes made since you started are not lost."
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:34
+msgid "Your Changes"
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:35
+#: apps/wiki/templates/wiki/edit_document.html:43
+#: apps/wiki/templates/wiki/review_translation.html:48
+#: apps/wiki/templates/wiki/review_translation.html:52
+#: apps/wiki/templates/wiki/includes/revision_diff.html:16
+#: apps/wiki/templates/wiki/includes/revision_diff.html:28
+msgid "Revision {id} by {user} on {date}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:40
+msgid "Current Revision:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:71
+#: apps/wiki/templates/wiki/review_revision.html:44
+msgid "Search results summary:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:94
+msgid "<span class=\"action\">Editing</span> <em>{title}</em>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:97
+msgid "Edit Page Title and Properties"
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:99
+msgid ""
+"Draft <span id=\"draft-action\"></span> <time id=\"draft-time\" class=\"timeago\" "
+"title=\"\"></time>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:113
+msgid "Rendering max age (in seconds):"
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:115
+msgid ""
+"Find the translation source with the lookup below and then click \"Save "
+"Changes."
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:117
+#: apps/wiki/templates/wiki/includes/translate_description.html:61
+msgid "Lookup:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/edit_document.html:154
+msgid "Review needed?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_documents.html:6
+msgid "Articles tagged: {tag}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_documents.html:8
+msgid "All Templates"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_documents.html:10
+msgid "All Articles"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_documents.html:28
+msgid "Translation updates needed"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_documents.html:51
+#: apps/wiki/templates/wiki/list_documents_for_review.html:34
+msgid "There are no articles."
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_documents_for_review.html:4
+msgid "Documents for {tag} review"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_documents_for_review.html:7
+msgid "Documents for review"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_documents_for_review.html:12
+msgid "Articles in Need of Review Tagged: {tag}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_documents_for_review.html:14
+msgid "All Articles in Need of Review"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_files.html:3
+msgid "All Files"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_files.html:24
+msgid "There are no files."
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_tags.html:3
+msgid "All Tags"
+msgstr ""
+
+#: apps/wiki/templates/wiki/list_tags.html:19
+msgid "There are no tags."
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:3
+msgid "Move \"{t}\""
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:16
+msgid "Please provide a new slug for this page using the field below."
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:20
+msgid "Your requested move cannot be completed due to slug conflicts:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:28
+msgid "Please choose a different slug value."
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:43
+msgid "Current Slug:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:55
+msgid "New Slug:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:62
+msgid "Lookup by Document Title"
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:65
+msgid "Parent Title"
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:73
+msgid "Move {d} Pages"
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:73
+msgid "Move Page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:78
+msgid "The following {d} subpages will be affected by this move:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_document.html:85
+msgid "No other documents will be affected by this change."
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_requested.html:3
+msgid "Page move requested"
+msgstr ""
+
+#: apps/wiki/templates/wiki/move_requested.html:10
+msgid ""
+"<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%"
+"(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it "
+"finishes, or if any errors occur during the move.</p>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/mvp_signup.html:3
+msgid "External Document Source Signup"
+msgstr ""
+
+#: apps/wiki/templates/wiki/mvp_signup.html:10
+msgid ""
+"<h1>We put TFM in RTFM</h1> <p>MDN has great docs, you have great docs. Tell "
+"us where your great docs are and we'll work on adding them to the MDN "
+"collection.</p>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/mvp_signup.html:23
+msgid "URL to hosted docs or repository"
+msgstr ""
+
+#: apps/wiki/templates/wiki/mvp_signup.html:24
+msgid "Add Your Docs to MDN"
+msgstr ""
+
+#: apps/wiki/templates/wiki/mvp_signup.html:27
+msgid ""
+"<p>Note: If your docs are in a sub-directory of a repository, please give us "
+"the full path to the docs directory.</p>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/mvp_signup.html:54
+msgid ""
+"<h1>Thanks</h1> <p>We will work on adding your docs in MDN. If you'd like to "
+"help or follow along, watch or give us comments and feedback on <a "
+"href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=861981\">bug "
+"861981</a>.</p>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/new_document.html:5
+msgid "Create a New {title}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/new_document.html:29
+msgid "New Document"
+msgstr ""
+
+#: apps/wiki/templates/wiki/new_document.html:34
+msgid "URL segment that identifies the page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/preview.html:20
+msgid "This is a preview of an unsaved document."
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:3
+msgid "Review Revision {id} | {document}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:11
+msgid "Review Revision of {title}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:12
+msgid "Reviewing Revision {id} by {user}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:17
+msgid "This revision was already reviewed by {user} on {date}."
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:21
+msgid "Submitted Revision Changes"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:22
+msgid "Current public revision:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:22
+msgid "Submitted revision:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:27
+#: apps/wiki/templates/wiki/revision.html:74
+msgid "Revision Source"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:33
+#: apps/wiki/templates/wiki/review_translation.html:79
+#: apps/wiki/templates/wiki/revision.html:81
+msgid "Revision Content"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:39
+msgid "This document does not have a current revision."
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:48
+msgid "Revision source:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_revision.html:52
+msgid "Revision rendered html:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:3
+msgid "Review Translation {id} | {document}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:9
+msgid "Review Translation of {title}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:10
+msgid "Reviewing Translation {id} in {language} by {user}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:15
+msgid "This translation was already reviewed by {user} on {date}."
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:22
+msgid "Recent English Changes"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:31
+msgid "Submitted Translation Changes"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:33
+msgid "Current public translation:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:33
+msgid "Submitted translation:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:38
+msgid "Full Article Sources"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:41
+msgid "The {default_locale} version has no approved content to show."
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:47
+#: apps/wiki/templates/wiki/translate.html:96
+msgid "Approved {default_locale} version:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:51
+msgid "Submitted {locale} translation:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:85
+msgid "This document does not have a current translation."
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:86
+msgid "Translation keywords:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:90
+msgid "Translation search results summary:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:94
+msgid "Translation source:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/review_translation.html:98
+msgid "Translation rendered html:"
+msgstr ""
+
+#. {n} is the revision number, {t} is the title of the document. {c} is the category.
+#: apps/wiki/templates/wiki/revision.html:4
+msgid "Revision {n} | {t} | {c}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/revision.html:14
+msgid "Revision Information"
+msgstr ""
+
+#: apps/wiki/templates/wiki/revision.html:39
+msgid "Is reviewed?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/select_locale.html:3
+msgid "Select language | {document}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/select_locale.html:10
+msgid "Select a language to translate to:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/sphinx.html:32
+msgid ""
+"Content is available under a license specific to this project. &middot; <a "
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/sphinx.html:43
+msgid ""
+"&copy; 2005-2013 Mozilla Developer Network and individual contributors<br /> "
+"Content is available under a license specific to this project. &middot; <a "
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/translate.html:5
+msgid "Translate Article | {document}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/translate.html:31
+msgid "<span class=\"action\">Translating</span> <em>{title}</em>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/translate.html:35
+msgid "Translating article to {locale}"
+msgstr ""
+
+#: apps/wiki/templates/wiki/translate.html:49
+msgid "You are translating an unreviewed or rejected English document."
+msgstr ""
+
+#: apps/wiki/templates/wiki/translate.html:57
+msgid "Translate Content"
+msgstr ""
+
+#: apps/wiki/templates/wiki/translate.html:116
+msgid "This document has no tags."
+msgstr ""
+
+#: apps/wiki/templates/wiki/translate.html:128
+msgid "{locale} translation:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/translate.html:146
+msgid "Localization flags"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/attachment_list.html:5
+msgid "Attachments"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/attachment_list.html:14
+msgid "This document has no attachments."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/attachment_list.html:24
+#: apps/wiki/templates/wiki/includes/attachment_list.html:43
+msgid "File"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/attachment_list.html:25
+msgid "Size"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/attachment_list.html:27
+msgid "Attached by"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/attachment_list.html:46
+msgid "Comments"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/attachment_list.html:61
+msgid "Uploading"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:21
+msgid "Please log in to use this feature."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:155
+msgid "Show Sidebar"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:169
+msgid "In This Article"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:191
+msgid ""
+"This document is being rendered for the first time by the system. Please <a "
+"href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:199
+msgid ""
+"An update to this document <abbr title=\"%(started_at)s\">is currently in "
+"progress</abbr>. If the content below seems stale or if something is "
+"missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:208
+msgid ""
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been "
+"scheduled</abbr>. If the content below seems stale or if something is "
+"missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:224
+msgid "<p>This article is in need of a technical review.</p>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:229
+msgid "<p>This article is in need of an editorial review.</p>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:236
+msgid ""
+"Our volunteers haven't translated this article into %(locale)s yet. <a "
+"href=\"%(help_link)s\">Join us and help get the job done!</a>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:247
+msgid "This article doesn't have any content yet."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:250
+msgid ""
+"Search for <a href=\"%(search_link)s\">pages that use %(title)s</a> to see "
+"example use cases and how many pages use this macro."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:263
+msgid "This article doesn't have approved content yet."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:275
+msgid "Document Tags and Contributors"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:283
+msgid ""
+"<div class=\"contributor-sub\"> <i aria-hidden=\"true\" class=\"icon-"
+"group\"></i><strong>Contributors to this page:</strong> %(contributors)s "
+"</div>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:290
+msgid "Last updated by:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_content.html:305
+msgid "Hide Sidebar"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:12
+#: apps/wiki/templates/wiki/includes/document_macros.html:72
+msgid "Subscribe"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:20
+msgid "breadcrumbs"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:36
+msgid "Languages"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:46
+msgid "No translations exist for this document."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:50
+msgid "Add a translation"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:54
+msgid "Settings"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:59
+msgid "This Page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:77
+msgid "New sub-page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:78
+msgid "Clone this page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:81
+msgid "Move this page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:84
+msgid "View in admin"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:92
+msgid "Delete this page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:97
+msgid "Manage access policy"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:99
+msgid "Manage access policies"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:101
+msgid "Add access policy"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:106
+msgid "Manage content zone"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:109
+msgid "Convert to content zone"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:111
+msgid "Print page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:111
+msgid "Print this page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:128
+msgid "See also"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:137
+msgid "The following reviews have been requested:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:145
+msgid "Technical"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:151
+msgid "Editorial"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_macros.html:156
+msgid "Submit Review"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_toc_field.html:2
+#: apps/wiki/templates/wiki/includes/translate_description.html:49
+msgid "Generate table of contents"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/document_toc_field.html:2
+#: apps/wiki/templates/wiki/includes/translate_description.html:49
+msgid "TOC:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/helpful_form.html:6
+msgid "Was this article helpful?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/helpful_form.html:7
+msgid "Yes"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/helpful_form.html:8
+msgid "No"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/helpful_form.html:9
+msgid "Please wait..."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/kumascript_errors.html:3
+msgid ""
+"There were scripting errors on this page. While those are being addressed by "
+"site editors, you can view partial content below."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/kumascript_errors.html:8
+msgid "There are scripting messages on this page:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/more_help.html:4
+msgid "Couldn't find what you were looking for?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/more_help.html:8
+msgid "Here's a list of related articles that might help:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/more_help.html:17
+msgid "Browse other articles about <a href=\"{url}\">{category}</a>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/more_help.html:20
+msgid "Ask our awesome support community for help"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/more_help.html:23
+msgid "Or try searching:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/page_buttons.html:12
+msgid "New Page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/page_buttons.html:13
+msgid "Discard changes and create a new document?"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/page_buttons.html:13
+msgid "Save and Keep Editing"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/page_buttons.html:13
+msgid "Preview Changes"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:10
+msgid "Approve Translation"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:10
+msgid "Approve Revision"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:11
+msgid "Reject Translation"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:11
+msgid "Reject Revision"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:12
+msgid "Cancel Review"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:15
+msgid "Accept this Translation"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:15
+msgid "Accept this Revision"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:19
+msgid ""
+"Thanks for taking the time to review these changes. Please consider sending "
+"a thank you to the person who submitted them."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:22
+msgid ""
+"Clicking Accept will make this version of the article live! Please pick the "
+"appropriate revision level below and consider sending a thank you to the "
+"person who submitted this."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:31
+#: apps/wiki/templates/wiki/includes/review_form.html:45
+msgid ""
+"Leave a message for the contributor: <span "
+"class=\"optional\">(optional)</span>"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:34
+msgid "Accept"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:38
+msgid "Reject this Translation"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:38
+msgid "Reject this Revision"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:41
+msgid ""
+"Thanks for taking the time to review these changes. Please consider leaving "
+"a message for the person who submitted them explaining why they were "
+"rejected."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/review_form.html:48
+msgid "Reject"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/revision_comment.html:2
+msgid "Revision Comment"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/revision_comment.html:3
+msgid "Tell us why you made additions and changes."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/revision_diff.html:12
+#: apps/wiki/templates/wiki/includes/revision_diff.html:24
+msgid "Revision {num}:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/submit_revision_for_review.html:3
+msgid "Preview Content"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/submit_revision_for_review.html:4
+msgid "Submit for Review"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/submit_revision_modal.html:3
+msgid "Submit Your Changes"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/submit_revision_modal.html:5
+msgid ""
+"You rock! We'll send an email to let you know if your changes get approved. "
+"You can follow the discussion about this article by clicking the Discussion "
+"tab."
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/submit_revision_modal.html:9
+msgid "Briefly describe your changes:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/submit_revision_modal.html:15
+msgid "Notify me of any future changes to this page"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/submit_revision_modal.html:18
+msgid "Submit"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/translate_description.html:6
+msgid "Translate Description"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/translate_description.html:15
+msgid "Title in {locale}:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/translate_description.html:26
+msgid "Slug in {locale}:"
+msgstr ""
+
+#: apps/wiki/templates/wiki/includes/translate_description.html:65
+msgid ""
+"Find the translation source with the lookup above and then click \"Save "
+"Changes."
+msgstr ""
+
+#: templates/403.html:5
+#: templates/handlers/400.html:5
+msgid "Permission Denied"
+msgstr ""
+
+#: templates/403.html:17
+msgid "The wiki is in read-only mode."
+msgstr ""
+
+#: templates/403.html:19
+msgid "Your account has been banned from making edits."
+msgstr ""
+
+#: templates/403.html:25
+#: templates/handlers/400.html:21
+msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
+msgstr ""
+
+#: templates/403.html:29
+#: templates/handlers/400.html:25
+msgid "<p>We're sorry, we're afraid we can't do that.</p>"
+msgstr ""
+
+#: templates/403.html:36
+msgid "<li><a href=\"%(logout_url)s\">Log out</a> to try again.</li>"
+msgstr ""
+
+#: templates/403.html:40
+#: templates/handlers/400.html:36
+msgid ""
+"<li><a href=\"%(login_url)s\">Log in</a> to try again.</li> <li><a href=\"%"
+"(register_url)s\">Register</a> to edit docs and submit demos.</li>"
+msgstr ""
+
+#: templates/403.html:45
+msgid ""
+"<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">browse "
+"docs</a></li>"
+msgstr ""
+
+#: templates/403.html:50
+msgid ""
+"<p>No computer has ever made a mistake or distorted information. We are all, "
+"by any practical definition of the words, foolproof and incapable of error. "
+"So it can only be attributable to human error. If so, <a "
+"href=\"https://bugzilla.mozilla.org/form.mdn\" rel=\"nofollow\">file a bug</a> "
+"for my human operators.</p>"
+msgstr ""
+
+#: templates/403.html:54
+msgid ""
+"<p class=\"attrib\"><small><a "
+"href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
+"rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a "
+"href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
+msgstr ""
+
+#: templates/404.html:6
+msgid "Not Found"
+msgstr ""
+
+#: templates/500.html:5
+msgid "Internal Server Error"
+msgstr ""
+
+#: templates/base.html:70
+msgid "Skip to main content"
+msgstr ""
+
+#: templates/base.html:71
+msgid "Select language"
+msgstr ""
+
+#: templates/base.html:73
+msgid "Skip to search"
+msgstr ""
+
+#: templates/base.html:99
+msgid "Persona"
+msgstr ""
+
+#: templates/base.html:107
+msgid "Web Platform"
+msgstr ""
+
+#: templates/base.html:111
+msgid "Technologies"
+msgstr ""
+
+#: templates/base.html:116
+msgid "Graphics"
+msgstr ""
+
+#: templates/base.html:117
+msgid "APIs / DOM"
+msgstr ""
+
+#: templates/base.html:122
+msgid "References & Guides"
+msgstr ""
+
+#: templates/base.html:124
+msgid "Tutorials"
+msgstr ""
+
+#: templates/base.html:125
+msgid "References"
+msgstr ""
+
+#: templates/base.html:126
+msgid "Developer Guides"
+msgstr ""
+
+#: templates/base.html:127
+msgid "Accessibility"
+msgstr ""
+
+#: templates/base.html:129
+msgid "...more docs"
+msgstr ""
+
+#: templates/base.html:137
+msgid "Developer Program"
+msgstr ""
+
+#: templates/base.html:140
+msgid "SEARCH"
+msgstr ""
+
+#: templates/base.html:158
+msgid ""
+"<bdi>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual "
+"contributors<br /> Content is available under <a href=\"%"
+"(copyright_url)s\">these licenses</a> &middot; <a href=\"%(about_url)s\">About "
+"MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the "
+"code</a> &middot; <a "
+"href=\"//www.mozilla.org/privacy/policies/websites/\">Privacy policy</a></bdi>"
+msgstr ""
+
+#: templates/badger/award_delete.html:17
+#: templates/badger/awards_by_badge.html:12
+#: templates/badger/awards_by_user.html:12
+#: templates/badger/awards_list.html:12
+#: templates/badger/badges_list.html:6
+msgid "Badges:"
+msgstr ""
+
+#: templates/badger/award_delete.html:18
+msgid "Delete Award"
+msgstr ""
+
+#: templates/badger/award_delete.html:32
+msgid "Delete this award, are you sure?"
+msgstr ""
+
+#: templates/badger/award_delete.html:34
+msgid "Yes, delete award"
+msgstr ""
+
+#: templates/badger/award_detail.html:18
+#: templates/badger/badge_detail.html:13
+msgid "{title} (JSON)"
+msgstr ""
+
+#: templates/badger/award_detail.html:38
+msgid "Badge award:"
+msgstr ""
+
+#: templates/badger/award_detail.html:51
+#: templates/badger/badge_detail.html:76
+msgid "Share:"
+msgstr ""
+
+#: templates/badger/award_detail.html:57
+msgid "Add this to your Mozilla&nbsp;Badge&nbsp;Backpack"
+msgstr ""
+
+#: templates/badger/awards_by_badge.html:7
+#: templates/badger/awards_by_user.html:7
+#: templates/badger/badge_detail.html:10
+msgid "Recent awards"
+msgstr ""
+
+#: templates/badger/awards_by_badge.html:13
+msgid "Awards for {title}"
+msgstr ""
+
+#: templates/badger/awards_by_badge.html:24
+msgid "Awards"
+msgstr ""
+
+#: templates/badger/awards_by_user.html:13
+msgid "Awards for {user}"
+msgstr ""
+
+#: templates/badger/awards_list.html:7
+msgid "Recent badge awards"
+msgstr ""
+
+#: templates/badger/awards_list.html:14
+msgid "Awards for {badge}"
+msgstr ""
+
+#: templates/badger/awards_list.html:16
+msgid "All awards"
+msgstr ""
+
+#: templates/badger/badge_detail.html:32
+msgid "Badge:"
+msgstr ""
+
+#: templates/badger/badge_detail.html:51
+msgid "Recent awardees"
+msgstr ""
+
+#: templates/badger/badges_list.html:8
+msgid ""
+"Badges tagged <a href=\"\" class=\"tag\"><i class=\"icon-tag icon-white\"></i> %"
+"(tag_name)s</a>"
+msgstr ""
+
+#: templates/badger/badges_list.html:10
+msgid "Badges matching \"{query_string}\""
+msgstr ""
+
+#: templates/badger/badges_list.html:12
+msgid "All badges"
+msgstr ""
+
+#: templates/badger/badges_list.html:19
+msgid "Recent awards for these badges"
+msgstr ""
+
+#: templates/badger/includes/award_as_badge.html:4
+msgid "Award details"
+msgstr ""
+
+#: templates/badger/includes/award_full.html:3
+msgid "Awarded to:"
+msgstr ""
+
+#: templates/badger/includes/award_full.html:7
+msgid "(That's you!)"
+msgstr ""
+
+#: templates/badger/includes/award_full.html:11
+msgid "Awarded by:"
+msgstr ""
+
+#: templates/badger/includes/award_full.html:16
+msgid "Awarded at:"
+msgstr ""
+
+#: templates/badger/includes/award_full.html:19
+msgid "Explanation:"
+msgstr ""
+
+#: templates/badger/includes/awards_list.html:7
+msgid ""
+"<span class=\"badge_title\">%(title)s</span> <span class=\"relation\">awarded "
+"to</span> <span class=\"user\">%(user)s</span>"
+msgstr ""
+
+#: templates/badger/includes/badge_full.html:7
+msgid "Image:"
+msgstr ""
+
+#: templates/badger/includes/badge_full.html:10
+msgid "Description:"
+msgstr ""
+
+#: templates/badger/includes/badge_full.html:28
+msgid "Modified:"
+msgstr ""
+
+#: templates/badger/includes/recent_badge_awards.html:6
+msgid "You've earned some new badges!"
+msgstr ""
+
+#: templates/handlers/400.html:32
+msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
+msgstr ""
+
+#: templates/handlers/400.html:41
+msgid ""
+"<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
+msgstr ""
+
+#: templates/handlers/400.html:46
+msgid ""
+"<p>No computer has ever made a mistake or distorted information. We are all, "
+"by any practical definition of the words, foolproof and incapable of error. "
+"So it can only be attributable to human error. If so, <a "
+"href=\"https://bugzilla.mozilla.org/form.mdn\">file a bug</a> for my human "
+"operators.</p>"
+msgstr ""
+
+#: templates/includes/common_macros.html:19
+msgid "Search Firefox Help"
+msgstr ""
+
+#: templates/includes/common_macros.html:37
+msgid "Welcome, <span class=\"user\">{user}</span>."
+msgstr ""
+
+#: templates/includes/common_macros.html:39
+msgid "Profile"
+msgstr ""
+
+#: templates/includes/common_macros.html:41
+msgid "Sign Out"
+msgstr ""
+
+#: templates/includes/common_macros.html:45
+msgid ""
+"Want to contribute?<br /> <a href=\"%(login_url)s\">Sign In</a> or <a href=\"%"
+"(register_url)s\">Register</a>"
+msgstr ""
+
+#: templates/includes/common_macros.html:74
+msgid ""
+"Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web "
+"apps ecosystem. <strong>Join us!</strong>"
+msgstr ""
+
+#: templates/includes/common_macros.html:106
+msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
+msgstr ""
+
+#: templates/includes/login.html:4
+msgid "{username}"
+msgstr ""
+
+#: templates/includes/login.html:5
+msgid "Sign out"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:5
+msgid "For Contributors"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:7
+msgid "Contributor Home Page"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:8
+msgid "Knowledge Base Dashboard"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:9
+msgid "Media Gallery"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:10
+msgid "Help on Twitter"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:11
+msgid "Answer Support Questions"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:12
+msgid "Help with Live Chat"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:13
+msgid "Improve the Knowledge Base"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:14
+msgid "Translate Articles"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:15
+msgid "Contributors Forums"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:25
+msgid "Firefox Help Home"
+msgstr ""
+
+#: templates/includes/sidebar_modules.html:28
+msgid "Ask a Question"
+msgstr ""
+
+#: templates/layout/footer.html:11
+msgid "Other Languages"
+msgstr ""
+
+#: templates/layout/login.html:8
+msgid "Username:"
+msgstr ""
+
+#: templates/layout/login.html:11
+msgid "Password:"
+msgstr ""
+
+#: templates/layout/login.html:16
+msgid "Remember me"
+msgstr ""
+
+#: templates/layout/login.html:23
+msgid "Click here to register"
+msgstr ""
+
+#: templates/layout/login.html:26
+msgid "Click here if you've forgotten your password"
+msgstr ""
+
+#: templates/layout/login.html:26
+msgid "I forgot my password"
+msgstr ""
+
+#: templates/layout/menu_links.html:5
+msgid "Support"
+msgstr ""
+
+#: templates/layout/menu_links.html:7
+msgid "Firefox Support"
+msgstr ""
+
+#: templates/layout/menu_links.html:8
+msgid "Mobile Support"
+msgstr ""
+
+#: templates/layout/menu_links.html:9
+msgid "Thunderbird Support"
+msgstr ""
+
+#: templates/teamwork/user_roles.html:5
+msgid "Manage Roles | {user}"
+msgstr ""
+
+#: templates/teamwork/user_roles.html:40
+msgid "There are no roles you can manage for this user."
+msgstr ""

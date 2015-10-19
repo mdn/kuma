@@ -1,0 +1,6539 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-28 10:26-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: sw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 1.6.0\n"
+
+#: kuma/actioncounters/models.py:47
+#: kuma/contentflagging/models.py:112
+msgid "object ID"
+msgstr ""
+
+#: kuma/actioncounters/models.py:49
+msgid "name of the action"
+msgstr ""
+
+#: kuma/actioncounters/models.py:67
+#: kuma/contentflagging/models.py:128
+#: kuma/demos/models.py:464
+msgid "date last modified"
+msgstr ""
+
+#: kuma/attachments/feeds.py:9
+msgid "MDN recent file changes"
+msgstr ""
+
+#: kuma/attachments/feeds.py:10
+msgid "Recent revisions to MDN file attachments"
+msgstr ""
+
+#: kuma/attachments/forms.py:11
+msgid "Files of this type are not permitted."
+msgstr ""
+
+#: kuma/attachments/views.py:135
+msgid "The file provided is not valid. File must be one of these types: ."
+msgstr ""
+
+#. {n} is the revision number, {t} is the title of the document. {c} is the category.
+#: kuma/attachments/templates/attachments/attachment_detail.html:3
+msgid "Attachment {n} | {t}"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:15
+msgid "Attachment Information"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:19
+#: kuma/wiki/templates/wiki/revision.html:18
+msgid "Revision slug:"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:23
+#: kuma/wiki/templates/wiki/revision.html:22
+msgid "Revision title:"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:27
+#: kuma/wiki/templates/wiki/revision.html:26
+msgid "Revision id:"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:31
+#: kuma/wiki/templates/wiki/revision.html:30
+#: templates/badger/includes/badge_full.html:26
+msgid "Created:"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:35
+#: kuma/wiki/templates/wiki/revision.html:34
+#: templates/badger/includes/badge_full.html:22
+msgid "Creator:"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:39
+#: kuma/attachments/templates/attachments/attachment_detail.html:43
+msgid "MIME Type:"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:44
+#: kuma/attachments/templates/attachments/includes/attachment_row.html:6
+msgid "%s bytes"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:48
+msgid "Is approved?"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:52
+#: kuma/wiki/templates/wiki/revision.html:39
+msgid "Is current revision?"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:60
+msgid "Attachment Preview"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/attachment_detail.html:65
+msgid "No preview is available."
+msgstr ""
+
+#: kuma/attachments/templates/attachments/list_files.html:2
+msgid "All Files"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/list_files.html:23
+msgid "There are no files."
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:4
+msgid "Attachments"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:4
+msgid "Learn how to use Attachments"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:13
+msgid ""
+"This document has no attachments. Images can be attached, and then embedded "
+"in the article."
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:26
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:44
+msgid "File"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:27
+msgid "Size"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:28
+#: kuma/users/templates/users/profile.html:182
+#: kuma/wiki/templates/wiki/confirm_revision_delete.html:13
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:17
+msgid "Date"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:29
+msgid "Attached by"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:45
+#: kuma/users/models.py:117
+msgid "Title"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:46
+#: kuma/authkeys/templates/authkeys/delete.html:9
+#: kuma/authkeys/templates/authkeys/history.html:10
+#: kuma/authkeys/templates/authkeys/new.html:36
+#: kuma/events/templates/events/calendar.html:45
+#: kuma/events/templates/events/calendar.html:71
+msgid "Description"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:47
+msgid "Comments"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:61
+msgid "Uploading"
+msgstr ""
+
+#: kuma/authkeys/models.py:33
+msgid "Lookup key"
+msgstr ""
+
+#: kuma/authkeys/models.py:35
+msgid "Hashed secret"
+msgstr ""
+
+#: kuma/authkeys/models.py:37
+msgid "Description of intended use"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/delete.html:7
+#: kuma/authkeys/templates/authkeys/history.html:8
+#: kuma/authkeys/templates/authkeys/new.html:34
+msgid "Created"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/delete.html:15
+#: kuma/demos/templates/demos/elements/comments_tree.html:40
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:15
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:38
+#: kuma/wiki/templates/wiki/confirm_revision_delete.html:23
+msgid "Delete"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/delete.html:16
+#: kuma/authkeys/templates/authkeys/new.html:17
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:39
+#: kuma/wiki/templates/wiki/confirm_revision_delete.html:24
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:34
+#: kuma/wiki/templates/wiki/move_document.html:84
+#: templates/tidings/unsubscribe.html:13
+msgid "Cancel"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/history.html:14
+msgid "This key has not been used yet."
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/list.html:8
+msgid ""
+"These are your API keys. They're useful for building applications that "
+"perform tasks on MDN on your behalf. If you have stopped using any of them, "
+"or suspect one has been exposed to parties you don't trust with your account "
+"delete the key. It's easy to create a replacement key at any time."
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/list.html:14
+msgid "Create a new key"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/list.html:16
+msgid "You have no API keys, yet."
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/list.html:25
+msgid "View key usage history"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/list.html:26
+msgid "History ({count})"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/list.html:35
+msgid ""
+"You need a special permission to use API keys. You may request permission by "
+"<a href=\"%(bugzilla_url)s\">filing a bug</a>."
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/new.html:7
+msgid ""
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> "
+"This will be your only means of identifying this key later, other than the "
+"date and time of its creation. So, be as clear as you can.</p>"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/new.html:16
+msgid "Create"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/new.html:20
+msgid ""
+"<p>Your new key has been created. Please make a note of the details below "
+"(e.g. by copying them into your application's settings). This information "
+"will never be displayed again, and cannot be recovered if lost.</p> "
+"<p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%"
+"(list_url)s\">return to the key list</a>. Reloading this page will create a "
+"new key.</p>"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/new.html:30
+msgid "Key ID"
+msgstr ""
+
+#: kuma/authkeys/templates/authkeys/new.html:32
+msgid "Secret"
+msgstr ""
+
+#: kuma/contentflagging/models.py:16
+msgid "This is not working for me"
+msgstr ""
+
+#: kuma/contentflagging/models.py:17
+msgid "This contains inappropriate content"
+msgstr ""
+
+#: kuma/contentflagging/models.py:18
+msgid "This was not created by the author"
+msgstr ""
+
+#: kuma/contentflagging/models.py:19
+msgid "The author is fake"
+msgstr ""
+
+#: kuma/contentflagging/models.py:29
+msgid "Flagged"
+msgstr ""
+
+#: kuma/contentflagging/models.py:30
+msgid "Flag rejected by moderator"
+msgstr ""
+
+#: kuma/contentflagging/models.py:31
+msgid "Creator notified"
+msgstr ""
+
+#: kuma/contentflagging/models.py:32
+msgid "Content hidden by moderator"
+msgstr ""
+
+#: kuma/contentflagging/models.py:33
+msgid "Content deleted by moderator"
+msgstr ""
+
+#: kuma/contentflagging/models.py:66
+msgid "{object} Flagged"
+msgstr ""
+
+#: kuma/contentflagging/models.py:99
+msgid "current status of flag review"
+msgstr ""
+
+#: kuma/contentflagging/models.py:102
+msgid "reason for flagging the content"
+msgstr ""
+
+#: kuma/contentflagging/models.py:105
+msgid "please explain what content you feel is inappropriate"
+msgstr ""
+
+#: kuma/contentflagging/models.py:126
+msgid "date submitted"
+msgstr ""
+
+#: kuma/demos/__init__.py:34
+msgid "None"
+msgstr ""
+
+#: kuma/demos/__init__.py:35
+msgid "Removed from Derby"
+msgstr ""
+
+#: kuma/demos/__init__.py:39
+msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
+msgstr ""
+
+#: kuma/demos/__init__.py:40
+msgid "CSS3 Animations"
+msgstr ""
+
+#: kuma/demos/__init__.py:41
+msgid "June 2011"
+msgstr ""
+
+#: kuma/demos/__init__.py:44
+msgid ""
+"CSS3 Animations let you change property values over time, to animate the "
+"appearance or position of elements, with no or minimal JavaScript, and with "
+"greater control than transitions."
+msgstr ""
+
+#: kuma/demos/__init__.py:45
+msgid ""
+"CSS3 Animations are a new feature of modern browsers like Firefox, which add "
+"even more flexibility and control to the style and experience of the Web. "
+"CSS3 Animations let you change property values over time with no or minimal "
+"JavaScript, and with greater control than CSS Transitions. Go beyond static "
+"properties to animate the appearance and positions of HTML elements. You can "
+"achieve these effects without Flash or Silverlight, to make creative "
+"dynamic interfaces and engaging animations with CSS3."
+msgstr ""
+
+#: kuma/demos/__init__.py:50
+msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
+msgstr ""
+
+#: kuma/demos/__init__.py:51
+msgid "HTML5 <video>"
+msgstr ""
+
+#: kuma/demos/__init__.py:52
+msgid "July 2011"
+msgstr ""
+
+#: kuma/demos/__init__.py:55
+#: kuma/demos/__init__.py:56
+msgid ""
+"The HTML5 <video> element lets you embed and control video media directly in "
+"web pages, without resorting to plug-ins."
+msgstr ""
+
+#: kuma/demos/__init__.py:61
+msgid "August 2011 Dev Derby Challenge - History API"
+msgstr ""
+
+#: kuma/demos/__init__.py:62
+msgid "History API"
+msgstr ""
+
+#: kuma/demos/__init__.py:63
+msgid "August 2011"
+msgstr ""
+
+#: kuma/demos/__init__.py:66
+#: kuma/demos/__init__.py:67
+msgid ""
+"The History API in modern browsers enables live changes to the document "
+"without breaking the back button and allows apps to be bookmarked."
+msgstr ""
+
+#: kuma/demos/__init__.py:72
+msgid "September 2011 Dev Derby Challenge - Geolocation"
+msgstr ""
+
+#: kuma/demos/__init__.py:73
+#: kuma/demos/__init__.py:456
+msgid "Geolocation"
+msgstr ""
+
+#: kuma/demos/__init__.py:74
+msgid "September 2011"
+msgstr ""
+
+#: kuma/demos/__init__.py:77
+#: kuma/demos/__init__.py:78
+#: kuma/demos/__init__.py:235
+#: kuma/demos/__init__.py:236
+msgid ""
+"With Geolocation, you can get the user's physical location (with permission) "
+"and use it to enhance the browsing experience or enable advanced location-"
+"aware features."
+msgstr ""
+
+#: kuma/demos/__init__.py:86
+msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
+msgstr ""
+
+#: kuma/demos/__init__.py:87
+msgid "CSS Media Queries"
+msgstr ""
+
+#: kuma/demos/__init__.py:88
+msgid "October 2011"
+msgstr ""
+
+#: kuma/demos/__init__.py:91
+#: kuma/demos/__init__.py:92
+msgid ""
+"CSS Media Queries allow Web developers to create responsive Web designs, "
+"tailoring the user experience for a range of screen sizes, including "
+"desktops, tablets, and mobiles."
+msgstr ""
+
+#: kuma/demos/__init__.py:99
+msgid "November 2011 Dev Derby Challenge - Canvas"
+msgstr ""
+
+#: kuma/demos/__init__.py:100
+#: kuma/demos/__init__.py:398
+msgid "Canvas"
+msgstr ""
+
+#: kuma/demos/__init__.py:101
+msgid "November 2011"
+msgstr ""
+
+#: kuma/demos/__init__.py:104
+#: kuma/demos/__init__.py:105
+msgid ""
+"Canvas lets you paint the Web using JavaScript to render 2D shapes, "
+"bitmapped images, and advanced graphical effects. Each <canvas> element "
+"provides a graphics context with its own state and methods that make it easy "
+"to control and draw in."
+msgstr ""
+
+#: kuma/demos/__init__.py:111
+msgid "December 2011 Dev Derby Challenge - IndexedDB"
+msgstr ""
+
+#: kuma/demos/__init__.py:112
+#: kuma/demos/__init__.py:486
+msgid "IndexedDB"
+msgstr ""
+
+#: kuma/demos/__init__.py:113
+msgid "December 2011"
+msgstr ""
+
+#: kuma/demos/__init__.py:116
+#: kuma/demos/__init__.py:117
+msgid ""
+"IndexedDB lets web applications store significant amounts of structured data "
+"locally, for faster access, online or offline."
+msgstr ""
+
+#: kuma/demos/__init__.py:123
+msgid "January 2012 Dev Derby Challenge - Orientation"
+msgstr ""
+
+#: kuma/demos/__init__.py:124
+msgid "Orientation"
+msgstr ""
+
+#: kuma/demos/__init__.py:125
+msgid "January 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:128
+#: kuma/demos/__init__.py:129
+msgid ""
+"Orientation features in HTML5 access the motion and orientation data of "
+"devices with accelerometers."
+msgstr ""
+
+#: kuma/demos/__init__.py:135
+msgid "February 2012 Dev Derby Challenge - Touch Events"
+msgstr ""
+
+#: kuma/demos/__init__.py:136
+msgid "Touch Events"
+msgstr ""
+
+#: kuma/demos/__init__.py:137
+msgid "February 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:140
+#: kuma/demos/__init__.py:141
+msgid ""
+"Touch Events help you make websites and applications more engaging by "
+"responding appropriately when users interact with touch screens."
+msgstr ""
+
+#: kuma/demos/__init__.py:147
+msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
+msgstr ""
+
+#: kuma/demos/__init__.py:148
+msgid "CSS 3D Transforms"
+msgstr ""
+
+#: kuma/demos/__init__.py:149
+msgid "March 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:152
+#: kuma/demos/__init__.py:153
+msgid ""
+"CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS "
+"to be transformed in three-dimensional space."
+msgstr ""
+
+#: kuma/demos/__init__.py:159
+msgid "April 2012 Dev Derby Challenge - Audio"
+msgstr ""
+
+#: kuma/demos/__init__.py:160
+#: kuma/demos/__init__.py:388
+msgid "Audio"
+msgstr ""
+
+#: kuma/demos/__init__.py:161
+msgid "April 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:164
+#: kuma/demos/__init__.py:165
+msgid ""
+"The HTML5 audio element lets you embed sound in webpages without requiring "
+"your users to rely on plug-ins."
+msgstr ""
+
+#: kuma/demos/__init__.py:171
+msgid "May 2012 Dev Derby Challenge - WebSockets API"
+msgstr ""
+
+#: kuma/demos/__init__.py:172
+msgid "WebSockets API"
+msgstr ""
+
+#: kuma/demos/__init__.py:173
+msgid "May 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:176
+#: kuma/demos/__init__.py:177
+msgid ""
+"With the Websocket API and protocol, you can open a two-way channel between "
+"the browser and a server, for scalable and real-time data flow. No more "
+"server polling!"
+msgstr ""
+
+#: kuma/demos/__init__.py:187
+msgid "June 2012 Dev Derby Challenge - WebGL"
+msgstr ""
+
+#: kuma/demos/__init__.py:188
+#: kuma/demos/__init__.py:546
+msgid "WebGL"
+msgstr ""
+
+#: kuma/demos/__init__.py:189
+msgid "June 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:192
+#: kuma/demos/__init__.py:193
+#: kuma/demos/__init__.py:364
+#: kuma/demos/__init__.py:365
+msgid ""
+"WebGL brings the power of OpenGL, for creating interactive 3D graphics, to "
+"the Web, with no plug-ins required."
+msgstr ""
+
+#: kuma/demos/__init__.py:202
+msgid "July 2012 Dev Derby Challenge - No JavaScript"
+msgstr ""
+
+#: kuma/demos/__init__.py:203
+msgid "No JavaScript"
+msgstr ""
+
+#: kuma/demos/__init__.py:204
+msgid "July 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:207
+#: kuma/demos/__init__.py:208
+msgid ""
+"Creating rich user experiences for the Web has never been easier. Today's "
+"open Web standards put some of the most powerful features right at your "
+"fingertips. Animate pages with CSS, validate user input with HTML, and more. "
+"What else can you do without JavaScript?"
+msgstr ""
+
+#: kuma/demos/__init__.py:216
+msgid "August 2012 Dev Derby Challenge - Camera API"
+msgstr ""
+
+#: kuma/demos/__init__.py:217
+msgid "Camera API"
+msgstr ""
+
+#: kuma/demos/__init__.py:218
+msgid "August 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:221
+#: kuma/demos/__init__.py:222
+msgid ""
+"The Camera API lets you access (with permission) the cameras of mobile "
+"devices. With the Camera API, users can easily take pictures and upload them "
+"to your web page."
+msgstr ""
+
+#: kuma/demos/__init__.py:230
+msgid "September 2012 Dev Derby Challenge - Geolocation II"
+msgstr ""
+
+#: kuma/demos/__init__.py:231
+msgid "Geolocation II"
+msgstr ""
+
+#: kuma/demos/__init__.py:232
+msgid "September 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:244
+msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
+msgstr ""
+
+#: kuma/demos/__init__.py:245
+msgid "CSS Media Queries II"
+msgstr ""
+
+#: kuma/demos/__init__.py:246
+msgid "October 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:249
+#: kuma/demos/__init__.py:250
+msgid ""
+"CSS Media Queries are now a common tool for responsive, mobile-first web "
+"design. They are now even a W3C Recommendation! They can tell you a lot more "
+"about a display than just its width. What can you do with Media Queries?"
+msgstr ""
+
+#: kuma/demos/__init__.py:258
+msgid "November 2012 Dev Derby Challenge - Fullscreen API"
+msgstr ""
+
+#: kuma/demos/__init__.py:259
+msgid "Fullscreen API"
+msgstr ""
+
+#: kuma/demos/__init__.py:260
+msgid "November 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:263
+#: kuma/demos/__init__.py:264
+msgid ""
+"With the Fullscreen API, you can escape the confines of the browser window. "
+"You can even detect full screen state changes and style full screen pages "
+"specially. Talk about immersive!"
+msgstr ""
+
+#: kuma/demos/__init__.py:273
+msgid "December 2012 Dev Derby Challenge - Offline"
+msgstr ""
+
+#: kuma/demos/__init__.py:274
+msgid "Offline"
+msgstr ""
+
+#: kuma/demos/__init__.py:275
+msgid "December 2012"
+msgstr ""
+
+#: kuma/demos/__init__.py:278
+#: kuma/demos/__init__.py:279
+msgid ""
+"With the maturing offline capabilities of the open Web, you can build apps "
+"that work with or without an Internet connection. With offline technologies, "
+"you can better support travelers and mobile users, improve performance, and "
+"more."
+msgstr ""
+
+#: kuma/demos/__init__.py:289
+msgid "January 2013 Dev Derby Challenge - Drag and Drop"
+msgstr ""
+
+#: kuma/demos/__init__.py:290
+#: kuma/demos/__init__.py:496
+msgid "Drag and Drop"
+msgstr ""
+
+#: kuma/demos/__init__.py:291
+msgid "January 2013"
+msgstr ""
+
+#: kuma/demos/__init__.py:294
+#: kuma/demos/__init__.py:295
+msgid ""
+"The Drag and Drop API brings an age-old interaction to the Web, making rich, "
+"natural, and familiar user experiences possible."
+msgstr ""
+
+#: kuma/demos/__init__.py:303
+msgid "February 2013 Dev Derby Challenge - Multi-touch"
+msgstr ""
+
+#: kuma/demos/__init__.py:304
+#: kuma/demos/__init__.py:586
+msgid "Multi-touch"
+msgstr ""
+
+#: kuma/demos/__init__.py:305
+msgid "February 2013"
+msgstr ""
+
+#: kuma/demos/__init__.py:308
+#: kuma/demos/__init__.py:309
+msgid ""
+"The Touch Events API lets you track multiple touches at the same time on "
+"devices that support them. Build complex games, support pinch-to-zoom and "
+"more. By using multi-touch, your app can respond to all the interactions "
+"users have come to expect."
+msgstr ""
+
+#: kuma/demos/__init__.py:317
+msgid "March 2013 Dev Derby Challenge - Mobile"
+msgstr ""
+
+#: kuma/demos/__init__.py:318
+#: kuma/demos/__init__.py:506
+msgid "Mobile"
+msgstr ""
+
+#: kuma/demos/__init__.py:319
+msgid "March 2013"
+msgstr ""
+
+#: kuma/demos/__init__.py:322
+#: kuma/demos/__init__.py:323
+msgid ""
+"The mobile Web is becoming more important every day. This time, the only "
+"limit is your creativity. What amazing experiences can you build for users "
+"on the go?"
+msgstr ""
+
+#: kuma/demos/__init__.py:331
+msgid "April 2013 Dev Derby Challenge - Web Workers"
+msgstr ""
+
+#: kuma/demos/__init__.py:332
+#: kuma/demos/__init__.py:566
+msgid "Web Workers"
+msgstr ""
+
+#: kuma/demos/__init__.py:333
+msgid "April 2013"
+msgstr ""
+
+#: kuma/demos/__init__.py:336
+#: kuma/demos/__init__.py:337
+msgid ""
+"Web Workers make it easy for you to run scripts in the background. By using "
+"Web Workers, you can create dazzling user interfaces that are not hindered "
+"by even the most computationally-intensive tasks."
+msgstr ""
+
+#: kuma/demos/__init__.py:345
+msgid "May 2013 Dev Derby Challenge - getUserMedia"
+msgstr ""
+
+#: kuma/demos/__init__.py:346
+msgid "getUserMedia"
+msgstr ""
+
+#: kuma/demos/__init__.py:347
+msgid "May 2013"
+msgstr ""
+
+#: kuma/demos/__init__.py:348
+msgid "May"
+msgstr ""
+
+#: kuma/demos/__init__.py:349
+msgid "Action!"
+msgstr ""
+
+#: kuma/demos/__init__.py:350
+#: kuma/demos/__init__.py:351
+msgid ""
+"The getUserMedia function lets you access (with permission) the cameras and "
+"microphones of your users. No plugins needed! What can you do once you have "
+"this media? The possibilities are endless."
+msgstr ""
+
+#: kuma/demos/__init__.py:359
+msgid "June 2013 Dev Derby Challenge - WebGL II"
+msgstr ""
+
+#: kuma/demos/__init__.py:360
+msgid "WebGL II"
+msgstr ""
+
+#: kuma/demos/__init__.py:361
+msgid "June 2013"
+msgstr ""
+
+#: kuma/demos/__init__.py:362
+msgid "June"
+msgstr ""
+
+#: kuma/demos/__init__.py:363
+msgid "Twice the 3D!"
+msgstr ""
+
+#: kuma/demos/__init__.py:373
+msgid "July 2013 Dev Derby Challenge - File API"
+msgstr ""
+
+#: kuma/demos/__init__.py:374
+msgid "File API"
+msgstr ""
+
+#: kuma/demos/__init__.py:375
+msgid "July 2013"
+msgstr ""
+
+#: kuma/demos/__init__.py:376
+msgid "July"
+msgstr ""
+
+#: kuma/demos/__init__.py:377
+msgid "File found"
+msgstr ""
+
+#: kuma/demos/__init__.py:378
+#: kuma/demos/__init__.py:379
+msgid ""
+"The File API lets you read the contents of files submitted by your users, "
+"making natural and familiar data operations possible."
+msgstr ""
+
+#: kuma/demos/__init__.py:389
+msgid ""
+"Mozilla's Audio Data API extends the current HTML5 API and allows web "
+"developers to read and write raw audio data."
+msgstr ""
+
+#: kuma/demos/__init__.py:391
+#: kuma/demos/__init__.py:401
+#: kuma/demos/__init__.py:411
+#: kuma/demos/__init__.py:421
+#: kuma/demos/__init__.py:430
+#: kuma/demos/__init__.py:439
+#: kuma/demos/__init__.py:449
+#: kuma/demos/__init__.py:459
+#: kuma/demos/__init__.py:469
+#: kuma/demos/__init__.py:479
+#: kuma/demos/__init__.py:489
+#: kuma/demos/__init__.py:499
+#: kuma/demos/__init__.py:509
+#: kuma/demos/__init__.py:519
+#: kuma/demos/__init__.py:529
+#: kuma/demos/__init__.py:539
+#: kuma/demos/__init__.py:549
+#: kuma/demos/__init__.py:559
+#: kuma/demos/__init__.py:569
+#: kuma/demos/__init__.py:579
+#: kuma/demos/__init__.py:589
+msgid "MDN Documentation"
+msgstr ""
+
+#: kuma/demos/__init__.py:391
+msgid ""
+"https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
+msgstr ""
+
+#: kuma/demos/__init__.py:392
+#: kuma/demos/__init__.py:402
+#: kuma/demos/__init__.py:412
+#: kuma/demos/__init__.py:440
+#: kuma/demos/__init__.py:450
+#: kuma/demos/__init__.py:460
+#: kuma/demos/__init__.py:470
+#: kuma/demos/__init__.py:480
+#: kuma/demos/__init__.py:490
+#: kuma/demos/__init__.py:500
+#: kuma/demos/__init__.py:510
+#: kuma/demos/__init__.py:520
+#: kuma/demos/__init__.py:530
+#: kuma/demos/__init__.py:540
+#: kuma/demos/__init__.py:550
+#: kuma/demos/__init__.py:560
+#: kuma/demos/__init__.py:570
+#: kuma/demos/__init__.py:580
+#: kuma/demos/__init__.py:590
+msgid "Wikipedia Article"
+msgstr ""
+
+#: kuma/demos/__init__.py:392
+msgid "http://en.wikipedia.org/wiki/HTML5_audio"
+msgstr ""
+
+#: kuma/demos/__init__.py:393
+#: kuma/demos/__init__.py:403
+#: kuma/demos/__init__.py:413
+#: kuma/demos/__init__.py:422
+#: kuma/demos/__init__.py:431
+#: kuma/demos/__init__.py:441
+#: kuma/demos/__init__.py:451
+#: kuma/demos/__init__.py:461
+#: kuma/demos/__init__.py:481
+#: kuma/demos/__init__.py:491
+#: kuma/demos/__init__.py:501
+#: kuma/demos/__init__.py:511
+#: kuma/demos/__init__.py:521
+#: kuma/demos/__init__.py:531
+#: kuma/demos/__init__.py:541
+#: kuma/demos/__init__.py:561
+#: kuma/demos/__init__.py:571
+#: kuma/demos/__init__.py:581
+#: kuma/demos/__init__.py:591
+msgid "W3C Spec"
+msgstr ""
+
+#: kuma/demos/__init__.py:393
+msgid "http://www.w3.org/TR/html5/video.html#audio"
+msgstr ""
+
+#: kuma/demos/__init__.py:399
+msgid ""
+"The HTML5 canvas element allows you to display scriptable renderings of 2D "
+"shapes and bitmap images."
+msgstr ""
+
+#: kuma/demos/__init__.py:401
+msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
+msgstr ""
+
+#: kuma/demos/__init__.py:402
+msgid "http://en.wikipedia.org/wiki/Canvas_element"
+msgstr ""
+
+#: kuma/demos/__init__.py:403
+msgid "http://www.w3.org/TR/html5/the-canvas-element.html"
+msgstr ""
+
+#: kuma/demos/__init__.py:408
+#: kuma/landing/templates/landing/homepage.html:52
+msgid "CSS3"
+msgstr ""
+
+#: kuma/demos/__init__.py:409
+msgid ""
+"Cascading Style Sheets level 3 (CSS3) provide serveral new features and "
+"properties to enhance the formatting and look of documents written in "
+"different kinds of markup languages like HTML or XML."
+msgstr ""
+
+#: kuma/demos/__init__.py:411
+msgid "https://developer.mozilla.org/en-US/docs/Web/CSS"
+msgstr ""
+
+#: kuma/demos/__init__.py:412
+msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
+msgstr ""
+
+#: kuma/demos/__init__.py:413
+msgid "http://www.w3.org/TR/css3-roadmap/"
+msgstr ""
+
+#: kuma/demos/__init__.py:418
+msgid "Device"
+msgstr ""
+
+#: kuma/demos/__init__.py:419
+msgid ""
+"Media queries and orientation events let authors adjust their layout on "
+"hand-held devices such as mobile phones."
+msgstr ""
+
+#: kuma/demos/__init__.py:421
+msgid ""
+"https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
+msgstr ""
+
+#: kuma/demos/__init__.py:422
+msgid "http://www.w3.org/TR/css3-mediaqueries/"
+msgstr ""
+
+#: kuma/demos/__init__.py:427
+msgid "Files"
+msgstr ""
+
+#: kuma/demos/__init__.py:428
+msgid ""
+"The File API allows web developers to use file objects in web applications, "
+"as well as selecting and accessing their data."
+msgstr ""
+
+#: kuma/demos/__init__.py:430
+msgid ""
+"https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
+msgstr ""
+
+#: kuma/demos/__init__.py:431
+msgid "http://www.w3.org/TR/FileAPI/"
+msgstr ""
+
+#: kuma/demos/__init__.py:436
+msgid "Fonts & Type"
+msgstr ""
+
+#: kuma/demos/__init__.py:437
+msgid ""
+"The CSS3-Font specification contains enhanced features for fonts and "
+"typography like embedding own fonts via @font-face or controlling OpenType "
+"font features directly via CSS."
+msgstr ""
+
+#: kuma/demos/__init__.py:439
+msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
+msgstr ""
+
+#: kuma/demos/__init__.py:440
+msgid "http://en.wikipedia.org/wiki/Web_typography"
+msgstr ""
+
+#: kuma/demos/__init__.py:441
+msgid "http://www.w3.org/TR/css3-fonts/"
+msgstr ""
+
+#: kuma/demos/__init__.py:446
+msgid "Forms"
+msgstr ""
+
+#: kuma/demos/__init__.py:447
+msgid ""
+"Form elements and attributes in HTML5 provide a greater degree of semantic "
+"mark-up than HTML4 and remove a great deal of the need for tedious scripting "
+"and styling that was required in HTML4."
+msgstr ""
+
+#: kuma/demos/__init__.py:449
+msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
+msgstr ""
+
+#: kuma/demos/__init__.py:450
+msgid "http://en.wikipedia.org/wiki/HTML_forms"
+msgstr ""
+
+#: kuma/demos/__init__.py:451
+msgid "http://www.w3.org/TR/html5/forms.html"
+msgstr ""
+
+#: kuma/demos/__init__.py:457
+msgid ""
+"The Geolocation API allows web applications to access the user's "
+"geographical location."
+msgstr ""
+
+#: kuma/demos/__init__.py:459
+msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
+msgstr ""
+
+#: kuma/demos/__init__.py:460
+msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
+msgstr ""
+
+#: kuma/demos/__init__.py:461
+msgid "http://dev.w3.org/geo/api/spec-source.html"
+msgstr ""
+
+#: kuma/demos/__init__.py:466
+#: kuma/landing/templates/landing/homepage.html:53
+#: kuma/landing/templates/landing/learn.html:38
+#: kuma/landing/templates/landing/promote_buttons.html:111
+#: templates/base.html:131
+msgid "JavaScript"
+msgstr ""
+
+#: kuma/demos/__init__.py:467
+msgid ""
+"JavaScript is a lightweight, object-oriented programming language, commonly "
+"used for scripting interactive behavior on web pages and in web "
+"applications."
+msgstr ""
+
+#: kuma/demos/__init__.py:469
+msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+msgstr ""
+
+#: kuma/demos/__init__.py:470
+msgid "http://en.wikipedia.org/wiki/JavaScript"
+msgstr ""
+
+#: kuma/demos/__init__.py:471
+msgid "ECMA Spec"
+msgstr ""
+
+#: kuma/demos/__init__.py:471
+msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+msgstr ""
+
+#: kuma/demos/__init__.py:476
+#: kuma/landing/templates/landing/homepage.html:51
+msgid "HTML5"
+msgstr ""
+
+#: kuma/demos/__init__.py:477
+msgid ""
+"HTML5 is the newest version of the HTML standard, currently under "
+"development."
+msgstr ""
+
+#: kuma/demos/__init__.py:479
+msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
+msgstr ""
+
+#: kuma/demos/__init__.py:480
+msgid "http://en.wikipedia.org/wiki/Html5"
+msgstr ""
+
+#: kuma/demos/__init__.py:481
+msgid "http://dev.w3.org/html5/spec/Overview.html"
+msgstr ""
+
+#: kuma/demos/__init__.py:487
+msgid ""
+"IndexedDB is an API for client-side storage of significant amounts of "
+"structured data and for high performance searches on this data using "
+"indexes."
+msgstr ""
+
+#: kuma/demos/__init__.py:489
+msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
+msgstr ""
+
+#: kuma/demos/__init__.py:490
+msgid "http://en.wikipedia.org/wiki/IndexedDB"
+msgstr ""
+
+#: kuma/demos/__init__.py:491
+msgid "http://www.w3.org/TR/IndexedDB/"
+msgstr ""
+
+#: kuma/demos/__init__.py:497
+msgid ""
+"Drag and Drop features allow the user to move elements on the screen using "
+"the mouse pointer."
+msgstr ""
+
+#: kuma/demos/__init__.py:499
+msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
+msgstr ""
+
+#: kuma/demos/__init__.py:500
+msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
+msgstr ""
+
+#: kuma/demos/__init__.py:501
+msgid "http://www.w3.org/TR/html5/dnd.html"
+msgstr ""
+
+#: kuma/demos/__init__.py:507
+msgid ""
+"Firefox Mobile brings the true Web experience to mobile phones and other "
+"non-PC devices."
+msgstr ""
+
+#: kuma/demos/__init__.py:509
+msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
+msgstr ""
+
+#: kuma/demos/__init__.py:510
+msgid "http://en.wikipedia.org/wiki/Mobile_web"
+msgstr ""
+
+#: kuma/demos/__init__.py:511
+msgid "http://www.w3.org/Mobile/"
+msgstr ""
+
+#: kuma/demos/__init__.py:516
+msgid "Offline Support"
+msgstr ""
+
+#: kuma/demos/__init__.py:517
+msgid ""
+"Offline caching of web applications' resources using the application cache "
+"and local storage."
+msgstr ""
+
+#: kuma/demos/__init__.py:519
+msgid ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
+msgstr ""
+
+#: kuma/demos/__init__.py:520
+msgid "http://en.wikipedia.org/wiki/Web_Storage"
+msgstr ""
+
+#: kuma/demos/__init__.py:521
+msgid "http://dev.w3.org/html5/webstorage/"
+msgstr ""
+
+#: kuma/demos/__init__.py:526
+msgid "SVG"
+msgstr ""
+
+#: kuma/demos/__init__.py:527
+msgid ""
+"Scalable Vector Graphics (SVG) is an XML based language for describing two-"
+"dimensional vector graphics."
+msgstr ""
+
+#: kuma/demos/__init__.py:529
+msgid "https://developer.mozilla.org/en-US/docs/Web/SVG"
+msgstr ""
+
+#: kuma/demos/__init__.py:530
+msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+msgstr ""
+
+#: kuma/demos/__init__.py:531
+msgid "http://www.w3.org/TR/SVG11/"
+msgstr ""
+
+#: kuma/demos/__init__.py:536
+msgid "Video"
+msgstr ""
+
+#: kuma/demos/__init__.py:537
+msgid ""
+"The HTML5 video element provides integrated support for playing video media "
+"without requiring plug-ins."
+msgstr ""
+
+#: kuma/demos/__init__.py:539
+msgid ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/HTML/Using_HTML5_audio_and_video"
+msgstr ""
+
+#: kuma/demos/__init__.py:540
+msgid "http://en.wikipedia.org/wiki/HTML5_video"
+msgstr ""
+
+#: kuma/demos/__init__.py:541
+msgid "http://www.w3.org/TR/html5/video.html"
+msgstr ""
+
+#: kuma/demos/__init__.py:547
+msgid ""
+"In the context of the HTML canvas element WebGL provides an API for 3D "
+"graphics in the browser."
+msgstr ""
+
+#: kuma/demos/__init__.py:549
+msgid "https://developer.mozilla.org/en-US/docs/Web/WebGL"
+msgstr ""
+
+#: kuma/demos/__init__.py:550
+msgid "http://en.wikipedia.org/wiki/WebGL"
+msgstr ""
+
+#: kuma/demos/__init__.py:551
+msgid "Khronos Spec"
+msgstr ""
+
+#: kuma/demos/__init__.py:551
+msgid "http://www.khronos.org/webgl/"
+msgstr ""
+
+#: kuma/demos/__init__.py:556
+msgid "WebSockets"
+msgstr ""
+
+#: kuma/demos/__init__.py:557
+msgid ""
+"WebSockets is a technology that makes it possible to open an interactive "
+"communication session between the user's browser and a server."
+msgstr ""
+
+#: kuma/demos/__init__.py:559
+msgid "https://developer.mozilla.org/en-US/docs/WebSockets"
+msgstr ""
+
+#: kuma/demos/__init__.py:560
+msgid "http://en.wikipedia.org/wiki/Web_Sockets"
+msgstr ""
+
+#: kuma/demos/__init__.py:561
+msgid "http://dev.w3.org/html5/websockets/"
+msgstr ""
+
+#: kuma/demos/__init__.py:567
+msgid ""
+"Web Workers provide a simple means for web content to run scripts in "
+"background threads."
+msgstr ""
+
+#: kuma/demos/__init__.py:569
+msgid ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/Guide/Performance/Using_web_workers"
+msgstr ""
+
+#: kuma/demos/__init__.py:570
+msgid "http://en.wikipedia.org/wiki/Web_Workers"
+msgstr ""
+
+#: kuma/demos/__init__.py:571
+msgid "http://www.w3.org/TR/workers/"
+msgstr ""
+
+#: kuma/demos/__init__.py:576
+msgid "XMLHttpRequest"
+msgstr ""
+
+#: kuma/demos/__init__.py:577
+msgid ""
+"XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver "
+"and load the response data directly back into the script."
+msgstr ""
+
+#: kuma/demos/__init__.py:579
+msgid ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
+msgstr ""
+
+#: kuma/demos/__init__.py:580
+msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
+msgstr ""
+
+#: kuma/demos/__init__.py:581
+msgid "http://www.w3.org/TR/XMLHttpRequest/"
+msgstr ""
+
+#: kuma/demos/__init__.py:587
+msgid ""
+"Track the movement of the user's finger on a touch screen, monitoring the "
+"raw touch events generated by the system."
+msgstr ""
+
+#: kuma/demos/__init__.py:589
+msgid ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
+msgstr ""
+
+#: kuma/demos/__init__.py:590
+msgid "http://en.wikipedia.org/wiki/Multi-touch"
+msgstr ""
+
+#: kuma/demos/__init__.py:591
+msgid "http://www.w3.org/2010/webevents/charter/"
+msgstr ""
+
+#: kuma/demos/__init__.py:600
+msgid "MPL/GPL/LGPL"
+msgstr ""
+
+#: kuma/demos/__init__.py:601
+msgid "http://www.mozilla.org/MPL/"
+msgstr ""
+
+#: kuma/demos/__init__.py:606
+msgid "GPL"
+msgstr ""
+
+#: kuma/demos/__init__.py:607
+msgid "http://www.opensource.org/licenses/gpl-license.php"
+msgstr ""
+
+#: kuma/demos/__init__.py:612
+msgid "BSD"
+msgstr ""
+
+#: kuma/demos/__init__.py:613
+msgid "http://www.opensource.org/licenses/bsd-license.php"
+msgstr ""
+
+#: kuma/demos/__init__.py:618
+msgid "Apache"
+msgstr ""
+
+#: kuma/demos/__init__.py:619
+msgid "http://www.apache.org/licenses/"
+msgstr ""
+
+#: kuma/demos/__init__.py:624
+msgid "Public Domain (where applicable by law)"
+msgstr ""
+
+#: kuma/demos/__init__.py:625
+msgid "http://creativecommons.org/publicdomain/zero/1.0/"
+msgstr ""
+
+#: kuma/demos/admin.py:38
+msgid "Censored %(item)s"
+msgstr ""
+
+#: kuma/demos/admin.py:42
+msgid "Successfully censored %(count)d %(items)s."
+msgstr ""
+
+#: kuma/demos/admin.py:54
+#: kuma/demos/admin.py:121
+msgid "Are you sure?"
+msgstr ""
+
+#: kuma/demos/admin.py:103
+msgid "Deleted and uploaded files for %(item)s"
+msgstr ""
+
+#: kuma/demos/admin.py:107
+msgid "Successfully deleted %(count)d %(items)s."
+msgstr ""
+
+#: kuma/demos/admin.py:119
+msgid "Cannot delete %(name)s"
+msgstr ""
+
+#: kuma/demos/feeds.py:87
+msgid "MDN demos"
+msgstr ""
+
+#: kuma/demos/feeds.py:88
+msgid "Demos submitted by MDN users"
+msgstr ""
+
+#: kuma/demos/feeds.py:154
+msgid "MDN recent demos"
+msgstr ""
+
+#: kuma/demos/feeds.py:155
+msgid "Demos recently submitted to MDN"
+msgstr ""
+
+#: kuma/demos/feeds.py:166
+msgid "MDN featured demos"
+msgstr ""
+
+#: kuma/demos/feeds.py:167
+msgid "Demos featured on MDN"
+msgstr ""
+
+#: kuma/demos/feeds.py:181
+msgid "MDN demos tagged %s"
+msgstr ""
+
+#: kuma/demos/feeds.py:184
+msgid "MDN demos tagged \"%s\""
+msgstr ""
+
+#: kuma/demos/feeds.py:200
+msgid "%s's MDN demos"
+msgstr ""
+
+#: kuma/demos/feeds.py:215
+msgid "MDN demo search for \"%s\""
+msgstr ""
+
+#: kuma/demos/feeds.py:216
+msgid "Search results for demo submissions matching \"%s\""
+msgstr ""
+
+#: kuma/demos/forms.py:183
+msgid "Show us you're human"
+msgstr ""
+
+#: kuma/demos/helpers.py:114
+msgid "First Place"
+msgstr ""
+
+#: kuma/demos/helpers.py:115
+msgid "Second Place"
+msgstr ""
+
+#: kuma/demos/helpers.py:116
+msgid "Third Place"
+msgstr ""
+
+#: kuma/demos/helpers.py:117
+msgid "Finalist"
+msgstr ""
+
+#: kuma/demos/helpers.py:118
+msgid "Featured"
+msgstr ""
+
+#: kuma/demos/helpers.py:298
+msgid "year"
+msgid_plural "years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:299
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:300
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:301
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:309
+msgid "%(number)d %(type)s"
+msgstr ""
+
+#: kuma/demos/helpers.py:389
+msgid "%(number)d year ago"
+msgid_plural "%(number)d years ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:391
+msgid "%(number)d month ago"
+msgid_plural "%(number)d months ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:393
+msgid "%(number)d week ago"
+msgid_plural "%(number)d weeks ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:395
+msgid "%(number)d day ago"
+msgid_plural "%(number)d days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:397
+msgid "%(number)d hour ago"
+msgid_plural "%(number)d hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:399
+msgid "%(number)d minute ago"
+msgid_plural "%(number)d minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/helpers.py:401
+msgid "%(number)d second ago"
+msgid_plural "%(number)d seconds ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/models.py:201
+msgid "Please keep filesize under %s. Current filesize %s"
+msgstr ""
+
+#: kuma/demos/models.py:278
+msgid "Cannot process image"
+msgstr ""
+
+#: kuma/demos/models.py:374
+msgid "what is your demo's name?"
+msgstr ""
+
+#: kuma/demos/models.py:376
+msgid "slug"
+msgstr ""
+
+#: kuma/demos/models.py:379
+msgid "describe your demo in one line"
+msgstr ""
+
+#: kuma/demos/models.py:382
+msgid "describe your demo in more detail (optional)"
+msgstr ""
+
+#: kuma/demos/models.py:387
+msgid "Hide this demo from others?"
+msgstr ""
+
+#: kuma/demos/models.py:390
+msgid "Redirect URL for censorship."
+msgstr ""
+
+#: kuma/demos/models.py:394
+msgid "control how your demo is launched"
+msgstr ""
+
+#: kuma/demos/models.py:396
+msgid "Disable navigation bar, launch demo in a new window"
+msgstr ""
+
+#: kuma/demos/models.py:397
+msgid "Use navigation bar, display demo in <iframe>"
+msgstr ""
+
+#: kuma/demos/models.py:409
+msgid "Screenshot #1"
+msgstr ""
+
+#: kuma/demos/models.py:415
+msgid "Screenshot #2"
+msgstr ""
+
+#: kuma/demos/models.py:421
+msgid "Screenshot #3"
+msgstr ""
+
+#: kuma/demos/models.py:427
+msgid "Screenshot #4"
+msgstr ""
+
+#: kuma/demos/models.py:433
+msgid "Screenshot #5"
+msgstr ""
+
+#: kuma/demos/models.py:440
+msgid "have a video of your demo in action? (optional)"
+msgstr ""
+
+#: kuma/demos/models.py:444
+msgid "select a ZIP file containing your demo"
+msgstr ""
+
+#: kuma/demos/models.py:453
+msgid ""
+"Is your source code also available somewhere else on the web (e.g., github)? "
+"Please share the link."
+msgstr ""
+
+#: kuma/demos/models.py:456
+msgid "Select the license that applies to your source code."
+msgstr ""
+
+#: kuma/demos/models.py:462
+msgid "date created"
+msgstr ""
+
+#: kuma/demos/models.py:669
+#: kuma/demos/models.py:676
+msgid "ZIP file contains no acceptable files"
+msgstr ""
+
+#: kuma/demos/models.py:672
+msgid "ZIP file corrupted"
+msgstr ""
+
+#: kuma/demos/models.py:691
+msgid "ZIP file contains a file that is too large: %(filename)s"
+msgstr ""
+
+#: kuma/demos/models.py:706
+msgid "ZIP file contains an unacceptable file: %(filename)s"
+msgstr ""
+
+#: kuma/demos/models.py:710
+msgid "HTML index not found in ZIP"
+msgstr ""
+
+#: kuma/demos/views.py:83
+#: kuma/demos/views.py:321
+#: kuma/demos/views.py:349
+#: kuma/demos/views.py:391
+#: kuma/demos/views.py:406
+msgid "access denied"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete.html:10
+#: kuma/demos/templates/demos/delete_comment.html:10
+#: kuma/demos/templates/demos/detail.html:9
+#: kuma/demos/templates/demos/devderby_tag.html:5
+#: kuma/demos/templates/demos/flag.html:10
+#: kuma/demos/templates/demos/launch.html:6
+#: kuma/demos/templates/demos/listing_all.html:4
+#: kuma/demos/templates/demos/listing_search.html:9
+#: kuma/demos/templates/demos/listing_tag.html:4
+#: kuma/demos/templates/demos/submit.html:13
+#: kuma/demos/templates/demos/submit.html:15
+#: kuma/demos/templates/demos/submit_noauth.html:11
+#: kuma/demos/templates/demos/terms.html:10
+msgid "{subtitle} | Demo Studio"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete.html:20
+#: kuma/demos/templates/demos/delete_comment.html:20
+#: kuma/landing/templates/landing/learn_html.html:63
+#: kuma/landing/templates/landing/learn_html.html:74
+#: kuma/landing/templates/landing/learn_html.html:99
+msgid "MDN"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete.html:21
+#: kuma/demos/templates/demos/delete_comment.html:21
+#: kuma/demos/templates/demos/detail.html:14
+#: kuma/demos/templates/demos/home.html:14
+#: kuma/demos/templates/demos/launch.html:15
+msgid "Demo Studio"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete.html:26
+#: kuma/demos/templates/demos/delete_comment.html:26
+#: kuma/demos/templates/demos/detail.html:32
+#: kuma/demos/templates/demos/home.html:23
+#: kuma/demos/templates/demos/elements/demos_head.html:4
+msgid "Submit a Demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete.html:38
+msgid "Remove this demo?"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete.html:40
+msgid ""
+"<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo "
+"Studio.</p> <p>The Demo's listing, source code, and statistics will be "
+"<strong>deleted</strong>.</p> <p>This action <strong>cannot be "
+"undone</strong>."
+msgstr ""
+
+#: kuma/demos/templates/demos/delete.html:49
+msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete_comment.html:10
+#: kuma/demos/templates/demos/delete_comment.html:22
+msgid "Delete Comment"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete_comment.html:38
+msgid "Delete this comment?"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete_comment.html:39
+msgid "<p>Are you sure that you would like to delete this comment?</p>"
+msgstr ""
+
+#: kuma/demos/templates/demos/delete_comment.html:53
+msgid ""
+"<button type=\"submit\" class=\"remove\"><span>Delete comment</span></button>"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:30
+#: kuma/demos/templates/demos/devderby_landing.html:22
+#: kuma/demos/templates/demos/devderby_tag.html:32
+#: kuma/demos/templates/demos/home.html:21
+#: kuma/demos/templates/demos/submit.html:45
+#: kuma/demos/templates/demos/submit_noauth.html:20
+#: kuma/demos/templates/demos/elements/demos_head.html:2
+msgid "Mozilla Demo Studio"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:33
+#: kuma/demos/templates/demos/home.html:24
+#: kuma/demos/templates/demos/listing_tag.html:31
+#: kuma/demos/templates/demos/elements/demos_head.html:5
+msgid "Learn More"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:35
+#: kuma/demos/templates/demos/home.html:26
+#: kuma/demos/templates/demos/elements/demos_head.html:7
+msgid ""
+"<p>Welcome to the Mozilla Demo Studio, where developers like you can "
+"develop, share, demonstrate, and learn all about Web technologies. See "
+"what's possible by exploring Demo Studio:</p> <ul> <li>View demos that "
+"showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source "
+"code for those demos so you can see how they work.</li> <li>Read "
+"documentation to learn about the open standards and technologies that power "
+"the Web.</li> </ul>"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:51
+#: kuma/demos/templates/demos/launch.html:82
+msgid "Go to the previous demo, {demo_title}"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:51
+msgid "Prev"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:55
+#: kuma/demos/templates/demos/launch.html:86
+msgid "Go to the next demo, {demo_title}"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:55
+#: kuma/demos/templates/demos/detail.html:69
+#: kuma/demos/templates/demos/home.html:47
+#: kuma/demos/templates/demos/launch.html:86
+#: kuma/demos/templates/demos/elements/submission_listing.html:64
+#: kuma/search/templates/search/results.html:156
+#: templates/badger/includes/pagination.html:14
+#: templates/includes/paginator.html:30
+msgid "Next"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:68
+msgid "See the previous image"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:68
+#: kuma/demos/templates/demos/home.html:46
+#: kuma/demos/templates/demos/launch.html:82
+#: kuma/demos/templates/demos/elements/submission_listing.html:61
+#: kuma/search/templates/search/results.html:151
+#: kuma/wiki/templates/wiki/document_revisions.html:56
+#: templates/badger/includes/pagination.html:11
+#: templates/includes/paginator.html:6
+msgid "Previous"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:69
+msgid "See the next image"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:102
+msgid "By %(creator_link)s on %(create_date)s"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:117
+msgid "Launch Demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:124
+#: kuma/demos/templates/demos/launch.html:48
+msgid "You like this demo. Undo?"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:124
+#: kuma/demos/templates/demos/launch.html:48
+msgid "You Like"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:130
+#: kuma/demos/templates/demos/launch.html:54
+msgid "Do you like this demo?"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:130
+#: kuma/demos/templates/demos/launch.html:54
+msgid "Like It"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:135
+#: kuma/demos/templates/demos/launch.html:58
+msgid "Share this demo with your social network"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:135
+#: kuma/demos/templates/demos/detail.html:137
+#: kuma/demos/templates/demos/launch.html:58
+msgid "Share It"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:138
+#: kuma/demos/templates/demos/launch.html:60
+msgid "Share on Twitter"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:139
+#: kuma/demos/templates/demos/launch.html:61
+msgid "Share on Facebook"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:153
+msgid "Built using"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:156
+msgid "See more demos made with {tag_title}"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:166
+#: kuma/demos/templates/demos/elements/submission_thumb.html:21
+msgid "This demo has been viewed {count} time"
+msgid_plural "This demo has been viewed {count} times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/templates/demos/detail.html:166
+msgid "{count} view"
+msgid_plural "{count} views"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/templates/demos/detail.html:167
+#: kuma/demos/templates/demos/elements/submission_thumb.html:22
+msgid "{count} person liked this demo"
+msgid_plural "{count} people liked this demo"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/templates/demos/detail.html:167
+msgid "{count} like"
+msgid_plural "{count} likes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/templates/demos/detail.html:168
+#: kuma/demos/templates/demos/elements/submission_thumb.html:23
+msgid "There is {count} comment for this demo"
+msgid_plural "There are {count} comments for this demo"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/templates/demos/detail.html:168
+msgid "{comment_count} comments"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:189
+msgid "Edit Demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:194
+msgid "Remove demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:199
+msgid "Show demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:202
+msgid "Hide demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:211
+msgid "More About This Demo From The Author"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:219
+msgid "No comments yet."
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:221
+msgid "{comments_total} comment so far"
+msgid_plural "{comments_total} comments so far"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/templates/demos/detail.html:224
+msgid "<p>Why not <a href=\"#comment-post\">Add your own</a>?</p>"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:228
+msgid "<p><a href=\"%(login_url)s\">Log in</a> to add your own.</p>"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:245
+msgid "Add your comment"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:247
+#: kuma/demos/templates/demos/elements/comments_tree.html:50
+#: kuma/users/templates/users/profile.html:183
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:26
+#: kuma/wiki/templates/wiki/revision.html:43
+msgid "Comment"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:259
+msgid "About this Demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:261
+msgid ""
+"Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP "
+"File</span>"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:269
+msgid ""
+"This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:277
+msgid "More by {creator}"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:289
+#: kuma/demos/templates/demos/launch.html:65
+msgid "Report a Problem"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:291
+#: kuma/demos/templates/demos/detail.html:292
+#: kuma/demos/templates/demos/detail.html:293
+msgid "Flag Content"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:291
+msgid "Demo is not working"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:292
+msgid "Demo is inappropriate"
+msgstr ""
+
+#: kuma/demos/templates/demos/detail.html:293
+msgid "Demo is not by this author"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_landing.html:11
+#: kuma/demos/templates/demos/devderby_landing.html:23
+#: kuma/demos/templates/demos/devderby_tag.html:33
+msgid "Dev Derby"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_landing.html:22
+#: kuma/demos/templates/demos/devderby_tag.html:32
+msgid "presents"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_landing.html:25
+msgid "Dev Derby has ended"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_landing.html:27
+msgid ""
+"From 2011 until 2013, web developers created more than 450 demos for the Dev "
+"Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo "
+"Studio</a> for many more."
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_landing.html:40
+msgid "Previous Dev Derby Challenges"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_landing.html:55
+#: kuma/demos/templates/demos/devderby_tag.html:25
+msgid "Resources"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_landing.html:57
+#: kuma/search/templates/search/results.html:138
+msgid "Docs"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_landing.html:58
+#: templates/base.html:144
+#: templates/base.html:149
+msgid "Demos"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_landing.html:59
+msgid "Articles"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_tag.html:8
+#: kuma/demos/templates/demos/listing_tag.html:7
+msgid "Demos tagged {tag}"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_tag.html:21
+msgid "Home"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_tag.html:22
+msgid "Challenges"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_tag.html:23
+msgid "Judging"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_tag.html:24
+msgid "Prizes"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_tag.html:41
+msgid "Derby Winners"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_tag.html:52
+msgid "Submissions"
+msgstr ""
+
+#: kuma/demos/templates/demos/devderby_tag.html:55
+#: kuma/demos/templates/demos/home.html:136
+#: kuma/demos/templates/demos/listing_tag.html:45
+msgid "Subscribe to a feed of {tag_title} demos"
+msgstr ""
+
+#: kuma/demos/templates/demos/feed_item_description.html:7
+msgid "Submitted by:"
+msgstr ""
+
+#: kuma/demos/templates/demos/feed_item_description.html:9
+msgid "Tagged as:"
+msgstr ""
+
+#: kuma/demos/templates/demos/flag.html:24
+msgid "Flag this demo?"
+msgstr ""
+
+#: kuma/demos/templates/demos/flag.html:30
+msgid "<button type=\"submit\" name=\"action_create\">Flag content</button>"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:8
+#: kuma/demos/templates/demos/listing_all.html:6
+msgid "Recent demos"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:10
+msgid "Featured demos"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:42
+msgid "Featured Demos"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:46
+msgid "See the previous demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:47
+msgid "See the next demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:66
+#: kuma/demos/templates/demos/elements/submission_thumb.html:28
+msgid "Details"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:69
+msgid "Launch"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:106
+#: kuma/demos/templates/demos/home.html:107
+msgid "Search demos"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:111
+msgid "<b>or</b>"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:114
+#: kuma/demos/templates/demos/elements/demos_head.html:18
+#: kuma/demos/templates/demos/elements/tech_tags_list.html:2
+msgid "Browse by Technology"
+msgstr ""
+
+#: kuma/demos/templates/demos/home.html:136
+msgid "recent"
+msgstr ""
+
+#: kuma/demos/templates/demos/launch.html:34
+#: kuma/search/templates/search/plugin.html:3
+#: templates/base.html:11
+#: templates/base.html:31
+#: templates/base.html:37
+#: templates/base.html:101
+#: templates/base_popup.html:5
+msgid "Mozilla Developer Network"
+msgstr ""
+
+#: kuma/demos/templates/demos/launch.html:38
+msgid "by %(profile_link)s"
+msgstr ""
+
+#: kuma/demos/templates/demos/launch.html:79
+msgid "Back"
+msgstr ""
+
+#: kuma/demos/templates/demos/launch.html:88
+msgid "Remove this toolbar"
+msgstr ""
+
+#: kuma/demos/templates/demos/launch.html:88
+msgid "Remove toolbar"
+msgstr ""
+
+#: kuma/demos/templates/demos/listing_all.html:4
+#: kuma/demos/templates/demos/listing_all.html:20
+msgid "Browse all demos"
+msgstr ""
+
+#: kuma/demos/templates/demos/listing_all.html:26
+msgid "Subscribe to a feed of all demos"
+msgstr ""
+
+#: kuma/demos/templates/demos/listing_search.html:9
+msgid "Search for \"{q}\""
+msgstr ""
+
+#: kuma/demos/templates/demos/listing_search.html:13
+msgid "Search results for \"{q}\""
+msgstr ""
+
+#: kuma/demos/templates/demos/listing_search.html:27
+msgid "Search demos for \"{q}\""
+msgstr ""
+
+#: kuma/demos/templates/demos/listing_search.html:33
+msgid "Subscribe to a feed of search results for \"{q}\""
+msgstr ""
+
+#: kuma/demos/templates/demos/listing_tag.html:4
+msgid "{tag_title} Demos"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:13
+#: kuma/demos/templates/demos/submit.html:53
+msgid "Edit {demo_title}"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:15
+#: kuma/demos/templates/demos/submit.html:55
+#: kuma/demos/templates/demos/submit_noauth.html:11
+#: kuma/demos/templates/demos/submit_noauth.html:25
+msgid "Submit a New Demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:60
+msgid ""
+"<p>Whether you are creating an amazing new way to experience the Web or just "
+"experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p> <p>Please "
+"complete the form below to ensure your demo is submitted to the Demo Studio "
+"successfully.</p>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:72
+msgid "Describe Your Demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:74
+msgid ""
+"<p>Tell us more about your demo, including the name, description and the "
+"technologies used. Please list the browsers you have tested it with.</p>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:87
+msgid "Select up to five technologies used in your demo."
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:98
+msgid "Show Off Your Demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:102
+msgid "Provide at least one screenshot of your demo in action"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:111
+msgid "JPEG and PNG supported. Minimum size of 480x360."
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:113
+msgid "We support YouTube and Vimeo"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:114
+msgid ""
+"If your demo has problems when displayed in an &lt;iframe&gt;, try changing "
+"this."
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:119
+#: kuma/demos/templates/demos/submit_noauth.html:48
+msgid "Preparing Your Demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:120
+msgid ""
+"<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> "
+"<li>The main page of your demo should be a file named "
+"<code>index.html</code> in the root of the ZIP.</li> <li>Your demo should be "
+"built on client-side technology (HTML, CSS, JavaScript). Server-side "
+"languages like PHP and Ruby are not supported.</li> <li>If your demo "
+"requires external resources, it should use AJAX to access them.</li> <li>To "
+"submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> "
+"<li>Please identify in the demo details box any 3rd party content that "
+"can't be licensed under the CC-BY-SA license and include links to the "
+"authors' websites.</li> </ul>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:133
+msgid "Provide the Source Code"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:135
+msgid ""
+"<p>Upload a ZIP file of your source code, in which the main page of your "
+"demo is named <code>index.html</code> in the root directory.</p>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:163
+msgid ""
+"I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a "
+"href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:178
+msgid "Submit demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:179
+msgid "or"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:179
+msgid "Discard Demo"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:181
+msgid "Save changes"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:182
+#: kuma/wiki/templates/wiki/includes/page_buttons.html:35
+msgid "Discard Changes"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:190
+msgid "Update Your Profile"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:191
+msgid ""
+"<p>Share your developer interests and areas of expertise with the MDN "
+"community. We'll be able to bring you a better, more customized experience "
+"and you will have a place to show off the amazing work you do.</p>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit.html:196
+msgid "Go to your profile"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit_noauth.html:27
+msgid ""
+"<p>Whether you are creating an amazing new way to experience the Web or just "
+"experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit_noauth.html:36
+msgid "Before You Begin"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit_noauth.html:37
+msgid ""
+"<ul> <li>You must be prepared to <strong>provide the source code</strong> "
+"for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your "
+"demo's source code must be available under an <strong>open license</strong>, "
+"such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open "
+"web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should "
+"support a wide range of <strong>modern web browsers</strong>, like Firefox, "
+"Chrome, Safari, and Opera.</li> </ul>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit_noauth.html:49
+msgid ""
+"<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP "
+"file</strong>.</li> <li>The main page of your demo should be a file named "
+"<strong><code>index.html</code></strong> in the root of the ZIP.</li> "
+"<li>Your demo should be built on <strong>client-side technology</strong> "
+"(HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not "
+"supported.</li> <li>If your demo requires external resources, it should use "
+"<strong>AJAX</strong> to access them.</li> <li>Please identify in the demo "
+"details box any 3rd party content that can't be licensed under the CC-BY-SA "
+"license and include links to the authors' websites.</li> </ul>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit_noauth.html:61
+msgid ""
+"<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN "
+"profile</a></strong>.</p>"
+msgstr ""
+
+#: kuma/demos/templates/demos/submit_noauth.html:66
+msgid "Log In to Profile"
+msgstr ""
+
+#: kuma/demos/templates/demos/terms.html:10
+msgid "Terms for Contributors"
+msgstr ""
+
+#: kuma/demos/templates/demos/terms.html:20
+msgid "Demo Studio: Terms for Contributors"
+msgstr ""
+
+#: kuma/demos/templates/demos/terms.html:107
+msgid "Rights Representation Details"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/comments_tree.html:9
+msgid "<cite class=\"author fn\">%(comment_profile_link)s</cite> said,"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/comments_tree.html:19
+msgid ""
+"Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent "
+"link to this comment by %(display_name)s\"><time class=\"published\" "
+"pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\" title=\"%"
+"(comment_isotime)s\">%(comment_timesince)s</time></a>"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/comments_tree.html:31
+msgid "Reply to this comment by {full_name}"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/comments_tree.html:31
+msgid "Reply"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/comments_tree.html:34
+msgid "Report this comment"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/comments_tree.html:34
+msgid "Report"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/comments_tree.html:37
+msgid "Edit this comment"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/comments_tree.html:37
+#: kuma/users/templates/users/profile.html:65
+#: kuma/wiki/content.py:673
+#: kuma/wiki/templates/wiki/includes/document_macros.html:43
+msgid "Edit"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/comments_tree.html:40
+msgid "Delete this comment"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/demos_head.html:31
+#: kuma/demos/templates/demos/elements/search_form.html:4
+msgid "Search the Demo Studio"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/demos_head.html:33
+#: kuma/demos/templates/demos/elements/search_form.html:6
+#: kuma/landing/templates/landing/homepage.html:38
+#: kuma/landing/templates/landing/homepage.html:40
+#: kuma/search/templates/search/base.html:2
+#: kuma/search/templates/search/results.html:15
+#: kuma/search/templates/search/results.html:52
+#: kuma/search/templates/search/results.html:55
+#: kuma/search/templates/search/results.html:57
+#: templates/base.html:151
+#: templates/base.html:152
+#: templates/base.html:154
+#: templates/includes/common_macros.html:26
+#: templates/includes/common_macros.html:27
+msgid "Search"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/profile_link.html:2
+#: kuma/demos/templates/demos/elements/submission_creator.html:2
+msgid "See {display_name}'s profile"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:6
+msgid "{count} Demo"
+msgid_plural "{count} Demos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:9
+msgid "Sort demos by most recent likes and views"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:9
+msgid "You are viewing demos by most recent likes and views"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:9
+msgid "Up and Coming"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:10
+msgid "Sort demos by most views"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:10
+msgid "You are viewing demos by most views"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:10
+msgid "Most Viewed"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:11
+msgid "Sort demos by most likes"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:11
+msgid "You are viewing demos by most likes"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:11
+msgid "Most Liked"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:12
+msgid "Sort demos by most recently submitted"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:12
+msgid "You are viewing demos by most recently submitted"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:12
+msgid "Most Recent"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:49
+#: templates/badger/includes/pagination.html:3
+msgid "{start}&ndash;{end} of {total}"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:58
+#: templates/badger/includes/pagination.html:8
+msgid "Go to the first page"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:58
+msgid "First"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:61
+#: templates/badger/includes/pagination.html:11
+msgid "Go to the previous page"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:64
+#: templates/badger/includes/pagination.html:14
+msgid "Go to the next page"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:67
+#: templates/badger/includes/pagination.html:17
+msgid "Go to the last page"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:67
+#: templates/badger/includes/pagination.html:17
+msgid "Last"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_listing.html:72
+msgid "Feed"
+msgstr ""
+
+#: kuma/demos/templates/demos/elements/submission_thumb.html:30
+msgid "Launch {title}"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:5
+#: kuma/events/templates/events/calendar.html:17
+msgid "Where is Mozilla?"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:19
+msgid ""
+"Here you can see some of the developer events at which Mozilla will be "
+"participating, and the topics on which our Mozillians will be speaking. If "
+"you are organizing an event and would like a Mozillian to participate, "
+"please <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">file "
+"a bug</a>. If you are a Mozillian speaking at an event that's not listed "
+"here, or if an existing event entry needs updating, <a href=\"mailto:dev-"
+"events@mozilla.com\">let us know</a>! You can also check out the <a "
+"href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps "
+"events</a> page to find a Mozilla Reps event near you!"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:37
+msgid "Upcoming Conferences"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:38
+msgid "Upcoming conferences featuring Mozilla speakers"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:40
+#: kuma/events/templates/events/calendar.html:66
+msgid "Start Date"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:41
+#: kuma/events/templates/events/calendar.html:67
+msgid "End Date"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:42
+#: kuma/events/templates/events/calendar.html:68
+msgid "Conference"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:43
+#: kuma/events/templates/events/calendar.html:69
+#: kuma/users/models.py:123
+msgid "Location"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:44
+#: kuma/events/templates/events/calendar.html:70
+msgid "Attendees"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:63
+msgid "Past Conferences"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:64
+msgid "Past conferences that featured Mozilla speakers"
+msgstr ""
+
+#: kuma/events/templates/events/calendar.html:72
+msgid "Presentation Materials"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:14
+msgid ""
+"The Mozilla Developer Network (MDN) provides information about Open Web "
+"technologies including HTML, CSS, and APIs for both Web sites and HTML5 "
+"Apps. It also documents Mozilla products, like Firefox OS."
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:34
+msgid "Shared knowledge <span>for the Open Web</span>"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:39
+#: kuma/search/templates/search/results.html:56
+msgid "Search the docs"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:45
+msgid "Web Technologies"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:48
+msgid "Web<br />Platform"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:50
+msgid "Web APIs &amp; DOM"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:51
+#: kuma/landing/templates/landing/learn.html:26
+#: kuma/landing/templates/landing/promote_buttons.html:105
+#: kuma/users/forms.py:34
+#: templates/base.html:129
+msgid "HTML"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:52
+#: kuma/landing/templates/landing/learn.html:32
+#: kuma/landing/templates/landing/promote_buttons.html:99
+#: templates/base.html:130
+msgid "CSS"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:54
+#: kuma/landing/templates/landing/homepage.html:74
+msgid "more..."
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:58
+#: templates/base.html:109
+msgid "Zones"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:60
+#: templates/base.html:116
+msgid "Firefox"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:61
+#: templates/base.html:118
+msgid "Firefox OS"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:62
+#: templates/base.html:117
+msgid "Firefox Marketplace"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:63
+#: templates/base.html:115
+msgid "App Center"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:64
+#: templates/base.html:114
+msgid "Add-ons"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:68
+msgid "Developer<br />Tools"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:70
+msgid "Firefox OS App Manager"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:71
+msgid "Page Inspector"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:72
+msgid "JavaScript Debugger"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:73
+msgid "Web Console"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:78
+#: templates/base.html:149
+msgid "Connect"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:79
+msgid ""
+"Get Web technology news from Mozilla, get help from other developers, and "
+"more!"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:80
+msgid "Learn more and sign up!"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:89
+msgid "Open Web and Mobile"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:92
+msgid "Create<br />Web Apps"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:95
+msgid "Develop<br />Firefox for Android"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:98
+msgid "Build<br />Firefox OS"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:106
+msgid ""
+"<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-"
+"hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:111
+msgid "Get Involved"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:113
+msgid ""
+"<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%"
+"(contributors)s</span> contributors</span> <span class=\"row2\">in <span "
+"class=\"number\">%(locales)s</span> languages and locales</span> <span "
+"class=\"row3\">around the world.</span> </p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:120
+#: kuma/landing/templates/landing/homepage.html:154
+msgid "Help improve MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:131
+msgid "Next Dev Derby: <strong>July 2013</strong>"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:132
+msgid "Subject: <strong>File API</strong>"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:136
+msgid "See & submit demos"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:138
+msgid "MDN Dev Derby <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i>"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:140
+msgid "MDN Demo Studio <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i>"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:158
+msgid ""
+"All parts of MDN (docs, demos, and the site itself) are created by an open "
+"community of developers. Please join us! Pick one of these ways to help:"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:164
+msgid "Getting started"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:165
+msgid "Editorial review"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:166
+msgid "Technical review"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:171
+msgid "Translating"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:172
+msgid "Promoting MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/homepage.html:173
+msgid "Contributing to the MDN codebase"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn.html:5
+#: kuma/landing/templates/landing/learn.html:10
+msgid "Learn How to Make Websites"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn.html:11
+msgid ""
+"<p>Want to learn to use the technologies that power the Web? <br>We've put "
+"together a great collection of resources to get you started.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn.html:27
+msgid ""
+"<p><strong>HyperText Markup Language</strong> is the core syntax for putting "
+"information on the worldwide web. If you want to create or modify web "
+"pages, it's best if you learn HTML.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn.html:33
+msgid ""
+"<p><strong>Cascading Style Sheets</strong> is a language for describing the "
+"appearance of web pages. To create good-looking web pages, you need to learn "
+"CSS in order to define the appearance and location of the HTML elements "
+"within the pages.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn.html:39
+msgid ""
+"<p><strong>JavaScript</strong> (JS for short) is the programming language "
+"that enables web pages to respond to user interaction beyond the basic level "
+"provided by HTML links and forms.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn.html:47
+msgid ""
+"<h2>Are you tired of learning on your own?<br>Do you want to join a "
+"community of people learning about open web technologies?</h2> <p>Consider "
+"signing up for free online peer study groups through Peer-to-Peer "
+"University's<span title=\"Peer-to-Peer University\"></span> <a "
+"href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of "
+"Webcraft</a>. Share your discoveries, struggles, and victories with others "
+"who are learning the same things.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:5
+#: kuma/landing/templates/landing/learn_css.html:11
+msgid "Learn CSS"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:10
+#: kuma/landing/templates/landing/learn_html.html:10
+#: kuma/landing/templates/landing/learn_javascript.html:10
+msgid "Back to Home"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:12
+msgid ""
+"<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language "
+"for describing the appearance of web pages. To create good-looking web "
+"pages, you need to learn CSS in order to define the appearance and location "
+"of the HTML elements within the pages.</p> <p>The links on this page lead to "
+"a variety of CSS tutorials and CSS training materials. Whether you are just "
+"starting out, learning the basics of CSS, or are an experienced web "
+"developer wanting to learn <strong>CSS3</strong> (the newest version of the "
+"standard) and CSS best practices, you can find helpful resources here.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:30
+#: kuma/landing/templates/landing/learn_html.html:29
+#: kuma/landing/templates/landing/learn_javascript.html:28
+msgid "Introductory Level"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:33
+msgid "CSS Getting Started"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:35
+msgid ""
+"This tutorial introduces you to Cascading Style Sheets (CSS). It guides you "
+"through the basic features of CSS with practical examples that you can try "
+"for yourself on your own computer."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:38
+msgid "CSS Basics"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:40
+msgid ""
+"What CSS is, how to apply it to HTML, and what basic CSS syntax looks like."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:43
+msgid "CSS Selector Classes"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:45
+msgid "What are classes in CSS?"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:48
+msgid "External CSS"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:50
+msgid "Using CSS from an external style sheet."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:53
+msgid "Adding a Touch of Style"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:55
+msgid "A brief beginner's guide to styling web pages with CSS."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:58
+msgid "CSS From the Ground Up"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:60
+msgid "Video tutorial on styling pages with CSS."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:63
+msgid "Common CSS Questions"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:65
+msgid "Common questions and answers for beginners."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:71
+#: kuma/landing/templates/landing/learn_javascript.html:59
+msgid "Intermediate Level"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:74
+msgid "CSS Reference"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:76
+msgid ""
+"Complete reference to CSS, with details on support by Firefox and other "
+"browsers."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:79
+msgid "CSS Challenges"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:81
+msgid "Flex your CSS skills, and see where you need more practice."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:84
+msgid "Intermediate CSS Concepts"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:86
+msgid "Grouping, pseudo-classes, and more."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:89
+msgid "CSS Positioning 101"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:91
+msgid "Using positioning for standards-compliant, table-free layout."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:94
+msgid "Progressive Enhancement with CSS"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:96
+msgid "Integrate progressive enhancement into your web pages with CSS."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:99
+msgid "Fluid Grids"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:101
+msgid ""
+"Design layouts that fluidly resize with the browser window, while still "
+"using a typographic grid."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:108
+#: kuma/landing/templates/landing/learn_html.html:70
+#: kuma/landing/templates/landing/learn_javascript.html:90
+msgid "Advanced Level"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:112
+msgid "CSS3 in Under 5 Minutes"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:112
+#: kuma/landing/templates/landing/learn_css.html:117
+#: kuma/landing/templates/landing/learn_css.html:122
+#: kuma/landing/templates/landing/learn_css.html:129
+#: kuma/landing/templates/landing/learn_css.html:134
+msgid "This site features CSS3"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:114
+msgid "A quick introduction to some of the core features introduced in CSS3."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:117
+msgid "Using CSS Transforms"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:119
+msgid "Apply rotation, skewing, scaling, and translation using CSS."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:122
+msgid "CSS Transitions"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:124
+msgid ""
+"CSS transitions, part of the draft CSS3 specification, provide a way to "
+"animate changes to CSS properties, instead of having the changes take effect "
+"instantly."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:129
+msgid "Understanding CSS3 Transitions"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:131
+msgid ""
+"Start using CSS3 transitions by carefully choosing the situations in which "
+"to use them."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:134
+msgid "Quick Guide to Implement Web Fonts with @font-face"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:136
+msgid ""
+"The @font-face feature from CSS3 allows you to use custom typefaces on the "
+"web in an accessible, manipulable, and scalable way."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:145
+msgid ""
+"<h2>Are you tired of learning CSS on your own?<br> Do you want to join a "
+"community of people who are learning CSS and other open web "
+"technologies?</h2> <p>Consider signing up for free online peer study groups "
+"through Peer-to-Peer University's<span title=\"Peer-to-Peer "
+"University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-"
+"webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
+"victories with others who are learning the same things.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_css.html:155
+msgid ""
+"This site discusses <strong>CSS3</strong>, latest, still-evolving version of "
+"CSS. Many CSS3 features are supported in various ways by modern browsers, "
+"but many users still have older browsers and so can't take advantage."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_fineprint.html:2
+msgid ""
+"<p>These resources are created by forward-thinking companies and web "
+"developers who have embraced open standards and best practices for web "
+"development. If you think we've omitted a great resource, please <a href=\"%"
+"(feedback_url)s\">tell us about it</a>. We want to share these resources with "
+"our international community, so we prefer ones that provide or allow "
+"translations, through an open content license such as <a "
+"href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:5
+#: kuma/landing/templates/landing/learn_html.html:11
+msgid "Learn HTML"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:12
+msgid ""
+"<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the "
+"core syntax for putting information on the worldwide web. If you want to "
+"create or modify web pages, it's best if you learn HTML.</p> <p>The links on "
+"this page lead to a variety of HTML tutorials and HTML training materials. "
+"Whether you are just starting out, learning the basics of HTML, or are an "
+"old hand at web development wanting to learn <strong>HTML5</strong> (the "
+"newest version of the standard), you can find helpful resources here for "
+"HTML best practices.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:32
+msgid "The Basics of HTML"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:34
+msgid ""
+"What HTML is, what it does, its history in brief, and what the structure of "
+"an HTML document looks like. The articles that follow this one look at each "
+"individual part of HTML in much greater depth."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:37
+msgid "Basic Structure of a Web Page"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:39
+msgid "Learn how HTML elements fit together into the bigger picture."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:42
+msgid "Fundamental HTML Elements"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:44
+msgid ""
+"Describes the different types of elements you can use to write an HTML "
+"document."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:47
+msgid "HTML Beginner Tutorial"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:49
+msgid "A tutorial and exercises that take you through the basics."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:52
+msgid "HTML From the Ground Up"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:53
+msgid "Google Code University"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:54
+msgid ""
+"Video tutorial on best practices and approaches for how to write good HTML "
+"code."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:57
+msgid "HTML Challenges"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:59
+msgid ""
+"Use these challenges to hone your HTML skills (for example, \"Should I use an "
+"&lt;h2&gt; element or a &lt;strong&gt; element?\"), focusing on meaningful "
+"mark-up."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:64
+msgid ""
+"A comprehensive reference for HTML elements, and how Firefox and other "
+"browsers support them."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:73
+msgid "Tips for Authoring Fast-loading HTML Pages"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:75
+msgid ""
+"Optimize web pages to provide a more responsive site for visitors and reduce "
+"the load on your web server and Internet connection."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:78
+msgid "Dive into HTML5"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:78
+#: kuma/landing/templates/landing/learn_html.html:83
+#: kuma/landing/templates/landing/learn_html.html:88
+#: kuma/landing/templates/landing/learn_html.html:93
+#: kuma/landing/templates/landing/learn_html.html:98
+#: kuma/landing/templates/landing/learn_html.html:103
+#: kuma/landing/templates/landing/learn_html.html:107
+#: kuma/landing/templates/landing/learn_html.html:132
+#: kuma/landing/templates/landing/learn_html.html:137
+msgid "This site features HTML5"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:79
+msgid "From Mark Pilgrim"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:80
+msgid ""
+"Learn about a selection of features of HTML5, the newest version of the HTML "
+"specification."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:83
+msgid "Get Ready for HTML5"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:84
+#: kuma/landing/templates/landing/learn_html.html:94
+msgid "A List Apart"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:85
+msgid "Some suggestions to help you get on board with HTML5."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:88
+msgid "HTML5 Tutorials"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:89
+msgid "HTML5 Rocks"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:90
+msgid "Take a guided tour through code that uses HTML5 features."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:93
+msgid "Semantics in HTML5"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:95
+msgid ""
+"Learn meaningful mark-up that is extensible and backwards- and forwards-"
+"compatible."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:98
+msgid "Canvas Tutorial"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:100
+msgid ""
+"Learn how to draw graphics using scripting using the &lt;canvas&gt; element."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:103
+msgid "HTML5 Doctor"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:104
+msgid "Articles about using HTML5 right now."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:107
+msgid "The Joy of HTML5 Audio"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:109
+msgid ""
+"Learn how to use the HTML audio element to embed sounds in your web pages "
+"easily. Lots of code examples are included in the tutorial."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:116
+msgid "HTML5 Examples"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:120
+msgid "Web o' Wonder"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:121
+#: kuma/landing/templates/landing/learn_html.html:126
+msgid "Mozilla"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:122
+msgid "Demos from Mozilla developers and evangelists."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:125
+msgid "MDN Demo Studio"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:127
+msgid ""
+"Run, inspect, and submit demos that show what HTML, CSS, and JavaScript can "
+"do."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:132
+msgid "HTML5 Demos and Examples"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:133
+msgid "Remy Sharp"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:134
+msgid "Demos that you can filter by technology or browser support."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:137
+msgid "HTML5 Gallery"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:138
+msgid "Richard Clark"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:139
+msgid ""
+"Showcase of sites that use HTML5 to help you learn about how it should be "
+"used."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:147
+msgid ""
+"<h2>Tired of learning on your own?<br>Want to join a community of people "
+"learning HTML and other open web technologies?</h2> <p>Consider signing up "
+"for free online peer study groups through Peer-to-Peer University's<span "
+"title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools"
+"/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, "
+"struggles, and victories with others who are learning the same things.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_html.html:157
+msgid ""
+"This site discusses <strong>HTML5</strong>, the upcoming latest version of "
+"the standard. Many HTML5 features are supported by modern browsers, but many "
+"users still have older browsers and so can't take advantage."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:5
+#: kuma/landing/templates/landing/learn_javascript.html:11
+msgid "Learn JavaScript"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:12
+msgid ""
+"<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the "
+"programming language that enables web pages to respond to user interaction "
+"beyond the basic level provided by HTML links and forms.</p> <p>The links on "
+"this page lead to a variety of JavaScript tutorials and JavaScript training "
+"materials. Whether you are just starting out, wanting to learn JS basics, "
+"or are an old hand, wanting to sharpen your skills, you can find helpful "
+"resources here for JS best practices.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:31
+msgid "Codecademy"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:33
+msgid ""
+"Codecademy is the easiest way to learn how to code JavaScript. It's "
+"interactive, fun, and you can do it with your friends."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:36
+msgid "Getting Started with JavaScript"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:38
+msgid "What is JavaScript and how can it help you?"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:41
+msgid "Programming &ndash; The Real Basics"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:43
+msgid ""
+"Basic fundamentals of programming. Following articles introduce what you can "
+"do with JavaScript, best practices for using it, and more."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:46
+msgid "JavaScript From the Ground Up"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:48
+msgid "Video tutorial on making pages interactive with JavaScript"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:51
+msgid "JavaScript Best Practices"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:53
+msgid ""
+"Learn about some of the obvious and (not so) obvious best practices when "
+"writing JavaScript."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:62
+msgid "A Re-introduction to JavaScript"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:64
+msgid ""
+"A recap of the JavaScript programming language aimed at intermediate-level "
+"developers."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:67
+msgid "Eloquent JavaScript"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:68
+msgid ""
+"A comprehensive guide to intermediate and advanced JavaScript methodologies."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:71
+msgid "Essential JavaScript Design Patterns"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:73
+msgid "An introduction to essential JavaScript design patterns."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:76
+msgid "The JavaScript Programming Language"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:78
+msgid ""
+"Douglas Crockford explores the language as it is today, and how it came to "
+"be."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:81
+msgid "Introduction to Object-oriented JavaScript"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:83
+msgid "Learn about the JavaScript object model."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:94
+msgid "Learning Advanced JavaScript"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:96
+msgid "John Resig's guide to advanced JavaScript."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:99
+msgid "Introducing the JavaScript DOM"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:101
+msgid ""
+"What is the Document Object Model, and why is it useful? This article gives "
+"you a gentle introduction to this powerful JavaScript feature."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:104
+msgid "An Inconvenient API: The Theory of the DOM"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:106
+msgid "Douglas Crockford explains the Document Object Model."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:109
+msgid "Advanced JavaScript"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:111
+msgid ""
+"Douglas Crockford looks closely at code patterns from which JavaScript "
+"programmers can choose in authoring their applications."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:116
+msgid "JavaScript Garden"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:117
+msgid "Documentation of the most quirky parts of JavaScript."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:120
+msgid "Which JavaScript Framework?"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:122
+msgid "Advice on choosing a JavaScript framework."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:125
+msgid "Non-blocking JavaScript Downloads"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:127
+msgid ""
+"Tips on improving the download performance of pages containing JavaScript."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:130
+msgid "JavaScript Guide"
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:132
+msgid ""
+"A comprehensive, regularly updated guide to JavaScript for all levels of "
+"learning from beginner to advanced."
+msgstr ""
+
+#: kuma/landing/templates/landing/learn_javascript.html:141
+msgid ""
+"<h2>Are you tired of learning JS on your own?<br>Do you want to join a "
+"community of people who are learning JavaScript and other open web "
+"technologies?</h2> <p>Consider signing up for free online peer study groups "
+"through Peer-to-Peer University's<span title=\"Peer-to-Peer "
+"University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-"
+"webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
+"victories with others who are learning the same things.</p>"
+msgstr ""
+
+#: kuma/landing/templates/landing/newsfeed.html:8
+msgid "Posted %(entrydate)s by %(authorlink)s"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:5
+#: kuma/landing/templates/landing/promote_buttons.html:17
+msgid "Promote MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:19
+msgid "Spread some developer love."
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:20
+msgid ""
+"<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a "
+"custom button and source code to promote MDN on your website or blog.</li> "
+"<li><strong>Post Buttons:</strong> Copy the source code and paste it "
+"anywhere on your website or blog to help people click through to MDN.</li> "
+"<li><strong>Feel Good:</strong> Take pride in knowing you're making "
+"developers lives just a little bit better by sharing MDN with the "
+"world.</li> </ol>"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:35
+msgid "Preview"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:40
+msgid "Choose a button style"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:45
+msgid "Better Docs"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:51
+msgid "Developer Powered"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:57
+msgid "For Developers, By Developers"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:63
+msgid "Web Developer Toolbox"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:70
+msgid "Choose a color"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:75
+msgid "Gray"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:81
+msgid "Orange"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:87
+msgid "Red"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:94
+msgid "Replace &lt;FOO&gt; with"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:117
+msgid "Web"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:124
+msgid "Add your custom button to your website"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:125
+msgid "Your source code:"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:127
+msgid "Your button will take people to:"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:162
+#: kuma/landing/templates/landing/promote_buttons.html:166
+#: kuma/landing/templates/landing/promote_buttons.html:170
+msgid "Better CSS docs for a better Web on MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:163
+#: kuma/landing/templates/landing/promote_buttons.html:167
+#: kuma/landing/templates/landing/promote_buttons.html:171
+msgid "Better HTML docs for a better Web on MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:164
+#: kuma/landing/templates/landing/promote_buttons.html:168
+#: kuma/landing/templates/landing/promote_buttons.html:172
+msgid "Better JavaScript docs for a better Web on MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:165
+#: kuma/landing/templates/landing/promote_buttons.html:169
+#: kuma/landing/templates/landing/promote_buttons.html:173
+msgid "Better Web docs for a better Web on MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:174
+#: kuma/landing/templates/landing/promote_buttons.html:178
+#: kuma/landing/templates/landing/promote_buttons.html:182
+msgid "MDN is Developer Powered for CSS docs, demos and more."
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:175
+#: kuma/landing/templates/landing/promote_buttons.html:179
+#: kuma/landing/templates/landing/promote_buttons.html:183
+msgid "MDN is Developer Powered for HTML docs, demos and more."
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:176
+#: kuma/landing/templates/landing/promote_buttons.html:180
+#: kuma/landing/templates/landing/promote_buttons.html:184
+msgid "MDN is Developer Powered for JavaScript docs, demos and more."
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:177
+#: kuma/landing/templates/landing/promote_buttons.html:181
+#: kuma/landing/templates/landing/promote_buttons.html:185
+msgid "MDN is Developer Powered for Web docs, demos and more."
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:186
+#: kuma/landing/templates/landing/promote_buttons.html:190
+#: kuma/landing/templates/landing/promote_buttons.html:194
+msgid "CSS docs by developers, for developers on MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:187
+#: kuma/landing/templates/landing/promote_buttons.html:191
+#: kuma/landing/templates/landing/promote_buttons.html:195
+msgid "HTML docs by developers, for developers on MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:188
+#: kuma/landing/templates/landing/promote_buttons.html:192
+#: kuma/landing/templates/landing/promote_buttons.html:196
+msgid "JavaScript docs by developers, for developers on MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:189
+#: kuma/landing/templates/landing/promote_buttons.html:193
+#: kuma/landing/templates/landing/promote_buttons.html:197
+msgid "Web docs by developers, for developers on MDN"
+msgstr ""
+
+#: kuma/landing/templates/landing/promote_buttons.html:198
+#: kuma/landing/templates/landing/promote_buttons.html:199
+#: kuma/landing/templates/landing/promote_buttons.html:200
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+
+#: kuma/search/admin.py:12
+msgid "Can't promote more than one index at once."
+msgstr ""
+
+#: kuma/search/admin.py:16
+msgid "Promoted search index %s."
+msgstr ""
+
+#: kuma/search/admin.py:17
+msgid "Promote selected search index to current index"
+msgstr ""
+
+#: kuma/search/admin.py:22
+msgid "Can't demote more than one index at once."
+msgstr ""
+
+#: kuma/search/admin.py:25
+msgid ""
+"Can't demote the index if there is only one. Create and populate a new one "
+"first."
+msgstr ""
+
+#: kuma/search/admin.py:30
+msgid "Demoted search index %s."
+msgstr ""
+
+#: kuma/search/admin.py:31
+msgid "Demote selected search index (automatic fallback to previous index)"
+msgstr ""
+
+#: kuma/search/admin.py:38
+msgid "Can't populate more than one index at once."
+msgstr ""
+
+#: kuma/search/admin.py:42
+msgid "Scheduled a Celery task to populate search index %s."
+msgstr ""
+
+#: kuma/search/admin.py:44
+msgid "Populate selected search index via Celery"
+msgstr ""
+
+#: kuma/search/admin.py:55
+msgid "There is already a successor to the current index %s"
+msgstr ""
+
+#: kuma/search/admin.py:71
+msgid "Is current index?"
+msgstr ""
+
+#: kuma/search/queries.py:71
+msgid "name"
+msgstr ""
+
+#: kuma/search/queries.py:72
+msgid "groupname"
+msgstr ""
+
+#: kuma/search/templates/search/down.html:5
+msgid "Search Unavailable"
+msgstr ""
+
+#: kuma/search/templates/search/down.html:7
+msgid "Search is temporarily unavailable. Please try again in a few minutes."
+msgstr ""
+
+#. Search Mozilla Developer Network documentation
+#: kuma/search/templates/search/plugin.html:5
+msgid "Search Mozilla Developer Network documentation"
+msgstr ""
+
+#: kuma/search/templates/search/results.html:13
+msgid "Search Results for \"{query}\""
+msgstr ""
+
+#: kuma/search/templates/search/results.html:39
+msgid ""
+"translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%"
+"(parent_title)s (%(parent_language)s)</a>"
+msgstr ""
+
+#: kuma/search/templates/search/results.html:51
+msgid "MDN Site Search"
+msgstr ""
+
+#: kuma/search/templates/search/results.html:66
+msgid "Results"
+msgstr ""
+
+#: kuma/search/templates/search/results.html:71
+msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
+msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/search/templates/search/results.html:77
+msgid ""
+"%(count)s document found for \"%(query)s\" in %(locale_native)s and %"
+"(default_locale_native)s."
+msgid_plural ""
+"%(count)s documents found for \"%(query)s\" in %(locale_native)s and %"
+"(default_locale_native)s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/search/templates/search/results.html:85
+msgid "%(count)s document found in %(locale_native)s."
+msgid_plural "%(count)s documents found in %(locale_native)s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/search/templates/search/results.html:91
+msgid ""
+"%(count)s document found in %(locale_native)s and %(default_locale_native)s."
+msgid_plural ""
+"%(count)s documents found in %(locale_native)s and %"
+"(default_locale_native)s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/search/templates/search/results.html:101
+msgid "%(count)s document found for \"%(query)s\"."
+msgid_plural "%(count)s documents found for \"%(query)s\"."
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/search/templates/search/results.html:107
+msgid "%(count)s document found."
+msgid_plural "%(count)s documents found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/search/templates/search/results.html:116
+msgid "Showing all results."
+msgstr ""
+
+#: kuma/search/templates/search/results.html:118
+msgid "Showing results %(start)s to %(end)s."
+msgstr ""
+
+#: kuma/search/templates/search/results.html:124
+msgid "Search again in %(default_locale_native)s only"
+msgstr ""
+
+#: kuma/search/templates/search/results.html:173
+msgid "Filter by"
+msgstr ""
+
+#: kuma/search/templates/search/results.html:207
+msgid "Filter"
+msgstr ""
+
+#: kuma/users/adapters.py:19
+msgid ""
+"Sorry, you must have at least one connected account so you can sign in. To "
+"disconnect this account connect a different one first. To delete your MDN "
+"profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
+msgstr ""
+
+#: kuma/users/adapters.py:23
+msgid "An email address cannot be used as a username."
+msgstr ""
+
+#: kuma/users/adapters.py:50
+msgid "The username you entered already exists."
+msgstr ""
+
+#: kuma/users/backends.py:33
+msgid "algorithm"
+msgstr ""
+
+#: kuma/users/backends.py:34
+msgid "salt"
+msgstr ""
+
+#: kuma/users/backends.py:35
+msgid "hash"
+msgstr ""
+
+#: kuma/users/constants.py:4
+msgid ""
+"Username may contain only letters, numbers, and these characters: . - _ +"
+msgstr ""
+
+#: kuma/users/forms.py:20
+msgid "You must agree to the privacy policy."
+msgstr ""
+
+#: kuma/users/forms.py:35
+msgid "Plain text"
+msgstr ""
+
+#: kuma/users/forms.py:37
+msgid "Send me the newsletter"
+msgstr ""
+
+#: kuma/users/forms.py:39
+msgid "Preferred format"
+msgstr ""
+
+#: kuma/users/forms.py:44
+#: kuma/users/signup.py:32
+msgid "I agree"
+msgstr ""
+
+#: kuma/users/forms.py:47
+msgid "Your country"
+msgstr ""
+
+#: kuma/users/forms.py:147
+msgid "Beta tester"
+msgstr ""
+
+#: kuma/users/forms.py:148
+#: kuma/users/templates/users/profile.html:99
+msgid "Interests"
+msgstr ""
+
+#: kuma/users/forms.py:151
+msgid "Expertise"
+msgstr ""
+
+#: kuma/users/forms.py:154
+msgid "Username"
+msgstr ""
+
+#: kuma/users/forms.py:178
+msgid "Areas of expertise must be a subset of interests"
+msgstr ""
+
+#: kuma/users/forms.py:190
+msgid "Username already in use."
+msgstr ""
+
+#: kuma/users/helpers.py:44
+msgid "Banned on {ban_date} by {ban_admin}."
+msgstr ""
+
+#: kuma/users/helpers.py:45
+msgid "Banned"
+msgstr ""
+
+#: kuma/users/helpers.py:48
+msgid "Ban User"
+msgstr ""
+
+#: kuma/users/helpers.py:58
+msgid "Admin"
+msgstr ""
+
+#: kuma/users/models.py:38
+msgid "%s banned by %s"
+msgstr ""
+
+#: kuma/users/models.py:40
+msgid "%s (no longer active)"
+msgstr ""
+
+#: kuma/users/models.py:62
+msgid "Website"
+msgstr ""
+
+#: kuma/users/models.py:68
+msgid "Twitter"
+msgstr ""
+
+#: kuma/users/models.py:74
+#: templates/includes/login.html:24
+msgid "GitHub"
+msgstr ""
+
+#: kuma/users/models.py:80
+msgid "Stack Overflow"
+msgstr ""
+
+#: kuma/users/models.py:86
+msgid "LinkedIn"
+msgstr ""
+
+#: kuma/users/models.py:92
+msgid "Mozillians"
+msgstr ""
+
+#: kuma/users/models.py:98
+msgid "Facebook"
+msgstr ""
+
+#: kuma/users/models.py:109
+msgid "Timezone"
+msgstr ""
+
+#: kuma/users/models.py:111
+msgid "Language"
+msgstr ""
+
+#: kuma/users/models.py:114
+msgid ""
+"This URL has an invalid format. Valid URLs look like "
+"http://example.com/my_page."
+msgstr ""
+
+#: kuma/users/models.py:119
+msgid "Name"
+msgstr ""
+
+#: kuma/users/models.py:121
+msgid "Organization"
+msgstr ""
+
+#: kuma/users/models.py:125
+msgid "About Me"
+msgstr ""
+
+#: kuma/users/models.py:127
+msgid "IRC nickname"
+msgstr ""
+
+#: kuma/users/models.py:130
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:21
+#: kuma/wiki/templates/wiki/edit_document.html:174
+#: kuma/wiki/templates/wiki/new_document.html:74
+msgid "Tags"
+msgstr ""
+
+#: kuma/users/signup.py:7
+msgid "Username is required."
+msgstr ""
+
+#: kuma/users/signup.py:8
+msgid ""
+"Username is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: kuma/users/signup.py:10
+msgid ""
+"Username is too long (%(show_value)s characters). It must be %(limit_value)s "
+"characters or less."
+msgstr ""
+
+#: kuma/users/signup.py:13
+msgid "You must agree to the terms of use."
+msgstr ""
+
+#: kuma/users/tasks.py:37
+#: kuma/users/templates/users/email/welcome/html.ltxt:6
+msgid "Take the next step to get involved on MDN!"
+msgstr ""
+
+#: kuma/users/views.py:279
+msgid "Email address"
+msgstr ""
+
+#: kuma/users/views.py:337
+msgid "%(email)s <b>Verified</b>"
+msgstr ""
+
+#: kuma/users/views.py:340
+msgid "%(email)s Unverified"
+msgstr ""
+
+#: kuma/users/views.py:343
+#: kuma/users/templates/socialaccount/signup.html:141
+msgid "Other:"
+msgstr ""
+
+#: kuma/users/templates/account/account_inactive.html:3
+#: kuma/users/templates/account/account_inactive.html:7
+msgid "Profile Inactive"
+msgstr ""
+
+#: kuma/users/templates/account/account_inactive.html:9
+msgid "This profile is inactive."
+msgstr ""
+
+#: kuma/users/templates/account/email.html:3
+#: kuma/users/templates/account/email.html:7
+#: kuma/users/templates/users/profile.html:75
+msgid "Email addresses"
+msgstr ""
+
+#: kuma/users/templates/account/email.html:11
+msgid "{email} is your <em>primary</em> email address"
+msgstr ""
+
+#: kuma/users/templates/account/email.html:15
+msgid "You've also added the following email addresses:"
+msgstr ""
+
+#: kuma/users/templates/account/email.html:28
+msgid "Make Primary"
+msgstr ""
+
+#: kuma/users/templates/account/email.html:30
+msgid "Re-send Confirmation"
+msgstr ""
+
+#: kuma/users/templates/account/email.html:32
+msgid "Remove"
+msgstr ""
+
+#: kuma/users/templates/account/email.html:45
+msgid ""
+"<strong>Warning:</strong>\"You have not added any email addresses to this "
+"profile. Without one you cannot receive notifications."
+msgstr ""
+
+#: kuma/users/templates/account/email.html:49
+msgid "Add email address"
+msgstr ""
+
+#: kuma/users/templates/account/email.html:55
+msgid "Add Email"
+msgstr ""
+
+#: kuma/users/templates/account/email.html:60
+#: kuma/users/templates/socialaccount/connections.html:70
+msgid "Edit profile"
+msgstr ""
+
+#: kuma/users/templates/account/email.html:71
+msgid "Do you really want to remove the selected email address?"
+msgstr ""
+
+#: kuma/users/templates/account/email_confirm.html:3
+#: kuma/users/templates/account/email_confirm.html:9
+#: kuma/users/templates/account/email_confirmed.html:3
+#: kuma/users/templates/account/email_confirmed.html:8
+msgid "Confirm Email Address"
+msgstr ""
+
+#: kuma/users/templates/account/email_confirm.html:13
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
+"address for user %(user_display)s."
+msgstr ""
+
+#: kuma/users/templates/account/email_confirm.html:17
+msgid "Confirm"
+msgstr ""
+
+#: kuma/users/templates/account/email_confirm.html:22
+msgid ""
+"This email confirmation link expired or is invalid. Please <a href=\"%"
+"(email_url)s\">issue a new email confirmation request</a>."
+msgstr ""
+
+#: kuma/users/templates/account/email_confirmed.html:10
+msgid ""
+"You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
+"address for user %(user_display)s."
+msgstr ""
+
+#: kuma/users/templates/account/login.html:3
+msgid "Sign In"
+msgstr ""
+
+#: kuma/users/templates/account/login.html:11
+msgid "Please sign in"
+msgstr ""
+
+#: kuma/users/templates/account/login.html:13
+msgid ""
+"In order to contribute, you need to sign in to MDN. You can sign in using "
+"any of the services below. A MDN profile will be created for you if you "
+"don't already have one."
+msgstr ""
+
+#: kuma/users/templates/account/logout.html:3
+#: kuma/users/templates/account/logout.html:8
+#: kuma/users/templates/account/logout.html:17
+#: templates/includes/common_macros.html:40
+msgid "Sign Out"
+msgstr ""
+
+#: kuma/users/templates/account/logout.html:10
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: kuma/users/templates/account/password_change.html:3
+#: kuma/users/templates/account/password_change.html:8
+#: kuma/users/templates/account/password_change.html:13
+#: kuma/users/templates/account/password_reset_from_key_done.html:3
+#: kuma/users/templates/account/password_reset_from_key_done.html:7
+msgid "Change Password"
+msgstr ""
+
+#: kuma/users/templates/account/password_reset.html:3
+#: kuma/users/templates/account/password_reset.html:8
+#: kuma/users/templates/account/password_reset_done.html:3
+#: kuma/users/templates/account/password_reset_done.html:8
+msgid "Password Reset"
+msgstr ""
+
+#: kuma/users/templates/account/password_reset.html:13
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll send you "
+"an email allowing you to reset it."
+msgstr ""
+
+#: kuma/users/templates/account/password_reset.html:18
+msgid "Reset My Password"
+msgstr ""
+
+#: kuma/users/templates/account/password_reset.html:21
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: kuma/users/templates/account/password_reset_done.html:14
+msgid ""
+"We have sent you an email. Please contact us if you do not receive it within "
+"a few minutes."
+msgstr ""
+
+#: kuma/users/templates/account/password_reset_from_key_done.html:8
+msgid "Your password is now changed."
+msgstr ""
+
+#: kuma/users/templates/account/password_set.html:3
+#: kuma/users/templates/account/password_set.html:7
+#: kuma/users/templates/account/password_set.html:12
+msgid "Set Password"
+msgstr ""
+
+#: kuma/users/templates/account/signup.html:3
+msgid "Signup"
+msgstr ""
+
+#: kuma/users/templates/account/signup.html:8
+#: kuma/users/templates/account/signup.html:18
+msgid "Sign Up"
+msgstr ""
+
+#: kuma/users/templates/account/signup.html:10
+msgid ""
+"Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: kuma/users/templates/account/signup_closed.html:3
+#: kuma/users/templates/account/signup_closed.html:7
+msgid "Sign Up Closed"
+msgstr ""
+
+#: kuma/users/templates/account/signup_closed.html:9
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: kuma/users/templates/account/verification_sent.html:3
+#: kuma/users/templates/account/verification_sent.html:7
+#: kuma/users/templates/account/verified_email_required.html:3
+#: kuma/users/templates/account/verified_email_required.html:7
+msgid "Confirm Your Email Address"
+msgstr ""
+
+#: kuma/users/templates/account/verification_sent.html:9
+msgid ""
+"We have sent an email to you for confirmation. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: kuma/users/templates/account/verified_email_required.html:9
+msgid ""
+"This part of the site requires us to confirm that you are who you claim to "
+"be. For this purpose, we require that you confirm ownership of your email "
+"address."
+msgstr ""
+
+#: kuma/users/templates/account/verified_email_required.html:13
+msgid ""
+"We have sent an email to you for confirmation. Please click on the link "
+"inside this email. Please contact us if you do not receive it within a few "
+"minutes."
+msgstr ""
+
+#: kuma/users/templates/account/verified_email_required.html:17
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
+"email address</a>."
+msgstr ""
+
+#: kuma/users/templates/account/snippets/already_logged_in.html:1
+msgid "Note"
+msgstr ""
+
+#: kuma/users/templates/account/snippets/already_logged_in.html:1
+msgid "you are already logged in as %(user_display)s."
+msgstr ""
+
+#: kuma/users/templates/openid/login.html:3
+#: kuma/users/templates/openid/login.html:6
+msgid "OpenID Sign In"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/authentication_error.html:3
+#: kuma/users/templates/socialaccount/authentication_error.html:6
+msgid "Account Sign In Failure"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/authentication_error.html:8
+msgid "An error occurred while attempting to sign in with your account."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/connections.html:3
+msgid "Account Connections"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/connections.html:6
+#: kuma/users/templates/users/profile.html:73
+msgid "Account connections"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/connections.html:11
+msgid "You can sign in to your profile using any of the following:"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/connections.html:50
+msgid "Disconnect"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/connections.html:58
+msgid "You have no connected accounts."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/connections.html:61
+msgid "Connect a new account"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/login_cancelled.html:3
+#: kuma/users/templates/socialaccount/login_cancelled.html:7
+msgid "Login Cancelled"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/login_cancelled.html:9
+msgid ""
+"You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to <a href=\"%"
+"(login_url)s\">sign in</a>."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:4
+#: kuma/users/templates/socialaccount/signup.html:26
+msgid "Create your MDN profile to continue"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:30
+msgid ""
+"A profile already exists with this email address. To connect Persona to your "
+"MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
+"your social account connections.</a>"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:43
+msgid ""
+"A profile already exists with an email address below. Do you already have an "
+"MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" "
+"data-next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+msgid_plural ""
+"A profile already exists with one of these email addresses below. Do you "
+"already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-"
+"persona-login\" data-next=\"%(persona_next_url)s\">Yes, connect with my MDN "
+"profile</a>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/users/templates/socialaccount/signup.html:54
+msgid ""
+"Thanks for signing in to MDN with %(provider_name)s. You have one more step "
+"to join MDN: <strong>create your MDN profile</strong>."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:60
+msgid ""
+"You can access everything on the MDN website even without an MDN profile. "
+"However, by joining MDN, you'll be able to edit docs, submit demos, and have "
+"your own profile page."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:67
+msgid ""
+"To set up your MDN profile, please <strong>choose a username</strong>. Your "
+"username will be displayed on MDN to identify any contributions (edits, "
+"demos, etc.) that you make."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:73
+msgid ""
+"To set up your MDN profile, please <strong>choose a username and email "
+"address</strong>. Your username will be displayed on MDN to identify any "
+"contributions (edits, demos, etc.) that you make."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:81
+msgid ""
+"If you're <strong>having trouble</strong> signing in or creating an MDN "
+"profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
+"know</a></strong>."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:106
+msgid ""
+"Your GitHub username %(username)s is already taken. Please choose another."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:110
+msgid ""
+"Please enter the name you'd like to display to other users to identify your "
+"contributions."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:124
+msgid ""
+"A profile already exists with the selected email address. <a href=\"%"
+"(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%"
+"(persona_next_url)s\">Connect your %(provider_name)s account to it.</a>"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:154
+msgid ""
+"What email address should we use to send you MDN-related messages and "
+"notifications? This address will <strong>not</strong> be displayed on MDN "
+"and will be used according to our <a href=\"{privacy_url}\">privacy "
+"policy</a>."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:169
+msgid ""
+"to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%"
+"(privacy_url)s\">Privacy Notice</a>."
+msgstr ""
+
+#: kuma/users/templates/socialaccount/signup.html:178
+msgid "Create my MDN profile"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/snippets/login_service_icon.html:2
+msgid "Signed in with Persona"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/snippets/login_service_icon.html:4
+msgid "Signed in with GitHub"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/snippets/provider_list.html:17
+msgid "Connect with Persona"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/snippets/provider_list.html:19
+msgid "Sign in with Persona"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/snippets/provider_list.html:29
+msgid "Connect with GitHub"
+msgstr ""
+
+#: kuma/users/templates/socialaccount/snippets/provider_list.html:31
+msgid "Sign in with GitHub"
+msgstr ""
+
+#: kuma/users/templates/users/apps_newsletter.html:7
+#: templates/includes/common_macros.html:71
+msgid "Firefox Apps & Hacks Newsletter"
+msgstr ""
+
+#: kuma/users/templates/users/apps_newsletter.html:14
+msgid ""
+"<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the newsletter."
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:51
+msgid "Manage Roles"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:67
+#: kuma/wiki/templates/wiki/includes/document_macros.html:43
+#: kuma/wiki/templates/wiki/includes/document_macros.html:48
+msgid "Advanced"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:71
+msgid "Manage"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:74
+msgid "API keys"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:112
+msgid "Areas of Expertise"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:120
+msgid "Member since"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:148
+msgid "Recent Badge Awards"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:159
+msgid "Subscribe to a feed of {display_name}'s demos"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:167
+msgid "No Demos"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:169
+msgid ""
+"You haven't submitted any web technology demos. Build something awesome and "
+"<a href=\"%(submit_url)s\">submit a demo</a>!"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:175
+msgid "Recent Docs Activity"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:175
+msgid "View all activity"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:181
+msgid "Page"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:192
+#: kuma/wiki/templates/wiki/document.html:399
+msgid "Edit page"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:193
+msgid "View complete diff"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:194
+#: kuma/wiki/templates/wiki/document.html:400
+msgid "View page history"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:218
+msgid ""
+"<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%"
+"(docs_url)s\">Pitch in!</a></p>"
+msgstr ""
+
+#: kuma/users/templates/users/profile.html:222
+msgid "This user has no activity."
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:10
+msgid "Edit Your Profile"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:40
+msgid "Change your avatar at"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:44
+msgid "View profile"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:52
+msgid "You're editing a different profile than your own. Please take care!"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:63
+msgid ""
+"We'd love to have your feedback on site changes! Beta testers get access to "
+"new features first and we send the occasional email asking for help testing "
+"specific things."
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:66
+msgid "Primary Email"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:67
+msgid "Edit email"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:79
+msgid "About me"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:79
+msgid "words remaining"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:85
+msgid "Interests (tags)"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:86
+msgid ""
+"Separate tags with commas or spaces. Join multi-word tags with double "
+"quotes, like \"web standards\"."
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:92
+msgid "Areas of expertise"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:93
+msgid ""
+"Add your interests first, then declare yourself an expert in selected "
+"topics."
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:101
+msgid "My Profiles"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:106
+#: kuma/users/templates/users/profile_edit.html:122
+msgid "Change"
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:112
+msgid "Use your Persona account to sign in."
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:131
+msgid "Use your GitHub account to sign in."
+msgstr ""
+
+#: kuma/users/templates/users/profile_edit.html:152
+#: kuma/users/templates/users/profile_edit.html:160
+#: kuma/wiki/templates/wiki/includes/page_buttons.html:27
+msgid "Save Changes"
+msgstr ""
+
+#: kuma/users/templates/users/user_banned.html:2
+msgid "You've Been Banned"
+msgstr ""
+
+#: kuma/users/templates/users/user_banned.html:20
+msgid "You have been banned for the following reasons:"
+msgstr ""
+
+#: kuma/users/templates/users/user_banned.html:30
+msgid ""
+"<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> "
+"to appeal this ban.</p>"
+msgstr ""
+
+#: kuma/users/templates/users/email/welcome/html.ltxt:9
+msgid "Hi {username}!"
+msgstr ""
+
+#: kuma/users/templates/users/email/welcome/html.ltxt:11
+msgid ""
+"Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer "
+"Network (MDN)</a> - a community making great resources for developers like "
+"you."
+msgstr ""
+
+#: kuma/users/templates/users/email/welcome/html.ltxt:16
+msgid ""
+"You've completed the first step of <a href=\"%(started_link)s\">Getting "
+"Started on MDN</a> by creating a profile."
+msgstr ""
+
+#: kuma/users/templates/users/email/welcome/html.ltxt:21
+msgid ""
+"Now, keep going by picking a task on MDN, and doing it! We have a bunch of "
+"intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like "
+"words</a>, <a href=\"%(code_link)s\">like code</a>, <a href=\"%"
+"(both_link)s\">like both words and code</a>, or you want to <a href=\"%"
+"(translate_link)s\">translate MDN to your language</a>."
+msgstr ""
+
+#: kuma/users/templates/users/email/welcome/html.ltxt:34
+msgid "Talk to us!"
+msgstr ""
+
+#: kuma/users/templates/users/email/welcome/html.ltxt:35
+msgid ""
+"Want to talk to someone about MDN? There are a few ways you can do that:"
+msgstr ""
+
+#: kuma/users/templates/users/email/welcome/html.ltxt:38
+msgid ""
+"Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what "
+"you're interested in on MDN and ask questions about the site."
+msgstr ""
+
+#: kuma/users/templates/users/email/welcome/html.ltxt:43
+msgid ""
+"Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on "
+"irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) "
+"You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
+"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
+"(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
+msgstr ""
+
+#: kuma/users/templates/users/email/welcome/html.ltxt:51
+msgid ""
+"Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for the "
+"posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/html.ltxt:59
+#: kuma/users/templates/users/email/welcome/plain.ltxt:61
+msgid ""
+"Don't be shy, if you have any doubt, problems, questions: contact us! We are "
+"here to help."
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:3
+msgid "Hi {username}"
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:6
+msgid ""
+"Thanks for creating a profile on Mozilla Developer Network (MDN) -- a "
+"community making great resources for developers like you."
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:12
+msgid ""
+"You've completed the first step of Getting Started on MDN by creating a "
+"profile. Now, keep going by picking a task on MDN, and doing it! We have a "
+"bunch of intro tasks you can choose based on your interests."
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:19
+msgid "Like words?"
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:23
+msgid "Like code?"
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:27
+msgid "Like both words and code?"
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:31
+msgid "Want to translate MDN to your language?"
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:36
+msgid ""
+"Want to talk to someone about MDN? There are a few ways you can do that: * "
+"Mailing list: %(list_link)s Subscribe to tell us about what you're "
+"interested in on MDN and ask questions about the site. * Real-time chat: "
+"#mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) "
+"You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
+"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
+"(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. "
+"* Blog: %(blog_link)s"
+msgstr ""
+
+#: kuma/wiki/constants.py:204
+msgid "Technical - code samples, APIs, or technologies"
+msgstr ""
+
+#: kuma/wiki/constants.py:205
+msgid "Editorial - prose, grammar, or content"
+msgstr ""
+
+#: kuma/wiki/constants.py:210
+msgid "Localization in progress - not completely translated yet."
+msgstr ""
+
+#: kuma/wiki/content.py:655
+msgid "Edit section"
+msgstr ""
+
+#: kuma/wiki/events.py:72
+msgid "[MDN] Page \"{document_title}\" changed by {creator}"
+msgstr ""
+
+#: kuma/wiki/feeds.py:27
+msgid "MDN documents"
+msgstr ""
+
+#: kuma/wiki/feeds.py:28
+msgid "Documents authored by MDN users"
+msgstr ""
+
+#: kuma/wiki/feeds.py:29
+msgid "/"
+msgstr ""
+
+#: kuma/wiki/feeds.py:142
+msgid "MDN recent document changes"
+msgstr ""
+
+#: kuma/wiki/feeds.py:143
+msgid "Recent changes to MDN documents"
+msgstr ""
+
+#: kuma/wiki/feeds.py:150
+msgid "MDN recent changes to documents tagged %s"
+msgstr ""
+
+#: kuma/wiki/feeds.py:178
+msgid "MDN documents for %s review"
+msgstr ""
+
+#: kuma/wiki/feeds.py:183
+msgid "MDN documents for review"
+msgstr ""
+
+#: kuma/wiki/feeds.py:209
+msgid "MDN '%s' translations in need of update"
+msgstr ""
+
+#: kuma/wiki/feeds.py:225
+msgid ""
+"<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%"
+"(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %"
+"(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s\" title=\"%"
+"(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %"
+"(doc_modified)s) </p>"
+msgstr ""
+
+#: kuma/wiki/feeds.py:267
+msgid "MDN recent revisions"
+msgstr ""
+
+#: kuma/wiki/feeds.py:268
+msgid "Recent revisions to MDN documents"
+msgstr ""
+
+#: kuma/wiki/feeds.py:336
+msgid "View Page"
+msgstr ""
+
+#: kuma/wiki/feeds.py:339
+msgid "Edit Page"
+msgstr ""
+
+#: kuma/wiki/feeds.py:347
+msgid "Show comparison"
+msgstr ""
+
+#: kuma/wiki/feeds.py:350
+#: kuma/wiki/templates/wiki/includes/document_macros.html:50
+msgid "History"
+msgstr ""
+
+#: kuma/wiki/forms.py:20
+msgid "Please provide a title."
+msgstr ""
+
+#: kuma/wiki/forms.py:21
+msgid ""
+"The title is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: kuma/wiki/forms.py:23
+msgid ""
+"Please keep the length of the title to %(limit_value)s characters or less. "
+"It is currently %(show_value)s characters."
+msgstr ""
+
+#: kuma/wiki/forms.py:26
+msgid "Name Your Article"
+msgstr ""
+
+#: kuma/wiki/forms.py:27
+msgid "Please provide a slug."
+msgstr ""
+
+#: kuma/wiki/forms.py:28
+msgid "The slug provided is not valid."
+msgstr ""
+
+#: kuma/wiki/forms.py:29
+msgid ""
+"The slug is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: kuma/wiki/forms.py:31
+msgid ""
+"Please keep the length of the slug to %(limit_value)s characters or less. It "
+"is currently %(show_value)s characters."
+msgstr ""
+
+#: kuma/wiki/forms.py:34
+msgid "Please provide a summary."
+msgstr ""
+
+#: kuma/wiki/forms.py:35
+msgid ""
+"The summary is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: kuma/wiki/forms.py:37
+msgid ""
+"Please keep the length of the summary to %(limit_value)s characters or less. "
+"It is currently %(show_value)s characters."
+msgstr ""
+
+#: kuma/wiki/forms.py:40
+msgid "Please provide content."
+msgstr ""
+
+#: kuma/wiki/forms.py:41
+msgid ""
+"The content is too short (%(show_value)s characters). It must be at least %"
+"(limit_value)s characters."
+msgstr ""
+
+#: kuma/wiki/forms.py:43
+msgid ""
+"Please keep the length of the content to %(limit_value)s characters or less. "
+"It is currently %(show_value)s characters."
+msgstr ""
+
+#: kuma/wiki/forms.py:46
+msgid ""
+"Please keep the length of the comment to %(limit_value)s characters or less. "
+"It is currently %(show_value)s characters."
+msgstr ""
+
+#: kuma/wiki/forms.py:49
+msgid "Another document with this slug already exists."
+msgstr ""
+
+#: kuma/wiki/forms.py:50
+msgid "Another document with this metadata already exists."
+msgstr ""
+
+#: kuma/wiki/forms.py:52
+msgid "This document was modified while you were editing it."
+msgstr ""
+
+#: kuma/wiki/forms.py:54
+msgid "Changing this document's slug requires moving it and its children."
+msgstr ""
+
+#: kuma/wiki/forms.py:64
+#: kuma/wiki/forms.py:134
+#: kuma/wiki/forms.py:400
+#: kuma/wiki/templates/wiki/edit_document.html:54
+#: kuma/wiki/templates/wiki/edit_document.html:103
+#: kuma/wiki/templates/wiki/move_document.html:51
+#: kuma/wiki/templates/wiki/new_document.html:35
+#: kuma/wiki/templates/wiki/includes/document_macros.html:191
+#: kuma/wiki/templates/wiki/includes/translate_description.html:11
+#: templates/badger/includes/badge_full.html:4
+msgid "Title:"
+msgstr ""
+
+#: kuma/wiki/forms.py:65
+#: kuma/wiki/forms.py:135
+#: kuma/wiki/forms.py:401
+msgid "Title of article"
+msgstr ""
+
+#: kuma/wiki/forms.py:72
+#: kuma/wiki/forms.py:142
+#: kuma/wiki/templates/wiki/new_document.html:39
+#: kuma/wiki/templates/wiki/includes/document_macros.html:195
+#: kuma/wiki/templates/wiki/includes/translate_description.html:22
+msgid "Slug:"
+msgstr ""
+
+#: kuma/wiki/forms.py:73
+#: kuma/wiki/forms.py:143
+msgid "Article URL"
+msgstr ""
+
+#: kuma/wiki/forms.py:83
+msgid "Category:"
+msgstr ""
+
+#: kuma/wiki/forms.py:84
+msgid "Type of article"
+msgstr ""
+
+#: kuma/wiki/forms.py:89
+#: kuma/wiki/templates/wiki/new_document.html:43
+#: kuma/wiki/templates/wiki/includes/translate_description.html:33
+msgid "Parent:"
+msgstr ""
+
+#: kuma/wiki/forms.py:149
+#: kuma/wiki/templates/wiki/document.html:346
+#: kuma/wiki/templates/wiki/edit_document.html:60
+#: kuma/wiki/templates/wiki/includes/document_macros.html:200
+#: templates/badger/includes/badge_full.html:14
+msgid "Tags:"
+msgstr ""
+
+#: kuma/wiki/forms.py:152
+#: kuma/wiki/templates/wiki/edit_document.html:66
+msgid "Keywords:"
+msgstr ""
+
+#: kuma/wiki/forms.py:153
+msgid "Affects search results"
+msgstr ""
+
+#: kuma/wiki/forms.py:157
+msgid "Search result summary:"
+msgstr ""
+
+#: kuma/wiki/forms.py:158
+msgid "Only displayed on search results page"
+msgstr ""
+
+#: kuma/wiki/forms.py:165
+#: kuma/wiki/templates/wiki/edit_document.html:78
+#: kuma/wiki/templates/wiki/includes/document_macros.html:205
+msgid "Content:"
+msgstr ""
+
+#: kuma/wiki/forms.py:171
+msgid "Comment:"
+msgstr ""
+
+#: kuma/wiki/forms.py:174
+msgid "Tag this revision for review?"
+msgstr ""
+
+#: kuma/wiki/forms.py:179
+msgid "Tag this revision for localization?"
+msgstr ""
+
+#: kuma/wiki/forms.py:407
+msgid "New slug:"
+msgstr ""
+
+#: kuma/wiki/forms.py:408
+msgid "New article URL"
+msgstr ""
+
+#: kuma/wiki/helpers.py:160
+#: kuma/wiki/helpers.py:161
+#: kuma/wiki/helpers.py:188
+#: kuma/wiki/helpers.py:189
+msgid "Revision %s"
+msgstr ""
+
+#: kuma/wiki/helpers.py:167
+msgid "There was an error generating the content."
+msgstr ""
+
+#: kuma/wiki/models.py:123
+msgid "Parent %s/%s does not exist."
+msgstr ""
+
+#: kuma/wiki/models.py:132
+msgid "Document Tag"
+msgstr ""
+
+#: kuma/wiki/models.py:133
+msgid "Document Tags"
+msgstr ""
+
+#: kuma/wiki/models.py:160
+msgid "Uncategorized"
+msgstr ""
+
+#: kuma/wiki/models.py:161
+msgid "Reference"
+msgstr ""
+
+#: kuma/wiki/models.py:731
+msgid "Please choose a category."
+msgstr ""
+
+#: kuma/wiki/models.py:1530
+msgid "Review Tag"
+msgstr ""
+
+#: kuma/wiki/models.py:1531
+msgid "Review Tags"
+msgstr ""
+
+#: kuma/wiki/models.py:1537
+msgid "Localization Tag"
+msgstr ""
+
+#: kuma/wiki/models.py:1538
+msgid "Localization Tags"
+msgstr ""
+
+#: kuma/wiki/models.py:1583
+msgid "No table of contents"
+msgstr ""
+
+#: kuma/wiki/models.py:1584
+msgid "All levels"
+msgstr ""
+
+#: kuma/wiki/models.py:1585
+msgid "H2 and higher"
+msgstr ""
+
+#: kuma/wiki/models.py:1586
+msgid "H3 and higher"
+msgstr ""
+
+#: kuma/wiki/models.py:1587
+msgid "H4 and higher"
+msgstr ""
+
+#: kuma/wiki/models.py:1689
+msgid ""
+"A revision must be based on a revision of the %(locale)s document. Revision "
+"ID %(id)s does not fit those criteria."
+msgstr ""
+
+#: kuma/wiki/views.py:510
+msgid "Redirected from %(url)s"
+msgstr ""
+
+#: kuma/wiki/views.py:640
+msgid "Unsupported content-type: %s"
+msgstr ""
+
+#: kuma/wiki/views.py:646
+msgid "Request parsing error: %s"
+msgstr ""
+
+#: kuma/wiki/views.py:666
+msgid "ETag precondition failed"
+msgstr ""
+
+#: kuma/wiki/views.py:1025
+msgid "Sections may only be edited inline."
+msgstr ""
+
+#: kuma/wiki/views.py:1411
+msgid ""
+"Autosuggest requires a partial title. For a full document index, see the "
+"main page."
+msgstr ""
+
+#: kuma/wiki/views.py:1597
+msgid "You cannot translate this document."
+msgstr ""
+
+#: kuma/wiki/views.py:1921
+msgid "Glad to hear it &mdash; thanks for the feedback!"
+msgstr ""
+
+#: kuma/wiki/views.py:1923
+msgid "Sorry to hear that. Perhaps one of the solutions below can help."
+msgstr ""
+
+#: kuma/wiki/views.py:1933
+msgid "You already voted on this Article."
+msgstr ""
+
+#: kuma/wiki/views.py:2115
+msgid "Document has been edited; please re-review."
+msgstr ""
+
+#: kuma/wiki/views.py:2312
+msgid "%(obj_count)d object(s) loaded."
+msgstr ""
+
+#: kuma/wiki/views.py:2316
+msgid "Failed to import data: %(error)s"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/compare_revisions.html:4
+msgid "Compare Revisions | {document}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/compare_revisions.html:12
+msgid "Compare Revisions"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/compare_revisions.html:17
+msgid "Back to History"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:3
+msgid "Delete Document | {document}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:9
+msgid "Cannot delete pages with children until we fix this bug:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:17
+#: kuma/wiki/templates/wiki/confirm_revision_delete.html:11
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:15
+msgid "Creator"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:20
+msgid "Creation Date"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:23
+msgid "Last Change By"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:26
+msgid "Last Change Date"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:29
+msgid ""
+"You are about to delete this document and all of its revisions. Please let "
+"us know why this page should be deleted."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:36
+msgid "Are you sure you want to continue?"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_delete.html:2
+msgid "Delete Revision | {document}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_delete.html:9
+msgid "Are you sure you want to delete this revision?"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_delete.html:15
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:19
+msgid "Content"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_delete.html:20
+msgid ""
+"You are about to permanently delete this revision. <strong>This cannot be "
+"undone!</strong> Are you sure you want to continue?"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:2
+msgid "Revert Revision | {document}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:10
+msgid "Are you sure you want to revert to this revision?"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:12
+msgid "Document"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:27
+msgid "Why are you reverting to this revision?"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:30
+msgid ""
+"You are about to revert the document to this revision. Click \"revert\" to "
+"revert to the content&nbsp;above."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:33
+msgid "Revert"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/deletion_log.html:2
+#: kuma/wiki/templates/wiki/deletion_log.html:7
+msgid "Document Deleted"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/deletion_log.html:9
+msgid "This document was deleted on %(when)s."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/deletion_log.html:14
+msgid "Reason for Deletion"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/deletion_log.html:18
+msgid "Restore this document"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:82
+#: templates/includes/lang_switcher.html:2
+msgid "Other languages:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:93
+#: templates/includes/lang_switcher.html:15
+msgid "Go"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:162
+msgid "Previous Search Result"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:162
+#: kuma/wiki/templates/wiki/document.html:172
+msgid "No Previous Search Result"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:168
+msgid "Your Search Results"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:172
+msgid "Next Search Result"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:180
+msgid "Show all"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:180
+msgid "contributors"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:182
+msgid "by %(count)s contributor:"
+msgid_plural "by %(count)s contributors:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/wiki/templates/wiki/document.html:191
+msgid "View profile: %(username)s"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:214
+msgid "Show Sidebar"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:228
+msgid "In This Article"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:250
+msgid ""
+"This document is being rendered for the first time by the system. Please <a "
+"href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:258
+msgid ""
+"An update to this document <abbr title=\"%(started_at)s\">is currently in "
+"progress</abbr>. If the content below seems stale or if something is "
+"missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:267
+msgid ""
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been "
+"scheduled</abbr>. If the content below seems stale or if something is "
+"missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:283
+msgid "This article is in need of a technical review."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:288
+msgid "This article is in need of an editorial review."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:294
+msgid ""
+"This translation is incomplete. Please help <a href=\"%"
+"(translate_url)s\">translate this article</a> from English."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:299
+msgid "This translation is in progress."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:306
+msgid ""
+"Our volunteers haven't translated this article into %(locale)s yet. <a "
+"href=\"%(help_link)s\">Join us and help get the job done!</a>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:317
+msgid "This article doesn't have any content yet."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:320
+msgid ""
+"Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use "
+"%(title)s</a> to see example use cases and how many pages use this macro."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:333
+msgid "This article doesn't have approved content yet."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:341
+msgid "Document Tags and Contributors"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:350
+msgid ""
+"<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-"
+"group\"></i><strong>Contributors to this page:</strong> %(contributors)s "
+"</div>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:357
+msgid "Last updated by:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document.html:372
+msgid "Hide Sidebar"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document_revisions.html:2
+msgid "Revision History | {document}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document_revisions.html:14
+msgid "History of"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document_revisions.html:17
+msgid "Revision history for:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document_revisions.html:42
+#: kuma/wiki/templates/wiki/document_revisions.html:78
+msgid "Compare Selected Translations"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document_revisions.html:42
+#: kuma/wiki/templates/wiki/document_revisions.html:78
+msgid "Compare Selected Revisions"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document_revisions.html:70
+#: kuma/wiki/templates/wiki/revision.html:69
+msgid "Revert to this revision"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/document_revisions.html:83
+msgid "This document has no revisions."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:25
+msgid ""
+"Please review the differences between your changes and the changes saved "
+"since you started editing. You may save again, but try to resolve any "
+"conflicts by hand so that the changes made since you started are not lost."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:35
+msgid "Your Changes"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:36
+#: kuma/wiki/templates/wiki/edit_document.html:44
+#: kuma/wiki/templates/wiki/includes/document_macros.html:174
+#: kuma/wiki/templates/wiki/includes/document_macros.html:186
+msgid "Revision {id} by {user} on {date}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:41
+msgid "Current Revision:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:72
+msgid "Search results summary:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:89
+msgid "<span class=\"title-prefix\">Editing</span> <em>{title}</em>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:92
+msgid "Edit Page Title and Properties"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:94
+msgid ""
+"Draft <span id=\"draft-action\"></span> <time id=\"draft-time\" class=\"timeago\" "
+"title=\"\"></time>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:113
+msgid "Rendering max age:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:115
+msgid "Days"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:119
+msgid "Hours"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:123
+msgid "Minutes"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:132
+msgid ""
+"Find the translation source with the lookup below and then click \"Save "
+"Changes.\""
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:134
+#: kuma/wiki/templates/wiki/includes/translate_description.html:62
+msgid "Lookup:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:148
+msgid "Thank you for taking the time to improve MDN!"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:150
+msgid ""
+"It looks like this is your first contribution to MDN. You can find answers "
+"to common editing questions within our <a target=\"_blank\" href=\"%"
+"(url)s\">Editor Guide</a>."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:154
+msgid "Don't be afraid to break something, you can always revert your changes."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:155
+msgid "Have fun and be proud of your contribution!"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:174
+msgid "Learn how to tag an article"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/edit_document.html:176
+#: kuma/wiki/templates/wiki/translate.html:115
+msgid ""
+"Categorize the article. It will make the article findable under the right "
+"filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the "
+"Tagging Guide</a>."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:2
+#: kuma/wiki/templates/wiki/list_documents_for_review.html:23
+msgid "Found {0} documents."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:6
+msgid "Articles tagged: {tag}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:8
+msgid "All templates"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:9
+msgid "Found {0} templates."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:11
+msgid "Documents with errors"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:13
+msgid "Top level documents"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:15
+msgid "Documents with no parent"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:17
+msgid "All documents"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:35
+msgid "Translation updates needed"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents.html:59
+#: kuma/wiki/templates/wiki/list_documents_for_review.html:32
+#: kuma/wiki/templates/wiki/list_documents_with_localization_tags.html:29
+msgid "There are no articles."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents_for_review.html:4
+msgid "Documents for {tag} review"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents_for_review.html:7
+msgid "Documents for review"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents_for_review.html:12
+msgid "Articles in Need of Review Tagged: {tag}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents_for_review.html:14
+msgid "All Articles in Need of Review"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents_with_localization_tags.html:3
+msgid "Localized articles tagged with: {tag}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents_with_localization_tags.html:5
+msgid "Articles tagged with any localization tags"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_documents_with_localization_tags.html:15
+msgid "Found %(count)s document."
+msgid_plural "Found %(count)s documents."
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/wiki/templates/wiki/list_tags.html:2
+msgid "All Tags"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/list_tags.html:18
+msgid "There are no tags."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:2
+msgid "Move Article | {document}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:16
+msgid "<span class=\"title-prefix\">Moving</span> <em>{title}</em>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:18
+msgid "Please provide a new slug for this page using the field below."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:22
+msgid "Your requested move cannot be completed due to slug conflicts:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:30
+msgid "Please choose a different slug value."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:45
+msgid "Current Slug:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:57
+msgid "Preview URL:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:65
+msgid "New Slug:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:72
+msgid "Lookup by Document Title"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:75
+msgid "Parent Title"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:83
+msgid "Move {d} Pages"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:83
+msgid "Move Page"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:88
+msgid "The following {d} subpages will be affected by this move:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_document.html:95
+msgid "No other documents will be affected by this change."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_requested.html:2
+msgid "Page move requested"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/move_requested.html:9
+msgid ""
+"<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%"
+"(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it "
+"finishes, or if any errors occur during the move.</p>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/new_document.html:5
+msgid "Create a New {title}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/new_document.html:30
+msgid "New Document"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/new_document.html:39
+msgid "URL segment that identifies the page"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/preview.html:13
+msgid "This is a preview of an unsaved document."
+msgstr ""
+
+#. {n} is the revision number, {t} is the title of the document. {c} is the category.
+#: kuma/wiki/templates/wiki/revision.html:3
+msgid "Revision {n} | {t} | {c}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/revision.html:11
+msgid "Revision"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/revision.html:11
+msgid "of"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/revision.html:14
+msgid "Revision Information"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/revision.html:56
+msgid "Revision Content"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/revision.html:63
+msgid "Revision Source"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/select_locale.html:2
+msgid "Select language | {document}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/select_locale.html:9
+msgid "Select a language to translate to:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/sphinx.html:32
+msgid ""
+"Content is available under a license specific to this project. &middot; <a "
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/sphinx.html:43
+msgid ""
+"&copy; 2005-2013 Mozilla Developer Network and individual contributors<br /> "
+"Content is available under a license specific to this project. &middot; <a "
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:7
+msgid "Translate Article | {document}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:31
+msgid "<span class=\"title-prefix\">Translating</span> <em>{title}</em>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:35
+msgid "Translating article to {locale}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:45
+msgid "Translate Content"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:86
+msgid "Approved {locale} version"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:88
+msgid "View Rendered"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:88
+msgid "View Source"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:89
+msgid "Show {locale}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:89
+msgid "Hide {locale}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:102
+msgid "{locale} translation:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:112
+msgid "Translate Tags"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:121
+msgid "English tags"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:133
+msgid "This document has no tags."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:140
+msgid "{locale} tags"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:147
+msgid "Version Notes"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/translate.html:149
+msgid "Localization flags"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/email/edited.ltxt:4
+msgid "%(creator)s changed %(document_title)s."
+msgstr ""
+
+#. This is in an email.
+#: kuma/wiki/templates/wiki/email/edited.ltxt:13
+msgid "View User Profile:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/email/edited.ltxt:18
+msgid "Compare on MDN:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/email/edited.ltxt:23
+msgid "View Article:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/email/edited.ltxt:27
+msgid "Edit Article:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/email/edited.ltxt:31
+msgid "Article History:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:2
+msgid "breadcrumbs"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:25
+msgid "Languages"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:35
+msgid "No translations exist for this article."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:39
+msgid "Add a translation"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:53
+msgid "Updating subscription status"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:56
+#: kuma/wiki/templates/wiki/includes/document_macros.html:57
+msgid "Subscribe to this article"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:56
+#: kuma/wiki/templates/wiki/includes/document_macros.html:57
+msgid "Unsubscribe from this article"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:56
+msgid "You are now subscribed to this article."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:56
+msgid "You have been unsubscribed from this article."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:65
+#: kuma/wiki/templates/wiki/includes/document_macros.html:66
+msgid "Subscribe to {language} version"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:65
+#: kuma/wiki/templates/wiki/includes/document_macros.html:66
+msgid "Unsubscribe from {language} version"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:65
+msgid "You are now subscribed to the {language} version of this article."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:65
+msgid "You have been unsubscribed from the {language} version of this article."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:73
+msgid "New sub-page"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:74
+msgid "Clone this page"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:77
+msgid "Move this page"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:80
+msgid "View in admin"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:88
+msgid "Delete this page"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:93
+msgid "Manage access policy"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:95
+msgid "Manage access policies"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:97
+msgid "Add access policy"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:102
+msgid "Manage content zone"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:105
+msgid "Convert to content zone"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:107
+msgid "Print this page"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:124
+msgid "See also"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:133
+msgid "The following reviews have been requested:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:141
+msgid "Technical"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:147
+msgid "Editorial"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:152
+msgid "Review completed"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:162
+msgid "Change Revisions"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:170
+#: kuma/wiki/templates/wiki/includes/document_macros.html:182
+msgid "Revision {num}:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
+#: kuma/wiki/templates/wiki/includes/translate_description.html:50
+msgid "Generate table of contents"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
+#: kuma/wiki/templates/wiki/includes/translate_description.html:50
+msgid "TOC:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:3
+msgid ""
+"There was a scripting error on this page. While it is being addressed by "
+"site editors, you can view partial content below."
+msgid_plural ""
+"There were scripting errors on this page. While those are being addressed by "
+"site editors, you can view partial content below."
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:11
+msgid "Hide error information"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:12
+msgid "More information about this error"
+msgid_plural "More information about these errors"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:19
+msgid ""
+"Anyone with an MDN profile can edit a document to fix an error. Use the <a "
+"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
+"troubleshooting guide</a> as a starting point."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
+msgid "Error type:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:40
+msgid "In macro:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:44
+msgid "Create Template"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:47
+msgid "Edit Template"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+msgid "Parsing macro:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+msgid "Edit Document"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:54
+msgid "Full text of error:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/more_help.html:4
+msgid "Couldn't find what you were looking for?"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/more_help.html:7
+msgid "Browse other articles about <a href=\"{url}\">{category}</a>"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/more_help.html:10
+msgid "Ask our awesome support community for help"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/more_help.html:13
+msgid "Or try searching:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/page_buttons.html:16
+msgid "New Page"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/page_buttons.html:17
+msgid "Discard changes and create a new document?"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/page_buttons.html:23
+msgid "Save and Keep Editing"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/page_buttons.html:31
+msgid "Preview Changes"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/review_tags.html:3
+msgid "Review needed?"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/revision_comment.html:2
+msgid "Revision Comment"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/revision_comment.html:2
+msgid "Learn how to use Revision Comments"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/revision_comment.html:3
+msgid ""
+"Tell us why you made additions and changes. It is optional, but will make "
+"page history easier to understand."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/translate_description.html:6
+msgid "Translate Description"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/translate_description.html:15
+msgid "Title in {locale}:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/translate_description.html:26
+msgid "Slug in {locale}:"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/translate_description.html:66
+msgid ""
+"Find the translation source with the lookup above and then click \"Save "
+"Changes."
+msgstr ""
+
+#: templates/403.html:5
+#: templates/403.html:19
+#: templates/handlers/400.html:5
+msgid "Permission Denied"
+msgstr ""
+
+#: templates/403.html:22
+msgid "The wiki is in read-only mode."
+msgstr ""
+
+#: templates/403.html:24
+msgid "Your profile has been banned from making edits."
+msgstr ""
+
+#: templates/403.html:26
+msgid "This user's profile has been banned."
+msgstr ""
+
+#: templates/403.html:28
+msgid "You must sign in to view all history"
+msgstr ""
+
+#: templates/403.html:34
+#: templates/handlers/400.html:21
+msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
+msgstr ""
+
+#: templates/403.html:38
+#: templates/handlers/400.html:25
+msgid "<p>We're sorry, we're afraid we can't do that.</p>"
+msgstr ""
+
+#: templates/403.html:45
+msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
+msgstr ""
+
+#: templates/403.html:49
+#: templates/handlers/400.html:36
+msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
+msgstr ""
+
+#: templates/403.html:53
+msgid ""
+"<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">browse "
+"docs</a></li>"
+msgstr ""
+
+#: templates/403.html:58
+msgid ""
+"<p class=\"attrib\"><small><a "
+"href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
+"rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a "
+"href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
+msgstr ""
+
+#: templates/404.html:6
+msgid "Not Found"
+msgstr ""
+
+#: templates/404.html:20
+msgid "We're sorry, we couldn't find what you were looking for."
+msgstr ""
+
+#: templates/404.html:24
+msgid ""
+"You can try a search or start over on the <a href=\"%(homepage_url)s\">home "
+"page</a>."
+msgstr ""
+
+#: templates/404.html:28
+msgid ""
+"If you were following a documentation link, you can sign in and create the "
+"page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a "
+"bug</a>. Thanks!"
+msgstr ""
+
+#: templates/404.html:36
+msgid ""
+"<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of "
+"<a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
+msgstr ""
+
+#: templates/500.html:5
+msgid "Internal Server Error"
+msgstr ""
+
+#: templates/base.html:87
+msgid "Skip to main content"
+msgstr ""
+
+#: templates/base.html:88
+msgid "Select language"
+msgstr ""
+
+#: templates/base.html:90
+msgid "Skip to search"
+msgstr ""
+
+#: templates/base.html:119
+#: templates/includes/login.html:22
+msgid "Persona"
+msgstr ""
+
+#: templates/base.html:123
+msgid "Web Platform"
+msgstr ""
+
+#: templates/base.html:127
+msgid "Technologies"
+msgstr ""
+
+#: templates/base.html:132
+msgid "Graphics"
+msgstr ""
+
+#: templates/base.html:133
+msgid "APIs / DOM"
+msgstr ""
+
+#: templates/base.html:134
+msgid "Apps"
+msgstr ""
+
+#: templates/base.html:135
+msgid "MathML"
+msgstr ""
+
+#: templates/base.html:138
+msgid "References & Guides"
+msgstr ""
+
+#: templates/base.html:140
+msgid "Tutorials"
+msgstr ""
+
+#: templates/base.html:141
+msgid "References"
+msgstr ""
+
+#: templates/base.html:142
+msgid "Developer Guides"
+msgstr ""
+
+#: templates/base.html:143
+msgid "Accessibility"
+msgstr ""
+
+#: templates/base.html:145
+msgid "...more docs"
+msgstr ""
+
+#: templates/base.html:149
+msgid "Tools"
+msgstr ""
+
+#: templates/base.html:170
+msgid ""
+"<bdi>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual "
+"contributors<br /> Content is available under <a href=\"%"
+"(copyright_url)s\">these licenses</a> &middot; <a href=\"%(about_url)s\">About "
+"MDN</a> &middot; <a "
+"href=\"//www.mozilla.org/about/legal/terms/mozilla\">Terms</a> &middot; <a "
+"href=\"//www.mozilla.org/privacy/websites/\">Privacy</a> &middot; <a "
+"href=\"//www.mozilla.org/privacy/websites/#cookies\">Cookies</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Contribute to the code</a></bdi>"
+msgstr ""
+
+#: templates/badger/award_delete.html:19
+msgid "Badges: Delete Award"
+msgstr ""
+
+#: templates/badger/award_delete.html:26
+msgid "Delete this award"
+msgstr ""
+
+#: templates/badger/award_detail.html:19
+#: templates/badger/badge_detail.html:13
+msgid "{title} (JSON)"
+msgstr ""
+
+#: templates/badger/award_detail.html:44
+msgid "Badge award:"
+msgstr ""
+
+#: templates/badger/award_detail.html:51
+msgid "Add this to your Mozilla&nbsp;Badge&nbsp;Backpack"
+msgstr ""
+
+#: templates/badger/awards_by_badge.html:7
+#: templates/badger/awards_by_user.html:7
+#: templates/badger/badge_detail.html:10
+msgid "Recent awards"
+msgstr ""
+
+#: templates/badger/awards_by_badge.html:12
+#: templates/badger/awards_list.html:13
+msgid "Badges:"
+msgstr ""
+
+#: templates/badger/awards_by_badge.html:12
+msgid "Awards for {title}"
+msgstr ""
+
+#: templates/badger/awards_by_badge.html:20
+msgid "Awards"
+msgstr ""
+
+#: templates/badger/awards_by_user.html:12
+msgid "Awards for {user}"
+msgstr ""
+
+#: templates/badger/awards_list.html:7
+msgid "Recent badge awards"
+msgstr ""
+
+#: templates/badger/awards_list.html:15
+msgid "Awards for {badge}"
+msgstr ""
+
+#: templates/badger/awards_list.html:17
+msgid "All awards"
+msgstr ""
+
+#: templates/badger/badge_detail.html:33
+msgid "Badge:"
+msgstr ""
+
+#: templates/badger/badge_detail.html:55
+msgid "Recent awardees"
+msgstr ""
+
+#: templates/badger/badge_detail.html:57
+msgid "More..."
+msgstr ""
+
+#: templates/badger/badges_list.html:9
+msgid "Badges tagged <a href=\"\" class=\"tag\">%(tag_name)s</a>"
+msgstr ""
+
+#: templates/badger/badges_list.html:11
+msgid "Badges matching \"{query_string}\""
+msgstr ""
+
+#: templates/badger/badges_list.html:13
+msgid "All Badges"
+msgstr ""
+
+#: templates/badger/badges_list.html:19
+msgid "Recent awards for these badges"
+msgstr ""
+
+#: templates/badger/includes/award_as_badge.html:4
+msgid "Award details"
+msgstr ""
+
+#: templates/badger/includes/award_full.html:5
+msgid "Awarded to"
+msgstr ""
+
+#: templates/badger/includes/award_full.html:9
+msgid "(That's you!)"
+msgstr ""
+
+#: templates/badger/includes/award_full.html:15
+msgid "Awarded by"
+msgstr ""
+
+#: templates/badger/includes/awards_list.html:7
+msgid ""
+"<span class=\"badge_title\">%(title)s</span> <span class=\"relation\">awarded "
+"to</span> <span class=\"user\">%(user)s</span>"
+msgstr ""
+
+#: templates/badger/includes/badge_full.html:7
+msgid "Image:"
+msgstr ""
+
+#: templates/badger/includes/badge_full.html:10
+msgid "Description:"
+msgstr ""
+
+#: templates/badger/includes/badge_full.html:28
+msgid "Modified:"
+msgstr ""
+
+#: templates/badger/includes/recent_badge_awards.html:13
+msgid "You've earned a badge!"
+msgstr ""
+
+#: templates/handlers/400.html:32
+msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
+msgstr ""
+
+#: templates/handlers/400.html:40
+msgid ""
+"<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
+msgstr ""
+
+#: templates/includes/common_macros.html:18
+msgid "Search Firefox Help"
+msgstr ""
+
+#: templates/includes/common_macros.html:36
+msgid "Welcome, <span class=\"user\">{user}</span>."
+msgstr ""
+
+#: templates/includes/common_macros.html:38
+msgid "Profile"
+msgstr ""
+
+#: templates/includes/common_macros.html:44
+msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
+msgstr ""
+
+#: templates/includes/common_macros.html:73
+msgid ""
+"Subscribe for periodic news about Firefox OS, Firefox Marketplace and the "
+"Open Web apps ecosystem."
+msgstr ""
+
+#: templates/includes/common_macros.html:102
+msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
+msgstr ""
+
+#: templates/includes/login.html:6
+msgid "Sign out"
+msgstr ""
+
+#: templates/includes/login.html:19
+msgid "Sign in with"
+msgstr ""
+
+#: templates/includes/login.html:20
+msgid "Sign in"
+msgstr ""
+
+#: templates/includes/unsubscribe_text.ltxt:3
+msgid "Unsubscribe from these emails:"
+msgstr ""
+
+#: templates/teamwork/user_roles.html:5
+msgid "Manage Roles | {user}"
+msgstr ""
+
+#: templates/teamwork/user_roles.html:40
+msgid "There are no roles you can manage for this user."
+msgstr ""
+
+#: templates/tidings/unsubscribe.html:2
+#: templates/tidings/unsubscribe.html:12
+#: templates/tidings/unsubscribe_error.html:2
+#: templates/tidings/unsubscribe_success.html:2
+msgid "Unsubscribe"
+msgstr ""
+
+#: templates/tidings/unsubscribe.html:7
+msgid "Are you sure you want to unsubscribe?"
+msgstr ""
+
+#: templates/tidings/unsubscribe_error.html:7
+msgid "Unsubscribe Error"
+msgstr ""
+
+#: templates/tidings/unsubscribe_error.html:10
+msgid ""
+"We could not find your subscription. Either it has already been cancelled, "
+"or there was a mistake in the unsubscribe link. Please make sure the entire "
+"link from the email made it into the browser. If the last part of the link "
+"wraps onto a second line in the email, try copying and pasting the link into "
+"the browser."
+msgstr ""
+
+#: templates/tidings/unsubscribe_success.html:7
+msgid "Unsubscribed"
+msgstr ""
+
+#: templates/tidings/unsubscribe_success.html:9
+msgid "You have been unsubscribed."
+msgstr ""

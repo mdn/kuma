@@ -1,0 +1,176 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: promote-mdn\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
+"POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ga\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 1.9.0\n"
+
+#: promote-mdn.php:190
+msgid "Reloaded values from the URL."
+msgstr "Athluchtaíodh luachanna ón URL."
+
+#: promote-mdn.php:208
+msgid "Plugin settings saved."
+msgstr "Sábháladh socruithe an bhreiseáin."
+
+#: promote-mdn.php:245
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr "Is Bosca Uirlisí d'Fhorbróirí Gréasáin é MDN, áit a bhfaighidh tú doiciméadú, taispeántais, agus acmhainní eile a bhaineann le HTML, CSS, JavaScript, caighdeáin Ghréasáin agus teicneolaíochtaí oscailte eile."
+
+#: promote-mdn.php:248
+msgid ""
+"MDN is the best online resource - for web developers, by web developers."
+msgstr "Is é MDN an acmhainn ar líne is fearr - déanta ag forbróirí Gréasáin ar son forbróirí Gréasáin."
+
+#: promote-mdn.php:249
+msgid ""
+"Promote MDN automatically links keywords and phrases in your posts and pages "
+"to MDN URLs."
+msgstr "Déanann Promote MDN nascanna idir eochairfhocail agus frásaí i do chuid postálacha agus leathanaigh agus doiciméadú MDN go huathoibríoch."
+
+#: promote-mdn.php:256
+msgid "Settings"
+msgstr "Socruithe"
+
+#: promote-mdn.php:257
+msgid "Load keywords from URL"
+msgstr "Luchtaigh eochairfhocail ó URL"
+
+#: promote-mdn.php:257
+msgid "Preview"
+msgstr "Réamhamharc"
+
+#: promote-mdn.php:258
+msgid "Use keywords and links specifically for %s"
+msgstr "Úsáid eochairfhocail agus nascanna a bhaineann go háirithe le %s"
+
+#: promote-mdn.php:259
+msgid "Reload keywords after (seconds):"
+msgstr "Athluchtaigh eochairfhocail tar éis (soicindí):"
+
+#: promote-mdn.php:260
+msgid "Reload now"
+msgstr "Athluchtaigh anois"
+
+#: promote-mdn.php:262
+msgid "Add links to RSS feeds"
+msgstr "Cuir nascanna le fothaí RSS"
+
+#: promote-mdn.php:263
+msgid "Open links in new window"
+msgstr "Oscail nascanna i bhfuinneog nua"
+
+#: promote-mdn.php:266
+msgid "Exceptions"
+msgstr "Eisceachtaí"
+
+#: promote-mdn.php:267
+msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+msgstr "Ná cuir nascanna le clibeanna ceanntáisc (h1,h2,h3,h4,h5,h6)."
+
+#: promote-mdn.php:268
+msgid ""
+"Do not add links to the following posts or pages (comma-separated id, slug, "
+"name):"
+msgstr "Ná cuir nascanna leis na postálacha nó leathanaigh seo a leanas (aitheantas, sluga, ainm, scartha ag camóga):"
+
+#: promote-mdn.php:270
+msgid "Do not add links on the following phrases (comma-separated):"
+msgstr "Ná cuir nascanna leis na frásaí seo a leanas (scartha ag camóga):"
+
+#: promote-mdn.php:274
+msgid "Limits"
+msgstr "Teorainneacha"
+
+#: promote-mdn.php:275
+msgid "Max links to generate per post:"
+msgstr "Líon is mó nascanna i bpostáil amháin:"
+
+#: promote-mdn.php:276
+msgid "Max links to generate for a single keyword/phrase:"
+msgstr "Líon is mó nascanna ó eochairfhocal/fhrása amháin:"
+
+#: promote-mdn.php:277
+msgid "Max links to generate for a single URL:"
+msgstr "Líon is mó nascanna le URL amháin:"
+
+#: promote-mdn.php:280
+msgid "Custom Keywords"
+msgstr "Eochairfhocail Shaincheaptha"
+
+#: promote-mdn.php:281
+msgid ""
+"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
+"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr "Eochairfhocail sa bhreis a ndéanfar nascanna astu i gcónaí. Úsáid camóga idir eochairfhocail agus cuir an sprioc-URL ag an deireadh. Cuir gach URL nua agus na heochairfhocail a bhaineann leis ar líne nua.  Mar shampla,"
+
+#: promote-mdn.php:288
+msgid ""
+"Note: These keywords will take priority over those loaded at the URL. If you "
+"have too many custom keywords here, you may not link to MDN at all."
+msgstr "Nod: Úsáidfear na heochairfhocail seo roimh na cinn atá luchtaithe ag an URL. Má tá an iomarca eochairfhocal saincheaptha anseo, seans nach ndéanfaidh tú nasc le MDN ar chor ar bith."
+
+#: promote-mdn.php:289
+msgid "Update options"
+msgstr "Nuashonraigh roghanna"
+
+#: promote-mdn.php:312
+msgid ""
+"Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
+"configure."
+msgstr "Go raibh maith agat as Promote MDN a shuiteáil! Féach ar na <a href=\"%s\">socruithe</a> chun cumraíocht a dhéanamh."
+
+#: promote-mdn.php:313
+msgid ""
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
+"\">setting</a> for a locale-specific URL for keywords."
+msgstr "An leagan Fraincise, <a href=\"%s\">giuirléid</a> nua don bharra taoibh, <a href=\"%s\">socrú</a> do URLanna atá dírithe ar theanga ar leith."
+
+#. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
+msgid "Promote MDN"
+msgstr "Promote MDN"
+
+#: promote-mdn.php:352
+msgid "hide"
+msgstr "folaigh"
+
+#: promote-mdn.php:376
+msgid "Sidebar image and links to MDN."
+msgstr "Íomhá agus nascanna le MDN sa mbarra taoibh."
+
+#: promote-mdn.php:390
+msgid "Help Promote MDN!"
+msgstr "Cabhraigh Linn MDN a Chur Chun Cinn!"
+
+#: promote-mdn.php:391
+msgid "Get the WordPress plugin"
+msgstr "Faigh an breiseán WordPress"
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/groovecoder/wp-promote-mdn"
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
+
+#. Description of the plugin/theme
+msgid "Promote MDN automatically links keywords phrases to MDN docs"
+msgstr "Déanann Promote MDN nascanna idir eochairfhocail agus frásaí agus doiciméadú MDN go huathoibríoch"
+
+#. Author of the plugin/theme
+msgid "Luke Crouch"
+msgstr "Luke Crouch"
+
+#. Author URI of the plugin/theme
+msgid "http://groovecoder.com"
+msgstr "http://groovecoder.com"
