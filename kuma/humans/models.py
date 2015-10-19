@@ -1,7 +1,7 @@
 from __future__ import with_statement
+
 import json
 import os
-import subprocess
 import urllib
 
 from django.conf import settings
@@ -20,14 +20,11 @@ class HumansTXT(object):
 
     def generate_file(self):
         githubbers = self.get_github(json.load(urllib.urlopen(GITHUB_REPOS)))
-        localizers = self.get_mdn()
         path = os.path.join(settings.HUMANSTXT_ROOT, "humans.txt")
 
         with open(path, 'w') as target:
             self.write_to_file(githubbers, target,
                                "Contributors on GitHub", "Developer")
-            self.write_to_file(localizers, target,
-                               "Localization Contributors", "Localizer")
 
     def write_to_file(self, humans, target, message, role):
         target.write("%s \n" % message)
@@ -59,18 +56,3 @@ class HumansTXT(object):
             name = name.split('@')[0]
 
         return name
-
-    def get_mdn(self):
-        p = subprocess.Popen(
-            "svn log --quiet http://svn.mozilla.org/projects/\
-            mdn/trunk/locale/ | grep '^r' | awk '{print $3}' | sort | uniq",
-            shell=True, stdout=subprocess.PIPE)
-        localizers_list = p.communicate()[0].rstrip().split('\n', -1)
-
-        humans = []
-        for localizer in localizers_list:
-            human = Human()
-            human.name = self.split_name(localizer)
-            humans.append(human)
-
-        return humans
