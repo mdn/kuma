@@ -361,14 +361,14 @@
                   {% if has_contributors %}
                     {% trans contributors_list=contributor_links(contributors) %}
                     <div class="contributors-sub">
-                      <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors_list }}
+                      <i aria-hidden="true" class="icon-group icon-fw"></i>&nbsp;<strong>Contributors to this page:</strong> {{ contributors_list }}
                     </div>
                     {% endtrans %}
                   {% endif %}
 
                   {% if current_revision.creator %}
                     <div class="contributors-sub">
-                      <i aria-hidden="true" class="icon-clock-o"></i><strong>{{ _('Last updated by:') }}</strong>
+                      <i aria-hidden="true" class="icon-clock-o icon-fw"></i>&nbsp;<strong>{{ _('Last updated by:') }}</strong>
                       <a href="{{ current_revision.creator.get_absolute_url() }}">{{ current_revision.creator }}</a>,
                       {{ datetimeformat(current_revision.created, format='datetime') }}
                     </div>
