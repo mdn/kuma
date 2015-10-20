@@ -12,5 +12,5 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('search', async=True) }}
+    {% javascript 'search' %}
 {% endblock %}

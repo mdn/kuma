@@ -5,7 +5,7 @@
 {% block bodyclass %}section-demos devderby landing derby-closed{% endblock %}
 
 {% block extrahead %}
-    {{ css('devderby') }}
+    {% stylesheet 'devderby' %}
 {% endblock %}
 
 {% block title %}{{ page_title(_('Dev Derby')) }}{% endblock %}
@@ -67,5 +67,5 @@
 {% endblock %}
 
 {% block js %}
-    {{ js('demostudio_devderby_landing') }}
+    {% javascript 'demostudio_devderby_landing' %}
 {% endblock %}

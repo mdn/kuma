@@ -1,11 +1,9 @@
 <!-- Production ready CKEditor scripts -->
-<script src="{{ static('js/libs/ckeditor/build/ckeditor/ckeditor.js') }}?build={{ BUILD_ID_JS }}"></script>
-<script src="{{ static('js/libs/ckeditor/build/ckeditor/adapters/jquery.js') }}?build={{ BUILD_ID_JS }}"></script>
+{% javascript 'ckeditor-prod' %}
 
-{#
 <!-- Development version -->
-<script src="{{ static('js/libs/ckeditor/source/ckeditor/ckeditor.js') }}?build={{ BUILD_ID_JS }}"></script>
-<script src="{{ static('js/libs/ckeditor/source/ckeditor/adapters/jquery.js') }}?build={{ BUILD_ID_JS }}"></script>
+{#
+{% javascript 'ckeditor-dev' %}
 #}
 <script>
   // Define the path to non-core plugins.

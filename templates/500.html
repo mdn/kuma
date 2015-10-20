@@ -44,5 +44,5 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('framebuster') }}
+    {% javascript 'framebuster' %}
 {% endblock %}
