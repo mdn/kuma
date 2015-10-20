@@ -3,19 +3,21 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-15 05:54-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2015-10-20 17:24+0000\n"
+"Last-Translator: Matjaž <m@owca.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: my\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.6.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 2.5.0\n"
+"X-POOTLE-MTIME: 1445361882.0\n"
 
 #: kuma/actioncounters/models.py:47
 #: kuma/contentflagging/models.py:112
 msgid "object ID"
-msgstr ""
+msgstr "TEST"
 
 #: kuma/actioncounters/models.py:49
 msgid "name of the action"
@@ -1530,25 +1532,21 @@ msgstr ""
 msgid "year"
 msgid_plural "years"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:270
 msgid "month"
 msgid_plural "months"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:271
 msgid "week"
 msgid_plural "weeks"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:272
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:280
 msgid "%(number)d %(type)s"
@@ -1558,43 +1556,36 @@ msgstr ""
 msgid "%(number)d year ago"
 msgid_plural "%(number)d years ago"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:361
 msgid "%(number)d month ago"
 msgid_plural "%(number)d months ago"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:363
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:365
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:367
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:369
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/helpers.py:371
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/models.py:201
 msgid "Please keep filesize under %s. Current filesize %s"
@@ -1918,33 +1909,28 @@ msgstr ""
 msgid "This demo has been viewed {count} time"
 msgid_plural "This demo has been viewed {count} times"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:166
 msgid "{count} view"
 msgid_plural "{count} views"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:167
 #: kuma/demos/templates/demos/elements/submission_thumb.html:22
 msgid "{count} person liked this demo"
 msgid_plural "{count} people liked this demo"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:167
 msgid "{count} like"
 msgid_plural "{count} likes"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:168
 #: kuma/demos/templates/demos/elements/submission_thumb.html:23
 msgid "There is {count} comment for this demo"
 msgid_plural "There are {count} comments for this demo"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:168
 msgid "{comment_count} comments"
@@ -1978,7 +1964,6 @@ msgstr ""
 msgid "{comments_total} comment so far"
 msgid_plural "{comments_total} comments so far"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:224
 msgid "<p>Why not <a href=\"#comment-post\">Add your own</a>?</p>"
@@ -2505,7 +2490,6 @@ msgstr ""
 msgid "{count} Demo"
 msgid_plural "{count} Demos"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:9
 msgid "Sort demos by most recent likes and views"
@@ -3120,7 +3104,6 @@ msgstr ""
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:77
 msgid ""
@@ -3130,13 +3113,11 @@ msgid_plural ""
 "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %"
 "(default_locale_native)s."
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:85
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:91
 msgid ""
@@ -3145,19 +3126,16 @@ msgid_plural ""
 "%(count)s documents found in %(locale_native)s and %"
 "(default_locale_native)s."
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:101
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:107
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:116
 msgid "Showing all results."
@@ -3698,7 +3676,6 @@ msgid_plural ""
 "persona-login\" data-next=\"%(persona_next_url)s\">Yes, connect with my MDN "
 "profile</a>"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/users/templates/socialaccount/signup.html:55
 msgid ""
@@ -4668,7 +4645,6 @@ msgstr ""
 msgid "by %(count)s contributor:"
 msgid_plural "by %(count)s contributors:"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/wiki/templates/wiki/document.html:197
 msgid "View profile: %(username)s"
@@ -4957,7 +4933,6 @@ msgstr ""
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/wiki/templates/wiki/list_tags.html:2
 msgid "All Tags"
@@ -5344,7 +5319,6 @@ msgid_plural ""
 "There were scripting errors on this page. While those are being addressed by "
 "site editors, you can view partial content below."
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -5354,7 +5328,6 @@ msgstr ""
 msgid "More information about this error"
 msgid_plural "More information about these errors"
 msgstr[0] ""
-msgstr[1] ""
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:19
 msgid ""
