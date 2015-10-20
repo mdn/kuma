@@ -1,0 +1,133 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: developer.mozilla.com\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-promote-mdn\n"
+"POT-Creation-Date: 2012-08-14 05:49:22+00:00\n"
+"PO-Revision-Date: 2015-05-28 11:15+0100\n"
+"Last-Translator: Matjaz Horvat <matjaz.horvat@gmail.com>\n"
+"Language-Team: Slovenian\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#: promote-mdn.php:210
+msgid "Reloaded values from the URL."
+msgstr "Reloaded values from the URL."
+
+#: promote-mdn.php:227
+msgid "Plugin settings saved."
+msgstr "Plugin settings saved."
+
+#: promote-mdn.php:263
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+
+#: promote-mdn.php:266
+msgid ""
+"MDN is the best online resource - for web developers, by web developers."
+msgstr ""
+"MDN is the best online resource - for web developers, by web developers."
+
+#: promote-mdn.php:267
+msgid ""
+"Promote MDN automatically links keywords and phrases in your posts and pages "
+"to MDN URLs."
+msgstr ""
+"Promote MDN automatically links keywords and phrases in your posts and pages "
+"to MDN URLs."
+
+#: promote-mdn.php:274
+msgid "Settings"
+msgstr "Settings"
+
+#: promote-mdn.php:275
+msgid "Load keywords from URL"
+msgstr "Load keywords from URL"
+
+#: promote-mdn.php:275
+msgid "Preview"
+msgstr "Preview"
+
+#: promote-mdn.php:277
+msgid "Reload keywords after (seconds):"
+msgstr "Reload keywords after (seconds):"
+
+#: promote-mdn.php:278
+msgid "Reload now"
+msgstr "Reload now"
+
+#: promote-mdn.php:280
+msgid "Add links to RSS feeds"
+msgstr "Add links to RSS feeds"
+
+#: promote-mdn.php:281
+msgid "Open links in new window"
+msgstr "Open links in new window"
+
+#: promote-mdn.php:284
+msgid "Exceptions"
+msgstr "Exceptions"
+
+#: promote-mdn.php:285
+msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+msgstr "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+
+#: promote-mdn.php:286
+msgid ""
+"Do not add links to the following posts or pages (comma-separated id, slug, "
+"name):"
+msgstr ""
+"Do not add links to the following posts or pages (comma-separated id, slug, "
+"name):"
+
+#: promote-mdn.php:288
+msgid "Do not add links on the following phrases (comma-separated):"
+msgstr "Do not add links on the following phrases (comma-separated):"
+
+#: promote-mdn.php:292
+msgid "Limits"
+msgstr "Limits"
+
+#: promote-mdn.php:293
+msgid "Max links to generate per post:"
+msgstr "Max links to generate per post:"
+
+#: promote-mdn.php:294
+msgid "Max links to generate for a single keyword/phrase:"
+msgstr "Max links to generate for a single keyword/phrase:"
+
+#: promote-mdn.php:295
+msgid "Max links to generate for a single URL:"
+msgstr "Max links to generate for a single URL:"
+
+#: promote-mdn.php:298
+msgid "Custom Keywords"
+msgstr "Custom Keywords"
+
+#: promote-mdn.php:299
+msgid ""
+"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
+"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr ""
+"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
+"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+
+#: promote-mdn.php:306
+msgid ""
+"Note: These keywords will take priority over those loaded at the URL. If you "
+"have too many custom keywords here, you may not link to MDN at all."
+msgstr ""
+"Note: These keywords will take priority over those loaded at the URL. If you "
+"have too many custom keywords here, you may not link to MDN at all."
+
+#: promote-mdn.php:307
+msgid "Update options"
+msgstr "Update options"

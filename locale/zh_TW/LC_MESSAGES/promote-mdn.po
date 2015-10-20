@@ -1,0 +1,178 @@
+# Copyright (C) 2012 Promote MDN
+# This file is distributed under the same license as the Promote MDN package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
+"POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
+"PO-Revision-Date: 2015-02-02 21:46+0000\n"
+"Last-Translator: Peter <petercpg@mail.moztw.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 2.5.0\n"
+"X-POOTLE-MTIME: 1422913563.0\n"
+
+#: promote-mdn.php:190
+msgid "Reloaded values from the URL."
+msgstr "已自網址中重新載入數值。"
+
+#: promote-mdn.php:208
+msgid "Plugin settings saved."
+msgstr "已儲存外掛程式設定。"
+
+#: promote-mdn.php:245
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr "MDN 是您的網頁開發工具箱，裡面有 HTML、CSS、JavaScript 與其他網頁標準與開放技術的文件與 Demo。"
+
+#: promote-mdn.php:248
+msgid ""
+"MDN is the best online resource - for web developers, by web developers."
+msgstr "MDN 是最佳的線上支援 - 由網頁開發者所撰寫，供網頁開發者所用。"
+
+#: promote-mdn.php:249
+msgid ""
+"Promote MDN automatically links keywords and phrases in your posts and pages "
+"to MDN URLs."
+msgstr "Promote MDN 將會自動在您的文章與網頁中尋找關鍵字與詞彙，並為其加上 MDN 文件鏈結。"
+
+#: promote-mdn.php:256
+msgid "Settings"
+msgstr "設定"
+
+#: promote-mdn.php:257
+msgid "Load keywords from URL"
+msgstr "自網址中載入關鍵字"
+
+#: promote-mdn.php:257
+msgid "Preview"
+msgstr "預覽"
+
+#: promote-mdn.php:258
+msgid "Use keywords and links specifically for %s"
+msgstr "針對 %s 請使用關鍵字與連結"
+
+#: promote-mdn.php:259
+msgid "Reload keywords after (seconds):"
+msgstr "在幾秒後重新載入關鍵字:"
+
+#: promote-mdn.php:260
+msgid "Reload now"
+msgstr "立刻重新載入"
+
+#: promote-mdn.php:262
+msgid "Add links to RSS feeds"
+msgstr "將鏈結加入 RSS 資訊來源"
+
+#: promote-mdn.php:263
+msgid "Open links in new window"
+msgstr "在新視窗中開啟鏈結"
+
+#: promote-mdn.php:266
+msgid "Exceptions"
+msgstr "例外"
+
+#: promote-mdn.php:267
+msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+msgstr "不要為標題標籤 (h1,h2,h3,h4,h5,h6) 加上鏈結。"
+
+#: promote-mdn.php:268
+msgid ""
+"Do not add links to the following posts or pages (comma-separated id, slug, "
+"name):"
+msgstr "不要為下列的文章或頁面加上鏈結 (使用半形逗號分隔 id, 網址字串, 或網頁名稱):"
+
+#: promote-mdn.php:270
+msgid "Do not add links on the following phrases (comma-separated):"
+msgstr "不要為下列詞彙加上鏈結 (使用半形逗號分隔):"
+
+#: promote-mdn.php:274
+msgid "Limits"
+msgstr "限制"
+
+#: promote-mdn.php:275
+msgid "Max links to generate per post:"
+msgstr "每篇文章最多產生多少鏈結:"
+
+#: promote-mdn.php:276
+msgid "Max links to generate for a single keyword/phrase:"
+msgstr "單一詞彙/關鍵字最多產生多少鏈結:"
+
+#: promote-mdn.php:277
+msgid "Max links to generate for a single URL:"
+msgstr "單一網址最多產生多少鏈結:"
+
+#: promote-mdn.php:280
+msgid "Custom Keywords"
+msgstr "自訂關鍵字"
+
+#: promote-mdn.php:281
+msgid ""
+"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
+"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr "自動鏈結更多關鍵字。使用半型逗號分隔關鍵字與目標網址；每組關鍵字間請使用新的一行分隔。例如:"
+
+#: promote-mdn.php:288
+msgid ""
+"Note: These keywords will take priority over those loaded at the URL. If you "
+"have too many custom keywords here, you may not link to MDN at all."
+msgstr "這些關鍵字會有比網址更高的優先權。若您在此設定了太多的自訂關鍵字，您可能無法鏈結到 MDN。"
+
+#: promote-mdn.php:289
+msgid "Update options"
+msgstr "更新選項"
+
+#: promote-mdn.php:312
+msgid ""
+"Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
+"configure."
+msgstr "感謝您的安裝! 您可以到<a href=\"%s\">設定</a>頁面進行調整。"
+
+#: promote-mdn.php:313
+msgid ""
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
+"\">setting</a> for a locale-specific URL for keywords."
+msgstr "法文翻譯、新的側邊欄 <a href=\"%s\">小工具</a>、對應語系關鍵字網址的 <a href=\"%s\">設定</a>。"
+
+#. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
+msgid "Promote MDN"
+msgstr "Promote MDN"
+
+#: promote-mdn.php:352
+msgid "hide"
+msgstr "隱藏"
+
+#: promote-mdn.php:376
+msgid "Sidebar image and links to MDN."
+msgstr "側邊欄圖片與 MDN 的連結。"
+
+#: promote-mdn.php:390
+msgid "Help Promote MDN!"
+msgstr "來幫忙推廣 MDN 吧！"
+
+#: promote-mdn.php:391
+msgid "Get the WordPress plugin"
+msgstr "取得 WordPress 外掛"
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/groovecoder/wp-promote-mdn"
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
+
+#. Description of the plugin/theme
+msgid "Promote MDN automatically links keywords phrases to MDN docs"
+msgstr "Promote MDN 自動將關鍵字連結到 MDN 的文件"
+
+#. Author of the plugin/theme
+msgid "Luke Crouch"
+msgstr "Luke Crouch"
+
+#. Author URI of the plugin/theme
+msgid "http://groovecoder.com"
+msgstr "http://groovecoder.com"

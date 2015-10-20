@@ -30,7 +30,6 @@ def update_code(ctx, tag):
 @task
 def update_locales(ctx):
     with ctx.lcd(os.path.join(settings.SRC_DIR, 'locale')):
-        ctx.local("svn up")
         ctx.local("./compile-mo.sh .")
 
 
@@ -92,10 +91,6 @@ def update_info(ctx):
         ctx.local("git status")
         ctx.local("git submodule status")
         ctx.local("python2.7 ./manage.py migrate --list")
-        with ctx.lcd("locale"):
-            ctx.local("svn info")
-            ctx.local("svn status")
-
         ctx.local("git rev-parse HEAD > media/revision.txt")
 
 

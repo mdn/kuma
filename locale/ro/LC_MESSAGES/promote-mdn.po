@@ -1,0 +1,202 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
+"POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
+"PO-Revision-Date: 2015-08-14 10:04+0000\n"
+"Last-Translator: Jobava <jobaval10n@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);;\n"
+"X-Generator: Pootle 2.5.0\n"
+"X-POOTLE-MTIME: 1439546650.0\n"
+
+#: promote-mdn.php:190
+msgid "Reloaded values from the URL."
+msgstr "Valori reîncărcate din URL."
+
+#: promote-mdn.php:208
+msgid "Plugin settings saved."
+msgstr "Setări suplimente salvate."
+
+#: promote-mdn.php:245
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+"MDN este „cutia cu unelte” pentru dezvoltare web pentru documente, demo-uri "
+"și multe altele despre HTML, CSS, JavaScript și alte standarde Web și "
+"tehnologii deschise."
+
+#: promote-mdn.php:248
+msgid ""
+"MDN is the best online resource - for web developers, by web developers."
+msgstr ""
+"MDN este cea mai bună resursă online - făcut pentru dezvoltatori web, de "
+"către dezvoltatori web."
+
+#: promote-mdn.php:249
+msgid ""
+"Promote MDN automatically links keywords and phrases in your posts and pages "
+"to MDN URLs."
+msgstr ""
+"Promovare MDN creează în mod automat hyperlegături pentru cuvinte cheie și "
+"fraze din postări și pagini la URL-uri MDN."
+
+#: promote-mdn.php:256
+msgid "Settings"
+msgstr "Setări"
+
+#: promote-mdn.php:257
+msgid "Load keywords from URL"
+msgstr "Încarcă cuvinte cheie din URL"
+
+#: promote-mdn.php:257
+msgid "Preview"
+msgstr "Previzualizare"
+
+#: promote-mdn.php:258
+msgid "Use keywords and links specifically for %s"
+msgstr "Folosește cuvinte cheie și legături în mod special pentru %s"
+
+#: promote-mdn.php:259
+msgid "Reload keywords after (seconds):"
+msgstr "Reîncarcă cuvintele cheie după (secunde):"
+
+#: promote-mdn.php:260
+msgid "Reload now"
+msgstr "Reîncarcă acum"
+
+#: promote-mdn.php:262
+msgid "Add links to RSS feeds"
+msgstr "Adaugă legături la feed-uri RSS"
+
+#: promote-mdn.php:263
+msgid "Open links in new window"
+msgstr "Deschide legăturile într-o nouă fereastră"
+
+#: promote-mdn.php:266
+msgid "Exceptions"
+msgstr "Excepții"
+
+#: promote-mdn.php:267
+msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+msgstr "Nu adăuga legături în tagurile heading (h1,h2,h3,h4,h5,h6)."
+
+#: promote-mdn.php:268
+msgid ""
+"Do not add links to the following posts or pages (comma-separated id, slug, "
+"name):"
+msgstr ""
+"Nu adăuga legături la următoarele postări sau pagini (id separat prin "
+"virgule, slug, nume):"
+
+#: promote-mdn.php:270
+msgid "Do not add links on the following phrases (comma-separated):"
+msgstr "Nu adăuga legături pentru următoarele fraze (separate prin virgule):"
+
+#: promote-mdn.php:274
+msgid "Limits"
+msgstr "Limite"
+
+#: promote-mdn.php:275
+msgid "Max links to generate per post:"
+msgstr "Număr maxim de legături de generat per post:"
+
+#: promote-mdn.php:276
+msgid "Max links to generate for a single keyword/phrase:"
+msgstr "Număr maxim de legături pentru un cuvânt sau frază cheie:"
+
+#: promote-mdn.php:277
+msgid "Max links to generate for a single URL:"
+msgstr "Număr maxim de legături pentru un singur URL:"
+
+#: promote-mdn.php:280
+msgid "Custom Keywords"
+msgstr "Cuvinte cheie particularizate"
+
+#: promote-mdn.php:281
+msgid ""
+"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
+"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr ""
+"Cuvintele cheie pentru crearea automată de legături. Folosiți virgula pentru "
+"a separa cuvinte cheie și pentru a adăuga url-ul țintă la sfârșit. Folosiți "
+"câte o linie nouă pentru url-ul nou și mai multe cuvinte cheie. De ex.,"
+
+#: promote-mdn.php:288
+msgid ""
+"Note: These keywords will take priority over those loaded at the URL. If you "
+"have too many custom keywords here, you may not link to MDN at all."
+msgstr ""
+"Notă: aceste cuvinte cheie vor fi considerate în mod prioritar față de cele "
+"încărcate din URL. Dacă aveți prea multe cuvinte cheie particularizate nu le "
+"puteți lega de MDN deloc."
+
+#: promote-mdn.php:289
+msgid "Update options"
+msgstr "Opțiuni de actualizare"
+
+#: promote-mdn.php:312
+msgid ""
+"Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
+"configure."
+msgstr ""
+"Mulțumim pentru instalare! Mergeți la <a href=\"%s\">setări</a> pentru a "
+"configura."
+
+#: promote-mdn.php:313
+msgid ""
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
+"\">setting</a> for a locale-specific URL for keywords."
+msgstr ""
+"Traducere în franceză, noul <a href=\"%s\">control</a> bară laterală, <a "
+"href=\"%s\">setări</a> pentru cuvinte cheie particularizate într-o limbă "
+"specifică."
+
+#. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
+msgid "Promote MDN"
+msgstr "Promovare MDN"
+
+#: promote-mdn.php:352
+msgid "hide"
+msgstr "ascunde"
+
+#: promote-mdn.php:376
+msgid "Sidebar image and links to MDN."
+msgstr "Imaginea din bara laterală și legături la MDN."
+
+#: promote-mdn.php:390
+msgid "Help Promote MDN!"
+msgstr "Ajută la promovarea MDN!"
+
+# aici se referă la plugin de wordpress, nu „modul” pentru un produs Mozilla
+#: promote-mdn.php:391
+msgid "Get the WordPress plugin"
+msgstr "Obțineți pluginul WordPress"
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/groovecoder/wp-promote-mdn"
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
+
+#. Description of the plugin/theme
+msgid "Promote MDN automatically links keywords phrases to MDN docs"
+msgstr ""
+"Promovare MDN creează automat hyperlegături pentru fraze cheie la documente "
+"MDN"
+
+#. Author of the plugin/theme
+msgid "Luke Crouch"
+msgstr "Luke Crouch"
+
+#. Author URI of the plugin/theme
+msgid "http://groovecoder.com"
+msgstr "http://groovecoder.com"

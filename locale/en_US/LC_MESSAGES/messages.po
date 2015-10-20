@@ -1,0 +1,3485 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MDN\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Raul Malea <raul.malea@gmail.com>\n"
+"Language-Team: Romanian Contributors <raul.malea@gmail.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Romanian\n"
+"X-Poedit-Country: ROMANIA\n"
+
+#: apps/landing/templates/landing/mobile.html:158
+msgid ""
+"\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
+"that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+msgstr ""
+"\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
+"that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+
+#: apps/landing/templates/landing/web.html:93
+msgid "\"An absolute necessity for anyone doing serious web development. Awesome!!!!\""
+msgstr "\"An absolute necessity for anyone doing serious web development. Awesome!!!!\""
+
+#: apps/docs/templates/docs/docs.html:53
+msgid "\"Asynchronous JavaScript and XML\" is a term that describes the use of all these technologies together to create powerful web applications."
+msgstr "\"Asynchronous JavaScript and XML\" is a term that describes the use of all these technologies together to create powerful web applications."
+
+#: apps/landing/templates/landing/mobile.html:150
+msgid "\"HTML5 is Great for Mobile, Developers Say\""
+msgstr "\"HTML5 is Great for Mobile, Developers Say\""
+
+#: apps/landing/templates/sidebar/twitter.html:9
+msgid "%(author)s from %(section)s says:"
+msgstr "%(author)s from %(section)s says:"
+
+#: apps/landing/templates/landing/discussions.html:6
+msgid "%(authorlink)s wrote %(summary)s"
+msgstr "%(authorlink)s wrote %(summary)s"
+
+#: apps/demos/helpers.py:237
+msgid "%(number)d %(type)s"
+msgstr "%(number)d %(type)s"
+
+#: apps/demos/helpers.py:311
+msgid "%(number)d day ago"
+msgid_plural "%(number)d days ago"
+msgstr[0] "%(number)d day ago"
+msgstr[1] "%(number)d days ago"
+
+#: apps/demos/helpers.py:313
+msgid "%(number)d hour ago"
+msgid_plural "%(number)d hours ago"
+msgstr[0] "%(number)d hour ago"
+msgstr[1] "%(number)d hours ago"
+
+#: apps/demos/helpers.py:315
+msgid "%(number)d minute ago"
+msgid_plural "%(number)d minutes ago"
+msgstr[0] "%(number)d minute ago"
+msgstr[1] "%(number)d minutes ago"
+
+#: apps/demos/helpers.py:307
+msgid "%(number)d month ago"
+msgid_plural "%(number)d months ago"
+msgstr[0] "%(number)d month ago"
+msgstr[1] "%(number)d months ago"
+
+#: apps/demos/helpers.py:317
+msgid "%(number)d second ago"
+msgid_plural "%(number)d seconds ago"
+msgstr[0] "%(number)d second ago"
+msgstr[1] "%(number)d seconds ago"
+
+#: apps/demos/helpers.py:309
+msgid "%(number)d week ago"
+msgid_plural "%(number)d weeks ago"
+msgstr[0] "%(number)d week ago"
+msgstr[1] "%(number)d weeks ago"
+
+#: apps/demos/helpers.py:305
+msgid "%(number)d year ago"
+msgid_plural "%(number)d years ago"
+msgstr[0] "%(number)d year ago"
+msgstr[1] "%(number)d years ago"
+
+#: apps/demos/feeds.py:199
+msgid "%s's MDN demos"
+msgstr "%s's MDN demos"
+
+#: apps/docs/views.py:33
+msgid "(multiple)"
+msgstr "(multiple)"
+
+#: apps/landing/templates/landing/learn_css.html:114
+#, fuzzy
+msgid "/En/CSS/Using_CSS_transforms"
+msgstr "/en/CSS/Using_CSS_transforms"
+
+#: apps/landing/templates/landing/learn_html.html:61
+#, fuzzy
+msgid "/HTML/Element"
+msgstr "/en/HTML/Element/canvas"
+
+#: templates/base.html:108
+msgid "/Project:Copyrights"
+msgstr "/Project:Copyrights"
+
+#: templates/base.html:111
+msgid "/Project:en/About"
+msgstr "/Project:en/About"
+
+#: apps/docs/templates/docs/docs.html:52 apps/docs/templates/docs/glossary.html:11
+#, fuzzy
+msgid "/en/AJAX"
+msgstr "AJAX"
+
+#: apps/landing/templates/landing/learn_javascript.html:66
+msgid "/en/A_re-introduction_to_JavaScript"
+msgstr "/en/A_re-introduction_to_JavaScript"
+
+#: apps/docs/templates/docs/docs.html:44 apps/docs/templates/docs/glossary.html:5 apps/landing/templates/landing/home.html:197 apps/landing/templates/landing/web.html:73
+#, fuzzy
+msgid "/en/CSS"
+msgstr "CSS"
+
+#: apps/landing/templates/landing/learn_css.html:119
+#, fuzzy
+msgid "/en/CSS/CSS_transitions"
+msgstr "/en/CSS/Using_CSS_transforms"
+
+#: apps/docs/templates/docs/glossary.html:12
+#, fuzzy
+msgid "/en/CSS/Media_queries"
+msgstr "Media Queries"
+
+#: apps/docs/templates/docs/glossary.html:20
+msgid "/en/CSS/Using_CSS_transforms"
+msgstr "/en/CSS/Using_CSS_transforms"
+
+#: apps/landing/templates/landing/learn_css.html:73
+#, fuzzy
+msgid "/en/CSS_Reference"
+msgstr "CSS Reference"
+
+#: apps/landing/templates/landing/learn_html.html:97
+msgid "/en/Canvas_tutorial"
+msgstr "/en/Canvas_tutorial"
+
+#: apps/landing/templates/landing/learn_css.html:62
+msgid "/en/Common_CSS_Questions"
+msgstr "/en/Common_CSS_Questions"
+
+#: apps/docs/templates/docs/docs.html:93
+msgid "/en/Creating_OpenSearch_plugins_for_Firefox"
+msgstr "/en/Creating_OpenSearch_plugins_for_Firefox"
+
+#: apps/docs/templates/docs/docs.html:48 apps/docs/templates/docs/glossary.html:8 apps/landing/templates/landing/home.html:205 apps/landing/templates/landing/web.html:77
+#, fuzzy
+msgid "/en/DOM"
+msgstr "DOM"
+
+#: apps/docs/templates/docs/glossary.html:14
+#, fuzzy
+msgid "/en/DOM/Storage"
+msgstr "Web Storage"
+
+#: apps/landing/templates/landing/mozilla.html:71
+#, fuzzy
+msgid "/en/Debugging"
+msgstr "Debugging"
+
+#: apps/docs/templates/docs/docs.html:81
+#, fuzzy
+msgid "/en/Detecting_device_orientation"
+msgstr "Detecting device orientation"
+
+#: apps/landing/templates/landing/mozilla.html:43
+#, fuzzy
+msgid "/en/Developer_Guide"
+msgstr "Mozilla Developer Network"
+
+#: apps/docs/templates/docs/glossary.html:19
+msgid "/en/DragDrop/Drag_and_Drop"
+msgstr "/en/DragDrop/Drag_and_Drop"
+
+#: apps/docs/templates/docs/docs.html:89 apps/landing/templates/landing/addons.html:60
+#, fuzzy
+msgid "/en/Extensions"
+msgstr "Extensions"
+
+#: apps/landing/templates/landing/home.html:88 apps/landing/templates/landing/home.html:182
+#, fuzzy
+msgid "/en/Firefox_4_for_developers"
+msgstr "Firefox Mobile for developers"
+
+#: apps/docs/templates/docs/docs.html:32 apps/docs/templates/docs/glossary.html:4 apps/landing/templates/landing/home.html:193
+#, fuzzy
+msgid "/en/HTML"
+msgstr "HTML5"
+
+#: apps/docs/templates/docs/glossary.html:10
+msgid "/en/HTML/Element/canvas"
+msgstr "/en/HTML/Element/canvas"
+
+#: apps/docs/templates/docs/docs.html:36 apps/docs/templates/docs/glossary.html:7 apps/landing/templates/landing/home.html:88 apps/landing/templates/landing/home.html:94
+#: apps/landing/templates/landing/web.html:65
+msgid "/en/HTML/HTML5"
+msgstr "/en/HTML/HTML5"
+
+#: apps/docs/templates/docs/glossary.html:23
+#, fuzzy
+msgid "/en/IndexedDB"
+msgstr "IndexedDB"
+
+#: apps/landing/templates/landing/learn_javascript.html:85
+msgid "/en/Introduction_to_Object-Oriented_JavaScript"
+msgstr "/en/Introduction_to_Object-Oriented_JavaScript"
+
+#: apps/docs/templates/docs/docs.html:40 apps/docs/templates/docs/glossary.html:6 apps/landing/templates/landing/home.html:201 apps/landing/templates/landing/web.html:69
+#, fuzzy
+msgid "/en/JavaScript"
+msgstr "JavaScript"
+
+#: apps/landing/templates/landing/learn_javascript.html:30
+#, fuzzy
+msgid "/en/JavaScript/Getting_Started"
+msgstr "JavaScript"
+
+#: apps/landing/templates/landing/learn_javascript.html:50
+#, fuzzy
+msgid "/en/JavaScript/Guide"
+msgstr "JavaScript"
+
+#: apps/docs/templates/docs/docs.html:101 apps/landing/templates/landing/home.html:166 apps/landing/templates/landing/mozilla.html:81
+#, fuzzy
+msgid "/en/Localization"
+msgstr "Localization"
+
+#: apps/docs/templates/docs/docs.html:80 apps/landing/templates/landing/home.html:148 apps/landing/templates/landing/mobile.html:88
+#, fuzzy
+msgid "/en/Mobile"
+msgstr "Mobile"
+
+#: apps/docs/templates/docs/docs.html:99 apps/landing/templates/landing/home.html:165 apps/landing/templates/landing/home.html:223
+#, fuzzy
+msgid "/en/Participating_in_the_Mozilla_project"
+msgstr "Participating in the Mozilla project"
+
+#: apps/docs/templates/docs/docs.html:90
+#, fuzzy
+msgid "/en/Plugins"
+msgstr "Plugins"
+
+#: apps/docs/templates/docs/docs.html:102 apps/landing/templates/landing/home.html:166
+msgid "/en/QA"
+msgstr "/en/QA"
+
+#: apps/docs/templates/docs/glossary.html:9
+#, fuzzy
+msgid "/en/SVG"
+msgstr "SVG"
+
+#: apps/docs/templates/docs/glossary.html:22
+#, fuzzy
+msgid "/en/Security"
+msgstr "Security"
+
+#: apps/landing/templates/landing/mozilla.html:52
+#, fuzzy
+msgid "/en/The_Mozilla_platform"
+msgstr "The Mozilla Platform"
+
+#: apps/docs/templates/docs/docs.html:92
+#, fuzzy
+msgid "/en/Themes"
+msgstr "Themes"
+
+#: apps/landing/templates/landing/learn_html.html:72
+msgid "/en/Tips_for_Authoring_Fast-loading_HTML_Pages"
+msgstr "/en/Tips_for_Authoring_Fast-loading_HTML_Pages"
+
+#: apps/landing/templates/landing/mozilla.html:92 apps/landing/templates/landing/mozilla.html:109
+msgid "/en/Tools"
+msgstr "/en/Tools"
+
+#: apps/docs/templates/docs/docs.html:100 apps/landing/templates/landing/mozilla.html:61
+#, fuzzy
+msgid "/en/Using_Mozilla_code_in_other_projects"
+msgstr "Using Mozilla code in other projects"
+
+#: apps/docs/templates/docs/glossary.html:15 apps/docs/templates/docs/glossary.html:16
+msgid "/en/Using_audio_and_video_in_Firefox"
+msgstr "/en/Using_audio_and_video_in_Firefox"
+
+#: apps/docs/templates/docs/glossary.html:18
+msgid "/en/Using_files_from_web_applications"
+msgstr "/en/Using_files_from_web_applications"
+
+#: apps/docs/templates/docs/docs.html:82 apps/landing/templates/landing/home.html:148 apps/landing/templates/landing/mobile.html:69
+#, fuzzy
+msgid "/en/Using_geolocation"
+msgstr "Using geolocation"
+
+#: apps/docs/templates/docs/glossary.html:21
+msgid "/en/Using_gradients"
+msgstr "/en/Using_gradients"
+
+#: apps/docs/templates/docs/glossary.html:17
+msgid "/en/Using_web_workers"
+msgstr "/en/Using_web_workers"
+
+#: apps/docs/templates/docs/glossary.html:13
+#, fuzzy
+msgid "/en/WebGL"
+msgstr "WebGL"
+
+#: apps/landing/templates/landing/web.html:81
+msgid "/en/Web_Development"
+msgstr "/en/Web_Development"
+
+#: apps/landing/templates/landing/home.html:217
+#, fuzzy
+msgid "/en/mobile"
+msgstr "Mobile"
+
+#: apps/landing/templates/landing/home.html:156
+msgid "<a href=\"%(builder_url)s\">Build your own add-ons</a> and discuss them with the <a href=\"%(dev_url)s\">add-on developer community</a>."
+msgstr "<a href=\"%(builder_url)s\">Build your own add-ons</a> and discuss them with the <a href=\"%(dev_url)s\">add-on developer community</a>."
+
+#: apps/demos/templates/demos/elements/comments_tree.html:9
+msgid "<cite class=\"author fn\">%(comment_profile_link)s</cite> said,"
+msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> said,"
+
+#: apps/landing/templates/landing/learn_css.html:141
+msgid ""
+"<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online peer "
+"study groups through <a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of "
+"Webcraft</a>. Share your discoveries, struggles, and victories with others who are learning the same things.</p>"
+msgstr ""
+"<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online peer "
+"study groups through <a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of "
+"Webcraft</a>. Share your discoveries, struggles, and victories with others who are learning the same things.</p>"
+
+#: apps/landing/templates/landing/learn_javascript.html:137
+msgid ""
+"<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free online "
+"peer study groups through <a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of "
+"Webcraft</a>. Share your discoveries, struggles, and victories with others who are learning the same things.</p>"
+msgstr ""
+"<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free online "
+"peer study groups through <a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of "
+"Webcraft</a>. Share your discoveries, struggles, and victories with others who are learning the same things.</p>"
+
+#: apps/landing/templates/landing/learn.html:47
+msgid ""
+"<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups through "
+"<a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. Share your "
+"discoveries, struggles, and victories with others who are learning the same things.</p>"
+msgstr ""
+"<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups through "
+"<a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. Share your "
+"discoveries, struggles, and victories with others who are learning the same things.</p>"
+
+#: apps/landing/templates/landing/learn_html.html:143
+#, fuzzy
+msgid ""
+"<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through <a href="
+"\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. Share your discoveries, "
+"struggles, and victories with others who are learning the same things.</p>"
+msgstr ""
+"<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through <a href="
+"\"http://p2pu.org/\">Peer-to-Peer Universitys<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. Share your discoveries, "
+"struggles, and victories with others who are learning the same things.</p>"
+
+#: templates/403.html:23
+msgid ""
+"<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Log in</a> to try again.</li> <li><a href=\"/Special:UserRegistration\">Register</a> to edit docs, submit demos, and post to forums.</"
+"li>"
+msgstr ""
+"<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Log in</a> to try again.</li> <li><a href=\"/Special:UserRegistration\">Register</a> to edit docs, submit demos, and post to forums.</"
+"li>"
+
+#: templates/403.html:28
+msgid "<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
+msgstr "<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
+
+#: templates/403.html:19
+msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
+msgstr "<li><a href=\"/logout\">Log out</a> to try again.</li>"
+
+#: apps/landing/templates/landing/learn_javascript.html:12
+msgid ""
+"<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and "
+"forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old hand, "
+"wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
+msgstr ""
+"<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and "
+"forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old hand, "
+"wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
+
+#: apps/landing/templates/landing/learn_css.html:12
+msgid ""
+"<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define "
+"the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just starting out, "
+"learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find helpful resources "
+"here.</p>"
+msgstr ""
+"<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define "
+"the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just starting out, "
+"learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find helpful resources "
+"here.</p>"
+
+#: apps/landing/templates/landing/learn_html.html:12
+#, fuzzy
+msgid ""
+"<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you "
+"learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at web "
+"development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
+msgstr ""
+"<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, its best if you "
+"learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at web "
+"development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
+
+#: apps/demos/templates/demos/detail.html:194
+msgid "<p><a href=\"/Special:UserRegistration\">Register</a> or <a href=\"/Special:UserLogin\">log in</a> to add your own.</p>"
+msgstr "<p><a href=\"/Special:UserRegistration\">Register</a> or <a href=\"/Special:UserLogin\">log in</a> to add your own.</p>"
+
+#: apps/landing/templates/landing/learn.html:33
+msgid ""
+"<p><strong>Cascading Style Sheets</strong> is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define the appearance and "
+"location of the HTML elements within the pages.</p>"
+msgstr ""
+"<p><strong>Cascading Style Sheets</strong> is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define the appearance and "
+"location of the HTML elements within the pages.</p>"
+
+#: apps/landing/templates/landing/learn.html:27
+#, fuzzy
+msgid "<p><strong>HyperText Markup Language</strong> is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you learn HTML.</p>"
+msgstr "<p><strong>HyperText Markup Language</strong> is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, its best if you learn HTML.</p>"
+
+#: apps/landing/templates/landing/learn.html:39
+msgid "<p><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and forms.</p>"
+msgstr "<p><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and forms.</p>"
+
+#: apps/demos/templates/demos/delete_comment.html:39
+msgid "<p>Are you sure that you would like to delete this comment?</p>"
+msgstr "<p>Are you sure that you would like to delete this comment?</p>"
+
+#: templates/403.html:9
+msgid "<p>I'm sorry %(name)s, I'm afraid I can't do that.</p>"
+msgstr "<p>I'm sorry %(name)s, I'm afraid I can't do that.</p>"
+
+#: templates/403.html:13
+msgid "<p>I'm sorry, I'm afraid I can't do that.</p>"
+msgstr "<p>I'm sorry, I'm afraid I can't do that.</p>"
+
+#: templates/403.html:32
+msgid ""
+"<p>No computer has ever made a mistake or distorted information. We are all, by any practical definition of the words, foolproof and incapable of error. So it can only be attributable to human "
+"error. If so, <a href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website\">file a bug</a> for my human operators.</p>"
+msgstr ""
+"<p>No computer has ever made a mistake or distorted information. We are all, by any practical definition of the words, foolproof and incapable of error. So it can only be attributable to human "
+"error. If so, <a href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website\">file a bug</a> for my human operators.</p>"
+
+#: apps/demos/templates/demos/submit.html:81
+msgid "<p>Tell us more about your demo, including the name, description and the technologies used. Please list the browsers you have tested it with.</p>"
+msgstr "<p>Tell us more about your demo, including the name, description and the technologies used. Please list the browsers you have tested it with.</p>"
+
+#: apps/landing/templates/landing/learn_html.html:150
+#, fuzzy
+msgid ""
+"<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great resource, "
+"please tell us about it in the <a href=\"/forums/viewforum.php?f=4\">Open Web Forum</a>. We want to share these resources with our international community, so we prefer ones that provide or allow "
+"translations, through an open content license such as a <a href=\"http://creativecommons.org/licenses/\">Creative Commons license</a>.</p>"
+msgstr ""
+"<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think weve omitted a great resource, "
+"please tell us about it in the <a href=\"/forums/viewforum.php?f=4&start=0\">Open Web Forum</a>. We want to share these resources with our international community, so we prefer ones that provide or "
+"allow translations, through an open content license such as a <a href=\"http://creativecommons.org/licenses/\">Creative Commons license</a>.</p>"
+
+#: apps/landing/templates/landing/learn.html:54 apps/landing/templates/landing/learn_css.html:148 apps/landing/templates/landing/learn_javascript.html:144
+msgid ""
+"<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great resource, "
+"please tell us about it in the <a href=\"https://developer.mozilla.org/forums/viewforum.php?f=4\">Open Web Forum</a>. We want to share these resources with our international community, so we prefer "
+"ones that provide or allow translations, through an open content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+msgstr ""
+"<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great resource, "
+"please tell us about it in the <a href=\"https://developer.mozilla.org/forums/viewforum.php?f=4\">Open Web Forum</a>. We want to share these resources with our international community, so we prefer "
+"ones that provide or allow translations, through an open content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+
+#: apps/demos/templates/demos/submit_noauth.html:65
+msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN account</a></strong>.</p>"
+msgstr "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN account</a></strong>.</p>"
+
+#: apps/demos/templates/demos/submit.html:139
+#, fuzzy
+msgid "<p>Upload a ZIP file of your source code, in which the main page of your demo is named <code>index.html</code> in the root directory.</p>"
+msgstr "<p>Upload a Zip file of your source code, in which the main page of your demo is named <code>index.html</code> in the root directory.</p>"
+
+#: apps/landing/templates/landing/learn.html:11
+#, fuzzy
+msgid "<p>Want to learn to use the technologies that power the Web? <br>We've put together a great collection of resources to get you started.</p>"
+msgstr "<p>Want to learn to use the technologies that power the Web? <br>Weve put together a great collection of resources to get you started.</p>"
+
+#: apps/demos/templates/demos/home.html:23
+#, fuzzy
+msgid ""
+"<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> <li>View "
+"<strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
+"<strong>documentation</strong> to learn about the open standards and technologies that power the Web.</li> </ul>"
+msgstr ""
+"<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See whats possible by exploring Demo Studio:</p> <ul> <li>View "
+"<strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
+"<strong>documentation</strong> to learn about the open standards and technologies that power the Web.</li> </ul>"
+
+#: apps/demos/templates/demos/submit_noauth.html:32
+msgid ""
+"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
+"web developers.</p>"
+msgstr ""
+"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
+"web developers.</p>"
+
+#: apps/demos/templates/demos/submit.html:67
+msgid ""
+"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
+"web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+msgstr ""
+"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
+"web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+
+#: apps/demos/templates/demos/detail.html:190
+msgid "<p>Why not <a href=\"#comment-post\">Add your own</a>?</p>"
+msgstr "<p>Why not <a href=\"#comment-post\">Add your own</a>?</p>"
+
+#: apps/demos/templates/demos/delete.html:40
+msgid ""
+"<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
+"<strong>cannot be undone</strong>."
+msgstr ""
+"<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
+"<strong>cannot be undone</strong>."
+
+#: apps/demos/templates/demos/submit_noauth.html:41
+#, fuzzy
+msgid ""
+"<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
+"<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
+"range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+msgstr ""
+"<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studios servers.</li> <li>Your demos source code must be available under an "
+"<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
+"range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+
+#: apps/demos/templates/demos/submit_noauth.html:53
+#, fuzzy
+msgid ""
+"<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
+"root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
+"demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-"
+"SA license and include links to the authors' websites.</li> </ul>"
+msgstr ""
+"<ul> <li>Your demos source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
+"root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
+"demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-"
+"SA license and include links to the authors' websites.</li> </ul>"
+
+#: apps/demos/templates/demos/submit.html:125
+#, fuzzy
+msgid ""
+"<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
+"should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX "
+"to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
+"under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+msgstr ""
+"<ul> <li>Your demos source code should be packaged inside a Zip file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the Zip.</li> <li>Your demo "
+"should be built on client-side technology (HTML, CSS, Javascript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX "
+"to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
+"under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+
+#: apps/landing/templates/landing/learn_html.html:83 apps/landing/templates/landing/learn_html.html:93
+msgid "A List Apart"
+msgstr "A List Apart"
+
+#: apps/landing/templates/landing/mozilla.html:107
+msgid "A Mozilla source tree browser."
+msgstr "A Mozilla source tree browser."
+
+#: apps/landing/templates/landing/learn_javascript.html:66
+msgid "A Re-introduction to JavaScript"
+msgstr "A Re-introduction to JavaScript"
+
+#: apps/landing/templates/landing/learn_css.html:54
+#, fuzzy
+msgid "A brief beginner's guide to styling web pages with CSS."
+msgstr "A brief beginners guide to styling web pages with CSS."
+
+#: apps/landing/templates/landing/learn_javascript.html:72
+msgid "A comprehensive guide to intermediate and advanced JavaScript methodologies."
+msgstr "A comprehensive guide to intermediate and advanced JavaScript methodologies."
+
+#: apps/docs/templates/docs/docs.html:60
+msgid "A comprehensive list of terms to help Web developers find the documentation they need."
+msgstr "A comprehensive list of terms to help Web developers find the documentation they need."
+
+#: apps/landing/templates/landing/learn_html.html:63
+msgid "A comprehensive reference for HTML elements, and how Firefox and other browsers support them."
+msgstr "A comprehensive reference for HTML elements, and how Firefox and other browsers support them."
+
+#: apps/landing/templates/landing/learn_javascript.html:52
+msgid "A comprehensive, regularly updated guide to JavaScript for all levels of learning from beginner to advanced."
+msgstr "A comprehensive, regularly updated guide to JavaScript for all levels of learning from beginner to advanced."
+
+#: templates/base.html:49
+msgid "A comprehensive, usable, and accurate resource for everyone developing for the Open Web."
+msgstr "A comprehensive, usable, and accurate resource for everyone developing for the Open Web."
+
+#: apps/landing/templates/landing/web.html:70
+msgid "A great resource for anyone working with JS."
+msgstr "A great resource for anyone working with JS."
+
+#: apps/landing/templates/landing/learn_css.html:111
+msgid "A quick introduction to some of the core features introduced in CSS3."
+msgstr "A quick introduction to some of the core features introduced in CSS3."
+
+#: apps/landing/templates/landing/learn_javascript.html:68
+msgid "A recap of the JavaScript programming language aimed at intermediate-level developers."
+msgstr "A recap of the JavaScript programming language aimed at intermediate-level developers."
+
+#: apps/landing/templates/landing/learn_html.html:48
+msgid "A tutorial and exercises that take you through the basics."
+msgstr "A tutorial and exercises that take you through the basics."
+
+#: apps/docs/templates/docs/docs.html:52 apps/docs/templates/docs/glossary.html:11
+msgid "AJAX"
+msgstr "AJAX"
+
+#: apps/docs/templates/docs/docs.html:88
+msgid "AMO Developer Hub"
+msgstr "AMO Developer Hub"
+
+#: apps/landing/templates/landing/addons.html:56
+msgid "API & Language Reference"
+msgstr "API & Language Reference"
+
+#: templates/base.html:111
+msgid "About MDN"
+msgstr "About MDN"
+
+#: apps/landing/templates/landing/mobile.html:170
+msgid "Access Android APIs on this Android Developer page."
+msgstr "Access Android APIs on this Android Developer page."
+
+#: apps/demos/templates/demos/detail.html:211
+msgid "Add your comment"
+msgstr "Add your comment"
+
+#: apps/landing/templates/landing/addons.html:104
+msgid "Add-on Packager"
+msgstr "Add-on Packager"
+
+#: apps/landing/templates/landing/addons.html:108
+msgid "Add-on Validator"
+msgstr "Add-on Validator"
+
+#: apps/devmo/__init__.py:6 apps/docs/templates/docs/docs.html:70 apps/docs/templates/docs/docs.html:86 apps/landing/templates/landing/addons.html:11 apps/landing/templates/landing/addons.html:17
+#: apps/landing/templates/landing/home.html:154 templates/base.html:72 templates/base_compact.html:24
+msgid "Add-ons"
+msgstr "Add-ons"
+
+#: apps/docs/templates/docs/docs.html:91
+#, fuzzy
+msgid "Add-ons Builder"
+msgstr "Addons Builder Preview"
+
+#: apps/landing/templates/landing/addons.html:43
+#, fuzzy
+msgid "Add-ons Builder SDK Docs"
+msgstr "Addons Builder Preview"
+
+#: apps/landing/templates/landing/addons.html:100
+#, fuzzy
+msgid "Add-ons Builder [Preview]"
+msgstr "Addons Builder Preview"
+
+#: apps/landing/templates/landing/learn_css.html:52
+msgid "Adding a Touch of Style"
+msgstr "Adding a Touch of Style"
+
+#: apps/landing/templates/landing/home.html:49 apps/landing/templates/landing/home.html:115
+msgid "Addons Builder Preview"
+msgstr "Addons Builder Preview"
+
+#: apps/landing/templates/landing/learn_javascript.html:111
+#, fuzzy
+msgid "Advanced JavaScript"
+msgstr "JavaScript"
+
+#: apps/landing/templates/landing/learn_css.html:106 apps/landing/templates/landing/learn_html.html:69 apps/landing/templates/landing/learn_javascript.html:93
+msgid "Advanced Level"
+msgstr "Advanced Level"
+
+#: apps/landing/templates/landing/learn_javascript.html:124
+msgid "Advice on choosing a JavaScript framework."
+msgstr "Advice on choosing a JavaScript framework."
+
+#: apps/landing/templates/landing/addons.html:111
+msgid "All add-on development tools"
+msgstr "All add-on development tools"
+
+#: apps/landing/templates/landing/addons.html:68
+msgid "All add-ons development documentation"
+msgstr "All add-ons development documentation"
+
+#: apps/landing/templates/landing/addons.html:123
+msgid "All add-ons development entries"
+msgstr "All add-ons development entries"
+
+#: apps/landing/templates/landing/mozilla.html:121
+msgid "All application development entries"
+msgstr "All application development entries"
+
+#: apps/landing/templates/landing/mozilla.html:109
+msgid "All application development tools"
+msgstr "All application development tools"
+
+#: apps/landing/templates/landing/mozilla.html:92
+msgid "All applications development documentation"
+msgstr "All applications development documentation"
+
+#: apps/landing/templates/landing/mobile.html:88
+msgid "All mobile development documentation"
+msgstr "All mobile development documentation"
+
+#: apps/landing/templates/landing/mobile.html:186
+msgid "All mobile development entries"
+msgstr "All mobile development entries"
+
+#: apps/landing/templates/landing/web.html:81
+msgid "All web development documentation"
+msgstr "All web development documentation"
+
+#: apps/landing/templates/landing/web.html:119
+msgid "All web development entries"
+msgstr "All web development entries"
+
+#: apps/landing/templates/landing/web.html:107
+msgid "All web development tools"
+msgstr "All web development tools"
+
+#: apps/landing/templates/landing/home.html:22
+msgid "Already a member?"
+msgstr "Already a member?"
+
+#: apps/landing/templates/landing/learn_javascript.html:106
+msgid "An Inconvenient API: The Theory of the DOM"
+msgstr "An Inconvenient API: The Theory of the DOM"
+
+#: apps/landing/templates/landing/learn_javascript.html:77
+msgid "An introduction to essential JavaScript design patterns."
+msgstr "An introduction to essential JavaScript design patterns."
+
+#: apps/landing/templates/landing/mobile.html:168
+msgid "Android APIs"
+msgstr "Android APIs"
+
+#: apps/landing/templates/landing/web.html:105
+msgid "Another great Firefox/Firebug Add-on that helps you view and manage cookies in your browser."
+msgstr "Another great Firefox/Firebug Add-on that helps you view and manage cookies in your browser."
+
+#: apps/demos/__init__.py:286
+msgid "Apache"
+msgstr "Apache"
+
+#: apps/landing/templates/landing/learn_css.html:116
+msgid "Apply rotation, skewing, scaling, and translation using CSS."
+msgstr "Apply rotation, skewing, scaling, and translation using CSS."
+
+#: apps/landing/templates/landing/addons.html:20 apps/landing/templates/landing/mozilla.html:20
+msgid "Are you ready to make browsing better?"
+msgstr "Are you ready to make browsing better?"
+
+#: apps/landing/templates/landing/learn_html.html:103
+msgid "Articles about using HTML5 right now."
+msgstr "Articles about using HTML5 right now."
+
+#: apps/demos/__init__.py:56 apps/docs/templates/docs/glossary.html:15
+msgid "Audio"
+msgstr "Audio"
+
+#: apps/landing/templates/landing/home.html:45 apps/landing/templates/landing/home.html:55
+msgid "Aurora"
+msgstr "Aurora"
+
+#: apps/landing/templates/landing/addons.html:105
+msgid "Auto-generate add-on packaging by entering basic info and picking UI parts. Get working without setup."
+msgstr "Auto-generate add-on packaging by entering basic info and picking UI parts. Get working without setup."
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/web.html:38
+#, fuzzy
+msgid "Awesome <span class=\"web\">Web</span> Demos"
+msgstr "Key Topics for <a href=\"%(web_url)s\" class=\"web\">Web</a> Developers"
+
+#: apps/demos/__init__.py:280
+msgid "BSD"
+msgstr "BSD"
+
+#: apps/landing/templates/landing/learn_css.html:10 apps/landing/templates/landing/learn_html.html:10 apps/landing/templates/landing/learn_javascript.html:10
+msgid "Back to Home"
+msgstr "Back to Home"
+
+#: apps/landing/templates/landing/learn_html.html:36
+msgid "Basic Structure of a Web Page"
+msgstr "Basic Structure of a Web Page"
+
+#: apps/landing/templates/landing/learn_javascript.html:42
+msgid "Basic fundamentals of programming. Following articles introduce what you can do with JavaScript, best practices for using it, and more."
+msgstr "Basic fundamentals of programming. Following articles introduce what you can do with JavaScript, best practices for using it, and more."
+
+#: apps/landing/templates/landing/home.html:231
+msgid "Be Heard."
+msgstr "Be Heard."
+
+#: templates/includes/login.html:7
+msgid "Become an MDN member"
+msgstr "Become an MDN member"
+
+#: apps/demos/templates/demos/submit_noauth.html:40
+msgid "Before You Begin"
+msgstr "Before You Begin"
+
+#: apps/demos/templates/demos/listing_all.html:5 apps/demos/templates/demos/listing_all.html:19 apps/demos/templates/demos/listing_all.html:31
+msgid "Browse all demos"
+msgstr "Browse all demos"
+
+#: apps/demos/templates/demos/elements/tags_list.html:2
+msgid "Browse by Technology"
+msgstr "Browse by Technology"
+
+#: apps/landing/templates/landing/mozilla.html:102
+msgid "Bugzilla"
+msgstr "Bugzilla"
+
+#: apps/landing/templates/landing/addons.html:82
+msgid "Build Add-on in 5 Minutes"
+msgstr "Build Add-on in 5 Minutes"
+
+#: apps/landing/templates/landing/mobile.html:53
+msgid "Build Great Mobile Add-ons"
+msgstr "Build Great Mobile Add-ons"
+
+#: apps/demos/templates/demos/detail.html:125
+msgid "Built using"
+msgstr "Built using"
+
+#: apps/docs/templates/docs/docs.html:44 apps/docs/templates/docs/glossary.html:5 apps/landing/templates/landing/learn.html:32 apps/landing/templates/landing/web.html:73
+msgid "CSS"
+msgstr "CSS"
+
+#: apps/landing/templates/landing/learn_css.html:37
+#, fuzzy
+msgid "CSS Basics"
+msgstr "CSS Gradients"
+
+#: apps/landing/templates/landing/learn_css.html:78
+#, fuzzy
+msgid "CSS Challenges"
+msgstr "Save changes"
+
+#: apps/landing/templates/landing/learn_css.html:57
+msgid "CSS From the Ground Up"
+msgstr "CSS From the Ground Up"
+
+#: apps/landing/templates/landing/learn_css.html:32
+msgid "CSS Getting Started"
+msgstr "CSS Getting Started"
+
+#: apps/docs/templates/docs/glossary.html:21
+msgid "CSS Gradients"
+msgstr "CSS Gradients"
+
+#: apps/landing/templates/landing/learn_css.html:88
+msgid "CSS Positioning 101"
+msgstr "CSS Positioning 101"
+
+#: apps/landing/templates/landing/home.html:197 apps/landing/templates/landing/learn_css.html:73
+msgid "CSS Reference"
+msgstr "CSS Reference"
+
+#: apps/landing/templates/landing/learn_css.html:42
+msgid "CSS Selector Classes"
+msgstr "CSS Selector Classes"
+
+#: apps/docs/templates/docs/glossary.html:20
+msgid "CSS Transforms"
+msgstr "CSS Transforms"
+
+#: apps/landing/templates/landing/learn_css.html:119
+#, fuzzy
+msgid "CSS Transitions"
+msgstr "CSS Transforms"
+
+#: apps/landing/templates/landing/learn_css.html:121
+msgid "CSS transitions, part of the draft CSS3 specification, provide a way to animate changes to CSS properties, instead of having the changes take effect instantly."
+msgstr "CSS transitions, part of the draft CSS3 specification, provide a way to animate changes to CSS properties, instead of having the changes take effect instantly."
+
+#: apps/demos/__init__.py:76
+#, fuzzy
+msgid "CSS3"
+msgstr "CSS"
+
+#: apps/landing/templates/landing/learn_css.html:109
+msgid "CSS3 in Under 5 Minutes"
+msgstr "CSS3 in Under 5 Minutes"
+
+#: apps/demos/templates/demos/delete.html:49 apps/demos/templates/demos/delete_comment.html:52 apps/demos/templates/demos/flag.html:44
+msgid "Cancel"
+msgstr "Cancel"
+
+#: apps/demos/models.py:305
+msgid "Cannot process image"
+msgstr "Cannot process image"
+
+#: apps/demos/__init__.py:66 apps/docs/templates/docs/glossary.html:10
+msgid "Canvas"
+msgstr "Canvas"
+
+#: apps/landing/templates/landing/learn_html.html:97
+msgid "Canvas Tutorial"
+msgstr "Canvas Tutorial"
+
+#: apps/demos/__init__.py:77
+msgid ""
+"Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
+msgstr ""
+"Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
+
+#: apps/docs/templates/docs/docs.html:45
+msgid "Cascading Style Sheets provide advanced layout and formatting of web content."
+msgstr "Cascading Style Sheets provide advanced layout and formatting of web content."
+
+#: apps/landing/templates/landing/home.html:198
+msgid "Cascading Style Sheets."
+msgstr "Cascading Style Sheets."
+
+#: apps/landing/templates/landing/addons.html:64
+msgid "Case Studies"
+msgstr "Case Studies"
+
+#: apps/landing/templates/landing/addons.html:109
+msgid "Check your add-on for common problems and errors. Open to anyone, not just add-ons hosted here."
+msgstr "Check your add-on for common problems and errors. Open to anyone, not just add-ons hosted here."
+
+#: templates/includes/video_player.html:3
+msgid "Close"
+msgstr "Close"
+
+#: apps/demos/templates/demos/detail.html:213 apps/demos/templates/demos/elements/comments_tree.html:50
+#, fuzzy
+msgid "Comment"
+msgstr "Community"
+
+#: apps/landing/templates/landing/learn_css.html:62
+msgid "Common CSS Questions"
+msgstr "Common CSS Questions"
+
+#: apps/landing/templates/landing/learn_css.html:64
+msgid "Common questions and answers for beginners."
+msgstr "Common questions and answers for beginners."
+
+#: apps/landing/templates/landing/addons.html:61
+msgid "Complete documentation for developing extensions for Mozilla applications."
+msgstr "Complete documentation for developing extensions for Mozilla applications."
+
+#: apps/landing/templates/landing/learn_css.html:75
+msgid "Complete reference to CSS, with details on support by Firefox and other browsers."
+msgstr "Complete reference to CSS, with details on support by Firefox and other browsers."
+
+#: apps/contentflagging/models.py:31
+msgid "Content deleted by moderator"
+msgstr "Content deleted by moderator"
+
+#: apps/contentflagging/models.py:30
+msgid "Content hidden by moderator"
+msgstr "Content hidden by moderator"
+
+#: templates/base.html:108
+msgid "Content is available under <a href=\"%(copyright_url)s\">these licenses</a>"
+msgstr "Content is available under <a href=\"%(copyright_url)s\">these licenses</a>"
+
+#: apps/landing/templates/landing/addons.html:130
+msgid "Correspondence on Twitter from the Add-ons developer community."
+msgstr "Correspondence on Twitter from the Add-ons developer community."
+
+#: apps/landing/templates/landing/mobile.html:193
+msgid "Correspondence on Twitter from the Mobile developer community."
+msgstr "Correspondence on Twitter from the Mobile developer community."
+
+#: apps/landing/templates/landing/mozilla.html:128
+#, fuzzy
+msgid "Correspondence on Twitter from the Mozilla developer community."
+msgstr "Correspondence on Twitter from the Mobile developer community."
+
+#: apps/landing/templates/landing/web.html:126
+msgid "Correspondence on Twitter from the Web developer community."
+msgstr "Correspondence on Twitter from the Web developer community."
+
+#: apps/demos/templates/demos/submit_noauth.html:70
+msgid "Create an Account"
+msgstr "Create an Account"
+
+#: apps/landing/templates/landing/home.html:212
+msgid "Creating extensions, themes, and plug-ins for Firefox and Thunderbird."
+msgstr "Creating extensions, themes, and plug-ins for Firefox and Thunderbird."
+
+#: apps/contentflagging/models.py:29
+msgid "Creator notified"
+msgstr "Creator notified"
+
+#: apps/landing/templates/landing/home.html:23
+#, fuzzy
+msgid "Customize your profile & fine-tune your participation within MDN."
+msgstr "Customize your profile &amp; fine-tune your participation within MDN."
+
+#. DEVMO is the nickname for MDN.
+#: apps/landing/templates/landing/home.html:13
+msgid "DEVMO"
+msgstr "DEVMO"
+
+#: apps/docs/templates/docs/docs.html:48 apps/docs/templates/docs/glossary.html:8 apps/landing/templates/landing/home.html:205 apps/landing/templates/landing/web.html:77
+msgid "DOM"
+msgstr "DOM"
+
+#: apps/landing/templates/landing/mozilla.html:71
+msgid "Debugging"
+msgstr "Debugging"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:40
+msgid "Delete"
+msgstr "Delete"
+
+#: apps/demos/templates/demos/delete_comment.html:10 apps/demos/templates/demos/delete_comment.html:22
+msgid "Delete Comment"
+msgstr "Delete Comment"
+
+#: apps/demos/templates/demos/delete_comment.html:51
+msgid "Delete comment"
+msgstr "Delete comment"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:40
+msgid "Delete this comment"
+msgstr "Delete this comment"
+
+#: apps/demos/templates/demos/delete_comment.html:38
+msgid "Delete this comment?"
+msgstr "Delete this comment?"
+
+#: apps/demos/templates/demos/delete.html:21 apps/demos/templates/demos/delete_comment.html:21 apps/demos/templates/demos/detail.html:14 apps/demos/templates/demos/detail.html:25
+#: apps/demos/templates/demos/flag.html:21 apps/demos/templates/demos/home.html:14 apps/demos/templates/demos/launch.html:15 apps/demos/templates/demos/listing_all.html:18
+#: apps/demos/templates/demos/listing_search.html:24 apps/demos/templates/demos/listing_tag.html:19 apps/demos/templates/demos/profile_detail.html:23 apps/demos/templates/demos/submit.html:43
+#: apps/demos/templates/demos/submit_noauth.html:19 apps/landing/templates/landing/web.html:47
+#, fuzzy
+msgid "Demo Studio"
+msgstr "Case Studies"
+
+#: apps/demos/templates/demos/detail.html:264
+msgid "Demo is inappropriate"
+msgstr "Demo is inappropriate"
+
+#: apps/demos/templates/demos/detail.html:265
+msgid "Demo is not by this author"
+msgstr "Demo is not by this author"
+
+#: apps/demos/templates/demos/detail.html:263
+msgid "Demo is not working"
+msgstr "Demo is not working"
+
+#: apps/demos/templates/demos/base.html:4 apps/landing/templates/landing/base_learn.html:9 templates/base.html:78 templates/base_compact.html:18
+#, fuzzy
+msgid "Demos"
+msgstr "MDN demos"
+
+#: apps/demos/feeds.py:167
+msgid "Demos featured on MDN"
+msgstr "Demos featured on MDN"
+
+#: apps/demos/templates/demos/profile_detail.html:12
+msgid "Demos for {display_name}"
+msgstr "Demos for {display_name}"
+
+#: apps/landing/templates/landing/learn_html.html:119
+msgid "Demos from Mozilla developers and evangelists."
+msgstr "Demos from Mozilla developers and evangelists."
+
+#: apps/demos/feeds.py:155
+msgid "Demos recently submitted to MDN"
+msgstr "Demos recently submitted to MDN"
+
+#: apps/demos/feeds.py:88
+msgid "Demos submitted by MDN users"
+msgstr "Demos submitted by MDN users"
+
+#: apps/demos/templates/demos/listing_tag.html:8
+msgid "Demos tagged {tag}"
+msgstr "Demos tagged {tag}"
+
+#: apps/landing/templates/landing/learn_html.html:131
+msgid "Demos that you can filter by technology or browser support."
+msgstr "Demos that you can filter by technology or browser support."
+
+#: apps/demos/templates/demos/submit.html:79
+msgid "Describe Your Demo"
+msgstr "Describe Your Demo"
+
+#: apps/landing/templates/landing/learn_html.html:43
+msgid "Describes the different types of elements you can use to write an HTML document."
+msgstr "Describes the different types of elements you can use to write an HTML document."
+
+#: apps/landing/templates/landing/learn_css.html:100
+msgid "Design layouts that fluidly resize with the browser window, while still using a typographic grid."
+msgstr "Design layouts that fluidly resize with the browser window, while still using a typographic grid."
+
+#: apps/docs/templates/docs/docs.html:81
+msgid "Detecting device orientation"
+msgstr "Detecting device orientation"
+
+#: apps/landing/templates/landing/web.html:20
+msgid "Develop for an open and participatory Web."
+msgstr "Develop for an open and participatory Web."
+
+#: apps/landing/templates/landing/home.html:211
+msgid "Developing Add-ons"
+msgstr "Developing Add-ons"
+
+#: apps/landing/templates/landing/home.html:218
+msgid "Developing add-ons and content for Firefox mobile."
+msgstr "Developing add-ons and content for Firefox mobile."
+
+#: apps/landing/templates/landing/home.html:217
+#, fuzzy
+msgid "Developing for Mobile"
+msgstr "Help build Firefox for Mobile"
+
+#: apps/demos/__init__.py:86
+msgid "Device"
+msgstr "Device"
+
+#: apps/demos/models.py:397
+msgid "Disable navigation bar, launch demo in a new window"
+msgstr "Disable navigation bar, launch demo in a new window"
+
+#: apps/demos/templates/demos/submit.html:187
+msgid "Discard Changes"
+msgstr "Discard Changes"
+
+#: apps/demos/templates/demos/submit.html:183
+msgid "Discard Demo"
+msgstr "Discard Demo"
+
+#: apps/landing/templates/landing/learn_html.html:77
+msgid "Dive into HTML5"
+msgstr "Dive into HTML5"
+
+#: apps/demos/templates/demos/detail.html:103 apps/demos/templates/demos/launch.html:50
+msgid "Do you like this demo?"
+msgstr "Do you like this demo?"
+
+#: apps/landing/templates/landing/web.html:48
+msgid "Do you want to show the world what the Web can do? Demo Studio is your place for sharing awesome demos and experiments with the latest Web standards and open technologies."
+msgstr "Do you want to show the world what the Web can do? Demo Studio is your place for sharing awesome demos and experiments with the latest Web standards and open technologies."
+
+#: apps/docs/templates/docs/docs.html:7
+msgid "Doc Center"
+msgstr "Doc Center"
+
+#: apps/docs/templates/docs/docs.html:124
+msgid "Doc Of The Day"
+msgstr "Doc Of The Day"
+
+#: apps/landing/templates/landing/base_learn.html:8 apps/landing/templates/landing/home.html:136 templates/base.html:77 templates/base_compact.html:27
+msgid "Docs"
+msgstr "Docs"
+
+#: apps/landing/templates/landing/learn_javascript.html:119
+msgid "Documentation of the most quirky parts of JavaScript."
+msgstr "Documentation of the most quirky parts of JavaScript."
+
+#: apps/landing/templates/landing/learn_javascript.html:108
+msgid "Douglas Crockford explains the Document Object Model."
+msgstr "Douglas Crockford explains the Document Object Model."
+
+#: apps/landing/templates/landing/learn_javascript.html:82
+msgid "Douglas Crockford explores the language as it is today, and how it came to be."
+msgstr "Douglas Crockford explores the language as it is today, and how it came to be."
+
+#: apps/landing/templates/landing/learn_javascript.html:113
+msgid "Douglas Crockford looks closely at code patterns from which JavaScript programmers can choose in authoring their applications."
+msgstr "Douglas Crockford looks closely at code patterns from which JavaScript programmers can choose in authoring their applications."
+
+#. Label used before a list of links to download the video
+#: templates/includes/video_player.html:5
+msgid "Download Formats:"
+msgstr "Download Formats:"
+
+#: apps/demos/templates/demos/detail.html:225
+msgid "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP File</span>"
+msgstr "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP File</span>"
+
+#: apps/demos/__init__.py:164 apps/docs/templates/docs/glossary.html:19
+msgid "Drag and Drop"
+msgstr "Drag and Drop"
+
+#: apps/demos/__init__.py:165
+msgid "Drag and Drop features allow the user to move elements on the screen using the mouse pointer."
+msgstr "Drag and Drop features allow the user to move elements on the screen using the mouse pointer."
+
+#: apps/demos/__init__.py:139
+msgid "ECMA Spec"
+msgstr "ECMA Spec"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:37
+msgid "Edit"
+msgstr "Edit"
+
+#: apps/demos/templates/demos/detail.html:64
+msgid "Edit Demo"
+msgstr "Edit Demo"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:37
+msgid "Edit this comment"
+msgstr "Edit this comment"
+
+#: apps/demos/templates/demos/submit.html:8 apps/demos/templates/demos/submit.html:45 apps/demos/templates/demos/submit.html:60
+msgid "Edit {demo_title}"
+msgstr "Edit {demo_title}"
+
+#: apps/landing/templates/landing/learn_javascript.html:71
+#, fuzzy
+msgid "Eloquent JavaScript"
+msgstr "JavaScript"
+
+#: apps/landing/templates/landing/learn_javascript.html:75
+msgid "Essential JavaScript Design Patterns"
+msgstr "Essential JavaScript Design Patterns"
+
+#: apps/landing/templates/landing/web.html:101
+msgid "Evaluate performance of web pages with this Firefox/Firebug Add-on"
+msgstr "Evaluate performance of web pages with this Firefox/Firebug Add-on"
+
+#: apps/landing/templates/landing/home.html:224
+msgid "Everything from filing bugs to fixing them."
+msgstr "Everything from filing bugs to fixing them."
+
+#: apps/landing/templates/landing/home.html:57
+msgid ""
+"Experience the very latest features before they go to beta by trying out the new Aurora builds. Test things out early and help decide what makes it to final release. Note: Aurora is not for the "
+"faint of heart, but that's the price of being on the cutting edge."
+msgstr ""
+"Experience the very latest features before they go to beta by trying out the new Aurora builds. Test things out early and help decide what makes it to final release. Note: Aurora is not for the "
+"faint of heart, but that's the price of being on the cutting edge."
+
+#: apps/docs/templates/docs/docs.html:89 apps/landing/templates/landing/addons.html:60
+msgid "Extensions"
+msgstr "Extensions"
+
+#: apps/landing/templates/landing/learn_css.html:47
+msgid "External CSS"
+msgstr "External CSS"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:96
+msgid "Favorite <span class=\"addons\">Add-on</span> Tools"
+msgstr "Favorite <span class=\"addons\">Add-on</span> Tools"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mobile.html:136
+msgid "Favorite <span class=\"mobile\">Mobile</span> Articles"
+msgstr "Favorite <span class=\"mobile\">Mobile</span> Articles"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mozilla.html:98
+#, fuzzy
+msgid "Favorite <span class=\"mozilla\">Mozilla</span> Tools"
+msgstr "Favorite <span class=\"addons\">Add-on</span> Tools"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/web.html:87
+#, fuzzy
+msgid "Favorite <span class=\"web\">Web</span> Developer Tools"
+msgstr "Key Topics for <a href=\"%(web_url)s\" class=\"web\">Web</a> Developers"
+
+#: apps/demos/templates/demos/home.html:39
+msgid "Featured Demos"
+msgstr "Featured Demos"
+
+#: apps/demos/templates/demos/home.html:10
+msgid "Featured demos"
+msgstr "Featured demos"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:63
+#, fuzzy
+msgid "Feed"
+msgstr "Fennec"
+
+#: apps/landing/templates/landing/mobile.html:119
+msgid "Fennec"
+msgstr "Fennec"
+
+#: apps/demos/__init__.py:95 apps/docs/templates/docs/glossary.html:18
+msgid "Files"
+msgstr "Files"
+
+#: apps/landing/templates/landing/web.html:66
+msgid "Find out what HTML5 is really all about and how you can develop for a better Web through open standards."
+msgstr "Find out what HTML5 is really all about and how you can develop for a better Web through open standards."
+
+#: apps/landing/templates/landing/home.html:48 apps/landing/templates/landing/home.html:100
+#, fuzzy
+msgid "Firefox 4"
+msgstr "Firefox 4 Beta"
+
+#: apps/landing/templates/landing/web.html:97
+msgid "Firefox Add-on that adds a lot of great developer tools that are just a click away."
+msgstr "Firefox Add-on that adds a lot of great developer tools that are just a click away."
+
+#: apps/demos/__init__.py:175
+msgid "Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."
+msgstr "Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."
+
+#: apps/docs/templates/docs/docs.html:80
+msgid "Firefox Mobile for developers"
+msgstr "Firefox Mobile for developers"
+
+#: apps/landing/templates/landing/mobile.html:103
+#, fuzzy
+msgid "Firefox Sync"
+msgstr "Firefox 4 Beta"
+
+#: apps/landing/templates/landing/mobile.html:140
+msgid "Firefox for mobile: What's coming next"
+msgstr "Firefox for mobile: What's coming next"
+
+#: apps/landing/templates/landing/mobile.html:55
+msgid ""
+"Firefox is the world's first Web browser to support mobile add-ons. Learn about <a href=\"%(basics_url)s\">Extension Basics</a>, <a href=\"%(best_practices_url)s\">Extension Best Practices</a>, "
+"helpful <a href=\"%(snippets_url)s\">Code Snippets</a>, and more so you can build innovative add-ons for Firefox on Android and Firefox on Nokia's Meego platform."
+msgstr ""
+"Firefox is the world's first Web browser to support mobile add-ons. Learn about <a href=\"%(basics_url)s\">Extension Basics</a>, <a href=\"%(best_practices_url)s\">Extension Best Practices</a>, "
+"helpful <a href=\"%(snippets_url)s\">Code Snippets</a>, and more so you can build innovative add-ons for Firefox on Android and Firefox on Nokia's Meego platform."
+
+#: apps/demos/templates/demos/flag.html:43
+msgid "Flag content"
+msgstr "Flag content"
+
+#: apps/contentflagging/models.py:28
+msgid "Flag rejected by moderator"
+msgstr "Flag rejected by moderator"
+
+#: apps/demos/templates/demos/flag.html:37
+#, fuzzy
+msgid "Flag this demo?"
+msgstr "Watch this video"
+
+#: apps/contentflagging/models.py:27
+msgid "Flagged"
+msgstr "Flagged"
+
+#: apps/landing/templates/landing/learn_css.html:80
+msgid "Flex your CSS skills, and see where you need more practice."
+msgstr "Flex your CSS skills, and see where you need more practice."
+
+#: apps/landing/templates/landing/learn_css.html:98
+msgid "Fluid Grids"
+msgstr "Fluid Grids"
+
+#: apps/demos/__init__.py:104
+msgid "Fonts & Type"
+msgstr "Fonts & Type"
+
+#: apps/demos/__init__.py:115
+msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+msgstr "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+
+#: apps/demos/__init__.py:114
+#, fuzzy
+msgid "Forms"
+msgstr "Forums"
+
+#: apps/landing/templates/landing/base_learn.html:10 templates/base.html:80 templates/base_compact.html:29
+msgid "Forums"
+msgstr "Forums"
+
+#: apps/landing/templates/landing/learn_html.html:78
+msgid "From Mark Pilgrim"
+msgstr "From Mark Pilgrim"
+
+#: apps/landing/templates/landing/learn_html.html:41
+msgid "Fundamental HTML Elements"
+msgstr "Fundamental HTML Elements"
+
+#: apps/demos/__init__.py:274
+msgid "GPL"
+msgstr "GPL"
+
+#: apps/demos/__init__.py:124
+#, fuzzy
+msgid "Geolocation"
+msgstr "Using geolocation"
+
+#: apps/landing/templates/landing/home.html:64
+msgid "Get Aurora now"
+msgstr "Get Aurora now"
+
+#: apps/landing/templates/landing/learn_html.html:82
+msgid "Get Ready for HTML5"
+msgstr "Get Ready for HTML5"
+
+#: apps/landing/templates/landing/home.html:234
+msgid "Get Started Today!"
+msgstr "Get Started Today!"
+
+#: apps/landing/templates/landing/addons.html:53
+msgid "Get add-on development guidance in a top-notch collection of tutorials, articles, and more."
+msgstr "Get add-on development guidance in a top-notch collection of tutorials, articles, and more."
+
+#: apps/docs/templates/docs/docs.html:69
+msgid "Get involved in the %(mobile_link)s, %(addons_link)s, & %(apps_link)s Developer Communities:"
+msgstr "Get involved in the %(mobile_link)s, %(addons_link)s, & %(apps_link)s Developer Communities:"
+
+#: apps/demos/templates/demos/detail.html:224
+msgid "Get the Source Code"
+msgstr "Get the Source Code"
+
+#: apps/landing/templates/landing/mobile.html:45
+msgid "Get the latest news, status and developer documentation on the Mozilla mobile project. Check out the mobile project's goals, and how you can help out and get involved!"
+msgstr "Get the latest news, status and developer documentation on the Mozilla mobile project. Check out the mobile project's goals, and how you can help out and get involved!"
+
+#: apps/landing/templates/landing/learn_javascript.html:30
+msgid "Getting Started with JavaScript"
+msgstr "Getting Started with JavaScript"
+
+#: templates/includes/lang_switcher.html:10
+msgid "Go"
+msgstr "Go"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:52
+msgid "Go to the first page"
+msgstr "Go to the first page"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:59
+msgid "Go to the last page"
+msgstr "Go to the last page"
+
+#: apps/demos/templates/demos/detail.html:38 apps/demos/templates/demos/launch.html:71
+msgid "Go to the next demo, {demo_title}"
+msgstr "Go to the next demo, {demo_title}"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:57
+msgid "Go to the next page"
+msgstr "Go to the next page"
+
+#: apps/demos/templates/demos/detail.html:34 apps/demos/templates/demos/launch.html:67
+msgid "Go to the previous demo, {demo_title}"
+msgstr "Go to the previous demo, {demo_title}"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:54
+msgid "Go to the previous page"
+msgstr "Go to the previous page"
+
+#: apps/landing/templates/landing/learn_html.html:52
+msgid "Google Code University"
+msgstr "Google Code University"
+
+#: apps/landing/templates/landing/learn_css.html:85
+msgid "Grouping, pseudo-classes, and more."
+msgstr "Grouping, pseudo-classes, and more."
+
+#: apps/docs/templates/docs/docs.html:32 apps/docs/templates/docs/glossary.html:4 apps/landing/templates/landing/home.html:193 apps/landing/templates/landing/learn.html:26
+#, fuzzy
+msgid "HTML"
+msgstr "HTML5"
+
+#: apps/landing/templates/landing/learn_html.html:46
+msgid "HTML Beginner Tutorial"
+msgstr "HTML Beginner Tutorial"
+
+#: apps/landing/templates/landing/learn_html.html:56
+msgid "HTML Challenges"
+msgstr "HTML Challenges"
+
+#: apps/landing/templates/landing/learn_html.html:51
+msgid "HTML From the Ground Up"
+msgstr "HTML From the Ground Up"
+
+#: apps/demos/models.py:597
+msgid "HTML index not found in ZIP"
+msgstr "HTML index not found in ZIP"
+
+#: apps/demos/__init__.py:144 apps/docs/templates/docs/docs.html:36 apps/docs/templates/docs/glossary.html:7 apps/landing/templates/landing/home.html:47 apps/landing/templates/landing/home.html:86
+#: apps/landing/templates/landing/web.html:65
+msgid "HTML5"
+msgstr "HTML5"
+
+#: apps/landing/templates/landing/learn_html.html:129
+msgid "HTML5 Demos and Examples"
+msgstr "HTML5 Demos and Examples"
+
+#: apps/landing/templates/landing/learn_html.html:102
+msgid "HTML5 Doctor"
+msgstr "HTML5 Doctor"
+
+#: apps/landing/templates/landing/learn_html.html:114
+msgid "HTML5 Examples"
+msgstr "HTML5 Examples"
+
+#: apps/landing/templates/landing/learn_html.html:134
+msgid "HTML5 Gallery"
+msgstr "HTML5 Gallery"
+
+#: apps/landing/templates/landing/learn_html.html:88
+#, fuzzy
+msgid "HTML5 Rocks"
+msgstr "HTML5"
+
+#: apps/landing/templates/landing/learn_html.html:87
+msgid "HTML5 Tutorials"
+msgstr "HTML5 Tutorials"
+
+#: apps/demos/__init__.py:145
+msgid "HTML5 is the newest version of the HTML standard, currently under development."
+msgstr "HTML5 is the newest version of the HTML standard, currently under development."
+
+#: apps/landing/templates/landing/web.html:51
+#, fuzzy
+msgid "Hacks Blog"
+msgstr "Hacks Demos"
+
+#: apps/landing/templates/landing/mobile.html:152
+msgid "Hear from other developers about the advantages of HTML5 and developing for the mobile Web in this article from ReadWriteWeb:"
+msgstr "Hear from other developers about the advantages of HTML5 and developing for the mobile Web in this article from ReadWriteWeb:"
+
+#: templates/base.html:113
+msgid "Help"
+msgstr "Help"
+
+#: apps/landing/templates/landing/mobile.html:77
+msgid "Help build Firefox for Mobile"
+msgstr "Help build Firefox for Mobile"
+
+#: apps/landing/templates/landing/home.html:20
+msgid "Here's how to get started"
+msgstr "Here's how to get started"
+
+#: apps/demos/templates/demos/detail.html:77
+msgid "Hide demo"
+msgstr "Hide demo"
+
+#: apps/landing/templates/landing/home.html:133
+msgid "Highlighted Mozilla Developer News & Updates"
+msgstr "Highlighted Mozilla Developer News & Updates"
+
+#: apps/landing/templates/landing/addons.html:52
+msgid "How-to Library"
+msgstr "How-to Library"
+
+#: apps/docs/templates/docs/docs.html:33
+msgid "HyperText Markup Language, the core language of the web."
+msgstr "HyperText Markup Language, the core language of the web."
+
+#: apps/landing/templates/landing/home.html:194
+#, fuzzy
+msgid "Hypertext Markup Language, the core technology of the web."
+msgstr "HyperText Markup Language, the core language of the web."
+
+#: apps/demos/templates/demos/submit.html:166
+msgid "I accept the Mozilla Demo Studio <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
+msgstr "I accept the Mozilla Demo Studio <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
+
+#: apps/landing/templates/landing/addons.html:45
+msgid "If you are comfortable with a command line and prefer working locally, the Add-ons Builder SDK gives you a development environment on your own computer."
+msgstr "If you are comfortable with a command line and prefer working locally, the Add-ons Builder SDK gives you a development environment on your own computer."
+
+#: apps/demos/templates/demos/submit.html:119
+msgid "If your demo has problems when displayed in an <iframe>, try changing this."
+msgstr "If your demo has problems when displayed in an <iframe>, try changing this."
+
+#: apps/demos/__init__.py:215
+msgid "In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."
+msgstr "In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."
+
+#: apps/demos/__init__.py:154 apps/docs/templates/docs/glossary.html:23
+msgid "IndexedDB"
+msgstr "IndexedDB"
+
+#: apps/demos/__init__.py:155
+msgid "IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."
+msgstr "IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."
+
+#: apps/landing/templates/landing/learn_css.html:95
+msgid "Integrate progressive enhancement into your web pages with CSS."
+msgstr "Integrate progressive enhancement into your web pages with CSS."
+
+#: apps/landing/templates/landing/learn_css.html:83
+msgid "Intermediate CSS Concepts"
+msgstr "Intermediate CSS Concepts"
+
+#: apps/landing/templates/landing/learn_css.html:70 apps/landing/templates/landing/learn_javascript.html:63
+msgid "Intermediate Level"
+msgstr "Intermediate Level"
+
+#: templates/500.html:3 templates/500.html:5
+msgid "Internal Server Error"
+msgstr "Internal Server Error"
+
+#: apps/landing/templates/landing/learn_javascript.html:101
+msgid "Introducing the JavaScript DOM"
+msgstr "Introducing the JavaScript DOM"
+
+#: apps/landing/templates/landing/learn_javascript.html:85
+msgid "Introduction to Object-oriented JavaScript"
+msgstr "Introduction to Object-oriented JavaScript"
+
+#: apps/landing/templates/landing/learn_css.html:29 apps/landing/templates/landing/learn_html.html:28 apps/landing/templates/landing/learn_javascript.html:27
+msgid "Introductory Level"
+msgstr "Introductory Level"
+
+#: apps/demos/models.py:455
+msgid "Is your source code also available somewhere else on the web (e.g., github)? Please share the link."
+msgstr "Is your source code also available somewhere else on the web (e.g., github)? Please share the link."
+
+#: apps/demos/templates/demos/submit.html:116
+msgid "JPEG and PNG supported. Minimum size of 480x360."
+msgstr "JPEG and PNG supported. Minimum size of 480x360."
+
+#: apps/demos/__init__.py:134 apps/docs/templates/docs/docs.html:40 apps/docs/templates/docs/glossary.html:6 apps/landing/templates/landing/home.html:201 apps/landing/templates/landing/learn.html:38
+#: apps/landing/templates/landing/web.html:69
+msgid "JavaScript"
+msgstr "JavaScript"
+
+#: apps/landing/templates/landing/learn_javascript.html:55
+msgid "JavaScript Best Practices"
+msgstr "JavaScript Best Practices"
+
+#: apps/landing/templates/landing/learn_javascript.html:45
+msgid "JavaScript From the Ground Up"
+msgstr "JavaScript From the Ground Up"
+
+#: apps/landing/templates/landing/learn_javascript.html:118
+#, fuzzy
+msgid "JavaScript Garden"
+msgstr "JavaScript"
+
+#: apps/landing/templates/landing/learn_javascript.html:50
+#, fuzzy
+msgid "JavaScript Guide"
+msgstr "JavaScript"
+
+#: apps/demos/__init__.py:135
+msgid "JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."
+msgstr "JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."
+
+#: apps/landing/templates/landing/learn_javascript.html:98
+#, fuzzy
+msgid "John Resig's guide to advanced JavaScript."
+msgstr "John Resigs guide to advanced JavaScript."
+
+#: apps/landing/templates/landing/addons.html:24
+msgid "Join the Add-ons discussions!"
+msgstr "Join the Add-ons discussions!"
+
+#: apps/landing/templates/landing/mobile.html:24
+msgid "Join the Mobile discussions!"
+msgstr "Join the Mobile discussions!"
+
+#: apps/landing/templates/landing/mozilla.html:24
+#, fuzzy
+msgid "Join the Mozilla discussions!"
+msgstr "Join the Mobile discussions!"
+
+#: apps/landing/templates/landing/web.html:24
+msgid "Join the Web discussions!"
+msgstr "Join the Web discussions!"
+
+#: apps/landing/templates/landing/home.html:138
+msgid "Key Topics for <a href=\"%(web_url)s\" class=\"web\">Web</a> Developers"
+msgstr "Key Topics for <a href=\"%(web_url)s\" class=\"web\">Web</a> Developers"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/docs/templates/docs/docs.html:59
+#, fuzzy
+msgid "Key Topics for <span class=\"web\">Web</span> Developers"
+msgstr "Key Topics for <a href=\"%(web_url)s\" class=\"web\">Web</a> Developers"
+
+#: apps/demos/__init__.py:219
+msgid "Khronos Spec"
+msgstr "Khronos Spec"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:59
+msgid "Last"
+msgstr "Last"
+
+#: apps/docs/templates/docs/docs.html:117
+msgid "Last edited by:"
+msgstr "Last edited by:"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:150
+msgid "Latest <span class=\"addons\">Add-ons</span> Comments from Our Community:"
+msgstr "Latest <span class=\"addons\">Add-ons</span> Comments from Our Community:"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:142
+msgid "Latest <span class=\"addons\">Add-ons</span> Discussions from Our Forums:"
+msgstr "Latest <span class=\"addons\">Add-ons</span> Discussions from Our Forums:"
+
+#: apps/demos/templates/demos/elements/submission_thumb.html:20
+#, fuzzy
+msgid "Launch"
+msgstr "Hacks Demos"
+
+#: apps/demos/templates/demos/detail.html:89
+#, fuzzy
+msgid "Launch Demo"
+msgstr "Hacks Demos"
+
+#: apps/demos/templates/demos/elements/submission_thumb.html:20
+msgid "Launch {title}"
+msgstr "Launch {title}"
+
+#: apps/landing/templates/landing/learn_css.html:5 apps/landing/templates/landing/learn_css.html:11
+#, fuzzy
+msgid "Learn CSS"
+msgstr "Learn More"
+
+#: apps/landing/templates/landing/learn_html.html:5 apps/landing/templates/landing/learn_html.html:11
+#, fuzzy
+msgid "Learn HTML"
+msgstr "Learn More"
+
+#: apps/landing/templates/landing/learn.html:5 apps/landing/templates/landing/learn.html:10
+msgid "Learn How to Make Websites"
+msgstr "Learn How to Make Websites"
+
+#: apps/landing/templates/landing/learn_javascript.html:5 apps/landing/templates/landing/learn_javascript.html:11
+#, fuzzy
+msgid "Learn JavaScript"
+msgstr "JavaScript"
+
+#: apps/demos/templates/demos/listing_tag.html:39
+msgid "Learn More"
+msgstr "Learn More"
+
+#: apps/landing/templates/landing/learn_html.html:79
+msgid "Learn about a selection of features of HTML5, the newest version of the HTML specification."
+msgstr "Learn about a selection of features of HTML5, the newest version of the HTML specification."
+
+#: apps/landing/templates/landing/learn_javascript.html:57
+msgid "Learn about some of the obvious and (not so) obvious best practices when writing JavaScript."
+msgstr "Learn about some of the obvious and (not so) obvious best practices when writing JavaScript."
+
+#: apps/landing/templates/landing/learn_javascript.html:87
+msgid "Learn about the JavaScript object model."
+msgstr "Learn about the JavaScript object model."
+
+#: apps/landing/templates/landing/learn_html.html:38
+msgid "Learn how HTML elements fit together into the bigger picture."
+msgstr "Learn how HTML elements fit together into the bigger picture."
+
+#: apps/landing/templates/landing/learn_html.html:99
+msgid "Learn how to draw graphics using scripting using the &lt;canvas&gt; element."
+msgstr "Learn how to draw graphics using scripting using the &lt;canvas&gt; element."
+
+#: apps/landing/templates/landing/mobile.html:69
+msgid ""
+"Learn how to use the <a href=\"%(geo_url)s\">Geolocation API</a> and put people on the right path. Location-Aware Browsing is a must when you're out and about on your mobile. Learn how to build "
+"innovative apps that delight your audience."
+msgstr ""
+"Learn how to use the <a href=\"%(geo_url)s\">Geolocation API</a> and put people on the right path. Location-Aware Browsing is a must when you're out and about on your mobile. Learn how to build "
+"innovative apps that delight your audience."
+
+#: apps/landing/templates/landing/learn_html.html:108
+msgid "Learn how to use the HTML audio element to embed sounds in your web pages easily. Lots of code examples are included in the tutorial."
+msgstr "Learn how to use the HTML audio element to embed sounds in your web pages easily. Lots of code examples are included in the tutorial."
+
+#: apps/landing/templates/landing/learn_html.html:94
+msgid "Learn meaningful mark-up that is extensible and backwards- and forwards-compatible."
+msgstr "Learn meaningful mark-up that is extensible and backwards- and forwards-compatible."
+
+#: apps/landing/templates/landing/home.html:148
+msgid "Learn more about <a href=\"%(devmo_mobile)s\">Fennec</a> and mobile-specific technologies like <a href=\"%(devmo_geo)s\">geolocation</a>.</p>"
+msgstr "Learn more about <a href=\"%(devmo_mobile)s\">Fennec</a> and mobile-specific technologies like <a href=\"%(devmo_geo)s\">geolocation</a>.</p>"
+
+#: apps/landing/templates/landing/web.html:52
+msgid "Learn more about developer features and the latest technologies through articles and demos on the Hacks Blog."
+msgstr "Learn more about developer features and the latest technologies through articles and demos on the Hacks Blog."
+
+#: apps/landing/templates/landing/mozilla.html:54
+msgid "Learn more about the technologies at the core of Mozilla products and services."
+msgstr "Learn more about the technologies at the core of Mozilla products and services."
+
+#: apps/landing/templates/landing/learn_javascript.html:37
+msgid "Learn the basics of programming with JavaScript"
+msgstr "Learn the basics of programming with JavaScript"
+
+#: apps/landing/templates/landing/home.html:16
+msgid "Learn the history behind Project <em>Devmo</em>"
+msgstr "Learn the history behind Project <em>Devmo</em>"
+
+#: apps/landing/templates/landing/base_learn.html:4 templates/base.html:79 templates/base_compact.html:28
+msgid "Learning"
+msgstr "Learning"
+
+#: apps/landing/templates/landing/learn_javascript.html:96
+msgid "Learning Advanced JavaScript"
+msgstr "Learning Advanced JavaScript"
+
+#: apps/demos/templates/demos/detail.html:103 apps/demos/templates/demos/launch.html:50
+msgid "Like It"
+msgstr "Like It"
+
+#: apps/docs/templates/docs/docs.html:101 apps/landing/templates/landing/mozilla.html:81
+msgid "Localization"
+msgstr "Localization"
+
+#: apps/landing/templates/landing/mozilla.html:83
+msgid ""
+"Localization (L10n) is the process of translating software user interfaces from one language to another and adapting it to suit a foreign culture. These resources are about making Mozilla-based "
+"applications/extensions localizable."
+msgstr ""
+"Localization (L10n) is the process of translating software user interfaces from one language to another and adapting it to suit a foreign culture. These resources are about making Mozilla-based "
+"applications/extensions localizable."
+
+#: apps/landing/templates/landing/mobile.html:67
+#, fuzzy
+msgid "Location-Aware Applications"
+msgstr "Applications"
+
+#: apps/demos/templates/demos/submit_noauth.html:71
+msgid "Log In to Account"
+msgstr "Log In to Account"
+
+#: apps/landing/templates/landing/home.html:24 templates/includes/login.html:6
+msgid "Log in"
+msgstr "Log in"
+
+#: templates/includes/login.html:3 templates/includes/login.html:10
+#, fuzzy
+msgid "Log out"
+msgstr "Log in"
+
+#: apps/demos/templates/demos/delete.html:20 apps/demos/templates/demos/delete_comment.html:20 apps/demos/templates/demos/detail.html:24 apps/demos/templates/demos/flag.html:20
+#: apps/demos/templates/demos/listing_all.html:17 apps/demos/templates/demos/listing_search.html:23 apps/demos/templates/demos/listing_tag.html:18 apps/demos/templates/demos/profile_detail.html:22
+#: apps/demos/templates/demos/submit.html:42 apps/demos/templates/demos/submit_noauth.html:18 apps/landing/templates/landing/learn_html.html:62 apps/landing/templates/landing/learn_html.html:73
+#: apps/landing/templates/landing/learn_html.html:98
+msgid "MDN"
+msgstr "MDN"
+
+#: apps/landing/templates/landing/learn_html.html:122
+#, fuzzy
+msgid "MDN Demo Studio"
+msgstr "Case Studies"
+
+#: apps/demos/__init__.py:59 apps/demos/__init__.py:69 apps/demos/__init__.py:79 apps/demos/__init__.py:89 apps/demos/__init__.py:98 apps/demos/__init__.py:107 apps/demos/__init__.py:117
+#: apps/demos/__init__.py:127 apps/demos/__init__.py:137 apps/demos/__init__.py:147 apps/demos/__init__.py:157 apps/demos/__init__.py:167 apps/demos/__init__.py:177 apps/demos/__init__.py:187
+#: apps/demos/__init__.py:197 apps/demos/__init__.py:207 apps/demos/__init__.py:217 apps/demos/__init__.py:227 apps/demos/__init__.py:237 apps/demos/__init__.py:247 apps/demos/__init__.py:257
+#, fuzzy
+msgid "MDN Documentation"
+msgstr "Search MDN Documentation"
+
+#: apps/demos/feeds.py:214
+msgid "MDN demo search for \"%s\""
+msgstr "MDN demo search for \"%s\""
+
+#: apps/demos/feeds.py:87
+msgid "MDN demos"
+msgstr "MDN demos"
+
+#: apps/demos/feeds.py:184
+msgid "MDN demos tagged \"%s\""
+msgstr "MDN demos tagged \"%s\""
+
+#: apps/demos/feeds.py:181
+msgid "MDN demos tagged %s"
+msgstr "MDN demos tagged %s"
+
+#: apps/demos/feeds.py:166
+msgid "MDN featured demos"
+msgstr "MDN featured demos"
+
+#: apps/landing/templates/sidebar/twitter.html:3
+msgid "MDN on Twitter"
+msgstr "MDN on Twitter"
+
+#: apps/demos/feeds.py:154
+msgid "MDN recent demos"
+msgstr "MDN recent demos"
+
+#: apps/demos/__init__.py:268
+msgid "MPL/GPL/LGPL"
+msgstr "MPL/GPL/LGPL"
+
+#: apps/landing/templates/landing/mozilla.html:106
+msgid "MXR"
+msgstr "MXR"
+
+#: apps/demos/models.py:146
+msgid "Maximum of %s tags allowed"
+msgstr "Maximum of %s tags allowed"
+
+#: apps/docs/templates/docs/glossary.html:12
+msgid "Media Queries"
+msgstr "Media Queries"
+
+#: apps/demos/__init__.py:87
+msgid "Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."
+msgstr "Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."
+
+#: apps/demos/__init__.py:174 apps/devmo/__init__.py:18 apps/docs/templates/docs/docs.html:69 apps/docs/templates/docs/docs.html:78 apps/landing/templates/landing/home.html:146
+#: apps/landing/templates/landing/mobile.html:11 apps/landing/templates/landing/mobile.html:17 templates/base.html:71 templates/base_compact.html:23
+msgid "Mobile"
+msgstr "Mobile"
+
+#: apps/landing/templates/landing/mobile.html:43
+#, fuzzy
+msgid "Mobile Wiki"
+msgstr "Mobile"
+
+#: apps/docs/templates/docs/docs.html:129
+msgid "Modified by %(author)s on %(updated)s"
+msgstr "Modified by %(author)s on %(updated)s"
+
+#: apps/landing/templates/landing/home.html:80 apps/landing/templates/landing/home.html:94 apps/landing/templates/landing/home.html:109 apps/landing/templates/landing/home.html:124
+msgid "More"
+msgstr "More"
+
+#: apps/demos/templates/demos/detail.html:177
+msgid "More About This Demo From The Author"
+msgstr "More About This Demo From The Author"
+
+#: apps/demos/templates/demos/detail.html:250
+msgid "More by {creator_link}"
+msgstr "More by {creator_link}"
+
+#: apps/docs/templates/docs/docs.html:112
+msgid "Most Active Docs"
+msgstr "Most Active Docs"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:13
+msgid "Most Liked"
+msgstr "Most Liked"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:14
+msgid "Most Recent"
+msgstr "Most Recent"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:12
+msgid "Most Viewed"
+msgstr "Most Viewed"
+
+#: apps/devmo/__init__.py:12 apps/docs/templates/docs/docs.html:71 apps/docs/templates/docs/docs.html:97 apps/landing/templates/landing/home.html:163
+#: apps/landing/templates/landing/learn_html.html:118 apps/landing/templates/landing/learn_html.html:123 apps/landing/templates/landing/mozilla.html:11 apps/landing/templates/landing/mozilla.html:17
+#: templates/base.html:73 templates/base_compact.html:25
+#, fuzzy
+msgid "Mozilla"
+msgstr "Bugzilla"
+
+#: apps/demos/templates/demos/home.html:22
+#, fuzzy
+msgid "Mozilla Demo Studio"
+msgstr "Mozilla Developer Network"
+
+#: apps/landing/templates/landing/mozilla.html:43
+#, fuzzy
+msgid "Mozilla Developer Guide"
+msgstr "Mozilla Developer Network"
+
+#: apps/demos/templates/demos/launch.html:30 templates/base.html:4 templates/base_popup.html:4
+msgid "Mozilla Developer Network"
+msgstr "Mozilla Developer Network"
+
+#: apps/landing/templates/landing/home.html:72
+msgid ""
+"Mozilla and <a href=\"%(p2pu)s\">P2PU</a> are creating the <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes are globally "
+"accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and build "
+"careers on open web technology."
+msgstr ""
+"Mozilla and <a href=\"%(p2pu)s\">P2PU</a> are creating the <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes are globally "
+"accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and build "
+"careers on open web technology."
+
+#: apps/landing/templates/landing/home.html:88
+msgid ""
+"Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest "
+"enhancements in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
+msgstr ""
+"Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest "
+"enhancements in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
+
+#: apps/landing/templates/landing/mozilla.html:73
+msgid "Mozilla developers have come up with not just technologies and features to help you debug code, but have devised tips and techniques that can help too."
+msgstr "Mozilla developers have come up with not just technologies and features to help you debug code, but have devised tips and techniques that can help too."
+
+#: apps/demos/__init__.py:57
+msgid "Mozilla's Audio Data API extends the current HTML5 API and allows web developers to read and write raw audio data."
+msgstr "Mozilla's Audio Data API extends the current HTML5 API and allows web developers to read and write raw audio data."
+
+#: apps/demos/__init__.py:254
+msgid "Multi-touch"
+msgstr "Multi-touch"
+
+#: apps/landing/templates/landing/home.html:18
+msgid "New to MDN?"
+msgstr "New to MDN?"
+
+#: apps/landing/templates/landing/home.html:132
+msgid "News & Updates"
+msgstr "News & Updates"
+
+#: apps/demos/templates/demos/detail.html:38 apps/demos/templates/demos/detail.html:144 apps/demos/templates/demos/home.html:44 apps/demos/templates/demos/launch.html:71
+#: apps/demos/templates/demos/elements/submission_listing.html:57
+msgid "Next"
+msgstr "Next"
+
+#: apps/demos/templates/demos/detail.html:185
+msgid "No comments yet."
+msgstr "No comments yet."
+
+#: apps/landing/templates/landing/learn_javascript.html:127
+msgid "Non-blocking JavaScript Downloads"
+msgstr "Non-blocking JavaScript Downloads"
+
+#: templates/404.html:3 templates/404.html:5
+msgid "Not Found"
+msgstr "Not Found"
+
+#: apps/demos/__init__.py:184
+msgid "Offline Support"
+msgstr "Offline Support"
+
+#: apps/demos/__init__.py:185
+msgid "Offline caching of web applications' resources using the application cache and local storage."
+msgstr "Offline caching of web applications' resources using the application cache and local storage."
+
+#: apps/landing/templates/landing/learn_html.html:74
+msgid "Optimize web pages to provide a more responsive site for visitors and reduce the load on your web server and Internet connection."
+msgstr "Optimize web pages to provide a more responsive site for visitors and reduce the load on your web server and Internet connection."
+
+#: templates/includes/lang_switcher.html:2
+msgid "Other languages:"
+msgstr "Other languages:"
+
+#: apps/landing/templates/landing/home.html:223
+#, fuzzy
+msgid "Participating in the Mozilla Project"
+msgstr "Participating in the Mozilla project"
+
+#: apps/docs/templates/docs/docs.html:99
+msgid "Participating in the Mozilla project"
+msgstr "Participating in the Mozilla project"
+
+#: templates/403.html:3 templates/403.html:5
+#, fuzzy
+msgid "Permission Denied"
+msgstr "access denied"
+
+#: apps/demos/models.py:241
+msgid "Please keep filesize under %s. Current filesize %s"
+msgstr "Please keep filesize under %s. Current filesize %s"
+
+#: apps/docs/templates/docs/docs.html:90
+msgid "Plugins"
+msgstr "Plugins"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:38
+msgid "Popular <span class=\"addons\">Add-ons</span> Documentation"
+msgstr "Popular <span class=\"addons\">Add-ons</span> Documentation"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mobile.html:38
+msgid "Popular <span class=\"mobile\">Mobile</span> Documentation"
+msgstr "Popular <span class=\"mobile\">Mobile</span> Documentation"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mozilla.html:38
+#, fuzzy
+msgid "Popular <span class=\"mozilla\">Mozilla</span> Documentation"
+msgstr "Popular <span class=\"mobile\">Mobile</span> Documentation"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/web.html:60
+msgid "Popular <span class=\"web\">Web</span> Documentation"
+msgstr "Popular <span class=\"web\">Web</span> Documentation"
+
+#: apps/landing/templates/landing/home.html:190
+msgid "Popular Docs"
+msgstr "Popular Docs"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/docs/templates/docs/docs.html:28
+#, fuzzy
+msgid "Popular Topics for <span class=\"web\">Web</span> Developers"
+msgstr "Key Topics for <a href=\"%(web_url)s\" class=\"web\">Web</a> Developers"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:19
+msgid ""
+"Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime=\"%(comment_isotime)s"
+"\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+msgstr ""
+"Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime=\"%(comment_isotime)s"
+"\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+
+#: apps/landing/templates/landing/mobile.html:123
+msgid "Pre-Alpha Fennec and HTML5 Demos"
+msgstr "Pre-Alpha Fennec and HTML5 Demos"
+
+#: apps/demos/templates/demos/submit.html:124 apps/demos/templates/demos/submit_noauth.html:52
+msgid "Preparing Your Demo"
+msgstr "Preparing Your Demo"
+
+#: apps/demos/templates/demos/detail.html:34 apps/demos/templates/demos/launch.html:67
+msgid "Prev"
+msgstr "Prev"
+
+#: apps/demos/templates/demos/detail.html:143 apps/demos/templates/demos/home.html:43 apps/demos/templates/demos/elements/submission_listing.html:54
+msgid "Previous"
+msgstr "Previous"
+
+#: apps/landing/templates/landing/learn_css.html:93
+msgid "Progressive Enhancement with CSS"
+msgstr "Progressive Enhancement with CSS"
+
+#: apps/demos/templates/demos/submit.html:107
+msgid "Provide at least one screenshot of your demo in action"
+msgstr "Provide at least one screenshot of your demo in action"
+
+#: apps/demos/templates/demos/submit.html:138
+msgid "Provide the Source Code"
+msgstr "Provide the Source Code"
+
+#: apps/demos/__init__.py:292
+msgid "Public Domain (where applicable by law)"
+msgstr "Public Domain (where applicable by law)"
+
+#: apps/docs/templates/docs/docs.html:102
+msgid "Quality Assurance"
+msgstr "Quality Assurance"
+
+#: apps/landing/templates/landing/learn_css.html:131
+msgid "Quick Guide to Implement Web Fonts with @font-face"
+msgstr "Quick Guide to Implement Web Fonts with @font-face"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/addons.html:118
+msgid "Recent <span class=\"addons\">Add-ons</span> News &amp; Updates"
+msgstr "Recent <span class=\"addons\">Add-ons</span> News &amp; Updates"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mobile.html:181
+msgid "Recent <span class=\"mobile\">Mobile</span> News &amp; Updates"
+msgstr "Recent <span class=\"mobile\">Mobile</span> News &amp; Updates"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/mozilla.html:116
+#, fuzzy
+msgid "Recent <span class=\"mozilla\">Mozilla</span> News &amp; Updates"
+msgstr "Recent <span class=\"mobile\">Mobile</span> News &amp; Updates"
+
+#. Please escape HTML entities here, like &amp;
+#: apps/landing/templates/landing/web.html:114
+msgid "Recent <span class=\"web\">Web</span> News &amp; Updates"
+msgstr "Recent <span class=\"web\">Web</span> News &amp; Updates"
+
+#: apps/demos/templates/demos/home.html:8 apps/demos/templates/demos/listing_all.html:7
+msgid "Recent demos"
+msgstr "Recent demos"
+
+#: apps/demos/templates/demos/delete.html:48 apps/demos/templates/demos/detail.html:69
+msgid "Remove demo"
+msgstr "Remove demo"
+
+#: apps/demos/templates/demos/delete.html:38
+msgid "Remove this demo?"
+msgstr "Remove this demo?"
+
+#: apps/demos/templates/demos/launch.html:76
+msgid "Remove this toolbar"
+msgstr "Remove this toolbar"
+
+#: apps/demos/templates/demos/launch.html:76
+msgid "Remove toolbar"
+msgstr "Remove toolbar"
+
+#: apps/landing/templates/landing/learn_html.html:130
+msgid "Remy Sharp"
+msgstr "Remy Sharp"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:31
+msgid "Reply"
+msgstr "Reply"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:31
+msgid "Reply to this comment by {full_name}"
+msgstr "Reply to this comment by {full_name}"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:34
+msgid "Report"
+msgstr "Report"
+
+#: apps/demos/templates/demos/detail.html:261
+msgid "Report a Problem"
+msgstr "Report a Problem"
+
+#: apps/demos/templates/demos/elements/comments_tree.html:34
+msgid "Report this comment"
+msgstr "Report this comment"
+
+#: apps/landing/templates/landing/learn_html.html:135
+msgid "Richard Clark"
+msgstr "Richard Clark"
+
+#: apps/demos/templates/demos/terms.html:122
+msgid "Rights Representation Details"
+msgstr "Rights Representation Details"
+
+#: apps/landing/templates/landing/learn_html.html:124
+msgid "Run, inspect, and submit demos that show what HTML, CSS, and JavaScript can do."
+msgstr "Run, inspect, and submit demos that show what HTML, CSS, and JavaScript can do."
+
+#: apps/demos/__init__.py:194 apps/docs/templates/docs/glossary.html:9
+msgid "SVG"
+msgstr "SVG"
+
+#: apps/demos/templates/demos/submit.html:185
+msgid "Save changes"
+msgstr "Save changes"
+
+#: apps/demos/__init__.py:195
+msgid "Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."
+msgstr "Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."
+
+#: apps/landing/templates/landing/home.html:46 apps/landing/templates/landing/home.html:70
+msgid "School of Webcraft"
+msgstr "School of Webcraft"
+
+#: apps/demos/models.py:412
+msgid "Screenshot #1"
+msgstr "Screenshot #1"
+
+#: apps/demos/models.py:418
+msgid "Screenshot #2"
+msgstr "Screenshot #2"
+
+#: apps/demos/models.py:424
+msgid "Screenshot #3"
+msgstr "Screenshot #3"
+
+#: apps/demos/models.py:430
+msgid "Screenshot #4"
+msgstr "Screenshot #4"
+
+#: apps/demos/models.py:436
+msgid "Screenshot #5"
+msgstr "Screenshot #5"
+
+#: apps/demos/templates/demos/elements/search_form.html:6 apps/docs/templates/docs/docs.html:18 templates/base.html:60
+#, fuzzy
+msgid "Search"
+msgstr "Search Results"
+
+#: templates/base.html:59
+#, fuzzy
+msgid "Search MDN"
+msgstr "Search Results"
+
+#: apps/docs/templates/docs/docs.html:17
+msgid "Search MDN Documentation"
+msgstr "Search MDN Documentation"
+
+#: apps/landing/templates/landing/searchresults.html:7
+msgid "Search Results"
+msgstr "Search Results"
+
+#: apps/demos/templates/demos/listing_search.html:25 apps/demos/templates/demos/listing_search.html:37
+msgid "Search demos for \"{q}\""
+msgstr "Search demos for \"{q}\""
+
+#: apps/docs/templates/docs/docs.html:93
+msgid "Search engine plugins"
+msgstr "Search engine plugins"
+
+#: apps/demos/templates/demos/listing_search.html:10
+msgid "Search for \"{q}\""
+msgstr "Search for \"{q}\""
+
+#: apps/demos/templates/demos/listing_search.html:14
+#, fuzzy
+msgid "Search results for \"{q}\""
+msgstr "Search Results"
+
+#: apps/demos/feeds.py:215
+msgid "Search results for demo submissions matching \"%s\""
+msgstr "Search results for demo submissions matching \"%s\""
+
+#: apps/demos/templates/demos/elements/search_form.html:4
+msgid "Search the Demo Studio"
+msgstr "Search the Demo Studio"
+
+#: apps/docs/templates/docs/glossary.html:22
+msgid "Security"
+msgstr "Security"
+
+#: apps/landing/templates/landing/mobile.html:108
+msgid "See Ragavan demo Firefox Sync on his Android phone. Learn about purpose and goals behind the development of Firefox Sync."
+msgstr "See Ragavan demo Firefox Sync on his Android phone. Learn about purpose and goals behind the development of Firefox Sync."
+
+#: apps/landing/templates/landing/mobile.html:124
+msgid "See Stuart demo HTML5 capabilities on pre-alpha Fennec. Learn about the purpose and goals behind the development of Firefox 4 for mobile."
+msgstr "See Stuart demo HTML5 capabilities on pre-alpha Fennec. Learn about the purpose and goals behind the development of Firefox 4 for mobile."
+
+#: apps/landing/templates/landing/home.html:165
+msgid "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
+msgstr "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
+
+#: apps/demos/templates/demos/elements/submission_thumb.html:5
+msgid "See more about {title} by {author}"
+msgstr "See more about {title} by {author}"
+
+#: apps/demos/templates/demos/detail.html:127
+msgid "See more demos made with {tag_title}"
+msgstr "See more demos made with {tag_title}"
+
+#: apps/demos/templates/demos/detail.html:144
+msgid "See the next image"
+msgstr "See the next image"
+
+#: apps/demos/templates/demos/home.html:44
+msgid "See the next three demos"
+msgstr "See the next three demos"
+
+#: apps/demos/templates/demos/detail.html:143
+msgid "See the previous image"
+msgstr "See the previous image"
+
+#: apps/demos/templates/demos/home.html:43
+msgid "See the previous three demos"
+msgstr "See the previous three demos"
+
+#: apps/landing/templates/landing/home.html:186
+msgid "See what's new for web developers in the latest version of Firefox"
+msgstr "See what's new for web developers in the latest version of Firefox"
+
+#: apps/demos/templates/demos/elements/profile_link.html:2 apps/demos/templates/demos/elements/submission_creator.html:2
+msgid "See {display_name}'s profile"
+msgstr "See {display_name}'s profile"
+
+#: apps/demos/models.py:458
+msgid "Select the license that applies to your source code."
+msgstr "Select the license that applies to your source code."
+
+#: apps/demos/templates/demos/submit.html:92
+msgid "Select up to five technologies used in your demo."
+msgstr "Select up to five technologies used in your demo."
+
+#: apps/landing/templates/landing/learn_html.html:92
+msgid "Semantics in HTML5"
+msgstr "Semantics in HTML5"
+
+#: apps/demos/templates/demos/detail.html:108 apps/demos/templates/demos/detail.html:110 apps/demos/templates/demos/launch.html:54
+msgid "Share It"
+msgstr "Share It"
+
+#: apps/demos/templates/demos/detail.html:112 apps/demos/templates/demos/launch.html:57
+msgid "Share on Facebook"
+msgstr "Share on Facebook"
+
+#: apps/demos/templates/demos/detail.html:111 apps/demos/templates/demos/launch.html:56
+#, fuzzy
+msgid "Share on Twitter"
+msgstr "MDN on Twitter"
+
+#: apps/demos/templates/demos/detail.html:108 apps/demos/templates/demos/launch.html:54
+msgid "Share this demo with your social network"
+msgstr "Share this demo with your social network"
+
+#: apps/demos/templates/demos/submit.html:103
+msgid "Show Off Your Demo"
+msgstr "Show Off Your Demo"
+
+#: apps/demos/templates/demos/detail.html:74
+msgid "Show demo"
+msgstr "Show demo"
+
+#: apps/demos/forms.py:139
+msgid "Show us you're human"
+msgstr "Show us you're human"
+
+#: apps/landing/templates/landing/learn_html.html:136
+msgid "Showcase of sites that use HTML5 to help you learn about how it should be used."
+msgstr "Showcase of sites that use HTML5 to help you learn about how it should be used."
+
+#: apps/landing/templates/landing/learn_html.html:84
+msgid "Some suggestions to help you get on board with HTML5."
+msgstr "Some suggestions to help you get on board with HTML5."
+
+#: apps/demos/templates/demos/elements/submission_listing.html:13
+msgid "Sort demos by most likes"
+msgstr "Sort demos by most likes"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:14
+msgid "Sort demos by most recently submitted"
+msgstr "Sort demos by most recently submitted"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:12
+msgid "Sort demos by most views"
+msgstr "Sort demos by most views"
+
+#: apps/demos/templates/demos/submit.html:147
+#, fuzzy
+msgid "Source code ZIP file"
+msgstr "Source code Zip file"
+
+#: apps/landing/templates/landing/learn_css.html:128
+msgid "Start using CSS3 transitions by carefully choosing the situations in which to use them."
+msgstr "Start using CSS3 transitions by carefully choosing the situations in which to use them."
+
+#: apps/landing/templates/landing/addons.html:65
+msgid "Start-to-finish success stories. See how add-on developers made magic with Mozilla."
+msgstr "Start-to-finish success stories. See how add-on developers made magic with Mozilla."
+
+#: apps/demos/templates/demos/delete.html:26 apps/demos/templates/demos/delete_comment.html:26 apps/demos/templates/demos/flag.html:26 apps/demos/templates/demos/home.html:33
+#: apps/demos/templates/demos/listing_all.html:22 apps/demos/templates/demos/listing_search.html:28 apps/demos/templates/demos/listing_tag.html:23 apps/demos/templates/demos/profile_detail.html:27
+msgid "Submit a Demo"
+msgstr "Submit a Demo"
+
+#: apps/demos/templates/demos/submit.html:10 apps/demos/templates/demos/submit.html:47 apps/demos/templates/demos/submit.html:62 apps/demos/templates/demos/submit_noauth.html:10
+#: apps/demos/templates/demos/submit_noauth.html:20 apps/demos/templates/demos/submit_noauth.html:30
+msgid "Submit a New Demo"
+msgstr "Submit a New Demo"
+
+#: apps/demos/templates/demos/submit.html:181
+msgid "Submit demo"
+msgstr "Submit demo"
+
+#: apps/demos/templates/demos/feed_item_description.html:7
+msgid "Submitted by:"
+msgstr "Submitted by:"
+
+#: apps/landing/templates/landing/addons.html:23 apps/landing/templates/landing/mobile.html:23 apps/landing/templates/landing/mozilla.html:23 apps/landing/templates/landing/web.html:23
+msgid "Subscribe"
+msgstr "Subscribe"
+
+#: apps/demos/templates/demos/listing_all.html:38
+msgid "Subscribe to a feed of all demos"
+msgstr "Subscribe to a feed of all demos"
+
+#: apps/demos/templates/demos/listing_search.html:44
+msgid "Subscribe to a feed of search results for \"{q}\""
+msgstr "Subscribe to a feed of search results for \"{q}\""
+
+#: apps/demos/templates/demos/profile_detail.html:55
+msgid "Subscribe to a feed of {display_name}'s demos"
+msgstr "Subscribe to a feed of {display_name}'s demos"
+
+#: apps/demos/templates/demos/home.html:65 apps/demos/templates/demos/listing_tag.html:53
+msgid "Subscribe to a feed of {tag_title} demos"
+msgstr "Subscribe to a feed of {tag_title} demos"
+
+#: apps/demos/models.py:152
+msgid "Tag \"%s\" is not in the set of described tags"
+msgstr "Tag \"%s\" is not in the set of described tags"
+
+#: apps/demos/templates/demos/feed_item_description.html:9
+msgid "Tagged as:"
+msgstr "Tagged as:"
+
+#: apps/landing/templates/landing/learn_html.html:89
+msgid "Take a guided tour through code that uses HTML5 features."
+msgstr "Take a guided tour through code that uses HTML5 features."
+
+#: apps/demos/templates/demos/terms.html:10 apps/demos/templates/demos/terms.html:35
+msgid "Terms for Contributors"
+msgstr "Terms for Contributors"
+
+#: apps/demos/templates/demos/terms.html:21
+msgid "Terms of Use"
+msgstr "Terms of Use"
+
+#: apps/landing/templates/landing/home.html:102
+#, fuzzy
+msgid ""
+"Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s\">big "
+"chart full of check marks</a> to prove it."
+msgstr ""
+"Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world’s best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s\">big "
+"chart full of check marks</a> to prove it."
+
+#: apps/landing/templates/landing/learn_css.html:133
+msgid "The @font-face feature from CSS3 allows you to use custom typefaces on the web in an accessible, manipulable, and scalable way."
+msgstr "The @font-face feature from CSS3 allows you to use custom typefaces on the web in an accessible, manipulable, and scalable way."
+
+#: apps/landing/templates/landing/learn_html.html:31
+msgid "The Basics of HTML"
+msgstr "The Basics of HTML"
+
+#: apps/demos/__init__.py:105
+msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
+msgstr "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
+
+#: apps/landing/templates/landing/web.html:78
+msgid "The DOM is the architecture for Web documents; learn how to use the DOM and its API to look at and manipulate Web content."
+msgstr "The DOM is the architecture for Web documents; learn how to use the DOM and its API to look at and manipulate Web content."
+
+#: apps/landing/templates/landing/home.html:206
+#, fuzzy
+msgid "The Document Object Model describes the layout and content of web pages."
+msgstr "The Document Object Model describes the structure and content of web pages."
+
+#: apps/docs/templates/docs/docs.html:49
+msgid "The Document Object Model describes the structure and content of web pages."
+msgstr "The Document Object Model describes the structure and content of web pages."
+
+#: apps/demos/__init__.py:96
+msgid "The File API allows web developers to use file objects in web applications, as well as selecting and accessing their data."
+msgstr "The File API allows web developers to use file objects in web applications, as well as selecting and accessing their data."
+
+#: apps/demos/__init__.py:125
+msgid "The Geolocation API allows web applications to access the user's geographical location."
+msgstr "The Geolocation API allows web applications to access the user's geographical location."
+
+#: apps/demos/__init__.py:67
+#, fuzzy
+msgid "The HTML5 canvas element allows you to display scriptable renderings of 2D shapes and bitmap images."
+msgstr "The HTML5 canvas element allows to display scriptable renderings of 2D shapes and bitmap images."
+
+#: apps/demos/__init__.py:205
+msgid "The HTML5 video element provides integrated support for playing video media without requiring plug-ins."
+msgstr "The HTML5 video element provides integrated support for playing video media without requiring plug-ins."
+
+#: apps/landing/templates/landing/learn_javascript.html:80
+msgid "The JavaScript Programming Language"
+msgstr "The JavaScript Programming Language"
+
+#: apps/landing/templates/landing/learn_html.html:106
+msgid "The Joy of HTML5 Audio"
+msgstr "The Joy of HTML5 Audio"
+
+#: apps/landing/templates/landing/mozilla.html:52
+msgid "The Mozilla Platform"
+msgstr "The Mozilla Platform"
+
+#: apps/contentflagging/models.py:23
+msgid "The author is fake"
+msgstr "The author is fake"
+
+#: apps/landing/templates/landing/mozilla.html:103
+msgid "The main issue-tracker for Mozilla projects."
+msgstr "The main issue-tracker for Mozilla projects."
+
+#: apps/landing/templates/landing/web.html:92
+msgid "The most popular and powerful web development tool."
+msgstr "The most popular and powerful web development tool."
+
+#: apps/docs/templates/docs/docs.html:37
+msgid "The next generation of HTML, HTML5 adds powerful new capabilities for web sites and web applications."
+msgstr "The next generation of HTML, HTML5 adds powerful new capabilities for web sites and web applications."
+
+#: apps/landing/templates/landing/addons.html:57
+msgid "The official documentation on APIs and languages. What you need, when you need it, to create your masterpiece."
+msgstr "The official documentation on APIs and languages. What you need, when you need it, to create your masterpiece."
+
+#: apps/landing/templates/landing/mobile.html:142
+msgid ""
+"The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the world's "
+"best mobile Web browser."
+msgstr ""
+"The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the world's "
+"best mobile Web browser."
+
+#: apps/docs/templates/docs/docs.html:41 apps/landing/templates/landing/home.html:202
+msgid "The scripting language that powers modern web applications."
+msgstr "The scripting language that powers modern web applications."
+
+#: apps/docs/templates/docs/docs.html:92
+msgid "Themes"
+msgstr "Themes"
+
+#: apps/landing/templates/landing/mozilla.html:63
+msgid "There are several ways you can use Mozilla code in your own project. Find everything you need to develop \"powered by Mozilla\" applications."
+msgstr "There are several ways you can use Mozilla code in your own project. Find everything you need to develop \"powered by Mozilla\" applications."
+
+#: apps/demos/templates/demos/detail.html:137 apps/demos/templates/demos/elements/submission_thumb.html:17
+msgid "There is {count} comment for this demo"
+msgid_plural "There are {count} comments for this demo"
+msgstr[0] "There is {count} comment for this demo"
+msgstr[1] "There are {count} comments for this demo"
+
+#: apps/devmo/models.py:35
+msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
+msgstr "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
+
+#: apps/contentflagging/models.py:21
+msgid "This contains inappropriate content"
+msgstr "This contains inappropriate content"
+
+#: apps/demos/templates/demos/detail.html:135 apps/demos/templates/demos/elements/submission_thumb.html:15
+msgid "This demo has been viewed {count} time"
+msgid_plural "This demo has been viewed {count} times"
+msgstr[0] "This demo has been viewed {count} time"
+msgstr[1] "This demo has been viewed {count} times"
+
+#: apps/demos/templates/demos/detail.html:243
+msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
+msgstr "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
+
+#: apps/contentflagging/models.py:20
+msgid "This is not working for me"
+msgstr "This is not working for me"
+
+#: apps/landing/templates/landing/learn_css.html:155
+#, fuzzy
+msgid ""
+"This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and "
+"so can't take advantage."
+msgstr ""
+"This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and "
+"so cant take advantage."
+
+#: apps/landing/templates/landing/learn_html.html:157
+#, fuzzy
+msgid ""
+"This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so can't "
+"take advantage."
+msgstr ""
+"This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so cant "
+"take advantage."
+
+#: apps/landing/templates/landing/learn_css.html:109 apps/landing/templates/landing/learn_css.html:114 apps/landing/templates/landing/learn_css.html:119
+#: apps/landing/templates/landing/learn_css.html:126 apps/landing/templates/landing/learn_css.html:131
+msgid "This site features CSS3"
+msgstr "This site features CSS3"
+
+#: apps/landing/templates/landing/learn_html.html:77 apps/landing/templates/landing/learn_html.html:82 apps/landing/templates/landing/learn_html.html:87
+#: apps/landing/templates/landing/learn_html.html:92 apps/landing/templates/landing/learn_html.html:97 apps/landing/templates/landing/learn_html.html:102
+#: apps/landing/templates/landing/learn_html.html:106 apps/landing/templates/landing/learn_html.html:129 apps/landing/templates/landing/learn_html.html:134
+msgid "This site features HTML5"
+msgstr "This site features HTML5"
+
+#: apps/landing/templates/landing/learn_css.html:34
+msgid "This tutorial introduces you to Cascading Style Sheets (CSS). It guides you through the basic features of CSS with practical examples that you can try for yourself on your own computer."
+msgstr "This tutorial introduces you to Cascading Style Sheets (CSS). It guides you through the basic features of CSS with practical examples that you can try for yourself on your own computer."
+
+#. Browsers and Plugins useful for viewing video content
+#: templates/includes/video_player.html:7
+msgid ""
+"This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a href=\"http://www.apple.com/safari/\">Safari</"
+"a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links provided."
+msgstr ""
+"This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a href=\"http://www.apple.com/safari/\">Safari</"
+"a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links provided."
+
+#: apps/contentflagging/models.py:22
+msgid "This was not created by the author"
+msgstr "This was not created by the author"
+
+#: apps/landing/templates/landing/learn_html.html:72
+msgid "Tips for Authoring Fast-loading HTML Pages"
+msgstr "Tips for Authoring Fast-loading HTML Pages"
+
+#: apps/landing/templates/landing/learn_javascript.html:129
+msgid "Tips on improving the download performance of pages containing JavaScript."
+msgstr "Tips on improving the download performance of pages containing JavaScript."
+
+#: apps/demos/helpers.py:371
+msgid "Today at %s"
+msgstr "Today at %s"
+
+#: apps/demos/__init__.py:255
+msgid "Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."
+msgstr "Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."
+
+#: apps/landing/templates/landing/addons.html:22 apps/landing/templates/landing/mobile.html:22 apps/landing/templates/landing/mozilla.html:22 apps/landing/templates/landing/web.html:22
+msgid "Twitter"
+msgstr "Twitter"
+
+#: apps/landing/templates/landing/learn_css.html:126
+msgid "Understanding CSS3 Transitions"
+msgstr "Understanding CSS3 Transitions"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:9
+msgid "Up and Coming"
+msgstr "Up and Coming"
+
+#: apps/demos/templates/demos/submit.html:148
+msgid "Upload demo file&hellip;"
+msgstr "Upload demo file&hellip;"
+
+#: apps/landing/templates/landing/addons.html:101
+msgid "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies."
+msgstr "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies."
+
+#: apps/landing/templates/landing/home.html:117
+msgid ""
+"Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a href=\"%(api)s"
+"\">variety of APIs in the core library</a> to add functionality to Firefox."
+msgstr ""
+"Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a href=\"%(api)s"
+"\">variety of APIs in the core library</a> to add functionality to Firefox."
+
+#: apps/demos/models.py:398
+msgid "Use navigation bar, display demo in <iframe>"
+msgstr "Use navigation bar, display demo in <iframe>"
+
+#: apps/landing/templates/landing/learn_html.html:58
+#, fuzzy
+msgid "Use these challenges to hone your HTML skills (for example, \"Should I use an &lt;h2&gt; element or a &lt;strong&gt; element?\"), focusing on meaningful mark-up."
+msgstr "Use these challenges to hone your HTML skills (for example, Should I use an &lt;h2&gt; element or a &lt;strong&gt; element?), focusing on meaningful mark-up."
+
+#: apps/landing/templates/landing/learn_css.html:114
+#, fuzzy
+msgid "Using CSS Transforms"
+msgstr "CSS Transforms"
+
+#: apps/landing/templates/landing/learn_css.html:49
+msgid "Using CSS from an external style sheet."
+msgstr "Using CSS from an external style sheet."
+
+#: apps/docs/templates/docs/docs.html:100 apps/landing/templates/landing/mozilla.html:61
+msgid "Using Mozilla code in other projects"
+msgstr "Using Mozilla code in other projects"
+
+#: apps/docs/templates/docs/docs.html:82
+msgid "Using geolocation"
+msgstr "Using geolocation"
+
+#: apps/landing/templates/landing/learn_css.html:90
+msgid "Using positioning for standards-compliant, table-free layout."
+msgstr "Using positioning for standards-compliant, table-free layout."
+
+#: apps/demos/__init__.py:204 apps/docs/templates/docs/glossary.html:16
+msgid "Video"
+msgstr "Video"
+
+#: apps/landing/templates/landing/learn_html.html:53
+msgid "Video tutorial on best practices and approaches for how to write good HTML code."
+msgstr "Video tutorial on best practices and approaches for how to write good HTML code."
+
+#: apps/landing/templates/landing/learn_javascript.html:47
+msgid "Video tutorial on making pages interactive with JavaScript"
+msgstr "Video tutorial on making pages interactive with JavaScript"
+
+#: apps/landing/templates/landing/learn_css.html:59
+msgid "Video tutorial on styling pages with CSS."
+msgstr "Video tutorial on styling pages with CSS."
+
+#: apps/demos/__init__.py:61 apps/demos/__init__.py:71 apps/demos/__init__.py:81 apps/demos/__init__.py:90 apps/demos/__init__.py:99 apps/demos/__init__.py:109 apps/demos/__init__.py:119
+#: apps/demos/__init__.py:129 apps/demos/__init__.py:149 apps/demos/__init__.py:159 apps/demos/__init__.py:169 apps/demos/__init__.py:179 apps/demos/__init__.py:189 apps/demos/__init__.py:199
+#: apps/demos/__init__.py:209 apps/demos/__init__.py:229 apps/demos/__init__.py:239 apps/demos/__init__.py:249 apps/demos/__init__.py:259
+msgid "W3C Spec"
+msgstr "W3C Spec"
+
+#: apps/landing/templates/landing/home.html:19
+msgid "Want to help make our network even better?"
+msgstr "Want to help make our network even better?"
+
+#: apps/landing/templates/landing/web.html:44
+msgid "Want to see what the Web is really capable of? Explore the Web o' Wonder website and prepare to be amazed!"
+msgstr "Want to see what the Web is really capable of? Explore the Web o' Wonder website and prepare to be amazed!"
+
+#: apps/landing/templates/landing/addons.html:73
+#, fuzzy
+msgid "Watch <span class=\"addons\">Add-on</span> Videos"
+msgstr "Favorite <span class=\"addons\">Add-on</span> Tools"
+
+#: apps/landing/templates/landing/mobile.html:93
+#, fuzzy
+msgid "Watch <span class=\"mobile\">Mobile</span> Videos"
+msgstr "Favorite <span class=\"mobile\">Mobile</span> Articles"
+
+#: apps/landing/templates/landing/addons.html:85
+msgid "Watch Myk Melez create an Add-on in 5 minutes using the new Add-on Builder!"
+msgstr "Watch Myk Melez create an Add-on in 5 minutes using the new Add-on Builder!"
+
+#: apps/landing/templates/landing/addons.html:79 apps/landing/templates/landing/mobile.html:99 apps/landing/templates/landing/mobile.html:115
+msgid "Watch this video"
+msgstr "Watch this video"
+
+#: apps/demos/templates/demos/submit.html:118
+msgid "We support YouTube and Vimeo"
+msgstr "We support YouTube and Vimeo"
+
+#: apps/devmo/__init__.py:24 apps/landing/templates/landing/web.html:11 apps/landing/templates/landing/web.html:17 templates/base.html:70 templates/base_compact.html:22
+msgid "Web"
+msgstr "Web"
+
+#: apps/landing/templates/landing/web.html:43
+#, fuzzy
+msgid "Web O' Wonder"
+msgstr "Web Workers"
+
+#: apps/docs/templates/docs/glossary.html:14
+msgid "Web Storage"
+msgstr "Web Storage"
+
+#: apps/demos/__init__.py:234 apps/docs/templates/docs/glossary.html:17
+msgid "Web Workers"
+msgstr "Web Workers"
+
+#: apps/demos/__init__.py:235
+msgid "Web Workers provide a simple means for web content to run scripts in background threads."
+msgstr "Web Workers provide a simple means for web content to run scripts in background threads."
+
+#: apps/landing/templates/landing/learn_html.html:117
+#, fuzzy
+msgid "Web o' Wonder"
+msgstr "Web Workers"
+
+#: apps/demos/__init__.py:214 apps/docs/templates/docs/glossary.html:13
+msgid "WebGL"
+msgstr "WebGL"
+
+#: apps/demos/__init__.py:224
+#, fuzzy
+msgid "WebSockets"
+msgstr "Web Workers"
+
+#: apps/demos/__init__.py:225
+msgid "WebSockets is a technology that makes it possible to open an interactive communication session between the user's browser and a server."
+msgstr "WebSockets is a technology that makes it possible to open an interactive communication session between the user's browser and a server."
+
+#: templates/includes/login.html:2 templates/includes/login.html:9
+msgid "Welcome back"
+msgstr "Welcome back"
+
+#: apps/landing/templates/landing/addons.html:16
+#, fuzzy
+msgid "Welcome to the Add-ons Developer Community:"
+msgstr "Correspondence on Twitter from the Add-ons developer community."
+
+#: apps/landing/templates/landing/mobile.html:16
+#, fuzzy
+msgid "Welcome to the Mobile Developer Community:"
+msgstr "Welcome to the Mozilla Developer Network, a.k.a.:"
+
+#: apps/landing/templates/landing/mozilla.html:16
+#, fuzzy
+msgid "Welcome to the Mozilla Developer Community:"
+msgstr "Welcome to the Mozilla Developer Network, a.k.a.:"
+
+#. a.k.a. stands for 'also known as'. Followed by 'DEVMO'.
+#: apps/landing/templates/landing/home.html:10
+msgid "Welcome to the Mozilla Developer Network, a.k.a.:"
+msgstr "Welcome to the Mozilla Developer Network, a.k.a.:"
+
+#: apps/landing/templates/landing/web.html:16
+#, fuzzy
+msgid "Welcome to the Web Developer Community:"
+msgstr "Correspondence on Twitter from the Web developer community."
+
+#: apps/landing/templates/landing/learn_css.html:39
+msgid "What CSS is, how to apply it to HTML, and what basic CSS syntax looks like."
+msgstr "What CSS is, how to apply it to HTML, and what basic CSS syntax looks like."
+
+#: apps/landing/templates/landing/learn_html.html:33
+msgid ""
+"What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth."
+msgstr ""
+"What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth."
+
+#: apps/landing/templates/landing/learn_css.html:44
+msgid "What are classes in CSS?"
+msgstr "What are classes in CSS?"
+
+#: templates/base.html:95
+msgid "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us."
+msgstr "What do you think of the new MDN? Please <a href=\"%(uservoice_url)s\">share your feedback</a> with us."
+
+#: apps/landing/templates/landing/learn_javascript.html:32
+msgid "What is JavaScript and how can it help you?"
+msgstr "What is JavaScript and how can it help you?"
+
+#: apps/landing/templates/landing/learn_javascript.html:103
+msgid "What is the Document Object Model, and why is it useful? This article gives you a gentle introduction to this powerful JavaScript feature."
+msgstr "What is the Document Object Model, and why is it useful? This article gives you a gentle introduction to this powerful JavaScript feature."
+
+#: apps/landing/templates/landing/mozilla.html:45
+msgid "Whether you're an old hand or just getting started, this is the best way to get started with Mozilla development."
+msgstr "Whether you're an old hand or just getting started, this is the best way to get started with Mozilla development."
+
+#: apps/landing/templates/landing/learn_javascript.html:122
+msgid "Which JavaScript Framework?"
+msgstr "Which JavaScript Framework?"
+
+#: apps/landing/templates/landing/mobile.html:107
+msgid "Why Sync up, Security and More"
+msgstr "Why Sync up, Security and More"
+
+#: apps/demos/__init__.py:60 apps/demos/__init__.py:70 apps/demos/__init__.py:80 apps/demos/__init__.py:108 apps/demos/__init__.py:118 apps/demos/__init__.py:128 apps/demos/__init__.py:138
+#: apps/demos/__init__.py:148 apps/demos/__init__.py:158 apps/demos/__init__.py:168 apps/demos/__init__.py:178 apps/demos/__init__.py:188 apps/demos/__init__.py:198 apps/demos/__init__.py:208
+#: apps/demos/__init__.py:218 apps/demos/__init__.py:228 apps/demos/__init__.py:238 apps/demos/__init__.py:248 apps/demos/__init__.py:258
+msgid "Wikipedia Article"
+msgstr "Wikipedia Article"
+
+#: apps/landing/templates/landing/newsfeed.html:12
+msgid "Written by %(authorlink)s on %(entrydate)s"
+msgstr "Written by %(authorlink)s on %(entrydate)s"
+
+#: apps/demos/__init__.py:244
+msgid "XMLHttpRequest"
+msgstr "XMLHttpRequest"
+
+#: apps/demos/__init__.py:245
+msgid "XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."
+msgstr "XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."
+
+#: apps/demos/templates/demos/detail.html:97 apps/demos/templates/demos/launch.html:44
+msgid "You Like"
+msgstr "You Like"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:13
+msgid "You are viewing demos by most likes"
+msgstr "You are viewing demos by most likes"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:14
+msgid "You are viewing demos by most recently submitted"
+msgstr "You are viewing demos by most recently submitted"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:12
+msgid "You are viewing demos by most views"
+msgstr "You are viewing demos by most views"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:9
+msgid "You are viewing up and coming demos"
+msgstr "You are viewing up and coming demos"
+
+#: apps/demos/templates/demos/detail.html:97 apps/demos/templates/demos/launch.html:44
+msgid "You like this demo. Undo?"
+msgstr "You like this demo. Undo?"
+
+#: apps/landing/templates/landing/mobile.html:20
+msgid "You took back the Web. Now take it with you."
+msgstr "You took back the Web. Now take it with you."
+
+#: apps/landing/templates/landing/web.html:74
+msgid "You'll find everything you need in the CSS reference and helpful tutorials to build pretty websites."
+msgstr "You'll find everything you need in the CSS reference and helpful tutorials to build pretty websites."
+
+#: apps/landing/templates/landing/mobile.html:79
+msgid ""
+"Your help is vital to the success of Firefox. Provide feedback on our <a href=\"%(irc_url)s\">IRC channel</a>, <a href=\"%(meeting_url)s\">join our Wednesday development meeting</a>, or even <a "
+"href=\"%(bugzilla_url)s\">file some bugs</a>."
+msgstr ""
+"Your help is vital to the success of Firefox. Provide feedback on our <a href=\"%(irc_url)s\">IRC channel</a>, <a href=\"%(meeting_url)s\">join our Wednesday development meeting</a>, or even <a "
+"href=\"%(bugzilla_url)s\">file some bugs</a>."
+
+#: apps/demos/models.py:582
+#, fuzzy
+msgid "ZIP file contains a file that is too large: %(filename)s"
+msgstr "ZIP file contains files that are too large"
+
+#: apps/demos/models.py:592
+#, fuzzy
+msgid "ZIP file contains an unacceptable file: %(filename)s"
+msgstr "ZIP file contains no acceptable files"
+
+#: apps/demos/models.py:560 apps/demos/models.py:567
+msgid "ZIP file contains no acceptable files"
+msgstr "ZIP file contains no acceptable files"
+
+#: apps/demos/models.py:563
+msgid "ZIP file corrupted"
+msgstr "ZIP file corrupted"
+
+#: apps/demos/views.py:70 apps/demos/views.py:236 apps/demos/views.py:260 apps/demos/views.py:273 apps/demos/views.py:286
+msgid "access denied"
+msgstr "access denied"
+
+#: apps/demos/templates/demos/detail.html:54
+#, fuzzy
+msgid "by %(creator_link)s on %(create_date)s"
+msgstr "Written by %(authorlink)s on %(entrydate)s"
+
+#: apps/demos/templates/demos/launch.html:34
+msgid "by %(profile_link)s"
+msgstr "by %(profile_link)s"
+
+#: apps/demos/models.py:395
+msgid "control how your demo is launched"
+msgstr "control how your demo is launched"
+
+#: apps/contentflagging/models.py:65
+msgid "current status of flag review"
+msgstr "current status of flag review"
+
+#: apps/demos/models.py:464
+msgid "date created"
+msgstr "date created"
+
+#: apps/actioncounters/models.py:90 apps/contentflagging/models.py:99 apps/demos/models.py:466
+msgid "date last modified"
+msgstr "date last modified"
+
+#: apps/contentflagging/models.py:96
+msgid "date submitted"
+msgstr "date submitted"
+
+#: apps/demos/helpers.py:229
+msgid "day"
+msgid_plural "days"
+msgstr[0] "zi"
+msgstr[1] "zile"
+
+#: apps/demos/models.py:388
+msgid "describe your demo in more detail (optional)"
+msgstr "describe your demo in more detail (optional)"
+
+#: apps/demos/models.py:385
+msgid "describe your demo in one line"
+msgstr "describe your demo in one line"
+
+#: apps/landing/templates/landing/web.html:93
+msgid "geckoday via AMO"
+msgstr "geckoday via AMO"
+
+#: apps/demos/models.py:443
+msgid "have a video of your demo in action? (optional)"
+msgstr "have a video of your demo in action? (optional)"
+
+#: apps/demos/__init__.py:293
+msgid "http://creativecommons.org/publicdomain/zero/1.0/"
+msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
+
+#: apps/demos/__init__.py:129
+msgid "http://dev.w3.org/geo/api/spec-source.html"
+msgstr "http://dev.w3.org/geo/api/spec-source.html"
+
+#: apps/demos/__init__.py:149
+msgid "http://dev.w3.org/html5/spec/Overview.html"
+msgstr "http://dev.w3.org/html5/spec/Overview.html"
+
+#: apps/demos/__init__.py:229
+msgid "http://dev.w3.org/html5/websockets/"
+msgstr "http://dev.w3.org/html5/websockets/"
+
+#: apps/demos/__init__.py:189
+msgid "http://dev.w3.org/html5/webstorage/"
+msgstr "http://dev.w3.org/html5/webstorage/"
+
+#: apps/demos/__init__.py:70
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Canvas_element"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:80
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:168
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:60
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/HTML5_audio"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:208
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/HTML5_video"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:118
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/HTML_forms"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:148
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Html5"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:158
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/IndexedDB"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:138
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/JavaScript"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:178
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Mobile_web"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/landing/templates/landing/home.html:15
+msgid "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:258
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Multi-touch"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:198
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:128
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:218
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/WebGL"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:228
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Web_Sockets"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:188
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Web_Storage"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:238
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Web_Workers"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:108
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/Web_typography"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:248
+#, fuzzy
+msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
+msgstr "http://en.wikipedia.org/wiki/Mozilla_Developer_Center"
+
+#: apps/demos/__init__.py:287
+msgid "http://www.apache.org/licenses/"
+msgstr "http://www.apache.org/licenses/"
+
+#: apps/demos/__init__.py:139
+msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+
+#: apps/demos/__init__.py:219
+msgid "http://www.khronos.org/webgl/"
+msgstr "http://www.khronos.org/webgl/"
+
+#: apps/demos/__init__.py:269
+msgid "http://www.mozilla.org/MPL/"
+msgstr "http://www.mozilla.org/MPL/"
+
+#: apps/demos/__init__.py:281
+msgid "http://www.opensource.org/licenses/bsd-license.php"
+msgstr "http://www.opensource.org/licenses/bsd-license.php"
+
+#: apps/demos/__init__.py:275
+msgid "http://www.opensource.org/licenses/gpl-license.php"
+msgstr "http://www.opensource.org/licenses/gpl-license.php"
+
+#: apps/demos/__init__.py:259
+msgid "http://www.w3.org/2010/webevents/charter/"
+msgstr "http://www.w3.org/2010/webevents/charter/"
+
+#: apps/demos/__init__.py:179
+msgid "http://www.w3.org/Mobile/"
+msgstr "http://www.w3.org/Mobile/"
+
+#: apps/demos/__init__.py:99
+msgid "http://www.w3.org/TR/FileAPI/"
+msgstr "http://www.w3.org/TR/FileAPI/"
+
+#: apps/demos/__init__.py:159
+msgid "http://www.w3.org/TR/IndexedDB/"
+msgstr "http://www.w3.org/TR/IndexedDB/"
+
+#: apps/demos/__init__.py:199
+msgid "http://www.w3.org/TR/SVG11/"
+msgstr "http://www.w3.org/TR/SVG11/"
+
+#: apps/demos/__init__.py:249
+msgid "http://www.w3.org/TR/XMLHttpRequest/"
+msgstr "http://www.w3.org/TR/XMLHttpRequest/"
+
+#: apps/demos/__init__.py:109
+msgid "http://www.w3.org/TR/css3-fonts/"
+msgstr "http://www.w3.org/TR/css3-fonts/"
+
+#: apps/demos/__init__.py:90
+msgid "http://www.w3.org/TR/css3-mediaqueries/"
+msgstr "http://www.w3.org/TR/css3-mediaqueries/"
+
+#: apps/demos/__init__.py:81
+msgid "http://www.w3.org/TR/css3-roadmap/"
+msgstr "http://www.w3.org/TR/css3-roadmap/"
+
+#: apps/demos/__init__.py:169
+msgid "http://www.w3.org/TR/html5/dnd.html"
+msgstr "http://www.w3.org/TR/html5/dnd.html"
+
+#: apps/demos/__init__.py:119
+msgid "http://www.w3.org/TR/html5/forms.html"
+msgstr "http://www.w3.org/TR/html5/forms.html"
+
+#: apps/demos/__init__.py:71
+msgid "http://www.w3.org/TR/html5/the-canvas-element.html"
+msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
+
+#: apps/demos/__init__.py:209
+msgid "http://www.w3.org/TR/html5/video.html"
+msgstr "http://www.w3.org/TR/html5/video.html"
+
+#: apps/demos/__init__.py:61
+msgid "http://www.w3.org/TR/html5/video.html#audio"
+msgstr "http://www.w3.org/TR/html5/video.html#audio"
+
+#: apps/demos/__init__.py:239
+msgid "http://www.w3.org/TR/workers/"
+msgstr "http://www.w3.org/TR/workers/"
+
+#: apps/demos/__init__.py:177
+msgid "https://developer.mozilla.org/En/Mobile"
+msgstr "https://developer.mozilla.org/En/Mobile"
+
+#: apps/demos/__init__.py:207
+msgid "https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox"
+msgstr "https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox"
+
+#: apps/demos/__init__.py:127
+msgid "https://developer.mozilla.org/En/Using_geolocation"
+msgstr "https://developer.mozilla.org/En/Using_geolocation"
+
+#: apps/demos/__init__.py:237
+msgid "https://developer.mozilla.org/En/Using_web_workers"
+msgstr "https://developer.mozilla.org/En/Using_web_workers"
+
+#: apps/demos/__init__.py:247
+msgid "https://developer.mozilla.org/En/XMLHttpRequest/Using_XMLHttpRequest"
+msgstr "https://developer.mozilla.org/En/XMLHttpRequest/Using_XMLHttpRequest"
+
+#: apps/demos/__init__.py:79
+msgid "https://developer.mozilla.org/en/CSS"
+msgstr "https://developer.mozilla.org/en/CSS"
+
+#: apps/demos/__init__.py:257
+msgid "https://developer.mozilla.org/en/DOM/Touch_events"
+msgstr "https://developer.mozilla.org/en/DOM/Touch_events"
+
+#: apps/demos/__init__.py:89
+msgid "https://developer.mozilla.org/en/Detecting_device_orientation"
+msgstr "https://developer.mozilla.org/en/Detecting_device_orientation"
+
+#: apps/demos/__init__.py:167
+msgid "https://developer.mozilla.org/en/DragDrop/Drag_and_Drop"
+msgstr "https://developer.mozilla.org/en/DragDrop/Drag_and_Drop"
+
+#: apps/demos/__init__.py:69
+msgid "https://developer.mozilla.org/en/HTML/Canvas"
+msgstr "https://developer.mozilla.org/en/HTML/Canvas"
+
+#: apps/demos/__init__.py:147
+msgid "https://developer.mozilla.org/en/HTML/HTML5"
+msgstr "https://developer.mozilla.org/en/HTML/HTML5"
+
+#: apps/demos/__init__.py:117
+msgid "https://developer.mozilla.org/en/HTML/HTML5/Forms_in_HTML5"
+msgstr "https://developer.mozilla.org/en/HTML/HTML5/Forms_in_HTML5"
+
+#: apps/demos/__init__.py:157
+msgid "https://developer.mozilla.org/en/IndexedDB"
+msgstr "https://developer.mozilla.org/en/IndexedDB"
+
+#: apps/demos/__init__.py:59
+msgid "https://developer.mozilla.org/en/Introducing_the_Audio_API_Extension"
+msgstr "https://developer.mozilla.org/en/Introducing_the_Audio_API_Extension"
+
+#: apps/demos/__init__.py:197
+msgid "https://developer.mozilla.org/en/SVG"
+msgstr "https://developer.mozilla.org/en/SVG"
+
+#: apps/demos/__init__.py:217
+msgid "https://developer.mozilla.org/en/WebGL"
+msgstr "https://developer.mozilla.org/en/WebGL"
+
+#: apps/demos/__init__.py:227
+msgid "https://developer.mozilla.org/en/WebSockets"
+msgstr "https://developer.mozilla.org/en/WebSockets"
+
+#: apps/demos/__init__.py:107
+msgid "https://developer.mozilla.org/en/css/@font-face"
+msgstr "https://developer.mozilla.org/en/css/@font-face"
+
+#: apps/demos/__init__.py:187
+msgid "https://developer.mozilla.org/en/dom/storage#localStorage"
+msgstr "https://developer.mozilla.org/en/dom/storage#localStorage"
+
+#: apps/demos/__init__.py:137
+msgid "https://developer.mozilla.org/en/javascript"
+msgstr "https://developer.mozilla.org/en/javascript"
+
+#: apps/demos/__init__.py:98
+msgid "https://developer.mozilla.org/en/using_files_from_web_applications"
+msgstr "https://developer.mozilla.org/en/using_files_from_web_applications"
+
+#: apps/demos/helpers.py:227
+msgid "month"
+msgid_plural "months"
+msgstr[0] "lună"
+msgstr[1] "luni"
+
+#: apps/actioncounters/models.py:75
+msgid "name of the action"
+msgstr "name of the action"
+
+#: apps/actioncounters/models.py:71 apps/contentflagging/models.py:78
+msgid "object ID"
+msgstr "object ID"
+
+#: apps/contentflagging/models.py:71
+msgid "please explain what content you feel is inappropriate"
+msgstr "please explain what content you feel is inappropriate"
+
+#: apps/contentflagging/models.py:68
+msgid "reason for flagging the content"
+msgstr "reason for flagging the content"
+
+#: apps/demos/templates/demos/home.html:65
+msgid "recent"
+msgstr "recent"
+
+#: apps/demos/models.py:447
+msgid "select a ZIP file containing your demo"
+msgstr "select a ZIP file containing your demo"
+
+#: apps/demos/models.py:408
+msgid "select up to 5 tags that describe your demo"
+msgstr "select up to 5 tags that describe your demo"
+
+#: apps/demos/models.py:382
+msgid "slug"
+msgstr "slug"
+
+#: apps/demos/helpers.py:228
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] "săptămână"
+msgstr[1] "săptămâni"
+
+#: apps/demos/models.py:380
+msgid "what is your demo's name?"
+msgstr "what is your demo's name?"
+
+#: apps/demos/helpers.py:226
+#, fuzzy
+msgid "year"
+msgid_plural "years"
+msgstr[0] "Search Results"
+msgstr[1] "Search Results"
+
+#: apps/demos/templates/demos/detail.html:137
+msgid "{comment_count} comments"
+msgstr "{comment_count} comments"
+
+#: apps/demos/templates/demos/detail.html:187
+msgid "{comments_total} comment so far"
+msgid_plural "{comments_total} comments so far"
+msgstr[0] "{comments_total} comment so far"
+msgstr[1] "{comments_total} comments so far"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:6
+msgid "{count} Demo"
+msgid_plural "{count} Demos"
+msgstr[0] "{count} Demo"
+msgstr[1] "{count} Demos"
+
+#: apps/demos/templates/demos/detail.html:136
+msgid "{count} like"
+msgid_plural "{count} likes"
+msgstr[0] "{count} like"
+msgstr[1] "{count} likes"
+
+#: apps/demos/templates/demos/detail.html:136 apps/demos/templates/demos/elements/submission_thumb.html:16
+msgid "{count} person liked this demo"
+msgid_plural "{count} people liked this demo"
+msgstr[0] "{count} person liked this demo"
+msgstr[1] "{count} people liked this demo"
+
+#: apps/demos/templates/demos/detail.html:135
+msgid "{count} view"
+msgid_plural "{count} views"
+msgstr[0] "{count} view"
+msgstr[1] "{count} views"
+
+#: apps/demos/templates/demos/profile_detail.html:8
+msgid "{display_name}"
+msgstr "{display_name}"
+
+#: apps/demos/templates/demos/elements/submission_listing.html:47
+msgid "{start}&ndash;{end} of {total}"
+msgstr "{start}&ndash;{end} of {total}"
+
+#: apps/demos/templates/demos/delete.html:10 apps/demos/templates/demos/delete_comment.html:10 apps/demos/templates/demos/detail.html:8 apps/demos/templates/demos/flag.html:10
+#: apps/demos/templates/demos/launch.html:6 apps/demos/templates/demos/listing_all.html:5 apps/demos/templates/demos/listing_search.html:10 apps/demos/templates/demos/listing_tag.html:5
+#: apps/demos/templates/demos/profile_detail.html:8 apps/demos/templates/demos/submit.html:8 apps/demos/templates/demos/submit.html:10 apps/demos/templates/demos/submit_noauth.html:10
+#: apps/demos/templates/demos/terms.html:10
+msgid "{subtitle} | Demo Studio"
+msgstr "{subtitle} | Demo Studio"
+
+#: apps/demos/templates/demos/listing_tag.html:5
+msgid "{tag_title} Demos"
+msgstr "{tag_title} Demos"
+
+#: apps/landing/templates/sidebar/twitter.html:16
+msgid "{timedelta} ago"
+msgstr "{timedelta} ago"
+
+#~ msgid "Applications"
+#~ msgstr "Applications"
+
+#~ msgid "Apps"
+#~ msgstr "Apps"
+
+#~ msgid "Correspondence on Twitter from around the Mozilla Developer Network."
+#~ msgstr "Correspondence on Twitter from around the Mozilla Developer Network."
+
+#~ msgid "Correspondence on Twitter from the Applications developer community."
+#~ msgstr "Correspondence on Twitter from the Applications developer community."
+
+#~ msgid "Could you be the big winner?"
+#~ msgstr "Could you be the big winner?"
+
+#~ msgid ""
+#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until "
+#~ "<strong>January 7, 2011</strong>. Good luck!"
+#~ msgstr ""
+#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until "
+#~ "<strong>January 7, 2011</strong>. Good luck!"
+
+#~ msgid "Favorite <span class=\"apps\">Applications</span> Tools"
+#~ msgstr "Favorite <span class=\"apps\">Applications</span> Tools"
+
+#~ msgid "Filetype not supported."
+#~ msgstr "Filetype not supported."
+
+#~ msgid "For the latest in open Web technologies, these cool demos are a great way to discover new documentation."
+#~ msgstr "For the latest in open Web technologies, these cool demos are a great way to discover new documentation."
+
+#~ msgid "Highlights From Around the Network"
+#~ msgstr "Highlights From Around the Network"
+
+#, fuzzy
+#~ msgid "Javascript"
+#~ msgstr "JavaScript"
+
+#~ msgid "Join the Apps discussions!"
+#~ msgstr "Join the Apps discussions!"
+
+#, fuzzy
+#~ msgid "Mobile Add-ons Cup"
+#~ msgstr "Build Great Mobile Add-ons"
+
+#~ msgid "Popular <span class=\"apps\">Applications</span> Documentation"
+#~ msgstr "Popular <span class=\"apps\">Applications</span> Documentation"
+
+#~ msgid "Recent <span class=\"apps\">Applications</span> News &amp; Updates"
+#~ msgstr "Recent <span class=\"apps\">Applications</span> News &amp; Updates"
+
+#, fuzzy
+#~ msgid "Welcome to the Apps Developer Community:"
+#~ msgstr "Welcome to the Mozilla Developer Network, a.k.a.:"

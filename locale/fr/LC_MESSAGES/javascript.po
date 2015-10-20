@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-04 07:47-0700\n"
+"PO-Revision-Date: 2013-12-02 13:57+0000\n"
+"Last-Translator: Frédéric <fredbourgeon@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Translate Toolkit 1.13.0\n"
+"X-POOTLE-MTIME: 1385992653.0\n"
+
+#~ msgid "Launch"
+#~ msgstr "Lancer"
+
+#~ msgid "Article Title Lookup / Link Text"
+#~ msgstr "Recherche d'article par titre / texte du lien"
+
+#~ msgid "Attachments"
+#~ msgstr "Pièces jointes"
+
+#~ msgid "Syntax Highlighter"
+#~ msgstr "Coloration syntaxique"
+
+#~ msgid "No Highlight"
+#~ msgstr "Pas de coloration"

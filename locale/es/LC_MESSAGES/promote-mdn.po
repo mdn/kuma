@@ -1,0 +1,201 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
+"POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
+"PO-Revision-Date: 2014-03-16 19:09+0000\n"
+"Last-Translator: Inma <inma.barrios@mozilla-hispano.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.5.0\n"
+"X-POOTLE-MTIME: 1394996948.0\n"
+
+#: promote-mdn.php:190
+msgid "Reloaded values from the URL."
+msgstr "Valores recargados desde la URL."
+
+#: promote-mdn.php:208
+msgid "Plugin settings saved."
+msgstr "Opciones de plugins guardadas."
+
+#: promote-mdn.php:245
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+"MDN es tu caja de herramientas de desarrollador web para documentos, demos y "
+"mucho más sobre HTML, CSS, JavaScript y otros estándares web y tecnologías "
+"abiertas."
+
+#: promote-mdn.php:248
+msgid ""
+"MDN is the best online resource - for web developers, by web developers."
+msgstr ""
+"MDN es el mejor recurso en línea: para desarrolladores web, por "
+"desarrolladores web."
+
+#: promote-mdn.php:249
+msgid ""
+"Promote MDN automatically links keywords and phrases in your posts and pages "
+"to MDN URLs."
+msgstr ""
+"Enlaza automáticamente palabras clave y frases de tus publicaciones y "
+"páginas a las URL de MDN."
+
+#: promote-mdn.php:256
+msgid "Settings"
+msgstr "Opciones"
+
+#: promote-mdn.php:257
+msgid "Load keywords from URL"
+msgstr "Cargar palabras clave desde URL"
+
+#: promote-mdn.php:257
+msgid "Preview"
+msgstr "Vista previa"
+
+#: promote-mdn.php:258
+msgid "Use keywords and links specifically for %s"
+msgstr "Usar palabras clave y enlaces específicamente para %s"
+
+#: promote-mdn.php:259
+msgid "Reload keywords after (seconds):"
+msgstr "Recargar palabras claves después de (segundos):"
+
+#: promote-mdn.php:260
+msgid "Reload now"
+msgstr "Recargar ahora"
+
+#: promote-mdn.php:262
+msgid "Add links to RSS feeds"
+msgstr "Agregar enlaces a canales RSS"
+
+#: promote-mdn.php:263
+msgid "Open links in new window"
+msgstr "Abrir enlaces en una nueva ventana"
+
+#: promote-mdn.php:266
+msgid "Exceptions"
+msgstr "Excepciones"
+
+#: promote-mdn.php:267
+msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+msgstr "No agregues enlaces en etiquetas de encabezados (h1,h2,h3,h4,h5,h6)."
+
+#: promote-mdn.php:268
+msgid ""
+"Do not add links to the following posts or pages (comma-separated id, slug, "
+"name):"
+msgstr ""
+"No agregues enlaces a las siguientes entradas o páginas (id separados por "
+"comas, enlaces amigables o slugs, nombre):"
+
+#: promote-mdn.php:270
+msgid "Do not add links on the following phrases (comma-separated):"
+msgstr "No agregues enlaces en las siguientes frases (separadas por comas):"
+
+#: promote-mdn.php:274
+msgid "Limits"
+msgstr "Límites"
+
+#: promote-mdn.php:275
+msgid "Max links to generate per post:"
+msgstr "Cantidad máxima de enlaces para generar por entrada:"
+
+#: promote-mdn.php:276
+msgid "Max links to generate for a single keyword/phrase:"
+msgstr ""
+"Cantidad máxima de enlaces para generar por una única palabra clave/frase:"
+
+#: promote-mdn.php:277
+msgid "Max links to generate for a single URL:"
+msgstr "Cantidad máxima de enlaces para generar por una única URL:"
+
+#: promote-mdn.php:280
+msgid "Custom Keywords"
+msgstr "Palabras claves personalizadas"
+
+#: promote-mdn.php:281
+msgid ""
+"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
+"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr ""
+"Palabras claves adicionales para enlazar automáticamente. Separa las "
+"palabras clave con comas y agrega al final la URL de destino. Usa un salto "
+"de línea para introducir cada URL y conjunto de palabras clave, p. ej.,"
+
+#: promote-mdn.php:288
+msgid ""
+"Note: These keywords will take priority over those loaded at the URL. If you "
+"have too many custom keywords here, you may not link to MDN at all."
+msgstr ""
+"Nota: Estas palabras clave tendrán prioridad sobre las que se cargan en la "
+"URL. Si tienes demasiadas palabras clave personalizadas, no podrás enlazar a "
+"MDN."
+
+#: promote-mdn.php:289
+msgid "Update options"
+msgstr "Actualizar opciones"
+
+#: promote-mdn.php:312
+msgid ""
+"Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
+"configure."
+msgstr ""
+"¡Gracias por la instalación! Ve a la página de <a href=\"%s\">ajustes</a> para "
+"realizar la configuración."
+
+#: promote-mdn.php:313
+msgid ""
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
+"\">setting</a> for a locale-specific URL for keywords."
+msgstr ""
+"traducción en francés, nuevo <a href=\"%s\">widget</a> en panel lateral, <a "
+"href=\"%s\">ajustes</a> para crear una URL específica de un idioma y las "
+"palabras clave."
+
+#. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
+msgid "Promote MDN"
+msgstr "Promote MDN"
+
+#: promote-mdn.php:352
+msgid "hide"
+msgstr "ocultar"
+
+#: promote-mdn.php:376
+msgid "Sidebar image and links to MDN."
+msgstr "Imagen del panel lateral y los enlaces a MDN."
+
+#: promote-mdn.php:390
+msgid "Help Promote MDN!"
+msgstr "¡Ayuda a promover MDN!"
+
+#: promote-mdn.php:391
+msgid "Get the WordPress plugin"
+msgstr "Obtén el plugin de WordPress"
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/groovecoder/wp-promote-mdn"
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
+
+#. Description of the plugin/theme
+msgid "Promote MDN automatically links keywords phrases to MDN docs"
+msgstr ""
+"Promote MDN enlaza automáticamente palabras clave con la documentación en "
+"MDN"
+
+#. Author of the plugin/theme
+msgid "Luke Crouch"
+msgstr "Luke Crouch"
+
+#. Author URI of the plugin/theme
+msgid "http://groovecoder.com"
+msgstr "http://groovecoder.com"
