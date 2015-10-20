@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-15 05:54-0700\n"
-"PO-Revision-Date: 2015-10-20 18:03+0000\n"
+"PO-Revision-Date: 2015-10-20 18:23+0000\n"
 "Last-Translator: Matjaž <m@owca.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: my\n"
@@ -12,26 +12,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1445364191.0\n"
+"X-POOTLE-MTIME: 1445365393.0\n"
 
 #: kuma/actioncounters/models.py:47
 #: kuma/contentflagging/models.py:112
 msgid "object ID"
-msgstr "TEST"
+msgstr ""
 
 #: kuma/actioncounters/models.py:49
 msgid "name of the action"
-msgstr "TEST"
+msgstr ""
 
 #: kuma/actioncounters/models.py:67
 #: kuma/contentflagging/models.py:128
 #: kuma/demos/models.py:468
 msgid "date last modified"
-msgstr "TEST"
+msgstr ""
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr "TEST"
+msgstr ""
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
