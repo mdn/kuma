@@ -553,9 +553,7 @@ TEXT_DOMAIN = 'django'
 # files. See the following URL for an example of how to set these domains
 # in DOMAIN_METHODS.
 # http://github.com/jbalogh/zamboni/blob/d4c64239c24aa2f1e91276909823d1d1b290f0ee/settings.py#L254
-STANDALONE_DOMAINS = [
-    'javascript',
-]
+STANDALONE_DOMAINS = ['django', 'javascript']
 STATICI18N_DOMAIN = 'javascript'
 
 # If you have trouble extracting strings with Tower, try setting this
