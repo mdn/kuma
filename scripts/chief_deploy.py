@@ -14,9 +14,12 @@ from commander.deploy import task, hostgroups
 
 import commander_settings as settings
 
-# Setup venv path
-venv_bin_path = os.path.join(settings.VENV_DIR, 'bin')
-os.environ['PATH'] = venv_bin_path + os.pathsep + os.environ['PATH']
+# Setup local executable paths
+os.environ['PATH'] = os.pathsep.join([
+    os.path.join(settings.VENV_DIR, 'bin'),  # python virtualenv executables
+    '/usr/local/bin',  # node global executables
+    os.environ['PATH']])  # The existing paths
+
 
 @task
 def update_code(ctx, tag):
@@ -56,19 +59,23 @@ def deploy_app(ctx):
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
     ctx.remote("service httpd restart")
 
+
 @hostgroups(settings.WEB_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def deploy_kumascript(ctx):
     ctx.remote("/usr/bin/supervisorctl stop all; /usr/bin/killall nodejs; /usr/bin/supervisorctl start all")
+
 
 @hostgroups(settings.WEB_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def prime_app(ctx):
     for http_port in range(80, 82):
         ctx.remote("for i in {1..10}; do curl -so /dev/null -H 'Host: %s' -I http://localhost:%s/ & sleep 1; done" % (settings.REMOTE_HOSTNAME, http_port))
 
+
 @hostgroups(settings.CELERY_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def update_celery(ctx):
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
     ctx.remote('/usr/bin/supervisorctl mrestart celery\*')
+
 
 # As far as I can tell, Chief does not pass the username to commander,
 # so I can't give a username here: (
@@ -79,6 +86,7 @@ def ping_newrelic(ctx):
     tag = f.read()
     f.close()
     ctx.local('curl --silent -H "x-api-key:%s" -d "deployment[app_name]=%s" -d "deployment[revision]=%s" -d "deployment[user]=Chief" https://rpm.newrelic.com/deployments.xml' % (settings.NEWRELIC_API_KEY, settings.REMOTE_HOSTNAME, tag))
+
 
 @task
 def update_info(ctx):
