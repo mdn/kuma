@@ -1,21 +1,21 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-04 07:47-0700\n"
-"PO-Revision-Date: 2015-09-03 11:39+0000\n"
-"Last-Translator: Peter <petercpg@mail.moztw.org>\n"
+"PO-Revision-Date: 2015-10-21 16:14+0000\n"
+"Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1441280351.0\n"
 
-#: kuma/actioncounters/models.py:46
-#: kuma/contentflagging/models.py:111
+#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
 msgstr "物件 ID"
 
@@ -23,8 +23,7 @@ msgstr "物件 ID"
 msgid "name of the action"
 msgstr "行為名稱"
 
-#: kuma/actioncounters/models.py:66
-#: kuma/contentflagging/models.py:128
+#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128
 #: kuma/demos/models.py:455
 msgid "date last modified"
 msgstr "最新修改日期"
@@ -45,7 +44,8 @@ msgstr "此類型的檔案不被允許。"
 msgid "The file provided is not valid. File must be one of these types: %s."
 msgstr "您所提供的檔案無效，檔案類型必須是下列的其中一種: %s。"
 
-#. {n} is the revision number, {t} is the title of the document. {c} is the category.
+#. {n} is the revision number, {t} is the title of the document. {c} is the
+#. category.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
 msgid "Attachment {n} | {t}"
 msgstr "附件 {n} | {t}"
@@ -213,8 +213,8 @@ msgstr "這組金鑰還沒被使用過。"
 msgid ""
 "These are your API keys. They're useful for building applications that "
 "perform tasks on MDN on your behalf. If you have stopped using any of them, "
-"or suspect one has been exposed to parties you don't trust with your account "
-"delete the key. It's easy to create a replacement key at any time."
+"or suspect one has been exposed to parties you don't trust with your account"
+" delete the key. It's easy to create a replacement key at any time."
 msgstr ""
 "這些是您的 API 金鑰，在您要用您的身分在 MDN "
 "上打造軟體做事情的時候會用到。若您已經不再使用任何一把金鑰，或是懷疑您的金鑰被洩漏給不受信任的人的時候請刪除該金鑰。您隨時都能打造新的替代金鑰。"
@@ -237,18 +237,17 @@ msgstr "歷史 ({count})"
 
 #: kuma/authkeys/templates/authkeys/list.html:35
 msgid ""
-"You need a special permission to use API keys. You may request permission by "
-"<a href=\"%(bugzilla_url)s\">filing a bug</a>."
+"You need a special permission to use API keys. You may request permission by"
+" <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr "您需要特別權限才能使用 API 金鑰。您可以 <a href=\"%(bugzilla_url)s\">開 bug</a> 申請權限。"
 
 #: kuma/authkeys/templates/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> "
-"This will be your only means of identifying this key later, other than the "
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong>"
+" This will be your only means of identifying this key later, other than the "
 "date and time of its creation. So, be as clear as you can.</p>"
 msgstr ""
-"<p>在下方描述此金鑰的用途。<p><strong>注意：</strong>除了建立的時間日期之外，這是唯一可識別這把金鑰的方式，請儘量清楚的描述！</"
-"p>"
+"<p>在下方描述此金鑰的用途。<p><strong>注意：</strong>除了建立的時間日期之外，這是唯一可識別這把金鑰的方式，請儘量清楚的描述！</p>"
 
 #: kuma/authkeys/templates/authkeys/new.html:16
 msgid "Create"
@@ -256,16 +255,15 @@ msgstr "建立"
 
 #: kuma/authkeys/templates/authkeys/new.html:20
 msgid ""
-"<p>Your new key has been created. Please make a note of the details below ("
-"e.g. by copying them into your application's settings). This information "
+"<p>Your new key has been created. Please make a note of the details below "
+"(e.g. by copying them into your application's settings). This information "
 "will never be displayed again, and cannot be recovered if lost.</p> "
-"<p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\""
-"%(list_url)s\">return to the key list</a>. Reloading this page will create a "
-"new key.</p>"
+"<p><strong>NOTE:</strong> When you're done, <a class=\"button\" "
+"href=\"%(list_url)s\">return to the key list</a>. Reloading this page will "
+"create a new key.</p>"
 msgstr ""
-"<p>你的新金鑰建立成功，請注意下面細節（你也可以把這些細節複製到你的應用程式設定）。這些資訊只會顯示這一次，如果遺失的話，將無法透過任何方式找回！</"
-"p><p><strong>注意：</strong>完成之後，請 <a class=\"button\" href=\"%"
-"(list_url)s\">回到金鑰列表頁面</a>，重新載入本頁則會產生一組新的金鑰</p>"
+"<p>你的新金鑰建立成功，請注意下面細節（你也可以把這些細節複製到你的應用程式設定）。這些資訊只會顯示這一次，如果遺失的話，將無法透過任何方式找回！</p><p><strong>注意：</strong>完成之後，請"
+" <a class=\"button\" href=\"%(list_url)s\">回到金鑰列表頁面</a>，重新載入本頁則會產生一組新的金鑰</p>"
 
 #: kuma/authkeys/templates/authkeys/new.html:30
 msgid "Key ID"
@@ -361,13 +359,13 @@ msgstr ""
 
 #: kuma/demos/__init__.py:40
 msgid ""
-"CSS3 Animations are a new feature of modern browsers like Firefox, which add "
-"even more flexibility and control to the style and experience of the Web. "
+"CSS3 Animations are a new feature of modern browsers like Firefox, which add"
+" even more flexibility and control to the style and experience of the Web. "
 "CSS3 Animations let you change property values over time with no or minimal "
 "JavaScript, and with greater control than CSS Transitions. Go beyond static "
-"properties to animate the appearance and positions of HTML elements. You can "
-"achieve these effects without Flash or Silverlight, to make creative dynamic "
-"interfaces and engaging animations with CSS3."
+"properties to animate the appearance and positions of HTML elements. You can"
+" achieve these effects without Flash or Silverlight, to make creative "
+"dynamic interfaces and engaging animations with CSS3."
 msgstr ""
 "CSS3 動畫是像 Firefox 一類現代瀏覽器的新功能。可以讓您更靈活地控制網頁的樣式跟體驗。CSS3 "
 "動畫可以讓您隨著時間修改屬性值，而不需或只需要使用一點點 JavaScript，還有讓您可以更好地控制 CSS 變形。在靜態的屬性值之外，您可以讓 "
@@ -385,11 +383,10 @@ msgstr "HTML5 <video>"
 msgid "July 2011"
 msgstr "2011 年七月"
 
-#: kuma/demos/__init__.py:46
-#: kuma/demos/__init__.py:47
+#: kuma/demos/__init__.py:46 kuma/demos/__init__.py:47
 msgid ""
-"The HTML5 <video> element lets you embed and control video media directly in "
-"web pages, without resorting to plug-ins."
+"The HTML5 <video> element lets you embed and control video media directly in"
+" web pages, without resorting to plug-ins."
 msgstr "HTML5 的 <video> 元素讓您可以嵌入並在網頁當中直接控制，不需要交給擴充套件就能播放視訊媒體。"
 
 #: kuma/demos/__init__.py:50
@@ -404,8 +401,7 @@ msgstr "歷史 API"
 msgid "August 2011"
 msgstr "2011 年八月"
 
-#: kuma/demos/__init__.py:53
-#: kuma/demos/__init__.py:54
+#: kuma/demos/__init__.py:53 kuma/demos/__init__.py:54
 msgid ""
 "The History API in modern browsers enables live changes to the document "
 "without breaking the back button and allows apps to be bookmarked."
@@ -415,8 +411,7 @@ msgstr "現代瀏覽器的歷史 API 將可以不需要點下上一頁按鈕就�
 msgid "September 2011 Dev Derby Challenge - Geolocation"
 msgstr "2011 年九月 Dev Derby 挑戰 - 地理位置資訊"
 
-#: kuma/demos/__init__.py:58
-#: kuma/demos/__init__.py:279
+#: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
 msgid "Geolocation"
 msgstr "地理位置資訊"
 
@@ -424,13 +419,11 @@ msgstr "地理位置資訊"
 msgid "September 2011"
 msgstr "2011 年九月"
 
-#: kuma/demos/__init__.py:60
-#: kuma/demos/__init__.py:61
-#: kuma/demos/__init__.py:144
-#: kuma/demos/__init__.py:145
+#: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61
+#: kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
 msgid ""
-"With Geolocation, you can get the user's physical location (with permission) "
-"and use it to enhance the browsing experience or enable advanced location-"
+"With Geolocation, you can get the user's physical location (with permission)"
+" and use it to enhance the browsing experience or enable advanced location-"
 "aware features."
 msgstr "透過地理位置資訊，您將可以在使用者允許的狀況下取得使用者的實體位置，並使用此資訊擴充瀏覽體驗，或是啟用先進的地理感知功能。"
 
@@ -446,8 +439,7 @@ msgstr "媒體選擇（Media Queries）"
 msgid "October 2011"
 msgstr "2011 年十月"
 
-#: kuma/demos/__init__.py:67
-#: kuma/demos/__init__.py:68
+#: kuma/demos/__init__.py:67 kuma/demos/__init__.py:68
 msgid ""
 "CSS Media Queries allow Web developers to create responsive Web designs, "
 "tailoring the user experience for a range of screen sizes, including "
@@ -458,8 +450,7 @@ msgstr "CSS 媒體選擇將可以讓網頁開發者建立適應不同顯示裝�
 msgid "November 2011 Dev Derby Challenge - Canvas"
 msgstr "2011 年十一月 Dev Derby 挑戰 - Canvas"
 
-#: kuma/demos/__init__.py:72
-#: kuma/demos/__init__.py:233
+#: kuma/demos/__init__.py:72 kuma/demos/__init__.py:233
 msgid "Canvas"
 msgstr "Canvas"
 
@@ -467,13 +458,12 @@ msgstr "Canvas"
 msgid "November 2011"
 msgstr "2011 年十一月"
 
-#: kuma/demos/__init__.py:74
-#: kuma/demos/__init__.py:75
+#: kuma/demos/__init__.py:74 kuma/demos/__init__.py:75
 msgid ""
 "Canvas lets you paint the Web using JavaScript to render 2D shapes, "
 "bitmapped images, and advanced graphical effects. Each <canvas> element "
-"provides a graphics context with its own state and methods that make it easy "
-"to control and draw in."
+"provides a graphics context with its own state and methods that make it easy"
+" to control and draw in."
 msgstr ""
 "Canvas 允許您使用 JavaScript 渲染 2D 造型、點陣圖以及進階圖形效果至網頁上。每個 <canvas> "
 "元素提供一個擁有狀態和方法的圖形內容，使其易於控制及繪製。"
@@ -482,8 +472,7 @@ msgstr ""
 msgid "December 2011 Dev Derby Challenge - IndexedDB"
 msgstr "2011 年十二月 Dev Derby 挑戰 - IndexedDB"
 
-#: kuma/demos/__init__.py:79
-#: kuma/demos/__init__.py:303
+#: kuma/demos/__init__.py:79 kuma/demos/__init__.py:303
 msgid "IndexedDB"
 msgstr "IndexedDB"
 
@@ -491,11 +480,10 @@ msgstr "IndexedDB"
 msgid "December 2011"
 msgstr "2011 年十二月"
 
-#: kuma/demos/__init__.py:81
-#: kuma/demos/__init__.py:82
+#: kuma/demos/__init__.py:81 kuma/demos/__init__.py:82
 msgid ""
-"IndexedDB lets web applications store significant amounts of structured data "
-"locally, for faster access, online or offline."
+"IndexedDB lets web applications store significant amounts of structured data"
+" locally, for faster access, online or offline."
 msgstr "IndexedDB 讓網頁應用程式可以在使用者本地端儲存更大量的結構化資料，以供不論是線上或離線時更快速的存取。"
 
 #: kuma/demos/__init__.py:85
@@ -510,8 +498,7 @@ msgstr "方位偵測"
 msgid "January 2012"
 msgstr "2012 年一月"
 
-#: kuma/demos/__init__.py:88
-#: kuma/demos/__init__.py:89
+#: kuma/demos/__init__.py:88 kuma/demos/__init__.py:89
 msgid ""
 "Orientation features in HTML5 access the motion and orientation data of "
 "devices with accelerometers."
@@ -529,8 +516,7 @@ msgstr "觸控事件"
 msgid "February 2012"
 msgstr "2012 年二月"
 
-#: kuma/demos/__init__.py:95
-#: kuma/demos/__init__.py:96
+#: kuma/demos/__init__.py:95 kuma/demos/__init__.py:96
 msgid ""
 "Touch Events help you make websites and applications more engaging by "
 "responding appropriately when users interact with touch screens."
@@ -548,8 +534,7 @@ msgstr "CSS 3D 變形 (Transforms)"
 msgid "March 2012"
 msgstr "2012 年三月"
 
-#: kuma/demos/__init__.py:102
-#: kuma/demos/__init__.py:103
+#: kuma/demos/__init__.py:102 kuma/demos/__init__.py:103
 msgid ""
 "CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS "
 "to be transformed in three-dimensional space."
@@ -559,8 +544,7 @@ msgstr "CSS 3D 變形功能讓 CSS 變形變得更強，允許元素在三維空
 msgid "April 2012 Dev Derby Challenge - Audio"
 msgstr "2012 年四月 Dev Derby 挑戰 - 音訊"
 
-#: kuma/demos/__init__.py:107
-#: kuma/demos/__init__.py:225
+#: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
 msgid "Audio"
 msgstr "音訊"
 
@@ -568,8 +552,7 @@ msgstr "音訊"
 msgid "April 2012"
 msgstr "2012 年四月"
 
-#: kuma/demos/__init__.py:109
-#: kuma/demos/__init__.py:110
+#: kuma/demos/__init__.py:109 kuma/demos/__init__.py:110
 msgid ""
 "The HTML5 audio element lets you embed sound in webpages without requiring "
 "your users to rely on plug-ins."
@@ -587,8 +570,7 @@ msgstr "WebSockets API"
 msgid "May 2012"
 msgstr "2012 年五月"
 
-#: kuma/demos/__init__.py:116
-#: kuma/demos/__init__.py:117
+#: kuma/demos/__init__.py:116 kuma/demos/__init__.py:117
 msgid ""
 "With the Websocket API and protocol, you can open a two-way channel between "
 "the browser and a server, for scalable and real-time data flow. No more "
@@ -601,8 +583,7 @@ msgstr ""
 msgid "June 2012 Dev Derby Challenge - WebGL"
 msgstr "2012 年六月 Dev Derby 挑戰 - WebGL"
 
-#: kuma/demos/__init__.py:121
-#: kuma/demos/__init__.py:351
+#: kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
 msgid "WebGL"
 msgstr "WebGL"
 
@@ -611,10 +592,8 @@ msgstr "WebGL"
 msgid "June 2012"
 msgstr "2012 年六月"
 
-#: kuma/demos/__init__.py:123
-#: kuma/demos/__init__.py:124
-#: kuma/demos/__init__.py:211
-#: kuma/demos/__init__.py:212
+#: kuma/demos/__init__.py:123 kuma/demos/__init__.py:124
+#: kuma/demos/__init__.py:211 kuma/demos/__init__.py:212
 msgid ""
 "WebGL brings the power of OpenGL, for creating interactive 3D graphics, to "
 "the Web, with no plug-ins required."
@@ -634,13 +613,12 @@ msgstr "無 JavaScript"
 msgid "July 2012"
 msgstr "2012 年七月"
 
-#: kuma/demos/__init__.py:130
-#: kuma/demos/__init__.py:131
+#: kuma/demos/__init__.py:130 kuma/demos/__init__.py:131
 msgid ""
 "Creating rich user experiences for the Web has never been easier. Today's "
 "open Web standards put some of the most powerful features right at your "
-"fingertips. Animate pages with CSS, validate user input with HTML, and more. "
-"What else can you do without JavaScript?"
+"fingertips. Animate pages with CSS, validate user input with HTML, and more."
+" What else can you do without JavaScript?"
 msgstr ""
 "為 Web 創造豐富的使用者經驗未曾容易。現今開放的 Web 標準將許多強大的功能變得易如反掌。使用 CSS "
 "的動畫網頁、使用HTML的使用者輸入驗證等等。還有什麼是 JavaScript 不能做的？"
@@ -659,12 +637,11 @@ msgstr "Camera API"
 msgid "August 2012"
 msgstr "2012 年八月"
 
-#: kuma/demos/__init__.py:137
-#: kuma/demos/__init__.py:138
+#: kuma/demos/__init__.py:137 kuma/demos/__init__.py:138
 msgid ""
 "The Camera API lets you access (with permission) the cameras of mobile "
-"devices. With the Camera API, users can easily take pictures and upload them "
-"to your web page."
+"devices. With the Camera API, users can easily take pictures and upload them"
+" to your web page."
 msgstr "使用 Camera API 可在取得授權後操作手機的鏡頭，例如使用者可以使用Camera API 拍照和上傳照片。"
 
 #: kuma/demos/__init__.py:141
@@ -696,12 +673,11 @@ msgstr "CSS 媒體選擇 2"
 msgid "October 2012"
 msgstr "2012 年十月"
 
-#: kuma/demos/__init__.py:151
-#: kuma/demos/__init__.py:152
+#: kuma/demos/__init__.py:151 kuma/demos/__init__.py:152
 msgid ""
 "CSS Media Queries are now a common tool for responsive, mobile-first web "
-"design. They are now even a W3C Recommendation! They can tell you a lot more "
-"about a display than just its width. What can you do with Media Queries?"
+"design. They are now even a W3C Recommendation! They can tell you a lot more"
+" about a display than just its width. What can you do with Media Queries?"
 msgstr ""
 "目前 CSS 媒體選擇是常見的行動裝置適應性網頁設計工具。W3C "
 "也相當推薦這個方法！這個語法可以告訴您除了網頁寬度外的更多資訊，讓您設定更多網頁樣式。您還可以使用 CSS 媒體選擇器做什麼？"
@@ -718,8 +694,7 @@ msgstr "全螢幕 API"
 msgid "November 2012"
 msgstr "2012 年十一月"
 
-#: kuma/demos/__init__.py:158
-#: kuma/demos/__init__.py:159
+#: kuma/demos/__init__.py:158 kuma/demos/__init__.py:159
 msgid ""
 "With the Fullscreen API, you can escape the confines of the browser window. "
 "You can even detect full screen state changes and style full screen pages "
@@ -738,21 +713,20 @@ msgstr "離線"
 msgid "December 2012"
 msgstr "2012 年十二月"
 
-#: kuma/demos/__init__.py:165
-#: kuma/demos/__init__.py:166
+#: kuma/demos/__init__.py:165 kuma/demos/__init__.py:166
 msgid ""
 "With the maturing offline capabilities of the open Web, you can build apps "
-"that work with or without an Internet connection. With offline technologies, "
-"you can better support travelers and mobile users, improve performance, and "
-"more."
-msgstr "透過開放 Web 逐漸成熟的功能，您可以打造在線上或離線時皆能使用的應用程式。您可以透過離線功能更好地支持旅行者與行動使用者，改善效能等等。"
+"that work with or without an Internet connection. With offline technologies,"
+" you can better support travelers and mobile users, improve performance, and"
+" more."
+msgstr ""
+"透過開放 Web 逐漸成熟的功能，您可以打造在線上或離線時皆能使用的應用程式。您可以透過離線功能更好地支持旅行者與行動使用者，改善效能等等。"
 
 #: kuma/demos/__init__.py:169
 msgid "January 2013 Dev Derby Challenge - Drag and Drop"
 msgstr "2013 年一月 Dev Derby 挑戰 - 拖曳"
 
-#: kuma/demos/__init__.py:170
-#: kuma/demos/__init__.py:311
+#: kuma/demos/__init__.py:170 kuma/demos/__init__.py:311
 msgid "Drag and Drop"
 msgstr "拖曳"
 
@@ -761,19 +735,17 @@ msgstr "拖曳"
 msgid "January 2013"
 msgstr "2013 年一月"
 
-#: kuma/demos/__init__.py:172
-#: kuma/demos/__init__.py:173
+#: kuma/demos/__init__.py:172 kuma/demos/__init__.py:173
 msgid ""
-"The Drag and Drop API brings an age-old interaction to the Web, making rich, "
-"natural, and familiar user experiences possible."
+"The Drag and Drop API brings an age-old interaction to the Web, making rich,"
+" natural, and familiar user experiences possible."
 msgstr "拖放 API 為 Web 帶來歷史悠久的互動方式，使得使用者體驗更有豐富、自然且孰悉的可能性。"
 
 #: kuma/demos/__init__.py:176
 msgid "February 2013 Dev Derby Challenge - Multi-touch"
 msgstr "2013 年二月 Dev Derby 挑戰 - 多點觸控"
 
-#: kuma/demos/__init__.py:177
-#: kuma/demos/__init__.py:383
+#: kuma/demos/__init__.py:177 kuma/demos/__init__.py:383
 msgid "Multi-touch"
 msgstr "多點觸控"
 
@@ -781,23 +753,21 @@ msgstr "多點觸控"
 msgid "February 2013"
 msgstr "2013 年二月"
 
-#: kuma/demos/__init__.py:179
-#: kuma/demos/__init__.py:180
+#: kuma/demos/__init__.py:179 kuma/demos/__init__.py:180
 msgid ""
 "The Touch Events API lets you track multiple touches at the same time on "
 "devices that support them. Build complex games, support pinch-to-zoom and "
 "more. By using multi-touch, your app can respond to all the interactions "
 "users have come to expect."
 msgstr ""
-"觸控事件 API 可以讓您在可支援同時追蹤多個觸碰事件的設備上使用這樣功能。適用於建立複雜的遊戲，且支援雙指縮放等等。使用多點觸控，您的應用程序可以回應"
-"使用者所期待的所有互動效果。"
+"觸控事件 API "
+"可以讓您在可支援同時追蹤多個觸碰事件的設備上使用這樣功能。適用於建立複雜的遊戲，且支援雙指縮放等等。使用多點觸控，您的應用程序可以回應使用者所期待的所有互動效果。"
 
 #: kuma/demos/__init__.py:183
 msgid "March 2013 Dev Derby Challenge - Mobile"
 msgstr "2013 年三月 Dev Derby 挑戰 - 行動裝置"
 
-#: kuma/demos/__init__.py:184
-#: kuma/demos/__init__.py:319
+#: kuma/demos/__init__.py:184 kuma/demos/__init__.py:319
 msgid "Mobile"
 msgstr "Mobile"
 
@@ -805,8 +775,7 @@ msgstr "Mobile"
 msgid "March 2013"
 msgstr "2013 年三月"
 
-#: kuma/demos/__init__.py:186
-#: kuma/demos/__init__.py:187
+#: kuma/demos/__init__.py:186 kuma/demos/__init__.py:187
 msgid ""
 "The mobile Web is becoming more important every day. This time, the only "
 "limit is your creativity. What amazing experiences can you build for users "
@@ -817,8 +786,7 @@ msgstr "行動網路的重要性一天比一天要更高。除了創造力不足
 msgid "April 2013 Dev Derby Challenge - Web Workers"
 msgstr "2013 年四月 Dev Derby 挑戰 - Web Worker"
 
-#: kuma/demos/__init__.py:191
-#: kuma/demos/__init__.py:367
+#: kuma/demos/__init__.py:191 kuma/demos/__init__.py:367
 msgid "Web Workers"
 msgstr "Web Workers"
 
@@ -826,8 +794,7 @@ msgstr "Web Workers"
 msgid "April 2013"
 msgstr "2013 年四月"
 
-#: kuma/demos/__init__.py:193
-#: kuma/demos/__init__.py:194
+#: kuma/demos/__init__.py:193 kuma/demos/__init__.py:194
 msgid ""
 "Web Workers make it easy for you to run scripts in the background. By using "
 "Web Workers, you can create dazzling user interfaces that are not hindered "
@@ -854,13 +821,13 @@ msgstr "五月"
 msgid "Action!"
 msgstr "行動!"
 
-#: kuma/demos/__init__.py:202
-#: kuma/demos/__init__.py:203
+#: kuma/demos/__init__.py:202 kuma/demos/__init__.py:203
 msgid ""
 "The getUserMedia function lets you access (with permission) the cameras and "
 "microphones of your users. No plugins needed! What can you do once you have "
 "this media? The possibilities are endless."
-msgstr "getUserMedia 函數讓您可以在經由授權後存取使用者的攝影機與麥克風，不需要外掛程式！有了這些媒體之後您可以做什麼呢？有無限種可能。"
+msgstr ""
+"getUserMedia 函數讓您可以在經由授權後存取使用者的攝影機與麥克風，不需要外掛程式！有了這些媒體之後您可以做什麼呢？有無限種可能。"
 
 #: kuma/demos/__init__.py:206
 msgid "June 2013 Dev Derby Challenge - WebGL II"
@@ -902,8 +869,7 @@ msgstr "七月"
 msgid "File found"
 msgstr "找不到檔案"
 
-#: kuma/demos/__init__.py:220
-#: kuma/demos/__init__.py:221
+#: kuma/demos/__init__.py:220 kuma/demos/__init__.py:221
 msgid ""
 "The File API lets you read the contents of files submitted by your users, "
 "making natural and familiar data operations possible."
@@ -915,26 +881,16 @@ msgid ""
 "developers to read and write raw audio data."
 msgstr "Mozilla 的音訊資料 API 延伸了目前的 HTML5 API 並允許網頁開發者讀寫原始音訊資料。"
 
-#: kuma/demos/__init__.py:228
-#: kuma/demos/__init__.py:236
-#: kuma/demos/__init__.py:244
-#: kuma/demos/__init__.py:252
-#: kuma/demos/__init__.py:259
-#: kuma/demos/__init__.py:266
-#: kuma/demos/__init__.py:274
-#: kuma/demos/__init__.py:282
-#: kuma/demos/__init__.py:290
-#: kuma/demos/__init__.py:298
-#: kuma/demos/__init__.py:306
-#: kuma/demos/__init__.py:314
-#: kuma/demos/__init__.py:322
-#: kuma/demos/__init__.py:330
-#: kuma/demos/__init__.py:338
-#: kuma/demos/__init__.py:346
-#: kuma/demos/__init__.py:354
-#: kuma/demos/__init__.py:362
-#: kuma/demos/__init__.py:370
-#: kuma/demos/__init__.py:378
+#: kuma/demos/__init__.py:228 kuma/demos/__init__.py:236
+#: kuma/demos/__init__.py:244 kuma/demos/__init__.py:252
+#: kuma/demos/__init__.py:259 kuma/demos/__init__.py:266
+#: kuma/demos/__init__.py:274 kuma/demos/__init__.py:282
+#: kuma/demos/__init__.py:290 kuma/demos/__init__.py:298
+#: kuma/demos/__init__.py:306 kuma/demos/__init__.py:314
+#: kuma/demos/__init__.py:322 kuma/demos/__init__.py:330
+#: kuma/demos/__init__.py:338 kuma/demos/__init__.py:346
+#: kuma/demos/__init__.py:354 kuma/demos/__init__.py:362
+#: kuma/demos/__init__.py:370 kuma/demos/__init__.py:378
 #: kuma/demos/__init__.py:386
 msgid "MDN Documentation"
 msgstr "MDN 文件"
@@ -946,24 +902,15 @@ msgid ""
 msgstr ""
 "https://developer.mozilla.org/zh-TW/docs/Introducing_the_Audio_API_Extension"
 
-#: kuma/demos/__init__.py:229
-#: kuma/demos/__init__.py:237
-#: kuma/demos/__init__.py:245
-#: kuma/demos/__init__.py:267
-#: kuma/demos/__init__.py:275
-#: kuma/demos/__init__.py:283
-#: kuma/demos/__init__.py:291
-#: kuma/demos/__init__.py:299
-#: kuma/demos/__init__.py:307
-#: kuma/demos/__init__.py:315
-#: kuma/demos/__init__.py:323
-#: kuma/demos/__init__.py:331
-#: kuma/demos/__init__.py:339
-#: kuma/demos/__init__.py:347
-#: kuma/demos/__init__.py:355
-#: kuma/demos/__init__.py:363
-#: kuma/demos/__init__.py:371
-#: kuma/demos/__init__.py:379
+#: kuma/demos/__init__.py:229 kuma/demos/__init__.py:237
+#: kuma/demos/__init__.py:245 kuma/demos/__init__.py:267
+#: kuma/demos/__init__.py:275 kuma/demos/__init__.py:283
+#: kuma/demos/__init__.py:291 kuma/demos/__init__.py:299
+#: kuma/demos/__init__.py:307 kuma/demos/__init__.py:315
+#: kuma/demos/__init__.py:323 kuma/demos/__init__.py:331
+#: kuma/demos/__init__.py:339 kuma/demos/__init__.py:347
+#: kuma/demos/__init__.py:355 kuma/demos/__init__.py:363
+#: kuma/demos/__init__.py:371 kuma/demos/__init__.py:379
 #: kuma/demos/__init__.py:387
 msgid "Wikipedia Article"
 msgstr "維基百科文章"
@@ -972,24 +919,15 @@ msgstr "維基百科文章"
 msgid "http://en.wikipedia.org/wiki/HTML5_audio"
 msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
 
-#: kuma/demos/__init__.py:230
-#: kuma/demos/__init__.py:238
-#: kuma/demos/__init__.py:246
-#: kuma/demos/__init__.py:253
-#: kuma/demos/__init__.py:260
-#: kuma/demos/__init__.py:268
-#: kuma/demos/__init__.py:276
-#: kuma/demos/__init__.py:284
-#: kuma/demos/__init__.py:300
-#: kuma/demos/__init__.py:308
-#: kuma/demos/__init__.py:316
-#: kuma/demos/__init__.py:324
-#: kuma/demos/__init__.py:332
-#: kuma/demos/__init__.py:340
-#: kuma/demos/__init__.py:348
-#: kuma/demos/__init__.py:364
-#: kuma/demos/__init__.py:372
-#: kuma/demos/__init__.py:380
+#: kuma/demos/__init__.py:230 kuma/demos/__init__.py:238
+#: kuma/demos/__init__.py:246 kuma/demos/__init__.py:253
+#: kuma/demos/__init__.py:260 kuma/demos/__init__.py:268
+#: kuma/demos/__init__.py:276 kuma/demos/__init__.py:284
+#: kuma/demos/__init__.py:300 kuma/demos/__init__.py:308
+#: kuma/demos/__init__.py:316 kuma/demos/__init__.py:324
+#: kuma/demos/__init__.py:332 kuma/demos/__init__.py:340
+#: kuma/demos/__init__.py:348 kuma/demos/__init__.py:364
+#: kuma/demos/__init__.py:372 kuma/demos/__init__.py:380
 #: kuma/demos/__init__.py:388
 msgid "W3C Spec"
 msgstr "W3C 規格"
@@ -1017,8 +955,7 @@ msgstr "http://en.wikipedia.org/wiki/Canvas_element"
 msgid "http://www.w3.org/TR/html5/the-canvas-element.html"
 msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
 
-#: kuma/demos/__init__.py:241
-#: kuma/landing/templates/landing/homepage.html:79
+#: kuma/demos/__init__.py:241 kuma/landing/templates/landing/homepage.html:79
 msgid "CSS3"
 msgstr "CSS3"
 
@@ -1049,8 +986,8 @@ msgstr "裝置"
 
 #: kuma/demos/__init__.py:250
 msgid ""
-"Media queries and orientation events let authors adjust their layout on hand-"
-"held devices such as mobile phones."
+"Media queries and orientation events let authors adjust their layout on "
+"hand-held devices such as mobile phones."
 msgstr "媒體選擇與裝置方向事件可以讓作者在像手機之類的手持裝置上調整版面。"
 
 #: kuma/demos/__init__.py:252
@@ -1116,8 +1053,8 @@ msgstr "表單"
 #: kuma/demos/__init__.py:272
 msgid ""
 "Form elements and attributes in HTML5 provide a greater degree of semantic "
-"mark-up than HTML4 and remove a great deal of the need for tedious scripting "
-"and styling that was required in HTML4."
+"mark-up than HTML4 and remove a great deal of the need for tedious scripting"
+" and styling that was required in HTML4."
 msgstr "HTML5 當中的 Form 元素與屬性提供一個比 HTML4 更深層的語意標記，並移除了原本許多乏味的程式與樣式需求。"
 
 #: kuma/demos/__init__.py:274
@@ -1150,8 +1087,7 @@ msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
 msgid "http://dev.w3.org/geo/api/spec-source.html"
 msgstr "http://dev.w3.org/geo/api/spec-source.html"
 
-#: kuma/demos/__init__.py:287
-#: kuma/landing/templates/landing/homepage.html:80
+#: kuma/demos/__init__.py:287 kuma/landing/templates/landing/homepage.html:80
 #: kuma/landing/templates/landing/promote_buttons.html:111
 #: templates/base.html:136
 msgid "JavaScript"
@@ -1160,7 +1096,8 @@ msgstr "JavaScript"
 #: kuma/demos/__init__.py:288
 msgid ""
 "JavaScript is a lightweight, object-oriented programming language, commonly "
-"used for scripting interactive behavior on web pages and in web applications."
+"used for scripting interactive behavior on web pages and in web "
+"applications."
 msgstr "JavaScript 是一個輕量的物件導向程式語言，通常被用來作為開發網頁或網路應用程式當中的行為使用。"
 
 #: kuma/demos/__init__.py:290
@@ -1179,8 +1116,7 @@ msgstr "ECMA 標準"
 msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
 msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
 
-#: kuma/demos/__init__.py:295
-#: kuma/landing/templates/landing/homepage.html:78
+#: kuma/demos/__init__.py:295 kuma/landing/templates/landing/homepage.html:78
 msgid "HTML5"
 msgstr "HTML5"
 
@@ -1205,7 +1141,8 @@ msgstr "http://dev.w3.org/html5/spec/Overview.html"
 #: kuma/demos/__init__.py:304
 msgid ""
 "IndexedDB is an API for client-side storage of significant amounts of "
-"structured data and for high performance searches on this data using indexes."
+"structured data and for high performance searches on this data using "
+"indexes."
 msgstr "IndexedDB 是個供客戶端儲存大量結構化資料以及使用索引以進行高效能搜尋的 API。"
 
 #: kuma/demos/__init__.py:306
@@ -1240,8 +1177,8 @@ msgstr "http://www.w3.org/TR/html5/dnd.html"
 
 #: kuma/demos/__init__.py:320
 msgid ""
-"Firefox Mobile brings the true Web experience to mobile phones and other non-"
-"PC devices."
+"Firefox Mobile brings the true Web experience to mobile phones and other "
+"non-PC devices."
 msgstr "Firefox Mobile 將會把完整的 Web 體驗帶到您的手機與其他非 PC 裝置。"
 
 #: kuma/demos/__init__.py:322
@@ -1314,7 +1251,8 @@ msgstr "HTML5 video 元素提供不需安裝外掛程式即可撥放視訊媒體
 
 #: kuma/demos/__init__.py:346
 msgid ""
-"https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video"
+"https://developer.mozilla.org/en-"
+"US/docs/Web/HTML/Using_HTML5_audio_and_video"
 msgstr ""
 "https://developer.mozilla.org/en-"
 "US/docs/Web/HTML/Using_HTML5_audio_and_video"
@@ -1487,8 +1425,7 @@ msgstr "已審查 %(item)s"
 msgid "Successfully censored %(count)d %(items)s."
 msgstr "成功審查 %(count)d 個 %(items)s。"
 
-#: kuma/demos/admin.py:55
-#: kuma/demos/admin.py:125
+#: kuma/demos/admin.py:55 kuma/demos/admin.py:125
 msgid "Are you sure?"
 msgstr "您確定嗎？"
 
@@ -1705,8 +1642,8 @@ msgstr "選擇一個包含您 demo 的 ZIP 檔"
 
 #: kuma/demos/models.py:440
 msgid ""
-"Is your source code also available somewhere else on the web (e.g., github)? "
-"Please share the link."
+"Is your source code also available somewhere else on the web (e.g., github)?"
+" Please share the link."
 msgstr "您的原始碼是否也在網路上的某處（像是 github）可得？請分享鏈結。"
 
 #: kuma/demos/models.py:443
@@ -1717,8 +1654,7 @@ msgstr "選擇您原始碼的授權方式。"
 msgid "date created"
 msgstr "建立日期"
 
-#: kuma/demos/models.py:660
-#: kuma/demos/models.py:667
+#: kuma/demos/models.py:660 kuma/demos/models.py:667
 msgid "ZIP file contains no acceptable files"
 msgstr "ZIP 檔當中包含了不被接受的檔案"
 
@@ -1738,9 +1674,7 @@ msgstr "ZIP 檔當中包含了不被接受的檔案: %(filename)s"
 msgid "HTML index not found in ZIP"
 msgstr "ZIP 檔當中找不到 index HTML"
 
-#: kuma/demos/views.py:73
-#: kuma/demos/views.py:301
-#: kuma/demos/views.py:329
+#: kuma/demos/views.py:73 kuma/demos/views.py:301 kuma/demos/views.py:329
 #: kuma/demos/views.py:344
 msgid "access denied"
 msgstr "存取被拒。"
@@ -1793,8 +1727,7 @@ msgstr ""
 "的列名、原始碼、統計資料將會被 <strong>刪除</strong>。</p> <p>此行為將 <strong>無法復原</strong>。"
 
 #: kuma/demos/templates/demos/delete.html:49
-msgid ""
-"<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
+msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
 msgstr "<button type=\"submit\" class=\"remove\"><span>移除 demo</span></button>"
 
 #: kuma/demos/templates/demos/detail.html:30
@@ -2032,8 +1965,8 @@ msgstr "Dev Derby 已結束"
 
 #: kuma/demos/templates/demos/devderby_landing.html:27
 msgid ""
-"From 2011 until 2013, web developers created more than 450 demos for the Dev "
-"Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo "
+"From 2011 until 2013, web developers created more than 450 demos for the Dev"
+" Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo "
 "Studio</a> for many more."
 msgstr ""
 "2011 到 2013 年間，網頁開發者在 Dev Derby 大賽中開發了超過 450 個 demo。下方是當中的一些 demo，您也可以到 <a "
@@ -2053,8 +1986,7 @@ msgstr "資源"
 msgid "Docs"
 msgstr "Docs"
 
-#: kuma/demos/templates/demos/devderby_landing.html:58
-#: templates/base.html:150
+#: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:150
 #: templates/base.html:168
 msgid "Demos"
 msgstr "Demos"
@@ -2165,13 +2097,9 @@ msgid "recent"
 msgstr "最近"
 
 #: kuma/demos/templates/demos/launch.html:34
-#: kuma/search/templates/search/plugin.html:3
-#: templates/base.html:12
-#: templates/base.html:31
-#: templates/base.html:37
-#: templates/base.html:91
-#: templates/base.html:93
-#: templates/base_popup.html:5
+#: kuma/search/templates/search/plugin.html:3 templates/base.html:12
+#: templates/base.html:31 templates/base.html:37 templates/base.html:91
+#: templates/base.html:93 templates/base_popup.html:5
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
@@ -2234,11 +2162,11 @@ msgstr "送出一個新的 Demo"
 
 #: kuma/demos/templates/demos/submit.html:60
 msgid ""
-"<p>Whether you are creating an amazing new way to experience the Web or just "
-"experimenting with the latest technologies, we invite you to submit your own "
-"demos to share with (or show off to) other web developers.</p> <p>Please "
-"complete the form below to ensure your demo is submitted to the Demo Studio "
-"successfully.</p>"
+"<p>Whether you are creating an amazing new way to experience the Web or just"
+" experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p> <p>Please"
+" complete the form below to ensure your demo is submitted to the Demo Studio"
+" successfully.</p>"
 msgstr ""
 "<p>不論您是正要建立一個全新的方式以體驗網頁，或正要實驗最新的技術，我們邀請您送出您的 demo 以與其他網頁開發者分享（或炫耀）。</p> "
 "<p>請完成下列表單以確定您的 demo 被成功送出到 Demo Studio。</p>"
@@ -2287,20 +2215,21 @@ msgstr "準備您的 Demo"
 #: kuma/demos/templates/demos/submit.html:120
 msgid ""
 "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> "
-"<li>The main page of your demo should be a file named <code>index.html</code>"
-" in the root of the ZIP.</li> <li>Your demo should be built on client-side "
-"technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby "
-"are not supported.</li> <li>If your demo requires external resources, it "
-"should use AJAX to access them.</li> <li>To submit your demo, you need an <a "
-"href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the "
-"demo details box any 3rd party content that can't be licensed under the CC-"
-"BY-SA license and include links to the authors' websites.</li> </ul>"
+"<li>The main page of your demo should be a file named "
+"<code>index.html</code> in the root of the ZIP.</li> <li>Your demo should be"
+" built on client-side technology (HTML, CSS, JavaScript). Server-side "
+"languages like PHP and Ruby are not supported.</li> <li>If your demo "
+"requires external resources, it should use AJAX to access them.</li> <li>To "
+"submit your demo, you need an <a href=\"%(signup_url)s\">MDN "
+"profile</a>.</li> <li>Please identify in the demo details box any 3rd party "
+"content that can't be licensed under the CC-BY-SA license and include links "
+"to the authors' websites.</li> </ul>"
 msgstr ""
 "<ul><li>您的 demo 原始碼應該封裝為 ZIP 檔案。</li><li>您的 demo 的主要網頁應該位於 ZIP 檔根目錄中，叫做 "
 "<code>index.html</code> 的檔案內。</li><li>您的 demo "
 "應該以於客戶端執行的技術（HTML、CSS、JavaScript）開發。我們不支援 PHP 或 Ruby 等伺服器端語言。</li><li>若您的 "
-"demo 需要外部資源，應該使用 AJAX 來存取。</li><li>您需要有 <a href=\"%(signup_url)s\">MDN 帳號</a> "
-"才能送出您的 demo。</li><li>請在 demo 的詳細資訊中明確列出任何無法依照 CC-BY-SA "
+"demo 需要外部資源，應該使用 AJAX 來存取。</li><li>您需要有 <a href=\"%(signup_url)s\">MDN "
+"帳號</a> 才能送出您的 demo。</li><li>請在 demo 的詳細資訊中明確列出任何無法依照 CC-BY-SA "
 "授權的第三方內容，以及該內容的作者網站網址。</li></ul>"
 
 #: kuma/demos/templates/demos/submit.html:133
@@ -2311,15 +2240,16 @@ msgstr "提供原始碼"
 msgid ""
 "<p>Upload a ZIP file of your source code, in which the main page of your "
 "demo is named <code>index.html</code> in the root directory.</p>"
-msgstr "<p>上傳您的原始碼的 Zip 壓縮當，當中您作品的主要頁面應該被命名為根目錄下的 <code>index.html</code>。</p>"
+msgstr ""
+"<p>上傳您的原始碼的 Zip 壓縮當，當中您作品的主要頁面應該被命名為根目錄下的 <code>index.html</code>。</p>"
 
 #: kuma/demos/templates/demos/submit.html:162
 msgid ""
-"I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a "
-"href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
+"I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a"
+" href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
 msgstr ""
-"我接受 <a href=\"%(terms_url)s#tfc\">貢獻者條款</a> 及 <a href=\"%"
-"(terms_url)s#rrd\">權利詳情</a>"
+"我接受 <a href=\"%(terms_url)s#tfc\">貢獻者條款</a> 及 <a "
+"href=\"%(terms_url)s#rrd\">權利詳情</a>"
 
 #: kuma/demos/templates/demos/submit.html:177
 msgid "Submit demo"
@@ -2361,9 +2291,9 @@ msgstr "前往您的個人資料"
 
 #: kuma/demos/templates/demos/submit_noauth.html:27
 msgid ""
-"<p>Whether you are creating an amazing new way to experience the Web or just "
-"experimenting with the latest technologies, we invite you to submit your own "
-"demos to share with (or show off to) other web developers.</p>"
+"<p>Whether you are creating an amazing new way to experience the Web or just"
+" experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p>"
 msgstr ""
 "<p>無論您要創造令人吃驚的新方式來體驗 Web 或者是只想要測試最新的技術，我們邀請您送出您自己的範例程式與其他 web 開發者分享 "
 "(或者炫耀一番)。</p>"
@@ -2376,11 +2306,11 @@ msgstr "在您開始之前"
 msgid ""
 "<ul> <li>You must be prepared to <strong>provide the source code</strong> "
 "for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your "
-"demo's source code must be available under an <strong>open license</strong>, "
-"such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open "
-"web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should "
-"support a wide range of <strong>modern web browsers</strong>, like Firefox, "
-"Chrome, Safari, and Opera.</li> </ul>"
+"demo's source code must be available under an <strong>open license</strong>,"
+" such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open "
+"web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should"
+" support a wide range of <strong>modern web browsers</strong>, like Firefox,"
+" Chrome, Safari, and Opera.</li> </ul>"
 msgstr ""
 "<ul> <li>您必須準備好您展示的 <strong>程式原始碼</strong>。展示將會被存放於 Demo Studio 的伺服器。</li> "
 "<li>您的展示的原始碼必須透過一種 <strong>開放式授權</strong>，像是 MPL、GPL，或 BSD 等進行授權。</li> "
@@ -2392,9 +2322,9 @@ msgstr ""
 msgid ""
 "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP "
 "file</strong>.</li> <li>The main page of your demo should be a file named "
-"<strong><code>index.html</code></strong> in the root of the ZIP.</li> <li>"
-"Your demo should be built on <strong>client-side technology</strong> (HTML, "
-"CSS, JavaScript). Server-side languages like PHP and Ruby are not "
+"<strong><code>index.html</code></strong> in the root of the ZIP.</li> "
+"<li>Your demo should be built on <strong>client-side technology</strong> "
+"(HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not "
 "supported.</li> <li>If your demo requires external resources, it should use "
 "<strong>AJAX</strong> to access them.</li> <li>Please identify in the demo "
 "details box any 3rd party content that can't be licensed under the CC-BY-SA "
@@ -2411,7 +2341,8 @@ msgid ""
 "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN "
 "profile</a></strong>.</p>"
 msgstr ""
-"<p>要送出您的 demo，您需要 <strong><a href=\"%(signup_url)s\">MDN 帳號</a></strong>。</p>"
+"<p>要送出您的 demo，您需要 <strong><a href=\"%(signup_url)s\">MDN "
+"帳號</a></strong>。</p>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:66
 msgid "Log In to Profile"
@@ -2444,10 +2375,8 @@ msgstr "搜尋 Demo Studio"
 #: kuma/search/templates/search/results.html:15
 #: kuma/search/templates/search/results.html:52
 #: kuma/search/templates/search/results.html:55
-#: kuma/search/templates/search/results.html:57
-#: templates/base.html:187
-#: templates/base.html:188
-#: templates/base.html:190
+#: kuma/search/templates/search/results.html:57 templates/base.html:187
+#: templates/base.html:188 templates/base.html:190
 #: templates/includes/common_macros.html:26
 #: templates/includes/common_macros.html:27
 msgid "Search"
@@ -2592,8 +2521,7 @@ msgstr "Web API &amp; DOM"
 
 #: kuma/landing/templates/landing/homepage.html:78
 #: kuma/landing/templates/landing/promote_buttons.html:105
-#: kuma/users/forms.py:34
-#: templates/base.html:134
+#: kuma/users/forms.py:34 templates/base.html:134
 msgid "HTML"
 msgstr "HTML"
 
@@ -2613,18 +2541,15 @@ msgid "Mozilla<br> Docs"
 msgstr "Mozilla <br> 文件"
 
 # 77%
-#: kuma/landing/templates/landing/homepage.html:87
-#: templates/base.html:161
+#: kuma/landing/templates/landing/homepage.html:87 templates/base.html:161
 msgid "Firefox"
 msgstr "Firefox"
 
-#: kuma/landing/templates/landing/homepage.html:88
-#: templates/base.html:163
+#: kuma/landing/templates/landing/homepage.html:88 templates/base.html:163
 msgid "Firefox OS"
 msgstr "Firefox OS"
 
-#: kuma/landing/templates/landing/homepage.html:89
-#: templates/base.html:162
+#: kuma/landing/templates/landing/homepage.html:89 templates/base.html:162
 msgid "Firefox Marketplace"
 msgstr "Firefox Marketplace"
 
@@ -2632,8 +2557,7 @@ msgstr "Firefox Marketplace"
 msgid "App Center"
 msgstr "應用程式中心"
 
-#: kuma/landing/templates/landing/homepage.html:91
-#: templates/base.html:160
+#: kuma/landing/templates/landing/homepage.html:91 templates/base.html:160
 msgid "Add-ons"
 msgstr "Add-ons"
 
@@ -2657,8 +2581,7 @@ msgstr "JavaScript 除錯器"
 msgid "Performance Tools"
 msgstr "效能工具"
 
-#: kuma/landing/templates/landing/homepage.html:105
-#: templates/base.html:168
+#: kuma/landing/templates/landing/homepage.html:105 templates/base.html:168
 msgid "Connect"
 msgstr "連結"
 
@@ -2706,14 +2629,15 @@ msgstr "參與其中"
 
 #: kuma/landing/templates/landing/homepage.html:146
 msgid ""
-"<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\""
-">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span "
-"class=\"number\">%(locales)s</span> languages and locales</span> <span class="
-"\"row3\">around the world.</span> </p>"
+"<p class=\"numbers\"> <span class=\"row1\">Join <span "
+"class=\"number\">%(contributors)s</span> contributors</span> <span "
+"class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
+"locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">加入世界各地的</span> <span "
 "class=\"row2\"><span class=\"number\">%(locales)s</span> 語系</span> <span "
-"class=\"row3\"><span class=\"number\">%(contributors)s</span> 貢獻者。</span></p>"
+"class=\"row3\"><span class=\"number\">%(contributors)s</span> "
+"貢獻者。</span></p>"
 
 #: kuma/landing/templates/landing/homepage.html:153
 #: kuma/landing/templates/landing/homepage.html:176
@@ -2773,13 +2697,13 @@ msgstr "散播一些開發者的愛。"
 
 #: kuma/landing/templates/landing/promote_buttons.html:20
 msgid ""
-"<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a "
-"custom button and source code to promote MDN on your website or blog.</li> "
+"<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a"
+" custom button and source code to promote MDN on your website or blog.</li> "
 "<li><strong>Post Buttons:</strong> Copy the source code and paste it "
 "anywhere on your website or blog to help people click through to MDN.</li> "
 "<li><strong>Feel Good:</strong> Take pride in knowing you're making "
-"developers lives just a little bit better by sharing MDN with the world.</li>"
-" </ol>"
+"developers lives just a little bit better by sharing MDN with the "
+"world.</li> </ol>"
 msgstr ""
 "<ol><li><strong>取得按鈕:</strong> 使用下面簡單的表單以建立一個自訂按鈕以在您的網站或部落格宣傳 "
 "MDN。</li><li><strong>張貼按鈕:</strong> 複製原始碼並貼到您的網站或部落格的任何地方以幫助人們連結至 "
@@ -2924,7 +2848,8 @@ msgstr "由開發者所撰寫的網頁文件，為了 MDN 上的開發者"
 msgid ""
 "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
 "JavaScript and other Web standards and open technologies."
-msgstr "MDN 就是您的網頁開發工具箱，裡面有文件、demo，以及更多關於 HTML、CSS、JavaScript 以及其他網路標準與開放技術的資訊。"
+msgstr ""
+"MDN 就是您的網頁開發工具箱，裡面有文件、demo，以及更多關於 HTML、CSS、JavaScript 以及其他網路標準與開放技術的資訊。"
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
@@ -2988,7 +2913,7 @@ msgstr "暫時無法搜尋，請等幾分鐘後再試一次。"
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
-msgstr ""
+msgstr "搜尋時發生問題，請稍後幾分鐘再試一次。"
 
 #: kuma/search/templates/search/down.html:5
 msgid "Search Unavailable"
@@ -3005,11 +2930,11 @@ msgstr "「{query}」的搜尋結果"
 
 #: kuma/search/templates/search/results.html:39
 msgid ""
-"translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\""
-">%(parent_title)s (%(parent_language)s)</a>"
+"translated from <a href=\"%(parent_url)s\" "
+"title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 msgstr ""
-"翻譯自 <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s（%"
-"(parent_language)s）</a>"
+"翻譯自 <a href=\"%(parent_url)s\" "
+"title=\"%(parent_title)s\">%(parent_title)s（%(parent_language)s）</a>"
 
 #: kuma/search/templates/search/results.html:51
 msgid "MDN Site Search"
@@ -3032,8 +2957,8 @@ msgid_plural ""
 "%(count)s documents found for \"%(query)s\" in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
-"在 %(locale_native)s 與 %(default_locale_native)s 語系找到 %(count)s 份「%"
-"(query)s」的文件。"
+"在 %(locale_native)s 與 %(default_locale_native)s 語系找到 %(count)s "
+"份「%(query)s」的文件。"
 
 #: kuma/search/templates/search/results.html:85
 msgid "%(count)s document found in %(locale_native)s."
@@ -3044,8 +2969,10 @@ msgstr[0] "在 %(locale_native)s 語系找到 %(count)s 份文件。"
 msgid ""
 "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural ""
-"%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] "在 %(locale_native)s 與 %(default_locale_native)s 語系找到 %(count)s 份文件。"
+"%(count)s documents found in %(locale_native)s and "
+"%(default_locale_native)s."
+msgstr[0] ""
+"在 %(locale_native)s 與 %(default_locale_native)s 語系找到 %(count)s 份文件。"
 
 #: kuma/search/templates/search/results.html:101
 msgid "%(count)s document found for \"%(query)s\"."
@@ -3083,6 +3010,8 @@ msgid ""
 "disconnect this account connect a different one first. To delete your MDN "
 "profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
 msgstr ""
+"抱歉，您必須要至少連結一個帳號才能登入。若要取消連結此帳號，請先連結其他帳號。若要刪除您的 MDN 帳號，請<a "
+"href=\"%(bug_form_url)s\" rel=\"nofollow\">開 bug 處理</a>。"
 
 #: kuma/users/adapters.py:22
 msgid "An email address cannot be used as a username."
@@ -3125,8 +3054,7 @@ msgstr "寄電子報給我"
 msgid "Preferred format"
 msgstr "偏好格式"
 
-#: kuma/users/forms.py:44
-#: kuma/users/signup.py:32
+#: kuma/users/forms.py:44 kuma/users/signup.py:32
 msgid "I agree"
 msgstr "我同意"
 
@@ -3138,8 +3066,7 @@ msgstr "您的國家"
 msgid "Beta tester"
 msgstr "Beta 測試者"
 
-#: kuma/users/forms.py:148
-#: kuma/users/templates/users/profile.html:93
+#: kuma/users/forms.py:148 kuma/users/templates/users/profile.html:93
 msgid "Interests"
 msgstr "興趣"
 
@@ -3193,8 +3120,7 @@ msgstr "網站"
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/models.py:106
-#: templates/includes/login.html:21
+#: kuma/users/models.py:106 templates/includes/login.html:21
 msgid "GitHub"
 msgstr "GitHub"
 
@@ -3275,16 +3201,15 @@ msgstr "使用者名稱太短（%(show_value)s 個字元）。必須至少要有
 
 #: kuma/users/signup.py:10
 msgid ""
-"Username is too long (%(show_value)s characters). It must be %(limit_value)s "
-"characters or less."
+"Username is too long (%(show_value)s characters). It must be %(limit_value)s"
+" characters or less."
 msgstr "使用者名稱太長（%(show_value)s 個字元）。不能超過 %(limit_value)s 個字元長。"
 
 #: kuma/users/signup.py:13
 msgid "You must agree to the terms of use."
 msgstr "您必須同意使用條款。"
 
-#: kuma/users/tasks.py:37
-#: kuma/users/templates/users/email/welcome/html.ltxt:6
+#: kuma/users/tasks.py:37 kuma/users/templates/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
 msgstr "前往下一步，參與 MDN！"
 
@@ -3300,8 +3225,7 @@ msgstr "%(email)s <b>已驗證</b>"
 msgid "%(email)s Unverified"
 msgstr "%(email)s <b>未驗證</b>"
 
-#: kuma/users/views.py:331
-#: kuma/users/templates/socialaccount/signup.html:142
+#: kuma/users/views.py:331 kuma/users/templates/socialaccount/signup.html:142
 msgid "Other:"
 msgstr "其他:"
 
@@ -3375,7 +3299,8 @@ msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
 "address for user %(user_display)s."
 msgstr ""
-"請確認 <a href=\"mailto:%(email)s\">%(email)s</a> 是使用者 %(user_display)s 的電子郵件地址。 "
+"請確認 <a href=\"mailto:%(email)s\">%(email)s</a> 是使用者 %(user_display)s "
+"的電子郵件地址。 "
 
 #: kuma/users/templates/account/email_confirm.html:17
 msgid "Confirm"
@@ -3383,8 +3308,8 @@ msgstr "確認"
 
 #: kuma/users/templates/account/email_confirm.html:22
 msgid ""
-"This email confirmation link expired or is invalid. Please <a href=\""
-"%(email_url)s\">issue a new email confirmation request</a>."
+"This email confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr "此郵件確認鏈結已過期或無效，請 <a href=\"%(email_url)s\">要求重新確認電子郵件地址</a>。"
 
 #: kuma/users/templates/account/email_confirmed.html:10
@@ -3392,7 +3317,8 @@ msgid ""
 "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
 "email address for user %(user_display)s."
 msgstr ""
-"您已確認 <a href=\"mailto:%(email)s\">%(email)s</a> 是使用者 %(user_display)s 的電子郵件地址。"
+"您已確認 <a href=\"mailto:%(email)s\">%(email)s</a> 是使用者 %(user_display)s "
+"的電子郵件地址。"
 
 #: kuma/users/templates/account/login.html:3
 msgid "Sign In"
@@ -3452,8 +3378,8 @@ msgstr "若您重設密碼遇到問題請聯絡我們。"
 
 #: kuma/users/templates/account/password_reset_done.html:14
 msgid ""
-"We have sent you an email. Please contact us if you do not receive it within "
-"a few minutes."
+"We have sent you an email. Please contact us if you do not receive it within"
+" a few minutes."
 msgstr "我們已寄信給您，若您過幾分鐘後還沒收到請聯絡我們。"
 
 #: kuma/users/templates/account/password_reset_from_key_done.html:8
@@ -3578,8 +3504,8 @@ msgstr "已取消登入"
 #: kuma/users/templates/socialaccount/login_cancelled.html:9
 msgid ""
 "You decided to cancel logging in to our site using one of your existing "
-"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">"
-"sign in</a>."
+"accounts. If this was a mistake, please proceed to <a "
+"href=\"%(login_url)s\">sign in</a>."
 msgstr "您決定要取消使用某組現有的帳號登入我們的網站。若這是個錯誤，請<a href=\"%(login_url)s\">登入</a>以繼續。"
 
 #: kuma/users/templates/socialaccount/signup.html:4
@@ -3589,18 +3515,19 @@ msgstr "建立您的 MDN 個人資料以繼續"
 
 #: kuma/users/templates/socialaccount/signup.html:30
 msgid ""
-"A profile already exists with this email address. To connect Persona to your "
-"MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
+"A profile already exists with this email address. To connect Persona to your"
+" MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
 "your social account connections.</a>"
 msgstr ""
-"已經有使用此電子郵件地址的帳號存在。若要將 Persona 連結到您的 MDN 帳號，<a href=\"%"
-"(connections_url)s\">您需要先登入再連結您的社交帳號</a>。"
+"已經有使用此電子郵件地址的帳號存在。若要將 Persona 連結到您的 MDN 帳號，<a "
+"href=\"%(connections_url)s\">您需要先登入再連結您的社交帳號</a>。"
 
 #: kuma/users/templates/socialaccount/signup.html:43
 msgid ""
-"A profile already exists with an email address below. Do you already have an "
-"MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\""
-" data-next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+"A profile already exists with an email address below. Do you already have an"
+" MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-"
+"login\" data-next=\"%(persona_next_url)s\">Yes, connect with my MDN "
+"profile</a>"
 msgid_plural ""
 "A profile already exists with one of these email addresses below. Do you "
 "already have an MDN profile? <a href=\"%(persona_login_url)s\" class"
@@ -3608,10 +3535,10 @@ msgid_plural ""
 "with my MDN profile</a>"
 msgstr[0] ""
 "已經有使用此電子郵件地址的帳號存在。您有MDN帳號嗎？<a href=\"%(persona_login_url)s\" class=\"launch-"
-"persona-login\" data-next=\"%"
-"(persona_next_url)s\">是的，請連結我的MDN帳號</a>這些電子郵件地址已有帳號存在。您有MDN帳號嗎？<a href=\"%"
-"(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%"
-"(persona_next_url)s\">是的，請連結我的MDN帳號</a>"
+"persona-login\" data-"
+"next=\"%(persona_next_url)s\">是的，請連結我的MDN帳號</a>這些電子郵件地址已有帳號存在。您有MDN帳號嗎？<a "
+"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">是的，請連結我的MDN帳號</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:55
 msgid ""
@@ -3623,8 +3550,8 @@ msgstr ""
 #: kuma/users/templates/socialaccount/signup.html:61
 msgid ""
 "You can access everything on the MDN website even without an MDN profile. "
-"However, by joining MDN, you'll be able to edit docs, submit demos, and have "
-"your own profile page."
+"However, by joining MDN, you'll be able to edit docs, submit demos, and have"
+" your own profile page."
 msgstr "您不需登入即可存取MDN網站。加入MDN，您可以編輯文件、發佈demo，並可擁有您專屬的頁面。"
 
 #: kuma/users/templates/socialaccount/signup.html:68
@@ -3667,12 +3594,13 @@ msgstr "請輸入您希望讓其他使用者看到的名稱，以證明您的貢
 
 #: kuma/users/templates/socialaccount/signup.html:125
 msgid ""
-"A profile already exists with the selected email address. <a href=\""
-"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\""
-"%(persona_next_url)s\">Connect your %(provider_name)s account to it.</a>"
+"A profile already exists with the selected email address. <a "
+"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Connect your %(provider_name)s account to "
+"it.</a>"
 msgstr ""
-"已有帳號使用選擇的電子郵件地址，<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" "
-"data-next=\"%(persona_next_url)s\">連結您的 %(provider_name)s 帳號。</a>"
+"已有帳號使用選擇的電子郵件地址，<a href=\"%(persona_login_url)s\" class=\"launch-persona-"
+"login\" data-next=\"%(persona_next_url)s\">連結您的 %(provider_name)s 帳號。</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:155
 msgid ""
@@ -3684,8 +3612,8 @@ msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:170
 msgid ""
-"to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)"
-"s\">Privacy Notice</a>."
+"to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
+"href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:179
@@ -3727,8 +3655,7 @@ msgid ""
 "newsletter."
 msgstr "<a href=\"%(profile_edit_url)s\">編輯您的個人資料</a> 以訂閱電子報。"
 
-#: kuma/users/templates/users/profile.html:59
-#: kuma/wiki/content.py:712
+#: kuma/users/templates/users/profile.html:59 kuma/wiki/content.py:712
 #: kuma/wiki/templates/wiki/includes/document_macros.html:43
 msgid "Edit"
 msgstr "編輯"
@@ -3765,8 +3692,8 @@ msgstr "無 Demo"
 
 #: kuma/users/templates/users/profile.html:154
 msgid ""
-"You haven't submitted any web technology demos. Build something awesome and <"
-"a href=\"%(submit_url)s\">submit a demo</a>!"
+"You haven't submitted any web technology demos. Build something awesome and "
+"<a href=\"%(submit_url)s\">submit a demo</a>!"
 msgstr "您還沒有送出任何網頁技術 demo。製作一些酷炫的東西，然後<a href=\"%(submit_url)s\">送出給大家</a>！"
 
 #: kuma/users/templates/users/profile.html:160
@@ -3803,8 +3730,8 @@ msgstr "檢視頁面歷史紀錄"
 
 #: kuma/users/templates/users/profile.html:189
 msgid ""
-"<p class=\"none\">You haven't contributed to any MDN docs. <a href=\""
-"%(docs_url)s\">Pitch in!</a></p>"
+"<p class=\"none\">You haven't contributed to any MDN docs. <a "
+"href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr "<p class=\"none\">您尚未貢獻任何 MDN 文件。<a href=\"%(docs_url)s\">一起來寫文件吧！</a></p>"
 
 #: kuma/users/templates/users/profile.html:193
@@ -3867,7 +3794,8 @@ msgstr "專業知識領域"
 
 #: kuma/users/templates/users/profile_edit.html:92
 msgid ""
-"Add your interests first, then declare yourself an expert in selected topics."
+"Add your interests first, then declare yourself an expert in selected "
+"topics."
 msgstr "請先新增您的興趣，並在所選的主題當中描述您強在哪裡。"
 
 #: kuma/users/templates/users/profile_edit.html:100
@@ -3930,10 +3858,10 @@ msgstr ""
 #: kuma/users/templates/users/email/welcome/html.ltxt:21
 msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of "
-"intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like "
-"words</a>, <a href=\"%(code_link)s\">like code</a>, <a href=\"%(both_link)s\""
-">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">"
-"translate MDN to your language</a>."
+"intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like"
+" words</a>, <a href=\"%(code_link)s\">like code</a>, <a "
+"href=\"%(both_link)s\">like both words and code</a>, or you want to <a "
+"href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:34
@@ -3954,10 +3882,10 @@ msgstr ""
 #: kuma/users/templates/users/email/welcome/html.ltxt:43
 msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on "
-"irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) "
-"You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
-"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz)"
-", Chris Mills (chrismills), and me (jms), MDN's community manager."
+"irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.)"
+" You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
+"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
+"(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:51
@@ -3970,8 +3898,8 @@ msgstr ""
 #: kuma/users/templates/users/email/welcome/html.ltxt:59
 #: kuma/users/templates/users/email/welcome/plain.ltxt:61
 msgid ""
-"Don't be shy, if you have any doubt, problems, questions: contact us! We are "
-"here to help."
+"Don't be shy, if you have any doubt, problems, questions: contact us! We are"
+" here to help."
 msgstr "別害羞，若您有任何不懂、疑問、懷疑之處，快來聯絡我們！我們可以幫忙。"
 
 #. This is an email. Whitespace matters!
@@ -4019,12 +3947,12 @@ msgstr "想把 MDN 翻譯成您使用的語言？"
 msgid ""
 "Want to talk to someone about MDN? There are a few ways you can do that: * "
 "Mailing list: %(list_link)s Subscribe to tell us about what you're "
-"interested in on MDN and ask questions about the site. * Real-time chat: #"
-"mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) "
+"interested in on MDN and ask questions about the site. * Real-time chat: "
+"#mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) "
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
-"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz)"
-", Chris Mills (chrismills), and me (jms), MDN's community manager. * Blog: "
-"%(blog_link)s"
+"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
+"(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. "
+"* Blog: %(blog_link)s"
 msgstr ""
 
 #: kuma/wiki/constants.py:204
@@ -4073,11 +4001,11 @@ msgstr "MDN 最近修改的文件（%s 標籤）"
 
 #: kuma/wiki/feeds.py:180
 msgid "MDN documents in need of review"
-msgstr ""
+msgstr "需要審核的 MDN 文件"
 
 #: kuma/wiki/feeds.py:181
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr ""
+msgstr "MDN 文件最近需要審核的修改"
 
 #: kuma/wiki/feeds.py:187
 msgid "MDN documents for %s review"
@@ -4095,14 +4023,15 @@ msgstr "MDN「%s」翻譯需要更新"
 msgid ""
 "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View "
 "'%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at "
-"%(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s\" title=\""
-"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at "
-"%(doc_modified)s) </p>"
+"%(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s\" "
+"title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last "
+"modified at %(doc_modified)s) </p>"
 msgstr ""
-"<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> 檢視「%"
-"(parent_locale)s」的上一層 </a> (<a href=\"%(mod_url)s\">最後於 %"
-"(parent_modified)s</a> 修改) </p> <p> <a href=\"%(doc_edit_url)s\" title=\"%"
-"(doc_title)s\"> 編輯「%(doc_locale)s」翻譯 </a> (最後於 %(doc_modified)s 修改) </p>"
+"<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> "
+"檢視「%(parent_locale)s」的上一層 </a> (<a href=\"%(mod_url)s\">最後於 "
+"%(parent_modified)s</a> 修改) </p> <p> <a href=\"%(doc_edit_url)s\" "
+"title=\"%(doc_title)s\"> 編輯「%(doc_locale)s」翻譯 </a> (最後於 %(doc_modified)s 修改)"
+" </p>"
 
 #: kuma/wiki/feeds.py:282
 msgid "MDN recent revisions"
@@ -4166,8 +4095,8 @@ msgstr "此 URL 代稱太短（%(show_value)s 字元），至少需要 %(limit_v
 
 #: kuma/wiki/forms.py:31
 msgid ""
-"Please keep the length of the slug to %(limit_value)s characters or less. It "
-"is currently %(show_value)s characters."
+"Please keep the length of the slug to %(limit_value)s characters or less. It"
+" is currently %(show_value)s characters."
 msgstr "URL代稱請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
 #: kuma/wiki/forms.py:34
@@ -4182,8 +4111,8 @@ msgstr "摘要過短（%(show_value)s 字元），至少要 %(limit_value)s 字�
 
 #: kuma/wiki/forms.py:37
 msgid ""
-"Please keep the length of the summary to %(limit_value)s characters or less. "
-"It is currently %(show_value)s characters."
+"Please keep the length of the summary to %(limit_value)s characters or less."
+" It is currently %(show_value)s characters."
 msgstr "摘要請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
 #: kuma/wiki/forms.py:40
@@ -4198,14 +4127,14 @@ msgstr "內容太少了（%(show_value)s 個字元），至少需要 %(limit_val
 
 #: kuma/wiki/forms.py:43
 msgid ""
-"Please keep the length of the content to %(limit_value)s characters or less. "
-"It is currently %(show_value)s characters."
+"Please keep the length of the content to %(limit_value)s characters or less."
+" It is currently %(show_value)s characters."
 msgstr "內容請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
 #: kuma/wiki/forms.py:46
 msgid ""
-"Please keep the length of the comment to %(limit_value)s characters or less. "
-"It is currently %(show_value)s characters."
+"Please keep the length of the comment to %(limit_value)s characters or less."
+" It is currently %(show_value)s characters."
 msgstr "評論請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
 #: kuma/wiki/forms.py:49
@@ -4225,9 +4154,7 @@ msgid "Changing this document's slug requires moving it and its children."
 msgstr "修改此文件的URL代稱必須連同子頁面一起移動。"
 
 # 83%
-#: kuma/wiki/forms.py:64
-#: kuma/wiki/forms.py:134
-#: kuma/wiki/forms.py:405
+#: kuma/wiki/forms.py:64 kuma/wiki/forms.py:134 kuma/wiki/forms.py:405
 #: kuma/wiki/templates/wiki/edit_document.html:54
 #: kuma/wiki/templates/wiki/edit_document.html:103
 #: kuma/wiki/templates/wiki/move_document.html:60
@@ -4237,22 +4164,18 @@ msgstr "修改此文件的URL代稱必須連同子頁面一起移動。"
 msgid "Title:"
 msgstr "標題:"
 
-#: kuma/wiki/forms.py:65
-#: kuma/wiki/forms.py:135
-#: kuma/wiki/forms.py:406
+#: kuma/wiki/forms.py:65 kuma/wiki/forms.py:135 kuma/wiki/forms.py:406
 msgid "Title of article"
 msgstr "文章標題"
 
-#: kuma/wiki/forms.py:72
-#: kuma/wiki/forms.py:142
+#: kuma/wiki/forms.py:72 kuma/wiki/forms.py:142
 #: kuma/wiki/templates/wiki/new_document.html:42
 #: kuma/wiki/templates/wiki/includes/document_macros.html:186
 #: kuma/wiki/templates/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "URL代稱:"
 
-#: kuma/wiki/forms.py:73
-#: kuma/wiki/forms.py:143
+#: kuma/wiki/forms.py:73 kuma/wiki/forms.py:143
 msgid "Article URL"
 msgstr "文章網址"
 
@@ -4264,22 +4187,19 @@ msgstr "分類:"
 msgid "Type of article"
 msgstr "文章類型"
 
-#: kuma/wiki/forms.py:89
-#: kuma/wiki/templates/wiki/new_document.html:46
+#: kuma/wiki/forms.py:89 kuma/wiki/templates/wiki/new_document.html:46
 #: kuma/wiki/templates/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "上層:"
 
 # 80%
-#: kuma/wiki/forms.py:149
-#: kuma/wiki/templates/wiki/edit_document.html:60
+#: kuma/wiki/forms.py:149 kuma/wiki/templates/wiki/edit_document.html:60
 #: kuma/wiki/templates/wiki/includes/document_macros.html:191
 #: kuma/wiki/templates/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "標籤:"
 
-#: kuma/wiki/forms.py:152
-#: kuma/wiki/templates/wiki/edit_document.html:66
+#: kuma/wiki/forms.py:152 kuma/wiki/templates/wiki/edit_document.html:66
 msgid "Keywords:"
 msgstr "關鍵字:"
 
@@ -4297,8 +4217,7 @@ msgstr "只顯示於搜尋結果頁面"
 
 # 87%
 # 75%
-#: kuma/wiki/forms.py:167
-#: kuma/wiki/templates/wiki/edit_document.html:78
+#: kuma/wiki/forms.py:167 kuma/wiki/templates/wiki/edit_document.html:78
 #: kuma/wiki/templates/wiki/includes/document_macros.html:196
 msgid "Content:"
 msgstr "內容:"
@@ -4324,9 +4243,7 @@ msgstr "新的URL代稱:"
 msgid "New article URL"
 msgstr "新文件網址"
 
-#: kuma/wiki/helpers.py:161
-#: kuma/wiki/helpers.py:162
-#: kuma/wiki/helpers.py:188
+#: kuma/wiki/helpers.py:161 kuma/wiki/helpers.py:162 kuma/wiki/helpers.py:188
 #: kuma/wiki/helpers.py:189
 msgid "Revision %s"
 msgstr "修訂版本 %s"
@@ -4403,7 +4320,8 @@ msgstr "修改必須基於 %(locale)s 的修訂文件。 版本編號 %(id)s 不
 
 #: kuma/wiki/search.py:320
 msgid ""
-"Indexing {total} documents into {n} chunks of size {size} into index {index}."
+"Indexing {total} documents into {n} chunks of size {size} into index "
+"{index}."
 msgstr ""
 
 #: kuma/wiki/views.py:495
@@ -4566,11 +4484,11 @@ msgstr "已刪除文件"
 
 #: kuma/wiki/templates/wiki/deletion_log.html:9
 msgid "This document was deleted on %(when)s."
-msgstr ""
+msgstr "此文件刪除於 %(when)s。"
 
 #: kuma/wiki/templates/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
-msgstr ""
+msgstr "刪除原因"
 
 #: kuma/wiki/templates/wiki/deletion_log.html:18
 msgid "Restore this document"
@@ -4658,8 +4576,8 @@ msgstr "此文件需要編輯審查。"
 
 #: kuma/wiki/templates/wiki/document.html:300
 msgid ""
-"This translation is incomplete. Please help <a href=\"%(translate_url)s\">"
-"translate this article</a> from English."
+"This translation is incomplete. Please help <a "
+"href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:305
@@ -4668,8 +4586,8 @@ msgstr "正在翻譯中。"
 
 #: kuma/wiki/templates/wiki/document.html:312
 msgid ""
-"Our volunteers haven't translated this article into %(locale)s yet. <a href="
-"\"%(help_link)s\">Join us and help get the job done!</a>"
+"Our volunteers haven't translated this article into %(locale)s yet. <a "
+"href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:323
@@ -4679,23 +4597,26 @@ msgstr "這篇文章還沒有任何內容。"
 #: kuma/wiki/templates/wiki/document.html:326
 msgid ""
 "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that "
-"use %(title)s</a> to see example use cases and how many pages use this macro."
+"use %(title)s</a> to see example use cases and how many pages use this "
+"macro."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:339
-#, fuzzy
 msgid "This article doesn't have approved content yet."
-msgstr "這篇文章還沒有任何內容。"
+msgstr "這篇文章還沒有任何通過審核的內容。"
 
 #: kuma/wiki/templates/wiki/document.html:352
 msgid "Document Tags and Contributors"
-msgstr ""
+msgstr "文件標籤與貢獻者"
 
 #: kuma/wiki/templates/wiki/document.html:357
 msgid ""
-"<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-group\""
-"></i><strong>Contributors to this page:</strong> %(contributors_list)s </div>"
+"<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-"
+"group\"></i><strong>Contributors to this page:</strong> "
+"%(contributors_list)s </div>"
 msgstr ""
+"<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-"
+"group\"></i><strong>此頁面的貢獻者:</strong> %(contributors_list)s </div>"
 
 #: kuma/wiki/templates/wiki/document.html:366
 msgid "Last updated by:"
@@ -4711,7 +4632,7 @@ msgstr "編輯歷史 | {document}"
 
 #: kuma/wiki/templates/wiki/document_revisions.html:14
 msgid "History of"
-msgstr ""
+msgstr "文件歷史:"
 
 #: kuma/wiki/templates/wiki/document_revisions.html:17
 msgid "Revision history for:"
@@ -4771,11 +4692,11 @@ msgstr "編輯頁面標題及屬性"
 #: kuma/wiki/templates/wiki/edit_document.html:94
 #: kuma/wiki/templates/wiki/new_document.html:32
 msgid ""
-"Draft <span id=\"draft-action\"></span> <time id=\"draft-time\" class=\""
-"timeago\" title=\"\"></time>"
+"Draft <span id=\"draft-action\"></span> <time id=\"draft-time\" "
+"class=\"timeago\" title=\"\"></time>"
 msgstr ""
-"草稿 <span id=\"draft-action\"></span> <time id=\"draft-time\" class=\"timeago\" "
-"title=\"\"></time>"
+"草稿 <span id=\"draft-action\"></span> <time id=\"draft-time\" "
+"class=\"timeago\" title=\"\"></time>"
 
 #: kuma/wiki/templates/wiki/edit_document.html:113
 msgid "Rendering max age:"
@@ -4811,12 +4732,13 @@ msgstr "感謝您花時間改善 MDN！"
 #: kuma/wiki/templates/wiki/edit_document.html:150
 msgid ""
 "It looks like this is your first contribution to MDN. You can find answers "
-"to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">"
-"Editor Guide</a>."
+"to common editing questions within our <a target=\"_blank\" "
+"href=\"%(url)s\">Editor Guide</a>."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/edit_document.html:154
-msgid "Don't be afraid to break something, you can always revert your changes."
+msgid ""
+"Don't be afraid to break something, you can always revert your changes."
 msgstr "別擔心會改壞什麼東西，您總是可以還原您的變更。"
 
 #: kuma/wiki/templates/wiki/edit_document.html:155
@@ -4831,8 +4753,8 @@ msgstr "了解如何用 tag 標示文件"
 #: kuma/wiki/templates/wiki/translate.html:112
 msgid ""
 "Categorize the article. It will make the article findable under the right "
-"filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the "
-"Tagging Guide</a>."
+"filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the"
+" Tagging Guide</a>."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/list_documents.html:2
@@ -4842,23 +4764,23 @@ msgstr "找到 {0} 份文件。"
 
 #: kuma/wiki/templates/wiki/list_documents.html:6
 msgid "Articles tagged: {tag}"
-msgstr ""
+msgstr "文章標籤: {tag}"
 
 #: kuma/wiki/templates/wiki/list_documents.html:8
 msgid "All templates"
-msgstr ""
+msgstr "所有模板"
 
 #: kuma/wiki/templates/wiki/list_documents.html:9
 msgid "Found {0} templates."
-msgstr ""
+msgstr "找到 {0} 個模板。"
 
 #: kuma/wiki/templates/wiki/list_documents.html:11
 msgid "Documents with errors"
-msgstr ""
+msgstr "有錯誤的文件"
 
 #: kuma/wiki/templates/wiki/list_documents.html:13
 msgid "Top level documents"
-msgstr ""
+msgstr "頂端文件"
 
 #: kuma/wiki/templates/wiki/list_documents.html:15
 msgid "Documents with no parent"
@@ -4937,11 +4859,11 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/move_document.html:23
 msgid "Don't include the URL scheme (\"https://\")."
-msgstr ""
+msgstr "不要包含網址的 scheme（「https://」）。"
 
 #: kuma/wiki/templates/wiki/move_document.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "僅輸入網址中，「/docs/」後面的部分。"
 
 #: kuma/wiki/templates/wiki/move_document.html:25
 msgid ""
@@ -4991,11 +4913,11 @@ msgstr "移動頁面"
 
 #: kuma/wiki/templates/wiki/move_document.html:97
 msgid "The following {d} subpages will be affected by this move:"
-msgstr ""
+msgstr "下列 {d} 篇子頁面將被此次移動影響:"
 
 #: kuma/wiki/templates/wiki/move_document.html:104
 msgid "No other documents will be affected by this change."
-msgstr ""
+msgstr "此變更不會影響其他文件。"
 
 #: kuma/wiki/templates/wiki/move_requested.html:2
 msgid "Page move requested"
@@ -5003,10 +4925,12 @@ msgstr "已請求移動頁面"
 
 #: kuma/wiki/templates/wiki/move_requested.html:9
 msgid ""
-"<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)"
-"s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if "
-"any errors occur during the move.</p>"
+"<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a "
+"href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when "
+"it finishes, or if any errors occur during the move.</p>"
 msgstr ""
+"<h1>已排定頁面移動</h1> <p>正在移動 %(old_slug)s 至 <a "
+"href=\"%(new_url)s\">%(new_slug)s</a></p> <p>您將會在移動完成或發生錯誤時收到通知。</p>"
 
 #: kuma/wiki/templates/wiki/new_document.html:5
 msgid "Create a New {title}"
@@ -5022,9 +4946,10 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
-msgstr ""
+msgstr "這是未儲存文件的預覽。"
 
-#. {n} is the revision number, {t} is the title of the document. {c} is the category.
+#. {n} is the revision number, {t} is the title of the document. {c} is the
+#. category.
 #: kuma/wiki/templates/wiki/revision.html:3
 msgid "Revision {n} | {t} | {c}"
 msgstr "版本 {n} | {t} | {c}"
@@ -5060,25 +4985,25 @@ msgstr "選取要翻譯的語言:"
 #: kuma/wiki/templates/wiki/sphinx.html:32
 msgid ""
 "Content is available under a license specific to this project. &middot; <a "
-"href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/"
-"kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/"
-"privacy\">Privacy policy</a>"
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"內容依照此專案的授權條款提供大眾使用 &middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">貢獻程式碼</a> &middot; <a "
+"內容依照此專案的授權條款提供大眾使用 &middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a"
+" href=\"//github.com/mozilla/kuma\">貢獻程式碼</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
 
 #: kuma/wiki/templates/wiki/sphinx.html:43
 msgid ""
-"&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> "
-"Content is available under a license specific to this project. &middot; <a "
-"href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/"
-"kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/"
-"privacy\">Privacy policy</a>"
+"&copy; 2005-2015 Mozilla Developer Network and individual contributors<br />"
+" Content is available under a license specific to this project. &middot; <a "
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
 "&copy; 2005-2015 Mozilla Developer Network 及個別貢獻者<br /> "
-"內容依照此專案的授權條款提供大眾使用。&middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">貢獻程式碼</a> &middot; <a "
+"內容依照此專案的授權條款提供大眾使用。&middot; <a href=\"%(about_url)s\">關於 MDN</a> &middot; <a"
+" href=\"//github.com/mozilla/kuma\">貢獻程式碼</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
 
 #: kuma/wiki/templates/wiki/translate.html:7
@@ -5103,7 +5028,7 @@ msgstr "已通過審查的 {locale} 版本"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Rendered"
-msgstr ""
+msgstr "檢視產生的內容"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Source"
@@ -5115,7 +5040,7 @@ msgstr "顯示 {locale}"
 
 #: kuma/wiki/templates/wiki/translate.html:86
 msgid "Hide {locale}"
-msgstr ""
+msgstr "隱藏 {locale}"
 
 #: kuma/wiki/templates/wiki/translate.html:99
 msgid "{locale} translation:"
@@ -5123,11 +5048,11 @@ msgstr "{locale} 翻譯:"
 
 #: kuma/wiki/templates/wiki/translate.html:109
 msgid "Translate Tags"
-msgstr ""
+msgstr "翻譯標籤"
 
 #: kuma/wiki/templates/wiki/translate.html:118
 msgid "English tags"
-msgstr ""
+msgstr "英文版標籤"
 
 #: kuma/wiki/templates/wiki/translate.html:130
 msgid "This document has no tags."
@@ -5135,7 +5060,7 @@ msgstr "這份文件沒有標籤。"
 
 #: kuma/wiki/templates/wiki/translate.html:137
 msgid "{locale} tags"
-msgstr ""
+msgstr "{locale} 版標籤"
 
 #: kuma/wiki/templates/wiki/translate.html:144
 msgid "Version Notes"
@@ -5224,7 +5149,8 @@ msgid "You are now subscribed to the {language} version of this article."
 msgstr "您已訂閱此文章的 {language} 版本。"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:65
-msgid "You have been unsubscribed from the {language} version of this article."
+msgid ""
+"You have been unsubscribed from the {language} version of this article."
 msgstr "您已取消訂閱此文章的 {language} 版本。"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:73
@@ -5265,7 +5191,7 @@ msgstr "詳見"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:124
 msgid "The following reviews have been requested:"
-msgstr ""
+msgstr "已請求進行下列審核:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:132
 msgid "Technical"
@@ -5273,11 +5199,11 @@ msgstr "技術"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:138
 msgid "Editorial"
-msgstr ""
+msgstr "編輯"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:143
 msgid "Review completed"
-msgstr ""
+msgstr "審核完成"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:153
 msgid "Change Revisions"
@@ -5293,9 +5219,8 @@ msgid "Share:"
 msgstr "分享:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:227
-#, fuzzy
 msgid "Google+"
-msgstr "Google +"
+msgstr "Google+"
 
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/templates/wiki/includes/translate_description.html:50
@@ -5312,8 +5237,8 @@ msgid ""
 "There was a scripting error on this page. While it is being addressed by "
 "site editors, you can view partial content below."
 msgid_plural ""
-"There were scripting errors on this page. While those are being addressed by "
-"site editors, you can view partial content below."
+"There were scripting errors on this page. While those are being addressed by"
+" site editors, you can view partial content below."
 msgstr[0] ""
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:11
@@ -5341,7 +5266,7 @@ msgstr "錯誤類型:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:40
 msgid "In macro:"
-msgstr ""
+msgstr "於巨集:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:44
 msgid "Create Template"
@@ -5353,7 +5278,7 @@ msgstr "編輯範本"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
 msgid "Parsing macro:"
-msgstr ""
+msgstr "正在處理巨集:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
 msgid "Edit Document"
@@ -5361,7 +5286,7 @@ msgstr "編輯文件"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:54
 msgid "Full text of error:"
-msgstr ""
+msgstr "錯誤全文:"
 
 #: kuma/wiki/templates/wiki/includes/more_help.html:4
 msgid "Couldn't find what you were looking for?"
@@ -5405,7 +5330,7 @@ msgstr "版本註解"
 
 #: kuma/wiki/templates/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr ""
+msgstr "了解如何使用版本註解"
 
 #: kuma/wiki/templates/wiki/includes/revision_comment.html:3
 msgid ""
@@ -5431,9 +5356,7 @@ msgid ""
 "Changes."
 msgstr ""
 
-#: templates/403.html:5
-#: templates/403.html:19
-#: templates/handlers/400.html:5
+#: templates/403.html:5 templates/403.html:19 templates/handlers/400.html:5
 msgid "Permission Denied"
 msgstr "存取被拒"
 
@@ -5453,13 +5376,11 @@ msgstr "此使用者帳號已被封鎖。"
 msgid "You must sign in to view all history"
 msgstr "您必須登入才能檢視所有歷史記錄"
 
-#: templates/403.html:34
-#: templates/handlers/400.html:21
+#: templates/403.html:34 templates/handlers/400.html:21
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
 msgstr "<p>%(name)s 抱歉，我們˙恐怕不能這麼做。</p>"
 
-#: templates/403.html:38
-#: templates/handlers/400.html:25
+#: templates/403.html:38 templates/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr "<p>抱歉，我們恐怕不能這麼做。</p>"
 
@@ -5467,26 +5388,29 @@ msgstr "<p>抱歉，我們恐怕不能這麼做。</p>"
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
 msgstr "<li><a href=\"%(logout_url)s\">登出</a> 以再試一次。</li>"
 
-#: templates/403.html:49
-#: templates/handlers/400.html:36
+#: templates/403.html:49 templates/handlers/400.html:36
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr "<li><a href=\"%(login_url)s\">登入</a> 以再試一次。</li>"
 
 #: templates/403.html:53
 msgid ""
-"<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">"
-"browse docs</a></li>"
+"<li><a href=\"%(demos_url)s\">View demos</a> or <a "
+"href=\"%(docs_url)s\">browse docs</a></li>"
 msgstr ""
-"<li><a href=\"%(demos_url)s\">檢視 Demo</a> 或 <a href=\"%"
-"(docs_url)s\">瀏覽文件</a></li>"
+"<li><a href=\"%(demos_url)s\">檢視 Demo</a> 或 <a "
+"href=\"%(docs_url)s\">瀏覽文件</a></li>"
 
 #: templates/403.html:58
 msgid ""
-"<p class=\"attrib\"><small><a href=\""
-"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\""
-">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\""
-"nofollow\">The Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a "
+"href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
+"rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a "
+"href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
 msgstr ""
+"<p class=\"attrib\"><small><a "
+"href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
+"rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a "
+"href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
 
 #: templates/404.html:6
 msgid "Not Found"
@@ -5505,8 +5429,8 @@ msgstr "您可以搜尋看看，或是從 <a href=\"%(homepage_url)s\">首頁</a
 #: templates/404.html:28
 msgid ""
 "If you were following a documentation link, you can sign in and create the "
-"page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a "
-"bug</a>. Thanks!"
+"page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a"
+" bug</a>. Thanks!"
 msgstr ""
 
 #: templates/404.html:36
@@ -5514,6 +5438,8 @@ msgid ""
 "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew "
 "Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr ""
+"<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew "
+"Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 
 #: templates/500.html:5
 msgid "Internal Server Error"
@@ -5537,31 +5463,31 @@ msgstr "工具"
 
 #: templates/base.html:106
 msgid "Contribute to MDN"
-msgstr ""
+msgstr "貢獻到 MDN"
 
 #: templates/base.html:108
 msgid "Get started"
-msgstr ""
+msgstr "開始使用"
 
 #: templates/base.html:109
 msgid "Review or localize docs"
-msgstr ""
+msgstr "審核或翻譯文件"
 
 #: templates/base.html:110
 msgid "Add a new page"
-msgstr ""
+msgstr "新增頁面"
 
 #: templates/base.html:113
 msgid "Site Tools"
-msgstr ""
+msgstr "網站工具"
 
 #: templates/base.html:115
 msgid "Revision dashboard"
-msgstr ""
+msgstr "編修主控台"
 
 #: templates/base.html:116
 msgid "Documentation status"
-msgstr ""
+msgstr "文件狀態"
 
 #: templates/base.html:128
 msgid "Web Platform"
@@ -5617,51 +5543,50 @@ msgstr "…更多文件"
 
 #: templates/base.html:155
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "Mozilla 文件"
 
-#: templates/base.html:164
-#: templates/includes/login.html:20
+#: templates/base.html:164 templates/includes/login.html:20
 msgid "Persona"
 msgstr "Persona"
 
 #: templates/base.html:168
-#, fuzzy
 msgid "Developer Tools"
-msgstr "開發者<br />工具"
+msgstr "開發者工具"
 
 #: templates/base.html:168
 msgid "Feedback"
-msgstr ""
+msgstr "意見回饋"
 
 #: templates/base.html:178
 msgid "Join the MDN community"
-msgstr ""
+msgstr "加入 MDN 社群"
 
 #: templates/base.html:179
 msgid "Report a content problem"
-msgstr ""
+msgstr "回報內容問題"
 
 #: templates/base.html:180
 msgid "Report a bug"
-msgstr ""
+msgstr "回報 bug"
 
 #: templates/base.html:206
 msgid ""
 "<bdi>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual "
-"contributors<br /> Content is available under <a href=\"%(copyright_url)s\">"
-"these licenses</a> &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
-"<a href=\"//www.mozilla.org/about/legal/terms/mozilla\">Terms</a> &middot; <"
-"a href=\"//www.mozilla.org/privacy/websites/\">Privacy</a> &middot; <a href="
-"\"//www.mozilla.org/privacy/websites/#cookies\">Cookies</a> &middot; <a href="
-"\"//github.com/mozilla/kuma\">Contribute to the code</a></bdi>"
+"contributors<br /> Content is available under <a "
+"href=\"%(copyright_url)s\">these licenses</a> &middot; <a "
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//www.mozilla.org/about/legal/terms/mozilla\">Terms</a> &middot; <a "
+"href=\"//www.mozilla.org/privacy/websites/\">Privacy</a> &middot; <a "
+"href=\"//www.mozilla.org/privacy/websites/#cookies\">Cookies</a> &middot; <a"
+" href=\"//github.com/mozilla/kuma\">Contribute to the code</a></bdi>"
 msgstr ""
 "<bdi>&copy; 2005-%(thisyear)s Mozilla Developer Network 及個別貢獻者<br /> 內容依照<a "
-"href=\"%(copyright_url)s\">這些授權條款</a>提供大眾使用 &middot; <a href=\"%"
-"(about_url)s\">關於 MDN</a> &middot; <a "
+"href=\"%(copyright_url)s\">這些授權條款</a>提供大眾使用 &middot; <a "
+"href=\"%(about_url)s\">關於 MDN</a> &middot; <a "
 "href=\"//www.mozilla.org/about/legal/terms/mozilla\">法律條款</a> &middot; <a "
 "href=\"//www.mozilla.org/privacy/websites/\">隱私權</a> &middot; <a "
-"href=\"//www.mozilla.org/privacy/websites/#cookies\">Cookies</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">貢獻程式碼</a></bdi>"
+"href=\"//www.mozilla.org/privacy/websites/#cookies\">Cookies</a> &middot; <a"
+" href=\"//github.com/mozilla/kuma\">貢獻程式碼</a></bdi>"
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
@@ -5715,8 +5640,7 @@ msgstr "登入"
 msgid "Unsubscribe from these emails:"
 msgstr "退訂下列郵件:"
 
-#: templates/tidings/unsubscribe.html:2
-#: templates/tidings/unsubscribe.html:12
+#: templates/tidings/unsubscribe.html:2 templates/tidings/unsubscribe.html:12
 #: templates/tidings/unsubscribe_error.html:2
 #: templates/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
@@ -5735,8 +5659,8 @@ msgid ""
 "We could not find your subscription. Either it has already been cancelled, "
 "or there was a mistake in the unsubscribe link. Please make sure the entire "
 "link from the email made it into the browser. If the last part of the link "
-"wraps onto a second line in the email, try copying and pasting the link into "
-"the browser."
+"wraps onto a second line in the email, try copying and pasting the link into"
+" the browser."
 msgstr ""
 
 #: templates/tidings/unsubscribe_success.html:7
@@ -5745,7 +5669,7 @@ msgstr "已取消訂閱"
 
 #: templates/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr ""
+msgstr "您已退訂。"
 
 #~ msgid "Zones"
 #~ msgstr "專區"
@@ -5777,8 +5701,7 @@ msgstr ""
 #~ msgid "<p>Are you sure that you would like to delete this comment?</p>"
 #~ msgstr "<p>您確定要刪除此回應？</p>"
 
-#~ msgid ""
-#~ "<button type=\"submit\" class=\"remove\"><span>Delete comment</span></button>"
+#~ msgid "<button type=\"submit\" class=\"remove\"><span>Delete comment</span></button>"
 #~ msgstr "<button type=\"submit\" class=\"remove\"><span>刪除留言</span></button>"
 
 #~ msgid "There is {count} comment for this demo"
@@ -5808,15 +5731,15 @@ msgstr ""
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> 說，"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent "
-#~ "link to this comment by %(display_name)s\"><time class=\"published\" "
-#~ "pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\" title=\"%"
-#~ "(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" "
+#~ "title=\"Permanent link to this comment by %(display_name)s\"><time "
+#~ "class=\"published\" pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\" "
+#~ "title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "貼出於 <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"%(display_name)s "
-#~ "所送出的此回佣的永久鏈結\"><time class=\"published\" pubdate=\"pubdate\" datetime=\"%"
-#~ "(comment_isotime)s\" title=\"%(comment_isotime)s\">%"
-#~ "(comment_timesince)s</time></a>"
+#~ "貼出於 <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" "
+#~ "title=\"%(display_name)s 所送出的此回佣的永久鏈結\"><time class=\"published\" "
+#~ "pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\" "
+#~ "title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "由 {full_name} 回覆此回應"
@@ -5939,11 +5862,11 @@ msgstr ""
 #~ msgstr "頒發者"
 
 #~ msgid ""
-#~ "<span class=\"badge_title\">%(title)s</span> <span class=\"relation\">awarded "
-#~ "to</span> <span class=\"user\">%(user)s</span>"
+#~ "<span class=\"badge_title\">%(title)s</span> <span "
+#~ "class=\"relation\">awarded to</span> <span class=\"user\">%(user)s</span>"
 #~ msgstr ""
-#~ "<span class=\"badge_title\">%(title)s</span> <span class=\"relation\">頒發給</span> "
-#~ "<span class=\"user\">%(user)s</span>"
+#~ "<span class=\"badge_title\">%(title)s</span> <span "
+#~ "class=\"relation\">頒發給</span> <span class=\"user\">%(user)s</span>"
 
 #~ msgid "Image:"
 #~ msgstr "圖片:"
@@ -5984,8 +5907,8 @@ msgstr ""
 #~ msgstr "<p>想要學習網頁技術嗎？<br>我們整理了一些資源讓您可以開始下手。</p>"
 
 #~ msgid ""
-#~ "<p><strong>HyperText Markup Language</strong> is the core syntax for putting "
-#~ "information on the worldwide web. If you want to create or modify web "
+#~ "<p><strong>HyperText Markup Language</strong> is the core syntax for putting"
+#~ " information on the worldwide web. If you want to create or modify web "
 #~ "pages, it's best if you learn HTML.</p>"
 #~ msgstr ""
 #~ "<p><strong>超文字標記語言（HyperText Markup Language, "
@@ -5993,8 +5916,8 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p><strong>Cascading Style Sheets</strong> is a language for describing the "
-#~ "appearance of web pages. To create good-looking web pages, you need to learn "
-#~ "CSS in order to define the appearance and location of the HTML elements "
+#~ "appearance of web pages. To create good-looking web pages, you need to learn"
+#~ " CSS in order to define the appearance and location of the HTML elements "
 #~ "within the pages.</p>"
 #~ msgstr ""
 #~ "<p><strong>串接樣式表（Cascading Style Sheets, CSS）</strong> "
@@ -6002,8 +5925,8 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p><strong>JavaScript</strong> (JS for short) is the programming language "
-#~ "that enables web pages to respond to user interaction beyond the basic level "
-#~ "provided by HTML links and forms.</p>"
+#~ "that enables web pages to respond to user interaction beyond the basic level"
+#~ " provided by HTML links and forms.</p>"
 #~ msgstr ""
 #~ "<p><strong>JavaScript</strong>（簡稱為 JS）是讓網頁可以在 HTML "
 #~ "鏈結與表單之外，可以回應使用者產生互動的程式語言。</p>"
@@ -6015,18 +5938,19 @@ msgstr ""
 #~ msgstr "回到首頁"
 
 #~ msgid ""
-#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language "
-#~ "for describing the appearance of web pages. To create good-looking web "
-#~ "pages, you need to learn CSS in order to define the appearance and location "
-#~ "of the HTML elements within the pages.</p> <p>The links on this page lead to "
-#~ "a variety of CSS tutorials and CSS training materials. Whether you are just "
-#~ "starting out, learning the basics of CSS, or are an experienced web "
-#~ "developer wanting to learn <strong>CSS3</strong> (the newest version of the "
-#~ "standard) and CSS best practices, you can find helpful resources here.</p>"
+#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a "
+#~ "language for describing the appearance of web pages. To create good-looking "
+#~ "web pages, you need to learn CSS in order to define the appearance and "
+#~ "location of the HTML elements within the pages.</p> <p>The links on this "
+#~ "page lead to a variety of CSS tutorials and CSS training materials. Whether "
+#~ "you are just starting out, learning the basics of CSS, or are an experienced"
+#~ " web developer wanting to learn <strong>CSS3</strong> (the newest version of"
+#~ " the standard) and CSS best practices, you can find helpful resources "
+#~ "here.</p>"
 #~ msgstr ""
 #~ "<p "
-#~ "class=\"intro\">CSS（<strong>串接樣式表</strong>）是一種用來描述網頁呈現方式的語言。如果要做出一張好看的網頁，您需要學會 "
-#~ "CSS 才能定義網頁當中的 HTML 元素的樣式與位置。</p> <p>這張網頁當中的鏈結會包含了不同種類的 CSS "
+#~ "class=\"intro\">CSS（<strong>串接樣式表</strong>）是一種用來描述網頁呈現方式的語言。如果要做出一張好看的網頁，您需要學會"
+#~ " CSS 才能定義網頁當中的 HTML 元素的樣式與位置。</p> <p>這張網頁當中的鏈結會包含了不同種類的 CSS "
 #~ "教學與訓練資源。不論您只是正準備要入門，剛剛了解 CSS 的基礎，或是已經是一位老練的網頁開發者但想要學習 "
 #~ "<strong>CSS3</strong>（最新版本的 CSS 標準）與 CSS 的最佳實踐，您都可以在這裡找到最能幫助您的資源。</p>"
 
@@ -6145,8 +6069,8 @@ msgstr ""
 
 #~ msgid ""
 #~ "CSS transitions, part of the draft CSS3 specification, provide a way to "
-#~ "animate changes to CSS properties, instead of having the changes take effect "
-#~ "instantly."
+#~ "animate changes to CSS properties, instead of having the changes take effect"
+#~ " instantly."
 #~ msgstr "CSS3 規格書草稿的一部分，CSS 變形，提供了一個可以讓 CSS 屬性進行動態修改的方式，而不需要即時地讓修改生效。"
 
 #~ msgid "Understanding CSS3 Transitions"
@@ -6166,8 +6090,8 @@ msgstr ""
 #~ msgstr "CSS3 的 @font-face 功能讓您可以用簡單、可操縱、靈活的方式在網頁上使用自訂字形。"
 
 #~ msgid ""
-#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of "
-#~ "CSS. Many CSS3 features are supported in various ways by modern browsers, "
+#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of"
+#~ " CSS. Many CSS3 features are supported in various ways by modern browsers, "
 #~ "but many users still have older browsers and so can't take advantage."
 #~ msgstr ""
 #~ "此網站討論 <strong>CSS3</strong>，是最新穎，仍然發展中的版本的 CSS。許多 CSS3 "
@@ -6179,15 +6103,15 @@ msgstr ""
 #~ msgid ""
 #~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the "
 #~ "core syntax for putting information on the worldwide web. If you want to "
-#~ "create or modify web pages, it's best if you learn HTML.</p> <p>The links on "
-#~ "this page lead to a variety of HTML tutorials and HTML training materials. "
+#~ "create or modify web pages, it's best if you learn HTML.</p> <p>The links on"
+#~ " this page lead to a variety of HTML tutorials and HTML training materials. "
 #~ "Whether you are just starting out, learning the basics of HTML, or are an "
 #~ "old hand at web development wanting to learn <strong>HTML5</strong> (the "
 #~ "newest version of the standard), you can find helpful resources here for "
 #~ "HTML best practices.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">HTML (<strong>超文字標示語言，HyperText Markup Language</strong>) "
-#~ "是將資訊放到全球資訊網上的核心語法。若您想要建立或修改網頁，您最好得學會 HTML。</p> <p>本頁上的鏈結將帶您到一些不同的 HTML 教學與 "
+#~ "<p class=\"intro\">HTML (<strong>超文字標示語言，HyperText Markup Language</strong>)"
+#~ " 是將資訊放到全球資訊網上的核心語法。若您想要建立或修改網頁，您最好得學會 HTML。</p> <p>本頁上的鏈結將帶您到一些不同的 HTML 教學與 "
 #~ "HTML 訓練材料。不論您只是剛剛入門，正在學習 HTML 的基礎，或是您已經是老鳥想要學習 <strong>HTML5</strong> "
 #~ "(最新版本的標準)，您可以在此找到許多有用的 HTML 最佳實踐資源。</p>"
 
@@ -6236,9 +6160,9 @@ msgstr ""
 #~ msgstr "HTML 挑戰"
 
 #~ msgid ""
-#~ "Use these challenges to hone your HTML skills (for example, \"Should I use an "
-#~ "&lt;h2&gt; element or a &lt;strong&gt; element?\"), focusing on meaningful "
-#~ "mark-up."
+#~ "Use these challenges to hone your HTML skills (for example, \"Should I use "
+#~ "an &lt;h2&gt; element or a &lt;strong&gt; element?\"), focusing on "
+#~ "meaningful mark-up."
 #~ msgstr ""
 #~ "透過這些挑戰以精進您的 HTML 技能（舉例，「我應該使用 &lt;h2&gt; 元素還是 &lt;strong&gt; "
 #~ "元素？」），聚焦於有意義的文件語法。"
@@ -6252,8 +6176,8 @@ msgstr ""
 #~ msgstr "編輯可以快速載入的 HTML 頁面的小技巧"
 
 #~ msgid ""
-#~ "Optimize web pages to provide a more responsive site for visitors and reduce "
-#~ "the load on your web server and Internet connection."
+#~ "Optimize web pages to provide a more responsive site for visitors and reduce"
+#~ " the load on your web server and Internet connection."
 #~ msgstr "最佳化您的網頁以提供更好回應給參觀者，並減少您網頁伺服器與網路連線的負擔。"
 
 #~ msgid "Dive into HTML5"
@@ -6266,8 +6190,8 @@ msgstr ""
 #~ msgstr "From Mark Pilgrim"
 
 #~ msgid ""
-#~ "Learn about a selection of features of HTML5, the newest version of the HTML "
-#~ "specification."
+#~ "Learn about a selection of features of HTML5, the newest version of the HTML"
+#~ " specification."
 #~ msgstr "了解 HTML5，最新版本 HTML 規格的精選功能。"
 
 #~ msgid "Get Ready for HTML5"
@@ -6356,8 +6280,8 @@ msgstr ""
 
 #~ msgid ""
 #~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of "
-#~ "the standard. Many HTML5 features are supported by modern browsers, but many "
-#~ "users still have older browsers and so can't take advantage."
+#~ "the standard. Many HTML5 features are supported by modern browsers, but many"
+#~ " users still have older browsers and so can't take advantage."
 #~ msgstr ""
 #~ "這個網站討論 <strong>HTML5</strong>，即將到來的下一個版本標準。許多 HTML "
 #~ "標準已由新興的瀏覽器支援，但許多使用者仍然使用舊版瀏覽器，無法體驗新技術所帶來的好處。"
@@ -6368,9 +6292,9 @@ msgstr ""
 #~ msgid ""
 #~ "<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the "
 #~ "programming language that enables web pages to respond to user interaction "
-#~ "beyond the basic level provided by HTML links and forms.</p> <p>The links on "
-#~ "this page lead to a variety of JavaScript tutorials and JavaScript training "
-#~ "materials. Whether you are just starting out, wanting to learn JS basics, "
+#~ "beyond the basic level provided by HTML links and forms.</p> <p>The links on"
+#~ " this page lead to a variety of JavaScript tutorials and JavaScript training"
+#~ " materials. Whether you are just starting out, wanting to learn JS basics, "
 #~ "or are an old hand, wanting to sharpen your skills, you can find helpful "
 #~ "resources here for JS best practices.</p>"
 #~ msgstr ""
@@ -6397,8 +6321,8 @@ msgstr ""
 #~ msgstr "Programming &ndash; The Real Basics"
 
 #~ msgid ""
-#~ "Basic fundamentals of programming. Following articles introduce what you can "
-#~ "do with JavaScript, best practices for using it, and more."
+#~ "Basic fundamentals of programming. Following articles introduce what you can"
+#~ " do with JavaScript, best practices for using it, and more."
 #~ msgstr "基礎程式架構。下面的文章簡單介紹了您可以使用 JavaScript 做什麼、JavaScript 最佳實踐，還有更多資訊。"
 
 #~ msgid "JavaScript From the Ground Up"
@@ -6579,8 +6503,8 @@ msgstr ""
 #~ msgstr "{title}"
 
 #~ msgid ""
-#~ "&copy; 2005-2013 Mozilla Developer Network and individual contributors<br /> "
-#~ "Content is available under a license specific to this project. &middot; <a "
+#~ "&copy; 2005-2013 Mozilla Developer Network and individual contributors<br />"
+#~ " Content is available under a license specific to this project. &middot; <a "
 #~ "href=\"%(about_url)s\">About MDN</a> &middot; <a "
 #~ "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 #~ "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
@@ -6616,8 +6540,8 @@ msgstr ""
 #~ msgstr "請證明您是人類"
 
 #~ msgid ""
-#~ "<p><a href=\"%(register_url)s\">Register</a> or <a href=\"%(login_url)s\">log "
-#~ "in</a> to add your own.</p>"
+#~ "<p><a href=\"%(register_url)s\">Register</a> or <a "
+#~ "href=\"%(login_url)s\">log in</a> to add your own.</p>"
 #~ msgstr ""
 #~ "<p><a href=\"%(register_url)s\">註冊</a> 或 <a href=\"%(login_url)s\">登入</a> "
 #~ "以新增您的回應。</p>"
@@ -6629,8 +6553,8 @@ msgstr ""
 #~ msgstr "讓我們看看您可以把 %(title)s 變出什麼花樣"
 
 #~ msgid ""
-#~ "Join the Dev Derby now and submit your demo to win an Android phone or other "
-#~ "prizes."
+#~ "Join the Dev Derby now and submit your demo to win an Android phone or other"
+#~ " prizes."
 #~ msgstr "立刻加入 Dev Derby 並送出您的 demo 以贏得 Android 手機或是其他獎項。"
 
 #~ msgid "<a href=\"%(submit_url)s\"><b>Submit</b> Your Demo</a>"
@@ -6655,18 +6579,17 @@ msgstr ""
 #~ msgstr "目前"
 
 #~ msgid ""
-#~ "<p class=\"demo-submit\"><a href=\"%(submit_url)s\" class=\"button\">Submit your "
-#~ "demo</a> for the %(month)s Dev Derby today!</p>"
+#~ "<p class=\"demo-submit\"><a href=\"%(submit_url)s\" class=\"button\">Submit "
+#~ "your demo</a> for the %(month)s Dev Derby today!</p>"
 #~ msgstr ""
-#~ "<p class=\"demo-submit\">今天就 <a href=\"%(submit_url)s\" class=\"button\">送交您的 "
-#~ "demo</a> 參加 %(month)s 的 Dev Derby！</p>"
+#~ "<p class=\"demo-submit\">今天就 <a href=\"%(submit_url)s\" "
+#~ "class=\"button\">送交您的 demo</a> 參加 %(month)s 的 Dev Derby！</p>"
 
 #~ msgid ""
 #~ "Developers must be busy tinkering with their demos. No submissions yet. Be "
 #~ "the first!"
 #~ msgstr "開發者大概都還在忙於修正他們的作品。目前還沒有參加競賽的作品。成為第一個吧！"
 
-# 75%
 #~ msgid "Submit Your Demo"
 #~ msgstr "送出您的 Demo"
 
@@ -6676,25 +6599,25 @@ msgstr ""
 #~ "Contest Official Rules</a>.</p> <ul class=\"prose\"> <li>Almost anyone can "
 #~ "enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> "
 #~ "<li>There will be a new contest every month.</li> <li>Your entry must meet "
-#~ "certain criteria; <a href=\"%(rules_url)s\">see the rules</a> for the overall "
-#~ "criteria and the Current Challenge section for any special criteria for each "
-#~ "contest.</li> <li>Each contest runs from the first day of the month to the "
-#~ "last day of the month (based on <strong>US Pacific time</strong>).</li> "
-#~ "<li>Entries will be judged by a panel of qualified reviewers, who may or may "
-#~ "not take into account how many &ldquo;likes&rdquo; your entry "
-#~ "receives.</li> <li>The winners of each month's contest will be announced by "
-#~ "the <strong>20th of the following month</strong>.</li> <li>You can't win "
-#~ "more than once in the same calendar year.</li> <li>Please read the <a href=\""
-#~ "%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your "
-#~ "entry.</li> </ul>"
+#~ "certain criteria; <a href=\"%(rules_url)s\">see the rules</a> for the "
+#~ "overall criteria and the Current Challenge section for any special criteria "
+#~ "for each contest.</li> <li>Each contest runs from the first day of the month"
+#~ " to the last day of the month (based on <strong>US Pacific "
+#~ "time</strong>).</li> <li>Entries will be judged by a panel of qualified "
+#~ "reviewers, who may or may not take into account how many &ldquo;likes&rdquo;"
+#~ " your entry receives.</li> <li>The winners of each month's contest will be "
+#~ "announced by the <strong>20th of the following month</strong>.</li> <li>You "
+#~ "can't win more than once in the same calendar year.</li> <li>Please read the"
+#~ " <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before "
+#~ "submitting your entry.</li> </ul>"
 #~ msgstr ""
-#~ "<p>以下是競賽規則的摘要，若需完整規賽規則請見 <a href=\"%(rules_url)s\">Dev Derby Contest Official "
-#~ "Rules</a>。</p><ul class=\"prose\"><li>幾乎任何人都能加入（<a href=\"%"
-#~ "(rules_url)s\">請見規則</a>當中的例外條款）。</li><li>每月都會有新的競賽。</li><li>您的作品必須符合某些條件，<a "
-#~ "href=\"%(rules_url)s\">請見規則</a>當中對作品的要求，以及「目前挑戰」段落中是否有任何特別的要求。</li><li>每場競賽皆自美"
-#~ "國太平洋時間當月一日起至最後一日為止。</li><li>作品將由合格的評審進行評比，他們可能會或不會考慮您的作品收到的「讚」的數量。</li><li>每"
-#~ "月競賽的得獎作品將會在 <strong>下個月的 20 日</strong>宣布。</li><li>請在送出您的競賽作品前閱讀 <a href=\"%"
-#~ "(rules_url)s\">Dev Derby Contest Official Rules</a>。</li></ul>"
+#~ "<p>以下是競賽規則的摘要，若需完整規賽規則請見 <a href=\"%(rules_url)s\">Dev Derby Contest "
+#~ "Official Rules</a>。</p><ul class=\"prose\"><li>幾乎任何人都能加入（<a "
+#~ "href=\"%(rules_url)s\">請見規則</a>當中的例外條款）。</li><li>每月都會有新的競賽。</li><li>您的作品必須符合某些條件，<a"
+#~ " "
+#~ "href=\"%(rules_url)s\">請見規則</a>當中對作品的要求，以及「目前挑戰」段落中是否有任何特別的要求。</li><li>每場競賽皆自美國太平洋時間當月一日起至最後一日為止。</li><li>作品將由合格的評審進行評比，他們可能會或不會考慮您的作品收到的「讚」的數量。</li><li>每月競賽的得獎作品將會在"
+#~ " <strong>下個月的 20 日</strong>宣布。</li><li>請在送出您的競賽作品前閱讀 <a "
+#~ "href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>。</li></ul>"
 
 #~ msgid ""
 #~ "<p>Entries will be reviewed by a panel of qualified judges, including "
@@ -6738,8 +6661,8 @@ msgstr ""
 #~ msgstr "Mozilla 開發者社群經理"
 
 #~ msgid ""
-#~ "<div style=\"padding-right: 20px;\"> <h2>Dev Derby on Hiatus</h2> <p>The Dev "
-#~ "Derby is on hiatus while we work on revamping the contest series. When it "
+#~ "<div style=\"padding-right: 20px;\"> <h2>Dev Derby on Hiatus</h2> <p>The Dev"
+#~ " Derby is on hiatus while we work on revamping the contest series. When it "
 #~ "returns, you may see some changes in the contest format. However, the Dev "
 #~ "Derby mission remains unchanged: to provide a platform that helps web "
 #~ "developers learn, share, and push the web forward.</p> <p>See you soon!</p> "
@@ -6758,28 +6681,29 @@ msgstr ""
 #~ msgid ""
 #~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> "
 #~ "<p>Winner gets an Android mobile device from <a rel=\"external\" "
-#~ "href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a>.</p> </li> "
-#~ "<li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-"
-#~ "crafted laptop messenger bag from <a rel=\"external\" "
+#~ "href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a>.</p> </li>"
+#~ " <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a "
+#~ "hand-crafted laptop messenger bag from <a rel=\"external\" "
 #~ "href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard"
 #~ "/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li "
-#~ "class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited edition MDN "
-#~ "t-shirt to show off their geek cred.</p> </li> </ol>"
+#~ "class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited edition "
+#~ "MDN t-shirt to show off their geek cred.</p> </li> </ol>"
 #~ msgstr ""
 #~ "<h1>獎項</h1><ol><li class=\"first\"><h3>Android 行動裝置</h3><p>首獎得獎者可得到來自 <a "
 #~ "rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
-#~ "phones\">Samsung</a> 的 Android 行動裝置。</p></li><li class=\"second\"><h3>Rickshaw "
-#~ "筆電包</h3><p>二獎是手工製作的 <a rel=\"external\" href=\"http://www.rickshawbags.com/bags"
-#~ "/laptop-messenger-bag/standard/standard-commuter-laptop-bag-"
-#~ "black.html\">Rickshaw</a> 筆電包。</p></li><li class=\"third\"><h3>MDN t-shirt</h3> "
-#~ "<p>三獎得獎者將可獲得限量的 MDN t-shirt，可讓您用來炫耀您的技術威望。</p></li></ol>"
+#~ "phones\">Samsung</a> 的 Android 行動裝置。</p></li><li "
+#~ "class=\"second\"><h3>Rickshaw 筆電包</h3><p>二獎是手工製作的 <a rel=\"external\" "
+#~ "href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard"
+#~ "/standard-commuter-laptop-bag-black.html\">Rickshaw</a> 筆電包。</p></li><li "
+#~ "class=\"third\"><h3>MDN t-shirt</h3> <p>三獎得獎者將可獲得限量的 MDN "
+#~ "t-shirt，可讓您用來炫耀您的技術威望。</p></li></ol>"
 
 #~ msgid "Dev Derby Rules"
 #~ msgstr "Dev Derby 規則"
 
 #~ msgid ""
-#~ "<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn "
-#~ "More</strong>"
+#~ "<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn"
+#~ " More</strong>"
 #~ msgstr "<span>加入</span> <em>Dev Derby</em> 並贏得獎項 <br/><strong>了解更多資訊</strong>"
 
 #~ msgid "{display_name}"
@@ -6795,8 +6719,8 @@ msgstr ""
 #~ "Submit your demo to the <a href=\"%(derby_url)s\" "
 #~ "onclick=\"window.open(this.href);return false;\">Dev Derby</a>!"
 #~ msgstr ""
-#~ "送出您的 demo 作品到 <a href=\"%(derby_url)s\" onclick=\"window.open(this.href);return "
-#~ "false;\">Dev Derby</a>！"
+#~ "送出您的 demo 作品到 <a href=\"%(derby_url)s\" "
+#~ "onclick=\"window.open(this.href);return false;\">Dev Derby</a>！"
 
 #~ msgid ""
 #~ "Check the appropriate Dev Derby box and make sure you select the relevant "
@@ -6806,14 +6730,14 @@ msgstr ""
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> "
 #~ "<li>The main page of your demo should be a file named "
-#~ "<code>index.html</code> in the root of the ZIP.</li> <li>Your demo should be "
-#~ "built on client-side technology (HTML, CSS, JavaScript). Server-side "
+#~ "<code>index.html</code> in the root of the ZIP.</li> <li>Your demo should be"
+#~ " built on client-side technology (HTML, CSS, JavaScript). Server-side "
 #~ "languages like PHP and Ruby are not supported.</li> <li>If your demo "
 #~ "requires external resources, it should use AJAX to access them.</li> <li>To "
-#~ "submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> "
-#~ "<li>Please identify in the demo details box any 3rd party content that "
-#~ "can't be licensed under the CC-BY-SA license and include links to the "
-#~ "authors' websites.</li> </ul>"
+#~ "submit your demo, you need an <a href=\"%(signup_url)s\">MDN "
+#~ "account</a>.</li> <li>Please identify in the demo details box any 3rd party "
+#~ "content that can't be licensed under the CC-BY-SA license and include links "
+#~ "to the authors' websites.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>您要展示的原始碼應該被封裝於 ZIP 當中。</li> <li>您展示的主要頁面應該是 ZIP 檔根目錄下一個被命名為 "
 #~ "<code>index.html</code> 的檔案。</li> <li>您的展示應該使用客戶端技術 (HTML、CSS、JavaScript) "
@@ -6825,7 +6749,8 @@ msgstr ""
 #~ "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN "
 #~ "account</a></strong>.</p>"
 #~ msgstr ""
-#~ "<p>要送出您的 demo，您需要 <strong><a href=\"%(signup_url)s\">MDN 帳號</a></strong>。</p>"
+#~ "<p>要送出您的 demo，您需要 <strong><a href=\"%(signup_url)s\">MDN "
+#~ "帳號</a></strong>。</p>"
 
 #~ msgid "Log In to Account"
 #~ msgstr "登入帳號"
@@ -6839,8 +6764,8 @@ msgstr ""
 #~ msgstr "Email 地址太短了（只有 %(show_value)s 個字元)。必須至少要有 %(limit_value)s 個字元。"
 
 #~ msgid ""
-#~ "Email address is too long (%(show_value)s characters). It must be %"
-#~ "(limit_value)s characters or less."
+#~ "Email address is too long (%(show_value)s characters). It must be "
+#~ "%(limit_value)s characters or less."
 #~ msgstr "Email 地址太長了（有 %(show_value)s 個字元)。不能超過 %(limit_value)s 個字元。"
 
 #~ msgid "E-mail address"
@@ -6863,12 +6788,12 @@ msgstr ""
 
 #~ msgid ""
 #~ "<span class=\"row1\">Join <span class=\"number\">3,414</span> "
-#~ "contributors</span> <span class=\"row2\">in <span class=\"number\">31</span> "
-#~ "languages and locales</span> <span class=\"row3\">around the world.</span>"
+#~ "contributors</span> <span class=\"row2\">in <span class=\"number\">31</span>"
+#~ " languages and locales</span> <span class=\"row3\">around the world.</span>"
 #~ msgstr ""
-#~ "<span class=\"row1\">加入 <span class=\"number\">3,414</span> 名貢獻者</span> <span "
-#~ "class=\"row2\">的行列，遍及全球共 <span class=\"number\">31</span> 種語言/語系</span> <span "
-#~ "class=\"row3\">。</span>"
+#~ "<span class=\"row1\">加入 <span class=\"number\">3,414</span> 名貢獻者</span> "
+#~ "<span class=\"row2\">的行列，遍及全球共 <span class=\"number\">31</span> "
+#~ "種語言/語系</span> <span class=\"row3\">。</span>"
 
 #~ msgid "You have been unsubscribed from this notification."
 #~ msgstr "您已取消訂閱此通知"
@@ -6898,7 +6823,6 @@ msgstr ""
 #~ msgid "Required. 30 characters or fewer. Letters, digits and ./-/_ only."
 #~ msgstr "必填，不能超過 30 字元，只接受英文字母、數字和 . - _ 等符號。"
 
-# 88%
 #~ msgid "Password"
 #~ msgstr "密碼"
 
@@ -6984,8 +6908,8 @@ msgstr ""
 #~ "undone!</strong> You can always <a href=\"%(upload_url)s\">upload another "
 #~ "avatar</a> to replace your current one."
 #~ msgstr ""
-#~ "這將永久刪除你的大頭貼，<strong>此動作將無法復原！</strong> 你隨時可以<a href=\"%"
-#~ "(upload_url)s\">上傳大頭貼</a>來取代現有的大頭貼。"
+#~ "這將永久刪除你的大頭貼，<strong>此動作將無法復原！</strong> 你隨時可以<a "
+#~ "href=\"%(upload_url)s\">上傳大頭貼</a>來取代現有的大頭貼。"
 
 #~ msgid "Change Avatar"
 #~ msgstr "修改大頭照"
@@ -6998,7 +6922,6 @@ msgstr ""
 #~ msgid "Change"
 #~ msgstr "修改"
 
-# 100%
 #~ msgctxt "avatar"
 #~ msgid "Delete"
 #~ msgstr "刪除"
@@ -7006,7 +6929,6 @@ msgstr ""
 #~ msgid "Update"
 #~ msgstr "更新"
 
-# 83%
 #~ msgid "Log In"
 #~ msgstr "登入"
 
@@ -7022,7 +6944,6 @@ msgstr ""
 #~ msgid "I don't have an account."
 #~ msgstr "我沒有帳號。"
 
-# 95%
 #~ msgid "I forgot my password."
 #~ msgstr "我忘了密碼。"
 
@@ -7035,15 +6956,12 @@ msgstr ""
 #~ msgid "{city}, {country}"
 #~ msgstr "{country} {city}"
 
-# 83%
 #~ msgid "Email:"
 #~ msgstr "電子郵件:"
 
-# 87%
 #~ msgid "Website:"
 #~ msgstr "網站:"
 
-# 87%
 #~ msgid "Twitter:"
 #~ msgstr "Twitter:"
 
@@ -7059,7 +6977,6 @@ msgstr ""
 #~ msgid "About {user}"
 #~ msgstr "關於 {user}"
 
-# 83%
 #~ msgid "Change my password"
 #~ msgstr "修改我的密碼"
 
@@ -7137,18 +7054,18 @@ msgstr ""
 #~ msgstr "找不到對應此帳號的信箱"
 
 #~ msgid ""
-#~ "Could not find email for <strong>%(username)s</strong>. Please <a href=\"%"
-#~ "(bug_url)s\">file a bug</a> to restore your account."
+#~ "Could not find email for <strong>%(username)s</strong>. Please <a "
+#~ "href=\"%(bug_url)s\">file a bug</a> to restore your account."
 #~ msgstr ""
-#~ "找不到對應 <strong>%(username)s</strong> 的電子信箱，請<a href=\"%"
-#~ "(bug_url)s\">提交臭蟲</a>來取回你的帳號。"
+#~ "找不到對應 <strong>%(username)s</strong> 的電子信箱，請<a "
+#~ "href=\"%(bug_url)s\">提交臭蟲</a>來取回你的帳號。"
 
 #~ msgid "Reminder email sent."
 #~ msgstr "提醒信件已送出。"
 
 #~ msgid ""
-#~ "We've sent a reminder email to the address registered for <strong>%"
-#~ "(username)s</strong>."
+#~ "We've sent a reminder email to the address registered for "
+#~ "<strong>%(username)s</strong>."
 #~ msgstr "已將提醒信件送至 <strong>%(username)s</strong> 註冊的電子信箱中。"
 
 #~ msgid "%(old)s Redirect %(number)i"
@@ -7186,18 +7103,18 @@ msgstr ""
 #~ msgstr "<li><a href=\"%(logout_url)s\">登出</a> 以再試一次。</li>"
 
 #~ msgid ""
-#~ "<li><a href=\"%(login_url)s\">Log in</a> to try again.</li> <li><a href=\"%"
-#~ "(register_url)s\">Register</a> to edit docs and submit demos.</li>"
+#~ "<li><a href=\"%(login_url)s\">Log in</a> to try again.</li> <li><a "
+#~ "href=\"%(register_url)s\">Register</a> to edit docs and submit demos.</li>"
 #~ msgstr ""
-#~ "<li><a href=\"%(login_url)s\">登入</a> 以重試。</li> <li><a href=\"%"
-#~ "(register_url)s\">註冊</a> 以編輯文件或送出 Demo。</li>"
+#~ "<li><a href=\"%(login_url)s\">登入</a> 以重試。</li> <li><a "
+#~ "href=\"%(register_url)s\">註冊</a> 以編輯文件或送出 Demo。</li>"
 
 #~ msgid ""
-#~ "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign In</a> or <a href=\"%"
-#~ "(register_url)s\">Register</a>"
+#~ "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign In</a> or <a "
+#~ "href=\"%(register_url)s\">Register</a>"
 #~ msgstr ""
-#~ "想要加入貢獻嗎？<br /><a href=\"%(login_url)s\">登入</a> 或 <a href=\"%"
-#~ "(register_url)s\">註冊</a>"
+#~ "想要加入貢獻嗎？<br /><a href=\"%(login_url)s\">登入</a> 或 <a "
+#~ "href=\"%(register_url)s\">註冊</a>"
 
 #~ msgid ""
 #~ "Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web "

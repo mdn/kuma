@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1422913563.0\n"
 
 #: promote-mdn.php:190
@@ -37,8 +37,8 @@ msgstr "MDN 是最佳的線上支援 - 由網頁開發者所撰寫，供網頁�
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr "Promote MDN 將會自動在您的文章與網頁中尋找關鍵字與詞彙，並為其加上 MDN 文件鏈結。"
 
 #: promote-mdn.php:256
@@ -119,8 +119,8 @@ msgstr "自動鏈結更多關鍵字。使用半型逗號分隔關鍵字與目標
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr "這些關鍵字會有比網址更高的優先權。若您在此設定了太多的自訂關鍵字，您可能無法鏈結到 MDN。"
 
 #: promote-mdn.php:289
@@ -135,8 +135,8 @@ msgstr "感謝您的安裝! 您可以到<a href=\"%s\">設定</a>頁面進行調
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr "法文翻譯、新的側邊欄 <a href=\"%s\">小工具</a>、對應語系關鍵字網址的 <a href=\"%s\">設定</a>。"
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
