@@ -529,7 +529,7 @@ TOWER_KEYWORDS = {
 # Tells the extract script what files to look for l10n in and what function
 # handles the extraction.  The Tower library expects this.
 DOMAIN_METHODS = {
-    'messages': [
+    'django': [
         ('vendor/**', 'ignore'),
         ('kuma/dashboards/**', 'ignore'),
         ('kuma/core/**', 'ignore'),
@@ -545,6 +545,9 @@ DOMAIN_METHODS = {
         ('kuma/static/js/libs/ckeditor/plugins/mdn-link/**.js', 'javascript')
     ],
 }
+
+# Override tower's default to match Django's default.
+TEXT_DOMAIN = 'django'
 
 # These domains will not be merged into messages.pot and will use separate PO
 # files. See the following URL for an example of how to set these domains
