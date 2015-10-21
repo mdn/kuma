@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-04 07:47-0700\n"
-"PO-Revision-Date: 2015-10-07 16:31+0000\n"
+"PO-Revision-Date: 2015-10-15 17:12+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -864,6 +864,7 @@ msgstr ""
 msgid ""
 "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 msgstr ""
+"https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 
 #: kuma/demos/__init__.py:229 kuma/demos/__init__.py:237
 #: kuma/demos/__init__.py:245 kuma/demos/__init__.py:267
@@ -907,7 +908,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:236
 msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
 
 #: kuma/demos/__init__.py:237
 msgid "http://en.wikipedia.org/wiki/Canvas_element"
@@ -930,7 +931,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:244
 msgid "https://developer.mozilla.org/en-US/docs/Web/CSS"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS"
 
 #: kuma/demos/__init__.py:245
 msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
@@ -954,6 +955,7 @@ msgstr ""
 msgid ""
 "https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
 msgstr ""
+"https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
 
 #: kuma/demos/__init__.py:253
 msgid "http://www.w3.org/TR/css3-mediaqueries/"
@@ -973,6 +975,7 @@ msgstr ""
 msgid ""
 "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
 msgstr ""
+"https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
 
 #: kuma/demos/__init__.py:260
 msgid "http://www.w3.org/TR/FileAPI/"
@@ -991,7 +994,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:266
 msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
 
 #: kuma/demos/__init__.py:267
 msgid "http://en.wikipedia.org/wiki/Web_typography"
@@ -1014,7 +1017,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:274
 msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
 
 #: kuma/demos/__init__.py:275
 msgid "http://en.wikipedia.org/wiki/HTML_forms"
@@ -1032,7 +1035,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:282
 msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
 
 #: kuma/demos/__init__.py:283
 msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
@@ -1057,7 +1060,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:290
 msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
 
 #: kuma/demos/__init__.py:291
 msgid "http://en.wikipedia.org/wiki/JavaScript"
@@ -1083,11 +1086,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:298
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
 
 #: kuma/demos/__init__.py:299
 msgid "http://en.wikipedia.org/wiki/Html5"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Html5"
 
 #: kuma/demos/__init__.py:300
 msgid "http://dev.w3.org/html5/spec/Overview.html"
@@ -1102,7 +1105,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:306
 msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/IndexedDB"
 
 #: kuma/demos/__init__.py:307
 msgid "http://en.wikipedia.org/wiki/IndexedDB"
@@ -1120,7 +1123,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:314
 msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
 
 #: kuma/demos/__init__.py:315
 msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
@@ -1138,7 +1141,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:322
 msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
 
 #: kuma/demos/__init__.py:323
 msgid "http://en.wikipedia.org/wiki/Mobile_web"
@@ -1162,6 +1165,7 @@ msgstr ""
 msgid ""
 "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
 msgstr ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
 
 #: kuma/demos/__init__.py:331
 msgid "http://en.wikipedia.org/wiki/Web_Storage"
@@ -1183,7 +1187,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:338
 msgid "https://developer.mozilla.org/en-US/docs/Web/SVG"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/SVG"
 
 #: kuma/demos/__init__.py:339
 msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
@@ -1208,6 +1212,8 @@ msgid ""
 "https://developer.mozilla.org/en-"
 "US/docs/Web/HTML/Using_HTML5_audio_and_video"
 msgstr ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/HTML/Using_HTML5_audio_and_video"
 
 #: kuma/demos/__init__.py:347
 msgid "http://en.wikipedia.org/wiki/HTML5_video"
@@ -1225,7 +1231,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:354
 msgid "https://developer.mozilla.org/en-US/docs/Web/WebGL"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/WebGL"
 
 #: kuma/demos/__init__.py:355
 msgid "http://en.wikipedia.org/wiki/WebGL"
@@ -1251,7 +1257,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:362
 msgid "https://developer.mozilla.org/en-US/docs/WebSockets"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/WebSockets"
 
 #: kuma/demos/__init__.py:363
 msgid "http://en.wikipedia.org/wiki/Web_Sockets"
@@ -1272,6 +1278,8 @@ msgid ""
 "https://developer.mozilla.org/en-"
 "US/docs/Web/Guide/Performance/Using_web_workers"
 msgstr ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/Guide/Performance/Using_web_workers"
 
 #: kuma/demos/__init__.py:371
 msgid "http://en.wikipedia.org/wiki/Web_Workers"
@@ -1296,6 +1304,8 @@ msgid ""
 "https://developer.mozilla.org/en-"
 "US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
 msgstr ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
 
 #: kuma/demos/__init__.py:379
 msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
@@ -1315,6 +1325,7 @@ msgstr ""
 msgid ""
 "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
 msgstr ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
 
 #: kuma/demos/__init__.py:387
 msgid "http://en.wikipedia.org/wiki/Multi-touch"
