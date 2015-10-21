@@ -1,4 +1,4 @@
-# Copyright (C) 2012 
+# Copyright (C) 2012
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1393513427.0\n"
 
 #: promote-mdn.php:190
@@ -30,8 +30,8 @@ msgid ""
 "JavaScript and other Web standards and open technologies."
 msgstr ""
 "MDN est la boîte à outils du développeur web pour la doc, les démos et bien "
-"plus sur l'HTML, le CSS, le JavaScript et les autres standards du web et des "
-"technologies ouvertes."
+"plus sur l'HTML, le CSS, le JavaScript et les autres standards du web et des"
+" technologies ouvertes."
 
 #: promote-mdn.php:248
 msgid ""
@@ -42,8 +42,8 @@ msgstr ""
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr ""
 "Lie automatiquement des mots-clés et des phrases de vos messages et pages "
 "vers des URL de MDN."
@@ -133,12 +133,12 @@ msgstr ""
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
-"Important&nbsp; : ces mots-clés auront priorité sur ceux qui ont été chargés "
-"depuis l'URL. Si vous saisissez trop de mots-clés personnalisés, il se peut "
-"que les liens vers MDN ne fonctionnent plus."
+"Important&nbsp; : ces mots-clés auront priorité sur ceux qui ont été chargés"
+" depuis l'URL. Si vous saisissez trop de mots-clés personnalisés, il se peut"
+" que les liens vers MDN ne fonctionnent plus."
 
 #: promote-mdn.php:289
 msgid "Update options"
@@ -149,17 +149,17 @@ msgid ""
 "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
 "configure."
 msgstr ""
-"Merci pour l'installation ! Rendez-vous dans les <a href=\"%s\">paramètres</a> "
-"pour la configuration."
+"Merci pour l'installation ! Rendez-vous dans les <a "
+"href=\"%s\">paramètres</a> pour la configuration."
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr ""
-"traduction en français, nouveau <a href=\"%s\">widget</a> de panneau latéral, "
-"<a href=\"%s\">paramètre</a> pour une URL propre à une langue pour les mots-"
-"clés."
+"traduction en français, nouveau <a href=\"%s\">widget</a> de panneau "
+"latéral, <a href=\"%s\">paramètre</a> pour une URL propre à une langue pour "
+"les mots-clés."
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
