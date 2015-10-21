@@ -1,4 +1,4 @@
-# Copyright (C) 2012 
+# Copyright (C) 2012
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1383816047.0\n"
 
 #: promote-mdn.php:190
@@ -41,8 +41,8 @@ msgstr ""
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr ""
 "Promote-MDN verlinkt automatisch Schlüsselwörter und Sätze in Ihren "
 "Beiträgen und Seiten zu MDN-URLs."
@@ -110,12 +110,13 @@ msgstr "Obergrenze für Links, die pro Beitrag erzeugt werden:"
 #: promote-mdn.php:276
 msgid "Max links to generate for a single keyword/phrase:"
 msgstr ""
-"Obergrenze für Links, die für ein einzelnes Schlüsselwort/einen Satz erzeugt "
-"werden:"
+"Obergrenze für Links, die für ein einzelnes Schlüsselwort/einen Satz erzeugt"
+" werden:"
 
 #: promote-mdn.php:277
 msgid "Max links to generate for a single URL:"
-msgstr "Obergrenze für Links, die für eine einzelne URL erzeugt werden sollen:"
+msgstr ""
+"Obergrenze für Links, die für eine einzelne URL erzeugt werden sollen:"
 
 #: promote-mdn.php:280
 msgid "Custom Keywords"
@@ -133,8 +134,8 @@ msgstr ""
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
 "Hinweis: Diese Schlüsselwörter haben Vorrang vor denen, die über die URL "
 "geladen werden. Wenn Sie zu viele benutzerdefinierte Schlüsselwörter haben, "
@@ -149,13 +150,13 @@ msgid ""
 "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
 "configure."
 msgstr ""
-"Vielen Dank für die Installation! Öffnen Sie die Seite <a href=\"%"
-"s\">Einstellungen</a> zur Konfiguration."
+"Vielen Dank für die Installation! Öffnen Sie die Seite <a "
+"href=\"%s\">Einstellungen</a> zur Konfiguration."
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr ""
 "Französische Übersetzung, neue Seitenleisten-<a href=\"%s\">Widget</a>, <a "
 "href=\"%s\">Einstellung</a> für eine sprachenspezifische URL für "
@@ -189,7 +190,8 @@ msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
-msgstr "Promote MDN verlinkt Schlüsselwortsätze automatisch mit MDN-Dokumenten"
+msgstr ""
+"Promote MDN verlinkt Schlüsselwortsätze automatisch mit MDN-Dokumenten"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
