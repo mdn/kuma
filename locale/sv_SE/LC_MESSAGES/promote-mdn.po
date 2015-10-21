@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2015-10-06 00:07+0000\n"
+"PO-Revision-Date: 2015-10-15 17:02+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -17,11 +17,11 @@ msgstr ""
 
 #: promote-mdn.php:190
 msgid "Reloaded values from the URL."
-msgstr ""
+msgstr "Laddade om värden från URL:en."
 
 #: promote-mdn.php:208
 msgid "Plugin settings saved."
-msgstr ""
+msgstr "Inställningar för insticksmodul sparade."
 
 #: promote-mdn.php:245
 msgid ""
@@ -33,6 +33,7 @@ msgstr ""
 msgid ""
 "MDN is the best online resource - for web developers, by web developers."
 msgstr ""
+"MDN är den bästa webbresursen - för webbutvecklare, av webbutvecklare."
 
 #: promote-mdn.php:249
 msgid ""
@@ -46,69 +47,71 @@ msgstr "Inställningar"
 
 #: promote-mdn.php:257
 msgid "Load keywords from URL"
-msgstr ""
+msgstr "Läsa in sökord från URL"
 
 #: promote-mdn.php:257
 msgid "Preview"
-msgstr ""
+msgstr "Förhandsgranska"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
-msgstr ""
+msgstr "Använda sökord och länkar speciellt för %s"
 
 #: promote-mdn.php:259
 msgid "Reload keywords after (seconds):"
-msgstr ""
+msgstr "Ladda om sökord efter (sekunder):"
 
 #: promote-mdn.php:260
 msgid "Reload now"
-msgstr ""
+msgstr "Ladda om nu"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
-msgstr ""
+msgstr "Lägga till länkar till RSS-flöden"
 
 #: promote-mdn.php:263
 msgid "Open links in new window"
-msgstr ""
+msgstr "Öppna länkar i nytt fönster"
 
 #: promote-mdn.php:266
 msgid "Exceptions"
-msgstr ""
+msgstr "Undantag"
 
 #: promote-mdn.php:267
 msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
-msgstr ""
+msgstr "Lägg inte länkar i rubrikstaggar (h1, h2, h3, h4, h5, h6)."
 
 #: promote-mdn.php:268
 msgid ""
 "Do not add links to the following posts or pages (comma-separated id, slug, "
 "name):"
 msgstr ""
+"Lägg inte till länkar till följande inlägg eller sidor (kommaseparerad id, "
+"slugg, namn):"
 
 #: promote-mdn.php:270
 msgid "Do not add links on the following phrases (comma-separated):"
-msgstr ""
+msgstr "Lägg inte till länkar på följande fraser (kommaseparerade):"
 
 #: promote-mdn.php:274
 msgid "Limits"
-msgstr ""
+msgstr "Begränsningar"
 
 #: promote-mdn.php:275
 msgid "Max links to generate per post:"
-msgstr ""
+msgstr "Max länkar att generera per post:"
 
 #: promote-mdn.php:276
 msgid "Max links to generate for a single keyword/phrase:"
-msgstr ""
+msgstr "Max länkar att generera för ett enda sökord/fras:"
 
 #: promote-mdn.php:277
 msgid "Max links to generate for a single URL:"
-msgstr ""
+msgstr "Max länkar att generera för en enda URL:"
 
 #: promote-mdn.php:280
 msgid "Custom Keywords"
-msgstr ""
+msgstr "Anpassade sökord"
 
 #: promote-mdn.php:281
 msgid ""
@@ -124,13 +127,15 @@ msgstr ""
 
 #: promote-mdn.php:289
 msgid "Update options"
-msgstr ""
+msgstr "Uppdateringsalternativ"
 
 #: promote-mdn.php:312
 msgid ""
 "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
 "configure."
 msgstr ""
+"Tack för att du installerade! Gå till <a href=\"%s\">inställningssidan</a> "
+"för att konfigurera."
 
 #: promote-mdn.php:313
 msgid ""
@@ -142,7 +147,7 @@ msgstr ""
 #. Plugin Name of the plugin/theme
 #: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
 msgid "Promote MDN"
-msgstr ""
+msgstr "Främja MDN"
 
 #: promote-mdn.php:352
 msgid "hide"
@@ -154,15 +159,15 @@ msgstr ""
 
 #: promote-mdn.php:390
 msgid "Help Promote MDN!"
-msgstr ""
+msgstr "Bidra till att främja MDN!"
 
 #: promote-mdn.php:391
 msgid "Get the WordPress plugin"
-msgstr ""
+msgstr "Hämta WordPress insticksmodul"
 
 #. Plugin URI of the plugin/theme
 msgid "http://github.com/groovecoder/wp-promote-mdn"
-msgstr ""
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
@@ -170,8 +175,8 @@ msgstr ""
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
-msgstr ""
+msgstr "Luke Crouch"
 
 #. Author URI of the plugin/theme
 msgid "http://groovecoder.com"
-msgstr ""
+msgstr "http://groovecoder.com"
