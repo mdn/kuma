@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-04 07:47-0700\n"
-"PO-Revision-Date: 2015-10-15 17:12+0000\n"
+"PO-Revision-Date: 2015-10-21 23:37+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -1948,7 +1948,7 @@ msgstr ""
 #: kuma/demos/templates/demos/devderby_landing.html:57
 #: kuma/search/templates/search/results.html:138
 msgid "Docs"
-msgstr ""
+msgstr "Dokument"
 
 #: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:150
 #: templates/base.html:168
