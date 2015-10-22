@@ -57,22 +57,25 @@
                 $td.find('.bc-history-link').attr('tabIndex', -1);
             });
 
-            // Listen for clicks on "history" cells
-            $table.on('click', '.bc-has-history', function(e) {
+            // Listen for interaction on "history" cells
+            $table.on('click touchend', '.bc-has-history', function(e) {
                 var $actualTarget = $(e.target);
 
-                // Don't do open/close if the user clicks within the history section
+                // Don't do open/close if the user interaction within the history section
                 if($actualTarget.parents('.bc-history').length || $actualTarget.hasClass('bc-history')) {
                     e.stopImmediatePropagation();
                     return;
                 }
 
+                // don't also click if this was a touch
+                e.preventDefault();
+
                 // Close previous cell, open the next one
                 closeAndOpenHistory($(this));
             });
 
-            // Listen for clicks on "close" buttons
-            $table.on('click', '.bc-history-button', function(ev) {
+            // Listen for interaction on "close" buttons
+            $table.on('click touchend', '.bc-history-button', function(ev) {
                 ev.stopImmediatePropagation();
                 hideHistory();
             });
