@@ -22,7 +22,7 @@ from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
                         SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG)
-from .events import EditDocumentEvent
+from .events import EditDocumentEvent, EditDocumentInTreeEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag,
                      Revision, RevisionIP, valid_slug_parent)
 from .tasks import send_first_edit_email
@@ -542,6 +542,9 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
 
             # schedule event notifications
             EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
+
+            for doc in document.get_topic_parents():
+                EditDocumentInTreeEvent(doc).fire()
 
         return new_rev
 

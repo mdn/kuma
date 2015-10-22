@@ -5,7 +5,7 @@ from tower import ugettext as _
 from kuma.core.email_utils import emails_with_users_and_watches
 from kuma.core.helpers import add_utm
 from kuma.core.urlresolvers import reverse
-from tidings.events import InstanceEvent
+from tidings.events import Event, InstanceEvent
 
 from .helpers import revisions_unified_diff, get_compare_url
 from .models import Document
@@ -78,3 +78,18 @@ class EditDocumentEvent(InstanceEvent):
             context_vars=context,
             users_and_watches=users_and_watches,
             default_locale=document.locale)
+
+
+class EditDocumentInTreeEvent(Event):
+    """
+    Event for subscribing to all document edits to and under a document
+    """
+    event_type = 'edited wiki document with or under id'
+    filters = set(['id'])
+
+    def __init__(self, document):
+        super(EditDocumentInTreeEvent, self).__init__()
+        self.document = document
+
+    def _users_watching(self, **kwargs):
+        return self._users_watching_by_filter(id=self.document.id, **kwargs)
