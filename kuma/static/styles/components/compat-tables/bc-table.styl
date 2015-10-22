@@ -38,17 +38,11 @@ table layout
     position: relative;
     padding: 5px 3px;
     border-color: $bc-color-border;
-    border-top: 1px solid $bc-color-border;
-    border-left: 1px solid $bc-color-border;
+    border-top: 2px solid $bc-color-border;
+    border-right: 0;
     border-bottom: 0px solid transparent;
+    border-left: 2px solid $bc-color-border;
     text-align: center;
-}
-
-for $num in (1..14) {
-    .bc-table-{$num} thead th,
-    .bc-table-{$num} tbody td {
-        width: (100 / $num)%;
-    }
 }
 
 /* first column, fixed at 200 */
@@ -61,9 +55,11 @@ for $num in (1..14) {
 }
 
 /* everything except first column */
-.bc-table thead th,
-.bc-table tbody td {
-    width: 10%; /* not actually 10% but triggers making all equal width */
+for $num in (1..14) {
+    .bc-table-{$num} thead th,
+    .bc-table-{$num} tbody td {
+        width: (100 / $num)%;
+    }
 }
 
 /* second column */
@@ -83,12 +79,13 @@ for $num in (1..14) {
 ----------------------------------------------------------------------  */
 
 .text-content .bc-table th {
-    background-color: transparent
+    background-color: transparent;
 }
 
 .bc-table .bc-mediums th {
     width: auto;
-    padding: 2px 0 5px 0;
+    padding: 5px 0 2px 0;
+    border-top: 0;
     border-bottom: 4px solid $bc-color-border;
     font-size: 24px;
 }
@@ -111,7 +108,7 @@ for $num in (1..14) {
 
 /* empty td in thead */
 .bc-table thead td {
-    border-top-color: transparent;
+    border-top: 0;
     border-right: 4px solid $bc-color-border;
     border-left: 0;
 }
@@ -145,40 +142,6 @@ tablet display
 - mixins are included in media queries below
 ----------------------------------------------------------------------  */
 
-bc-table-tablet-display-block() {
-
-    .bc-table thead,
-    .bc-table tbody,
-    .bc-table tr {
-        width: 100%;
-        display: block;
-        clear: left;
-    }
-
-    .bc-table th,
-    .bc-table td {
-        display: block;
-        float: left;
-    }
-
-    .bc-table tbody th + td {
-        clear: left;
-    }
-
-    .bc-table thead td {
-        display: none;
-        z-index: 1; /* increase z-index for js to detect tablet display */
-    }
-
-    .bc-table tbody th {
-        width: 100%;
-        max-width: 100%;
-        border-right: 0;
-        padding-top: 10px;
-        padding-bottom: 0;
-    }
-}
-
 bc-table-tablet-display-flex() {
     /*
     Flexbox for those lucky few who can handle it
@@ -188,6 +151,12 @@ bc-table-tablet-display-flex() {
       but it doesn't supoort @support so we need to include that in the MQ
     - all browsers which support @support also use unprefixed syntax
     ----------------------------------------------------------------------  */
+
+    .bc-table thead,
+    .bc-table tbody,
+    .bc-table tr {
+        width: 100%;
+    }
 
     .bc-table,
     .bc-table thead,
@@ -201,6 +170,11 @@ bc-table-tablet-display-flex() {
     .bc-table thead,
     .bc-table tbody {
         flex-direction: column;
+    }
+
+    .bc-table thead td {
+        display: none;
+        z-index: 1; /* increase z-index for js to detect tablet display */
     }
 
     .bc-table tr {
@@ -221,25 +195,23 @@ bc-table-tablet-display-flex() {
     }
 
     .bc-table tbody th {
-        display: block;
         flex: 1 1 100%;
         justify-content: flex-start;
+        width: 100%;
+        max-width: 100%;
+        display: block;
+        border-right: 0;
+        padding-top: 10px;
+        padding-bottom: 0;
     }
 
     .bc-table td {
         display: block; /* if we leave it table-cell it doesn't act like a flex-item */
     }
 
-    .no-js .bc-table tbody td,
     .bc-table tbody td[tabindex] {
         /* flex is top aligned not center aligned so keep spacing at top same as no icons */
         padding-top: 5px;
-    }
-}
-
-@media all and (min-width: 769px) {
-    .wiki-right-present.wiki-left-present {
-        bc-table-tablet-display-block();
     }
 }
 
@@ -249,19 +221,11 @@ bc-table-tablet-display-flex() {
             bc-table-tablet-display-flex();
         }
     }
-}
 
-@media $media-query-mobile {
-    bc-table-tablet-display-block();
-}
-
-
-@supports (display: flex) {
-    @media all and (min-width: 481px) and (max-width: 768px) {
+    @media $media-query-mobile {
         bc-table-tablet-display-flex();
     }
 }
-
 
 /*
 mobile display
@@ -277,21 +241,30 @@ mobile display
         z-index: 2; /* increase z-index for js to detect mobile display */
     }
 
+    .bc-table tbody th {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+        border-right: 0;
+        padding-top: 10px;
+        padding-bottom: 0;
+    }
+
     .bc-table tbody td {
         position: relative;
         min-width: 100%;
         width: 100%;
         max-width: 100%;
+        display: block;
         box-sizing: border-box;
         box-shadow: inset 60px 0 0 0 #EAEFF2;
-        border-top: 1px solid $bc-color-border;
+        border-top: 2px solid $bc-color-border;
         border-left: 0;
         padding-left: 70px;
         padding-right: 10px;
         text-align: left;
-      }
+    }
 
-    .no-js .bc-table tbody td,
     .bc-table tbody td[tabindex] {
        padding-bottom: 20px;
     }
