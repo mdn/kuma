@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mdn-javascript\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-06 09:51-0700\n"
+"POT-Creation-Date: 2015-10-22 12:21-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,14 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.6.0\n"
 
-#: media/js/libs/ckeditor/plugins/mdn-link/plugin.js:155
-msgid "Launch"
-msgstr "Tosaigh"
+#~ msgid "Launch"
+#~ msgstr "Tosaigh"
 
-#: media/js/libs/ckeditor/plugins/mdn-link/dialogs/link.js:462
-msgid "Article Title Lookup / Link Text"
-msgstr "Cuardach: Teideal / Téacs an Naisc"
+#~ msgid "Article Title Lookup / Link Text"
+#~ msgstr "Cuardach: Teideal / Téacs an Naisc"
 
-#: media/js/libs/ckeditor/plugins/mdn-link/dialogs/link.js:500
-msgid "Attachments"
-msgstr "Iatáin"
+#~ msgid "Attachments"
+#~ msgstr "Iatáin"

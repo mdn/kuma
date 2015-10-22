@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-15 13:59-0700\n"
+"POT-Creation-Date: 2015-10-22 12:21-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,6 +118,11 @@ msgstr ""
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:12
 msgid "Learn how to use Attachments"
+msgstr ""
+
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:16
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:23
+msgid "Attach Files"
 msgstr ""
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:21
@@ -1780,7 +1785,7 @@ msgid ""
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:51
-#: kuma/demos/templates/demos/launch.html:81
+#: kuma/demos/templates/demos/launch.html:80
 msgid "Go to the previous demo, {demo_title}"
 msgstr ""
 
@@ -1789,14 +1794,14 @@ msgid "Prev"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:55
-#: kuma/demos/templates/demos/launch.html:85
+#: kuma/demos/templates/demos/launch.html:84
 msgid "Go to the next demo, {demo_title}"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:55
 #: kuma/demos/templates/demos/detail.html:69
 #: kuma/demos/templates/demos/home.html:47
-#: kuma/demos/templates/demos/launch.html:85
+#: kuma/demos/templates/demos/launch.html:84
 #: kuma/demos/templates/demos/elements/submission_listing.html:64
 #: kuma/search/templates/search/results.html:159
 #: templates/includes/paginator.html:30
@@ -1809,7 +1814,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:68
 #: kuma/demos/templates/demos/home.html:46
-#: kuma/demos/templates/demos/launch.html:81
+#: kuma/demos/templates/demos/launch.html:80
 #: kuma/demos/templates/demos/elements/submission_listing.html:61
 #: kuma/search/templates/search/results.html:154
 #: kuma/wiki/templates/wiki/list/revisions.html:56
@@ -1830,43 +1835,43 @@ msgid "Launch Demo"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:124
-#: kuma/demos/templates/demos/launch.html:47
+#: kuma/demos/templates/demos/launch.html:46
 msgid "You like this demo. Undo?"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:124
-#: kuma/demos/templates/demos/launch.html:47
+#: kuma/demos/templates/demos/launch.html:46
 msgid "You Like"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:130
-#: kuma/demos/templates/demos/launch.html:53
+#: kuma/demos/templates/demos/launch.html:52
 msgid "Do you like this demo?"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:130
-#: kuma/demos/templates/demos/launch.html:53
+#: kuma/demos/templates/demos/launch.html:52
 msgid "Like It"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:135
-#: kuma/demos/templates/demos/launch.html:57
+#: kuma/demos/templates/demos/launch.html:56
 msgid "Share this demo with your social network"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:135
 #: kuma/demos/templates/demos/detail.html:137
-#: kuma/demos/templates/demos/launch.html:57
+#: kuma/demos/templates/demos/launch.html:56
 msgid "Share It"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:138
-#: kuma/demos/templates/demos/launch.html:59
+#: kuma/demos/templates/demos/launch.html:58
 msgid "Share on Twitter"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:139
-#: kuma/demos/templates/demos/launch.html:60
+#: kuma/demos/templates/demos/launch.html:59
 msgid "Share on Facebook"
 msgstr ""
 
@@ -1944,7 +1949,7 @@ msgid "More by {creator}"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:237
-#: kuma/demos/templates/demos/launch.html:64
+#: kuma/demos/templates/demos/launch.html:63
 msgid "Report a Problem"
 msgstr ""
 
@@ -2112,7 +2117,7 @@ msgstr ""
 msgid "recent"
 msgstr ""
 
-#: kuma/demos/templates/demos/launch.html:33
+#: kuma/demos/templates/demos/launch.html:32
 #: kuma/search/templates/search/plugin.html:3
 #: templates/base.html:12
 #: templates/base.html:31
@@ -2123,19 +2128,19 @@ msgstr ""
 msgid "Mozilla Developer Network"
 msgstr ""
 
-#: kuma/demos/templates/demos/launch.html:37
+#: kuma/demos/templates/demos/launch.html:36
 msgid "by %(profile_link)s"
 msgstr ""
 
-#: kuma/demos/templates/demos/launch.html:78
+#: kuma/demos/templates/demos/launch.html:77
 msgid "Back"
 msgstr ""
 
-#: kuma/demos/templates/demos/launch.html:87
+#: kuma/demos/templates/demos/launch.html:86
 msgid "Remove this toolbar"
 msgstr ""
 
-#: kuma/demos/templates/demos/launch.html:87
+#: kuma/demos/templates/demos/launch.html:86
 msgid "Remove toolbar"
 msgstr ""
 
@@ -4067,109 +4072,103 @@ msgstr ""
 msgid "History"
 msgstr ""
 
-#: kuma/wiki/forms.py:28
+#: kuma/wiki/forms.py:27
 msgid "Please provide a title."
 msgstr ""
 
-#: kuma/wiki/forms.py:29
+#: kuma/wiki/forms.py:28
 msgid ""
 "The title is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:31
+#: kuma/wiki/forms.py:30
 msgid ""
 "Please keep the length of the title to %(limit_value)s characters or less. "
 "It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:34
+#: kuma/wiki/forms.py:33
 msgid "Name Your Article"
 msgstr ""
 
-#: kuma/wiki/forms.py:35
+#: kuma/wiki/forms.py:34
 msgid "Please provide a slug."
 msgstr ""
 
-#: kuma/wiki/forms.py:36
+#: kuma/wiki/forms.py:35
 msgid "The slug provided is not valid."
 msgstr ""
 
-#: kuma/wiki/forms.py:37
+#: kuma/wiki/forms.py:36
 msgid ""
 "The slug is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:39
+#: kuma/wiki/forms.py:38
 msgid ""
 "Please keep the length of the slug to %(limit_value)s characters or less. It "
 "is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:42
+#: kuma/wiki/forms.py:41
 msgid "Please provide a summary."
 msgstr ""
 
-#: kuma/wiki/forms.py:43
+#: kuma/wiki/forms.py:42
 msgid ""
 "The summary is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:45
+#: kuma/wiki/forms.py:44
 msgid ""
 "Please keep the length of the summary to %(limit_value)s characters or less. "
 "It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:48
+#: kuma/wiki/forms.py:47
 msgid "Please provide content."
 msgstr ""
 
-#: kuma/wiki/forms.py:49
+#: kuma/wiki/forms.py:48
 msgid ""
 "The content is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:51
+#: kuma/wiki/forms.py:50
 msgid ""
 "Please keep the length of the content to %(limit_value)s characters or less. "
 "It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:54
+#: kuma/wiki/forms.py:53
 msgid ""
 "Please keep the length of the comment to %(limit_value)s characters or less. "
 "It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:57
+#: kuma/wiki/forms.py:56
 msgid "Another document with this slug already exists."
 msgstr ""
 
-#: kuma/wiki/forms.py:58
+#: kuma/wiki/forms.py:57
 msgid "Another document with this metadata already exists."
 msgstr ""
 
-#: kuma/wiki/forms.py:60
+#: kuma/wiki/forms.py:59
 msgid "This document was modified while you were editing it."
 msgstr ""
 
-#: kuma/wiki/forms.py:62
+#: kuma/wiki/forms.py:61
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:64
-msgid ""
-"There is another tag matching this tag that only differs by case. Please use "
-"these tag(s) instead: %(tag)s."
-msgstr ""
-
-#: kuma/wiki/forms.py:80
-#: kuma/wiki/forms.py:159
-#: kuma/wiki/forms.py:479
+#: kuma/wiki/forms.py:77
+#: kuma/wiki/forms.py:156
+#: kuma/wiki/forms.py:477
 #: kuma/wiki/templates/wiki/create.html:38
 #: kuma/wiki/templates/wiki/edit.html:56
 #: kuma/wiki/templates/wiki/edit.html:105
@@ -4179,97 +4178,97 @@ msgstr ""
 msgid "Title:"
 msgstr ""
 
-#: kuma/wiki/forms.py:81
-#: kuma/wiki/forms.py:160
-#: kuma/wiki/forms.py:480
+#: kuma/wiki/forms.py:78
+#: kuma/wiki/forms.py:157
+#: kuma/wiki/forms.py:478
 msgid "Title of article"
 msgstr ""
 
-#: kuma/wiki/forms.py:89
-#: kuma/wiki/forms.py:173
+#: kuma/wiki/forms.py:86
+#: kuma/wiki/forms.py:170
 #: kuma/wiki/templates/wiki/create.html:42
 #: kuma/wiki/templates/wiki/includes/document_macros.html:62
 #: kuma/wiki/templates/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:90
-#: kuma/wiki/forms.py:174
+#: kuma/wiki/forms.py:87
+#: kuma/wiki/forms.py:171
 msgid "Article URL"
 msgstr ""
 
-#: kuma/wiki/forms.py:100
+#: kuma/wiki/forms.py:97
 msgid "Category:"
 msgstr ""
 
-#: kuma/wiki/forms.py:101
+#: kuma/wiki/forms.py:98
 msgid "Type of article"
 msgstr ""
 
-#: kuma/wiki/forms.py:106
+#: kuma/wiki/forms.py:103
 #: kuma/wiki/templates/wiki/create.html:46
 #: kuma/wiki/templates/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr ""
 
-#: kuma/wiki/forms.py:184
+#: kuma/wiki/forms.py:181
 #: kuma/wiki/templates/wiki/edit.html:62
 #: kuma/wiki/templates/wiki/includes/document_macros.html:67
 #: kuma/wiki/templates/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr ""
 
-#: kuma/wiki/forms.py:189
+#: kuma/wiki/forms.py:186
 #: kuma/wiki/templates/wiki/edit.html:68
 msgid "Keywords:"
 msgstr ""
 
-#: kuma/wiki/forms.py:190
+#: kuma/wiki/forms.py:187
 msgid "Affects search results"
 msgstr ""
 
-#: kuma/wiki/forms.py:198
+#: kuma/wiki/forms.py:195
 msgid "Search result summary:"
 msgstr ""
 
-#: kuma/wiki/forms.py:199
+#: kuma/wiki/forms.py:196
 msgid "Only displayed on search results page"
 msgstr ""
 
-#: kuma/wiki/forms.py:210
+#: kuma/wiki/forms.py:207
 #: kuma/wiki/templates/wiki/edit.html:80
 #: kuma/wiki/templates/wiki/includes/document_macros.html:72
 msgid "Content:"
 msgstr ""
 
-#: kuma/wiki/forms.py:219
+#: kuma/wiki/forms.py:216
 msgid "Comment:"
 msgstr ""
 
-#: kuma/wiki/forms.py:222
+#: kuma/wiki/forms.py:219
 msgid "Tag this revision for review?"
 msgstr ""
 
-#: kuma/wiki/forms.py:229
+#: kuma/wiki/forms.py:226
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:486
+#: kuma/wiki/forms.py:484
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:487
+#: kuma/wiki/forms.py:485
 msgid "New article URL"
 msgstr ""
 
+#: kuma/wiki/helpers.py:99
 #: kuma/wiki/helpers.py:100
-#: kuma/wiki/helpers.py:101
+#: kuma/wiki/helpers.py:115
 #: kuma/wiki/helpers.py:116
-#: kuma/wiki/helpers.py:117
 msgid "Revision %s"
 msgstr ""
 
-#: kuma/wiki/helpers.py:106
+#: kuma/wiki/helpers.py:105
 msgid "There was an error generating the content."
 msgstr ""
 

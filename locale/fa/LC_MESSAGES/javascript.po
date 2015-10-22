@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-06 09:51-0700\n"
+"POT-Creation-Date: 2015-10-22 12:21-0700\n"
 "PO-Revision-Date: 2013-11-26 16:23+0000\n"
 "Last-Translator: Amir <amir_farsi@ymail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,14 +14,8 @@ msgstr ""
 "X-Generator: Pootle 2.5.0\n"
 "X-POOTLE-MTIME: 1385483035.0\n"
 
-#: media/js/libs/ckeditor/plugins/mdn-link/plugin.js:155
-msgid "Launch"
-msgstr "راه اندازی"
+#~ msgid "Launch"
+#~ msgstr "راه اندازی"
 
-#: media/js/libs/ckeditor/plugins/mdn-link/dialogs/link.js:462
-msgid "Article Title Lookup / Link Text"
-msgstr ""
-
-#: media/js/libs/ckeditor/plugins/mdn-link/dialogs/link.js:500
-msgid "Attachments"
-msgstr "پیوست‌ها"
+#~ msgid "Attachments"
+#~ msgstr "پیوست‌ها"
