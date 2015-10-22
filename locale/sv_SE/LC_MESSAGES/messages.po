@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-04 07:47-0700\n"
-"PO-Revision-Date: 2015-10-21 23:37+0000\n"
+"PO-Revision-Date: 2015-10-22 16:16+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -16,42 +16,42 @@ msgstr ""
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
-msgstr ""
+msgstr "objekt-ID"
 
 #: kuma/actioncounters/models.py:48
 msgid "name of the action"
-msgstr ""
+msgstr "namn på åtgärden"
 
 #: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128
 #: kuma/demos/models.py:455
 msgid "date last modified"
-msgstr ""
+msgstr "senast ändrad"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr ""
+msgstr "MDN senaste filändringar"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
-msgstr ""
+msgstr "Senaste revision till MDN bifogade filer"
 
 #: kuma/attachments/forms.py:11
 msgid "Files of this type are not permitted."
-msgstr ""
+msgstr "Filer av den här typen är inte tillåtna."
 
 #: kuma/attachments/views.py:150
 msgid "The file provided is not valid. File must be one of these types: %s."
-msgstr ""
+msgstr "Filen är inte giltig. Filen måste vara av en av dessa typer: %s."
 
 #. {n} is the revision number, {t} is the title of the document. {c} is the
 #. category.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
 msgid "Attachment {n} | {t}"
-msgstr ""
+msgstr "Bilaga {n} | {t}"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:15
 msgid "Attachment Information"
-msgstr ""
+msgstr "Information om bilaga"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:19
 #: kuma/wiki/templates/wiki/revision.html:18
@@ -81,29 +81,29 @@ msgstr "Skapare:"
 #: kuma/attachments/templates/attachments/attachment_detail.html:39
 #: kuma/attachments/templates/attachments/attachment_detail.html:43
 msgid "MIME Type:"
-msgstr ""
+msgstr "MIME-typ:"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:44
 #: kuma/attachments/templates/attachments/includes/attachment_row.html:6
 msgid "%s bytes"
-msgstr ""
+msgstr "%s byte"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:48
 msgid "Is approved?"
-msgstr ""
+msgstr "Är godkänd?"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:52
 #: kuma/wiki/templates/wiki/revision.html:39
 msgid "Is current revision?"
-msgstr ""
+msgstr "Är aktuell revision?"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:60
 msgid "Attachment Preview"
-msgstr ""
+msgstr "Förhandsgranskning av bilaga"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:65
 msgid "No preview is available."
-msgstr ""
+msgstr "Ingen förhandsgranskning är tillgänglig."
 
 #: kuma/attachments/templates/attachments/list_files.html:2
 msgid "All Files"
@@ -119,13 +119,15 @@ msgstr "Bilagor"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:4
 msgid "Learn how to use Attachments"
-msgstr ""
+msgstr "Lär dig använda bilagor"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:13
 msgid ""
 "This document has no attachments. Images can be attached, and then embedded "
 "in the article."
 msgstr ""
+"Detta dokument har inga bilagor. Bilder kan bifogas och sedan bäddas in i "
+"artikeln."
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:26
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:44
@@ -165,19 +167,19 @@ msgstr "Kommentarer"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:61
 msgid "Uploading"
-msgstr ""
+msgstr "Laddar upp"
 
 #: kuma/authkeys/models.py:32
 msgid "Lookup key"
-msgstr ""
+msgstr "Sök nyckel"
 
 #: kuma/authkeys/models.py:34
 msgid "Hashed secret"
-msgstr ""
+msgstr "Hashad hemlighet"
 
 #: kuma/authkeys/models.py:36
 msgid "Description of intended use"
-msgstr ""
+msgstr "Beskrivning av avsedd användning"
 
 #: kuma/authkeys/templates/authkeys/delete.html:7
 #: kuma/authkeys/templates/authkeys/history.html:8
@@ -213,28 +215,34 @@ msgid ""
 "or suspect one has been exposed to parties you don't trust with your account"
 " delete the key. It's easy to create a replacement key at any time."
 msgstr ""
+"Detta är dina API-nycklar. De är användbara för att bygga applikationer som "
+"utför uppgifter på MDN för din räkning. Om du har slutat använda någon av "
+"dem eller misstänker att de har kommit i orätta händer, ta bort nyckeln. Det"
+" är lätt att skapa en ersättningsnyckel när som helst."
 
 #: kuma/authkeys/templates/authkeys/list.html:14
 msgid "Create a new key"
-msgstr ""
+msgstr "Skapa en ny nyckel"
 
 #: kuma/authkeys/templates/authkeys/list.html:16
 msgid "You have no API keys, yet."
-msgstr ""
+msgstr "Du har inga API-nycklar, ännu."
 
 #: kuma/authkeys/templates/authkeys/list.html:25
 msgid "View key usage history"
-msgstr ""
+msgstr "Visa historik över nyckelanvändning"
 
 #: kuma/authkeys/templates/authkeys/list.html:26
 msgid "History ({count})"
-msgstr ""
+msgstr "Historik ({count})"
 
 #: kuma/authkeys/templates/authkeys/list.html:35
 msgid ""
 "You need a special permission to use API keys. You may request permission by"
 " <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
+"Du behöver speciella behörigheter för att använda API-nycklar. Du kan begära"
+" behörighet genom att <a href=\"%(bugzilla_url)s\">rapportera en bugg</a>."
 
 #: kuma/authkeys/templates/authkeys/new.html:7
 msgid ""
@@ -242,6 +250,10 @@ msgid ""
 " This will be your only means of identifying this key later, other than the "
 "date and time of its creation. So, be as clear as you can.</p>"
 msgstr ""
+"<p>Beskriv hur nyckeln ska användas nedan. <p><strong>OBS:</strong> Detta "
+"kommer vara det enda sättet för dig att identifiera den här nyckeln i "
+"framtiden, annat än genom tid och datum för när den skapades. Var så tydlig "
+"som möjligt.</p>"
 
 #: kuma/authkeys/templates/authkeys/new.html:16
 msgid "Create"
@@ -256,90 +268,96 @@ msgid ""
 "href=\"%(list_url)s\">return to the key list</a>. Reloading this page will "
 "create a new key.</p>"
 msgstr ""
+"<p>Din nya nyckel har skapats. Vänligen spara detaljerna nedan (t.ex. genom "
+"att kopiera in dem i ditt programs inställningar). Den här informationen "
+"kommer aldrig att visas igen och kan inte återskapas om du tappar bort "
+"den.</p> <p><strong>OBS:</strong> När du är klar, <a class=\"button\" "
+"href=\"%(list_url)s\">återgå till listan över nycklar</a>. Laddar du om "
+"denna sida skapas en ny nyckel.</p>"
 
 #: kuma/authkeys/templates/authkeys/new.html:30
 msgid "Key ID"
-msgstr ""
+msgstr "Nyckel-ID"
 
 #: kuma/authkeys/templates/authkeys/new.html:32
 msgid "Secret"
-msgstr ""
+msgstr "Hemlighet"
 
 #: kuma/contentflagging/models.py:15
 msgid "This is not working for me"
-msgstr ""
+msgstr "Detta fungerar inte för mig"
 
 #: kuma/contentflagging/models.py:16
 msgid "This contains inappropriate content"
-msgstr ""
+msgstr "Detta innehåller olämpligt innehåll"
 
 #: kuma/contentflagging/models.py:17
 msgid "This was not created by the author"
-msgstr ""
+msgstr "Detta skapades inte av författaren"
 
 #: kuma/contentflagging/models.py:18
 msgid "The author is fake"
-msgstr ""
+msgstr "Författaren är fejk"
 
 #: kuma/contentflagging/models.py:28
 msgid "Flagged"
-msgstr ""
+msgstr "Flaggad"
 
 #: kuma/contentflagging/models.py:29
 msgid "Flag rejected by moderator"
-msgstr ""
+msgstr "Flagga nekad av moderator"
 
 #: kuma/contentflagging/models.py:30
 msgid "Creator notified"
-msgstr ""
+msgstr "Skaparen underrättad"
 
 #: kuma/contentflagging/models.py:31
 msgid "Content hidden by moderator"
-msgstr ""
+msgstr "Innehållet dolt av moderator"
 
 #: kuma/contentflagging/models.py:32
 msgid "Content deleted by moderator"
-msgstr ""
+msgstr "Innehållet borttaget av moderator"
 
 #: kuma/contentflagging/models.py:65
 msgid "{object} Flagged"
-msgstr ""
+msgstr "{object} flaggad"
 
 #: kuma/contentflagging/models.py:98
 msgid "current status of flag review"
-msgstr ""
+msgstr "aktuell status för flaggad granskning"
 
 #: kuma/contentflagging/models.py:101
 msgid "reason for flagging the content"
-msgstr ""
+msgstr "anledning till flaggning av innehållet"
 
 #: kuma/contentflagging/models.py:104
 msgid "please explain what content you feel is inappropriate"
-msgstr ""
+msgstr "vänligen beskriv vilket innehåll du känner är opassande"
 
 #: kuma/contentflagging/models.py:126
 msgid "date submitted"
-msgstr ""
+msgstr "datum inskickat"
 
 #: kuma/demos/__init__.py:33
 msgid "None"
-msgstr ""
+msgstr "Inget"
 
 #: kuma/demos/__init__.py:34
 msgid "Removed from Derby"
-msgstr ""
+msgstr "Borttaget från Derby"
 
 #: kuma/demos/__init__.py:36
 msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
-msgstr ""
+msgstr "Juni 2011 Dev Derby Challenge - CSS3-animationer"
 
 #: kuma/demos/__init__.py:37
 msgid "CSS3 Animations"
-msgstr ""
+msgstr "CSS3-animationer"
 
 #: kuma/demos/__init__.py:38
 msgid "June 2011"
-msgstr ""
+msgstr "Juni 2011"
 
 #: kuma/demos/__init__.py:39
 msgid ""
@@ -347,6 +365,9 @@ msgid ""
 "appearance or position of elements, with no or minimal JavaScript, and with "
 "greater control than transitions."
 msgstr ""
+"CSS3-animationer låter dig ändra egenskapsvärden över tiden, för att animera"
+" utseende eller plats för element, utan eller med minimal användning av "
+"Javaskript och med större kontroll än övergångar."
 
 #: kuma/demos/__init__.py:40
 msgid ""
@@ -358,36 +379,45 @@ msgid ""
 " achieve these effects without Flash or Silverlight, to make creative "
 "dynamic interfaces and engaging animations with CSS3."
 msgstr ""
+"CSS3-animationer är en ny funktion i moderna webbläsare som Firefox, vilket "
+"ger ytterligare flexibilitet och kontroll över stil och upplevelse av "
+"webben. CSS3-animationer låter dig ändra värden över tid utan eller med "
+"minimalt Javaskript, och med större kontroll än CSS-övergångar. Gå längre än"
+" statiska värden för att animera utseende och position på HTML-element. Du "
+"kan åstadkomma de här effekterna utan Flash eller Silverlight, för att skapa"
+" dynamiska gränssnitt och engagerande animationer med CSS3."
 
 #: kuma/demos/__init__.py:43
 msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
-msgstr ""
+msgstr "Juli 2011 Dev Derby Challenge - HTML5 <video>"
 
 #: kuma/demos/__init__.py:44
 msgid "HTML5 <video>"
-msgstr ""
+msgstr "HTML5 <video>"
 
 #: kuma/demos/__init__.py:45
 msgid "July 2011"
-msgstr ""
+msgstr "Juli 2011"
 
 #: kuma/demos/__init__.py:46 kuma/demos/__init__.py:47
 msgid ""
 "The HTML5 <video> element lets you embed and control video media directly in"
 " web pages, without resorting to plug-ins."
 msgstr ""
+"HTML5 <video> elementet kan du bädda in och kontrollera videomedia direkt i "
+"webbsidorna, utan att använda insticksmoduler."
 
 #: kuma/demos/__init__.py:50
 msgid "August 2011 Dev Derby Challenge - History API"
-msgstr ""
+msgstr "Augusti 2011 Dev Derby Challenge - Historik API"
 
 #: kuma/demos/__init__.py:51
 msgid "History API"
-msgstr ""
+msgstr "Historik API"
 
 #: kuma/demos/__init__.py:52
 msgid "August 2011"
-msgstr ""
+msgstr "Augusti 2011"
 
 #: kuma/demos/__init__.py:53 kuma/demos/__init__.py:54
 msgid ""

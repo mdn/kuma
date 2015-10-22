@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2015-10-21 17:06+0000\n"
+"PO-Revision-Date: 2015-10-22 16:05+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -28,6 +28,8 @@ msgid ""
 "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
 "JavaScript and other Web standards and open technologies."
 msgstr ""
+"MDN är webbutvecklarens verktygslåda för dokument, demos och mer för HTML, "
+"CSS, JavaScript och andra webbstandarder och öppna teknologier."
 
 #: promote-mdn.php:248
 msgid ""
@@ -40,6 +42,8 @@ msgid ""
 "Promote MDN automatically links keywords and phrases in your posts and pages"
 " to MDN URLs."
 msgstr ""
+"Främja MDN som automatiskt länkar sökord och fraser i dina inlägg och sidor "
+"till MDN:s webbadresser."
 
 #: promote-mdn.php:256
 msgid "Settings"
@@ -118,12 +122,18 @@ msgid ""
 "Extra keywords to automaticaly link. Use comma to seperate keywords and add "
 "target url at the end. Use a new line for new url and set of keywords. e.g.,"
 msgstr ""
+"Extra sökord för att länka automatiskt. Använd kommatecken för att separera "
+"sökord och lägga till måladressen i slutet. Använd en ny rad för ny "
+"webbadress och nya uppsättningar av sökord. t.ex.,"
 
 #: promote-mdn.php:288
 msgid ""
 "Note: These keywords will take priority over those loaded at the URL. If you"
 " have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
+"Obs: Dessa sökord kommer att ha företräde framför de som laddas från "
+"webbadressen. Om du har för många egna sökord här kan du inte länka till MDN"
+" alls."
 
 #: promote-mdn.php:289
 msgid "Update options"
@@ -142,6 +152,8 @@ msgid ""
 "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
 "href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr ""
+"fr_FR översättning, nytt sidofält <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">inställning</a> för en språkspecifik URL för sökord."
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
@@ -171,7 +183,7 @@ msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
-msgstr ""
+msgstr "Främja MDN som automatiskt länkar sökord och fraser till MDN dokument"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
