@@ -811,9 +811,6 @@ PIPELINE_JS = {
             'js/modal-control.js',
         ),
         'output_filename': 'build/js/demostudio.js',
-        'extra_context': {
-            'async': True,
-        },
     },
     'demostudio_devderby_landing': {
         'source_filenames': (
