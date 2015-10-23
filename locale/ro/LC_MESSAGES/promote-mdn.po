@@ -1,4 +1,4 @@
-# Copyright (C) 2012 
+# Copyright (C) 2012
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
@@ -12,9 +12,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2);;\n"
-"X-Generator: Pootle 2.5.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1439546650.0\n"
 
 #: promote-mdn.php:190
@@ -43,8 +42,8 @@ msgstr ""
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr ""
 "Promovare MDN creează în mod automat hyperlegături pentru cuvinte cheie și "
 "fraze din postări și pagini la URL-uri MDN."
@@ -126,18 +125,18 @@ msgid ""
 "Extra keywords to automaticaly link. Use comma to seperate keywords and add "
 "target url at the end. Use a new line for new url and set of keywords. e.g.,"
 msgstr ""
-"Cuvintele cheie pentru crearea automată de legături. Folosiți virgula pentru "
-"a separa cuvinte cheie și pentru a adăuga url-ul țintă la sfârșit. Folosiți "
-"câte o linie nouă pentru url-ul nou și mai multe cuvinte cheie. De ex.,"
+"Cuvintele cheie pentru crearea automată de legături. Folosiți virgula pentru"
+" a separa cuvinte cheie și pentru a adăuga url-ul țintă la sfârșit. Folosiți"
+" câte o linie nouă pentru url-ul nou și mai multe cuvinte cheie. De ex.,"
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
 "Notă: aceste cuvinte cheie vor fi considerate în mod prioritar față de cele "
-"încărcate din URL. Dacă aveți prea multe cuvinte cheie particularizate nu le "
-"puteți lega de MDN deloc."
+"încărcate din URL. Dacă aveți prea multe cuvinte cheie particularizate nu le"
+" puteți lega de MDN deloc."
 
 #: promote-mdn.php:289
 msgid "Update options"
@@ -153,8 +152,8 @@ msgstr ""
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr ""
 "Traducere în franceză, noul <a href=\"%s\">control</a> bară laterală, <a "
 "href=\"%s\">setări</a> pentru cuvinte cheie particularizate într-o limbă "
