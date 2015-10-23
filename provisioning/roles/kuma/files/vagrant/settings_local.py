@@ -108,3 +108,6 @@ if SENTRY_DSN:
     )
 
 SOCIALACCOUNT_PROVIDERS['persona']['AUDIENCE'] = 'https://developer-local.allizom.org'
+
+if DEBUG:
+    PIPELINE_STYLUS_ARGUMENTS = '--sourcemap'
