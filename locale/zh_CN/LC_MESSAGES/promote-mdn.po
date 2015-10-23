@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2014-03-09 02:08+0000\n"
-"Last-Translator: Hao Shen <steekid@icloud.com>\n"
+"PO-Revision-Date: 2015-10-23 15:21+0000\n"
+"Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "MDN 是最好的在线资源——由网页开发者所撰写，供网�
 msgid ""
 "Promote MDN automatically links keywords and phrases in your posts and pages"
 " to MDN URLs."
-msgstr "MDN 推广计划 会自动将您发表的文章和页面中的关键词与用语链接到 MDN 网址。"
+msgstr "“MDN 推广计划”可以为您将发表的文章和页面中的关键词与用语自动链接到 MDN 网址。"
 
 #: promote-mdn.php:256
 msgid "Settings"
@@ -167,7 +167,7 @@ msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
-msgstr "通过自动指向 MDN docs 关键字链接的形式推广 MDN"
+msgstr "通过自动将关键字链接并指向 MDN 文档的形式推广 MDN"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
