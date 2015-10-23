@@ -1,4 +1,4 @@
-# Copyright (C) 2012 
+# Copyright (C) 2012
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1394330962.0\n"
 
 #: promote-mdn.php:190
@@ -37,8 +37,8 @@ msgstr "MDN 是最好的在线资源——由网页开发者所撰写，供网�
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr "MDN 推广计划 会自动将您发表的文章和页面中的关键词与用语链接到 MDN 网址。"
 
 #: promote-mdn.php:256
@@ -119,8 +119,8 @@ msgstr "用于自动链接的额外关键字。请使用英文逗号分隔关键
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr "注意：这些关键字比那些从网址中载入的拥有更高的优先级。如果您在此设置了过多的自定义关键字，您可能甚至无法链接至 MDN。"
 
 #: promote-mdn.php:289
@@ -135,8 +135,8 @@ msgstr "感谢安装！请到 <a href=\"%s\">settings</a> 页面去配置。"
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr "法语翻译，新的侧栏<a href=\"%s\">微件</a>，针对特定语种关键词网址的<a href=\"%s\">设置</a>。"
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
