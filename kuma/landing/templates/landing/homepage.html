@@ -209,15 +209,4 @@
         jQuery('#home-search-form').searchSuggestions();
     </script>
   {% endif %}
-
-  {# This can be removed once the homepage heading A/B test is completed. #}
-  <script>
-      {% if not waffle.flag('hide_homepage_heading') %}
-          // Bucket visitor into the baseline Optimizely variation for reporting
-          mdn.optimizely.push(['bucketVisitor', 2702600192, 2707400176]);
-      {% else %}
-          // Bucket visitor into the tested Optimizely variation for reporting
-          mdn.optimizely.push(['bucketVisitor', 2702600192, 2709140171]);
-      {% endif %}
-  </script>
 {% endblock %}
