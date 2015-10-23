@@ -221,16 +221,23 @@ div.bug {
     }
 }
 
-div.callout-box {
-    background: #fafafa;
-    border: 1px solid #eee;
-    float: right;
-    margin: 0 0 8px 15px;
-    padding: 10px;
+.callout-box {
+    background: $light-background-color;
+    border: 1px solid #f1f1f1;
+    bidi-value(float, right, left);
+    bidi-value(margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0);
+    padding: $grid-spacing;
     position: relative;
     text-align: center;
-    width: 200px;
+    @extend $column-3;
+    min-width: 200px;
     z-index: 2;
+
+    @media $media-query-small-mobile {
+        width: 100%;
+        box-sizing: border-box;
+        bidi-value(margin, 0 0 ($grid-spacing / 2) 0, 0 0 ($grid-spacing / 2) 0);
+    }
 }
 
 p.footnote {
