@@ -1,4 +1,4 @@
-# Copyright (C) 2012 
+# Copyright (C) 2012
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
@@ -6,14 +6,14 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
 "PO-Revision-Date: 2014-05-16 09:57+0000\n"
-"Last-Translator: Sandro <gialloporpora@mozillaitalia.org>\n"
+"Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1400234236.0\n"
 
 #: promote-mdn.php:190
@@ -42,8 +42,8 @@ msgstr ""
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr ""
 "Il plugin Promote MDN aggiunge automaticamente dei link verso MDN alle "
 "parole chiave e alle frasi negli articoli e nelle pagine."
@@ -94,8 +94,8 @@ msgid ""
 "Do not add links to the following posts or pages (comma-separated id, slug, "
 "name):"
 msgstr ""
-"Non aggiungere link a queste pagine o articoli (separa con virgole id, slug, "
-"nome):"
+"Non aggiungere link a queste pagine o articoli (separa con virgole id, slug,"
+" nome):"
 
 #: promote-mdn.php:270
 msgid "Do not add links on the following phrases (comma-separated):"
@@ -111,7 +111,8 @@ msgstr "Numero massimo di link generati per ogni articolo:"
 
 #: promote-mdn.php:276
 msgid "Max links to generate for a single keyword/phrase:"
-msgstr "Numero massimo di link generati per una singola parola chiave o frase:"
+msgstr ""
+"Numero massimo di link generati per una singola parola chiave o frase:"
 
 #: promote-mdn.php:277
 msgid "Max links to generate for a single URL:"
@@ -132,8 +133,8 @@ msgstr ""
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
 "Nota: queste parole chiave hanno la priorità rispetto a quelle caricate "
 "dall’URL. Se imposti troppe parole chiave in questa sezione potresti non "
@@ -153,12 +154,12 @@ msgstr ""
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr ""
-"Traduzione in francese, Nuovo <a href=\"%s\">widget</a> per la barra laterale, "
-"<a href=\"%s\">Impostazione</a> di una URL specifica per le parole chiave "
-"localizzate."
+"Traduzione in francese, Nuovo <a href=\"%s\">widget</a> per la barra "
+"laterale, <a href=\"%s\">Impostazione</a> di una URL specifica per le parole"
+" chiave localizzate."
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
