@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-23 13:53+0000\n"
+"PO-Revision-Date: 2015-10-23 14:54+0000\n"
 "Last-Translator: Marco Aurélio <ouesten@me.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
@@ -2785,9 +2785,8 @@ msgid "Search the docs"
 msgstr "Busca nos documentos"
 
 #: kuma/landing/templates/landing/homepage.html:57
-#, fuzzy
 msgid "Show topics"
-msgstr "Mostrar comparativo"
+msgstr "Mostrar tópicos"
 
 #: kuma/landing/templates/landing/homepage.html:78
 msgid "Web Technologies"
@@ -2819,9 +2818,8 @@ msgid "more..."
 msgstr "mais..."
 
 #: kuma/landing/templates/landing/homepage.html:91
-#, fuzzy
 msgid "Mozilla<br> Docs"
-msgstr "Documentos mais utilizados"
+msgstr "Documentos<br> Mozilla"
 
 # 77%
 # 100%
@@ -2863,7 +2861,7 @@ msgstr "Depurador JavaScript"
 
 #: kuma/landing/templates/landing/homepage.html:106
 msgid "Performance Tools"
-msgstr ""
+msgstr "Ferramentas de desempenho"
 
 #: kuma/landing/templates/landing/homepage.html:111
 msgid "Connect"
@@ -2895,7 +2893,7 @@ msgstr "Instale o navegador para desenvolvedores como você"
 
 #: kuma/landing/templates/landing/homepage.html:132
 msgid "Celebrate ten years of documenting your Web."
-msgstr ""
+msgstr "Comemore os 10 anos de documenação da Web."
 
 #: kuma/landing/templates/landing/homepage.html:136
 msgid "Build Open Web Apps"
@@ -3212,12 +3210,11 @@ msgstr ""
 "alguns minutos."
 
 #: kuma/search/utils.py:17
-#, fuzzy
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
 msgstr ""
-"A busca está temporariamente indisponível. Por favor, tente novamente em "
+"Algo deu errado com a consulta de pesquisa. Por favor, tente novamente em "
 "alguns minutos."
 
 #: kuma/search/templates/search/down.html:5
@@ -3459,7 +3456,7 @@ msgstr "As ares de experiência devem fazer parte dos interesses"
 
 #: kuma/users/forms.py:274
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Este campo não pode ficar em branco."
 
 #: kuma/users/forms.py:280
 msgid "Username already in use."
@@ -3494,7 +3491,6 @@ msgid "Language"
 msgstr "Idioma"
 
 #: kuma/users/models.py:56
-#, fuzzy
 msgid "Homepage"
 msgstr "Início"
 
@@ -3537,7 +3533,7 @@ msgstr "Tags"
 
 #: kuma/users/models.py:102
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Insira um URL do website válido."
 
 #: kuma/users/models.py:107
 msgid "Enter a valid Twitter URL."
@@ -3545,19 +3541,19 @@ msgstr "Insira um URL do Twitter válido."
 
 #: kuma/users/models.py:112
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Insira um URL do GitHub válido."
 
 #: kuma/users/models.py:117
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Insira um URL do Stack Overflow válido."
 
 #: kuma/users/models.py:122
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Insira um URL do LinkedIn válido."
 
 #: kuma/users/models.py:127
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Insira um URL do Mozillians válido."
 
 #: kuma/users/models.py:132
 msgid "Enter a valid Facebook URL."
@@ -4126,9 +4122,8 @@ msgid "Areas of Expertise"
 msgstr "Áreas de experiência"
 
 #: kuma/users/templates/users/user_detail.html:108
-#, fuzzy
 msgid "Member since %(date_joined)s"
-msgstr "Membro desde {date}"
+msgstr "Membro desde %(date_joined)s"
 
 #: kuma/users/templates/users/user_detail.html:159
 msgid "Subscribe to a feed of {display_name}'s demos"
@@ -4443,7 +4438,7 @@ msgstr ""
 
 #: kuma/wiki/apps.py:54
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:205
 msgid "Technical - code samples, APIs, or technologies"
@@ -4490,14 +4485,12 @@ msgid "MDN recent changes to documents tagged %s"
 msgstr "Alterações recentes dos documentos com a tag %s no MDN"
 
 #: kuma/wiki/feeds.py:178
-#, fuzzy
 msgid "MDN documents in need of review"
-msgstr "Documentos MDN para revisão"
+msgstr "Documentos do MDN que precisam de revisão"
 
 #: kuma/wiki/feeds.py:179
-#, fuzzy
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr "Alterações recentes dos documentos MDN"
+msgstr "Mudanças recentes em documentos do MDN que precisam de revisão"
 
 #: kuma/wiki/feeds.py:185
 msgid "MDN documents for %s review"
@@ -5096,15 +5089,14 @@ msgid "Document Tags and Contributors"
 msgstr "Etiquetas do documento e colaboradores"
 
 #: kuma/wiki/templates/wiki/document.html:362
-#, fuzzy
 msgid ""
 "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-"
 "group\"></i><strong>Contributors to this page:</strong> "
 "%(contributors_list)s </div>"
 msgstr ""
 "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-"
-"group\"></i><strong>Contribuíram para esta página:</strong> %(contributors)s"
-" </div>"
+"group\"></i><strong>Contribuíram para esta página:</strong> "
+"%(contributors_list)s </div>"
 
 #: kuma/wiki/templates/wiki/document.html:371
 msgid "Last updated by:"
@@ -5233,16 +5225,20 @@ msgid ""
 "Please specify the new location for this page by filling out the fields "
 "below. Be sure your new destination follows these rules:"
 msgstr ""
+"Por favor, especifique a nova localização desta página preenchendo os campos"
+" abaixo. Certifique-se de que seu novo destino segue estas regras:"
 
 #: kuma/wiki/templates/wiki/move.html:22
 msgid ""
 "Make sure the location you specify is located immediately under an existing "
 "page."
 msgstr ""
+"Verifique se o local que você especificou é localizado imediatamente sob uma"
+" página existente."
 
 #: kuma/wiki/templates/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
-msgstr ""
+msgstr "Não inclua o esquema de URL (\"https://\")."
 
 #: kuma/wiki/templates/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
@@ -5255,18 +5251,18 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:31
-#, fuzzy
 msgid ""
 "Your requested move cannot be completed due to the following slug conflicts:"
 msgstr ""
-"Sua ação solicitada não pode ser concluída devido a conflitos com o nome "
-"curto:"
+"Sua solicitação não pode ser concluída devido a conflitos com o nome curto:"
 
 #: kuma/wiki/templates/wiki/move.html:39
 msgid ""
 "Please try a different destination slug. <strong>Double check to be sure "
 "you're trying to move to the right place!</strong>"
 msgstr ""
+"Por favor, tente um nome curto de destino diferente. <strong>Verifique se "
+"está no lugar certo!</strong>"
 
 #: kuma/wiki/templates/wiki/move.html:54
 msgid "Current Slug:"
@@ -5281,9 +5277,8 @@ msgid "New Slug:"
 msgstr "Novo nome curto:"
 
 #: kuma/wiki/templates/wiki/move.html:81
-#, fuzzy
 msgid "Look up by Document Title"
-msgstr "Pesquisa por Título do Documento"
+msgstr "Procure pelo título do documento"
 
 #: kuma/wiki/templates/wiki/move.html:84
 msgid "Parent Title"
@@ -5553,23 +5548,20 @@ msgid "New sub-article"
 msgstr "Novo sub-artigo"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:64
-#, fuzzy
 msgid "Clone this article"
-msgstr "Clone esta página"
+msgstr "Clonar este artigo"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:67
-#, fuzzy
 msgid "Move this article"
-msgstr "Mover esta página"
+msgstr "Mover este artigo"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr "Ver na administração"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:78
-#, fuzzy
 msgid "Delete this article"
-msgstr "Excluir esta página"
+msgstr "Excluir este artigo"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -5580,9 +5572,8 @@ msgid "Convert to content zone"
 msgstr "Converter para zona de conteúdo"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:88
-#, fuzzy
 msgid "Print this article"
-msgstr "Imprimir esta página"
+msgstr "Imprimir este artigo"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -5613,9 +5604,8 @@ msgid "Share:"
 msgstr "Compartilhar:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:103
-#, fuzzy
 msgid "Google+"
-msgstr "Google +"
+msgstr "Google+"
 
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/templates/wiki/includes/translate_description.html:50
@@ -5872,6 +5862,8 @@ msgid ""
 "Document already exists. Note: You cannot revert a document that has been "
 "moved until you delete its redirect."
 msgstr ""
+"O documento já existe. Nota: Você não pode reverter um documento que foi "
+"movido até que você exclua seu redirecionamento."
 
 #: kuma/wiki/views/document.py:580
 msgid "Redirected from %(url)s"
@@ -6053,37 +6045,32 @@ msgid "Tools"
 msgstr "Ferramentas"
 
 #: templates/base.html:104
-#, fuzzy
 msgid "Contribute to MDN"
-msgstr "Contribuindo para a base de código do MDN"
+msgstr "Contribuir com o MDN"
 
 #: templates/base.html:106
-#, fuzzy
 msgid "Get started"
 msgstr "Introdução"
 
 #: templates/base.html:107
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Revisar ou localizar documentos"
 
 #: templates/base.html:108
 msgid "Add a new page"
-msgstr ""
+msgstr "Adicionar uma nova página"
 
 #: templates/base.html:111
-#, fuzzy
 msgid "Site Tools"
-msgstr "Ferramentas"
+msgstr "Ferramentas do site"
 
 #: templates/base.html:113
-#, fuzzy
 msgid "Revision dashboard"
-msgstr "Fonte da revisão:"
+msgstr "Painel de revisão"
 
 #: templates/base.html:114
-#, fuzzy
 msgid "Documentation status"
-msgstr "Documentação MDN"
+msgstr "Status da documentação"
 
 #: templates/base.html:123
 msgid "Web Platform"
@@ -6138,61 +6125,50 @@ msgid "...more docs"
 msgstr "...mais documentos"
 
 #: templates/base.html:150
-#, fuzzy
 msgid "Mozilla Docs"
-msgstr "Mozilla"
+msgstr "Documentos Mozilla"
 
 #: templates/base.html:159 templates/includes/login.html:20
 msgid "Persona"
 msgstr "Persona"
 
 #: templates/base.html:163
-#, fuzzy
 msgid "Developer Tools"
-msgstr "Ferramentas de<br />desenvolvimento"
+msgstr "Ferramentas do desenvolvedor"
 
 #: templates/base.html:163
-#, fuzzy
 msgid "Feedback"
-msgstr "Feed"
+msgstr "Feedback"
 
 #: templates/base.html:168
 msgid "Get Firefox help"
 msgstr "Obter ajuda do Firefox"
 
 #: templates/base.html:169
-#, fuzzy
 msgid "Get web development help"
-msgstr "Coleção completa de ferramentas para desenvolvimento web"
+msgstr "Obter ajuda de desenvolvimento web"
 
 #: templates/base.html:172
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Junte-se à comunidade MDN"
 
 #: templates/base.html:173
-#, fuzzy
 msgid "Report a content problem"
-msgstr "Reportar um problema"
+msgstr "Relatar um problema de conteúdo"
 
 #: templates/base.html:174
-#, fuzzy
 msgid "Report a bug"
-msgstr "Reportar um problema"
+msgstr "Relatar um bug"
 
 #: templates/base.html:200
-#, fuzzy
 msgid ""
 "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual "
 "contributors.</p> <p>Content is available under <a "
 "href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
-"<bdi>&copy; 2005-%(thisyear)s Rede de Programadores da Mozilla e "
-"colaboradores individuais<br /> Conteúdo disponível sob <a "
-"href=\"%(copyright_url)s\">estas licenças</a> &middot; <a "
-"href=\"%(about_url)s\">Sobre a MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Contribua para o código</a> &middot; <a "
-"href=\"//www.mozilla.org/privacy/websites/\">Política de "
-"privacidade</a></bdi>"
+"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network e contribuintes "
+"individuais.</p> <p>Conteúdo está disponível sob <a "
+"href=\"%(copyright_url)s\">estas licenças</a>.</p>"
 
 #: templates/base.html:205
 msgid "About MDN"
@@ -6200,20 +6176,19 @@ msgstr "Sobre a MDN"
 
 #: templates/base.html:206
 msgid "Terms"
-msgstr ""
+msgstr "Termos"
 
 #: templates/base.html:207
 msgid "Privacy"
-msgstr ""
+msgstr "Privacidade"
 
 #: templates/base.html:208
 msgid "Cookies"
 msgstr ""
 
 #: templates/base.html:209
-#, fuzzy
 msgid "Contribute to the code"
-msgstr "Contribuindo para a base de código do MDN"
+msgstr "Contribuir com o código"
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
