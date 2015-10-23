@@ -139,7 +139,7 @@
                 var tableLeft = $table.offset().left;
 
                 // left coord of table minus left coord of cell
-                var historyLeft = tableLeft - cellLeft - parseInt(cellLeftBorder, 10) - 1;
+                var historyLeft = tableLeft - cellLeft - parseInt(cellLeftBorder, 10);
 
                 // get cell height
                 var cellTop = $openCell.outerHeight();
