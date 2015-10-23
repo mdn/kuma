@@ -625,10 +625,7 @@ PIPELINE_CSS = {
             'styles/zones.styl',
             'styles/diff.styl',
 
-            'js/libs/prism/themes/prism.css',
-            'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
-            'js/libs/prism/plugins/ie8/prism-ie8.css',
-            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
+            'js/libs/prism/prism.css',
             'js/prism-mdn/components/prism-json.css',
             'styles/wiki-syntax.styl',
         ),
@@ -849,8 +846,6 @@ PIPELINE_JS = {
         'source_filenames': (
             'js/libs/prism/prism.js',
             'js/prism-mdn/components/prism-json.js',
-            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
-            'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
             'js/syntax-prism.js',
         ),
         'output_filename': 'build/js/syntax-prism.js',

@@ -191,10 +191,10 @@
         Syntax highlighting scripts
     */
     if($('article pre').length && ('querySelectorAll' in doc)) (function() {
-        if (mdn.assets && mdn.assets.js.hasOwnProperty('syntax-prism')) {
+        if(mdn.assets && mdn.assets.js.hasOwnProperty('syntax-prism')) {
             mdn.assets.js['syntax-prism'].forEach(function(url, index, array) {
                 /*
-                   Note: In development, five scripts are loaded, and the
+                   Note: In development, multiple scripts are loaded, and the
                    later scripts use Prism, which is declared in the first
                    script.  This means syntax highlighting often doesn't work
                    on the first page load. Refresh, and syntax highlighing
@@ -205,14 +205,12 @@
                    help as well.
                  */
                 var syntaxScript = doc.createElement('script');
-                syntaxScript.setAttribute('data-manual', '');
-                syntaxScript.src = url;
-                if (array.length === 1) {
-                    syntaxScript.async = 'true';
-                } else {
-                    syntaxScript.defer = 'true';
+                syntaxScript.async = array.length === 1;
+                if(index === 0) {
+                    syntaxScript.setAttribute('data-manual', 'true');
                 }
-                doc.body.appendChild(syntaxScript);
+                syntaxScript.src = url;
+                doc.head.appendChild(syntaxScript);
             });
         }
     })();
