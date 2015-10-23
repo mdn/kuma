@@ -57,8 +57,11 @@ History
 
 .bc-history dd {
     min-height: 1.2em;
+    margin-bottom: 0; //override .text-content defaults
     padding-top: 4px;
+    padding-left: 0; //override .text-content defaults
     padding-bottom: 10px;
+    font-weight: normal; //override .text-content defaults
 }
 
 .bc-history dl > dt:first-child,
@@ -112,7 +115,7 @@ bc-history-tablet-display() {
     }
 
     .bc-history dt {
-        margin-top: 20px;
+        margin-top: 10px;
         margin-left: 0;
         margin-bottom: 10px;
     }
