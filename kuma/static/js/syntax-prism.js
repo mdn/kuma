@@ -18,9 +18,9 @@
         var brush = defaultBrush;
         var lineSearch;
 
-        // If the PRE has a "language-" class, it's a copy/pasted of already-prism'd
-        // code samples.  Bail to avoid an error
-        if(klass.indexOf('language-') !== -1) return;
+        // If the PRE has a child <code> tag, it's likely a copy/pasted, already-prism'd code samples.
+        // Bail to avoid an error
+        if($pre.find('code').length) return;
 
         // Parse classname to look for brush
         var brushSearch = klass.match(/brush: ?(.*)/);
@@ -31,6 +31,10 @@
         // Some boxes shouldn't be numbered
         if($pre.hasClass('syntaxbox') || $pre.hasClass('twopartsyntaxbox')) {
           $pre.attr('data-prism-prevent-line-number', 1);
+        }
+        else {
+            // Prism upgrade requires adding a class to use line numbering
+            $pre.addClass('line-numbers');
         }
 
         // Style all as HTML initially
