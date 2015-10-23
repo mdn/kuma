@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-04-17 07:41+0000\n"
+"PO-Revision-Date: 2015-10-23 13:53+0000\n"
 "Last-Translator: Marco Aurélio <ouesten@me.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
@@ -3540,9 +3540,8 @@ msgid "Enter a valid website URL."
 msgstr ""
 
 #: kuma/users/models.py:107
-#, fuzzy
 msgid "Enter a valid Twitter URL."
-msgstr "Por favor, insira uma URL do twitter.com."
+msgstr "Insira um URL do Twitter válido."
 
 #: kuma/users/models.py:112
 msgid "Enter a valid GitHub URL."
@@ -3561,9 +3560,8 @@ msgid "Enter a valid Mozillians URL."
 msgstr ""
 
 #: kuma/users/models.py:132
-#, fuzzy
 msgid "Enter a valid Facebook URL."
-msgstr "Por favor, insira uma URL do facebook.com."
+msgstr "Insira um URL do Facebook válido."
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
@@ -4928,9 +4926,8 @@ msgid "Create a New {title}"
 msgstr "Criar um novo {title}"
 
 #: kuma/wiki/templates/wiki/create.html:30
-#, fuzzy
 msgid "Create a"
-msgstr "Criar"
+msgstr "Criar um"
 
 #: kuma/wiki/templates/wiki/create.html:30
 msgid "New Document"
@@ -5135,9 +5132,8 @@ msgstr "Suas alterações"
 #: kuma/wiki/templates/wiki/edit.html:38 kuma/wiki/templates/wiki/edit.html:46
 #: kuma/wiki/templates/wiki/includes/document_macros.html:41
 #: kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy
 msgid "Revision {id} by <a href=\"{user_profile_url}\">{user}</a> on {date}"
-msgstr "Revisão {id} por {user} em {date}"
+msgstr "Revisão {id} por <a href=\"{user_profile_url}\">{user}</a> em {date}"
 
 #: kuma/wiki/templates/wiki/edit.html:43
 msgid "Current Revision:"
@@ -5553,9 +5549,8 @@ msgstr ""
 "Você já cancelou a subscrição para a versão em {language} deste artigo."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "New sub-article"
-msgstr "Nova sub-página"
+msgstr "Novo sub-artigo"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:64
 #, fuzzy
@@ -6162,9 +6157,8 @@ msgid "Feedback"
 msgstr "Feed"
 
 #: templates/base.html:168
-#, fuzzy
 msgid "Get Firefox help"
-msgstr "Procure por ajuda do Firefox"
+msgstr "Obter ajuda do Firefox"
 
 #: templates/base.html:169
 #, fuzzy
