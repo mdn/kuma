@@ -39,7 +39,7 @@ from .. import kumascript
 from ..constants import SLUG_CLEANSING_RE
 from ..decorators import (check_readonly, process_document_path,
                           allow_CORS_GET, prevent_indexing)
-from ..events import EditDocumentEvent, EditDocumentInTreeEvent
+from ..events import EditDocumentEvent, _EditDocumentInTreeEvent
 from ..forms import TreeMoveForm
 from ..models import (Document, DocumentZone, DocumentDeletionLog,
                       DocumentRenderedContentNotAvailable)
@@ -455,10 +455,13 @@ def subscribe_to_tree(request, document_slug, document_locale):
         Document, locale=document_locale, slug=document_slug)
     status = 0
 
-    if EditDocumentInTreeEvent.is_notifying(request.user, id=document.id):
-        EditDocumentInTreeEvent.stop_notifying(request.user, id=document.id)
+    if _EditDocumentInTreeEvent.is_notifying(request.user,
+                                            object_id=document.id):
+        _EditDocumentInTreeEvent.stop_notifying(request.user,
+                                               object_id=document.id)
     else:
-        EditDocumentInTreeEvent.notify(request.user, id=document.id)
+        _EditDocumentInTreeEvent.notify(request.user,
+                                       object_id=document.id)
         status = 1
 
     if request.is_ajax():
