@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-23 14:54+0000\n"
+"PO-Revision-Date: 2015-10-24 00:25+0000\n"
 "Last-Translator: Marco Aurélio <ouesten@me.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
@@ -101,11 +101,11 @@ msgstr "É a revisão atual?"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:60
 msgid "Attachment Preview"
-msgstr "Pré-visualização do anexo"
+msgstr "Visualizar anexo"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:65
 msgid "No preview is available."
-msgstr "Pré-visualização indisponível."
+msgstr "Visualização indisponível."
 
 #: kuma/attachments/templates/attachments/list_files.html:2
 msgid "All Files"
@@ -5242,13 +5242,13 @@ msgstr "Não inclua o esquema de URL (\"https://\")."
 
 #: kuma/wiki/templates/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "Digite apenas a parte da URL depois de \"/docs/\"."
 
 #: kuma/wiki/templates/wiki/move.html:25
 msgid ""
 "Don't include a trailing slash (this will be removed for you if you include "
 "it, but you should leave it out)."
-msgstr ""
+msgstr "Não inclua uma barra (será removida se incluí-la)."
 
 #: kuma/wiki/templates/wiki/move.html:31
 msgid ""
@@ -5598,6 +5598,8 @@ msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
 msgstr ""
+"O servidor está renderizando a comparação de conteúdo. Por favor, atualize "
+"esta página em alguns minutos."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:99
 msgid "Share:"
@@ -6184,7 +6186,7 @@ msgstr "Privacidade"
 
 #: templates/base.html:208
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: templates/base.html:209
 msgid "Contribute to the code"
