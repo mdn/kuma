@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2014-09-28 18:03+0000\n"
-"Last-Translator: Cláudio <cesperanc@gmail.com>\n"
+"PO-Revision-Date: 2015-10-24 14:27+0000\n"
+"Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
@@ -44,11 +44,10 @@ msgid "Files of this type are not permitted."
 msgstr "Ficheiros deste tipo não são permitidos."
 
 #: kuma/attachments/views.py:151
-#, fuzzy
 msgid "The file provided is not valid. File must be one of these types: %s."
 msgstr ""
 "O ficheiro fornecido não é válido. O ficheiro tem de ser de um destes tipos:"
-" ."
+" %s."
 
 #. {n} is the revision number, {t} is the title of the document. {c} is the
 #. category.
@@ -130,9 +129,8 @@ msgstr "Saiba como utilizar Anexos"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:16
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:23
-#, fuzzy
 msgid "Attach Files"
-msgstr "Anexos"
+msgstr "Anexar ficheiros"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:21
 msgid ""
@@ -223,7 +221,6 @@ msgid "This key has not been used yet."
 msgstr "Esta chave ainda não foi utilizada."
 
 #: kuma/authkeys/templates/authkeys/list.html:8
-#, fuzzy
 msgid ""
 "These are your API keys. They're useful for building applications that "
 "perform tasks on MDN on your behalf. If you have stopped using any of them, "
@@ -231,10 +228,9 @@ msgid ""
 " delete the key. It's easy to create a replacement key at any time."
 msgstr ""
 "Estas são as suas chaves da API. Elas são úteis para construir aplicações "
-"que realizam tarefas por si na MDN. Se parou de as utilizar ou se suspeitar "
-"que uma das chaves foi exposta a entidades a quem não confia a sua conta, "
-"clique no <span class=\"button\">X</span> para eliminar a chave. É fácil "
-"criar uma chave de substituição a qualquer altura."
+"que executam tarefas por si na MDN. Se parou de as utilizar ou se suspeitar "
+"que uma das chaves foi exposta a entidades em quem não confia a sua conta, "
+"elimine a chave. É fácil criar uma chave de substituição a qualquer momento."
 
 #: kuma/authkeys/templates/authkeys/list.html:14
 msgid "Create a new key"
@@ -2221,9 +2217,8 @@ msgstr "Mais sobre esta demonstração pelo autor"
 
 # 100%
 #: kuma/demos/templates/demos/detail.html:207
-#, fuzzy
 msgid "About this Demo"
-msgstr "Remover esta demonstração?"
+msgstr "Sobre esta demonstração"
 
 #: kuma/demos/templates/demos/detail.html:209
 msgid ""
@@ -2282,9 +2277,8 @@ msgid "presents"
 msgstr "apresenta"
 
 #: kuma/demos/templates/demos/devderby_landing.html:25
-#, fuzzy
 msgid "Dev Derby has ended"
-msgstr "Regras Dev Derby"
+msgstr "O Dev Derby terminou"
 
 #: kuma/demos/templates/demos/devderby_landing.html:27
 msgid ""
@@ -2404,9 +2398,8 @@ msgstr "Executar"
 
 #: kuma/demos/templates/demos/home.html:106
 #: kuma/demos/templates/demos/home.html:107
-#, fuzzy
 msgid "Search demos"
-msgstr "Procurar na documentação"
+msgstr "Pesquisar demonstrações"
 
 #: kuma/demos/templates/demos/home.html:111
 msgid "<b>or</b>"
@@ -2555,7 +2548,6 @@ msgid "Preparing Your Demo"
 msgstr "A preparar a sua demonstração"
 
 #: kuma/demos/templates/demos/submit.html:120
-#, fuzzy
 msgid ""
 "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> "
 "<li>The main page of your demo should be a file named "
@@ -2571,14 +2563,15 @@ msgstr ""
 "<ul> <li>O código fonte da sua demonstração deve estar empacotado num "
 "ficheiro ZIP.</li> <li>A página principal da sua demonstração deve ser um "
 "ficheiro com o nome <code>index.html</code> na raiz do ZIP.</li> <li>A sua "
-"demonstração deve ser construída numa tecnologia do lado do cliente (HTML, "
-"CSS, JavaScript). Tecnologias de servidor como PHP e Ruby não são "
+"demonstração deve ser construída numa tecnologia cliente (HTML, CSS, "
+"JavaScript). Tecnologias de servidor como PHP e Ruby não são "
 "suportadas.</li> <li>Se a sua demonstração necessitar de recursos externos, "
 "deve utilizar AJAX para aceder aos mesmos.</li> <li>Para submeter a sua "
-"demonstração, necessita de uma <a href=\"%(signup_url)s\">conta "
-"MDN</a>.</li> <li>Por favor indique na caixa de detalhes qualquer conteúdo "
-"de terceiros que não possa ser licenciado sob a licença CC-BY-SA e inclua "
-"ligações para os sites web dos autores.</li> </ul>"
+"demonstração, necessita de um <a href=\"%(signup_url)s\">perfil "
+"MDN</a>.</li> <li>Por favor identifique na caixa de detalhes da demonstração"
+" quaisquer conteúdos de terceiros que não possam ser licenciados sob a "
+"licença CC-BY-SA e inclua ligações para os sítios web dos autores.</li> "
+"</ul>"
 
 # 100%
 #: kuma/demos/templates/demos/submit.html:133
@@ -2701,13 +2694,12 @@ msgstr ""
 "ligações para os sites dos respetivos autores.</li> </ul>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:61
-#, fuzzy
 msgid ""
 "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN "
 "profile</a></strong>.</p>"
 msgstr ""
-"<p>Para enviar uma demonstração, irá necessitar de <strong><a "
-"href=\"%(signup_url)s\">uma conta MDN</a></strong>.</p>"
+"<p>Para enviar uma demonstração, irá necessitar de um <strong><a "
+"href=\"%(signup_url)s\">perfil MDN</a></strong>.</p>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:66
 #, fuzzy
