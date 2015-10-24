@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-24 16:01+0000\n"
+"PO-Revision-Date: 2015-10-24 17:01+0000\n"
 "Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_PT\n"
@@ -3946,16 +3946,21 @@ msgid ""
 "inside this email. Please contact us if you do not receive it within a few "
 "minutes."
 msgstr ""
+"Enviámos um e-mail de confirmação para si. Por favor, clique na ligação "
+"fornecida dentro deste e-mail. Por favor, contacte-nos caso não receba a "
+"mensagem dentro de alguns minutos."
 
 #: kuma/users/templates/account/verified_email_required.html:17
 msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
 "email address</a>."
 msgstr ""
+"<strong>Nota:</strong> pode ainda <a href=\"%(email_url)s\">alterar o seu "
+"endereço de e-mail</a>."
 
 #: kuma/users/templates/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "Nota"
 
 #: kuma/users/templates/account/snippets/already_logged_in.html:1
 msgid "you are already logged in as %(user_display)s."
@@ -3964,29 +3969,30 @@ msgstr "já tem sessão iniciada como %(user_display)s."
 #: kuma/users/templates/openid/login.html:3
 #: kuma/users/templates/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "Início de sessão com o OpenID"
 
 #: kuma/users/templates/socialaccount/authentication_error.html:3
 #: kuma/users/templates/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Falha do início de sessão na conta"
 
 #: kuma/users/templates/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
-msgstr ""
+msgstr "Ocorreu um erro ao tentar iniciar sessão com a sua conta."
 
 #: kuma/users/templates/socialaccount/connections.html:3
 msgid "Account Connections"
-msgstr ""
+msgstr "Ligações da Conta"
 
 #: kuma/users/templates/socialaccount/connections.html:6
 #: kuma/users/templates/users/user_detail.html:61
 msgid "Account connections"
-msgstr ""
+msgstr "Ligações da conta"
 
 #: kuma/users/templates/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
 msgstr ""
+"Pode iniciar sessão para o seu perfil utilizando qualquer um dos seguintes:"
 
 #: kuma/users/templates/socialaccount/connections.html:50
 msgid "Disconnect"
@@ -4003,7 +4009,7 @@ msgstr "Ligar uma nova conta"
 #: kuma/users/templates/socialaccount/login_cancelled.html:3
 #: kuma/users/templates/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Autenticação cancelada"
 
 #: kuma/users/templates/socialaccount/login_cancelled.html:9
 msgid ""
@@ -4011,6 +4017,9 @@ msgid ""
 "accounts. If this was a mistake, please proceed to <a "
 "href=\"%(login_url)s\">sign in</a>."
 msgstr ""
+"Decidiu cancelar o início de sessão no nosso sítio utilizando uma das suas "
+"contas existentes. Se isto foi um erro, por favor continue para o <a "
+"href=\"%(login_url)s\">início de sessão</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:4
 #: kuma/users/templates/socialaccount/signup.html:26
@@ -4023,6 +4032,9 @@ msgid ""
 " MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
 "your social account connections.</a>"
 msgstr ""
+"Já existe uma perfil com este endereço de e-mail. Para ligar o Persona ao "
+"seu perfil MDN, <a href=\"%(connections_url)s\">precisa de iniciar sessão e "
+"visitar as ligações para contas sociais.</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:43
 msgid ""
@@ -4036,13 +4048,21 @@ msgid_plural ""
 "=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, connect "
 "with my MDN profile</a>"
 msgstr[0] ""
+"Já existe um perfil com o endereço de e-mail abaixo. Já tem um perfil MDN? "
+"<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Sim, ligar ao meu perfil MDN</a>"
 msgstr[1] ""
+"Já existe um perfil com um destes endereços de e-mail abaixo. Já tem um "
+"perfil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\""
+" data-next=\"%(persona_next_url)s\">Sim, ligar ao meu perfil MDN</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:55
 msgid ""
 "Thanks for signing in to MDN with %(provider_name)s. You have one more step "
 "to join MDN: <strong>create your MDN profile</strong>."
 msgstr ""
+"Obrigado por iniciar sessão com a MDN com o %(provider_name)s. Falta apenas "
+"mais um passo para se juntar à MDN: <strong>criar o seu perfil MDN</strong>."
 
 #: kuma/users/templates/socialaccount/signup.html:61
 msgid ""
@@ -4060,6 +4080,9 @@ msgid ""
 "username will be displayed on MDN to identify any contributions (edits, "
 "demos, etc.) that you make."
 msgstr ""
+"Para configurar o seu perfil MDN, por favor <strong>escolha um nome de "
+"utilizador</strong>. O seu nome de utilizador será apresentado na MDN para "
+"identificar quaisquer contribuições (edições, demonstrações, etc.) que faça."
 
 #: kuma/users/templates/socialaccount/signup.html:74
 msgid ""
@@ -4067,6 +4090,10 @@ msgid ""
 "address</strong>. Your username will be displayed on MDN to identify any "
 "contributions (edits, demos, etc.) that you make."
 msgstr ""
+"Para configurar o seu perfil MDN, por favor <strong>escolha um nome de "
+"utilizador e endereço de e-mail</strong>. O seu nome de utilizador será "
+"apresentado na MDN para identificar quaisquer contribuições (edições, "
+"demonstrações, etc.) que faça."
 
 #: kuma/users/templates/socialaccount/signup.html:82
 msgid ""
@@ -4082,6 +4109,8 @@ msgstr ""
 msgid ""
 "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr ""
+"O seu nome de utilizador do GitHub %(username)s já está a ser utilizado. Por"
+" favor, escolha outro."
 
 #: kuma/users/templates/socialaccount/signup.html:111
 msgid ""
@@ -4098,6 +4127,10 @@ msgid ""
 "next=\"%(persona_next_url)s\">Connect your %(provider_name)s account to "
 "it.</a>"
 msgstr ""
+"Já existe um perfil com o endereço de e-mail selecionado. <a "
+"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Associe a sua conta %(provider_name)s ao "
+"mesmo</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:155
 msgid ""
@@ -4106,6 +4139,10 @@ msgid ""
 "and will be used according to our <a href=\"{privacy_url}\">privacy "
 "policy</a>."
 msgstr ""
+"Que endereço de e-mail devemos utilizar para lhe enviar mensagens e "
+"notificações relacionadas com a MDN? Este endereço <strong>não</strong> será"
+" apresentado publicamente na MDN e será utilizado de acordo com a nossa <a "
+"href=\"{privacy_url}\">política de privacidade</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:170
 msgid ""
@@ -4137,7 +4174,7 @@ msgstr "Iniciar sessão com o Persona"
 
 #: kuma/users/templates/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "Ligar com o GitHub"
 
 #: kuma/users/templates/socialaccount/snippets/provider_list.html:31
 msgid "Sign in with GitHub"
@@ -4276,6 +4313,7 @@ msgstr "Ver perfil"
 #: kuma/users/templates/users/user_edit.html:52
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr ""
+"Está a editar com um perfil diferente do seu. Tenha isso em consideração!"
 
 #: kuma/users/templates/users/user_edit.html:63
 msgid ""
@@ -4283,10 +4321,13 @@ msgid ""
 "new features first and we send the occasional email asking for help testing "
 "specific things."
 msgstr ""
+"Adoraríamos receber os seus comentários sobre alterações no sítio! Os beta "
+"testers têm acesso privilegiado a novas funcionalidades e enviamos mensagens"
+" ocasionais pedindo que testem coisas específicas."
 
 #: kuma/users/templates/users/user_edit.html:66
 msgid "Primary Email"
-msgstr ""
+msgstr "E-mail principal"
 
 # 100%
 #: kuma/users/templates/users/user_edit.html:67
@@ -4336,11 +4377,11 @@ msgstr "Alterar"
 
 #: kuma/users/templates/users/user_edit.html:112
 msgid "Use your Persona account to sign in."
-msgstr ""
+msgstr "Utilize a sua conta Persona para iniciar sessão."
 
 #: kuma/users/templates/users/user_edit.html:132
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "Utilize a sua conta GitHub para iniciar sessão."
 
 #: kuma/users/templates/users/user_edit.html:153
 #: kuma/users/templates/users/user_edit.html:161
@@ -4358,12 +4399,17 @@ msgid ""
 "Network (MDN)</a> - a community making great resources for developers like "
 "you."
 msgstr ""
+"Obrigado por criar um perfil na <a href=\"%(mdn_link)s\">Rede de "
+"Programadores da Mozilla (MDN)</a> - uma comunidade que faz excelentes "
+"recursos para programadores como você."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:16
 msgid ""
 "You've completed the first step of <a href=\"%(started_link)s\">Getting "
 "Started on MDN</a> by creating a profile."
 msgstr ""
+"Concluiu o primeiro passo para <a href=\"%(started_link)s\">começar na "
+"MDN</a> criando um perfil."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:21
 msgid ""
@@ -4373,21 +4419,30 @@ msgid ""
 "href=\"%(both_link)s\">like both words and code</a>, or you want to <a "
 "href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
+"Agora, continue escolhendo e concluindo uma tarefa na MDN! Temos uma série "
+"de tarefas introdutórias que pode escolher, quer <a "
+"href=\"%(words_link)s\">goste de palavras</a>, <a "
+"href=\"%(code_link)s\">goste de código</a>, <a href=\"%(both_link)s\">goste "
+"tanto de palavras como de código</a> ou se quiser <a "
+"href=\"%(translate_link)s\">traduzir a MDN para o seu idioma</a>."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr ""
+msgstr "Fale connosco!"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:35
 msgid ""
 "Want to talk to someone about MDN? There are a few ways you can do that:"
 msgstr ""
+"Quer falar com alguém sobre a MDN? Existem algumas coisas que pode fazer:"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:38
 msgid ""
 "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what "
 "you're interested in on MDN and ask questions about the site."
 msgstr ""
+"Lista de discussão: <a href=\"%(list_link)s\">subscreva</a> para nos dizer "
+"quais são os seus interesses na MDN e nos colocar questões sobre o sítio."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:43
 msgid ""
@@ -4397,12 +4452,21 @@ msgid ""
 "Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
+"Chat em tempo real: <a href=\"%(channel_link)s\">canal #mdn no "
+"irc.mozilla.org</a>. (Obter mais informação sobre o <a "
+"href=\"%(irc_link)s\">IRC</a>.) Lá, pode encontrar os administradores da "
+"equipa editorial: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will "
+"Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) e eu "
+"(jms), gestor da comunidade MDN."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:51
 msgid ""
 "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for "
 "the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 msgstr ""
+"Blogue: No blogue <a href=\"%(blog_link)s\">about:community</a>, procure "
+"pelos artigos marcados com <a href=\"%(tagged_link)s\">Developer "
+"Engagement</a>."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/html.ltxt:59
@@ -4411,6 +4475,8 @@ msgid ""
 "Don't be shy, if you have any doubt, problems, questions: contact us! We are"
 " here to help."
 msgstr ""
+"Não seja tímido, se tiver qualquer dúvida, problema, questões: contacte-nos!"
+" Estamos aqui para ajudar."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:3
@@ -4423,6 +4489,8 @@ msgid ""
 "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a "
 "community making great resources for developers like you."
 msgstr ""
+"Obrigado por criar um perfil na Rede de Programadores da Mozilla (MDN) -- "
+"uma comunidade que faz excelentes recursos para programadores como você."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:12
@@ -4431,6 +4499,9 @@ msgid ""
 "profile. Now, keep going by picking a task on MDN, and doing it! We have a "
 "bunch of intro tasks you can choose based on your interests."
 msgstr ""
+"Ao criar um perfil na MDN, concluiu o primeiro passo para começar. Agora, "
+"continue escolhendo e terminando uma tarefa na MDN! Temos um conjunto de "
+"tarefas introdutórias que pode escolher com base nos seus interesses."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:19
@@ -4440,17 +4511,17 @@ msgstr "Gosta de palavras?"
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:23
 msgid "Like code?"
-msgstr ""
+msgstr "Gosta de código?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:27
 msgid "Like both words and code?"
-msgstr ""
+msgstr "Gosta de palavras e de código?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:31
 msgid "Want to translate MDN to your language?"
-msgstr ""
+msgstr "Quer traduzir a MDN para o seu idioma?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
@@ -4464,10 +4535,18 @@ msgid ""
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. "
 "* Blog: %(blog_link)s"
 msgstr ""
+"Quer falar com alguém sobre a MDN? Eis algumas formas para o fazer: * Listas"
+" de discussão: %(list_link)s Subscreva para nos dizer quais os seus "
+"interesses na MDN e colocar questões sobre o sítio. * Chat em tempo real: "
+"canal #mdn no irc.mozilla.org (Consulte %(irc_link)s para mais informações "
+"sobre o IRC.) Aqui pode encontrar os administradores editoriais da MDN: Eric"
+" Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), "
+"Florian Scholz (fscholz), Chris Mills (chrismills) e eu (jms), o gestor da "
+"comunidade MDN. * Blogue: %(blog_link)s"
 
 #: kuma/wiki/apps.py:54
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:205
 msgid "Technical - code samples, APIs, or technologies"
@@ -4479,7 +4558,7 @@ msgstr "Editorial - prosa, gramática ou conteúdo"
 
 #: kuma/wiki/constants.py:211
 msgid "Localization in progress - not completely translated yet."
-msgstr ""
+msgstr "Progresso da tradução - tradução incompleta."
 
 #: kuma/wiki/content.py:693
 msgid "Edit section"
@@ -4852,6 +4931,8 @@ msgid ""
 "Indexing {total} documents into {n} chunks of size {size} into index "
 "{index}."
 msgstr ""
+"A indexar {total} documentos em {n} pedaços com o tamanho de {size} para o "
+"índice {index}."
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:4
 msgid "Compare Revisions | {document}"
@@ -5075,6 +5156,8 @@ msgid ""
 "This translation is incomplete. Please help <a "
 "href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
+"Esta tradução não está completa. Por favor ajude a <a "
+"href=\"%(translate_url)s\">traduzir este artigo</a> a partir do Inglês."
 
 #: kuma/wiki/templates/wiki/document.html:310
 msgid "This translation is in progress."
@@ -5171,15 +5254,15 @@ msgstr "Idade máxima da renderização:"
 
 #: kuma/wiki/templates/wiki/edit.html:117
 msgid "Days"
-msgstr ""
+msgstr "Dias"
 
 #: kuma/wiki/templates/wiki/edit.html:121
 msgid "Hours"
-msgstr ""
+msgstr "Horas"
 
 #: kuma/wiki/templates/wiki/edit.html:125
 msgid "Minutes"
-msgstr ""
+msgstr "Minutos"
 
 #: kuma/wiki/templates/wiki/edit.html:134
 msgid ""
@@ -5247,26 +5330,32 @@ msgid ""
 "Please specify the new location for this page by filling out the fields "
 "below. Be sure your new destination follows these rules:"
 msgstr ""
+"Por favor especifique o novo endereço para esta página preenchendo os campos"
+" abaixo. Confirme que o novo destino segue as seguintes regras:"
 
 #: kuma/wiki/templates/wiki/move.html:22
 msgid ""
 "Make sure the location you specify is located immediately under an existing "
 "page."
 msgstr ""
+"Confirme que o endereço que especificar está localizado imediatamente abaixo"
+" de uma página existente."
 
 #: kuma/wiki/templates/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
-msgstr ""
+msgstr "Não inclua o esquema da URL (\"https://\")."
 
 #: kuma/wiki/templates/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "Introduza apenas a parte seguinte da URL \"/docs/\"."
 
 #: kuma/wiki/templates/wiki/move.html:25
 msgid ""
 "Don't include a trailing slash (this will be removed for you if you include "
 "it, but you should leave it out)."
 msgstr ""
+"Não inclua a barra diagonal (isto será removido para si se a incluir, mas "
+"não a deve incluir)."
 
 #: kuma/wiki/templates/wiki/move.html:31
 msgid ""
@@ -5280,6 +5369,8 @@ msgid ""
 "Please try a different destination slug. <strong>Double check to be sure "
 "you're trying to move to the right place!</strong>"
 msgstr ""
+"Por favor experimente um slug de destino diferente. <strong>Confirme que "
+"está a tentar mover para o sítio correto!</strong>"
 
 #: kuma/wiki/templates/wiki/move.html:54
 msgid "Current Slug:"
@@ -5348,7 +5439,7 @@ msgstr "Revisão"
 
 #: kuma/wiki/templates/wiki/revision.html:11
 msgid "of"
-msgstr ""
+msgstr "de"
 
 #: kuma/wiki/templates/wiki/revision.html:14
 msgid "Revision Information"
@@ -5423,7 +5514,7 @@ msgstr "Versão {locale} aprovada"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Rendered"
-msgstr ""
+msgstr "Vista renderizada"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Source"
@@ -5447,7 +5538,7 @@ msgstr "Traduzir etiquetas"
 
 #: kuma/wiki/templates/wiki/translate.html:118
 msgid "English tags"
-msgstr ""
+msgstr "Etiquetas em Inglês"
 
 #: kuma/wiki/templates/wiki/translate.html:130
 msgid "This document has no tags."
@@ -5520,7 +5611,7 @@ msgstr "Adicionar uma tradução"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:43
 msgid "Updating subscription status"
-msgstr ""
+msgstr "A atualizar o estado da subscrição"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
 #: kuma/wiki/templates/wiki/includes/buttons.html:47
@@ -5548,11 +5639,11 @@ msgstr "Subscrever à versão em {language}"
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
 #: kuma/wiki/templates/wiki/includes/buttons.html:56
 msgid "Unsubscribe from {language} version"
-msgstr ""
+msgstr "Anular subscrição da versão {language}"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
 msgid "You are now subscribed to the {language} version of this article."
-msgstr ""
+msgstr "Está agora subscrito à versão {language} deste artigo."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
 msgid ""
@@ -5614,6 +5705,8 @@ msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
 msgstr ""
+"O servidor está a renderizar a comparação de conteúdo. Por favor atualize a "
+"página dentro de alguns minutos."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:99
 msgid "Share:"
@@ -5621,7 +5714,7 @@ msgstr "Partilhar:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:103
 msgid "Google+"
-msgstr ""
+msgstr "Google+"
 
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/templates/wiki/includes/translate_description.html:50
@@ -5654,8 +5747,8 @@ msgstr "Ocultar informação de erro"
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Mais informação sobre este erro"
+msgstr[1] "Mais informação sobre estes erros"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:19
 msgid ""
@@ -5663,14 +5756,18 @@ msgid ""
 "href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
 "troubleshooting guide</a> as a starting point."
 msgstr ""
+"Qualquer pessoa com um perfil MDN pode editar um documento para corrigir um "
+"erro. Utilize o <a "
+"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">guia de "
+"diagnósticos KumaScript</a> como um ponto de partida."
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
 msgid "Error type:"
-msgstr ""
+msgstr "Tipo de erro:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:40
 msgid "In macro:"
-msgstr ""
+msgstr "Na macro:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:44
 msgid "Create Template"
@@ -5682,7 +5779,7 @@ msgstr "Editar modelo"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
 msgid "Parsing macro:"
-msgstr ""
+msgstr "Macro de análise:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
 msgid "Edit Document"
@@ -5690,7 +5787,7 @@ msgstr "Editar documento"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:54
 msgid "Full text of error:"
-msgstr ""
+msgstr "Texto completo do erro:"
 
 #: kuma/wiki/templates/wiki/includes/more_help.html:4
 msgid "Couldn't find what you were looking for?"
