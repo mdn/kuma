@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-08-18 00:52+0000\n"
-"Last-Translator: Théo <theo.chevalier11@gmail.com>\n"
+"PO-Revision-Date: 2015-10-24 08:41+0000\n"
+"Last-Translator: sphinx_knight <sphinx_knight@hotmail.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -3457,7 +3457,7 @@ msgstr "Les domaines d'expertise doivent être un sous-ensemble des intérêts"
 
 #: kuma/users/forms.py:274
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Ce champ de saisie ne peut rester vide."
 
 #: kuma/users/forms.py:280
 msgid "Username already in use."
@@ -3492,9 +3492,8 @@ msgid "Language"
 msgstr "Langue"
 
 #: kuma/users/models.py:56
-#, fuzzy
 msgid "Homepage"
-msgstr "Accueil"
+msgstr "Page d'accueil"
 
 #: kuma/users/models.py:60
 msgid ""
@@ -3534,33 +3533,31 @@ msgstr "Étiquettes"
 
 #: kuma/users/models.py:102
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Saisissez une adresse URL valide."
 
 #: kuma/users/models.py:107
-#, fuzzy
 msgid "Enter a valid Twitter URL."
-msgstr "Veuillez saisir une URL twitter.com."
+msgstr "Saisissez l'adresse URL d'un compte Twitter valide."
 
 #: kuma/users/models.py:112
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Saisissez l'adresse URL d'un compte GitHub valide."
 
 #: kuma/users/models.py:117
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Saisissez l'adresse URL d'un compte StackOverflow valide."
 
 #: kuma/users/models.py:122
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Saisissez l'adresse URL d'un compte LinkedIn valide."
 
 #: kuma/users/models.py:127
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Saisissez l'adresse URL d'un compte Mozillians valide."
 
 #: kuma/users/models.py:132
-#, fuzzy
 msgid "Enter a valid Facebook URL."
-msgstr "Veuillez saisir une URL facebook.com."
+msgstr "Saisissez l'adresse URL d'un compte Facebook valide."
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
@@ -4139,9 +4136,8 @@ msgid "Areas of Expertise"
 msgstr "Domaines d'expertise"
 
 #: kuma/users/templates/users/user_detail.html:108
-#, fuzzy
 msgid "Member since %(date_joined)s"
-msgstr "Membre depuis {date}"
+msgstr "Membre depuis %(date_joined)s"
 
 #: kuma/users/templates/users/user_detail.html:159
 msgid "Subscribe to a feed of {display_name}'s demos"
@@ -4457,9 +4453,8 @@ msgstr ""
 "%(blog_link)s"
 
 #: kuma/wiki/apps.py:54
-#, fuzzy
 msgid "Wiki"
-msgstr "Wiki des applications"
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:205
 msgid "Technical - code samples, APIs, or technologies"
@@ -4958,9 +4953,8 @@ msgstr "Créer un nouveau {title}"
 # 75%
 # 100%
 #: kuma/wiki/templates/wiki/create.html:30
-#, fuzzy
 msgid "Create a"
-msgstr "Créer"
+msgstr "Créer un"
 
 #: kuma/wiki/templates/wiki/create.html:30
 msgid "New Document"
@@ -5168,9 +5162,8 @@ msgstr "Vos modifications"
 #: kuma/wiki/templates/wiki/edit.html:38 kuma/wiki/templates/wiki/edit.html:46
 #: kuma/wiki/templates/wiki/includes/document_macros.html:41
 #: kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy
 msgid "Revision {id} by <a href=\"{user_profile_url}\">{user}</a> on {date}"
-msgstr "Révision {id} par {user} le {date}"
+msgstr "Révision {id} par <a href=\"{user_profile_url}\">{user}</a> le {date}"
 
 #: kuma/wiki/templates/wiki/edit.html:43
 msgid "Current Revision:"
@@ -5599,28 +5592,24 @@ msgid ""
 msgstr "Vous n'êtes plus abonné(e) à la version en {language} de cet article."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "New sub-article"
-msgstr "Nouvel article"
+msgstr "Nouvel article sous celui-ci"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:64
-#, fuzzy
 msgid "Clone this article"
-msgstr "Dupliquer cette page"
+msgstr "Dupliquer cet article"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:67
-#, fuzzy
 msgid "Move this article"
-msgstr "Déplacer cette page"
+msgstr "Déplacer cet article"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr "Afficher dans l'admin"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:78
-#, fuzzy
 msgid "Delete this article"
-msgstr "Supprimer cette page"
+msgstr "Supprimer cet article"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -5631,9 +5620,8 @@ msgid "Convert to content zone"
 msgstr "Transformer en zone de contenu"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:88
-#, fuzzy
 msgid "Print this article"
-msgstr "Imprimer cette page"
+msgstr "Imprimer cet article"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -5659,6 +5647,8 @@ msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
 msgstr ""
+"Le serveur est en train de procéder à la comparaison des contenus. Veuillez "
+"réactualiser cette page dans quelques minutes."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:99
 msgid "Share:"
@@ -5929,6 +5919,9 @@ msgid ""
 "Document already exists. Note: You cannot revert a document that has been "
 "moved until you delete its redirect."
 msgstr ""
+"Ce document existe déjà. Remarque : vous ne pouvez pas rétablir une version "
+"d'un document qui a été déplacé tant que vous n'avez pas supprimé sa "
+"redirection."
 
 #: kuma/wiki/views/document.py:580
 msgid "Redirected from %(url)s"
@@ -6208,14 +6201,12 @@ msgid "Feedback"
 msgstr "Votre avis"
 
 #: templates/base.html:168
-#, fuzzy
 msgid "Get Firefox help"
-msgstr "Recherche dans l'aide de Firefox"
+msgstr "Demander de l'aide pour Firefox"
 
 #: templates/base.html:169
-#, fuzzy
 msgid "Get web development help"
-msgstr "Tous les outils de développement web"
+msgstr "Demander de l'aide pour le développement web"
 
 #: templates/base.html:172
 msgid "Join the MDN community"
@@ -6230,19 +6221,14 @@ msgid "Report a bug"
 msgstr "Signaler un bug"
 
 #: templates/base.html:200
-#, fuzzy
 msgid ""
 "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual "
 "contributors.</p> <p>Content is available under <a "
 "href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
-"<bdi>&copy; 2005-%(thisyear)s Mozilla Developer Network et contributeurs "
-"individuels<br /> Le contenu est disponible sous <a "
-"href=\"%(copyright_url)s\">ces licences</a> &middot; <a "
-"href=\"%(about_url)s\">À propos de MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Contribuer au code</a> &middot; <a "
-"href=\"//www.mozilla.org/privacy/websites/\">Politique de "
-"confidentialité</a></bdi>"
+"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network et contributeurs "
+"individuels.</p> <p>Tous les contenus sont disponibles sous <a "
+"href=\"%(copyright_url)s\">ces licences</a>.</p>"
 
 #: templates/base.html:205
 msgid "About MDN"
@@ -6250,16 +6236,15 @@ msgstr "À propos de MDN"
 
 #: templates/base.html:206
 msgid "Terms"
-msgstr ""
+msgstr "Conditions d'utilisation"
 
 #: templates/base.html:207
-#, fuzzy
 msgid "Privacy"
-msgstr "Politique de confidentialité"
+msgstr "Confidentialité"
 
 #: templates/base.html:208
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: templates/base.html:209
 msgid "Contribute to the code"
