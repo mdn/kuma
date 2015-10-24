@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-24 14:27+0000\n"
+"PO-Revision-Date: 2015-10-24 15:00+0000\n"
 "Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_PT\n"
@@ -2702,18 +2702,16 @@ msgstr ""
 "href=\"%(signup_url)s\">perfil MDN</a></strong>.</p>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:66
-#, fuzzy
 msgid "Log In to Profile"
-msgstr "Entrar na conta"
+msgstr "Iniciar sessão no Perfil"
 
 #: kuma/demos/templates/demos/terms.html:10
 msgid "Terms for Contributors"
 msgstr "Termos para colaboradores"
 
 #: kuma/demos/templates/demos/terms.html:20
-#, fuzzy
 msgid "Demo Studio: Terms for Contributors"
-msgstr "Termos para colaboradores"
+msgstr "Demo Studio: Termos para Colaboradores"
 
 #: kuma/demos/templates/demos/terms.html:107
 msgid "Rights Representation Details"
@@ -2817,9 +2815,8 @@ msgid "Go to the first page"
 msgstr "Ir para a primeira página"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:58
-#, fuzzy
 msgid "First"
-msgstr "1º lugar"
+msgstr "Primeiro"
 
 # 100%
 #: kuma/demos/templates/demos/elements/submission_listing.html:61
@@ -2852,9 +2849,8 @@ msgid "Launch {title}"
 msgstr "Executar {title}"
 
 #: kuma/demos/templates/demos/elements/user_link.html:2
-#, fuzzy
 msgid "See %(display_name)s's profile"
-msgstr "Ver perfil de {display_name}"
+msgstr "Consultar perfil de %(display_name)s"
 
 #: kuma/landing/templates/landing/fellowship.html:12
 msgid ""
@@ -2883,9 +2879,8 @@ msgid "Search the docs"
 msgstr "Procurar na documentação"
 
 #: kuma/landing/templates/landing/homepage.html:57
-#, fuzzy
 msgid "Show topics"
-msgstr "Mostrar comparação"
+msgstr "Mostrar tópicos"
 
 #: kuma/landing/templates/landing/homepage.html:78
 msgid "Web Technologies"
@@ -2921,9 +2916,8 @@ msgid "more..."
 msgstr "mais..."
 
 #: kuma/landing/templates/landing/homepage.html:91
-#, fuzzy
 msgid "Mozilla<br> Docs"
-msgstr "Mozillians"
+msgstr "Documentação <br>Mozilla"
 
 # メインページ, スライド4 - タイトル
 # 100%
@@ -2991,9 +2985,8 @@ msgid "Open Web and Mobile"
 msgstr "Web aberta e móvel"
 
 #: kuma/landing/templates/landing/homepage.html:125
-#, fuzzy
 msgid "Learn Web Development"
-msgstr "Programação Web"
+msgstr "Aprender Programação Wev"
 
 #: kuma/landing/templates/landing/homepage.html:128
 msgid "Get The Browser For Developers Like You"
@@ -3004,9 +2997,8 @@ msgid "Celebrate ten years of documenting your Web."
 msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:136
-#, fuzzy
 msgid "Build Open Web Apps"
-msgstr "Aplicações Web Abertas"
+msgstr "Construir Aplicações Web Abertas"
 
 #: kuma/landing/templates/landing/homepage.html:145
 msgid ""
@@ -3021,17 +3013,16 @@ msgid "Get Involved"
 msgstr "Envolva-se"
 
 #: kuma/landing/templates/landing/homepage.html:152
-#, fuzzy
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span "
 "class=\"number\">%(contributors)s</span> contributors</span> <span "
 "class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<span class=\"row1\">Junte-se a <span class=\"number\">3414</span> "
-"colaboradores</span> <span class=\"row2\">em <span "
-"class=\"number\">31</span> idiomas e localizações</span> <span "
-"class=\"row3\">à volta do mundo.</span>"
+"<p class=\"numbers\"><span class=\"row1\">Junte-se a <span "
+"class=\"number\">%(contributors)s</span> colaboradores</span> <span "
+"class=\"row2\">em <span class=\"number\">%(locales)s</span> idiomas e "
+"localizações</span> <span class=\"row3\">à volta do mundo.</span></p>"
 
 #: kuma/landing/templates/landing/homepage.html:159
 #: kuma/landing/templates/landing/homepage.html:166
@@ -3321,12 +3312,11 @@ msgstr ""
 "dentro de alguns minutos."
 
 #: kuma/search/utils.py:17
-#, fuzzy
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
 msgstr ""
-"A pesquisa está temporariamente indisponível. Por favor tente novamente "
+"Algo correu mal com a expressão de pesquisa. Por favor tente novamente "
 "dentro de alguns minutos."
 
 #: kuma/search/templates/search/down.html:5
@@ -3365,7 +3355,6 @@ msgstr[1] ""
 "%(count)s documentos encontrados para \"%(query)s\" em %(locale_native)s."
 
 #: kuma/search/templates/search/results.html:80
-#, fuzzy
 msgid ""
 "%(count)s document found for \"%(query)s\" in %(locale_native)s and "
 "%(default_locale_native)s."
@@ -3373,9 +3362,11 @@ msgid_plural ""
 "%(count)s documents found for \"%(query)s\" in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
-"%(count)s documento encontrado para \"%(query)s\" em %(locale_native)s."
+"%(count)s documento encontrado para \"%(query)s\" em %(locale_native)s e "
+"%(default_locale_native)s."
 msgstr[1] ""
-"%(count)s documentos encontrados para \"%(query)s\" em %(locale_native)s."
+"%(count)s documentos encontrados para \"%(query)s\" em %(locale_native)s e "
+"%(default_locale_native)s."
 
 #: kuma/search/templates/search/results.html:88
 msgid "%(count)s document found in %(locale_native)s."
@@ -3384,14 +3375,17 @@ msgstr[0] "%(count)s documento encontrado em %(locale_native)s."
 msgstr[1] "%(count)s documentos encontrados em %(locale_native)s."
 
 #: kuma/search/templates/search/results.html:94
-#, fuzzy
 msgid ""
 "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural ""
 "%(count)s documents found in %(locale_native)s and "
 "%(default_locale_native)s."
-msgstr[0] "%(count)s documento encontrado em %(locale_native)s."
-msgstr[1] "%(count)s documentos encontrados em %(locale_native)s."
+msgstr[0] ""
+"%(count)s documento encontrado em %(locale_native)s e "
+"%(default_locale_native)s."
+msgstr[1] ""
+"%(count)s documentos encontrados em %(locale_native)s e "
+"%(default_locale_native)s."
 
 #: kuma/search/templates/search/results.html:104
 msgid "%(count)s document found for \"%(query)s\"."
@@ -3406,18 +3400,16 @@ msgstr[0] "%(count)s documento encontrado."
 msgstr[1] "%(count)s documentos encontrados."
 
 #: kuma/search/templates/search/results.html:119
-#, fuzzy
 msgid "Showing all results."
-msgstr "A apresentar todos os resultados."
+msgstr "A mostrar todos os resultados."
 
 #: kuma/search/templates/search/results.html:121
 msgid "Showing results %(start)s to %(end)s."
 msgstr ""
 
 #: kuma/search/templates/search/results.html:127
-#, fuzzy
 msgid "Search again in %(default_locale_native)s only"
-msgstr "Pesquisar novamente em %(default_locale_native)s"
+msgstr "Pesquisar novamente apenas em %(default_locale_native)s"
 
 #: kuma/search/templates/search/results.html:176
 msgid "Filter by"
@@ -3465,12 +3457,11 @@ msgid "hash"
 msgstr "hash"
 
 #: kuma/users/constants.py:4
-#, fuzzy
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr ""
-"O nome de utilizador apenas pode conter letras, números e os carateres "
-"./-/_."
+"O nome de utilizador apenas pode conter letras, números e estes caracteres: "
+". - _ +"
 
 #: kuma/users/forms.py:22
 msgid "You must agree to the privacy policy."
@@ -3566,9 +3557,8 @@ msgid "This field cannot be blank."
 msgstr ""
 
 #: kuma/users/forms.py:280
-#, fuzzy
 msgid "Username already in use."
-msgstr "É necessário um nome de utilizador."
+msgstr "O nome de utilizador já está a ser utilizado."
 
 #: kuma/users/helpers.py:37
 msgid "Banned on {ban_date} by {ban_admin}."
@@ -3599,9 +3589,8 @@ msgid "Language"
 msgstr "Idioma"
 
 #: kuma/users/models.py:56
-#, fuzzy
 msgid "Homepage"
-msgstr "Início"
+msgstr "Página inicial"
 
 #: kuma/users/models.py:60
 msgid ""
@@ -3643,9 +3632,8 @@ msgid "Enter a valid website URL."
 msgstr ""
 
 #: kuma/users/models.py:107
-#, fuzzy
 msgid "Enter a valid Twitter URL."
-msgstr "Por favor introduza uma URL do twitter.com."
+msgstr "Introduza um URL válido para o Twitter."
 
 #: kuma/users/models.py:112
 msgid "Enter a valid GitHub URL."
@@ -3664,9 +3652,8 @@ msgid "Enter a valid Mozillians URL."
 msgstr ""
 
 #: kuma/users/models.py:132
-#, fuzzy
 msgid "Enter a valid Facebook URL."
-msgstr "Por favor introduza uma URL do facebook.com."
+msgstr "Por favor introduza um URL válido para o Facebook."
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
@@ -3689,9 +3676,8 @@ msgstr ""
 "%(limit_value)s carateres ou menos."
 
 #: kuma/users/signup.py:13
-#, fuzzy
 msgid "You must agree to the terms of use."
-msgstr "Tem de concordar com a política de privacidade."
+msgstr "Deve concordar com os termos de utilização."
 
 #: kuma/users/tasks.py:37 kuma/users/templates/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
@@ -3715,45 +3701,39 @@ msgstr ""
 
 #: kuma/users/templates/account/account_inactive.html:3
 #: kuma/users/templates/account/account_inactive.html:7
-#, fuzzy
 msgid "Profile Inactive"
-msgstr "Perfil"
+msgstr "Perfil inativo"
 
 #: kuma/users/templates/account/account_inactive.html:9
-#, fuzzy
 msgid "This profile is inactive."
-msgstr "Esta conta está inativa."
+msgstr "Este perfil está inativo."
 
 #: kuma/users/templates/account/email.html:3
 #: kuma/users/templates/account/email.html:7
 #: kuma/users/templates/users/user_detail.html:63
-#, fuzzy
 msgid "Email addresses"
-msgstr "Endereço de email"
+msgstr "Endereços de e-mail"
 
 #: kuma/users/templates/account/email.html:11
 msgid "{email} is your <em>primary</em> email address"
 msgstr ""
 
 #: kuma/users/templates/account/email.html:15
-#, fuzzy
 msgid "You've also added the following email addresses:"
-msgstr "Foi banido pelas seguintes razões:"
+msgstr "Também adicionou os seguintes endereços:"
 
 #: kuma/users/templates/account/email.html:28
 msgid "Make Primary"
 msgstr ""
 
 #: kuma/users/templates/account/email.html:30
-#, fuzzy
 msgid "Re-send Confirmation"
-msgstr "Reenviar mensagem de correio eletrónico de confirmação"
+msgstr "Reenviar confirmação"
 
 # 100%
 #: kuma/users/templates/account/email.html:32
-#, fuzzy
 msgid "Remove"
-msgstr "Remover demonstração"
+msgstr "Remover"
 
 #: kuma/users/templates/account/email.html:45
 msgid ""
@@ -3762,18 +3742,15 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/account/email.html:49
-#, fuzzy
 msgid "Add email address"
-msgstr "Endereço de email"
+msgstr "Adicionar endereço de e-mail"
 
 #: kuma/users/templates/account/email.html:55
-#, fuzzy
 msgid "Add Email"
-msgstr "E-mail"
+msgstr "Adicionar e-mail"
 
 #: kuma/users/templates/account/email.html:60
 #: kuma/users/templates/socialaccount/connections.html:70
-#, fuzzy
 msgid "Edit profile"
 msgstr "Editar perfil"
 
@@ -3785,9 +3762,8 @@ msgstr ""
 #: kuma/users/templates/account/email_confirm.html:9
 #: kuma/users/templates/account/email_confirmed.html:3
 #: kuma/users/templates/account/email_confirmed.html:8
-#, fuzzy
 msgid "Confirm Email Address"
-msgstr "Alterar endereço de email"
+msgstr "Confirmar endereço de e-mail"
 
 #: kuma/users/templates/account/email_confirm.html:13
 msgid ""
@@ -3796,9 +3772,8 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/account/email_confirm.html:17
-#, fuzzy
 msgid "Confirm"
-msgstr "Confirmar senha"
+msgstr "Confirmar"
 
 #: kuma/users/templates/account/email_confirm.html:22
 msgid ""
@@ -3813,9 +3788,8 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/account/login.html:3
-#, fuzzy
 msgid "Sign In"
-msgstr "Terminar sessão"
+msgstr "Iniciar sessão"
 
 #: kuma/users/templates/account/login.html:11
 msgid "Please sign in"
@@ -3836,9 +3810,8 @@ msgid "Sign Out"
 msgstr "Terminar sessão"
 
 #: kuma/users/templates/account/logout.html:10
-#, fuzzy
 msgid "Are you sure you want to sign out?"
-msgstr "Tem a certeza que pretende continuar?"
+msgstr "Tem a certeza que pretende terminar sessão?"
 
 #: kuma/users/templates/account/password_change.html:3
 #: kuma/users/templates/account/password_change.html:8
@@ -3856,18 +3829,16 @@ msgid "Password Reset"
 msgstr "Reposição de senha"
 
 #: kuma/users/templates/account/password_reset.html:13
-#, fuzzy
 msgid ""
 "Forgotten your password? Enter your email address below, and we'll send you "
 "an email allowing you to reset it."
 msgstr ""
-"Esqueceu-se da sua senha? Introduza o seu endereço de email em baixo e "
-"iremos enviar-lhe as instruções para definir uma nova senha."
+"Esqueceu-se da sua palavra-passe? Introduza o seu endereço de e-mail abaixo "
+"e iremos enviar um e-mail que lhe permitirá repor a mesma."
 
 #: kuma/users/templates/account/password_reset.html:18
-#, fuzzy
 msgid "Reset My Password"
-msgstr "Repetir senha"
+msgstr "Repor a minha palavra-passe"
 
 #: kuma/users/templates/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
@@ -3886,20 +3857,17 @@ msgstr ""
 #: kuma/users/templates/account/password_set.html:3
 #: kuma/users/templates/account/password_set.html:7
 #: kuma/users/templates/account/password_set.html:12
-#, fuzzy
 msgid "Set Password"
-msgstr "Senha"
+msgstr "Definir palavra-passe"
 
 #: kuma/users/templates/account/signup.html:3
-#, fuzzy
 msgid "Signup"
-msgstr "Terminar sessão"
+msgstr "Registar"
 
 #: kuma/users/templates/account/signup.html:8
 #: kuma/users/templates/account/signup.html:18
-#, fuzzy
 msgid "Sign Up"
-msgstr "Terminar sessão"
+msgstr "Registar"
 
 #: kuma/users/templates/account/signup.html:10
 msgid ""
@@ -3908,9 +3876,8 @@ msgstr ""
 
 #: kuma/users/templates/account/signup_closed.html:3
 #: kuma/users/templates/account/signup_closed.html:7
-#, fuzzy
 msgid "Profile Creation Disabled"
-msgstr "Data de criação"
+msgstr "Criação de perfis desativada"
 
 #: kuma/users/templates/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
@@ -3920,9 +3887,8 @@ msgstr ""
 #: kuma/users/templates/account/verification_sent.html:7
 #: kuma/users/templates/account/verified_email_required.html:3
 #: kuma/users/templates/account/verified_email_required.html:7
-#, fuzzy
 msgid "Confirm Your Email Address"
-msgstr "Por favor confirme o seu endereço de email"
+msgstr "Confirme o seu endereço de e-mail"
 
 #: kuma/users/templates/account/verification_sent.html:9
 msgid ""
@@ -3956,9 +3922,8 @@ msgid "Note"
 msgstr ""
 
 #: kuma/users/templates/account/snippets/already_logged_in.html:1
-#, fuzzy
 msgid "you are already logged in as %(user_display)s."
-msgstr "Já tem sessão iniciada."
+msgstr "já tem sessão iniciada como %(user_display)s."
 
 #: kuma/users/templates/openid/login.html:3
 #: kuma/users/templates/openid/login.html:6
@@ -3988,19 +3953,16 @@ msgid "You can sign in to your profile using any of the following:"
 msgstr ""
 
 #: kuma/users/templates/socialaccount/connections.html:50
-#, fuzzy
 msgid "Disconnect"
-msgstr "Ligar"
+msgstr "Desligar"
 
 #: kuma/users/templates/socialaccount/connections.html:58
-#, fuzzy
 msgid "You have no connected accounts."
-msgstr "Eu não tenho uma conta."
+msgstr "Não tem contas ligadas."
 
 #: kuma/users/templates/socialaccount/connections.html:61
-#, fuzzy
 msgid "Connect a new account"
-msgstr "Eu não tenho uma conta."
+msgstr "Ligar uma nova conta"
 
 #: kuma/users/templates/socialaccount/login_cancelled.html:3
 #: kuma/users/templates/socialaccount/login_cancelled.html:7
@@ -4016,9 +3978,8 @@ msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:4
 #: kuma/users/templates/socialaccount/signup.html:26
-#, fuzzy
 msgid "Create your MDN profile to continue"
-msgstr "Tem a certeza que pretende continuar?"
+msgstr "Crie o seu perfil MDN para continuar"
 
 #: kuma/users/templates/socialaccount/signup.html:30
 msgid ""
@@ -4048,15 +4009,14 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:61
-#, fuzzy
 msgid ""
 "You can access everything on the MDN website even without an MDN profile. "
 "However, by joining MDN, you'll be able to edit docs, submit demos, and have"
 " your own profile page."
 msgstr ""
-"Pode aceder a tudo no site web da MDN mesmo sem conta, mas quando se juntar "
-"a nós, poderá editar documentação, submeter demonstrações e ter a sua "
-"própria página de perfil."
+"Pode aceder a tudo no sítio web da MDN, mesmo sem ter um perfil. No entanto,"
+" ao se juntar à MDN, poderá editar documentação, submeter demonstrações e "
+"ter a sua própria página de perfil."
 
 #: kuma/users/templates/socialaccount/signup.html:68
 msgid ""
@@ -4073,14 +4033,14 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:82
-#, fuzzy
 msgid ""
 "If you're <strong>having trouble</strong> signing in or creating an MDN "
 "profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
 "know</a></strong>."
 msgstr ""
-"<strong>Está a ter problemas na autenticação? <a href=\"%(bug_href)s\" "
-"rel=\"external\">Diga-nos.</a></strong>"
+"Se está a <strong>ter problemas</strong> na autenticação ou na criação de um"
+" perfil na MDN, <strong><a href=\"%(bug_href)s\" rel=\"external\">diga-"
+"nos</a></strong>."
 
 #: kuma/users/templates/socialaccount/signup.html:107
 msgid ""
@@ -4112,33 +4072,28 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:170
-#, fuzzy
 msgid ""
 "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
 "href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
-"<li><a href=\"%(demos_url)s\">Ver demonstrações</a> ou <a "
-"href=\"%(docs_url)s\">navegar na documentação</a></li>"
+"aos <a href=\"%(terms_url)s\">Termos</a> e à <a "
+"href=\"%(privacy_url)s\">Política de Privacidade</a> da Mozilla."
 
 #: kuma/users/templates/socialaccount/signup.html:179
-#, fuzzy
 msgid "Create my MDN profile"
-msgstr "Criar um novo perfil"
+msgstr "Criar o meu perfil MDN"
 
 #: kuma/users/templates/socialaccount/snippets/login_service_icon.html:2
-#, fuzzy
 msgid "Signed in with Persona"
-msgstr "Iniciar sessão com o Persona"
+msgstr "Sessão iniciada com o Persona"
 
 #: kuma/users/templates/socialaccount/snippets/login_service_icon.html:4
-#, fuzzy
 msgid "Signed in with GitHub"
-msgstr "Iniciar sessão com o Persona"
+msgstr "Sessão iniciada com o GitHub"
 
 #: kuma/users/templates/socialaccount/snippets/provider_list.html:18
-#, fuzzy
 msgid "Connect with Persona"
-msgstr "Iniciar sessão com o Persona"
+msgstr "Ligar com o Persona"
 
 #: kuma/users/templates/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with Persona"
@@ -4149,9 +4104,8 @@ msgid "Connect with GitHub"
 msgstr ""
 
 #: kuma/users/templates/socialaccount/snippets/provider_list.html:31
-#, fuzzy
 msgid "Sign in with GitHub"
-msgstr "Iniciar sessão com o Persona"
+msgstr "Iniciar sessão com o GitHub"
 
 #: kuma/users/templates/users/apps_newsletter.html:7
 #: templates/includes/newsletter.html:4
@@ -4159,12 +4113,11 @@ msgid "Firefox Apps & Hacks Newsletter"
 msgstr "Newsletter de aplicações e hacks do Firefox"
 
 #: kuma/users/templates/users/apps_newsletter.html:14
-#, fuzzy
 msgid ""
 "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the "
 "newsletter."
 msgstr ""
-"<a href=\"/profile/edit\">Edite o seu perfil</a> para se juntar à "
+"<a href=\"%(profile_edit_url)s\">Edite o seu perfil</a> para se juntar à "
 "newsletter."
 
 #: kuma/users/templates/users/user_banned.html:2
@@ -4196,23 +4149,20 @@ msgid "Advanced"
 msgstr "Avançado"
 
 #: kuma/users/templates/users/user_detail.html:59
-#, fuzzy
 msgid "Manage"
-msgstr "Gerir papéis"
+msgstr "Gerir"
 
 #: kuma/users/templates/users/user_detail.html:62
-#, fuzzy
 msgid "API keys"
-msgstr "Gerir chaves da API"
+msgstr "Chaves da API"
 
 #: kuma/users/templates/users/user_detail.html:100
 msgid "Areas of Expertise"
 msgstr "Áreas de especialização"
 
 #: kuma/users/templates/users/user_detail.html:108
-#, fuzzy
 msgid "Member since %(date_joined)s"
-msgstr "Membro desde {date}"
+msgstr "Membro desde %(date_joined)s"
 
 #: kuma/users/templates/users/user_detail.html:159
 msgid "Subscribe to a feed of {display_name}'s demos"
@@ -4304,9 +4254,8 @@ msgstr ""
 
 # 100%
 #: kuma/users/templates/users/user_edit.html:67
-#, fuzzy
 msgid "Edit email"
-msgstr "Editar Demonstração"
+msgstr "Editar e-mail"
 
 #: kuma/users/templates/users/user_edit.html:79
 msgid "About me"
@@ -4341,7 +4290,6 @@ msgstr ""
 "nos tópicos selecionados."
 
 #: kuma/users/templates/users/user_edit.html:101
-#, fuzzy
 msgid "My Profiles"
 msgstr "Os meus outros perfis"
 
@@ -4365,9 +4313,8 @@ msgid "Save Changes"
 msgstr "Guardar alterações"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:9
-#, fuzzy
 msgid "Hi {username}!"
-msgstr "{username}"
+msgstr "Olá {username}!"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
 msgid ""
@@ -4431,9 +4378,8 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:3
-#, fuzzy
 msgid "Hi {username}"
-msgstr "{username}"
+msgstr "Olá {username}"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:6
@@ -4452,9 +4398,8 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:19
-#, fuzzy
 msgid "Like words?"
-msgstr "Palavras-chave:"
+msgstr "Gosta de palavras?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:23
@@ -4533,14 +4478,12 @@ msgid "MDN recent changes to documents tagged %s"
 msgstr "Alterações recentes em documentos da MDN marcados como %s"
 
 #: kuma/wiki/feeds.py:178
-#, fuzzy
 msgid "MDN documents in need of review"
-msgstr "Documentos da MDN para revisão"
+msgstr "Documentos da MDN que precisam de revisão"
 
 #: kuma/wiki/feeds.py:179
-#, fuzzy
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr "Alterações recentes a documentos da MDN"
+msgstr "Alterações recentes a documentos da MDN que precisam de revisão"
 
 #: kuma/wiki/feeds.py:185
 msgid "MDN documents for %s review"
@@ -4905,14 +4848,12 @@ msgid "Creation Date"
 msgstr "Data de criação"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:23
-#, fuzzy
 msgid "Last Change By"
-msgstr "Guardar alterações"
+msgstr "Última alteração por"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:26
-#, fuzzy
 msgid "Last Change Date"
-msgstr "Alterar avatar"
+msgstr "Data da última alteração"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:29
 msgid ""
