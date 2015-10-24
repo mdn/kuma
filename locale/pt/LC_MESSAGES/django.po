@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-24 17:01+0000\n"
+"PO-Revision-Date: 2015-10-24 17:07+0000\n"
 "Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_PT\n"
@@ -5958,7 +5958,7 @@ msgstr "Artigos traduzidos marcados com: {tag}"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr ""
+msgstr "Artigos etiquetados com quaisquer etiquetas de tradução"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:15
 msgid "Found %(count)s document."
@@ -5971,6 +5971,8 @@ msgid ""
 "Document already exists. Note: You cannot revert a document that has been "
 "moved until you delete its redirect."
 msgstr ""
+"O documento já existe. Nota: não pode reverter um documento que tenha sido "
+"movido até eliminar o seu redirecionamento."
 
 #: kuma/wiki/views/document.py:580
 msgid "Redirected from %(url)s"
@@ -5978,7 +5980,7 @@ msgstr "Redirecionado de %(url)s"
 
 #: kuma/wiki/views/document.py:628
 msgid "I learned about %(title)s on MDN."
-msgstr ""
+msgstr "Aprendi sobre %(title)s na MDN."
 
 #: kuma/wiki/views/document.py:697
 msgid "Unsupported content-type: %s"
@@ -6051,7 +6053,7 @@ msgstr "O perfil deste utilizador foi banido."
 
 #: templates/403.html:28
 msgid "You must sign in to view all history"
-msgstr ""
+msgstr "Deve iniciar sessão para ver todo o histórico"
 
 #: templates/403.html:34 templates/handlers/400.html:21
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
@@ -6105,6 +6107,8 @@ msgid ""
 "You can try a search or start over on the <a href=\"%(homepage_url)s\">home "
 "page</a>."
 msgstr ""
+"Pode tentar uma pesquisa ou começar novamente a partir da <a "
+"href=\"%(homepage_url)s\">página inicial</a>."
 
 #: templates/404.html:28
 msgid ""
@@ -6112,6 +6116,9 @@ msgid ""
 "page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a"
 " bug</a>. Thanks!"
 msgstr ""
+"Se estava a seguir uma ligação da documentação, pode iniciar sessão e criar "
+"a página. Caso contrário, por favor <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">submeta um bug</a>. Obrigado!"
 
 #: templates/404.html:36
 msgid ""
@@ -6152,11 +6159,11 @@ msgstr "Começar"
 
 #: templates/base.html:107
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Rever ou traduzir documentação"
 
 #: templates/base.html:108
 msgid "Add a new page"
-msgstr ""
+msgstr "Adicionar uma nova página"
 
 #: templates/base.html:111
 msgid "Site Tools"
@@ -6254,7 +6261,7 @@ msgstr "Obter ajuda para programação na web"
 
 #: templates/base.html:172
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Participar na comunidade MDN"
 
 # 100%
 #: templates/base.html:173
@@ -6282,15 +6289,15 @@ msgstr "Sobre a MDN"
 
 #: templates/base.html:206
 msgid "Terms"
-msgstr ""
+msgstr "Termos"
 
 #: templates/base.html:207
 msgid "Privacy"
-msgstr ""
+msgstr "Privacidade"
 
 #: templates/base.html:208
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: templates/base.html:209
 msgid "Contribute to the code"
@@ -6350,7 +6357,7 @@ msgstr "para a <a href=\"%(privacy_url)s\">política de privacidade</a>"
 
 #: templates/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr ""
+msgstr "Anular subscrição destas mensagens:"
 
 #: templates/tidings/unsubscribe.html:2 templates/tidings/unsubscribe.html:12
 #: templates/tidings/unsubscribe_error.html:2
@@ -6374,6 +6381,11 @@ msgid ""
 "wraps onto a second line in the email, try copying and pasting the link into"
 " the browser."
 msgstr ""
+"Não conseguimos encontrar a sua subscrição. Ou já foi cancelada, ou existe "
+"um erro na ligação de anulação da subscrição. Por favor confirme que a "
+"totalidade da ligação chegou ao navegador. Se a última parte da ligação "
+"quebra para uma segunda linha no e-mail, tente copiar e colar a ligação no "
+"navegador."
 
 #: templates/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
