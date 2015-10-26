@@ -761,7 +761,7 @@ PIPELINE_JS = {
             'js/analytics.js',
             'js/main.js',
             'js/auth.js',
-            'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
+            'js/libs/fontfaceobserver/fontfaceobserver.js',
             'js/fonts.js',
         ),
         'output_filename': 'build/js/main.js',

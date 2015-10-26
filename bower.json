@@ -1,6 +1,7 @@
 {
     "name": "Kuma",
     "dependencies": {
+        "fontfaceobserver": "https://github.com/bramstein/fontfaceobserver.git#v1.4.7",
         "html5shiv": "3.6.2",
         "jquery": "2.1.0",
         "selectivizr": "https://github.com/keithclark/selectivizr.git#1.0.2"
@@ -10,6 +11,7 @@
             "js": "kuma/static/js/libs"
         },
         "sources": {
+            "fontfaceobserver": "bower_components/fontfaceobserver/fontfaceobserver.js",
             "html5shiv": "bower_components/html5shiv/dist/html5shiv.js",
             "selectivizr": "bower_components/selectivizr/selectivizr.js"
         }
