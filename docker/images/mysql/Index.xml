@@ -1,0 +1,1299 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<charsets max-id="99">
+
+<copyright>
+  Copyright (c) 2003-2005 MySQL AB
+  Use is subject to license terms
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; version 2 of the License.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+</copyright>
+
+<description>
+This file lists all of the available character sets.
+To make maintaining easier please:
+ - keep records sorted by collation number.
+ - change charsets.max-id when adding a new collation.
+</description>
+
+<charset name="big5">
+  <family>Traditional Chinese</family>
+  <description>Big5 Traditional Chinese</description>
+  <alias>big-5</alias>
+  <alias>bigfive</alias>
+  <alias>big-five</alias>
+  <alias>cn-big5</alias>
+  <alias>csbig5</alias>
+  <collation name="big5_chinese_ci"	id="1"	order="Chinese">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="big5_bin"	id="84"	order="Binary">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="latin2">
+  <family>Central European</family>
+  <description>ISO 8859-2 Central European</description>
+  <alias>csisolatin2</alias>
+  <alias>iso-8859-2</alias>
+  <alias>iso-ir-101</alias>
+  <alias>iso_8859-2</alias>
+  <alias>iso_8859-2:1987</alias>
+  <alias>l2</alias>
+  <collation name="latin2_czech_cs" 	id="2"	order="Czech" flag="compiled"/>
+  <collation name="latin2_general_ci"	id="9"	flag="primary">
+    <order>Hungarian</order>
+    <order>Polish</order>
+    <order>Romanian</order>
+    <order>Croatian</order>
+    <order>Slovak</order>
+    <order>Slovenian</order>
+    <order>Sorbian</order>
+  </collation>
+  <collation name="latin2_hungarian_ci"		id="21"	order="Hungarian"/>
+  <collation name="latin2_croatian_ci"		id="27"	order="Croatian"/>
+  <collation name="latin2_bin"	id="77"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="dec8">
+  <family>Western</family>
+  <description>DEC West European</description>
+  <collation name="dec8_bin"		id="69"	order="Binary"	flag="binary"/>
+  <collation name="dec8_swedish_ci"	id="3"	flag="primary">
+    <order>Dutch</order>
+    <order>English</order>
+    <order>French</order>
+    <order>German Duden</order>
+    <order>Italian</order>
+    <order>Latin</order>
+    <order>Portuguese</order>
+    <order>Spanish</order>
+  </collation>
+</charset>
+
+<charset name="cp850">
+  <family>Western</family>
+  <description>DOS West European</description>
+  <alias>850</alias>
+  <alias>cspc850multilingual</alias>
+  <alias>ibm850</alias>
+  <collation name="cp850_general_ci"	id="4"	flag="primary">
+    <order>Dutch</order>
+    <order>English</order>
+    <order>French</order>
+    <order>German Duden</order>
+    <order>Italian</order>
+    <order>Latin</order>
+    <order>Portuguese</order>
+    <order>Spanish</order>
+  </collation>
+  <collation name="cp850_bin"	id="80"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="latin1">
+  <family>Western</family>
+  <description>cp1252 West European</description>
+  <alias>csisolatin1</alias>
+  <alias>iso-8859-1</alias>
+  <alias>iso-ir-100</alias>
+  <alias>iso_8859-1</alias>
+  <alias>iso_8859-1:1987</alias>
+  <alias>l1</alias>
+  <alias>latin1</alias>
+  <collation name="latin1_german1_ci"	id="5"	order="German Duden"/>
+  <collation name="latin1_swedish_ci"	id="8"	order="Finnish, Swedish">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="latin1_danish_ci"	id="15"	order="Danish"/>
+  <collation name="latin1_german2_ci"	id="31"	order="German Phonebook"	flag="compiled"/>
+  <collation name="latin1_spanish_ci"	id="94"	order="Spanish"/>
+  <collation name="latin1_bin"		id="47"	order="Binary">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="latin1_general_ci"	id="48">
+    <order>Dutch</order>
+    <order>English</order>
+    <order>French</order>
+    <order>German Duden</order>
+    <order>Italian</order>
+    <order>Latin</order>
+    <order>Portuguese</order>
+    <order>Spanish</order>
+  </collation>
+  <collation name="latin1_general_cs"	id="49">
+    <order>Dutch</order>
+    <order>English</order>
+    <order>French</order>
+    <order>German Duden</order>
+    <order>Italian</order>
+    <order>Latin</order>
+    <order>Portuguese</order>
+    <order>Spanish</order>
+  </collation>
+</charset>
+
+<charset name="hp8">
+  <family>Western</family>
+  <description>HP West European</description>
+  <alias>hproman8</alias>
+  <collation name="hp8_bin"		id="72"	order="Binary"	flag="binary"/>
+  <collation name="hp8_english_ci"	id="6"	flag="primary">
+    <order>Dutch</order>
+    <order>English</order>
+    <order>French</order>
+    <order>German Duden</order>
+    <order>Italian</order>
+    <order>Latin</order>
+    <order>Portuguese</order>
+    <order>Spanish</order>
+  </collation>
+</charset>
+
+<charset name="koi8r">
+  <family>Cyrillic</family>
+  <description>KOI8-R Relcom Russian</description>
+  <alias>koi8-r</alias>
+  <alias>cskoi8r</alias>
+  <collation name="koi8r_general_ci"	id="7"	order="Russian"	flag="primary"/>
+  <collation name="koi8r_bin"		id="74"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="swe7">
+  <family>Western</family>
+  <description>7bit Swedish</description>
+  <alias>iso-646-se</alias>
+  <collation name="swe7_swedish_ci"	id="10"	order="Swedish"	flag="primary"/>
+  <collation name="swe7_bin"		id="82"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="ascii">
+  <family>Western</family>
+  <description>US ASCII</description>
+  <alias>us</alias>
+  <alias>us-ascii</alias>
+  <alias>csascii</alias>
+  <alias>iso-ir-6</alias>
+  <alias>iso646-us</alias>
+  <collation name="ascii_general_ci"	id="11"	order="English"	flag="primary"/>
+  <collation name="ascii_bin"		id="65"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="ujis">
+  <family>Japanese</family>
+  <description>EUC-JP Japanese</description>
+  <alias>euc-jp</alias>
+  <collation name="ujis_japanese_ci"	id="12"	order="Japanese">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="ujis_bin"	id="91"	order="Japanese">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="sjis">
+  <family>Japanese</family>
+  <description>Shift-JIS Japanese</description>
+  <alias>s-jis</alias>
+  <alias>shift-jis</alias>
+  <alias>x-sjis</alias>
+  <collation name="sjis_japanese_ci" 	id="13"	order="Japanese">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="sjis_bin" 	id="88"	order="Binary">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="cp1251">
+  <family>Cyrillic</family>
+  <description>Windows Cyrillic</description>
+  <alias>windows-1251</alias>
+  <alias>ms-cyr</alias>
+  <alias>ms-cyrillic</alias>
+  <collation name="cp1251_bulgarian_ci"	id="14">
+    <order>Belarusian</order>
+    <order>Bulgarian</order>
+    <order>Macedonian</order>
+    <order>Russian</order>
+    <order>Serbian</order>
+    <order>Mongolian</order>
+    <order>Ukrainian</order>
+  </collation>
+  <collation name="cp1251_ukrainian_ci"	id="23"	order="Ukrainian"/>
+  <collation name="cp1251_bin"		id="50"	order="Binary"	flag="binary"/>
+  <collation name="cp1251_general_ci"	id="51" flag="primary">
+    <order>Belarusian</order>
+    <order>Bulgarian</order>
+    <order>Macedonian</order>
+    <order>Russian</order>
+    <order>Serbian</order>
+    <order>Mongolian</order>
+    <order>Ukrainian</order>
+  </collation>
+  <collation name="cp1251_general_cs"	id="52">
+    <order>Belarusian</order>
+    <order>Bulgarian</order>
+    <order>Macedonian</order>
+    <order>Russian</order>
+    <order>Serbian</order>
+    <order>Mongolian</order>
+    <order>Ukrainian</order>
+  </collation>
+</charset>
+
+<charset name="hebrew">
+  <family>Hebrew</family>
+  <description>ISO 8859-8 Hebrew</description>
+  <alias>csisolatinhebrew</alias>
+  <alias>iso-8859-8</alias>
+  <alias>iso-ir-138</alias>
+  <collation name="hebrew_general_ci"	id="16"	order="Hebrew"	flag="primary"/>
+  <collation name="hebrew_bin"		id="71"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="tis620">
+  <family>Thai</family>
+  <description>TIS620 Thai</description>
+  <alias>tis-620</alias>
+  <collation name="tis620_thai_ci"	id="18"	order="Thai">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="tis620_bin"	id="89"	order="Binary">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="euckr">
+  <family>Korean</family>
+  <description>EUC-KR Korean</description>
+  <alias>euc_kr</alias>
+  <alias>euc-kr</alias>
+  <collation name="euckr_korean_ci"	id="19"	order="Korean">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="euckr_bin"	id="85">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="latin7">
+  <family>Baltic</family>
+  <description>ISO 8859-13 Baltic</description>
+  <alias>BalticRim</alias>
+  <alias>iso-8859-13</alias>
+  <alias>l7</alias>
+  <collation name="latin7_estonian_cs"	id="20">
+    <order>Estonian</order>
+  </collation>
+  <collation name="latin7_general_ci"	id="41">
+    <order>Latvian</order>
+    <order>Lithuanian</order>
+    <flag>primary</flag>
+  </collation>
+  <collation name="latin7_general_cs"	id="42">
+    <order>Latvian</order>
+    <order>Lithuanian</order>
+  </collation>
+  <collation name="latin7_bin"	id="79"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="koi8u">
+  <family>Cyrillic</family>
+  <description>KOI8-U Ukrainian</description>
+  <alias>koi8-u</alias>
+  <collation name="koi8u_general_ci"	id="22"	order="Ukranian"	flag="primary"/>
+  <collation name="koi8u_bin"		id="75"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="gb2312">
+  <family>Simplified Chinese</family>
+  <description>GB2312 Simplified Chinese</description>
+  <alias>chinese</alias>
+  <alias>iso-ir-58</alias>
+  <collation name="gb2312_chinese_ci"	id="24"	order="Chinese">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="gb2312_bin"	id="86">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="greek">
+  <family>Greek</family>
+  <description>ISO 8859-7 Greek</description>
+  <alias>csisolatingreek</alias>
+  <alias>ecma-118</alias>
+  <alias>greek8</alias>
+  <alias>iso-8859-7</alias>
+  <alias>iso-ir-126</alias>
+  <collation name="greek_general_ci" 	id="25"	order="Greek"	flag="primary"/>
+  <collation name="greek_bin"		id="70"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="cp1250">
+  <family>Central European</family>
+  <description>Windows Central European</description>
+  <alias>ms-ce</alias>
+  <alias>windows-1250</alias>
+  <collation name="cp1250_general_ci"	id="26"	flag="primary">
+    <order>Hungarian</order>
+    <order>Polish</order>
+    <order>Romanian</order>
+    <order>Croatian</order>
+    <order>Slovak</order>
+    <order>Slovenian</order>
+    <order>Sorbian</order>
+  </collation>
+  <collation name="cp1250_croatian_ci"	id="44">
+    <order>Croatian</order>
+  </collation>
+  <collation name="cp1250_polish_ci"  id="99">
+    <order>Polish</order>
+  </collation>
+  <collation name="cp1250_czech_cs"	id="34"	order="Czech">
+    <flag>compiled</flag>
+  </collation>
+  <collation name="cp1250_bin"		id="66"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="gbk">
+  <family>East Asian</family>
+  <description>GBK Simplified Chinese</description>
+  <alias>cp936</alias>
+  <collation name="gbk_chinese_ci"	id="28"	order="Chinese">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="gbk_bin"	id="87"	order="Binary">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="cp1257">
+  <family>Baltic</family>
+  <description>Windows Baltic</description>
+  <alias>WinBaltRim</alias>
+  <alias>windows-1257</alias>
+  <collation name="cp1257_lithuanian_ci"	id="29"	order="Lithuanian"/>
+  <collation name="cp1257_bin"			id="58"	order="Binary"	flag="binary"/>
+  <collation name="cp1257_general_ci"		id="59"	flag="primary">
+    <order>Latvian</order>
+    <order>Lithuanian</order>
+  </collation>
+  <!--collation name="cp1257_ci"		id="60"/-->
+  <!--collation name="cp1257_cs"		id="61"/-->
+</charset>
+
+<charset name="latin5">
+  <family>South Asian</family>
+  <description>ISO 8859-9 Turkish</description>
+  <alias>csisolatin5</alias>
+  <alias>iso-8859-9</alias>
+  <alias>iso-ir-148</alias>
+  <alias>l5</alias>
+  <alias>latin5</alias>
+  <alias>turkish</alias>
+  <collation name="latin5_turkish_ci"	id="30"	order="Turkish"	flag="primary"/>
+  <collation name="latin5_bin"		id="78"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="armscii8">
+  <family>South Asian</family>
+  <description>ARMSCII-8 Armenian</description>
+  <alias>armscii-8</alias>
+  <collation name="armscii8_general_ci"	id="32"	order="Armenian"	flag="primary"/>
+  <collation name="armscii8_bin"	id="64"	order="Binary"		flag="binary"/>
+</charset>
+
+<charset name="utf8">
+  <family>Unicode</family>
+  <description>UTF-8 Unicode</description>
+  <alias>utf-8</alias>
+  <collation name="utf8_general_ci"	id="33">
+   <flag>primary</flag>
+   <flag>compiled</flag>
+  </collation>
+  <collation name="utf8_bin"		id="83">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name='utf8_distinct_ci' id='255'>
+  <rules>
+    <reset>A</reset>
+    <p>\u33c2</p><!-- ㏂ -->
+    <p>\u2100</p><!-- ℀ -->
+    <p>\u2101</p><!-- ℁ -->
+    <p>\u3373</p><!-- ㍳ -->
+    <p>\u1e9a</p><!-- ẚ -->
+    <p>\u00c0</p><!-- À -->
+    <t>\u00e0</t><!-- à -->
+    <p>\u00c1</p><!-- Á -->
+    <t>\u00e1</t><!-- á -->
+    <p>\u00c2</p><!-- Â -->
+    <t>\u00e2</t><!-- â -->
+    <p>\u1ea6</p><!-- Ầ -->
+    <t>\u1ea7</t><!-- ầ -->
+    <p>\u1ea4</p><!-- Ấ -->
+    <t>\u1ea5</t><!-- ấ -->
+    <p>\u1eaa</p><!-- Ẫ -->
+    <t>\u1eab</t><!-- ẫ -->
+    <p>\u1ea8</p><!-- Ẩ -->
+    <t>\u1ea9</t><!-- ẩ -->
+    <p>\u00c3</p><!-- Ã -->
+    <t>\u00e3</t><!-- ã -->
+    <p>\u0100</p><!-- Ā -->
+    <t>\u0101</t><!-- ā -->
+    <p>\u0102</p><!-- Ă -->
+    <t>\u0103</t><!-- ă -->
+    <p>\u1eb0</p><!-- Ằ -->
+    <t>\u1eb1</t><!-- ằ -->
+    <p>\u1eae</p><!-- Ắ -->
+    <t>\u1eaf</t><!-- ắ -->
+    <p>\u1eb4</p><!-- Ẵ -->
+    <t>\u1eb5</t><!-- ẵ -->
+    <p>\u1eb2</p><!-- Ẳ -->
+    <t>\u1eb3</t><!-- ẳ -->
+    <p>\u0226</p><!-- Ȧ -->
+    <t>\u0227</t><!-- ȧ -->
+    <p>\u01e0</p><!-- Ǡ -->
+    <t>\u01e1</t><!-- ǡ -->
+    <p>\u00c4</p><!-- Ä -->
+    <t>\u00e4</t><!-- ä -->
+    <p>\u01de</p><!-- Ǟ -->
+    <t>\u01df</t><!-- ǟ -->
+    <p>\u1ea2</p><!-- Ả -->
+    <t>\u1ea3</t><!-- ả -->
+    <p>\u212b</p><!-- Å -->
+    <t>\u00c5</t><!-- Å -->
+    <t>\u00e5</t><!-- å -->
+    <p>\u01fa</p><!-- Ǻ -->
+    <t>\u01fb</t><!-- ǻ -->
+    <p>\u01cd</p><!-- Ǎ -->
+    <t>\u01ce</t><!-- ǎ -->
+    <p>\u0200</p><!-- Ȁ -->
+    <t>\u0201</t><!-- ȁ -->
+    <p>\u0202</p><!-- Ȃ -->
+    <t>\u0203</t><!-- ȃ -->
+    <p>\u1ea0</p><!-- Ạ -->
+    <t>\u1ea1</t><!-- ạ -->
+    <p>\u1eac</p><!-- Ậ -->
+    <t>\u1ead</t><!-- ậ -->
+    <p>\u1eb6</p><!-- Ặ -->
+    <t>\u1eb7</t><!-- ặ -->
+    <p>\u1e00</p><!-- Ḁ -->
+    <t>\u1e01</t><!-- ḁ -->
+    <p>\u0104</p><!-- Ą -->
+    <t>\u0105</t><!-- ą -->
+    <p>\u33df</p><!-- ㏟ -->
+
+    <reset>B</reset>
+    <p>\u3374</p><!-- ㍴ -->
+    <p>\u33c3</p><!-- ㏃ -->
+    <p>\u1e02</p><!-- Ḃ -->
+    <t>\u1e03</t><!-- ḃ -->
+    <p>\u1e04</p><!-- Ḅ -->
+    <t>\u1e05</t><!-- ḅ -->
+    <p>\u1e06</p><!-- Ḇ -->
+    <t>\u1e07</t><!-- ḇ -->
+
+    <reset>C</reset>
+    <p>\u2105</p><!-- ℅ -->
+    <p>\u2106</p><!-- ℆ -->
+    <p>\u3388</p><!-- ㎈ -->
+    <p>\u33c4</p><!-- ㏄ -->
+    <p>\u33c5</p><!-- ㏅ -->
+    <p>\u339d</p><!-- ㎝ -->
+    <p>\u33a0</p><!-- ㎠ -->
+    <p>\u33a4</p><!-- ㎤ -->
+    <p>\u33c7</p><!-- ㏇ -->
+    <p>\u0106</p><!-- Ć -->
+    <t>\u0107</t><!-- ć -->
+    <p>\u0108</p><!-- Ĉ -->
+    <t>\u0109</t><!-- ĉ -->
+    <p>\u010a</p><!-- Ċ -->
+    <t>\u010b</t><!-- ċ -->
+    <p>\u010c</p><!-- Č -->
+    <t>\u010d</t><!-- č -->
+    <p>\u00c7</p><!-- Ç -->
+    <t>\u00e7</t><!-- ç -->
+    <p>\u1e08</p><!-- Ḉ -->
+    <t>\u1e09</t><!-- ḉ -->
+    <p>\u33c6</p><!-- ㏆ -->
+
+    <reset>D</reset>
+    <p>\u33c8</p><!-- ㏈ -->
+    <p>\u01f1</p><!-- Ǳ -->
+    <p>\u01c4</p><!-- Ǆ -->
+    <p>\u3372</p><!-- ㍲ -->
+    <p>\u3397</p><!-- ㎗ -->
+    <p>\u3377</p><!-- ㍷ -->
+    <p>\u3378</p><!-- ㍸ -->
+    <p>\u3379</p><!-- ㍹ -->
+    <p>\u01f2</p><!-- ǲ -->
+    <t>\u01f3</t><!-- ǳ -->
+    <p>\u01c5</p><!-- ǅ -->
+    <t>\u01c6</t><!-- ǆ -->
+    <p>\u1e0a</p><!-- Ḋ -->
+    <t>\u1e0b</t><!-- ḋ -->
+    <p>\u010e</p><!-- Ď -->
+    <t>\u010f</t><!-- ď -->
+    <p>\u1e0c</p><!-- Ḍ -->
+    <t>\u1e0d</t><!-- ḍ -->
+    <p>\u1e10</p><!-- Ḑ -->
+    <t>\u1e11</t><!-- ḑ -->
+    <p>\u1e12</p><!-- Ḓ -->
+    <t>\u1e13</t><!-- ḓ -->
+    <p>\u1e0e</p><!-- Ḏ -->
+    <t>\u1e0f</t><!-- ḏ -->
+
+    <reset>E</reset>
+    <p>\u32ce</p><!-- ㋎ -->
+    <p>\u32cd</p><!-- ㋍ -->
+    <p>\u00c8</p><!-- È -->
+    <t>\u00e8</t><!-- è -->
+    <p>\u00c9</p><!-- É -->
+    <t>\u00e9</t><!-- é -->
+    <p>\u00ca</p><!-- Ê -->
+    <t>\u00ea</t><!-- ê -->
+    <p>\u1ec0</p><!-- Ề -->
+    <t>\u1ec1</t><!-- ề -->
+    <p>\u1ebe</p><!-- Ế -->
+    <t>\u1ebf</t><!-- ế -->
+    <p>\u1ec4</p><!-- Ễ -->
+    <t>\u1ec5</t><!-- ễ -->
+    <p>\u1ec2</p><!-- Ể -->
+    <t>\u1ec3</t><!-- ể -->
+    <p>\u1ebc</p><!-- Ẽ -->
+    <t>\u1ebd</t><!-- ẽ -->
+    <p>\u0112</p><!-- Ē -->
+    <t>\u0113</t><!-- ē -->
+    <p>\u1e14</p><!-- Ḕ -->
+    <t>\u1e15</t><!-- ḕ -->
+    <p>\u1e16</p><!-- Ḗ -->
+    <t>\u1e17</t><!-- ḗ -->
+    <p>\u0114</p><!-- Ĕ -->
+    <t>\u0115</t><!-- ĕ -->
+    <p>\u0116</p><!-- Ė -->
+    <t>\u0117</t><!-- ė -->
+    <p>\u00cb</p><!-- Ë -->
+    <t>\u00eb</t><!-- ë -->
+    <p>\u1eba</p><!-- Ẻ -->
+    <t>\u1ebb</t><!-- ẻ -->
+    <p>\u011a</p><!-- Ě -->
+    <t>\u011b</t><!-- ě -->
+    <p>\u0204</p><!-- Ȅ -->
+    <t>\u0205</t><!-- ȅ -->
+    <p>\u0206</p><!-- Ȇ -->
+    <t>\u0207</t><!-- ȇ -->
+    <p>\u1eb8</p><!-- Ẹ -->
+    <t>\u1eb9</t><!-- ẹ -->
+    <p>\u1ec6</p><!-- Ệ -->
+    <t>\u1ec7</t><!-- ệ -->
+    <p>\u0228</p><!-- Ȩ -->
+    <t>\u0229</t><!-- ȩ -->
+    <p>\u1e1c</p><!-- Ḝ -->
+    <t>\u1e1d</t><!-- ḝ -->
+    <p>\u0118</p><!-- Ę -->
+    <t>\u0119</t><!-- ę -->
+    <p>\u1e18</p><!-- Ḙ -->
+    <t>\u1e19</t><!-- ḙ -->
+    <p>\u1e1a</p><!-- Ḛ -->
+    <t>\u1e1b</t><!-- ḛ -->
+
+    <reset>F</reset>
+    <p>\u213b</p><!-- ℻ -->
+    <p>\ufb00</p><!-- ﬀ -->
+    <p>\ufb03</p><!-- ﬃ -->
+    <p>\ufb04</p><!-- ﬄ -->
+    <p>\ufb01</p><!-- ﬁ -->
+    <p>\ufb02</p><!-- ﬂ -->
+    <p>\u3399</p><!-- ㎙ -->
+    <p>\u1e1e</p><!-- Ḟ -->
+    <t>\u1e1f</t><!-- ḟ -->
+
+    <reset>G</reset>
+    <p>\u3387</p><!-- ㎇ -->
+    <p>\u3393</p><!-- ㎓ -->
+    <p>\u33ac</p><!-- ㎬ -->
+    <p>\u33ff</p><!-- ㏿ -->
+    <p>\u33c9</p><!-- ㏉ -->
+    <p>\u01f4</p><!-- Ǵ -->
+    <t>\u01f5</t><!-- ǵ -->
+    <p>\u011c</p><!-- Ĝ -->
+    <t>\u011d</t><!-- ĝ -->
+    <p>\u1e20</p><!-- Ḡ -->
+    <t>\u1e21</t><!-- ḡ -->
+    <p>\u011e</p><!-- Ğ -->
+    <t>\u011f</t><!-- ğ -->
+    <p>\u0120</p><!-- Ġ -->
+    <t>\u0121</t><!-- ġ -->
+    <p>\u01e6</p><!-- Ǧ -->
+    <t>\u01e7</t><!-- ǧ -->
+    <p>\u0122</p><!-- Ģ -->
+    <t>\u0123</t><!-- ģ -->
+
+    <reset>H</reset>
+    <p>\u33cb</p><!-- ㏋ -->
+    <p>\u3371</p><!-- ㍱ -->
+    <p>\u33ca</p><!-- ㏊ -->
+    <p>\u32cc</p><!-- ㋌ -->
+    <p>\u3390</p><!-- ㎐ -->
+    <p>\u0124</p><!-- Ĥ -->
+    <t>\u0125</t><!-- ĥ -->
+    <p>\u1e22</p><!-- Ḣ -->
+    <t>\u1e23</t><!-- ḣ -->
+    <p>\u1e26</p><!-- Ḧ -->
+    <t>\u1e27</t><!-- ḧ -->
+    <p>\u021e</p><!-- Ȟ -->
+    <t>\u021f</t><!-- ȟ -->
+    <p>\u1e24</p><!-- Ḥ -->
+    <t>\u1e25</t><!-- ḥ -->
+    <p>\u1e28</p><!-- Ḩ -->
+    <t>\u1e29</t><!-- ḩ -->
+    <p>\u1e2a</p><!-- Ḫ -->
+    <t>\u1e2b</t><!-- ḫ -->
+    <p>\u1e96</p><!-- ẖ -->
+
+    <reset>I</reset>
+    <p>\u2161</p><!-- Ⅱ -->
+    <p>\u2162</p><!-- Ⅲ -->
+    <p>\u0132</p><!-- Ĳ -->
+    <p>\u337a</p><!-- ㍺ -->
+    <p>\u2163</p><!-- Ⅳ -->
+    <p>\u2168</p><!-- Ⅸ -->
+    <p>\u2171</p><!-- ⅱ -->
+    <p>\u2172</p><!-- ⅲ -->
+    <p>\u0133</p><!-- ĳ -->
+    <p>\u33cc</p><!-- ㏌ -->
+    <p>\u2173</p><!-- ⅳ -->
+    <p>\u2178</p><!-- ⅸ -->
+    <p>\u00cc</p><!-- Ì -->
+    <t>\u00ec</t><!-- ì -->
+    <p>\u00cd</p><!-- Í -->
+    <t>\u00ed</t><!-- í -->
+    <p>\u00ce</p><!-- Î -->
+    <t>\u00ee</t><!-- î -->
+    <p>\u0128</p><!-- Ĩ -->
+    <t>\u0129</t><!-- ĩ -->
+    <p>\u012a</p><!-- Ī -->
+    <t>\u012b</t><!-- ī -->
+    <p>\u012c</p><!-- Ĭ -->
+    <t>\u012d</t><!-- ĭ -->
+    <p>\u0130</p><!-- İ -->
+    <p>\u00cf</p><!-- Ï -->
+    <t>\u00ef</t><!-- ï -->
+    <p>\u1e2e</p><!-- Ḯ -->
+    <t>\u1e2f</t><!-- ḯ -->
+    <p>\u1ec8</p><!-- Ỉ -->
+    <t>\u1ec9</t><!-- ỉ -->
+    <p>\u01cf</p><!-- Ǐ -->
+    <t>\u01d0</t><!-- ǐ -->
+    <p>\u0208</p><!-- Ȉ -->
+    <t>\u0209</t><!-- ȉ -->
+    <p>\u020a</p><!-- Ȋ -->
+    <t>\u020b</t><!-- ȋ -->
+    <p>\u1eca</p><!-- Ị -->
+    <t>\u1ecb</t><!-- ị -->
+    <p>\u012e</p><!-- Į -->
+    <t>\u012f</t><!-- į -->
+    <p>\u1e2c</p><!-- Ḭ -->
+    <t>\u1e2d</t><!-- ḭ -->
+
+    <reset>J</reset>
+    <p>\u0134</p><!-- Ĵ -->
+    <t>\u0135</t><!-- ĵ -->
+    <p>\u01f0</p><!-- ǰ -->
+
+    <reset>K</reset>
+    <p>\u3384</p><!-- ㎄ -->
+    <p>\u3385</p><!-- ㎅ -->
+    <p>\u3391</p><!-- ㎑ -->
+    <p>\u33cd</p><!-- ㏍ -->
+    <p>\u33ce</p><!-- ㏎ -->
+    <p>\u33aa</p><!-- ㎪ -->
+    <p>\u33b8</p><!-- ㎸ -->
+    <p>\u33be</p><!-- ㎾ -->
+    <p>\u3389</p><!-- ㎉ -->
+    <p>\u338f</p><!-- ㎏ -->
+    <p>\u3398</p><!-- ㎘ -->
+    <p>\u339e</p><!-- ㎞ -->
+    <p>\u33a2</p><!-- ㎢ -->
+    <p>\u33a6</p><!-- ㎦ -->
+    <p>\u33cf</p><!-- ㏏ -->
+    <p>\u1e30</p><!-- Ḱ -->
+    <t>\u1e31</t><!-- ḱ -->
+    <p>\u01e8</p><!-- Ǩ -->
+    <t>\u01e9</t><!-- ǩ -->
+    <p>\u1e32</p><!-- Ḳ -->
+    <t>\u1e33</t><!-- ḳ -->
+    <p>\u0136</p><!-- Ķ -->
+    <t>\u0137</t><!-- ķ -->
+    <p>\u1e34</p><!-- Ḵ -->
+    <t>\u1e35</t><!-- ḵ -->
+    <p>\u33c0</p><!-- ㏀ -->
+
+    <reset>L</reset>
+    <p>\u01c7</p><!-- Ǉ -->
+    <p>\u32cf</p><!-- ㋏ -->
+    <p>\u01c8</p><!-- ǈ -->
+    <t>\u01c9</t><!-- ǉ -->
+    <p>\u33d0</p><!-- ㏐ -->
+    <p>\u33d1</p><!-- ㏑ -->
+    <p>\u33d2</p><!-- ㏒ -->
+    <p>\u33d3</p><!-- ㏓ -->
+    <p>\u013f</p><!-- Ŀ -->
+    <t>\u0140</t><!-- ŀ -->
+    <p>\u0139</p><!-- Ĺ -->
+    <t>\u013a</t><!-- ĺ -->
+    <p>\u013d</p><!-- Ľ -->
+    <t>\u013e</t><!-- ľ -->
+    <p>\u1e36</p><!-- Ḷ -->
+    <t>\u1e37</t><!-- ḷ -->
+    <p>\u1e38</p><!-- Ḹ -->
+    <t>\u1e39</t><!-- ḹ -->
+    <p>\u013b</p><!-- Ļ -->
+    <t>\u013c</t><!-- ļ -->
+    <p>\u1e3c</p><!-- Ḽ -->
+    <t>\u1e3d</t><!-- ḽ -->
+    <p>\u1e3a</p><!-- Ḻ -->
+    <t>\u1e3b</t><!-- ḻ -->
+
+    <reset>M</reset>
+    <p>\u33a1</p><!-- ㎡ -->
+    <p>\u33a5</p><!-- ㎥ -->
+    <p>\u3383</p><!-- ㎃ -->
+    <p>\u3386</p><!-- ㎆ -->
+    <p>\u3392</p><!-- ㎒ -->
+    <p>\u33ab</p><!-- ㎫ -->
+    <p>\u33b9</p><!-- ㎹ -->
+    <t>\u33b7</t><!-- ㎷ -->
+    <p>\u33bf</p><!-- ㎿ -->
+    <t>\u33bd</t><!-- ㎽ -->
+    <p>\u33d4</p><!-- ㏔ -->
+    <p>\u338e</p><!-- ㎎ -->
+    <p>\u33d5</p><!-- ㏕ -->
+    <p>\u3396</p><!-- ㎖ -->
+    <p>\u339c</p><!-- ㎜ -->
+    <p>\u339f</p><!-- ㎟ -->
+    <p>\u33a3</p><!-- ㎣ -->
+    <p>\u33d6</p><!-- ㏖ -->
+    <p>\u33b3</p><!-- ㎳ -->
+    <p>\u1e3e</p><!-- Ḿ -->
+    <t>\u1e3f</t><!-- ḿ -->
+    <p>\u1e40</p><!-- Ṁ -->
+    <t>\u1e41</t><!-- ṁ -->
+    <p>\u1e42</p><!-- Ṃ -->
+    <t>\u1e43</t><!-- ṃ -->
+    <p>\u33c1</p><!-- ㏁ -->
+    <p>\u33a7</p><!-- ㎧ -->
+    <p>\u33a8</p><!-- ㎨ -->
+
+    <reset>N</reset>
+    <p>\u3381</p><!-- ㎁ -->
+    <p>\u338b</p><!-- ㎋ -->
+    <p>\u01ca</p><!-- Ǌ -->
+    <p>\u33b5</p><!-- ㎵ -->
+    <p>\u33bb</p><!-- ㎻ -->
+    <p>\u01cb</p><!-- ǋ -->
+    <t>\u01cc</t><!-- ǌ -->
+    <p>\u339a</p><!-- ㎚ -->
+    <p>\u2116</p><!-- № -->
+    <p>\u33b1</p><!-- ㎱ -->
+    <p>\u01f8</p><!-- Ǹ -->
+    <t>\u01f9</t><!-- ǹ -->
+    <p>\u0143</p><!-- Ń -->
+    <t>\u0144</t><!-- ń -->
+    <p>\u00d1</p><!-- Ñ -->
+    <t>\u00f1</t><!-- ñ -->
+    <p>\u1e44</p><!-- Ṅ -->
+    <t>\u1e45</t><!-- ṅ -->
+    <p>\u0147</p><!-- Ň -->
+    <t>\u0148</t><!-- ň -->
+    <p>\u1e46</p><!-- Ṇ -->
+    <t>\u1e47</t><!-- ṇ -->
+    <p>\u0145</p><!-- Ņ -->
+    <t>\u0146</t><!-- ņ -->
+    <p>\u1e4a</p><!-- Ṋ -->
+    <t>\u1e4b</t><!-- ṋ -->
+    <p>\u1e48</p><!-- Ṉ -->
+    <t>\u1e49</t><!-- ṉ -->
+
+    <reset>O</reset>
+    <p>\u3375</p><!-- ㍵ -->
+    <p>\u00d2</p><!-- Ò -->
+    <t>\u00f2</t><!-- ò -->
+    <p>\u00d3</p><!-- Ó -->
+    <t>\u00f3</t><!-- ó -->
+    <p>\u00d4</p><!-- Ô -->
+    <t>\u00f4</t><!-- ô -->
+    <p>\u1ed2</p><!-- Ồ -->
+    <t>\u1ed3</t><!-- ồ -->
+    <p>\u1ed0</p><!-- Ố -->
+    <t>\u1ed1</t><!-- ố -->
+    <p>\u1ed6</p><!-- Ỗ -->
+    <t>\u1ed7</t><!-- ỗ -->
+    <p>\u1ed4</p><!-- Ổ -->
+    <t>\u1ed5</t><!-- ổ -->
+    <p>\u00d5</p><!-- Õ -->
+    <t>\u00f5</t><!-- õ -->
+    <p>\u1e4c</p><!-- Ṍ -->
+    <t>\u1e4d</t><!-- ṍ -->
+    <p>\u022c</p><!-- Ȭ -->
+    <t>\u022d</t><!-- ȭ -->
+    <p>\u1e4e</p><!-- Ṏ -->
+    <t>\u1e4f</t><!-- ṏ -->
+    <p>\u014c</p><!-- Ō -->
+    <t>\u014d</t><!-- ō -->
+    <p>\u1e50</p><!-- Ṑ -->
+    <t>\u1e51</t><!-- ṑ -->
+    <p>\u1e52</p><!-- Ṓ -->
+    <t>\u1e53</t><!-- ṓ -->
+    <p>\u014e</p><!-- Ŏ -->
+    <t>\u014f</t><!-- ŏ -->
+    <p>\u022e</p><!-- Ȯ -->
+    <t>\u022f</t><!-- ȯ -->
+    <p>\u0230</p><!-- Ȱ -->
+    <t>\u0231</t><!-- ȱ -->
+    <p>\u00d6</p><!-- Ö -->
+    <t>\u00f6</t><!-- ö -->
+    <p>\u022a</p><!-- Ȫ -->
+    <t>\u022b</t><!-- ȫ -->
+    <p>\u1ece</p><!-- Ỏ -->
+    <t>\u1ecf</t><!-- ỏ -->
+    <p>\u0150</p><!-- Ő -->
+    <t>\u0151</t><!-- ő -->
+    <p>\u01d1</p><!-- Ǒ -->
+    <t>\u01d2</t><!-- ǒ -->
+    <p>\u020c</p><!-- Ȍ -->
+    <t>\u020d</t><!-- ȍ -->
+    <p>\u020e</p><!-- Ȏ -->
+    <t>\u020f</t><!-- ȏ -->
+    <p>\u01a0</p><!-- Ơ -->
+    <t>\u01a1</t><!-- ơ -->
+    <p>\u1edc</p><!-- Ờ -->
+    <t>\u1edd</t><!-- ờ -->
+    <p>\u1eda</p><!-- Ớ -->
+    <t>\u1edb</t><!-- ớ -->
+    <p>\u1ee0</p><!-- Ỡ -->
+    <t>\u1ee1</t><!-- ỡ -->
+    <p>\u1ede</p><!-- Ở -->
+    <t>\u1edf</t><!-- ở -->
+    <p>\u1ee2</p><!-- Ợ -->
+    <t>\u1ee3</t><!-- ợ -->
+    <p>\u1ecc</p><!-- Ọ -->
+    <t>\u1ecd</t><!-- ọ -->
+    <p>\u1ed8</p><!-- Ộ -->
+    <t>\u1ed9</t><!-- ộ -->
+    <p>\u01ea</p><!-- Ǫ -->
+    <t>\u01eb</t><!-- ǫ -->
+    <p>\u01ec</p><!-- Ǭ -->
+    <t>\u01ed</t><!-- ǭ -->
+
+    <reset>P</reset>
+    <p>\u33d8</p><!-- ㏘ -->
+    <p>\u3380</p><!-- ㎀ -->
+    <p>\u338a</p><!-- ㎊ -->
+    <p>\u33d7</p><!-- ㏗ -->
+    <p>\u33d9</p><!-- ㏙ -->
+    <p>\u33da</p><!-- ㏚ -->
+    <p>\u3250</p><!-- ㉐ -->
+    <p>\u33b4</p><!-- ㎴ -->
+    <p>\u33ba</p><!-- ㎺ -->
+    <p>\u33a9</p><!-- ㎩ -->
+    <p>\u3376</p><!-- ㍶ -->
+    <p>\u33b0</p><!-- ㎰ -->
+    <p>\u1e54</p><!-- Ṕ -->
+    <t>\u1e55</t><!-- ṕ -->
+    <p>\u1e56</p><!-- Ṗ -->
+    <t>\u1e57</t><!-- ṗ -->
+
+    <reset>R</reset>
+    <p>\u33ad</p><!-- ㎭ -->
+    <p>\u33ae</p><!-- ㎮ -->
+    <p>\u33af</p><!-- ㎯ -->
+    <p>\u20a8</p><!-- ₨ -->
+    <p>\u0154</p><!-- Ŕ -->
+    <t>\u0155</t><!-- ŕ -->
+    <p>\u1e58</p><!-- Ṙ -->
+    <t>\u1e59</t><!-- ṙ -->
+    <p>\u0158</p><!-- Ř -->
+    <t>\u0159</t><!-- ř -->
+    <p>\u0210</p><!-- Ȑ -->
+    <t>\u0211</t><!-- ȑ -->
+    <p>\u0212</p><!-- Ȓ -->
+    <t>\u0213</t><!-- ȓ -->
+    <p>\u1e5a</p><!-- Ṛ -->
+    <t>\u1e5b</t><!-- ṛ -->
+    <p>\u1e5c</p><!-- Ṝ -->
+    <t>\u1e5d</t><!-- ṝ -->
+    <p>\u0156</p><!-- Ŗ -->
+    <t>\u0157</t><!-- ŗ -->
+    <p>\u1e5e</p><!-- Ṟ -->
+    <t>\u1e5f</t><!-- ṟ -->
+
+    <reset>S</reset>
+    <p>\u2120</p><!-- ℠ -->
+    <p>\u33db</p><!-- ㏛ -->
+    <p>\ufb05</p><!-- ﬅ -->
+    <t>\ufb06</t><!-- ﬆ -->
+    <p>\u33dc</p><!-- ㏜ -->
+    <p>\u015a</p><!-- Ś -->
+    <t>\u015b</t><!-- ś -->
+    <p>\u1e64</p><!-- Ṥ -->
+    <t>\u1e65</t><!-- ṥ -->
+    <p>\u015c</p><!-- Ŝ -->
+    <t>\u015d</t><!-- ŝ -->
+    <p>\u1e60</p><!-- Ṡ -->
+    <t>\u1e61</t><!-- ṡ -->
+    <t>\u1e9b</t><!-- ẛ -->
+    <p>\u0160</p><!-- Š -->
+    <t>\u0161</t><!-- š -->
+    <p>\u1e66</p><!-- Ṧ -->
+    <t>\u1e67</t><!-- ṧ -->
+    <p>\u1e62</p><!-- Ṣ -->
+    <t>\u1e63</t><!-- ṣ -->
+    <p>\u1e68</p><!-- Ṩ -->
+    <t>\u1e69</t><!-- ṩ -->
+    <p>\u0218</p><!-- Ș -->
+    <t>\u0219</t><!-- ș -->
+    <p>\u015e</p><!-- Ş -->
+    <t>\u015f</t><!-- ş -->
+
+    <reset>T</reset>
+    <p>\u2121</p><!-- ℡ -->
+    <p>\u3394</p><!-- ㎔ -->
+    <p>\u2122</p><!-- ™ -->
+    <p>\u1e6a</p><!-- Ṫ -->
+    <t>\u1e6b</t><!-- ṫ -->
+    <p>\u1e97</p><!-- ẗ -->
+    <p>\u0164</p><!-- Ť -->
+    <t>\u0165</t><!-- ť -->
+    <p>\u1e6c</p><!-- Ṭ -->
+    <t>\u1e6d</t><!-- ṭ -->
+    <p>\u021a</p><!-- Ț -->
+    <t>\u021b</t><!-- ț -->
+    <p>\u0162</p><!-- Ţ -->
+    <t>\u0163</t><!-- ţ -->
+    <p>\u1e70</p><!-- Ṱ -->
+    <t>\u1e71</t><!-- ṱ -->
+    <p>\u1e6e</p><!-- Ṯ -->
+    <t>\u1e6f</t><!-- ṯ -->
+
+    <reset>U</reset>
+    <p>\u00d9</p><!-- Ù -->
+    <t>\u00f9</t><!-- ù -->
+    <p>\u00da</p><!-- Ú -->
+    <t>\u00fa</t><!-- ú -->
+    <p>\u00db</p><!-- Û -->
+    <t>\u00fb</t><!-- û -->
+    <p>\u0168</p><!-- Ũ -->
+    <t>\u0169</t><!-- ũ -->
+    <p>\u1e78</p><!-- Ṹ -->
+    <t>\u1e79</t><!-- ṹ -->
+    <p>\u016a</p><!-- Ū -->
+    <t>\u016b</t><!-- ū -->
+    <p>\u1e7a</p><!-- Ṻ -->
+    <t>\u1e7b</t><!-- ṻ -->
+    <p>\u016c</p><!-- Ŭ -->
+    <t>\u016d</t><!-- ŭ -->
+    <p>\u00dc</p><!-- Ü -->
+    <t>\u00fc</t><!-- ü -->
+    <p>\u01db</p><!-- Ǜ -->
+    <t>\u01dc</t><!-- ǜ -->
+    <p>\u01d7</p><!-- Ǘ -->
+    <t>\u01d8</t><!-- ǘ -->
+    <p>\u01d5</p><!-- Ǖ -->
+    <t>\u01d6</t><!-- ǖ -->
+    <p>\u01d9</p><!-- Ǚ -->
+    <t>\u01da</t><!-- ǚ -->
+    <p>\u1ee6</p><!-- Ủ -->
+    <t>\u1ee7</t><!-- ủ -->
+    <p>\u016e</p><!-- Ů -->
+    <t>\u016f</t><!-- ů -->
+    <p>\u0170</p><!-- Ű -->
+    <t>\u0171</t><!-- ű -->
+    <p>\u01d3</p><!-- Ǔ -->
+    <t>\u01d4</t><!-- ǔ -->
+    <p>\u0214</p><!-- Ȕ -->
+    <t>\u0215</t><!-- ȕ -->
+    <p>\u0216</p><!-- Ȗ -->
+    <t>\u0217</t><!-- ȗ -->
+    <p>\u01af</p><!-- Ư -->
+    <t>\u01b0</t><!-- ư -->
+    <p>\u1eea</p><!-- Ừ -->
+    <t>\u1eeb</t><!-- ừ -->
+    <p>\u1ee8</p><!-- Ứ -->
+    <t>\u1ee9</t><!-- ứ -->
+    <p>\u1eee</p><!-- Ữ -->
+    <t>\u1eef</t><!-- ữ -->
+    <p>\u1eec</p><!-- Ử -->
+    <t>\u1eed</t><!-- ử -->
+    <p>\u1ef0</p><!-- Ự -->
+    <t>\u1ef1</t><!-- ự -->
+    <p>\u1ee4</p><!-- Ụ -->
+    <t>\u1ee5</t><!-- ụ -->
+    <p>\u1e72</p><!-- Ṳ -->
+    <t>\u1e73</t><!-- ṳ -->
+    <p>\u0172</p><!-- Ų -->
+    <t>\u0173</t><!-- ų -->
+    <p>\u1e76</p><!-- Ṷ -->
+    <t>\u1e77</t><!-- ṷ -->
+    <p>\u1e74</p><!-- Ṵ -->
+    <t>\u1e75</t><!-- ṵ -->
+
+    <reset>V</reset>
+    <p>\u2165</p><!-- Ⅵ -->
+    <p>\u2166</p><!-- Ⅶ -->
+    <p>\u2167</p><!-- Ⅷ -->
+    <p>\u2175</p><!-- ⅵ -->
+    <p>\u2176</p><!-- ⅶ -->
+    <p>\u2177</p><!-- ⅷ -->
+    <p>\u1e7c</p><!-- Ṽ -->
+    <t>\u1e7d</t><!-- ṽ -->
+    <p>\u1e7e</p><!-- Ṿ -->
+    <t>\u1e7f</t><!-- ṿ -->
+    <p>\u33de</p><!-- ㏞ -->
+
+    <reset>W</reset>
+    <p>\u33dd</p><!-- ㏝ -->
+    <p>\u1e80</p><!-- Ẁ -->
+    <t>\u1e81</t><!-- ẁ -->
+    <p>\u1e82</p><!-- Ẃ -->
+    <t>\u1e83</t><!-- ẃ -->
+    <p>\u0174</p><!-- Ŵ -->
+    <t>\u0175</t><!-- ŵ -->
+    <p>\u1e86</p><!-- Ẇ -->
+    <t>\u1e87</t><!-- ẇ -->
+    <p>\u1e84</p><!-- Ẅ -->
+    <t>\u1e85</t><!-- ẅ -->
+    <p>\u1e98</p><!-- ẘ -->
+    <p>\u1e88</p><!-- Ẉ -->
+    <t>\u1e89</t><!-- ẉ -->
+
+    <reset>X</reset>
+    <p>\u216a</p><!-- Ⅺ -->
+    <p>\u216b</p><!-- Ⅻ -->
+    <p>\u217a</p><!-- ⅺ -->
+    <p>\u217b</p><!-- ⅻ -->
+    <p>\u1e8a</p><!-- Ẋ -->
+    <t>\u1e8b</t><!-- ẋ -->
+    <p>\u1e8c</p><!-- Ẍ -->
+    <t>\u1e8d</t><!-- ẍ -->
+
+    <reset>Y</reset>
+    <p>\u1ef2</p><!-- Ỳ -->
+    <t>\u1ef3</t><!-- ỳ -->
+    <p>\u00dd</p><!-- Ý -->
+    <t>\u00fd</t><!-- ý -->
+    <p>\u0176</p><!-- Ŷ -->
+    <t>\u0177</t><!-- ŷ -->
+    <p>\u1ef8</p><!-- Ỹ -->
+    <t>\u1ef9</t><!-- ỹ -->
+    <p>\u0232</p><!-- Ȳ -->
+    <t>\u0233</t><!-- ȳ -->
+    <p>\u1e8e</p><!-- Ẏ -->
+    <t>\u1e8f</t><!-- ẏ -->
+    <p>\u0178</p><!-- Ÿ -->
+    <t>\u00ff</t><!-- ÿ -->
+    <p>\u1ef6</p><!-- Ỷ -->
+    <t>\u1ef7</t><!-- ỷ -->
+    <p>\u1e99</p><!-- ẙ -->
+    <p>\u1ef4</p><!-- Ỵ -->
+    <t>\u1ef5</t><!-- ỵ -->
+
+    <reset>Z</reset>
+    <p>\u0179</p><!-- Ź -->
+    <t>\u017a</t><!-- ź -->
+    <p>\u1e90</p><!-- Ẑ -->
+    <t>\u1e91</t><!-- ẑ -->
+    <p>\u017b</p><!-- Ż -->
+    <t>\u017c</t><!-- ż -->
+    <p>\u017d</p><!-- Ž -->
+    <t>\u017e</t><!-- ž -->
+    <p>\u1e92</p><!-- Ẓ -->
+    <t>\u1e93</t><!-- ẓ -->
+    <p>\u1e94</p><!-- Ẕ -->
+    <t>\u1e95</t><!-- ẕ -->
+
+  </rules>
+</collation>
+
+</charset>
+
+<charset name="ucs2">
+  <family>Unicode</family>
+  <description>UCS-2 Unicode</description>
+  <collation name="ucs2_general_ci"	id="35">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="ucs2_bin"	id="90">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="cp866">
+  <family>Cyrillic</family>
+  <description>DOS Russian</description>
+  <alias>866</alias>
+  <alias>csibm866</alias>
+  <alias>ibm866</alias>
+  <alias>DOSCyrillicRussian</alias>
+  <collation name="cp866_general_ci"	id="36"	order="Russian"	flag="primary"/>
+  <collation name="cp866_bin"		id="68"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="keybcs2">
+  <family>Central European</family>
+  <description>DOS Kamenicky Czech-Slovak</description>
+  <collation name="keybcs2_general_ci"	id="37"	order="Czech"	flag="primary"/>
+  <collation name="keybcs2_bin"		id="73"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="macce">
+  <family>Central European</family>
+  <description>Mac Central European</description>
+  <alias>MacCentralEurope</alias>
+  <collation name="macce_general_ci"	id="38"	flag="primary">
+    <order>Hungarian</order>
+    <order>Polish</order>
+    <order>Romanian</order>
+    <order>Croatian</order>
+    <order>Slovak</order>
+    <order>Slovenian</order>
+    <order>Sorbian</order>
+  </collation>
+  <collation name="macce_bin"	id="43"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="macroman">
+  <family>Western</family>
+  <description>Mac West European</description>
+  <alias>Mac</alias>
+  <alias>Macintosh</alias>
+  <alias>csmacintosh</alias>
+  <collation name="macroman_general_ci"	id="39"	flag="primary">
+    <order>Dutch</order>
+    <order>English</order>
+    <order>French</order>
+    <order>German Duden</order>
+    <order>Italian</order>
+    <order>Latin</order>
+    <order>Portuguese</order>
+    <order>Spanish</order>
+  </collation>
+  <collation name="macroman_bin"	id="53"	order="Binary"	flag="binary"/>
+  <!--collation name="macroman_ci"	id="54"/-->
+  <!--collation name="macroman_ci_ai"	id="55"/-->
+  <!--collation name="macroman_cs"	id="56"/-->
+</charset>
+
+<charset name="cp852">
+  <family>Central European</family>
+  <description>DOS Central European</description>
+  <alias>852</alias>
+  <alias>cp852</alias>
+  <alias>ibm852</alias>
+  <collation name="cp852_general_ci"	id="40"	flag="primary">
+    <order>Hungarian</order>
+    <order>Polish</order>
+    <order>Romanian</order>
+    <order>Croatian</order>
+    <order>Slovak</order>
+    <order>Slovenian</order>
+    <order>Sorbian</order>
+  </collation>
+  <collation name="cp852_bin"	id="81"	order="Binary"	flag="binary"/>
+</charset>
+
+<charset name="cp1256">
+  <family>Arabic</family>
+  <description>Windows Arabic</description>
+  <alias>ms-arab</alias>
+  <alias>windows-1256</alias>
+  <collation name="cp1256_bin"		id="67"	order="Binary"	flag="binary"/>
+  <collation name="cp1256_general_ci"	id="57"	order="Arabic"	flag="primary">
+    <order>Arabic</order>
+    <order>Persian</order>
+    <order>Pakistani</order>
+    <order>Urdu</order>
+  </collation>
+</charset>
+
+<charset name="geostd8">
+  <family>South Asian</family>
+  <description>GEOSTD8 Georgian</description>
+  <collation name="geostd8_general_ci"	id="92"	order="Georgian"	flag="primary"/>
+  <collation name="geostd8_bin"		id="93"	order="Binary"		flag="binary"/>
+</charset>
+
+<charset name="binary">
+  <description>Binary pseudo charset</description>
+  <collation name="binary"	id="63"	order="Binary">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="cp932">
+  <family>Japanese</family>
+  <description>SJIS for Windows Japanese</description>
+  <alias>ms_cp932</alias>
+  <alias>sjis_cp932</alias>
+  <alias>sjis_ms</alias>
+  <collation name="cp932_japanese_ci"    id="95" order="Japanese">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="cp932_bin"    id="96" order="Binary">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+<charset name="eucjpms">
+  <family>Japanese</family>
+  <description>UJIS for Windows Japanese</description>
+  <alias>eucjpms</alias>
+  <alias>eucJP_ms</alias>
+  <alias>ujis_ms</alias>
+  <alias>ujis_cp932</alias>
+  <collation name="eucjpms_japanese_ci"    id="97" order="Japanese">
+    <flag>primary</flag>
+    <flag>compiled</flag>
+  </collation>
+  <collation name="eucjpms_bin"    id="98" order="Japanese">
+    <flag>binary</flag>
+    <flag>compiled</flag>
+  </collation>
+</charset>
+
+</charsets>
