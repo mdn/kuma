@@ -36,3 +36,4 @@ kuma/static/js/libs/ckeditor/source/ckbuilder
 *devmo*.sql*
 htmlcov/
 locale/**/*.mo
+/bower_components

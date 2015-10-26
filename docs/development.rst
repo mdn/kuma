@@ -82,16 +82,19 @@ Tests
 (Advanced) Managing Dependencies
 ================================
 
-Pure Python Packages
---------------------
+Python dependencies
+-------------------
+
+Pure Packages
+~~~~~~~~~~~~~
 
 All of the pure Python dependencies are included in the git repository,
 in the ``vendor`` subdirectory. This allows them to be available on the
 Python path without needing to be installed in the system, allowing multiple
 versions for multiple projects simultaneously.
 
-Compiled Python Packages
-------------------------
+Compiled Packages
+~~~~~~~~~~~~~~~~~
 
 There are a small number of compiled packages, including the MySQL Python
 client. You can install these using ``pip`` or via a package manager.
@@ -106,6 +109,22 @@ dependencies::
 
     deactivate
     sudo pip install -r requirements/compiled.txt
+
+Front-end dependencies
+----------------------
+
+Front-end dependencies are managed by Bower and checked into the repository.
+
+Follow these steps to add or upgrade a dependency:
+
+#. Update *bower.json*
+#. Enter the virtual machine (``vagrant ssh``)
+#. Install the dependency (``bower-installer``)
+#. Exit the virtual machine (``exit``)
+#. Prepare the dependency to be committed (``git add path/to/dependency``)
+
+Front-end dependencies that are not already managed by Bower should begin using
+this approach the next time they're upgraded.
 
 (Advanced) Configuration
 ========================
