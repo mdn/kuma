@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-22 16:16+0000\n"
+"PO-Revision-Date: 2015-10-26 17:53+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -123,9 +123,8 @@ msgstr "Lär dig använda bilagor"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:16
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:23
-#, fuzzy
 msgid "Attach Files"
-msgstr "Bilagor"
+msgstr "Bifoga filer"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:21
 msgid ""
@@ -433,11 +432,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
 msgid "Geolocation"
-msgstr ""
+msgstr "Geolokalisering"
 
 #: kuma/demos/__init__.py:59
 msgid "September 2011"
-msgstr ""
+msgstr "September 2011"
 
 #: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61
 #: kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
@@ -457,7 +456,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:66
 msgid "October 2011"
-msgstr ""
+msgstr "Oktober 2011"
 
 #: kuma/demos/__init__.py:67 kuma/demos/__init__.py:68
 msgid ""
@@ -472,11 +471,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:72 kuma/demos/__init__.py:233
 msgid "Canvas"
-msgstr ""
+msgstr "Canvas"
 
 #: kuma/demos/__init__.py:73
 msgid "November 2011"
-msgstr ""
+msgstr "November 2011"
 
 #: kuma/demos/__init__.py:74 kuma/demos/__init__.py:75
 msgid ""
@@ -492,11 +491,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:79 kuma/demos/__init__.py:303
 msgid "IndexedDB"
-msgstr ""
+msgstr "IndexedDB"
 
 #: kuma/demos/__init__.py:80
 msgid "December 2011"
-msgstr ""
+msgstr "December 2011"
 
 #: kuma/demos/__init__.py:81 kuma/demos/__init__.py:82
 msgid ""
@@ -510,11 +509,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:86
 msgid "Orientation"
-msgstr ""
+msgstr "Orientering"
 
 #: kuma/demos/__init__.py:87
 msgid "January 2012"
-msgstr ""
+msgstr "Januari 2012"
 
 #: kuma/demos/__init__.py:88 kuma/demos/__init__.py:89
 msgid ""
@@ -532,7 +531,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:94
 msgid "February 2012"
-msgstr ""
+msgstr "Februari 2012"
 
 #: kuma/demos/__init__.py:95 kuma/demos/__init__.py:96
 msgid ""
@@ -550,7 +549,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:101
 msgid "March 2012"
-msgstr ""
+msgstr "Mars 2012"
 
 #: kuma/demos/__init__.py:102 kuma/demos/__init__.py:103
 msgid ""
@@ -564,11 +563,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
 msgid "Audio"
-msgstr ""
+msgstr "Ljud"
 
 #: kuma/demos/__init__.py:108
 msgid "April 2012"
-msgstr ""
+msgstr "April 2012"
 
 #: kuma/demos/__init__.py:109 kuma/demos/__init__.py:110
 msgid ""
@@ -586,7 +585,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:115
 msgid "May 2012"
-msgstr ""
+msgstr "Maj 2012"
 
 #: kuma/demos/__init__.py:116 kuma/demos/__init__.py:117
 msgid ""
@@ -601,11 +600,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
 msgid "WebGL"
-msgstr ""
+msgstr "WebGL"
 
 #: kuma/demos/__init__.py:122
 msgid "June 2012"
-msgstr ""
+msgstr "Juni 2012"
 
 #: kuma/demos/__init__.py:123 kuma/demos/__init__.py:124
 #: kuma/demos/__init__.py:211 kuma/demos/__init__.py:212
@@ -620,11 +619,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:128
 msgid "No JavaScript"
-msgstr ""
+msgstr "Inget Javascript"
 
 #: kuma/demos/__init__.py:129
 msgid "July 2012"
-msgstr ""
+msgstr "Juli 2012"
 
 #: kuma/demos/__init__.py:130 kuma/demos/__init__.py:131
 msgid ""
@@ -640,11 +639,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:135
 msgid "Camera API"
-msgstr ""
+msgstr "Kamera API"
 
 #: kuma/demos/__init__.py:136
 msgid "August 2012"
-msgstr ""
+msgstr "Augusti 2012"
 
 #: kuma/demos/__init__.py:137 kuma/demos/__init__.py:138
 msgid ""
@@ -663,7 +662,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:143
 msgid "September 2012"
-msgstr ""
+msgstr "September 2012"
 
 #: kuma/demos/__init__.py:148
 msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
@@ -675,7 +674,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:150
 msgid "October 2012"
-msgstr ""
+msgstr "Oktober 2012"
 
 #: kuma/demos/__init__.py:151 kuma/demos/__init__.py:152
 msgid ""
@@ -690,11 +689,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:156
 msgid "Fullscreen API"
-msgstr ""
+msgstr "Fullskärm API"
 
 #: kuma/demos/__init__.py:157
 msgid "November 2012"
-msgstr ""
+msgstr "November 2012"
 
 #: kuma/demos/__init__.py:158 kuma/demos/__init__.py:159
 msgid ""
@@ -709,7 +708,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:163
 msgid "Offline"
-msgstr ""
+msgstr "Offline"
 
 #: kuma/demos/__init__.py:164
 msgid "December 2012"
@@ -729,11 +728,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:170 kuma/demos/__init__.py:311
 msgid "Drag and Drop"
-msgstr ""
+msgstr "Dra och släpp"
 
 #: kuma/demos/__init__.py:171
 msgid "January 2013"
-msgstr ""
+msgstr "Januari 2013"
 
 #: kuma/demos/__init__.py:172 kuma/demos/__init__.py:173
 msgid ""
@@ -747,11 +746,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:177 kuma/demos/__init__.py:383
 msgid "Multi-touch"
-msgstr ""
+msgstr "Multi-touch"
 
 #: kuma/demos/__init__.py:178
 msgid "February 2013"
-msgstr ""
+msgstr "Februari 2013"
 
 #: kuma/demos/__init__.py:179 kuma/demos/__init__.py:180
 msgid ""
@@ -767,11 +766,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:184 kuma/demos/__init__.py:319
 msgid "Mobile"
-msgstr ""
+msgstr "Mobil"
 
 #: kuma/demos/__init__.py:185
 msgid "March 2013"
-msgstr ""
+msgstr "Mars 2013"
 
 #: kuma/demos/__init__.py:186 kuma/demos/__init__.py:187
 msgid ""
@@ -790,7 +789,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:192
 msgid "April 2013"
-msgstr ""
+msgstr "April 2013"
 
 #: kuma/demos/__init__.py:193 kuma/demos/__init__.py:194
 msgid ""
@@ -805,15 +804,15 @@ msgstr ""
 
 #: kuma/demos/__init__.py:198
 msgid "getUserMedia"
-msgstr ""
+msgstr "getUserMedia"
 
 #: kuma/demos/__init__.py:199
 msgid "May 2013"
-msgstr ""
+msgstr "Maj 2013"
 
 #: kuma/demos/__init__.py:200
 msgid "May"
-msgstr ""
+msgstr "Maj"
 
 #: kuma/demos/__init__.py:201
 msgid "Action!"
@@ -832,7 +831,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:207
 msgid "WebGL II"
-msgstr ""
+msgstr "WebGL II"
 
 #: kuma/demos/__init__.py:208
 msgid "June 2013"
@@ -852,7 +851,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:216
 msgid "File API"
-msgstr ""
+msgstr "Fil API"
 
 #: kuma/demos/__init__.py:217
 msgid "July 2013"
@@ -2969,9 +2968,8 @@ msgid "The username you entered already exists."
 msgstr ""
 
 #: kuma/users/apps.py:24
-#, fuzzy
 msgid "User"
-msgstr "Användarnamn"
+msgstr "Användare"
 
 #: kuma/users/apps.py:69
 msgid ""
@@ -4369,9 +4367,8 @@ msgid "Create a New {title}"
 msgstr "Skapa en ny {title}"
 
 #: kuma/wiki/templates/wiki/create.html:30
-#, fuzzy
 msgid "Create a"
-msgstr "Skapa"
+msgstr "Skapa en"
 
 #: kuma/wiki/templates/wiki/create.html:30
 msgid "New Document"
@@ -4939,28 +4936,24 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "New sub-article"
-msgstr "Typ av artikel"
+msgstr "Ny underartikel"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:64
-#, fuzzy
 msgid "Clone this article"
-msgstr "Titel på artikel"
+msgstr "Klona denna artikel"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:67
-#, fuzzy
 msgid "Move this article"
-msgstr "Typ av artikel"
+msgstr "Flytta denna artikel"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:78
-#, fuzzy
 msgid "Delete this article"
-msgstr "Titel på artikel"
+msgstr "Ta bort denna artikel"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -4971,9 +4964,8 @@ msgid "Convert to content zone"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:88
-#, fuzzy
 msgid "Print this article"
-msgstr "Titel på artikel"
+msgstr "Skriv ut denna artikel"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -5503,9 +5495,8 @@ msgid "Feedback"
 msgstr "Återkoppling"
 
 #: templates/base.html:168
-#, fuzzy
 msgid "Get Firefox help"
-msgstr "Firefox OS"
+msgstr ""
 
 #: templates/base.html:169
 msgid "Get web development help"
@@ -5531,9 +5522,8 @@ msgid ""
 msgstr ""
 
 #: templates/base.html:205
-#, fuzzy
 msgid "About MDN"
-msgstr "Om mig"
+msgstr "Om MDN"
 
 #: templates/base.html:206
 msgid "Terms"
