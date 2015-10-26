@@ -2,14 +2,16 @@
     "name": "Kuma",
     "dependencies": {
         "html5shiv": "3.6.2",
-        "jquery": "2.1.0"
+        "jquery": "2.1.0",
+        "selectivizr": "https://github.com/keithclark/selectivizr.git#1.0.2"
     },
     "install": {
         "path": {
             "js": "kuma/static/js/libs"
         },
         "sources": {
-            "html5shiv": "bower_components/html5shiv/dist/html5shiv.js"
+            "html5shiv": "bower_components/html5shiv/dist/html5shiv.js",
+            "selectivizr": "bower_components/selectivizr/selectivizr.js"
         }
     }
 }

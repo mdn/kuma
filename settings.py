@@ -937,7 +937,7 @@ PIPELINE_JS = {
     },
     'selectivizr': {
         'source_filenames': (
-            'js/libs/selectivizr-1.0.2/selectivizr-build.js',
+            'js/libs/selectivizr/selectivizr.js',
         ),
         'output_filename': 'build/js/selectivizr.js',
     },
