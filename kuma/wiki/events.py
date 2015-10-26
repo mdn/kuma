@@ -80,13 +80,14 @@ class EditDocumentEvent(InstanceEvent):
             default_locale=document.locale)
 
     def fire(self, **kwargs):
-        events = [self]
-        events.extend(_EditDocumentInTreeEvent(doc) for doc in
-                      self.revision.document.get_topic_parents())
-        return EventUnion(*events).fire(**kwargs)
+        parent_events = [EditDocumentInTreeEvent(doc) for doc in
+                         self.revision.document.get_topic_parents()]
+        return EventUnion(self,
+                          EditDocumentInTreeEvent(self.revision.document),
+                          *parent_events).fire(**kwargs)
 
 
-class _EditDocumentInTreeEvent(InstanceEvent):
+class EditDocumentInTreeEvent(InstanceEvent):
     """
     Event class for subscribing to all document edits to and under a document
 
