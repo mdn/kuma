@@ -93,10 +93,10 @@
         trackClientErrors: function() {
             $(win).on('error', function(e) {
                 var originalEvent = e.originalEvent;
-                analytics.trackError(' JavaScript Error: ' + originalEvent.message + ' ; ' + originalEvent.filename + ':' + originalEvent.lineno);
+                analytics.trackError('JavaScript Error:' + originalEvent.message + ' ; ' + originalEvent.filename + ':' + originalEvent.lineno, win.location.href);
             });
             $(doc).ajaxError(function(e, request, settings) {
-                analytics.trackError('AJAX Error: ' +  settings.url + ' : ' + e.result);
+                analytics.trackError('AJAX Error: ' +  settings.url + ' : ' + e.result, win.location.href);
             });
         },
 
