@@ -113,3 +113,42 @@
         <a href="{{ url('users.user_detail', username=contributor.username) }}">{{ contributor.username }}</a>{% if not loop.last %}, {% endif %}
     {% endfor %}
 {%- endmacro %}
+
+{% macro watch_menu_items(document, user) -%}
+                  <li class="page-watch">
+                    {% set subscribe_status = _('Updating subscription status') %}
+                    {% set subscribe_text = _('Subscribe to this article') %}
+                    {% set unsubscribe_text = _('Unsubscribe from this article') %}
+                    <form action="{{ url('wiki.subscribe', document.slug, locale=document.locale) }}" method="post">
+                        {{ csrf() }}
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_text }}" data-unsubscribe-text="{{ unsubscribe_text }}" data-subscribe-message="{{ _('You are now subscribed to this article.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from this article.') }}">
+                        {% if document.is_watched_by(user) %}{{ unsubscribe_text }}{% else %}{{ subscribe_text }}{% endif %}
+                        </a>
+                    </form>
+                  </li>
+
+                  <li class="page-watch">
+                      {% set subscribe_tree_text = _('Subscribe to this article and all its sub-articles') %}
+                      {% set unsubscribe_tree_text = _('Unsubscribe from this article and all its sub-articles') %}
+                    <form action="{{ url('wiki.subscribe_to_tree', document.slug, locale=document.locale) }}" method="post">
+                        {{ csrf() }}
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_tree_text }}" data-unsubscribe-text="{{ unsubscribe_tree_text }}" data-subscribe-message="{{ _('You are now subscribed to this article and all its sub-articles.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from this article and all its sub-articles.') }}">
+                        {% if document.tree_is_watched_by(user) %}{{ unsubscribe_tree_text }}{% else %}{{ subscribe_tree_text }}{% endif %}
+                        </a>
+                    </form>
+                  </li>
+
+                    {% if document.parent %}
+                  <li class="page-watch">
+                    {% set parent_language = document.parent.language %}
+                    {% set subscribe_parent_text = _('Subscribe to {language} version')|f(language=parent_language) %}
+                    {% set unsubscribe_parent_text = _('Unsubscribe from {language} version')|f(language=parent_language) %}
+                    <form action="{{ url('wiki.subscribe', document.parent.slug, locale=document.parent.locale) }}" method="post">
+                        {{ csrf() }}
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_parent_text }}" data-unsubscribe-text="{{ unsubscribe_parent_text }}" data-subscribe-message="{{ _('You are now subscribed to the {language} version of this article.')|f(language=parent_language) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from the {language} version of this article.')|f(language=parent_language) }}">
+                        {% if document.parent.is_watched_by(user) %}{{ unsubscribe_parent_text }}{% else %}{{ subscribe_parent_text }}{% endif %}
+                        </a>
+                    </form>
+                  </li>
+                    {% endif %}
+{%- endmacro %}

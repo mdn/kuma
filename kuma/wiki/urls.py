@@ -81,6 +81,11 @@ document_patterns = [
         views.document.subscribe,
         name='wiki.subscribe'),
 
+    # Un/Subscribe to document tree edit notifications.
+    url(r'^\$subscribe_to_tree$',
+        views.document.subscribe_to_tree,
+        name='wiki.subscribe_to_tree'),
+
     # Vote helpful/not helpful
     url(r'^\$vote',
         views.misc.helpful_vote,

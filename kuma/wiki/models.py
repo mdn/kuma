@@ -1450,6 +1450,11 @@ Full traceback:
         from .events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
 
+    def tree_is_watched_by(self, user):
+        """Return whether `user` is notified of edits to me AND sub-pages."""
+        from .events import EditDocumentInTreeEvent
+        return EditDocumentInTreeEvent.is_notifying(user, self)
+
     def get_document_type(self):
         return WikiDocumentType
 

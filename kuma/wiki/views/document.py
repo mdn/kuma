@@ -455,13 +455,10 @@ def subscribe_to_tree(request, document_slug, document_locale):
         Document, locale=document_locale, slug=document_slug)
     status = 0
 
-    if EditDocumentInTreeEvent.is_notifying(request.user,
-                                            object_id=document.id):
-        EditDocumentInTreeEvent.stop_notifying(request.user,
-                                               object_id=document.id)
+    if EditDocumentInTreeEvent.is_notifying(request.user, document):
+        EditDocumentInTreeEvent.stop_notifying(request.user, document)
     else:
-        EditDocumentInTreeEvent.notify(request.user,
-                                       object_id=document.id)
+        EditDocumentInTreeEvent.notify(request.user, document)
         status = 1
 
     if request.is_ajax():

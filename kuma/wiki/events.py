@@ -93,5 +93,5 @@ class EditDocumentInTreeEvent(InstanceEvent):
 
     Note: Do not call this class's .fire() method directly.
     """
-    event_type = 'edited wiki document with or under id'
+    event_type = 'wiki edit document in tree'
     content_type = Document
