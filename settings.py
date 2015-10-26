@@ -756,7 +756,7 @@ PIPELINE_CSS = {
 PIPELINE_JS = {
     'main': {
         'source_filenames': (
-            'js/libs/jquery-2.1.0.js',
+            'js/libs/jquery/jquery.js',
             'js/components.js',
             'js/analytics.js',
             'js/main.js',
