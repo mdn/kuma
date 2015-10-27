@@ -1302,7 +1302,7 @@ msgstr "Iskanje po primerih MDN  za \"%s\""
 
 #: kuma/demos/feeds.py:217
 msgid "Search results for demo submissions matching \"%s\""
-msgstr "Rezultati iskanja za primere \"% s\""
+msgstr "Rezultati iskanja za primere \"%s\""
 
 #: kuma/demos/helpers.py:109
 msgid "First Place"

@@ -334,7 +334,7 @@ msgstr "Inhalt von Moderator gelöscht"
 
 #: kuma/contentflagging/models.py:65
 msgid "{object} Flagged"
-msgstr "{objekt} gekennzeichnet"
+msgstr "{object} gekennzeichnet"
 
 #: kuma/contentflagging/models.py:98
 msgid "current status of flag review"

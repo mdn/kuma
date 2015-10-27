@@ -1410,7 +1410,7 @@ msgstr "已删除并上传 %(item)s 的文件"
 
 #: kuma/demos/admin.py:111
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr "成功删除了 %(count)d 个 %(item)s。"
+msgstr "成功删除了 %(count)d 个 %(items)s。"
 
 #: kuma/demos/admin.py:123
 msgid "Cannot delete %(name)s"
@@ -4052,7 +4052,7 @@ msgid ""
 "modified at %(doc_modified)s) </p>"
 msgstr ""
 "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> 查看 "
-"'%(parent_locale) 的上一层 </a> (<a href=\"%(mod_url)s\">最后修改于 "
+"'%(parent_locale)s 的上一层 </a> (<a href=\"%(mod_url)s\">最后修改于 "
 "%(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s\" "
 "title=\"%(doc_title)s\"> 编辑 '%(doc_locale)s' 的翻译 </a> (最后修改于 "
 "%(doc_modified)s) </p>"

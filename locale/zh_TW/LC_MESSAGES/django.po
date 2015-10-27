@@ -5339,7 +5339,7 @@ msgstr "含有下列標籤，已翻譯的文件: {tag}"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr "含有任何翻譯標籤的文件: {tag}"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:15
 msgid "Found %(count)s document."
