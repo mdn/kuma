@@ -16,13 +16,14 @@ from django.core.exceptions import ValidationError
 from django.test.utils import override_settings
 
 from kuma.core.exceptions import ProgrammingError
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, get_user
 from kuma.users.tests import UserTestCase
 
 from . import (create_template_test_users, create_topical_parents_docs,
                doc_rev, document, normalize_html, revision)
 from .. import tasks
 from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
+from ..events import EditDocumentInTreeEvent
 from ..exceptions import (DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress, PageMoveError)
 from ..helpers import absolutify
@@ -532,6 +533,12 @@ class DocumentTestsWithFixture(UserTestCase):
         eq_(sample_css.strip(), result['css'].strip())
         eq_(sample_js.strip(), result['js'].strip())
 
+    def test_tree_is_watched_by(self):
+        rev = revision()
+        testuser2 = get_user(username='testuser2')
+        EditDocumentInTreeEvent.notify(testuser2, rev.document)
+
+        assert rev.document.tree_is_watched_by(testuser2)
 
 class TaggedDocumentTests(UserTestCase):
     """Tests for tags in Documents and Revisions"""

@@ -36,7 +36,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase, user
 
 from ..content import get_seo_description
-from ..events import EditDocumentEvent
+from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       DocumentTag, DocumentDeletionLog)
@@ -2556,43 +2556,50 @@ class DocumentWatchTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
         super(DocumentWatchTests, self).setUp()
+        self.subscribe_views = [
+            ('wiki.subscribe', EditDocumentEvent),
+            ('wiki.subscribe_to_tree', EditDocumentInTreeEvent)
+        ]
         self.document, self.r = doc_rev()
         self.client.login(username='testuser', password='testpass')
 
     def test_watch_GET_405(self):
         """Watch document with HTTP GET results in 405."""
-        response = self.client.get(reverse('wiki.subscribe',
-                                           args=[self.document.slug]),
-                                   follow=True)
-        eq_(405, response.status_code)
+        for view, Event in self.subscribe_views:
+            response = self.client.get(reverse(view,
+                                               args=[self.document.slug]),
+                                       follow=True)
+            eq_(405, response.status_code)
 
     def test_unwatch_GET_405(self):
         """Unwatch document with HTTP GET results in 405."""
-        response = self.client.get(reverse('wiki.subscribe',
-                                           args=[self.document.slug]),
-                                   follow=True)
-        eq_(405, response.status_code)
+        for view, Event in self.subscribe_views:
+            response = self.client.get(reverse(view,
+                                               args=[self.document.slug]),
+                                       follow=True)
+            eq_(405, response.status_code)
 
     def test_watch_unwatch(self):
         """Watch and unwatch a document."""
         user = self.user_model.objects.get(username='testuser')
 
-        # Subscribe
-        response = self.client.post(reverse('wiki.subscribe',
-                                            args=[self.document.slug]),
-                                    follow=True)
+        for view, Event in self.subscribe_views:
+            # Subscribe
+            response = self.client.post(reverse(view,
+                                                args=[self.document.slug]),
+                                        follow=True)
 
-        eq_(200, response.status_code)
-        assert EditDocumentEvent.is_notifying(user, self.document), \
-            'Watch was not created'
+            eq_(200, response.status_code)
+            assert Event.is_notifying(user, self.document), \
+                'Watch was not created'
 
-        # Unsubscribe
-        response = self.client.post(reverse('wiki.subscribe',
-                                            args=[self.document.slug]),
-                                    follow=True)
-        eq_(200, response.status_code)
-        assert not EditDocumentEvent.is_notifying(user, self.document), \
-            'Watch was not destroyed'
+            # Unsubscribe
+            response = self.client.post(reverse(view,
+                                                args=[self.document.slug]),
+                                        follow=True)
+            eq_(200, response.status_code)
+            assert not Event.is_notifying(user, self.document), \
+                'Watch was not destroyed'
 
 
 class SectionEditingResourceTests(UserTestCase, WikiTestCase):
