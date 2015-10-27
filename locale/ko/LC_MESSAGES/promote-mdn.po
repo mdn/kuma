@@ -1,4 +1,4 @@
-# Copyright (C) 2012 
+# Copyright (C) 2012
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1408080217.0\n"
 
 #: promote-mdn.php:190
@@ -38,8 +38,8 @@ msgstr "MDN는 웹 개발자에 의해 만들어진 웹 개발자를 위한 최�
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr "MDN에서 추출된 키워드 및 문서 페이지를 만들어 공유할 수 있습니다."
 
 #: promote-mdn.php:256
@@ -121,8 +121,8 @@ msgstr ""
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
 "주의: 이들 키워드는 URL 로드 시 우선 가져오게 됩니다. 너무 많은 맞춤 키워드가 있으면 MDN에 링크하지 않을 수도 있습니다."
 
@@ -138,8 +138,8 @@ msgstr "설치해 주셔서 감사합니다! <a href=\"%s\">환경 설정</a>페
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr "프랑스어 번역 <a href=\"%s\">위젯</a>, <a href=\"%s\">설정</a>은 특정 URL 키워드가 됩니다."
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
