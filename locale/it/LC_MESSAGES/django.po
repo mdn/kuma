@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-27 14:08+0000\n"
+"PO-Revision-Date: 2015-10-23 07:19+0000\n"
 "Last-Translator: Sandro <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: MozillaItalia <MozillaItalia>\n"
 "Language: it\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1445954922.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
@@ -41,11 +41,8 @@ msgid "Files of this type are not permitted."
 msgstr "I file di questo tipo non sono consentiti."
 
 #: kuma/attachments/views.py:151
-#, fuzzy
 msgid "The file provided is not valid. File must be one of these types: %s."
 msgstr ""
-"Il file specificato non è valido. Sono accettati solo i seguenti tipi di "
-"file: %s."
 
 #. {n} is the revision number, {t} is the title of the document. {c} is the
 #. category.
@@ -127,9 +124,8 @@ msgstr "Scopri come gestire gli allegati"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:16
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:23
-#, fuzzy
 msgid "Attach Files"
-msgstr "Allega file"
+msgstr ""
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:21
 msgid ""
@@ -253,16 +249,11 @@ msgstr ""
 "richiederli <a href=\"%(bugzilla_url)s\">aprendo un bug su Bugzilla</a>."
 
 #: kuma/authkeys/templates/authkeys/new.html:7
-#, fuzzy
 msgid ""
 "<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong>"
 " This will be your only means of identifying this key later, other than the "
 "date and time of its creation. So, be as clear as you can.</p>"
 msgstr ""
-"<p>Di seguito, specifica che uso intendi fare di questa chiave. "
-"<p><strong>NOTA</strong>: questa descrizione è l’unico riferimento per "
-"identificare la chiave in futuro, oltre alla data e all’ora di creazione, "
-"per cui è consigliabile compilare il campo con informazioni rilevanti.</p>"
 
 #: kuma/authkeys/templates/authkeys/new.html:16
 msgid "Create"
@@ -2065,9 +2056,8 @@ msgid "More About This Demo From The Author"
 msgstr "Ulteriori informazioni su questa demo da parte del suo autore"
 
 #: kuma/demos/templates/demos/detail.html:207
-#, fuzzy
 msgid "About this Demo"
-msgstr "Informazioni sulla demo"
+msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:209
 msgid ""
@@ -2243,9 +2233,8 @@ msgstr "Avvia"
 
 #: kuma/demos/templates/demos/home.html:106
 #: kuma/demos/templates/demos/home.html:107
-#, fuzzy
 msgid "Search demos"
-msgstr "Ricerca demo"
+msgstr ""
 
 #: kuma/demos/templates/demos/home.html:111
 msgid "<b>or</b>"
@@ -2551,9 +2540,8 @@ msgid "Terms for Contributors"
 msgstr "Termini per i collaboratori"
 
 #: kuma/demos/templates/demos/terms.html:20
-#, fuzzy
 msgid "Demo Studio: Terms for Contributors"
-msgstr "Demo Studio — Termini per i collaboratori"
+msgstr ""
 
 #: kuma/demos/templates/demos/terms.html:107
 msgid "Rights Representation Details"
@@ -2650,9 +2638,8 @@ msgid "Go to the first page"
 msgstr "Vai alla prima pagina"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:58
-#, fuzzy
 msgid "First"
-msgstr "Prima"
+msgstr ""
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:61
 msgid "Go to the previous page"
@@ -2679,9 +2666,8 @@ msgid "Launch {title}"
 msgstr "Avvia {title}"
 
 #: kuma/demos/templates/demos/elements/user_link.html:2
-#, fuzzy
 msgid "See %(display_name)s's profile"
-msgstr "Visualizza il profilo di %(display_name)s"
+msgstr ""
 
 #: kuma/landing/templates/landing/fellowship.html:12
 #, fuzzy
@@ -2689,8 +2675,8 @@ msgid ""
 "The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
 "web developers to come change the world with Mozilla."
 msgstr ""
-"Il programma fellowship di  Mozilla Developer Network (MDN) invita tutti gli "
-"sviluppatori a unirsi a Mozilla per cambiare il mondo."
+"Il programma fellowship di  Mozilla Developer Network (MDN) invita tutti gli"
+" sviluppatori a unirsi a Mozilla per cambiare il mondo."
 
 #: kuma/landing/templates/landing/homepage.html:14
 msgid ""
@@ -2714,9 +2700,8 @@ msgid "Search the docs"
 msgstr "Ricerca nella documentazione"
 
 #: kuma/landing/templates/landing/homepage.html:57
-#, fuzzy
 msgid "Show topics"
-msgstr "Mostra argomenti"
+msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:78
 msgid "Web Technologies"
@@ -2748,9 +2733,8 @@ msgid "more..."
 msgstr "altro…"
 
 #: kuma/landing/templates/landing/homepage.html:91
-#, fuzzy
 msgid "Mozilla<br> Docs"
-msgstr "Mozilla<br> Docs"
+msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:93 templates/base.html:156
 msgid "Firefox"
@@ -2814,9 +2798,8 @@ msgid "Open Web and Mobile"
 msgstr "Open Web e piattaforma mobile"
 
 #: kuma/landing/templates/landing/homepage.html:125
-#, fuzzy
 msgid "Learn Web Development"
-msgstr "Impara lo sviluppo web"
+msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:128
 #, fuzzy
@@ -2847,17 +2830,12 @@ msgid "Get Involved"
 msgstr "Collabora con noi"
 
 #: kuma/landing/templates/landing/homepage.html:152
-#, fuzzy
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span "
 "class=\"number\">%(contributors)s</span> contributors</span> <span "
 "class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">Unisciti ai <span class=\"number\">%"
-"(contributors)s</span> contributors</span> <span class=\"row2\">con oltre "
-"<span class=\"number\">%(locales)s</span> lingue e varianti regionali</span> "
-"<span class=\"row3\">in tutto il mondo.</span> </p>"
 
 #: kuma/landing/templates/landing/homepage.html:159
 #: kuma/landing/templates/landing/homepage.html:166
@@ -3155,13 +3133,10 @@ msgstr ""
 "minuto."
 
 #: kuma/search/utils.py:17
-#, fuzzy
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
 msgstr ""
-"Si è verificato un errore con la query di ricerca specificata. Riprova tra "
-"qualche minuto."
 
 #: kuma/search/templates/search/down.html:5
 msgid "Search Unavailable"
@@ -3268,16 +3243,11 @@ msgid "Filter"
 msgstr "Filtra"
 
 #: kuma/users/adapters.py:18
-#, fuzzy
 msgid ""
 "Sorry, you must have at least one connected account so you can sign in. To "
 "disconnect this account connect a different one first. To delete your MDN "
 "profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
 msgstr ""
-"Devi essere connesso a un account per poter effettuare l’accesso. Prima di "
-"disconnettere questo account devi connetterne un altro. Per eliminare il "
-"profilo MDN <a href=\"%(bug_form_url)s\" rel=\"nofollow\">apri un bug su "
-"Buzilla</a>."
 
 #: kuma/users/adapters.py:22
 #, fuzzy
@@ -3293,12 +3263,10 @@ msgid "User"
 msgstr "Utente"
 
 #: kuma/users/apps.py:69
-#, fuzzy
 msgid ""
 "You have completed the first step of <a href=\"%s\">getting started with "
 "MDN</a>"
 msgstr ""
-"Hai fatto il primo passo <a href=\"%s\">per iniziare a collaborare a MDN</a>."
 
 #: kuma/users/backends.py:33
 msgid "algorithm"
@@ -3313,12 +3281,9 @@ msgid "hash"
 msgstr "hash"
 
 #: kuma/users/constants.py:4
-#, fuzzy
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr ""
-"Il nome utente può contenere unicamente lettere, numeri e i caratteri: . - _ "
-"+"
 
 #: kuma/users/forms.py:22
 msgid "You must agree to the privacy policy."
@@ -3416,9 +3381,8 @@ msgid "This field cannot be blank."
 msgstr "Questo campo non può essere lasciato vuoto."
 
 #: kuma/users/forms.py:280
-#, fuzzy
 msgid "Username already in use."
-msgstr "Questo nome utente è già utilizzato."
+msgstr ""
 
 #: kuma/users/helpers.py:37
 #, fuzzy
@@ -3452,9 +3416,8 @@ msgid "Language"
 msgstr "Lingua"
 
 #: kuma/users/models.py:56
-#, fuzzy
 msgid "Homepage"
-msgstr "Pagina iniziale"
+msgstr ""
 
 #: kuma/users/models.py:60
 msgid ""
@@ -3497,9 +3460,8 @@ msgid "Enter a valid website URL."
 msgstr "Inserire l’indirizzo valido di un sito web."
 
 #: kuma/users/models.py:107
-#, fuzzy
 msgid "Enter a valid Twitter URL."
-msgstr "Inserire l’indirizzo valido di una pagina Twitter."
+msgstr ""
 
 #: kuma/users/models.py:112
 #, fuzzy
@@ -3522,9 +3484,8 @@ msgid "Enter a valid Mozillians URL."
 msgstr "Inserire l’indirizzo valido di una pagina Mozillians."
 
 #: kuma/users/models.py:132
-#, fuzzy
 msgid "Enter a valid Facebook URL."
-msgstr "Inserire l’indirizzo valido di una pagina Facebook."
+msgstr ""
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
@@ -3547,9 +3508,8 @@ msgstr ""
 "massimo %(limit_value)s caratteri."
 
 #: kuma/users/signup.py:13
-#, fuzzy
 msgid "You must agree to the terms of use."
-msgstr "È necessario accettare i termini di utilizzo."
+msgstr ""
 
 #: kuma/users/tasks.py:37 kuma/users/templates/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
@@ -3565,9 +3525,8 @@ msgid "%(email)s <b>Verified</b>"
 msgstr "L’indirizzo email %(email)s <b>è stato verificato</b>"
 
 #: kuma/users/views.py:299
-#, fuzzy
 msgid "%(email)s Unverified"
-msgstr "L’indirizzo email %(email)s non è stato verificato"
+msgstr ""
 
 #: kuma/users/views.py:302 kuma/users/templates/socialaccount/signup.html:142
 msgid "Other:"
@@ -3766,16 +3725,12 @@ msgstr ""
 
 #: kuma/users/templates/account/signup_closed.html:3
 #: kuma/users/templates/account/signup_closed.html:7
-#, fuzzy
 msgid "Profile Creation Disabled"
-msgstr "Creazione di nuovi profili disattivata"
+msgstr ""
 
 #: kuma/users/templates/account/signup_closed.html:9
-#, fuzzy
 msgid "We are sorry, but profile creation is currently disabled."
 msgstr ""
-"Siamo spiacenti, ma al momento le registrazioni di nuovi profili sono "
-"chiuse."
 
 #: kuma/users/templates/account/verification_sent.html:3
 #: kuma/users/templates/account/verification_sent.html:7
@@ -4014,13 +3969,10 @@ msgstr ""
 "href=\"{privacy_url}\">informativa sulla privacy</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:170
-#, fuzzy
 msgid ""
 "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
 "href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
-"ai <a href=\"%(terms_url)s\">termini di utilizzo</a> e all’<a href=\"%"
-"(privacy_url)s\">informativa sulla privacy</a> di Mozilla."
 
 #: kuma/users/templates/socialaccount/signup.html:179
 msgid "Create my MDN profile"
@@ -4103,9 +4055,8 @@ msgid "Areas of Expertise"
 msgstr "Campi di competenza"
 
 #: kuma/users/templates/users/user_detail.html:108
-#, fuzzy
 msgid "Member since %(date_joined)s"
-msgstr "Registrato in data %(date_joined)s"
+msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:159
 msgid "Subscribe to a feed of {display_name}'s demos"
@@ -4464,14 +4415,12 @@ msgid "MDN recent changes to documents tagged %s"
 msgstr "Ultime modifiche ai documenti etichettati %s su MDN"
 
 #: kuma/wiki/feeds.py:178
-#, fuzzy
 msgid "MDN documents in need of review"
-msgstr "Documenti MDN in attesa di revisione."
+msgstr ""
 
 #: kuma/wiki/feeds.py:179
-#, fuzzy
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr "Ultime modifiche a documenti MDN in attesa di revisione"
+msgstr ""
 
 #: kuma/wiki/feeds.py:185
 msgid "MDN documents for %s review"
@@ -4842,14 +4791,12 @@ msgid "Creation Date"
 msgstr "Data di creazione"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:23
-#, fuzzy
 msgid "Last Change By"
-msgstr "Autore ultima modifica"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:26
-#, fuzzy
 msgid "Last Change Date"
-msgstr "Data ultima modifica"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:29
 msgid ""
@@ -4900,9 +4847,8 @@ msgid "Create a New {title}"
 msgstr "Crea nuovo {title}"
 
 #: kuma/wiki/templates/wiki/create.html:30
-#, fuzzy
 msgid "Create a"
-msgstr "Crea un"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/create.html:30
 msgid "New Document"
@@ -4927,9 +4873,8 @@ msgid "Document Deleted"
 msgstr "Il documento è stato eliminato"
 
 #: kuma/wiki/templates/wiki/deletion_log.html:9
-#, fuzzy
 msgid "This document was deleted on %(when)s."
-msgstr "Questo documento è stato eliminato in data %(when)s."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
@@ -5055,15 +5000,11 @@ msgid "This article doesn't have any content yet."
 msgstr "Questo articolo non ha ancora alcun contenuto."
 
 #: kuma/wiki/templates/wiki/document.html:331
-#, fuzzy
 msgid ""
 "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that "
 "use %(title)s</a> to see example use cases and how many pages use this "
 "macro."
 msgstr ""
-"Cerca per <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pagine in cui "
-"viene utilizzata %(title)s</a> per vedere alcuni esempi e il numero di "
-"pagine che utilizzano questa macro."
 
 #: kuma/wiki/templates/wiki/document.html:344
 msgid "This article doesn't have approved content yet."
@@ -5074,15 +5015,11 @@ msgid "Document Tags and Contributors"
 msgstr "Etichette del documento e nomi di chi ha collaborato alla sua stesura"
 
 #: kuma/wiki/templates/wiki/document.html:362
-#, fuzzy
 msgid ""
 "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-"
 "group\"></i><strong>Contributors to this page:</strong> "
 "%(contributors_list)s </div>"
 msgstr ""
-"<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-"
-"group\"></i><strong>Hanno collaborato a questa pagina:</strong> %"
-"(contributors_list)s </div>"
 
 #: kuma/wiki/templates/wiki/document.html:371
 msgid "Last updated by:"
@@ -5110,9 +5047,8 @@ msgstr "Le tue modifiche"
 #: kuma/wiki/templates/wiki/edit.html:38 kuma/wiki/templates/wiki/edit.html:46
 #: kuma/wiki/templates/wiki/includes/document_macros.html:41
 #: kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy
 msgid "Revision {id} by <a href=\"{user_profile_url}\">{user}</a> on {date}"
-msgstr "Versione {id} di <a href=\"{user_profile_url}\">{user}</a> del {date}"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:43
 msgid "Current Revision:"
@@ -5123,9 +5059,8 @@ msgid "Search results summary:"
 msgstr "Sommario dei risultati della ricerca:"
 
 #: kuma/wiki/templates/wiki/edit.html:91
-#, fuzzy
 msgid "<span class=\"title-prefix\">Editing</span> <em>{title}</em>"
-msgstr "<span class=\"title-prefix\">Stai modificando</span> <em>{title}</em>"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:94
 msgid "Edit Page Title and Properties"
@@ -5201,14 +5136,12 @@ msgstr ""
 "relativa all’aggiunta di etichette agli articoli</a>."
 
 #: kuma/wiki/templates/wiki/move.html:2
-#, fuzzy
 msgid "Move Article | {document}"
-msgstr "Sposta l’articolo | {document}"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:16
-#, fuzzy
 msgid "<span class=\"title-prefix\">Moving</span> <em>{title}</em>"
-msgstr "<span class=\"title-prefix\">Stai spostando</span> <em>{title}</em>"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:20
 #, fuzzy
@@ -5244,16 +5177,13 @@ msgid ""
 "Don't include a trailing slash (this will be removed for you if you include "
 "it, but you should leave it out)."
 msgstr ""
-"non inserire lo slash finale (se viene inserito sarà rimosso, ciò nonostante "
-"è meglio non inserirlo)."
+"non inserire lo slash finale (se viene inserito sarà rimosso, ciò nonostante"
+" è meglio non inserirlo)."
 
 #: kuma/wiki/templates/wiki/move.html:31
-#, fuzzy
 msgid ""
 "Your requested move cannot be completed due to the following slug conflicts:"
 msgstr ""
-"Non è possibile spostare il documento che hai richiesto a causa dei seguenti "
-"conflitti tra slug:"
 
 #: kuma/wiki/templates/wiki/move.html:39
 #, fuzzy
@@ -5327,9 +5257,8 @@ msgid "Revision {n} | {t} | {c}"
 msgstr "Versione {n} | {t} | {c}"
 
 #: kuma/wiki/templates/wiki/revision.html:11
-#, fuzzy
 msgid "Revision"
-msgstr "Versione"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/revision.html:11
 #, fuzzy
@@ -5374,7 +5303,6 @@ msgstr ""
 "href=\"//www.mozilla.org/en-US/privacy\">Informativa sulla privacy</a>"
 
 #: kuma/wiki/templates/wiki/sphinx.html:43
-#, fuzzy
 msgid ""
 "&copy; 2005-2015 Mozilla Developer Network and individual contributors<br />"
 " Content is available under a license specific to this project. &middot; <a "
@@ -5382,20 +5310,14 @@ msgid ""
 "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Mozilla Developer Network e di singoli collaboratori<br /> "
-"Contenuto disponibile con una licenza personalizzata. &middot; <a href=\"%"
-"(about_url)s\">Informazioni su MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Contribuisci al codice</a> &middot; <a "
-"href=\"//www.mozilla.org/en-US/privacy\">Informativa sulla privacy</a>"
 
 #: kuma/wiki/templates/wiki/translate.html:7
 msgid "Translate Article | {document}"
 msgstr "Traduci articolo | {document}"
 
 #: kuma/wiki/templates/wiki/translate.html:29
-#, fuzzy
 msgid "<span class=\"title-prefix\">Translating</span> <em>{title}</em>"
-msgstr "<span class=\"title-prefix\">Stai traducendo</span> <em>{title}</em>"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:33
 msgid "Translating article to {locale}"
@@ -5459,9 +5381,8 @@ msgstr "%(creator)s ha modificato il titolo di %(document_title)s."
 
 #. This is in an email.
 #: kuma/wiki/templates/wiki/email/edited.ltxt:13
-#, fuzzy
 msgid "View User Profile:"
-msgstr "Visualizza Profilo di:"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
@@ -5500,9 +5421,8 @@ msgid "Languages"
 msgstr "Lingue"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:25
-#, fuzzy
 msgid "No translations exist for this article."
-msgstr "Non esiste alcuna traduzione di questo articolo."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:29
 msgid "Add a translation"
@@ -5515,76 +5435,63 @@ msgstr "Aggiornamento delle sottoscrizioni"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
 #: kuma/wiki/templates/wiki/includes/buttons.html:47
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "Iscriviti a questo articolo"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
 #: kuma/wiki/templates/wiki/includes/buttons.html:47
-#, fuzzy
 msgid "Unsubscribe from this article"
-msgstr "Annulla l’iscrizione a questo articolo"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
-#, fuzzy
 msgid "You are now subscribed to this article."
-msgstr "Hai effettuato l’iscrizione a questo articolo."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
-#, fuzzy
 msgid "You have been unsubscribed from this article."
-msgstr "Hai annullato l’iscrizione a questo articolo."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
 #: kuma/wiki/templates/wiki/includes/buttons.html:56
-#, fuzzy
 msgid "Subscribe to {language} version"
-msgstr "Iscriviti alle revisioni per il locale {language}"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
 #: kuma/wiki/templates/wiki/includes/buttons.html:56
-#, fuzzy
 msgid "Unsubscribe from {language} version"
-msgstr "Annulla l’iscrizione alle revisioni per il locale {language}"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
 #, fuzzy
 msgid "You are now subscribed to the {language} version of this article."
 msgstr ""
-"Hai effettuato l’iscrizione per le modifiche del locale {language} di questo "
-"articolo."
+"Hai effettuato l’iscrizione per le modifiche del locale {language} di questo"
+" articolo."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
-#, fuzzy
 msgid ""
 "You have been unsubscribed from the {language} version of this article."
 msgstr ""
-"Hai annullato l’iscrizione per le modifiche del locale {language} di questo "
-"articolo."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "New sub-article"
-msgstr "Nuovo sottoarticolo"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:64
-#, fuzzy
 msgid "Clone this article"
-msgstr "Clona questo articolo"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:67
-#, fuzzy
 msgid "Move this article"
-msgstr "Sposta questo articolo"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr "Visualizza in modalità amministratore"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:78
-#, fuzzy
 msgid "Delete this article"
-msgstr "Elimina questo articolo"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -5595,9 +5502,8 @@ msgid "Convert to content zone"
 msgstr "Converti in una sezione contenuti"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:88
-#, fuzzy
 msgid "Print this article"
-msgstr "Stampa questo articolo"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -5628,9 +5534,8 @@ msgstr ""
 "Ricarica questa pagina tra qualche minuto."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:99
-#, fuzzy
 msgid "Share:"
-msgstr "Condividi:"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:103
 msgid "Google+"
@@ -6077,9 +5982,8 @@ msgid "Tools"
 msgstr "Strumenti"
 
 #: templates/base.html:104
-#, fuzzy
 msgid "Contribute to MDN"
-msgstr "Collabora a MDN"
+msgstr ""
 
 #: templates/base.html:106
 #, fuzzy
@@ -6097,19 +6001,16 @@ msgid "Add a new page"
 msgstr "Aggiungi una nuova pagina"
 
 #: templates/base.html:111
-#, fuzzy
 msgid "Site Tools"
-msgstr "Strumenti sito"
+msgstr ""
 
 #: templates/base.html:113
-#, fuzzy
 msgid "Revision dashboard"
-msgstr "Pannello versioni"
+msgstr ""
 
 #: templates/base.html:114
-#, fuzzy
 msgid "Documentation status"
-msgstr "Stato documentazione"
+msgstr ""
 
 #: templates/base.html:123
 msgid "Web Platform"
@@ -6140,9 +6041,8 @@ msgid "References & Guides"
 msgstr "Manuali di riferimento e guide"
 
 #: templates/base.html:140
-#, fuzzy
 msgid "Learn the Web"
-msgstr "Impara il Web"
+msgstr ""
 
 #: templates/base.html:141
 msgid "Tutorials"
@@ -6165,28 +6065,24 @@ msgid "...more docs"
 msgstr "Ulteriore documentazione"
 
 #: templates/base.html:150
-#, fuzzy
 msgid "Mozilla Docs"
-msgstr "Mozilla Docs"
+msgstr ""
 
 #: templates/base.html:159 templates/includes/login.html:20
 msgid "Persona"
 msgstr "Persona"
 
 #: templates/base.html:163
-#, fuzzy
 msgid "Developer Tools"
-msgstr "Strumenti di sviluppo"
+msgstr ""
 
 #: templates/base.html:163
-#, fuzzy
 msgid "Feedback"
-msgstr "Feedback"
+msgstr ""
 
 #: templates/base.html:168
-#, fuzzy
 msgid "Get Firefox help"
-msgstr "ottieni supporto su Firefox"
+msgstr ""
 
 #: templates/base.html:169
 #, fuzzy
@@ -6199,9 +6095,8 @@ msgid "Join the MDN community"
 msgstr "Unisciti alla comunità MDN"
 
 #: templates/base.html:173
-#, fuzzy
 msgid "Report a content problem"
-msgstr "Segnala errori dei contenuti"
+msgstr ""
 
 #: templates/base.html:174
 #, fuzzy
@@ -6209,20 +6104,15 @@ msgid "Report a bug"
 msgstr "Segnala un problema"
 
 #: templates/base.html:200
-#, fuzzy
 msgid ""
 "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual "
 "contributors.</p> <p>Content is available under <a "
 "href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
-"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network e di singoli "
-"collaboratori al progetto.</p> <p>I contenuti sono disponibili secondo <a "
-"href=\"%(copyright_url)s\">queste licenze</a>.</p>"
 
 #: templates/base.html:205
-#, fuzzy
 msgid "About MDN"
-msgstr "Informazioni su MDN"
+msgstr ""
 
 #: templates/base.html:206
 #, fuzzy
@@ -6238,9 +6128,8 @@ msgid "Cookies"
 msgstr "Cookie"
 
 #: templates/base.html:209
-#, fuzzy
 msgid "Contribute to the code"
-msgstr "Collabora al codice sorgente"
+msgstr ""
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
