@@ -415,8 +415,9 @@ TEMPLATE_DIRS = (
 )
 
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'pipeline.finders.AppDirectoriesFinder',
+    'pipeline.finders.FileSystemFinder',
+    'pipeline.finders.CachedFileFinder',
     'pipeline.finders.PipelineFinder',
 )
 
@@ -566,7 +567,7 @@ PIPELINE_COMPILERS = (
 
 PIPELINE_STYLUS_ARGUMENTS = ''
 
-PIPELINE_CSS_COMPRESSOR = 'kuma.core.pipeline.cleancss.CleanCSSCompressor'
+PIPELINE_CSS_COMPRESSOR = 'kuma.core.pipeline.compressors.cleancss.CleanCSSCompressor'
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
 
 PIPELINE_CSS = {
