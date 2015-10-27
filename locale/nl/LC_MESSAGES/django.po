@@ -12,11 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1445975837.0\n"
+"X-POOTLE-MTIME: 1445975860.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
-msgstr "test"
+msgstr "object-ID"
 
 #: kuma/actioncounters/models.py:48
 msgid "name of the action"
