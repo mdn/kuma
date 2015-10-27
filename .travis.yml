@@ -16,6 +16,7 @@ env:
         - TOXENV=py27
         - TOXENV=flake8
         - TOXENV=docs
+        - TOXENV=dennis
     global:
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive
