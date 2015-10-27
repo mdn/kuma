@@ -3423,8 +3423,6 @@ msgid ""
 "You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
 "interests."
 msgstr ""
-"Duke krijuar një profil, plotësuat hapin e parë te <a href=\"%(started_link)s\">Si T’ia Fillohet Te MDN</a>. Tani vazhdoni duke zgjedhur një punë te MDN-ja, dhe duke e përmbushur atë! Kemi një dorë "
-"punësh fillestare prej nga të cilat mund të zgjidhni bazuar në interesat tuaja."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:19

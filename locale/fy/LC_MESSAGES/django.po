@@ -1496,7 +1496,7 @@ msgid ""
 "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 "<strong>cannot be undone</strong>."
 msgstr ""
-"<p>Jo steane op it punt om <strong>%(demo_title)</strong> fuort te smiten út de Demo Studio.</p> <p>De Demo's list, boarnekoade, en statistiken sille <strong>fuortsmiten</strong> wurde.</p> <p>Dize "
+"<p>Jo steane op it punt om <strong>%(demo_title)s</strong> fuort te smiten út de Demo Studio.</p> <p>De Demo's list, boarnekoade, en statistiken sille <strong>fuortsmiten</strong> wurde.</p> <p>Dize "
 "aksje <strong>kin net ûngedien makke wurde</strong>."
 
 #: kuma/demos/templates/demos/delete.html:49

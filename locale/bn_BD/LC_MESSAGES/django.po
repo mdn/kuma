@@ -1217,11 +1217,11 @@ msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
 
 #: kuma/demos/admin.py:38
 msgid "Censored %(item)s"
-msgstr "সেন্সরকৃত %(item)গুলো"
+msgstr "সেন্সরকৃত %(item)sগুলো"
 
 #: kuma/demos/admin.py:43
 msgid "Successfully censored %(count)d %(items)s."
-msgstr "সফলভাবে মুছে দেওয়া হয়েছে %(count)d %(item) গুলি।"
+msgstr "সফলভাবে মুছে দেওয়া হয়েছে %(count)d %(items)s গুলি।"
 
 #: kuma/demos/admin.py:55 kuma/demos/admin.py:125
 msgid "Are you sure?"
@@ -1233,7 +1233,7 @@ msgstr "ডিলিট এবং অপলোড করা ফাইলগু�
 
 #: kuma/demos/admin.py:111
 msgid "Successfully deleted %(count)d %(items)s."
-msgstr "সফলভাবে মুছে দেওয়া হয়েছে %(গণনা) %(আইটেম) গুলি।"
+msgstr "সফলভাবে মুছে দেওয়া হয়েছে %(count)d %(items)s গুলি।"
 
 #: kuma/demos/admin.py:123
 msgid "Cannot delete %(name)s"
@@ -1512,7 +1512,7 @@ msgid ""
 "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 "<strong>cannot be undone</strong>."
 msgstr ""
-"<p>অাপনি  <strong>%(demo_title)টি</strong> ডেমো স্টুডিও থেকে মুছতে যাচ্ছেন।</p> <p> এতে ডেমোটির তালিকা, সোর্স কোড এবং পরিসংখ্যান <strong>মুছে যাবে</strong> যাবে.</p> <p>এই কাজটি <strong>পুনরায় অাগের মত করা "
+"<p>অাপনি  <strong>%(demo_title)sটি</strong> ডেমো স্টুডিও থেকে মুছতে যাচ্ছেন।</p> <p> এতে ডেমোটির তালিকা, সোর্স কোড এবং পরিসংখ্যান <strong>মুছে যাবে</strong> যাবে.</p> <p>এই কাজটি <strong>পুনরায় অাগের মত করা "
 "যাবে না</strong>।"
 
 #: kuma/demos/templates/demos/delete.html:49
@@ -3562,11 +3562,11 @@ msgstr "অনুগ্রহ করে একটি শিরোনাম প�
 
 #: kuma/wiki/forms.py:28
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "টাইটেলটি অত্যন্ত ছোট (%(show_value) অক্ষরের)। এটার অবশ্যই %(limit_value) অক্ষরের হতে হবে।"
+msgstr "টাইটেলটি অত্যন্ত ছোট (%(show_value)s অক্ষরের)। এটার অবশ্যই %(limit_value)s অক্ষরের হতে হবে।"
 
 #: kuma/wiki/forms.py:30
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr "অনুগ্রহ করে টাইটেলের সীমা %(limit_value) অক্ষর অথবা এর থেকে কম রাখুন। বর্তমানে %(show_value) অক্ষর আছে।"
+msgstr "অনুগ্রহ করে টাইটেলের সীমা %(limit_value)s অক্ষর অথবা এর থেকে কম রাখুন। বর্তমানে %(show_value)s অক্ষর আছে।"
 
 #: kuma/wiki/forms.py:33
 msgid "Name Your Article"
@@ -3582,11 +3582,11 @@ msgstr "প্রদানকৃত স্লাগটি বৈধ নয়।"
 
 #: kuma/wiki/forms.py:36
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "স্লাগটি অনেক ছোট (%(show_value)s অক্ষরের)। এটি অবশ্যই %(limit_value) অক্ষরের মধ্যে হতে হবে।"
+msgstr "স্লাগটি অনেক ছোট (%(show_value)s অক্ষরের)। এটি অবশ্যই %(limit_value)s অক্ষরের মধ্যে হতে হবে।"
 
 #: kuma/wiki/forms.py:38
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr "দয়া করে স্লাগের দৈর্ঘ‍্য %(limit_value) অক্ষরের ম‍ধ‍্যে হতে হবে। বর্তমানে এর মধ‍্যে %(show_value) অক্ষর আছে।"
+msgstr "দয়া করে স্লাগের দৈর্ঘ‍্য %(limit_value)s অক্ষরের ম‍ধ‍্যে হতে হবে। বর্তমানে এর মধ‍্যে %(show_value)s অক্ষর আছে।"
 
 #: kuma/wiki/forms.py:41
 msgid "Please provide a summary."
@@ -3594,11 +3594,11 @@ msgstr "অনুগ্রহ করে সংক্ষিপ্ত বিবর
 
 #: kuma/wiki/forms.py:42
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "বিবরনটি অত‍্যান্ত ছোট (%(show_value) অক্ষরের)। এটি কমপক্ষে %(limit_value) অক্ষরের হতে হবে।"
+msgstr "বিবরনটি অত‍্যান্ত ছোট (%(show_value)s অক্ষরের)। এটি কমপক্ষে %(limit_value)s অক্ষরের হতে হবে।"
 
 #: kuma/wiki/forms.py:44
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr "দয়াকরে বিররনটি %(limit_value) অক্ষর বা তার চেয়ে কম রাখুন। বর্তমানে %(show_value) অক্ষরে আছে।"
+msgstr "দয়াকরে বিররনটি %(limit_value)s অক্ষর বা তার চেয়ে কম রাখুন। বর্তমানে %(show_value)s অক্ষরে আছে।"
 
 #: kuma/wiki/forms.py:47
 msgid "Please provide content."
@@ -3606,7 +3606,7 @@ msgstr "বিষয়বস্তু প্রদান করুন।"
 
 #: kuma/wiki/forms.py:48
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "বিষয়বস্তু অত্যন্ত ছোট (%(show_value) অক্ষরের)। এটা অন্তত %(limit_value) টি অক্ষরের হতে হবে।"
+msgstr "বিষয়বস্তু অত্যন্ত ছোট (%(show_value)s অক্ষরের)। এটা অন্তত %(limit_value)s টি অক্ষরের হতে হবে।"
 
 #: kuma/wiki/forms.py:50
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
@@ -3614,7 +3614,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:53
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr "অনুগ্রহ করে মন্তব‍্যটি %(limit_value)অক্ষরের বা এর থেকে ছোট রাখুন। এটি বর্তমানে %(show_value) অক্ষরের আছে।"
+msgstr "অনুগ্রহ করে মন্তব‍্যটি %(limit_value)sঅক্ষরের বা এর থেকে ছোট রাখুন। এটি বর্তমানে %(show_value)s অক্ষরের আছে।"
 
 #: kuma/wiki/forms.py:56
 msgid "Another document with this slug already exists."
