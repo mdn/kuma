@@ -9,11 +9,11 @@
     var $sectionHead = $compatWrapper.prevAll('h2').first();
     var sectionHeadIsMatch = $sectionHead.filter(function() {
             return $(this).text().match(/(browser )?compat[i|a]bility/i);
-        });
+    });
     // is it a browser compat section?
     if(sectionHeadIsMatch) {
         // come back down DOM hiding things until we reach the comapt table.
-        $sectionHead.nextUntil('.bc-api').hide();
+        $sectionHead.nextUntil('.bc-api').hide().addClass('bc-old-hide');
     }
 
     // Private var to assign IDs to history for accessibility purposes
@@ -36,6 +36,9 @@
         return $(this).each(function() {
 
             var $table = $(this);
+
+            // add beta notice & menu
+            addBetaNotice($table);
 
             // Keep track of what may be open within this table
             var $openCell;
@@ -96,6 +99,46 @@
                 }
             });
 
+            // add beta notice & associated functonality
+            function addBetaNotice($table) {
+                var $betaMenuWrapper = $('<div />', { 'class': 'bc-beta-menu' });
+                var $betaMenuTrigger = $('<a />', { text: gettext('New compatibility tables are in beta '), href: '/en-US/docs/New_Compatibility_Tables_Beta' }).append($('<i>', { class: 'icon-caret-down', 'aria-hidden': 'true' }));
+                var $betaSubmenu = $('<ul />', { 'class': 'submenu js-submenu' });
+                var betaSubmenuItems = [];
+
+                var $betaLink = $('<a />', { text: gettext('More about the beta.'), href: '/en-US/docs/New_Compatibility_Tables_Beta' });
+                betaSubmenuItems.push($betaLink);
+
+                var $betaSurvey = $('<a />', { text: gettext('Take the survey'), href: 'http://www.surveygizmo.com/s3/2342437/0b5ff6b6b8f6', 'class': 'external external-icon' });
+                betaSubmenuItems.push($betaSurvey);
+
+                var $betaError = $('<button />', { text: gettext('Report an error.'), 'class': 'button bc-error' });
+                $betaError.on('click', function(){
+                    mdn.analytics.trackEvent({
+                        category: 'Compat Tables Error',
+                        action: location.pathname
+                    });
+                    mdn.Notifier.growl(gettext('Reported. Thanks!'), { duration: 2000, closable: true }).success();
+                });
+                betaSubmenuItems.push($betaError);
+
+                var $betaShowOld = $('<button />', { text: gettext('Show old table.'), 'class': 'button bc-old' });
+                $betaShowOld.on('click', function(){
+                    $('.bc-old-hide').toggle();
+                });
+                betaSubmenuItems.push($betaShowOld);
+
+                $(betaSubmenuItems).each(function(){
+                    var $newItem = $('<li />');
+                    $newItem.append(this);
+                    $newItem.appendTo($betaSubmenu);
+                });
+
+                $betaMenuWrapper.append($betaMenuTrigger).append($betaSubmenu);
+                $betaMenuWrapper.insertBefore($table);
+
+                $betaMenuWrapper.mozMenu().mozKeyboardNav();
+            }
 
             // Function which closes any open history, opens the target history
             // Acts as the "router" for open and close directives
@@ -118,7 +161,6 @@
                 // Close what's open, if anything, and open if $td has a value
                 hideHistory($td);
             }
-
 
             // Opens the history for a given item
             function showHistory() {
