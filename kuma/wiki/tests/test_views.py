@@ -33,6 +33,7 @@ from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.models import IPBan
 from kuma.core.urlresolvers import reverse
+from kuma.core.tests import get_user
 from kuma.users.tests import UserTestCase, user
 
 from ..content import get_seo_description
@@ -2549,6 +2550,136 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         _check_message_for_headers(testuser_message, 'testuser')
         _check_message_for_headers(admin_message, 'admin')
 
+    @mock.patch.object(Site.objects, 'get_current')
+    def test_email_for_watched_edits(self, get_current):
+        """
+        When a user edits a watched document, we should send an email to users
+        who are watching it.
+        """
+        get_current.return_value.domain = 'dev.mo.org'
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        rev = revision(save=True)
+
+        testuser2 = get_user(username='testuser2')
+        EditDocumentEvent.notify(testuser2, rev.document)
+
+        data.update({'form': 'rev',
+                     'slug': rev.document.slug,
+                     'content': 'This edit should send an email',
+                     'comment': 'This edit should send an email'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[rev.document.slug]),
+                         data)
+        self.assertEquals(1, len(mail.outbox))
+
+        # Subscribe another user and assert 2 emails sent this time
+        testuser01 = get_user(username='testuser01')
+        EditDocumentEvent.notify(testuser01, rev.document)
+
+        data.update({'form': 'rev',
+                     'slug': rev.document.slug,
+                     'content': 'This edit should send 2 emails',
+                     'comment': 'This edit should send 2 emails'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[rev.document.slug]),
+                         data)
+        self.assertEquals(3, len(mail.outbox))
+
+    @mock.patch.object(Site.objects, 'get_current')
+    def test_email_for_child_edit_in_watched_tree(self, get_current):
+        """
+        When a user edits a child document in a watched document tree, we
+        should send an email to users who are watching the tree.
+        """
+        get_current.return_value.domain = 'dev.mo.org'
+
+        root_doc = document(title="Root", slug="Root", save=True)
+        revision(document=root_doc, title="Root", slug="Root", save=True)
+        child_doc = document(title="Child", slug="Child", save=True)
+        child_doc.parent_topic = root_doc
+        child_doc.save()
+        revision(document=child_doc, title="Child", slug="Child", save=True)
+
+        testuser2 = get_user(username='testuser2')
+        EditDocumentInTreeEvent.notify(testuser2, root_doc)
+
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        data.update({'form': 'rev',
+                     'slug': child_doc.slug,
+                     'content': 'This edit should send an email',
+                     'comment': 'This edit should send an email'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[child_doc.slug]),
+                         data)
+        eq_(1, len(mail.outbox))
+
+    @mock.patch.object(Site.objects, 'get_current')
+    def test_email_for_grandchild_edit_in_watched_tree(self, get_current):
+        """
+        When a user edits a grandchild document in a watched document tree, we
+        should send an email to users who are watching the tree.
+        """
+        get_current.return_value.domain = 'dev.mo.org'
+
+        root_doc = document(title="Root", slug="Root", save=True)
+        revision(document=root_doc, title="Root", slug="Root", save=True)
+        child_doc = document(title="Child", slug="Child", save=True)
+        child_doc.parent_topic = root_doc
+        child_doc.save()
+        revision(document=child_doc, title="Child", slug="Child", save=True)
+        grandchild_doc = document(title="Grandchild", slug="Grandchild",
+                                  save=True)
+        grandchild_doc.parent_topic = child_doc
+        grandchild_doc.save()
+        revision(document=grandchild_doc, title="Grandchild",
+                 slug="Grandchild", save=True)
+
+        testuser2 = get_user(username='testuser2')
+        EditDocumentInTreeEvent.notify(testuser2, root_doc)
+
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        data.update({'form': 'rev',
+                     'slug': grandchild_doc.slug,
+                     'content': 'This edit should send an email',
+                     'comment': 'This edit should send an email'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[grandchild_doc.slug]),
+                         data)
+        eq_(1, len(mail.outbox))
+
+    @mock.patch.object(Site.objects, 'get_current')
+    def test_single_email_when_watching_doc_and_tree(self, get_current):
+        """
+        When a user edits a watched document in a watched document tree, we
+        should only send a single email to users who are watching both the
+        document and the tree.
+        """
+        get_current.return_value.domain = 'dev.mo.org'
+
+        root_doc = document(title="Root", slug="Root", save=True)
+        revision(document=root_doc, title="Root", slug="Root", save=True)
+        child_doc = document(title="Child", slug="Child", save=True)
+        child_doc.parent_topic = root_doc
+        child_doc.save()
+        revision(document=child_doc, title="Child", slug="Child", save=True)
+
+        testuser2 = get_user(username='testuser2')
+        EditDocumentInTreeEvent.notify(testuser2, root_doc)
+        EditDocumentEvent.notify(testuser2, child_doc)
+
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        data.update({'form': 'rev',
+                     'slug': child_doc.slug,
+                     'content': 'This edit should send an email',
+                     'comment': 'This edit should send an email'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[child_doc.slug]),
+                         data)
+        eq_(1, len(mail.outbox))
 
 class DocumentWatchTests(UserTestCase, WikiTestCase):
     """Tests for un/subscribing to document edit notifications."""
