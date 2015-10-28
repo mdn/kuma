@@ -34,7 +34,7 @@ class UserAdmin(BaseUserAdmin):
         """HTML link to user's revisions with count"""
         link = urlparams(reverse('dashboards.revisions'),
                          user=obj.username)
-        count = obj.wiki_revisions().count()
+        count = obj.created_revisions.count()
         return ('<a href="%(link)s"><strong>%(count)s</strong></a>' %
                 {'link': link, 'count': count})
 
