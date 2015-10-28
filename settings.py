@@ -576,6 +576,7 @@ PIPELINE_CSS = {
             'styles/main.styl',
         ),
         'output_filename': 'build/styles/mdn.css',
+        'variant': 'datauri',
     },
     'jquery-ui': {
         'source_filenames': (
