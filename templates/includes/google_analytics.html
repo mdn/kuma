@@ -25,6 +25,11 @@
         ga('set', 'dimension9', 'Enabled');
     {% endif %}
 
+    // dimension10 == "Watch Menu"
+    {% if waffle.flag('watch_menu') %}
+        ga('set', 'dimension10', 'Enabled');
+    {% endif %}
+
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
         var win = window;
