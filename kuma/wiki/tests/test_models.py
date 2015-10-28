@@ -540,6 +540,7 @@ class DocumentTestsWithFixture(UserTestCase):
 
         assert rev.document.tree_is_watched_by(testuser2)
 
+
 class TaggedDocumentTests(UserTestCase):
     """Tests for tags in Documents and Revisions"""
 

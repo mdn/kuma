@@ -2681,6 +2681,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                          data)
         eq_(1, len(mail.outbox))
 
+
 class DocumentWatchTests(UserTestCase, WikiTestCase):
     """Tests for un/subscribing to document edit notifications."""
     localizing_client = True

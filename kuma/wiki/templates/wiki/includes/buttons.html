@@ -1,4 +1,4 @@
-{% from "wiki/includes/document_macros.html" import watch_menu_items %}
+{% from "wiki/includes/document_macros.html" import watch_menu_items with context%}
 {% macro get_document_buttons(document, edit_link) %}
 
   {% if document.parent %}
