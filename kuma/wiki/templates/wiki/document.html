@@ -359,11 +359,9 @@
                   {% include "wiki/includes/document_tag.html" %}
 
                   {% if has_contributors %}
-                    {% trans contributors_list=contributor_links(contributors) %}
                     <div class="contributors-sub">
-                      <i aria-hidden="true" class="icon-group icon-fw"></i>&nbsp;<strong>Contributors to this page:</strong> {{ contributors_list }}
+                      <i aria-hidden="true" class="icon-group icon-fw"></i>&nbsp;<strong>{{ _('Contributors to this page:') }}</strong> {{ contributor_links(contributors) }}
                     </div>
-                    {% endtrans %}
                   {% endif %}
 
                   {% if current_revision.creator %}
