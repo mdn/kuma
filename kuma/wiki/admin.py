@@ -11,7 +11,7 @@ from kuma.core.decorators import login_required, permission_required
 from kuma.core.urlresolvers import reverse
 
 from .decorators import check_readonly
-from .models import (Document, DocumentZone, DocumentTag,
+from .models import (Document, DocumentZone, DocumentTag, DocumentSpamAttempt,
                      Revision, RevisionIP, EditorToolbar)
 
 
@@ -320,6 +320,25 @@ class DocumentAdmin(admin.ModelAdmin):
         return qs
 
 
+class DocumentTagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    search_fields = ('name',)
+    ordering = ('name',)
+
+
+class DocumentZoneAdmin(admin.ModelAdmin):
+    raw_id_fields = ('document',)
+
+
+class DocumentSpamAttemptAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'slug', 'document', 'created', 'user']
+    list_display_links = ['id', 'title', 'slug']
+    list_filter = ['created', 'document__deleted', 'document__locale']
+    ordering = ['-created']
+    search_fields = ['title', 'slug', 'user__username']
+    raw_id_fields = ['user', 'document']
+
+
 class RevisionAdmin(admin.ModelAdmin):
     fields = ('title', 'summary', 'content', 'keywords', 'tags',
               'comment', 'is_approved')
@@ -336,19 +355,10 @@ class RevisionIPAdmin(admin.ModelAdmin):
     list_display = ('revision', 'ip',)
 
 
-class DocumentTagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
-    search_fields = ('name',)
-    ordering = ('name',)
-
-
-class DocumentZoneAdmin(admin.ModelAdmin):
-    raw_id_fields = ('document',)
-
-
 admin.site.register(Document, DocumentAdmin)
-admin.site.register(DocumentZone, DocumentZoneAdmin)
+admin.site.register(DocumentSpamAttempt, DocumentSpamAttemptAdmin)
 admin.site.register(DocumentTag, DocumentTagAdmin)
+admin.site.register(DocumentZone, DocumentZoneAdmin)
 admin.site.register(Revision, RevisionAdmin)
 admin.site.register(RevisionIP, RevisionIPAdmin)
 admin.site.register(EditorToolbar, admin.ModelAdmin)

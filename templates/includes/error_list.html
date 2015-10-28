@@ -1,13 +1,13 @@
-{% macro errorlist(form, safe=False) -%}
+{% macro errorlist(form) -%}
   {% if form.errors %}
     <ul class="errorlist">
       {% for field in form %}
         {% for error in field.errors %}
-          <li><a href="#{{ form.auto_id % field.name }}">{{ error|safe if safe else error }}</a></li>
+          <li><a href="#{{ form.auto_id % field.name }}">{{ error }}</a></li>
         {% endfor %}
       {% endfor %}
       {% for error in form.non_field_errors() %}
-        <li>{{ error|safe if safe else error }}</li>
+        <li>{{ error }}</li>
       {% endfor %}
     </ul>
   {% endif %}

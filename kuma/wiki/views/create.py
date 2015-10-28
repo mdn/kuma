@@ -95,14 +95,15 @@ def create(request):
 
         doc_form = DocumentForm(initial=initial_data, parent_slug=parent_slug)
 
-        rev_form = RevisionForm(initial={
+        initial = {
             'slug': initial_slug,
             'title': initial_title,
             'content': initial_html,
             'review_tags': review_tags,
             'tags': initial_tags,
             'toc_depth': initial_toc
-        })
+        }
+        rev_form = RevisionForm(request=request, initial=initial)
 
         context.update({
             'parent_id': initial_parent_id,
@@ -119,8 +120,10 @@ def create(request):
         if parent_slug:
             submitted_data['parent_topic'] = initial_parent_id
 
-        doc_form = DocumentForm(submitted_data, parent_slug=parent_slug)
-        rev_form = RevisionForm(data=submitted_data, parent_slug=parent_slug)
+        doc_form = DocumentForm(data=submitted_data, parent_slug=parent_slug)
+        rev_form = RevisionForm(request=request,
+                                data=submitted_data,
+                                parent_slug=parent_slug)
 
         if doc_form.is_valid() and rev_form.is_valid():
             slug = doc_form.cleaned_data['slug']
@@ -128,7 +131,7 @@ def create(request):
                 raise PermissionDenied
 
             doc = doc_form.save(parent=None)
-            rev_form.save(request, doc)
+            rev_form.save(doc)
             if doc.current_revision.is_approved:
                 view = 'wiki.document'
             else:

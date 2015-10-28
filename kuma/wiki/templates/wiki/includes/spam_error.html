@@ -1,0 +1,15 @@
+<p>
+    {% trans does_this_belong_url=wiki_url('MDN/Contribute/Does_this_belong') %}
+    Your submission includes content that may not be suitable for MDN.
+    Repeated attempts to submit unsuitable material may result in your
+    account being deactivated. See our guide
+    “<a href="{{ does_this_belong_url }}">Does this belong on MDN?</a>”
+    for details on what constitutes appropriate material.
+    {% endtrans %}
+</p>
+<p>
+    {% trans admin_email='mailto:mdn-admins@mozilla.org' %}
+    If you believe you’ve received this message by mistake, please
+    <a href="{{ admin_email }}">contact the site administrators</a>.
+    {% endtrans %}
+</p>
