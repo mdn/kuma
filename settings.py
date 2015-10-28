@@ -608,6 +608,7 @@ PIPELINE_CSS = {
             'styles/home.styl',
         ),
         'output_filename': 'build/styles/home.css',
+        'variant': 'datauri',
     },
     'search': {
         'source_filenames': (
@@ -1368,6 +1369,10 @@ CONSTANCE_CONFIG = dict(
         "mdn-spam-watch@mozilla.com",
         "Email address to which emails will be sent for users' first edits",
     ),
+    AKISMET_KEY=(
+        '',
+        'API key for Akismet spam checks, leave empty to disable'
+    )
 )
 
 BASKET_URL = 'https://basket.mozilla.com'

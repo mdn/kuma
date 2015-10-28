@@ -120,7 +120,8 @@ def edit(request, document_slug, document_locale, revision_id=None):
 
     doc_form = rev_form = None
     if doc.allows_revision_by(request.user):
-        rev_form = RevisionForm(instance=rev,
+        rev_form = RevisionForm(request=request,
+                                instance=rev,
                                 initial={'based_on': rev.id,
                                          'current_rev': rev.id,
                                          'comment': ''},
@@ -194,7 +195,8 @@ def edit(request, document_slug, document_locale, revision_id=None):
             else:
                 post_data = request.POST.copy()
 
-                rev_form = RevisionForm(post_data,
+                rev_form = RevisionForm(request=request,
+                                        data=post_data,
                                         is_iframe_target=is_iframe_target,
                                         section_id=section_id)
                 rev_form.instance.document = doc  # for rev_form.clean()
@@ -219,7 +221,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
                             rev, doc)
 
                 if rev_form.is_valid():
-                    rev_form.save(request, doc)
+                    rev_form.save(doc)
 
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just

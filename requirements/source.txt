@@ -111,3 +111,7 @@ django-flat-theme==0.9.5
 django-sundial==1.0.1
 
 django-pipeline==1.5.4
+
+cookies==2.2.1
+
+responses==0.4.0

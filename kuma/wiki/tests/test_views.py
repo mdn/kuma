@@ -2,14 +2,15 @@
 import base64
 import datetime
 import json
+import re
 import time
+from urlparse import urlparse
 
 import mock
+import responses
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
-
-from urlparse import urlparse
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -42,7 +43,9 @@ from ..models import (Document, Revision, RevisionIP, DocumentZone,
 from ..views.document import _get_seo_parent_title
 from . import (doc_rev, document, new_document_data, revision,
                normalize_html, create_template_test_users,
-               make_translation, WikiTestCase, FakeResponse)
+               make_translation, WikiTestCase)
+
+KUMASCRIPT_URL_RE = re.compile(r'https?://.*')
 
 
 class RedirectTests(UserTestCase, WikiTestCase):
@@ -674,7 +677,6 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
         super(KumascriptIntegrationTests, self).setUp()
-
         self.d, self.r = doc_rev()
         self.r.content = "TEST CONTENT"
         self.r.save()
@@ -749,87 +751,85 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         ok_(mock_kumascript_get.called,
             "kumascript should have been used")
 
-    @override_config(KUMASCRIPT_TIMEOUT=1.0,
-                     KUMASCRIPT_MAX_AGE=1234)
-    @mock.patch('requests.get')
-    def test_ua_max_age_zero(self, mock_requests_get):
-        """Authenticated users can request a zero max-age for kumascript"""
-        trap = {}
-
-        def my_requests_get(url, headers=None, timeout=None):
-            trap['headers'] = headers
-            return FakeResponse(status_code=200,
-                                headers={}, text='HELLO WORLD')
-
-        mock_requests_get.side_effect = my_requests_get
+    @responses.activate
+    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
+    def test_ua_max_age_zero(self):
+        """
+        Authenticated users can request a zero max-age for kumascript
+        """
+        responses.add(responses.GET, self.url, body='HELLO WORLD')
 
         self.client.get(self.url, follow=False,
                         HTTP_CACHE_CONTROL='no-cache')
-        eq_('max-age=1234', trap['headers']['Cache-Control'])
+        eq_(responses.calls[0].request.headers['Cache-Control'],
+            'max-age=1234')
 
         self.client.login(username='admin', password='testpass')
         self.client.get(self.url, follow=False,
                         HTTP_CACHE_CONTROL='no-cache')
-        eq_('no-cache', trap['headers']['Cache-Control'])
+        eq_(responses.calls[1].request.headers['Cache-Control'],
+            'no-cache')
 
-    @override_config(KUMASCRIPT_TIMEOUT=1.0,
-                     KUMASCRIPT_MAX_AGE=1234)
-    @mock.patch('requests.get')
-    def test_ua_no_cache(self, mock_requests_get):
-        """Authenticated users can request no-cache for kumascript"""
-        trap = {}
+    @responses.activate
+    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
+    def test_ua_no_cache(self):
+        """
+        Authenticated users can request no-cache for kumascript
+        """
+        responses.add(responses.GET, self.url, body='HELLO WORLD')
 
-        def my_requests_get(url, headers=None, timeout=None):
-            trap['headers'] = headers
-            return FakeResponse(status_code=200,
-                                headers={}, text='HELLO WORLD')
-
-        mock_requests_get.side_effect = my_requests_get
-
-        self.client.get(self.url, follow=False,
-                        HTTP_CACHE_CONTROL='no-cache')
-        eq_('max-age=1234', trap['headers']['Cache-Control'])
+        self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
+        eq_(responses.calls[0].request.headers['Cache-Control'],
+            'max-age=1234')
 
         self.client.login(username='admin', password='testpass')
-        self.client.get(self.url, follow=False,
-                        HTTP_CACHE_CONTROL='no-cache')
-        eq_('no-cache', trap['headers']['Cache-Control'])
+        self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
+        eq_(responses.calls[1].request.headers['Cache-Control'], 'no-cache')
 
-    @override_config(KUMASCRIPT_TIMEOUT=1.0,
-                     KUMASCRIPT_MAX_AGE=1234)
-    @mock.patch('requests.get')
-    def test_conditional_get(self, mock_requests_get):
-        """Ensure conditional GET in requests to kumascript work as expected"""
+    @responses.activate
+    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
+    def test_conditional_get(self):
+        """
+        Ensure conditional GET in requests to kumascript work as expected
+        """
         expected_etag = "8675309JENNY"
         expected_modified = "Wed, 14 Mar 2012 22:29:17 GMT"
         expected_content = "HELLO THERE, WORLD"
 
-        trap = dict(req_cnt=0)
-
-        def my_requests_get(url, headers=None, timeout=None):
-            trap['req_cnt'] += 1
-            trap['headers'] = headers
-            if trap['req_cnt'] in [1, 2]:
-                return FakeResponse(
-                    status_code=200, text=expected_content,
-                    headers={
-                        "etag": expected_etag,
-                        "last-modified": expected_modified,
-                        "age": 456
-                    })
-            else:
-                return FakeResponse(
-                    status_code=304, text='',
-                    headers={
-                        "etag": expected_etag,
-                        "last-modified": expected_modified,
-                        "age": 123
-                    })
-
-        mock_requests_get.side_effect = my_requests_get
+        responses.add(
+            responses.GET,
+            KUMASCRIPT_URL_RE,
+            body=expected_content,
+            adding_headers={
+                'etag': expected_etag,
+                'last-modified': expected_modified,
+                'age': '456',
+            },
+        )
+        responses.add(
+            responses.GET,
+            KUMASCRIPT_URL_RE,
+            body=expected_content,
+            adding_headers={
+                'etag': expected_etag,
+                'last-modified': expected_modified,
+                'age': '456',
+            },
+        )
+        responses.add(
+            responses.GET,
+            KUMASCRIPT_URL_RE,
+            body=expected_content,
+            status=304,
+            adding_headers={
+                'etag': expected_etag,
+                'last-modified': expected_modified,
+                'age': '123',
+            },
+        )
 
         # First request to let the view cache etag / last-modified
-        response = self.client.get(self.url)
+        self.client.get(self.url)
 
         # Clear rendered_html to force another request.
         self.d.rendered_html = ''
@@ -837,17 +837,18 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
         # Second request to verify the view sends them back
         response = self.client.get(self.url)
-        eq_(expected_etag, trap['headers']['If-None-Match'])
-        eq_(expected_modified, trap['headers']['If-Modified-Since'])
+        eq_(expected_etag,
+            responses.calls[1].request.headers['If-None-Match'])
+        eq_(expected_modified,
+            responses.calls[1].request.headers['If-Modified-Since'])
 
         # Third request to verify content was cached and served on a 304
         response = self.client.get(self.url)
         ok_(expected_content in response.content)
 
-    @override_config(KUMASCRIPT_TIMEOUT=1.0,
-                     KUMASCRIPT_MAX_AGE=600)
-    @mock.patch('requests.get')
-    def test_error_reporting(self, mock_requests_get):
+    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
+    @responses.activate
+    def test_error_reporting(self):
         """Kumascript reports errors in HTTP headers, Kuma should display"""
 
         # Make sure we have enough log messages to ensure there are more than
@@ -898,52 +899,43 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         for i in range(0, len(d_lines)):
             headers_out['%s-%s-%s' % (p[i % len(p)], fl_uid, i)] = d_lines[i]
 
-        # Now, trap the request from the view.
-        trap = {}
-
-        def my_requests_get(url, headers=None, timeout=None):
-            trap['headers'] = headers
-            return FakeResponse(
-                status_code=200,
-                text='HELLO WORLD',
-                headers=headers_out
-            )
-        mock_requests_get.side_effect = my_requests_get
+        responses.add(
+            responses.GET,
+            KUMASCRIPT_URL_RE,
+            body='HELLO WORLD',
+            adding_headers=headers_out,
+        )
 
         # Finally, fire off the request to the view and ensure that the log
         # messages were received and displayed on the page. But, only for a
         # logged in user.
         self.client.login(username='admin', password='testpass')
         response = self.client.get(self.url)
-        eq_(trap['headers']['X-FireLogger'], '1.2')
+        eq_(responses.calls[0].request.headers['X-FireLogger'], '1.2')
         for error in expected_errors['logs']:
             ok_(error['message'] in response.content)
             eq_(response.status_code, 200)
 
-    @override_config(KUMASCRIPT_TIMEOUT=1.0,
-                     KUMASCRIPT_MAX_AGE=600)
-    @mock.patch('requests.post')
-    def test_preview_nonascii(self, mock_post):
+    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
+    @responses.activate
+    def test_preview_nonascii(self):
         """POSTing non-ascii to kumascript should encode to utf8"""
         content = u'Français'
-        trap = {}
-
-        def my_post(url, timeout=None, headers=None, data=None):
-            trap['data'] = data
-            return FakeResponse(status_code=200, headers={},
-                                text=content.encode('utf8'))
-        mock_post.side_effect = my_post
+        responses.add(
+            responses.POST,
+            KUMASCRIPT_URL_RE,
+            body=content.encode('utf8'),
+        )
 
         self.client.login(username='admin', password='testpass')
         self.client.post(reverse('wiki.preview'), {'content': content})
         try:
-            trap['data'].decode('utf8')
+            responses.calls[0].request.body.decode('utf8')
         except UnicodeDecodeError:
             self.fail("Data wasn't posted as utf8")
 
     @attr('bug1197971')
-    @override_config(KUMASCRIPT_TIMEOUT=1.0,
-                     KUMASCRIPT_MAX_AGE=600)
+    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
     @mock.patch('kuma.wiki.kumascript.post')
     def test_dont_render_previews_for_deferred_docs(self, mock_post):
         """
@@ -3513,9 +3505,21 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         ok_(mock_document_schedule_rendering.called)
 
     @mock.patch('kuma.wiki.kumascript.get')
-    @mock.patch('requests.post')
-    def test_alternate_bleach_whitelist(self, mock_requests_post,
-                                        mock_kumascript_get):
+    @responses.activate
+    @override_config(
+        BLEACH_ALLOWED_TAGS=json.dumps([
+            "a", "p"
+        ]),
+        BLEACH_ALLOWED_ATTRIBUTES=json.dumps({
+            "a": ['href', 'style'],
+            "p": ['id']
+        }),
+        BLEACH_ALLOWED_STYLES=json.dumps([
+            "border"
+        ]),
+        KUMASCRIPT_TIMEOUT=100,
+    )
+    def test_alternate_bleach_whitelist(self, mock_kumascript_get):
         # Some test content with contentious tags.
         test_content = """
             <p id="foo">
@@ -3540,33 +3544,15 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
             </p>
         """
 
-        # Set up an alternate set of whitelists...
-        config.BLEACH_ALLOWED_TAGS = json.dumps([
-            "a", "p"
-        ])
-        config.BLEACH_ALLOWED_ATTRIBUTES = json.dumps({
-            "a": ['href', 'style'],
-            "p": ['id']
-        })
-        config.BLEACH_ALLOWED_STYLES = json.dumps([
-            "border"
-        ])
-        config.KUMASCRIPT_TIMEOUT = 100
-
         # Rig up a mocked response from KumaScript GET method
         mock_kumascript_get.return_value = (test_content, None)
 
         # Rig up a mocked response from KumaScript POST service
         # Digging a little deeper into the stack, so that the rest of
         # kumascript.post processing happens.
-        from StringIO import StringIO
-        m_resp = mock.Mock()
-        m_resp.status_code = 200
-        m_resp.text = test_content
-        m_resp.read = StringIO(test_content).read
-        mock_requests_post.return_value = m_resp
+        responses.add(responses.POST, KUMASCRIPT_URL_RE, body=test_content)
 
-        d, r = doc_rev(test_content)
+        doc, rev = doc_rev(test_content)
 
         trials = (
             (False, '', expected_content_old),
@@ -3582,14 +3568,12 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
             else:
                 self.client.logout()
 
-            url = ('%s?raw&macros%s' % (
-                   reverse('wiki.document', args=(d.slug,), locale=d.locale),
-                   param))
-            resp = self.client.get(url, follow=True)
+            url = '%s?raw&macros%s' % (doc.get_absolute_url(), param)
+            response = self.client.get(url, follow=True)
             eq_(normalize_html(expected),
-                normalize_html(resp.content),
+                normalize_html(response.content),
                 "Should match? %s %s %s %s" %
-                (do_login, param, expected, resp.content))
+                (do_login, param, expected, response.content))
 
 
 class APITests(UserTestCase, WikiTestCase):

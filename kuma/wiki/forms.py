@@ -9,18 +9,22 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.widgets import CheckboxSelectMultiple
+from django.template.loader import render_to_string
+from django.utils import translation
+from django.utils.safestring import mark_safe
 
 import kuma.wiki.content
 from kuma.contentflagging.forms import ContentFlagForm
 from kuma.core.form_fields import StrippedCharField
+from kuma.spam.forms import AkismetFormMixin
 
 from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
-                        SLUG_CLEANSING_RE)
+                        SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG)
 from .events import EditDocumentEvent
-from .models import (Document, DocumentTag, Revision, RevisionIP,
-                     valid_slug_parent)
+from .models import (Document, DocumentSpamAttempt, DocumentTag,
+                     Revision, RevisionIP, valid_slug_parent)
 from .tasks import send_first_edit_email
 
 
@@ -144,10 +148,20 @@ class DocumentForm(forms.ModelForm):
         return doc
 
 
-class RevisionForm(forms.ModelForm):
+class RevisionForm(AkismetFormMixin, forms.ModelForm):
     """
     Form to create new revisions.
     """
+    AKISMET_FIELDS = [
+        'title',
+        'slug',
+        'summary',
+        'content',
+        'comment',
+        'tags',
+        'keywords',
+    ]
+
     title = StrippedCharField(
         min_length=1,
         max_length=255,
@@ -416,14 +430,77 @@ class RevisionForm(forms.ModelForm):
             # If there's no document yet, just bail.
             return current_rev
 
-    def save(self, request, document, **kwargs):
+    def akismet_enabled(self):
+        """
+        Makes sure that users that have been granted the
+        'wiki_akismet_exempted' waffle flag are exempted from spam checks.
+        """
+        client_ready = super(RevisionForm, self).akismet_enabled()
+        user_exempted = waffle.flag_is_active(self.request,
+                                              SPAM_EXEMPTED_FLAG)
+        return client_ready and not user_exempted
+
+    @property
+    def akismet_error_message(self):
+        return mark_safe(render_to_string('wiki/includes/spam_error.html', {}))
+
+    def akismet_error(self):
+        """
+        Upon errors from the Akismet API records the user, document
+        and date of the attempt for further analysis. Then call the
+        parent class' error handler.
+        """
+        try:
+            document = self.instance.document
+        except ObjectDoesNotExist:
+            document = None
+        # wrapping this in a try/finally to make sure that even if
+        # creating a spam attempt object fails we call the parent
+        # method that raises a ValidationError
+        try:
+            DocumentSpamAttempt.objects.create(
+                title=self.cleaned_data['title'],
+                slug=self.cleaned_data['slug'],
+                user=self.request.user,
+                document=document,
+            )
+        finally:
+            super(RevisionForm, self).akismet_error()
+
+    def akismet_parameters(self):
+        """
+        Gets the parent class' default parameters and adds a bunch of
+        wiki document/revision specific parameters like the actual
+        content to check.
+        """
+        parameters = super(RevisionForm, self).akismet_parameters()
+        language = self.cleaned_data.get('locale',
+                                         settings.WIKI_DEFAULT_LANGUAGE)
+        user = self.request.user
+        author = user.fullname or user.get_full_name() or user.username
+        author_email = user.email
+        content = u'\n'.join([self.cleaned_data.get(field, '')
+                              for field in self.AKISMET_FIELDS])
+
+        parameters.update({
+            'comment_author': author,
+            'comment_author_email': author_email,
+            'comment_content': content,
+            'comment_type': 'wiki-revision',
+            # 'en-US' -> 'en_us'
+            'blog_lang': translation.to_locale(language).lower(),
+            'blog_charset': 'UTF-8',
+        })
+        return parameters
+
+    def save(self, document, **kwargs):
         """
         Persists the revision and returns it.
         Takes the view request and document of the revision.
         Does some specific things when the revision is fully saved.
         """
         # have to check for first edit before we save
-        is_first_edit = request.user.wiki_revisions().count() == 0
+        is_first_edit = self.request.user.wiki_revisions().count() == 0
 
         # Making sure we don't commit the saving right away since we
         # want to do other things here.
@@ -437,7 +514,7 @@ class RevisionForm(forms.ModelForm):
             old_rev = Document.objects.get(pk=self.instance.document.id).current_revision
             new_rev = super(RevisionForm, self).save(**kwargs)
             new_rev.document = document
-            new_rev.creator = request.user
+            new_rev.creator = self.request.user
             new_rev.toc_depth = old_rev.toc_depth
             new_rev.save()
             new_rev.review_tags.set(*list(old_rev.review_tags.names()))
@@ -445,7 +522,7 @@ class RevisionForm(forms.ModelForm):
         else:
             new_rev = super(RevisionForm, self).save(**kwargs)
             new_rev.document = document
-            new_rev.creator = request.user
+            new_rev.creator = self.request.user
             new_rev.toc_depth = self.cleaned_data['toc_depth']
             new_rev.save()
             new_rev.review_tags.set(*self.cleaned_data['review_tags'])
@@ -453,7 +530,7 @@ class RevisionForm(forms.ModelForm):
 
             # when enabled store the user's IP address
             if waffle.switch_is_active('store_revision_ips'):
-                ip = request.META.get('REMOTE_ADDR')
+                ip = self.request.META.get('REMOTE_ADDR')
                 RevisionIP.objects.create(revision=new_rev, ip=ip)
 
             # send first edit emails

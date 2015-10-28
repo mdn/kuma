@@ -25,6 +25,7 @@ Switches
 * ``wiki_error_on_delete`` - throw an error if a user tries to delete a page
 * ``render_stale_document_async`` - render stale documents in a background
   sub-task
+* ``spam_checks_enabled`` - toggle spam checks site wide
 
 Flags
 -----
@@ -46,6 +47,8 @@ other advanced criteria.
 * ``enable_customcss`` - enable/disable Template:CustomCSS styles in wiki pages
   pages
 * ``page_move`` - enable/disable page move feature
+* ``wiki_spam_exempted`` - exempt users and user groups from checking
+  submissions for spam
 
 Constance Features
 ------------------

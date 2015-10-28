@@ -1,7 +1,9 @@
 from django.apps import AppConfig
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.db.models import signals
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from elasticsearch_dsl.connections import connections as es_connections
@@ -85,6 +87,11 @@ class WikiConfig(AppConfig):
                                   sender=DocumentZone,
                                   dispatch_uid='wiki.zone.post_save')
 
+        DocumentSpamAttempt = self.get_model('DocumentSpamAttempt')
+        signals.post_save.connect(self.on_document_spam_attempt_save,
+                                  sender=DocumentSpamAttempt,
+                                  dispatch_uid='wiki.spam_attempt.post_save')
+
     def on_document_save(self, sender, instance, **kwargs):
         """
         A signal handler to be called after saving a document. Does:
@@ -124,3 +131,14 @@ class WikiConfig(AppConfig):
         """
         from .tasks import tidy_revision_content
         tidy_revision_content.delay(instance.pk)
+
+    def on_document_spam_attempt_save(self, sender, instance, **kwargs):
+        subject = u'[MDN] Wiki spam attempt recorded'
+        if instance.document:
+            subject = u'%s for document %s' % (subject, instance.document)
+        elif instance.title:
+            subject = u'%s with title %s' % (subject, instance.title)
+        body = render_to_string('wiki/email/spam.ltxt',
+                                {'spam_attempt': instance})
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
+                  ['mdn-spam-watch@mozilla.com'])
