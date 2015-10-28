@@ -608,6 +608,7 @@ PIPELINE_CSS = {
             'styles/home.styl',
         ),
         'output_filename': 'build/styles/home.css',
+        'variant': 'datauri',
     },
     'search': {
         'source_filenames': (
