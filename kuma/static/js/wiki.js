@@ -154,7 +154,6 @@
         }).done(function(data) {
 
             var message;
-            data = JSON.parse(data);
             if(Number(data.status) === 1) {
                 $link.text($link.data('unsubscribe-text'));
                 message = $link.data('subscribe-message');
