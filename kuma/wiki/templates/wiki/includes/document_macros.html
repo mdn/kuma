@@ -142,12 +142,12 @@
                     {% if document.parent %}
                   <li class="page-watch">
                     {% set parent_language = document.parent.language %}
-                    {% set subscribe_parent_text = _('Subscribe to {language} version')|f(language=parent_language) %}
-                    {% set unsubscribe_parent_text = _('Unsubscribe from {language} version')|f(language=parent_language) %}
+                    {% set subscribe_parent_text = _('Subscribe to <bdi>{language}</bdi> version')|f(language=parent_language) %}
+                    {% set unsubscribe_parent_text = _('Unsubscribe from <bdi>{language}</bdi> version')|f(language=parent_language) %}
                     <form action="{{ url('wiki.subscribe', document.parent.slug, locale=document.parent.locale) }}" method="post">
                         {{ csrf() }}
                         <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_parent_text }}" data-unsubscribe-text="{{ unsubscribe_parent_text }}" data-subscribe-message="{{ _('You are now subscribed to the {language} version of this article.')|f(language=parent_language) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from the {language} version of this article.')|f(language=parent_language) }}">
-                        {% if document.parent.is_watched_by(user) %}{{ unsubscribe_parent_text }}{% else %}{{ subscribe_parent_text }}{% endif %}
+                        {% if document.parent.is_watched_by(user) %}{{ unsubscribe_parent_text|safe }}{% else %}{{ subscribe_parent_text|safe }}{% endif %}
                         </a>
                     </form>
                   </li>
