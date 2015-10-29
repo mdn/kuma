@@ -18,7 +18,8 @@ docker build -t kuma:builder -f Dockerfile-builder .
 docker run -it --rm=true -v "$PWD:/app" kuma:builder \
     sh -c './manage.py collectstatic --noinput && ./manage.py compilejsi18n'
 
-tar \
+# why sudo? https://github.com/docker/docker/issues/15785
+sudo tar \
    --create \
    --exclude-vcs \
    --exclude=./media \
