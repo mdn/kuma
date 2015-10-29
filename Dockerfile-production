@@ -1,9 +1,6 @@
-# This is a work in progress.
-#
-# The preferred way to set up development is still using Vagrant as documented here:
-# http://kuma.readthedocs.org/en/latest/installation.html
-
 FROM python:2.7.10
+
+# This is a work in progress.
 
 RUN useradd --create-home --home-dir /app --shell /bin/bash app
 WORKDIR /app
@@ -16,6 +13,7 @@ COPY requirements/compiled.txt /app/requirements/compiled.txt
 
 RUN pip install --build ./build --no-cache-dir \
     --disable-pip-version-check \
-    -r requirements/compiled.txt
+    -r requirements/compiled.txt && \
+    rm -rf ./build
 
 COPY . /app
