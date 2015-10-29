@@ -42,8 +42,8 @@ from ..forms import MIDAIR_COLLISION
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       DocumentTag, DocumentDeletionLog)
 from ..views.document import _get_seo_parent_title
-from . import (doc_rev, document, new_document_data, revision,
-               normalize_html, create_template_test_users,
+from . import (create_test_document_tree, doc_rev, document, new_document_data,
+               revision, normalize_html, create_template_test_users,
                make_translation, WikiTestCase)
 
 KUMASCRIPT_URL_RE = re.compile(r'https?://.*')
@@ -2593,13 +2593,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         should send an email to users who are watching the tree.
         """
         get_current.return_value.domain = 'dev.mo.org'
-
-        root_doc = document(title="Root", slug="Root", save=True)
-        revision(document=root_doc, title="Root", slug="Root", save=True)
-        child_doc = document(title="Child", slug="Child", save=True)
-        child_doc.parent_topic = root_doc
-        child_doc.save()
-        revision(document=child_doc, title="Child", slug="Child", save=True)
+        root_doc, child_doc, grandchild_doc = create_test_document_tree()
 
         testuser2 = get_user(username='testuser2')
         EditDocumentInTreeEvent.notify(testuser2, root_doc)
@@ -2622,19 +2616,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         should send an email to users who are watching the tree.
         """
         get_current.return_value.domain = 'dev.mo.org'
-
-        root_doc = document(title="Root", slug="Root", save=True)
-        revision(document=root_doc, title="Root", slug="Root", save=True)
-        child_doc = document(title="Child", slug="Child", save=True)
-        child_doc.parent_topic = root_doc
-        child_doc.save()
-        revision(document=child_doc, title="Child", slug="Child", save=True)
-        grandchild_doc = document(title="Grandchild", slug="Grandchild",
-                                  save=True)
-        grandchild_doc.parent_topic = child_doc
-        grandchild_doc.save()
-        revision(document=grandchild_doc, title="Grandchild",
-                 slug="Grandchild", save=True)
+        root_doc, child_doc, grandchild_doc = create_test_document_tree()
 
         testuser2 = get_user(username='testuser2')
         EditDocumentInTreeEvent.notify(testuser2, root_doc)
@@ -2658,13 +2640,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         document and the tree.
         """
         get_current.return_value.domain = 'dev.mo.org'
-
-        root_doc = document(title="Root", slug="Root", save=True)
-        revision(document=root_doc, title="Root", slug="Root", save=True)
-        child_doc = document(title="Child", slug="Child", save=True)
-        child_doc.parent_topic = root_doc
-        child_doc.save()
-        revision(document=child_doc, title="Child", slug="Child", save=True)
+        root_doc, child_doc, grandchild_doc = create_test_document_tree()
 
         testuser2 = get_user(username='testuser2')
         EditDocumentInTreeEvent.notify(testuser2, root_doc)

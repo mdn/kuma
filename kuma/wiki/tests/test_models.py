@@ -19,8 +19,9 @@ from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import KumaTestCase, get_user
 from kuma.users.tests import UserTestCase
 
-from . import (create_template_test_users, create_topical_parents_docs,
-               doc_rev, document, normalize_html, revision)
+from . import (create_template_test_users, create_test_document_tree,
+               create_topical_parents_docs, doc_rev, document, normalize_html,
+               revision)
 from .. import tasks
 from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from ..events import EditDocumentInTreeEvent
@@ -539,6 +540,15 @@ class DocumentTestsWithFixture(UserTestCase):
         EditDocumentInTreeEvent.notify(testuser2, rev.document)
 
         assert rev.document.tree_is_watched_by(testuser2)
+
+    def test_parent_trees_watched_by(self):
+        root_doc, child_doc, grandchild_doc = create_test_document_tree()
+        testuser2 = get_user(username='testuser2')
+
+        EditDocumentInTreeEvent.notify(testuser2, root_doc)
+        EditDocumentInTreeEvent.notify(testuser2, child_doc)
+
+        assert 2 == len(grandchild_doc.parent_trees_watched_by(testuser2))
 
 
 class TaggedDocumentTests(UserTestCase):

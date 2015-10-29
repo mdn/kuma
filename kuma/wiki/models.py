@@ -1455,6 +1455,13 @@ Full traceback:
         from .events import EditDocumentInTreeEvent
         return EditDocumentInTreeEvent.is_notifying(user, self)
 
+    def parent_trees_watched_by(self, user):
+        """
+        Return any and all of this document's parents that are watched by the
+        given user.
+        """
+        return [doc for doc in self.parents if doc.tree_is_watched_by(user)]
+
     def get_document_type(self):
         return WikiDocumentType
 
