@@ -42,8 +42,10 @@ class UserAdmin(BaseUserAdmin):
 
     def website(self, obj):
         """HTML link to user's website"""
-        return ('<a href="%(url)s"><strong>%(url)s</strong></a>' %
-                {'url': obj.website_url})
+        if obj.website_url:
+            return ('<a href="%(url)s"><strong>%(url)s</strong></a>' %
+                    {'url': obj.website_url})
+        return ""
 
     website.allow_tags = True
 
