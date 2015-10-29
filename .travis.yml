@@ -1,41 +1,15 @@
-branches:
-    only:
-        - master
-cache:
-    apt: true
-    directories:
-        - $HOME/.cache/pip
+sudo: required
+services:
+    - docker
 language: python
 python:
     - "2.7"
-services:
-    - memcached
-    - elasticsearch
 env:
-    matrix:
-        - TOXENV=py27
-        - TOXENV=flake8
-        - TOXENV=docs
-        - TOXENV=dennis
     global:
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive
         - CFLAGS=-O0
 before_install:
     - scripts/travis-install
-    - pip install -U pip
 install:
-    - pip install -r requirements/travis.txt
-    - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
-script: tox -v
-after_failure:
-    - dmesg | tail
-after_success:
-    - codecov
-notifications:
-    irc:
-        channels:
-            - "irc.mozilla.org#mdndev"
-        on_success: always
-        on_failure: always
-        use_notice: true
+    - echo "OK"
