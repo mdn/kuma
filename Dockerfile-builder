@@ -25,5 +25,3 @@ COPY ./requirements/compiled.txt /app/requirements/compiled.txt
 
 RUN pip install --build ./build --no-cache-dir --no-deps \
     -r requirements/compiled.txt
-
-COPY . /app

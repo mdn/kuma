@@ -8,27 +8,25 @@ git submodule update --init --recursive
 # assets
 
 # clean out the static folder
-rm -rm static/*
+rm -r static/*
 
-tar \
-   --create \
-   --exclude-vcs \
-   --exclude=./static \
-   --exclude=kumascript \
-   --exclude=vendor/*/docs \
-   --to-stdout . | \
-   docker build -t kuma:builder -f Dockerfile-builder -
+# make sure the build container is updated
+docker build -t kuma:builder -f Dockerfile-builder .
 
 # Build the static assets
-docker run -it --rm=true -v "$PWD/static:/app/static" kuma:builder \
+docker run -it --rm=true -v "$PWD:/app" kuma:builder \
     sh -c './manage.py collectstatic --noinput && ./manage.py compilejsi18n'
 
 tar \
    --create \
    --exclude-vcs \
    --exclude=./media \
-   --exclude=kumascript \
-   --exclude=kuma/static \
-   --exclude=vendor/*/docs \
+   --exclude=./kumascript \
+   --exclude=./kuma/static \
+   --exclude=./vendor/*/docs \
+   --exclude=./provisioning \
+   --exclude=./etc \
+   --exclude=./docker \
+   --exclude=./configs \
    --to-stdout . | \
    docker build -t kuma:latest -f Dockerfile-production -
