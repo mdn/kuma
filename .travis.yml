@@ -12,4 +12,6 @@ env:
 before_install:
     - scripts/travis-install
 install:
+    - docker-build.sh
+script:
     - echo "OK"
