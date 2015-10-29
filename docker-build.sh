@@ -2,8 +2,6 @@
 
 cd $(dirname $0)
 
-git submodule update --init --recursive
-
 # create the container that will build the static 
 # assets
 
