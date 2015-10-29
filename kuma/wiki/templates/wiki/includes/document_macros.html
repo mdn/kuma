@@ -115,6 +115,7 @@
 {%- endmacro %}
 
 {% macro watch_menu_items(document, user) -%}
+                <ul>
                   <li class="page-watch">
                     {% set subscribe_status = _('Updating subscription status') %}
                     {% set subscribe_text = _('Subscribe to this article') %}
@@ -151,4 +152,5 @@
                     </form>
                   </li>
                     {% endif %}
+                </ul>
 {%- endmacro %}

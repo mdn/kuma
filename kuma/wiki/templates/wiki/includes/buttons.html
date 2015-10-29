@@ -44,9 +44,7 @@
         <div class="submenu js-submenu" id="watch-menu-submenu">
             <div class="submenu-column">
                 <div class="title">{{ _('Watch') }}</div>
-                <ul>
-                    {{ watch_menu_items_html }}
-                </ul>
+                {{ watch_menu_items_html }}
             </div>
         </div>
         </li>
@@ -57,11 +55,10 @@
           <!-- this page -->
           <div class="submenu-column">
             <div class="title">{{ _('Advanced') }}</div>
-            <ul>
                 {% if user.is_authenticated() and document and not waffle.flag('watch_menu')%}
                 {{ watch_menu_items_html }}
-                <hr/>
                 {% endif %}
+            <ul>
                 <li><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow, noindex">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
                 </li>{% endif %}
