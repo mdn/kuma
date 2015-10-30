@@ -2550,6 +2550,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         _check_message_for_headers(testuser_message, 'testuser')
         _check_message_for_headers(admin_message, 'admin')
 
+    @attr('edit_emails')
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_watched_edits(self, get_current):
         """
@@ -2566,14 +2567,20 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         data.update({'form': 'rev',
                      'slug': rev.document.slug,
+                     'title': rev.document.title,
                      'content': 'This edit should send an email',
                      'comment': 'This edit should send an email'})
         self.client.post(reverse('wiki.edit',
                                  args=[rev.document.slug]),
                          data)
         self.assertEquals(1, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
+        assert rev.document.title in message.body
+        assert 'sub-articles' not in message.body
 
         # Subscribe another user and assert 2 emails sent this time
+        mail.outbox = []
         testuser01 = get_user(username='testuser01')
         EditDocumentEvent.notify(testuser01, rev.document)
 
@@ -2584,8 +2591,18 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.post(reverse('wiki.edit',
                                  args=[rev.document.slug]),
                          data)
-        self.assertEquals(3, len(mail.outbox))
+        self.assertEquals(2, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
+        assert rev.document.title in message.body
+        assert 'sub-articles' not in message.body
 
+        message = mail.outbox[1]
+        assert testuser01.email in message.to
+        assert rev.document.title in message.body
+        assert 'sub-articles' not in message.body
+
+    @attr('edit_emails')
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_child_edit_in_watched_tree(self, get_current):
         """
@@ -2608,7 +2625,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                  args=[child_doc.slug]),
                          data)
         eq_(1, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
+        assert 'sub-articles' in message.body
 
+    @attr('edit_emails')
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_grandchild_edit_in_watched_tree(self, get_current):
         """
@@ -2631,7 +2652,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                  args=[grandchild_doc.slug]),
                          data)
         eq_(1, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
+        assert 'sub-articles' in message.body
 
+    @attr('edit_emails')
     @mock.patch.object(Site.objects, 'get_current')
     def test_single_email_when_watching_doc_and_tree(self, get_current):
         """
@@ -2656,6 +2681,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                  args=[child_doc.slug]),
                          data)
         eq_(1, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
 
 
 class DocumentWatchTests(UserTestCase, WikiTestCase):
