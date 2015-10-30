@@ -42,7 +42,7 @@ from ..forms import MIDAIR_COLLISION
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       DocumentTag, DocumentDeletionLog)
 from ..views.document import _get_seo_parent_title
-from . import (create_test_document_tree, doc_rev, document, new_document_data,
+from . import (create_document_tree, doc_rev, document, new_document_data,
                revision, normalize_html, create_template_test_users,
                make_translation, WikiTestCase)
 
@@ -2610,7 +2610,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         should send an email to users who are watching the tree.
         """
         get_current.return_value.domain = 'dev.mo.org'
-        root_doc, child_doc, grandchild_doc = create_test_document_tree()
+        root_doc, child_doc, grandchild_doc = create_document_tree()
 
         testuser2 = get_user(username='testuser2')
         EditDocumentInTreeEvent.notify(testuser2, root_doc)
@@ -2637,7 +2637,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         should send an email to users who are watching the tree.
         """
         get_current.return_value.domain = 'dev.mo.org'
-        root_doc, child_doc, grandchild_doc = create_test_document_tree()
+        root_doc, child_doc, grandchild_doc = create_document_tree()
 
         testuser2 = get_user(username='testuser2')
         EditDocumentInTreeEvent.notify(testuser2, root_doc)
@@ -2665,7 +2665,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         document and the tree.
         """
         get_current.return_value.domain = 'dev.mo.org'
-        root_doc, child_doc, grandchild_doc = create_test_document_tree()
+        root_doc, child_doc, grandchild_doc = create_document_tree()
 
         testuser2 = get_user(username='testuser2')
         EditDocumentInTreeEvent.notify(testuser2, root_doc)

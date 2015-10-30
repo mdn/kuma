@@ -203,7 +203,7 @@ def create_topical_parents_docs():
     return d1, d2
 
 
-def create_test_document_tree():
+def create_document_tree():
     root_doc = document(title="Root", slug="Root", save=True)
     revision(document=root_doc, title="Root", slug="Root", save=True)
     child_doc = document(title="Child", slug="Child", save=True)
