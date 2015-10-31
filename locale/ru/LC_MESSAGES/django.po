@@ -3,16 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-01-24 17:40+0000\n"
-"Last-Translator: Daniluk4000 <daniluk4000@outlook.com>\n"
+"PO-Revision-Date: 2015-10-31 22:47+0000\n"
+"Last-Translator: Vladimir <waldemar.yan@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1422121202.0\n"
+"X-POOTLE-MTIME: 1446331679.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -39,9 +40,10 @@ msgid "Files of this type are not permitted."
 msgstr "Файлы этого типа не разрешены."
 
 #: kuma/attachments/views.py:151
-#, fuzzy
 msgid "The file provided is not valid. File must be one of these types: %s."
-msgstr "Указанный файл недействителен. Файл должен иметь одно из этих расширений:"
+msgstr ""
+"Указанный файл недействителен. Файл должен иметь одно из этих расширений: %"
+"s."
 
 #. {n} is the revision number, {t} is the title of the document. {c} is the category.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
@@ -109,9 +111,8 @@ msgid "Attachments"
 msgstr "Прикреплённые файлы"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:12
-#, fuzzy
 msgid "Learn how to use Attachments"
-msgstr "Научитесь создавать веб-сайты"
+msgstr "Узнайте, как использовать Вложения"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:16 kuma/attachments/templates/attachments/includes/attachment_list.html:23
 msgid "Attach Files"
@@ -120,6 +121,8 @@ msgstr "Прикрепить файлы"
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:21
 msgid "This document has no attachments. Images can be attached, and then embedded in the article."
 msgstr ""
+"Этот документ не имеет вложений. Изображения могут быть прикреплены, а затем "
+"встроены в статье."
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:33 kuma/attachments/templates/attachments/includes/attachment_list.html:51
 msgid "File"
@@ -2132,9 +2135,8 @@ msgid "Launch {title}"
 msgstr "Запустить {title}"
 
 #: kuma/demos/templates/demos/elements/user_link.html:2
-#, fuzzy
 msgid "See %(display_name)s's profile"
-msgstr "Просмотреть профиль {display_name}"
+msgstr "Просмотреть профиль %{display_name}s"
 
 #: kuma/landing/templates/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
@@ -2186,9 +2188,8 @@ msgid "more..."
 msgstr "еще..."
 
 #: kuma/landing/templates/landing/homepage.html:91
-#, fuzzy
 msgid "Mozilla<br> Docs"
-msgstr "Мозилльцы"
+msgstr "Mozilla<br> Документы"
 
 #: kuma/landing/templates/landing/homepage.html:93 templates/base.html:156
 msgid "Firefox"
@@ -2272,13 +2273,14 @@ msgid "Get Involved"
 msgstr "Присоединиться"
 
 #: kuma/landing/templates/landing/homepage.html:152
-#, fuzzy
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<span class=\"row1\">Присоединяйтесь к <span class=\"number\">3 414</span> участникам</span> <span class=\"row2\">из <span class=\"number\">31</span> страны</span> <span class=\"row3\"> по всему "
-"миру.</span>"
+"<p class=\"numbers\"> <span class=\"row1\">Присоединяйтесь к <span "
+"class=\"number\">%(contributors)s</span> участникам</span> <span "
+"class=\"row2\">на <span class=\"number\">%(locales)s</span> языках и "
+"регионах</span> <span class=\"row3\">по всему миру.</span> </p>"
 
 #: kuma/landing/templates/landing/homepage.html:159 kuma/landing/templates/landing/homepage.html:166
 msgid "Help improve MDN"
@@ -2539,12 +2541,17 @@ msgstr[1] "по запросу «%(query)s» на %(locale_native)s найден
 msgstr[2] "по запросу «%(query)s» на %(locale_native)s найдено %(count)s документов."
 
 #: kuma/search/templates/search/results.html:80
-#, fuzzy
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] "по запросу «%(query)s» на %(locale_native)s найден %(count)s документ."
-msgstr[1] "по запросу «%(query)s» на %(locale_native)s найдено %(count)s документа."
-msgstr[2] "по запросу «%(query)s» на %(locale_native)s найдено %(count)s документов."
+msgstr[0] ""
+"по запросу \"%(query)s\" на %(locale_native)s и %(default_locale_native)s "
+"найден %(count)s документ."
+msgstr[1] ""
+"по запросу \"%(query)s\" на %(locale_native)s и %(default_locale_native)s "
+"найдено %(count)s документа."
+msgstr[2] ""
+"по запросу \"%(query)s\" на %(locale_native)s и %(default_locale_native)s "
+"найдено %(count)s документов."
 
 #: kuma/search/templates/search/results.html:88
 msgid "%(count)s document found in %(locale_native)s."
@@ -2554,12 +2561,16 @@ msgstr[1] "на %(locale_native)s найдено %(count)s документа."
 msgstr[2] "на %(locale_native)s найдено %(count)s документов."
 
 #: kuma/search/templates/search/results.html:94
-#, fuzzy
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] "на %(locale_native)s найден %(count)s документ."
-msgstr[1] "на %(locale_native)s найдено %(count)s документа."
-msgstr[2] "на %(locale_native)s найдено %(count)s документов."
+msgstr[0] ""
+"на %(locale_native)s и %(default_locale_native)s найден %(count)s документ."
+msgstr[1] ""
+"на %(locale_native)s и %(default_locale_native)s найдено %(count)s "
+"документа."
+msgstr[2] ""
+"на %(locale_native)s и %(default_locale_native)s найдено %(count)s "
+"документов."
 
 #: kuma/search/templates/search/results.html:104
 msgid "%(count)s document found for \"%(query)s\"."
@@ -3030,9 +3041,8 @@ msgid "Note"
 msgstr ""
 
 #: kuma/users/templates/account/snippets/already_logged_in.html:1
-#, fuzzy
 msgid "you are already logged in as %(user_display)s."
-msgstr "Вы уже вошли."
+msgstr "Вы уже вошли как %(user_display)s."
 
 #: kuma/users/templates/openid/login.html:3 kuma/users/templates/openid/login.html:6
 msgid "OpenID Sign In"
@@ -3142,9 +3152,10 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:170
-#, fuzzy
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
-msgstr "Я принимаю <a href=\"%(terms_url)s#tfc\">Условия Участия</a> и <a href=\"%(terms_url)s#rrd\">Права Представителя</a>"
+msgstr ""
+"<a href=\"%(terms_url)s\">Условия использования</a> и <a href=\"%"
+"(privacy_url)s\">Уведомление о конфиденциальности</a> Mozilla."
 
 #: kuma/users/templates/socialaccount/signup.html:179
 #, fuzzy
@@ -3184,9 +3195,10 @@ msgid "Firefox Apps & Hacks Newsletter"
 msgstr ""
 
 #: kuma/users/templates/users/apps_newsletter.html:14
-#, fuzzy
 msgid "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the newsletter."
-msgstr "<a href=\"/profile/edit\">Отредактируйте свой профиль</a> чтобы подписаться на обновления."
+msgstr ""
+"<a href=\"%(profile_edit_url)s\">Отредактируйте свой профиль</a>, чтобы "
+"подписаться на обновления."
 
 #: kuma/users/templates/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -3224,9 +3236,8 @@ msgid "Areas of Expertise"
 msgstr "Экспертные области"
 
 #: kuma/users/templates/users/user_detail.html:108
-#, fuzzy
 msgid "Member since %(date_joined)s"
-msgstr "На сайте с {date}"
+msgstr "Участник с %(date_joined)s"
 
 #: kuma/users/templates/users/user_detail.html:159
 msgid "Subscribe to a feed of {display_name}'s demos"
@@ -3237,9 +3248,10 @@ msgid "No Demos"
 msgstr "Нет демо"
 
 #: kuma/users/templates/users/user_detail.html:169
-#, fuzzy
 msgid "You haven't submitted any web technology demos. Build something awesome and <a href=\"%(submit_url)s\">submit a demo</a>!"
-msgstr "Вы не отправили ни одного демо по веб-технологиям. Сделайте что-нибудь классное и <a class=\"button positive\" href=\"%(submit_url)s\">Отправьте демо</a>"
+msgstr ""
+"Вы не отправили ни одного демо по веб-технологиям. Сделайте что-нибудь "
+"классное и <a href=\"%(submit_url)s\">отправьте демо</a>!"
 
 #: kuma/users/templates/users/user_detail.html:175
 msgid "Recent Docs Activity"
@@ -3449,11 +3461,11 @@ msgstr ""
 
 #: kuma/wiki/constants.py:205
 msgid "Technical - code samples, APIs, or technologies"
-msgstr "Техническое — примеры кода, API или технологий"
+msgstr "Техническая — примеры кода, API или технологий"
 
 #: kuma/wiki/constants.py:206
 msgid "Editorial - prose, grammar, or content"
-msgstr "Редакционное — текст, грамматика или контент"
+msgstr "Редакционная — текст, грамматика или содержание"
 
 #: kuma/wiki/constants.py:211
 msgid "Localization in progress - not completely translated yet."
@@ -3870,9 +3882,8 @@ msgid "Document Deleted"
 msgstr "Статья удалена"
 
 #: kuma/wiki/templates/wiki/deletion_log.html:9
-#, fuzzy
 msgid "This document was deleted on %(when)s."
-msgstr "Эта статья была удалена %(when)s пользователем <a href=\"%(url)s\">%(username)s</a>."
+msgstr "Этот документ был удален %(when)s."
 
 #: kuma/wiki/templates/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
@@ -3927,9 +3938,8 @@ msgstr[1] ""
 msgstr[2] ""
 
 #: kuma/wiki/templates/wiki/document.html:199
-#, fuzzy
 msgid "View profile: %(username)s"
-msgstr "Просмотреть профиль"
+msgstr "Просмотреть профиль: %(username)s"
 
 #: kuma/wiki/templates/wiki/document.html:222
 msgid "Show Sidebar"
@@ -3987,9 +3997,11 @@ msgid "This article doesn't have any content yet."
 msgstr "Данная статья пока не имеет содержимого."
 
 #: kuma/wiki/templates/wiki/document.html:331
-#, fuzzy
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
-msgstr "Поищите <a href=\"%(search_link)s\">страницы, использующие %(title)s</a>, чтобы увидеть примеры использования данного макроса и количество страниц, на которых он используется."
+msgstr ""
+"Поищите <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">страницы, "
+"использующие %(title)s</a>, чтобы увидеть примеры использования данного "
+"макроса и количество страниц, на которых он используется."
 
 #: kuma/wiki/templates/wiki/document.html:344
 msgid "This article doesn't have approved content yet."
@@ -4000,9 +4012,11 @@ msgid "Document Tags and Contributors"
 msgstr "Метки документа и участники"
 
 #: kuma/wiki/templates/wiki/document.html:362
-#, fuzzy
 msgid "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-group\"></i><strong>Contributors to this page:</strong> %(contributors_list)s </div>"
-msgstr "<div class=\"contributor-sub\"> <i aria-hidden=\"true\" class=\"icon-group\"></i><strong>На данную страницу внесли свой вклад:</strong> %(contributors)s </div>"
+msgstr ""
+"<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-"
+"group\"></i><strong>На данную страницу внесли свой вклад:</strong> %"
+"(contributors_list)s </div>"
 
 #: kuma/wiki/templates/wiki/document.html:371
 msgid "Last updated by:"
@@ -4025,9 +4039,9 @@ msgid "Your Changes"
 msgstr "Ваши изменения"
 
 #: kuma/wiki/templates/wiki/edit.html:38 kuma/wiki/templates/wiki/edit.html:46 kuma/wiki/templates/wiki/includes/document_macros.html:41 kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy
 msgid "Revision {id} by <a href=\"{user_profile_url}\">{user}</a> on {date}"
-msgstr "Версия {id} пользователя {user}, сделанная {date}"
+msgstr ""
+"Ревизия {id} от <a href=\"{user_profile_url}\">{user}</a>, сделанная {date}"
 
 #: kuma/wiki/templates/wiki/edit.html:43
 msgid "Current Revision:"
@@ -4038,9 +4052,8 @@ msgid "Search results summary:"
 msgstr "Результаты поиска:"
 
 #: kuma/wiki/templates/wiki/edit.html:91
-#, fuzzy
 msgid "<span class=\"title-prefix\">Editing</span> <em>{title}</em>"
-msgstr "<span class=\"action\">Редактирование</span> <em>{title}</em>"
+msgstr "<span class=\"title-prefix\">Редактирование</span> <em>{title}</em>"
 
 #: kuma/wiki/templates/wiki/edit.html:94
 msgid "Edit Page Title and Properties"
@@ -4102,9 +4115,8 @@ msgid "Move Article | {document}"
 msgstr "Перевод статьи | {document}"
 
 #: kuma/wiki/templates/wiki/move.html:16
-#, fuzzy
 msgid "<span class=\"title-prefix\">Moving</span> <em>{title}</em>"
-msgstr "<span class=\"action\">Редактирование</span> <em>{title}</em>"
+msgstr "<span class=\"title-prefix\">Перемещение</span> <em>{title}</em>"
 
 #: kuma/wiki/templates/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
@@ -4193,9 +4205,8 @@ msgid "Revision {n} | {t} | {c}"
 msgstr "Ревизия {n} | {t} | {c}"
 
 #: kuma/wiki/templates/wiki/revision.html:11
-#, fuzzy
 msgid "Revision"
-msgstr "Ревизия %s"
+msgstr "Ревизия"
 
 #: kuma/wiki/templates/wiki/revision.html:11
 msgid "of"
@@ -4247,9 +4258,8 @@ msgid "Translate Article | {document}"
 msgstr "Перевод статьи | {document}"
 
 #: kuma/wiki/templates/wiki/translate.html:29
-#, fuzzy
 msgid "<span class=\"title-prefix\">Translating</span> <em>{title}</em>"
-msgstr "<span class=\"action\">Редактирование</span> <em>{title}</em>"
+msgstr "<span class=\"title-prefix\">Перевод</span> <em>{title}</em>"
 
 #: kuma/wiki/templates/wiki/translate.html:33
 msgid "Translating article to {locale}"
@@ -4287,9 +4297,8 @@ msgid "{locale} translation:"
 msgstr "Перевод на {locale}:"
 
 #: kuma/wiki/templates/wiki/translate.html:109
-#, fuzzy
 msgid "Translate Tags"
-msgstr "Перевод содержимого"
+msgstr "Перевод ключевых слов"
 
 #: kuma/wiki/templates/wiki/translate.html:118
 msgid "English tags"
@@ -4305,9 +4314,8 @@ msgid "{locale} tags"
 msgstr "Перевод на {locale}:"
 
 #: kuma/wiki/templates/wiki/translate.html:144
-#, fuzzy
 msgid "Version Notes"
-msgstr "Содержание версии"
+msgstr "Примечания к версии"
 
 #: kuma/wiki/templates/wiki/translate.html:146
 msgid "Localization flags"
@@ -4957,64 +4965,59 @@ msgid "Persona"
 msgstr "Персона"
 
 #: templates/base.html:163
-#, fuzzy
 msgid "Developer Tools"
-msgstr "Инструменты<br />Разработчика"
+msgstr "Инструменты Разработчика"
 
 #: templates/base.html:163
-#, fuzzy
 msgid "Feedback"
-msgstr "Новости"
+msgstr "Обратная связь"
 
 #: templates/base.html:168
-#, fuzzy
 msgid "Get Firefox help"
-msgstr "Firefox 4"
+msgstr "Получить помощь Firefox"
 
 #: templates/base.html:169
-#, fuzzy
 msgid "Get web development help"
-msgstr "Веб-разработка"
+msgstr "Получить помощь веб-разработки"
 
 #: templates/base.html:172
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Присоединиться к сообществу MDN"
 
 #: templates/base.html:173
-#, fuzzy
 msgid "Report a content problem"
-msgstr "Пожаловаться на этот комментарий"
+msgstr "Сообщить о проблеме содержания"
 
 #: templates/base.html:174
-#, fuzzy
 msgid "Report a bug"
-msgstr "Пожаловаться"
+msgstr "Сообщить об ошибке"
 
 #: templates/base.html:200
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
+"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network и отдельные "
+"соучастники.</p><p>Содержимое доступно на условиях <a href=\"%"
+"(copyright_url)s\">этих лицензий</a>.</p>"
 
 #: templates/base.html:205
-#, fuzzy
 msgid "About MDN"
-msgstr "Обо мне"
+msgstr "О MDN"
 
 #: templates/base.html:206
 msgid "Terms"
-msgstr ""
+msgstr "Условия использования"
 
 #: templates/base.html:207
 msgid "Privacy"
-msgstr ""
+msgstr "Конфиденциальность"
 
 #: templates/base.html:208
 msgid "Cookies"
-msgstr ""
+msgstr "Куки"
 
 #: templates/base.html:209
-#, fuzzy
 msgid "Contribute to the code"
-msgstr "Вклад в кодовую базу MDN"
+msgstr "Внести вклад в код"
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
@@ -5030,28 +5033,27 @@ msgstr ""
 
 #: templates/includes/common_macros.html:36
 msgid "Welcome, <span class=\"user\">{user}</span>."
-msgstr ""
+msgstr "Добро пожаловать, <span class=\"user\">{user}</span>."
 
 #: templates/includes/common_macros.html:38
 msgid "Profile"
-msgstr ""
+msgstr "Профиль"
 
 #: templates/includes/common_macros.html:44
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr ""
+msgstr "Хотите внести свой вклад?<br /> <a href=\"%(login_url)s\">Войдите</a>"
 
 #: templates/includes/login.html:6
 msgid "Sign out"
-msgstr ""
+msgstr "Выйти"
 
 #: templates/includes/login.html:17
-#, fuzzy
 msgid "Sign in with"
-msgstr "Войти через Persona"
+msgstr "Войти через"
 
 #: templates/includes/login.html:18
 msgid "Sign in"
-msgstr ""
+msgstr "Войти"
 
 #: templates/includes/newsletter.html:6
 msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem."
@@ -5063,21 +5065,19 @@ msgstr ""
 
 #: templates/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr ""
+msgstr "Отказаться от подписки на эти письма:"
 
 #: templates/tidings/unsubscribe.html:2 templates/tidings/unsubscribe.html:12 templates/tidings/unsubscribe_error.html:2 templates/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
 #: templates/tidings/unsubscribe.html:7
-#, fuzzy
 msgid "Are you sure you want to unsubscribe?"
-msgstr "Вы уверены, что хотите продолжить?"
+msgstr "Вы уверены, что хотите отказаться от подписки?"
 
 #: templates/tidings/unsubscribe_error.html:7
-#, fuzzy
 msgid "Unsubscribe Error"
-msgstr "Отписаться"
+msgstr "Ошибка отказа от подписки"
 
 #: templates/tidings/unsubscribe_error.html:10
 msgid ""
@@ -5091,7 +5091,7 @@ msgstr "Вы отписаны от новостей"
 
 #: templates/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr ""
+msgstr "Ваша подписка была отменена."
 
 #~ msgid "Delete key"
 #~ msgstr "Удалить ключ"
