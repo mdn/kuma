@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-21 15:52+0000\n"
+"PO-Revision-Date: 2015-10-31 17:11+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
@@ -124,9 +124,8 @@ msgstr "了解如何使用附件"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:16
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:23
-#, fuzzy
 msgid "Attach Files"
-msgstr "附件"
+msgstr "附加檔案"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:21
 msgid ""
@@ -3218,20 +3217,19 @@ msgstr "請輸入有效的 GitHub 網址。"
 
 #: kuma/users/models.py:117
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "請輸入有效的 Stack Overflow 網址。"
 
 #: kuma/users/models.py:122
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "請輸入有效的 LinkedIn 網址。"
 
 #: kuma/users/models.py:127
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "請輸入有效的 Mozillians 網站網址。"
 
 #: kuma/users/models.py:132
-#, fuzzy
 msgid "Enter a valid Facebook URL."
-msgstr "請輸入 facebook.com 網址。"
+msgstr "請輸入有效的 Facebook 網址。"
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
@@ -3739,9 +3737,8 @@ msgid "Areas of Expertise"
 msgstr "專業知識領域"
 
 #: kuma/users/templates/users/user_detail.html:108
-#, fuzzy
 msgid "Member since %(date_joined)s"
-msgstr "於 {date} 加入"
+msgstr "於 %(date_joined)s 年加入本站"
 
 #: kuma/users/templates/users/user_detail.html:159
 msgid "Subscribe to a feed of {display_name}'s demos"
@@ -4002,7 +3999,7 @@ msgstr ""
 
 #: kuma/wiki/apps.py:54
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:205
 msgid "Technical - code samples, APIs, or technologies"
@@ -4639,9 +4636,8 @@ msgstr "您的變更"
 #: kuma/wiki/templates/wiki/edit.html:38 kuma/wiki/templates/wiki/edit.html:46
 #: kuma/wiki/templates/wiki/includes/document_macros.html:41
 #: kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy
 msgid "Revision {id} by <a href=\"{user_profile_url}\">{user}</a> on {date}"
-msgstr "由 {user} 於 {date} 所做的編修 {id}"
+msgstr "由 <a href=\"{user_profile_url}\">{user}</a> 於 {date} 所做的編修 {id}"
 
 #: kuma/wiki/templates/wiki/edit.html:43
 msgid "Current Revision:"
@@ -5039,28 +5035,24 @@ msgid ""
 msgstr "您已取消訂閱此文章的 {language} 版本。"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "New sub-article"
-msgstr "新增子頁面"
+msgstr "新增子文件"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:64
-#, fuzzy
 msgid "Clone this article"
-msgstr "複製此頁"
+msgstr "複製此文件"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:67
-#, fuzzy
 msgid "Move this article"
-msgstr "移動此頁"
+msgstr "移動此文件"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr "以管理員模式檢視"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:78
-#, fuzzy
 msgid "Delete this article"
-msgstr "刪除此頁面"
+msgstr "刪除此文件"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -5071,9 +5063,8 @@ msgid "Convert to content zone"
 msgstr "轉換為內容區域"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:88
-#, fuzzy
 msgid "Print this article"
-msgstr "列印此頁"
+msgstr "列印此文件"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -5097,7 +5088,7 @@ msgstr "版本 {num}:"
 msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
-msgstr ""
+msgstr "伺服器正在產生內容對照。請等幾分鐘後重新整理此頁面。"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:99
 msgid "Share:"
@@ -5338,7 +5329,7 @@ msgstr "含有下列標籤，已翻譯的文件: {tag}"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr ""
+msgstr "含有任何翻譯標籤的文件"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:15
 msgid "Found %(count)s document."
@@ -5349,7 +5340,7 @@ msgstr[0] "找到 %(count)s 份文件。"
 msgid ""
 "Document already exists. Note: You cannot revert a document that has been "
 "moved until you delete its redirect."
-msgstr ""
+msgstr "文件已存在。註: 除非您已刪除重導文件，否則無法恢復已移動的文件。"
 
 #: kuma/wiki/views/document.py:580
 msgid "Redirected from %(url)s"
@@ -5611,14 +5602,12 @@ msgid "Feedback"
 msgstr "意見回饋"
 
 #: templates/base.html:168
-#, fuzzy
 msgid "Get Firefox help"
-msgstr "搜尋 Firefox 輔助說明"
+msgstr "取得 Firefox 說明"
 
 #: templates/base.html:169
-#, fuzzy
 msgid "Get web development help"
-msgstr "學習網頁開發"
+msgstr "取得網頁開發教學"
 
 #: templates/base.html:172
 msgid "Join the MDN community"
@@ -5638,29 +5627,29 @@ msgid ""
 "contributors.</p> <p>Content is available under <a "
 "href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
+"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network 與各貢獻者。</p> <p>內容依照 <a "
+"href=\"%(copyright_url)s\">這些授權條款</a> 提供大眾使用。</p>"
 
 # 77%
 #: templates/base.html:205
-#, fuzzy
 msgid "About MDN"
-msgstr "關於我"
+msgstr "關於 MDN"
 
 #: templates/base.html:206
 msgid "Terms"
-msgstr ""
+msgstr "使用條款"
 
 #: templates/base.html:207
 msgid "Privacy"
-msgstr ""
+msgstr "隱私權"
 
 #: templates/base.html:208
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: templates/base.html:209
-#, fuzzy
 msgid "Contribute to the code"
-msgstr "貢獻至 MDN codebase"
+msgstr "貢獻寫程式"
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
