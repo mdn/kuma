@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-21 15:56+0000\n"
+"PO-Revision-Date: 2015-10-21 15:52+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
@@ -3132,7 +3132,7 @@ msgstr "專業知識的範疇必須是興趣的子集"
 
 #: kuma/users/forms.py:274
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "此欄位不能空白。"
 
 #: kuma/users/forms.py:280
 msgid "Username already in use."
@@ -3206,16 +3206,15 @@ msgstr "標籤"
 
 #: kuma/users/models.py:102
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "請輸入有效的網站網址。"
 
 #: kuma/users/models.py:107
-#, fuzzy
 msgid "Enter a valid Twitter URL."
-msgstr "請輸入 twitter.com 網址。"
+msgstr "請輸入有效的 Twitter 網址。"
 
 #: kuma/users/models.py:112
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "請輸入有效的 GitHub 網址。"
 
 #: kuma/users/models.py:117
 msgid "Enter a valid Stack Overflow URL."
