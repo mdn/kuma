@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-11-01 20:01+0000\n"
+"PO-Revision-Date: 2015-11-01 20:06+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -929,7 +929,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:229
 msgid "http://en.wikipedia.org/wiki/HTML5_audio"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
 
 #: kuma/demos/__init__.py:230 kuma/demos/__init__.py:238
 #: kuma/demos/__init__.py:246 kuma/demos/__init__.py:253
@@ -960,7 +960,7 @@ msgstr "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
 
 #: kuma/demos/__init__.py:237
 msgid "http://en.wikipedia.org/wiki/Canvas_element"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Canvas_element"
 
 #: kuma/demos/__init__.py:238
 msgid "http://www.w3.org/TR/html5/the-canvas-element.html"
@@ -1046,7 +1046,7 @@ msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
 
 #: kuma/demos/__init__.py:267
 msgid "http://en.wikipedia.org/wiki/Web_typography"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_typography"
 
 #: kuma/demos/__init__.py:268
 msgid "http://www.w3.org/TR/css3-fonts/"
@@ -1217,11 +1217,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:331
 msgid "http://en.wikipedia.org/wiki/Web_Storage"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_Storage"
 
 #: kuma/demos/__init__.py:332
 msgid "http://dev.w3.org/html5/webstorage/"
-msgstr ""
+msgstr "http://dev.w3.org/html5/webstorage/"
 
 #: kuma/demos/__init__.py:335
 msgid "SVG"
@@ -1239,7 +1239,7 @@ msgstr "https://developer.mozilla.org/en-US/docs/Web/SVG"
 
 #: kuma/demos/__init__.py:339
 msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
 
 #: kuma/demos/__init__.py:340
 msgid "http://www.w3.org/TR/SVG11/"
@@ -1265,7 +1265,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:347
 msgid "http://en.wikipedia.org/wiki/HTML5_video"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/HTML5_video"
 
 #: kuma/demos/__init__.py:348
 msgid "http://www.w3.org/TR/html5/video.html"
@@ -1283,7 +1283,7 @@ msgstr "https://developer.mozilla.org/en-US/docs/Web/WebGL"
 
 #: kuma/demos/__init__.py:355
 msgid "http://en.wikipedia.org/wiki/WebGL"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/WebGL"
 
 #: kuma/demos/__init__.py:356
 msgid "Khronos Spec"
@@ -1309,11 +1309,11 @@ msgstr "https://developer.mozilla.org/en-US/docs/WebSockets"
 
 #: kuma/demos/__init__.py:363
 msgid "http://en.wikipedia.org/wiki/Web_Sockets"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_Sockets"
 
 #: kuma/demos/__init__.py:364
 msgid "http://dev.w3.org/html5/websockets/"
-msgstr ""
+msgstr "http://dev.w3.org/html5/websockets/"
 
 #: kuma/demos/__init__.py:368
 msgid ""
@@ -1331,7 +1331,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:371
 msgid "http://en.wikipedia.org/wiki/Web_Workers"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_Workers"
 
 #: kuma/demos/__init__.py:372
 msgid "http://www.w3.org/TR/workers/"
@@ -1339,7 +1339,7 @@ msgstr "http://www.w3.org/TR/workers/"
 
 #: kuma/demos/__init__.py:375
 msgid "XMLHttpRequest"
-msgstr ""
+msgstr "XMLHttpRequest"
 
 #: kuma/demos/__init__.py:376
 msgid ""
@@ -1357,7 +1357,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:379
 msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/XMLHttpRequest"
 
 #: kuma/demos/__init__.py:380
 msgid "http://www.w3.org/TR/XMLHttpRequest/"
@@ -1377,7 +1377,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:387
 msgid "http://en.wikipedia.org/wiki/Multi-touch"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Multi-touch"
 
 #: kuma/demos/__init__.py:388
 msgid "http://www.w3.org/2010/webevents/charter/"
@@ -1385,7 +1385,7 @@ msgstr "http://www.w3.org/2010/webevents/charter/"
 
 #: kuma/demos/__init__.py:394
 msgid "MPL/GPL/LGPL"
-msgstr ""
+msgstr "MPL/GPL/LGPL"
 
 #: kuma/demos/__init__.py:395
 msgid "http://www.mozilla.org/MPL/"
@@ -1393,7 +1393,7 @@ msgstr "http://www.mozilla.org/MPL/"
 
 #: kuma/demos/__init__.py:397
 msgid "GPL"
-msgstr ""
+msgstr "GPL"
 
 #: kuma/demos/__init__.py:398
 msgid "http://www.opensource.org/licenses/gpl-license.php"
@@ -1401,7 +1401,7 @@ msgstr "http://www.opensource.org/licenses/gpl-license.php"
 
 #: kuma/demos/__init__.py:400
 msgid "BSD"
-msgstr ""
+msgstr "BSD"
 
 #: kuma/demos/__init__.py:401
 msgid "http://www.opensource.org/licenses/bsd-license.php"
@@ -1409,7 +1409,7 @@ msgstr "http://www.opensource.org/licenses/bsd-license.php"
 
 #: kuma/demos/__init__.py:403
 msgid "Apache"
-msgstr ""
+msgstr "Apache"
 
 #: kuma/demos/__init__.py:404
 msgid "http://www.apache.org/licenses/"
@@ -1421,7 +1421,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:407
 msgid "http://creativecommons.org/publicdomain/zero/1.0/"
-msgstr ""
+msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
 
 #: kuma/demos/admin.py:38
 msgid "Censored %(item)s"
@@ -1513,7 +1513,7 @@ msgstr "Finalist"
 
 #: kuma/demos/helpers.py:113
 msgid "Featured"
-msgstr ""
+msgstr "Utvald"
 
 #: kuma/demos/helpers.py:268
 msgid "year"
@@ -1541,61 +1541,61 @@ msgstr[1] "dagar"
 
 #: kuma/demos/helpers.py:279
 msgid "%(number)d %(type)s"
-msgstr ""
+msgstr "%(number)d %(type)s"
 
 #: kuma/demos/helpers.py:306
 msgid "%(number)d year ago"
 msgid_plural "%(number)d years ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d år sedan"
+msgstr[1] "%(number)d år sedan"
 
 #: kuma/demos/helpers.py:308
 msgid "%(number)d month ago"
 msgid_plural "%(number)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d månad sedan"
+msgstr[1] "%(number)d månader sedan"
 
 #: kuma/demos/helpers.py:310
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d vecka sedan"
+msgstr[1] "%(number)d veckor sedan"
 
 #: kuma/demos/helpers.py:312
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d dag sedan"
+msgstr[1] "%(number)d dagar sedan"
 
 #: kuma/demos/helpers.py:314
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d timme sedan"
+msgstr[1] "%(number)d timmar sedan"
 
 #: kuma/demos/helpers.py:316
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d minut sedan"
+msgstr[1] "%(number)d minuter sedan"
 
 #: kuma/demos/helpers.py:318
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d sekund sedan"
+msgstr[1] "%(number)d sekunder sedan"
 
 #: kuma/demos/models.py:204
 msgid "Please keep filesize under %s. Current filesize %s"
-msgstr ""
+msgstr "Vänligen håll filstorleken under %s. Nuvarande filstorlek %s"
 
 #: kuma/demos/models.py:273
 msgid "Cannot process image"
-msgstr ""
+msgstr "Kan inte bearbeta bild"
 
 #: kuma/demos/models.py:360
 msgid "what is your demo's name?"
-msgstr ""
+msgstr "vad heter ditt demo?"
 
 #: kuma/demos/models.py:363
 msgid "slug"
@@ -1603,7 +1603,7 @@ msgstr "slugg"
 
 #: kuma/demos/models.py:366
 msgid "describe your demo in one line"
-msgstr ""
+msgstr "beskriv ditt demo på en rad"
 
 #: kuma/demos/models.py:369
 msgid "describe your demo in more detail (optional)"
@@ -4750,7 +4750,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/revision.html:11
 msgid "of"
-msgstr ""
+msgstr "av"
 
 #: kuma/wiki/templates/wiki/revision.html:14
 msgid "Revision Information"
@@ -4771,11 +4771,11 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/select_locale.html:2
 msgid "Select language | {document}"
-msgstr ""
+msgstr "Välj språk | {document}"
 
 #: kuma/wiki/templates/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
-msgstr ""
+msgstr "Välj ett språk att översätta till:"
 
 #: kuma/wiki/templates/wiki/sphinx.html:32
 msgid ""
@@ -4808,7 +4808,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:43
 msgid "Translate Content"
-msgstr ""
+msgstr "Översätt innehåll"
 
 #: kuma/wiki/templates/wiki/translate.html:83
 msgid "Approved {locale} version"
