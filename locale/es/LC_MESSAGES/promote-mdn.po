@@ -1,4 +1,4 @@
-# Copyright (C) 2012 
+# Copyright (C) 2012
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1394996948.0\n"
 
 #: promote-mdn.php:190
@@ -29,8 +29,8 @@ msgid ""
 "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
 "JavaScript and other Web standards and open technologies."
 msgstr ""
-"MDN es tu caja de herramientas de desarrollador web para documentos, demos y "
-"mucho más sobre HTML, CSS, JavaScript y otros estándares web y tecnologías "
+"MDN es tu caja de herramientas de desarrollador web para documentos, demos y"
+" mucho más sobre HTML, CSS, JavaScript y otros estándares web y tecnologías "
 "abiertas."
 
 #: promote-mdn.php:248
@@ -42,8 +42,8 @@ msgstr ""
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr ""
 "Enlaza automáticamente palabras clave y frases de tus publicaciones y "
 "páginas a las URL de MDN."
@@ -132,12 +132,12 @@ msgstr ""
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
 "Nota: Estas palabras clave tendrán prioridad sobre las que se cargan en la "
-"URL. Si tienes demasiadas palabras clave personalizadas, no podrás enlazar a "
-"MDN."
+"URL. Si tienes demasiadas palabras clave personalizadas, no podrás enlazar a"
+" MDN."
 
 #: promote-mdn.php:289
 msgid "Update options"
@@ -148,13 +148,13 @@ msgid ""
 "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
 "configure."
 msgstr ""
-"¡Gracias por la instalación! Ve a la página de <a href=\"%s\">ajustes</a> para "
-"realizar la configuración."
+"¡Gracias por la instalación! Ve a la página de <a href=\"%s\">ajustes</a> "
+"para realizar la configuración."
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr ""
 "traducción en francés, nuevo <a href=\"%s\">widget</a> en panel lateral, <a "
 "href=\"%s\">ajustes</a> para crear una URL específica de un idioma y las "
