@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-11-01 20:06+0000\n"
+"PO-Revision-Date: 2015-11-01 23:02+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -576,7 +576,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:106
 msgid "April 2012 Dev Derby Challenge - Audio"
-msgstr ""
+msgstr "April 2012 Dev Derby utmaning - Ljud"
 
 #: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
 msgid "Audio"
@@ -591,14 +591,16 @@ msgid ""
 "The HTML5 audio element lets you embed sound in webpages without requiring "
 "your users to rely on plug-ins."
 msgstr ""
+"Med HTML5 ljudelement kan du bädda in ljud i webbsidor utan att dina "
+"användare ska förlita sig på insticksmoduler."
 
 #: kuma/demos/__init__.py:113
 msgid "May 2012 Dev Derby Challenge - WebSockets API"
-msgstr ""
+msgstr "Maj 2012 Dev Derby utmaning - WebSockets API"
 
 #: kuma/demos/__init__.py:114
 msgid "WebSockets API"
-msgstr ""
+msgstr "WebSockets API"
 
 #: kuma/demos/__init__.py:115
 msgid "May 2012"
@@ -613,7 +615,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:120
 msgid "June 2012 Dev Derby Challenge - WebGL"
-msgstr ""
+msgstr "Juni 2012 Dev Derby utmaning - WebGL"
 
 #: kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
 msgid "WebGL"
@@ -632,11 +634,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:127
 msgid "July 2012 Dev Derby Challenge - No JavaScript"
-msgstr ""
+msgstr "Juli 2012 Dev Derby utmaning - Inga JavaScript"
 
 #: kuma/demos/__init__.py:128
 msgid "No JavaScript"
-msgstr "Inget Javascript"
+msgstr "Inga Javascript"
 
 #: kuma/demos/__init__.py:129
 msgid "July 2012"
