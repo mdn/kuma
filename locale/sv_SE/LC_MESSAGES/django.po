@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-26 17:53+0000\n"
+"PO-Revision-Date: 2015-11-01 18:48+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -350,7 +350,7 @@ msgstr "Borttaget från Derby"
 
 #: kuma/demos/__init__.py:36
 msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
-msgstr "Juni 2011 Dev Derby Challenge - CSS3-animationer"
+msgstr "Juni 2011 Dev Derby utmaning - CSS3-animationer"
 
 #: kuma/demos/__init__.py:37
 msgid "CSS3 Animations"
@@ -390,7 +390,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:43
 msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
-msgstr "Juli 2011 Dev Derby Challenge - HTML5 <video>"
+msgstr "Juli 2011 Dev Derby utmaning - HTML5 <video>"
 
 #: kuma/demos/__init__.py:44
 msgid "HTML5 <video>"
@@ -410,7 +410,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:50
 msgid "August 2011 Dev Derby Challenge - History API"
-msgstr "Augusti 2011 Dev Derby Challenge - Historik API"
+msgstr "Augusti 2011 Dev Derby utmaning - Historik API"
 
 #: kuma/demos/__init__.py:51
 msgid "History API"
@@ -428,7 +428,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:57
 msgid "September 2011 Dev Derby Challenge - Geolocation"
-msgstr ""
+msgstr "September 2011 Dev Derby utmaning - Geolokalisering"
 
 #: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
 msgid "Geolocation"
@@ -445,14 +445,17 @@ msgid ""
 " and use it to enhance the browsing experience or enable advanced location-"
 "aware features."
 msgstr ""
+"Med geolokalisering kan du få användarens fysiska plats (med tillstånd) och "
+"använda den för att förbättra webbupplevelse eller aktivera avancerade "
+"platsmedvetna funktioner."
 
 #: kuma/demos/__init__.py:64
 msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
-msgstr ""
+msgstr "Oktober 2011 Dev Derby utmaning - CSS Media Queries"
 
 #: kuma/demos/__init__.py:65
 msgid "CSS Media Queries"
-msgstr ""
+msgstr "CSS Media Queries"
 
 #: kuma/demos/__init__.py:66
 msgid "October 2011"
@@ -464,10 +467,13 @@ msgid ""
 "tailoring the user experience for a range of screen sizes, including "
 "desktops, tablets, and mobiles."
 msgstr ""
+"CSS Media Queries tillåter webbutvecklare att skapa lyhörd webbdesign, "
+"skräddarsy användarupplevelsen för en rad skärmstorlekar, inklusive "
+"stationära datorer, surfplattor och mobiler."
 
 #: kuma/demos/__init__.py:71
 msgid "November 2011 Dev Derby Challenge - Canvas"
-msgstr ""
+msgstr "November 2011 Dev Derby utmaning - Canvas"
 
 #: kuma/demos/__init__.py:72 kuma/demos/__init__.py:233
 msgid "Canvas"
@@ -484,10 +490,14 @@ msgid ""
 "provides a graphics context with its own state and methods that make it easy"
 " to control and draw in."
 msgstr ""
+"Med canvas kan du måla på webben med hjälp av JavaScript för att göra 2D-"
+"former, bitmappade bilder och avancerade grafiska effekter. Varje <canvas> "
+"element ger en grafisk kontext med sitt eget tillstånd och metoder som gör "
+"det lätt att kontrollera och rita i."
 
 #: kuma/demos/__init__.py:78
 msgid "December 2011 Dev Derby Challenge - IndexedDB"
-msgstr ""
+msgstr "December 2011 Dev Derby utmaning - IndexedDB"
 
 #: kuma/demos/__init__.py:79 kuma/demos/__init__.py:303
 msgid "IndexedDB"
@@ -502,10 +512,12 @@ msgid ""
 "IndexedDB lets web applications store significant amounts of structured data"
 " locally, for faster access, online or offline."
 msgstr ""
+"IndexedDB låter webbapplikationer lagra stora mängder strukturerade data "
+"lokalt, för snabbare åtkomst, online eller offline."
 
 #: kuma/demos/__init__.py:85
 msgid "January 2012 Dev Derby Challenge - Orientation"
-msgstr ""
+msgstr "Januari 2012 Dev Derby utmaning - Orientering"
 
 #: kuma/demos/__init__.py:86
 msgid "Orientation"
@@ -520,14 +532,16 @@ msgid ""
 "Orientation features in HTML5 access the motion and orientation data of "
 "devices with accelerometers."
 msgstr ""
+"Orienteringsfunktioner i HTML5 ger tillgång till rörelse- och "
+"orienteringsdata från enheter med accelerometrar."
 
 #: kuma/demos/__init__.py:92
 msgid "February 2012 Dev Derby Challenge - Touch Events"
-msgstr ""
+msgstr "Februari 2012 Dev Derby utmaning - Touchhändelser"
 
 #: kuma/demos/__init__.py:93
 msgid "Touch Events"
-msgstr ""
+msgstr "Touchhändelser"
 
 #: kuma/demos/__init__.py:94
 msgid "February 2012"
@@ -538,14 +552,17 @@ msgid ""
 "Touch Events help you make websites and applications more engaging by "
 "responding appropriately when users interact with touch screens."
 msgstr ""
+"Touchhändelser hjälpa dig att göra webbplatser och applikationer mer "
+"engagerande genom att svara på lämpligt sätt när användare interagerar med "
+"pekskärmar."
 
 #: kuma/demos/__init__.py:99
 msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
-msgstr ""
+msgstr "Mars 2012 Dev Derby utmaning - CSS 3D transformeringar"
 
 #: kuma/demos/__init__.py:100
 msgid "CSS 3D Transforms"
-msgstr ""
+msgstr "CSS 3D transformeringar"
 
 #: kuma/demos/__init__.py:101
 msgid "March 2012"
