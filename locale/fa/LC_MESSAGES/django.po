@@ -1,9 +1,10 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2013-12-09 19:10+0000\n"
+"PO-Revision-Date: 2015-11-02 11:21+0000\n"
 "Last-Translator: Amir <amir_farsi@ymail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fa\n"
@@ -11,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1386616256.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
@@ -22,7 +23,8 @@ msgstr "ID شیء"
 msgid "name of the action"
 msgstr ""
 
-#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128 kuma/demos/models.py:455
+#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128
+#: kuma/demos/models.py:455
 msgid "date last modified"
 msgstr ""
 
@@ -42,7 +44,8 @@ msgstr ""
 msgid "The file provided is not valid. File must be one of these types: %s."
 msgstr ""
 
-#. {n} is the revision number, {t} is the title of the document. {c} is the category.
+#. {n} is the revision number, {t} is the title of the document. {c} is the
+#. category.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
 msgid "Attachment {n} | {t}"
 msgstr ""
@@ -51,31 +54,38 @@ msgstr ""
 msgid "Attachment Information"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:19 kuma/wiki/templates/wiki/revision.html:18
+#: kuma/attachments/templates/attachments/attachment_detail.html:19
+#: kuma/wiki/templates/wiki/revision.html:18
 msgid "Revision slug:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:23 kuma/wiki/templates/wiki/revision.html:22
+#: kuma/attachments/templates/attachments/attachment_detail.html:23
+#: kuma/wiki/templates/wiki/revision.html:22
 msgid "Revision title:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:27 kuma/wiki/templates/wiki/revision.html:26
+#: kuma/attachments/templates/attachments/attachment_detail.html:27
+#: kuma/wiki/templates/wiki/revision.html:26
 msgid "Revision id:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:31 kuma/wiki/templates/wiki/revision.html:30
+#: kuma/attachments/templates/attachments/attachment_detail.html:31
+#: kuma/wiki/templates/wiki/revision.html:30
 msgid "Created:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:35 kuma/wiki/templates/wiki/revision.html:34
+#: kuma/attachments/templates/attachments/attachment_detail.html:35
+#: kuma/wiki/templates/wiki/revision.html:34
 msgid "Creator:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:39 kuma/attachments/templates/attachments/attachment_detail.html:43
+#: kuma/attachments/templates/attachments/attachment_detail.html:39
+#: kuma/attachments/templates/attachments/attachment_detail.html:43
 msgid "MIME Type:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:44 kuma/attachments/templates/attachments/includes/attachment_row.html:6
+#: kuma/attachments/templates/attachments/attachment_detail.html:44
+#: kuma/attachments/templates/attachments/includes/attachment_row.html:6
 msgid "%s bytes"
 msgstr ""
 
@@ -83,7 +93,8 @@ msgstr ""
 msgid "Is approved?"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:52 kuma/wiki/templates/wiki/revision.html:39
+#: kuma/attachments/templates/attachments/attachment_detail.html:52
+#: kuma/wiki/templates/wiki/revision.html:39
 msgid "Is current revision?"
 msgstr ""
 
@@ -111,15 +122,19 @@ msgstr "پیوست‌ها"
 msgid "Learn how to use Attachments"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/includes/attachment_list.html:16 kuma/attachments/templates/attachments/includes/attachment_list.html:23
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:16
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:23
 msgid "Attach Files"
 msgstr "پیوست فایل‌ها"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:21
-msgid "This document has no attachments. Images can be attached, and then embedded in the article."
+msgid ""
+"This document has no attachments. Images can be attached, and then embedded "
+"in the article."
 msgstr ""
 
-#: kuma/attachments/templates/attachments/includes/attachment_list.html:33 kuma/attachments/templates/attachments/includes/attachment_list.html:51
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:33
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:51
 msgid "File"
 msgstr ""
 
@@ -127,7 +142,9 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/includes/attachment_list.html:35 kuma/users/templates/users/user_detail.html:181 kuma/wiki/templates/wiki/confirm_revision_revert.html:23
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:35
+#: kuma/users/templates/users/user_detail.html:181
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:23
 msgid "Date"
 msgstr "تاریخ"
 
@@ -135,11 +152,14 @@ msgstr "تاریخ"
 msgid "Attached by"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/includes/attachment_list.html:52 kuma/users/models.py:65
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:52
+#: kuma/users/models.py:65
 msgid "Title"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/includes/attachment_list.html:53 kuma/authkeys/templates/authkeys/delete.html:9 kuma/authkeys/templates/authkeys/history.html:10
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:53
+#: kuma/authkeys/templates/authkeys/delete.html:9
+#: kuma/authkeys/templates/authkeys/history.html:10
 #: kuma/authkeys/templates/authkeys/new.html:36
 msgid "Description"
 msgstr ""
@@ -164,16 +184,23 @@ msgstr ""
 msgid "Description of intended use"
 msgstr ""
 
-#: kuma/authkeys/templates/authkeys/delete.html:7 kuma/authkeys/templates/authkeys/history.html:8 kuma/authkeys/templates/authkeys/new.html:34
+#: kuma/authkeys/templates/authkeys/delete.html:7
+#: kuma/authkeys/templates/authkeys/history.html:8
+#: kuma/authkeys/templates/authkeys/new.html:34
 msgid "Created"
 msgstr ""
 
-#: kuma/authkeys/templates/authkeys/delete.html:15 kuma/wiki/templates/wiki/confirm_document_delete.html:15 kuma/wiki/templates/wiki/confirm_document_delete.html:38
+#: kuma/authkeys/templates/authkeys/delete.html:15
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:15
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:38
 msgid "Delete"
 msgstr ""
 
-#: kuma/authkeys/templates/authkeys/delete.html:16 kuma/authkeys/templates/authkeys/new.html:17 kuma/wiki/templates/wiki/confirm_document_delete.html:39
-#: kuma/wiki/templates/wiki/confirm_revision_revert.html:40 kuma/wiki/templates/wiki/move.html:93 templates/tidings/unsubscribe.html:13
+#: kuma/authkeys/templates/authkeys/delete.html:16
+#: kuma/authkeys/templates/authkeys/new.html:17
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:39
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:40
+#: kuma/wiki/templates/wiki/move.html:93 templates/tidings/unsubscribe.html:13
 msgid "Cancel"
 msgstr "انصراف"
 
@@ -183,8 +210,10 @@ msgstr ""
 
 #: kuma/authkeys/templates/authkeys/list.html:8
 msgid ""
-"These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
-"don't trust with your account delete the key. It's easy to create a replacement key at any time."
+"These are your API keys. They're useful for building applications that "
+"perform tasks on MDN on your behalf. If you have stopped using any of them, "
+"or suspect one has been exposed to parties you don't trust with your account"
+" delete the key. It's easy to create a replacement key at any time."
 msgstr ""
 
 #: kuma/authkeys/templates/authkeys/list.html:14
@@ -204,13 +233,16 @@ msgid "History ({count})"
 msgstr ""
 
 #: kuma/authkeys/templates/authkeys/list.html:35
-msgid "You need a special permission to use API keys. You may request permission by <a href=\"%(bugzilla_url)s\">filing a bug</a>."
+msgid ""
+"You need a special permission to use API keys. You may request permission by"
+" <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
 
 #: kuma/authkeys/templates/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
-"clear as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong>"
+" This will be your only means of identifying this key later, other than the "
+"date and time of its creation. So, be as clear as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/templates/authkeys/new.html:16
@@ -219,8 +251,12 @@ msgstr ""
 
 #: kuma/authkeys/templates/authkeys/new.html:20
 msgid ""
-"<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
-"recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
+"<p>Your new key has been created. Please make a note of the details below "
+"(e.g. by copying them into your application's settings). This information "
+"will never be displayed again, and cannot be recovered if lost.</p> "
+"<p><strong>NOTE:</strong> When you're done, <a class=\"button\" "
+"href=\"%(list_url)s\">return to the key list</a>. Reloading this page will "
+"create a new key.</p>"
 msgstr ""
 
 #: kuma/authkeys/templates/authkeys/new.html:30
@@ -308,14 +344,21 @@ msgid "June 2011"
 msgstr ""
 
 #: kuma/demos/__init__.py:39
-msgid "CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions."
+msgid ""
+"CSS3 Animations let you change property values over time, to animate the "
+"appearance or position of elements, with no or minimal JavaScript, and with "
+"greater control than transitions."
 msgstr ""
 
 #: kuma/demos/__init__.py:40
 msgid ""
-"CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
-"over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
-"effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
+"CSS3 Animations are a new feature of modern browsers like Firefox, which add"
+" even more flexibility and control to the style and experience of the Web. "
+"CSS3 Animations let you change property values over time with no or minimal "
+"JavaScript, and with greater control than CSS Transitions. Go beyond static "
+"properties to animate the appearance and positions of HTML elements. You can"
+" achieve these effects without Flash or Silverlight, to make creative "
+"dynamic interfaces and engaging animations with CSS3."
 msgstr ""
 
 #: kuma/demos/__init__.py:43
@@ -331,7 +374,9 @@ msgid "July 2011"
 msgstr ""
 
 #: kuma/demos/__init__.py:46 kuma/demos/__init__.py:47
-msgid "The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins."
+msgid ""
+"The HTML5 <video> element lets you embed and control video media directly in"
+" web pages, without resorting to plug-ins."
 msgstr ""
 
 #: kuma/demos/__init__.py:50
@@ -347,7 +392,9 @@ msgid "August 2011"
 msgstr ""
 
 #: kuma/demos/__init__.py:53 kuma/demos/__init__.py:54
-msgid "The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."
+msgid ""
+"The History API in modern browsers enables live changes to the document "
+"without breaking the back button and allows apps to be bookmarked."
 msgstr ""
 
 #: kuma/demos/__init__.py:57
@@ -362,8 +409,12 @@ msgstr ""
 msgid "September 2011"
 msgstr ""
 
-#: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61 kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
-msgid "With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."
+#: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61
+#: kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
+msgid ""
+"With Geolocation, you can get the user's physical location (with permission)"
+" and use it to enhance the browsing experience or enable advanced location-"
+"aware features."
 msgstr ""
 
 #: kuma/demos/__init__.py:64
@@ -379,7 +430,10 @@ msgid "October 2011"
 msgstr ""
 
 #: kuma/demos/__init__.py:67 kuma/demos/__init__.py:68
-msgid "CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."
+msgid ""
+"CSS Media Queries allow Web developers to create responsive Web designs, "
+"tailoring the user experience for a range of screen sizes, including "
+"desktops, tablets, and mobiles."
 msgstr ""
 
 #: kuma/demos/__init__.py:71
@@ -396,8 +450,10 @@ msgstr ""
 
 #: kuma/demos/__init__.py:74 kuma/demos/__init__.py:75
 msgid ""
-"Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
-"methods that make it easy to control and draw in."
+"Canvas lets you paint the Web using JavaScript to render 2D shapes, "
+"bitmapped images, and advanced graphical effects. Each <canvas> element "
+"provides a graphics context with its own state and methods that make it easy"
+" to control and draw in."
 msgstr ""
 
 #: kuma/demos/__init__.py:78
@@ -413,7 +469,9 @@ msgid "December 2011"
 msgstr ""
 
 #: kuma/demos/__init__.py:81 kuma/demos/__init__.py:82
-msgid "IndexedDB lets web applications store significant amounts of structured data locally, for faster access, online or offline."
+msgid ""
+"IndexedDB lets web applications store significant amounts of structured data"
+" locally, for faster access, online or offline."
 msgstr ""
 
 #: kuma/demos/__init__.py:85
@@ -429,7 +487,9 @@ msgid "January 2012"
 msgstr ""
 
 #: kuma/demos/__init__.py:88 kuma/demos/__init__.py:89
-msgid "Orientation features in HTML5 access the motion and orientation data of devices with accelerometers."
+msgid ""
+"Orientation features in HTML5 access the motion and orientation data of "
+"devices with accelerometers."
 msgstr ""
 
 #: kuma/demos/__init__.py:92
@@ -445,7 +505,9 @@ msgid "February 2012"
 msgstr ""
 
 #: kuma/demos/__init__.py:95 kuma/demos/__init__.py:96
-msgid "Touch Events help you make websites and applications more engaging by responding appropriately when users interact with touch screens."
+msgid ""
+"Touch Events help you make websites and applications more engaging by "
+"responding appropriately when users interact with touch screens."
 msgstr ""
 
 #: kuma/demos/__init__.py:99
@@ -461,7 +523,9 @@ msgid "March 2012"
 msgstr ""
 
 #: kuma/demos/__init__.py:102 kuma/demos/__init__.py:103
-msgid "CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS to be transformed in three-dimensional space."
+msgid ""
+"CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS "
+"to be transformed in three-dimensional space."
 msgstr ""
 
 #: kuma/demos/__init__.py:106
@@ -477,7 +541,9 @@ msgid "April 2012"
 msgstr ""
 
 #: kuma/demos/__init__.py:109 kuma/demos/__init__.py:110
-msgid "The HTML5 audio element lets you embed sound in webpages without requiring your users to rely on plug-ins."
+msgid ""
+"The HTML5 audio element lets you embed sound in webpages without requiring "
+"your users to rely on plug-ins."
 msgstr ""
 
 #: kuma/demos/__init__.py:113
@@ -493,7 +559,10 @@ msgid "May 2012"
 msgstr ""
 
 #: kuma/demos/__init__.py:116 kuma/demos/__init__.py:117
-msgid "With the Websocket API and protocol, you can open a two-way channel between the browser and a server, for scalable and real-time data flow. No more server polling!"
+msgid ""
+"With the Websocket API and protocol, you can open a two-way channel between "
+"the browser and a server, for scalable and real-time data flow. No more "
+"server polling!"
 msgstr ""
 
 #: kuma/demos/__init__.py:120
@@ -508,8 +577,11 @@ msgstr ""
 msgid "June 2012"
 msgstr ""
 
-#: kuma/demos/__init__.py:123 kuma/demos/__init__.py:124 kuma/demos/__init__.py:211 kuma/demos/__init__.py:212
-msgid "WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."
+#: kuma/demos/__init__.py:123 kuma/demos/__init__.py:124
+#: kuma/demos/__init__.py:211 kuma/demos/__init__.py:212
+msgid ""
+"WebGL brings the power of OpenGL, for creating interactive 3D graphics, to "
+"the Web, with no plug-ins required."
 msgstr ""
 
 #: kuma/demos/__init__.py:127
@@ -526,8 +598,10 @@ msgstr ""
 
 #: kuma/demos/__init__.py:130 kuma/demos/__init__.py:131
 msgid ""
-"Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
-"input with HTML, and more. What else can you do without JavaScript?"
+"Creating rich user experiences for the Web has never been easier. Today's "
+"open Web standards put some of the most powerful features right at your "
+"fingertips. Animate pages with CSS, validate user input with HTML, and more."
+" What else can you do without JavaScript?"
 msgstr ""
 
 #: kuma/demos/__init__.py:134
@@ -543,7 +617,10 @@ msgid "August 2012"
 msgstr ""
 
 #: kuma/demos/__init__.py:137 kuma/demos/__init__.py:138
-msgid "The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."
+msgid ""
+"The Camera API lets you access (with permission) the cameras of mobile "
+"devices. With the Camera API, users can easily take pictures and upload them"
+" to your web page."
 msgstr ""
 
 #: kuma/demos/__init__.py:141
@@ -572,8 +649,9 @@ msgstr ""
 
 #: kuma/demos/__init__.py:151 kuma/demos/__init__.py:152
 msgid ""
-"CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can "
-"you do with Media Queries?"
+"CSS Media Queries are now a common tool for responsive, mobile-first web "
+"design. They are now even a W3C Recommendation! They can tell you a lot more"
+" about a display than just its width. What can you do with Media Queries?"
 msgstr ""
 
 #: kuma/demos/__init__.py:155
@@ -589,7 +667,10 @@ msgid "November 2012"
 msgstr ""
 
 #: kuma/demos/__init__.py:158 kuma/demos/__init__.py:159
-msgid "With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"
+msgid ""
+"With the Fullscreen API, you can escape the confines of the browser window. "
+"You can even detect full screen state changes and style full screen pages "
+"specially. Talk about immersive!"
 msgstr ""
 
 #: kuma/demos/__init__.py:162
@@ -606,8 +687,10 @@ msgstr ""
 
 #: kuma/demos/__init__.py:165 kuma/demos/__init__.py:166
 msgid ""
-"With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile "
-"users, improve performance, and more."
+"With the maturing offline capabilities of the open Web, you can build apps "
+"that work with or without an Internet connection. With offline technologies,"
+" you can better support travelers and mobile users, improve performance, and"
+" more."
 msgstr ""
 
 #: kuma/demos/__init__.py:169
@@ -623,7 +706,9 @@ msgid "January 2013"
 msgstr ""
 
 #: kuma/demos/__init__.py:172 kuma/demos/__init__.py:173
-msgid "The Drag and Drop API brings an age-old interaction to the Web, making rich, natural, and familiar user experiences possible."
+msgid ""
+"The Drag and Drop API brings an age-old interaction to the Web, making rich,"
+" natural, and familiar user experiences possible."
 msgstr ""
 
 #: kuma/demos/__init__.py:176
@@ -640,8 +725,10 @@ msgstr ""
 
 #: kuma/demos/__init__.py:179 kuma/demos/__init__.py:180
 msgid ""
-"The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond "
-"to all the interactions users have come to expect."
+"The Touch Events API lets you track multiple touches at the same time on "
+"devices that support them. Build complex games, support pinch-to-zoom and "
+"more. By using multi-touch, your app can respond to all the interactions "
+"users have come to expect."
 msgstr ""
 
 #: kuma/demos/__init__.py:183
@@ -657,7 +744,10 @@ msgid "March 2013"
 msgstr ""
 
 #: kuma/demos/__init__.py:186 kuma/demos/__init__.py:187
-msgid "The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"
+msgid ""
+"The mobile Web is becoming more important every day. This time, the only "
+"limit is your creativity. What amazing experiences can you build for users "
+"on the go?"
 msgstr ""
 
 #: kuma/demos/__init__.py:190
@@ -674,8 +764,9 @@ msgstr ""
 
 #: kuma/demos/__init__.py:193 kuma/demos/__init__.py:194
 msgid ""
-"Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive "
-"tasks."
+"Web Workers make it easy for you to run scripts in the background. By using "
+"Web Workers, you can create dazzling user interfaces that are not hindered "
+"by even the most computationally-intensive tasks."
 msgstr ""
 
 #: kuma/demos/__init__.py:197
@@ -700,7 +791,9 @@ msgstr ""
 
 #: kuma/demos/__init__.py:202 kuma/demos/__init__.py:203
 msgid ""
-"The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."
+"The getUserMedia function lets you access (with permission) the cameras and "
+"microphones of your users. No plugins needed! What can you do once you have "
+"this media? The possibilities are endless."
 msgstr ""
 
 #: kuma/demos/__init__.py:206
@@ -744,26 +837,46 @@ msgid "File found"
 msgstr ""
 
 #: kuma/demos/__init__.py:220 kuma/demos/__init__.py:221
-msgid "The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."
+msgid ""
+"The File API lets you read the contents of files submitted by your users, "
+"making natural and familiar data operations possible."
 msgstr ""
 
 #: kuma/demos/__init__.py:226
-msgid "Mozilla's Audio Data API extends the current HTML5 API and allows web developers to read and write raw audio data."
+msgid ""
+"Mozilla's Audio Data API extends the current HTML5 API and allows web "
+"developers to read and write raw audio data."
 msgstr ""
 
-#: kuma/demos/__init__.py:228 kuma/demos/__init__.py:236 kuma/demos/__init__.py:244 kuma/demos/__init__.py:252 kuma/demos/__init__.py:259 kuma/demos/__init__.py:266 kuma/demos/__init__.py:274
-#: kuma/demos/__init__.py:282 kuma/demos/__init__.py:290 kuma/demos/__init__.py:298 kuma/demos/__init__.py:306 kuma/demos/__init__.py:314 kuma/demos/__init__.py:322 kuma/demos/__init__.py:330
-#: kuma/demos/__init__.py:338 kuma/demos/__init__.py:346 kuma/demos/__init__.py:354 kuma/demos/__init__.py:362 kuma/demos/__init__.py:370 kuma/demos/__init__.py:378 kuma/demos/__init__.py:386
+#: kuma/demos/__init__.py:228 kuma/demos/__init__.py:236
+#: kuma/demos/__init__.py:244 kuma/demos/__init__.py:252
+#: kuma/demos/__init__.py:259 kuma/demos/__init__.py:266
+#: kuma/demos/__init__.py:274 kuma/demos/__init__.py:282
+#: kuma/demos/__init__.py:290 kuma/demos/__init__.py:298
+#: kuma/demos/__init__.py:306 kuma/demos/__init__.py:314
+#: kuma/demos/__init__.py:322 kuma/demos/__init__.py:330
+#: kuma/demos/__init__.py:338 kuma/demos/__init__.py:346
+#: kuma/demos/__init__.py:354 kuma/demos/__init__.py:362
+#: kuma/demos/__init__.py:370 kuma/demos/__init__.py:378
+#: kuma/demos/__init__.py:386
 msgid "MDN Documentation"
 msgstr ""
 
 #: kuma/demos/__init__.py:228
-msgid "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
+msgid ""
+"https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 msgstr ""
 
-#: kuma/demos/__init__.py:229 kuma/demos/__init__.py:237 kuma/demos/__init__.py:245 kuma/demos/__init__.py:267 kuma/demos/__init__.py:275 kuma/demos/__init__.py:283 kuma/demos/__init__.py:291
-#: kuma/demos/__init__.py:299 kuma/demos/__init__.py:307 kuma/demos/__init__.py:315 kuma/demos/__init__.py:323 kuma/demos/__init__.py:331 kuma/demos/__init__.py:339 kuma/demos/__init__.py:347
-#: kuma/demos/__init__.py:355 kuma/demos/__init__.py:363 kuma/demos/__init__.py:371 kuma/demos/__init__.py:379 kuma/demos/__init__.py:387
+#: kuma/demos/__init__.py:229 kuma/demos/__init__.py:237
+#: kuma/demos/__init__.py:245 kuma/demos/__init__.py:267
+#: kuma/demos/__init__.py:275 kuma/demos/__init__.py:283
+#: kuma/demos/__init__.py:291 kuma/demos/__init__.py:299
+#: kuma/demos/__init__.py:307 kuma/demos/__init__.py:315
+#: kuma/demos/__init__.py:323 kuma/demos/__init__.py:331
+#: kuma/demos/__init__.py:339 kuma/demos/__init__.py:347
+#: kuma/demos/__init__.py:355 kuma/demos/__init__.py:363
+#: kuma/demos/__init__.py:371 kuma/demos/__init__.py:379
+#: kuma/demos/__init__.py:387
 msgid "Wikipedia Article"
 msgstr ""
 
@@ -771,9 +884,16 @@ msgstr ""
 msgid "http://en.wikipedia.org/wiki/HTML5_audio"
 msgstr ""
 
-#: kuma/demos/__init__.py:230 kuma/demos/__init__.py:238 kuma/demos/__init__.py:246 kuma/demos/__init__.py:253 kuma/demos/__init__.py:260 kuma/demos/__init__.py:268 kuma/demos/__init__.py:276
-#: kuma/demos/__init__.py:284 kuma/demos/__init__.py:300 kuma/demos/__init__.py:308 kuma/demos/__init__.py:316 kuma/demos/__init__.py:324 kuma/demos/__init__.py:332 kuma/demos/__init__.py:340
-#: kuma/demos/__init__.py:348 kuma/demos/__init__.py:364 kuma/demos/__init__.py:372 kuma/demos/__init__.py:380 kuma/demos/__init__.py:388
+#: kuma/demos/__init__.py:230 kuma/demos/__init__.py:238
+#: kuma/demos/__init__.py:246 kuma/demos/__init__.py:253
+#: kuma/demos/__init__.py:260 kuma/demos/__init__.py:268
+#: kuma/demos/__init__.py:276 kuma/demos/__init__.py:284
+#: kuma/demos/__init__.py:300 kuma/demos/__init__.py:308
+#: kuma/demos/__init__.py:316 kuma/demos/__init__.py:324
+#: kuma/demos/__init__.py:332 kuma/demos/__init__.py:340
+#: kuma/demos/__init__.py:348 kuma/demos/__init__.py:364
+#: kuma/demos/__init__.py:372 kuma/demos/__init__.py:380
+#: kuma/demos/__init__.py:388
 msgid "W3C Spec"
 msgstr ""
 
@@ -782,7 +902,9 @@ msgid "http://www.w3.org/TR/html5/video.html#audio"
 msgstr ""
 
 #: kuma/demos/__init__.py:234
-msgid "The HTML5 canvas element allows you to display scriptable renderings of 2D shapes and bitmap images."
+msgid ""
+"The HTML5 canvas element allows you to display scriptable renderings of 2D "
+"shapes and bitmap images."
 msgstr ""
 
 #: kuma/demos/__init__.py:236
@@ -803,7 +925,9 @@ msgstr ""
 
 #: kuma/demos/__init__.py:242
 msgid ""
-"Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
+"Cascading Style Sheets level 3 (CSS3) provide serveral new features and "
+"properties to enhance the formatting and look of documents written in "
+"different kinds of markup languages like HTML or XML."
 msgstr ""
 
 #: kuma/demos/__init__.py:244
@@ -823,11 +947,14 @@ msgid "Device"
 msgstr ""
 
 #: kuma/demos/__init__.py:250
-msgid "Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."
+msgid ""
+"Media queries and orientation events let authors adjust their layout on "
+"hand-held devices such as mobile phones."
 msgstr ""
 
 #: kuma/demos/__init__.py:252
-msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
+msgid ""
+"https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
 msgstr ""
 
 #: kuma/demos/__init__.py:253
@@ -839,11 +966,14 @@ msgid "Files"
 msgstr ""
 
 #: kuma/demos/__init__.py:257
-msgid "The File API allows web developers to use file objects in web applications, as well as selecting and accessing their data."
+msgid ""
+"The File API allows web developers to use file objects in web applications, "
+"as well as selecting and accessing their data."
 msgstr ""
 
 #: kuma/demos/__init__.py:259
-msgid "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
+msgid ""
+"https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
 msgstr ""
 
 #: kuma/demos/__init__.py:260
@@ -855,7 +985,10 @@ msgid "Fonts & Type"
 msgstr ""
 
 #: kuma/demos/__init__.py:264
-msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
+msgid ""
+"The CSS3-Font specification contains enhanced features for fonts and "
+"typography like embedding own fonts via @font-face or controlling OpenType "
+"font features directly via CSS."
 msgstr ""
 
 #: kuma/demos/__init__.py:266
@@ -875,7 +1008,10 @@ msgid "Forms"
 msgstr ""
 
 #: kuma/demos/__init__.py:272
-msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+msgid ""
+"Form elements and attributes in HTML5 provide a greater degree of semantic "
+"mark-up than HTML4 and remove a great deal of the need for tedious scripting"
+" and styling that was required in HTML4."
 msgstr ""
 
 #: kuma/demos/__init__.py:274
@@ -891,7 +1027,9 @@ msgid "http://www.w3.org/TR/html5/forms.html"
 msgstr ""
 
 #: kuma/demos/__init__.py:280
-msgid "The Geolocation API allows web applications to access the user's geographical location."
+msgid ""
+"The Geolocation API allows web applications to access the user's "
+"geographical location."
 msgstr ""
 
 #: kuma/demos/__init__.py:282
@@ -906,12 +1044,17 @@ msgstr ""
 msgid "http://dev.w3.org/geo/api/spec-source.html"
 msgstr ""
 
-#: kuma/demos/__init__.py:287 kuma/landing/templates/landing/homepage.html:86 kuma/landing/templates/landing/promote_buttons.html:111 templates/base.html:131
+#: kuma/demos/__init__.py:287 kuma/landing/templates/landing/homepage.html:86
+#: kuma/landing/templates/landing/promote_buttons.html:111
+#: templates/base.html:131
 msgid "JavaScript"
 msgstr ""
 
 #: kuma/demos/__init__.py:288
-msgid "JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."
+msgid ""
+"JavaScript is a lightweight, object-oriented programming language, commonly "
+"used for scripting interactive behavior on web pages and in web "
+"applications."
 msgstr ""
 
 #: kuma/demos/__init__.py:290
@@ -935,7 +1078,9 @@ msgid "HTML5"
 msgstr ""
 
 #: kuma/demos/__init__.py:296
-msgid "HTML5 is the newest version of the HTML standard, currently under development."
+msgid ""
+"HTML5 is the newest version of the HTML standard, currently under "
+"development."
 msgstr ""
 
 #: kuma/demos/__init__.py:298
@@ -951,7 +1096,10 @@ msgid "http://dev.w3.org/html5/spec/Overview.html"
 msgstr ""
 
 #: kuma/demos/__init__.py:304
-msgid "IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."
+msgid ""
+"IndexedDB is an API for client-side storage of significant amounts of "
+"structured data and for high performance searches on this data using "
+"indexes."
 msgstr ""
 
 #: kuma/demos/__init__.py:306
@@ -967,7 +1115,9 @@ msgid "http://www.w3.org/TR/IndexedDB/"
 msgstr ""
 
 #: kuma/demos/__init__.py:312
-msgid "Drag and Drop features allow the user to move elements on the screen using the mouse pointer."
+msgid ""
+"Drag and Drop features allow the user to move elements on the screen using "
+"the mouse pointer."
 msgstr ""
 
 #: kuma/demos/__init__.py:314
@@ -983,8 +1133,12 @@ msgid "http://www.w3.org/TR/html5/dnd.html"
 msgstr ""
 
 #: kuma/demos/__init__.py:320
-msgid "Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."
-msgstr "فایرفاکس تلفن همراه تجربه‌ی واقعی وب را برای تلفن‌های همراه و سایر دستگاه‌های غیر PC به ارمغان می‌آورد."
+msgid ""
+"Firefox Mobile brings the true Web experience to mobile phones and other "
+"non-PC devices."
+msgstr ""
+"فایرفاکس تلفن همراه تجربه‌ی واقعی وب را برای تلفن‌های همراه و سایر "
+"دستگاه‌های غیر PC به ارمغان می‌آورد."
 
 #: kuma/demos/__init__.py:322
 msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
@@ -1003,11 +1157,14 @@ msgid "Offline Support"
 msgstr ""
 
 #: kuma/demos/__init__.py:328
-msgid "Offline caching of web applications' resources using the application cache and local storage."
+msgid ""
+"Offline caching of web applications' resources using the application cache "
+"and local storage."
 msgstr ""
 
 #: kuma/demos/__init__.py:330
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
+msgid ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
 msgstr ""
 
 #: kuma/demos/__init__.py:331
@@ -1023,7 +1180,9 @@ msgid "SVG"
 msgstr ""
 
 #: kuma/demos/__init__.py:336
-msgid "Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."
+msgid ""
+"Scalable Vector Graphics (SVG) is an XML based language for describing two-"
+"dimensional vector graphics."
 msgstr ""
 
 #: kuma/demos/__init__.py:338
@@ -1043,11 +1202,15 @@ msgid "Video"
 msgstr ""
 
 #: kuma/demos/__init__.py:344
-msgid "The HTML5 video element provides integrated support for playing video media without requiring plug-ins."
+msgid ""
+"The HTML5 video element provides integrated support for playing video media "
+"without requiring plug-ins."
 msgstr ""
 
 #: kuma/demos/__init__.py:346
-msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video"
+msgid ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/HTML/Using_HTML5_audio_and_video"
 msgstr ""
 
 #: kuma/demos/__init__.py:347
@@ -1059,7 +1222,9 @@ msgid "http://www.w3.org/TR/html5/video.html"
 msgstr ""
 
 #: kuma/demos/__init__.py:352
-msgid "In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."
+msgid ""
+"In the context of the HTML canvas element WebGL provides an API for 3D "
+"graphics in the browser."
 msgstr ""
 
 #: kuma/demos/__init__.py:354
@@ -1083,7 +1248,9 @@ msgid "WebSockets"
 msgstr ""
 
 #: kuma/demos/__init__.py:360
-msgid "WebSockets is a technology that makes it possible to open an interactive communication session between the user's browser and a server."
+msgid ""
+"WebSockets is a technology that makes it possible to open an interactive "
+"communication session between the user's browser and a server."
 msgstr ""
 
 #: kuma/demos/__init__.py:362
@@ -1099,11 +1266,15 @@ msgid "http://dev.w3.org/html5/websockets/"
 msgstr ""
 
 #: kuma/demos/__init__.py:368
-msgid "Web Workers provide a simple means for web content to run scripts in background threads."
+msgid ""
+"Web Workers provide a simple means for web content to run scripts in "
+"background threads."
 msgstr ""
 
 #: kuma/demos/__init__.py:370
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers"
+msgid ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/Guide/Performance/Using_web_workers"
 msgstr ""
 
 #: kuma/demos/__init__.py:371
@@ -1119,11 +1290,15 @@ msgid "XMLHttpRequest"
 msgstr ""
 
 #: kuma/demos/__init__.py:376
-msgid "XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."
+msgid ""
+"XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver "
+"and load the response data directly back into the script."
 msgstr ""
 
 #: kuma/demos/__init__.py:378
-msgid "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
+msgid ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
 msgstr ""
 
 #: kuma/demos/__init__.py:379
@@ -1135,11 +1310,14 @@ msgid "http://www.w3.org/TR/XMLHttpRequest/"
 msgstr ""
 
 #: kuma/demos/__init__.py:384
-msgid "Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."
+msgid ""
+"Track the movement of the user's finger on a touch screen, monitoring the "
+"raw touch events generated by the system."
 msgstr ""
 
 #: kuma/demos/__init__.py:386
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
+msgid ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
 msgstr ""
 
 #: kuma/demos/__init__.py:387
@@ -1414,7 +1592,9 @@ msgid "select a ZIP file containing your demo"
 msgstr ""
 
 #: kuma/demos/models.py:440
-msgid "Is your source code also available somewhere else on the web (e.g., github)? Please share the link."
+msgid ""
+"Is your source code also available somewhere else on the web (e.g., github)?"
+" Please share the link."
 msgstr ""
 
 #: kuma/demos/models.py:443
@@ -1445,13 +1625,23 @@ msgstr ""
 msgid "HTML index not found in ZIP"
 msgstr ""
 
-#: kuma/demos/views.py:73 kuma/demos/views.py:300 kuma/demos/views.py:328 kuma/demos/views.py:343
+#: kuma/demos/views.py:73 kuma/demos/views.py:300 kuma/demos/views.py:328
+#: kuma/demos/views.py:343
 msgid "access denied"
 msgstr ""
 
-#: kuma/demos/templates/demos/delete.html:10 kuma/demos/templates/demos/detail.html:9 kuma/demos/templates/demos/devderby_tag.html:5 kuma/demos/templates/demos/flag.html:10
-#: kuma/demos/templates/demos/launch.html:6 kuma/demos/templates/demos/listing_all.html:4 kuma/demos/templates/demos/listing_search.html:9 kuma/demos/templates/demos/listing_tag.html:4
-#: kuma/demos/templates/demos/submit.html:13 kuma/demos/templates/demos/submit.html:15 kuma/demos/templates/demos/submit_noauth.html:11 kuma/demos/templates/demos/terms.html:10
+#: kuma/demos/templates/demos/delete.html:10
+#: kuma/demos/templates/demos/detail.html:9
+#: kuma/demos/templates/demos/devderby_tag.html:5
+#: kuma/demos/templates/demos/flag.html:10
+#: kuma/demos/templates/demos/launch.html:6
+#: kuma/demos/templates/demos/listing_all.html:4
+#: kuma/demos/templates/demos/listing_search.html:9
+#: kuma/demos/templates/demos/listing_tag.html:4
+#: kuma/demos/templates/demos/submit.html:13
+#: kuma/demos/templates/demos/submit.html:15
+#: kuma/demos/templates/demos/submit_noauth.html:11
+#: kuma/demos/templates/demos/terms.html:10
 msgid "{subtitle} | Demo Studio"
 msgstr ""
 
@@ -1459,11 +1649,17 @@ msgstr ""
 msgid "MDN"
 msgstr ""
 
-#: kuma/demos/templates/demos/delete.html:21 kuma/demos/templates/demos/detail.html:14 kuma/demos/templates/demos/home.html:14 kuma/demos/templates/demos/launch.html:15
+#: kuma/demos/templates/demos/delete.html:21
+#: kuma/demos/templates/demos/detail.html:14
+#: kuma/demos/templates/demos/home.html:14
+#: kuma/demos/templates/demos/launch.html:15
 msgid "Demo Studio"
 msgstr "استدیوی نسخه‌های نمایشی"
 
-#: kuma/demos/templates/demos/delete.html:26 kuma/demos/templates/demos/detail.html:32 kuma/demos/templates/demos/home.html:23 kuma/demos/templates/demos/elements/demos_head.html:4
+#: kuma/demos/templates/demos/delete.html:26
+#: kuma/demos/templates/demos/detail.html:32
+#: kuma/demos/templates/demos/home.html:23
+#: kuma/demos/templates/demos/elements/demos_head.html:4
 msgid "Submit a Demo"
 msgstr "ارسال یک نسخه‌ی نمایشی"
 
@@ -1473,31 +1669,50 @@ msgstr ""
 
 #: kuma/demos/templates/demos/delete.html:40
 msgid ""
-"<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
-"<strong>cannot be undone</strong>."
+"<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo "
+"Studio.</p> <p>The Demo's listing, source code, and statistics will be "
+"<strong>deleted</strong>.</p> <p>This action <strong>cannot be "
+"undone</strong>."
 msgstr ""
 
 #: kuma/demos/templates/demos/delete.html:49
 msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
-msgstr "<button type=\"submit\" class=\"remove\"><span>حذف نسخه‌ی نمایشی</span></button>"
+msgstr ""
+"<button type=\"submit\" class=\"remove\"><span>حذف نسخه‌ی "
+"نمایشی</span></button>"
 
-#: kuma/demos/templates/demos/detail.html:30 kuma/demos/templates/demos/devderby_landing.html:22 kuma/demos/templates/demos/devderby_tag.html:32 kuma/demos/templates/demos/home.html:21
-#: kuma/demos/templates/demos/submit.html:45 kuma/demos/templates/demos/submit_noauth.html:20 kuma/demos/templates/demos/elements/demos_head.html:2
+#: kuma/demos/templates/demos/detail.html:30
+#: kuma/demos/templates/demos/devderby_landing.html:22
+#: kuma/demos/templates/demos/devderby_tag.html:32
+#: kuma/demos/templates/demos/home.html:21
+#: kuma/demos/templates/demos/submit.html:45
+#: kuma/demos/templates/demos/submit_noauth.html:20
+#: kuma/demos/templates/demos/elements/demos_head.html:2
 msgid "Mozilla Demo Studio"
 msgstr "استدیوی نسخه‌های نمایشی Mozilla"
 
-#: kuma/demos/templates/demos/detail.html:33 kuma/demos/templates/demos/home.html:24 kuma/demos/templates/demos/listing_tag.html:31 kuma/demos/templates/demos/elements/demos_head.html:5
+#: kuma/demos/templates/demos/detail.html:33
+#: kuma/demos/templates/demos/home.html:24
+#: kuma/demos/templates/demos/listing_tag.html:31
+#: kuma/demos/templates/demos/elements/demos_head.html:5
 msgid "Learn More"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:35 kuma/demos/templates/demos/home.html:26 kuma/demos/templates/demos/elements/demos_head.html:7
+#: kuma/demos/templates/demos/detail.html:35
+#: kuma/demos/templates/demos/home.html:26
+#: kuma/demos/templates/demos/elements/demos_head.html:7
 msgid ""
-"<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-"<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
-"open standards and technologies that power the Web.</li> </ul>"
+"<p>Welcome to the Mozilla Demo Studio, where developers like you can "
+"develop, share, demonstrate, and learn all about Web technologies. See "
+"what's possible by exploring Demo Studio:</p> <ul> <li>View demos that "
+"showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source "
+"code for those demos so you can see how they work.</li> <li>Read "
+"documentation to learn about the open standards and technologies that power "
+"the Web.</li> </ul>"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:51 kuma/demos/templates/demos/launch.html:80
+#: kuma/demos/templates/demos/detail.html:51
+#: kuma/demos/templates/demos/launch.html:80
 msgid "Go to the previous demo, {demo_title}"
 msgstr "برو به نسخه‌ی نمایشی قبلی، {demo_title}"
 
@@ -1505,12 +1720,18 @@ msgstr "برو به نسخه‌ی نمایشی قبلی، {demo_title}"
 msgid "Prev"
 msgstr "قبلی"
 
-#: kuma/demos/templates/demos/detail.html:55 kuma/demos/templates/demos/launch.html:84
+#: kuma/demos/templates/demos/detail.html:55
+#: kuma/demos/templates/demos/launch.html:84
 msgid "Go to the next demo, {demo_title}"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:55 kuma/demos/templates/demos/detail.html:69 kuma/demos/templates/demos/home.html:47 kuma/demos/templates/demos/launch.html:84
-#: kuma/demos/templates/demos/elements/submission_listing.html:64 kuma/search/templates/search/results.html:159 templates/includes/paginator.html:30
+#: kuma/demos/templates/demos/detail.html:55
+#: kuma/demos/templates/demos/detail.html:69
+#: kuma/demos/templates/demos/home.html:47
+#: kuma/demos/templates/demos/launch.html:84
+#: kuma/demos/templates/demos/elements/submission_listing.html:64
+#: kuma/search/templates/search/results.html:159
+#: templates/includes/paginator.html:30
 msgid "Next"
 msgstr "بعدی"
 
@@ -1518,8 +1739,13 @@ msgstr "بعدی"
 msgid "See the previous image"
 msgstr "مشاهده‌ی تصویر قبلی"
 
-#: kuma/demos/templates/demos/detail.html:68 kuma/demos/templates/demos/home.html:46 kuma/demos/templates/demos/launch.html:80 kuma/demos/templates/demos/elements/submission_listing.html:61
-#: kuma/search/templates/search/results.html:154 kuma/wiki/templates/wiki/list/revisions.html:56 templates/includes/paginator.html:6
+#: kuma/demos/templates/demos/detail.html:68
+#: kuma/demos/templates/demos/home.html:46
+#: kuma/demos/templates/demos/launch.html:80
+#: kuma/demos/templates/demos/elements/submission_listing.html:61
+#: kuma/search/templates/search/results.html:154
+#: kuma/wiki/templates/wiki/list/revisions.html:56
+#: templates/includes/paginator.html:6
 msgid "Previous"
 msgstr "قبلی"
 
@@ -1535,35 +1761,44 @@ msgstr ""
 msgid "Launch Demo"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:124 kuma/demos/templates/demos/launch.html:46
+#: kuma/demos/templates/demos/detail.html:124
+#: kuma/demos/templates/demos/launch.html:46
 msgid "You like this demo. Undo?"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:124 kuma/demos/templates/demos/launch.html:46
+#: kuma/demos/templates/demos/detail.html:124
+#: kuma/demos/templates/demos/launch.html:46
 msgid "You Like"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:130 kuma/demos/templates/demos/launch.html:52
+#: kuma/demos/templates/demos/detail.html:130
+#: kuma/demos/templates/demos/launch.html:52
 msgid "Do you like this demo?"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:130 kuma/demos/templates/demos/launch.html:52
+#: kuma/demos/templates/demos/detail.html:130
+#: kuma/demos/templates/demos/launch.html:52
 msgid "Like It"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:135 kuma/demos/templates/demos/launch.html:56
+#: kuma/demos/templates/demos/detail.html:135
+#: kuma/demos/templates/demos/launch.html:56
 msgid "Share this demo with your social network"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:135 kuma/demos/templates/demos/detail.html:137 kuma/demos/templates/demos/launch.html:56
+#: kuma/demos/templates/demos/detail.html:135
+#: kuma/demos/templates/demos/detail.html:137
+#: kuma/demos/templates/demos/launch.html:56
 msgid "Share It"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:138 kuma/demos/templates/demos/launch.html:58
+#: kuma/demos/templates/demos/detail.html:138
+#: kuma/demos/templates/demos/launch.html:58
 msgid "Share on Twitter"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:139 kuma/demos/templates/demos/launch.html:59
+#: kuma/demos/templates/demos/detail.html:139
+#: kuma/demos/templates/demos/launch.html:59
 msgid "Share on Facebook"
 msgstr ""
 
@@ -1575,7 +1810,8 @@ msgstr ""
 msgid "See more demos made with {tag_title}"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:165 kuma/demos/templates/demos/elements/submission_thumb.html:15
+#: kuma/demos/templates/demos/detail.html:165
+#: kuma/demos/templates/demos/elements/submission_thumb.html:15
 msgid "This demo has been viewed {count} time"
 msgid_plural "This demo has been viewed {count} times"
 msgstr[0] ""
@@ -1585,7 +1821,8 @@ msgid "{count} view"
 msgid_plural "{count} views"
 msgstr[0] ""
 
-#: kuma/demos/templates/demos/detail.html:166 kuma/demos/templates/demos/elements/submission_thumb.html:16
+#: kuma/demos/templates/demos/detail.html:166
+#: kuma/demos/templates/demos/elements/submission_thumb.html:16
 msgid "{count} person liked this demo"
 msgid_plural "{count} people liked this demo"
 msgstr[0] ""
@@ -1621,22 +1858,28 @@ msgid "About this Demo"
 msgstr "درباره من"
 
 #: kuma/demos/templates/demos/detail.html:209
-msgid "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP File</span>"
+msgid ""
+"Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP "
+"File</span>"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:217
-msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
+msgid ""
+"This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:225
 msgid "More by {creator}"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:237 kuma/demos/templates/demos/launch.html:63
+#: kuma/demos/templates/demos/detail.html:237
+#: kuma/demos/templates/demos/launch.html:63
 msgid "Report a Problem"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:239 kuma/demos/templates/demos/detail.html:240 kuma/demos/templates/demos/detail.html:241
+#: kuma/demos/templates/demos/detail.html:239
+#: kuma/demos/templates/demos/detail.html:240
+#: kuma/demos/templates/demos/detail.html:241
 msgid "Flag Content"
 msgstr ""
 
@@ -1652,11 +1895,14 @@ msgstr ""
 msgid "Demo is not by this author"
 msgstr ""
 
-#: kuma/demos/templates/demos/devderby_landing.html:11 kuma/demos/templates/demos/devderby_landing.html:23 kuma/demos/templates/demos/devderby_tag.html:33
+#: kuma/demos/templates/demos/devderby_landing.html:11
+#: kuma/demos/templates/demos/devderby_landing.html:23
+#: kuma/demos/templates/demos/devderby_tag.html:33
 msgid "Dev Derby"
 msgstr ""
 
-#: kuma/demos/templates/demos/devderby_landing.html:22 kuma/demos/templates/demos/devderby_tag.html:32
+#: kuma/demos/templates/demos/devderby_landing.html:22
+#: kuma/demos/templates/demos/devderby_tag.html:32
 msgid "presents"
 msgstr ""
 
@@ -1665,22 +1911,28 @@ msgid "Dev Derby has ended"
 msgstr ""
 
 #: kuma/demos/templates/demos/devderby_landing.html:27
-msgid "From 2011 until 2013, web developers created more than 450 demos for the Dev Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo Studio</a> for many more."
+msgid ""
+"From 2011 until 2013, web developers created more than 450 demos for the Dev"
+" Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo "
+"Studio</a> for many more."
 msgstr ""
 
 #: kuma/demos/templates/demos/devderby_landing.html:40
 msgid "Previous Dev Derby Challenges"
 msgstr ""
 
-#: kuma/demos/templates/demos/devderby_landing.html:55 kuma/demos/templates/demos/devderby_tag.html:25
+#: kuma/demos/templates/demos/devderby_landing.html:55
+#: kuma/demos/templates/demos/devderby_tag.html:25
 msgid "Resources"
 msgstr ""
 
-#: kuma/demos/templates/demos/devderby_landing.html:57 kuma/search/templates/search/results.html:141
+#: kuma/demos/templates/demos/devderby_landing.html:57
+#: kuma/search/templates/search/results.html:141
 msgid "Docs"
 msgstr ""
 
-#: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:145 templates/base.html:163
+#: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:145
+#: templates/base.html:163
 msgid "Demos"
 msgstr "نسخه‌های نمایشی"
 
@@ -1688,7 +1940,8 @@ msgstr "نسخه‌های نمایشی"
 msgid "Articles"
 msgstr ""
 
-#: kuma/demos/templates/demos/devderby_tag.html:8 kuma/demos/templates/demos/listing_tag.html:7
+#: kuma/demos/templates/demos/devderby_tag.html:8
+#: kuma/demos/templates/demos/listing_tag.html:7
 msgid "Demos tagged {tag}"
 msgstr ""
 
@@ -1716,7 +1969,9 @@ msgstr ""
 msgid "Submissions"
 msgstr ""
 
-#: kuma/demos/templates/demos/devderby_tag.html:55 kuma/demos/templates/demos/home.html:136 kuma/demos/templates/demos/listing_tag.html:45
+#: kuma/demos/templates/demos/devderby_tag.html:55
+#: kuma/demos/templates/demos/home.html:136
+#: kuma/demos/templates/demos/listing_tag.html:45
 msgid "Subscribe to a feed of {tag_title} demos"
 msgstr "مشترک یک خوراک از {tag_title} نسخه‌های نمایشی شوید"
 
@@ -1736,7 +1991,8 @@ msgstr ""
 msgid "<button type=\"submit\" name=\"action_create\">Flag content</button>"
 msgstr ""
 
-#: kuma/demos/templates/demos/home.html:8 kuma/demos/templates/demos/listing_all.html:6
+#: kuma/demos/templates/demos/home.html:8
+#: kuma/demos/templates/demos/listing_all.html:6
 msgid "Recent demos"
 msgstr ""
 
@@ -1756,7 +2012,8 @@ msgstr "مشاهده‌ی نسخه‌ی نمایشی قبلی"
 msgid "See the next demo"
 msgstr "مشاهده‌ی نسخه‌ی نمایشی بعدی"
 
-#: kuma/demos/templates/demos/home.html:66 kuma/demos/templates/demos/elements/submission_thumb.html:21
+#: kuma/demos/templates/demos/home.html:66
+#: kuma/demos/templates/demos/elements/submission_thumb.html:21
 msgid "Details"
 msgstr ""
 
@@ -1764,7 +2021,8 @@ msgstr ""
 msgid "Launch"
 msgstr ""
 
-#: kuma/demos/templates/demos/home.html:106 kuma/demos/templates/demos/home.html:107
+#: kuma/demos/templates/demos/home.html:106
+#: kuma/demos/templates/demos/home.html:107
 #, fuzzy
 msgid "Search demos"
 msgstr "جستجوی اسناد"
@@ -1773,7 +2031,9 @@ msgstr "جستجوی اسناد"
 msgid "<b>or</b>"
 msgstr ""
 
-#: kuma/demos/templates/demos/home.html:114 kuma/demos/templates/demos/elements/demos_head.html:18 kuma/demos/templates/demos/elements/tech_tags_list.html:2
+#: kuma/demos/templates/demos/home.html:114
+#: kuma/demos/templates/demos/elements/demos_head.html:18
+#: kuma/demos/templates/demos/elements/tech_tags_list.html:2
 msgid "Browse by Technology"
 msgstr "مرور بر اساس فناوری"
 
@@ -1781,7 +2041,9 @@ msgstr "مرور بر اساس فناوری"
 msgid "recent"
 msgstr ""
 
-#: kuma/demos/templates/demos/launch.html:32 kuma/search/templates/search/plugin.html:3 templates/base.html:12 templates/base.html:31 templates/base.html:37 templates/base.html:91
+#: kuma/demos/templates/demos/launch.html:32
+#: kuma/search/templates/search/plugin.html:3 templates/base.html:12
+#: templates/base.html:31 templates/base.html:37 templates/base.html:91
 #: templates/base.html:93 templates/base_popup.html:5
 msgid "Mozilla Developer Network"
 msgstr "شبکه توسعه دهندگان Mozilla"
@@ -1802,7 +2064,8 @@ msgstr ""
 msgid "Remove toolbar"
 msgstr ""
 
-#: kuma/demos/templates/demos/listing_all.html:4 kuma/demos/templates/demos/listing_all.html:20
+#: kuma/demos/templates/demos/listing_all.html:4
+#: kuma/demos/templates/demos/listing_all.html:20
 msgid "Browse all demos"
 msgstr "مرور همه‌ی نسخه‌های نمایشی"
 
@@ -1830,18 +2093,25 @@ msgstr ""
 msgid "{tag_title} Demos"
 msgstr ""
 
-#: kuma/demos/templates/demos/submit.html:13 kuma/demos/templates/demos/submit.html:53
+#: kuma/demos/templates/demos/submit.html:13
+#: kuma/demos/templates/demos/submit.html:53
 msgid "Edit {demo_title}"
 msgstr ""
 
-#: kuma/demos/templates/demos/submit.html:15 kuma/demos/templates/demos/submit.html:55 kuma/demos/templates/demos/submit_noauth.html:11 kuma/demos/templates/demos/submit_noauth.html:25
+#: kuma/demos/templates/demos/submit.html:15
+#: kuma/demos/templates/demos/submit.html:55
+#: kuma/demos/templates/demos/submit_noauth.html:11
+#: kuma/demos/templates/demos/submit_noauth.html:25
 msgid "Submit a New Demo"
 msgstr "ارسال یک نسخه‌ی نمایشی جدید"
 
 #: kuma/demos/templates/demos/submit.html:60
 msgid ""
-"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-"web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+"<p>Whether you are creating an amazing new way to experience the Web or just"
+" experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p> <p>Please"
+" complete the form below to ensure your demo is submitted to the Demo Studio"
+" successfully.</p>"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:72
@@ -1849,7 +2119,9 @@ msgid "Describe Your Demo"
 msgstr "نسخه‌ی نمایشی‌تان را توصیف کنید"
 
 #: kuma/demos/templates/demos/submit.html:74
-msgid "<p>Tell us more about your demo, including the name, description and the technologies used. Please list the browsers you have tested it with.</p>"
+msgid ""
+"<p>Tell us more about your demo, including the name, description and the "
+"technologies used. Please list the browsers you have tested it with.</p>"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:87
@@ -1873,19 +2145,28 @@ msgid "We support YouTube and Vimeo"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:114
-msgid "If your demo has problems when displayed in an &lt;iframe&gt;, try changing this."
+msgid ""
+"If your demo has problems when displayed in an &lt;iframe&gt;, try changing "
+"this."
 msgstr ""
 
-#: kuma/demos/templates/demos/submit.html:119 kuma/demos/templates/demos/submit_noauth.html:48
+#: kuma/demos/templates/demos/submit.html:119
+#: kuma/demos/templates/demos/submit_noauth.html:48
 msgid "Preparing Your Demo"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:120
 msgid ""
-"<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-"should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX "
-"to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-"under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+"<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> "
+"<li>The main page of your demo should be a file named "
+"<code>index.html</code> in the root of the ZIP.</li> <li>Your demo should be"
+" built on client-side technology (HTML, CSS, JavaScript). Server-side "
+"languages like PHP and Ruby are not supported.</li> <li>If your demo "
+"requires external resources, it should use AJAX to access them.</li> <li>To "
+"submit your demo, you need an <a href=\"%(signup_url)s\">MDN "
+"profile</a>.</li> <li>Please identify in the demo details box any 3rd party "
+"content that can't be licensed under the CC-BY-SA license and include links "
+"to the authors' websites.</li> </ul>"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:133
@@ -1893,11 +2174,15 @@ msgid "Provide the Source Code"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:135
-msgid "<p>Upload a ZIP file of your source code, in which the main page of your demo is named <code>index.html</code> in the root directory.</p>"
+msgid ""
+"<p>Upload a ZIP file of your source code, in which the main page of your "
+"demo is named <code>index.html</code> in the root directory.</p>"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:162
-msgid "I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
+msgid ""
+"I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a"
+" href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:177
@@ -1916,7 +2201,8 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: kuma/demos/templates/demos/submit.html:181 kuma/wiki/templates/wiki/includes/page_buttons.html:35
+#: kuma/demos/templates/demos/submit.html:181
+#: kuma/wiki/templates/wiki/includes/page_buttons.html:35
 msgid "Discard Changes"
 msgstr ""
 
@@ -1926,8 +2212,9 @@ msgstr "به‌روز رسانی نمایه‌ی شما"
 
 #: kuma/demos/templates/demos/submit.html:190
 msgid ""
-"<p>Share your developer interests and areas of expertise with the MDN community. We'll be able to bring you a better, more customized experience and you will have a place to show off the amazing "
-"work you do.</p>"
+"<p>Share your developer interests and areas of expertise with the MDN "
+"community. We'll be able to bring you a better, more customized experience "
+"and you will have a place to show off the amazing work you do.</p>"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:195
@@ -1936,8 +2223,9 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit_noauth.html:27
 msgid ""
-"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-"web developers.</p>"
+"<p>Whether you are creating an amazing new way to experience the Web or just"
+" experimenting with the latest technologies, we invite you to submit your "
+"own demos to share with (or show off to) other web developers.</p>"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit_noauth.html:36
@@ -1946,23 +2234,36 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit_noauth.html:37
 msgid ""
-"<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-"<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-"range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+"<ul> <li>You must be prepared to <strong>provide the source code</strong> "
+"for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your "
+"demo's source code must be available under an <strong>open license</strong>,"
+" such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open "
+"web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should"
+" support a wide range of <strong>modern web browsers</strong>, like Firefox,"
+" Chrome, Safari, and Opera.</li> </ul>"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit_noauth.html:49
 msgid ""
-"<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-"root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-"demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-"
-"SA license and include links to the authors' websites.</li> </ul>"
+"<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP "
+"file</strong>.</li> <li>The main page of your demo should be a file named "
+"<strong><code>index.html</code></strong> in the root of the ZIP.</li> "
+"<li>Your demo should be built on <strong>client-side technology</strong> "
+"(HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not "
+"supported.</li> <li>If your demo requires external resources, it should use "
+"<strong>AJAX</strong> to access them.</li> <li>Please identify in the demo "
+"details box any 3rd party content that can't be licensed under the CC-BY-SA "
+"license and include links to the authors' websites.</li> </ul>"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit_noauth.html:61
 #, fuzzy
-msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
-msgstr "<p>برای ارسال نسخه نمایشی‌تان، به یک <strong><a href=\"%(signup_url)s\">حساب MDN</a></strong>نیاز دارید.</p>"
+msgid ""
+"<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN "
+"profile</a></strong>.</p>"
+msgstr ""
+"<p>برای ارسال نسخه نمایشی‌تان، به یک <strong><a href=\"%(signup_url)s\">حساب"
+" MDN</a></strong>نیاز دارید.</p>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:66
 #, fuzzy
@@ -1981,14 +2282,25 @@ msgstr ""
 msgid "Rights Representation Details"
 msgstr ""
 
-#: kuma/demos/templates/demos/elements/demos_head.html:31 kuma/demos/templates/demos/elements/search_form.html:4
+#: kuma/demos/templates/demos/elements/demos_head.html:31
+#: kuma/demos/templates/demos/elements/search_form.html:4
 msgid "Search the Demo Studio"
 msgstr ""
 
-#: kuma/demos/templates/demos/elements/demos_head.html:33 kuma/demos/templates/demos/elements/search_form.html:6 kuma/landing/templates/landing/homepage.html:50
-#: kuma/landing/templates/landing/homepage.html:60 kuma/landing/templates/landing/homepage.html:67 kuma/landing/templates/landing/homepage.html:72 kuma/search/templates/search/base.html:2
-#: kuma/search/templates/search/results.html:15 kuma/search/templates/search/results.html:52 kuma/search/templates/search/results.html:55 kuma/search/templates/search/results.html:60
-#: templates/base.html:181 templates/base.html:182 templates/base.html:184 templates/includes/common_macros.html:26 templates/includes/common_macros.html:27
+#: kuma/demos/templates/demos/elements/demos_head.html:33
+#: kuma/demos/templates/demos/elements/search_form.html:6
+#: kuma/landing/templates/landing/homepage.html:50
+#: kuma/landing/templates/landing/homepage.html:60
+#: kuma/landing/templates/landing/homepage.html:67
+#: kuma/landing/templates/landing/homepage.html:72
+#: kuma/search/templates/search/base.html:2
+#: kuma/search/templates/search/results.html:15
+#: kuma/search/templates/search/results.html:52
+#: kuma/search/templates/search/results.html:55
+#: kuma/search/templates/search/results.html:60 templates/base.html:181
+#: templates/base.html:182 templates/base.html:184
+#: templates/includes/common_macros.html:26
+#: templates/includes/common_macros.html:27
 msgid "Search"
 msgstr "جستجو"
 
@@ -2090,20 +2402,25 @@ msgid "See %(display_name)s's profile"
 msgstr ""
 
 #: kuma/landing/templates/landing/fellowship.html:12
-msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
+msgid ""
+"The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
+"web developers to come change the world with Mozilla."
 msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
-"Firefox OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web "
+"technologies including HTML, CSS, and APIs for both Web sites and HTML5 "
+"Apps. It also documents Mozilla products, like Firefox OS."
 msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:43
 msgid "Shared knowledge <span>for the Open Web</span>"
 msgstr "دانش به اشتراک گذاشته شده<span>برای وب باز</span>"
 
-#: kuma/landing/templates/landing/homepage.html:54 kuma/landing/templates/landing/homepage.html:71 kuma/search/templates/search/results.html:59
+#: kuma/landing/templates/landing/homepage.html:54
+#: kuma/landing/templates/landing/homepage.html:71
+#: kuma/search/templates/search/results.html:59
 msgid "Search the docs"
 msgstr "جستجوی اسناد"
 
@@ -2124,15 +2441,20 @@ msgstr "پلتفرم<br />وب"
 msgid "Web APIs &amp; DOM"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:84 kuma/landing/templates/landing/promote_buttons.html:105 kuma/users/forms.py:36 templates/base.html:129
+#: kuma/landing/templates/landing/homepage.html:84
+#: kuma/landing/templates/landing/promote_buttons.html:105
+#: kuma/users/forms.py:36 templates/base.html:129
 msgid "HTML"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:85 kuma/landing/templates/landing/promote_buttons.html:99 templates/base.html:130
+#: kuma/landing/templates/landing/homepage.html:85
+#: kuma/landing/templates/landing/promote_buttons.html:99
+#: templates/base.html:130
 msgid "CSS"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:87 kuma/landing/templates/landing/homepage.html:107
+#: kuma/landing/templates/landing/homepage.html:87
+#: kuma/landing/templates/landing/homepage.html:107
 msgid "more..."
 msgstr "بیشتر..."
 
@@ -2188,7 +2510,9 @@ msgid "Connect"
 msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:112
-msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
+msgid ""
+"Get Web technology news from Mozilla, get help from other developers, and "
+"more!"
 msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:113
@@ -2218,8 +2542,12 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:145
 #, fuzzy
-msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
-msgstr "وب‌نوشت هک‌ها <a href=\"http://hacks.mozilla.org\">در hacks.mozilla.org بیشتر بخوانید <i class=\"icon-arrow-right\"></i></a>"
+msgid ""
+"<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-"
+"hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
+msgstr ""
+"وب‌نوشت هک‌ها <a href=\"http://hacks.mozilla.org\">در hacks.mozilla.org "
+"بیشتر بخوانید <i class=\"icon-arrow-right\"></i></a>"
 
 #: kuma/landing/templates/landing/homepage.html:150
 msgid "Get Involved"
@@ -2227,17 +2555,25 @@ msgstr "مشارکت"
 
 #: kuma/landing/templates/landing/homepage.html:152
 msgid ""
-"<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
+"<p class=\"numbers\"> <span class=\"row1\">Join <span "
+"class=\"number\">%(contributors)s</span> contributors</span> <span "
+"class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:159 kuma/landing/templates/landing/homepage.html:166
+#: kuma/landing/templates/landing/homepage.html:159
+#: kuma/landing/templates/landing/homepage.html:166
 msgid "Help improve MDN"
 msgstr "کمک به بهینه سازی MDN"
 
 #: kuma/landing/templates/landing/homepage.html:170
-msgid "All parts of MDN (docs, demos, and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
-msgstr "همه‌ی بخش‌های MDN(اسناد، نسخه‌های نمایشی، و خود سایت) توسّط یک جامعه‌ی باز از توسعه دهندگان ایجاد شده‌اند. لطفاً به ما بپیوندید! یکی از این راه‌ها را برای کمک برگزینید:"
+msgid ""
+"All parts of MDN (docs, demos, and the site itself) are created by an open "
+"community of developers. Please join us! Pick one of these ways to help:"
+msgstr ""
+"همه‌ی بخش‌های MDN(اسناد، نسخه‌های نمایشی، و خود سایت) توسّط یک جامعه‌ی باز "
+"از توسعه دهندگان ایجاد شده‌اند. لطفاً به ما بپیوندید! یکی از این راه‌ها را "
+"برای کمک برگزینید:"
 
 #: kuma/landing/templates/landing/homepage.html:176
 msgid "Getting started"
@@ -2267,7 +2603,8 @@ msgstr "کمک کردن به کد پایه‌ی MDN"
 msgid "Posted %(entrydate)s by %(authorlink)s"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:5 kuma/landing/templates/landing/promote_buttons.html:17
+#: kuma/landing/templates/landing/promote_buttons.html:5
+#: kuma/landing/templates/landing/promote_buttons.html:17
 msgid "Promote MDN"
 msgstr ""
 
@@ -2277,9 +2614,13 @@ msgstr ""
 
 #: kuma/landing/templates/landing/promote_buttons.html:20
 msgid ""
-"<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
-"little bit better by sharing MDN with the world.</li> </ol>"
+"<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a"
+" custom button and source code to promote MDN on your website or blog.</li> "
+"<li><strong>Post Buttons:</strong> Copy the source code and paste it "
+"anywhere on your website or blog to help people click through to MDN.</li> "
+"<li><strong>Feel Good:</strong> Take pride in knowing you're making "
+"developers lives just a little bit better by sharing MDN with the "
+"world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/templates/landing/promote_buttons.html:35
@@ -2342,57 +2683,92 @@ msgstr ""
 msgid "Your button will take people to:"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:162 kuma/landing/templates/landing/promote_buttons.html:166 kuma/landing/templates/landing/promote_buttons.html:170
+#: kuma/landing/templates/landing/promote_buttons.html:162
+#: kuma/landing/templates/landing/promote_buttons.html:166
+#: kuma/landing/templates/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:163 kuma/landing/templates/landing/promote_buttons.html:167 kuma/landing/templates/landing/promote_buttons.html:171
+#: kuma/landing/templates/landing/promote_buttons.html:163
+#: kuma/landing/templates/landing/promote_buttons.html:167
+#: kuma/landing/templates/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:164 kuma/landing/templates/landing/promote_buttons.html:168 kuma/landing/templates/landing/promote_buttons.html:172
+#: kuma/landing/templates/landing/promote_buttons.html:164
+#: kuma/landing/templates/landing/promote_buttons.html:168
+#: kuma/landing/templates/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:165 kuma/landing/templates/landing/promote_buttons.html:169 kuma/landing/templates/landing/promote_buttons.html:173
+#: kuma/landing/templates/landing/promote_buttons.html:165
+#: kuma/landing/templates/landing/promote_buttons.html:169
+#: kuma/landing/templates/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:174 kuma/landing/templates/landing/promote_buttons.html:178 kuma/landing/templates/landing/promote_buttons.html:182
+#: kuma/landing/templates/landing/promote_buttons.html:174
+#: kuma/landing/templates/landing/promote_buttons.html:178
+#: kuma/landing/templates/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs, demos and more."
-msgstr "MDN برای اسناد CSS، نسخه‌های نمایشی و بیشتر از توسعه ده قدرت گرفته است."
+msgstr ""
+"MDN برای اسناد CSS، نسخه‌های نمایشی و بیشتر از توسعه ده قدرت گرفته است."
 
-#: kuma/landing/templates/landing/promote_buttons.html:175 kuma/landing/templates/landing/promote_buttons.html:179 kuma/landing/templates/landing/promote_buttons.html:183
+#: kuma/landing/templates/landing/promote_buttons.html:175
+#: kuma/landing/templates/landing/promote_buttons.html:179
+#: kuma/landing/templates/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs, demos and more."
-msgstr "MDN برای اسناد HTML، نسخه‌های نمایشی و بیشتر از توسعه دهنده قدرت گرفته است."
+msgstr ""
+"MDN برای اسناد HTML، نسخه‌های نمایشی و بیشتر از توسعه دهنده قدرت گرفته است."
 
-#: kuma/landing/templates/landing/promote_buttons.html:176 kuma/landing/templates/landing/promote_buttons.html:180 kuma/landing/templates/landing/promote_buttons.html:184
+#: kuma/landing/templates/landing/promote_buttons.html:176
+#: kuma/landing/templates/landing/promote_buttons.html:180
+#: kuma/landing/templates/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs, demos and more."
-msgstr "MDN برای اسناد JavsScript، نسخه‌های نمایشی و بیشتر از توسعه دهنده قدرت گرفته است."
+msgstr ""
+"MDN برای اسناد JavsScript، نسخه‌های نمایشی و بیشتر از توسعه دهنده قدرت گرفته"
+" است."
 
-#: kuma/landing/templates/landing/promote_buttons.html:177 kuma/landing/templates/landing/promote_buttons.html:181 kuma/landing/templates/landing/promote_buttons.html:185
+#: kuma/landing/templates/landing/promote_buttons.html:177
+#: kuma/landing/templates/landing/promote_buttons.html:181
+#: kuma/landing/templates/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs, demos and more."
-msgstr "MDN برای اسناد وب، نسخه‌های نمایشی و بیشتر از توسعه دهنده قدرت گرفته است."
+msgstr ""
+"MDN برای اسناد وب، نسخه‌های نمایشی و بیشتر از توسعه دهنده قدرت گرفته است."
 
-#: kuma/landing/templates/landing/promote_buttons.html:186 kuma/landing/templates/landing/promote_buttons.html:190 kuma/landing/templates/landing/promote_buttons.html:194
+#: kuma/landing/templates/landing/promote_buttons.html:186
+#: kuma/landing/templates/landing/promote_buttons.html:190
+#: kuma/landing/templates/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:187 kuma/landing/templates/landing/promote_buttons.html:191 kuma/landing/templates/landing/promote_buttons.html:195
+#: kuma/landing/templates/landing/promote_buttons.html:187
+#: kuma/landing/templates/landing/promote_buttons.html:191
+#: kuma/landing/templates/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:188 kuma/landing/templates/landing/promote_buttons.html:192 kuma/landing/templates/landing/promote_buttons.html:196
+#: kuma/landing/templates/landing/promote_buttons.html:188
+#: kuma/landing/templates/landing/promote_buttons.html:192
+#: kuma/landing/templates/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:189 kuma/landing/templates/landing/promote_buttons.html:193 kuma/landing/templates/landing/promote_buttons.html:197
+#: kuma/landing/templates/landing/promote_buttons.html:189
+#: kuma/landing/templates/landing/promote_buttons.html:193
+#: kuma/landing/templates/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/promote_buttons.html:198 kuma/landing/templates/landing/promote_buttons.html:199 kuma/landing/templates/landing/promote_buttons.html:200
-msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
-msgstr "MDN جعبه ابزار توسعه‌ی وب شما برای اسناد، نسخه‌های نمایشی و سایر موارد روی CSS، HTML JavaScript و سایر استانداردهای وب و فناوری‌های باز است."
+#: kuma/landing/templates/landing/promote_buttons.html:198
+#: kuma/landing/templates/landing/promote_buttons.html:199
+#: kuma/landing/templates/landing/promote_buttons.html:200
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+"MDN جعبه ابزار توسعه‌ی وب شما برای اسناد، نسخه‌های نمایشی و سایر موارد روی "
+"CSS، HTML JavaScript و سایر استانداردهای وب و فناوری‌های باز است."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
@@ -2411,7 +2787,9 @@ msgid "Can't demote more than one index at once."
 msgstr ""
 
 #: kuma/search/admin.py:24
-msgid "Can't demote the index if there is only one. Create and populate a new one first."
+msgid ""
+"Can't demote the index if there is only one. Create and populate a new one "
+"first."
 msgstr ""
 
 #: kuma/search/admin.py:29
@@ -2442,7 +2820,9 @@ msgstr ""
 #: kuma/search/serializers.py:94
 #, fuzzy
 msgid "name"
-msgstr "وب‌نوشت هک‌ها <a href=\"http://hacks.mozilla.org\">در hacks.mozilla.org بیشتر بخوانید <i class=\"icon-arrow-right\"></i></a>"
+msgstr ""
+"وب‌نوشت هک‌ها <a href=\"http://hacks.mozilla.org\">در hacks.mozilla.org "
+"بیشتر بخوانید <i class=\"icon-arrow-right\"></i></a>"
 
 #: kuma/search/serializers.py:95
 msgid "groupname"
@@ -2453,7 +2833,9 @@ msgid "Search is temporarily unavailable. Please try again in a few minutes."
 msgstr ""
 
 #: kuma/search/utils.py:17
-msgid "Something went wrong with the search query. Please try again in a few minutes."
+msgid ""
+"Something went wrong with the search query. Please try again in a few "
+"minutes."
 msgstr ""
 
 #: kuma/search/templates/search/down.html:5
@@ -2471,7 +2853,9 @@ msgid "Search Results for \"{query}\""
 msgstr ""
 
 #: kuma/search/templates/search/results.html:39
-msgid "translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
+msgid ""
+"translated from <a href=\"%(parent_url)s\" "
+"title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 msgstr ""
 
 #: kuma/search/templates/search/results.html:51
@@ -2488,8 +2872,12 @@ msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
 msgstr[0] ""
 
 #: kuma/search/templates/search/results.html:80
-msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
-msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
+msgid ""
+"%(count)s document found for \"%(query)s\" in %(locale_native)s and "
+"%(default_locale_native)s."
+msgid_plural ""
+"%(count)s documents found for \"%(query)s\" in %(locale_native)s and "
+"%(default_locale_native)s."
 msgstr[0] ""
 
 #: kuma/search/templates/search/results.html:88
@@ -2498,8 +2886,11 @@ msgid_plural "%(count)s documents found in %(locale_native)s."
 msgstr[0] ""
 
 #: kuma/search/templates/search/results.html:94
-msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
-msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
+msgid ""
+"%(count)s document found in %(locale_native)s and %(default_locale_native)s."
+msgid_plural ""
+"%(count)s documents found in %(locale_native)s and "
+"%(default_locale_native)s."
 msgstr[0] ""
 
 #: kuma/search/templates/search/results.html:104
@@ -2534,8 +2925,9 @@ msgstr ""
 
 #: kuma/users/adapters.py:18
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
-"\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To "
+"disconnect this account connect a different one first. To delete your MDN "
+"profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:22
@@ -2551,7 +2943,9 @@ msgid "User"
 msgstr ""
 
 #: kuma/users/apps.py:69
-msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
+msgid ""
+"You have completed the first step of <a href=\"%s\">getting started with "
+"MDN</a>"
 msgstr ""
 
 #: kuma/users/backends.py:33
@@ -2567,7 +2961,8 @@ msgid "hash"
 msgstr ""
 
 #: kuma/users/constants.py:4
-msgid "Username may contain only letters, numbers, and these characters: . - _ +"
+msgid ""
+"Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr ""
 
 #: kuma/users/forms.py:22
@@ -2616,31 +3011,42 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: kuma/users/forms.py:179 kuma/users/models.py:139 kuma/users/templates/users/user_detail.html:117
+#: kuma/users/forms.py:179 kuma/users/models.py:139
+#: kuma/users/templates/users/user_detail.html:117
 msgid "Website"
 msgstr ""
 
-#: kuma/users/forms.py:188 kuma/users/models.py:154 kuma/users/templates/users/user_detail.html:121 kuma/wiki/templates/wiki/includes/document_macros.html:101
+#: kuma/users/forms.py:188 kuma/users/models.py:154
+#: kuma/users/templates/users/user_detail.html:121
+#: kuma/wiki/templates/wiki/includes/document_macros.html:101
 msgid "Twitter"
 msgstr ""
 
-#: kuma/users/forms.py:197 kuma/users/models.py:149 kuma/users/templates/users/user_detail.html:126 kuma/users/templates/users/user_detail.html:130 templates/includes/login.html:21
+#: kuma/users/forms.py:197 kuma/users/models.py:149
+#: kuma/users/templates/users/user_detail.html:126
+#: kuma/users/templates/users/user_detail.html:130
+#: templates/includes/login.html:21
 msgid "GitHub"
 msgstr ""
 
-#: kuma/users/forms.py:206 kuma/users/models.py:169 kuma/users/templates/users/user_detail.html:135
+#: kuma/users/forms.py:206 kuma/users/models.py:169
+#: kuma/users/templates/users/user_detail.html:135
 msgid "Stack Overflow"
 msgstr ""
 
-#: kuma/users/forms.py:215 kuma/users/models.py:159 kuma/users/templates/users/user_detail.html:139
+#: kuma/users/forms.py:215 kuma/users/models.py:159
+#: kuma/users/templates/users/user_detail.html:139
 msgid "LinkedIn"
 msgstr ""
 
-#: kuma/users/forms.py:224 kuma/users/models.py:144 kuma/users/templates/users/user_detail.html:143
+#: kuma/users/forms.py:224 kuma/users/models.py:144
+#: kuma/users/templates/users/user_detail.html:143
 msgid "Mozillians"
 msgstr ""
 
-#: kuma/users/forms.py:233 kuma/users/models.py:164 kuma/users/templates/users/user_detail.html:147 kuma/wiki/templates/wiki/includes/document_macros.html:102
+#: kuma/users/forms.py:233 kuma/users/models.py:164
+#: kuma/users/templates/users/user_detail.html:147
+#: kuma/wiki/templates/wiki/includes/document_macros.html:102
 msgid "Facebook"
 msgstr ""
 
@@ -2689,7 +3095,9 @@ msgid "Homepage"
 msgstr ""
 
 #: kuma/users/models.py:60
-msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
+msgid ""
+"This URL has an invalid format. Valid URLs look like "
+"http://example.com/my_page."
 msgstr ""
 
 #: kuma/users/models.py:70
@@ -2712,7 +3120,10 @@ msgstr "درباره من"
 msgid "IRC nickname"
 msgstr ""
 
-#: kuma/users/models.py:94 kuma/wiki/templates/wiki/confirm_revision_revert.html:27 kuma/wiki/templates/wiki/create.html:75 kuma/wiki/templates/wiki/edit.html:176
+#: kuma/users/models.py:94
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:27
+#: kuma/wiki/templates/wiki/create.html:75
+#: kuma/wiki/templates/wiki/edit.html:176
 msgid "Tags"
 msgstr ""
 
@@ -2749,11 +3160,15 @@ msgid "Username is required."
 msgstr ""
 
 #: kuma/users/signup.py:8
-msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgid ""
+"Username is too short (%(show_value)s characters). It must be at least "
+"%(limit_value)s characters."
 msgstr ""
 
 #: kuma/users/signup.py:10
-msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
+msgid ""
+"Username is too long (%(show_value)s characters). It must be %(limit_value)s"
+" characters or less."
 msgstr ""
 
 #: kuma/users/signup.py:13
@@ -2780,7 +3195,8 @@ msgstr ""
 msgid "Other:"
 msgstr ""
 
-#: kuma/users/templates/account/account_inactive.html:3 kuma/users/templates/account/account_inactive.html:7
+#: kuma/users/templates/account/account_inactive.html:3
+#: kuma/users/templates/account/account_inactive.html:7
 msgid "Profile Inactive"
 msgstr ""
 
@@ -2788,7 +3204,9 @@ msgstr ""
 msgid "This profile is inactive."
 msgstr ""
 
-#: kuma/users/templates/account/email.html:3 kuma/users/templates/account/email.html:7 kuma/users/templates/users/user_detail.html:63
+#: kuma/users/templates/account/email.html:3
+#: kuma/users/templates/account/email.html:7
+#: kuma/users/templates/users/user_detail.html:63
 #, fuzzy
 msgid "Email addresses"
 msgstr "آدرس پست الکترونیکی"
@@ -2815,7 +3233,9 @@ msgid "Remove"
 msgstr ""
 
 #: kuma/users/templates/account/email.html:45
-msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
+msgid ""
+"<strong>Warning:</strong>\"You have not added any email addresses to this "
+"profile. Without one you cannot receive notifications."
 msgstr ""
 
 #: kuma/users/templates/account/email.html:49
@@ -2828,7 +3248,8 @@ msgstr "آدرس پست الکترونیکی"
 msgid "Add Email"
 msgstr "پست الکترونیکی"
 
-#: kuma/users/templates/account/email.html:60 kuma/users/templates/socialaccount/connections.html:70
+#: kuma/users/templates/account/email.html:60
+#: kuma/users/templates/socialaccount/connections.html:70
 #, fuzzy
 msgid "Edit profile"
 msgstr "ویرایش نمایه"
@@ -2837,14 +3258,18 @@ msgstr "ویرایش نمایه"
 msgid "Do you really want to remove the selected email address?"
 msgstr ""
 
-#: kuma/users/templates/account/email_confirm.html:3 kuma/users/templates/account/email_confirm.html:9 kuma/users/templates/account/email_confirmed.html:3
+#: kuma/users/templates/account/email_confirm.html:3
+#: kuma/users/templates/account/email_confirm.html:9
+#: kuma/users/templates/account/email_confirmed.html:3
 #: kuma/users/templates/account/email_confirmed.html:8
 #, fuzzy
 msgid "Confirm Email Address"
 msgstr "تغییر آدرس پست الکترونیکی"
 
 #: kuma/users/templates/account/email_confirm.html:13
-msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
+"address for user %(user_display)s."
 msgstr ""
 
 #: kuma/users/templates/account/email_confirm.html:17
@@ -2852,11 +3277,15 @@ msgid "Confirm"
 msgstr ""
 
 #: kuma/users/templates/account/email_confirm.html:22
-msgid "This email confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new email confirmation request</a>."
+msgid ""
+"This email confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr ""
 
 #: kuma/users/templates/account/email_confirmed.html:10
-msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
+msgid ""
+"You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
+"email address for user %(user_display)s."
 msgstr ""
 
 #: kuma/users/templates/account/login.html:3
@@ -2868,10 +3297,16 @@ msgid "Please sign in"
 msgstr ""
 
 #: kuma/users/templates/account/login.html:13
-msgid "In order to contribute, you need to sign in to MDN. You can sign in using any of the services below. A MDN profile will be created for you if you don't already have one."
+msgid ""
+"In order to contribute, you need to sign in to MDN. You can sign in using "
+"any of the services below. A MDN profile will be created for you if you "
+"don't already have one."
 msgstr ""
 
-#: kuma/users/templates/account/logout.html:3 kuma/users/templates/account/logout.html:8 kuma/users/templates/account/logout.html:17 templates/includes/common_macros.html:40
+#: kuma/users/templates/account/logout.html:3
+#: kuma/users/templates/account/logout.html:8
+#: kuma/users/templates/account/logout.html:17
+#: templates/includes/common_macros.html:40
 msgid "Sign Out"
 msgstr ""
 
@@ -2879,20 +3314,30 @@ msgstr ""
 msgid "Are you sure you want to sign out?"
 msgstr ""
 
-#: kuma/users/templates/account/password_change.html:3 kuma/users/templates/account/password_change.html:8 kuma/users/templates/account/password_change.html:13
-#: kuma/users/templates/account/password_reset_from_key_done.html:3 kuma/users/templates/account/password_reset_from_key_done.html:7
+#: kuma/users/templates/account/password_change.html:3
+#: kuma/users/templates/account/password_change.html:8
+#: kuma/users/templates/account/password_change.html:13
+#: kuma/users/templates/account/password_reset_from_key_done.html:3
+#: kuma/users/templates/account/password_reset_from_key_done.html:7
 msgid "Change Password"
 msgstr ""
 
-#: kuma/users/templates/account/password_reset.html:3 kuma/users/templates/account/password_reset.html:8 kuma/users/templates/account/password_reset_done.html:3
+#: kuma/users/templates/account/password_reset.html:3
+#: kuma/users/templates/account/password_reset.html:8
+#: kuma/users/templates/account/password_reset_done.html:3
 #: kuma/users/templates/account/password_reset_done.html:8
 msgid "Password Reset"
 msgstr ""
 
 #: kuma/users/templates/account/password_reset.html:13
 #, fuzzy
-msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
-msgstr "گذرواژه‌تان را فراموش کرده‌اید؟ آدرس پست الکترونیکی‌تان را در زیر وارد کنید، و ما دستورالعمل‌هایی برای تنظیم یک پست الکترونیکی جدید برایتان ارسال خواهیم کرد."
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll send you "
+"an email allowing you to reset it."
+msgstr ""
+"گذرواژه‌تان را فراموش کرده‌اید؟ آدرس پست الکترونیکی‌تان را در زیر وارد کنید،"
+" و ما دستورالعمل‌هایی برای تنظیم یک پست الکترونیکی جدید برایتان ارسال خواهیم"
+" کرد."
 
 #: kuma/users/templates/account/password_reset.html:18
 msgid "Reset My Password"
@@ -2903,14 +3348,18 @@ msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
 
 #: kuma/users/templates/account/password_reset_done.html:14
-msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
+msgid ""
+"We have sent you an email. Please contact us if you do not receive it within"
+" a few minutes."
 msgstr ""
 
 #: kuma/users/templates/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
 msgstr ""
 
-#: kuma/users/templates/account/password_set.html:3 kuma/users/templates/account/password_set.html:7 kuma/users/templates/account/password_set.html:12
+#: kuma/users/templates/account/password_set.html:3
+#: kuma/users/templates/account/password_set.html:7
+#: kuma/users/templates/account/password_set.html:12
 msgid "Set Password"
 msgstr ""
 
@@ -2918,15 +3367,18 @@ msgstr ""
 msgid "Signup"
 msgstr ""
 
-#: kuma/users/templates/account/signup.html:8 kuma/users/templates/account/signup.html:18
+#: kuma/users/templates/account/signup.html:8
+#: kuma/users/templates/account/signup.html:18
 msgid "Sign Up"
 msgstr ""
 
 #: kuma/users/templates/account/signup.html:10
-msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgid ""
+"Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
 
-#: kuma/users/templates/account/signup_closed.html:3 kuma/users/templates/account/signup_closed.html:7
+#: kuma/users/templates/account/signup_closed.html:3
+#: kuma/users/templates/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
 msgstr ""
 
@@ -2934,26 +3386,39 @@ msgstr ""
 msgid "We are sorry, but profile creation is currently disabled."
 msgstr ""
 
-#: kuma/users/templates/account/verification_sent.html:3 kuma/users/templates/account/verification_sent.html:7 kuma/users/templates/account/verified_email_required.html:3
+#: kuma/users/templates/account/verification_sent.html:3
+#: kuma/users/templates/account/verification_sent.html:7
+#: kuma/users/templates/account/verified_email_required.html:3
 #: kuma/users/templates/account/verified_email_required.html:7
 #, fuzzy
 msgid "Confirm Your Email Address"
 msgstr "لطفاً آدرس پست الکترونیکی‌تان را تأیید کنید"
 
 #: kuma/users/templates/account/verification_sent.html:9
-msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
+msgid ""
+"We have sent an email to you for confirmation. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
 msgstr ""
 
 #: kuma/users/templates/account/verified_email_required.html:9
-msgid "This part of the site requires us to confirm that you are who you claim to be. For this purpose, we require that you confirm ownership of your email address."
+msgid ""
+"This part of the site requires us to confirm that you are who you claim to "
+"be. For this purpose, we require that you confirm ownership of your email "
+"address."
 msgstr ""
 
 #: kuma/users/templates/account/verified_email_required.html:13
-msgid "We have sent an email to you for confirmation. Please click on the link inside this email. Please contact us if you do not receive it within a few minutes."
+msgid ""
+"We have sent an email to you for confirmation. Please click on the link "
+"inside this email. Please contact us if you do not receive it within a few "
+"minutes."
 msgstr ""
 
 #: kuma/users/templates/account/verified_email_required.html:17
-msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your email address</a>."
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
+"email address</a>."
 msgstr ""
 
 #: kuma/users/templates/account/snippets/already_logged_in.html:1
@@ -2964,11 +3429,13 @@ msgstr ""
 msgid "you are already logged in as %(user_display)s."
 msgstr ""
 
-#: kuma/users/templates/openid/login.html:3 kuma/users/templates/openid/login.html:6
+#: kuma/users/templates/openid/login.html:3
+#: kuma/users/templates/openid/login.html:6
 msgid "OpenID Sign In"
 msgstr ""
 
-#: kuma/users/templates/socialaccount/authentication_error.html:3 kuma/users/templates/socialaccount/authentication_error.html:6
+#: kuma/users/templates/socialaccount/authentication_error.html:3
+#: kuma/users/templates/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
 msgstr ""
 
@@ -2980,7 +3447,8 @@ msgstr ""
 msgid "Account Connections"
 msgstr ""
 
-#: kuma/users/templates/socialaccount/connections.html:6 kuma/users/templates/users/user_detail.html:61
+#: kuma/users/templates/socialaccount/connections.html:6
+#: kuma/users/templates/users/user_detail.html:61
 msgid "Account connections"
 msgstr ""
 
@@ -3000,74 +3468,108 @@ msgstr ""
 msgid "Connect a new account"
 msgstr ""
 
-#: kuma/users/templates/socialaccount/login_cancelled.html:3 kuma/users/templates/socialaccount/login_cancelled.html:7
+#: kuma/users/templates/socialaccount/login_cancelled.html:3
+#: kuma/users/templates/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
 msgstr ""
 
 #: kuma/users/templates/socialaccount/login_cancelled.html:9
-msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
+msgid ""
+"You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to <a "
+"href=\"%(login_url)s\">sign in</a>."
 msgstr ""
 
-#: kuma/users/templates/socialaccount/signup.html:4 kuma/users/templates/socialaccount/signup.html:26
+#: kuma/users/templates/socialaccount/signup.html:4
+#: kuma/users/templates/socialaccount/signup.html:26
 msgid "Create your MDN profile to continue"
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:30
-msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
+msgid ""
+"A profile already exists with this email address. To connect Persona to your"
+" MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
+"your social account connections.</a>"
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:43
 msgid ""
-"A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
-"connect with my MDN profile</a>"
+"A profile already exists with an email address below. Do you already have an"
+" MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-"
+"login\" data-next=\"%(persona_next_url)s\">Yes, connect with my MDN "
+"profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
-"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+"A profile already exists with one of these email addresses below. Do you "
+"already have an MDN profile? <a href=\"%(persona_login_url)s\" class"
+"=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, connect "
+"with my MDN profile</a>"
 msgstr[0] ""
 
 #: kuma/users/templates/socialaccount/signup.html:55
-msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
+msgid ""
+"Thanks for signing in to MDN with %(provider_name)s. You have one more step "
+"to join MDN: <strong>create your MDN profile</strong>."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:61
-msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs, submit demos, and have your own profile page."
+msgid ""
+"You can access everything on the MDN website even without an MDN profile. "
+"However, by joining MDN, you'll be able to edit docs, submit demos, and have"
+" your own profile page."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:68
-msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions (edits, demos, etc.) that you make."
+msgid ""
+"To set up your MDN profile, please <strong>choose a username</strong>. Your "
+"username will be displayed on MDN to identify any contributions (edits, "
+"demos, etc.) that you make."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:74
 msgid ""
-"To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions (edits, demos, etc.) that you make."
+"To set up your MDN profile, please <strong>choose a username and email "
+"address</strong>. Your username will be displayed on MDN to identify any "
+"contributions (edits, demos, etc.) that you make."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:82
-msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
+msgid ""
+"If you're <strong>having trouble</strong> signing in or creating an MDN "
+"profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
+"know</a></strong>."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:107
-msgid "Your GitHub username %(username)s is already taken. Please choose another."
+msgid ""
+"Your GitHub username %(username)s is already taken. Please choose another."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:111
-msgid "Please enter the name you'd like to display to other users to identify your contributions."
+msgid ""
+"Please enter the name you'd like to display to other users to identify your "
+"contributions."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:125
 msgid ""
-"A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
-"to it.</a>"
+"A profile already exists with the selected email address. <a "
+"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Connect your %(provider_name)s account to "
+"it.</a>"
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:155
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"{privacy_url}\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and "
+"notifications? This address will <strong>not</strong> be displayed on MDN "
+"and will be used according to our <a href=\"{privacy_url}\">privacy "
+"policy</a>."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:170
-msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
+msgid ""
+"to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
+"href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:179
@@ -3100,12 +3602,15 @@ msgstr ""
 msgid "Sign in with GitHub"
 msgstr ""
 
-#: kuma/users/templates/users/apps_newsletter.html:7 templates/includes/newsletter.html:4
+#: kuma/users/templates/users/apps_newsletter.html:7
+#: templates/includes/newsletter.html:4
 msgid "Firefox Apps & Hacks Newsletter"
 msgstr "خبرنامه‌ی برنامه‌های فایرفاکس و هک‌ها"
 
 #: kuma/users/templates/users/apps_newsletter.html:14
-msgid "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the newsletter."
+msgid ""
+"<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the "
+"newsletter."
 msgstr ""
 
 #: kuma/users/templates/users/user_banned.html:2
@@ -3117,14 +3622,19 @@ msgid "You have been banned for the following reasons:"
 msgstr ""
 
 #: kuma/users/templates/users/user_banned.html:30
-msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
+msgid ""
+"<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click "
+"here</a> to appeal this ban.</p>"
 msgstr ""
 
-#: kuma/users/templates/users/user_detail.html:53 kuma/wiki/content.py:712 kuma/wiki/templates/wiki/includes/buttons.html:33
+#: kuma/users/templates/users/user_detail.html:53 kuma/wiki/content.py:712
+#: kuma/wiki/templates/wiki/includes/buttons.html:33
 msgid "Edit"
 msgstr ""
 
-#: kuma/users/templates/users/user_detail.html:55 kuma/wiki/templates/wiki/includes/buttons.html:33 kuma/wiki/templates/wiki/includes/buttons.html:38
+#: kuma/users/templates/users/user_detail.html:55
+#: kuma/wiki/templates/wiki/includes/buttons.html:33
+#: kuma/wiki/templates/wiki/includes/buttons.html:38
 msgid "Advanced"
 msgstr ""
 
@@ -3154,7 +3664,9 @@ msgid "No Demos"
 msgstr "فاقد نسخه‌های نمایشی"
 
 #: kuma/users/templates/users/user_detail.html:169
-msgid "You haven't submitted any web technology demos. Build something awesome and <a href=\"%(submit_url)s\">submit a demo</a>!"
+msgid ""
+"You haven't submitted any web technology demos. Build something awesome and "
+"<a href=\"%(submit_url)s\">submit a demo</a>!"
 msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:175
@@ -3169,11 +3681,14 @@ msgstr ""
 msgid "Page"
 msgstr "صفحه"
 
-#: kuma/users/templates/users/user_detail.html:182 kuma/wiki/templates/wiki/confirm_revision_revert.html:32 kuma/wiki/templates/wiki/revision.html:43
+#: kuma/users/templates/users/user_detail.html:182
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:32
+#: kuma/wiki/templates/wiki/revision.html:43
 msgid "Comment"
 msgstr "توضیح"
 
-#: kuma/users/templates/users/user_detail.html:190 kuma/wiki/templates/wiki/document.html:413
+#: kuma/users/templates/users/user_detail.html:190
+#: kuma/wiki/templates/wiki/document.html:413
 msgid "Edit page"
 msgstr "ویرایش صفحه"
 
@@ -3181,12 +3696,15 @@ msgstr "ویرایش صفحه"
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/templates/users/user_detail.html:192 kuma/wiki/templates/wiki/document.html:414
+#: kuma/users/templates/users/user_detail.html:192
+#: kuma/wiki/templates/wiki/document.html:414
 msgid "View page history"
 msgstr "نمایش تاریخچه‌ی صفحه"
 
 #: kuma/users/templates/users/user_detail.html:204
-msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
+msgid ""
+"<p class=\"none\">You haven't contributed to any MDN docs. <a "
+"href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:208
@@ -3211,7 +3729,10 @@ msgid "You're editing a different profile than your own. Please take care!"
 msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:63
-msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
+msgid ""
+"We'd love to have your feedback on site changes! Beta testers get access to "
+"new features first and we send the occasional email asking for help testing "
+"specific things."
 msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:66
@@ -3237,7 +3758,9 @@ msgid "Interests (tags)"
 msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:86
-msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
+msgid ""
+"Separate tags with commas or spaces. Join multi-word tags with double "
+"quotes, like \"web standards\"."
 msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:92
@@ -3245,7 +3768,9 @@ msgid "Areas of expertise"
 msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:93
-msgid "Add your interests first, then declare yourself an expert in selected topics."
+msgid ""
+"Add your interests first, then declare yourself an expert in selected "
+"topics."
 msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:101
@@ -3253,7 +3778,8 @@ msgstr ""
 msgid "My Profiles"
 msgstr "ویرایش نمایه"
 
-#: kuma/users/templates/users/user_edit.html:106 kuma/users/templates/users/user_edit.html:124
+#: kuma/users/templates/users/user_edit.html:106
+#: kuma/users/templates/users/user_edit.html:124
 msgid "Change"
 msgstr ""
 
@@ -3265,27 +3791,39 @@ msgstr ""
 msgid "Use your GitHub account to sign in."
 msgstr ""
 
-#: kuma/users/templates/users/user_edit.html:153 kuma/users/templates/users/user_edit.html:161 kuma/wiki/templates/wiki/includes/page_buttons.html:27
+#: kuma/users/templates/users/user_edit.html:153
+#: kuma/users/templates/users/user_edit.html:161
+#: kuma/wiki/templates/wiki/includes/page_buttons.html:27
 msgid "Save Changes"
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:9
 #, fuzzy
 msgid "Hi {username}!"
-msgstr "وب‌نوشت هک‌ها <a href=\"http://hacks.mozilla.org\">در hacks.mozilla.org بیشتر بخوانید <i class=\"icon-arrow-right\"></i></a>"
+msgstr ""
+"وب‌نوشت هک‌ها <a href=\"http://hacks.mozilla.org\">در hacks.mozilla.org "
+"بیشتر بخوانید <i class=\"icon-arrow-right\"></i></a>"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
-msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
+msgid ""
+"Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer "
+"Network (MDN)</a> - a community making great resources for developers like "
+"you."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:16
-msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
+msgid ""
+"You've completed the first step of <a href=\"%(started_link)s\">Getting "
+"Started on MDN</a> by creating a profile."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:21
 msgid ""
-"Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
-"code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
+"Now, keep going by picking a task on MDN, and doing it! We have a bunch of "
+"intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like"
+" words</a>, <a href=\"%(code_link)s\">like code</a>, <a "
+"href=\"%(both_link)s\">like both words and code</a>, or you want to <a "
+"href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:34
@@ -3293,44 +3831,60 @@ msgid "Talk to us!"
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:35
-msgid "Want to talk to someone about MDN? There are a few ways you can do that:"
+msgid ""
+"Want to talk to someone about MDN? There are a few ways you can do that:"
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:38
-msgid "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site."
+msgid ""
+"Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what "
+"you're interested in on MDN and ask questions about the site."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:43
 msgid ""
-"Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
-"Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
+"Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on "
+"irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.)"
+" You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
+"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
+"(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:51
-msgid "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
+msgid ""
+"Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for "
+"the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/html.ltxt:59 kuma/users/templates/users/email/welcome/plain.ltxt:61
-msgid "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
+#: kuma/users/templates/users/email/welcome/html.ltxt:59
+#: kuma/users/templates/users/email/welcome/plain.ltxt:61
+msgid ""
+"Don't be shy, if you have any doubt, problems, questions: contact us! We are"
+" here to help."
 msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:3
 #, fuzzy
 msgid "Hi {username}"
-msgstr "وب‌نوشت هک‌ها <a href=\"http://hacks.mozilla.org\">در hacks.mozilla.org بیشتر بخوانید <i class=\"icon-arrow-right\"></i></a>"
+msgstr ""
+"وب‌نوشت هک‌ها <a href=\"http://hacks.mozilla.org\">در hacks.mozilla.org "
+"بیشتر بخوانید <i class=\"icon-arrow-right\"></i></a>"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:6
-msgid "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you."
+msgid ""
+"Thanks for creating a profile on Mozilla Developer Network (MDN) -- a "
+"community making great resources for developers like you."
 msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:12
 msgid ""
-"You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
-"interests."
+"You've completed the first step of Getting Started on MDN by creating a "
+"profile. Now, keep going by picking a task on MDN, and doing it! We have a "
+"bunch of intro tasks you can choose based on your interests."
 msgstr ""
 
 #. This is an email. Whitespace matters!
@@ -3356,9 +3910,14 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
 msgid ""
-"Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: %(list_link)s Subscribe to tell us about what you're interested in on MDN and ask questions about the site. "
-"* Real-time chat: #mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), "
-"Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. * Blog: %(blog_link)s"
+"Want to talk to someone about MDN? There are a few ways you can do that: * "
+"Mailing list: %(list_link)s Subscribe to tell us about what you're "
+"interested in on MDN and ask questions about the site. * Real-time chat: "
+"#mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) "
+"You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
+"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
+"(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. "
+"* Blog: %(blog_link)s"
 msgstr ""
 
 #: kuma/wiki/apps.py:54
@@ -3431,8 +3990,11 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:233
 msgid ""
-"<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s"
-"\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
+"<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View "
+"'%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at "
+"%(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s\" "
+"title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last "
+"modified at %(doc_modified)s) </p>"
 msgstr ""
 
 #: kuma/wiki/feeds.py:279
@@ -3464,11 +4026,15 @@ msgid "Please provide a title."
 msgstr ""
 
 #: kuma/wiki/forms.py:28
-msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgid ""
+"The title is too short (%(show_value)s characters). It must be at least "
+"%(limit_value)s characters."
 msgstr ""
 
 #: kuma/wiki/forms.py:30
-msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgid ""
+"Please keep the length of the title to %(limit_value)s characters or less. "
+"It is currently %(show_value)s characters."
 msgstr ""
 
 #: kuma/wiki/forms.py:33
@@ -3484,11 +4050,15 @@ msgid "The slug provided is not valid."
 msgstr ""
 
 #: kuma/wiki/forms.py:36
-msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgid ""
+"The slug is too short (%(show_value)s characters). It must be at least "
+"%(limit_value)s characters."
 msgstr ""
 
 #: kuma/wiki/forms.py:38
-msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgid ""
+"Please keep the length of the slug to %(limit_value)s characters or less. It"
+" is currently %(show_value)s characters."
 msgstr ""
 
 #: kuma/wiki/forms.py:41
@@ -3496,11 +4066,15 @@ msgid "Please provide a summary."
 msgstr ""
 
 #: kuma/wiki/forms.py:42
-msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgid ""
+"The summary is too short (%(show_value)s characters). It must be at least "
+"%(limit_value)s characters."
 msgstr ""
 
 #: kuma/wiki/forms.py:44
-msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgid ""
+"Please keep the length of the summary to %(limit_value)s characters or less."
+" It is currently %(show_value)s characters."
 msgstr ""
 
 #: kuma/wiki/forms.py:47
@@ -3508,15 +4082,21 @@ msgid "Please provide content."
 msgstr ""
 
 #: kuma/wiki/forms.py:48
-msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgid ""
+"The content is too short (%(show_value)s characters). It must be at least "
+"%(limit_value)s characters."
 msgstr ""
 
 #: kuma/wiki/forms.py:50
-msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgid ""
+"Please keep the length of the content to %(limit_value)s characters or less."
+" It is currently %(show_value)s characters."
 msgstr ""
 
 #: kuma/wiki/forms.py:53
-msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgid ""
+"Please keep the length of the comment to %(limit_value)s characters or less."
+" It is currently %(show_value)s characters."
 msgstr ""
 
 #: kuma/wiki/forms.py:56
@@ -3535,8 +4115,13 @@ msgstr ""
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:77 kuma/wiki/forms.py:156 kuma/wiki/forms.py:477 kuma/wiki/templates/wiki/create.html:38 kuma/wiki/templates/wiki/edit.html:56 kuma/wiki/templates/wiki/edit.html:105
-#: kuma/wiki/templates/wiki/move.html:60 kuma/wiki/templates/wiki/includes/document_macros.html:58 kuma/wiki/templates/wiki/includes/translate_description.html:11
+#: kuma/wiki/forms.py:77 kuma/wiki/forms.py:156 kuma/wiki/forms.py:477
+#: kuma/wiki/templates/wiki/create.html:38
+#: kuma/wiki/templates/wiki/edit.html:56
+#: kuma/wiki/templates/wiki/edit.html:105
+#: kuma/wiki/templates/wiki/move.html:60
+#: kuma/wiki/templates/wiki/includes/document_macros.html:58
+#: kuma/wiki/templates/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr ""
 
@@ -3544,7 +4129,9 @@ msgstr ""
 msgid "Title of article"
 msgstr ""
 
-#: kuma/wiki/forms.py:86 kuma/wiki/forms.py:170 kuma/wiki/templates/wiki/create.html:42 kuma/wiki/templates/wiki/includes/document_macros.html:62
+#: kuma/wiki/forms.py:86 kuma/wiki/forms.py:170
+#: kuma/wiki/templates/wiki/create.html:42
+#: kuma/wiki/templates/wiki/includes/document_macros.html:62
 #: kuma/wiki/templates/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr ""
@@ -3561,11 +4148,14 @@ msgstr ""
 msgid "Type of article"
 msgstr ""
 
-#: kuma/wiki/forms.py:103 kuma/wiki/templates/wiki/create.html:46 kuma/wiki/templates/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:103 kuma/wiki/templates/wiki/create.html:46
+#: kuma/wiki/templates/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr ""
 
-#: kuma/wiki/forms.py:181 kuma/wiki/templates/wiki/edit.html:62 kuma/wiki/templates/wiki/includes/document_macros.html:67 kuma/wiki/templates/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:181 kuma/wiki/templates/wiki/edit.html:62
+#: kuma/wiki/templates/wiki/includes/document_macros.html:67
+#: kuma/wiki/templates/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr ""
 
@@ -3585,7 +4175,8 @@ msgstr ""
 msgid "Only displayed on search results page"
 msgstr ""
 
-#: kuma/wiki/forms.py:207 kuma/wiki/templates/wiki/edit.html:80 kuma/wiki/templates/wiki/includes/document_macros.html:72
+#: kuma/wiki/forms.py:207 kuma/wiki/templates/wiki/edit.html:80
+#: kuma/wiki/templates/wiki/includes/document_macros.html:72
 msgid "Content:"
 msgstr ""
 
@@ -3609,7 +4200,8 @@ msgstr ""
 msgid "New article URL"
 msgstr ""
 
-#: kuma/wiki/helpers.py:99 kuma/wiki/helpers.py:100 kuma/wiki/helpers.py:115 kuma/wiki/helpers.py:116
+#: kuma/wiki/helpers.py:99 kuma/wiki/helpers.py:100 kuma/wiki/helpers.py:115
+#: kuma/wiki/helpers.py:116
 msgid "Revision %s"
 msgstr ""
 
@@ -3678,11 +4270,15 @@ msgid "H4 and higher"
 msgstr ""
 
 #: kuma/wiki/models.py:1663
-msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
+msgid ""
+"A revision must be based on a revision of the %(locale)s document. Revision "
+"ID %(id)s does not fit those criteria."
 msgstr ""
 
 #: kuma/wiki/search.py:312
-msgid "Indexing {total} documents into {n} chunks of size {size} into index {index}."
+msgid ""
+"Indexing {total} documents into {n} chunks of size {size} into index "
+"{index}."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:4
@@ -3706,7 +4302,8 @@ msgstr "حذف نظر"
 msgid "Cannot delete pages with children until we fix this bug:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/confirm_document_delete.html:17 kuma/wiki/templates/wiki/confirm_revision_revert.html:21
+#: kuma/wiki/templates/wiki/confirm_document_delete.html:17
+#: kuma/wiki/templates/wiki/confirm_revision_revert.html:21
 msgid "Creator"
 msgstr ""
 
@@ -3724,7 +4321,9 @@ msgid "Last Change Date"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:29
-msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
+msgid ""
+"You are about to delete this document and all of its revisions. Please let "
+"us know why this page should be deleted."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:36
@@ -3752,7 +4351,9 @@ msgid "Why are you reverting to this revision?"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:36
-msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
+msgid ""
+"You are about to revert the document to this revision. Click \"revert\" to "
+"revert to the content&nbsp;above."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:39
@@ -3771,15 +4372,19 @@ msgstr ""
 msgid "New Document"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/create.html:32 kuma/wiki/templates/wiki/edit.html:96
-msgid "Draft <span id=\"draft-action\"></span> <time id=\"draft-time\" class=\"timeago\" title=\"\"></time>"
+#: kuma/wiki/templates/wiki/create.html:32
+#: kuma/wiki/templates/wiki/edit.html:96
+msgid ""
+"Draft <span id=\"draft-action\"></span> <time id=\"draft-time\" "
+"class=\"timeago\" title=\"\"></time>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/create.html:42
 msgid "URL segment that identifies the page"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/deletion_log.html:2 kuma/wiki/templates/wiki/deletion_log.html:7
+#: kuma/wiki/templates/wiki/deletion_log.html:2
+#: kuma/wiki/templates/wiki/deletion_log.html:7
 msgid "Document Deleted"
 msgstr ""
 
@@ -3797,11 +4402,13 @@ msgstr ""
 msgid "Restore this document"
 msgstr "این نظر را حذف می‌کنید؟"
 
-#: kuma/wiki/templates/wiki/document.html:89 templates/includes/lang_switcher.html:2
+#: kuma/wiki/templates/wiki/document.html:89
+#: templates/includes/lang_switcher.html:2
 msgid "Other languages:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:100 templates/includes/lang_switcher.html:15
+#: kuma/wiki/templates/wiki/document.html:100
+#: templates/includes/lang_switcher.html:15
 msgid "Go"
 msgstr ""
 
@@ -3809,7 +4416,8 @@ msgstr ""
 msgid "Previous Search Result"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:168 kuma/wiki/templates/wiki/document.html:178
+#: kuma/wiki/templates/wiki/document.html:168
+#: kuma/wiki/templates/wiki/document.html:178
 msgid "No Previous Search Result"
 msgstr ""
 
@@ -3849,19 +4457,23 @@ msgid "In This Article"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:261
-msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
+msgid ""
+"This document is being rendered for the first time by the system. Please <a "
+"href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:269
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
-"a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in "
+"progress</abbr>. If the content below seems stale or if something is "
+"missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:278
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
-"in a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been "
+"scheduled</abbr>. If the content below seems stale or if something is "
+"missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:294
@@ -3875,7 +4487,9 @@ msgid "This article is in need of an editorial review."
 msgstr "<p>این مقاله نیازمند یک بازبینی ویرایشی است.</p>"
 
 #: kuma/wiki/templates/wiki/document.html:305
-msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
+msgid ""
+"This translation is incomplete. Please help <a "
+"href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:310
@@ -3883,7 +4497,9 @@ msgid "This translation is in progress."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:317
-msgid "Our volunteers haven't translated this article into %(locale)s yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
+msgid ""
+"Our volunteers haven't translated this article into %(locale)s yet. <a "
+"href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:328
@@ -3891,7 +4507,10 @@ msgid "This article doesn't have any content yet."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:331
-msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
+msgid ""
+"Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that "
+"use %(title)s</a> to see example use cases and how many pages use this "
+"macro."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:344
@@ -3903,7 +4522,10 @@ msgid "Document Tags and Contributors"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:362
-msgid "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-group\"></i><strong>Contributors to this page:</strong> %(contributors_list)s </div>"
+msgid ""
+"<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-"
+"group\"></i><strong>Contributors to this page:</strong> "
+"%(contributors_list)s </div>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:371
@@ -3916,15 +4538,18 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:27
 msgid ""
-"Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
-"started are not lost."
+"Please review the differences between your changes and the changes saved "
+"since you started editing. You may save again, but try to resolve any "
+"conflicts by hand so that the changes made since you started are not lost."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:37
 msgid "Your Changes"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/edit.html:38 kuma/wiki/templates/wiki/edit.html:46 kuma/wiki/templates/wiki/includes/document_macros.html:41 kuma/wiki/templates/wiki/includes/document_macros.html:53
+#: kuma/wiki/templates/wiki/edit.html:38 kuma/wiki/templates/wiki/edit.html:46
+#: kuma/wiki/templates/wiki/includes/document_macros.html:41
+#: kuma/wiki/templates/wiki/includes/document_macros.html:53
 msgid "Revision {id} by <a href=\"{user_profile_url}\">{user}</a> on {date}"
 msgstr ""
 
@@ -3961,10 +4586,13 @@ msgid "Minutes"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:134
-msgid "Find the translation source with the lookup below and then click \"Save Changes.\""
+msgid ""
+"Find the translation source with the lookup below and then click \"Save "
+"Changes.\""
 msgstr ""
 
-#: kuma/wiki/templates/wiki/edit.html:136 kuma/wiki/templates/wiki/includes/translate_description.html:62
+#: kuma/wiki/templates/wiki/edit.html:136
+#: kuma/wiki/templates/wiki/includes/translate_description.html:62
 msgid "Lookup:"
 msgstr ""
 
@@ -3973,11 +4601,15 @@ msgid "Thank you for taking the time to improve MDN!"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:152
-msgid "It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">Editor Guide</a>."
+msgid ""
+"It looks like this is your first contribution to MDN. You can find answers "
+"to common editing questions within our <a target=\"_blank\" "
+"href=\"%(url)s\">Editor Guide</a>."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:156
-msgid "Don't be afraid to break something, you can always revert your changes."
+msgid ""
+"Don't be afraid to break something, you can always revert your changes."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:157
@@ -3988,8 +4620,12 @@ msgstr ""
 msgid "Learn how to tag an article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/edit.html:178 kuma/wiki/templates/wiki/translate.html:112
-msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
+#: kuma/wiki/templates/wiki/edit.html:178
+#: kuma/wiki/templates/wiki/translate.html:112
+msgid ""
+"Categorize the article. It will make the article findable under the right "
+"filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the"
+" Tagging Guide</a>."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:2
@@ -4001,11 +4637,15 @@ msgid "<span class=\"title-prefix\">Moving</span> <em>{title}</em>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:20
-msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
+msgid ""
+"Please specify the new location for this page by filling out the fields "
+"below. Be sure your new destination follows these rules:"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:22
-msgid "Make sure the location you specify is located immediately under an existing page."
+msgid ""
+"Make sure the location you specify is located immediately under an existing "
+"page."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:23
@@ -4017,15 +4657,20 @@ msgid "Enter only the part of the URL following \"/docs/\"."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:25
-msgid "Don't include a trailing slash (this will be removed for you if you include it, but you should leave it out)."
+msgid ""
+"Don't include a trailing slash (this will be removed for you if you include "
+"it, but you should leave it out)."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:31
-msgid "Your requested move cannot be completed due to the following slug conflicts:"
+msgid ""
+"Your requested move cannot be completed due to the following slug conflicts:"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:39
-msgid "Please try a different destination slug. <strong>Double check to be sure you're trying to move to the right place!</strong>"
+msgid ""
+"Please try a different destination slug. <strong>Double check to be sure "
+"you're trying to move to the right place!</strong>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:54
@@ -4070,14 +4715,18 @@ msgid "Page move requested"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move_requested.html:9
-msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
+msgid ""
+"<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a "
+"href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when "
+"it finishes, or if any errors occur during the move.</p>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
 msgstr "این پیش نمایشی از یک سند حل نشده است."
 
-#. {n} is the revision number, {t} is the title of the document. {c} is the category.
+#. {n} is the revision number, {t} is the title of the document. {c} is the
+#. category.
 #: kuma/wiki/templates/wiki/revision.html:3
 msgid "Revision {n} | {t} | {c}"
 msgstr ""
@@ -4103,7 +4752,8 @@ msgstr ""
 msgid "Revision Source"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/revision.html:75 kuma/wiki/templates/wiki/list/revisions.html:70
+#: kuma/wiki/templates/wiki/revision.html:75
+#: kuma/wiki/templates/wiki/list/revisions.html:70
 msgid "Revert to this revision"
 msgstr ""
 
@@ -4117,14 +4767,19 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/sphinx.html:32
 msgid ""
-"Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+"Content is available under a license specific to this project. &middot; <a "
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/sphinx.html:43
 msgid ""
-"&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
-"<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+"&copy; 2005-2015 Mozilla Developer Network and individual contributors<br />"
+" Content is available under a license specific to this project. &middot; <a "
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:7
@@ -4251,11 +4906,13 @@ msgstr ""
 msgid "Updating subscription status"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:46 kuma/wiki/templates/wiki/includes/buttons.html:47
+#: kuma/wiki/templates/wiki/includes/buttons.html:46
+#: kuma/wiki/templates/wiki/includes/buttons.html:47
 msgid "Subscribe to this article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:46 kuma/wiki/templates/wiki/includes/buttons.html:47
+#: kuma/wiki/templates/wiki/includes/buttons.html:46
+#: kuma/wiki/templates/wiki/includes/buttons.html:47
 msgid "Unsubscribe from this article"
 msgstr ""
 
@@ -4267,11 +4924,13 @@ msgstr ""
 msgid "You have been unsubscribed from this article."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:55 kuma/wiki/templates/wiki/includes/buttons.html:56
+#: kuma/wiki/templates/wiki/includes/buttons.html:55
+#: kuma/wiki/templates/wiki/includes/buttons.html:56
 msgid "Subscribe to {language} version"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:55 kuma/wiki/templates/wiki/includes/buttons.html:56
+#: kuma/wiki/templates/wiki/includes/buttons.html:55
+#: kuma/wiki/templates/wiki/includes/buttons.html:56
 msgid "Unsubscribe from {language} version"
 msgstr ""
 
@@ -4280,7 +4939,8 @@ msgid "You are now subscribed to the {language} version of this article."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
-msgid "You have been unsubscribed from the {language} version of this article."
+msgid ""
+"You have been unsubscribed from the {language} version of this article."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:63
@@ -4328,12 +4988,16 @@ msgstr ""
 msgid "Change Revisions"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:37 kuma/wiki/templates/wiki/includes/document_macros.html:49
+#: kuma/wiki/templates/wiki/includes/document_macros.html:37
+#: kuma/wiki/templates/wiki/includes/document_macros.html:49
 msgid "Revision {num}:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:74 kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
-msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
+#: kuma/wiki/templates/wiki/includes/document_macros.html:74
+#: kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
+msgid ""
+"The server is rendering the content comparison. Please refresh this page in "
+"a few minutes."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:99
@@ -4344,17 +5008,23 @@ msgstr ""
 msgid "Google+"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/document_toc_field.html:2 kuma/wiki/templates/wiki/includes/translate_description.html:50
+#: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
+#: kuma/wiki/templates/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/document_toc_field.html:2 kuma/wiki/templates/wiki/includes/translate_description.html:50
+#: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
+#: kuma/wiki/templates/wiki/includes/translate_description.html:50
 msgid "TOC:"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:3
-msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
-msgid_plural "There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below."
+msgid ""
+"There was a scripting error on this page. While it is being addressed by "
+"site editors, you can view partial content below."
+msgid_plural ""
+"There were scripting errors on this page. While those are being addressed by"
+" site editors, you can view partial content below."
 msgstr[0] ""
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:11
@@ -4367,7 +5037,10 @@ msgid_plural "More information about these errors"
 msgstr[0] ""
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:19
-msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
+msgid ""
+"Anyone with an MDN profile can edit a document to fix an error. Use the <a "
+"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
+"troubleshooting guide</a> as a starting point."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
@@ -4446,7 +5119,9 @@ msgid "Learn how to use Revision Comments"
 msgstr "توضیح بازبینی"
 
 #: kuma/wiki/templates/wiki/includes/revision_comment.html:3
-msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
+msgid ""
+"Tell us why you made additions and changes. It is optional, but will make "
+"page history easier to understand."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:6
@@ -4462,10 +5137,13 @@ msgid "Slug in {locale}:"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:66
-msgid "Find the translation source with the lookup above and then click \"Save Changes."
+msgid ""
+"Find the translation source with the lookup above and then click \"Save "
+"Changes."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/list/documents.html:2 kuma/wiki/templates/wiki/list/needs_review.html:23
+#: kuma/wiki/templates/wiki/list/documents.html:2
+#: kuma/wiki/templates/wiki/list/needs_review.html:23
 msgid "Found {0} documents."
 msgstr ""
 
@@ -4502,7 +5180,9 @@ msgstr ""
 msgid "Translation updates needed"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/list/documents.html:60 kuma/wiki/templates/wiki/list/needs_review.html:33 kuma/wiki/templates/wiki/list/with_localization_tags.html:30
+#: kuma/wiki/templates/wiki/list/documents.html:60
+#: kuma/wiki/templates/wiki/list/needs_review.html:33
+#: kuma/wiki/templates/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
 msgstr ""
 
@@ -4568,7 +5248,9 @@ msgid_plural "Found %(count)s documents."
 msgstr[0] ""
 
 #: kuma/wiki/views/delete.py:50
-msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
+msgid ""
+"Document already exists. Note: You cannot revert a document that has been "
+"moved until you delete its redirect."
 msgstr ""
 
 #: kuma/wiki/views/document.py:580
@@ -4596,7 +5278,9 @@ msgid "Sections may only be edited inline."
 msgstr ""
 
 #: kuma/wiki/views/misc.py:61
-msgid "Autosuggest requires a partial title. For a full document index, see the main page."
+msgid ""
+"Autosuggest requires a partial title. For a full document index, see the "
+"main page."
 msgstr ""
 
 #: kuma/wiki/views/misc.py:143
@@ -4664,13 +5348,17 @@ msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr ""
 
 #: templates/403.html:53
-msgid "<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">browse docs</a></li>"
+msgid ""
+"<li><a href=\"%(demos_url)s\">View demos</a> or <a "
+"href=\"%(docs_url)s\">browse docs</a></li>"
 msgstr ""
 
 #: templates/403.html:58
 msgid ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
-"Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a "
+"href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
+"rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a "
+"href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
 msgstr ""
 
 #: templates/404.html:6
@@ -4682,15 +5370,22 @@ msgid "We're sorry, we couldn't find what you were looking for."
 msgstr ""
 
 #: templates/404.html:24
-msgid "You can try a search or start over on the <a href=\"%(homepage_url)s\">home page</a>."
+msgid ""
+"You can try a search or start over on the <a href=\"%(homepage_url)s\">home "
+"page</a>."
 msgstr ""
 
 #: templates/404.html:28
-msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
+msgid ""
+"If you were following a documentation link, you can sign in and create the "
+"page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a"
+" bug</a>. Thanks!"
 msgstr ""
 
 #: templates/404.html:36
-msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
+msgid ""
+"<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew "
+"Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr ""
 
 #: templates/500.html:5
@@ -4837,7 +5532,10 @@ msgid "Report a bug"
 msgstr ""
 
 #: templates/base.html:200
-msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
+msgid ""
+"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual "
+"contributors.</p> <p>Content is available under <a "
+"href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
 
 #: templates/base.html:205
@@ -4865,7 +5563,9 @@ msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
 msgstr ""
 
 #: templates/handlers/400.html:40
-msgid "<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
+msgid ""
+"<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse "
+"docs</a></li>"
 msgstr ""
 
 #: templates/includes/common_macros.html:18
@@ -4897,7 +5597,9 @@ msgid "Sign in"
 msgstr ""
 
 #: templates/includes/newsletter.html:6
-msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem."
+msgid ""
+"Subscribe for periodic news about Firefox OS, Firefox Marketplace and the "
+"Open Web apps ecosystem."
 msgstr ""
 
 #: templates/includes/newsletter.html:35
@@ -4908,7 +5610,9 @@ msgstr ""
 msgid "Unsubscribe from these emails:"
 msgstr ""
 
-#: templates/tidings/unsubscribe.html:2 templates/tidings/unsubscribe.html:12 templates/tidings/unsubscribe_error.html:2 templates/tidings/unsubscribe_success.html:2
+#: templates/tidings/unsubscribe.html:2 templates/tidings/unsubscribe.html:12
+#: templates/tidings/unsubscribe_error.html:2
+#: templates/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
 msgstr ""
 
@@ -4922,8 +5626,11 @@ msgstr ""
 
 #: templates/tidings/unsubscribe_error.html:10
 msgid ""
-"We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
-"If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
+"We could not find your subscription. Either it has already been cancelled, "
+"or there was a mistake in the unsubscribe link. Please make sure the entire "
+"link from the email made it into the browser. If the last part of the link "
+"wraps onto a second line in the email, try copying and pasting the link into"
+" the browser."
 msgstr ""
 
 #: templates/tidings/unsubscribe_success.html:7
@@ -4961,11 +5668,19 @@ msgstr ""
 #~ msgid "Email address is required."
 #~ msgstr "آدرس پست الکترونیکی لازم است."
 
-#~ msgid "Email address is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-#~ msgstr "آدرس پست الکترونیکی بسیار کوتاه است (%(show_value)s characters). آن باید حدّاقل %(limit_value)s کارکتر باشد."
+#~ msgid ""
+#~ "Email address is too short (%(show_value)s characters). It must be at least "
+#~ "%(limit_value)s characters."
+#~ msgstr ""
+#~ "آدرس پست الکترونیکی بسیار کوتاه است (%(show_value)s characters). آن باید "
+#~ "حدّاقل %(limit_value)s کارکتر باشد."
 
-#~ msgid "Email address is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
-#~ msgstr "آدرس پست الکترونیکی بسیار بلند است (%(show_value)s characters). آن باید %(limit_value)s کارکتر یا کمتر باشد."
+#~ msgid ""
+#~ "Email address is too long (%(show_value)s characters). It must be "
+#~ "%(limit_value)s characters or less."
+#~ msgstr ""
+#~ "آدرس پست الکترونیکی بسیار بلند است (%(show_value)s characters). آن باید "
+#~ "%(limit_value)s کارکتر یا کمتر باشد."
 
 #~ msgid "Welcome to the <b>Add-ons Developer Community</b>"
 #~ msgstr "<b>به جامعه‌ی توسعه دهنده‌ی افزودنی‌ها</b> خوش آمدید"
@@ -4976,8 +5691,11 @@ msgstr ""
 #~ msgid "Build Add-on in 5 Minutes"
 #~ msgstr "تولید افزودنی در 5 دقیقه"
 
-#~ msgid "Watch Myk Melez create an Add-on in 5 minutes using the new Add-on Builder!"
-#~ msgstr "تماشا کنید Myk Melez با استفاده از تولید کننده‌ی افزودنی جدید در 5 دقیقه یک افزودنی میسازد!"
+#~ msgid ""
+#~ "Watch Myk Melez create an Add-on in 5 minutes using the new Add-on Builder!"
+#~ msgstr ""
+#~ "تماشا کنید Myk Melez با استفاده از تولید کننده‌ی افزودنی جدید در 5 دقیقه یک "
+#~ "افزودنی میسازد!"
 
 #~ msgid "Favorite <span class=\"addons\">Add-on</span> Tools"
 #~ msgstr "ابزارهای <span class=\"addons\">افزودنی</span> مورد علاقه"
@@ -4985,8 +5703,12 @@ msgstr ""
 #~ msgid "Add-on Builder"
 #~ msgstr "تولید کننده‌ی افزودنی"
 
-#~ msgid "Use Add-on Builder to quickly and easily develop an extension for Firefox using common web technologies."
-#~ msgstr "از تولید کننده‌ی افزودنی برای توسعه‌ی آسان و سریع یک ضمیمه برای فایرفاکس با استفاده از فناوری‌های متداول وب استفاده کنید."
+#~ msgid ""
+#~ "Use Add-on Builder to quickly and easily develop an extension for Firefox "
+#~ "using common web technologies."
+#~ msgstr ""
+#~ "از تولید کننده‌ی افزودنی برای توسعه‌ی آسان و سریع یک ضمیمه برای فایرفاکس با "
+#~ "استفاده از فناوری‌های متداول وب استفاده کنید."
 
 #~ msgid "All add-on development tools"
 #~ msgstr "همه‌ی ابزارهای توسعه‌ی افزودنی"
@@ -5043,7 +5765,8 @@ msgstr ""
 #~ msgstr "فایرفاکس اواس<br>برای توسعه دهندگان"
 
 #~ msgid "Open source mobile OS built with HTML, JavaScript, &amp; WebAPIs"
-#~ msgstr "سیستم عامل تلفن همراه متن باز تولید شده با ‎HTML،‏ JavaScript؛ و APIهای Web"
+#~ msgstr ""
+#~ "سیستم عامل تلفن همراه متن باز تولید شده با ‎HTML،‏ JavaScript؛ و APIهای Web"
 
 #~ msgid "Develop apps using Web standards and open technologies"
 #~ msgstr "توسعه‌ی برنامه‌ها با استفاده از استانداردهای وب و فناوری‌های باز"
@@ -5058,9 +5781,13 @@ msgstr ""
 #~ msgstr "نسخه‌های نمایشی ویژه:"
 
 #~ msgid ""
-#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater "
-#~ "depth."
-#~ msgstr "HTML چیست، چه می‌کند، تاریخچه‌اش بطور مختصر، و ساختار یک سند HTML شبیه چیست. مقاله‌هایی که در این قسمت دنبال می‌کند در تک تک بخش‌های HTML در عمق بسیار بیشتری می‌نگرند."
+#~ "What HTML is, what it does, its history in brief, and what the structure of "
+#~ "an HTML document looks like. The articles that follow this one look at each "
+#~ "individual part of HTML in much greater depth."
+#~ msgstr ""
+#~ "HTML چیست، چه می‌کند، تاریخچه‌اش بطور مختصر، و ساختار یک سند HTML شبیه چیست."
+#~ " مقاله‌هایی که در این قسمت دنبال می‌کند در تک تک بخش‌های HTML در عمق بسیار "
+#~ "بیشتری می‌نگرند."
 
 #~ msgid "HTML5 Tutorials"
 #~ msgstr "آموزش‌های HTML5"
@@ -5069,7 +5796,9 @@ msgstr ""
 #~ msgstr "استدیوی نسخه‌ی نمایشی MDN"
 
 #~ msgid "Demos that you can filter by technology or browser support."
-#~ msgstr "نسخه‌های نمایشی که شما می‌توانید بر اساس فناوری یا پشتیبانی مرورگر پالایش کنید."
+#~ msgstr ""
+#~ "نسخه‌های نمایشی که شما می‌توانید بر اساس فناوری یا پشتیبانی مرورگر پالایش "
+#~ "کنید."
 
 #~ msgid "Tools and Resources"
 #~ msgstr "ابزارها و منابع"
@@ -5101,8 +5830,12 @@ msgstr ""
 #~ msgid "All application development tools"
 #~ msgstr "همه‌ی ابزارهای توسعه‌ی برنامه"
 
-#~ msgid "Firefox Add-on that adds a lot of great developer tools that are just a click away."
-#~ msgstr "افزودنی فایرفاکس که تعداد زیادی از ابزارهای توسعه دهنده که فقط یک کلیک فاصله دارند را می‌افزاید."
+#~ msgid ""
+#~ "Firefox Add-on that adds a lot of great developer tools that are just a "
+#~ "click away."
+#~ msgstr ""
+#~ "افزودنی فایرفاکس که تعداد زیادی از ابزارهای توسعه دهنده که فقط یک کلیک فاصله"
+#~ " دارند را می‌افزاید."
 
 #~ msgid "Make my email public"
 #~ msgstr "آدرس پست الکترونیکی من را عمومی کن"
@@ -5110,17 +5843,28 @@ msgstr ""
 #~ msgid "Email Address Reminder"
 #~ msgstr "یادآور آدرس پست الکترونیکی"
 
-#~ msgid "You've confirmed your email address and activated your account! You can now log in, and go edit your profile."
-#~ msgstr "شما پست الکترونیکی‌تان را تأیید کردید و حسابتان را فعّال نمودید! شما می‌توانید وارد شده، و نمایه‌تان را ویرایش کنید."
+#~ msgid ""
+#~ "You've confirmed your email address and activated your account! You can now "
+#~ "log in, and go edit your profile."
+#~ msgstr ""
+#~ "شما پست الکترونیکی‌تان را تأیید کردید و حسابتان را فعّال نمودید! شما "
+#~ "می‌توانید وارد شده، و نمایه‌تان را ویرایش کنید."
 
-#~ msgid "We could not activate your account. Please make sure that you have clicked the correct link in your email or typed in the correct address."
-#~ msgstr "ما نتوانستیم حساب شما را فعّال کنیم. لطفاً مطمئن شوید روی لینک درستی در پست الکترونیکی‌تان کلیک کرده‌اید یا آدرس درستی وارد کرده‌اید."
+#~ msgid ""
+#~ "We could not activate your account. Please make sure that you have clicked "
+#~ "the correct link in your email or typed in the correct address."
+#~ msgstr ""
+#~ "ما نتوانستیم حساب شما را فعّال کنیم. لطفاً مطمئن شوید روی لینک درستی در پست "
+#~ "الکترونیکی‌تان کلیک کرده‌اید یا آدرس درستی وارد کرده‌اید."
 
 #~ msgid "Forgot your email?"
 #~ msgstr "پست الکترونیکی‌تان را فراموش کرده‌اید؟"
 
-#~ msgid "To change your MDN email, simply sign in below with the new email address."
-#~ msgstr "برای تغییر پست الکترونیکی MDNتان، به سادگی در زیر با آدرس پست الکترونیکی جدید وارد شوید."
+#~ msgid ""
+#~ "To change your MDN email, simply sign in below with the new email address."
+#~ msgstr ""
+#~ "برای تغییر پست الکترونیکی MDNتان، به سادگی در زیر با آدرس پست الکترونیکی "
+#~ "جدید وارد شوید."
 
 #~ msgid "Unable to change email for user {username}"
 #~ msgstr "تغییر پست الکترونیکی برای کاربر {username} ممکن نیست"
@@ -5137,11 +5881,21 @@ msgstr ""
 #~ msgid "Email Address"
 #~ msgstr "آدرس پست الکترونیکی"
 
-#~ msgid "We've sent an email to any account using this address. Please follow the link in the email to reset your password."
-#~ msgstr "ما یک ایمیل به هر حسابی که از این آدرس استفاده می‌کند فرستاده‌ایم. لطفاً از لینک درون ایمیل برای تنظیم دوباره‌ی گذرواژه‌تان استفاده کنید."
+#~ msgid ""
+#~ "We've sent an email to any account using this address. Please follow the "
+#~ "link in the email to reset your password."
+#~ msgstr ""
+#~ "ما یک ایمیل به هر حسابی که از این آدرس استفاده می‌کند فرستاده‌ایم. لطفاً از "
+#~ "لینک درون ایمیل برای تنظیم دوباره‌ی گذرواژه‌تان استفاده کنید."
 
-#~ msgid "To activate your account you must first confirm your email address. Enter your email and submit the form below, and we will resend the confirmation email."
-#~ msgstr "برای فعّال سازی حسابتان باید ابتدا آدرس پست الکترونیکی‌تان را تأیید کنید. پست الکترونیکی‌‌تان را وارد نموده و از اینجا ارسال کنید، و ما دوباره ایمیل تأییدیه را ارسال خواهیم کرد."
+#~ msgid ""
+#~ "To activate your account you must first confirm your email address. Enter "
+#~ "your email and submit the form below, and we will resend the confirmation "
+#~ "email."
+#~ msgstr ""
+#~ "برای فعّال سازی حسابتان باید ابتدا آدرس پست الکترونیکی‌تان را تأیید کنید. "
+#~ "پست الکترونیکی‌‌تان را وارد نموده و از اینجا ارسال کنید، و ما دوباره ایمیل "
+#~ "تأییدیه را ارسال خواهیم کرد."
 
 #~ msgid "Confirmation email sent successfully."
 #~ msgstr "ایمیل تأییدیه با موفّقیت ارسال شد."
@@ -5176,8 +5930,14 @@ msgstr ""
 #~ msgid "Preview Content"
 #~ msgstr "محتوای پیش نمایش"
 
-#~ msgid "MDN is being redesigned! Want to help beta-test it? <a href=\"%s\">(Sign up for and) sign in to your MDN account</a>, and then select <strong>Beta user</strong> in your profile."
-#~ msgstr "MDN بازطرّاحی شده است! می‌خواهید به آزمایش اولیه آن کمک کنید؟ <a href=\"%s\">(ثبت نام کنید و) به حساب MDNتان وارد شوید</a>، و سپس <strong>کاربر بتا</strong> را در نمایه‌تان انتخاب کنید."
+#~ msgid ""
+#~ "MDN is being redesigned! Want to help beta-test it? <a href=\"%s\">(Sign up "
+#~ "for and) sign in to your MDN account</a>, and then select <strong>Beta "
+#~ "user</strong> in your profile."
+#~ msgstr ""
+#~ "MDN بازطرّاحی شده است! می‌خواهید به آزمایش اولیه آن کمک کنید؟ <a "
+#~ "href=\"%s\">(ثبت نام کنید و) به حساب MDNتان وارد شوید</a>، و سپس "
+#~ "<strong>کاربر بتا</strong> را در نمایه‌تان انتخاب کنید."
 
 #~ msgid "Read<br /><em>Docs</em>"
 #~ msgstr "خواندن<br /><em>اسناد</em>"
@@ -5204,11 +5964,15 @@ msgstr ""
 #~ msgstr "توییت‌ها، وب‌نوشت‌ها و بیشتر"
 
 #~ msgid ""
-#~ "Is MDN helpful to you? Please <a href=\"%(feedback_url)s\">share your feedback</a> with us. Or join our <a id=\"dev-mdc-link\" href=\"//lists.mozilla.org/listinfo/dev-mdc\">mailing list about "
-#~ "improving MDN content</a>."
+#~ "Is MDN helpful to you? Please <a href=\"%(feedback_url)s\">share your "
+#~ "feedback</a> with us. Or join our <a id=\"dev-mdc-link\" "
+#~ "href=\"//lists.mozilla.org/listinfo/dev-mdc\">mailing list about improving "
+#~ "MDN content</a>."
 #~ msgstr ""
-#~ "آیا MDN برایتان مفید است؟ لطفاً <a href=\"%(feedback_url)s\">نظرتان را با ما به اشتراک بگذارید</a>. یا <a id=\"dev-mdc-link\" href=\"//lists.mozilla.org/listinfo/dev-mdc\">به لیست پستی ما درباره‌ی "
-#~ "بهبود محتوای MDN</a> بپیوندید."
+#~ "آیا MDN برایتان مفید است؟ لطفاً <a href=\"%(feedback_url)s\">نظرتان را با ما"
+#~ " به اشتراک بگذارید</a>. یا <a id=\"dev-mdc-link\" "
+#~ "href=\"//lists.mozilla.org/listinfo/dev-mdc\">به لیست پستی ما درباره‌ی بهبود"
+#~ " محتوای MDN</a> بپیوندید."
 
 #~ msgid "Firefox Help Home"
 #~ msgstr "خانه‌ی راهنمای فایرفاکس"
