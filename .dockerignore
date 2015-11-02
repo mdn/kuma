@@ -1,0 +1,10 @@
+.git/*
+media/*
+provisioning/*
+requirements/*
+kumascript/*
+docs/*
+docker/*
+configs/*
+vendor/*
+
