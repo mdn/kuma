@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-11-02 05:01+0000\n"
+"PO-Revision-Date: 2015-11-02 05:06+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -3012,11 +3012,10 @@ msgid "Search is temporarily unavailable. Please try again in a few minutes."
 msgstr "검색이 일시적으로 사용할 수 없습니다. 몇 분 후 다시 시도하세요."
 
 #: kuma/search/utils.py:17
-#, fuzzy
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
-msgstr "검색이 일시적으로 사용할 수 없습니다. 몇 분 후 다시 시도하세요."
+msgstr "검색 쿼리의 무엇인가가 잘 못 되었습니다. 몇 분 후 다시 시도하세요."
 
 #: kuma/search/templates/search/down.html:5
 msgid "Search Unavailable"
