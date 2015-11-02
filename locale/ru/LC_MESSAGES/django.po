@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-11-02 18:24+0000\n"
-"Last-Translator: Vladimir <waldemar.yan@gmail.com>\n"
+"PO-Revision-Date: 2015-11-02 19:29+0000\n"
+"Last-Translator: bychek.ru <a@bychek.ru>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1446488645.0\n"
+"X-POOTLE-MTIME: 1446492547.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -214,6 +214,9 @@ msgstr "История ({count})"
 #: kuma/authkeys/templates/authkeys/list.html:35
 msgid "You need a special permission to use API keys. You may request permission by <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
+"Вам нужно специальное разрешение, чтобы использовать API ключи. Вы можете "
+"запросить разрешение, <a href=\"%(bugzilla_url)s\">создав сообщение об "
+"ошибке</a>."
 
 #: kuma/authkeys/templates/authkeys/new.html:7
 msgid ""
@@ -332,6 +335,14 @@ msgid ""
 "over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
 "effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
 msgstr ""
+"CSS3 анимации - новая возможность современных браузеров типа Firefox, "
+"который добавляет большую гибкость и контроль над стилем и обытом Веба. "
+"Анимации позволяют вам изменять значения свойств через некоторое время без "
+"или с минимальным количеством JavaScript, а также лучше контролируются, чем "
+"CSS переходы. Выйдите за пределы статических свойств, чтобы анимировать "
+"внешний вид и позиции HTML элементов. Вы можете достичь этих эффектов без "
+"Flash или Silverlight, создать креативные динамические интерфейсы и "
+"привлекательный анимации с CSS3."
 
 #: kuma/demos/__init__.py:43
 msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
@@ -364,6 +375,8 @@ msgstr "Август 2011"
 #: kuma/demos/__init__.py:53 kuma/demos/__init__.py:54
 msgid "The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."
 msgstr ""
+"History API в современных браузерах позволяет производить живые изменения в "
+"документе, не ломая кнопку назад, а приложениям быть в закладках."
 
 #: kuma/demos/__init__.py:57
 msgid "September 2011 Dev Derby Challenge - Geolocation"
@@ -398,6 +411,9 @@ msgstr "Октябрь 2011"
 #: kuma/demos/__init__.py:67 kuma/demos/__init__.py:68
 msgid "CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."
 msgstr ""
+"CSS медиа запросы позволяют разработчикам создавать отзывчивые веб-дизайны, "
+"создавая интерфейс для диапазона экранов, включая компьютеры, планшеты и "
+"смартфоны."
 
 #: kuma/demos/__init__.py:71
 msgid "November 2011 Dev Derby Challenge - Canvas"
@@ -416,6 +432,10 @@ msgid ""
 "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
 "methods that make it easy to control and draw in."
 msgstr ""
+"Canvas позволяет вам рисовать в веб, используя JavaScript для отрисовки 2D "
+"фигур, bmp изображений и расширенных графических эффектов. Каждый элемент "
+"<canvas> предоставляет графический контекст со своим состоянием и методами, "
+"позволяющими легко его контролировать и рисовать в нём."
 
 #: kuma/demos/__init__.py:78
 msgid "December 2011 Dev Derby Challenge - IndexedDB"
@@ -448,6 +468,8 @@ msgstr "Январь 2012"
 #: kuma/demos/__init__.py:88 kuma/demos/__init__.py:89
 msgid "Orientation features in HTML5 access the motion and orientation data of devices with accelerometers."
 msgstr ""
+"Возможность ориентации в HTML5 даёт доступ к информации о движении и "
+"ориентации для устройств с акселерометрами."
 
 #: kuma/demos/__init__.py:92
 msgid "February 2012 Dev Derby Challenge - Touch Events"
@@ -455,7 +477,7 @@ msgstr "Февраль 2012 Dev Derby Challenge - Touch Events"
 
 #: kuma/demos/__init__.py:93
 msgid "Touch Events"
-msgstr ""
+msgstr "События прикосновения"
 
 #: kuma/demos/__init__.py:94
 msgid "February 2012"
@@ -464,6 +486,9 @@ msgstr "Февраль 2012"
 #: kuma/demos/__init__.py:95 kuma/demos/__init__.py:96
 msgid "Touch Events help you make websites and applications more engaging by responding appropriately when users interact with touch screens."
 msgstr ""
+"События прикосновения помогают делать сайты и приложения более "
+"привлекательные, путём ответа соответствующим образом, когда пользователи "
+"взаимодействуют с сенсорными экранами."
 
 #: kuma/demos/__init__.py:99
 msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
@@ -471,7 +496,7 @@ msgstr "Март 2012 Dev Derby Challenge - CSS 3D Transforms"
 
 #: kuma/demos/__init__.py:100
 msgid "CSS 3D Transforms"
-msgstr ""
+msgstr "CSS 3D трансформации"
 
 #: kuma/demos/__init__.py:101
 msgid "March 2012"
@@ -480,6 +505,8 @@ msgstr "Март 2012"
 #: kuma/demos/__init__.py:102 kuma/demos/__init__.py:103
 msgid "CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS to be transformed in three-dimensional space."
 msgstr ""
+"CSS 3D трансформации расширяют CSS трансформации, позволяя элементам "
+"прорисовываться будучи в трёх-мерном пространстве."
 
 #: kuma/demos/__init__.py:106
 msgid "April 2012 Dev Derby Challenge - Audio"
