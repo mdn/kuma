@@ -53,6 +53,18 @@ Kumascript tests
 If you're changing Kumascript, be sure to run its tests too.
 See https://github.com/mozilla/kumascript
 
+Compiling Stylus Files
+======================
+
+Stylus files need to be compiled for changes to take effect. Vagrant will
+automatically compile Stylus files when they change, but compilation can also be
+run manually::
+
+    compile-stylesheets
+
+The relevant CSS files will be generated and placed within the
+`build/assets/css` directory. You can add a ``-w`` flag to that call to compile
+stylesheets upon save.
 
 Database Migrations
 ===================
@@ -237,6 +249,7 @@ assets locally, follow these steps:
 #. In settings_local.py, set ``DEBUG = False``
 #. In settings_local.py, set ``DEV = False``
 #. Run ``vagrant ssh`` to enter the virtual machine
+#. Run ``compile-stylesheets``
 #. Run ``./manage.py collectstatic``
 #. Edit the file /etc/apache2/sites-enabled/kuma.conf and uncomment any lines
    pertaining to hosting static files

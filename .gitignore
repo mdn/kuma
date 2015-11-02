@@ -37,3 +37,5 @@ kuma/static/js/libs/ckeditor/source/ckbuilder
 htmlcov/
 locale/**/*.mo
 /bower_components
+build/assets/css/*
+!build/assets/css/README.md

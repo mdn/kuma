@@ -424,6 +424,7 @@ STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 STATICFILES_DIRS = (
     path('kuma', 'static'),
+    path('build', 'assets'),
 )
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
@@ -554,20 +555,14 @@ PUENTE = {
 STANDALONE_DOMAINS = ['django', 'javascript']
 STATICI18N_DOMAIN = 'javascript'
 
-PIPELINE_COMPILERS = (
-    'pipeline.compilers.stylus.StylusCompiler',
-)
-
-PIPELINE_STYLUS_ARGUMENTS = ''
-
 PIPELINE_CSS_COMPRESSOR = 'kuma.core.pipeline.cleancss.CleanCSSCompressor'
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
 
 PIPELINE_CSS = {
     'mdn': {
         'source_filenames': (
-            'styles/font-awesome.styl',
-            'styles/main.styl',
+            'css/font-awesome.css',
+            'css/main.css',
         ),
         'output_filename': 'build/styles/mdn.css',
         'variant': 'datauri',
@@ -576,88 +571,88 @@ PIPELINE_CSS = {
         'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'styles/libs/jqueryui/moz-jquery-plugins.css',
-            'styles/jquery-ui-customizations.styl',
+            'css/jquery-ui-customizations.css',
         ),
         'output_filename': 'build/styles/jquery-ui.css',
     },
     'demostudio': {
         'source_filenames': (
-            'styles/demos.styl',
+            'css/demos.css',
         ),
         'output_filename': 'build/styles/demostudio.css',
     },
     'devderby': {
         'source_filenames': (
-            'styles/devderby.styl',
+            'css/devderby.css',
         ),
         'output_filename': 'build/styles/devderby.css',
     },
     'gaia': {
         'source_filenames': (
-            'styles/gaia.styl',
+            'css/gaia.css',
         ),
         'output_filename': 'build/styles/gaia.css',
     },
     'home': {
         'source_filenames': (
-            'styles/home.styl',
+            'css/home.css',
         ),
         'output_filename': 'build/styles/home.css',
         'variant': 'datauri',
     },
     'search': {
         'source_filenames': (
-            'styles/search.styl',
+            'css/search.css',
         ),
         'output_filename': 'build/styles/search.css',
     },
     'search-suggestions': {
         'source_filenames': (
-            'styles/search-suggestions.styl',
+            'css/search-suggestions.css',
         ),
         'output_filename': 'build/styles/search-suggestions.css',
     },
     'wiki': {
         'source_filenames': (
-            'styles/wiki.styl',
-            'styles/zones.styl',
-            'styles/diff.styl',
+            'css/wiki.css',
+            'css/zones.css',
+            'css/diff.css',
 
             'js/libs/prism/prism.css',
             'js/prism-mdn/components/prism-json.css',
-            'styles/wiki-syntax.styl',
+            'css/wiki-syntax.css',
         ),
         'output_filename': 'build/styles/wiki.css',
     },
     'wiki-revisions': {
         'source_filenames': (
-            'styles/wiki-revisions.styl',
+            'css/wiki-revisions.css',
         ),
         'output_filename': 'build/styles/wiki-revisions.css',
     },
     'wiki-edit': {
         'source_filenames': (
-            'styles/wiki-edit.styl',
+            'css/wiki-edit.css',
         ),
         'output_filename': 'build/styles/wiki-edit.css',
     },
     'wiki-compat-tables': {
         'source_filenames': (
-            'styles/wiki-compat-tables.styl',
+            'css/wiki-compat-tables.css',
         ),
         'output_filename': 'build/styles/wiki-compat-tables.css',
         'template_name': 'pipeline/javascript-array.jinja',
     },
     'sphinx': {
         'source_filenames': (
-            'styles/wiki.styl',
-            'styles/sphinx.styl',
+            'css/wiki.css',
+            'css/sphinx.css',
         ),
         'output_filename': 'build/styles/sphinx.css',
     },
     'users': {
         'source_filenames': (
-            'styles/users.styl',
+            'css/users.css',
         ),
         'output_filename': 'build/styles/users.css',
     },
@@ -669,72 +664,72 @@ PIPELINE_CSS = {
     },
     'promote': {
         'source_filenames': (
-            'styles/promote.styl',
+            'css/promote.css',
         ),
         'output_filename': 'build/styles/promote.css',
     },
     'error': {
         'source_filenames': (
-            'styles/error.styl',
+            'css/error.css',
         ),
         'output_filename': 'build/styles/error.css',
     },
     'error-404': {
         'source_filenames': (
-            'styles/error.styl',
-            'styles/error-404.styl',
+            'css/error.css',
+            'css/error-404.css',
         ),
         'output_filename': 'build/styles/error-404.css',
     },
     'dashboards': {
         'source_filenames': (
-            'styles/dashboards.styl',
-            'styles/diff.styl',
+            'css/dashboards.css',
+            'css/diff.css',
         ),
         'output_filename': 'build/styles/dashboards.css',
     },
     'newsletter': {
         'source_filenames': (
-            'styles/newsletter.styl',
+            'css/newsletter.css',
         ),
         'output_filename': 'build/styles/newsletter.css',
     },
     'submission': {
         'source_filenames': (
-            'styles/submission.styl',
+            'css/submission.css',
         ),
         'output_filename': 'build/styles/submission.css',
     },
     'user-banned': {
         'source_filenames': (
-            'styles/user-banned.styl',
+            'css/user-banned.css',
         ),
         'output_filename': 'build/styles/user-banned.css',
     },
     'error-403-alternate': {
         'source_filenames': (
-            'styles/error-403-alternate.styl',
+            'css/error-403-alternate.css',
         ),
         'output_filename': 'build/styles/error-403-alternate.css',
     },
     'fellowship': {
         'source_filenames': (
-            'styles/fellowship.styl',
+            'css/fellowship.css',
         ),
         'output_filename': 'build/styles/fellowship.css',
     },
     'mdn10': {
         'source_filenames': (
-            'styles/mdn10.styl',
+            'css/mdn10.css',
         ),
         'output_filename': 'build/styles/mdn10.css',
     },
     'editor-content': {
         'source_filenames': (
-            'styles/main.styl',
-            'styles/wiki.styl',
-            'styles/wiki-wysiwyg.styl',
-            'styles/wiki-syntax.styl',
+            'css/main.css',
+            'css/wiki.css',
+            'css/wiki-wysiwyg.css',
+            'css/wiki-syntax.css',
             'styles/libs/font-awesome/css/font-awesome.min.css',
         ),
         'output_filename': 'build/styles/editor-content.css',
@@ -742,8 +737,8 @@ PIPELINE_CSS = {
     },
     'demowrap': {
         'source_filenames': (
-            'styles/demowrap.styl',
-            'styles/demos_wrap.styl',
+            'css/demowrap.css',
+            'css/demos_wrap.css',
         ),
         'output_filename': 'build/styles/demowrap.css',
     },
