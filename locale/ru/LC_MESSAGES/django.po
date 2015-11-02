@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-11-02 19:34+0000\n"
+"PO-Revision-Date: 2015-11-02 19:52+0000\n"
 "Last-Translator: Alexander <unghost@mozilla-russia.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1446492859.0\n"
+"X-POOTLE-MTIME: 1446493947.0\n"
 
 #: kuma/actioncounters/models.py:46
 #: kuma/contentflagging/models.py:111
@@ -1324,7 +1324,7 @@ msgstr "http://www.w3.org/TR/SVG11/"
 
 #: kuma/demos/__init__.py:343
 msgid "Video"
-msgstr ""
+msgstr "Видео"
 
 #: kuma/demos/__init__.py:344
 msgid ""
@@ -1573,15 +1573,15 @@ msgstr ""
 
 #: kuma/demos/helpers.py:109
 msgid "First Place"
-msgstr ""
+msgstr "Первое место"
 
 #: kuma/demos/helpers.py:110
 msgid "Second Place"
-msgstr ""
+msgstr "Второе место"
 
 #: kuma/demos/helpers.py:111
 msgid "Third Place"
-msgstr ""
+msgstr "Третье место"
 
 #: kuma/demos/helpers.py:112
 msgid "Finalist"
@@ -1589,88 +1589,88 @@ msgstr ""
 
 #: kuma/demos/helpers.py:113
 msgid "Featured"
-msgstr ""
+msgstr "Избранное"
 
 #: kuma/demos/helpers.py:268
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "год"
+msgstr[1] "года"
+msgstr[2] "лет"
 
 #: kuma/demos/helpers.py:269
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "месяц"
+msgstr[1] "месяца"
+msgstr[2] "месяцев"
 
 #: kuma/demos/helpers.py:270
 msgid "week"
 msgid_plural "weeks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "неделя"
+msgstr[1] "недели"
+msgstr[2] "недель"
 
 #: kuma/demos/helpers.py:271
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "день"
+msgstr[1] "дня"
+msgstr[2] "дней"
 
 #: kuma/demos/helpers.py:279
 msgid "%(number)d %(type)s"
-msgstr ""
+msgstr "%(number)d %(type)s"
 
 #: kuma/demos/helpers.py:306
 msgid "%(number)d year ago"
 msgid_plural "%(number)d years ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d год назад"
+msgstr[1] "%(number)d года назад"
+msgstr[2] "%(number)d лет назад"
 
 #: kuma/demos/helpers.py:308
 msgid "%(number)d month ago"
 msgid_plural "%(number)d months ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d месяц назад"
+msgstr[1] "%(number)d месяца назад"
+msgstr[2] "%(number)d месяцев назад"
 
 #: kuma/demos/helpers.py:310
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d неделю назад"
+msgstr[1] "%(number)d недели назад"
+msgstr[2] "%(number)d недель назад"
 
 #: kuma/demos/helpers.py:312
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d день назад"
+msgstr[1] "%(number)d дня назад"
+msgstr[2] "%(number)d дней назад"
 
 #: kuma/demos/helpers.py:314
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d час назад"
+msgstr[1] "%(number)d часа назад"
+msgstr[2] "%(number)d часов назад"
 
 #: kuma/demos/helpers.py:316
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d минуту назад"
+msgstr[1] "%(number)d минуты назад"
+msgstr[2] "%(number)d минут назад"
 
 #: kuma/demos/helpers.py:318
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d секунду назад"
+msgstr[1] "%(number)d секунды назад"
+msgstr[2] "%(number)d секунд назад"
 
 #: kuma/demos/models.py:204
 msgid "Please keep filesize under %s. Current filesize %s"
@@ -1758,7 +1758,7 @@ msgstr "Выберите лицензию, применяемую к Вашем�
 
 #: kuma/demos/models.py:452
 msgid "date created"
-msgstr ""
+msgstr "дата создания"
 
 #: kuma/demos/models.py:645
 #: kuma/demos/models.py:652
@@ -1786,7 +1786,7 @@ msgstr ""
 #: kuma/demos/views.py:328
 #: kuma/demos/views.py:343
 msgid "access denied"
-msgstr ""
+msgstr "в доступе отказано"
 
 #: kuma/demos/templates/demos/delete.html:10
 #: kuma/demos/templates/demos/detail.html:9
@@ -1854,7 +1854,7 @@ msgstr "Mozilla Demo Studio"
 #: kuma/demos/templates/demos/listing_tag.html:31
 #: kuma/demos/templates/demos/elements/demos_head.html:5
 msgid "Learn More"
-msgstr ""
+msgstr "Подробнее"
 
 #: kuma/demos/templates/demos/detail.html:35
 #: kuma/demos/templates/demos/home.html:26
@@ -1917,7 +1917,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:117
 msgid "Launch Demo"
-msgstr ""
+msgstr "Запустить демо"
 
 #: kuma/demos/templates/demos/detail.html:124
 #: kuma/demos/templates/demos/launch.html:46
@@ -1937,7 +1937,7 @@ msgstr ""
 #: kuma/demos/templates/demos/detail.html:130
 #: kuma/demos/templates/demos/launch.html:52
 msgid "Like It"
-msgstr ""
+msgstr "Лайкнуть его"
 
 #: kuma/demos/templates/demos/detail.html:135
 #: kuma/demos/templates/demos/launch.html:56
@@ -1953,16 +1953,16 @@ msgstr ""
 #: kuma/demos/templates/demos/detail.html:138
 #: kuma/demos/templates/demos/launch.html:58
 msgid "Share on Twitter"
-msgstr ""
+msgstr "Поделиться в Твиттере"
 
 #: kuma/demos/templates/demos/detail.html:139
 #: kuma/demos/templates/demos/launch.html:59
 msgid "Share on Facebook"
-msgstr ""
+msgstr "Поделиться на Фейсбуке"
 
 #: kuma/demos/templates/demos/detail.html:153
 msgid "Built using"
-msgstr ""
+msgstr "Создано при помощи"
 
 #: kuma/demos/templates/demos/detail.html:156
 msgid "See more demos made with {tag_title}"
@@ -1979,40 +1979,40 @@ msgstr[2] ""
 #: kuma/demos/templates/demos/detail.html:165
 msgid "{count} view"
 msgid_plural "{count} views"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "{count} просмотр"
+msgstr[1] "{count} просмотра"
+msgstr[2] "{count} просмотров"
 
 #: kuma/demos/templates/demos/detail.html:166
 #: kuma/demos/templates/demos/elements/submission_thumb.html:16
 msgid "{count} person liked this demo"
 msgid_plural "{count} people liked this demo"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "{count} человеку понравилось это демо"
+msgstr[1] "{count} человекам понравилось это демо"
+msgstr[2] "{count} человекам понравилось это демо"
 
 #: kuma/demos/templates/demos/detail.html:166
 msgid "{count} like"
 msgid_plural "{count} likes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "{count} лайк"
+msgstr[1] "{count} лайка"
+msgstr[2] "{count} лайков"
 
 #: kuma/demos/templates/demos/detail.html:181
 msgid "Edit Demo"
-msgstr ""
+msgstr "Редактировать демо"
 
 #: kuma/demos/templates/demos/detail.html:183
 msgid "Remove demo"
-msgstr ""
+msgstr "Удалить демо"
 
 #: kuma/demos/templates/demos/detail.html:186
 msgid "Show demo"
-msgstr ""
+msgstr "Показать демо"
 
 #: kuma/demos/templates/demos/detail.html:189
 msgid "Hide demo"
-msgstr ""
+msgstr "Скрыть демо"
 
 #: kuma/demos/templates/demos/detail.html:196
 msgid "More About This Demo From The Author"
@@ -2036,12 +2036,12 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:225
 msgid "More by {creator}"
-msgstr ""
+msgstr "Больше от {creator}"
 
 #: kuma/demos/templates/demos/detail.html:237
 #: kuma/demos/templates/demos/launch.html:63
 msgid "Report a Problem"
-msgstr ""
+msgstr "Сообщить о проблеме"
 
 #: kuma/demos/templates/demos/detail.html:239
 #: kuma/demos/templates/demos/detail.html:240
@@ -2051,7 +2051,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:239
 msgid "Demo is not working"
-msgstr ""
+msgstr "Демо не работает"
 
 #: kuma/demos/templates/demos/detail.html:240
 msgid "Demo is inappropriate"
@@ -2059,7 +2059,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:241
 msgid "Demo is not by this author"
-msgstr ""
+msgstr "Демо не от этого автора "
 
 #: kuma/demos/templates/demos/devderby_landing.html:11
 #: kuma/demos/templates/demos/devderby_landing.html:23
@@ -2090,7 +2090,7 @@ msgstr ""
 #: kuma/demos/templates/demos/devderby_landing.html:55
 #: kuma/demos/templates/demos/devderby_tag.html:25
 msgid "Resources"
-msgstr ""
+msgstr "Ресурсы"
 
 #: kuma/demos/templates/demos/devderby_landing.html:57
 #: kuma/search/templates/search/results.html:141
@@ -2101,11 +2101,11 @@ msgstr "Документы"
 #: templates/base.html:145
 #: templates/base.html:163
 msgid "Demos"
-msgstr ""
+msgstr "Демо"
 
 #: kuma/demos/templates/demos/devderby_landing.html:59
 msgid "Articles"
-msgstr ""
+msgstr "Статьи"
 
 #: kuma/demos/templates/demos/devderby_tag.html:8
 #: kuma/demos/templates/demos/listing_tag.html:7
@@ -2118,15 +2118,15 @@ msgstr ""
 
 #: kuma/demos/templates/demos/devderby_tag.html:22
 msgid "Challenges"
-msgstr ""
+msgstr "Вызовы"
 
 #: kuma/demos/templates/demos/devderby_tag.html:23
 msgid "Judging"
-msgstr ""
+msgstr "Жюри"
 
 #: kuma/demos/templates/demos/devderby_tag.html:24
 msgid "Prizes"
-msgstr ""
+msgstr "Призы"
 
 #: kuma/demos/templates/demos/devderby_tag.html:41
 msgid "Derby Winners"
@@ -2134,7 +2134,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/devderby_tag.html:52
 msgid "Submissions"
-msgstr ""
+msgstr "Представления"
 
 #: kuma/demos/templates/demos/devderby_tag.html:55
 #: kuma/demos/templates/demos/home.html:136
@@ -2144,7 +2144,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/feed_item_description.html:7
 msgid "Submitted by:"
-msgstr ""
+msgstr "Представлено:"
 
 #: kuma/demos/templates/demos/feed_item_description.html:9
 msgid "Tagged as:"
@@ -2289,7 +2289,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:72
 msgid "Describe Your Demo"
-msgstr ""
+msgstr "Опишите ваше демо"
 
 #: kuma/demos/templates/demos/submit.html:74
 msgid ""
@@ -2326,7 +2326,7 @@ msgstr ""
 #: kuma/demos/templates/demos/submit.html:119
 #: kuma/demos/templates/demos/submit_noauth.html:48
 msgid "Preparing Your Demo"
-msgstr ""
+msgstr "Подготовка вашего демо"
 
 #: kuma/demos/templates/demos/submit.html:120
 msgid ""
@@ -2396,7 +2396,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:195
 msgid "Go to your profile"
-msgstr ""
+msgstr "Перейти к вашему профилю"
 
 #: kuma/demos/templates/demos/submit_noauth.html:27
 msgid ""
@@ -2407,7 +2407,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit_noauth.html:36
 msgid "Before You Begin"
-msgstr ""
+msgstr "Перед тем, как вы начнёте"
 
 #: kuma/demos/templates/demos/submit_noauth.html:37
 msgid ""
@@ -2440,9 +2440,8 @@ msgid ""
 msgstr ""
 
 #: kuma/demos/templates/demos/submit_noauth.html:66
-#, fuzzy
 msgid "Log In to Profile"
-msgstr "Войти в аккаунт"
+msgstr "Войти в профиль"
 
 #: kuma/demos/templates/demos/terms.html:10
 msgid "Terms for Contributors"
@@ -2488,9 +2487,9 @@ msgstr "Просмотреть профиль {display_name}"
 #: kuma/demos/templates/demos/elements/submission_listing.html:6
 msgid "{count} Demo"
 msgid_plural "{count} Demos"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "{count} демо"
+msgstr[1] "{count} демо"
+msgstr[2] "{count} демо"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:9
 msgid "Sort demos by most recent likes and views"
@@ -2517,9 +2516,8 @@ msgid "Most Viewed"
 msgstr ""
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:11
-#, fuzzy
 msgid "Sort demos by most likes"
-msgstr "Сортировать по количеству просмотров"
+msgstr "Сортировать демо по числу лайков"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:11
 msgid "You are viewing demos by most likes"
@@ -2609,9 +2607,8 @@ msgid "Search the docs"
 msgstr "Поиск по документации"
 
 #: kuma/landing/templates/landing/homepage.html:57
-#, fuzzy
 msgid "Show topics"
-msgstr "Показать сравнение"
+msgstr "Показать темы"
 
 #: kuma/landing/templates/landing/homepage.html:78
 msgid "Web Technologies"
@@ -2776,9 +2773,8 @@ msgid "Technical review"
 msgstr "Технический обзор"
 
 #: kuma/landing/templates/landing/homepage.html:183
-#, fuzzy
 msgid "Translating"
-msgstr "Перевод (локализация)"
+msgstr "Перевод"
 
 #: kuma/landing/templates/landing/homepage.html:184
 msgid "Promoting MDN"
@@ -3125,11 +3121,11 @@ msgstr ""
 
 #: kuma/search/templates/search/results.html:176
 msgid "Filter by"
-msgstr ""
+msgstr "Фильтровать по"
 
 #: kuma/search/templates/search/results.html:210
 msgid "Filter"
-msgstr ""
+msgstr "Фильтр"
 
 #: kuma/users/adapters.py:18
 msgid ""
@@ -3179,7 +3175,7 @@ msgstr "Вы должны согласиться с политикой конф�
 
 #: kuma/users/forms.py:37
 msgid "Plain text"
-msgstr ""
+msgstr "Обычный текст"
 
 #: kuma/users/forms.py:39
 msgid "Send me the newsletter"
@@ -3218,7 +3214,7 @@ msgstr "Эксперт в"
 
 #: kuma/users/forms.py:172
 msgid "Username"
-msgstr ""
+msgstr "Имя пользователя"
 
 #: kuma/users/forms.py:179
 #: kuma/users/models.py:139
@@ -3292,7 +3288,7 @@ msgstr "Заблокировать пользователя"
 
 #: kuma/users/helpers.py:52
 msgid "Admin"
-msgstr ""
+msgstr "Админ"
 
 #: kuma/users/models.py:30
 msgid "%s banned by %s"
