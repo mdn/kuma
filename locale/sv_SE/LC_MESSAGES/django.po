@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-11-01 23:02+0000\n"
+"PO-Revision-Date: 2015-11-01 23:06+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -654,7 +654,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:134
 msgid "August 2012 Dev Derby Challenge - Camera API"
-msgstr ""
+msgstr "Augusti 2012 Dev Derby utmaning - Kamera API"
 
 #: kuma/demos/__init__.py:135
 msgid "Camera API"
@@ -673,11 +673,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:141
 msgid "September 2012 Dev Derby Challenge - Geolocation II"
-msgstr ""
+msgstr "September 2012 Dev Derby utmaning - Geolokalisering II"
 
 #: kuma/demos/__init__.py:142
 msgid "Geolocation II"
-msgstr ""
+msgstr "Geolokalisering II"
 
 #: kuma/demos/__init__.py:143
 msgid "September 2012"
@@ -685,11 +685,11 @@ msgstr "September 2012"
 
 #: kuma/demos/__init__.py:148
 msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
-msgstr ""
+msgstr "Oktober 2012 Dev Derby utmaning - CSS Media Queries II"
 
 #: kuma/demos/__init__.py:149
 msgid "CSS Media Queries II"
-msgstr ""
+msgstr "CSS Media Queries II"
 
 #: kuma/demos/__init__.py:150
 msgid "October 2012"
@@ -704,7 +704,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:155
 msgid "November 2012 Dev Derby Challenge - Fullscreen API"
-msgstr ""
+msgstr "November 2012 Dev Derby utmaning - Fullskärm API"
 
 #: kuma/demos/__init__.py:156
 msgid "Fullscreen API"
@@ -723,7 +723,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:162
 msgid "December 2012 Dev Derby Challenge - Offline"
-msgstr ""
+msgstr "December 2012 Dev Derby utmaning - Offline"
 
 #: kuma/demos/__init__.py:163
 msgid "Offline"
@@ -743,7 +743,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:169
 msgid "January 2013 Dev Derby Challenge - Drag and Drop"
-msgstr ""
+msgstr "Januari 2013 Dev Derby utmaning - Dra och släpp"
 
 #: kuma/demos/__init__.py:170 kuma/demos/__init__.py:311
 msgid "Drag and Drop"
@@ -761,7 +761,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:176
 msgid "February 2013 Dev Derby Challenge - Multi-touch"
-msgstr ""
+msgstr "Februari 2013 Dev Derby utmaning - Multi-touch"
 
 #: kuma/demos/__init__.py:177 kuma/demos/__init__.py:383
 msgid "Multi-touch"
@@ -781,7 +781,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:183
 msgid "March 2013 Dev Derby Challenge - Mobile"
-msgstr ""
+msgstr "Mars 2013 Dev Derby utmaning - Mobil"
 
 #: kuma/demos/__init__.py:184 kuma/demos/__init__.py:319
 msgid "Mobile"
@@ -800,11 +800,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:190
 msgid "April 2013 Dev Derby Challenge - Web Workers"
-msgstr ""
+msgstr "April 2013 Dev Derby utmaning - Web Workers"
 
 #: kuma/demos/__init__.py:191 kuma/demos/__init__.py:367
 msgid "Web Workers"
-msgstr ""
+msgstr "Web Workers"
 
 #: kuma/demos/__init__.py:192
 msgid "April 2013"
@@ -819,7 +819,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:197
 msgid "May 2013 Dev Derby Challenge - getUserMedia"
-msgstr ""
+msgstr "Maj 2013 Dev Derby utmaning - getUserMedia"
 
 #: kuma/demos/__init__.py:198
 msgid "getUserMedia"
@@ -846,7 +846,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:206
 msgid "June 2013 Dev Derby Challenge - WebGL II"
-msgstr ""
+msgstr "Juni 2013 Dev Derby utmaning - WebGL II"
 
 #: kuma/demos/__init__.py:207
 msgid "WebGL II"
@@ -866,7 +866,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:215
 msgid "July 2013 Dev Derby Challenge - File API"
-msgstr ""
+msgstr "Juli 2013 Dev Derby utmaning - Fil API"
 
 #: kuma/demos/__init__.py:216
 msgid "File API"
@@ -882,7 +882,7 @@ msgstr "Juli"
 
 #: kuma/demos/__init__.py:219
 msgid "File found"
-msgstr ""
+msgstr "Filen hittades"
 
 #: kuma/demos/__init__.py:220 kuma/demos/__init__.py:221
 msgid ""
@@ -908,7 +908,7 @@ msgstr ""
 #: kuma/demos/__init__.py:370 kuma/demos/__init__.py:378
 #: kuma/demos/__init__.py:386
 msgid "MDN Documentation"
-msgstr ""
+msgstr "MDN dokumentation"
 
 #: kuma/demos/__init__.py:228
 msgid ""
@@ -927,7 +927,7 @@ msgstr ""
 #: kuma/demos/__init__.py:371 kuma/demos/__init__.py:379
 #: kuma/demos/__init__.py:387
 msgid "Wikipedia Article"
-msgstr ""
+msgstr "Wikipedia-artikel"
 
 #: kuma/demos/__init__.py:229
 msgid "http://en.wikipedia.org/wiki/HTML5_audio"
@@ -944,7 +944,7 @@ msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
 #: kuma/demos/__init__.py:372 kuma/demos/__init__.py:380
 #: kuma/demos/__init__.py:388
 msgid "W3C Spec"
-msgstr ""
+msgstr "W3C Spec"
 
 #: kuma/demos/__init__.py:230
 msgid "http://www.w3.org/TR/html5/video.html#audio"
