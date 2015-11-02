@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-31 22:47+0000\n"
+"PO-Revision-Date: 2015-11-02 18:24+0000\n"
 "Last-Translator: Vladimir <waldemar.yan@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1446331679.0\n"
+"X-POOTLE-MTIME: 1446488645.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -2136,7 +2136,7 @@ msgstr "Запустить {title}"
 
 #: kuma/demos/templates/demos/elements/user_link.html:2
 msgid "See %(display_name)s's profile"
-msgstr "Просмотреть профиль %{display_name}s"
+msgstr "Просмотреть профиль %(display_name)s"
 
 #: kuma/landing/templates/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
@@ -2296,11 +2296,11 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:177
 msgid "Editorial review"
-msgstr ""
+msgstr "Редакционный обзор"
 
 #: kuma/landing/templates/landing/homepage.html:178
 msgid "Technical review"
-msgstr "Техническая проверка"
+msgstr "Технический обзор"
 
 #: kuma/landing/templates/landing/homepage.html:183
 #, fuzzy
@@ -2336,11 +2336,11 @@ msgstr ""
 
 #: kuma/landing/templates/landing/promote_buttons.html:35
 msgid "Preview"
-msgstr "Предпросмотр"
+msgstr "Предварительный просмотр"
 
 #: kuma/landing/templates/landing/promote_buttons.html:40
 msgid "Choose a button style"
-msgstr "Выберите стиль для кнопки"
+msgstr "Выберите стиль кнопки"
 
 #: kuma/landing/templates/landing/promote_buttons.html:45
 msgid "Better Docs"
@@ -2352,11 +2352,11 @@ msgstr ""
 
 #: kuma/landing/templates/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr "Создано разработчиками для разработчиков"
+msgstr "От Разработчиков, Для Разработчиков"
 
 #: kuma/landing/templates/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr ""
+msgstr "Инструменты веб-разработчика"
 
 #: kuma/landing/templates/landing/promote_buttons.html:70
 msgid "Choose a color"
@@ -2384,15 +2384,15 @@ msgstr "Веб"
 
 #: kuma/landing/templates/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
-msgstr ""
+msgstr "Добавить персональную кнопку на свой сайт"
 
 #: kuma/landing/templates/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr "Исходный код:"
+msgstr "Ваш исходный код:"
 
 #: kuma/landing/templates/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr "Ваша кнопка будет вести на:"
+msgstr "Ваша кнопка будет вести людей на:"
 
 #: kuma/landing/templates/landing/promote_buttons.html:162 kuma/landing/templates/landing/promote_buttons.html:166 kuma/landing/templates/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
@@ -3975,9 +3975,8 @@ msgid "This article is in need of a technical review."
 msgstr "Все статьи, которые необходимо проверить"
 
 #: kuma/wiki/templates/wiki/document.html:299
-#, fuzzy
 msgid "This article is in need of an editorial review."
-msgstr "Все статьи, которые необходимо проверить"
+msgstr "Эта статья нуждается в редакционном обзоре."
 
 #: kuma/wiki/templates/wiki/document.html:305
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
@@ -4373,9 +4372,8 @@ msgid "Languages"
 msgstr "Языки"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:25
-#, fuzzy
 msgid "No translations exist for this article."
-msgstr "Для данного документа не существует переводов."
+msgstr "Для данной статьи не существует переводов."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:29
 msgid "Add a translation"
@@ -4383,66 +4381,59 @@ msgstr "Добавить перевод"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:43
 msgid "Updating subscription status"
-msgstr ""
+msgstr "Обновление статуса подписки"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:46 kuma/wiki/templates/wiki/includes/buttons.html:47
-#, fuzzy
 msgid "Subscribe to this article"
-msgstr "Вы уже проголосовали за эту статью."
+msgstr "Подписаться на эту статью"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:46 kuma/wiki/templates/wiki/includes/buttons.html:47
 msgid "Unsubscribe from this article"
-msgstr ""
+msgstr "Отписаться от этой статьи"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
-#, fuzzy
 msgid "You are now subscribed to this article."
-msgstr "Вы уже проголосовали за эту статью."
+msgstr "Вы сейчас подписаны на эту статью."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
-#, fuzzy
 msgid "You have been unsubscribed from this article."
-msgstr "Вы уже проголосовали за эту статью."
+msgstr "Вы отписались от этой статьи."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55 kuma/wiki/templates/wiki/includes/buttons.html:56
 msgid "Subscribe to {language} version"
-msgstr ""
+msgstr "Подписаться на {language} версию"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55 kuma/wiki/templates/wiki/includes/buttons.html:56
 msgid "Unsubscribe from {language} version"
-msgstr ""
+msgstr "Отписаться от {language} версии"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
 msgid "You are now subscribed to the {language} version of this article."
-msgstr ""
+msgstr "Вы сейчас подписаны на {language} версию этой статьи."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:55
 msgid "You have been unsubscribed from the {language} version of this article."
-msgstr ""
+msgstr "Вы отписались от {language} версии этой статьи."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "New sub-article"
-msgstr "Новая подстраница"
+msgstr "Новая подстатья"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:64
-#, fuzzy
 msgid "Clone this article"
-msgstr "Клонировать эту страницу"
+msgstr "Клонировать эту статью"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:67
-#, fuzzy
 msgid "Move this article"
-msgstr "Переместить эту страницу"
+msgstr "Переместить эту статью"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr "Посмотреть как администратор"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:78
-#, fuzzy
 msgid "Delete this article"
-msgstr "Удалить эту страницу"
+msgstr "Удалить эту статью"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -4453,9 +4444,8 @@ msgid "Convert to content zone"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:88
-#, fuzzy
 msgid "Print this article"
-msgstr "Напечатать эту страницу"
+msgstr "Распечатать эту статью"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -4567,11 +4557,11 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:16
 msgid "New Page"
-msgstr ""
+msgstr "Новая страница"
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr ""
+msgstr "Отменить изменения и создать новый документ?"
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:23
 msgid "Save and Keep Editing"
