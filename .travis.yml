@@ -21,6 +21,9 @@ env:
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive
         - CFLAGS=-O0
+matrix:
+    allow_failures:
+        - env: TOXENV=dennis
 before_install:
     - scripts/travis-install
     - pip install -U pip
