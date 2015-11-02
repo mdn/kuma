@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-29 06:23+0000\n"
+"PO-Revision-Date: 2015-11-02 05:01+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -224,7 +224,6 @@ msgid "This key has not been used yet."
 msgstr "현재 키를 사용하지 않았습니다."
 
 #: kuma/authkeys/templates/authkeys/list.html:8
-#, fuzzy
 msgid ""
 "These are your API keys. They're useful for building applications that "
 "perform tasks on MDN on your behalf. If you have stopped using any of them, "
@@ -232,8 +231,8 @@ msgid ""
 " delete the key. It's easy to create a replacement key at any time."
 msgstr ""
 "다음은 API 키의 목록입니다. API 키를 사용하면 MDN에서 여러분 대신 작업을 수행하는 애플리케이션을 만들 수 있습니다. 만약 어떤"
-" 키가 더 이상 사용되지 않거나 의심스러운 집단에게 노출되었을 것으로 의심되는 경우, <span "
-"class=\"button\">X</span>를 눌러 키를 삭제하십시오. 나중에 언제든 새 키를 만들 수 있습니다."
+" 키가 더 이상 사용되지 않거나 의심스러운 집단에게 노출되었을 것으로 의심되는 경우 키를 삭제하십시오. 나중에 언제든지 새 키를 만들 수"
+" 있습니다."
 
 #: kuma/authkeys/templates/authkeys/list.html:14
 msgid "Create a new key"
@@ -1987,9 +1986,8 @@ msgid "More About This Demo From The Author"
 msgstr "현재 데모에 대한 개발자 댓글"
 
 #: kuma/demos/templates/demos/detail.html:207
-#, fuzzy
 msgid "About this Demo"
-msgstr "Firefox 소개"
+msgstr "데모 소개"
 
 #: kuma/demos/templates/demos/detail.html:209
 msgid ""
@@ -2042,9 +2040,8 @@ msgid "presents"
 msgstr "제출"
 
 #: kuma/demos/templates/demos/devderby_landing.html:25
-#, fuzzy
 msgid "Dev Derby has ended"
-msgstr "Dev Derby 규칙"
+msgstr "Dev Derby 종료됨"
 
 #: kuma/demos/templates/demos/devderby_landing.html:27
 msgid ""
@@ -2164,9 +2161,8 @@ msgstr "데모 실행"
 
 #: kuma/demos/templates/demos/home.html:106
 #: kuma/demos/templates/demos/home.html:107
-#, fuzzy
 msgid "Search demos"
-msgstr "검색 도구"
+msgstr "데모 검색"
 
 #: kuma/demos/templates/demos/home.html:111
 msgid "<b>or</b>"
@@ -2302,7 +2298,6 @@ msgid "Preparing Your Demo"
 msgstr "데모 제출를 위한 준비"
 
 #: kuma/demos/templates/demos/submit.html:120
-#, fuzzy
 msgid ""
 "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> "
 "<li>The main page of your demo should be a file named "
@@ -2315,13 +2310,12 @@ msgid ""
 "content that can't be licensed under the CC-BY-SA license and include links "
 "to the authors' websites.</li> </ul>"
 msgstr ""
-"<ul> <li>여러분의 데모 소스 코드는 ZIP 파일에 압축하여 주십시오.</li> <li>여러분의 데모의 메인 페이지는 ZIP 의 "
-"루트 디렉토리내의 <code>index.html</code> (이)라는 이름의 파일로 해 주십시오.</li> <li>여러분의 데모는 "
-"클라이언트 사이드의 기술 (HTML, CSS, JavaScript)로 구성하여야 합니다. PHP나 Ruby와 같은 서버 사이드 언어는 "
-"지원되고 있지 않습니다.</li> <li>여러분의 데모가 외부 자원을 필요로 하는 경우는 AJAX를 사용해서 접근해야 합니다.</li> "
-"<li>데모를 제출하려면 <a href=\"%(signup_url)s\">MDN 계정</a>이 필요합니다.</li> <li>데모의 "
-"상세란에 CC-BY-SA (표시-계승) 아래에서 허가할 수 없는 써드파티의 콘텐츠를 명기해 그 개발자의 웹 사이트의 링크를 기술해 "
-"주십시오.</li> </ul>"
+"<ul> <li>여러분의 데모 소스 코드는 ZIP 파일로 압축하여 주십시오.</li> <li>여러분의 데모의 메인 페이지는 ZIP 의 "
+"루트 디렉토리에 <code>index.html</code>이라는 이름의 파일로 해 주십시오.</li> <li>여러분의 데모는 클라이언트 "
+"사이드의 기술(HTML, CSS, JavaScript)로 구성하여야 합니다. PHP나 Ruby와 같은 서버 사이드 언어는 지원되고 있지 "
+"않습니다.</li> <li>여러분의 데모가 외부 자원을 필요로 하는 경우는 AJAX를 사용해서 접근해야 합니다.</li> <li>데모를 "
+"제출하려면 <a href=\"%(signup_url)s\">MDN 계정</a>이 필요합니다.</li> <li>데모의 상세란에 CC-BY-"
+"SA 아래에서 허가할 수 없는 써드파티의 콘텐츠를 명기하고 그 저작자의 웹 사이트 링크를 포함해 주십시오.</li> </ul>"
 
 #: kuma/demos/templates/demos/submit.html:133
 msgid "Provide the Source Code"
@@ -2437,12 +2431,11 @@ msgstr ""
 "주십시오.</li> </ul>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:61
-#, fuzzy
 msgid ""
 "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN "
 "profile</a></strong>.</p>"
 msgstr ""
-"<p>데모를 제출하려면 <strong><a href=\"%(signup_url)s\">MDN 계정</a></strong> 이 "
+"<p>데모를 제출하려면 <strong><a href=\"%(signup_url)s\">MDN 계정</a></strong>이 "
 "필요합니다.</p>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:66
@@ -2584,9 +2577,8 @@ msgid "Launch {title}"
 msgstr "{title} 실행"
 
 #: kuma/demos/templates/demos/elements/user_link.html:2
-#, fuzzy
 msgid "See %(display_name)s's profile"
-msgstr "{display_name}의 프로필 보기"
+msgstr "%(display_name)s의 프로필 보기"
 
 #: kuma/landing/templates/landing/fellowship.html:12
 msgid ""
@@ -2651,9 +2643,8 @@ msgid "more..."
 msgstr "자세히..."
 
 #: kuma/landing/templates/landing/homepage.html:91
-#, fuzzy
 msgid "Mozilla<br> Docs"
-msgstr "Mozilla 부가 기능"
+msgstr "Mozilla<br> 문서"
 
 # 77%
 #: kuma/landing/templates/landing/homepage.html:93 templates/base.html:156
@@ -2693,9 +2684,8 @@ msgid "JavaScript Debugger"
 msgstr "자바스크립트 디버거"
 
 #: kuma/landing/templates/landing/homepage.html:106
-#, fuzzy
 msgid "Performance Tools"
-msgstr "성능"
+msgstr "성능 측정 도구"
 
 #: kuma/landing/templates/landing/homepage.html:111
 msgid "Connect"
@@ -2716,9 +2706,8 @@ msgid "Open Web and Mobile"
 msgstr "오픈 웹 및 모바일"
 
 #: kuma/landing/templates/landing/homepage.html:125
-#, fuzzy
 msgid "Learn Web Development"
-msgstr "웹 개발"
+msgstr "웹 개발 배우기"
 
 #: kuma/landing/templates/landing/homepage.html:128
 msgid "Get The Browser For Developers Like You"
@@ -2729,9 +2718,8 @@ msgid "Celebrate ten years of documenting your Web."
 msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:136
-#, fuzzy
 msgid "Build Open Web Apps"
-msgstr "오픈 웹앱"
+msgstr "오픈 웹 앱 만들기"
 
 #: kuma/landing/templates/landing/homepage.html:145
 msgid ""
@@ -2746,16 +2734,16 @@ msgid "Get Involved"
 msgstr "참여하기"
 
 #: kuma/landing/templates/landing/homepage.html:152
-#, fuzzy
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span "
 "class=\"number\">%(contributors)s</span> contributors</span> <span "
 "class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<span class=\"row1\">참여자: <span class=\"number\">3,414</span>명이</span> <span"
-" class=\"row2\"><span class=\"number\">31</span>개 언어 버전으로</span> <span "
-"class=\"row3\">참여하고 있습니다.</span>"
+"<p class=\"numbers\"> <span class=\"row1\">Join <span "
+"class=\"number\">%(contributors)s</span> contributors</span> <span "
+"class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
+"locales</span> <span class=\"row3\">around the world.</span> </p>"
 
 #: kuma/landing/templates/landing/homepage.html:159
 #: kuma/landing/templates/landing/homepage.html:166
