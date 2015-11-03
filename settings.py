@@ -1519,3 +1519,5 @@ BLOCKABLE_USER_AGENTS = [
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'kuma.search.utils.search_exception_handler'
 }
+
+TAGGIT_CASE_INSENSITIVE = True

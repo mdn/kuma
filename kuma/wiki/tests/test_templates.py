@@ -688,11 +688,9 @@ class DocumentListTests(UserTestCase, WikiTestCase):
     @attr('tags')
     def test_tag_list(self):
         """Verify the tagged documents list view."""
-        tag = DocumentTag(name='Test Tag', slug='test-tag')
-        tag.save()
+        tag = DocumentTag.objects.create(name='Test Tag', slug='test-tag')
         self.doc.tags.add(tag)
-        response = self.client.get(reverse('wiki.tag',
-                                   args=[tag.name]))
+        response = self.client.get(reverse('wiki.tag', args=[tag.name]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('#document-list ul.document-list li')))
@@ -709,8 +707,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         fr_tag.save()
         self.doc.tags.add(en_tag)
         self.doc.tags.add(fr_tag)
-        response = self.client.get(reverse('wiki.tag',
-                                   args=[en_tag.name]))
+        response = self.client.get(reverse('wiki.tag', args=[en_tag.name]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('#document-list ul.document-list li')))
