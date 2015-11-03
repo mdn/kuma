@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2015-06-23 12:27+0000\n"
+"PO-Revision-Date: 2015-11-02 23:35+0000\n"
 "Last-Translator: Marco Aurélio <ouesten@me.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
@@ -164,7 +164,7 @@ msgstr ""
 #. Plugin Name of the plugin/theme
 #: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
 msgid "Promote MDN"
-msgstr "Promover o MDN"
+msgstr "Promover a MDN"
 
 #: promote-mdn.php:352
 msgid "hide"
@@ -172,11 +172,11 @@ msgstr "esconder"
 
 #: promote-mdn.php:376
 msgid "Sidebar image and links to MDN."
-msgstr "Imagem do painel e links para o MDN."
+msgstr "Imagem do painel e links para a MDN."
 
 #: promote-mdn.php:390
 msgid "Help Promote MDN!"
-msgstr "Ajudar a promover o MDN!"
+msgstr "Ajudar a promover a MDN!"
 
 #: promote-mdn.php:391
 msgid "Get the WordPress plugin"
@@ -189,7 +189,7 @@ msgstr "http://github.com/groovecoder/wp-promote-mdn"
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
 msgstr ""
-"Promovar o MDN linkando automaticamente palavras-chave para documentos MDN"
+"Promover a MDN linkando automaticamente palavras-chave para documentos MDN"
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
