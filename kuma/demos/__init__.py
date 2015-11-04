@@ -71,8 +71,8 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
          "title": _("November 2011 Dev Derby Challenge - Canvas"),
          "short_title": _("Canvas"),
          "dateline": _("November 2011"),
-         "summary": _("Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
-         "description": _("Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
+         "summary": _("Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
+         "description": _("Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
          "learn_more": []},
         {"tag_name": "challenge:2011:december",
          "title": _("December 2011 Dev Derby Challenge - IndexedDB"),
@@ -261,7 +261,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
          )},
         {"tag_name": "tech:fonts",
          "title": _("Fonts & Type"),
-         "description": _("The CSS3-Font specification contains enhanced features for fonts and typography like  embedding own fonts via @font-face or controlling OpenType font features directly via CSS."),
+         "description": _("The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."),
          "learn_more": (
              (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face')),
              (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Web_typography')),
@@ -301,7 +301,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
          )},
         {"tag_name": "tech:indexeddb",
          "title": _("IndexedDB"),
-         "description": _("IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes. "),
+         "description": _("IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."),
          "learn_more": (
              (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/IndexedDB')),
              (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/IndexedDB')),
@@ -357,7 +357,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
          )},
         {"tag_name": "tech:websockets",
          "title": _("WebSockets"),
-         "description": _("WebSockets is a technology that makes it possible to open an interactive  communication session between the user's browser and a server."),
+         "description": _("WebSockets is a technology that makes it possible to open an interactive communication session between the user's browser and a server."),
          "learn_more": (
              (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/WebSockets')),
              (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Web_Sockets')),

@@ -4928,12 +4928,8 @@ msgstr "Novo documento"
 
 #: kuma/wiki/templates/wiki/create.html:32
 #: kuma/wiki/templates/wiki/edit.html:96
-msgid ""
-"Draft <span id=\"draft-action\"></span> <time id=\"draft-time\" "
-"class=\"timeago\" title=\"\"></time>"
-msgstr ""
-"Rascunho <span id=\"draft-action\"></span> <time id=\"draft-time\" "
-"class=\"timeago\" title=\"\"></time>"
+msgid "Draft"
+msgstr "Rascunho"
 
 #: kuma/wiki/templates/wiki/create.html:42
 msgid "URL segment that identifies the page"

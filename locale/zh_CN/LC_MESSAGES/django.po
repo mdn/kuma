@@ -4432,12 +4432,8 @@ msgstr "新建文档"
 
 #: kuma/wiki/templates/wiki/create.html:32
 #: kuma/wiki/templates/wiki/edit.html:96
-msgid ""
-"Draft <span id=\"draft-action\"></span> <time id=\"draft-time\" "
-"class=\"timeago\" title=\"\"></time>"
-msgstr ""
-"草稿 <span id=\"draft-action\"></span> <time id=\"draft-time\" "
-"class=\"timeago\" title=\"\"></time>"
+msgid "Draft"
+msgstr "草稿"
 
 #: kuma/wiki/templates/wiki/create.html:42
 msgid "URL segment that identifies the page"
