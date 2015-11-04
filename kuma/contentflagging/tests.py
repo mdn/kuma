@@ -2,6 +2,7 @@ from django.core.exceptions import MultipleObjectsReturned
 
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.contenttypes.models import ContentType
+from django.core import mail
 from django.db import IntegrityError
 from django.http import HttpRequest
 
@@ -167,6 +168,18 @@ class DemoPackageTest(UserTransactionTestCase):
             flag_dict[doc][0].content_object.title)
         eq_('getElementByID',
             flag_dict[doc][1].content_object.title)
+
+    def test_flag_email(self):
+        request = _mock_request()
+        flag, created = ContentFlag.objects.flag(
+            request=request, object=self.user2, flag_type='notworking',
+            explanation='It not go.', recipients=[self.user1.email])
+        ok_(created)
+        eq_(len(mail.outbox), 1)
+        email = mail.outbox[0]
+        eq_(email.to, [self.user1.email])
+        eq_(email.subject, 'tester2 Flagged')
+        ok_('tester2 has been flagged notworking' in email.body)
 
 
 class ViewTests(UserTransactionTestCase):
