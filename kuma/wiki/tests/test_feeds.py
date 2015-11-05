@@ -50,10 +50,9 @@ class FeedTests(UserTestCase, WikiTestCase):
         self.assertEqual(1, len(feed.find('item')))
         for i, item in enumerate(feed.find('item')):
             desc_text = pq(item).find('description').text()
-            compare_url = '%s$compare?to=%s&from=%s' % (d1.slug,
-                                                        d1.current_revision.id,
-                                                        first_rev_id)
-            edit_url = '%s$edit' % d2.slug
+            compare_url = '%s$compare?to=%s&from=%s&utm_campaign=feed' % (
+                d1.slug, d1.current_revision.id, first_rev_id)
+            edit_url = '%s$edit?utm_campaign=feed&utm_medium=rss' % d2.slug
             self.assertTrue(escape(compare_url) in desc_text)
             self.assertTrue(escape(edit_url) in desc_text)
 

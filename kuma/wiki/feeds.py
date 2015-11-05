@@ -10,6 +10,7 @@ from django.utils.feedgenerator import (Atom1Feed, Rss201rev2Feed,
 from django.utils.html import escape
 from django.utils.translation import ugettext as _
 
+from kuma.core.helpers import add_utm
 from kuma.core.urlresolvers import reverse
 from kuma.core.validators import valid_jsonp_callback_value
 from kuma.users.helpers import gravatar_url
@@ -62,11 +63,15 @@ class DocumentsFeed(Feed):
         return document.current_revision.creator.username
 
     def item_author_link(self, document):
-        return self.request.build_absolute_uri(
-            document.current_revision.creator.get_absolute_url())
+        return add_utm(
+            self.request.build_absolute_uri(
+                document.current_revision.creator.get_absolute_url()),
+            'feed', medium='rss')
 
     def item_link(self, document):
-        return self.request.build_absolute_uri(document.get_absolute_url())
+        return add_utm(
+            self.request.build_absolute_uri(document.get_absolute_url()),
+            'feed', medium='rss')
 
     def item_categories(self, document):
         return document.tags.all()
@@ -355,7 +360,9 @@ class RevisionsFeed(DocumentsFeed):
                          tag_diff, review_diff, content_diff, links_table])
 
     def item_link(self, item):
-        return self.request.build_absolute_uri(item.document.get_absolute_url())
+        return add_utm(
+            self.request.build_absolute_uri(item.document.get_absolute_url()),
+            'feed', medium='rss')
 
     def item_pubdate(self, item):
         return item.created
@@ -364,7 +371,9 @@ class RevisionsFeed(DocumentsFeed):
         return item.creator.username
 
     def item_author_link(self, item):
-        return self.request.build_absolute_uri(item.creator.get_absolute_url())
+        return add_utm(
+            self.request.build_absolute_uri(item.creator.get_absolute_url()),
+            'feed', medium='rss')
 
     def item_categories(self, item):
         return []
