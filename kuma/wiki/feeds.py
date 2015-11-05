@@ -336,20 +336,34 @@ class RevisionsFeed(DocumentsFeed):
             content_diff = content_diff + escape(item.content)
 
         link_cell = u'<td><a href="%s">%s</a></td>'
-        view_cell = link_cell % (item.document.get_absolute_url(),
+        view_cell = link_cell % (add_utm(item.document.get_absolute_url(),
+                                         'feed', medium='rss'),
                                  _('View Page'))
-        edit_cell = link_cell % (item.document.get_edit_url(),
+        edit_cell = link_cell % (add_utm(item.document.get_edit_url(),
+                                         'feed', medium='rss'),
                                  _('Edit Page'))
         if previous:
-            compare_cell = link_cell % (get_compare_url(item.document,
-                                                        previous.id,
-                                                        item.id),
-                                        _('Show comparison'))
+            compare_cell = link_cell % (
+                add_utm(
+                    get_compare_url(item.document, previous.id, item.id),
+                    'feed',
+                    medium='rss'
+                ),
+                _('Show comparison')
+            )
         else:
             compare_cell = ''
-        history_cell = link_cell % (reverse('wiki.document_revisions',
-                                            args=[item.document.slug]),
-                                    _('History'))
+
+        history_cell = link_cell % (
+            add_utm(
+                reverse(
+                    'wiki.document_revisions', args=[item.document.slug]
+                ),
+                'feed',
+                medium='rss'
+            ),
+            _('History')
+        )
         links_table = u'<table border="0" width="80%">'
         links_table = links_table + u'<tr>%s%s%s%s</tr>' % (view_cell,
                                                             edit_cell,
