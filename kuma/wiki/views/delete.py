@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-from tower import ugettext as _
-
 from django.core.exceptions import PermissionDenied
 from django.db import IntegrityError, transaction
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import ugettext
 
-from kuma.core.decorators import login_required, permission_required, block_user_agents
+from kuma.core.decorators import (block_user_agents, login_required,
+                                  permission_required)
 from kuma.core.urlresolvers import reverse
 
 from ..decorators import check_readonly, process_document_path
 from ..forms import DocumentDeletionForm
-from ..models import Document, Revision, DocumentDeletionLog
+from ..models import Document, DocumentDeletionLog, Revision
 from ..utils import locale_and_slug_from_path
 
 
@@ -47,9 +47,10 @@ def revert_document(request, document_path, revision_id):
                 {
                     'revision': revision,
                     'document': revision.document,
-                    'error': _("Document already exists. Note: You cannot "
-                               "revert a document that has been moved until you "
-                               "delete its redirect.")
+                    'error': ugettext(
+                        "Document already exists. Note: You cannot "
+                        "revert a document that has been moved until you "
+                        "delete its redirect.")
                 }
             )
         return redirect('wiki.document_revisions', revision.document.slug)

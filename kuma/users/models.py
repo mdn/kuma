@@ -1,14 +1,13 @@
 import datetime
 
+from constance import config
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core import validators
 from django.db import models
 from django.utils.functional import cached_property
-
-from constance import config
+from django.utils.translation import ugettext_lazy as _
 from sundial.zones import COMMON_GROUPED_CHOICES
-from tower import ugettext_lazy as _
 
 from kuma.core.managers import NamespacedTaggableManager
 

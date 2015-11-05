@@ -7,44 +7,40 @@ except ImportError:
     from StringIO import StringIO
 
 import newrelic.agent
-from pyquery import PyQuery as pq
-from tower import ugettext as _
-
+from constance import config
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
-from django.http import (HttpResponse, HttpResponsePermanentRedirect,
-                         Http404, HttpResponseBadRequest, JsonResponse)
+from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
+                         HttpResponsePermanentRedirect, JsonResponse)
 from django.http.multipartparser import MultiPartParser
-from django.shortcuts import (get_object_or_404,
-                              redirect, render)
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.http import urlunquote_plus
 from django.utils.safestring import mark_safe
-from django.views.decorators.http import (require_GET, require_POST,
-                                          require_http_methods, condition)
+from django.utils.translation import ugettext
 from django.views.decorators.csrf import csrf_exempt
-
-from constance import config
+from django.views.decorators.http import (condition, require_GET,
+                                          require_http_methods, require_POST)
 from jingo.helpers import urlparams
+from pyquery import PyQuery as pq
 
+import kuma.wiki.content
 from kuma.authkeys.decorators import accepts_auth_key
-from kuma.core.decorators import (login_required,
-                                  permission_required, superuser_required,
-                                  block_user_agents)
+from kuma.core.decorators import (block_user_agents, login_required,
+                                  permission_required, superuser_required)
 from kuma.core.urlresolvers import reverse
 from kuma.search.store import referrer_url
 
-import kuma.wiki.content
 from .. import kumascript
 from ..constants import SLUG_CLEANSING_RE
-from ..decorators import (check_readonly, process_document_path,
-                          allow_CORS_GET, prevent_indexing)
+from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
+                          process_document_path)
 from ..events import EditDocumentEvent
 from ..forms import TreeMoveForm
-from ..models import (Document, DocumentZone, DocumentDeletionLog,
-                      DocumentRenderedContentNotAvailable)
+from ..models import (Document, DocumentDeletionLog,
+                      DocumentRenderedContentNotAvailable, DocumentZone)
 from ..tasks import move_page
-from .utils import split_slug, document_last_modified
+from .utils import document_last_modified, split_slug
 
 
 def _get_html_and_errors(request, doc, rendering_params):
@@ -577,7 +573,7 @@ def document(request, document_slug, document_locale):
         # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
         messages.add_message(
             request, messages.WARNING,
-            mark_safe(_(u'Redirected from %(url)s') % {
+            mark_safe(ugettext(u'Redirected from %(url)s') % {
                 "url": request.build_absolute_uri(doc.get_absolute_url())
             }), extra_tags='wiki_redirect')
         return HttpResponsePermanentRedirect(url)
@@ -625,7 +621,8 @@ def document(request, document_slug, document_locale):
         zone_subnav_html = doc.get_zone_subnav_html()
         body_html = doc.get_body_html()
 
-    share_text = _('I learned about %(title)s on MDN.') % {"title": doc.title}
+    share_text = ugettext(
+        'I learned about %(title)s on MDN.') % {"title": doc.title}
 
     contributors = doc.contributors
     contributors_count = len(contributors)
@@ -694,13 +691,14 @@ def _document_PUT(request, document_slug, document_locale):
         else:
             resp = HttpResponse()
             resp.status_code = 400
-            resp.content = _("Unsupported content-type: %s") % content_type
+            resp.content = ugettext(
+                "Unsupported content-type: %s") % content_type
             return resp
 
     except Exception as e:
         resp = HttpResponse()
         resp.status_code = 400
-        resp.content = _("Request parsing error: %s") % e
+        resp.content = ugettext("Request parsing error: %s") % e
         return resp
 
     try:
@@ -720,7 +718,7 @@ def _document_PUT(request, document_slug, document_locale):
             if curr_etag != expected_etag:
                 resp = HttpResponse()
                 resp.status_code = 412
-                resp.content = _('ETag precondition failed')
+                resp.content = ugettext('ETag precondition failed')
                 return resp
 
     except Document.DoesNotExist:

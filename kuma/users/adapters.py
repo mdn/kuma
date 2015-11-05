@@ -1,13 +1,12 @@
-from django import forms
-from django.contrib import messages
-from django.contrib.auth import get_user_model
-from django.shortcuts import redirect
-
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialLogin
-from tower import ugettext_lazy as _
+from django import forms
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.shortcuts import redirect
+from django.utils.translation import ugettext_lazy as _
 from waffle import flag_is_active
 
 from kuma.core.urlresolvers import reverse

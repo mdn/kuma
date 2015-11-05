@@ -1,24 +1,22 @@
 # -*- coding: utf-8 -*-
-from tower import ugettext_lazy as _lazy
-
 from django.conf import settings
-from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
-
+from django.utils.translation import ugettext_lazy as _
 from jingo.helpers import urlparams
 
+import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
+from kuma.core.decorators import block_user_agents, login_required, never_cache
 from kuma.core.i18n import get_language_mapping
-from kuma.core.decorators import never_cache, login_required, block_user_agents
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import get_object_or_none, smart_int
 
-import kuma.wiki.content
-from ..decorators import (check_readonly, process_document_path,
-                          prevent_indexing)
+from ..decorators import (check_readonly, prevent_indexing,
+                          process_document_path)
 from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
-from .utils import split_slug, document_form_initial
+from .utils import document_form_initial, split_slug
 
 
 @block_user_agents
@@ -72,7 +70,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             args=[parent_doc.slug]))
 
     if not parent_doc.is_localizable:
-        message = _lazy(u'You cannot translate this document.')
+        message = _(u'You cannot translate this document.')
         context = {'message': message}
         return render(request, 'handlers/400.html', context, status=400)
 

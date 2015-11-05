@@ -1,9 +1,9 @@
 import collections
 from operator import attrgetter
 
+from django.utils.translation import ugettext
 from elasticsearch_dsl import document
-from rest_framework import serializers, pagination
-from tower import ugettext as _
+from rest_framework import pagination, serializers
 
 from . import models
 from .fields import LocaleField, SearchQueryField, SiteURLField
@@ -91,8 +91,8 @@ class SearchSerializer(pagination.PaginationSerializer):
                 group_slug = None
             else:
                 # Let's check if we can get the name from the gettext catalog
-                filter_name = _(filter_['name'])
-                group_name = _(filter_['group']['name'])
+                filter_name = ugettext(filter_['name'])
+                group_name = ugettext(filter_['group']['name'])
                 group_slug = filter_['group']['slug']
 
             filter_groups.setdefault((
@@ -168,7 +168,7 @@ class FilterSerializer(serializers.ModelSerializer):
         read_only_fields = ('slug', 'shortcut')
 
     def get_localized_name(self, obj):
-        return _(obj.name)
+        return ugettext(obj.name)
 
 
 class GroupWithFiltersSerializer(serializers.ModelSerializer):
@@ -183,7 +183,7 @@ class GroupWithFiltersSerializer(serializers.ModelSerializer):
         fields = ('name', 'slug', 'order', 'filters')
 
     def get_localized_name(self, obj):
-        return _(obj.name)
+        return ugettext(obj.name)
 
 
 class GroupSerializer(serializers.Serializer):

@@ -1,16 +1,16 @@
 import logging
-from constance import config
-from tower import ugettext_lazy as _
 
+from constance import config
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-
+from django.utils import translation
+from django.utils.translation import ugettext_lazy as _
 from djcelery_transactions import task as transaction_task
 
 from kuma.core.utils import strings_are_translated
-from kuma.core.email_utils import uselocale
+
 
 log = logging.getLogger('kuma.users.tasks')
 
@@ -28,7 +28,7 @@ def send_welcome_email(user_pk, locale):
             strings_are_translated(WELCOME_EMAIL_STRINGS, locale)):
         context = {'username': user.username}
         log.debug('Using the locale %s to send the welcome email', locale)
-        with uselocale(locale):
+        with translation.override(locale):
             content_plain = render_to_string('users/email/welcome/plain.ltxt',
                                              context)
             content_html = render_to_string('users/email/welcome/html.ltxt',

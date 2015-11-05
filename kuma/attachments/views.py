@@ -2,19 +2,15 @@ import json
 import mimetypes
 
 import jinja2
-from tower import ugettext as _
-
+from constance import config
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import (Http404,
-                         HttpResponse,
-                         HttpResponsePermanentRedirect,
+from django.http import (Http404, HttpResponse, HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, render
+from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_GET, require_POST
-
-from constance import config
 
 from kuma.core.decorators import login_required
 from kuma.core.utils import paginate
@@ -23,8 +19,8 @@ from kuma.wiki.models import Document
 
 from .forms import AttachmentRevisionForm
 from .models import Attachment
-from .utils import (attachments_payload, convert_to_http_date,
-                    allow_add_attachment_by)
+from .utils import (allow_add_attachment_by, attachments_payload,
+                    convert_to_http_date)
 
 
 # Mime types used on MDN
@@ -148,8 +144,9 @@ def new_attachment(request):
             allowed_types = ', '.join(map(guess_extension, allowed_list))
             error_obj = {
                 'title': request.POST.get('is_ajax', ''),
-                'error': _(u'The file provided is not valid. '
-                           u'File must be one of these types: %s.') % allowed_types
+                'error': ugettext(
+                    u'The file provided is not valid. '
+                    u'File must be one of these types: %s.') % allowed_types
             }
             response = render(
                 request,

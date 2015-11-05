@@ -1,12 +1,11 @@
+from babel import Locale, localedata
+from babel.support import Format
 from django import forms
 from django.conf import settings
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.utils import translation
-
-from babel import Locale, localedata
-from babel.support import Format
-from tower import ugettext_lazy as _lazy
+from django.utils.translation import ugettext_lazy as _
 
 
 # TODO: remove this and use strip kwarg once ticket #6362 is done
@@ -55,13 +54,13 @@ class BaseValidator(validators.BaseValidator):
 
 
 class MinLengthValidator(validators.MinLengthValidator, BaseValidator):
-    message = _lazy(u'Ensure this value has at least %(limit_value)s '
-                    u'characters (it has %(show_value)s).')
+    message = _(u'Ensure this value has at least %(limit_value)s '
+                u'characters (it has %(show_value)s).')
 
 
 class MaxLengthValidator(validators.MaxLengthValidator, BaseValidator):
-    message = _lazy(u'Ensure this value has at most %(limit_value)s '
-                    u'characters (it has %(show_value)s).')
+    message = _(u'Ensure this value has at most %(limit_value)s '
+                u'characters (it has %(show_value)s).')
 
 
 def _format_decimal(num, format=None):
