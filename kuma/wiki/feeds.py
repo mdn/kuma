@@ -10,6 +10,7 @@ from django.utils.feedgenerator import (Atom1Feed, Rss201rev2Feed,
 from django.utils.html import escape
 from django.utils.translation import ugettext as _
 
+from kuma.core.helpers import add_utm
 from kuma.core.urlresolvers import reverse
 from kuma.core.validators import valid_jsonp_callback_value
 from kuma.users.helpers import gravatar_url
@@ -62,11 +63,15 @@ class DocumentsFeed(Feed):
         return document.current_revision.creator.username
 
     def item_author_link(self, document):
-        return self.request.build_absolute_uri(
-            document.current_revision.creator.get_absolute_url())
+        return add_utm(
+            self.request.build_absolute_uri(
+                document.current_revision.creator.get_absolute_url()),
+            'feed', medium='rss')
 
     def item_link(self, document):
-        return self.request.build_absolute_uri(document.get_absolute_url())
+        return add_utm(
+            self.request.build_absolute_uri(document.get_absolute_url()),
+            'feed', medium='rss')
 
     def item_categories(self, document):
         return document.tags.all()
@@ -331,20 +336,34 @@ class RevisionsFeed(DocumentsFeed):
             content_diff = content_diff + escape(item.content)
 
         link_cell = u'<td><a href="%s">%s</a></td>'
-        view_cell = link_cell % (item.document.get_absolute_url(),
+        view_cell = link_cell % (add_utm(item.document.get_absolute_url(),
+                                         'feed', medium='rss'),
                                  _('View Page'))
-        edit_cell = link_cell % (item.document.get_edit_url(),
+        edit_cell = link_cell % (add_utm(item.document.get_edit_url(),
+                                         'feed', medium='rss'),
                                  _('Edit Page'))
         if previous:
-            compare_cell = link_cell % (get_compare_url(item.document,
-                                                        previous.id,
-                                                        item.id),
-                                        _('Show comparison'))
+            compare_cell = link_cell % (
+                add_utm(
+                    get_compare_url(item.document, previous.id, item.id),
+                    'feed',
+                    medium='rss'
+                ),
+                _('Show comparison')
+            )
         else:
             compare_cell = ''
-        history_cell = link_cell % (reverse('wiki.document_revisions',
-                                            args=[item.document.slug]),
-                                    _('History'))
+
+        history_cell = link_cell % (
+            add_utm(
+                reverse(
+                    'wiki.document_revisions', args=[item.document.slug]
+                ),
+                'feed',
+                medium='rss'
+            ),
+            _('History')
+        )
         links_table = u'<table border="0" width="80%">'
         links_table = links_table + u'<tr>%s%s%s%s</tr>' % (view_cell,
                                                             edit_cell,
@@ -355,7 +374,9 @@ class RevisionsFeed(DocumentsFeed):
                          tag_diff, review_diff, content_diff, links_table])
 
     def item_link(self, item):
-        return self.request.build_absolute_uri(item.document.get_absolute_url())
+        return add_utm(
+            self.request.build_absolute_uri(item.document.get_absolute_url()),
+            'feed', medium='rss')
 
     def item_pubdate(self, item):
         return item.created
@@ -364,7 +385,9 @@ class RevisionsFeed(DocumentsFeed):
         return item.creator.username
 
     def item_author_link(self, item):
-        return self.request.build_absolute_uri(item.creator.get_absolute_url())
+        return add_utm(
+            self.request.build_absolute_uri(item.creator.get_absolute_url()),
+            'feed', medium='rss')
 
     def item_categories(self, item):
         return []
