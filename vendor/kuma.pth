@@ -12,6 +12,7 @@ src/django-allauth
 src/django-appconf
 src/django-cacheback
 src/django-celery
+src/django-celery-transactions
 src/django-constance
 src/django-debug-toolbar
 src/django-devserver

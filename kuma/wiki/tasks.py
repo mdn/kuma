@@ -16,6 +16,7 @@ from django.utils.encoding import smart_str
 
 from celery import chord, task
 from constance import config
+from djcelery_transactions import task as transaction_task
 from lxml import etree
 
 from kuma.core.cache import memcache
@@ -281,7 +282,7 @@ def delete_old_revision_ips(days=30):
     RevisionIP.objects.delete_old(days=days)
 
 
-@task
+@transaction_task
 def send_first_edit_email(revision_pk):
     """ Make an 'edited' notification email for first-time editors """
     revision = Revision.objects.get(pk=revision_pk)

@@ -171,3 +171,6 @@
 	path = vendor/src/cookies
 	url = https://gitlab.com/sashahart/cookies.git
 	ignore = untracked
+[submodule "vendor/src/django-celery-transactions"]
+	path = vendor/src/django-celery-transactions
+	url = git://github.com/fellowshipofone/django-celery-transactions.git
