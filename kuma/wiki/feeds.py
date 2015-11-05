@@ -3,18 +3,18 @@ import datetime
 import json
 
 from django.conf import settings
-from django.db.models import F
 from django.contrib.syndication.views import Feed
+from django.db.models import F
+from django.utils.feedgenerator import (Atom1Feed, Rss201rev2Feed,
+                                        SyndicationFeed)
 from django.utils.html import escape
-from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
-                                        Atom1Feed)
 from django.utils.translation import ugettext as _
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.validators import valid_jsonp_callback_value
 from kuma.users.helpers import gravatar_url
 
-from .helpers import diff_table, tag_diff_table, get_compare_url, colorize_diff
+from .helpers import colorize_diff, diff_table, get_compare_url, tag_diff_table
 from .models import Document, Revision
 
 
@@ -210,6 +210,8 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
     """Feed of translated documents whose parent has been modified since the
     translation was last updated."""
 
+    description_template = 'wiki/feed_docs_updated.html'
+
     def get_object(self, request, format, tag=None):
         super(DocumentsUpdatedTranslationParentFeed,
               self).get_object(request, format)
@@ -228,48 +230,22 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
                         .order_by('-parent__current_revision__created')
                 [:MAX_FEED_ITEMS])
 
-    def item_description(self, item):
-        # TODO: Needs to be a jinja template?
-        template = _(u"""
-            <p>
-              <a href="%(parent_url)s" title="%(parent_title)s">
-                 View '%(parent_locale)s' parent
-              </a>
-              (<a href="%(mod_url)s">last modified at %(parent_modified)s</a>)
-            </p>
-            <p>
-              <a href="%(doc_edit_url)s" title="%(doc_title)s">
-                  Edit '%(doc_locale)s' translation
-              </a>
-              (last modified at %(doc_modified)s)
-            </p>
-        """)
-        doc, parent = item, item.parent
+    def get_context_data(self, **kwargs):
+        context = super(DocumentsUpdatedTranslationParentFeed,
+                        self).get_context_data(**kwargs)
 
-        trans_based_on_pk = (Revision.objects.filter(document=parent)
-                                             .filter(created__lte=doc.modified)
+        obj = context.get('obj')
+        trans_based_on_pk = (Revision.objects.filter(document=obj.parent)
+                                             .filter(created__lte=obj.modified)
                                              .order_by('created')
                                              .values_list('pk', flat=True)
                                              .first())
-        mod_url = get_compare_url(parent,
+        mod_url = get_compare_url(obj.parent,
                                   trans_based_on_pk,
-                                  parent.current_revision.id)
+                                  obj.parent.current_revision.id)
 
-        context = {
-            'doc_url': self.request.build_absolute_uri(doc.get_absolute_url()),
-            'doc_edit_url': self.request.build_absolute_uri(
-                doc.get_edit_url()),
-            'doc_title': doc.title,
-            'doc_locale': doc.locale,
-            'doc_modified': doc.modified,
-            'parent_url': self.request.build_absolute_uri(
-                parent.get_absolute_url()),
-            'parent_title': parent.title,
-            'parent_locale': parent.locale,
-            'parent_modified': parent.modified,
-            'mod_url': mod_url,
-        }
-        return template % context
+        context['mod_url'] = mod_url
+        return context
 
 
 class RevisionsFeed(DocumentsFeed):
