@@ -39,6 +39,8 @@ src/jingo
 src/jingo-minify
 src/kombu
 src/oauthlib
+src/pipeline
+src/puente
 src/py-amqp
 src/pyquery
 src/python-dateutil
@@ -51,8 +53,6 @@ src/requests
 src/requests-oauthlib
 src/responses
 src/sqlparse
-src/tower
 src/urllib3
 src/urlobject
 src/werkzeug
-src/pipeline
