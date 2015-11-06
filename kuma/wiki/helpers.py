@@ -6,6 +6,7 @@ import urllib
 import urlparse
 
 import jinja2
+from cssselect.parser import SelectorSyntaxError
 from pyquery import PyQuery as pq
 from tower import ugettext as _
 
@@ -145,13 +146,18 @@ def selector_content_find(document, selector):
     """
     Provided a selector, returns the relevant content from the document
     """
-    summary = ''
+    content = ''
     try:
         page = pq(document.rendered_html)
-        summary = page.find(selector).text()
-    except:
+    except ValueError:
+        # pass errors during construction
         pass
-    return summary
+    try:
+        content = page.find(selector).text()
+    except SelectorSyntaxError:
+        # pass errors during find/select
+        pass
+    return content
 
 
 def _recursive_escape(value, esc=conditional_escape):
