@@ -8,7 +8,7 @@ from kuma.core.cache import memcache
 from kuma.users.tests import UserTestCase
 from . import document, revision, WikiTestCase
 from ..helpers import (absolutify, document_zone_management_links,
-                       revisions_unified_diff, tojson)
+                       revisions_unified_diff, selector_content_find, tojson)
 from ..models import DocumentZone
 
 
@@ -135,3 +135,23 @@ class DocumentZoneTests(UserTestCase, WikiTestCase):
             result_links = document_zone_management_links(user, doc)
             eq_(add, result_links['add'] is not None, (user, doc))
             eq_(change, result_links['change'] is not None)
+
+
+class SelectorContentFindTests(UserTestCase, WikiTestCase):
+    def test_selector_not_found_returns_empty_string(self):
+        doc_content = u'<div id="not-summary">Not the summary</div>'
+        doc1 = document(title=u'Test Missing Selector', save=True)
+        doc1.rendered_html = doc_content
+        doc1.save()
+        revision(document=doc1, content=doc_content, save=True)
+        content = selector_content_find(doc1, 'summary')
+        assert content == ''
+
+    def test_pyquery_bad_selector_syntax_returns_empty_string(self):
+        doc_content = u'<div id="not-suNot the summary</span'
+        doc1 = document(title=u'Test Missing Selector', save=True)
+        doc1.rendered_html = doc_content
+        doc1.save()
+        revision(document=doc1, content=doc_content, save=True)
+        content = selector_content_find(doc1, '.')
+        assert content == ''

@@ -6,6 +6,8 @@ import urllib
 import urlparse
 
 import jinja2
+from cssselect.parser import SelectorSyntaxError
+from pyquery import PyQuery as pq
 from tower import ugettext as _
 
 from django.contrib.sites.models import Site
@@ -137,6 +139,25 @@ def colorize_diff(diff):
 def wiki_bleach(val):
     from kuma.wiki.models import Document
     return jinja2.Markup(Document.objects.clean_content(val))
+
+
+@register.filter
+def selector_content_find(document, selector):
+    """
+    Provided a selector, returns the relevant content from the document
+    """
+    content = ''
+    try:
+        page = pq(document.rendered_html)
+    except ValueError:
+        # pass errors during construction
+        pass
+    try:
+        content = page.find(selector).text()
+    except SelectorSyntaxError:
+        # pass errors during find/select
+        pass
+    return content
 
 
 def _recursive_escape(value, esc=conditional_escape):
