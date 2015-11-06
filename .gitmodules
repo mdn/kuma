@@ -66,7 +66,7 @@
 [submodule "vendor/src/python-magic"]
 	path = vendor/src/python-magic
 	url = git://github.com/ahupp/python-magic.git
-	ignore = untracked
+	ignore = dirty
 [submodule "vendor/src/python-memcached"]
 	path = vendor/src/python-memcached
 	url = git://github.com/linsomniac/python-memcached.git
