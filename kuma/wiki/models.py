@@ -111,8 +111,8 @@ def valid_slug_parent(slug, locale):
             parent = Document.objects.get(locale=locale, slug=parent_slug)
         except Document.DoesNotExist:
             raise Exception(
-                ugettext("Parent %s/%s does not exist." % (locale,
-                                                           parent_slug)))
+                ugettext('Parent %s does not exist.' % (
+                    '%s/%s' % (locale, parent_slug))))
 
     return parent
 
@@ -120,8 +120,8 @@ def valid_slug_parent(slug, locale):
 class DocumentTag(TagBase):
     """A tag indexing a document"""
     class Meta:
-        verbose_name = ugettext("Document Tag")
-        verbose_name_plural = ugettext("Document Tags")
+        verbose_name = _('Document Tag')
+        verbose_name_plural = _('Document Tags')
 
 
 def tags_for(cls, model, instance=None, **extra_filters):
@@ -1506,15 +1506,15 @@ class DocumentZone(models.Model):
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
     class Meta:
-        verbose_name = ugettext("Review Tag")
-        verbose_name_plural = ugettext("Review Tags")
+        verbose_name = _('Review Tag')
+        verbose_name_plural = _('Review Tags')
 
 
 class LocalizationTag(TagBase):
     """A tag indicating localization status, mainly for revisions"""
     class Meta:
-        verbose_name = ugettext("Localization Tag")
-        verbose_name_plural = ugettext("Localization Tags")
+        verbose_name = _('Localization Tag')
+        verbose_name_plural = _('Localization Tags')
 
 
 class ReviewTaggedRevision(ItemBase):
@@ -1655,7 +1655,6 @@ class Revision(models.Model):
                     old = self.based_on
                     self.based_on = based_on  # Guess a correct value.
                     locale = settings.LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
-                    # TODO(erik): This error message ignores non-translations.
                     error = ugettext(
                         'A revision must be based on a revision of the '
                         '%(locale)s document. Revision ID %(id)s does '
