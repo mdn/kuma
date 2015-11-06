@@ -4678,7 +4678,7 @@ msgstr "새 문서"
 #: kuma/wiki/templates/wiki/create.html:32
 #: kuma/wiki/templates/wiki/edit.html:96
 msgid "Draft"
-msgstr "초안" 
+msgstr "초안"
 
 #: kuma/wiki/templates/wiki/create.html:42
 msgid "URL segment that identifies the page"
