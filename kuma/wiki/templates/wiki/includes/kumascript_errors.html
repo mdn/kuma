@@ -20,39 +20,51 @@
         Anyone with an MDN profile can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
       {% endtrans %}</p>
 
-      <ul>
+      <ul id="kserrors-list">
       {% for error in kumascript_errors %}
         <li>
+          <dl class="compact">
             {% if error.args %}
-                {% set error_type = error.args[0] %}
-                {{ _('Error type:') }} <strong class="type">{{ error_type }}</strong><br>
-
-                {% set error_meta = error.args[2] %}
-                {% if error_meta %}
-                    {% set template_name = error_meta.name %}
-
-                    {% if '$' not in template_name %}
-                        {% set template_slug = 'Template: %s' % template_name %}
-                        {% set edit_url = url('wiki.edit', template_slug) %}
-                        {% set new_url = url('wiki.create') + '?slug=Template:%s' % template_name %}
-                    {% endif %}
-
-                    {{ _('In macro:') }} <code>{{ template_name }}</code>
-
-                    {% if 'status 404' in error.message %}
-                        {% if new_url %}
-                            (<a href="{{ new_url }}">{{ _('Create Template') }}</a>)
-                        {% endif %}
-                    {% elif edit_url  %}
-                        (<a href="{{ edit_url }}">{{ _('Edit Template') }}</a>)
-                    {% endif %}<br>
-
-                    {{ _('Parsing macro:') }} <code>{{ template_name }}({% if error_meta.token %}{{ error_meta.token.args }}{% endif %})</code> {% if document %}(<a href="{{ document.get_edit_url() }}">{{ _('Edit Document') }}</a>){% endif %}
+              {% set error_type = error.args[0] %}
+              <dt>{{ _('Error type:') }}</dt>
+              <dd class="kserror-type">
+                {{ error_type }}
+              </dd>
+              {% set error_meta = error.args[2] %}
+              {% if error_meta %}
+                {% set template_name = error_meta.name %}
+                {% if '$' not in template_name %}
+                  {% set template_slug = 'Template: %s' % template_name %}
+                  {% set edit_url = url('wiki.edit', template_slug) %}
+                  {% set new_url = url('wiki.create') + '?slug=Template:%s' % template_name %}
                 {% endif %}
+                <dt>{{ _('In macro:') }}</dt>
+                <dd>
+                  <code class="kserror-macro">{{ template_name }}</code>
+                  {% if 'status 404' in error.message %}
+                    {% if new_url %}
+                      (<a href="{{ new_url }}">{{ _('Create Template') }}</a>)
+                    {% endif %}
+                  {% elif edit_url  %}
+                    (<a href="{{ edit_url }}">{{ _('Edit Template') }}</a>)
+                  {% endif %}
+                </dd>
+                <dt>{{ _('Parsing macro:') }}</dt>
+                <dd>
+                  <code class="kserror-parse">{{ template_name }}
+                    {% if error_meta.token %}
+                      ({{ error_meta.token.args }})
+                    {% endif %}
+                  </code>
+                  {% if document %}
+                    (<a href="{{ document.get_edit_url() }}">{{ _('Edit Document') }}</a>)
+                  {% endif %}
+                </dd>
+              {% endif %}
             {% endif %}
-
-            {{ _('Full text of error:') }}<br>
-            <pre class="message brush: text">{{ error.message }}</pre>
+            <dt>{{ _('Full text of error:') }}</dt>
+            <dd><pre class="message brush: text">{{ error.message }}</pre></dd>
+          </dl>
         </li>
       {% endfor %}
       </ul>
