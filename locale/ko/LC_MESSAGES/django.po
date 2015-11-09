@@ -2439,18 +2439,16 @@ msgstr ""
 "필요합니다.</p>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:66
-#, fuzzy
 msgid "Log In to Profile"
-msgstr "계정 로그인"
+msgstr ""
 
 #: kuma/demos/templates/demos/terms.html:10
 msgid "Terms for Contributors"
 msgstr "공헌자 규약"
 
 #: kuma/demos/templates/demos/terms.html:20
-#, fuzzy
 msgid "Demo Studio: Terms for Contributors"
-msgstr "공헌자 규약"
+msgstr ""
 
 #: kuma/demos/templates/demos/terms.html:107
 msgid "Rights Representation Details"
@@ -2548,9 +2546,8 @@ msgid "Go to the first page"
 msgstr "첫페이지"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:58
-#, fuzzy
 msgid "First"
-msgstr "1등"
+msgstr ""
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:61
 msgid "Go to the previous page"
@@ -2607,9 +2604,8 @@ msgstr "문서 검색"
 
 # 100%
 #: kuma/landing/templates/landing/homepage.html:57
-#, fuzzy
 msgid "Show topics"
-msgstr "비교한 문서 보여주기"
+msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:78
 msgid "Web Technologies"
@@ -3125,11 +3121,10 @@ msgid "User"
 msgstr "사용자"
 
 #: kuma/users/apps.py:69
-#, fuzzy
 msgid ""
 "You have completed the first step of <a href=\"%s\">getting started with "
 "MDN</a>"
-msgstr "계정 만들기를 통해 <a href=\"%(started_link)s\">MDN 시작</a>해 보세요."
+msgstr ""
 
 #: kuma/users/backends.py:33
 msgid "algorithm"
@@ -3144,10 +3139,9 @@ msgid "hash"
 msgstr ""
 
 #: kuma/users/constants.py:4
-#, fuzzy
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
-msgstr "사용자이름은 문자와 숫자, @/./+/-/_ 만 입력 가능합니다."
+msgstr ""
 
 #: kuma/users/forms.py:22
 msgid "You must agree to the privacy policy."
@@ -3245,9 +3239,8 @@ msgid "This field cannot be blank."
 msgstr ""
 
 #: kuma/users/forms.py:280
-#, fuzzy
 msgid "Username already in use."
-msgstr "사용자이름을 입력해주세요."
+msgstr ""
 
 #: kuma/users/helpers.py:37
 msgid "Banned on {ban_date} by {ban_admin}."
@@ -3280,9 +3273,8 @@ msgid "Language"
 msgstr "언어"
 
 #: kuma/users/models.py:56
-#, fuzzy
 msgid "Homepage"
-msgstr "홈페이지"
+msgstr ""
 
 #: kuma/users/models.py:60
 msgid ""
@@ -3324,9 +3316,8 @@ msgid "Enter a valid website URL."
 msgstr ""
 
 #: kuma/users/models.py:107
-#, fuzzy
 msgid "Enter a valid Twitter URL."
-msgstr "Twitter URL 를 입력해주세요."
+msgstr ""
 
 #: kuma/users/models.py:112
 msgid "Enter a valid GitHub URL."
@@ -3345,9 +3336,8 @@ msgid "Enter a valid Mozillians URL."
 msgstr ""
 
 #: kuma/users/models.py:132
-#, fuzzy
 msgid "Enter a valid Facebook URL."
-msgstr "Facebook URL 을 입력해주세요."
+msgstr ""
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
