@@ -793,6 +793,19 @@ class ContentSectionToolTests(UserTestCase):
                       .serialize())
         eq_(normalize_html(expected_src), normalize_html(result_src))
 
+    def test_ahref_protocol_filter_invalid_protocol(self):
+        doc_src = """
+            <p><a id="xss" href="data:text/html;base64,PHNjcmlwdD5hbGVydCgiZG9jdW1lbnQuY29va2llOiIgKyBkb2N1bWVudC5jb29raWUpOzwvc2NyaXB0Pg==">click for xss</a></p>
+            <p><a id="ok" href="/docs/ok/test">OK link</a></p>
+        """
+        result_src = (kuma.wiki.content.parse(doc_src)
+                      .filterAHrefProtocols('^(data\:?)')
+                      .serialize())
+        page = pq(result_src)
+
+        eq_(page.find('#xss').attr('href'), '')
+        eq_(page.find('#ok').attr('href'), '/docs/ok/test')
+
     def test_link_annotation(self):
         d, r = doc_rev("This document exists")
         d.save()

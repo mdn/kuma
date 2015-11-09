@@ -1292,6 +1292,10 @@ CONSTANCE_CONFIG = dict(
         'image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop',
         'Allowed file types for wiki file attachments',
     ),
+    KUMA_WIKI_HREF_BLOCKED_PROTOCOLS=(
+        '(?i)^(data\:?)',
+        'Regex for protocols that are blocked for A HREFs'
+    ),
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
         '^https?\:\/\/(developer-local.allizom.org|developer.allizom.org|mozillademos.org|testserver|localhost\:8000|(www.)?youtube.com\/embed\/(\.*))',
         'Regex comprised of domain names that are allowed for IFRAME SRCs'
