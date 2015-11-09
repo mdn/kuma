@@ -3,25 +3,20 @@ import json
 import sys
 import traceback
 from datetime import datetime, timedelta
-
-try:
-    from functools import wraps
-except ImportError:
-    from django.utils.functional import wraps
+from functools import wraps
 
 import newrelic.agent
-from pyquery import PyQuery
-from tower import ugettext_lazy as _lazy, ugettext as _
-
+import waffle
+from constance import config
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import signals
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
-
-import waffle
-from constance import config
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
+from pyquery import PyQuery
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
@@ -116,8 +111,8 @@ def valid_slug_parent(slug, locale):
             parent = Document.objects.get(locale=locale, slug=parent_slug)
         except Document.DoesNotExist:
             raise Exception(
-                _("Parent %s/%s does not exist." % (locale,
-                                                    parent_slug)))
+                ugettext('Parent %s does not exist.' % (
+                    '%s/%s' % (locale, parent_slug))))
 
     return parent
 
@@ -125,8 +120,8 @@ def valid_slug_parent(slug, locale):
 class DocumentTag(TagBase):
     """A tag indexing a document"""
     class Meta:
-        verbose_name = _("Document Tag")
-        verbose_name_plural = _("Document Tags")
+        verbose_name = _('Document Tag')
+        verbose_name_plural = _('Document Tags')
 
 
 def tags_for(cls, model, instance=None, **extra_filters):
@@ -179,8 +174,8 @@ class DocumentAttachment(models.Model):
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
     CATEGORIES = (
-        (00, _lazy(u'Uncategorized')),
-        (10, _lazy(u'Reference')),
+        (00, _(u'Uncategorized')),
+        (10, _(u'Reference')),
     )
     TOC_FILTERS = {
         1: SectionTOCFilter,
@@ -768,7 +763,7 @@ class Document(NotificationsMixin, models.Model):
             # All we really need to do here is make sure category != '' (which
             # is what it is when it's missing from the DocumentForm). The extra
             # validation is just a nicety.
-            raise ValidationError(_('Please choose a category.'))
+            raise ValidationError(ugettext('Please choose a category.'))
         else:  # An article cannot have both a parent and children.
             # Make my children the same as me:
             if self.id:
@@ -1511,15 +1506,15 @@ class DocumentZone(models.Model):
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
     class Meta:
-        verbose_name = _("Review Tag")
-        verbose_name_plural = _("Review Tags")
+        verbose_name = _('Review Tag')
+        verbose_name_plural = _('Review Tags')
 
 
 class LocalizationTag(TagBase):
     """A tag indicating localization status, mainly for revisions"""
     class Meta:
-        verbose_name = _("Localization Tag")
-        verbose_name_plural = _("Localization Tags")
+        verbose_name = _('Localization Tag')
+        verbose_name_plural = _('Localization Tags')
 
 
 class ReviewTaggedRevision(ItemBase):
@@ -1552,11 +1547,11 @@ class Revision(models.Model):
     TOC_DEPTH_H4 = 4
 
     TOC_DEPTH_CHOICES = (
-        (TOC_DEPTH_NONE, _lazy(u'No table of contents')),
-        (TOC_DEPTH_ALL, _lazy(u'All levels')),
-        (TOC_DEPTH_H2, _lazy(u'H2 and higher')),
-        (TOC_DEPTH_H3, _lazy(u'H3 and higher')),
-        (TOC_DEPTH_H4, _lazy('H4 and higher')),
+        (TOC_DEPTH_NONE, _(u'No table of contents')),
+        (TOC_DEPTH_ALL, _(u'All levels')),
+        (TOC_DEPTH_H2, _(u'H2 and higher')),
+        (TOC_DEPTH_H3, _(u'H3 and higher')),
+        (TOC_DEPTH_H4, _('H4 and higher')),
     )
 
     document = models.ForeignKey(Document, related_name='revisions')
@@ -1660,10 +1655,10 @@ class Revision(models.Model):
                     old = self.based_on
                     self.based_on = based_on  # Guess a correct value.
                     locale = settings.LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
-                    # TODO(erik): This error message ignores non-translations.
-                    error = _('A revision must be based on a revision of the '
-                              '%(locale)s document. Revision ID %(id)s does '
-                              'not fit those criteria.')
+                    error = ugettext(
+                        'A revision must be based on a revision of the '
+                        '%(locale)s document. Revision ID %(id)s does '
+                        'not fit those criteria.')
                     raise ValidationError(error %
                                           {'locale': locale, 'id': old.id})
 
@@ -1818,11 +1813,11 @@ class DocumentSpamAttempt(SpamAttempt):
     to see where it happens.
     """
     title = models.CharField(
-        verbose_name=_('Title'),
+        verbose_name=ugettext('Title'),
         max_length=255,
     )
     slug = models.CharField(
-        verbose_name=_('Slug'),
+        verbose_name=ugettext('Slug'),
         max_length=255,
     )
     document = models.ForeignKey(
@@ -1830,7 +1825,7 @@ class DocumentSpamAttempt(SpamAttempt):
         related_name='spam_attempts',
         null=True,
         blank=True,
-        verbose_name=_('Document (optional)')
+        verbose_name=ugettext('Document (optional)')
     )
 
     def __unicode__(self):

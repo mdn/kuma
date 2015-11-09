@@ -1,6 +1,12 @@
 import collections
 import operator
 
+from allauth.account.adapter import get_adapter
+from allauth.account.models import EmailAddress
+from allauth.socialaccount import helpers
+from allauth.socialaccount.models import SocialAccount
+from allauth.socialaccount.views import SignupView as BaseSignupView
+from constance import config
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
@@ -8,25 +14,18 @@ from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Q
-from django.http import Http404, HttpResponseForbidden, HttpResponseBadRequest
-from django.shortcuts import get_object_or_404, render, redirect
-
-from allauth.account.adapter import get_adapter
-from allauth.account.models import EmailAddress
-from allauth.socialaccount import helpers
-from allauth.socialaccount.models import SocialAccount
-from allauth.socialaccount.views import SignupView as BaseSignupView
-from constance import config
+from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import ugettext_lazy as _
 from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
-from tower import ugettext_lazy as _
 
 from kuma.core.decorators import login_required
 from kuma.demos.models import Submission
 from kuma.demos.views import DEMOS_PAGE_SIZE
 
-from .forms import UserBanForm, UserEditForm, NewsletterForm
-from .models import UserBan, User
+from .forms import NewsletterForm, UserBanForm, UserEditForm
+from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm

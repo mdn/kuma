@@ -1,25 +1,23 @@
 # -*- coding: utf-8 -*-
 import newrelic.agent
-from tower import ugettext_lazy as _lazy, ugettext as _
-
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.decorators.http import require_GET, require_POST
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
-
+from django.views.decorators.http import require_GET, require_POST
 from smuggler.forms import ImportForm
 
-from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
-
-from kuma.core.decorators import superuser_required, block_user_agents
+from kuma.contentflagging.models import FLAG_NOTIFICATIONS, ContentFlag
+from kuma.core.decorators import block_user_agents, superuser_required
 from kuma.users.models import User
 
-from ..constants import REDIRECT_CONTENT, ALLOWED_TAGS
-from ..decorators import process_document_path, allow_CORS_GET
+from ..constants import ALLOWED_TAGS, REDIRECT_CONTENT
+from ..decorators import allow_CORS_GET, process_document_path
 from ..forms import DocumentContentFlagForm
-from ..models import Document, HelpfulVote, EditorToolbar
+from ..models import Document, EditorToolbar, HelpfulVote
 from ..utils import locale_and_slug_from_path
 
 
@@ -58,9 +56,9 @@ def autosuggest_documents(request):
     if not partial_title:
         # Only handle actual autosuggest requests, not requests for a
         # memory-busting list of all documents.
-        return HttpResponseBadRequest(_lazy('Autosuggest requires a partial '
-                                            'title. For a full document '
-                                            'index, see the main page.'))
+        return HttpResponseBadRequest(_('Autosuggest requires a partial '
+                                        'title. For a full document '
+                                        'index, see the main page.'))
 
     # Retrieve all documents that aren't redirects or templates
     docs = (Document.objects.extra(select={'length': 'Length(slug)'})
@@ -140,10 +138,12 @@ def helpful_vote(request, document_path):
 
         if 'helpful' in request.POST:
             vote.helpful = True
-            message = _('Glad to hear it &mdash; thanks for the feedback!')
+            message = ugettext(
+                'Glad to hear it &mdash; thanks for the feedback!')
         else:
-            message = _('Sorry to hear that. Perhaps one of the solutions '
-                        'below can help.')
+            message = ugettext(
+                'Sorry to hear that. Perhaps one of the solutions '
+                'below can help.')
 
         if request.user.is_authenticated():
             vote.creator = request.user
@@ -152,7 +152,7 @@ def helpful_vote(request, document_path):
 
         vote.save()
     else:
-        message = _('You already voted on this Article.')
+        message = ugettext('You already voted on this Article.')
 
     if request.is_ajax():
         return JsonResponse({'message': message})
@@ -183,11 +183,11 @@ def load_documents(request):
             # Try to import the data, but report any error that occurs.
             try:
                 counter = Document.objects.load_json(request.user, file_data)
-                user_msg = (_('%(obj_count)d object(s) loaded.') %
+                user_msg = (ugettext('%(obj_count)d object(s) loaded.') %
                             {'obj_count': counter, })
                 messages.add_message(request, messages.INFO, user_msg)
             except Exception as e:
-                err_msg = (_('Failed to import data: %(error)s') %
+                err_msg = (ugettext('Failed to import data: %(error)s') %
                            {'error': '%s' % e, })
                 messages.add_message(request, messages.ERROR, err_msg)
 

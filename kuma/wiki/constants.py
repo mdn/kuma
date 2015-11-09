@@ -1,7 +1,8 @@
 import re
 
 import bleach
-from tower import ugettext_lazy as _lazy
+from django.utils.translation import ugettext_lazy as _
+
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
@@ -202,13 +203,13 @@ KUMASCRIPT_TIMEOUT_ERROR = [
 # TODO: Put this under the control of Constance / Waffle?
 # Flags used to signify revisions in need of review
 REVIEW_FLAG_TAGS = (
-    ('technical', _lazy('Technical - code samples, APIs, or technologies')),
-    ('editorial', _lazy('Editorial - prose, grammar, or content')),
+    ('technical', _('Technical - code samples, APIs, or technologies')),
+    ('editorial', _('Editorial - prose, grammar, or content')),
 )
 REVIEW_FLAG_TAGS_DEFAULT = ['technical', 'editorial']
 
 LOCALIZATION_FLAG_TAGS = (
-    ('inprogress', _lazy('Localization in progress - not completely translated yet.')),
+    ('inprogress', _('Localization in progress - not completely translated yet.')),
 )
 
 # TODO: This is info derived from urls.py, but unsure how to DRY it

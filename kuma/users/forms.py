@@ -1,23 +1,24 @@
 import operator
 import time
 
-from django import forms
-from django.conf import settings
-from django.http import HttpResponseServerError
-
 import basket
 from basket.base import BasketException
 from basket.errors import BASKET_UNKNOWN_EMAIL
 from constance import config
+from django import forms
+from django.conf import settings
+from django.http import HttpResponseServerError
+from django.utils.translation import ugettext_lazy as _
 from product_details import product_details
 from sundial.forms import TimezoneChoiceField
 from sundial.zones import COMMON_GROUPED_CHOICES
 from taggit.utils import parse_tags
-from tower import ugettext_lazy as _
 
-from .constants import (USERNAME_CHARACTERS, USERNAME_REGEX,
-                        USERNAME_LEGACY_REGEX)
+
+from .constants import (USERNAME_CHARACTERS, USERNAME_LEGACY_REGEX,
+                        USERNAME_REGEX)
 from .models import User
+
 
 PRIVACY_REQUIRED = _(u'You must agree to the privacy policy.')
 

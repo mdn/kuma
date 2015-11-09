@@ -1,43 +1,14 @@
-import contextlib
 import logging
 from functools import wraps
 
+import jingo
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.test import RequestFactory
 from django.utils import translation
 
-import jingo
-import tower
-
 
 log = logging.getLogger('kuma.core.email')
-
-
-@contextlib.contextmanager
-def uselocale(locale):
-    """Context manager for setting locale and returning
-    to previous locale.
-
-    This is useful for when doing translations for things run by
-    celery workers or out of the HTTP request handling path.
-
-    >>> with uselocale('xx'):
-    ...     subj = _('Subject of my email')
-    ...     msg = render_email(email_template, email_kwargs)
-    ...     mail.send_mail(subj, msg, ...)
-    ...
-
-    In kuma, you can get the right locale from User.locale and
-    also request.LANGUAGE_CODE.
-
-    If kuma is handling an HTTP request already, you don't have to
-    run uselocale---the locale will already be set correctly.
-    """
-    currlocale = translation.get_language()
-    tower.activate(locale)
-    yield
-    tower.activate(currlocale)
 
 
 def safe_translation(f):
@@ -50,7 +21,7 @@ def safe_translation(f):
     @wraps(f)
     def wrapper(locale, *args, **kwargs):
         try:
-            with uselocale(locale):
+            with translation.override(locale):
                 return f(locale, *args, **kwargs)
         except (TypeError, KeyError, ValueError, IndexError) as e:
             # Types of errors, and examples.
@@ -65,7 +36,7 @@ def safe_translation(f):
             #    '{0} {1}'.format(42)
             log.error('Bad translation in locale "%s": %s', locale, e)
 
-            with uselocale(settings.WIKI_DEFAULT_LANGUAGE):
+            with translation.override(settings.WIKI_DEFAULT_LANGUAGE):
                 return f(settings.WIKI_DEFAULT_LANGUAGE, *args, **kwargs)
 
     return wrapper

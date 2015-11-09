@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict
 import re
 import urllib
+from collections import defaultdict
 from urllib import urlencode
 from urlparse import urlparse
 
 import html5lib
-from html5lib.filters._base import Filter as html5lib_Filter
 import newrelic.agent
+from django.utils.translation import ugettext
+from html5lib.filters._base import Filter as html5lib_Filter
 from lxml import etree
 from pyquery import PyQuery as pq
 
-from tower import ugettext as _
-
 from kuma.core.urlresolvers import reverse
+
 from .utils import locale_and_slug_from_path
+
 
 # A few regex patterns for various parsing efforts in this file
 MACRO_RE = re.compile(r'\{\{\s*([^\(\} ]+)', re.MULTILINE)
@@ -690,7 +691,7 @@ class SectionEditLinkFilter(html5lib_Filter):
                         ts = ({'type': 'StartTag',
                                'name': 'a',
                                'data': {
-                                   (None, u'title'): _('Edit section'),
+                                   (None, u'title'): ugettext('Edit section'),
                                    (None, u'class'): 'edit-section',
                                    (None, u'data-section-id'): value,
                                    (None, u'data-section-src-url'): u'%s?%s' % (
@@ -709,7 +710,7 @@ class SectionEditLinkFilter(html5lib_Filter):
                                    )
                                }},
                               {'type': 'Characters',
-                               'data': _(u'Edit')},
+                               'data': ugettext(u'Edit')},
                               {'type': 'EndTag', 'name': 'a'})
                         for t in ts:
                             yield t

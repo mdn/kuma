@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
-from tower import ugettext_lazy as _
 from kuma.core.form_fields import StrippedCharField
 
 

@@ -1,10 +1,6 @@
 import logging
 
 import waffle
-from taggit.utils import parse_tags
-from tower import ugettext as _
-from tower import ugettext_lazy as _lazy
-
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,6 +8,9 @@ from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
+from taggit.utils import parse_tags
 
 import kuma.wiki.content
 from kuma.contentflagging.forms import ContentFlagForm
@@ -23,47 +22,47 @@ from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
                         SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG)
 from .events import EditDocumentEvent
-from .models import (Document, DocumentSpamAttempt, DocumentTag,
-                     Revision, RevisionIP, valid_slug_parent)
+from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
+                     RevisionIP, valid_slug_parent)
 from .tasks import send_first_edit_email
 
 
-TITLE_REQUIRED = _lazy(u'Please provide a title.')
-TITLE_SHORT = _lazy(u'The title is too short (%(show_value)s characters). '
-                    u'It must be at least %(limit_value)s characters.')
-TITLE_LONG = _lazy(u'Please keep the length of the title to %(limit_value)s '
-                   u'characters or less. It is currently %(show_value)s '
-                   u'characters.')
-TITLE_PLACEHOLDER = _lazy(u'Name Your Article')
-SLUG_REQUIRED = _lazy(u'Please provide a slug.')
-SLUG_INVALID = _lazy(u'The slug provided is not valid.')
-SLUG_SHORT = _lazy(u'The slug is too short (%(show_value)s characters). '
-                   u'It must be at least %(limit_value)s characters.')
-SLUG_LONG = _lazy(u'Please keep the length of the slug to %(limit_value)s '
-                  u'characters or less. It is currently %(show_value)s '
-                  u'characters.')
-SUMMARY_REQUIRED = _lazy(u'Please provide a summary.')
-SUMMARY_SHORT = _lazy(u'The summary is too short (%(show_value)s characters). '
-                      u'It must be at least %(limit_value)s characters.')
-SUMMARY_LONG = _lazy(u'Please keep the length of the summary to '
-                     u'%(limit_value)s characters or less. It is currently '
-                     u'%(show_value)s characters.')
-CONTENT_REQUIRED = _lazy(u'Please provide content.')
-CONTENT_SHORT = _lazy(u'The content is too short (%(show_value)s characters). '
-                      u'It must be at least %(limit_value)s characters.')
-CONTENT_LONG = _lazy(u'Please keep the length of the content to '
-                     u'%(limit_value)s characters or less. It is currently '
-                     u'%(show_value)s characters.')
-COMMENT_LONG = _lazy(u'Please keep the length of the comment to '
-                     u'%(limit_value)s characters or less. It is currently '
-                     u'%(show_value)s characters.')
-SLUG_COLLIDES = _lazy(u'Another document with this slug already exists.')
-OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
+TITLE_REQUIRED = _(u'Please provide a title.')
+TITLE_SHORT = _(u'The title is too short (%(show_value)s characters). '
+                u'It must be at least %(limit_value)s characters.')
+TITLE_LONG = _(u'Please keep the length of the title to %(limit_value)s '
+               u'characters or less. It is currently %(show_value)s '
+               u'characters.')
+TITLE_PLACEHOLDER = _(u'Name Your Article')
+SLUG_REQUIRED = _(u'Please provide a slug.')
+SLUG_INVALID = _(u'The slug provided is not valid.')
+SLUG_SHORT = _(u'The slug is too short (%(show_value)s characters). '
+               u'It must be at least %(limit_value)s characters.')
+SLUG_LONG = _(u'Please keep the length of the slug to %(limit_value)s '
+              u'characters or less. It is currently %(show_value)s '
+              u'characters.')
+SUMMARY_REQUIRED = _(u'Please provide a summary.')
+SUMMARY_SHORT = _(u'The summary is too short (%(show_value)s characters). '
+                  u'It must be at least %(limit_value)s characters.')
+SUMMARY_LONG = _(u'Please keep the length of the summary to '
+                 u'%(limit_value)s characters or less. It is currently '
+                 u'%(show_value)s characters.')
+CONTENT_REQUIRED = _(u'Please provide content.')
+CONTENT_SHORT = _(u'The content is too short (%(show_value)s characters). '
+                  u'It must be at least %(limit_value)s characters.')
+CONTENT_LONG = _(u'Please keep the length of the content to '
+                 u'%(limit_value)s characters or less. It is currently '
+                 u'%(show_value)s characters.')
+COMMENT_LONG = _(u'Please keep the length of the comment to '
+                 u'%(limit_value)s characters or less. It is currently '
+                 u'%(show_value)s characters.')
+SLUG_COLLIDES = _(u'Another document with this slug already exists.')
+OTHER_COLLIDES = _(u'Another document with this metadata already exists.')
 
-MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
-                         'editing it.')
-MOVE_REQUIRED = _lazy(u"Changing this document's slug requires "
-                      u"moving it and its children.")
+MIDAIR_COLLISION = _(u'This document was modified while you were '
+                     u'editing it.')
+MOVE_REQUIRED = _(u"Changing this document's slug requires "
+                  u"moving it and its children.")
 
 
 log = logging.getLogger('kuma.wiki.forms')
@@ -78,8 +77,8 @@ class DocumentForm(forms.ModelForm):
                               max_length=255,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
-                              label=_lazy(u'Title:'),
-                              help_text=_lazy(u'Title of article'),
+                              label=_(u'Title:'),
+                              help_text=_(u'Title of article'),
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
@@ -87,8 +86,8 @@ class DocumentForm(forms.ModelForm):
     slug = StrippedCharField(min_length=1,
                              max_length=255,
                              widget=forms.TextInput(),
-                             label=_lazy(u'Slug:'),
-                             help_text=_lazy(u'Article URL'),
+                             label=_(u'Slug:'),
+                             help_text=_(u'Article URL'),
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
@@ -98,13 +97,13 @@ class DocumentForm(forms.ModelForm):
                                  # Required for non-translations, which is
                                  # enforced in Document.clean().
                                  required=False,
-                                 label=_lazy(u'Category:'),
-                                 help_text=_lazy(u'Type of article'),
+                                 label=_(u'Category:'),
+                                 help_text=_(u'Type of article'),
                                  widget=forms.HiddenInput())
 
     parent_topic = forms.ModelChoiceField(queryset=Document.objects.all(),
                                           required=False,
-                                          label=_lazy(u'Parent:'))
+                                          label=_(u'Parent:'))
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
@@ -167,8 +166,8 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
         max_length=255,
         required=False,
         widget=forms.TextInput(attrs={'placeholder': TITLE_PLACEHOLDER}),
-        label=_lazy(u'Title:'),
-        help_text=_lazy(u'Title of article'),
+        label=_(u'Title:'),
+        help_text=_(u'Title of article'),
         error_messages={
             'required': TITLE_REQUIRED,
             'min_length': TITLE_SHORT,
@@ -181,8 +180,8 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
         max_length=255,
         required=False,
         widget=forms.TextInput(),
-        label=_lazy(u'Slug:'),
-        help_text=_lazy(u'Article URL'),
+        label=_(u'Slug:'),
+        help_text=_(u'Article URL'),
         error_messages={
             'required': SLUG_REQUIRED,
             'min_length': SLUG_SHORT,
@@ -192,13 +191,13 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
 
     tags = StrippedCharField(
         required=False,
-        label=_lazy(u'Tags:'),
+        label=_(u'Tags:'),
     )
 
     keywords = StrippedCharField(
         required=False,
-        label=_lazy(u'Keywords:'),
-        help_text=_lazy(u'Affects search results'),
+        label=_(u'Keywords:'),
+        help_text=_(u'Affects search results'),
     )
 
     summary = StrippedCharField(
@@ -206,8 +205,8 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
         min_length=5,
         max_length=1000,
         widget=forms.Textarea(),
-        label=_lazy(u'Search result summary:'),
-        help_text=_lazy(u'Only displayed on search results page'),
+        label=_(u'Search result summary:'),
+        help_text=_(u'Only displayed on search results page'),
         error_messages={
             'required': SUMMARY_REQUIRED,
             'min_length': SUMMARY_SHORT,
@@ -218,7 +217,7 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
     content = StrippedCharField(
         min_length=5,
         max_length=300000,
-        label=_lazy(u'Content:'),
+        label=_(u'Content:'),
         widget=forms.Textarea(),
         error_messages={
             'required': CONTENT_REQUIRED,
@@ -227,17 +226,17 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
         }
     )
 
-    comment = StrippedCharField(required=False, label=_lazy(u'Comment:'))
+    comment = StrippedCharField(required=False, label=_(u'Comment:'))
 
     review_tags = forms.MultipleChoiceField(
-        label=_("Tag this revision for review?"),
+        label=ugettext("Tag this revision for review?"),
         widget=CheckboxSelectMultiple,
         required=False,
         choices=REVIEW_FLAG_TAGS,
     )
 
     localization_tags = forms.MultipleChoiceField(
-        label=_("Tag this revision for localization?"),
+        label=ugettext("Tag this revision for localization?"),
         widget=CheckboxSelectMultiple,
         required=False,
         choices=LOCALIZATION_FLAG_TAGS,
@@ -551,15 +550,15 @@ class TreeMoveForm(forms.Form):
                               required=False,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
-                              label=_lazy(u'Title:'),
-                              help_text=_lazy(u'Title of article'),
+                              label=_(u'Title:'),
+                              help_text=_(u'Title of article'),
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=1, max_length=255,
                              widget=forms.TextInput(),
-                             label=_lazy(u'New slug:'),
-                             help_text=_lazy(u'New article URL'),
+                             label=_(u'New slug:'),
+                             help_text=_(u'New article URL'),
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})

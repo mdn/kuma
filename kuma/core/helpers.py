@@ -1,6 +1,6 @@
-import json
 import datetime
 import HTMLParser
+import json
 import urllib
 
 import bleach
@@ -9,13 +9,6 @@ import pytz
 from babel import localedata
 from babel.dates import format_date, format_datetime, format_time
 from babel.numbers import format_decimal
-from jingo import env, register
-from pytz import timezone
-from soapbox.models import Message
-from tower import ugettext_lazy as _lazy
-from tower import ungettext
-from urlobject import URLObject
-
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -23,9 +16,15 @@ from django.template import defaultfilters
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
 from django.utils.timezone import get_default_timezone
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ungettext
+from jingo import env, register
+from pytz import timezone
+from soapbox.models import Message
+from urlobject import URLObject
 
-from .jobs import StaticI18nJob
 from .exceptions import DateTimeFormatError
+from .jobs import StaticI18nJob
 from .urlresolvers import reverse, split_path
 
 
@@ -141,7 +140,7 @@ def timesince(d, now=None):
 
 @register.filter
 def yesno(boolean_value):
-    return jinja2.Markup(_lazy(u'Yes') if boolean_value else _lazy(u'No'))
+    return jinja2.Markup(_(u'Yes') if boolean_value else _(u'No'))
 
 
 @register.filter
@@ -295,7 +294,7 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     if format == 'shortdatetime':
         # Check if the date is today
         if value.toordinal() == datetime.date.today().toordinal():
-            formatted = _lazy(u'Today at %s') % format_time(
+            formatted = _(u'Today at %s') % format_time(
                 tzvalue, format='short', locale=locale)
         else:
             formatted = format_datetime(tzvalue, format='short', locale=locale)

@@ -30,7 +30,7 @@ class SerializerTests(ElasticTestCase):
             'group': {'name': 'Group', 'slug': 'group', 'order': 1},
             'shortcut': None})
 
-    @mock.patch('kuma.search.serializers._')
+    @mock.patch('kuma.search.serializers.ugettext')
     def test_filter_serializer_with_translations(self, _mock):
         _mock.return_value = u'Juegos'
         translation.activate('es')

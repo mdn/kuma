@@ -1,14 +1,12 @@
 import magic
-from tower import ugettext_lazy as _lazy
-
-from django import forms
-
 from constance import config
+from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from .models import AttachmentRevision
 
 
-MIME_TYPE_INVALID = _lazy(u'Files of this type are not permitted.')
+MIME_TYPE_INVALID = _(u'Files of this type are not permitted.')
 
 
 class AttachmentRevisionForm(forms.ModelForm):

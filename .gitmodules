@@ -85,9 +85,6 @@
 [submodule "vendor/src/requests-oauthlib"]
 	path = vendor/src/requests-oauthlib
 	url = git://github.com/requests/requests-oauthlib.git
-[submodule "vendor/src/tower"]
-	path = vendor/src/tower
-	url = git://github.com/clouserw/tower.git
 [submodule "vendor/src/urllib3"]
 	path = vendor/src/urllib3
 	url = git://github.com/shazow/urllib3.git
@@ -174,3 +171,6 @@
 [submodule "vendor/src/django-celery-transactions"]
 	path = vendor/src/django-celery-transactions
 	url = git://github.com/fellowshipofone/django-celery-transactions.git
+[submodule "vendor/src/puente"]
+	path = vendor/src/puente
+	url = git://github.com/mozilla/puente.git

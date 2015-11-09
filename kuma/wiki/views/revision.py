@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 import newrelic.agent
-from tower import ugettext_lazy as _lazy
-
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.decorators.http import require_GET, require_POST
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
-
+from django.views.decorators.http import require_GET, require_POST
 from ratelimit.decorators import ratelimit
-from kuma.core.decorators import login_required, block_user_agents
+
+from kuma.core.decorators import block_user_agents, login_required
 from kuma.core.utils import smart_int
 
 from .. import kumascript
-from ..decorators import process_document_path, prevent_indexing
+from ..decorators import prevent_indexing, process_document_path
 from ..helpers import format_comment
 from ..models import Document, Revision
 
@@ -138,7 +137,7 @@ def quick_review(request, document_slug, document_locale):
         # Ideal is to kick them to the diff view, but that expects
         # fully-filled-out editing forms, and we don't have those
         # here.
-        raise PermissionDenied(_lazy("Document has been edited; please re-review."))
+        raise PermissionDenied(_("Document has been edited; please re-review."))
 
     needs_technical = rev.needs_technical_review
     needs_editorial = rev.needs_editorial_review
