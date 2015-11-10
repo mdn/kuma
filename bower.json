@@ -1,7 +1,7 @@
 {
     "name": "Kuma",
     "dependencies": {
-        "fontfaceobserver": "https://github.com/bramstein/fontfaceobserver.git#v1.4.7",
+        "fontfaceobserver": "https://github.com/bramstein/fontfaceobserver.git#v1.4.17",
         "html5shiv": "3.6.2",
         "jquery": "2.1.0",
         "selectivizr": "https://github.com/keithclark/selectivizr.git#1.0.2"
