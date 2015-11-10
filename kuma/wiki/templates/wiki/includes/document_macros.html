@@ -117,8 +117,8 @@
 {% macro watch_tree_item(document, user) -%}
 {% set title = document.title %}
                   <li class="page-watch">
-                    {% set subscribe_tree_text = _('Subscribe to {title} and all its sub-articles'|f(title=title)) %}
-                    {% set unsubscribe_tree_text = _('Unsubscribe from {title} and all its sub-articles'|f(title=title)) %}
+                    {% set subscribe_tree_text = _('Subscribe to {title} and all its sub-articles'|f(title=title)|escape) %}
+                    {% set unsubscribe_tree_text = _('Unsubscribe from {title} and all its sub-articles'|f(title=title)|escape) %}
                     <form action="{{ url('wiki.subscribe_to_tree', document.slug, locale=document.locale) }}" method="post">
                         {{ csrf() }}
                         <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_tree_text }}" data-unsubscribe-text="{{ unsubscribe_tree_text }}" data-subscribe-message="{{ _('You are now subscribed to this article and all its sub-articles.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from this article and all its sub-articles.') }}">
@@ -137,15 +137,11 @@
                     {% set unsubscribe_text = _('Unsubscribe from {title}')|f(title=title) %}
                     <form action="{{ url('wiki.subscribe', document.slug, locale=document.locale) }}" method="post">
                         {{ csrf() }}
-                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_text }}" data-unsubscribe-text="{{ unsubscribe_text }}" data-subscribe-message="{{ _('You are now subscribed to {title}.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from {title}.')|f(title=title) }}">
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_text }}" data-unsubscribe-text="{{ unsubscribe_text }}" data-subscribe-message="{{ _('You are now subscribed to {title}.')|f(title=title) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from {title}.')|f(title=title) }}">
                         {% if document.is_watched_by(user) %}{{ unsubscribe_text }}{% else %}{{ subscribe_text }}{% endif %}
                         </a>
                     </form>
                   </li>
-
-                  {% for watched_parent_tree in document.parent_trees_watched_by(user) %}
-                    {{ watch_tree_item(watched_parent_tree, user) }}
-                  {% endfor %}
 
                   {{ watch_tree_item(document, user) }}
 
@@ -162,5 +158,13 @@
                       </form>
                     </li>
                   {% endif %}
+
+                  </ul>
+
+                <ul>
+                  {% for watched_parent_tree in document.parent_trees_watched_by(user) %}
+                    {{ watch_tree_item(watched_parent_tree, user) }}
+                  {% endfor %}
+
                 </ul>
 {%- endmacro %}
