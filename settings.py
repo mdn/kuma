@@ -521,7 +521,7 @@ def JINJA_CONFIG():
         # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
         # and in the errors you get when you try it the other way.
         bc = jinja2.MemcachedBytecodeCache(cache._cache,
-                                           "%s:j3:" % settings.CACHE_PREFIX)
+                                           "%s:j4:" % settings.CACHE_PREFIX)
         config['cache_size'] = -1  # Never clear the cache
         config['bytecode_cache'] = bc
     return config
