@@ -823,13 +823,12 @@
       });
 
       // Keep track of editor dirtiness
-      var editorDirty = false;
       function checkEditorDirtiness() {
-        var wasDirty = editorDirty;
-        editorDirty = editor.checkDirty();
-        if (editorDirty && !wasDirty) {
+        var editorDirty = editor.checkDirty();
+
+        if (editorDirty) {
           $form.find('.editor-container').addClass('dirty').trigger('mdn:dirty');
-        } else if (!editorDirty && wasDirty) {
+        } else {
           $form.find('.editor-container').removeClass('dirty').trigger('mdn:clean');
         }
       }
