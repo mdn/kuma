@@ -215,7 +215,7 @@
             {% set license_class = submission.license_name %}
             <p class="license {{ license_class }}">
                 {% trans link=license_link(submission.license_name)|e, title=license_title(submission.license_name)|e %}
-                    This demo is released under the <a href="{{link}}">{{title}}</a> license.
+                    This demo is released under the <a href="{{link}}">{{title}}</a> license.
                 {% endtrans %}
             </p>
           </div>

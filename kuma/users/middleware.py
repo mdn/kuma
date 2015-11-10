@@ -1,5 +1,6 @@
 from django.contrib.auth import logout
 from django.shortcuts import render
+from django.utils.cache import add_never_cache_headers
 
 from .models import UserBan
 
@@ -17,8 +18,10 @@ class BanMiddleware(object):
             if not bans:
                 return None
             logout(request)
-            return render(request,
-                          'users/user_banned.html',
-                          {'bans': bans,
-                           'path': request.path})
+            banned_response = render(request, 'users/user_banned.html', {
+                'bans': bans,
+                'path': request.path
+            })
+            add_never_cache_headers(banned_response)
+            return banned_response
         return None

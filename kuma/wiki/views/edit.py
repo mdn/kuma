@@ -3,29 +3,26 @@ import textwrap
 from urllib import urlencode
 
 import newrelic.agent
-from tower import ugettext as _
-
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_http_methods
-
 from jingo.helpers import urlparams
 from ratelimit.decorators import ratelimit
 
+import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.core.decorators import never_cache, login_required, block_user_agents
+from kuma.core.decorators import block_user_agents, login_required, never_cache
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import limit_banned_ip_to_0
 
-import kuma.wiki.content
-from ..decorators import (check_readonly, process_document_path,
-                          prevent_indexing)
+from ..decorators import (check_readonly, prevent_indexing,
+                          process_document_path)
 from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
-
 from .translate import translate
 from .utils import document_form_initial, split_slug
 
@@ -115,7 +112,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
 
     section_id = request.GET.get('section', None)
     if section_id and not request.is_ajax():
-        return HttpResponse(_("Sections may only be edited inline."))
+        return HttpResponse(ugettext("Sections may only be edited inline."))
     disclose_description = bool(request.GET.get('opendescription'))
 
     doc_form = rev_form = None

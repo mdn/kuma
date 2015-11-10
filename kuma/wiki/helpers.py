@@ -6,16 +6,17 @@ import urllib
 import urlparse
 
 import jinja2
-from tower import ugettext as _
-
+from constance import config
+from cssselect.parser import SelectorSyntaxError
 from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.html import conditional_escape
-
-from constance import config
+from django.utils.translation import ugettext
 from jingo import register
+from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
+
 from .constants import DIFF_WRAP_COLUMN
 from .jobs import DocumentZoneStackJob
 from .utils import tidy_content
@@ -96,13 +97,13 @@ def diff_table(content_from, content_to, prev_id, curr_id, tidy=False):
     try:
         diff = html_diff.make_table(content_from.splitlines(),
                                     content_to.splitlines(),
-                                    _('Revision %s') % prev_id,
-                                    _('Revision %s') % curr_id,
+                                    ugettext('Revision %s') % prev_id,
+                                    ugettext('Revision %s') % curr_id,
                                     context=True,
                                     numlines=config.DIFF_CONTEXT_LINES)
     except RuntimeError:
         # some diffs hit a max recursion error
-        message = _(u'There was an error generating the content.')
+        message = ugettext(u'There was an error generating the content.')
         diff = '<div class="warning"><p>%s</p></div>' % message
     return jinja2.Markup(diff)
 
@@ -112,8 +113,8 @@ def tag_diff_table(prev_tags, curr_tags, prev_id, curr_id):
     html_diff = difflib.HtmlDiff(wrapcolumn=DIFF_WRAP_COLUMN)
 
     diff = html_diff.make_table([prev_tags], [curr_tags],
-                                _('Revision %s') % prev_id,
-                                _('Revision %s') % curr_id)
+                                ugettext('Revision %s') % prev_id,
+                                ugettext('Revision %s') % curr_id)
 
     # Simple formatting update: 784877
     diff = diff.replace('",', '"<br />').replace('<td', '<td valign="top"')
@@ -137,6 +138,25 @@ def colorize_diff(diff):
 def wiki_bleach(val):
     from kuma.wiki.models import Document
     return jinja2.Markup(Document.objects.clean_content(val))
+
+
+@register.filter
+def selector_content_find(document, selector):
+    """
+    Provided a selector, returns the relevant content from the document
+    """
+    content = ''
+    try:
+        page = pq(document.rendered_html)
+    except ValueError:
+        # pass errors during construction
+        pass
+    try:
+        content = page.find(selector).text()
+    except SelectorSyntaxError:
+        # pass errors during find/select
+        pass
+    return content
 
 
 def _recursive_escape(value, esc=conditional_escape):

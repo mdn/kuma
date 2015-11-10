@@ -175,7 +175,7 @@ Strings in Python are more complex for two reasons:
 
 Here's how you might localize a string in a view::
 
-    from tower import ugettext
+    from django.utils.translation import ugettext
 
     def my_view(request):
         if request.user.is_superuser:
@@ -198,7 +198,7 @@ L10n comments are normal one-line Python comments::
 
 If you need to use plurals, import the function ``ungettext`` from Tower::
 
-    from tower import ungettext
+    from django.utils.translation import ungettext
 
     n = len(results)
     msg = ungettext('Found {0} result', 'Found {0} results', n).format(n)
@@ -218,7 +218,7 @@ methods, ``ugettext_lazy`` and ``ungettext_lazy``. The result doesn't get
 translated until it is evaluated as a string, for example by being output or
 passed to ``unicode()``::
 
-    from tower import ugettext_lazy as _
+    from django.utils.translation import ugettext_lazy as _
 
     PAGE_TITLE = _(u'Page Title')
 

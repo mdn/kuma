@@ -88,25 +88,49 @@
         },
 
         /*
-            Track specific clientside errors create by our code
+            Track specific clientside errors created by our code
+            this article was a lot of help: http://blog.gospodarets.com/track_javascript_angularjs_and_jquery_errors_with_google_analytics/
         */
         trackClientErrors: function() {
+
+            // javascript & jQuery errors
             $(win).on('error', function(e) {
-                var originalEvent = e.originalEvent;
-                analytics.trackError(' JavaScript Error: ' + originalEvent.message + ' ; ' + originalEvent.filename + ':' + originalEvent.lineno);
+                // probably javascript
+                if(e.originalEvent) {
+                    var originalEvent = e.originalEvent;
+                    var lineAndColumnInfo = originalEvent.colno ? ' line:' + originalEvent.lineno +', column:'+ originalEvent.colno : ' line:' + originalEvent.lineno;
+                    analytics.trackError('JavaScript Error', originalEvent.message , originalEvent.filename + ':' + lineAndColumnInfo);
+                }
+                // no originalEvent means probably jQuery
+                else {
+                    var message = e.message ? e.message : '';
+                    analytics.trackError('jQuery Error', message);
+                }
             });
+
+            // jQuery ajax errors
             $(doc).ajaxError(function(e, request, settings) {
-                analytics.trackError('AJAX Error: ' +  settings.url + ' : ' + e.result);
+                analytics.trackError('AJAX Error', settings.url , JSON.stringify({
+                    result: e.result,
+                    status: request.status,
+                    statusText: request.statusText,
+                    crossDomain: settings.crossDomain,
+                    dataType: settings.dataType
+                    })
+                );
             });
         },
 
         /*
             Sends universal analytics client side error
         */
-        trackError: function(category, action) {
+        trackError: function(category, action, label) {
+            // label is optional, give it a default value if it's not passed
+            label = typeof label !== 'undefined' ? label : '';
             return analytics.trackEvent({
-                category: category,
-                action: action
+                'category': category,
+                'action': action,
+                'label': label
             });
         }
     };

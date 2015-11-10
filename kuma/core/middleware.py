@@ -2,10 +2,9 @@ import contextlib
 import urllib
 
 from django.core import urlresolvers
-from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect
+from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
-
-import tower
 from jingo.helpers import urlparams
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
@@ -55,7 +54,7 @@ class LocaleURLMiddleware(object):
 
         request.path_info = '/' + prefixer.shortened_path
         request.locale = prefixer.locale
-        tower.activate(prefixer.locale)
+        translation.activate(prefixer.locale)
 
     def process_response(self, request, response):
         """Unset the thread-local var we set during `process_request`."""

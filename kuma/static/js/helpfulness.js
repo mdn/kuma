@@ -6,11 +6,9 @@
     if (('localStorage' in win)) {
         var ignore = localStorage.getItem('helpful-ignore') === 'true'; // true if ever clicked ignore
         var articleAskedRecently = parseInt(localStorage.getItem(articleTracker), 10) > Date.now();
-        var lastAsked = localStorage.getItem('helpful-asked-last');
-        var today = new Date().setHours(0,0,0,0);
-        var askedToday = String(lastAsked) === String(today);
+        var helpfulnessAskedRecently = parseInt(localStorage.getItem('helpfulnessTracker'), 10) > Date.now();
 
-        if (!ignore && !articleAskedRecently && !askedToday) {
+        if (!ignore && !articleAskedRecently && !helpfulnessAskedRecently) {
             // ask about helpfulness after 1 min
             setTimeout(inquire, waitBeforeAsking);
         }
@@ -21,8 +19,8 @@
         // dimension7 is "helpfulness"
         if(win.ga) ga('set', 'dimension7', 'Yes');
 
-        // note that we asked today
-        localStorage.setItem('helpful-asked-last', today);
+        // note that we have asked so we don't ask again for a while
+        askAgainLater();
 
         // ask a simple question
         var ask = gettext('Did this page help you?') +
@@ -83,7 +81,6 @@
                 });
             }
             else {
-                askAgainLater();
                 mdn.analytics.trackEvent({
                     category: 'Helpful',
                     action: 'Clicked',
@@ -94,9 +91,12 @@
         }
     }
 
-    // set a date (180 days ahead) for asking again
+    // set a date for asking again
     function askAgainLater() {
+        // ask about this particular article in 180 days
         localStorage.setItem(articleTracker, Date.now() + (1000*60*60*24)*180);
+        // ask about any article in 7 days
+        localStorage.setItem('helpfulnessTracker', Date.now() + (1000*60*60*24)*7);
     }
 
 })(window, document, jQuery);

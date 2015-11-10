@@ -463,7 +463,7 @@ INSTALLED_APPS = (
     # util
     'pipeline',
     'product_details',
-    'tower',
+    'puente',
     'smuggler',
     'constance.backends.database',
     'constance',
@@ -504,50 +504,48 @@ def JINJA_CONFIG():
     from django.core.cache.backends.memcached import MemcachedCache
     from django.core.cache import caches
     cache = caches['memcache']
-    config = {'extensions': ['jinja2.ext.i18n', 'tower.template.i18n',
-                             'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
-                             'jinja2.ext.autoescape',
-                             'pipeline.templatetags.ext.PipelineExtension'],
-              'finalize': lambda x: x if x is not None else ''}
+    config = {
+        'extensions': [
+            'jinja2.ext.i18n',
+            'puente.ext.i18n',
+            'jinja2.ext.with_',
+            'jinja2.ext.loopcontrols',
+            'jinja2.ext.autoescape',
+            'pipeline.templatetags.ext.PipelineExtension'
+        ],
+        'finalize': lambda x: x if x is not None else ''
+    }
     if isinstance(cache, MemcachedCache) and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
         # Django can't store binary directly; it enforces unicode on it.
         # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
         # and in the errors you get when you try it the other way.
         bc = jinja2.MemcachedBytecodeCache(cache._cache,
-                                           "%s:j2:" % settings.CACHE_PREFIX)
+                                           "%s:j3:" % settings.CACHE_PREFIX)
         config['cache_size'] = -1  # Never clear the cache
         config['bytecode_cache'] = bc
     return config
 
-# Let Tower know about our additional keywords.
-# DO NOT import an ngettext variant as _lazy.
-TOWER_KEYWORDS = {
-    '_lazy': None,
+PUENTE = {
+    'BASE_DIR': ROOT,
+    # Tells the extract script what files to look for l10n in and what function
+    # handles the extraction.
+    'DOMAIN_METHODS': {
+        'django': [
+            ('vendor/**', 'ignore'),
+            ('kuma/**.py', 'python'),
+            ('kuma/demos/templates/admin/**.html',
+             'django_babel.extract.extract_django'),
+            ('**/templates/**.html', 'jinja2'),
+            ('**/templates/**.ltxt', 'jinja2'),
+        ],
+        'javascript': [
+            # We can't say **.js because that would dive into any libraries.
+            ('kuma/static/js/libs/ckeditor/plugins/mdn-link/**.js',
+             'javascript')
+        ],
+    },
 }
-
-# Tells the extract script what files to look for l10n in and what function
-# handles the extraction.  The Tower library expects this.
-DOMAIN_METHODS = {
-    'django': [
-        ('vendor/**', 'ignore'),
-        ('kuma/dashboards/**', 'ignore'),
-        ('kuma/core/**', 'ignore'),
-        ('kuma/**.py',
-            'tower.management.commands.extract.extract_tower_python'),
-        ('**/templates/**.html',
-            'tower.management.commands.extract.extract_tower_template'),
-        ('**/templates/**.ltxt',
-            'tower.management.commands.extract.extract_tower_template'),
-    ],
-    'javascript': [
-        # We can't say **.js because that would dive into any libraries.
-        ('kuma/static/js/libs/ckeditor/plugins/mdn-link/**.js', 'javascript')
-    ],
-}
-
-# Override tower's default to match Django's default.
-TEXT_DOMAIN = 'django'
 
 # These domains will not be merged into messages.pot and will use separate PO
 # files. See the following URL for an example of how to set these domains
@@ -555,10 +553,6 @@ TEXT_DOMAIN = 'django'
 # http://github.com/jbalogh/zamboni/blob/d4c64239c24aa2f1e91276909823d1d1b290f0ee/settings.py#L254
 STANDALONE_DOMAINS = ['django', 'javascript']
 STATICI18N_DOMAIN = 'javascript'
-
-# If you have trouble extracting strings with Tower, try setting this
-# to True
-TOWER_ADD_HEADERS = True
 
 PIPELINE_COMPILERS = (
     'pipeline.compilers.stylus.StylusCompiler',

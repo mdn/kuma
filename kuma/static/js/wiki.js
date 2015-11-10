@@ -827,7 +827,7 @@
                     });
                 });
                 players[i].addEventListener('onError', function(event) {
-                    mdn.analytics.trackError('YouTube Error: ' + event.data, win.location.href);
+                    mdn.analytics.trackError('YouTube Error', event.data);
                 });
             });
         };

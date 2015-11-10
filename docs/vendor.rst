@@ -62,7 +62,8 @@ Using PyPI
 ----------
 
 Update the ``requirements/packages.txt`` file with the package you'd like to
-add. To add the package to the vendored packages do::
+add. To add the package to the vendored packages run the following from
+within the vagrant machine::
 
     $ cd vendor
     $ make packages

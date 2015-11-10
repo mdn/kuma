@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 import datetime
-import json
 import hashlib
+import json
 import time
 
-from nose.tools import eq_, ok_
+from django.utils.html import escape
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
-from . import WikiTestCase, document, revision, make_translation, wait_add_rev
+
+from . import WikiTestCase, document, make_translation, revision, wait_add_rev
 
 
 class FeedTests(UserTestCase, WikiTestCase):
@@ -26,15 +27,15 @@ class FeedTests(UserTestCase, WikiTestCase):
         # There should be no entries in this feed yet.
         resp = self.client.get(feed_url)
         data = json.loads(resp.content)
-        eq_(0, len(data))
+        self.assertEqual(0, len(data))
 
         wait_add_rev(d1)
 
         # Now, there should be an item in the feed.
         resp = self.client.get(feed_url)
         data = json.loads(resp.content)
-        eq_(1, len(data))
-        ok_(d2.get_absolute_url() in data[0]['link'])
+        self.assertEqual(1, len(data))
+        self.assertTrue(d2.get_absolute_url() in data[0]['link'])
 
     def test_updated_translation_parent_feed_mod_link(self):
         d1, d2 = make_translation()
@@ -46,13 +47,14 @@ class FeedTests(UserTestCase, WikiTestCase):
                            args=(), kwargs={'format': 'rss'})
         resp = self.client.get(feed_url)
         feed = pq(resp.content)
-        eq_(1, len(feed.find('item')))
+        self.assertEqual(1, len(feed.find('item')))
         for i, item in enumerate(feed.find('item')):
             desc_text = pq(item).find('description').text()
-            ok_("%s$compare?to=%s&from=%s" % (d1.slug,
-                                              d1.current_revision.id,
-                                              first_rev_id)
-                in desc_text)
+            compare_url = '%s$compare?to=%s&from=%s&utm_campaign=feed' % (
+                d1.slug, d1.current_revision.id, first_rev_id)
+            edit_url = '%s$edit?utm_campaign=feed&utm_medium=rss' % d2.slug
+            self.assertTrue(escape(compare_url) in desc_text)
+            self.assertTrue(escape(edit_url) in desc_text)
 
     def test_revisions_feed(self):
         d = document(title='HTML9')
@@ -70,36 +72,36 @@ class FeedTests(UserTestCase, WikiTestCase):
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
                                        args=(), kwargs={'format': 'rss'}))
-        eq_(200, resp.status_code)
+        self.assertEqual(200, resp.status_code)
         feed = pq(resp.content)
-        eq_(5, len(feed.find('item')))
+        self.assertEqual(5, len(feed.find('item')))
         for i, item in enumerate(feed.find('item')):
             desc_text = pq(item).find('description').text()
-            ok_('by:</h3><p>testuser</p>' in desc_text)
-            ok_('<h3>Comment:</h3><p>Revision' in desc_text)
+            self.assertTrue('by:</h3><p>testuser</p>' in desc_text)
+            self.assertTrue('<h3>Comment:</h3><p>Revision' in desc_text)
             if "Edited" in desc_text:
-                ok_('$compare?to' in desc_text)
-                ok_('diff_chg' in desc_text)
-            ok_('$edit' in desc_text)
-            ok_('$history' in desc_text)
+                self.assertTrue('$compare?to' in desc_text)
+                self.assertTrue('diff_chg' in desc_text)
+            self.assertTrue('$edit' in desc_text)
+            self.assertTrue('$history' in desc_text)
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
                                        args=(), kwargs={'format': 'rss'}) +
                                '?limit=2')
         feed = pq(resp.content)
-        eq_(2, len(feed.find('item')))
+        self.assertEqual(2, len(feed.find('item')))
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
                                        args=(), kwargs={'format': 'rss'}) +
                                '?limit=2&page=1')
-        ok_('Revision 5' in resp.content)
-        ok_('Revision 4' in resp.content)
+        self.assertTrue('Revision 5' in resp.content)
+        self.assertTrue('Revision 4' in resp.content)
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
                                        args=(), kwargs={'format': 'rss'}) +
                                '?limit=2&page=2')
-        ok_('Revision 3' in resp.content)
-        ok_('Revision 2' in resp.content)
+        self.assertTrue('Revision 3' in resp.content)
+        self.assertTrue('Revision 2' in resp.content)
 
     def test_bug869301_revisions_feed_locale(self):
         """Links to documents in revisions feed with ?all_locales should
@@ -122,12 +124,12 @@ class FeedTests(UserTestCase, WikiTestCase):
                                        args=(),
                                        kwargs={'format': 'rss'},
                                        locale='en-US'))
-        eq_(200, resp.status_code)
+        self.assertEqual(200, resp.status_code)
         feed = pq(resp.content)
-        eq_(5, len(feed.find('item')))
+        self.assertEqual(5, len(feed.find('item')))
         for i, item in enumerate(feed.find('item')):
             href = pq(item).find('link').text()
-            ok_('/fr/' in href)
+            self.assertTrue('/fr/' in href)
 
     def test_revisions_feed_diffs(self):
         d = document(title='HTML9')
@@ -152,17 +154,19 @@ class FeedTests(UserTestCase, WikiTestCase):
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
                                        args=(), kwargs={'format': 'rss'}))
-        eq_(200, resp.status_code)
+        self.assertEqual(200, resp.status_code)
         feed = pq(resp.content)
         for i, item in enumerate(feed.find('item')):
             desc_text = pq(item).find('description').text()
             if "Edited" in desc_text:
-                ok_('<h3>Tag changes:</h3>' in desc_text)
-                ok_('<span class="diff_add" style="background-color: #afa; '
+                self.assertTrue('<h3>Tag changes:</h3>' in desc_text)
+                self.assertTrue(
+                    '<span class="diff_add" style="background-color: #afa; '
                     'text-decoration: none;">"more"<br />&nbsp;</span>'
                     in desc_text)
-                ok_('<h3>Review changes:</h3>' in desc_text)
-                ok_('<span class="diff_add" style="background-color: #afa; '
+                self.assertTrue('<h3>Review changes:</h3>' in desc_text)
+                self.assertTrue(
+                    '<span class="diff_add" style="background-color: #afa; '
                     'text-decoration: none;">editorial</span>' in desc_text)
 
     def test_feed_unchanged_after_render(self):
@@ -200,7 +204,7 @@ class FeedTests(UserTestCase, WikiTestCase):
         feed_hash_2 = hashlib.md5(resp.content).hexdigest()
 
         # The hashes should match
-        eq_(feed_hash_1, feed_hash_2)
+        self.assertEqual(feed_hash_1, feed_hash_2)
 
         # Make a real edit.
         time.sleep(1)  # Let timestamps tick over.
@@ -211,7 +215,7 @@ class FeedTests(UserTestCase, WikiTestCase):
         # This time, the hashes should *not* match
         resp = self.client.get(feed_url)
         feed_hash_3 = hashlib.md5(resp.content).hexdigest()
-        ok_(feed_hash_2 != feed_hash_3)
+        self.assertTrue(feed_hash_2 != feed_hash_3)
 
     def test_feed_locale_filter(self):
         """Documents and Revisions in feeds should be filtered by locale"""
@@ -253,6 +257,6 @@ class FeedTests(UserTestCase, WikiTestCase):
                     resp = self.client.get(feed_url)
                     data = json.loads(resp.content)
                     if show_all:
-                        eq_(3, len(data))
+                        self.assertEqual(3, len(data))
                     else:
-                        eq_(1, len(data))
+                        self.assertEqual(1, len(data))

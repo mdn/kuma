@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-26 17:53+0000\n"
+"PO-Revision-Date: 2015-11-06 17:50+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -350,7 +350,7 @@ msgstr "Borttaget från Derby"
 
 #: kuma/demos/__init__.py:36
 msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
-msgstr "Juni 2011 Dev Derby Challenge - CSS3-animationer"
+msgstr "Juni 2011 Dev Derby utmaning - CSS3-animationer"
 
 #: kuma/demos/__init__.py:37
 msgid "CSS3 Animations"
@@ -390,7 +390,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:43
 msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
-msgstr "Juli 2011 Dev Derby Challenge - HTML5 <video>"
+msgstr "Juli 2011 Dev Derby utmaning - HTML5 <video>"
 
 #: kuma/demos/__init__.py:44
 msgid "HTML5 <video>"
@@ -410,7 +410,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:50
 msgid "August 2011 Dev Derby Challenge - History API"
-msgstr "Augusti 2011 Dev Derby Challenge - Historik API"
+msgstr "Augusti 2011 Dev Derby utmaning - Historik API"
 
 #: kuma/demos/__init__.py:51
 msgid "History API"
@@ -425,10 +425,12 @@ msgid ""
 "The History API in modern browsers enables live changes to the document "
 "without breaking the back button and allows apps to be bookmarked."
 msgstr ""
+"Historik API i moderna webbläsare möjliggör realtidsändringar i dokumentet "
+"utan att bryta bakåtknappen och tillåter att appar bokmärks."
 
 #: kuma/demos/__init__.py:57
 msgid "September 2011 Dev Derby Challenge - Geolocation"
-msgstr ""
+msgstr "September 2011 Dev Derby utmaning - Geolokalisering"
 
 #: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
 msgid "Geolocation"
@@ -445,14 +447,17 @@ msgid ""
 " and use it to enhance the browsing experience or enable advanced location-"
 "aware features."
 msgstr ""
+"Med geolokalisering kan du få användarens fysiska plats (med tillstånd) och "
+"använda den för att förbättra webbupplevelse eller aktivera avancerade "
+"platsmedvetna funktioner."
 
 #: kuma/demos/__init__.py:64
 msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
-msgstr ""
+msgstr "Oktober 2011 Dev Derby utmaning - CSS Media Queries"
 
 #: kuma/demos/__init__.py:65
 msgid "CSS Media Queries"
-msgstr ""
+msgstr "CSS Media Queries"
 
 #: kuma/demos/__init__.py:66
 msgid "October 2011"
@@ -464,10 +469,13 @@ msgid ""
 "tailoring the user experience for a range of screen sizes, including "
 "desktops, tablets, and mobiles."
 msgstr ""
+"CSS Media Queries tillåter webbutvecklare att skapa lyhörd webbdesign, "
+"skräddarsy användarupplevelsen för en rad skärmstorlekar, inklusive "
+"stationära datorer, surfplattor och mobiler."
 
 #: kuma/demos/__init__.py:71
 msgid "November 2011 Dev Derby Challenge - Canvas"
-msgstr ""
+msgstr "November 2011 Dev Derby utmaning - Canvas"
 
 #: kuma/demos/__init__.py:72 kuma/demos/__init__.py:233
 msgid "Canvas"
@@ -484,10 +492,14 @@ msgid ""
 "provides a graphics context with its own state and methods that make it easy"
 " to control and draw in."
 msgstr ""
+"Med canvas kan du måla på webben med hjälp av JavaScript för att göra 2D-"
+"former, bitmappade bilder och avancerade grafiska effekter. Varje <canvas> "
+"element ger en grafisk kontext med sitt eget tillstånd och metoder som gör "
+"det lätt att kontrollera och rita i."
 
 #: kuma/demos/__init__.py:78
 msgid "December 2011 Dev Derby Challenge - IndexedDB"
-msgstr ""
+msgstr "December 2011 Dev Derby utmaning - IndexedDB"
 
 #: kuma/demos/__init__.py:79 kuma/demos/__init__.py:303
 msgid "IndexedDB"
@@ -502,10 +514,12 @@ msgid ""
 "IndexedDB lets web applications store significant amounts of structured data"
 " locally, for faster access, online or offline."
 msgstr ""
+"IndexedDB låter webbapplikationer lagra stora mängder strukturerade data "
+"lokalt, för snabbare åtkomst, online eller offline."
 
 #: kuma/demos/__init__.py:85
 msgid "January 2012 Dev Derby Challenge - Orientation"
-msgstr ""
+msgstr "Januari 2012 Dev Derby utmaning - Orientering"
 
 #: kuma/demos/__init__.py:86
 msgid "Orientation"
@@ -520,14 +534,16 @@ msgid ""
 "Orientation features in HTML5 access the motion and orientation data of "
 "devices with accelerometers."
 msgstr ""
+"Orienteringsfunktioner i HTML5 ger tillgång till rörelse- och "
+"orienteringsdata från enheter med accelerometrar."
 
 #: kuma/demos/__init__.py:92
 msgid "February 2012 Dev Derby Challenge - Touch Events"
-msgstr ""
+msgstr "Februari 2012 Dev Derby utmaning - Touchhändelser"
 
 #: kuma/demos/__init__.py:93
 msgid "Touch Events"
-msgstr ""
+msgstr "Touchhändelser"
 
 #: kuma/demos/__init__.py:94
 msgid "February 2012"
@@ -538,14 +554,17 @@ msgid ""
 "Touch Events help you make websites and applications more engaging by "
 "responding appropriately when users interact with touch screens."
 msgstr ""
+"Touchhändelser hjälpa dig att göra webbplatser och applikationer mer "
+"engagerande genom att svara på lämpligt sätt när användare interagerar med "
+"pekskärmar."
 
 #: kuma/demos/__init__.py:99
 msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
-msgstr ""
+msgstr "Mars 2012 Dev Derby utmaning - CSS 3D transformeringar"
 
 #: kuma/demos/__init__.py:100
 msgid "CSS 3D Transforms"
-msgstr ""
+msgstr "CSS 3D transformeringar"
 
 #: kuma/demos/__init__.py:101
 msgid "March 2012"
@@ -559,7 +578,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:106
 msgid "April 2012 Dev Derby Challenge - Audio"
-msgstr ""
+msgstr "April 2012 Dev Derby utmaning - Ljud"
 
 #: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
 msgid "Audio"
@@ -574,14 +593,16 @@ msgid ""
 "The HTML5 audio element lets you embed sound in webpages without requiring "
 "your users to rely on plug-ins."
 msgstr ""
+"Med HTML5 ljudelement kan du bädda in ljud i webbsidor utan att dina "
+"användare ska förlita sig på insticksmoduler."
 
 #: kuma/demos/__init__.py:113
 msgid "May 2012 Dev Derby Challenge - WebSockets API"
-msgstr ""
+msgstr "Maj 2012 Dev Derby utmaning - WebSockets API"
 
 #: kuma/demos/__init__.py:114
 msgid "WebSockets API"
-msgstr ""
+msgstr "WebSockets API"
 
 #: kuma/demos/__init__.py:115
 msgid "May 2012"
@@ -596,7 +617,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:120
 msgid "June 2012 Dev Derby Challenge - WebGL"
-msgstr ""
+msgstr "Juni 2012 Dev Derby utmaning - WebGL"
 
 #: kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
 msgid "WebGL"
@@ -615,11 +636,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:127
 msgid "July 2012 Dev Derby Challenge - No JavaScript"
-msgstr ""
+msgstr "Juli 2012 Dev Derby utmaning - Inga JavaScript"
 
 #: kuma/demos/__init__.py:128
 msgid "No JavaScript"
-msgstr "Inget Javascript"
+msgstr "Inga Javascript"
 
 #: kuma/demos/__init__.py:129
 msgid "July 2012"
@@ -635,7 +656,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:134
 msgid "August 2012 Dev Derby Challenge - Camera API"
-msgstr ""
+msgstr "Augusti 2012 Dev Derby utmaning - Kamera API"
 
 #: kuma/demos/__init__.py:135
 msgid "Camera API"
@@ -654,11 +675,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:141
 msgid "September 2012 Dev Derby Challenge - Geolocation II"
-msgstr ""
+msgstr "September 2012 Dev Derby utmaning - Geolokalisering II"
 
 #: kuma/demos/__init__.py:142
 msgid "Geolocation II"
-msgstr ""
+msgstr "Geolokalisering II"
 
 #: kuma/demos/__init__.py:143
 msgid "September 2012"
@@ -666,11 +687,11 @@ msgstr "September 2012"
 
 #: kuma/demos/__init__.py:148
 msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
-msgstr ""
+msgstr "Oktober 2012 Dev Derby utmaning - CSS Media Queries II"
 
 #: kuma/demos/__init__.py:149
 msgid "CSS Media Queries II"
-msgstr ""
+msgstr "CSS Media Queries II"
 
 #: kuma/demos/__init__.py:150
 msgid "October 2012"
@@ -685,7 +706,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:155
 msgid "November 2012 Dev Derby Challenge - Fullscreen API"
-msgstr ""
+msgstr "November 2012 Dev Derby utmaning - Fullskärm API"
 
 #: kuma/demos/__init__.py:156
 msgid "Fullscreen API"
@@ -704,7 +725,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:162
 msgid "December 2012 Dev Derby Challenge - Offline"
-msgstr ""
+msgstr "December 2012 Dev Derby utmaning - Offline"
 
 #: kuma/demos/__init__.py:163
 msgid "Offline"
@@ -724,7 +745,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:169
 msgid "January 2013 Dev Derby Challenge - Drag and Drop"
-msgstr ""
+msgstr "Januari 2013 Dev Derby utmaning - Dra och släpp"
 
 #: kuma/demos/__init__.py:170 kuma/demos/__init__.py:311
 msgid "Drag and Drop"
@@ -742,7 +763,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:176
 msgid "February 2013 Dev Derby Challenge - Multi-touch"
-msgstr ""
+msgstr "Februari 2013 Dev Derby utmaning - Multi-touch"
 
 #: kuma/demos/__init__.py:177 kuma/demos/__init__.py:383
 msgid "Multi-touch"
@@ -762,7 +783,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:183
 msgid "March 2013 Dev Derby Challenge - Mobile"
-msgstr ""
+msgstr "Mars 2013 Dev Derby utmaning - Mobil"
 
 #: kuma/demos/__init__.py:184 kuma/demos/__init__.py:319
 msgid "Mobile"
@@ -781,11 +802,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:190
 msgid "April 2013 Dev Derby Challenge - Web Workers"
-msgstr ""
+msgstr "April 2013 Dev Derby utmaning - Web Workers"
 
 #: kuma/demos/__init__.py:191 kuma/demos/__init__.py:367
 msgid "Web Workers"
-msgstr ""
+msgstr "Web Workers"
 
 #: kuma/demos/__init__.py:192
 msgid "April 2013"
@@ -800,7 +821,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:197
 msgid "May 2013 Dev Derby Challenge - getUserMedia"
-msgstr ""
+msgstr "Maj 2013 Dev Derby utmaning - getUserMedia"
 
 #: kuma/demos/__init__.py:198
 msgid "getUserMedia"
@@ -827,7 +848,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:206
 msgid "June 2013 Dev Derby Challenge - WebGL II"
-msgstr ""
+msgstr "Juni 2013 Dev Derby utmaning - WebGL II"
 
 #: kuma/demos/__init__.py:207
 msgid "WebGL II"
@@ -847,7 +868,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:215
 msgid "July 2013 Dev Derby Challenge - File API"
-msgstr ""
+msgstr "Juli 2013 Dev Derby utmaning - Fil API"
 
 #: kuma/demos/__init__.py:216
 msgid "File API"
@@ -863,7 +884,7 @@ msgstr "Juli"
 
 #: kuma/demos/__init__.py:219
 msgid "File found"
-msgstr ""
+msgstr "Filen hittades"
 
 #: kuma/demos/__init__.py:220 kuma/demos/__init__.py:221
 msgid ""
@@ -889,7 +910,7 @@ msgstr ""
 #: kuma/demos/__init__.py:370 kuma/demos/__init__.py:378
 #: kuma/demos/__init__.py:386
 msgid "MDN Documentation"
-msgstr ""
+msgstr "MDN dokumentation"
 
 #: kuma/demos/__init__.py:228
 msgid ""
@@ -908,11 +929,11 @@ msgstr ""
 #: kuma/demos/__init__.py:371 kuma/demos/__init__.py:379
 #: kuma/demos/__init__.py:387
 msgid "Wikipedia Article"
-msgstr ""
+msgstr "Wikipedia-artikel"
 
 #: kuma/demos/__init__.py:229
 msgid "http://en.wikipedia.org/wiki/HTML5_audio"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
 
 #: kuma/demos/__init__.py:230 kuma/demos/__init__.py:238
 #: kuma/demos/__init__.py:246 kuma/demos/__init__.py:253
@@ -925,11 +946,11 @@ msgstr ""
 #: kuma/demos/__init__.py:372 kuma/demos/__init__.py:380
 #: kuma/demos/__init__.py:388
 msgid "W3C Spec"
-msgstr ""
+msgstr "W3C Spec"
 
 #: kuma/demos/__init__.py:230
 msgid "http://www.w3.org/TR/html5/video.html#audio"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/video.html#audio"
 
 #: kuma/demos/__init__.py:234
 msgid ""
@@ -943,11 +964,11 @@ msgstr "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
 
 #: kuma/demos/__init__.py:237
 msgid "http://en.wikipedia.org/wiki/Canvas_element"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Canvas_element"
 
 #: kuma/demos/__init__.py:238
 msgid "http://www.w3.org/TR/html5/the-canvas-element.html"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
 
 #: kuma/demos/__init__.py:241 kuma/landing/templates/landing/homepage.html:85
 msgid "CSS3"
@@ -966,11 +987,11 @@ msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS"
 
 #: kuma/demos/__init__.py:245
 msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
 
 #: kuma/demos/__init__.py:246
 msgid "http://www.w3.org/TR/css3-roadmap/"
-msgstr ""
+msgstr "http://www.w3.org/TR/css3-roadmap/"
 
 #: kuma/demos/__init__.py:249
 msgid "Device"
@@ -990,7 +1011,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:253
 msgid "http://www.w3.org/TR/css3-mediaqueries/"
-msgstr ""
+msgstr "http://www.w3.org/TR/css3-mediaqueries/"
 
 #: kuma/demos/__init__.py:256
 msgid "Files"
@@ -1010,11 +1031,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:260
 msgid "http://www.w3.org/TR/FileAPI/"
-msgstr ""
+msgstr "http://www.w3.org/TR/FileAPI/"
 
 #: kuma/demos/__init__.py:263
 msgid "Fonts & Type"
-msgstr ""
+msgstr "Typsnitt & Stil"
 
 #: kuma/demos/__init__.py:264
 msgid ""
@@ -1029,15 +1050,15 @@ msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
 
 #: kuma/demos/__init__.py:267
 msgid "http://en.wikipedia.org/wiki/Web_typography"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_typography"
 
 #: kuma/demos/__init__.py:268
 msgid "http://www.w3.org/TR/css3-fonts/"
-msgstr ""
+msgstr "http://www.w3.org/TR/css3-fonts/"
 
 #: kuma/demos/__init__.py:271
 msgid "Forms"
-msgstr ""
+msgstr "Formulär"
 
 #: kuma/demos/__init__.py:272
 msgid ""
@@ -1052,11 +1073,11 @@ msgstr "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
 
 #: kuma/demos/__init__.py:275
 msgid "http://en.wikipedia.org/wiki/HTML_forms"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/HTML_forms"
 
 #: kuma/demos/__init__.py:276
 msgid "http://www.w3.org/TR/html5/forms.html"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/forms.html"
 
 #: kuma/demos/__init__.py:280
 msgid ""
@@ -1070,17 +1091,17 @@ msgstr "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
 
 #: kuma/demos/__init__.py:283
 msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
 
 #: kuma/demos/__init__.py:284
 msgid "http://dev.w3.org/geo/api/spec-source.html"
-msgstr ""
+msgstr "http://dev.w3.org/geo/api/spec-source.html"
 
 #: kuma/demos/__init__.py:287 kuma/landing/templates/landing/homepage.html:86
 #: kuma/landing/templates/landing/promote_buttons.html:111
 #: templates/base.html:131
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: kuma/demos/__init__.py:288
 msgid ""
@@ -1095,7 +1116,7 @@ msgstr "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
 
 #: kuma/demos/__init__.py:291
 msgid "http://en.wikipedia.org/wiki/JavaScript"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/JavaScript"
 
 #: kuma/demos/__init__.py:292
 msgid "ECMA Spec"
@@ -1103,11 +1124,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:292
 msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
-msgstr ""
+msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
 
 #: kuma/demos/__init__.py:295 kuma/landing/templates/landing/homepage.html:84
 msgid "HTML5"
-msgstr ""
+msgstr "HTML5"
 
 #: kuma/demos/__init__.py:296
 msgid ""
@@ -1125,7 +1146,7 @@ msgstr "http://en.wikipedia.org/wiki/Html5"
 
 #: kuma/demos/__init__.py:300
 msgid "http://dev.w3.org/html5/spec/Overview.html"
-msgstr ""
+msgstr "http://dev.w3.org/html5/spec/Overview.html"
 
 #: kuma/demos/__init__.py:304
 msgid ""
@@ -1140,11 +1161,11 @@ msgstr "https://developer.mozilla.org/en-US/docs/IndexedDB"
 
 #: kuma/demos/__init__.py:307
 msgid "http://en.wikipedia.org/wiki/IndexedDB"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/IndexedDB"
 
 #: kuma/demos/__init__.py:308
 msgid "http://www.w3.org/TR/IndexedDB/"
-msgstr ""
+msgstr "http://www.w3.org/TR/IndexedDB/"
 
 #: kuma/demos/__init__.py:312
 msgid ""
@@ -1176,11 +1197,11 @@ msgstr "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
 
 #: kuma/demos/__init__.py:323
 msgid "http://en.wikipedia.org/wiki/Mobile_web"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Mobile_web"
 
 #: kuma/demos/__init__.py:324
 msgid "http://www.w3.org/Mobile/"
-msgstr ""
+msgstr "http://www.w3.org/Mobile/"
 
 #: kuma/demos/__init__.py:327
 msgid "Offline Support"
@@ -1200,11 +1221,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:331
 msgid "http://en.wikipedia.org/wiki/Web_Storage"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_Storage"
 
 #: kuma/demos/__init__.py:332
 msgid "http://dev.w3.org/html5/webstorage/"
-msgstr ""
+msgstr "http://dev.w3.org/html5/webstorage/"
 
 #: kuma/demos/__init__.py:335
 msgid "SVG"
@@ -1222,11 +1243,11 @@ msgstr "https://developer.mozilla.org/en-US/docs/Web/SVG"
 
 #: kuma/demos/__init__.py:339
 msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
 
 #: kuma/demos/__init__.py:340
 msgid "http://www.w3.org/TR/SVG11/"
-msgstr ""
+msgstr "http://www.w3.org/TR/SVG11/"
 
 #: kuma/demos/__init__.py:343
 msgid "Video"
@@ -1248,11 +1269,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:347
 msgid "http://en.wikipedia.org/wiki/HTML5_video"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/HTML5_video"
 
 #: kuma/demos/__init__.py:348
 msgid "http://www.w3.org/TR/html5/video.html"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/video.html"
 
 #: kuma/demos/__init__.py:352
 msgid ""
@@ -1266,7 +1287,7 @@ msgstr "https://developer.mozilla.org/en-US/docs/Web/WebGL"
 
 #: kuma/demos/__init__.py:355
 msgid "http://en.wikipedia.org/wiki/WebGL"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/WebGL"
 
 #: kuma/demos/__init__.py:356
 msgid "Khronos Spec"
@@ -1274,7 +1295,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:356
 msgid "http://www.khronos.org/webgl/"
-msgstr ""
+msgstr "http://www.khronos.org/webgl/"
 
 #: kuma/demos/__init__.py:359
 msgid "WebSockets"
@@ -1292,11 +1313,11 @@ msgstr "https://developer.mozilla.org/en-US/docs/WebSockets"
 
 #: kuma/demos/__init__.py:363
 msgid "http://en.wikipedia.org/wiki/Web_Sockets"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_Sockets"
 
 #: kuma/demos/__init__.py:364
 msgid "http://dev.w3.org/html5/websockets/"
-msgstr ""
+msgstr "http://dev.w3.org/html5/websockets/"
 
 #: kuma/demos/__init__.py:368
 msgid ""
@@ -1314,15 +1335,15 @@ msgstr ""
 
 #: kuma/demos/__init__.py:371
 msgid "http://en.wikipedia.org/wiki/Web_Workers"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_Workers"
 
 #: kuma/demos/__init__.py:372
 msgid "http://www.w3.org/TR/workers/"
-msgstr ""
+msgstr "http://www.w3.org/TR/workers/"
 
 #: kuma/demos/__init__.py:375
 msgid "XMLHttpRequest"
-msgstr ""
+msgstr "XMLHttpRequest"
 
 #: kuma/demos/__init__.py:376
 msgid ""
@@ -1340,11 +1361,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:379
 msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/XMLHttpRequest"
 
 #: kuma/demos/__init__.py:380
 msgid "http://www.w3.org/TR/XMLHttpRequest/"
-msgstr ""
+msgstr "http://www.w3.org/TR/XMLHttpRequest/"
 
 #: kuma/demos/__init__.py:384
 msgid ""
@@ -1360,43 +1381,43 @@ msgstr ""
 
 #: kuma/demos/__init__.py:387
 msgid "http://en.wikipedia.org/wiki/Multi-touch"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Multi-touch"
 
 #: kuma/demos/__init__.py:388
 msgid "http://www.w3.org/2010/webevents/charter/"
-msgstr ""
+msgstr "http://www.w3.org/2010/webevents/charter/"
 
 #: kuma/demos/__init__.py:394
 msgid "MPL/GPL/LGPL"
-msgstr ""
+msgstr "MPL/GPL/LGPL"
 
 #: kuma/demos/__init__.py:395
 msgid "http://www.mozilla.org/MPL/"
-msgstr ""
+msgstr "http://www.mozilla.org/MPL/"
 
 #: kuma/demos/__init__.py:397
 msgid "GPL"
-msgstr ""
+msgstr "GPL"
 
 #: kuma/demos/__init__.py:398
 msgid "http://www.opensource.org/licenses/gpl-license.php"
-msgstr ""
+msgstr "http://www.opensource.org/licenses/gpl-license.php"
 
 #: kuma/demos/__init__.py:400
 msgid "BSD"
-msgstr ""
+msgstr "BSD"
 
 #: kuma/demos/__init__.py:401
 msgid "http://www.opensource.org/licenses/bsd-license.php"
-msgstr ""
+msgstr "http://www.opensource.org/licenses/bsd-license.php"
 
 #: kuma/demos/__init__.py:403
 msgid "Apache"
-msgstr ""
+msgstr "Apache"
 
 #: kuma/demos/__init__.py:404
 msgid "http://www.apache.org/licenses/"
-msgstr ""
+msgstr "http://www.apache.org/licenses/"
 
 #: kuma/demos/__init__.py:406
 msgid "Public Domain (where applicable by law)"
@@ -1404,7 +1425,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:407
 msgid "http://creativecommons.org/publicdomain/zero/1.0/"
-msgstr ""
+msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
 
 #: kuma/demos/admin.py:38
 msgid "Censored %(item)s"
@@ -1496,7 +1517,7 @@ msgstr "Finalist"
 
 #: kuma/demos/helpers.py:113
 msgid "Featured"
-msgstr ""
+msgstr "Utvald"
 
 #: kuma/demos/helpers.py:268
 msgid "year"
@@ -1524,61 +1545,61 @@ msgstr[1] "dagar"
 
 #: kuma/demos/helpers.py:279
 msgid "%(number)d %(type)s"
-msgstr ""
+msgstr "%(number)d %(type)s"
 
 #: kuma/demos/helpers.py:306
 msgid "%(number)d year ago"
 msgid_plural "%(number)d years ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d år sedan"
+msgstr[1] "%(number)d år sedan"
 
 #: kuma/demos/helpers.py:308
 msgid "%(number)d month ago"
 msgid_plural "%(number)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d månad sedan"
+msgstr[1] "%(number)d månader sedan"
 
 #: kuma/demos/helpers.py:310
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d vecka sedan"
+msgstr[1] "%(number)d veckor sedan"
 
 #: kuma/demos/helpers.py:312
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d dag sedan"
+msgstr[1] "%(number)d dagar sedan"
 
 #: kuma/demos/helpers.py:314
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d timme sedan"
+msgstr[1] "%(number)d timmar sedan"
 
 #: kuma/demos/helpers.py:316
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d minut sedan"
+msgstr[1] "%(number)d minuter sedan"
 
 #: kuma/demos/helpers.py:318
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(number)d sekund sedan"
+msgstr[1] "%(number)d sekunder sedan"
 
 #: kuma/demos/models.py:204
 msgid "Please keep filesize under %s. Current filesize %s"
-msgstr ""
+msgstr "Vänligen håll filstorleken under %s. Nuvarande filstorlek %s"
 
 #: kuma/demos/models.py:273
 msgid "Cannot process image"
-msgstr ""
+msgstr "Kan inte bearbeta bild"
 
 #: kuma/demos/models.py:360
 msgid "what is your demo's name?"
-msgstr ""
+msgstr "vad heter ditt demo?"
 
 #: kuma/demos/models.py:363
 msgid "slug"
@@ -1586,7 +1607,7 @@ msgstr "slugg"
 
 #: kuma/demos/models.py:366
 msgid "describe your demo in one line"
-msgstr ""
+msgstr "beskriv ditt demo på en rad"
 
 #: kuma/demos/models.py:369
 msgid "describe your demo in more detail (optional)"
@@ -4376,9 +4397,7 @@ msgstr "Nytt dokument"
 
 #: kuma/wiki/templates/wiki/create.html:32
 #: kuma/wiki/templates/wiki/edit.html:96
-msgid ""
-"Draft <span id=\"draft-action\"></span> <time id=\"draft-time\" "
-"class=\"timeago\" title=\"\"></time>"
+msgid "Draft"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/create.html:42
@@ -4733,7 +4752,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/revision.html:11
 msgid "of"
-msgstr ""
+msgstr "av"
 
 #: kuma/wiki/templates/wiki/revision.html:14
 msgid "Revision Information"
@@ -4754,11 +4773,11 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/select_locale.html:2
 msgid "Select language | {document}"
-msgstr ""
+msgstr "Välj språk | {document}"
 
 #: kuma/wiki/templates/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
-msgstr ""
+msgstr "Välj ett språk att översätta till:"
 
 #: kuma/wiki/templates/wiki/sphinx.html:32
 msgid ""
@@ -4791,7 +4810,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:43
 msgid "Translate Content"
-msgstr ""
+msgstr "Översätt innehåll"
 
 #: kuma/wiki/templates/wiki/translate.html:83
 msgid "Approved {locale} version"
@@ -4803,15 +4822,15 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Source"
-msgstr ""
+msgstr "Visa källa"
 
 #: kuma/wiki/templates/wiki/translate.html:86
 msgid "Show {locale}"
-msgstr ""
+msgstr "Visa {locale}"
 
 #: kuma/wiki/templates/wiki/translate.html:86
 msgid "Hide {locale}"
-msgstr ""
+msgstr "Dölj {locale}"
 
 #: kuma/wiki/templates/wiki/translate.html:99
 msgid "{locale} translation:"
@@ -4884,15 +4903,15 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:15
 msgid "Languages"
-msgstr ""
+msgstr "Språk"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:25
 msgid "No translations exist for this article."
-msgstr ""
+msgstr "Det finns inga översättningar för denna artikel."
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:29
 msgid "Add a translation"
-msgstr ""
+msgstr "Lägg till översättning"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:43
 msgid "Updating subscription status"
@@ -4973,7 +4992,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:21
 msgid "See also"
-msgstr ""
+msgstr "Se även"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
@@ -5007,7 +5026,7 @@ msgstr ""
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/templates/wiki/includes/translate_description.html:50
 msgid "TOC:"
-msgstr ""
+msgstr "Innehållsförteckning:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:3
 msgid ""
@@ -5058,7 +5077,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
 msgid "Edit Document"
-msgstr ""
+msgstr "Redigera dokument"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:54
 msgid "Full text of error:"
@@ -5143,15 +5162,15 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/list/documents.html:8
 msgid "All templates"
-msgstr ""
+msgstr "Alla mallar"
 
 #: kuma/wiki/templates/wiki/list/documents.html:9
 msgid "Found {0} templates."
-msgstr ""
+msgstr "Hittade {0} mallar."
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
 msgid "Documents with errors"
-msgstr ""
+msgstr "Dokument med fel"
 
 #: kuma/wiki/templates/wiki/list/documents.html:13
 msgid "Top level documents"
@@ -5303,7 +5322,7 @@ msgstr ""
 
 #: templates/403.html:5 templates/403.html:19 templates/handlers/400.html:5
 msgid "Permission Denied"
-msgstr ""
+msgstr "Åtkomst nekad"
 
 #: templates/403.html:22
 msgid "The wiki is in read-only mode."

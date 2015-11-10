@@ -1,13 +1,14 @@
 import logging
 
-from tower import ugettext as _
+from django.utils.translation import ugettext
+from tidings.events import InstanceEvent
 
 from kuma.core.email_utils import emails_with_users_and_watches
 from kuma.core.helpers import add_utm
 from kuma.core.urlresolvers import reverse
-from tidings.events import InstanceEvent, EventUnion
+from tidings.events import EventUnion
 
-from .helpers import revisions_unified_diff, get_compare_url
+from .helpers import get_compare_url, revisions_unified_diff
 from .models import Document
 
 
@@ -68,7 +69,8 @@ class EditDocumentEvent(InstanceEvent):
         document = revision.document
         log.debug('Sending edited notification email for document (id=%s)' %
                   document.id)
-        subject = _(u'[MDN] Page "{document_title}" changed by {creator}')
+        subject = ugettext(
+            u'[MDN] Page "{document_title}" changed by {creator}')
         context = context_dict(revision)
 
         return emails_with_users_and_watches(

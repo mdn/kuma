@@ -3,18 +3,16 @@ import functools
 import hashlib
 import random
 
-from django.conf import settings
-from django.utils.encoding import smart_str
-from django.utils.timezone import get_default_timezone
-
 import bitly_api
 import jingo
 import jinja2
 from babel import localedata
+from django.conf import settings
+from django.utils.encoding import smart_str
+from django.utils.timezone import get_default_timezone
+from django.utils.translation import ugettext, ungettext
 from jingo import register
 from taggit.models import TaggedItem
-from tower import ugettext as _
-from tower import ungettext
 
 from kuma.core.cache import memcache
 from kuma.core.urlresolvers import reverse
@@ -106,11 +104,11 @@ def submission_thumb(submission, extra_class=None, thumb_width="200",
     # TODO: Move to a constant or DB table? Too much view stuff here?
     flags_meta = {
         # flag name      thumb class     flag description
-        'firstplace': ('first-place', _('First Place')),
-        'secondplace': ('second-place', _('Second Place')),
-        'thirdplace': ('third-place', _('Third Place')),
-        'finalist': ('finalist', _('Finalist')),
-        'featured': ('featured', _('Featured')),
+        'firstplace': ('first-place', ugettext('First Place')),
+        'secondplace': ('second-place', ugettext('Second Place')),
+        'thirdplace': ('third-place', ugettext('Third Place')),
+        'finalist': ('finalist', ugettext('Finalist')),
+        'featured': ('featured', ugettext('Featured')),
     }
 
     # If there are any flags, pass them onto the template. Special treatment
@@ -276,7 +274,8 @@ def date_diff(timestamp, to=None):
             count = abs(round(delta.days / chunk, 0))
             break
 
-    date_str = (_('%(number)d %(type)s') % {'number': count, 'type': name(count)})
+    date_str = ugettext('%(number)d %(type)s') % {'number': count,
+                                                  'type': name(count)}
 
     if delta.days > 0:
         return "in " + date_str

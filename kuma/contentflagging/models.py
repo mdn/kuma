@@ -5,7 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core import urlresolvers
 from django.core.mail import send_mail
 from django.db import models
-from django.template import Context, loader
+from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 
 from kuma.core.utils import get_unique
@@ -64,11 +64,11 @@ class ContentFlagManager(models.Manager):
         if recipients:
             subject = _("{object} Flagged")
             subject = subject.format(object=object)
+            # Note: This returns a Jinja2 template b/c of jingo.Loader.
             t = loader.get_template('contentflagging/email/flagged.ltxt')
-            url = '/admin/contentflagging/contentflag/' + str(object.pk)
-            content = t.render(Context({'url': url,
-                                        'object': object,
-                                        'flag_type': flag_type}))
+            url = '/admin/contentflagging/contentflag/%s' % object.pk
+            content = t.render({'url': url, 'object': object,
+                                'flag_type': flag_type})
             send_mail(subject, content,
                       settings.DEFAULT_FROM_EMAIL, recipients)
         return cf

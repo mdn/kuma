@@ -66,7 +66,7 @@
 [submodule "vendor/src/python-magic"]
 	path = vendor/src/python-magic
 	url = git://github.com/ahupp/python-magic.git
-	ignore = untracked
+	ignore = dirty
 [submodule "vendor/src/python-memcached"]
 	path = vendor/src/python-memcached
 	url = git://github.com/linsomniac/python-memcached.git
@@ -85,9 +85,6 @@
 [submodule "vendor/src/requests-oauthlib"]
 	path = vendor/src/requests-oauthlib
 	url = git://github.com/requests/requests-oauthlib.git
-[submodule "vendor/src/tower"]
-	path = vendor/src/tower
-	url = git://github.com/clouserw/tower.git
 [submodule "vendor/src/urllib3"]
 	path = vendor/src/urllib3
 	url = git://github.com/shazow/urllib3.git
@@ -171,3 +168,9 @@
 	path = vendor/src/cookies
 	url = https://gitlab.com/sashahart/cookies.git
 	ignore = untracked
+[submodule "vendor/src/django-celery-transactions"]
+	path = vendor/src/django-celery-transactions
+	url = git://github.com/fellowshipofone/django-celery-transactions.git
+[submodule "vendor/src/puente"]
+	path = vendor/src/puente
+	url = git://github.com/mozilla/puente.git
