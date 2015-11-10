@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.utils.html import escape
+from jingo.helpers import urlparams
 
 from kuma.core.urlresolvers import reverse
-from jingo.helpers import urlparams
+
 from .models import User, UserBan
 
 
@@ -44,7 +46,7 @@ class UserAdmin(BaseUserAdmin):
         """HTML link to user's website"""
         if obj.website_url:
             return ('<a href="%(url)s"><strong>%(url)s</strong></a>' %
-                    {'url': obj.website_url})
+                    {'url': escape(obj.website_url)})
         return ""
 
     website.allow_tags = True
