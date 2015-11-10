@@ -64,6 +64,13 @@
                     return;
                 }
 
+                // bug 1222864 - prevent links to data: uris
+                if (this.href.toLowerCase().indexOf('data') === 0) {
+                    e.preventDefault();
+                    analytics.trackError('XSS Attempt', 'data href');
+                    return;
+                }
+
                 var host = this.hostname;
                 if(host && host !== location.hostname) {
                     var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);

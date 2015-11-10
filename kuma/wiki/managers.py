@@ -22,8 +22,10 @@ class BaseDocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
         allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
+        blocked_protocols = config.KUMA_WIKI_HREF_BLOCKED_PROTOCOLS
         out = (parse_content(content_in)
                .filterIframeHosts(allowed_hosts)
+               .filterAHrefProtocols(blocked_protocols)
                .serialize())
 
         if use_constance_bleach_whitelists:
