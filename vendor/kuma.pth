@@ -56,3 +56,4 @@ src/sqlparse
 src/urllib3
 src/urlobject
 src/werkzeug
+src/whitenoise
