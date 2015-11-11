@@ -1,7 +1,7 @@
 We are using English strings for gettext message ids.
 
 Instructions:
-1) ./manage.py extract 
+1) ./manage.py extract
 2) ./manage.py verbatimize --rename
    This will copy the POT files created in step 1 to templates/LC_MESSAGES
 3) ./manage.py merge
@@ -15,5 +15,5 @@ Assuming you want to add 'fr':
 2) ./manage.py merge
 
 or
-1) msginit --no-translator -l fr -i templates/LC_MESSAGES/messages.pot -o fr/LC_MESSAGES/messages.po
+1) msginit --no-translator -l fr -i templates/LC_MESSAGES/django.pot -o fr/LC_MESSAGES/django.po
 2) repeat for other POT files

@@ -56,6 +56,7 @@
             </li>
         </ul>
         <p>
+          {# Note: If you change this string also change ``WELCOME_EMAIL_STRINGS`` in kuma/users/tasks.py #}
           {% trans %}
             Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help.
           {% endtrans %}

@@ -1,5 +1,8 @@
-from django.conf import settings
+import jingo
+import jingo.monkey
 from django.apps import AppConfig
+from django.conf import settings
+from django.utils import translation
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 
@@ -11,6 +14,12 @@ class CoreConfig(AppConfig):
     """
     name = 'kuma.core'
     verbose_name = _('Core')
+
+    def ready(self):
+        super(CoreConfig, self).ready()
+
+        jingo.monkey.patch()
+        jingo.env.install_gettext_translations(translation, newstyle=True)
 
     @cached_property
     def language_mapping(self):

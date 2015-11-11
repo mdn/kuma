@@ -295,8 +295,7 @@ Adding a new Locale
 #.  BONUS: Use `podebug` to test a fake translation of the locale::
 
         $ cd locale
-        $ podebug --rewrite=bracket templates/LC_MESSAGES/messages.pot
-        ml/LC_MESSAGES/messages.po
+        $ podebug --rewrite=bracket templates/LC_MESSAGES/django.pot ml/LC_MESSAGES/django.po
         $ ./compile-mo.sh .
 
     Restart the django server and re-visit the new locale to verify it shows
