@@ -9,6 +9,7 @@
 {# L10n: This is an email. Whitespace matters! #}
 {{ _("You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your interests.") }}
 
+{# Note: If you change this string also change ``WELCOME_EMAIL_STRINGS`` in kuma/users/tasks.py #}
 {# L10n: This is an email. Whitespace matters! #}
 {{ _('Like words?') }}
 {{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1.3A_I_like_words', 'welcome') }}

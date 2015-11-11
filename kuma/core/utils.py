@@ -69,7 +69,7 @@ def smart_int(string, fallback=0):
 def strings_are_translated(strings, locale):
     # http://stackoverflow.com/a/24339946/571420
     pofile_path = os.path.join(settings.ROOT, 'locale', locale, 'LC_MESSAGES',
-                               'messages.po')
+                               'django.po')
     try:
         po = pofile(pofile_path)
     except IOError:  # in case the file doesn't exist or couldn't be parsed

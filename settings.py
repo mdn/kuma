@@ -279,8 +279,6 @@ MT_TO_KUMA_LOCALE_MAP = {
     "ka": "ka",
 }
 
-TEXT_DOMAIN = 'messages'
-
 SITE_ID = 1
 
 PROD_DETAILS_DIR = path('../product_details_json')
@@ -547,7 +545,7 @@ PUENTE = {
     },
 }
 
-# These domains will not be merged into messages.pot and will use separate PO
+# These domains will not be merged into django.pot and will use separate PO
 # files. See the following URL for an example of how to set these domains
 # in DOMAIN_METHODS.
 # http://github.com/jbalogh/zamboni/blob/d4c64239c24aa2f1e91276909823d1d1b290f0ee/settings.py#L254
