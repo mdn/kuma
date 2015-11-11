@@ -1,11 +1,8 @@
-import jingo
-import jingo.monkey
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.shortcuts import redirect
-from django.utils import translation
 from django.views.static import serve
 
 from kuma.attachments import views as attachment_views
@@ -14,9 +11,6 @@ from kuma.core import views as core_views
 from kuma.wiki.admin import purge_view
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
 
-
-jingo.monkey.patch()
-jingo.env.install_gettext_translations(translation, newstyle=True)
 
 admin.autodiscover()
 
