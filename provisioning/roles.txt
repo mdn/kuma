@@ -5,3 +5,4 @@ geerlingguy.mysql,1.5.0
 Mayeu.RabbitMQ,1.4.0
 nodesource.node
 Stouts.elasticsearch,2.5.0
+gunicorn,19.3

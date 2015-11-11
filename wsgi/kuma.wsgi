@@ -29,6 +29,10 @@ import manage
 from django.core.wsgi import get_wsgi_application
 django_app = get_wsgi_application()
 
+# Enable WhiteNoise
+from whitenoise.django import DjangoWhiteNoise
+django_app = DjangoWhiteNoise(django_app)
+
 # Normally we could let WSGIHandler run directly, but while we're dark
 # launching, we want to force the script name to be empty so we don't create
 # any /z links through reverse.  This fixes bug 554576.

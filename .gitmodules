@@ -170,3 +170,6 @@
 [submodule "vendor/src/requests-mock"]
 	path = vendor/src/requests-mock
 	url = https://github.com/openstack/requests-mock.git
+[submodule "vendor/src/whitenoise"]
+	path = vendor/src/whitenoise
+	url = https://github.com/evansd/whitenoise.git
