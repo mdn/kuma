@@ -117,3 +117,5 @@ cookies==2.2.1
 responses==0.4.0
 
 django-celery-transactions==0.3.5
+
+whitenoise==2.0.4

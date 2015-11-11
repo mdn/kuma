@@ -174,3 +174,6 @@
 [submodule "vendor/src/puente"]
 	path = vendor/src/puente
 	url = git://github.com/mozilla/puente.git
+[submodule "vendor/src/whitenoise"]
+	path = vendor/src/whitenoise
+	url = https://github.com/evansd/whitenoise.git

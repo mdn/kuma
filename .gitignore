@@ -15,7 +15,6 @@ media/uploads
 media/attachments
 media/sitemap*
 /static/*/*
-!/static/.htaccess
 !/static/fonts/.htaccess
 xfers/*
 humans.txt
