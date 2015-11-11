@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-11-02 05:06+0000\n"
+"PO-Revision-Date: 2015-10-26 08:45+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -4017,9 +4017,8 @@ msgid "Change"
 msgstr "변경"
 
 #: kuma/users/templates/users/user_edit.html:112
-#, fuzzy
 msgid "Use your Persona account to sign in."
-msgstr "로그인 하려믄 GitHub 계정을 사용하세요."
+msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:132
 msgid "Use your GitHub account to sign in."
@@ -4038,14 +4037,11 @@ msgid "Hi {username}!"
 msgstr "안녕하세요! {username}님"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
-#, fuzzy
 msgid ""
 "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer "
 "Network (MDN)</a> - a community making great resources for developers like "
 "you."
 msgstr ""
-"<a href=\"%(mdn_link)s\">Mozilla 개발자 네트워크(MDN)</a>에 참여해주셔서 감사합니다. 여러분 같은 "
-"개발자를 위한 문서 커뮤니티입니다."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:16
 #, fuzzy
