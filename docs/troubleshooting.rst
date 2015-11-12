@@ -86,6 +86,11 @@ running it. (See `Running individual processes`_.)
 -  If you see ``Kumascript service failed unexpectedly: HTTPConnectionPool``,
    make sure you enabled :ref:`KumaScript <enable KumaScript>`.
 
+-  If changes to stylesheets do not have any effect, try compiling the Stylus
+   manually by running this command in the VM::
+
+       compile-stylesheets
+
 .. _more-help:
 
 Getting more help
