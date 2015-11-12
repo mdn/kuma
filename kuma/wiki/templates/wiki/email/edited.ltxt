@@ -32,4 +32,18 @@ Edit Article:
 Article History:
 {% endtrans %}
  {{ history_url|absolutify }}
-{% if watch %}{{ unsubscribe_text(watch) }}{% endif %}{% endautoescape %}
+--
+{% if watch %}
+  {%- set title = watch.content_object.title -%}
+    {%- if watch.event_type == 'wiki edit document in tree' -%}
+
+{{ _('You are subscribed to edits on: {title} and all its sub-articles.')|f(title=title) }}
+
+    {%- else -%}
+
+{{ _('You are subscribed to edits on: {title}.')|f(title=title) }}
+
+    {% endif %}
+{{ unsubscribe_text(watch) }}
+{% endif %}
+{% endautoescape %}

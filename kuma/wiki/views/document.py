@@ -35,7 +35,7 @@ from .. import kumascript
 from ..constants import SLUG_CLEANSING_RE
 from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
                           process_document_path)
-from ..events import EditDocumentEvent
+from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import TreeMoveForm
 from ..models import (Document, DocumentDeletionLog,
                       DocumentRenderedContentNotAvailable, DocumentZone)
@@ -431,6 +431,30 @@ def subscribe(request, document_slug, document_locale):
         EditDocumentEvent.stop_notifying(request.user, document)
     else:
         EditDocumentEvent.notify(request.user, document)
+        status = 1
+
+    if request.is_ajax():
+        return JsonResponse({'status': status})
+    else:
+        return redirect(document)
+
+
+@block_user_agents
+@require_POST
+@login_required
+@process_document_path
+def subscribe_to_tree(request, document_slug, document_locale):
+    """
+    Toggle watching a tree of documents for edits.
+    """
+    document = get_object_or_404(
+        Document, locale=document_locale, slug=document_slug)
+    status = 0
+
+    if EditDocumentInTreeEvent.is_notifying(request.user, document):
+        EditDocumentInTreeEvent.stop_notifying(request.user, document)
+    else:
+        EditDocumentInTreeEvent.notify(request.user, document)
         status = 1
 
     if request.is_ajax():

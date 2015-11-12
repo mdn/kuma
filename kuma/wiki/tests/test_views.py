@@ -33,16 +33,17 @@ from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.models import IPBan
 from kuma.core.urlresolvers import reverse
+from kuma.core.tests import get_user
 from kuma.users.tests import UserTestCase, user
 
 from ..content import get_seo_description
-from ..events import EditDocumentEvent
+from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
                       DocumentTag, DocumentDeletionLog)
 from ..views.document import _get_seo_parent_title
-from . import (doc_rev, document, new_document_data, revision,
-               normalize_html, create_template_test_users,
+from . import (create_document_tree, doc_rev, document, new_document_data,
+               revision, normalize_html, create_template_test_users,
                make_translation, WikiTestCase)
 
 KUMASCRIPT_URL_RE = re.compile(r'https?://.*')
@@ -2549,6 +2550,140 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         _check_message_for_headers(testuser_message, 'testuser')
         _check_message_for_headers(admin_message, 'admin')
 
+    @attr('edit_emails')
+    @mock.patch.object(Site.objects, 'get_current')
+    def test_email_for_watched_edits(self, get_current):
+        """
+        When a user edits a watched document, we should send an email to users
+        who are watching it.
+        """
+        get_current.return_value.domain = 'dev.mo.org'
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        rev = revision(save=True)
+
+        testuser2 = get_user(username='testuser2')
+        EditDocumentEvent.notify(testuser2, rev.document)
+
+        data.update({'form': 'rev',
+                     'slug': rev.document.slug,
+                     'title': rev.document.title,
+                     'content': 'This edit should send an email',
+                     'comment': 'This edit should send an email'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[rev.document.slug]),
+                         data)
+        self.assertEquals(1, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
+        assert rev.document.title in message.body
+        assert 'sub-articles' not in message.body
+
+        # Subscribe another user and assert 2 emails sent this time
+        mail.outbox = []
+        testuser01 = get_user(username='testuser01')
+        EditDocumentEvent.notify(testuser01, rev.document)
+
+        data.update({'form': 'rev',
+                     'slug': rev.document.slug,
+                     'content': 'This edit should send 2 emails',
+                     'comment': 'This edit should send 2 emails'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[rev.document.slug]),
+                         data)
+        self.assertEquals(2, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
+        assert rev.document.title in message.body
+        assert 'sub-articles' not in message.body
+
+        message = mail.outbox[1]
+        assert testuser01.email in message.to
+        assert rev.document.title in message.body
+        assert 'sub-articles' not in message.body
+
+    @attr('edit_emails')
+    @mock.patch.object(Site.objects, 'get_current')
+    def test_email_for_child_edit_in_watched_tree(self, get_current):
+        """
+        When a user edits a child document in a watched document tree, we
+        should send an email to users who are watching the tree.
+        """
+        get_current.return_value.domain = 'dev.mo.org'
+        root_doc, child_doc, grandchild_doc = create_document_tree()
+
+        testuser2 = get_user(username='testuser2')
+        EditDocumentInTreeEvent.notify(testuser2, root_doc)
+
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        data.update({'form': 'rev',
+                     'slug': child_doc.slug,
+                     'content': 'This edit should send an email',
+                     'comment': 'This edit should send an email'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[child_doc.slug]),
+                         data)
+        eq_(1, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
+        assert 'sub-articles' in message.body
+
+    @attr('edit_emails')
+    @mock.patch.object(Site.objects, 'get_current')
+    def test_email_for_grandchild_edit_in_watched_tree(self, get_current):
+        """
+        When a user edits a grandchild document in a watched document tree, we
+        should send an email to users who are watching the tree.
+        """
+        get_current.return_value.domain = 'dev.mo.org'
+        root_doc, child_doc, grandchild_doc = create_document_tree()
+
+        testuser2 = get_user(username='testuser2')
+        EditDocumentInTreeEvent.notify(testuser2, root_doc)
+
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        data.update({'form': 'rev',
+                     'slug': grandchild_doc.slug,
+                     'content': 'This edit should send an email',
+                     'comment': 'This edit should send an email'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[grandchild_doc.slug]),
+                         data)
+        eq_(1, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
+        assert 'sub-articles' in message.body
+
+    @attr('edit_emails')
+    @mock.patch.object(Site.objects, 'get_current')
+    def test_single_email_when_watching_doc_and_tree(self, get_current):
+        """
+        When a user edits a watched document in a watched document tree, we
+        should only send a single email to users who are watching both the
+        document and the tree.
+        """
+        get_current.return_value.domain = 'dev.mo.org'
+        root_doc, child_doc, grandchild_doc = create_document_tree()
+
+        testuser2 = get_user(username='testuser2')
+        EditDocumentInTreeEvent.notify(testuser2, root_doc)
+        EditDocumentEvent.notify(testuser2, child_doc)
+
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        data.update({'form': 'rev',
+                     'slug': child_doc.slug,
+                     'content': 'This edit should send an email',
+                     'comment': 'This edit should send an email'})
+        self.client.post(reverse('wiki.edit',
+                                 args=[child_doc.slug]),
+                         data)
+        eq_(1, len(mail.outbox))
+        message = mail.outbox[0]
+        assert testuser2.email in message.to
+
 
 class DocumentWatchTests(UserTestCase, WikiTestCase):
     """Tests for un/subscribing to document edit notifications."""
@@ -2556,43 +2691,50 @@ class DocumentWatchTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
         super(DocumentWatchTests, self).setUp()
+        self.subscribe_views = [
+            ('wiki.subscribe', EditDocumentEvent),
+            ('wiki.subscribe_to_tree', EditDocumentInTreeEvent)
+        ]
         self.document, self.r = doc_rev()
         self.client.login(username='testuser', password='testpass')
 
     def test_watch_GET_405(self):
         """Watch document with HTTP GET results in 405."""
-        response = self.client.get(reverse('wiki.subscribe',
-                                           args=[self.document.slug]),
-                                   follow=True)
-        eq_(405, response.status_code)
+        for view, Event in self.subscribe_views:
+            response = self.client.get(reverse(view,
+                                               args=[self.document.slug]),
+                                       follow=True)
+            eq_(405, response.status_code)
 
     def test_unwatch_GET_405(self):
         """Unwatch document with HTTP GET results in 405."""
-        response = self.client.get(reverse('wiki.subscribe',
-                                           args=[self.document.slug]),
-                                   follow=True)
-        eq_(405, response.status_code)
+        for view, Event in self.subscribe_views:
+            response = self.client.get(reverse(view,
+                                               args=[self.document.slug]),
+                                       follow=True)
+            eq_(405, response.status_code)
 
     def test_watch_unwatch(self):
         """Watch and unwatch a document."""
         user = self.user_model.objects.get(username='testuser')
 
-        # Subscribe
-        response = self.client.post(reverse('wiki.subscribe',
-                                            args=[self.document.slug]),
-                                    follow=True)
+        for view, Event in self.subscribe_views:
+            # Subscribe
+            response = self.client.post(reverse(view,
+                                                args=[self.document.slug]),
+                                        follow=True)
 
-        eq_(200, response.status_code)
-        assert EditDocumentEvent.is_notifying(user, self.document), \
-            'Watch was not created'
+            eq_(200, response.status_code)
+            assert Event.is_notifying(user, self.document), \
+                'Watch was not created'
 
-        # Unsubscribe
-        response = self.client.post(reverse('wiki.subscribe',
-                                            args=[self.document.slug]),
-                                    follow=True)
-        eq_(200, response.status_code)
-        assert not EditDocumentEvent.is_notifying(user, self.document), \
-            'Watch was not destroyed'
+            # Unsubscribe
+            response = self.client.post(reverse(view,
+                                                args=[self.document.slug]),
+                                        follow=True)
+            eq_(200, response.status_code)
+            assert not Event.is_notifying(user, self.document), \
+                'Watch was not destroyed'
 
 
 class SectionEditingResourceTests(UserTestCase, WikiTestCase):

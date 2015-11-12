@@ -6,6 +6,7 @@ from tidings.events import InstanceEvent
 from kuma.core.email_utils import emails_with_users_and_watches
 from kuma.core.helpers import add_utm
 from kuma.core.urlresolvers import reverse
+from tidings.events import EventUnion
 
 from .helpers import get_compare_url, revisions_unified_diff
 from .models import Document
@@ -79,3 +80,20 @@ class EditDocumentEvent(InstanceEvent):
             context_vars=context,
             users_and_watches=users_and_watches,
             default_locale=document.locale)
+
+    def fire(self, **kwargs):
+        parent_events = [EditDocumentInTreeEvent(doc) for doc in
+                         self.revision.document.get_topic_parents()]
+        return EventUnion(self,
+                          EditDocumentInTreeEvent(self.revision.document),
+                          *parent_events).fire(**kwargs)
+
+
+class EditDocumentInTreeEvent(InstanceEvent):
+    """
+    Event class for subscribing to all document edits to and under a document
+
+    Note: Do not call this class's .fire() method directly.
+    """
+    event_type = 'wiki edit document in tree'
+    content_type = Document

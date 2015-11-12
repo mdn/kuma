@@ -201,3 +201,20 @@ def create_topical_parents_docs():
     d2.parent_topic = d1
     d2.save()
     return d1, d2
+
+
+def create_document_tree():
+    root_doc = document(title="Root", slug="Root", save=True)
+    revision(document=root_doc, title="Root", slug="Root", save=True)
+    child_doc = document(title="Child", slug="Child", save=True)
+    child_doc.parent_topic = root_doc
+    child_doc.save()
+    revision(document=child_doc, title="Child", slug="Child", save=True)
+    grandchild_doc = document(title="Grandchild", slug="Grandchild",
+                              save=True)
+    grandchild_doc.parent_topic = child_doc
+    grandchild_doc.save()
+    revision(document=grandchild_doc, title="Grandchild",
+             slug="Grandchild", save=True)
+
+    return root_doc, child_doc, grandchild_doc

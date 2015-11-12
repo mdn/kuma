@@ -137,6 +137,11 @@
         var $link = $(this);
         if($link.hasClass('disabled')) return;
 
+        mdn.analytics.trackEvent({
+            category: 'Page Watch',
+            action: $link.text().trim()
+        });
+
         var $form = $link.closest('form');
 
         var notification = mdn.Notifier.growl($link.data('subscribe-status'), { duration: 0 });
@@ -149,7 +154,6 @@
         }).done(function(data) {
 
             var message;
-            data = JSON.parse(data);
             if(Number(data.status) === 1) {
                 $link.text($link.data('unsubscribe-text'));
                 message = $link.data('subscribe-message');
