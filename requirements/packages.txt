@@ -48,6 +48,3 @@ polib==1.0.7
 Pygments==2.0.2
 
 diff-match-patch==20121119
-
-# FIXME: heavily out-dated
-GitPython==0.1.7
