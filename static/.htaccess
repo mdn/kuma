@@ -1,29 +1,16 @@
+# Set far-future Expires headers for static media
 ExpiresActive on
+
+ExpiresDefault "access plus 1 week"
+ExpiresByType text/css "access plus 1 year"
+ExpiresByType text/javascript "access plus 1 year"
+ExpiresByType image/png "access plus 1 month"
+ExpiresByType image/jpeg "access plus 1 month"
+ExpiresByType image/gif "access plus 1 month"
+ExpiresByType image/vnd.microsoft.icon "access plus 1 month"
+ExpiresByType video/webm "access plus 1 week"
+ExpiresByType video/ogg "access plus 1 week"
+ExpiresByType video/x-flv "access plus 1 week"
+ExpiresByType application/x-shockwave-flash "access plus 1 week"
+
 FileETag MTime
-
-# Versioned assets (assets that contain an MD5 hash in the filename) never need
-# to expire. The longest valid Expires header is "access + 1 year".
-<If "%{REQUEST_FILENAME} =~ /\.[a-f0-9]{12}\./">
-    ExpiresDefault "access plus 1 year"
-</If>
-
-# Non-versioned assets should expire sooner
-<Else>
-    ExpiresDefault "access plus 1 week"
-
-    ExpiresByType text/css "access plus 1 year"
-    ExpiresByType text/javascript "access plus 1 year"
-    ExpiresByType image/png "access plus 1 month"
-    ExpiresByType image/jpeg "access plus 1 month"
-    ExpiresByType image/gif "access plus 1 month"
-    ExpiresByType image/vnd.microsoft.icon "access plus 1 month"
-    ExpiresByType video/webm "access plus 1 week"
-    ExpiresByType video/ogg "access plus 1 week"
-    ExpiresByType video/x-flv "access plus 1 week"
-    ExpiresByType application/x-shockwave-flash "access plus 1 week"
-
-    # Fonts
-    <FilesMatch "\.(ttf|woff|woff2|eot)$">
-        ExpiresDefault "access plus 2 weeks"
-    </FilesMatch>
-</Else>
