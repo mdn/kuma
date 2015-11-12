@@ -60,7 +60,7 @@ def preview(request):
     if render_preview:
         wiki_content, kumascript_errors = kumascript.post(request,
                                                           wiki_content,
-                                                          request.locale)
+                                                          request.LANGUAGE_CODE)
     # TODO: Get doc ID from JSON.
     context = {
         'content': wiki_content,

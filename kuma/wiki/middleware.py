@@ -28,7 +28,7 @@ class DocumentZoneMiddleware(object):
         if request.method == 'POST' and '$subscribe' in request.path:
             return None
 
-        remaps = DocumentZoneURLRemapsJob().get(request.locale)
+        remaps = DocumentZoneURLRemapsJob().get(request.LANGUAGE_CODE)
         for original_path, new_path in remaps:
 
             if (
@@ -40,7 +40,7 @@ class DocumentZoneMiddleware(object):
                 new_path = request.path_info.replace(original_path,
                                                      new_path,
                                                      1)
-                new_path = '/%s%s' % (request.locale, new_path)
+                new_path = '/%s%s' % (request.LANGUAGE_CODE, new_path)
 
                 query = request.GET.copy()
                 if 'lang' in query:

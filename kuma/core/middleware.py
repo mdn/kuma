@@ -53,7 +53,7 @@ class LocaleURLMiddleware(object):
             return response
 
         request.path_info = '/' + prefixer.shortened_path
-        request.locale = prefixer.locale
+        request.LANGUAGE_CODE = prefixer.locale
         translation.activate(prefixer.locale)
 
     def process_response(self, request, response):

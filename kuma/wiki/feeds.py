@@ -33,7 +33,7 @@ class DocumentsFeed(Feed):
         if 'all_locales' in request.GET:
             self.locale = None
         else:
-            self.locale = request.locale
+            self.locale = request.LANGUAGE_CODE
         return super(DocumentsFeed, self).__call__(request, *args, **kwargs)
 
     def feed_extra_kwargs(self, obj):

@@ -43,10 +43,10 @@ class LanguageFilterBackend(BaseFilterBackend):
 
         sq = queryset.to_dict().pop('query', query.MatchAll().to_dict())
 
-        if request.locale == settings.LANGUAGE_CODE:
-            locales = [request.locale]
+        if request.LANGUAGE_CODE == settings.LANGUAGE_CODE:
+            locales = [request.LANGUAGE_CODE]
         else:
-            locales = [request.locale, settings.LANGUAGE_CODE]
+            locales = [request.LANGUAGE_CODE, settings.LANGUAGE_CODE]
 
         positive_sq = {
             'filtered': {
@@ -57,7 +57,7 @@ class LanguageFilterBackend(BaseFilterBackend):
         negative_sq = {
             'bool': {
                 'must_not': [
-                    {'term': {'locale': request.locale}}
+                    {'term': {'locale': request.LANGUAGE_CODE}}
                 ]
             }
         }

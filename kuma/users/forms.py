@@ -106,14 +106,14 @@ class NewsletterForm(forms.Form):
         subscription_details = self.get_subscription_details(email)
         if 'subscribe_needed' in self.cleaned_data:
             optin = 'N'
-            if request.locale == 'en-US':
+            if request.LANGUAGE_CODE == 'en-US':
                 optin = 'Y'
             basket_data = {
                 'email': email,
                 'newsletters': settings.BASKET_APPS_NEWSLETTER,
                 'country': self.cleaned_data['country'],
                 'format': self.cleaned_data['format'],
-                'lang': request.locale,
+                'lang': request.LANGUAGE_CODE,
                 'optin': optin,
                 'source_url': request.build_absolute_uri()
             }

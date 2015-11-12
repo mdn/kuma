@@ -72,9 +72,9 @@ def autosuggest_documents(request):
     if locale:
         docs = docs.filter(locale=locale)
     if current_locale:
-        docs = docs.filter(locale=request.locale)
+        docs = docs.filter(locale=request.LANGUAGE_CODE)
     if exclude_current_locale:
-        docs = docs.exclude(locale=request.locale)
+        docs = docs.exclude(locale=request.LANGUAGE_CODE)
 
     # Generates a list of acceptable docs
     docs_list = []

@@ -36,7 +36,7 @@ def documents(request, category=None, tag=None):
             if matching_tag.name.lower() == tag.lower():
                 tag_obj = matching_tag
                 break
-    docs = Document.objects.filter_for_list(locale=request.locale,
+    docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
                                             category=category_id,
                                             tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
@@ -83,7 +83,7 @@ def needs_review(request, tag=None):
     Lists wiki documents with revisions flagged for review
     """
     tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
-    docs = Document.objects.filter_for_review(locale=request.locale,
+    docs = Document.objects.filter_for_review(locale=request.LANGUAGE_CODE,
                                               tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
@@ -102,8 +102,8 @@ def with_localization_tag(request, tag=None):
     Lists wiki documents with localization tag
     """
     tag_obj = tag and get_object_or_404(LocalizationTag, name=tag) or None
-    docs = Document.objects.filter_with_localization_tag(locale=request.locale,
-                                                         tag=tag_obj)
+    docs = Document.objects.filter_with_localization_tag(
+        locale=request.LANGUAGE_CODE, tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
@@ -120,7 +120,8 @@ def with_errors(request):
     """
     Lists wiki documents with (KumaScript) errors
     """
-    docs = Document.objects.filter_for_list(locale=request.locale, errors=True)
+    docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
+                                            errors=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
@@ -134,7 +135,7 @@ def with_errors(request):
 @require_GET
 def without_parent(request):
     """Lists wiki documents without parent (no English source document)"""
-    docs = Document.objects.filter_for_list(locale=request.locale,
+    docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
                                             noparent=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
@@ -149,7 +150,7 @@ def without_parent(request):
 @require_GET
 def top_level(request):
     """Lists documents directly under /docs/"""
-    docs = Document.objects.filter_for_list(locale=request.locale,
+    docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
                                             toplevel=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {

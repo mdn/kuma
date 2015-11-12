@@ -116,7 +116,7 @@ def create(request):
 
         submitted_data = request.POST.copy()
         posted_slug = submitted_data['slug']
-        submitted_data['locale'] = request.locale
+        submitted_data['locale'] = request.LANGUAGE_CODE
         if parent_slug:
             submitted_data['parent_topic'] = initial_parent_id
 

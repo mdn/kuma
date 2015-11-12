@@ -32,7 +32,7 @@ def locale_and_slug_from_path(path, request=None, path_locale=None):
     # No locale yet? Try the locale detected by the request or in path
     if locale == '':
         if request:
-            locale = request.locale
+            locale = request.LANGUAGE_CODE
         elif path_locale:
             locale = path_locale
 

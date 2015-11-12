@@ -19,7 +19,7 @@ class TestWelcomeEmails(UserTestCase):
 
     def setup_request_for_messages(self):
         request = self.rf.get('/')
-        request.locale = 'en-US'
+        request.LANGUAGE_CODE = 'en-US'
         session = self.client.session
         session.save()
         request.session = session
@@ -95,7 +95,7 @@ class TestWelcomeEmails(UserTestCase):
                                                     email='welcome2@tester.com',
                                                     verified=False)
         request = self.rf.get('/')
-        request.locale = 'en-US'
+        request.LANGUAGE_CODE = 'en-US'
 
         # emulate the phase in which the request for email confirmation is
         # sent as the user's email address is not verified

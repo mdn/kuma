@@ -6,9 +6,9 @@
 {% from "wiki/includes/approvals.html" import get_approvals_html with context %}
 
 {% if fallback_reason == 'no_translation' %}
-  {% set help_link = url('wiki.translate', document_path=document.slug, locale=document.locale)|urlparams(tolocale=request.locale) %}
+  {% set help_link = url('wiki.translate', document_path=document.slug, locale=document.locale)|urlparams(tolocale=request.LANGUAGE_CODE) %}
 {% elif fallback_reason == 'translation_not_approved' %}
-  {% set help_link = url('wiki.translate', document_path=document.parent.slug, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
+  {% set help_link = url('wiki.translate', document_path=document.parent.slug, locale=document.parent.locale)|urlparams(tolocale=request.LANGUAGE_CODE) %}
 {% endif %}
 
 {% set is_logged_in = request.user.is_authenticated() %}
@@ -315,7 +315,7 @@
               {% endif %}
               {% if fallback_reason %}
                 <div id="doc-pending-fallback" class="warning">
-                  {% trans help_link=help_link, locale=settings.LOCALES[request.locale].native %}
+                  {% trans help_link=help_link, locale=settings.LOCALES[request.LANGUAGE_CODE].native %}
                     Our volunteers haven't translated this article into {{ locale }} yet.
                     <a href="{{ help_link }}">Join us and help get the job done!</a>
                   {% endtrans %}

@@ -89,5 +89,5 @@ def suggestions(request):
 def plugin(request):
     """Render an OpenSearch Plugin."""
     return render(request, 'search/plugin.html', {
-        'locale': request.locale
+        'locale': request.LANGUAGE_CODE
     }, content_type='application/opensearchdescription+xml')
