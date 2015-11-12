@@ -227,7 +227,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
          "learn_more": (
              (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension')),
              (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/HTML5_audio')),
-             (_('W3C Spec'), _('http://www.w3.org/TR/html5/video.html#audio')),
+             (_('W3C Spec'), _('http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element')),
          )},
         {"tag_name": "tech:canvas",
          "title": _("Canvas"),
@@ -235,7 +235,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
          "learn_more": (
              (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/HTML/Canvas')),
              (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Canvas_element')),
-             (_('W3C Spec'), _('http://www.w3.org/TR/html5/the-canvas-element.html')),
+             (_('W3C Spec'), _('http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element')),
          )},
         {"tag_name": "tech:css3",
          "title": _("CSS3"),
@@ -345,7 +345,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
          "learn_more": (
              (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video')),
              (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/HTML5_video')),
-             (_('W3C Spec'), _('http://www.w3.org/TR/html5/video.html')),
+             (_('W3C Spec'), _('http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element')),
          )},
         {"tag_name": "tech:webgl",
          "title": _("WebGL"),
