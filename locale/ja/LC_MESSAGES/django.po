@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-11-12 19:13+0000\n"
+"PO-Revision-Date: 2015-11-12 19:49+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -4087,6 +4087,8 @@ msgid ""
 "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what "
 "you're interested in on MDN and ask questions about the site."
 msgstr ""
+"メーリングリスト: <a href=\"%(list_link)s\">購読を開始</a> して、MDN "
+"上であなたが興味のあることを教えてください。サイトに関する質問もお気軽にどうぞ。"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:43
 msgid ""
@@ -4096,12 +4098,19 @@ msgid ""
 "Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
+"リアルタイムチャット: <a href=\"%(channel_link)s\">irc.mozilla.org 上の #mdn チャンネル</a> "
+"を使ってください (<a href=\"%(irc_link)s\">IRC の詳細はこちら</a>)。MDN の編集スタッフの Eric "
+"Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian "
+"Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet "
+"Swisher (jms) が常駐しています。"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:51
 msgid ""
 "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for "
 "the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 msgstr ""
+"ブログ: <a href=\"%(blog_link)s\">about:community</a> ブログ上で、<a "
+"href=\"%(tagged_link)s\">Developer Engagement</a> タグの付いた記事を探してみてください。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/html.ltxt:59
@@ -4109,7 +4118,7 @@ msgstr ""
 msgid ""
 "Don't be shy, if you have any doubt, problems, questions: contact us! We are"
 " here to help."
-msgstr ""
+msgstr "遠慮はいりません。疑問や問題があればぜひご連絡ください。私たちはいつでもお手伝いします。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:3
@@ -4122,6 +4131,8 @@ msgid ""
 "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a "
 "community making great resources for developers like you."
 msgstr ""
+"Mozilla Developer Network (MDN) "
+"にプロファイルを作成していただき、ありがとうございます。ここはあなたのような開発者のための優れた資料を作成しているコミュニティです。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:12
@@ -4130,26 +4141,28 @@ msgid ""
 "profile. Now, keep going by picking a task on MDN, and doing it! We have a "
 "bunch of intro tasks you can choose based on your interests."
 msgstr ""
+"あなたはプロファイルを作成することで MDN に参加する最初のステップを完了しました。次に、MDN "
+"で取り組みたいタスクを選んで、実際に始めてみましょう！ 興味に応じて選択可能な入門的タスクはたくさんあります。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:19
 msgid "Like words?"
-msgstr ""
+msgstr "単語が好きですか？"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:23
 msgid "Like code?"
-msgstr ""
+msgstr "コードが好きですか？"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:27
 msgid "Like both words and code?"
-msgstr ""
+msgstr "単語とコードの両方が好きですか？"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:31
 msgid "Want to translate MDN to your language?"
-msgstr ""
+msgstr "MDN をあなたの言語に翻訳したいですか？"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
@@ -4163,6 +4176,12 @@ msgid ""
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. "
 "* Blog: %(blog_link)s"
 msgstr ""
+"MDN について誰かと話がしたいですか？ それにはいくつかの方法があります。 * メーリングリスト: %(list_link)s を購読して、MDN "
+"上であなたが興味のあることを教えてください。サイトに関する質問もお気軽にどうぞ。 * リアルタイムチャット: irc.mozilla.org 上の "
+"#mdn チャンネルを使ってください (IRC の詳細は %(irc_link)s を見てください)。MDN の編集スタッフの Eric "
+"Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian "
+"Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet "
+"Swisher (jms) が常駐しています。 * ブログ: %(blog_link)s"
 
 #: kuma/wiki/apps.py:54
 msgid "Wiki"
