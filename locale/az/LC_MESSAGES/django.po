@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-03-03 14:56+0000\n"
-"Last-Translator: Vusal <vusal_hasanov@outlook.com>\n"
+"PO-Revision-Date: 2015-11-11 23:45+0000\n"
+"Last-Translator: Emin Mastizada <emin@mastizada.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
@@ -124,9 +124,8 @@ msgstr "Bağlamaları necə işlədəcəyinizi öyrənin"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:16
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:23
-#, fuzzy
 msgid "Attach Files"
-msgstr "Bağlamalar"
+msgstr "Fayllar Əlavə et"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:21
 msgid ""
@@ -1076,7 +1075,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:295 kuma/landing/templates/landing/homepage.html:84
 msgid "HTML5"
-msgstr ""
+msgstr "HTML5"
 
 #: kuma/demos/__init__.py:296
 msgid ""
@@ -1176,7 +1175,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:335
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: kuma/demos/__init__.py:336
 msgid ""
@@ -1198,7 +1197,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:343
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: kuma/demos/__init__.py:344
 msgid ""
@@ -1218,7 +1217,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:348
 msgid "http://www.w3.org/TR/html5/video.html"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/video.html"
 
 #: kuma/demos/__init__.py:352
 msgid ""
@@ -1244,7 +1243,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:359
 msgid "WebSockets"
-msgstr ""
+msgstr "WebSocket-lər"
 
 #: kuma/demos/__init__.py:360
 msgid ""
@@ -1286,7 +1285,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:375
 msgid "XMLHttpRequest"
-msgstr ""
+msgstr "XMLHttpRequest"
 
 #: kuma/demos/__init__.py:376
 msgid ""
@@ -1329,7 +1328,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:394
 msgid "MPL/GPL/LGPL"
-msgstr ""
+msgstr "MPL/GPL/LGPL"
 
 #: kuma/demos/__init__.py:395
 msgid "http://www.mozilla.org/MPL/"
@@ -1337,7 +1336,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:397
 msgid "GPL"
-msgstr ""
+msgstr "GPL"
 
 #: kuma/demos/__init__.py:398
 msgid "http://www.opensource.org/licenses/gpl-license.php"
@@ -1345,11 +1344,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:400
 msgid "BSD"
-msgstr ""
+msgstr "BSD"
 
 #: kuma/demos/__init__.py:401
 msgid "http://www.opensource.org/licenses/bsd-license.php"
-msgstr ""
+msgstr "http://www.opensource.org/licenses/bsd-license.php"
 
 #: kuma/demos/__init__.py:403
 msgid "Apache"
@@ -1357,7 +1356,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:404
 msgid "http://www.apache.org/licenses/"
-msgstr ""
+msgstr "http://www.apache.org/licenses/"
 
 #: kuma/demos/__init__.py:406
 msgid "Public Domain (where applicable by law)"
@@ -1365,7 +1364,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:407
 msgid "http://creativecommons.org/publicdomain/zero/1.0/"
-msgstr ""
+msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
 
 #: kuma/demos/admin.py:38
 msgid "Censored %(item)s"
@@ -1462,30 +1461,30 @@ msgstr ""
 #: kuma/demos/helpers.py:268
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "il"
+msgstr[1] "il"
 
 #: kuma/demos/helpers.py:269
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ay"
+msgstr[1] "ay"
 
 #: kuma/demos/helpers.py:270
 msgid "week"
 msgid_plural "weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "həftə"
+msgstr[1] "həftə"
 
 #: kuma/demos/helpers.py:271
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "gün"
+msgstr[1] "gün"
 
 #: kuma/demos/helpers.py:279
 msgid "%(number)d %(type)s"
-msgstr ""
+msgstr "%(number)d %(type)s"
 
 #: kuma/demos/helpers.py:306
 msgid "%(number)d year ago"
@@ -2064,7 +2063,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/launch.html:77
 msgid "Back"
-msgstr ""
+msgstr "Geri"
 
 #: kuma/demos/templates/demos/launch.html:86
 msgid "Remove this toolbar"
@@ -2486,7 +2485,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:97 templates/base.html:155
 msgid "Add-ons"
-msgstr ""
+msgstr "Əlavələr"
 
 #: kuma/landing/templates/landing/homepage.html:101
 msgid "Developer<br />Tools"
@@ -2510,7 +2509,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:111
 msgid "Connect"
-msgstr ""
+msgstr "Qoşul"
 
 #: kuma/landing/templates/landing/homepage.html:112
 msgid ""
@@ -2665,7 +2664,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/promote_buttons.html:117
 msgid "Web"
-msgstr ""
+msgstr "Web"
 
 #: kuma/landing/templates/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
@@ -2848,7 +2847,7 @@ msgstr ""
 
 #: kuma/search/templates/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "Nəticələr"
 
 #: kuma/search/templates/search/results.html:74
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
@@ -2895,7 +2894,7 @@ msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Bütün nəticələr göstərilir."
 
 #: kuma/search/templates/search/results.html:121
 msgid "Showing results %(start)s to %(end)s."
@@ -3076,7 +3075,7 @@ msgstr ""
 
 #: kuma/users/models.py:51
 msgid "Language"
-msgstr ""
+msgstr "Dil"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
@@ -3090,30 +3089,30 @@ msgstr ""
 
 #: kuma/users/models.py:70
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #: kuma/users/models.py:75
 msgid "Organization"
-msgstr ""
+msgstr "Təşkilat"
 
 #: kuma/users/models.py:80
 msgid "Location"
-msgstr ""
+msgstr "Mövqe"
 
 #: kuma/users/models.py:85
 msgid "About Me"
-msgstr ""
+msgstr "Mənim Haqqımda"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
-msgstr ""
+msgstr "IRC ləqəbi"
 
 #: kuma/users/models.py:94
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:27
 #: kuma/wiki/templates/wiki/create.html:75
 #: kuma/wiki/templates/wiki/edit.html:176
 msgid "Tags"
-msgstr ""
+msgstr "Teqlər"
 
 #: kuma/users/models.py:102
 msgid "Enter a valid website URL."
@@ -3169,7 +3168,7 @@ msgstr ""
 
 #: kuma/users/views.py:237
 msgid "Email address"
-msgstr ""
+msgstr "E-poçt ünvanı"
 
 #: kuma/users/views.py:296
 msgid "%(email)s <b>Verified</b>"
@@ -3272,11 +3271,11 @@ msgstr ""
 
 #: kuma/users/templates/account/login.html:3
 msgid "Sign In"
-msgstr ""
+msgstr "Daxil ol"
 
 #: kuma/users/templates/account/login.html:11
 msgid "Please sign in"
-msgstr ""
+msgstr "Lütfən daxil olun"
 
 #: kuma/users/templates/account/login.html:13
 msgid ""
@@ -3290,7 +3289,7 @@ msgstr ""
 #: kuma/users/templates/account/logout.html:17
 #: templates/includes/common_macros.html:40
 msgid "Sign Out"
-msgstr ""
+msgstr "Çıx"
 
 #: kuma/users/templates/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -4328,9 +4327,8 @@ msgid "Create a New {title}"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/create.html:30
-#, fuzzy
 msgid "Create a"
-msgstr "Yarat"
+msgstr "Yarat:"
 
 #: kuma/wiki/templates/wiki/create.html:30
 msgid "New Document"
