@@ -1,20 +1,18 @@
-from django.core.exceptions import MultipleObjectsReturned
-
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.core import mail
+from django.core.exceptions import MultipleObjectsReturned
 from django.db import IntegrityError
 from django.http import HttpRequest
-
-from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import get_unique
 from kuma.demos.models import Submission
 from kuma.demos.tests.test_models import save_valid_submission
-from kuma.wiki.models import Document
 from kuma.users.tests import UserTransactionTestCase
+from kuma.wiki.models import Document
 
 from .models import ContentFlag
 

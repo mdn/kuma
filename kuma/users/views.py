@@ -30,7 +30,6 @@ from .models import User, UserBan
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
 
-
 # TODO: Make this dynamic, editable from admin interface
 INTEREST_SUGGESTIONS = [
     "audio", "canvas", "css3", "device", "files", "fonts",

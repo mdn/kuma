@@ -1,7 +1,6 @@
 import mock
-from nose.tools import ok_, eq_
-
 from django.utils import translation
+from nose.tools import eq_, ok_
 
 from kuma.wiki.search import WikiDocumentType
 

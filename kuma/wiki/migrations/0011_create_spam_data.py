@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import migrations
+
 from kuma.spam.constants import SPAM_CHECKS_FLAG
 from kuma.wiki.constants import SPAM_EXEMPTED_FLAG
 

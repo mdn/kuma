@@ -1,10 +1,10 @@
-from django.test import SimpleTestCase
-from constance.test import override_config
-from nose.plugins.attrib import attr
-from waffle.models import Flag
 import mock
 import requests
 import responses
+from constance.test import override_config
+from django.test import SimpleTestCase
+from nose.plugins.attrib import attr
+from waffle.models import Flag
 
 from ..akismet import Akismet, AkismetError
 from ..constants import (CHECK_URL_RE, HAM_URL_RE, SPAM_CHECKS_FLAG,

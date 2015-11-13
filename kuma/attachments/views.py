@@ -5,8 +5,8 @@ import jinja2
 from constance import config
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import (Http404, HttpResponse, HttpResponsePermanentRedirect,
-                         HttpResponseRedirect)
+from django.http import (Http404, HttpResponse,
+                         HttpResponsePermanentRedirect, HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
@@ -19,9 +19,8 @@ from kuma.wiki.models import Document
 
 from .forms import AttachmentRevisionForm
 from .models import Attachment
-from .utils import (allow_add_attachment_by, attachments_payload,
-                    convert_to_http_date)
-
+from .utils import (allow_add_attachment_by,
+                    attachments_payload, convert_to_http_date)
 
 # Mime types used on MDN
 OVERRIDE_MIMETYPES = {

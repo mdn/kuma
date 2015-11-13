@@ -1,28 +1,26 @@
-import mock
 import json
-from urlparse import urlparse, parse_qs
+from urlparse import parse_qs, urlparse
 
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
-from pyquery import PyQuery as pq
-
-from django.conf import settings
-from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
-from django.contrib.sites.models import Site
-from django.core.paginator import PageNotAnInteger
-
+import mock
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.tests import MockedResponse, mocked_response
+from django.conf import settings
+from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
+from django.contrib.sites.models import Site
+from django.core.paginator import PageNotAnInteger
+from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
 
 from kuma.core.tests import mock_lookup_user
 from kuma.core.urlresolvers import reverse
 
-from . import UserTestCase, user, email
+from . import UserTestCase, email, user
 from ..models import UserBan
-from ..signup import SignupForm
 from ..providers.github.provider import KumaGitHubProvider
+from ..signup import SignupForm
 
 TESTUSER_PASSWORD = 'testpass'
 

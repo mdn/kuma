@@ -1,9 +1,8 @@
+from constance.test import override_config
 from nose.tools import eq_, ok_
 
-from constance.test import override_config
-
-from kuma.core.urlresolvers import reverse
 from kuma.core.tests import KumaTestCase
+from kuma.core.urlresolvers import reverse
 
 
 class HomeTests(KumaTestCase):

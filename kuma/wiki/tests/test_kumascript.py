@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-import json
 import base64
+import json
 
 import mock
 from nose.tools import eq_, ok_
 
 from kuma.wiki import kumascript
+
 from . import WikiTestCase, document
 
 

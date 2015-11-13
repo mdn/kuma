@@ -1,13 +1,12 @@
+import fileinput
 import json
 from os import makedirs
 from os.path import dirname, exists, isdir
 
-import fileinput
+from django.test import TestCase
 from nose.tools import assert_equal, ok_
 
-from django.test import TestCase
-
-from .models import HumansTXT, Human
+from .models import Human, HumansTXT
 
 APP_DIR = dirname(__file__)
 CONTRIBUTORS_JSON = "%s/fixtures/contributors.json" % APP_DIR

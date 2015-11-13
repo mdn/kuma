@@ -1,10 +1,8 @@
 import logging
 
+from celery.task import task
 from django.conf import settings
 from django.core.mail import mail_admins
-
-from celery.task import task
-
 
 log = logging.getLogger('kuma.search.tasks')
 

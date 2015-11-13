@@ -1,4 +1,5 @@
 from django.utils import six
+
 from kuma.core.tests import KumaTestCase
 
 from ..jobs import KumaJob

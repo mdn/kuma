@@ -1,10 +1,10 @@
+import pyquery
 from django.test import RequestFactory
 from nose.tools import eq_
-import pyquery
 
+from ..helpers import paginator
 from ..urlresolvers import reverse
 from ..utils import paginate
-from ..helpers import paginator
 
 
 def test_paginated_url():

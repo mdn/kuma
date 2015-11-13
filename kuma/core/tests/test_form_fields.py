@@ -1,5 +1,4 @@
 from django.utils import translation
-
 from nose.tools import eq_
 
 from kuma.core.tests import KumaTestCase

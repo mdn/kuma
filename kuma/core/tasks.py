@@ -1,14 +1,11 @@
 from celery.task import task
-
-from django.db import connection
-from django.contrib.sessions.models import Session
-from django.utils import timezone
-
 from constance import config
+from django.contrib.sessions.models import Session
+from django.db import connection
+from django.utils import timezone
 
 from .cache import memcache
 from .models import IPBan
-
 
 LOCK_ID = 'clean-sessions-lock'
 LOCK_EXPIRE = 60 * 5

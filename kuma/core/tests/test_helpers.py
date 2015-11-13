@@ -5,12 +5,11 @@ from datetime import datetime
 import jingo
 import pytz
 from babel.dates import format_date, format_datetime, format_time
+from django.conf import settings
+from django.test import RequestFactory
 from nose.tools import assert_raises, eq_, ok_
 from pyquery import PyQuery as pq
 from soapbox.models import Message
-
-from django.conf import settings
-from django.test import RequestFactory
 
 from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse

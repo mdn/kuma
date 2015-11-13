@@ -22,10 +22,9 @@ from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
                         SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG)
 from .events import EditDocumentEvent
-from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
-                     RevisionIP, valid_slug_parent)
+from .models import (Document, DocumentSpamAttempt, DocumentTag,
+                     Revision, RevisionIP, valid_slug_parent)
 from .tasks import send_first_edit_email
-
 
 TITLE_REQUIRED = _(u'Please provide a title.')
 TITLE_SHORT = _(u'The title is too short (%(show_value)s characters). '

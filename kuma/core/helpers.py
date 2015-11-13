@@ -27,7 +27,6 @@ from .exceptions import DateTimeFormatError
 from .jobs import StaticI18nJob
 from .urlresolvers import reverse, split_path
 
-
 htmlparser = HTMLParser.HTMLParser()
 
 

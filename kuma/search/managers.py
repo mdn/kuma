@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-
 from elasticsearch.exceptions import RequestError
 
 from kuma.wiki.search import WikiDocumentType

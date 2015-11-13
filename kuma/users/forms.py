@@ -14,11 +14,9 @@ from sundial.forms import TimezoneChoiceField
 from sundial.zones import COMMON_GROUPED_CHOICES
 from taggit.utils import parse_tags
 
-
-from .constants import (USERNAME_CHARACTERS, USERNAME_LEGACY_REGEX,
-                        USERNAME_REGEX)
+from .constants import (USERNAME_CHARACTERS,
+                        USERNAME_LEGACY_REGEX, USERNAME_REGEX)
 from .models import User
-
 
 PRIVACY_REQUIRED = _(u'You must agree to the privacy policy.')
 

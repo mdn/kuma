@@ -10,7 +10,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from kuma.core.utils import get_unique
 
-
 FLAG_REASONS = getattr(settings, "FLAG_REASONS", (
     ('notworking', _('This is not working for me')),
     ('inappropriate', _('This contains inappropriate content')),

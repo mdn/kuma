@@ -1,12 +1,11 @@
 import importlib
 
+from allauth.account import views as account_views
+from allauth.socialaccount import views as socialaccount_views
+from allauth.socialaccount import providers
 from django.conf.urls import include, url
 
-from allauth.account import views as account_views
-from allauth.socialaccount import providers, views as socialaccount_views
-
 from . import views
-
 
 account_patterns = [
     url(r'^signin/cancelled/?$',

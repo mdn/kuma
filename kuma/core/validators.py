@@ -5,7 +5,6 @@
 """Validate Javascript Identifiers for use as JSON-P callback parameters."""
 
 import re
-
 from unicodedata import category
 
 # ------------------------------------------------------------------------------

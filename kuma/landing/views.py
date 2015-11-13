@@ -2,8 +2,8 @@ from django.conf import settings
 from django.shortcuts import render
 from django.views import static
 
-from kuma.core.sections import SECTION_USAGE
 from kuma.core.cache import memcache
+from kuma.core.sections import SECTION_USAGE
 from kuma.feeder.models import Bundle
 from kuma.search.models import FilterGroup
 from kuma.search.serializers import GroupWithFiltersSerializer

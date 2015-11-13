@@ -1,9 +1,8 @@
 from datetime import datetime
 
+import jingo
 from django.conf import settings
 from django.db import models
-
-import jingo
 
 from .utils import attachment_upload_to, full_attachment_url
 

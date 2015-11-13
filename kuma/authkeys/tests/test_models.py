@@ -1,7 +1,6 @@
 from django.test import TestCase
-
-from nose.tools import ok_
 from nose.plugins.attrib import attr
+from nose.tools import ok_
 
 from kuma.users.tests import user
 

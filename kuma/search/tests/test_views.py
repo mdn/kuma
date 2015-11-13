@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import elasticsearch
 from nose.tools import eq_
+
 from . import ElasticTestCase
-from ..models import Index, Filter, FilterGroup
+from ..models import Filter, FilterGroup, Index
 from ..views import SearchView
 
 

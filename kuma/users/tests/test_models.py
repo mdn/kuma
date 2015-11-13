@@ -1,11 +1,11 @@
-from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
 
 from kuma.wiki.tests import revision
 
+from . import UserTestCase
 from ..helpers import gravatar_url
 from ..models import UserBan
-from . import UserTestCase
 
 
 class TestUser(UserTestCase):

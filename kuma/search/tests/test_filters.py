@@ -1,12 +1,12 @@
-from nose.tools import ok_, eq_
+from nose.tools import eq_, ok_
 
 from kuma.wiki.models import Document
 from kuma.wiki.signals import render_done
 
 from . import ElasticTestCase
-from ..filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                       HighlightFilterBackend, LanguageFilterBackend,
-                       SearchQueryBackend)
+from ..filters import (AdvancedSearchQueryBackend,
+                       DatabaseFilterBackend, HighlightFilterBackend,
+                       LanguageFilterBackend, SearchQueryBackend)
 from ..views import SearchView
 
 

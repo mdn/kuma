@@ -4,7 +4,6 @@ from django.conf import settings
 
 from kuma.wiki.search import WikiDocumentType
 
-
 log = logging.getLogger('kuma.search.signals')
 
 

@@ -1,14 +1,15 @@
-from hashlib import md5
 import operator
+import re
+import zipfile
+from hashlib import md5
 from os import makedirs
 from os.path import basename, dirname, isdir, join
-from shutil import rmtree, copyfileobj
-import re
+from shutil import copyfileobj, rmtree
 from time import time
-import zipfile
 
 import magic
-
+from constance import config
+from constance.admin import FIELDS
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
@@ -16,21 +17,17 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile, ImageFieldFile
 from django.template.defaultfilters import filesizeformat
+from django.utils.functional import lazy
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-
-from constance import config
-from constance.admin import FIELDS
-from django.utils.functional import lazy
 
 from kuma.actioncounters.fields import ActionCounterField
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import generate_filename_and_delete_previous
 
-from . import challenge_utils, DEMO_LICENSES, scale_image
+from . import DEMO_LICENSES, challenge_utils, scale_image
 from .embed import VideoEmbedURLField
-
 
 SCREENSHOT_MAXW = getattr(settings, 'DEMO_SCREENSHOT_MAX_WIDTH', 480)
 SCREENSHOT_MAXH = getattr(settings, 'DEMO_SCREENSHOT_MAX_HEIGHT', 360)

@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
 
-try:
-    from cStringIO import cStringIO as StringIO
-except ImportError:
-    from StringIO import StringIO
-
 import newrelic.agent
 from constance import config
 from django.conf import settings
@@ -33,14 +28,19 @@ from kuma.search.store import referrer_url
 
 from .. import kumascript
 from ..constants import SLUG_CLEANSING_RE
-from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
-                          process_document_path)
+from ..decorators import (allow_CORS_GET, check_readonly,
+                          prevent_indexing, process_document_path)
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import TreeMoveForm
 from ..models import (Document, DocumentDeletionLog,
                       DocumentRenderedContentNotAvailable, DocumentZone)
 from ..tasks import move_page
 from .utils import document_last_modified, split_slug
+
+try:
+    from cStringIO import cStringIO as StringIO
+except ImportError:
+    from StringIO import StringIO
 
 
 def _get_html_and_errors(request, doc, rendering_params):

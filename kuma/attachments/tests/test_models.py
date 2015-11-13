@@ -1,10 +1,10 @@
-from nose.tools import ok_
-
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from nose.tools import ok_
 
 from kuma.core.tests import KumaTestCase
 from kuma.users.tests import user
+
 from ..utils import allow_add_attachment_by
 
 

@@ -20,13 +20,14 @@ Name of the cookie to use
 ANONYMOUS_COOKIE_MAX_AGE
 Maximum age of the cookie, in seconds.
 """
+import hashlib
+import os
+import random
+import time
+
 from django.conf import settings
 from django.utils.http import cookie_date
 
-import time
-import os
-import hashlib
-import random
 # Use the system (hardware-based) random number generator if it exists.
 if hasattr(random, 'SystemRandom'):
     randrange = random.SystemRandom().randrange

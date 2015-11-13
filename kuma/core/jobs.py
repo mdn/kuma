@@ -1,12 +1,11 @@
-import os
 import hashlib
-import six
+import os
 
+import six
+from cacheback.base import Job, to_bytestring
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils.safestring import mark_safe
-
-from cacheback.base import Job, to_bytestring
 from statici18n.utils import get_filename
 
 

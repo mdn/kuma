@@ -3,7 +3,6 @@ import re
 import bleach
 from django.utils.translation import ugettext_lazy as _
 
-
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'pre', 'code', 'cite',

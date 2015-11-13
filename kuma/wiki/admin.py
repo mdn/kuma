@@ -1,8 +1,7 @@
 from datetime import datetime
 
-from django.contrib import admin
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import admin, messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -11,8 +10,8 @@ from kuma.core.decorators import login_required, permission_required
 from kuma.core.urlresolvers import reverse
 
 from .decorators import check_readonly
-from .models import (Document, DocumentZone, DocumentTag, DocumentSpamAttempt,
-                     Revision, RevisionIP, EditorToolbar)
+from .models import (Document, DocumentSpamAttempt, DocumentTag,
+                     DocumentZone, EditorToolbar, Revision, RevisionIP)
 
 
 def dump_selected_documents(self, request, queryset):

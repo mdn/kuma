@@ -16,7 +16,6 @@ from kuma.core.urlresolvers import reverse
 
 from .utils import locale_and_slug_from_path
 
-
 # A few regex patterns for various parsing efforts in this file
 MACRO_RE = re.compile(r'\{\{\s*([^\(\} ]+)', re.MULTILINE)
 

@@ -4,7 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from kuma.core.form_fields import StrippedCharField
 
-
 LANG_CHOICES = [('', _('All Locales'))] + settings.LANGUAGES
 PERIOD_CHOICES = [
     ('', _('None')),

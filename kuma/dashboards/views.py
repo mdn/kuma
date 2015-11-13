@@ -7,11 +7,11 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.http import require_GET
 
-from kuma.wiki.models import Document, Revision
 from kuma.core.utils import paginate
+from kuma.wiki.models import Document, Revision
 
-from .forms import RevisionDashboardForm
 from . import PAGE_SIZE
+from .forms import RevisionDashboardForm
 
 
 @require_GET

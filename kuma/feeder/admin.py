@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Feed, Entry, Bundle
+from .models import Bundle, Entry, Feed
 
 
 class BundleInline(admin.TabularInline):

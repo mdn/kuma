@@ -1,7 +1,6 @@
 import collections
 
 from django.conf import settings
-
 from elasticsearch_dsl import F, Q, query
 from rest_framework.filters import BaseFilterBackend
 

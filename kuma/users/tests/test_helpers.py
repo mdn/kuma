@@ -2,7 +2,6 @@ import urllib
 from hashlib import md5
 
 from django.conf import settings
-
 from nose.tools import eq_, ok_
 
 from . import UserTestCase

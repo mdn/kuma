@@ -1,11 +1,11 @@
 import logging
-from nose.tools import eq_, ok_
-from pyquery import PyQuery as pq
-from soapbox.models import Message
 
 from django.core import mail
 from django.test import override_settings
 from django.utils.log import AdminEmailHandler
+from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
+from soapbox.models import Message
 
 from kuma.core.tests import KumaTestCase
 

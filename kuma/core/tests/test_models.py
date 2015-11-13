@@ -1,8 +1,7 @@
 from datetime import date, timedelta
 
-from nose.tools import eq_
-
 from django.test import TestCase
+from nose.tools import eq_
 
 from ..models import IPBan
 

@@ -1,18 +1,17 @@
 import requests
+from allauth.socialaccount import app_settings, providers
+from allauth.socialaccount.helpers import (complete_social_login,
+                                           render_authentication_error)
+from allauth.socialaccount.models import SocialLogin
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, QueryDict
 from django.shortcuts import redirect
 from django.template import RequestContext
-from django.views.decorators.http import require_POST, require_GET
+from django.views.decorators.http import require_GET, require_POST
 
-from allauth.socialaccount.helpers import complete_social_login
-from allauth.socialaccount.helpers import render_authentication_error
-from allauth.socialaccount.models import SocialLogin
-from allauth.socialaccount import app_settings, providers
-
-from kuma.core.urlresolvers import reverse
 from kuma.core.decorators import never_cache
+from kuma.core.urlresolvers import reverse
 
 from .provider import PersonaProvider
 

@@ -1,8 +1,7 @@
-from django.conf import settings
-from django.db import connection, transaction
-from django.contrib.contenttypes.models import ContentType
-
 from celery.task import task
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.db import connection, transaction
 
 # TODO: Figure out a way to do this per-class? Would need to break up some of the SQL calls.
 ACTIONCOUNTERS_ANON_GC_WINDOW = getattr(settings, "ACTIONCOUNTERS_ANON_GC_WINDOW", "2 MONTH")

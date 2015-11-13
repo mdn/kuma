@@ -6,7 +6,7 @@ from nose.tools import eq_, ok_
 from kuma.users.tests import UserTestCase, user
 
 from . import revision
-from ..jobs import DocumentZoneStackJob, DocumentContributorsJob
+from ..jobs import DocumentContributorsJob, DocumentZoneStackJob
 from ..models import Document, DocumentZone
 
 

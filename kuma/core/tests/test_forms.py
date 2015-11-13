@@ -1,5 +1,4 @@
 from django import forms
-
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 

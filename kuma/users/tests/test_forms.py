@@ -1,12 +1,10 @@
 from django import forms
-
 from nose.tools import eq_, ok_
 
 from kuma.core.tests import KumaTestCase
 
 from . import user
-from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
-                        USERNAME_EMAIL)
+from ..adapters import USERNAME_CHARACTERS, USERNAME_EMAIL, KumaAccountAdapter
 from ..forms import UserEditForm
 
 

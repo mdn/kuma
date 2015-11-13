@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 import newrelic.agent
-
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.core.decorators import never_cache, login_required, block_user_agents
+from kuma.core.decorators import block_user_agents, login_required, never_cache
 from kuma.core.urlresolvers import reverse
 
-from ..constants import (TEMPLATE_TITLE_PREFIX,
-                         REVIEW_FLAG_TAGS_DEFAULT)
+from ..constants import REVIEW_FLAG_TAGS_DEFAULT, TEMPLATE_TITLE_PREFIX
 from ..decorators import check_readonly, prevent_indexing
 from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
