@@ -308,8 +308,12 @@ class WikiDocumentType(document.DocType):
             chord_flow(pre_task, index_tasks, post_task).apply_async()
 
         message = _(
-            'Indexing {total} documents into {n} chunks of size {size} into '
-            'index {index}.'.format(total=total, n=total_chunks,
-                                    size=chunk_size,
-                                    index=index.prefixed_name))
+            'Indexing %(total)d documents into %(total_chunks)d chunks of '
+            'size %(size)d into index %(index)s.' % {
+                'total': total,
+                'total_chunks': total_chunks,
+                'size': chunk_size,
+                'index': index.prefixed_name
+            }
+        )
         return message

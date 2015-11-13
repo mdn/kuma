@@ -1,6 +1,5 @@
 {% extends "wiki/base.html" %}
-{# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
-{% set title = _('Revision {n} | {t} | {c}')|f(n=revision.id, t=document.title, c=document.get_category_display()) %}
+{% set title = _('Revision {id} | {title} | {category}')|f(id=revision.id, title=document.title, category=document.get_category_display()) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 {% set classes = 'document' %}

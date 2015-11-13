@@ -20,7 +20,7 @@
 
       <div id="document-list" class="boxed">
         <h1>{{ title }}</h1>
-        <p>{{ _('Found {0} documents.')|f(count) }}</p>
+        <p>{{ _('Found {count} documents.')|f(count=count) }}</p>
         {% if documents.object_list %}
           {{ documents|paginator }}
           <ul class="document-list cols-3">

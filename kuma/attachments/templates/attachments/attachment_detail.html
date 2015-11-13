@@ -1,6 +1,6 @@
 {% extends "wiki/base.html" %}
-{# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
-{% set title = _('Attachment {n} | {t}')|f(n=revision.id, t=attachment.title) %}
+{# L10n: {id} is the revision number, {title} is the title of the document. #}
+{% set title = _('Attachment {id} | {title}')|f(id=revision.id, title=attachment.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 {% set classes = 'document' %}
