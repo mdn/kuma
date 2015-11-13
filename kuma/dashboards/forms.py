@@ -42,3 +42,6 @@ class RevisionDashboardForm(forms.Form):
         choices=PERIOD_CHOICES,
         required=False,
         label=_(u'Preceding Period:'))
+    last_id = forms.IntegerField(
+        widget=forms.HiddenInput
+    )

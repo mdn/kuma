@@ -1,5 +1,3 @@
-{{ revisions|paginator }}
-
 {% set show_ips = False %}
 {% if waffle.switch('store_revision_ips') and user.is_superuser %}
     {% set show_ips = True %}
@@ -67,4 +65,8 @@
 
 {% endif %}
 
-{{ revisions|paginator }}
+<ol class="pagination">
+  <li class="next">
+    <a href="#">Next</a>
+  </li>
+</ol>

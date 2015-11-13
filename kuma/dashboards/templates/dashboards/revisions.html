@@ -42,7 +42,7 @@
             </div>
 
             <button type="submit">{{ _('Filter') }}</button>
-            <input type="hidden" name="page" id="revision-page" value="{{ page }}" />
+            <input type="hidden" name="last_id" id="last-revision-id" value="{{ last_id }}" />
         </form>
 
 
@@ -64,7 +64,7 @@
     var $revisionReplaceBlock = $('#revision-replace-block');
     var $localeInput = $('#id_locale');
     var $filterForm = $('#revision-filter');
-    var $pageInput = $('#revision-page');
+    var $lastIDInput = $('#last-revision-id');
     var $showIPsButton = $('#show_ips_btn');
     var currentLocale = '{{ request.LANGUAGE_CODE }}';
     var controlsTemplate = '\
@@ -161,6 +161,7 @@
             label: linkText
         });
         $pageInput.val(pageNum);
+        $lastIDInput.val($('tr.dashboard-row').last().data('revision-id'));
         $filterForm.submit();
     });
 

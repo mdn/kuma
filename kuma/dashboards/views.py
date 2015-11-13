@@ -8,7 +8,6 @@ from django.utils import timezone
 from django.views.decorators.http import require_GET
 
 from kuma.wiki.models import Document, Revision
-from kuma.core.utils import paginate
 
 from .forms import RevisionDashboardForm
 from . import PAGE_SIZE
@@ -19,11 +18,10 @@ def revisions(request):
     """Dashboard for reviewing revisions"""
 
     filter_form = RevisionDashboardForm(request.GET)
-    page = request.GET.get('page', 1)
 
     revisions = (Revision.objects.prefetch_related('creator__bans',
                                                    'document')
-                                 .order_by('-created')
+                                 .order_by('-id')
                                  .defer('content'))
 
     query_kwargs = False
@@ -35,6 +33,7 @@ def revisions(request):
             'user': 'creator__username__istartswith',
             'locale': 'document__locale',
             'topic': 'slug__icontains',
+            'last_id': 'id__lt'
         }
 
         # Build up a dict of the filter conditions, if any, then apply
@@ -71,9 +70,9 @@ def revisions(request):
     if query_kwargs:
         revisions = revisions.filter(**query_kwargs)
 
-    revisions = paginate(request, revisions, per_page=PAGE_SIZE)
+    revisions = revisions[:PAGE_SIZE]
 
-    context = {'revisions': revisions, 'page': page}
+    context = {'revisions': revisions}
 
     # Serve the response HTML conditionally upon reques type
     if request.is_ajax():
