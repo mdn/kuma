@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-11-13 02:10+0000\n"
+"PO-Revision-Date: 2015-11-13 02:20+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -5127,28 +5127,24 @@ msgid "Translate Content"
 msgstr "내용 번역"
 
 #: kuma/wiki/templates/wiki/translate.html:83
-#, fuzzy
 msgid "Approved {locale} version"
-msgstr "승인된 {default_locale} 버전:"
+msgstr "승인된 {locale} 버전"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Rendered"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:85
-#, fuzzy
 msgid "View Source"
-msgstr "문서 보기:"
+msgstr "소스 보기"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-#, fuzzy
 msgid "Show {locale}"
-msgstr "{locale}로 번역된 슬러그:"
+msgstr "{locale} 보기"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-#, fuzzy
 msgid "Hide {locale}"
-msgstr "{locale}로 번역된 제목:"
+msgstr "{locale} 감추기"
 
 #: kuma/wiki/templates/wiki/translate.html:99
 msgid "{locale} translation:"
@@ -5187,9 +5183,8 @@ msgstr "%(document_title)s 문서를 %(creator)s님이 변경하였습니다."
 
 #. This is in an email.
 #: kuma/wiki/templates/wiki/email/edited.ltxt:13
-#, fuzzy
 msgid "View User Profile:"
-msgstr "프로필 보기"
+msgstr "프로필 보기:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
@@ -5230,7 +5225,6 @@ msgid "Languages"
 msgstr "언어"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:25
-#, fuzzy
 msgid "No translations exist for this article."
 msgstr "현재 문서 번역이 없습니다."
 
