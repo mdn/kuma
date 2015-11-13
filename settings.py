@@ -533,8 +533,9 @@ PUENTE = {
         'django': [
             ('vendor/**', 'ignore'),
             ('kuma/**.py', 'python'),
-            ('kuma/demos/templates/admin/**.html',
+            ('kuma/*/templates/admin/**.html',
              'django_babel.extract.extract_django'),
+            ('templates/admin/**.html', 'django_babel.extract.extract_django'),
             ('**/templates/**.html', 'jinja2'),
             ('**/templates/**.ltxt', 'jinja2'),
         ],

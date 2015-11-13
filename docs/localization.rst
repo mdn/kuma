@@ -285,6 +285,9 @@ Adding a new Locale
 
 #.  Add the locale to `MDN_LANGUAGES` in `settings.py`
 
+#.  Add the locale to the `locale/` folder by following the instructions in
+   `locale/README.txt`.
+
 #. Create the `jsi18n` file for the new locale::
 
         $ ./manage.py compilejsi18n
