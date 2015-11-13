@@ -1,12 +1,12 @@
 {% extends "wiki/base.html" %}
-{% set counter = _('Found {0} documents.')|f(count) %}
+{% set counter = _('Found {count} documents.')|f(count=count) %}
 {% if category %}
   {% set title = category %}
 {% elif tag %}
   {% set title = _('Articles tagged: {tag}')|f(tag=tag) %}
 {% elif is_templates %}
   {% set title = _('All templates') %}
-  {% set counter = _('Found {0} templates.')|f(count) %}
+  {% set counter = _('Found {count} templates.')|f(count=count) %}
 {% elif errors %}
   {% set title = _('Documents with errors') %}
 {% elif toplevel %}

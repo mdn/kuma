@@ -201,8 +201,10 @@ class ReplacingZipFileField(models.FileField):
         try:
             if file._size > self.max_upload_size:
                 raise ValidationError(
-                    _('Please keep filesize under %s. Current filesize %s') %
-                    (filesizeformat(self.max_upload_size), filesizeformat(file._size))
+                    _('Please keep filesize under %(max_size)s. '
+                      'Current filesize %(file_size)s')
+                    % {'max_size': filesizeformat(self.max_upload_size),
+                       'file_size': filesizeformat(file._size)}
                 )
         except AttributeError:
             pass
