@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 12:21-0700\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-11-13 11:55-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "name of the action"
 msgstr ""
 
-#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128 kuma/demos/models.py:455
+#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128 kuma/demos/models.py:457
 msgid "date last modified"
 msgstr ""
 
@@ -33,40 +33,41 @@ msgstr ""
 msgid "Recent revisions to MDN file attachments"
 msgstr ""
 
-#: kuma/attachments/forms.py:11
+#: kuma/attachments/forms.py:9
 msgid "Files of this type are not permitted."
 msgstr ""
 
-#: kuma/attachments/views.py:151
+#: kuma/attachments/views.py:147
+#, python-format
 msgid "The file provided is not valid. File must be one of these types: %s."
 msgstr ""
 
-#. {n} is the revision number, {t} is the title of the document. {c} is the category.
+#. {id} is the revision number, {title} is the title of the document.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
-msgid "Attachment {n} | {t}"
+msgid "Attachment {id} | {title}"
 msgstr ""
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:15
 msgid "Attachment Information"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:19 kuma/wiki/templates/wiki/revision.html:18
+#: kuma/attachments/templates/attachments/attachment_detail.html:19 kuma/wiki/templates/wiki/revision.html:17
 msgid "Revision slug:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:23 kuma/wiki/templates/wiki/revision.html:22
+#: kuma/attachments/templates/attachments/attachment_detail.html:23 kuma/wiki/templates/wiki/revision.html:21
 msgid "Revision title:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:27 kuma/wiki/templates/wiki/revision.html:26
+#: kuma/attachments/templates/attachments/attachment_detail.html:27 kuma/wiki/templates/wiki/revision.html:25
 msgid "Revision id:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:31 kuma/wiki/templates/wiki/revision.html:30
+#: kuma/attachments/templates/attachments/attachment_detail.html:31 kuma/wiki/templates/wiki/revision.html:29
 msgid "Created:"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:35 kuma/wiki/templates/wiki/revision.html:34
+#: kuma/attachments/templates/attachments/attachment_detail.html:35 kuma/wiki/templates/wiki/revision.html:33
 msgid "Creator:"
 msgstr ""
 
@@ -75,6 +76,7 @@ msgid "MIME Type:"
 msgstr ""
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:44 kuma/attachments/templates/attachments/includes/attachment_row.html:6
+#, python-format
 msgid "%s bytes"
 msgstr ""
 
@@ -82,7 +84,7 @@ msgstr ""
 msgid "Is approved?"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:52 kuma/wiki/templates/wiki/revision.html:39
+#: kuma/attachments/templates/attachments/attachment_detail.html:52 kuma/wiki/templates/wiki/revision.html:38
 msgid "Is current revision?"
 msgstr ""
 
@@ -134,7 +136,7 @@ msgstr ""
 msgid "Attached by"
 msgstr ""
 
-#: kuma/attachments/templates/attachments/includes/attachment_list.html:52 kuma/users/models.py:65
+#: kuma/attachments/templates/attachments/includes/attachment_list.html:52 kuma/users/models.py:65 kuma/wiki/models.py:1828
 msgid "Title"
 msgstr ""
 
@@ -203,6 +205,7 @@ msgid "History ({count})"
 msgstr ""
 
 #: kuma/authkeys/templates/authkeys/list.html:35
+#, python-format
 msgid "You need a special permission to use API keys. You may request permission by <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
 
@@ -217,6 +220,7 @@ msgid "Create"
 msgstr ""
 
 #: kuma/authkeys/templates/authkeys/new.html:20
+#, python-format
 msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
@@ -286,8 +290,336 @@ msgstr ""
 msgid "date submitted"
 msgstr ""
 
-#: kuma/demos/__init__.py:33
+#. This is an email. Whitespace matters!
+#: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:2
+#, python-format
+msgid "%(object)s has been flagged %(flag_type)s"
+msgstr ""
+
+#: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:6
+msgid "To change the status of this flag, click the following link, or paste it into your browser's location bar:"
+msgstr ""
+
+#: kuma/core/apps.py:16
+msgid "Core"
+msgstr ""
+
+#: kuma/core/form_fields.py:57
+#, python-format
+msgid "Ensure this value has at least %(limit_value)s characters (it has %(show_value)s)."
+msgstr ""
+
+#: kuma/core/form_fields.py:62
+#, python-format
+msgid "Ensure this value has at most %(limit_value)s characters (it has %(show_value)s)."
+msgstr ""
+
+#: kuma/core/helpers.py:108 kuma/demos/helpers.py:305
+#, python-format
+msgid "%(number)d year ago"
+msgid_plural "%(number)d years ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/core/helpers.py:110 kuma/demos/helpers.py:307
+#, python-format
+msgid "%(number)d month ago"
+msgid_plural "%(number)d months ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/core/helpers.py:112 kuma/demos/helpers.py:309
+#, python-format
+msgid "%(number)d week ago"
+msgid_plural "%(number)d weeks ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/core/helpers.py:114 kuma/demos/helpers.py:311
+#, python-format
+msgid "%(number)d day ago"
+msgid_plural "%(number)d days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/core/helpers.py:116 kuma/demos/helpers.py:313
+#, python-format
+msgid "%(number)d hour ago"
+msgid_plural "%(number)d hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/core/helpers.py:118 kuma/demos/helpers.py:315
+#, python-format
+msgid "%(number)d minute ago"
+msgid_plural "%(number)d minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/core/helpers.py:120 kuma/demos/helpers.py:317
+#, python-format
+msgid "%(number)d second ago"
+msgid_plural "%(number)d seconds ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kuma/core/helpers.py:143
+msgid "Yes"
+msgstr ""
+
+#: kuma/core/helpers.py:143
+msgid "No"
+msgstr ""
+
+#: kuma/core/helpers.py:297
+#, python-format
+msgid "Today at %s"
+msgstr ""
+
+#: kuma/core/sections.py:6 kuma/landing/templates/landing/homepage.html:85 templates/base.html:155
+msgid "Add-ons"
+msgstr ""
+
+#: kuma/core/sections.py:13
+msgid "Mozilla"
+msgstr ""
+
+#: kuma/core/sections.py:20 templates/base.html:134
+msgid "Apps"
+msgstr ""
+
+#: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4 kuma/demos/__init__.py:184 kuma/demos/__init__.py:319
+msgid "Mobile"
+msgstr ""
+
+#: kuma/core/sections.py:34 kuma/landing/templates/landing/promote_buttons.html:117
+msgid "Web"
+msgstr ""
+
+#: kuma/core/sections.py:41
+msgid "Moz Hacks"
+msgstr ""
+
+#: kuma/core/translations/search/filter/addons/name.py:4
+msgid "Add-ons & Extensions"
+msgstr ""
+
+#: kuma/core/translations/search/filter/advanced/name.py:4
+msgid "I'm an Expert"
+msgstr ""
+
+#: kuma/core/translations/search/filter/api/name.py:4
+msgid "APIs and DOM"
+msgstr ""
+
+#: kuma/core/translations/search/filter/apps/name.py:4
+msgid "Open Web Apps"
+msgstr ""
+
+#: kuma/core/translations/search/filter/beginner/name.py:4
+msgid "I'm Learning"
+msgstr ""
+
+#: kuma/core/translations/search/filter/canvas/name.py:4 kuma/demos/__init__.py:72 kuma/demos/__init__.py:233
+msgid "Canvas"
+msgstr ""
+
+#: kuma/core/translations/search/filter/code/name.py:4
+msgid "Code Samples"
+msgstr ""
+
+#: kuma/core/translations/search/filter/css/name.py:4 kuma/landing/templates/landing/homepage.html:73 kuma/landing/templates/landing/promote_buttons.html:99 templates/base.html:130
+msgid "CSS"
+msgstr ""
+
+#: kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/templates/landing/homepage.html:81 templates/base.html:156
+msgid "Firefox"
+msgstr ""
+
+#: kuma/core/translations/search/filter/firefox-desktop/name.py:4
+msgid "Firefox for Desktop"
+msgstr ""
+
+#: kuma/core/translations/search/filter/firefox-mobile/name.py:4
+msgid "Firefox for Android"
+msgstr ""
+
+#: kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/templates/landing/homepage.html:82 templates/base.html:158
+msgid "Firefox OS"
+msgstr ""
+
+#: kuma/core/translations/search/filter/games/name.py:4
+msgid "Games"
+msgstr ""
+
+#: kuma/core/translations/search/filter/howto/name.py:4
+msgid "How-To & Tutorial"
+msgstr ""
+
+#: kuma/core/translations/search/filter/html/name.py:4 kuma/landing/templates/landing/homepage.html:72 kuma/landing/templates/landing/promote_buttons.html:105 kuma/users/forms.py:37
+#: templates/base.html:129
+msgid "HTML"
+msgstr ""
+
+#: kuma/core/translations/search/filter/intermediate/name.py:4
+msgid "Intermediate"
+msgstr ""
+
+#: kuma/core/translations/search/filter/js/name.py:4 kuma/demos/__init__.py:287 kuma/landing/templates/landing/homepage.html:74 kuma/landing/templates/landing/promote_buttons.html:111
+#: templates/base.html:131
+msgid "JavaScript"
+msgstr ""
+
+#: kuma/core/translations/search/filter/marketplace/name.py:4
+msgid "Marketplace"
+msgstr ""
+
+#: kuma/core/translations/search/filter/mathml/name.py:4 templates/base.html:135
+msgid "MathML"
+msgstr ""
+
+#: kuma/core/translations/search/filter/svg/name.py:4 kuma/demos/__init__.py:335
+msgid "SVG"
+msgstr ""
+
+#: kuma/core/translations/search/filter/tools/name.py:4 templates/base.html:100
+msgid "Tools"
+msgstr ""
+
+#: kuma/core/translations/search/filter/webdev/name.py:4
+msgid "Web Development"
+msgstr ""
+
+#: kuma/core/translations/search/filter/webgl/name.py:4 kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
+msgid "WebGL"
+msgstr ""
+
+#: kuma/core/translations/search/filter/xul/name.py:4
+msgid "XUL"
+msgstr ""
+
+#: kuma/core/translations/search/filtergroup/document-type/name.py:4
+msgid "Document type"
+msgstr ""
+
+#: kuma/core/translations/search/filtergroup/skill-level/name.py:4
+msgid "Skill level"
+msgstr ""
+
+#: kuma/core/translations/search/filtergroup/topics/name.py:4
+msgid "Topics"
+msgstr ""
+
+#: kuma/dashboards/forms.py:8
+msgid "All Locales"
+msgstr ""
+
+#: kuma/dashboards/forms.py:10 kuma/demos/__init__.py:33
 msgid "None"
+msgstr ""
+
+#: kuma/dashboards/forms.py:11
+msgid "Hour"
+msgstr ""
+
+#: kuma/dashboards/forms.py:12
+msgid "Day"
+msgstr ""
+
+#: kuma/dashboards/forms.py:13
+msgid "Week"
+msgstr ""
+
+#: kuma/dashboards/forms.py:14
+msgid "30 days"
+msgstr ""
+
+#: kuma/dashboards/forms.py:24 kuma/dashboards/templates/dashboards/revisions.html:14
+msgid "Locale:"
+msgstr ""
+
+#: kuma/dashboards/forms.py:28 kuma/dashboards/templates/dashboards/revisions.html:19
+msgid "User:"
+msgstr ""
+
+#: kuma/dashboards/forms.py:32 kuma/dashboards/templates/dashboards/revisions.html:24
+msgid "Topic:"
+msgstr ""
+
+#: kuma/dashboards/forms.py:34 kuma/dashboards/templates/dashboards/revisions.html:30
+msgid "Start Date:"
+msgstr ""
+
+#: kuma/dashboards/forms.py:38 kuma/dashboards/templates/dashboards/revisions.html:35
+msgid "End Date:"
+msgstr ""
+
+#: kuma/dashboards/forms.py:44 kuma/dashboards/templates/dashboards/revisions.html:40
+msgid "Preceding Period:"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/revisions.html:2
+msgid "Revision Dashboard"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/revisions.html:44 kuma/search/templates/search/results.html:210
+msgid "Filter"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/revisions.html:73 kuma/wiki/templates/wiki/confirm_revision_revert.html:39
+msgid "Revert"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/revisions.html:73 kuma/wiki/feeds.py:341
+msgid "View Page"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/revisions.html:73 kuma/wiki/feeds.py:344
+msgid "Edit Page"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/revisions.html:73 kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:62
+msgid "History"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:35
+msgid "new"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:36
+msgid "deleted"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
+msgid "Ban IP from Editing"
+msgstr ""
+
+#: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
+msgid "There are no revisions matching this filter set."
+msgstr ""
+
+#. Please localize 'English' here.
+#. Please replace 'English' with your language.
+#: kuma/dashboards/templates/dashboards/includes/watch_approved.html:8 kuma/dashboards/templates/dashboards/includes/watch_approved.html:11
+msgid "Stop getting emailed when English revisions are approved"
+msgstr ""
+
+#. Please localize 'English' here.
+#. Please replace 'English' with your language.
+#: kuma/dashboards/templates/dashboards/includes/watch_approved.html:20 kuma/dashboards/templates/dashboards/includes/watch_approved.html:23
+msgid "Get emailed when English revisions are approved"
+msgstr ""
+
+#. Please localize 'English' here.
+#. Please replace 'English' with your language.
+#: kuma/dashboards/templates/dashboards/includes/watch_locale.html:7 kuma/dashboards/templates/dashboards/includes/watch_locale.html:10
+msgid "Stop getting emailed when English reviews are waiting"
+msgstr ""
+
+#. Please localize 'English' here.
+#. Please replace 'English' with your language.
+#: kuma/dashboards/templates/dashboards/includes/watch_locale.html:18 kuma/dashboards/templates/dashboards/includes/watch_locale.html:21
+msgid "Get emailed when English reviews are waiting"
 msgstr ""
 
 #: kuma/demos/__init__.py:34
@@ -383,10 +715,6 @@ msgstr ""
 
 #: kuma/demos/__init__.py:71
 msgid "November 2011 Dev Derby Challenge - Canvas"
-msgstr ""
-
-#: kuma/demos/__init__.py:72 kuma/demos/__init__.py:233
-msgid "Canvas"
 msgstr ""
 
 #: kuma/demos/__init__.py:73
@@ -497,10 +825,6 @@ msgstr ""
 
 #: kuma/demos/__init__.py:120
 msgid "June 2012 Dev Derby Challenge - WebGL"
-msgstr ""
-
-#: kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
-msgid "WebGL"
 msgstr ""
 
 #: kuma/demos/__init__.py:122
@@ -647,10 +971,6 @@ msgstr ""
 msgid "March 2013 Dev Derby Challenge - Mobile"
 msgstr ""
 
-#: kuma/demos/__init__.py:184 kuma/demos/__init__.py:319
-msgid "Mobile"
-msgstr ""
-
 #: kuma/demos/__init__.py:185
 msgid "March 2013"
 msgstr ""
@@ -777,7 +1097,7 @@ msgid "W3C Spec"
 msgstr ""
 
 #: kuma/demos/__init__.py:230
-msgid "http://www.w3.org/TR/html5/video.html#audio"
+msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
 msgstr ""
 
 #: kuma/demos/__init__.py:234
@@ -793,10 +1113,10 @@ msgid "http://en.wikipedia.org/wiki/Canvas_element"
 msgstr ""
 
 #: kuma/demos/__init__.py:238
-msgid "http://www.w3.org/TR/html5/the-canvas-element.html"
+msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
 msgstr ""
 
-#: kuma/demos/__init__.py:241 kuma/landing/templates/landing/homepage.html:85
+#: kuma/demos/__init__.py:241 kuma/landing/templates/landing/homepage.html:73
 msgid "CSS3"
 msgstr ""
 
@@ -905,10 +1225,6 @@ msgstr ""
 msgid "http://dev.w3.org/geo/api/spec-source.html"
 msgstr ""
 
-#: kuma/demos/__init__.py:287 kuma/landing/templates/landing/homepage.html:86 kuma/landing/templates/landing/promote_buttons.html:111 templates/base.html:131
-msgid "JavaScript"
-msgstr ""
-
 #: kuma/demos/__init__.py:288
 msgid "JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."
 msgstr ""
@@ -929,7 +1245,7 @@ msgstr ""
 msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
 msgstr ""
 
-#: kuma/demos/__init__.py:295 kuma/landing/templates/landing/homepage.html:84
+#: kuma/demos/__init__.py:295 kuma/landing/templates/landing/homepage.html:72
 msgid "HTML5"
 msgstr ""
 
@@ -1017,10 +1333,6 @@ msgstr ""
 msgid "http://dev.w3.org/html5/webstorage/"
 msgstr ""
 
-#: kuma/demos/__init__.py:335
-msgid "SVG"
-msgstr ""
-
 #: kuma/demos/__init__.py:336
 msgid "Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."
 msgstr ""
@@ -1054,7 +1366,7 @@ msgid "http://en.wikipedia.org/wiki/HTML5_video"
 msgstr ""
 
 #: kuma/demos/__init__.py:348
-msgid "http://www.w3.org/TR/html5/video.html"
+msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
 msgstr ""
 
 #: kuma/demos/__init__.py:352
@@ -1190,10 +1502,12 @@ msgid "http://creativecommons.org/publicdomain/zero/1.0/"
 msgstr ""
 
 #: kuma/demos/admin.py:38
+#, python-format
 msgid "Censored %(item)s"
 msgstr ""
 
 #: kuma/demos/admin.py:43
+#, python-format
 msgid "Successfully censored %(count)d %(items)s."
 msgstr ""
 
@@ -1202,14 +1516,17 @@ msgid "Are you sure?"
 msgstr ""
 
 #: kuma/demos/admin.py:106
+#, python-format
 msgid "Deleted and uploaded files for %(item)s"
 msgstr ""
 
 #: kuma/demos/admin.py:111
+#, python-format
 msgid "Successfully deleted %(count)d %(items)s."
 msgstr ""
 
 #: kuma/demos/admin.py:123
+#, python-format
 msgid "Cannot delete %(name)s"
 msgstr ""
 
@@ -1242,221 +1559,210 @@ msgid "Demos featured on MDN"
 msgstr ""
 
 #: kuma/demos/feeds.py:183
+#, python-format
 msgid "MDN demos tagged %s"
 msgstr ""
 
 #: kuma/demos/feeds.py:186
+#, python-format
 msgid "MDN demos tagged \"%s\""
 msgstr ""
 
 #: kuma/demos/feeds.py:202
+#, python-format
 msgid "%s's MDN demos"
 msgstr ""
 
 #: kuma/demos/feeds.py:216
+#, python-format
 msgid "MDN demo search for \"%s\""
 msgstr ""
 
 #: kuma/demos/feeds.py:217
+#, python-format
 msgid "Search results for demo submissions matching \"%s\""
 msgstr ""
 
-#: kuma/demos/helpers.py:109
+#: kuma/demos/helpers.py:107
 msgid "First Place"
 msgstr ""
 
-#: kuma/demos/helpers.py:110
+#: kuma/demos/helpers.py:108
 msgid "Second Place"
 msgstr ""
 
-#: kuma/demos/helpers.py:111
+#: kuma/demos/helpers.py:109
 msgid "Third Place"
 msgstr ""
 
-#: kuma/demos/helpers.py:112
+#: kuma/demos/helpers.py:110
 msgid "Finalist"
 msgstr ""
 
-#: kuma/demos/helpers.py:113
+#: kuma/demos/helpers.py:111
 msgid "Featured"
 msgstr ""
 
-#: kuma/demos/helpers.py:268
+#: kuma/demos/helpers.py:266
 msgid "year"
 msgid_plural "years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kuma/demos/helpers.py:269
+#: kuma/demos/helpers.py:267
 msgid "month"
 msgid_plural "months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kuma/demos/helpers.py:270
+#: kuma/demos/helpers.py:268
 msgid "week"
 msgid_plural "weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kuma/demos/helpers.py:271
+#: kuma/demos/helpers.py:269
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kuma/demos/helpers.py:279
+#: kuma/demos/helpers.py:277
+#, python-format
 msgid "%(number)d %(type)s"
 msgstr ""
 
-#: kuma/demos/helpers.py:306
-msgid "%(number)d year ago"
-msgid_plural "%(number)d years ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: kuma/demos/helpers.py:308
-msgid "%(number)d month ago"
-msgid_plural "%(number)d months ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: kuma/demos/helpers.py:310
-msgid "%(number)d week ago"
-msgid_plural "%(number)d weeks ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: kuma/demos/helpers.py:312
-msgid "%(number)d day ago"
-msgid_plural "%(number)d days ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: kuma/demos/helpers.py:314
-msgid "%(number)d hour ago"
-msgid_plural "%(number)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: kuma/demos/helpers.py:316
-msgid "%(number)d minute ago"
-msgid_plural "%(number)d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: kuma/demos/helpers.py:318
-msgid "%(number)d second ago"
-msgid_plural "%(number)d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-
 #: kuma/demos/models.py:204
-msgid "Please keep filesize under %s. Current filesize %s"
+#, python-format
+msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
 msgstr ""
 
-#: kuma/demos/models.py:273
+#: kuma/demos/models.py:275
 msgid "Cannot process image"
 msgstr ""
 
-#: kuma/demos/models.py:360
+#: kuma/demos/models.py:362
 msgid "what is your demo's name?"
 msgstr ""
 
-#: kuma/demos/models.py:363
+#: kuma/demos/models.py:365
 msgid "slug"
 msgstr ""
 
-#: kuma/demos/models.py:366
+#: kuma/demos/models.py:368
 msgid "describe your demo in one line"
 msgstr ""
 
-#: kuma/demos/models.py:369
+#: kuma/demos/models.py:371
 msgid "describe your demo in more detail (optional)"
 msgstr ""
 
-#: kuma/demos/models.py:374
+#: kuma/demos/models.py:376
 msgid "Hide this demo from others?"
 msgstr ""
 
-#: kuma/demos/models.py:377
+#: kuma/demos/models.py:379
 msgid "Redirect URL for censorship."
 msgstr ""
 
-#: kuma/demos/models.py:381
+#: kuma/demos/models.py:383
 msgid "control how your demo is launched"
 msgstr ""
 
-#: kuma/demos/models.py:383
+#: kuma/demos/models.py:385
 msgid "Disable navigation bar, launch demo in a new window"
 msgstr ""
 
-#: kuma/demos/models.py:384
+#: kuma/demos/models.py:386
 msgid "Use navigation bar, display demo in <iframe>"
 msgstr ""
 
-#: kuma/demos/models.py:396
+#: kuma/demos/models.py:398
 msgid "Screenshot #1"
 msgstr ""
 
-#: kuma/demos/models.py:402
+#: kuma/demos/models.py:404
 msgid "Screenshot #2"
 msgstr ""
 
-#: kuma/demos/models.py:408
+#: kuma/demos/models.py:410
 msgid "Screenshot #3"
 msgstr ""
 
-#: kuma/demos/models.py:414
+#: kuma/demos/models.py:416
 msgid "Screenshot #4"
 msgstr ""
 
-#: kuma/demos/models.py:420
+#: kuma/demos/models.py:422
 msgid "Screenshot #5"
 msgstr ""
 
-#: kuma/demos/models.py:427
+#: kuma/demos/models.py:429
 msgid "have a video of your demo in action? (optional)"
 msgstr ""
 
-#: kuma/demos/models.py:431
+#: kuma/demos/models.py:433
 msgid "select a ZIP file containing your demo"
 msgstr ""
 
-#: kuma/demos/models.py:440
+#: kuma/demos/models.py:442
 msgid "Is your source code also available somewhere else on the web (e.g., github)? Please share the link."
 msgstr ""
 
-#: kuma/demos/models.py:443
+#: kuma/demos/models.py:445
 msgid "Select the license that applies to your source code."
 msgstr ""
 
-#: kuma/demos/models.py:452
+#: kuma/demos/models.py:454
 msgid "date created"
 msgstr ""
 
-#: kuma/demos/models.py:645 kuma/demos/models.py:652
+#: kuma/demos/models.py:647 kuma/demos/models.py:654
 msgid "ZIP file contains no acceptable files"
 msgstr ""
 
-#: kuma/demos/models.py:648
+#: kuma/demos/models.py:650
 msgid "ZIP file corrupted"
 msgstr ""
 
-#: kuma/demos/models.py:667
+#: kuma/demos/models.py:669
+#, python-format
 msgid "ZIP file contains a file that is too large: %(filename)s"
 msgstr ""
 
-#: kuma/demos/models.py:682
+#: kuma/demos/models.py:684
+#, python-format
 msgid "ZIP file contains an unacceptable file: %(filename)s"
 msgstr ""
 
-#: kuma/demos/models.py:686
+#: kuma/demos/models.py:688
 msgid "HTML index not found in ZIP"
 msgstr ""
 
 #: kuma/demos/views.py:73 kuma/demos/views.py:300 kuma/demos/views.py:328 kuma/demos/views.py:343
 msgid "access denied"
+msgstr ""
+
+#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:6 kuma/demos/templates/demos/devderby_tag.html:21 kuma/wiki/templates/admin/wiki/purge_documents.html:22
+#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
+msgid "Home"
+msgstr ""
+
+#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:9
+msgid "Censor multiple objects"
+msgstr ""
+
+#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:14
+#, python-format
+msgid "Are you sure you want to censor the selected %(object_name)s objects? This cannot be reversed."
+msgstr ""
+
+#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:23
+msgid "Explanation URL (optional):"
+msgstr ""
+
+#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
+msgid "Yes, I'm sure"
 msgstr ""
 
 #: kuma/demos/templates/demos/delete.html:10 kuma/demos/templates/demos/detail.html:9 kuma/demos/templates/demos/devderby_tag.html:5 kuma/demos/templates/demos/flag.html:10
@@ -1482,6 +1788,7 @@ msgid "Remove this demo?"
 msgstr ""
 
 #: kuma/demos/templates/demos/delete.html:40
+#, python-format
 msgid ""
 "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 "<strong>cannot be undone</strong>."
@@ -1496,7 +1803,7 @@ msgstr ""
 msgid "Mozilla Demo Studio"
 msgstr ""
 
-#: kuma/demos/templates/demos/detail.html:33 kuma/demos/templates/demos/home.html:24 kuma/demos/templates/demos/listing_tag.html:31 kuma/demos/templates/demos/elements/demos_head.html:5
+#: kuma/demos/templates/demos/detail.html:33 kuma/demos/templates/demos/home.html:24 kuma/demos/templates/demos/listing_tag.html:37 kuma/demos/templates/demos/elements/demos_head.html:5
 msgid "Learn More"
 msgstr ""
 
@@ -1538,6 +1845,7 @@ msgid "See the next image"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:102
+#, python-format
 msgid "By %(creator_link)s on %(create_date)s"
 msgstr ""
 
@@ -1634,10 +1942,12 @@ msgid "About this Demo"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:209
+#, python-format
 msgid "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP File</span>"
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:217
+#, python-format
 msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
 msgstr ""
 
@@ -1678,6 +1988,7 @@ msgid "Dev Derby has ended"
 msgstr ""
 
 #: kuma/demos/templates/demos/devderby_landing.html:27
+#, python-format
 msgid "From 2011 until 2013, web developers created more than 450 demos for the Dev Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo Studio</a> for many more."
 msgstr ""
 
@@ -1705,10 +2016,6 @@ msgstr ""
 msgid "Demos tagged {tag}"
 msgstr ""
 
-#: kuma/demos/templates/demos/devderby_tag.html:21
-msgid "Home"
-msgstr ""
-
 #: kuma/demos/templates/demos/devderby_tag.html:22
 msgid "Challenges"
 msgstr ""
@@ -1729,7 +2036,7 @@ msgstr ""
 msgid "Submissions"
 msgstr ""
 
-#: kuma/demos/templates/demos/devderby_tag.html:55 kuma/demos/templates/demos/home.html:136 kuma/demos/templates/demos/listing_tag.html:45
+#: kuma/demos/templates/demos/devderby_tag.html:55 kuma/demos/templates/demos/home.html:136 kuma/demos/templates/demos/listing_tag.html:51
 msgid "Subscribe to a feed of {tag_title} demos"
 msgstr ""
 
@@ -1799,6 +2106,7 @@ msgid "Mozilla Developer Network"
 msgstr ""
 
 #: kuma/demos/templates/demos/launch.html:36
+#, python-format
 msgid "by %(profile_link)s"
 msgstr ""
 
@@ -1823,19 +2131,19 @@ msgid "Subscribe to a feed of all demos"
 msgstr ""
 
 #: kuma/demos/templates/demos/listing_search.html:9
-msgid "Search for \"{q}\""
+msgid "Search for \"{query}\""
 msgstr ""
 
 #: kuma/demos/templates/demos/listing_search.html:13
-msgid "Search results for \"{q}\""
+msgid "Search results for \"{query}\""
 msgstr ""
 
 #: kuma/demos/templates/demos/listing_search.html:27
-msgid "Search demos for \"{q}\""
+msgid "Search demos for \"{query}\""
 msgstr ""
 
 #: kuma/demos/templates/demos/listing_search.html:33
-msgid "Subscribe to a feed of search results for \"{q}\""
+msgid "Subscribe to a feed of search results for \"{query}\""
 msgstr ""
 
 #: kuma/demos/templates/demos/listing_tag.html:4
@@ -1893,6 +2201,7 @@ msgid "Preparing Your Demo"
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:120
+#, python-format
 msgid ""
 "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
 "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX "
@@ -1909,6 +2218,7 @@ msgid "<p>Upload a ZIP file of your source code, in which the main page of your 
 msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:162
+#, python-format
 msgid "I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
 msgstr ""
 
@@ -1972,6 +2282,7 @@ msgid ""
 msgstr ""
 
 #: kuma/demos/templates/demos/submit_noauth.html:61
+#, python-format
 msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 msgstr ""
 
@@ -1995,8 +2306,8 @@ msgstr ""
 msgid "Search the Demo Studio"
 msgstr ""
 
-#: kuma/demos/templates/demos/elements/demos_head.html:33 kuma/demos/templates/demos/elements/search_form.html:6 kuma/landing/templates/landing/homepage.html:50
-#: kuma/landing/templates/landing/homepage.html:60 kuma/landing/templates/landing/homepage.html:67 kuma/landing/templates/landing/homepage.html:72 kuma/search/templates/search/base.html:2
+#: kuma/demos/templates/demos/elements/demos_head.html:33 kuma/demos/templates/demos/elements/search_form.html:6 kuma/landing/templates/landing/homepage.html:38
+#: kuma/landing/templates/landing/homepage.html:48 kuma/landing/templates/landing/homepage.html:55 kuma/landing/templates/landing/homepage.html:60 kuma/search/templates/search/base.html:2
 #: kuma/search/templates/search/results.html:15 kuma/search/templates/search/results.html:52 kuma/search/templates/search/results.html:55 kuma/search/templates/search/results.html:60
 #: templates/base.html:181 templates/base.html:182 templates/base.html:184 templates/includes/common_macros.html:26 templates/includes/common_macros.html:27
 msgid "Search"
@@ -2097,6 +2408,7 @@ msgid "Launch {title}"
 msgstr ""
 
 #: kuma/demos/templates/demos/elements/user_link.html:2
+#, python-format
 msgid "See %(display_name)s's profile"
 msgstr ""
 
@@ -2110,165 +2422,147 @@ msgid ""
 "Firefox OS."
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:43
+#: kuma/landing/templates/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:54 kuma/landing/templates/landing/homepage.html:71 kuma/search/templates/search/results.html:59
+#: kuma/landing/templates/landing/homepage.html:42 kuma/landing/templates/landing/homepage.html:59 kuma/search/templates/search/results.html:59
 msgid "Search the docs"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:57
+#: kuma/landing/templates/landing/homepage.html:45
 msgid "Show topics"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:78
+#: kuma/landing/templates/landing/homepage.html:66
 msgid "Web Technologies"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:81
+#: kuma/landing/templates/landing/homepage.html:69
 msgid "Web<br />Platform"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:83
+#: kuma/landing/templates/landing/homepage.html:71
 msgid "Web APIs &amp; DOM"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:84 kuma/landing/templates/landing/promote_buttons.html:105 kuma/users/forms.py:36 templates/base.html:129
-msgid "HTML"
-msgstr ""
-
-#: kuma/landing/templates/landing/homepage.html:85 kuma/landing/templates/landing/promote_buttons.html:99 templates/base.html:130
-msgid "CSS"
-msgstr ""
-
-#: kuma/landing/templates/landing/homepage.html:87 kuma/landing/templates/landing/homepage.html:107
+#: kuma/landing/templates/landing/homepage.html:75 kuma/landing/templates/landing/homepage.html:95
 msgid "more..."
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:91
+#: kuma/landing/templates/landing/homepage.html:79
 msgid "Mozilla<br> Docs"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:93 templates/base.html:156
-msgid "Firefox"
-msgstr ""
-
-#: kuma/landing/templates/landing/homepage.html:94 templates/base.html:158
-msgid "Firefox OS"
-msgstr ""
-
-#: kuma/landing/templates/landing/homepage.html:95 templates/base.html:157
+#: kuma/landing/templates/landing/homepage.html:83 templates/base.html:157
 msgid "Firefox Marketplace"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:96
+#: kuma/landing/templates/landing/homepage.html:84
 msgid "App Center"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:97 templates/base.html:155
-msgid "Add-ons"
-msgstr ""
-
-#: kuma/landing/templates/landing/homepage.html:101
+#: kuma/landing/templates/landing/homepage.html:89
 msgid "Developer<br />Tools"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:103
+#: kuma/landing/templates/landing/homepage.html:91
 msgid "Page Inspector"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:104
+#: kuma/landing/templates/landing/homepage.html:92
 msgid "Web Console"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:105
+#: kuma/landing/templates/landing/homepage.html:93
 msgid "JavaScript Debugger"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:106
+#: kuma/landing/templates/landing/homepage.html:94
 msgid "Performance Tools"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:111
+#: kuma/landing/templates/landing/homepage.html:99
 msgid "Connect"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:112
+#: kuma/landing/templates/landing/homepage.html:100
 msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:113
+#: kuma/landing/templates/landing/homepage.html:101
 msgid "Learn more and sign up!"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:122
+#: kuma/landing/templates/landing/homepage.html:110
 msgid "Open Web and Mobile"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:125
+#: kuma/landing/templates/landing/homepage.html:113
 msgid "Learn Web Development"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:128
+#: kuma/landing/templates/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:132
+#: kuma/landing/templates/landing/homepage.html:120
 msgid "Celebrate ten years of documenting your Web."
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:136
+#: kuma/landing/templates/landing/homepage.html:124
 msgid "Build Open Web Apps"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:145
+#: kuma/landing/templates/landing/homepage.html:133
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:150
+#: kuma/landing/templates/landing/homepage.html:138
 msgid "Get Involved"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:152
+#: kuma/landing/templates/landing/homepage.html:140
+#, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:159 kuma/landing/templates/landing/homepage.html:166
+#: kuma/landing/templates/landing/homepage.html:147 kuma/landing/templates/landing/homepage.html:154
 msgid "Help improve MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:170
+#: kuma/landing/templates/landing/homepage.html:158
 msgid "All parts of MDN (docs, demos, and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:176
+#: kuma/landing/templates/landing/homepage.html:164
 msgid "Getting started"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:177
+#: kuma/landing/templates/landing/homepage.html:165
 msgid "Editorial review"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:178
+#: kuma/landing/templates/landing/homepage.html:166
 msgid "Technical review"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:183
+#: kuma/landing/templates/landing/homepage.html:171
 msgid "Translating"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:184
+#: kuma/landing/templates/landing/homepage.html:172
 msgid "Promoting MDN"
 msgstr ""
 
-#: kuma/landing/templates/landing/homepage.html:185
+#: kuma/landing/templates/landing/homepage.html:173
 msgid "Contributing to the MDN codebase"
 msgstr ""
 
 #: kuma/landing/templates/landing/newsfeed.html:8
+#, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
 msgstr ""
 
@@ -2329,10 +2623,6 @@ msgstr ""
 
 #: kuma/landing/templates/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr ""
-
-#: kuma/landing/templates/landing/promote_buttons.html:117
-msgid "Web"
 msgstr ""
 
 #: kuma/landing/templates/landing/promote_buttons.html:124
@@ -2404,6 +2694,7 @@ msgid "Can't promote more than one index at once."
 msgstr ""
 
 #: kuma/search/admin.py:15
+#, python-format
 msgid "Promoted search index %s."
 msgstr ""
 
@@ -2420,6 +2711,7 @@ msgid "Can't demote the index if there is only one. Create and populate a new on
 msgstr ""
 
 #: kuma/search/admin.py:29
+#, python-format
 msgid "Demoted search index %s."
 msgstr ""
 
@@ -2440,6 +2732,7 @@ msgid "Is current index?"
 msgstr ""
 
 #: kuma/search/forms.py:17
+#, python-format
 msgid "There is already a successor to the current index %s"
 msgstr ""
 
@@ -2473,6 +2766,7 @@ msgid "Search Results for \"{query}\""
 msgstr ""
 
 #: kuma/search/templates/search/results.html:39
+#, python-format
 msgid "translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 msgstr ""
 
@@ -2485,36 +2779,42 @@ msgid "Results"
 msgstr ""
 
 #: kuma/search/templates/search/results.html:74
+#, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
 msgstr[0] ""
 msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:80
+#, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgstr[0] ""
 msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:88
+#, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
 msgstr[0] ""
 msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:94
+#, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
 msgstr[0] ""
 msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:104
+#, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
 msgstr[0] ""
 msgstr[1] ""
 
 #: kuma/search/templates/search/results.html:110
+#, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
 msgstr[0] ""
@@ -2525,10 +2825,12 @@ msgid "Showing all results."
 msgstr ""
 
 #: kuma/search/templates/search/results.html:121
+#, python-format
 msgid "Showing results %(start)s to %(end)s."
 msgstr ""
 
 #: kuma/search/templates/search/results.html:127
+#, python-format
 msgid "Search again in %(default_locale_native)s only"
 msgstr ""
 
@@ -2536,21 +2838,30 @@ msgstr ""
 msgid "Filter by"
 msgstr ""
 
-#: kuma/search/templates/search/results.html:210
-msgid "Filter"
+#: kuma/spam/forms.py:17
+msgid "The submitted data contains invalid content."
 msgstr ""
 
-#: kuma/users/adapters.py:18
+#: kuma/spam/forms.py:33
+msgid "The form data has not yet been validated. Please try again."
+msgstr ""
+
+#: kuma/spam/models.py:10
+msgid "created"
+msgstr ""
+
+#: kuma/users/adapters.py:17
+#, python-format
 msgid ""
 "Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
 "\"nofollow\">file a bug</a>."
 msgstr ""
 
-#: kuma/users/adapters.py:22
+#: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
 msgstr ""
 
-#: kuma/users/adapters.py:49
+#: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
 msgstr ""
 
@@ -2559,130 +2870,133 @@ msgid "User"
 msgstr ""
 
 #: kuma/users/apps.py:69
+#, python-format
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr ""
 
-#: kuma/users/backends.py:33
+#: kuma/users/backends.py:32
 msgid "algorithm"
 msgstr ""
 
-#: kuma/users/backends.py:34
+#: kuma/users/backends.py:33
 msgid "salt"
 msgstr ""
 
-#: kuma/users/backends.py:35
+#: kuma/users/backends.py:34
 msgid "hash"
 msgstr ""
 
-#: kuma/users/constants.py:4
+#: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr ""
 
-#: kuma/users/forms.py:22
+#: kuma/users/forms.py:23
 msgid "You must agree to the privacy policy."
 msgstr ""
 
-#: kuma/users/forms.py:37
+#: kuma/users/forms.py:38
 msgid "Plain text"
 msgstr ""
 
-#: kuma/users/forms.py:39
+#: kuma/users/forms.py:40
 msgid "Send me the newsletter"
 msgstr ""
 
-#: kuma/users/forms.py:41
+#: kuma/users/forms.py:42
 msgid "Preferred format"
 msgstr ""
 
-#: kuma/users/forms.py:46 kuma/users/signup.py:32
+#: kuma/users/forms.py:47 kuma/users/signup.py:32
 msgid "I agree"
 msgstr ""
 
-#: kuma/users/forms.py:49
+#: kuma/users/forms.py:50
 msgid "Your country"
 msgstr ""
 
-#: kuma/users/forms.py:150 kuma/users/models.py:41
+#: kuma/users/forms.py:151 kuma/users/models.py:41
 msgid "Timezone"
 msgstr ""
 
-#: kuma/users/forms.py:156
+#: kuma/users/forms.py:157
 msgid "Beta tester"
 msgstr ""
 
-#: kuma/users/forms.py:160 kuma/users/templates/users/user_detail.html:87
+#: kuma/users/forms.py:161 kuma/users/templates/users/user_detail.html:87
 msgid "Interests"
 msgstr ""
 
-#: kuma/users/forms.py:166
+#: kuma/users/forms.py:167
 msgid "Expertise"
 msgstr ""
 
-#: kuma/users/forms.py:172
+#: kuma/users/forms.py:173
 msgid "Username"
 msgstr ""
 
-#: kuma/users/forms.py:179 kuma/users/models.py:139 kuma/users/templates/users/user_detail.html:117
+#: kuma/users/forms.py:180 kuma/users/models.py:139 kuma/users/templates/users/user_detail.html:117
 msgid "Website"
 msgstr ""
 
-#: kuma/users/forms.py:188 kuma/users/models.py:154 kuma/users/templates/users/user_detail.html:121 kuma/wiki/templates/wiki/includes/document_macros.html:101
+#: kuma/users/forms.py:189 kuma/users/models.py:154 kuma/users/templates/users/user_detail.html:121 kuma/wiki/templates/wiki/includes/document_macros.html:101
 msgid "Twitter"
 msgstr ""
 
-#: kuma/users/forms.py:197 kuma/users/models.py:149 kuma/users/templates/users/user_detail.html:126 kuma/users/templates/users/user_detail.html:130 templates/includes/login.html:21
+#: kuma/users/forms.py:198 kuma/users/models.py:149 kuma/users/templates/users/user_detail.html:126 kuma/users/templates/users/user_detail.html:130 templates/includes/login.html:21
 msgid "GitHub"
 msgstr ""
 
-#: kuma/users/forms.py:206 kuma/users/models.py:169 kuma/users/templates/users/user_detail.html:135
+#: kuma/users/forms.py:207 kuma/users/models.py:169 kuma/users/templates/users/user_detail.html:135
 msgid "Stack Overflow"
 msgstr ""
 
-#: kuma/users/forms.py:215 kuma/users/models.py:159 kuma/users/templates/users/user_detail.html:139
+#: kuma/users/forms.py:216 kuma/users/models.py:159 kuma/users/templates/users/user_detail.html:139
 msgid "LinkedIn"
 msgstr ""
 
-#: kuma/users/forms.py:224 kuma/users/models.py:144 kuma/users/templates/users/user_detail.html:143
+#: kuma/users/forms.py:225 kuma/users/models.py:144 kuma/users/templates/users/user_detail.html:143
 msgid "Mozillians"
 msgstr ""
 
-#: kuma/users/forms.py:233 kuma/users/models.py:164 kuma/users/templates/users/user_detail.html:147 kuma/wiki/templates/wiki/includes/document_macros.html:102
+#: kuma/users/forms.py:234 kuma/users/models.py:164 kuma/users/templates/users/user_detail.html:147 kuma/wiki/templates/wiki/includes/document_macros.html:102
 msgid "Facebook"
 msgstr ""
 
-#: kuma/users/forms.py:265
+#: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
 msgstr ""
 
-#: kuma/users/forms.py:274
+#: kuma/users/forms.py:275
 msgid "This field cannot be blank."
 msgstr ""
 
-#: kuma/users/forms.py:280
+#: kuma/users/forms.py:281
 msgid "Username already in use."
 msgstr ""
 
-#: kuma/users/helpers.py:37
+#: kuma/users/helpers.py:35
 msgid "Banned on {ban_date} by {ban_admin}."
 msgstr ""
 
-#: kuma/users/helpers.py:38
+#: kuma/users/helpers.py:41
 msgid "Banned"
 msgstr ""
 
-#: kuma/users/helpers.py:41
+#: kuma/users/helpers.py:48
 msgid "Ban User"
 msgstr ""
 
-#: kuma/users/helpers.py:52
+#: kuma/users/helpers.py:59
 msgid "Admin"
 msgstr ""
 
-#: kuma/users/models.py:30
-msgid "%s banned by %s"
+#: kuma/users/models.py:29
+#, python-format
+msgid "%(banned_user)s banned by %(banned_by)s"
 msgstr ""
 
 #: kuma/users/models.py:32
+#, python-format
 msgid "%s (no longer active)"
 msgstr ""
 
@@ -2755,10 +3069,12 @@ msgid "Username is required."
 msgstr ""
 
 #: kuma/users/signup.py:8
+#, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
 #: kuma/users/signup.py:10
+#, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
 msgstr ""
 
@@ -2766,23 +3082,25 @@ msgstr ""
 msgid "You must agree to the terms of use."
 msgstr ""
 
-#: kuma/users/tasks.py:37 kuma/users/templates/users/email/welcome/html.ltxt:6
+#: kuma/users/tasks.py:38 kuma/users/templates/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
 msgstr ""
 
-#: kuma/users/views.py:237
+#: kuma/users/views.py:236
 msgid "Email address"
 msgstr ""
 
-#: kuma/users/views.py:296
+#: kuma/users/views.py:295
+#, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr ""
 
-#: kuma/users/views.py:299
+#: kuma/users/views.py:298
+#, python-format
 msgid "%(email)s Unverified"
 msgstr ""
 
-#: kuma/users/views.py:302 kuma/users/templates/socialaccount/signup.html:142
+#: kuma/users/views.py:301 kuma/users/templates/socialaccount/signup.html:142
 msgid "Other:"
 msgstr ""
 
@@ -2844,6 +3162,7 @@ msgid "Confirm Email Address"
 msgstr ""
 
 #: kuma/users/templates/account/email_confirm.html:13
+#, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
 msgstr ""
 
@@ -2852,10 +3171,12 @@ msgid "Confirm"
 msgstr ""
 
 #: kuma/users/templates/account/email_confirm.html:22
+#, python-format
 msgid "This email confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr ""
 
 #: kuma/users/templates/account/email_confirmed.html:10
+#, python-format
 msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
 msgstr ""
 
@@ -2880,7 +3201,8 @@ msgid "Are you sure you want to sign out?"
 msgstr ""
 
 #: kuma/users/templates/account/password_change.html:3 kuma/users/templates/account/password_change.html:8 kuma/users/templates/account/password_change.html:13
-#: kuma/users/templates/account/password_reset_from_key_done.html:3 kuma/users/templates/account/password_reset_from_key_done.html:7
+#: kuma/users/templates/account/password_reset_from_key.html:3 kuma/users/templates/account/password_reset_from_key.html:12 kuma/users/templates/account/password_reset_from_key_done.html:3
+#: kuma/users/templates/account/password_reset_from_key_done.html:7
 msgid "Change Password"
 msgstr ""
 
@@ -2905,7 +3227,20 @@ msgstr ""
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
 msgstr ""
 
-#: kuma/users/templates/account/password_reset_from_key_done.html:8
+#: kuma/users/templates/account/password_reset_from_key.html:10
+msgid "Bad Token"
+msgstr ""
+
+#: kuma/users/templates/account/password_reset_from_key.html:17
+#, python-format
+msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
+msgstr ""
+
+#: kuma/users/templates/account/password_reset_from_key.html:23
+msgid "Change password"
+msgstr ""
+
+#: kuma/users/templates/account/password_reset_from_key.html:26 kuma/users/templates/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
 msgstr ""
 
@@ -2922,6 +3257,7 @@ msgid "Sign Up"
 msgstr ""
 
 #: kuma/users/templates/account/signup.html:10
+#, python-format
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
 
@@ -2951,6 +3287,7 @@ msgid "We have sent an email to you for confirmation. Please click on the link i
 msgstr ""
 
 #: kuma/users/templates/account/verified_email_required.html:17
+#, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your email address</a>."
 msgstr ""
 
@@ -2959,6 +3296,7 @@ msgid "Note"
 msgstr ""
 
 #: kuma/users/templates/account/snippets/already_logged_in.html:1
+#, python-format
 msgid "you are already logged in as %(user_display)s."
 msgstr ""
 
@@ -3003,6 +3341,7 @@ msgid "Login Cancelled"
 msgstr ""
 
 #: kuma/users/templates/socialaccount/login_cancelled.html:9
+#, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
 
@@ -3011,10 +3350,12 @@ msgid "Create your MDN profile to continue"
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:30
+#, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:43
+#, python-format
 msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 "connect with my MDN profile</a>"
@@ -3025,6 +3366,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: kuma/users/templates/socialaccount/signup.html:55
+#, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
 msgstr ""
 
@@ -3042,10 +3384,12 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:82
+#, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:107
+#, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr ""
 
@@ -3054,6 +3398,7 @@ msgid "Please enter the name you'd like to display to other users to identify yo
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:125
+#, python-format
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
@@ -3066,6 +3411,7 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:170
+#, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
 
@@ -3102,6 +3448,7 @@ msgid "Firefox Apps & Hacks Newsletter"
 msgstr ""
 
 #: kuma/users/templates/users/apps_newsletter.html:14
+#, python-format
 msgid "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the newsletter."
 msgstr ""
 
@@ -3117,11 +3464,11 @@ msgstr ""
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
 msgstr ""
 
-#: kuma/users/templates/users/user_detail.html:53 kuma/wiki/content.py:712 kuma/wiki/templates/wiki/includes/buttons.html:33
+#: kuma/users/templates/users/user_detail.html:53 kuma/wiki/content.py:718 kuma/wiki/templates/wiki/includes/buttons.html:40
 msgid "Edit"
 msgstr ""
 
-#: kuma/users/templates/users/user_detail.html:55 kuma/wiki/templates/wiki/includes/buttons.html:33 kuma/wiki/templates/wiki/includes/buttons.html:38
+#: kuma/users/templates/users/user_detail.html:55 kuma/wiki/templates/wiki/includes/buttons.html:53 kuma/wiki/templates/wiki/includes/buttons.html:57
 msgid "Advanced"
 msgstr ""
 
@@ -3138,6 +3485,7 @@ msgid "Areas of Expertise"
 msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:108
+#, python-format
 msgid "Member since %(date_joined)s"
 msgstr ""
 
@@ -3150,6 +3498,7 @@ msgid "No Demos"
 msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:169
+#, python-format
 msgid "You haven't submitted any web technology demos. Build something awesome and <a href=\"%(submit_url)s\">submit a demo</a>!"
 msgstr ""
 
@@ -3165,11 +3514,11 @@ msgstr ""
 msgid "Page"
 msgstr ""
 
-#: kuma/users/templates/users/user_detail.html:182 kuma/wiki/templates/wiki/confirm_revision_revert.html:32 kuma/wiki/templates/wiki/revision.html:43
+#: kuma/users/templates/users/user_detail.html:182 kuma/wiki/templates/wiki/confirm_revision_revert.html:32 kuma/wiki/templates/wiki/revision.html:42
 msgid "Comment"
 msgstr ""
 
-#: kuma/users/templates/users/user_detail.html:190 kuma/wiki/templates/wiki/document.html:413
+#: kuma/users/templates/users/user_detail.html:190 kuma/wiki/templates/wiki/document.html:412
 msgid "Edit page"
 msgstr ""
 
@@ -3177,11 +3526,12 @@ msgstr ""
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/templates/users/user_detail.html:192 kuma/wiki/templates/wiki/document.html:414
+#: kuma/users/templates/users/user_detail.html:192 kuma/wiki/templates/wiki/document.html:413
 msgid "View page history"
 msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:204
+#, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
 
@@ -3266,14 +3616,17 @@ msgid "Hi {username}!"
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
+#, python-format
 msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:16
+#, python-format
 msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:21
+#, python-format
 msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
@@ -3283,396 +3636,467 @@ msgstr ""
 msgid "Talk to us!"
 msgstr ""
 
-#: kuma/users/templates/users/email/welcome/html.ltxt:35
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/html.ltxt:35 kuma/users/templates/users/email/welcome/plain.ltxt:30
 msgid "Want to talk to someone about MDN? There are a few ways you can do that:"
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:38
+#, python-format
 msgid "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:43
+#, python-format
 msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:51
+#, python-format
 msgid "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/html.ltxt:59 kuma/users/templates/users/email/welcome/plain.ltxt:61
+#: kuma/users/templates/users/email/welcome/html.ltxt:60 kuma/users/templates/users/email/welcome/plain.ltxt:51
 msgid "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/plain.ltxt:3
+#: kuma/users/templates/users/email/welcome/plain.ltxt:4
 msgid "Hi {username}"
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/plain.ltxt:6
+#: kuma/users/templates/users/email/welcome/plain.ltxt:7
 msgid "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you."
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/plain.ltxt:12
+#: kuma/users/templates/users/email/welcome/plain.ltxt:10
 msgid ""
 "You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
 "interests."
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/plain.ltxt:19
+#: kuma/users/templates/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/plain.ltxt:23
+#: kuma/users/templates/users/email/welcome/plain.ltxt:18
 msgid "Like code?"
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/plain.ltxt:27
+#: kuma/users/templates/users/email/welcome/plain.ltxt:22
 msgid "Like both words and code?"
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/plain.ltxt:31
+#: kuma/users/templates/users/email/welcome/plain.ltxt:26
 msgid "Want to translate MDN to your language?"
 msgstr ""
 
 #. This is an email. Whitespace matters!
-#: kuma/users/templates/users/email/welcome/plain.ltxt:36
-msgid ""
-"Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: %(list_link)s Subscribe to tell us about what you're interested in on MDN and ask questions about the site. "
-"* Real-time chat: #mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), "
-"Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. * Blog: %(blog_link)s"
+#: kuma/users/templates/users/email/welcome/plain.ltxt:33
+msgid "Mailing list: {list_link}"
 msgstr ""
 
-#: kuma/wiki/apps.py:54
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:36
+msgid "Subscribe to tell us about what you're interested in on MDN and ask questions about the site."
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:39
+msgid "Real-time chat: #mdn channel on irc.mozilla.org"
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:42
+msgid "See {irc_link} for more info about IRC."
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:45
+msgid ""
+"You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
+"community manager."
+msgstr ""
+
+#. This is an email. Whitespace matters!
+#: kuma/users/templates/users/email/welcome/plain.ltxt:48
+msgid "Blog: {blog_link}"
+msgstr ""
+
+#: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr ""
 
-#: kuma/wiki/constants.py:205
+#: kuma/wiki/constants.py:206
 msgid "Technical - code samples, APIs, or technologies"
 msgstr ""
 
-#: kuma/wiki/constants.py:206
+#: kuma/wiki/constants.py:207
 msgid "Editorial - prose, grammar, or content"
 msgstr ""
 
-#: kuma/wiki/constants.py:211
+#: kuma/wiki/constants.py:212
 msgid "Localization in progress - not completely translated yet."
 msgstr ""
 
-#: kuma/wiki/content.py:693
+#: kuma/wiki/content.py:699
 msgid "Edit section"
 msgstr ""
 
-#: kuma/wiki/events.py:71
+#: kuma/wiki/events.py:72
 msgid "[MDN] Page \"{document_title}\" changed by {creator}"
 msgstr ""
 
-#: kuma/wiki/feeds.py:26
+#: kuma/wiki/feeds.py:27
 msgid "MDN documents"
 msgstr ""
 
-#: kuma/wiki/feeds.py:27
+#: kuma/wiki/feeds.py:28
 msgid "Documents authored by MDN users"
 msgstr ""
 
-#: kuma/wiki/feeds.py:28
+#: kuma/wiki/feeds.py:29
 msgid "/"
 msgstr ""
 
-#: kuma/wiki/feeds.py:142
+#: kuma/wiki/feeds.py:147
 msgid "MDN recent document changes"
 msgstr ""
 
-#: kuma/wiki/feeds.py:143
+#: kuma/wiki/feeds.py:148
 msgid "Recent changes to MDN documents"
 msgstr ""
 
-#: kuma/wiki/feeds.py:150
+#: kuma/wiki/feeds.py:155
+#, python-format
 msgid "MDN recent changes to documents tagged %s"
 msgstr ""
 
-#: kuma/wiki/feeds.py:178
+#: kuma/wiki/feeds.py:183
 msgid "MDN documents in need of review"
 msgstr ""
 
-#: kuma/wiki/feeds.py:179
+#: kuma/wiki/feeds.py:184
 msgid "Recent changes to MDN documents that need to be reviewed"
 msgstr ""
 
-#: kuma/wiki/feeds.py:185
+#: kuma/wiki/feeds.py:190
+#, python-format
 msgid "MDN documents for %s review"
 msgstr ""
 
-#: kuma/wiki/feeds.py:189
+#: kuma/wiki/feeds.py:194
 msgid "MDN documents for review"
 msgstr ""
 
-#: kuma/wiki/feeds.py:217
+#: kuma/wiki/feeds.py:224
+#, python-format
 msgid "MDN '%s' translations in need of update"
 msgstr ""
 
-#: kuma/wiki/feeds.py:233
-msgid ""
-"<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s"
-"\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
-msgstr ""
-
-#: kuma/wiki/feeds.py:279
+#: kuma/wiki/feeds.py:260
 msgid "MDN recent revisions"
 msgstr ""
 
-#: kuma/wiki/feeds.py:280
+#: kuma/wiki/feeds.py:261
 msgid "Recent revisions to MDN documents"
 msgstr ""
 
-#: kuma/wiki/feeds.py:359
-msgid "View Page"
-msgstr ""
-
-#: kuma/wiki/feeds.py:361
-msgid "Edit Page"
-msgstr ""
-
-#: kuma/wiki/feeds.py:366
+#: kuma/wiki/feeds.py:352
 msgid "Show comparison"
 msgstr ""
 
-#: kuma/wiki/feeds.py:371 kuma/wiki/templates/wiki/includes/buttons.html:40
-msgid "History"
-msgstr ""
-
-#: kuma/wiki/forms.py:27
+#: kuma/wiki/forms.py:30
 msgid "Please provide a title."
 msgstr ""
 
-#: kuma/wiki/forms.py:28
+#: kuma/wiki/forms.py:31
+#, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:30
+#: kuma/wiki/forms.py:33
+#, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:33
+#: kuma/wiki/forms.py:36
 msgid "Name Your Article"
 msgstr ""
 
-#: kuma/wiki/forms.py:34
+#: kuma/wiki/forms.py:37
 msgid "Please provide a slug."
 msgstr ""
 
-#: kuma/wiki/forms.py:35
+#: kuma/wiki/forms.py:38
 msgid "The slug provided is not valid."
 msgstr ""
 
-#: kuma/wiki/forms.py:36
+#: kuma/wiki/forms.py:39
+#, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:38
+#: kuma/wiki/forms.py:41
+#, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:41
+#: kuma/wiki/forms.py:44
 msgid "Please provide a summary."
 msgstr ""
 
-#: kuma/wiki/forms.py:42
+#: kuma/wiki/forms.py:45
+#, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:44
+#: kuma/wiki/forms.py:47
+#, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:47
+#: kuma/wiki/forms.py:50
 msgid "Please provide content."
 msgstr ""
 
-#: kuma/wiki/forms.py:48
+#: kuma/wiki/forms.py:51
+#, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:50
+#: kuma/wiki/forms.py:53
+#, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:53
+#: kuma/wiki/forms.py:56
+#, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:56
+#: kuma/wiki/forms.py:59
 msgid "Another document with this slug already exists."
 msgstr ""
 
-#: kuma/wiki/forms.py:57
+#: kuma/wiki/forms.py:60
 msgid "Another document with this metadata already exists."
 msgstr ""
 
-#: kuma/wiki/forms.py:59
+#: kuma/wiki/forms.py:62
 msgid "This document was modified while you were editing it."
 msgstr ""
 
-#: kuma/wiki/forms.py:61
+#: kuma/wiki/forms.py:64
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:77 kuma/wiki/forms.py:156 kuma/wiki/forms.py:477 kuma/wiki/templates/wiki/create.html:38 kuma/wiki/templates/wiki/edit.html:56 kuma/wiki/templates/wiki/edit.html:105
+#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:169 kuma/wiki/forms.py:553 kuma/wiki/templates/wiki/create.html:38 kuma/wiki/templates/wiki/edit.html:56 kuma/wiki/templates/wiki/edit.html:105
 #: kuma/wiki/templates/wiki/move.html:60 kuma/wiki/templates/wiki/includes/document_macros.html:58 kuma/wiki/templates/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr ""
 
-#: kuma/wiki/forms.py:78 kuma/wiki/forms.py:157 kuma/wiki/forms.py:478
+#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:170 kuma/wiki/forms.py:554
 msgid "Title of article"
 msgstr ""
 
-#: kuma/wiki/forms.py:86 kuma/wiki/forms.py:170 kuma/wiki/templates/wiki/create.html:42 kuma/wiki/templates/wiki/includes/document_macros.html:62
+#: kuma/wiki/forms.py:89 kuma/wiki/forms.py:183 kuma/wiki/templates/wiki/create.html:42 kuma/wiki/templates/wiki/includes/document_macros.html:62
 #: kuma/wiki/templates/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:87 kuma/wiki/forms.py:171
+#: kuma/wiki/forms.py:90 kuma/wiki/forms.py:184
 msgid "Article URL"
 msgstr ""
 
-#: kuma/wiki/forms.py:97
+#: kuma/wiki/forms.py:100
 msgid "Category:"
 msgstr ""
 
-#: kuma/wiki/forms.py:98
+#: kuma/wiki/forms.py:101
 msgid "Type of article"
 msgstr ""
 
-#: kuma/wiki/forms.py:103 kuma/wiki/templates/wiki/create.html:46 kuma/wiki/templates/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:106 kuma/wiki/templates/wiki/create.html:46 kuma/wiki/templates/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr ""
 
-#: kuma/wiki/forms.py:181 kuma/wiki/templates/wiki/edit.html:62 kuma/wiki/templates/wiki/includes/document_macros.html:67 kuma/wiki/templates/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:194 kuma/wiki/templates/wiki/edit.html:62 kuma/wiki/templates/wiki/includes/document_macros.html:67 kuma/wiki/templates/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr ""
 
-#: kuma/wiki/forms.py:186 kuma/wiki/templates/wiki/edit.html:68
+#: kuma/wiki/forms.py:199 kuma/wiki/templates/wiki/edit.html:68
 msgid "Keywords:"
 msgstr ""
 
-#: kuma/wiki/forms.py:187
+#: kuma/wiki/forms.py:200
 msgid "Affects search results"
 msgstr ""
 
-#: kuma/wiki/forms.py:195
+#: kuma/wiki/forms.py:208
 msgid "Search result summary:"
 msgstr ""
 
-#: kuma/wiki/forms.py:196
+#: kuma/wiki/forms.py:209
 msgid "Only displayed on search results page"
 msgstr ""
 
-#: kuma/wiki/forms.py:207 kuma/wiki/templates/wiki/edit.html:80 kuma/wiki/templates/wiki/includes/document_macros.html:72
+#: kuma/wiki/forms.py:220 kuma/wiki/templates/wiki/edit.html:80 kuma/wiki/templates/wiki/includes/document_macros.html:72
 msgid "Content:"
 msgstr ""
 
-#: kuma/wiki/forms.py:216
+#: kuma/wiki/forms.py:229
 msgid "Comment:"
 msgstr ""
 
-#: kuma/wiki/forms.py:219
+#: kuma/wiki/forms.py:232
 msgid "Tag this revision for review?"
 msgstr ""
 
-#: kuma/wiki/forms.py:226
+#: kuma/wiki/forms.py:239
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:484
+#: kuma/wiki/forms.py:560
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:485
+#: kuma/wiki/forms.py:561
 msgid "New article URL"
 msgstr ""
 
-#: kuma/wiki/helpers.py:99 kuma/wiki/helpers.py:100 kuma/wiki/helpers.py:115 kuma/wiki/helpers.py:116
+#: kuma/wiki/helpers.py:100 kuma/wiki/helpers.py:101 kuma/wiki/helpers.py:116 kuma/wiki/helpers.py:117
+#, python-format
 msgid "Revision %s"
 msgstr ""
 
-#: kuma/wiki/helpers.py:105
+#: kuma/wiki/helpers.py:106
 msgid "There was an error generating the content."
 msgstr ""
 
-#: kuma/wiki/models.py:118
-msgid "Parent %s/%s does not exist."
+#: kuma/wiki/models.py:115
+#, python-format
+msgid "Parent %s does not exist."
 msgstr ""
 
-#: kuma/wiki/models.py:127
+#: kuma/wiki/models.py:123
 msgid "Document Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:128
+#: kuma/wiki/models.py:124
 msgid "Document Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:181
+#: kuma/wiki/models.py:177
 msgid "Uncategorized"
 msgstr ""
 
-#: kuma/wiki/models.py:182
+#: kuma/wiki/models.py:178
 msgid "Reference"
 msgstr ""
 
-#: kuma/wiki/models.py:770
+#: kuma/wiki/models.py:766
 msgid "Please choose a category."
 msgstr ""
 
-#: kuma/wiki/models.py:1513
+#: kuma/wiki/models.py:1521
 msgid "Review Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1514
+#: kuma/wiki/models.py:1522
 msgid "Review Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1520
+#: kuma/wiki/models.py:1528
 msgid "Localization Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1521
+#: kuma/wiki/models.py:1529
 msgid "Localization Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1554
+#: kuma/wiki/models.py:1562
 msgid "No table of contents"
 msgstr ""
 
-#: kuma/wiki/models.py:1555
+#: kuma/wiki/models.py:1563
 msgid "All levels"
 msgstr ""
 
-#: kuma/wiki/models.py:1556
+#: kuma/wiki/models.py:1564
 msgid "H2 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1557
+#: kuma/wiki/models.py:1565
 msgid "H3 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1558
+#: kuma/wiki/models.py:1566
 msgid "H4 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1663
+#: kuma/wiki/models.py:1670
+#, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr ""
 
-#: kuma/wiki/search.py:312
-msgid "Indexing {total} documents into {n} chunks of size {size} into index {index}."
+#: kuma/wiki/models.py:1832
+msgid "Slug"
+msgstr ""
+
+#: kuma/wiki/models.py:1840
+msgid "Document (optional)"
+msgstr ""
+
+#: kuma/wiki/search.py:310
+#, python-format
+msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
+msgstr ""
+
+#: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
+#: kuma/wiki/templates/admin/wiki/purge_documents.html:54
+msgid "Purge documents"
+msgstr ""
+
+#: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
+msgid "Documents"
+msgstr ""
+
+#: kuma/wiki/templates/admin/wiki/purge_documents.html:39
+msgid ""
+"\n"
+"          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
+"        "
+msgstr ""
+
+#: kuma/wiki/templates/admin/wiki/document/change_list.html:8
+msgid "\"Load documents\""
+msgstr ""
+
+#: kuma/wiki/templates/admin/wiki/document/change_list.html:12
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
+msgid "Load documents"
+msgstr ""
+
+#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
+msgid "Please correct the error below."
+msgstr ""
+
+#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
+msgid "Load"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:4
@@ -3743,10 +4167,6 @@ msgstr ""
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/confirm_revision_revert.html:39
-msgid "Revert"
-msgstr ""
-
 #: kuma/wiki/templates/wiki/create.html:5
 msgid "Create a New {title}"
 msgstr ""
@@ -3772,6 +4192,7 @@ msgid "Document Deleted"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/deletion_log.html:9
+#, python-format
 msgid "This document was deleted on %(when)s."
 msgstr ""
 
@@ -3791,109 +4212,117 @@ msgstr ""
 msgid "Go"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:168
+#: kuma/wiki/templates/wiki/document.html:169
 msgid "Previous Search Result"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:168 kuma/wiki/templates/wiki/document.html:178
+#: kuma/wiki/templates/wiki/document.html:169 kuma/wiki/templates/wiki/document.html:179
 msgid "No Previous Search Result"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:174
+#: kuma/wiki/templates/wiki/document.html:175
 msgid "Your Search Results"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:178
+#: kuma/wiki/templates/wiki/document.html:179
 msgid "Next Search Result"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:188
+#: kuma/wiki/templates/wiki/document.html:189
 msgid "Show all"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:188
+#: kuma/wiki/templates/wiki/document.html:189
 msgid "contributors"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:190
+#: kuma/wiki/templates/wiki/document.html:191
+#, python-format
 msgid "by %(count)s contributor:"
 msgid_plural "by %(count)s contributors:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kuma/wiki/templates/wiki/document.html:199
+#: kuma/wiki/templates/wiki/document.html:200
+#, python-format
 msgid "View profile: %(username)s"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:222
+#: kuma/wiki/templates/wiki/document.html:223
 msgid "Show Sidebar"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:236
+#: kuma/wiki/templates/wiki/document.html:237
 msgid "In This Article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:261
+#: kuma/wiki/templates/wiki/document.html:262
+#, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:269
+#: kuma/wiki/templates/wiki/document.html:270
+#, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
 "a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:278
+#: kuma/wiki/templates/wiki/document.html:279
+#, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
 "in a few minutes."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:294
+#: kuma/wiki/templates/wiki/document.html:295
 msgid "This article is in need of a technical review."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:299
+#: kuma/wiki/templates/wiki/document.html:300
 msgid "This article is in need of an editorial review."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:305
+#: kuma/wiki/templates/wiki/document.html:306
+#, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:310
+#: kuma/wiki/templates/wiki/document.html:311
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:317
+#: kuma/wiki/templates/wiki/document.html:318
+#, python-format
 msgid "Our volunteers haven't translated this article into %(locale)s yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:328
+#: kuma/wiki/templates/wiki/document.html:329
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:331
+#: kuma/wiki/templates/wiki/document.html:332
+#, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:344
+#: kuma/wiki/templates/wiki/document.html:345
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:357
+#: kuma/wiki/templates/wiki/document.html:358
 msgid "Document Tags and Contributors"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:362
-msgid "<div class=\"contributors-sub\"> <i aria-hidden=\"true\" class=\"icon-group\"></i><strong>Contributors to this page:</strong> %(contributors_list)s </div>"
+#: kuma/wiki/templates/wiki/document.html:364
+msgid "Contributors to this page:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:371
+#: kuma/wiki/templates/wiki/document.html:370
 msgid "Last updated by:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:386
+#: kuma/wiki/templates/wiki/document.html:385
 msgid "Hide Sidebar"
 msgstr ""
 
@@ -3956,6 +4385,7 @@ msgid "Thank you for taking the time to improve MDN!"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:152
+#, python-format
 msgid "It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">Editor Guide</a>."
 msgstr ""
 
@@ -3972,7 +4402,23 @@ msgid "Learn how to tag an article"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:178 kuma/wiki/templates/wiki/translate.html:112
+#, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/feed_docs_updated.html:3
+#, python-format
+msgid "View %(locale)s parent"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/feed_docs_updated.html:5 kuma/wiki/templates/wiki/feed_docs_updated.html:11
+#, python-format
+msgid "last modified at %(modified)s"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/feed_docs_updated.html:9
+#, python-format
+msgid "Edit %(locale)s translation"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:2
@@ -4032,7 +4478,7 @@ msgid "Parent Title"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:92
-msgid "Move {d} Pages"
+msgid "Move {count} Pages"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:92
@@ -4040,7 +4486,7 @@ msgid "Move Page"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:97
-msgid "The following {d} subpages will be affected by this move:"
+msgid "The following {count} subpages will be affected by this move:"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:104
@@ -4052,6 +4498,7 @@ msgid "Page move requested"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move_requested.html:9
+#, python-format
 msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
 msgstr ""
 
@@ -4059,32 +4506,31 @@ msgstr ""
 msgid "This is a preview of an unsaved document."
 msgstr ""
 
-#. {n} is the revision number, {t} is the title of the document. {c} is the category.
-#: kuma/wiki/templates/wiki/revision.html:3
-msgid "Revision {n} | {t} | {c}"
+#: kuma/wiki/templates/wiki/revision.html:2
+msgid "Revision {id} | {title} | {category}"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/revision.html:11
+#: kuma/wiki/templates/wiki/revision.html:10
 msgid "Revision"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/revision.html:11
+#: kuma/wiki/templates/wiki/revision.html:10
 msgid "of"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/revision.html:14
+#: kuma/wiki/templates/wiki/revision.html:13
 msgid "Revision Information"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/revision.html:61
+#: kuma/wiki/templates/wiki/revision.html:60
 msgid "Revision Content"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/revision.html:68
+#: kuma/wiki/templates/wiki/revision.html:67
 msgid "Revision Source"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/revision.html:75 kuma/wiki/templates/wiki/list/revisions.html:70
+#: kuma/wiki/templates/wiki/revision.html:74 kuma/wiki/templates/wiki/list/revisions.html:70
 msgid "Revert to this revision"
 msgstr ""
 
@@ -4097,12 +4543,14 @@ msgid "Select a language to translate to:"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/sphinx.html:32
+#, python-format
 msgid ""
 "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/sphinx.html:43
+#, python-format
 msgid ""
 "&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
 "<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
@@ -4173,6 +4621,7 @@ msgid "Localization flags"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:4
+#, python-format
 msgid "%(creator)s changed %(document_title)s."
 msgstr ""
 
@@ -4197,6 +4646,14 @@ msgstr ""
 msgid "Article History:"
 msgstr ""
 
+#: kuma/wiki/templates/wiki/email/edited.ltxt:40
+msgid "You are subscribed to edits on: {title} and all its sub-articles."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/email/edited.ltxt:44
+msgid "You are subscribed to edits on: {title}."
+msgstr ""
+
 #: kuma/wiki/templates/wiki/includes/approvals.html:5
 msgid "The following reviews have been requested:"
 msgstr ""
@@ -4213,83 +4670,51 @@ msgstr ""
 msgid "Review completed"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:15
+#: kuma/wiki/templates/wiki/includes/buttons.html:19
 msgid "Languages"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:25
+#: kuma/wiki/templates/wiki/includes/buttons.html:29
 msgid "No translations exist for this article."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:29
+#: kuma/wiki/templates/wiki/includes/buttons.html:33
 msgid "Add a translation"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:43
-msgid "Updating subscription status"
+#: kuma/wiki/templates/wiki/includes/buttons.html:43 kuma/wiki/templates/wiki/includes/buttons.html:46
+msgid "Watch"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:46 kuma/wiki/templates/wiki/includes/buttons.html:47
-msgid "Subscribe to this article"
-msgstr ""
-
-#: kuma/wiki/templates/wiki/includes/buttons.html:46 kuma/wiki/templates/wiki/includes/buttons.html:47
-msgid "Unsubscribe from this article"
-msgstr ""
-
-#: kuma/wiki/templates/wiki/includes/buttons.html:46
-msgid "You are now subscribed to this article."
-msgstr ""
-
-#: kuma/wiki/templates/wiki/includes/buttons.html:46
-msgid "You have been unsubscribed from this article."
-msgstr ""
-
-#: kuma/wiki/templates/wiki/includes/buttons.html:55 kuma/wiki/templates/wiki/includes/buttons.html:56
-msgid "Subscribe to {language} version"
-msgstr ""
-
-#: kuma/wiki/templates/wiki/includes/buttons.html:55 kuma/wiki/templates/wiki/includes/buttons.html:56
-msgid "Unsubscribe from {language} version"
-msgstr ""
-
-#: kuma/wiki/templates/wiki/includes/buttons.html:55
-msgid "You are now subscribed to the {language} version of this article."
-msgstr ""
-
-#: kuma/wiki/templates/wiki/includes/buttons.html:55
-msgid "You have been unsubscribed from the {language} version of this article."
-msgstr ""
-
-#: kuma/wiki/templates/wiki/includes/buttons.html:63
+#: kuma/wiki/templates/wiki/includes/buttons.html:66
 msgid "New sub-article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:64
+#: kuma/wiki/templates/wiki/includes/buttons.html:67
 msgid "Clone this article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:67
+#: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "Move this article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:70
+#: kuma/wiki/templates/wiki/includes/buttons.html:73
 msgid "View in admin"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:78
+#: kuma/wiki/templates/wiki/includes/buttons.html:81
 msgid "Delete this article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:83
+#: kuma/wiki/templates/wiki/includes/buttons.html:86
 msgid "Manage content zone"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:86
+#: kuma/wiki/templates/wiki/includes/buttons.html:89
 msgid "Convert to content zone"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:88
+#: kuma/wiki/templates/wiki/includes/buttons.html:91
 msgid "Print this article"
 msgstr ""
 
@@ -4319,6 +4744,50 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:103
 msgid "Google+"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:124
+msgid "You are now subscribed to this article and all its sub-articles."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:124
+msgid "You have been unsubscribed from this article and all its sub-articles."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:135
+msgid "Updating subscription status"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:136
+msgid "Subscribe to {title}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:137
+msgid "Unsubscribe from {title}"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:140
+msgid "You are now subscribed to {title}."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:140
+msgid "You have been unsubscribed from {title}."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:151
+msgid "Subscribe to <bdi>{language}</bdi> version"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:152
+msgid "Unsubscribe from <bdi>{language}</bdi> version"
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:155
+msgid "You are now subscribed to the {language} version of this article."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:155
+msgid "You have been unsubscribed from the {language} version of this article."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2 kuma/wiki/templates/wiki/includes/translate_description.html:50
@@ -4425,6 +4894,18 @@ msgstr ""
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
 msgstr ""
 
+#: kuma/wiki/templates/wiki/includes/spam_error.html:2
+#, python-format
+msgid ""
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+msgstr ""
+
+#: kuma/wiki/templates/wiki/includes/spam_error.html:11
+#, python-format
+msgid "If you believe you’ve received this message by mistake, please <a href=\"%(admin_email)s\">contact the site administrators</a>."
+msgstr ""
+
 #: kuma/wiki/templates/wiki/includes/translate_description.html:6
 msgid "Translate Description"
 msgstr ""
@@ -4442,7 +4923,7 @@ msgid "Find the translation source with the lookup above and then click \"Save C
 msgstr ""
 
 #: kuma/wiki/templates/wiki/list/documents.html:2 kuma/wiki/templates/wiki/list/needs_review.html:23
-msgid "Found {0} documents."
+msgid "Found {count} documents."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/list/documents.html:6
@@ -4454,7 +4935,7 @@ msgid "All templates"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/list/documents.html:9
-msgid "Found {0} templates."
+msgid "Found {count} templates."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
@@ -4538,6 +5019,7 @@ msgid "Articles tagged with any localization tags"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:15
+#, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
 msgstr[0] ""
@@ -4547,39 +5029,43 @@ msgstr[1] ""
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr ""
 
-#: kuma/wiki/views/document.py:580
+#: kuma/wiki/views/document.py:600
+#, python-format
 msgid "Redirected from %(url)s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:628
+#: kuma/wiki/views/document.py:648
+#, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr ""
 
-#: kuma/wiki/views/document.py:697
+#: kuma/wiki/views/document.py:718
+#, python-format
 msgid "Unsupported content-type: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:703
+#: kuma/wiki/views/document.py:725
+#, python-format
 msgid "Request parsing error: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:723
+#: kuma/wiki/views/document.py:745
 msgid "ETag precondition failed"
 msgstr ""
 
-#: kuma/wiki/views/edit.py:118
+#: kuma/wiki/views/edit.py:115
 msgid "Sections may only be edited inline."
 msgstr ""
 
-#: kuma/wiki/views/misc.py:61
+#: kuma/wiki/views/misc.py:59
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
 msgstr ""
 
-#: kuma/wiki/views/misc.py:143
+#: kuma/wiki/views/misc.py:141
 msgid "Glad to hear it &mdash; thanks for the feedback!"
 msgstr ""
 
-#: kuma/wiki/views/misc.py:145
+#: kuma/wiki/views/misc.py:144
 msgid "Sorry to hear that. Perhaps one of the solutions below can help."
 msgstr ""
 
@@ -4588,18 +5074,20 @@ msgid "You already voted on this Article."
 msgstr ""
 
 #: kuma/wiki/views/misc.py:186
+#, python-format
 msgid "%(obj_count)d object(s) loaded."
 msgstr ""
 
 #: kuma/wiki/views/misc.py:190
+#, python-format
 msgid "Failed to import data: %(error)s"
 msgstr ""
 
-#: kuma/wiki/views/revision.py:141
+#: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
 msgstr ""
 
-#: kuma/wiki/views/translate.py:75
+#: kuma/wiki/views/translate.py:73
 msgid "You cannot translate this document."
 msgstr ""
 
@@ -4624,6 +5112,7 @@ msgid "You must sign in to view all history"
 msgstr ""
 
 #: templates/403.html:34 templates/handlers/400.html:21
+#, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
 msgstr ""
 
@@ -4632,14 +5121,17 @@ msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr ""
 
 #: templates/403.html:45
+#, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
 msgstr ""
 
 #: templates/403.html:49 templates/handlers/400.html:36
+#, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr ""
 
 #: templates/403.html:53
+#, python-format
 msgid "<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">browse docs</a></li>"
 msgstr ""
 
@@ -4658,14 +5150,17 @@ msgid "We're sorry, we couldn't find what you were looking for."
 msgstr ""
 
 #: templates/404.html:24
+#, python-format
 msgid "You can try a search or start over on the <a href=\"%(homepage_url)s\">home page</a>."
 msgstr ""
 
 #: templates/404.html:28
+#, python-format
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
 msgstr ""
 
 #: templates/404.html:36
+#, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr ""
 
@@ -4683,10 +5178,6 @@ msgstr ""
 
 #: templates/base.html:77
 msgid "Skip to search"
-msgstr ""
-
-#: templates/base.html:100
-msgid "Tools"
 msgstr ""
 
 #: templates/base.html:104
@@ -4731,14 +5222,6 @@ msgstr ""
 
 #: templates/base.html:133
 msgid "APIs / DOM"
-msgstr ""
-
-#: templates/base.html:134
-msgid "Apps"
-msgstr ""
-
-#: templates/base.html:135
-msgid "MathML"
 msgstr ""
 
 #: templates/base.html:138
@@ -4806,6 +5289,7 @@ msgid "Report a bug"
 msgstr ""
 
 #: templates/base.html:200
+#, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
 
@@ -4829,6 +5313,11 @@ msgstr ""
 msgid "Contribute to the code"
 msgstr ""
 
+#: templates/admin/search/index/change_list.html:8
+#, python-format
+msgid "Elasticsearch server: %(backend)s"
+msgstr ""
+
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
 msgstr ""
@@ -4850,6 +5339,7 @@ msgid "Profile"
 msgstr ""
 
 #: templates/includes/common_macros.html:44
+#, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
 msgstr ""
 
@@ -4870,6 +5360,7 @@ msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the
 msgstr ""
 
 #: templates/includes/newsletter.html:35
+#, python-format
 msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
 msgstr ""
 
