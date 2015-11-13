@@ -153,7 +153,14 @@
     // AJAX loads for pagination
     $revisionReplaceBlock.on('click', '.pagination a', function (e) {
         e.preventDefault();
-        $pageInput.val(/page=([^&#]*)/.exec(this.href)[1]);
+        var pageNum = /page=([^&#]*)/.exec(this.href)[1];
+        var linkText = this.text.trim();
+        mdn.analytics.trackEvent({
+            category: 'Dashboard Pagination',
+            action: pageNum,
+            label: linkText
+        });
+        $pageInput.val(pageNum);
         $filterForm.submit();
     });
 
