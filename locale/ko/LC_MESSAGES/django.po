@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 12:21-0700\n"
-"PO-Revision-Date: 2015-10-26 08:45+0000\n"
+"PO-Revision-Date: 2015-11-13 02:10+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -255,6 +255,8 @@ msgid ""
 "You need a special permission to use API keys. You may request permission by"
 " <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
+"API 키를 사용하기 위해서는 관리자 허가가 필요합니다. <a href=\"%(bugzilla_url)s\">버그 보고하기</a>를 통해"
+" 허가를 요청할 수 있습니다."
 
 #: kuma/authkeys/templates/authkeys/new.html:7
 msgid ""
@@ -1513,7 +1515,7 @@ msgstr "%(count)d개 %(items)s이 삭제 완료되었습니다."
 
 #: kuma/demos/admin.py:123
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "다음을 삭제할 수 없음: %(name)s"
 
 #: kuma/demos/embed.py:128
 msgid "Not an URL from a supported video service"
@@ -2049,6 +2051,8 @@ msgid ""
 " Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo "
 "Studio</a> for many more."
 msgstr ""
+"2011년 부터 2013년까지 웹개발자들은 Dev Derby를 위해 450개 이상의 데모를 만들었습니다! 아래에서 찾아보거나 <a "
+"href=\"%(demos_url)s\">데모 스튜디오</a>를 방문하여 더 많은 데모를 찾아볼 수 있습니다."
 
 #: kuma/demos/templates/demos/devderby_landing.html:40
 msgid "Previous Dev Derby Challenges"
@@ -2192,7 +2196,7 @@ msgstr "- %(profile_link)s"
 
 #: kuma/demos/templates/demos/launch.html:77
 msgid "Back"
-msgstr ""
+msgstr "뒤로가기"
 
 #: kuma/demos/templates/demos/launch.html:86
 msgid "Remove this toolbar"
@@ -2440,7 +2444,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit_noauth.html:66
 msgid "Log In to Profile"
-msgstr ""
+msgstr "계정 로그인"
 
 #: kuma/demos/templates/demos/terms.html:10
 msgid "Terms for Contributors"
@@ -2448,7 +2452,7 @@ msgstr "공헌자 규약"
 
 #: kuma/demos/templates/demos/terms.html:20
 msgid "Demo Studio: Terms for Contributors"
-msgstr ""
+msgstr "데모 스튜디오: 기여자 목록"
 
 #: kuma/demos/templates/demos/terms.html:107
 msgid "Rights Representation Details"
@@ -2547,7 +2551,7 @@ msgstr "첫페이지"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:58
 msgid "First"
-msgstr ""
+msgstr "1등"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:61
 msgid "Go to the previous page"
@@ -2581,7 +2585,7 @@ msgstr "%(display_name)s의 프로필 보기"
 msgid ""
 "The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
 "web developers to come change the world with Mozilla."
-msgstr ""
+msgstr "모질라 개발자 네트워크(MDN) 펠로우십 프로그램은 모질라와 함께 세상을 바꿀 세계 최고의 웹 개발자들을 초대하고 있습니다."
 
 #: kuma/landing/templates/landing/homepage.html:14
 msgid ""
@@ -2605,7 +2609,7 @@ msgstr "문서 검색"
 # 100%
 #: kuma/landing/templates/landing/homepage.html:57
 msgid "Show topics"
-msgstr ""
+msgstr "주제 보기"
 
 #: kuma/landing/templates/landing/homepage.html:78
 msgid "Web Technologies"
@@ -2707,7 +2711,7 @@ msgstr "웹 개발 배우기"
 
 #: kuma/landing/templates/landing/homepage.html:128
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "당신과 같은 개발자들을 위해 만든 브라우저 다운받기"
 
 #: kuma/landing/templates/landing/homepage.html:132
 msgid "Celebrate ten years of documenting your Web."
@@ -3124,24 +3128,24 @@ msgstr "사용자"
 msgid ""
 "You have completed the first step of <a href=\"%s\">getting started with "
 "MDN</a>"
-msgstr ""
+msgstr "<a href=\"%s\">MDN 시작하기</a>의 첫 단계를 완료하였습니다"
 
 #: kuma/users/backends.py:33
 msgid "algorithm"
-msgstr ""
+msgstr "알고리즘"
 
 #: kuma/users/backends.py:34
 msgid "salt"
-msgstr ""
+msgstr "솔트"
 
 #: kuma/users/backends.py:35
 msgid "hash"
-msgstr ""
+msgstr "해시"
 
 #: kuma/users/constants.py:4
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
-msgstr ""
+msgstr "사용자이름은 문자와 숫자, 그리고 . - _ + 만 입력 가능합니다"
 
 #: kuma/users/forms.py:22
 msgid "You must agree to the privacy policy."
@@ -3149,7 +3153,7 @@ msgstr "개인정보 취급방침에 동의하셔야 합니다."
 
 #: kuma/users/forms.py:37
 msgid "Plain text"
-msgstr ""
+msgstr "평문"
 
 #: kuma/users/forms.py:39
 msgid "Send me the newsletter"
@@ -3240,7 +3244,7 @@ msgstr ""
 
 #: kuma/users/forms.py:280
 msgid "Username already in use."
-msgstr ""
+msgstr "이미 사용 중인 사용자 이름입니다."
 
 #: kuma/users/helpers.py:37
 msgid "Banned on {ban_date} by {ban_admin}."
@@ -3257,7 +3261,7 @@ msgstr "베타 사용자"
 
 #: kuma/users/helpers.py:52
 msgid "Admin"
-msgstr ""
+msgstr "관리자"
 
 #: kuma/users/models.py:30
 msgid "%s banned by %s"
@@ -3265,7 +3269,7 @@ msgstr ""
 
 #: kuma/users/models.py:32
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s(비활성화 상태)"
 
 # 100%
 #: kuma/users/models.py:51
@@ -3274,7 +3278,7 @@ msgstr "언어"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
-msgstr ""
+msgstr "홈페이지"
 
 #: kuma/users/models.py:60
 msgid ""
@@ -3317,15 +3321,15 @@ msgstr ""
 
 #: kuma/users/models.py:107
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "유효한 Twitter URL을 입력해주세요."
 
 #: kuma/users/models.py:112
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "유효한 GitHub URL을 입력해주세요."
 
 #: kuma/users/models.py:117
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "유효한 Stack Overflow URL을 입력해주세요."
 
 #: kuma/users/models.py:122
 msgid "Enter a valid LinkedIn URL."
@@ -3337,7 +3341,7 @@ msgstr ""
 
 #: kuma/users/models.py:132
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "유효한 Facebook URL을 입력해주세요."
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
@@ -4018,7 +4022,7 @@ msgstr "변경"
 
 #: kuma/users/templates/users/user_edit.html:112
 msgid "Use your Persona account to sign in."
-msgstr ""
+msgstr "로그인을 위해서 Persona 계정을 사용하세요."
 
 #: kuma/users/templates/users/user_edit.html:132
 msgid "Use your GitHub account to sign in."
@@ -4042,6 +4046,8 @@ msgid ""
 "Network (MDN)</a> - a community making great resources for developers like "
 "you."
 msgstr ""
+"<a href=\"%(mdn_link)s\">Mozilla 개발자 네트워크(MDN)</a> 프로필을 만든 것에 감사드립니다 - "
+"Mozilla 개발자 네트워크는 여러분과 같은 개발자를 위한 문서를 만드는 커뮤니티입니다."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:16
 #, fuzzy
