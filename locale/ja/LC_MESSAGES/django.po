@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-14 00:06+0000\n"
+"PO-Revision-Date: 2015-11-14 00:19+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -5693,14 +5693,12 @@ msgid "Article History:"
 msgstr "記事の編集履歴:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:40
-#, fuzzy
 msgid "You are subscribed to edits on: {title} and all its sub-articles."
-msgstr "この記事の {language} 版の購読を開始しました。"
+msgstr "{title} とその全サブ記事に対する編集の購読を開始しました。"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:44
-#, fuzzy
 msgid "You are subscribed to edits on: {title}."
-msgstr "この記事の編集が通知されます。"
+msgstr "{title} に対する編集の購読を開始しました。"
 
 #: kuma/wiki/templates/wiki/includes/approvals.html:5
 msgid "The following reviews have been requested:"
@@ -5734,7 +5732,7 @@ msgstr "翻訳を追加"
 #: kuma/wiki/templates/wiki/includes/buttons.html:43
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
 msgid "Watch"
-msgstr ""
+msgstr "監視"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:66
 msgid "New sub-article"
@@ -5801,48 +5799,40 @@ msgid "Google+"
 msgstr "Google+"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr "この記事の編集が通知されます。"
+msgstr "この記事と全サブ記事の購読を開始しました。"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr "この記事の編集通知を解除しました。"
+msgstr "この記事と全サブ記事の購読を解除しました。"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:135
 msgid "Updating subscription status"
 msgstr "購読状況を更新しています"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:136
-#, fuzzy
 msgid "Subscribe to {title}"
-msgstr "この記事の編集を通知"
+msgstr "{title} の購読を開始"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:137
-#, fuzzy
 msgid "Unsubscribe from {title}"
-msgstr "この記事の編集通知を解除"
+msgstr "{title} の購読を解除"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:140
-#, fuzzy
 msgid "You are now subscribed to {title}."
-msgstr "この記事の編集が通知されます。"
+msgstr "{title} の購読を開始しました。"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:140
-#, fuzzy
 msgid "You have been unsubscribed from {title}."
-msgstr "この記事の編集通知を解除しました。"
+msgstr "{title} の購読を解除しました。"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:151
-#, fuzzy
 msgid "Subscribe to <bdi>{language}</bdi> version"
-msgstr "{language} 版の編集を通知"
+msgstr "<bdi>{language}</bdi> 版の購読を開始"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:152
-#, fuzzy
 msgid "Unsubscribe from <bdi>{language}</bdi> version"
-msgstr "{language} 版の購読を解除"
+msgstr "<bdi>{language}</bdi> 版の購読を解除"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:155
 msgid "You are now subscribed to the {language} version of this article."
@@ -5979,6 +5969,9 @@ msgid ""
 "deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
 "belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"あなたの投稿には MDN "
+"にふさわしくないと思われる内容が含まれています。不適切な内容を何度も投稿した場合、あなたのアカウントは凍結される可能性があります。適切な内容かどうかの詳細に関しては"
+" <a href=\"%(does_this_belong_url)s\">MDN の記事掲載ガイド</a> を参照してください。"
 
 #: kuma/wiki/templates/wiki/includes/spam_error.html:11
 #, python-format
@@ -5986,6 +5979,7 @@ msgid ""
 "If you believe you’ve received this message by mistake, please <a "
 "href=\"%(admin_email)s\">contact the site administrators</a>."
 msgstr ""
+"このメッセージを間違って受け取ったと思われる場合は、<a href=\"%(admin_email)s\">サイト管理者までご連絡ください</a>。"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -6007,9 +6001,8 @@ msgstr "上の検索フォームで翻訳元を探して「変更を保存」を
 
 #: kuma/wiki/templates/wiki/list/documents.html:2
 #: kuma/wiki/templates/wiki/list/needs_review.html:23
-#, fuzzy
 msgid "Found {count} documents."
-msgstr "{0} 件のドキュメントが見つかりました。"
+msgstr "{count} 件のドキュメントが見つかりました。"
 
 #: kuma/wiki/templates/wiki/list/documents.html:6
 msgid "Articles tagged: {tag}"
@@ -6020,9 +6013,8 @@ msgid "All templates"
 msgstr "すべてのテンプレート"
 
 #: kuma/wiki/templates/wiki/list/documents.html:9
-#, fuzzy
 msgid "Found {count} templates."
-msgstr "{0} 件のテンプレートが見つかりました。"
+msgstr "{count} 件のテンプレートが見つかりました。"
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
 msgid "Documents with errors"
@@ -6438,7 +6430,7 @@ msgstr "MDN のコードに貢献する"
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Elasticsearch サーバ: %(backend)s"
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
