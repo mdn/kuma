@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-14 14:19+0000\n"
+"PO-Revision-Date: 2015-11-14 15:53+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -335,17 +335,17 @@ msgstr "提交日期"
 #: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:2
 #, python-format
 msgid "%(object)s has been flagged %(flag_type)s"
-msgstr ""
+msgstr "%(object)s 已被标记 %(flag_type)s"
 
 #: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:6
 msgid ""
 "To change the status of this flag, click the following link, or paste it "
 "into your browser's location bar:"
-msgstr ""
+msgstr "要更改此标志的状态，点击下面的链接，或者粘贴它到您的浏览器地址栏："
 
 #: kuma/core/apps.py:16
 msgid "Core"
-msgstr ""
+msgstr "核心"
 
 #: kuma/core/form_fields.py:57
 #, python-format
@@ -586,11 +586,11 @@ msgstr "天"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "周"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30 天"
 
 #: kuma/dashboards/forms.py:24
 #: kuma/dashboards/templates/dashboards/revisions.html:14
@@ -620,7 +620,7 @@ msgstr "结束日期："
 #: kuma/dashboards/forms.py:44
 #: kuma/dashboards/templates/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "前段时间："
 
 #: kuma/dashboards/templates/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -653,7 +653,7 @@ msgstr "历史记录"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:35
 msgid "new"
-msgstr ""
+msgstr "新"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:36
 msgid "deleted"
@@ -661,7 +661,7 @@ msgstr "已删除"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "封禁IP禁止编辑"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
 msgid "There are no revisions matching this filter set."
@@ -672,28 +672,28 @@ msgstr "没有修订匹配此过滤器集。"
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:8
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "停止当简体中文版本被批准时的邮件通知"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:20
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "当简体中文版本被批准时获得邮件通知"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:7
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr ""
+msgstr "停止当简体中文版本等待批准时的邮件通知"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:18
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr ""
+msgstr "当简体中文版本等待批准时获得邮件通知"
 
 #: kuma/demos/__init__.py:34
 msgid "Removed from Derby"
@@ -1984,22 +1984,22 @@ msgstr "首页"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:9
 msgid "Censor multiple objects"
-msgstr ""
+msgstr "检查多个对象"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:14
 #, python-format
 msgid ""
 "Are you sure you want to censor the selected %(object_name)s objects? This "
 "cannot be reversed."
-msgstr ""
+msgstr "您确定要检查选定的 %(object_name)s 对象？这不能还原。"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:23
 msgid "Explanation URL (optional):"
-msgstr ""
+msgstr "说明网址（可选）："
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "是的，我确定"
 
 #: kuma/demos/templates/demos/delete.html:10
 #: kuma/demos/templates/demos/detail.html:9
@@ -3297,7 +3297,7 @@ msgstr "提交的数据包含无效的内容。"
 
 #: kuma/spam/forms.py:33
 msgid "The form data has not yet been validated. Please try again."
-msgstr ""
+msgstr "这个表单数据未被验证。请重试。"
 
 #: kuma/spam/models.py:10
 msgid "created"
@@ -3463,7 +3463,7 @@ msgstr "管理员"
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_user)s 已被 %(banned_by)s 封禁"
 
 #: kuma/users/models.py:32
 #, python-format
@@ -3742,7 +3742,7 @@ msgstr "我们已经给您发送了一封邮件。如果您在几分钟之后仍
 
 #: kuma/users/templates/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "错误的令牌"
 
 #: kuma/users/templates/account/password_reset_from_key.html:17
 #, python-format
@@ -4360,7 +4360,7 @@ msgstr "想要翻译 MDN 到您使用的语言？"
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:33
 msgid "Mailing list: {list_link}"
-msgstr ""
+msgstr "邮件列表：{list_link}"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
@@ -4372,12 +4372,12 @@ msgstr "订阅来告诉我们您所感兴趣的 MDN 的方面，以及询问有�
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:39
 msgid "Real-time chat: #mdn channel on irc.mozilla.org"
-msgstr ""
+msgstr "实时聊天：#mdn 频道于 irc.mozilla.org"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:42
 msgid "See {irc_link} for more info about IRC."
-msgstr ""
+msgstr "查看 {irc_link} 了解更多有关 IRC 的信息。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:45
@@ -4393,7 +4393,7 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
 msgid "Blog: {blog_link}"
-msgstr ""
+msgstr "博客：{blog_link}"
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
@@ -4779,6 +4779,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          下列文档将从数据库中永久移除。此操作不能撤销。若要取消操作，请点击浏览器的后退按钮。\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
@@ -4787,7 +4790,7 @@ msgstr "“载入文档”"
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
 msgid "Add %(name)s"
-msgstr ""
+msgstr "添加 %(name)s"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
@@ -4797,11 +4800,11 @@ msgstr "载入文档"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
-msgstr ""
+msgstr "请纠正下面的错误。"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "载入"
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:4
 msgid "Compare Revisions | {document}"
@@ -5464,7 +5467,7 @@ msgstr "添加翻译"
 #: kuma/wiki/templates/wiki/includes/buttons.html:43
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
 msgid "Watch"
-msgstr ""
+msgstr "关注"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:66
 msgid "New sub-article"
@@ -5699,13 +5702,15 @@ msgid ""
 "deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
 "belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"您的提交包含可能不适合 MDN 的内容。反复尝试提交不适合的资料可能会导致您的账号被停用。参见我们的指南“<a "
+"href=\"%(does_this_belong_url)s\">这适合 MDN？</a>”了解什么是合适的资料。"
 
 #: kuma/wiki/templates/wiki/includes/spam_error.html:11
 #, python-format
 msgid ""
 "If you believe you’ve received this message by mistake, please <a "
 "href=\"%(admin_email)s\">contact the site administrators</a>."
-msgstr ""
+msgstr "如果您确信自己不应该收到此消息，请<a href=\"%(admin_email)s\">联系网站管理员</a>。"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -6151,7 +6156,7 @@ msgstr "贡献代码"
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Elasticsearch 服务器：%(backend)s"
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
