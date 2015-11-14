@@ -367,6 +367,7 @@ msgid "Core"
 msgstr "Core"
 
 #: kuma/core/form_fields.py:57
+#, python-format
 #, python-format, python-format
 msgid ""
 "Ensure this value has at least %(limit_value)s characters (it has "
@@ -376,6 +377,7 @@ msgstr ""
 "heeft er %(show_value)s)."
 
 #: kuma/core/form_fields.py:62
+#, python-format
 #, python-format, python-format
 msgid ""
 "Ensure this value has at most %(limit_value)s characters (it has "
@@ -2013,6 +2015,7 @@ msgid "%(number)d %(type)s"
 msgstr "%(number)d %(type)s"
 
 #: kuma/demos/models.py:204
+#, python-format
 #, python-format, python-format
 msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
 msgstr ""
@@ -4035,6 +4038,7 @@ msgid "Bad Token"
 msgstr "Ongeldige token"
 
 #: kuma/users/templates/account/password_reset_from_key.html:17
+#, python-format
 #, python-format, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
@@ -5053,6 +5057,7 @@ msgid "There was an error generating the content."
 msgstr "Er is een fout opgetreden bij het genereren van de inhoud."
 
 #: kuma/wiki/models.py:115
+#, python-format
 #, python-format, python-format
 msgid "Parent %s does not exist."
 msgstr "Bovenliggend(e) %s bestaat niet."
@@ -5135,6 +5140,7 @@ msgid "Document (optional)"
 msgstr "Document (optioneel)"
 
 #: kuma/wiki/search.py:310
+#, python-format
 #, python-format, python-format
 msgid ""
 "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d "
@@ -5572,17 +5578,20 @@ msgstr ""
 "Guide</a>."
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:3
+#, python-format
 #, python-format, python-format
 msgid "View %(locale)s parent"
 msgstr "Bovenliggende (%(locale)s) weergeven"
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:5
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:11
+#, python-format
 #, python-format, python-format
 msgid "last modified at %(modified)s"
 msgstr "laatst aangepast op %(modified)s"
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:9
+#, python-format
 #, python-format, python-format
 msgid "Edit %(locale)s translation"
 msgstr "Vertaling naar het %(locale)s bewerken"
