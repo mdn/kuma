@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-14 13:57+0000\n"
+"PO-Revision-Date: 2015-11-14 14:19+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -348,18 +348,18 @@ msgid "Core"
 msgstr ""
 
 #: kuma/core/form_fields.py:57
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Ensure this value has at least %(limit_value)s characters (it has "
 "%(show_value)s)."
-msgstr "请确保标题不多于 %(limit_value)s 个字符，目前有 %(show_value)s 个字符。"
+msgstr "确保此值不少于 %(limit_value)s 个字符（它目前是 %(show_value)s 个）。"
 
 #: kuma/core/form_fields.py:62
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Ensure this value has at most %(limit_value)s characters (it has "
 "%(show_value)s)."
-msgstr "用户名太长 (%(show_value)s 字符). 不能超过%(limit_value)s 字符。"
+msgstr "确保此值不超过最多 %(limit_value)s 个字符（它目前是 %(show_value)s 个）。"
 
 #: kuma/core/helpers.py:108 kuma/demos/helpers.py:305
 #, python-format
@@ -3292,9 +3292,8 @@ msgid "Filter by"
 msgstr "筛选依据"
 
 #: kuma/spam/forms.py:17
-#, fuzzy
 msgid "The submitted data contains invalid content."
-msgstr "包含不恰当的内容"
+msgstr "提交的数据包含无效的内容。"
 
 #: kuma/spam/forms.py:33
 msgid "The form data has not yet been validated. Please try again."
@@ -3746,12 +3745,12 @@ msgid "Bad Token"
 msgstr ""
 
 #: kuma/users/templates/account/password_reset_from_key.html:17
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
-msgstr "密码重置链接无效，可能是由于该链接已经被使用过。请另外请求一次密码重置。"
+msgstr "密码重置链接已无效，可能是该链接已经被使用过。请另外<a href=\"%(passwd_reset_url)s\">请求一次密码重置</a>。"
 
 #: kuma/users/templates/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -4365,11 +4364,10 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
-#, fuzzy
 msgid ""
 "Subscribe to tell us about what you're interested in on MDN and ask "
 "questions about the site."
-msgstr "邮件列表：<a href=\"%(list_link)s\">订阅</a>来告诉我们您所感兴趣的 MDN 的方面，以及讨论有关本网站的问题。"
+msgstr "订阅来告诉我们您所感兴趣的 MDN 的方面，以及询问有关本网站的问题。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:39
@@ -4383,16 +4381,14 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:45
-#, fuzzy
 msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
 "Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"实时聊天：<a href=\"%(channel_link)s\">#mdn 频道于irc.mozilla.org</a>。（获取更多有关<a "
-"href=\"%(irc_link)s\">IRC</a>的信息）。您可以找到 MDN 的编者、职员、管理员：Eric Shepherd "
-"(sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz"
-" (fscholz), Chris Mills (chrismills), 和我 (jms)，MDN 的社区经理。"
+"您可以找到 MDN 的编者、职员、管理员：Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will"
+" Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), 和我 "
+"(jms)，MDN 的社区经理。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
@@ -4758,11 +4754,12 @@ msgid "Document (optional)"
 msgstr "文档（可选）"
 
 #: kuma/wiki/search.py:310
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d "
 "into index %(index)s.total"
-msgstr "正在索引总计 {total} 篇文档至 {n} 个 {size} 大小的区块，至 {index} 索引。"
+msgstr ""
+"正在索引总计 %(total)d 篇文档至 %(total_chunks)d 个 %(size)d 大小的区块，至 %(index)s 索引"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
@@ -5160,9 +5157,9 @@ msgstr ""
 "href=\"%(url)s\">阅读标签指南</a>。"
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "View %(locale)s parent"
-msgstr "查看 %(username)s 的个人资料"
+msgstr "查看 %(locale)s 的父"
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:5
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:11
