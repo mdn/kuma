@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-14 00:00+0000\n"
-"Last-Translator: Marco Aurélio <ouesten@me.com>\n"
+"PO-Revision-Date: 2015-11-14 23:42+0000\n"
+"Last-Translator: Rodrigo Padula <rodrigopadula@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -353,17 +353,19 @@ msgstr "data de envio"
 #: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:2
 #, python-format
 msgid "%(object)s has been flagged %(flag_type)s"
-msgstr ""
+msgstr "O %(object)s foi etiquetado como %(flag_type)s"
 
 #: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:6
 msgid ""
 "To change the status of this flag, click the following link, or paste it "
 "into your browser's location bar:"
 msgstr ""
+"Para alterar o estado desta etiqueta, clique no link a seguir ou cole a "
+"mesma na barra de endereço do seu navegador:"
 
 #: kuma/core/apps.py:16
 msgid "Core"
-msgstr ""
+msgstr "Núcleo"
 
 #: kuma/core/form_fields.py:57
 #, fuzzy, python-format
@@ -628,7 +630,7 @@ msgstr "30 dias"
 #: kuma/dashboards/forms.py:24
 #: kuma/dashboards/templates/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "Idioma:"
 
 #: kuma/dashboards/forms.py:28
 #: kuma/dashboards/templates/dashboards/revisions.html:19
@@ -653,10 +655,9 @@ msgstr "Data final:"
 #: kuma/dashboards/forms.py:44
 #: kuma/dashboards/templates/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "Período anterior:"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:2
-#, fuzzy
 msgid "Revision Dashboard"
 msgstr "Painel de revisão"
 
@@ -695,7 +696,7 @@ msgstr "excluído"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Banir IP para edições"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
 #, fuzzy
@@ -707,14 +708,14 @@ msgstr "Não existem papéis para gerenciar para este usuário."
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:8
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "Parar de receber e-mails quando as revisões em Inglês são aprovadas"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:20
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "Receber e-mail quando revisões em inglês forem aprovadas"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -722,13 +723,14 @@ msgstr ""
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
 msgstr ""
+"Parar de receber e-mails quando revisões em inglês estiverem aguardando"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:18
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr ""
+msgstr "Receber e-mails quando revisões em inglês estiverem aguardando"
 
 # 100%
 #: kuma/demos/__init__.py:34
@@ -2246,7 +2248,7 @@ msgstr "Início"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:9
 msgid "Censor multiple objects"
-msgstr ""
+msgstr "Censurar múltiplos objetos"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:14
 #, python-format
@@ -2254,6 +2256,8 @@ msgid ""
 "Are you sure you want to censor the selected %(object_name)s objects? This "
 "cannot be reversed."
 msgstr ""
+"Tem a certeza que pretende censurar os objetos %(object_name)s selecionados?"
+" Isto não pode ser revertido."
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:23
 #, fuzzy
@@ -2731,19 +2735,16 @@ msgid "Subscribe to a feed of all demos"
 msgstr "Subscreva para um feed de todos os demos"
 
 #: kuma/demos/templates/demos/listing_search.html:9
-#, fuzzy
 msgid "Search for \"{query}\""
-msgstr "Buscar por \"{q}\""
+msgstr "Buscar por \"{query}\""
 
 #: kuma/demos/templates/demos/listing_search.html:13
-#, fuzzy
 msgid "Search results for \"{query}\""
 msgstr "Buscar resultados para \"{query}\""
 
 #: kuma/demos/templates/demos/listing_search.html:27
-#, fuzzy
 msgid "Search demos for \"{query}\""
-msgstr "Buscar demonstrações por \"{q}\""
+msgstr "Buscar demonstrações por \"{query}\""
 
 #: kuma/demos/templates/demos/listing_search.html:33
 #, fuzzy
@@ -4147,7 +4148,7 @@ msgstr ""
 
 #: kuma/users/templates/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Token errado"
 
 #: kuma/users/templates/account/password_reset_from_key.html:17
 #, fuzzy, python-format
@@ -5262,9 +5263,8 @@ msgid "Slug"
 msgstr "Slug:"
 
 #: kuma/wiki/models.py:1840
-#, fuzzy
 msgid "Document (optional)"
-msgstr "Documentação MDN"
+msgstr "Documento (opcional)"
 
 #: kuma/wiki/search.py:310
 #, fuzzy, python-format
@@ -5293,6 +5293,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          Os documentos seguintes irão ser permanentemente removidos da base de dados. Isto não pode ser revertido. Para cancelar, pressione o botão \"Retroceder\" no seu navegador.\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 #, fuzzy
@@ -5307,9 +5310,8 @@ msgstr "Adicionar %(name)s"
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
-#, fuzzy
 msgid "Load documents"
-msgstr "Documentos MDN"
+msgstr "Carregar documentos"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
@@ -5580,9 +5582,8 @@ msgid "Document Tags and Contributors"
 msgstr "Etiquetas do documento e colaboradores"
 
 #: kuma/wiki/templates/wiki/document.html:364
-#, fuzzy
 msgid "Contributors to this page:"
-msgstr "Página inicial do colaborador"
+msgstr "Colaboradores desta página:"
 
 #: kuma/wiki/templates/wiki/document.html:370
 msgid "Last updated by:"
@@ -5789,9 +5790,8 @@ msgid "Parent Title"
 msgstr "Título do pai"
 
 #: kuma/wiki/templates/wiki/move.html:92
-#, fuzzy
 msgid "Move {count} Pages"
-msgstr "Mover {d} Páginas"
+msgstr "Mover {count} Páginas"
 
 #: kuma/wiki/templates/wiki/move.html:92
 msgid "Move Page"
@@ -6023,7 +6023,7 @@ msgstr "Adicionar uma tradução"
 #: kuma/wiki/templates/wiki/includes/buttons.html:43
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
 msgid "Watch"
-msgstr ""
+msgstr "Acompanhar"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:66
 msgid "New sub-article"
@@ -6106,14 +6106,12 @@ msgid "Updating subscription status"
 msgstr "Atualizando o estado da subscrição"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:136
-#, fuzzy
 msgid "Subscribe to {title}"
-msgstr "Subscreva para este artigo"
+msgstr "Subscreva para {title}"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:137
-#, fuzzy
 msgid "Unsubscribe from {title}"
-msgstr "Cancelar subscrição para este artigo"
+msgstr "Cancelar subscrição para {title}"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:140
 #, fuzzy
@@ -6278,6 +6276,11 @@ msgid ""
 "deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
 "belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"A sua submissão inclui conteúdo que pode não ser apropriado para a MDN. "
+"Múltiplas tentativas de submeter materiais não apropriados podem resultar na"
+" desativação da sua conta. Consulte o nosso guia “<a "
+"href=\"%(does_this_belong_url)s\">Isto deve estar na MDN?</a>” para detalhes"
+" sobre o que constitui material apropriado."
 
 #: kuma/wiki/templates/wiki/includes/spam_error.html:11
 #, python-format
@@ -6285,6 +6288,8 @@ msgid ""
 "If you believe you’ve received this message by mistake, please <a "
 "href=\"%(admin_email)s\">contact the site administrators</a>."
 msgstr ""
+"Se pensa que está recebendo esta mensagem por erro, por favor <a "
+"href=\"%(admin_email)s\">contate os administradores do site</a>."
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -6752,7 +6757,7 @@ msgstr "Contribuir com o código"
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Servidor elasticsearch: %(backend)s"
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
