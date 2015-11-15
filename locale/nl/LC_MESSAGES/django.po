@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-14 16:04+0000\n"
+"PO-Revision-Date: 2015-11-14 18:22+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
 "Generated-By: Babel 2.0\n"
-"X-POOTLE-MTIME: 1447517063.0\n"
+"X-POOTLE-MTIME: 1447525329.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -6582,7 +6582,7 @@ msgstr "Hulp bij webontwikkeling verkrijgen"
 
 #: templates/base.html:172
 msgid "Join the MDN community"
-msgstr "Sluit u aan bij de MDN-gemeenschap"
+msgstr "Deelnemen aan de MDN-gemeenschap"
 
 #: templates/base.html:173
 msgid "Report a content problem"
