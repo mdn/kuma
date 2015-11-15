@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-14 18:22+0000\n"
+"PO-Revision-Date: 2015-11-15 14:08+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
 "Generated-By: Babel 2.0\n"
-"X-POOTLE-MTIME: 1447525329.0\n"
+"X-POOTLE-MTIME: 1447596530.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -4464,7 +4464,7 @@ msgstr "Volledige diff bekijken"
 #: kuma/users/templates/users/user_detail.html:192
 #: kuma/wiki/templates/wiki/document.html:413
 msgid "View page history"
-msgstr "Paginageschiedenis bekijken"
+msgstr "Paginageschiedenis weergeven"
 
 #: kuma/users/templates/users/user_detail.html:204
 #, python-format
