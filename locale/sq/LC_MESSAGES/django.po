@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-15 12:36+0200\n"
+"PO-Revision-Date: 2015-11-15 18:55+0300\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: sq\n"
 "Language: sq\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Translate Toolkit 1.13.0\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-POOTLE-MTIME: 1425209041.0\n"
 
 #: kuma/actioncounters/models.py:46
@@ -620,7 +620,7 @@ msgstr "Datë Përfundimi:"
 #: kuma/dashboards/forms.py:44
 #: kuma/dashboards/templates/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr "Periudha Pararendëse"
+msgstr "Periudha Pararendëse:"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -706,7 +706,7 @@ msgstr "Gara Dev Derby e Qershorit 2011 - Animacione CSS3"
 
 #: kuma/demos/__init__.py:37
 msgid "CSS3 Animations"
-msgstr "Animacione CSS"
+msgstr "Animacione CSS3"
 
 #: kuma/demos/__init__.py:38
 msgid "June 2011"
@@ -988,7 +988,7 @@ msgstr "Kërkesa Media CSS janë tashmë një mjet i rëndomtë për hartime gra
 
 #: kuma/demos/__init__.py:155
 msgid "November 2012 Dev Derby Challenge - Fullscreen API"
-msgstr "Gara Dev Derby e Nëntor 2012 - APi Ekran i Plotë"
+msgstr "Gara Dev Derby Nëntor 2012 - APi Ekran i Plotë"
 
 #: kuma/demos/__init__.py:156
 msgid "Fullscreen API"
@@ -1018,7 +1018,11 @@ msgstr "Dhjetor 2012"
 #: kuma/demos/__init__.py:165
 #: kuma/demos/__init__.py:166
 msgid "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile users, improve performance, and more."
-msgstr "Me pjekjen e vazhdueshme të aftësive të Web-it të hapur për punim jashtë Internetit, mund të krijoni aplikacione që punojnë me ose pa lidhje Internet. Me teknologjitë <em>offline</em>, mund t’u shërbeni më mirë përdoruesve në lëvizje dhe atyre të celularit, të përmirësoni punimin, etj."
+msgstr ""
+"Me pjekjen e vazhdueshme të aftësive të Web-it të hapur për punim jashtë "
+"Internetit, mund të krijoni aplikacione që punojnë me ose pa lidhje "
+"Internet. Me teknologjitë <em>offline</em>, mund t’u shërbeni më mirë "
+"përdoruesve në lëvizje dhe atyre të celularit, të përmirësoni punimin, etj."
 
 #: kuma/demos/__init__.py:169
 msgid "January 2013 Dev Derby Challenge - Drag and Drop"
@@ -1187,7 +1191,8 @@ msgstr "Dokumentim MDN"
 
 #: kuma/demos/__init__.py:228
 msgid "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
-msgstr "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
+msgstr ""
+"https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 
 #: kuma/demos/__init__.py:229
 #: kuma/demos/__init__.py:237
@@ -1288,7 +1293,8 @@ msgstr "Kërkesat media dhe aktet e orientimit u lejojnë autorëve t’ua përs
 
 #: kuma/demos/__init__.py:252
 msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
-msgstr "https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
+msgstr ""
+"https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
 
 #: kuma/demos/__init__.py:253
 msgid "http://www.w3.org/TR/css3-mediaqueries/"
@@ -1304,7 +1310,8 @@ msgstr "API për Kartela u lejon zhvilluesve të përdorin objekte kartelash në
 
 #: kuma/demos/__init__.py:259
 msgid "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
-msgstr "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
+msgstr ""
+"https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
 
 #: kuma/demos/__init__.py:260
 msgid "http://www.w3.org/TR/FileAPI/"
@@ -1409,7 +1416,10 @@ msgstr "http://dev.w3.org/html5/spec/Overview.html"
 
 #: kuma/demos/__init__.py:304
 msgid "IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."
-msgstr "IndexedDB është një API për depozitim, nga krahu i klientit, i sasive të mëdha të dhënash të strukturuara dhe për kërkime të fuqishme mbi këto të dhëna duke përdorur tregues (indekse)."
+msgstr ""
+"IndexedDB është një API për depozitim, nga krahu i klientit, i sasive të "
+"mëdha të dhënash të strukturuara dhe për kërkime të fuqishme mbi këto të "
+"dhëna duke përdorur tregues (indekse)."
 
 #: kuma/demos/__init__.py:306
 msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
@@ -1461,11 +1471,14 @@ msgstr "Asistencë Jo Në Internet"
 
 #: kuma/demos/__init__.py:328
 msgid "Offline caching of web applications' resources using the application cache and local storage."
-msgstr "Ruajtje në fshehtinë jashtë linje e burimeve të aplikacioneve web, përmes fshehtinës së aplikacionit dhe depos vendore."
+msgstr ""
+"Ruajtje në fshehtinë jashtë linje e burimeve të aplikacioneve web, përmes "
+"fshehtinës së aplikacionit dhe depos vendore."
 
 #: kuma/demos/__init__.py:330
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
-msgstr "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
+msgstr ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
 
 #: kuma/demos/__init__.py:331
 msgid "http://en.wikipedia.org/wiki/Web_Storage"
@@ -1501,7 +1514,8 @@ msgstr "Elementët video HTML5 furnizojnë mbulim të integruar për luajtje vid
 
 #: kuma/demos/__init__.py:346
 msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video"
-msgstr "https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video"
+msgstr ""
+"https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video"
 
 #: kuma/demos/__init__.py:347
 msgid "http://en.wikipedia.org/wiki/HTML5_video"
@@ -1557,7 +1571,9 @@ msgstr "Web Workers ofron një rrugë të thjeshtë që lënda web të xhirojë 
 
 #: kuma/demos/__init__.py:370
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers"
-msgstr "https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers"
+msgstr ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/Guide/Performance/Using_web_workers"
 
 #: kuma/demos/__init__.py:371
 msgid "http://en.wikipedia.org/wiki/Web_Workers"
@@ -1577,7 +1593,9 @@ msgstr "XMLHttpRequest (XHR) përdoret për të dërguar kërkesa HTTP drejt e t
 
 #: kuma/demos/__init__.py:378
 msgid "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
-msgstr "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
+msgstr ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
 
 #: kuma/demos/__init__.py:379
 msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
@@ -1593,7 +1611,8 @@ msgstr "Ndiqni lëvizjet e gishtit të përdoruesit një ekran me prekje, duke m
 
 #: kuma/demos/__init__.py:386
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
-msgstr "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
+msgstr ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
 
 #: kuma/demos/__init__.py:387
 msgid "http://en.wikipedia.org/wiki/Multi-touch"
@@ -1646,7 +1665,7 @@ msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
 #: kuma/demos/admin.py:38
 #, python-format
 msgid "Censored %(item)s"
-msgstr "%(item)s i/e censuruar"
+msgstr "%(item)s i censuruar"
 
 #: kuma/demos/admin.py:43
 #, python-format
@@ -1908,7 +1927,7 @@ msgstr "Jeni i sigurt se doni të censurohen objektet %(object_name)s e përzgje
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:23
 msgid "Explanation URL (optional):"
-msgstr "URL Shpjegimi (në dëshirë)"
+msgstr "URL Shpjegimi (në dëshirë):"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
 msgid "Yes, I'm sure"
@@ -2141,7 +2160,9 @@ msgstr "Shkarkoni <span class=\"note\">Kartelën ZIP &middot; %(file_ksize)s KB<
 #: kuma/demos/templates/demos/detail.html:217
 #, python-format
 msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
-msgstr "Kjo demo është hedhur në qarkullim nën lejen <a href=\"%(link)s\">%(title)s</a>."
+msgstr ""
+"Kjo demo është hedhur në qarkullim nën lejen <a href=\"%(link)s\""
+">%(title)s</a>."
 
 # 77%
 # 100%
@@ -2425,7 +2446,17 @@ msgstr "Përgatitja e Demos Suaj"
 #: kuma/demos/templates/demos/submit.html:120
 #, python-format
 msgid "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
-msgstr "<ul> <li>Kodi burim i demos suaj duhet të paketohet brenda një kartele ZIP.</li> <li>Faqja kryesore e demos suaj duhet të jetë një kartele e quajtur <code>index.html</code>, në rrënjë të ZIP-it.</li> <li>Demoja juaj duhet krijuar me teknologji klienti (HTML, CSS, JavaScript). Gjuhët për shërbyes, të tilla si PHP dhe Ruby, s’mbulohen.</li> <li>Nëse demoja juaj lyp burime të jashtme, për hyrjen në to duhet të përdorë AJAX.</li> <li>Për parashtrimin e demos suaj keni nevojë për një <a href=\"%(signup_url)s\">profil te MDN-ja</a>.</li> <li>Ju lutemi, tregoni te kutia e hollësive të demos çfarëdo lënde palësh të treta që s’mund të licencohet sipas një licence CC-BY-SA dhe jepni lidhje për te sajtet e autorëve.</li> </ul>"
+msgstr ""
+"<ul> <li>Kodi burim i demos suaj duhet të paketohet brenda një kartele "
+"ZIP.</li> <li>Faqja kryesore e demos suaj duhet të jetë një kartele e "
+"quajtur <code>index.html</code>, në rrënjë të ZIP-it.</li> <li>Demoja juaj "
+"duhet krijuar me teknologji klienti (HTML, CSS, JavaScript). Gjuhët për "
+"shërbyes, të tilla si PHP dhe Ruby, s’mbulohen.</li> <li>Nëse demoja juaj "
+"lyp burime të jashtme, për hyrjen në to duhet të përdorë AJAX.</li> <li>Për "
+"parashtrimin e demos suaj keni nevojë për një <a href=\"%(signup_url)s\">"
+"profil te MDN-ja</a>.</li> <li>Ju lutemi, tregoni te kutia e hollësive të "
+"demos çfarëdo lënde palësh të treta që s’mund të licencohet sipas një "
+"licence CC-BY-SA dhe jepni lidhje për te sajtet e autorëve.</li> </ul>"
 
 #: kuma/demos/templates/demos/submit.html:133
 msgid "Provide the Source Code"
@@ -2487,7 +2518,17 @@ msgstr "<ul> <li>Duhet të jeni gati për <strong>dhënien e kodit burim</strong
 
 #: kuma/demos/templates/demos/submit_noauth.html:49
 msgid "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
-msgstr "<ul> <li>Kodi burim i demos suaj duhet të jetë i paketuar si <strong>kartelë ZIP</strong>.</li> <li>Faqja kryesore e demos suaj duhet të jetë kartelë me emrin <strong><code>index.html</code></strong> në rrënjë të ZIP-it.</li> <li>Demoja juaj duhet të jetë e krijuar me <strong>teknologji për klient</strong> (HTML, CSS, JavaScript). Gjuhë shërbyesish, të tilla si PHP dhe Ruby, s’mbulohen.</li> <li>Nëse demoja juaj lyp burime të jashtme, për hyrje në to do të duhej të përdorte <strong>AJAX</strong>-in.</li> <li>Ju lutemi, radhisni te kutiza e hollësive për demon çfarëdo lënde prej palësh të treta për të cilat s’vlen leja CC-BY-SA dhe përfshini lidhje për te sajtet përkatës.</li> </ul>"
+msgstr ""
+"<ul> <li>Kodi burim i demos suaj duhet të jetë i paketuar si <strong>kartelë "
+"ZIP</strong>.</li> <li>Faqja kryesore e demos suaj duhet të jetë kartelë me "
+"emrin <strong><code>index.html</code></strong> në rrënjë të ZIP-it.</li> <li>"
+"Demoja juaj duhet të jetë e krijuar me <strong>teknologji për klient</strong>"
+" (HTML, CSS, JavaScript). Gjuhë shërbyesish, të tilla si PHP dhe Ruby, "
+"s’mbulohen.</li> <li>Nëse demoja juaj lyp burime të jashtme, për hyrje në to "
+"do të duhej të përdorte <strong>AJAX</strong>-in.</li> <li>Ju lutemi, "
+"radhisni te kutiza e hollësive për demon çfarëdo lënde prej palësh të treta "
+"për të cilat s’vlen leja CC-BY-SA dhe përfshini lidhje për te sajtet "
+"përkatës.</li> </ul>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:61
 #, python-format
@@ -2950,7 +2991,7 @@ msgstr "Kalojeni treguesin e përzgjedhur të kërkimeve si treguesin në fuqi"
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
-msgstr "S’mund të ulet në klasifikim më shumë se një tregues në herë"
+msgstr "S’mund të ulet në klasifikim më shumë se një tregues në herë."
 
 #: kuma/search/admin.py:24
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
@@ -3035,8 +3076,12 @@ msgstr[1] "U gjetën %(count)s dokumente për \"%(query)s\" në %(locale_native)
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] "U gjet %(count)s dokument për \"%(query)s\" në %(locale_native)s dhe %(default_locale_native)s."
-msgstr[1] "U gjet %(count)s dokumente për \"%(query)s\" në %(locale_native)s dhe %(default_locale_native)s."
+msgstr[0] ""
+"U gjet %(count)s dokument për \"%(query)s\" në %(locale_native)s dhe "
+"%(default_locale_native)s."
+msgstr[1] ""
+"U gjet %(count)s dokumente për \"%(query)s\" në %(locale_native)s dhe "
+"%(default_locale_native)s."
 
 #: kuma/search/templates/search/results.html:88
 #, python-format
@@ -3049,8 +3094,11 @@ msgstr[1] "U gjetën %(count)s dokumente në %(locale_native)s."
 #, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] "U gjet %(count)s dokument në %(locale_native)s dhe %(default_locale_native)s."
-msgstr[1] "U gjetën %(count)s dokumente në %(locale_native)s dhe %(default_locale_native)s."
+msgstr[0] ""
+"U gjet %(count)s dokument në %(locale_native)s dhe %(default_locale_native)s."
+msgstr[1] ""
+"U gjetën %(count)s dokumente në %(locale_native)s dhe "
+"%(default_locale_native)s."
 
 #: kuma/search/templates/search/results.html:104
 #, python-format
@@ -3277,7 +3325,9 @@ msgstr "Faqe Hyrëse"
 
 #: kuma/users/models.py:60
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
-msgstr "Kjo URL ka format të pavlefshëm. URL-të e vlefshme kanë pamje si kjo http://shembull.com/faqja_ime."
+msgstr ""
+"Kjo URL ka format të pavlefshëm. URL-të e vlefshme kanë pamje si kjo "
+"http://shembull.com/faqja_ime."
 
 #: kuma/users/models.py:70
 msgid "Name"
@@ -3703,7 +3753,9 @@ msgstr "Cilën adresë email do të duhej të përdornim për t’ju dërguar me
 #: kuma/users/templates/socialaccount/signup.html:170
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
-msgstr "te <a href=\"%(terms_url)s\">Kushtet</a> dhe <a href=\"%(privacy_url)s\">Shënimi i Privatësisë</a> së Mozilla-s."
+msgstr ""
+"te <a href=\"%(terms_url)s\">Kushtet</a> dhe <a href=\"%(privacy_url)s\">"
+"Shënimi i Privatësisë</a> së Mozilla-s."
 
 #: kuma/users/templates/socialaccount/signup.html:179
 msgid "Create my MDN profile"
@@ -3786,7 +3838,7 @@ msgstr "Anëtar që prej %(date_joined)s"
 
 #: kuma/users/templates/users/user_detail.html:159
 msgid "Subscribe to a feed of {display_name}'s demos"
-msgstr "Pajtohuni te prurja për demo {display_name}"
+msgstr "Pajtohuni te prurja për demon {display_name}"
 
 #: kuma/users/templates/users/user_detail.html:167
 msgid "No Demos"
@@ -3880,7 +3932,9 @@ msgstr "Interesa (etiketa)"
 
 #: kuma/users/templates/users/user_edit.html:86
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
-msgstr "Etiketat ndajini me presje ose hapësira. Etiketat e përbëra vendosini brenda thonjëzash, si kjo \" standarde web\"."
+msgstr ""
+"Etiketat ndajini me presje ose hapësira. Etiketat e përbëra vendosini brenda "
+"thonjëzash, si kjo \"standarde web\"."
 
 #: kuma/users/templates/users/user_edit.html:92
 msgid "Areas of expertise"
@@ -3925,7 +3979,9 @@ msgstr "Faleminderit për krijimin e profilit te <a href=\"%(mdn_link)s\">Rrjeti
 #: kuma/users/templates/users/email/welcome/html.ltxt:16
 #, python-format
 msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
-msgstr "Duke krijuar një profil, plotësuat hapin e parë te <a href=\"%(started_link)s\">Si T’ia Fillohet Te MDN</a>."
+msgstr ""
+"Duke krijuar një profil, plotësuat hapin e parë te <a href=\"%(started_link)"
+"s\">Si T’ia Fillohet Te MDN</a>."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:21
 #, python-format
@@ -3934,7 +3990,7 @@ msgstr "Tani vazhdoni duke zgjedhur një punë te MDN-ja, dhe duke e përmbushur
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr "Flisni me Ne!"
+msgstr "Flisni me ne!"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/html.ltxt:35
@@ -4077,7 +4133,7 @@ msgstr "Ndryshime te dokumente MDN tani së fundi"
 #: kuma/wiki/feeds.py:155
 #, python-format
 msgid "MDN recent changes to documents tagged %s"
-msgstr "Ndryshime së fundi te dokumente të etiketuar me %s"
+msgstr "Ndryshime MDN së fundi te dokumente të etiketuar me %s"
 
 #: kuma/wiki/feeds.py:183
 msgid "MDN documents in need of review"
@@ -4137,7 +4193,7 @@ msgstr "Ju lutemi, jepni një identifikues."
 
 #: kuma/wiki/forms.py:38
 msgid "The slug provided is not valid."
-msgstr "identifikuesi që dhatë s’është i vlefshëm."
+msgstr "Identifikuesi i dhënë s’është i vlefshëm."
 
 #: kuma/wiki/forms.py:39
 #, python-format
@@ -4935,7 +4991,7 @@ msgstr "Etiketa Përkthimi"
 
 #: kuma/wiki/templates/wiki/translate.html:118
 msgid "English tags"
-msgstr "Etiketa Anglishteje"
+msgstr "Etiketa anglishteje"
 
 #: kuma/wiki/templates/wiki/translate.html:130
 msgid "This document has no tags."
@@ -5001,7 +5057,7 @@ msgstr "Redaktoriale"
 
 #: kuma/wiki/templates/wiki/includes/approvals.html:24
 msgid "Review completed"
-msgstr "Shqyrtim i Plotësuar"
+msgstr "Shqyrtim i plotësuar"
 
 # 88%
 # 100%
@@ -5156,7 +5212,11 @@ msgstr[1] "Më tepër të dhëna rreth këtyre gabimeve"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr "Cilido me profil te MDN-ja mund të përpunojë një dokument, për ndreqjen e një gabimi. Si pikënisje, përdorni <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">dhërrëfyesin për diagnostikime me KumaScript-in</a>."
+msgstr ""
+"Cilido me profil te MDN-ja mund të përpunojë një dokument, për ndreqjen e "
+"një gabimi. Si pikënisje, përdorni <a href=\"/docs/MDN/Kuma/"
+"Troubleshooting_KumaScript_errors\">dhërrëfyesin për diagnostikime me "
+"KumaScript-in</a>."
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
 msgid "Error type:"
@@ -5237,7 +5297,12 @@ msgstr "Tregonani pse bëtë shtesa dhe ndryshime. Kjo është opsionale, por do
 #: kuma/wiki/templates/wiki/includes/spam_error.html:2
 #, python-format
 msgid "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
-msgstr "Parashtrimi juaj përfshin lëndë që mund të mos jetë e përshtatshme për MDN-në. Përpjekjet e përsëritura për të parashtruar material të papërshtatshëm mund të shpien në çaktivizimin e llogarisë suaj. Për hollësi mbi ç’përfaqëson material të përshtatshëm shihni udhërrëfyesin tonë “<a href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>”."
+msgstr ""
+"Parashtrimi juaj përfshin lëndë që mund të mos jetë e përshtatshme për MDN-"
+"në. Përpjekjet e përsëritura për të parashtruar material të papërshtatshëm "
+"mund të shpien në çaktivizimin e llogarisë suaj. Për hollësi mbi ç’"
+"përfaqëson material të përshtatshëm shihni udhërrëfyesin tonë “<a href=\""
+"%(does_this_belong_url)s\">Does this belong on MDN?</a>”."
 
 #: kuma/wiki/templates/wiki/includes/spam_error.html:11
 #, python-format
@@ -5548,7 +5613,7 @@ msgstr "Mjete Sajti"
 
 #: templates/base.html:113
 msgid "Revision dashboard"
-msgstr "Pult Rishikimesh"
+msgstr "Pult rishikimesh"
 
 #: templates/base.html:114
 msgid "Documentation status"
@@ -5713,7 +5778,7 @@ msgstr "te <a href=\"%(privacy_url)s\">Rregullat e Privatësisë</a>"
 
 #: templates/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr "Shpajtojini këta email-e"
+msgstr "Shpajtojini këta email-e:"
 
 #: templates/tidings/unsubscribe.html:2
 #: templates/tidings/unsubscribe.html:12
