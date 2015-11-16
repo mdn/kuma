@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-16 00:00+0000\n"
+"PO-Revision-Date: 2015-11-16 19:54+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -424,7 +424,7 @@ msgstr[1] "%(number)d sekunder sedan"
 
 #: kuma/core/helpers.py:143
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: kuma/core/helpers.py:143
 msgid "No"
@@ -433,7 +433,7 @@ msgstr "Nej"
 #: kuma/core/helpers.py:297
 #, python-format
 msgid "Today at %s"
-msgstr ""
+msgstr "Idag vid %s"
 
 #: kuma/core/sections.py:6 kuma/landing/templates/landing/homepage.html:85
 #: templates/base.html:155
@@ -442,7 +442,7 @@ msgstr "Tillägg"
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
-msgstr ""
+msgstr "Mozilla"
 
 #: kuma/core/sections.py:20 templates/base.html:134
 msgid "Apps"
@@ -457,23 +457,23 @@ msgstr "Mobil"
 #: kuma/core/sections.py:34
 #: kuma/landing/templates/landing/promote_buttons.html:117
 msgid "Web"
-msgstr ""
+msgstr "Webb"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Moz Hacks"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
-msgstr ""
+msgstr "Tillägg & Utökningar"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
-msgstr ""
+msgstr "Jag är en expert"
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
-msgstr ""
+msgstr "API:er och DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
@@ -497,7 +497,7 @@ msgstr ""
 #: kuma/landing/templates/landing/promote_buttons.html:99
 #: templates/base.html:130
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: kuma/core/translations/search/filter/firefox/name.py:4
 #: kuma/landing/templates/landing/homepage.html:81 templates/base.html:156
@@ -510,7 +510,7 @@ msgstr "Firefox för datorer"
 
 #: kuma/core/translations/search/filter/firefox-mobile/name.py:4
 msgid "Firefox for Android"
-msgstr ""
+msgstr "Firefox för Android"
 
 #: kuma/core/translations/search/filter/firefox-os/name.py:4
 #: kuma/landing/templates/landing/homepage.html:82 templates/base.html:158
@@ -519,7 +519,7 @@ msgstr "Firefox OS"
 
 #: kuma/core/translations/search/filter/games/name.py:4
 msgid "Games"
-msgstr ""
+msgstr "Spel"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
@@ -530,7 +530,7 @@ msgstr ""
 #: kuma/landing/templates/landing/promote_buttons.html:105
 #: kuma/users/forms.py:37 templates/base.html:129
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: kuma/core/translations/search/filter/intermediate/name.py:4
 msgid "Intermediate"
@@ -555,7 +555,7 @@ msgstr "MathML"
 #: kuma/core/translations/search/filter/svg/name.py:4
 #: kuma/demos/__init__.py:335
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: kuma/core/translations/search/filter/tools/name.py:4
 #: templates/base.html:100
@@ -564,7 +564,7 @@ msgstr "Verktyg"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
 msgid "Web Development"
-msgstr ""
+msgstr "Webbutveckling"
 
 #: kuma/core/translations/search/filter/webgl/name.py:4
 #: kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
@@ -573,7 +573,7 @@ msgstr "WebGL"
 
 #: kuma/core/translations/search/filter/xul/name.py:4
 msgid "XUL"
-msgstr ""
+msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 msgid "Document type"
@@ -585,7 +585,7 @@ msgstr "Kompetensnivå"
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
-msgstr ""
+msgstr "Ämnen"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
@@ -605,16 +605,16 @@ msgstr "Dag"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "Vecka"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30 dagar"
 
 #: kuma/dashboards/forms.py:24
 #: kuma/dashboards/templates/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "Språk:"
 
 #: kuma/dashboards/forms.py:28
 #: kuma/dashboards/templates/dashboards/revisions.html:19
@@ -624,12 +624,12 @@ msgstr "Användare:"
 #: kuma/dashboards/forms.py:32
 #: kuma/dashboards/templates/dashboards/revisions.html:24
 msgid "Topic:"
-msgstr ""
+msgstr "Ämne:"
 
 #: kuma/dashboards/forms.py:34
 #: kuma/dashboards/templates/dashboards/revisions.html:30
 msgid "Start Date:"
-msgstr ""
+msgstr "Startdatum:"
 
 #: kuma/dashboards/forms.py:38
 #: kuma/dashboards/templates/dashboards/revisions.html:35
@@ -673,7 +673,7 @@ msgstr "Historik"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:35
 msgid "new"
-msgstr ""
+msgstr "ny"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:36
 msgid "deleted"
@@ -681,7 +681,7 @@ msgstr "borttagen"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Bannlys IP från att redigera"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
 msgid "There are no revisions matching this filter set."
@@ -2154,7 +2154,7 @@ msgstr "Nästa"
 
 #: kuma/demos/templates/demos/detail.html:68
 msgid "See the previous image"
-msgstr ""
+msgstr "Visa föregående bild"
 
 #: kuma/demos/templates/demos/detail.html:68
 #: kuma/demos/templates/demos/home.html:46
@@ -2168,65 +2168,65 @@ msgstr "Föregående"
 
 #: kuma/demos/templates/demos/detail.html:69
 msgid "See the next image"
-msgstr ""
+msgstr "Visa nästa bild"
 
 #: kuma/demos/templates/demos/detail.html:102
 #, python-format
 msgid "By %(creator_link)s on %(create_date)s"
-msgstr ""
+msgstr "Av %(creator_link)s den %(create_date)s"
 
 #: kuma/demos/templates/demos/detail.html:117
 msgid "Launch Demo"
-msgstr ""
+msgstr "Starta demo"
 
 #: kuma/demos/templates/demos/detail.html:124
 #: kuma/demos/templates/demos/launch.html:46
 msgid "You like this demo. Undo?"
-msgstr ""
+msgstr "Du gillar detta demo. Ångra?"
 
 #: kuma/demos/templates/demos/detail.html:124
 #: kuma/demos/templates/demos/launch.html:46
 msgid "You Like"
-msgstr ""
+msgstr "Du gillar"
 
 #: kuma/demos/templates/demos/detail.html:130
 #: kuma/demos/templates/demos/launch.html:52
 msgid "Do you like this demo?"
-msgstr ""
+msgstr "Gillar du detta demo?"
 
 #: kuma/demos/templates/demos/detail.html:130
 #: kuma/demos/templates/demos/launch.html:52
 msgid "Like It"
-msgstr ""
+msgstr "Gilla"
 
 #: kuma/demos/templates/demos/detail.html:135
 #: kuma/demos/templates/demos/launch.html:56
 msgid "Share this demo with your social network"
-msgstr ""
+msgstr "Dela detta demo med ditt sociala nätverk"
 
 #: kuma/demos/templates/demos/detail.html:135
 #: kuma/demos/templates/demos/detail.html:137
 #: kuma/demos/templates/demos/launch.html:56
 msgid "Share It"
-msgstr ""
+msgstr "Dela det"
 
 #: kuma/demos/templates/demos/detail.html:138
 #: kuma/demos/templates/demos/launch.html:58
 msgid "Share on Twitter"
-msgstr ""
+msgstr "Dela på Twitter"
 
 #: kuma/demos/templates/demos/detail.html:139
 #: kuma/demos/templates/demos/launch.html:59
 msgid "Share on Facebook"
-msgstr ""
+msgstr "Dela på Facebook"
 
 #: kuma/demos/templates/demos/detail.html:153
 msgid "Built using"
-msgstr ""
+msgstr "Byggt med hjälp av"
 
 #: kuma/demos/templates/demos/detail.html:156
 msgid "See more demos made with {tag_title}"
-msgstr ""
+msgstr "Se fler demos skapade med {tag_title}"
 
 #: kuma/demos/templates/demos/detail.html:165
 #: kuma/demos/templates/demos/elements/submission_thumb.html:15
@@ -2256,19 +2256,19 @@ msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:181
 msgid "Edit Demo"
-msgstr ""
+msgstr "Redigera demo"
 
 #: kuma/demos/templates/demos/detail.html:183
 msgid "Remove demo"
-msgstr ""
+msgstr "Ta bort demo"
 
 #: kuma/demos/templates/demos/detail.html:186
 msgid "Show demo"
-msgstr ""
+msgstr "Visa demo"
 
 #: kuma/demos/templates/demos/detail.html:189
 msgid "Hide demo"
-msgstr ""
+msgstr "Dölj demo"
 
 #: kuma/demos/templates/demos/detail.html:196
 msgid "More About This Demo From The Author"
@@ -2276,7 +2276,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:207
 msgid "About this Demo"
-msgstr ""
+msgstr "Om detta demo"
 
 #: kuma/demos/templates/demos/detail.html:209
 #, python-format
@@ -2298,21 +2298,21 @@ msgstr ""
 #: kuma/demos/templates/demos/detail.html:237
 #: kuma/demos/templates/demos/launch.html:63
 msgid "Report a Problem"
-msgstr ""
+msgstr "Rapportera ett problem"
 
 #: kuma/demos/templates/demos/detail.html:239
 #: kuma/demos/templates/demos/detail.html:240
 #: kuma/demos/templates/demos/detail.html:241
 msgid "Flag Content"
-msgstr ""
+msgstr "Flagga innehåll"
 
 #: kuma/demos/templates/demos/detail.html:239
 msgid "Demo is not working"
-msgstr ""
+msgstr "Demo fungerar inte"
 
 #: kuma/demos/templates/demos/detail.html:240
 msgid "Demo is inappropriate"
-msgstr ""
+msgstr "Demo är opassande"
 
 #: kuma/demos/templates/demos/detail.html:241
 msgid "Demo is not by this author"
@@ -2322,16 +2322,16 @@ msgstr ""
 #: kuma/demos/templates/demos/devderby_landing.html:23
 #: kuma/demos/templates/demos/devderby_tag.html:33
 msgid "Dev Derby"
-msgstr ""
+msgstr "Dev Derby"
 
 #: kuma/demos/templates/demos/devderby_landing.html:22
 #: kuma/demos/templates/demos/devderby_tag.html:32
 msgid "presents"
-msgstr ""
+msgstr "presenterar"
 
 #: kuma/demos/templates/demos/devderby_landing.html:25
 msgid "Dev Derby has ended"
-msgstr ""
+msgstr "Dev Derby har slutat"
 
 #: kuma/demos/templates/demos/devderby_landing.html:27
 #, python-format
@@ -2343,12 +2343,12 @@ msgstr ""
 
 #: kuma/demos/templates/demos/devderby_landing.html:40
 msgid "Previous Dev Derby Challenges"
-msgstr ""
+msgstr "Tidigare Dev Derby utmaningar"
 
 #: kuma/demos/templates/demos/devderby_landing.html:55
 #: kuma/demos/templates/demos/devderby_tag.html:25
 msgid "Resources"
-msgstr ""
+msgstr "Resurser"
 
 #: kuma/demos/templates/demos/devderby_landing.html:57
 #: kuma/search/templates/search/results.html:141
@@ -4592,7 +4592,7 @@ msgstr "Typ av artikel"
 #: kuma/wiki/forms.py:106 kuma/wiki/templates/wiki/create.html:46
 #: kuma/wiki/templates/wiki/includes/translate_description.html:33
 msgid "Parent:"
-msgstr ""
+msgstr "Förälder:"
 
 #: kuma/wiki/forms.py:194 kuma/wiki/templates/wiki/edit.html:62
 #: kuma/wiki/templates/wiki/includes/document_macros.html:67
@@ -4768,9 +4768,8 @@ msgstr ""
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
-#, fuzzy
 msgid "Load documents"
-msgstr "Alla dokument"
+msgstr "Ladda dokument"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
@@ -4811,7 +4810,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:23
 msgid "Last Change By"
-msgstr ""
+msgstr "Senast ändrad av"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
@@ -4825,7 +4824,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "Är du säker på att du vill fortsätta?"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:2
 msgid "Revert Revision | {document}"
@@ -4868,7 +4867,7 @@ msgstr "Nytt dokument"
 #: kuma/wiki/templates/wiki/create.html:32
 #: kuma/wiki/templates/wiki/edit.html:96
 msgid "Draft"
-msgstr ""
+msgstr "Utkast"
 
 #: kuma/wiki/templates/wiki/create.html:42
 msgid "URL segment that identifies the page"
@@ -4877,7 +4876,7 @@ msgstr ""
 #: kuma/wiki/templates/wiki/deletion_log.html:2
 #: kuma/wiki/templates/wiki/deletion_log.html:7
 msgid "Document Deleted"
-msgstr ""
+msgstr "Dokument borttaget"
 
 #: kuma/wiki/templates/wiki/deletion_log.html:9
 #, python-format
@@ -4921,7 +4920,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:189
 msgid "Show all"
-msgstr ""
+msgstr "Visa alla"
 
 #: kuma/wiki/templates/wiki/document.html:189
 msgid "contributors"
@@ -5026,7 +5025,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:385
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "Dölj sidofält"
 
 #: kuma/wiki/templates/wiki/edit.html:27
 msgid ""
@@ -5193,7 +5192,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:74
 msgid "New Slug:"
-msgstr ""
+msgstr "Ny slugg:"
 
 #: kuma/wiki/templates/wiki/move.html:81
 msgid "Look up by Document Title"
@@ -5421,7 +5420,7 @@ msgstr "Lägg till översättning"
 #: kuma/wiki/templates/wiki/includes/buttons.html:43
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
 msgid "Watch"
-msgstr ""
+msgstr "Bevaka"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:66
 msgid "New sub-article"
@@ -5437,7 +5436,7 @@ msgstr "Flytta denna artikel"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:73
 msgid "View in admin"
-msgstr ""
+msgstr "Visa i admin"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:81
 msgid "Delete this article"
@@ -5485,7 +5484,7 @@ msgstr "Dela:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:103
 msgid "Google+"
-msgstr ""
+msgstr "Google+"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:124
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -5536,7 +5535,7 @@ msgstr ""
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/templates/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
-msgstr ""
+msgstr "Generera innehållsförteckning"
 
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/templates/wiki/includes/translate_description.html:50
@@ -5572,19 +5571,19 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
 msgid "Error type:"
-msgstr ""
+msgstr "Feltyp:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:40
 msgid "In macro:"
-msgstr ""
+msgstr "I makro:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:44
 msgid "Create Template"
-msgstr ""
+msgstr "Skapa mall"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:47
 msgid "Edit Template"
-msgstr ""
+msgstr "Redigera mall"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
 msgid "Parsing macro:"
@@ -5628,7 +5627,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:31
 msgid "Preview Changes"
-msgstr ""
+msgstr "Förhandsgranska ändringar"
 
 #: kuma/wiki/templates/wiki/includes/review_tags.html:3
 msgid "Review needed?"
@@ -5696,9 +5695,8 @@ msgid "All templates"
 msgstr "Alla mallar"
 
 #: kuma/wiki/templates/wiki/list/documents.html:9
-#, fuzzy
 msgid "Found {count} templates."
-msgstr "Hittade {0} mallar."
+msgstr "Hittade {count} mallar."
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
 msgid "Documents with errors"
@@ -5945,7 +5943,7 @@ msgstr ""
 
 #: templates/500.html:5
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Internt serverfel"
 
 #: templates/base.html:74
 msgid "Skip to main content"
@@ -5961,11 +5959,11 @@ msgstr ""
 
 #: templates/base.html:104
 msgid "Contribute to MDN"
-msgstr ""
+msgstr "Bidra till MDN"
 
 #: templates/base.html:106
 msgid "Get started"
-msgstr ""
+msgstr "Kom igång"
 
 #: templates/base.html:107
 msgid "Review or localize docs"
@@ -6029,15 +6027,15 @@ msgstr ""
 
 #: templates/base.html:146
 msgid "...more docs"
-msgstr ""
+msgstr "...mer dokument"
 
 #: templates/base.html:150
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "Mozilla Docs"
 
 #: templates/base.html:159 templates/includes/login.html:20
 msgid "Persona"
-msgstr ""
+msgstr "Persona"
 
 #: templates/base.html:163
 msgid "Developer Tools"
@@ -6065,7 +6063,7 @@ msgstr ""
 
 #: templates/base.html:174
 msgid "Report a bug"
-msgstr ""
+msgstr "Rapportera en bugg"
 
 #: templates/base.html:200
 #, python-format
@@ -6081,19 +6079,19 @@ msgstr "Om MDN"
 
 #: templates/base.html:206
 msgid "Terms"
-msgstr ""
+msgstr "Villkor"
 
 #: templates/base.html:207
 msgid "Privacy"
-msgstr ""
+msgstr "Sekretess"
 
 #: templates/base.html:208
 msgid "Cookies"
-msgstr ""
+msgstr "Kakor"
 
 #: templates/base.html:209
 msgid "Contribute to the code"
-msgstr ""
+msgstr "Bidra till koden"
 
 #: templates/admin/search/index/change_list.html:8
 #, python-format
