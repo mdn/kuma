@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-16 19:54+0000\n"
+"PO-Revision-Date: 2015-11-16 20:16+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -3877,7 +3877,7 @@ msgstr ""
 
 #: kuma/users/templates/socialaccount/connections.html:50
 msgid "Disconnect"
-msgstr ""
+msgstr "Koppla från"
 
 #: kuma/users/templates/socialaccount/connections.html:58
 msgid "You have no connected accounts."
@@ -4002,19 +4002,19 @@ msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:179
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "Skapa min MDN-profil"
 
 #: kuma/users/templates/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with Persona"
-msgstr ""
+msgstr "Logga in med Persona"
 
 #: kuma/users/templates/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
-msgstr ""
+msgstr "Logga in med GitHub"
 
 #: kuma/users/templates/socialaccount/snippets/provider_list.html:18
 msgid "Connect with Persona"
-msgstr ""
+msgstr "Anslut med Persona"
 
 #: kuma/users/templates/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with Persona"
@@ -4042,11 +4042,11 @@ msgstr ""
 
 #: kuma/users/templates/users/user_banned.html:2
 msgid "You've Been Banned"
-msgstr ""
+msgstr "Du har blivit bannlyst"
 
 #: kuma/users/templates/users/user_banned.html:20
 msgid "You have been banned for the following reasons:"
-msgstr ""
+msgstr "Du har blivit bannlyst för följande orsaker:"
 
 #: kuma/users/templates/users/user_banned.html:30
 msgid ""
@@ -4071,16 +4071,16 @@ msgstr "Hantera"
 
 #: kuma/users/templates/users/user_detail.html:62
 msgid "API keys"
-msgstr ""
+msgstr "API-nycklar"
 
 #: kuma/users/templates/users/user_detail.html:100
 msgid "Areas of Expertise"
-msgstr ""
+msgstr "Kompetensområden"
 
 #: kuma/users/templates/users/user_detail.html:108
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr ""
+msgstr "Medlem sedan %(date_joined)s"
 
 #: kuma/users/templates/users/user_detail.html:159
 msgid "Subscribe to a feed of {display_name}'s demos"
@@ -4165,11 +4165,11 @@ msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:66
 msgid "Primary Email"
-msgstr ""
+msgstr "Primär e-post"
 
 #: kuma/users/templates/users/user_edit.html:67
 msgid "Edit email"
-msgstr ""
+msgstr "Redigera e-post"
 
 #: kuma/users/templates/users/user_edit.html:79
 msgid "About me"
@@ -4210,11 +4210,11 @@ msgstr "Ändra"
 
 #: kuma/users/templates/users/user_edit.html:112
 msgid "Use your Persona account to sign in."
-msgstr ""
+msgstr "Använd ditt Persona-konto för att logga in."
 
 #: kuma/users/templates/users/user_edit.html:132
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "Använd ditt GitHub-konto för att logga in."
 
 #: kuma/users/templates/users/user_edit.html:153
 #: kuma/users/templates/users/user_edit.html:161
@@ -4224,7 +4224,7 @@ msgstr "Spara ändringar"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:9
 msgid "Hi {username}!"
-msgstr ""
+msgstr "Hej {username}!"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
 #, python-format
@@ -4297,7 +4297,7 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:4
 msgid "Hi {username}"
-msgstr ""
+msgstr "Hej {username}"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:7
@@ -4367,12 +4367,12 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
 msgid "Blog: {blog_link}"
-msgstr ""
+msgstr "Blogg: {blog_link}"
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:206
 msgid "Technical - code samples, APIs, or technologies"
@@ -4396,7 +4396,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:27
 msgid "MDN documents"
-msgstr ""
+msgstr "MDN-dokument"
 
 #: kuma/wiki/feeds.py:28
 msgid "Documents authored by MDN users"
@@ -4542,7 +4542,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:59
 msgid "Another document with this slug already exists."
-msgstr ""
+msgstr "Det finns redan ett annat dokument med denna slugg."
 
 #: kuma/wiki/forms.py:60
 msgid "Another document with this metadata already exists."
@@ -4550,7 +4550,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:62
 msgid "This document was modified while you were editing it."
-msgstr ""
+msgstr "Detta dokument ändrades medan du redigerade det."
 
 #: kuma/wiki/forms.py:64
 msgid "Changing this document's slug requires moving it and its children."
