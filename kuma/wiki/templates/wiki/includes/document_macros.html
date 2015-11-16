@@ -161,10 +161,13 @@
 
                   </ul>
 
-                <ul>
-                  {% for watched_parent_tree in document.parent_trees_watched_by(user) %}
-                    {{ watch_tree_item(watched_parent_tree, user) }}
-                  {% endfor %}
+                  {% set watched_parent_trees = document.parent_trees_watched_by(user) %}
+                  {% if watched_parent_trees %}
+                    <ul>
+                      {% for watched_parent_tree in watched_parent_trees %}
+                        {{ watch_tree_item(watched_parent_tree, user) }}
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
 
-                </ul>
 {%- endmacro %}
