@@ -4,6 +4,7 @@ import waffle
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models.functions import Lower
 from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
@@ -346,27 +347,28 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
 
         if tags:
             for tag in parse_tags(tags):
-                # Note: The exact match query doesn't work correctly with
-                # MySQL with regards to case-sensitivity. If we move to
-                # Postgresql in the future this code may need to change.
-                doc_tag = (DocumentTag.objects.filter(name__exact=tag)
-                                              .values_list('name', flat=True))
+                doc_tags = DocumentTag.objects.annotate(
+                    lowered_name=Lower('name'),
+                ).filter(
+                    lowered_name=tag.lower(),
+                ).values_list('name', flat=True)
 
                 # Write a log we can grep to help find pre-existing duplicate
                 # document tags for cleanup.
-                if len(doc_tag) > 1:
-                    log.warn('Found duplicate document tags: %s' % doc_tag)
+                if len(doc_tags) > 1:
+                    log.warn('Found duplicate document tags: %s' % doc_tags)
 
-                if doc_tag:
-                    if doc_tag[0] != tag and doc_tag[0].lower() == tag.lower():
+                if doc_tags:
+                    if (doc_tags[0] != tag and
+                            doc_tags[0].lower() == tag.lower()):
                         # The tag differs only by case. Do not add a new one,
                         # add the existing one.
-                        cleaned_tags.append(doc_tag[0])
+                        cleaned_tags.append(doc_tags[0])
                         continue
 
                 cleaned_tags.append(tag)
 
-        return ' '.join([u'"%s"' % t for t in cleaned_tags])
+        return ' '.join([u'"%s"' % tag for tag in cleaned_tags])
 
     def clean_content(self):
         """

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.http import Http404
+from django.db.models.functions import Lower
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.views.decorators.http import require_GET
 
@@ -28,20 +29,24 @@ def documents(request, category=None, tag=None):
             raise Http404
 
     # Taggit offers a slug - but use name here, because the slugification
-    # stinks and is hard to customize.
-    tag_obj = None
+    # for non-ASCII characters is hard.
     if tag:
-        matching_tags = get_list_or_404(DocumentTag, name__iexact=tag)
-        for matching_tag in matching_tags:
-            if matching_tag.name.lower() == tag.lower():
-                tag_obj = matching_tag
-                break
-    docs = Document.objects.filter_for_list(locale=request.locale,
-                                            category=category_id,
-                                            tag=tag_obj)
-    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
+        annotated_tags = DocumentTag.objects.annotate(
+            lowered_name=Lower('name'),
+        )
+        tag_obj = get_list_or_404(
+            annotated_tags,
+            lowered_name=tag.lower(),
+        ).first()
+    else:
+        tag_obj = None
+    docs = Document.objects.filter_for_list(
+        locale=request.locale,
+        category=category_id,
+        tag=tag_obj,
+    )
     context = {
-        'documents': paginated_docs,
+        'documents': paginate(request, docs, per_page=DOCUMENTS_PER_PAGE),
         'count': docs.count(),
         'category': category,
         'tag': tag,
@@ -82,12 +87,12 @@ def needs_review(request, tag=None):
     """
     Lists wiki documents with revisions flagged for review
     """
-    tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
+    tags = ReviewTag.objects.annotate(lowered_name=Lower('name'))
+    tag_obj = tag and get_object_or_404(tags, name=tag.lower()) or None
     docs = Document.objects.filter_for_review(locale=request.locale,
                                               tag=tag_obj)
-    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
-        'documents': paginated_docs,
+        'documents': paginate(request, docs, per_page=DOCUMENTS_PER_PAGE),
         'count': docs.count(),
         'tag': tag_obj,
         'tag_name': tag,
@@ -101,12 +106,12 @@ def with_localization_tag(request, tag=None):
     """
     Lists wiki documents with localization tag
     """
-    tag_obj = tag and get_object_or_404(LocalizationTag, name=tag) or None
+    tags = LocalizationTag.objects.annotate(lowered_name=Lower('name'))
+    tag_obj = tag and get_object_or_404(tags, name=tag.lower()) or None
     docs = Document.objects.filter_with_localization_tag(locale=request.locale,
                                                          tag=tag_obj)
-    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
-        'documents': paginated_docs,
+        'documents': paginate(request, docs, per_page=DOCUMENTS_PER_PAGE),
         'count': docs.count(),
         'tag': tag_obj,
         'tag_name': tag,
