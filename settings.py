@@ -554,6 +554,8 @@ PUENTE = {
 STANDALONE_DOMAINS = ['django', 'javascript']
 STATICI18N_DOMAIN = 'javascript'
 
+PIPELINE_DISABLE_WRAPPER = True
+
 PIPELINE_CSS_COMPRESSOR = 'kuma.core.pipeline.cleancss.CleanCSSCompressor'
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
 
