@@ -117,8 +117,8 @@
 {% macro watch_tree_item(document, user) -%}
 {% set title = document.title %}
                   <li class="page-watch">
-                    {% set subscribe_tree_text = _('Subscribe to {title} and all its sub-articles'|f(title=title)|escape) %}
-                    {% set unsubscribe_tree_text = _('Unsubscribe from {title} and all its sub-articles'|f(title=title)|escape) %}
+                    {% set subscribe_tree_text = _('Subscribe to {title} and all its sub-articles')|f(title=title)|escape %}
+                    {% set unsubscribe_tree_text = _('Unsubscribe from {title} and all its sub-articles')|f(title=title)|escape %}
                     <form action="{{ url('wiki.subscribe_to_tree', document.slug, locale=document.locale) }}" method="post">
                         {{ csrf() }}
                         <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_tree_text }}" data-unsubscribe-text="{{ unsubscribe_tree_text }}" data-subscribe-message="{{ _('You are now subscribed to this article and all its sub-articles.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from this article and all its sub-articles.') }}">
