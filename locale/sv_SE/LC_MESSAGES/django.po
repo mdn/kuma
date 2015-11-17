@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-16 20:16+0000\n"
+"PO-Revision-Date: 2015-11-17 21:10+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -1811,7 +1811,7 @@ msgstr ""
 
 #: kuma/demos/feeds.py:90
 msgid "MDN demos"
-msgstr ""
+msgstr "MDN demon"
 
 #: kuma/demos/feeds.py:91
 msgid "Demos submitted by MDN users"
@@ -1993,11 +1993,11 @@ msgstr ""
 
 #: kuma/demos/models.py:454
 msgid "date created"
-msgstr ""
+msgstr "datum skapad"
 
 #: kuma/demos/models.py:647 kuma/demos/models.py:654
 msgid "ZIP file contains no acceptable files"
-msgstr ""
+msgstr "ZIP-filen innehåller inga godtagbara filer"
 
 #: kuma/demos/models.py:650
 msgid "ZIP file corrupted"
@@ -2061,7 +2061,7 @@ msgstr ""
 #: kuma/demos/templates/demos/submit_noauth.html:11
 #: kuma/demos/templates/demos/terms.html:10
 msgid "{subtitle} | Demo Studio"
-msgstr ""
+msgstr "{subtitle} | Demo Studio"
 
 #: kuma/demos/templates/demos/delete.html:20
 msgid "MDN"
@@ -2072,18 +2072,18 @@ msgstr "MDN"
 #: kuma/demos/templates/demos/home.html:14
 #: kuma/demos/templates/demos/launch.html:15
 msgid "Demo Studio"
-msgstr ""
+msgstr "Demo Studio"
 
 #: kuma/demos/templates/demos/delete.html:26
 #: kuma/demos/templates/demos/detail.html:32
 #: kuma/demos/templates/demos/home.html:23
 #: kuma/demos/templates/demos/elements/demos_head.html:4
 msgid "Submit a Demo"
-msgstr ""
+msgstr "Skicka in ett demo"
 
 #: kuma/demos/templates/demos/delete.html:38
 msgid "Remove this demo?"
-msgstr ""
+msgstr "Ta bort detta demo?"
 
 #: kuma/demos/templates/demos/delete.html:40
 #, python-format
@@ -2106,14 +2106,14 @@ msgstr ""
 #: kuma/demos/templates/demos/submit_noauth.html:20
 #: kuma/demos/templates/demos/elements/demos_head.html:2
 msgid "Mozilla Demo Studio"
-msgstr ""
+msgstr "Mozilla Demo Studio"
 
 #: kuma/demos/templates/demos/detail.html:33
 #: kuma/demos/templates/demos/home.html:24
 #: kuma/demos/templates/demos/listing_tag.html:37
 #: kuma/demos/templates/demos/elements/demos_head.html:5
 msgid "Learn More"
-msgstr ""
+msgstr "Läs mer"
 
 #: kuma/demos/templates/demos/detail.html:35
 #: kuma/demos/templates/demos/home.html:26
@@ -2226,7 +2226,7 @@ msgstr "Byggt med hjälp av"
 
 #: kuma/demos/templates/demos/detail.html:156
 msgid "See more demos made with {tag_title}"
-msgstr "Se fler demos skapade med {tag_title}"
+msgstr "Se fler demon skapade med {tag_title}"
 
 #: kuma/demos/templates/demos/detail.html:165
 #: kuma/demos/templates/demos/elements/submission_thumb.html:15
@@ -2293,7 +2293,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:225
 msgid "More by {creator}"
-msgstr ""
+msgstr "Mer av {creator}"
 
 #: kuma/demos/templates/demos/detail.html:237
 #: kuma/demos/templates/demos/launch.html:63
@@ -2358,7 +2358,7 @@ msgstr "Dokument"
 #: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:145
 #: templates/base.html:163
 msgid "Demos"
-msgstr ""
+msgstr "Demon"
 
 #: kuma/demos/templates/demos/devderby_landing.html:59
 msgid "Articles"
@@ -2367,7 +2367,7 @@ msgstr ""
 #: kuma/demos/templates/demos/devderby_tag.html:8
 #: kuma/demos/templates/demos/listing_tag.html:7
 msgid "Demos tagged {tag}"
-msgstr ""
+msgstr "Demon taggade {tag}"
 
 #: kuma/demos/templates/demos/devderby_tag.html:22
 msgid "Challenges"
@@ -2379,11 +2379,11 @@ msgstr ""
 
 #: kuma/demos/templates/demos/devderby_tag.html:24
 msgid "Prizes"
-msgstr ""
+msgstr "Priser"
 
 #: kuma/demos/templates/demos/devderby_tag.html:41
 msgid "Derby Winners"
-msgstr ""
+msgstr "Derby vinnare"
 
 #: kuma/demos/templates/demos/devderby_tag.html:52
 msgid "Submissions"
@@ -2397,15 +2397,15 @@ msgstr ""
 
 #: kuma/demos/templates/demos/feed_item_description.html:7
 msgid "Submitted by:"
-msgstr ""
+msgstr "Inskickad av:"
 
 #: kuma/demos/templates/demos/feed_item_description.html:9
 msgid "Tagged as:"
-msgstr ""
+msgstr "Taggad som:"
 
 #: kuma/demos/templates/demos/flag.html:24
 msgid "Flag this demo?"
-msgstr ""
+msgstr "Flagga detta demo?"
 
 #: kuma/demos/templates/demos/flag.html:30
 msgid "<button type=\"submit\" name=\"action_create\">Flag content</button>"
@@ -2414,7 +2414,7 @@ msgstr ""
 #: kuma/demos/templates/demos/home.html:8
 #: kuma/demos/templates/demos/listing_all.html:6
 msgid "Recent demos"
-msgstr ""
+msgstr "Nya demon"
 
 #: kuma/demos/templates/demos/home.html:10
 msgid "Featured demos"
@@ -2439,16 +2439,16 @@ msgstr "Detaljer"
 
 #: kuma/demos/templates/demos/home.html:69
 msgid "Launch"
-msgstr ""
+msgstr "Starta"
 
 #: kuma/demos/templates/demos/home.html:106
 #: kuma/demos/templates/demos/home.html:107
 msgid "Search demos"
-msgstr ""
+msgstr "Sök demo"
 
 #: kuma/demos/templates/demos/home.html:111
 msgid "<b>or</b>"
-msgstr ""
+msgstr "<b>eller</b>"
 
 #: kuma/demos/templates/demos/home.html:114
 #: kuma/demos/templates/demos/elements/demos_head.html:18
@@ -2458,36 +2458,36 @@ msgstr ""
 
 #: kuma/demos/templates/demos/home.html:136
 msgid "recent"
-msgstr ""
+msgstr "senaste"
 
 #: kuma/demos/templates/demos/launch.html:32
 #: kuma/search/templates/search/plugin.html:3 templates/base.html:12
 #: templates/base.html:31 templates/base.html:37 templates/base.html:91
 #: templates/base.html:93 templates/base_popup.html:5
 msgid "Mozilla Developer Network"
-msgstr ""
+msgstr "Mozilla Developer Network"
 
 #: kuma/demos/templates/demos/launch.html:36
 #, python-format
 msgid "by %(profile_link)s"
-msgstr ""
+msgstr "av %(profile_link)s"
 
 #: kuma/demos/templates/demos/launch.html:77
 msgid "Back"
-msgstr ""
+msgstr "Tillbaka"
 
 #: kuma/demos/templates/demos/launch.html:86
 msgid "Remove this toolbar"
-msgstr ""
+msgstr "Ta bort detta verktygsfält"
 
 #: kuma/demos/templates/demos/launch.html:86
 msgid "Remove toolbar"
-msgstr ""
+msgstr "Ta bort verktygsfält"
 
 #: kuma/demos/templates/demos/listing_all.html:4
 #: kuma/demos/templates/demos/listing_all.html:20
 msgid "Browse all demos"
-msgstr ""
+msgstr "Bläddra bland alla demos"
 
 #: kuma/demos/templates/demos/listing_all.html:26
 msgid "Subscribe to a feed of all demos"
@@ -2617,7 +2617,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:178
 msgid "Discard Demo"
-msgstr ""
+msgstr "Ignorera demo"
 
 #: kuma/demos/templates/demos/submit.html:180
 msgid "Save changes"
@@ -2626,7 +2626,7 @@ msgstr ""
 #: kuma/demos/templates/demos/submit.html:181
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:35
 msgid "Discard Changes"
-msgstr ""
+msgstr "Ignorera ändringar"
 
 #: kuma/demos/templates/demos/submit.html:189
 msgid "Update Your Profile"
@@ -2755,7 +2755,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:10
 msgid "Most Viewed"
-msgstr ""
+msgstr "Flest visningar"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:11
 msgid "Sort demos by most likes"
@@ -2767,7 +2767,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:11
 msgid "Most Liked"
-msgstr ""
+msgstr "Gillad mest"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:12
 msgid "Sort demos by most recently submitted"
@@ -2779,7 +2779,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:12
 msgid "Most Recent"
-msgstr ""
+msgstr "Senaste"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:49
 msgid "{start}&ndash;{end} of {total}"
@@ -2976,7 +2976,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:171
 msgid "Translating"
-msgstr ""
+msgstr "Översätter"
 
 #: kuma/landing/templates/landing/homepage.html:172
 msgid "Promoting MDN"
@@ -3053,7 +3053,7 @@ msgstr "Röd"
 
 #: kuma/landing/templates/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr ""
+msgstr "Ersätt &lt;FOO&gt; med"
 
 #: kuma/landing/templates/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
@@ -3216,7 +3216,7 @@ msgstr ""
 
 #: kuma/search/templates/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "Sökning är inte tillgänglig"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/templates/search/plugin.html:5
@@ -3413,7 +3413,7 @@ msgstr "Användarnamn"
 #: kuma/users/forms.py:180 kuma/users/models.py:139
 #: kuma/users/templates/users/user_detail.html:117
 msgid "Website"
-msgstr ""
+msgstr "Webbplats"
 
 #: kuma/users/forms.py:189 kuma/users/models.py:154
 #: kuma/users/templates/users/user_detail.html:121
@@ -3441,7 +3441,7 @@ msgstr ""
 #: kuma/users/forms.py:225 kuma/users/models.py:144
 #: kuma/users/templates/users/user_detail.html:143
 msgid "Mozillians"
-msgstr ""
+msgstr "Mozillians"
 
 #: kuma/users/forms.py:234 kuma/users/models.py:164
 #: kuma/users/templates/users/user_detail.html:147
@@ -3613,7 +3613,7 @@ msgstr ""
 #: kuma/users/templates/account/email.html:7
 #: kuma/users/templates/users/user_detail.html:63
 msgid "Email addresses"
-msgstr ""
+msgstr "E-postadresser"
 
 #: kuma/users/templates/account/email.html:11
 msgid "{email} is your <em>primary</em> email address"
@@ -3731,7 +3731,7 @@ msgstr ""
 #: kuma/users/templates/account/password_reset_done.html:3
 #: kuma/users/templates/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr ""
+msgstr "Återställ lösenord"
 
 #: kuma/users/templates/account/password_reset.html:13
 msgid ""
@@ -3782,7 +3782,7 @@ msgstr ""
 
 #: kuma/users/templates/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "Registrera dig"
 
 #: kuma/users/templates/account/signup.html:8
 #: kuma/users/templates/account/signup.html:18
