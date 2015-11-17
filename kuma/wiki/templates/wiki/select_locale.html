@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% set title = _('Select language | {document}')|f(document=document.title) %}
+{% set title = _('Select language | %(document)s', document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block content %}

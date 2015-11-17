@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% set title = _('Revision {id} | {title} | {category}')|f(id=revision.id, title=document.title, category=document.get_category_display()) %}
+{% set title = _('Revision %(id)s | %(title)s | %(category)s', id=revision.id, title=document.title, category=document.get_category_display()) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 {% set classes = 'document' %}
@@ -7,7 +7,7 @@
 {% block content %}
 
   <article>
-    <h1>{{ _('Revision') }} {{ revision.id }} {{ _('of') }} <a href="{{ document.get_absolute_url() }}">{{ document.title }}</a></h1>
+    <h1>{{ _('Revision %(id)s of <a href="%(url)s">%(title)s</a>'|safe, id=revision.id, url=document.get_absolute_url(), title=document.title) }}</h1>
 
     <details class="h2" open="open">
       <summary class="hidden">{{ _('Revision Information') }}</summary>

@@ -6,7 +6,7 @@
         <title>{{ _('Take the next step to get involved on MDN!') }}</title>
     </head>
     <body>
-        <p>{{ _('Hi {username}!')|f(username=username) }}</p>
+        <p>{{ _('Hi %(username)s!', username=username) }}</p>
         <p>
           {% trans mdn_link=add_utm('https://developer.mozilla.org', 'welcome') %}
             Thanks for creating a profile on <a href="{{ mdn_link }}">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you.

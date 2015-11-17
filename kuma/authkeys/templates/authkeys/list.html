@@ -1,6 +1,6 @@
 {% extends "authkeys/base.html" %}
 
-{% block intro %}{{ _("API Keys: <b>Your Keys</b>" | safe) }}{% endblock %}
+{% block intro %}{{ _("API Keys: <b>Your Keys</b>"|safe) }}{% endblock %}
 
 {% block subcontent %}
 
@@ -23,7 +23,7 @@
             <span class="option-list-options">
                 <a class="button"
                    title="{{ _('View key usage history') }}"
-                   href="{{ url('authkeys.history', pk=key.pk) }}">{{ _('History ({count})') | f(count=key.history.count()) }}</a>
+                   href="{{ url('authkeys.history', pk=key.pk) }}">{{ _('History (%(count)s)', count=key.history.count()) }}</a>
             </span>
 
         </li>

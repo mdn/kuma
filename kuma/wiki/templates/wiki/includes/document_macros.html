@@ -34,11 +34,15 @@
               {{ revision_from_header }}
             {% else %}
               <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id) }}" rel="nofollow, noindex">
-                {{ _('Revision {num}:')|f(num=revision_from.id) }}
+                {{ _('Revision %(num)s:', num=revision_from.id) }}
               </a>
             {% endif %}
           </h3>
-          <p>{{ _('Revision {id} by <a href="{user_profile_url}">{user}</a> on {date}')|fe(id=revision_from.id, user_profile_url=revision_from.creator.get_absolute_url(), user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime')) }}</p>
+          <p>
+          {% trans id=revision_from.id, user_profile_url=revision_from.creator.get_absolute_url(), user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime') %}
+            Revision {{ id }} by <a href="{{ user_profile_url }}">{{ user }}</a> on {{ date }}
+          {% endtrans %}
+          </p>
         </div>
         <div class="rev-to">
           <h3>
@@ -46,11 +50,15 @@
               {{ revision_to_header }}
             {% else %}
               <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id) }}" rel="nofollow, noindex">
-                {{ _('Revision {num}:')|f(num=revision_to.id) }}
+                {{ _('Revision %(num)s:', num=revision_to.id) }}
               </a>
             {% endif %}
           </h3>
-          <p>{{ _('Revision {id} by <a href="{user_profile_url}">{user}</a> on {date}')|fe(id=revision_to.id, user_profile_url=revision_to.creator.get_absolute_url(), user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime')) }}</p>
+          <p>
+          {% trans id=revision_to.id, user_profile_url=revision_to.creator.get_absolute_url(), user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime') %}
+            Revision {{ id }} by <a href="{{ user_profile_url }}">{{ user }}</a> on {{ date }}
+          {% endtrans %}
+          </p>
         </div>
       </header>
 
@@ -117,8 +125,8 @@
 {% macro watch_tree_item(document, user) -%}
 {% set title = document.title %}
                   <li class="page-watch">
-                    {% set subscribe_tree_text = _('Subscribe to {title} and all its sub-articles')|f(title=title)|escape %}
-                    {% set unsubscribe_tree_text = _('Unsubscribe from {title} and all its sub-articles')|f(title=title)|escape %}
+                    {% set subscribe_tree_text = _('Subscribe to %(title)s and all its sub-articles', title=title) %}
+                    {% set unsubscribe_tree_text = _('Unsubscribe from %(title)s and all its sub-articles', title=title) %}
                     <form action="{{ url('wiki.subscribe_to_tree', document.slug, locale=document.locale) }}" method="post">
                         {{ csrf() }}
                         <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_tree_text }}" data-unsubscribe-text="{{ unsubscribe_tree_text }}" data-subscribe-message="{{ _('You are now subscribed to this article and all its sub-articles.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from this article and all its sub-articles.') }}">
@@ -133,11 +141,11 @@
                   <li class="page-watch">
                     {% set title = document.title %}
                     {% set subscribe_status = _('Updating subscription status') %}
-                    {% set subscribe_text = _('Subscribe to {title}')|f(title=title) %}
-                    {% set unsubscribe_text = _('Unsubscribe from {title}')|f(title=title) %}
+                    {% set subscribe_text = _('Subscribe to %(title)s', title=title) %}
+                    {% set unsubscribe_text = _('Unsubscribe from %(title)s', title=title) %}
                     <form action="{{ url('wiki.subscribe', document.slug, locale=document.locale) }}" method="post">
                         {{ csrf() }}
-                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_text }}" data-unsubscribe-text="{{ unsubscribe_text }}" data-subscribe-message="{{ _('You are now subscribed to {title}.')|f(title=title) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from {title}.')|f(title=title) }}">
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_text }}" data-unsubscribe-text="{{ unsubscribe_text }}" data-subscribe-message="{{ _('You are now subscribed to %(title)s.', title=title) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from %(title)s.', title=title) }}">
                         {% if document.is_watched_by(user) %}{{ unsubscribe_text }}{% else %}{{ subscribe_text }}{% endif %}
                         </a>
                     </form>
@@ -148,11 +156,11 @@
                   {% if document.parent %}
                     <li class="page-watch">
                     {% set parent_language = document.parent.language %}
-                    {% set subscribe_parent_text = _('Subscribe to <bdi>{language}</bdi> version')|f(language=parent_language) %}
-                    {% set unsubscribe_parent_text = _('Unsubscribe from <bdi>{language}</bdi> version')|f(language=parent_language) %}
+                    {% set subscribe_parent_text = _('Subscribe to <bdi>%(language)s</bdi> version', language=parent_language) %}
+                    {% set unsubscribe_parent_text = _('Unsubscribe from <bdi>%(language)s</bdi> version', language=parent_language) %}
                       <form action="{{ url('wiki.subscribe', document.parent.slug, locale=document.parent.locale) }}" method="post">
                           {{ csrf() }}
-                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_parent_text }}" data-unsubscribe-text="{{ unsubscribe_parent_text }}" data-subscribe-message="{{ _('You are now subscribed to the {language} version of this article.')|f(language=parent_language) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from the {language} version of this article.')|f(language=parent_language) }}">
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_parent_text }}" data-unsubscribe-text="{{ unsubscribe_parent_text }}" data-subscribe-message="{{ _('You are now subscribed to the %(language)s version of this article.', language=parent_language) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from the %(language)s version of this article.', language=parent_language) }}">
                           {% if document.parent.is_watched_by(user) %}{{ unsubscribe_parent_text|safe }}{% else %}{{ subscribe_parent_text|safe }}{% endif %}
                         </a>
                       </form>

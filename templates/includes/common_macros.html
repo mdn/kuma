@@ -33,7 +33,7 @@
 {% macro greeting(user, settings) %}
   <div id="greeting">
     {% if user.is_authenticated() %}
-      {{ _('Welcome, <span class="user">{user}</span>.')|fe(user=user) }}
+      {{ _('Welcome, <span class="user">%(user)s</span>.'|safe, user=user) }}
       <nav>
         <a href="{{ user.get_absolute_url() }}">{{ _('Profile') }}</a>
         |

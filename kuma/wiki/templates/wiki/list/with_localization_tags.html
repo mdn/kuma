@@ -1,6 +1,6 @@
 {% extends "wiki/base.html" %}
 {% if tag %}
-  {% set title = _('Localized articles tagged with: {tag}')|f(tag=tag) %}
+  {% set title = _('Localized articles tagged with: %(tag)s', tag=tag) %}
 {% else %}
   {% set title = _('Articles tagged with any localization tags') %}
 {% endif %}

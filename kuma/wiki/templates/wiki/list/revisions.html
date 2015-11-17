@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% set title = _('Revision History | {document}')|fe(document=document.title) %}
+{% set title = _('Revision History | %(document)s', document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block site_css %}

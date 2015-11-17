@@ -8,7 +8,7 @@
 
     {% if user.emailaddress_set.all().exists() %}
 
-      <p>{{ _('{email} is your <em>primary</em> email address')|fe(email=user.email) }}</p>
+      <p>{{ _('%(email)s is your <em>primary</em> email address', email=user.email) }}</p>
 
       {% if user.emailaddress_set.count() > 1  %}
 
