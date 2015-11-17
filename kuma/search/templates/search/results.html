@@ -1,6 +1,6 @@
 {% extends "search/base.html" %}
 
-{% set locale = request.locale %}
+{% set locale = request.LANGUAGE_CODE %}
 {% if locale in settings.LOCALES %}
   {% set locale_native = settings.LOCALES[locale].native %}
 {% endif %}

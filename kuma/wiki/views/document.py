@@ -59,7 +59,7 @@ def _get_html_and_errors(request, doc, rendering_params):
             # Temporary bleach_new query option to switch to Constance-based
             # Bleach whitelists, uses KumaScript POST for temporary rendering
             doc_html, ks_errors = kumascript.post(request, doc_html,
-                                                  request.locale, True)
+                                                  request.LANGUAGE_CODE, True)
 
         else:
             # A logged-in user can schedule a full re-render with Shift-Reload
@@ -339,7 +339,7 @@ def toc(request, document_slug=None, document_locale=None):
     Return a document's table of contents as HTML.
     """
     query = {
-        'locale': request.locale,
+        'locale': request.LANGUAGE_CODE,
         'current_revision__isnull': False,
     }
     if document_slug is not None:
@@ -370,7 +370,7 @@ def as_json(request, document_slug=None, document_locale=None):
     Return some basic document info in a JSON blob.
     """
     kwargs = {
-        'locale': request.locale,
+        'locale': request.LANGUAGE_CODE,
         'current_revision__isnull': False,
     }
     if document_slug is not None:

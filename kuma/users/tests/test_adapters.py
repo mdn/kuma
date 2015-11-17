@@ -94,7 +94,7 @@ class KumaAccountAdapterTestCase(UserTestCase):
         session.save()
         request.session = session
         request.user = self.user_model.objects.get(username='testuser')
-        request.locale = 'en-US'
+        request.LANGUAGE_CODE = 'en-US'
         messages = self.get_messages(request)
 
         self.adapter.add_message(request, django_messages.INFO,
@@ -106,7 +106,7 @@ class KumaAccountAdapterTestCase(UserTestCase):
         session = self.client.session
         next_url = reverse('users.user_edit',
                            kwargs={'username': request.user.username},
-                           locale=request.locale)
+                           locale=request.LANGUAGE_CODE)
         session['sociallogin_next_url'] = next_url
         session.save()
         request.session = session

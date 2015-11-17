@@ -57,7 +57,7 @@ def render_email(template, context):
         """
         req = RequestFactory()
         req.META = {}
-        req.locale = locale
+        req.LANGUAGE_CODE = locale
 
         return jingo.render_to_string(req, template, context)
 

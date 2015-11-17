@@ -160,7 +160,7 @@ def user_edit(request, username):
         user_form = UserEditForm(instance=edit_user,
                                  initial=initial,
                                  prefix='user')
-        newsletter_form = NewsletterForm(locale=request.locale,
+        newsletter_form = NewsletterForm(locale=request.LANGUAGE_CODE,
                                          already_subscribed=already_subscribed,
                                          prefix='newsletter',
                                          initial=subscription_initial)
@@ -169,7 +169,7 @@ def user_edit(request, username):
                                  files=request.FILES,
                                  instance=edit_user,
                                  prefix='user')
-        newsletter_form = NewsletterForm(locale=request.locale,
+        newsletter_form = NewsletterForm(locale=request.LANGUAGE_CODE,
                                          already_subscribed=already_subscribed,
                                          data=request.POST,
                                          prefix='newsletter')
@@ -309,7 +309,7 @@ class SignupView(BaseSignupView):
     def get_form_kwargs(self):
         kwargs = super(SignupView, self).get_form_kwargs()
         kwargs.update({
-            'locale': self.request.locale,
+            'locale': self.request.LANGUAGE_CODE,
             'already_subscribed': False,
         })
         return kwargs

@@ -27,7 +27,7 @@ class LocaleField(serializers.Field):
 
     def to_native(self, value):
         request = self.context.get('request')
-        return request.locale
+        return request.LANGUAGE_CODE
 
 
 class SiteURLField(serializers.Field):

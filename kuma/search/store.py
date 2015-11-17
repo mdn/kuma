@@ -25,7 +25,7 @@ def referrer_url(request):
         urlpath = None
 
     if (referrer is None or urlpath is None or
-            reverse('search', locale=request.locale) != urlpath):
+            reverse('search', locale=request.LANGUAGE_CODE) != urlpath):
         return None
     return referrer
 

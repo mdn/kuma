@@ -73,7 +73,7 @@ class UserConfig(AuthConfig):
             # only send if the user has already verified
             # at least one email address
             if user.emailaddress_set.filter(verified=True).exists():
-                send_welcome_email.delay(user.pk, request.locale)
+                send_welcome_email.delay(user.pk, request.LANGUAGE_CODE)
 
     def on_email_confirmed(self, sender, request, email_address, **kwargs):
         """
@@ -86,7 +86,8 @@ class UserConfig(AuthConfig):
             if not (email_address.user
                                  .emailaddress_set.exclude(pk=email_address.pk)
                                                   .exists()):
-                send_welcome_email.delay(email_address.user.pk, request.locale)
+                send_welcome_email.delay(email_address.user.pk,
+                                         request.LANGUAGE_CODE)
 
     def on_social_account_removed(self, sender, request, socialaccount, **kwargs):
         """

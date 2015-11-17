@@ -75,7 +75,7 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             # as it would be misleading
             user_url = reverse('users.user_edit',
                                kwargs={'username': request.user.username},
-                               locale=request.locale)
+                               locale=request.LANGUAGE_CODE)
             next_url = request.session.get('sociallogin_next_url', None)
             if next_url != user_url:
                 return

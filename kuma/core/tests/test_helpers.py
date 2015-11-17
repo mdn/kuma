@@ -32,7 +32,7 @@ class TestHelpers(KumaTestCase):
         jingo.load_helpers()
 
     def test_number(self):
-        context = {'request': namedtuple('R', 'locale')('en-US')}
+        context = {'request': namedtuple('R', 'LANGUAGE_CODE')('en-US')}
         eq_('5,000', number(context, 5000))
         eq_('', number(context, None))
 
@@ -109,7 +109,7 @@ class TestDateTimeFormat(UserTestCase):
         super(TestDateTimeFormat, self).setUp()
         url_ = reverse('home')
         self.context = {'request': RequestFactory().get(url_)}
-        self.context['request'].locale = u'en-US'
+        self.context['request'].LANGUAGE_CODE = u'en-US'
         self.context['request'].user = self.user_model.objects.get(username='testuser01')
 
     def test_today(self):
@@ -123,7 +123,7 @@ class TestDateTimeFormat(UserTestCase):
 
     def test_locale(self):
         """Expects shortdatetime in French."""
-        self.context['request'].locale = u'fr'
+        self.context['request'].LANGUAGE_CODE = u'fr'
         value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, format='short',
                                          locale=u'fr')
