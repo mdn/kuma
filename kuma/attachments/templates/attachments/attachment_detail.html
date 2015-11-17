@@ -1,6 +1,6 @@
 {% extends "wiki/base.html" %}
-{# L10n: {id} is the revision number, {title} is the title of the document. #}
-{% set title = _('Attachment {id} | {title}')|f(id=revision.id, title=attachment.title) %}
+{# L10n: 'id' is the revision number, 'title' is the title of the document. #}
+{% set title = _('Attachment %(id)s | %(title)s', id=revision.id, title=attachment.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 {% set classes = 'document' %}
@@ -41,7 +41,7 @@
           </li>
           <li>
             <mark>{{ _('MIME Type:') }}</mark>
-            <span>{{ _('%s bytes') % attachment.size }}</span>
+            <span>{{ _('%(bytes)s bytes', bytes=attachment.size) }}</span>
           </li>
 
           <li class="revision-is-current">

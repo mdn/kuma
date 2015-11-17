@@ -156,7 +156,7 @@
             {{ submission_listing(
                 request, demos_page.object_list, demos_page.has_other_pages(),
                 demos_paginator, demos_page,
-                _("Subscribe to a feed of {display_name}'s demos") | f(display_name=display_name),
+                _("Subscribe to a feed of %(display_name)s's demos", display_name=display_name),
                 url('demos_feed_profile', format='atom', username=detail_user.username), cols_per_row=4,
                 show_submit=True
             ) }}

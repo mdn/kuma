@@ -12,14 +12,14 @@
         {% set launches_recent = submission.launches.recent %}
         {% set likes = submission.likes.total %}
         {% set likes_recent = submission.likes.recent %}
-        <li class="views" title="{{ ngettext('This demo has been viewed {count} time', 'This demo has been viewed {count} times', launches) | f(count=launches) }}" data-recent="{{ launches_recent }}">{{ launches }}</li>
-        <li class="likes" title="{{ ngettext('{count} person liked this demo', '{count} people liked this demo', likes) | f(count=likes) }}" data-recent="{{ likes_recent }}">{{ likes }}</li>
+        <li class="views" title="{{ ngettext('This demo has been viewed %(num)s time', 'This demo has been viewed %(num)s times', launches) }}" data-recent="{{ launches_recent }}">{{ launches }}</li>
+        <li class="likes" title="{{ ngettext('%(num)s person liked this demo', '%(num)s people liked this demo', likes) }}" data-recent="{{ likes_recent }}">{{ likes }}</li>
       </ul>
       <p class="desc">
         {{ submission.summary }}
 
         <a href="{{ url('demos_detail', slug=submission.slug) }}" class="descLink">{{ _("Details") }}</a>
       </p>
-      <p class="launch"><a href="{{ url('demos_launch', slug=submission.slug) }}" target="{{ "_blank" if submission.navbar_optout }}" class="button" title="{{ _('Launch {title}') | f(title=submission.title) }}">Launch</a></p>
+      <p class="launch"><a href="{{ url('demos_launch', slug=submission.slug) }}" target="{{ "_blank" if submission.navbar_optout }}" class="button" title="{{ _('Launch %(title)s', title=submission.title) }}">Launch</a></p>
     </div>
 </li>

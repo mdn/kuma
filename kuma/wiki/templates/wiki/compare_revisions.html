@@ -1,7 +1,7 @@
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/document_macros.html" import revision_diff with context %}
 
-{% set title = _('Compare Revisions | {document}')|f(document=document.title) %}
+{% set title = _('Compare Revisions | %(document)s', document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 {% set classes = 'compare' %}
@@ -20,4 +20,3 @@
   </article>
 
 {% endblock %}
-

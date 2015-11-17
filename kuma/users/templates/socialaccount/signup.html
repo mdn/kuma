@@ -135,7 +135,7 @@
                 <ul class="choices">
                 {% set matching_uids = matching_accounts.values_list('uid', flat=True) %}
                 {% for email_choice in form.email %}
-                  {% set id_for_label="{name}_{id}"|f(name=email_choice.name, id=loop.index0) %}
+                  {% set id_for_label="%s_%s" % (email_choice.name, loop.index0) %}
                   <li class="{{ 'exists' if email_choice.choice_value in matching_uids }}">
                     {% if email_choice.choice_value == form.other_email_value %}
                       {{ email_choice.tag() }}
@@ -152,7 +152,7 @@
                 {% endfor %}
                 </ul>
                 <p class="field-explanation"><small>
-                    {{ _('What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="{privacy_url}">privacy policy</a>.')|f(privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
+                    {{ _('What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="%(privacy_url)s">privacy policy</a>.', privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
                 </small></p>
               </li>
               {% endif %}

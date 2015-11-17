@@ -111,33 +111,24 @@ L10n comments need to be Jinja2 comments::
     {# L10n: Describes this heading #}
     <h1>{{ _('Heading') }}</h1>
 
+To interpolate, you should use Python string formatting and add the
+keyword arguments to the gettext call::
+
+    {{ _('Welcome, %(name)s!', name=request.user.username) }}
+
 Note that Jinja2 escapes all content output through ``{{ }}`` by default. To
 put HTML in a string, you'll need to add the ``|safe`` filter::
 
     <h1>{{ _('Firefox <span>Help</span>')|safe }}</h1>
 
-To interpolate, you should use one of two Jinja2 filters: ``|f()`` or, in some
-cases, ``|fe()``. ``|f()`` has exactly the same arguments as
-``u''.format()``::
+If you want unescaped (non-safe) HTML in your arguments, mark it with
+``|safe`` also::
 
-    {{ _('Welcome, {name}!')|f(name=request.user.username) }}
-
-The ``|fe()`` is exactly like the ``|f()`` filter, but escapes its arguments
-before interpolating, then returns a "safe" object. Use it when the localized
-string contains HTML::
-
-    {{ _('Found <strong>{0}</strong> results.')|fe(num_results) }}
-
-Note that you *do not need* to use ``|safe`` with ``|fe()``. Also note that
-while it may look similar, the following is *not* safe::
-
-    {{ _('Found <strong>{0}</strong> results.')|f(num_results)|safe }}
+    {{ _('Found %(num)s results.', num='<b>num_results</b>'|safe) }}
 
 The ``ngettext`` function is also available::
 
-    {{ ngettext('Found {0} result.',
-                'Found {0} results.',
-                num_results)|f(num_results) }}
+    {{ ngettext('Found %(num)s result.', 'Found %(num)s results.', num=num_results) }}
 
 
 Using ``{% trans %}`` Blocks for Long Strings

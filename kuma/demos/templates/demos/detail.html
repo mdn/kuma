@@ -6,7 +6,7 @@
 
 {% block body_attributes %}id="demostudio"{% endblock %}
 {% block bodyclass %}section-demos detail{% endblock %}
-{% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=submission.title)) }}{% endblock %}
+{% block title %}{{ page_title(_('%(subtitle)s | Demo Studio', subtitle=submission.title)) }}{% endblock %}
 
 {% block extrahead %}
     <meta property="og:title" content="{{ submission.title }}"/>
@@ -48,11 +48,11 @@
       <ul role="navigation">
           {% set prev = submission.previous() %}
           {% if prev %}
-              <li class="prev"><a href="{{ prev.get_absolute_url() }}" title="{{_('Go to the previous demo, {demo_title}') | f(demo_title=prev.title)}}">{{_('Prev')}}</a></li>
+              <li class="prev"><a href="{{ prev.get_absolute_url() }}" title="{{ _('Go to the previous demo, %(demo_title)s', demo_title=prev.title) }}">{{ _('Prev') }}</a></li>
           {% endif %}
           {% set next = submission.next() %}
           {% if next %}
-              <li class="next"><a href="{{ next.get_absolute_url() }}" title="{{_('Go to the next demo, {demo_title}') | f(demo_title=next.title)}}">{{_('Next')}}</a></li>
+              <li class="next"><a href="{{ next.get_absolute_url() }}" title="{{ _('Go to the next demo, %(demo_title)s', demo_title=next.title) }}">{{ _('Next') }}</a></li>
           {% endif %}
       </ul>
     </nav>
@@ -153,7 +153,7 @@
                 {{_('Built using')}}
                 {% for tag in tags_for_object(submission) %}
                     {% if tag.name.startswith('tech:') %}
-                        <a title="{{_('See more demos made with {tag_title}') | f(tag_title=tag_title(tag)) }}" href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a>{% if not loop.last %}, {% endif %}
+                        <a title="{{ _('See more demos made with %(tag_title)s', tag_title=tag_title(tag)) }}" href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a>{% if not loop.last %}, {% endif %}
                     {% endif %}
                 {% endfor %}
             </p>
@@ -222,7 +222,7 @@
 
           {% if more_by | length > 1 %}
           <div class="module" id="moreby">
-            <h3 class="mod-title">{{ _('More by {creator}')|fe(creator=submission_creator(submission)) }}</h3>
+            <h3 class="mod-title">{{ _('More by %(creator)s', creator=submission_creator(submission)) }}</h3>
             <ul class="gallery">
               {% for more_submission in more_by %}
                 {% if more_submission.id != submission.id %}

@@ -1,15 +1,15 @@
 {% extends "wiki/base.html" %}
 {% block extrahead %}
   {% if tag %}
-    <link rel="alternate" type="application/atom+xml" title="{{_('Documents for {tag} review') | f(tag=tag)}}"
+    <link rel="alternate" type="application/atom+xml" title="{{ _('Documents for %(tag)s review', tag=tag) }}"
       href="{{ url('wiki.feeds.list_review_tag', format='atom', tag=tag) }}" />
   {% else %}
-    <link rel="alternate" type="application/atom+xml" title="{{_('Documents for review')}}"
+    <link rel="alternate" type="application/atom+xml" title="{{ _('Documents for review') }}"
       href="{{ url('wiki.feeds.list_review', format='atom') }}" />
   {% endif %}
 {% endblock %}
 {% if tag %}
-  {% set title = _('Articles in Need of Review Tagged: {tag}')|f(tag=tag) %}
+  {% set title = _('Articles in Need of Review Tagged: %(tag)s', tag=tag) %}
 {% else %}
   {% set title = _('All Articles in Need of Review') %}
 {% endif %}
@@ -20,7 +20,7 @@
 
       <div id="document-list" class="boxed">
         <h1>{{ title }}</h1>
-        <p>{{ _('Found {count} documents.')|f(count=count) }}</p>
+        <p>{{ _('Found %(count)s documents.', count=count) }}</p>
         {% if documents.object_list %}
           {{ documents|paginator }}
           <ul class="document-list cols-3">

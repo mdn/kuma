@@ -10,9 +10,9 @@
 {% block bodyclass %}{% endblock %}
 {% block title %}
     {% if edit %}
-        {{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_("Edit {demo_title}") | f(demo_title=submission.title))) }}
+        {{ page_title(_('%(subtitle)s | Demo Studio', subtitle=_("Edit %(demo_title)s", demo_title=submission.title))) }}
     {% else %}
-        {{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Submit a New Demo'))) }}
+        {{ page_title(_('%(subtitle)s | Demo Studio', subtitle=_('Submit a New Demo'))) }}
     {% endif %}
 {% endblock %}
 
@@ -50,7 +50,7 @@
       <header>
         <h1>
           {% if edit %}
-              {{_("Edit {demo_title}") | f(demo_title=submission.title)}}
+              {{_("Edit %(demo_title)s", demo_title=submission.title)}}
           {% else %}
               {{_("Submit a New Demo")}}
           {% endif %}

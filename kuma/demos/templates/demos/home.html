@@ -133,7 +133,7 @@
 
     <div class="demo-landing-gallery">
     {{ submission_listing(request, submission_list,  is_paginated, paginator, page_obj,
-        _('Subscribe to a feed of {tag_title} demos') | f(tag_title=_('recent')),
+        _('Subscribe to a feed of %(tag_title)s demos', tag_title=_('recent')),
         url('demos_feed_recent', format='rss'), cols_per_row=4,
         pagination_base_url=url('demos_all') ) }}
     </div>

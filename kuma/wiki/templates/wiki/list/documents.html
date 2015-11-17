@@ -1,12 +1,12 @@
 {% extends "wiki/base.html" %}
-{% set counter = _('Found {count} documents.')|f(count=count) %}
+{% set counter = ngettext('Found %(num)s document.', 'Found %(num)s documents', count) %}
 {% if category %}
   {% set title = category %}
 {% elif tag %}
-  {% set title = _('Articles tagged: {tag}')|f(tag=tag) %}
+  {% set title = _('Articles tagged: %(tag)s', tag=tag) %}
 {% elif is_templates %}
   {% set title = _('All templates') %}
-  {% set counter = _('Found {count} templates.')|f(count=count) %}
+  {% set counter = ngettext('Found %(num)s template.', 'Found %(num)s templates', count) %}
 {% elif errors %}
   {% set title = _('Documents with errors') %}
 {% elif toplevel %}
@@ -32,7 +32,7 @@
       {% if (request.LANGUAGE_CODE != 'en-US'): %}
         {# TODO: Someday, en-US won't be special in l10n. #}
         <link rel="alternate" type="application/atom+xml"
-              title="{{_('Translation updates needed')}}"
+              title="{{ _('Translation updates needed') }}"
               href="{{ url('wiki.feeds.l10n_updates', format='atom') }}" />
       {% endif %}
   {% endif %}

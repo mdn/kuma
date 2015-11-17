@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% set title = _('Move Article | {document}')|f(document=document.title) %}
+{% set title = _('Move Article | %(document)s', document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 {% block bodyclass %}move-page{% endblock %}
@@ -13,7 +13,7 @@
 {% block content %}
 
       <div class="doc-title">
-        <h1>{{ _('<span class="title-prefix">Moving</span> <em>{title}</em>')|fe(title=document.title) }}</h1>
+        <h1>{{ _('<span class="title-prefix">Moving</span> <em>%(title)s</em>'|safe, title=document.title) }}</h1>
       </div>
 
       <div class="text-content">
@@ -36,7 +36,7 @@
         {% endfor %}
         </ul>
 
-        <p>{{ _('Please try a different destination slug. <strong>Double check to be sure you\'re trying to move to the right place!</strong>') }}</p>
+        <p>{{ _('Please try a different destination slug. <strong>Double check to be sure you\'re trying to move to the right place!</strong>'|safe) }}</p>
       </div>
       {% endif %}
 
@@ -89,12 +89,12 @@
         </ul>
 
         <ul id="page-buttons">
-          <li><button type="submit">{{ _('Move {count} Pages')|f(count=descendants_count) if descendants_count else _('Move Page') }}</button></li>
+          <li><button type="submit">{{ _('Move %(count)s Pages', count=descendants_count) if descendants_count else _('Move Page') }}</button></li>
           <li><a class="button negative" href="{{ url('wiki.document', document.slug, locale=document.locale) }}">{{ _('Cancel') }}</a></li>
         </ul>
 
         {% if descendants_count: %}
-          <p><strong>{{ _('The following {count} subpages will be affected by this move:')|f(count=descendants_count) }}</strong></p>
+          <p><strong>{{ _('The following %(count)s subpages will be affected by this move:', count=descendants_count) }}</strong></p>
           <div class="move-descendants"><ul class="document-list">
             {% for doc in descendants %}
               <li>{{ doc }}</li>
