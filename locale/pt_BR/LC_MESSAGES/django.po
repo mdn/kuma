@@ -1456,9 +1456,8 @@ msgid "W3C Spec"
 msgstr "Especificações da W3C"
 
 #: kuma/demos/__init__.py:230
-#, fuzzy
 msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
-msgstr "http://www.w3.org/TR/html5/video.html#audio"
+msgstr ""
 
 #: kuma/demos/__init__.py:234
 msgid ""
@@ -1478,9 +1477,8 @@ msgid "http://en.wikipedia.org/wiki/Canvas_element"
 msgstr "http://en.wikipedia.org/wiki/Canvas_element"
 
 #: kuma/demos/__init__.py:238
-#, fuzzy
 msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
-msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
+msgstr ""
 
 #: kuma/demos/__init__.py:241 kuma/landing/templates/landing/homepage.html:73
 msgid "CSS3"
@@ -1819,9 +1817,8 @@ msgid "http://en.wikipedia.org/wiki/HTML5_video"
 msgstr "http://en.wikipedia.org/wiki/HTML5_video"
 
 #: kuma/demos/__init__.py:348
-#, fuzzy
 msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
-msgstr "http://www.w3.org/TR/html5/video.html#audio"
+msgstr ""
 
 #: kuma/demos/__init__.py:352
 msgid ""
@@ -2120,12 +2117,10 @@ msgid "%(number)d %(type)s"
 msgstr "%(number)d %(type)s"
 
 #: kuma/demos/models.py:204
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
 msgstr ""
-"Por favor mantenha o tamanho do arquivo abaixo de %s. Tamanho do arquivo "
-"atual %s"
 
 #: kuma/demos/models.py:275
 msgid "Cannot process image"
@@ -3669,9 +3664,8 @@ msgid "Filter by"
 msgstr "Filtrar por"
 
 #: kuma/spam/forms.py:17
-#, fuzzy
 msgid "The submitted data contains invalid content."
-msgstr "Contém conteúdo impróprio"
+msgstr ""
 
 #: kuma/spam/forms.py:33
 msgid "The form data has not yet been validated. Please try again."
@@ -4149,14 +4143,12 @@ msgid "Bad Token"
 msgstr "Token errado"
 
 #: kuma/users/templates/account/password_reset_from_key.html:17
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
 msgstr ""
-"O link para redefinição da senha é inválido, provavelmente porque ele já foi"
-" usado. Por favor, solicite novamente a redefinição da senha."
 
 #: kuma/users/templates/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -5275,9 +5267,8 @@ msgstr "indexando {total} documentos em {n} segmentos de {size} em {index}."
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
-#, fuzzy
 msgid "Purge documents"
-msgstr "Documentos MDN"
+msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
@@ -5823,9 +5814,8 @@ msgid "This is a preview of an unsaved document."
 msgstr "Esta é uma pré-visualização de um documento não salvo."
 
 #: kuma/wiki/templates/wiki/revision.html:2
-#, fuzzy
 msgid "Revision {id} | {title} | {category}"
-msgstr "Revisão {n} | {t} | {c}"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/revision.html:10
 msgid "Revision"
@@ -5979,14 +5969,12 @@ msgid "Article History:"
 msgstr "Histórico do Artigo:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:40
-#, fuzzy
 msgid "You are subscribed to edits on: {title} and all its sub-articles."
-msgstr "Você já se subscreveu para a versão em {language} deste artigo."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:44
-#, fuzzy
 msgid "You are subscribed to edits on: {title}."
-msgstr "Você já está subscrito neste artigo."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/approvals.html:5
 msgid "The following reviews have been requested:"
@@ -6088,14 +6076,12 @@ msgid "Google+"
 msgstr "Google+"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr "Você já está subscrito neste artigo."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:124
-#, fuzzy
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr "Você já cancelou a subscrição deste artigo."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:135
 msgid "Updating subscription status"
@@ -6110,14 +6096,12 @@ msgid "Unsubscribe from {title}"
 msgstr "Cancelar subscrição para {title}"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:140
-#, fuzzy
 msgid "You are now subscribed to {title}."
-msgstr "Você já está subscrito neste artigo."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:140
-#, fuzzy
 msgid "You have been unsubscribed from {title}."
-msgstr "Você já cancelou a subscrição deste artigo."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:151
 #, fuzzy
@@ -6309,9 +6293,8 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/list/documents.html:2
 #: kuma/wiki/templates/wiki/list/needs_review.html:23
-#, fuzzy
 msgid "Found {count} documents."
-msgstr "Encontrados {0} documentos."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/list/documents.html:6
 msgid "Articles tagged: {tag}"
@@ -6322,9 +6305,8 @@ msgid "All templates"
 msgstr "Todos os modelos"
 
 #: kuma/wiki/templates/wiki/list/documents.html:9
-#, fuzzy
 msgid "Found {count} templates."
-msgstr "Encontrados {0} modelos."
+msgstr ""
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
 msgid "Documents with errors"
