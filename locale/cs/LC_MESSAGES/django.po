@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-12 15:00-0800\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2015-11-18 21:53+0000\n"
+"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
-msgstr ""
+msgstr "ID objektu"
 
 #: kuma/actioncounters/models.py:48
 msgid "name of the action"
@@ -48,11 +48,11 @@ msgstr ""
 #. {id} is the revision number, {title} is the title of the document.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
 msgid "Attachment {id} | {title}"
-msgstr ""
+msgstr "Příloha {id} | {title}"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:15
 msgid "Attachment Information"
-msgstr ""
+msgstr "Informace o příloze"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:19
 #: kuma/wiki/templates/wiki/revision.html:17
@@ -62,27 +62,27 @@ msgstr ""
 #: kuma/attachments/templates/attachments/attachment_detail.html:23
 #: kuma/wiki/templates/wiki/revision.html:21
 msgid "Revision title:"
-msgstr ""
+msgstr "Název revize:"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:27
 #: kuma/wiki/templates/wiki/revision.html:25
 msgid "Revision id:"
-msgstr ""
+msgstr "ID revize:"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:31
 #: kuma/wiki/templates/wiki/revision.html:29
 msgid "Created:"
-msgstr ""
+msgstr "Vytvořeno:"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:35
 #: kuma/wiki/templates/wiki/revision.html:33
 msgid "Creator:"
-msgstr ""
+msgstr "Autor:"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:39
 #: kuma/attachments/templates/attachments/attachment_detail.html:43
 msgid "MIME Type:"
-msgstr ""
+msgstr "Typ MIME:"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:44
 #: kuma/attachments/templates/attachments/includes/attachment_row.html:6
@@ -101,23 +101,23 @@ msgstr ""
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:60
 msgid "Attachment Preview"
-msgstr ""
+msgstr "Náhled přílohy"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:65
 msgid "No preview is available."
-msgstr ""
+msgstr "Náhled není k dispozici."
 
 #: kuma/attachments/templates/attachments/list_files.html:2
 msgid "All Files"
-msgstr ""
+msgstr "Všechny soubory"
 
 #: kuma/attachments/templates/attachments/list_files.html:23
 msgid "There are no files."
-msgstr ""
+msgstr "Nejsou zde žádné soubory."
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:12
 msgid "Attachments"
-msgstr ""
+msgstr "Přílohy"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:12
 msgid "Learn how to use Attachments"
@@ -126,7 +126,7 @@ msgstr ""
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:16
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:23
 msgid "Attach Files"
-msgstr ""
+msgstr "Připojit soubory"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:21
 msgid ""
@@ -137,17 +137,17 @@ msgstr ""
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:33
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:51
 msgid "File"
-msgstr ""
+msgstr "Soubor"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:34
 msgid "Size"
-msgstr ""
+msgstr "Velikost"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:35
 #: kuma/users/templates/users/user_detail.html:181
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:23
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:36
 msgid "Attached by"
@@ -156,18 +156,18 @@ msgstr ""
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:52
 #: kuma/users/models.py:65 kuma/wiki/models.py:1828
 msgid "Title"
-msgstr ""
+msgstr "Název"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:53
 #: kuma/authkeys/templates/authkeys/delete.html:9
 #: kuma/authkeys/templates/authkeys/history.html:10
 #: kuma/authkeys/templates/authkeys/new.html:36
 msgid "Description"
-msgstr ""
+msgstr "Popis"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:54
 msgid "Comments"
-msgstr ""
+msgstr "Komentáře"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:66
 msgid "Uploading"
@@ -189,13 +189,13 @@ msgstr ""
 #: kuma/authkeys/templates/authkeys/history.html:8
 #: kuma/authkeys/templates/authkeys/new.html:34
 msgid "Created"
-msgstr ""
+msgstr "Vytvořeno"
 
 #: kuma/authkeys/templates/authkeys/delete.html:15
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:15
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:38
 msgid "Delete"
-msgstr ""
+msgstr "Smazat"
 
 #: kuma/authkeys/templates/authkeys/delete.html:16
 #: kuma/authkeys/templates/authkeys/new.html:17
@@ -203,11 +203,11 @@ msgstr ""
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:40
 #: kuma/wiki/templates/wiki/move.html:93 templates/tidings/unsubscribe.html:13
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: kuma/authkeys/templates/authkeys/history.html:14
 msgid "This key has not been used yet."
-msgstr ""
+msgstr "Tento klíč zatím není použit."
 
 #: kuma/authkeys/templates/authkeys/list.html:8
 msgid ""
@@ -219,19 +219,19 @@ msgstr ""
 
 #: kuma/authkeys/templates/authkeys/list.html:14
 msgid "Create a new key"
-msgstr ""
+msgstr "Vytvořit nový klíč"
 
 #: kuma/authkeys/templates/authkeys/list.html:16
 msgid "You have no API keys, yet."
-msgstr ""
+msgstr "Nemáte žádné API klíče."
 
 #: kuma/authkeys/templates/authkeys/list.html:25
 msgid "View key usage history"
-msgstr ""
+msgstr "Zobrazit historii použití klíče"
 
 #: kuma/authkeys/templates/authkeys/list.html:26
 msgid "History ({count})"
-msgstr ""
+msgstr "Historie ({count})"
 
 #: kuma/authkeys/templates/authkeys/list.html:35
 #, python-format
@@ -249,7 +249,7 @@ msgstr ""
 
 #: kuma/authkeys/templates/authkeys/new.html:16
 msgid "Create"
-msgstr ""
+msgstr "Vytvořit"
 
 #: kuma/authkeys/templates/authkeys/new.html:20
 #, python-format
@@ -284,15 +284,15 @@ msgstr ""
 
 #: kuma/contentflagging/models.py:18
 msgid "The author is fake"
-msgstr ""
+msgstr "Autor je falešný"
 
 #: kuma/contentflagging/models.py:28
 msgid "Flagged"
-msgstr ""
+msgstr "Označeno"
 
 #: kuma/contentflagging/models.py:29
 msgid "Flag rejected by moderator"
-msgstr ""
+msgstr "Označení odmítnuto moderátorem"
 
 #: kuma/contentflagging/models.py:30
 msgid "Creator notified"
@@ -1144,15 +1144,15 @@ msgstr ""
 
 #: kuma/demos/__init__.py:199
 msgid "May 2013"
-msgstr ""
+msgstr "Květen 2013"
 
 #: kuma/demos/__init__.py:200
 msgid "May"
-msgstr ""
+msgstr "Květen"
 
 #: kuma/demos/__init__.py:201
 msgid "Action!"
-msgstr ""
+msgstr "Akce!"
 
 #: kuma/demos/__init__.py:202 kuma/demos/__init__.py:203
 msgid ""
@@ -1167,7 +1167,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:207
 msgid "WebGL II"
-msgstr ""
+msgstr "WebGL II"
 
 #: kuma/demos/__init__.py:208
 msgid "June 2013"
@@ -1199,7 +1199,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:219
 msgid "File found"
-msgstr ""
+msgstr "Soubor nalezen"
 
 #: kuma/demos/__init__.py:220 kuma/demos/__init__.py:221
 msgid ""
