@@ -2456,7 +2456,9 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'comment': 'This revision should NOT record IP'})
 
         self.client.post(reverse('wiki.edit', args=[doc.slug]),
-                         data)
+                         data,
+                         HTTP_USER_AGENT='Mozilla Firefox',
+                         HTTP_REFERER='http://localhost/')
         eq_(0, RevisionIP.objects.all().count())
 
         Switch.objects.create(name='store_revision_ips', active=True)
@@ -2465,11 +2467,13 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'comment': 'Store the IP address for the revision.'})
 
         self.client.post(reverse('wiki.edit', args=[doc.slug]),
-                         data)
+                         data,
+                         HTTP_USER_AGENT='Mozilla Firefox',
+                         HTTP_REFERER='http://localhost/')
         eq_(1, RevisionIP.objects.all().count())
         rev = doc.revisions.order_by('-id').all()[0]
         rev_ip = RevisionIP.objects.get(revision=rev)
-        eq_('127.0.0.1', rev_ip.ip)
+        eq_(rev_ip.ip, '127.0.0.1')
 
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_first_edits(self, get_current):

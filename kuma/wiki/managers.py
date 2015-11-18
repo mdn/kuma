@@ -224,7 +224,20 @@ class TaggedDocumentManager(models.Manager):
 
 
 class RevisionIPManager(models.Manager):
+
     def delete_old(self, days=30):
         cutoff_date = date.today() - timedelta(days=days)
         old_rev_ips = self.filter(revision__created__lte=cutoff_date)
         old_rev_ips.delete()
+
+    def log(self, revision, headers):
+        """
+        Records the IP and some more data for the given revision and the
+        request headers.
+        """
+        self.create(
+            revision=revision,
+            ip=headers.get('REMOTE_ADDR'),
+            user_agent=headers.get('HTTP_USER_AGENT', ''),
+            referrer=headers.get('HTTP_REFERER', ''),
+        )
