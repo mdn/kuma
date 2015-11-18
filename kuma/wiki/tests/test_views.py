@@ -2474,6 +2474,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev = doc.revisions.order_by('-id').all()[0]
         rev_ip = RevisionIP.objects.get(revision=rev)
         eq_(rev_ip.ip, '127.0.0.1')
+        eq_(rev_ip.user_agent, 'Mozilla Firefox')
+        eq_(rev_ip.referrer, 'http://localhost/')
 
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_first_edits(self, get_current):

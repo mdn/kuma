@@ -28,7 +28,7 @@ from kuma.core.exceptions import ProgrammingError
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
 from kuma.search.decorators import register_live_index
-from kuma.spam.models import SpamAttempt
+from kuma.spam.models import AkismetSubmission, SpamAttempt
 
 from . import kumascript
 from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
@@ -1743,12 +1743,72 @@ class Revision(models.Model):
 
 
 class RevisionIP(models.Model):
-    """IP Address for a Revision."""
-    revision = models.ForeignKey(Revision)
-    ip = models.CharField(max_length=40, editable=False, db_index=True,
-                          blank=True, null=True)
-
+    """
+    IP Address for a Revision including User-Agent string and Referrer URL.
+    """
+    revision = models.ForeignKey(
+        Revision
+    )
+    ip = models.CharField(
+        _('IP address'),
+        max_length=40,
+        editable=False,
+        db_index=True,
+        blank=True,
+        null=True,
+    )
+    user_agent = models.TextField(
+        _('User-Agent'),
+        editable=False,
+        blank=True,
+    )
+    referrer = models.TextField(
+        _('HTTP Referrer'),
+        editable=False,
+        blank=True,
+    )
     objects = RevisionIPManager()
+
+    def __unicode__(self):
+        return '%s (revision %d)' % (self.ip or 'No IP', self.revision.id)
+
+
+class RevisionAkismetSubmission(AkismetSubmission):
+    """
+    The Akismet submission per wiki document revision.
+
+    Stores only a reference to the submitted revision.
+    """
+    revision = models.ForeignKey(
+        Revision,
+        related_name='akismet_submissions',
+        null=True,
+        blank=True,
+        verbose_name=_('Revision'),
+        # don't delete the akismet submission but set the revision to null
+        on_delete=models.SET_NULL,
+    )
+
+    class Meta:
+        verbose_name = _('Akismet submission')
+        verbose_name_plural = _('Akismet submissions')
+
+    def __unicode__(self):
+        if self.revision:
+            return (
+                u'%(type)s submission by %(sender)s (Revision %(revision_id)d)' % {
+                    'type': self.get_type_display(),
+                    'sender': self.sender,
+                    'revision_id': self.revision.id,
+                }
+            )
+        else:
+            return (
+                u'%(type)s submission by %(sender)s (no revision)' % {
+                    'type': self.get_type_display(),
+                    'sender': self.sender,
+                }
+            )
 
 
 class EditorToolbar(models.Model):
@@ -1782,7 +1842,8 @@ class DocumentSpamAttempt(SpamAttempt):
         related_name='spam_attempts',
         null=True,
         blank=True,
-        verbose_name=ugettext('Document (optional)')
+        verbose_name=ugettext('Document (optional)'),
+        on_delete=models.SET_NULL,
     )
 
     def __unicode__(self):

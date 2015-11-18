@@ -1,12 +1,14 @@
+from jingo.helpers import urlparams
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from waffle.models import Switch
+from waffle.models import Flag, Switch
 
+from kuma.core.urlresolvers import reverse
+from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
 from kuma.users.tests import UserTestCase
 from kuma.users.models import User, UserBan
-from kuma.core.urlresolvers import reverse
 
 
 @attr('dashboards')
@@ -34,24 +36,22 @@ class RevisionsDashTest(UserTestCase):
         eq_(200, response.status_code)
 
     def test_revision_list(self):
-        url = reverse('dashboards.revisions',
-                      locale='en-US')
+        url = reverse('dashboards.revisions', locale='en-US')
         # We only get revisions when requesting via AJAX.
-        response = self.client.get(url,
-                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(response.status_code, 200)
 
         page = pq(response.content)
         revisions = page.find('.dashboard-row')
 
-        eq_(10, revisions.length)
+        eq_(revisions.length, 11)
 
         # Most recent revision first.
-        eq_(29, int(pq(revisions[0]).attr('data-revision-id')))
+        eq_(int(pq(revisions[0]).attr('data-revision-id')), 30)
         # Second-most-recent revision next.
-        eq_(28, int(pq(revisions[1]).attr('data-revision-id')))
+        eq_(int(pq(revisions[1]).attr('data-revision-id')), 29)
         # Oldest revision last.
-        eq_(19, int(pq(revisions[-1]).attr('data-revision-id')))
+        eq_(int(pq(revisions[-1]).attr('data-revision-id')), 19)
 
     def test_ip_link_on_switch(self):
         url = reverse('dashboards.revisions', locale='en-US')
@@ -72,8 +72,29 @@ class RevisionsDashTest(UserTestCase):
         ip_button = page.find('button#show_ips_btn')
         ok_(len(ip_button) > 0)
 
+    def test_spam_submission_buttons(self):
+        url = reverse('dashboards.revisions', locale='en-US')
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+
+        page = pq(response.content)
+        spam_table_cell = page.find('td.dashboard-spam')
+        eq_(spam_table_cell, [])
+
+        flag = Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG)
+        flag.users.add(User.objects.get(username='admin'))
+        self.client.login(username='admin', password='testpass')
+        url = reverse('dashboards.revisions', locale='en-US')
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+
+        page = pq(response.content)
+        ip_button = page.find('td.dashboard-spam')
+        ok_(len(ip_button) > 0)
+
     def test_locale_filter(self):
-        url = reverse('dashboards.revisions', locale='fr') + '?locale=fr'
+        url = urlparams(reverse('dashboards.revisions', locale='fr'),
+                        locale='fr')
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
 
@@ -86,8 +107,8 @@ class RevisionsDashTest(UserTestCase):
         ok_('fr' in pq(revisions[0]).find('.locale').html())
 
     def test_user_lookup(self):
-        url = reverse('dashboards.user_lookup',
-                      locale='en-US') + '?user=test'
+        url = urlparams(reverse('dashboards.user_lookup', locale='en-US'),
+                        user='test')
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
 
@@ -100,8 +121,8 @@ class RevisionsDashTest(UserTestCase):
             ok_('admin' not in author)
 
     def test_creator_filter(self):
-        url = reverse('dashboards.revisions',
-                      locale='en-US') + '?user=testuser01'
+        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                        user='testuser01')
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
 
@@ -116,8 +137,8 @@ class RevisionsDashTest(UserTestCase):
             ok_('testuser2' not in author)
 
     def test_topic_lookup(self):
-        url = reverse('dashboards.topic_lookup',
-                      locale='en-US') + '?topic=lorem'
+        url = urlparams(reverse('dashboards.topic_lookup', locale='en-US'),
+                        topic='lorem')
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
 
@@ -130,14 +151,14 @@ class RevisionsDashTest(UserTestCase):
             ok_('article' not in slug)
 
     def test_topic_filter(self):
-        url = reverse('dashboards.revisions',
-                      locale='en-US') + '?topic=article-with-revisions'
+        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                        topic='article-with-revisions')
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
+        eq_(response.status_code, 200)
 
         page = pq(response.content)
         revisions = page.find('.dashboard-row')
 
-        eq_(6, revisions.length)
+        eq_(revisions.length, 7)
         for revision in revisions:
             ok_('lorem' not in pq(revision).find('.dashboard-title').html())

@@ -1,9 +1,5 @@
 {{ revisions|paginator }}
 
-{% set show_ips = False %}
-{% if waffle.switch('store_revision_ips') and user.is_superuser %}
-    {% set show_ips = True %}
-{% endif %}
 {% if revisions.count %}
     <table class="dashboard-table" width="100%">
         <thead>
@@ -12,6 +8,9 @@
                 <th class="dashboard-title">Title</th>
                 <th class="dashboard-comment">Comment</th>
                 <th class="dashboard-author">Author{% if show_ips %} <button id="show_ips_btn">Toggle IPs</button>{% endif %}</th>
+                {% if show_spam_submission %}
+                <th class="dashboard-spam">Akismet</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -39,23 +38,58 @@
                         <a href="{{ revision_url }}">{{ revision.title }}</a>
                         <span class="dashboard-slug">{{ revision.document.slug }}</span>
                     </td>
-                    <td class="dashboard-comment">{{ format_comment(revision) }}</td>
-                    <td class="dashboard-author"><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a>
-                    {% if show_ips and revision.revisionip_set.all() %}
-                    {% set revision_ip = revision.revisionip_set.all()[0].ip %}
-                    <span class="revision_ip">
-                    <br/>IP: {{ revision_ip }}
-                    {% set ban_ip_url = '%s?%s' % (url('admin:core_ipban_add'), 'ip=%s' % revision_ip) %}
-                    <br/><a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a>
-                    </span>
-                    {% endif %}
-                    {% if request.user.is_superuser and revision.creator.active_ban %}
-                        <div class="banned">
-                            banned {{ datetimeformat(revision.creator.active_ban.date, format='date') }}
-                            by {{ revision.creator.active_ban.by }}
-                        </div>
-                    {% endif %}
+                    <td class="dashboard-comment">
+                        {{ format_comment(revision) }}
                     </td>
+                    <td class="dashboard-author">
+                        <a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a>
+                        {% set revision_ip = revision.revisionip_set.first() %}
+                        {% if show_ips and revision_ip %}
+                        <dl class="revision_ip compact">
+                            <dt>{{ _('IP:') }}</dt>
+                            <dd>{{ revision_ip.ip }}</dd>
+                            {% if revision_ip.user_agent %}
+                            <dt>{{ _('User agent:') }}</dt>
+                            <dd>{{ revision_ip.user_agent }}</dd>
+                            {% endif %}
+                            {% if revision_ip.referrer %}
+                            <dt>{{ _('Referrer:') }}</dt>
+                            <dd>{{ revision_ip.referrer }}</dd>
+                            {% endif %}
+                            {% set ban_ip_url = url('admin:core_ipban_add')|urlparams(ip=revision_ip.ip) %}
+                        </dl>
+                        <a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a>
+                        {% endif %}
+                        {% if request.user.is_superuser and revision.creator.active_ban %}
+                            <div class="banned">
+                            {{ _('banned %(ban_date)s by %(user)s',
+                                 ban_date=datetimeformat(revision.creator.active_ban.date, format='date'),
+                                 user=user_display(revision.creator.active_ban.by)) }}
+                            </div>
+                        {% endif %}
+                    </td>
+                    {% if show_spam_submission %}
+                    <td class="dashboard-spam">
+                        {% set submissions = revision.akismet_submissions.all() %}
+                        {% if submissions.count() > 0 %}
+                        <dl class="compact">
+                            <dt>{{ _('Sent as') }}</dt>
+                            {% for submission in submissions %}
+                            <dd>
+                                {{ _('%(submission_type)s at %(sent_date)s by %(user)s',
+                                     submission_type=submission.type,
+                                     sent_date=datetimeformat(submission.sent, format='datetime'),
+                                     user=user_display(submission.sender)) }}
+                            </dd>
+                            {% endfor %}
+                        </dl>
+                        {% endif %}
+                        {% set spam_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id, type='spam') %}
+                        {% set ham_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id, type='ham') %}
+                        {{ _('Submit as') }} <a class="button" href="{{ spam_submission_url }}" target="_blank">{{ _('spam') }}</a>
+                        <a class="button" href="{{ ham_submission_url }}" target="_blank">{{ _('ham') }}</a>
+                    </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

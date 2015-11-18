@@ -12,8 +12,10 @@ from kuma.core.decorators import login_required, permission_required
 from kuma.core.urlresolvers import reverse
 
 from .decorators import check_readonly
-from .models import (Document, DocumentZone, DocumentTag, DocumentSpamAttempt,
-                     Revision, RevisionIP, EditorToolbar)
+from .forms import RevisionAkismetSubmissionAdminForm
+from .models import (Document, DocumentSpamAttempt, DocumentTag, DocumentZone,
+                     EditorToolbar, Revision, RevisionAkismetSubmission,
+                     RevisionIP)
 
 
 def dump_selected_documents(self, request, queryset):
@@ -343,10 +345,64 @@ class RevisionIPAdmin(admin.ModelAdmin):
     list_display = ('revision', 'ip',)
 
 
+class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
+    form = RevisionAkismetSubmissionAdminForm
+    radio_fields = {'type': admin.VERTICAL}
+    raw_id_fields = ['revision']
+    list_display = ['id', 'sent', 'revision_with_link', 'type', 'sender']
+    list_display_links = ['id', 'sent']
+    list_filter = ['type', 'sent']
+    search_fields = ('sender__username', 'revision__id', 'revision__title')
+
+    def get_fields(self, request, obj=None):
+        if obj is None:
+            return ['type', 'revision']
+        else:
+            return super(RevisionAkismetSubmissionAdmin,
+                         self).get_fields(request, obj)
+
+    def revision_with_link(self, obj):
+        """Admin link to the revision"""
+        admin_link = reverse('admin:wiki_revision_change',
+                             args=[obj.revision.id])
+        return ('<a target="_blank" href="%s">%s</a>' %
+                (admin_link, obj.revision))
+    revision_with_link.allow_tags = True
+    revision_with_link.short_description = "Revision"
+
+    def get_readonly_fields(self, request, obj=None):
+        """
+        Hook for specifying custom readonly fields.
+        """
+        if obj:
+            return ['type', 'revision', 'sender', 'sent']
+        else:
+            return ['sender', 'sent']
+
+    def save_model(self, request, obj, form, change):
+        obj.sender = request.user
+        obj.save()
+
+    def get_form(self, request, obj=None, **kwargs):
+        AdminForm = super(RevisionAkismetSubmissionAdmin,
+                          self).get_form(request, obj=obj, **kwargs)
+
+        class AdminFormWithRequest(AdminForm):
+            """
+            A ad-hoc admin form that has access to the current request.
+
+            Sigh.
+            """
+            def __new__(cls, *args, **kwargs):
+                return AdminForm(request, *args, **kwargs)
+
+        return AdminFormWithRequest
+
 admin.site.register(Document, DocumentAdmin)
 admin.site.register(DocumentSpamAttempt, DocumentSpamAttemptAdmin)
 admin.site.register(DocumentTag, DocumentTagAdmin)
 admin.site.register(DocumentZone, DocumentZoneAdmin)
 admin.site.register(Revision, RevisionAdmin)
 admin.site.register(RevisionIP, RevisionIPAdmin)
+admin.site.register(RevisionAkismetSubmission, RevisionAkismetSubmissionAdmin)
 admin.site.register(EditorToolbar, admin.ModelAdmin)

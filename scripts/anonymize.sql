@@ -186,5 +186,12 @@ DELETE FROM demos_submission WHERE censored=1;
 UPDATE wiki_revisionip SET
     ip = CONCAT('192.168.', SUBSTRING_INDEX(ip, '.', -2))
     WHERE ip != "";
+UPDATE wiki_revisionip SET
+    user_agent = CONCAT('Mozilla 1.0 (', @common_hash_secret, ')')
+    WHERE user_agent != "";
+UPDATE wiki_revisionip SET
+    referrer = CONCAT("https://example.com/", MD5(CONCAT(referrer, @common_hash_secret)))
+    WHERE referrer != "";
+
 
 SET FOREIGN_KEY_CHECKS=1;

@@ -15,15 +15,16 @@ from taggit.utils import parse_tags
 import kuma.wiki.content
 from kuma.contentflagging.forms import ContentFlagForm
 from kuma.core.form_fields import StrippedCharField
-from kuma.spam.forms import AkismetFormMixin
+from kuma.spam.forms import AkismetCheckFormMixin, AkismetSubmissionFormMixin
 
 from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
-                        SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG)
+                        SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG,
+                        SPAM_SUBMISSION_REVISION_FIELDS)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
-                     RevisionIP, valid_slug_parent)
+                     RevisionIP, RevisionAkismetSubmission, valid_slug_parent)
 from .tasks import send_first_edit_email
 
 
@@ -138,20 +139,18 @@ class DocumentForm(forms.ModelForm):
         return doc
 
 
-class RevisionForm(AkismetFormMixin, forms.ModelForm):
+def author_from_user(user):
+    return user.fullname or user.get_full_name() or user.username
+
+
+def author_email_from_user(user):
+    return user.email
+
+
+class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     """
     Form to create new revisions.
     """
-    AKISMET_FIELDS = [
-        'title',
-        'slug',
-        'summary',
-        'content',
-        'comment',
-        'tags',
-        'keywords',
-    ]
-
     title = StrippedCharField(
         min_length=1,
         max_length=255,
@@ -458,29 +457,32 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
 
     def akismet_parameters(self):
         """
-        Gets the parent class' default parameters and adds a bunch of
-        wiki document/revision specific parameters like the actual
-        content to check.
+        Returns a dict of parameters to pass to Akismet's submission
+        API endpoints. Uses the given form and form parameters to
+        build the dict.
+
+        Must follow the data used for retrieving a dict of this data
+        for a model instance in
+        ``RevisionAkismetSubmissionAdminForm.akismet_parameters`` method!
         """
-        parameters = super(RevisionForm, self).akismet_parameters()
         language = self.cleaned_data.get('locale',
                                          settings.WIKI_DEFAULT_LANGUAGE)
-        user = self.request.user
-        author = user.fullname or user.get_full_name() or user.username
-        author_email = user.email
-        content = u'\n'.join([self.cleaned_data.get(field, '')
-                              for field in self.AKISMET_FIELDS])
 
-        parameters.update({
-            'comment_author': author,
-            'comment_author_email': author_email,
-            'comment_content': content,
-            'comment_type': 'wiki-revision',
+        content = u'\n'.join([self.cleaned_data.get(field, '')
+                              for field in SPAM_SUBMISSION_REVISION_FIELDS])
+
+        return {
             # 'en-US' -> 'en_us'
             'blog_lang': translation.to_locale(language).lower(),
             'blog_charset': 'UTF-8',
-        })
-        return parameters
+            'comment_author': author_from_user(self.request.user),
+            'comment_author_email': author_email_from_user(self.request.user),
+            'comment_content': content,
+            'comment_type': 'wiki-revision',
+            'user_ip': self.request.META.get('REMOTE_ADDR', ''),
+            'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),
+            'referrer': self.request.META.get('HTTP_REFERER', ''),
+        }
 
     def save(self, document, **kwargs):
         """
@@ -536,6 +538,71 @@ class RevisionForm(AkismetFormMixin, forms.ModelForm):
             EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
 
         return new_rev
+
+
+class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
+                                         forms.ModelForm):
+    """
+    A model form used for rendering the ``AkismetSubmission`` admin UI
+    that is linked from the revision dashboard. It utilizes the same
+    base form class to do the data validation and sending it to Akismet
+    using the Akismet client.
+    """
+    class Meta(object):
+        model = RevisionAkismetSubmission
+        exclude = ['sender', 'sent']
+
+    def clean_sender(self):
+        return self.request.user
+
+    def akismet_submission_type(self):
+        """
+        Looking at the ``type`` attribute of the ``RevisionAkismetSubmission``
+        instance.
+        """
+        return self.cleaned_data['type']
+
+    def akismet_parameters(self):
+        """
+        Returns a dict of parameters to pass to Akismet's submission
+        API endpoints.
+
+        Must follow the data used for retrieving a dict of this data
+        for a model instance in the ``RevisionForm.akismet_parameters``
+        method!
+        """
+        revision = self.cleaned_data['revision']
+
+        language = revision.document.locale or settings.WIKI_DEFAULT_LANGUAGE
+
+        content = u'\n'.join([getattr(revision, field, None) or ''
+                              for field in SPAM_SUBMISSION_REVISION_FIELDS])
+
+        parameters = {
+            # 'en-US' -> 'en_us'
+            'blog_lang': translation.to_locale(language).lower(),
+            'blog_charset': 'UTF-8',
+            'comment_author': author_from_user(revision.creator),
+            'comment_author_email': author_email_from_user(revision.creator),
+            'comment_content': content,
+            'comment_type': 'wiki-revision',
+        }
+
+        # get the stored revision IP if there is still one logged away
+        revision_ip = revision.revisionip_set.first()
+        if revision_ip is None:
+            parameters.update({
+                'user_ip': '0.0.0.0',
+                'user_agent': '',
+                'referrer': '',
+            })
+        else:
+            parameters.update({
+                'user_ip': revision_ip.ip,
+                'user_agent': revision_ip.user_agent,
+                'referrer': revision_ip.referrer,
+            })
+        return parameters
 
 
 class TreeMoveForm(forms.Form):
