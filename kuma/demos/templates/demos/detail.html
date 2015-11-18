@@ -162,8 +162,8 @@
             <ul class="stats">
                 {% set launches = submission.launches.total %}
                 {% set likes = submission.likes.total %}
-                <li class="views" title="{{ ngettext('This demo has been viewed {count} time', 'This demo has been viewed {count} times', launches) | f(count=launches) }}">{{ngettext('{count} view', '{count} views', launches) | f(count=launches) }}</li>
-                <li class="likes" title="{{ ngettext('{count} person liked this demo', '{count} people liked this demo', likes) | f(count=likes) }}">{{ngettext('{count} like', '{count} likes', likes) | f(count=likes) }}</li>
+                <li class="views" title="{{ ngettext('This demo has been viewed %(num)s time', 'This demo has been viewed %(num)s times', launches) }}">{{ ngettext('%(num)s view', '%(num)s views', launches) }}</li>
+                <li class="likes" title="{{ ngettext('%(num)s person liked this demo', '%(num)s people liked this demo', likes) }}">{{ ngettext('%(num)s like', '%(num)s likes', likes) }}</li>
             </ul>
           </div>
       </div>
