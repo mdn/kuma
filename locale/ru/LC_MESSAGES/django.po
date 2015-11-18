@@ -3,16 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-07 14:00+0000\n"
-"Last-Translator: Vladimir <waldemar.yan@gmail.com>\n"
+"PO-Revision-Date: 2015-11-18 20:13+0000\n"
+"Last-Translator: bychek.ru <a@bychek.ru>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1446904805.0\n"
+"X-POOTLE-MTIME: 1447877614.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -45,13 +46,12 @@ msgstr "Указанный файл недействителен. Файл до�
 
 #. {id} is the revision number, {title} is the title of the document.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
-#, fuzzy
 msgid "Attachment {id} | {title}"
-msgstr "Прикрепление {n} | {t}"
+msgstr "Вложение {id} | {title}"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:15
 msgid "Attachment Information"
-msgstr "Информация о прикреплении"
+msgstr "Информация о вложении"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:19 kuma/wiki/templates/wiki/revision.html:17
 msgid "Revision slug:"
@@ -286,43 +286,49 @@ msgstr "{object} помечен Флагом"
 
 #: kuma/contentflagging/models.py:98
 msgid "current status of flag review"
-msgstr "Текущее состояние рассмотрения пометки флагом"
+msgstr "текущее состояние рассмотрения флага"
 
 #: kuma/contentflagging/models.py:101
 msgid "reason for flagging the content"
-msgstr "Причина пометки флагом содержимого"
+msgstr "причина пометки флагом содержимого"
 
 #: kuma/contentflagging/models.py:104
 msgid "please explain what content you feel is inappropriate"
-msgstr "Пожалуйста, объясните, какое содержание вы считаете неуместным"
+msgstr "пожалуйста, объясните, какое содержание вы считаете неуместным"
 
 #: kuma/contentflagging/models.py:126
 msgid "date submitted"
-msgstr "Дата отправки"
+msgstr "дата отправки"
 
 #. This is an email. Whitespace matters!
 #: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:2
 #, python-format
 msgid "%(object)s has been flagged %(flag_type)s"
-msgstr ""
+msgstr "%(object)s был отмечен как %(flag_type)s"
 
 #: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:6
 msgid "To change the status of this flag, click the following link, or paste it into your browser's location bar:"
 msgstr ""
+"Чтобы изменить этот флаг, кликните на следующую ссылку или вставьте её в "
+"адресную строку:"
 
 #: kuma/core/apps.py:16
 msgid "Core"
-msgstr ""
+msgstr "Ядро"
 
 #: kuma/core/form_fields.py:57
-#, fuzzy, python-format
+#, python-format
 msgid "Ensure this value has at least %(limit_value)s characters (it has %(show_value)s)."
-msgstr "Пожалуйста, урежьте длину названия до %(limit_value)s символов или менее. На текущий момент оно содержит %(show_value)s символов."
+msgstr ""
+"Убедитесь, что длина этого значения не менее %(limit_value)s символов (оно "
+"содержит %(show_value)s)."
 
 #: kuma/core/form_fields.py:62
-#, fuzzy, python-format
+#, python-format
 msgid "Ensure this value has at most %(limit_value)s characters (it has %(show_value)s)."
-msgstr "Пожалуйста, урежьте длину названия до %(limit_value)s символов или менее. На текущий момент оно содержит %(show_value)s символов."
+msgstr ""
+"Убедитесь, что длина этого значения не более %(limit_value)s символов (оно "
+"содержит %(show_value)s)."
 
 #: kuma/core/helpers.py:108 kuma/demos/helpers.py:305
 #, python-format
@@ -382,17 +388,16 @@ msgstr[2] "%(number)d секунд назад"
 
 #: kuma/core/helpers.py:143
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: kuma/core/helpers.py:143
-#, fuzzy
 msgid "No"
-msgstr "Отсутствует"
+msgstr "Нет"
 
 #: kuma/core/helpers.py:297
 #, python-format
 msgid "Today at %s"
-msgstr ""
+msgstr "Сегодня в %s"
 
 #: kuma/core/sections.py:6 kuma/landing/templates/landing/homepage.html:85 templates/base.html:155
 msgid "Add-ons"
@@ -432,9 +437,8 @@ msgid "APIs and DOM"
 msgstr "API и DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
-#, fuzzy
 msgid "Open Web Apps"
-msgstr "Создавайте<br />Веб-приложения"
+msgstr "Создавайте веб-приложения"
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
@@ -442,7 +446,7 @@ msgstr "Я новичок"
 
 #: kuma/core/translations/search/filter/canvas/name.py:4 kuma/demos/__init__.py:72 kuma/demos/__init__.py:233
 msgid "Canvas"
-msgstr "Ноябрь 2011 Dev Derby Challenge - Canvas"
+msgstr "Canvas"
 
 #: kuma/core/translations/search/filter/code/name.py:4
 msgid "Code Samples"
@@ -520,9 +524,8 @@ msgid "XUL"
 msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
-#, fuzzy
 msgid "Document type"
-msgstr "Статья"
+msgstr "Тип документа"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
 msgid "Skill level"
@@ -533,9 +536,8 @@ msgid "Topics"
 msgstr "Темы"
 
 #: kuma/dashboards/forms.py:8
-#, fuzzy
 msgid "All Locales"
-msgstr "Все файлы"
+msgstr "Все локализации"
 
 #: kuma/dashboards/forms.py:10 kuma/demos/__init__.py:33
 msgid "None"
@@ -543,53 +545,47 @@ msgstr "Отсутствует"
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
-msgstr ""
+msgstr "Час"
 
 #: kuma/dashboards/forms.py:12
-#, fuzzy
 msgid "Day"
-msgstr "Май"
+msgstr "День"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "Неделя"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30 дней"
 
 #: kuma/dashboards/forms.py:24 kuma/dashboards/templates/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "Локализация:"
 
 #: kuma/dashboards/forms.py:28 kuma/dashboards/templates/dashboards/revisions.html:19
-#, fuzzy
 msgid "User:"
-msgstr "Пользователь"
+msgstr "Пользователь:"
 
 #: kuma/dashboards/forms.py:32 kuma/dashboards/templates/dashboards/revisions.html:24
-#, fuzzy
 msgid "Topic:"
-msgstr "Темы"
+msgstr "Тема:"
 
 #: kuma/dashboards/forms.py:34 kuma/dashboards/templates/dashboards/revisions.html:30
-#, fuzzy
 msgid "Start Date:"
-msgstr "Дата начала"
+msgstr "Дата начала:"
 
 #: kuma/dashboards/forms.py:38 kuma/dashboards/templates/dashboards/revisions.html:35
-#, fuzzy
 msgid "End Date:"
-msgstr "Дата окончания"
+msgstr "Дата окончания:"
 
 #: kuma/dashboards/forms.py:44 kuma/dashboards/templates/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "Предшествующий период:"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:2
-#, fuzzy
 msgid "Revision Dashboard"
-msgstr "Источник версии:"
+msgstr "Панель ревизий"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:44 kuma/search/templates/search/results.html:210
 msgid "Filter"
@@ -614,44 +610,43 @@ msgstr "История"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:35
 msgid "new"
-msgstr ""
+msgstr "новый"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:36
-#, fuzzy
 msgid "deleted"
-msgstr "Удалить"
+msgstr "удалено"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Заблокировать IP от правок"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
 msgid "There are no revisions matching this filter set."
-msgstr ""
+msgstr "Нет ревизий, подходящих этому фильтру."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:8 kuma/dashboards/templates/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "Перестать получать сообщения, когда правят английскую версию"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:20 kuma/dashboards/templates/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "Получать сообщения, когда правят английскую версию"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:7 kuma/dashboards/templates/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr ""
+msgstr "Перестать получать почту, когда английская версия ждёт пересмотр"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:18 kuma/dashboards/templates/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr ""
+msgstr "Получать почту, когда английская версия ждёт пересмотр"
 
 #: kuma/demos/__init__.py:34
 msgid "Removed from Derby"
@@ -732,8 +727,9 @@ msgstr "Сентябрь 2011"
 #: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61 kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
 msgid "With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."
 msgstr ""
-"С помощью Geolocation Вы можете узнать физическое местоположение пользователя (с его разрешения) и использовать его для более приятного серфинга или для активации дополнительных локализационных "
-"функций. "
+"С помощью Geolocation Вы можете узнать физическое местоположение "
+"пользователя (с его разрешения) и использовать его для более приятного "
+"серфинга или для активации дополнительных локализационных функций."
 
 #: kuma/demos/__init__.py:64
 msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
@@ -846,6 +842,8 @@ msgstr "Апрель 2012"
 #: kuma/demos/__init__.py:109 kuma/demos/__init__.py:110
 msgid "The HTML5 audio element lets you embed sound in webpages without requiring your users to rely on plug-ins."
 msgstr ""
+"HTML5 аудио элемент позволяет вам вставлять звук в веб-страницы, не требуя "
+"от ваших пользователей использовать плагины."
 
 #: kuma/demos/__init__.py:113
 msgid "May 2012 Dev Derby Challenge - WebSockets API"
@@ -862,6 +860,9 @@ msgstr "Май 2012"
 #: kuma/demos/__init__.py:116 kuma/demos/__init__.py:117
 msgid "With the Websocket API and protocol, you can open a two-way channel between the browser and a server, for scalable and real-time data flow. No more server polling!"
 msgstr ""
+"C Websocket API и протоколом, вы можете открыть двухсторонний канал между "
+"браузером и сервером, для масштабируемого потока данных в реальном времени. "
+"Не мучайте больше сервер!"
 
 #: kuma/demos/__init__.py:120
 msgid "June 2012 Dev Derby Challenge - WebGL"
@@ -874,6 +875,8 @@ msgstr "Июнь 2012"
 #: kuma/demos/__init__.py:123 kuma/demos/__init__.py:124 kuma/demos/__init__.py:211 kuma/demos/__init__.py:212
 msgid "WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."
 msgstr ""
+"WebGL привносит в веб мощь OpenGL для создания интерактивной 3D графики, без "
+"необходимости использования плагинов."
 
 #: kuma/demos/__init__.py:127
 msgid "July 2012 Dev Derby Challenge - No JavaScript"
@@ -961,7 +964,7 @@ msgstr "Декабрь 2012 Dev Derby Challenge - Offline"
 
 #: kuma/demos/__init__.py:163
 msgid "Offline"
-msgstr ""
+msgstr "Оффлайн"
 
 #: kuma/demos/__init__.py:164
 msgid "December 2012"
@@ -1137,9 +1140,8 @@ msgid "W3C Spec"
 msgstr "Спецификация W3C"
 
 #: kuma/demos/__init__.py:230
-#, fuzzy
 msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
-msgstr "http://www.w3.org/TR/html5/video.html#audio"
+msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
 
 #: kuma/demos/__init__.py:234
 msgid "The HTML5 canvas element allows you to display scriptable renderings of 2D shapes and bitmap images."
@@ -1154,9 +1156,8 @@ msgid "http://en.wikipedia.org/wiki/Canvas_element"
 msgstr "https://ru.wikipedia.org/wiki/Canvas_(HTML)"
 
 #: kuma/demos/__init__.py:238
-#, fuzzy
 msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
-msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
+msgstr "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
 
 #: kuma/demos/__init__.py:241 kuma/landing/templates/landing/homepage.html:73
 msgid "CSS3"
@@ -1254,6 +1255,8 @@ msgstr "http://www.w3.org/TR/html5/forms.html"
 #: kuma/demos/__init__.py:280
 msgid "The Geolocation API allows web applications to access the user's geographical location."
 msgstr ""
+"Geolocation API предоставляет веб-приложению доступ к географическому "
+"положению пользователя"
 
 #: kuma/demos/__init__.py:282
 msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
@@ -1294,6 +1297,7 @@ msgstr "HTML5"
 #: kuma/demos/__init__.py:296
 msgid "HTML5 is the newest version of the HTML standard, currently under development."
 msgstr ""
+"HTML5 - новейшая версия HTML стандарта, находящаяся сейчас в разработке."
 
 #: kuma/demos/__init__.py:298
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
@@ -1357,7 +1361,7 @@ msgstr "http://www.w3.org/Mobile/"
 
 #: kuma/demos/__init__.py:327
 msgid "Offline Support"
-msgstr ""
+msgstr "Оффлайн поддержка"
 
 #: kuma/demos/__init__.py:328
 msgid "Offline caching of web applications' resources using the application cache and local storage."
@@ -1408,9 +1412,8 @@ msgid "http://en.wikipedia.org/wiki/HTML5_video"
 msgstr "http://ru.wikipedia.org/wiki/HTML5_video"
 
 #: kuma/demos/__init__.py:348
-#, fuzzy
 msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
-msgstr "http://www.w3.org/TR/html5/video.html#audio"
+msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
 
 #: kuma/demos/__init__.py:352
 msgid "In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."
@@ -1547,7 +1550,7 @@ msgstr "http://creativecommons.org/publicdomain/zero/1.0/deed.ru"
 #: kuma/demos/admin.py:38
 #, python-format
 msgid "Censored %(item)s"
-msgstr ""
+msgstr "Подвергнуто цензуре %(item)s"
 
 #: kuma/demos/admin.py:43
 #, fuzzy, python-format
@@ -1571,11 +1574,11 @@ msgstr "Успешно удалено %(count)d %(items)s."
 #: kuma/demos/admin.py:123
 #, python-format
 msgid "Cannot delete %(name)s"
-msgstr ""
+msgstr "Не удается удалить %(name)s"
 
 #: kuma/demos/embed.py:128
 msgid "Not an URL from a supported video service"
-msgstr ""
+msgstr "URL видео сервиса не поддерживается"
 
 #: kuma/demos/feeds.py:90
 msgid "MDN demos"
@@ -1583,48 +1586,48 @@ msgstr "Демо MDN"
 
 #: kuma/demos/feeds.py:91
 msgid "Demos submitted by MDN users"
-msgstr ""
+msgstr "Демо опубликованы пользователями MDN"
 
 #: kuma/demos/feeds.py:157
 msgid "MDN recent demos"
-msgstr ""
+msgstr "MDN недавние демо"
 
 #: kuma/demos/feeds.py:158
 msgid "Demos recently submitted to MDN"
-msgstr ""
+msgstr "Недавно опубликованные демо на MDN"
 
 #: kuma/demos/feeds.py:167
 msgid "MDN featured demos"
-msgstr ""
+msgstr "Популярные демо MDN"
 
 #: kuma/demos/feeds.py:168
 msgid "Demos featured on MDN"
-msgstr ""
+msgstr "Популярные демо на MDN"
 
 #: kuma/demos/feeds.py:183
 #, python-format
 msgid "MDN demos tagged %s"
-msgstr ""
+msgstr "MDN демо с тегом %s"
 
 #: kuma/demos/feeds.py:186
 #, python-format
 msgid "MDN demos tagged \"%s\""
-msgstr ""
+msgstr "MDN демо с тегом \"%s\""
 
 #: kuma/demos/feeds.py:202
 #, python-format
 msgid "%s's MDN demos"
-msgstr ""
+msgstr "%s MDN демо"
 
 #: kuma/demos/feeds.py:216
 #, python-format
 msgid "MDN demo search for \"%s\""
-msgstr ""
+msgstr "MDN поиск по демо для \"%s\""
 
 #: kuma/demos/feeds.py:217
 #, python-format
 msgid "Search results for demo submissions matching \"%s\""
-msgstr ""
+msgstr "Результаты поиска для демо, соответствующих \"%s\""
 
 #: kuma/demos/helpers.py:107
 msgid "First Place"
@@ -1640,7 +1643,7 @@ msgstr "Третье место"
 
 #: kuma/demos/helpers.py:110
 msgid "Finalist"
-msgstr ""
+msgstr "Финалист"
 
 #: kuma/demos/helpers.py:111
 msgid "Featured"
@@ -1683,18 +1686,20 @@ msgstr "%(number)d %(type)s"
 #, python-format
 msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
 msgstr ""
+"Пожалуйста, уменьшите размер файла до %(max_size)s. Текущий размер %"
+"(file_size)s"
 
 #: kuma/demos/models.py:275
 msgid "Cannot process image"
-msgstr ""
+msgstr "Не удается обработать картинку"
 
 #: kuma/demos/models.py:362
 msgid "what is your demo's name?"
-msgstr ""
+msgstr "какое имя вашего демо?"
 
 #: kuma/demos/models.py:365
 msgid "slug"
-msgstr ""
+msgstr "url"
 
 #: kuma/demos/models.py:368
 msgid "describe your demo in one line"
@@ -1710,11 +1715,11 @@ msgstr "Скрыть это демо от других?"
 
 #: kuma/demos/models.py:379
 msgid "Redirect URL for censorship."
-msgstr ""
+msgstr "Перенаправление URL для цензуры."
 
 #: kuma/demos/models.py:383
 msgid "control how your demo is launched"
-msgstr ""
+msgstr "контролируйте, как запускается ваше демо"
 
 #: kuma/demos/models.py:385
 msgid "Disable navigation bar, launch demo in a new window"
@@ -1766,25 +1771,25 @@ msgstr "дата создания"
 
 #: kuma/demos/models.py:647 kuma/demos/models.py:654
 msgid "ZIP file contains no acceptable files"
-msgstr ""
+msgstr "ZIP файл содержит недопустимые файлы"
 
 #: kuma/demos/models.py:650
 msgid "ZIP file corrupted"
-msgstr ""
+msgstr "ZIP архив повреждён"
 
 #: kuma/demos/models.py:669
 #, python-format
 msgid "ZIP file contains a file that is too large: %(filename)s"
-msgstr ""
+msgstr "ZIP файл содержит очень большой файл: %(filename)s"
 
 #: kuma/demos/models.py:684
 #, python-format
 msgid "ZIP file contains an unacceptable file: %(filename)s"
-msgstr ""
+msgstr "ZIP файл содержит недопустимый файл: %(filename)s"
 
 #: kuma/demos/models.py:688
 msgid "HTML index not found in ZIP"
-msgstr ""
+msgstr "Главный HTML файл не найден в ZIP"
 
 #: kuma/demos/views.py:73 kuma/demos/views.py:300 kuma/demos/views.py:328 kuma/demos/views.py:343
 msgid "access denied"
@@ -1793,30 +1798,32 @@ msgstr "в доступе отказано"
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:6 kuma/demos/templates/demos/devderby_tag.html:21 kuma/wiki/templates/admin/wiki/purge_documents.html:22
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
-msgstr ""
+msgstr "Главная"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:9
 msgid "Censor multiple objects"
-msgstr ""
+msgstr "Несколько объектов цензуры"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:14
 #, python-format
 msgid "Are you sure you want to censor the selected %(object_name)s objects? This cannot be reversed."
 msgstr ""
+"Вы уверены, что хотите подвергнуть цензуре выбранные %(object_name)s "
+"объекты? Это не может быть отменено."
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:23
 msgid "Explanation URL (optional):"
-msgstr ""
+msgstr "URL объяснения (не обязательно):"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "Да, я уверен(а)"
 
 #: kuma/demos/templates/demos/delete.html:10 kuma/demos/templates/demos/detail.html:9 kuma/demos/templates/demos/devderby_tag.html:5 kuma/demos/templates/demos/flag.html:10
 #: kuma/demos/templates/demos/launch.html:6 kuma/demos/templates/demos/listing_all.html:4 kuma/demos/templates/demos/listing_search.html:9 kuma/demos/templates/demos/listing_tag.html:4
 #: kuma/demos/templates/demos/submit.html:13 kuma/demos/templates/demos/submit.html:15 kuma/demos/templates/demos/submit_noauth.html:11 kuma/demos/templates/demos/terms.html:10
 msgid "{subtitle} | Demo Studio"
-msgstr ""
+msgstr "{subtitle} | Демо Cтудия"
 
 #: kuma/demos/templates/demos/delete.html:20
 msgid "MDN"
@@ -1833,7 +1840,7 @@ msgstr "Отправить демо"
 
 #: kuma/demos/templates/demos/delete.html:38
 msgid "Remove this demo?"
-msgstr ""
+msgstr "Удалить это демо?"
 
 #: kuma/demos/templates/demos/delete.html:40
 #, python-format
@@ -1841,10 +1848,14 @@ msgid ""
 "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 "<strong>cannot be undone</strong>."
 msgstr ""
+"<p>Вы собираетесь удалите <strong>%(demo_title)s</strong> из Демо "
+"Студии.</p> <p>Листинг демо, исходный код и статистика будут "
+"<strong>удалены</strong>.</p> <p>Это действие <strong>не может быть "
+"отменено</strong>."
 
 #: kuma/demos/templates/demos/delete.html:49
 msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
-msgstr ""
+msgstr "<button type=\"submit\" class=\"remove\"><span>Удалить демо</span></button>"
 
 #: kuma/demos/templates/demos/detail.html:30 kuma/demos/templates/demos/devderby_landing.html:22 kuma/demos/templates/demos/devderby_tag.html:32 kuma/demos/templates/demos/home.html:21
 #: kuma/demos/templates/demos/submit.html:45 kuma/demos/templates/demos/submit_noauth.html:20 kuma/demos/templates/demos/elements/demos_head.html:2
@@ -1864,15 +1875,15 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:51 kuma/demos/templates/demos/launch.html:80
 msgid "Go to the previous demo, {demo_title}"
-msgstr ""
+msgstr "Перейти к предыдущему демо, {demo_title}"
 
 #: kuma/demos/templates/demos/detail.html:51
 msgid "Prev"
-msgstr ""
+msgstr "Пред."
 
 #: kuma/demos/templates/demos/detail.html:55 kuma/demos/templates/demos/launch.html:84
 msgid "Go to the next demo, {demo_title}"
-msgstr ""
+msgstr "Перейти к следующему демо, {demo_title}"
 
 #: kuma/demos/templates/demos/detail.html:55 kuma/demos/templates/demos/detail.html:69 kuma/demos/templates/demos/home.html:47 kuma/demos/templates/demos/launch.html:84
 #: kuma/demos/templates/demos/elements/submission_listing.html:64 kuma/search/templates/search/results.html:159 templates/includes/paginator.html:30
@@ -1881,7 +1892,7 @@ msgstr "Далее"
 
 #: kuma/demos/templates/demos/detail.html:68
 msgid "See the previous image"
-msgstr ""
+msgstr "Посмотреть предыдущее изображение"
 
 #: kuma/demos/templates/demos/detail.html:68 kuma/demos/templates/demos/home.html:46 kuma/demos/templates/demos/launch.html:80 kuma/demos/templates/demos/elements/submission_listing.html:61
 #: kuma/search/templates/search/results.html:154 kuma/wiki/templates/wiki/list/revisions.html:56 templates/includes/paginator.html:6
@@ -1890,12 +1901,12 @@ msgstr "Назад"
 
 #: kuma/demos/templates/demos/detail.html:69
 msgid "See the next image"
-msgstr ""
+msgstr "Посмотреть следующее изображение"
 
 #: kuma/demos/templates/demos/detail.html:102
 #, python-format
 msgid "By %(creator_link)s on %(create_date)s"
-msgstr ""
+msgstr "%(creator_link)s %(create_date)s"
 
 #: kuma/demos/templates/demos/detail.html:117
 msgid "Launch Demo"
@@ -1903,15 +1914,15 @@ msgstr "Запустить демо"
 
 #: kuma/demos/templates/demos/detail.html:124 kuma/demos/templates/demos/launch.html:46
 msgid "You like this demo. Undo?"
-msgstr ""
+msgstr "Вам нравится это демо. Передумали?"
 
 #: kuma/demos/templates/demos/detail.html:124 kuma/demos/templates/demos/launch.html:46
 msgid "You Like"
-msgstr ""
+msgstr "Вам нравится"
 
 #: kuma/demos/templates/demos/detail.html:130 kuma/demos/templates/demos/launch.html:52
 msgid "Do you like this demo?"
-msgstr ""
+msgstr "Вам нравится это демо?"
 
 #: kuma/demos/templates/demos/detail.html:130 kuma/demos/templates/demos/launch.html:52
 msgid "Like It"
@@ -1919,11 +1930,11 @@ msgstr "Лайкнуть его"
 
 #: kuma/demos/templates/demos/detail.html:135 kuma/demos/templates/demos/launch.html:56
 msgid "Share this demo with your social network"
-msgstr ""
+msgstr "Поделитесь этим демо в вашей социальной сети"
 
 #: kuma/demos/templates/demos/detail.html:135 kuma/demos/templates/demos/detail.html:137 kuma/demos/templates/demos/launch.html:56
 msgid "Share It"
-msgstr ""
+msgstr "Поделиться этим"
 
 #: kuma/demos/templates/demos/detail.html:138 kuma/demos/templates/demos/launch.html:58
 msgid "Share on Twitter"
@@ -1939,14 +1950,14 @@ msgstr "Создано при помощи"
 
 #: kuma/demos/templates/demos/detail.html:156
 msgid "See more demos made with {tag_title}"
-msgstr ""
+msgstr "Посмотреть больше демо с {tag_title}"
 
 #: kuma/demos/templates/demos/detail.html:165 kuma/demos/templates/demos/elements/submission_thumb.html:15
 msgid "This demo has been viewed {count} time"
 msgid_plural "This demo has been viewed {count} times"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Это демо было просмотрено {count} раз"
+msgstr[1] "Это демо было просмотрено {count} раза"
+msgstr[2] "Это демо было просмотрено {count} раз"
 
 #: kuma/demos/templates/demos/detail.html:165
 msgid "{count} view"
@@ -1987,17 +1998,17 @@ msgstr "Скрыть демо"
 
 #: kuma/demos/templates/demos/detail.html:196
 msgid "More About This Demo From The Author"
-msgstr ""
+msgstr "Больше об этом демо от автора"
 
 #: kuma/demos/templates/demos/detail.html:207
-#, fuzzy
 msgid "About this Demo"
-msgstr "Обо мне"
+msgstr "Об этом демо"
 
 #: kuma/demos/templates/demos/detail.html:209
 #, python-format
 msgid "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP File</span>"
 msgstr ""
+"Скачать исходник <span class=\"note\">%(file_ksize)s КБ &middot; ZIP</span>"
 
 #: kuma/demos/templates/demos/detail.html:217
 #, python-format
@@ -2601,10 +2612,13 @@ msgstr "Помогите нам улучшить MDN"
 #: kuma/landing/templates/landing/homepage.html:158
 msgid "All parts of MDN (docs, demos, and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
+"Все части MDN (документация, демо и сам сайт) созданы открытым сообществом "
+"разработчиков. Пожалуйста, присоединяйтесь! Выберите один из этих способов "
+"помочь:"
 
 #: kuma/landing/templates/landing/homepage.html:164
 msgid "Getting started"
-msgstr ""
+msgstr "Начинаем"
 
 #: kuma/landing/templates/landing/homepage.html:165
 msgid "Editorial review"
@@ -2656,7 +2670,7 @@ msgstr "Выберите стиль кнопки"
 
 #: kuma/landing/templates/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr ""
+msgstr "Улучшенная документация"
 
 #: kuma/landing/templates/landing/promote_buttons.html:51
 msgid "Developer Powered"
@@ -2704,51 +2718,54 @@ msgstr "Ваша кнопка будет вести людей на:"
 
 #: kuma/landing/templates/landing/promote_buttons.html:162 kuma/landing/templates/landing/promote_buttons.html:166 kuma/landing/templates/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr ""
+msgstr "Улучшенная CSS документация для лучшего веба на MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:163 kuma/landing/templates/landing/promote_buttons.html:167 kuma/landing/templates/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr ""
+msgstr "Улучшенная HTML документация для лучшего веба на MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:164 kuma/landing/templates/landing/promote_buttons.html:168 kuma/landing/templates/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr ""
+msgstr "Улучшенная JavaScript документация для лучшего веба на MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:165 kuma/landing/templates/landing/promote_buttons.html:169 kuma/landing/templates/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr ""
+msgstr "Лучшая веб документация для лучшего веб на MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:174 kuma/landing/templates/landing/promote_buttons.html:178 kuma/landing/templates/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs, demos and more."
-msgstr ""
+msgstr "MDN создана разработчиками для CSS документации, демо и даже большего."
 
 #: kuma/landing/templates/landing/promote_buttons.html:175 kuma/landing/templates/landing/promote_buttons.html:179 kuma/landing/templates/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs, demos and more."
-msgstr ""
+msgstr "MDN создана разработчиками для HTML документации, демо и даже большего."
 
 #: kuma/landing/templates/landing/promote_buttons.html:176 kuma/landing/templates/landing/promote_buttons.html:180 kuma/landing/templates/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs, demos and more."
 msgstr ""
+"MDN создана разработчиками для JavaScript документации, демо и даже "
+"большего."
 
 #: kuma/landing/templates/landing/promote_buttons.html:177 kuma/landing/templates/landing/promote_buttons.html:181 kuma/landing/templates/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs, demos and more."
 msgstr ""
+"MDN создана разработчиками для документации по Веб, демо и даже большего."
 
 #: kuma/landing/templates/landing/promote_buttons.html:186 kuma/landing/templates/landing/promote_buttons.html:190 kuma/landing/templates/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
-msgstr ""
+msgstr "CSS документация от разработчиков для разработчиков на MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:187 kuma/landing/templates/landing/promote_buttons.html:191 kuma/landing/templates/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
-msgstr ""
+msgstr "HTML документация от разработчиков для разработчиков на MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:188 kuma/landing/templates/landing/promote_buttons.html:192 kuma/landing/templates/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
-msgstr ""
+msgstr "JavaScript документация от разработчиков для разработчиков на MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:189 kuma/landing/templates/landing/promote_buttons.html:193 kuma/landing/templates/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Веб документация от разработчиков для разработчиков на MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:198 kuma/landing/templates/landing/promote_buttons.html:199 kuma/landing/templates/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
