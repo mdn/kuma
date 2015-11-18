@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-18 20:13+0000\n"
+"PO-Revision-Date: 2015-11-18 20:14+0000\n"
 "Last-Translator: bychek.ru <a@bychek.ru>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1447877614.0\n"
+"X-POOTLE-MTIME: 1447877662.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -2013,7 +2013,7 @@ msgstr ""
 #: kuma/demos/templates/demos/detail.html:217
 #, python-format
 msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
-msgstr ""
+msgstr "Это демо опубликовано под <a href=\"%(link)s\">%(title)s</a> лицензией."
 
 #: kuma/demos/templates/demos/detail.html:225
 msgid "More by {creator}"
