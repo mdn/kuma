@@ -18,6 +18,7 @@ src/django-devserver
 src/django-extensions
 src/django-flat-theme
 src/django-honeypot
+src/django-jinja
 src/django-memcached-hashring
 src/django-nose
 src/django-product-details
@@ -34,7 +35,6 @@ src/elasticsearch-dsl-py
 src/elasticsearch-py
 src/hash_ring
 src/html5lib
-src/jingo
 src/jingo-minify
 src/kombu
 src/oauthlib
