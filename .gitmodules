@@ -25,6 +25,9 @@
 [submodule "vendor/src/django-extensions"]
 	path = vendor/src/django-extensions
 	url = git://github.com/django-extensions/django-extensions.git
+[submodule "vendor/src/django-jinja"]
+	path = vendor/src/django-jinja
+	url = https://github.com/niwinz/django-jinja.git
 [submodule "vendor/src/django-memcached-hashring"]
 	path = vendor/src/django-memcached-hashring
 	url = git://github.com/jezdez/django-memcached-hashring.git
@@ -57,9 +60,6 @@
 [submodule "vendor/src/hash_ring"]
 	path = vendor/src/hash_ring
 	url = git://github.com/Doist/hash_ring.git
-[submodule "vendor/src/jingo"]
-	path = vendor/src/jingo
-	url = git://github.com/jbalogh/jingo.git
 [submodule "vendor/src/oauthlib"]
 	path = vendor/src/oauthlib
 	url = git://github.com/idan/oauthlib.git
