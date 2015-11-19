@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
+{% set full_url = request.build_absolute_uri(submission.get_absolute_url()) %}
+{% set short_url = full_url | bitly_shorten %}
+<head>
+  <title>{{ page_title(_('%(subtitle)s | Demo Studio', subtitle=submission.title)) }}</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <meta property="og:title" content="{{ submission.title }}"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="{{ full_url }}"/>
+  <meta property="og:image" content="{{ request.build_absolute_uri(submission.screenshot_1.url) }}"/>
+  <meta property="og:site_name" content="{{ page_title(_('Demo Studio')) }}"/>
+  <meta property="og:description" content="{{ submission.summary }}"/>
+
+  <meta name="description" content="{{ submission.summary }}" />
+
+  {% stylesheet 'demowrap' %}
+  {% stylesheet 'jquery-ui' %}
+
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  {% javascript 'html5shiv' %}
+  <![endif]-->
+
+</head>
+<body>
+  <header id="demobar">
+  <h4 id="logo"><a href="{{ url('demos') }}"><img src="{{ static('img/mdn-logo-micro.png') }}" alt="{{_('Mozilla Developer Network')}}" width="54" height="16"></a></h4>
+
+    <div class="title">
+      <h1 class="demo-title"><a href="{{ submission.get_absolute_url() }}">{{ submission.title }}</a></h1>
+      <p class="byline vcard">{% trans profile_link=user_link(submission.creator) %}by {{ profile_link }}{% endtrans %}</p>
+    </div>
+
+    <ul class="tools">
+      <li>
+        {% set likes = submission.likes.get_total_for_request(request) %}
+        <form id="demo-unlike" target="like_receiver" method="POST"
+            action="{{ url('demos_unlike', slug=submission.slug) }}?iframe=1"
+            style="{{ likes > 0 and ' ' or 'display: none' }}">
+                {% csrf_token %}
+                <button type="submit" class="unlike" title="{{_('You like this demo. Undo?')}}"><span>{{_('You Like')}}</span></button>
+        </form>
+        <form id="demo-like" target="like_receiver" method="POST"
+            action="{{ url('demos_like', slug=submission.slug) }}?iframe=1"
+            style="{{ likes > 0 and 'display: none' or ' ' }}">
+                {% csrf_token %}
+                <button type="submit" class="like" title="{{_('Do you like this demo?')}}"><span>{{_('Like It')}}</span></button>
+        </form>
+        <iframe style="display: none" id="like_receiver" name="like_receiver"></iframe>
+      </li>
+      <li class="share"><a href="#share-opts" id="sharetoggle" title="{{_('Share this demo with your social network')}}">{{_('Share It')}}</a>
+        <ul id="share-opts">
+          <li class="twitter"><a href="{{ 'http://twitter.com/share'|urlparams(url=short_url, text=submission.title.encode('utf-8'), via="mozhacks") }}">{{_('Share on Twitter')}}</a></li>
+          <li class="facebook"><a href="{{ 'http://www.facebook.com/sharer.php'|urlparams(u=full_url, t=submission.title.encode('utf-8')) }}">{{_('Share on Facebook')}}</a></li>
+          <li class="link"><input id="shorturl" type="text" readonly="readonly" value="{{ short_url }}"></li>
+        </ul>
+      </li>
+      <li class="report"><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=notworking">{{ _("Report a Problem") }}</a>
+      </li>
+    </ul>
+
+    <!-- hide share link if no javascript present -->
+    <noscript>
+      <style type="text/css">
+        .tools .share { display: none; }
+      </style>
+    </noscript>
+
+
+    <nav class="paging">
+      <ul role="navigation">
+        <li><a href="{{ submission.get_absolute_url() }}">{{ _('Back') }}</a></li>
+        {% set prev = submission.previous() %}
+        {% if prev %}
+            <li class="prev"><a href="{{ prev.get_absolute_url() }}/launch" title="{{_('Go to the previous demo, %(demo_title)s', demo_title=prev.title)}}">{{_('Previous')}}</a></li>
+        {% endif %}
+        {% set next = submission.next() %}
+        {% if next %}
+            <li class="next"><a href="{{ next.get_absolute_url() }}/launch" title="{{_('Go to the next demo, %(demo_title)s', demo_title=next.title)}}">{{_('Next')}}</a></li>
+        {% endif %}
+            <li><a href="{{ submission.demo_package.url.replace('.zip', '/index.html') }}" title="{{_('Remove this toolbar')}}"><span class="remove-long-label">{{_('Remove toolbar')}}</span><span class="remove-short-label">X</span></a></li>
+      </ul>
+    </nav>
+
+    <script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
+
+    {% javascript 'main' %}
+    {% javascript 'popup' %}
+
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+
+      var $shareOpts = $("#share-opts"),
+          $shareToggle = $("#sharetoggle");
+
+      // Hide the "share" dropdown options
+      $shareOpts.addClass("js").hide();
+
+      // Toggle the dropdown when the button is clicked
+      $shareToggle.click(function() {
+        $shareOpts.fadeIn(100);
+        return false;
+      });
+
+      $shareOpts.hover(
+        function() {
+          $(this).show();
+        },
+        function() {
+          $(this).fadeOut(100);
+          $shareToggle.blur();
+        }
+      );
+
+      $(document).bind("click", function(e) {
+        if (! $(e.target).parents().hasClass("share"))
+          $shareOpts.hide();
+      });
+
+      $("a, input, textarea, button").bind("focus", function(e) {
+        if (! $(e.target).parents().hasClass("share"))
+          $shareOpts.hide();
+      });
+
+      $("#shorturl")
+        .focus(function() {
+          $(this).select().addClass("focus");
+        })
+        .click(function() {
+          $(this).select().addClass("focus");
+        })
+        .blur(function() {
+          $(this).removeClass("focus");
+        });
+
+
+    });
+    </script>
+
+  </header>
+
+  <iframe id="demoframe" border="no" frameborder="0" scrolling="auto"  seamless="seamless"
+      src="{{ submission.demo_package.url.replace('.zip', '/index.html') }}"></iframe>
+
+  <script type="text/javascript">
+    (function() {
+      // Adaptor for demo protocol to make WoW demos run
+      var ifrm = document.getElementById('demoframe');
+      ifrm.addEventListener('load', function (ev) {
+          var contentWindow = ifrm.contentWindow;
+          if (contentWindow && contentWindow.postMessage) {
+              contentWindow.postMessage('start_demo', '*');
+          }
+      }, true);
+    })();
+  </script>
+
+  <script type="text/javascript">
+    $('#share-opts li a').click(function () {
+        window.open($(this).attr('href'), 'sharer',
+            'toolbar=0, status=0, resizable=1, width=626, height=436');
+        return false;
+    });
+  </script>
+
+  <script type="text/javascript">
+      window.handleIFrameEvent = function (name, data) {
+          switch (name) {
+              case 'liked':
+                  $('#demo-unlike').show();
+                  $('#demo-like').hide();
+                  break;
+              case 'unliked':
+                  $('#demo-like').show();
+                  $('#demo-unlike').hide();
+                  break;
+          }
+      };
+  </script>
+
+  <!-- provide "report" functionality -->
+  {% javascript 'hoverIntent' %}
+  {% javascript 'modal-control' %}
+
+</body>
+</html>

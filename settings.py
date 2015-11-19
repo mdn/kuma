@@ -12,7 +12,6 @@ _Language = namedtuple(u'Language', u'english native iso639_1')
 
 
 DEBUG = False
-TEMPLATE_DEBUG = DEBUG
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
@@ -328,20 +327,7 @@ LANGUAGE_URL_IGNORED_PATHS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'jingo.Loader',
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
-JINGO_EXCLUDE_APPS = (
-    'admin',
-    'waffle',
-    'registration',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
+_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
@@ -405,13 +391,6 @@ MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 
 ROOT_URLCONF = 'urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates"
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    path('templates'),
-)
-
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -461,6 +440,7 @@ INSTALLED_APPS = (
     'kuma.actioncounters',
 
     # util
+    'django_jinja',
     'pipeline',
     'product_details',
     'puente',
@@ -497,35 +477,52 @@ NOSE_ARGS = [
 # Feed fetcher config
 FEEDER_TIMEOUT = 6  # in seconds
 
-
-def JINJA_CONFIG():
-    import jinja2
-    from django.conf import settings
-    from django.core.cache.backends.memcached import MemcachedCache
-    from django.core.cache import caches
-    cache = caches['memcache']
-    config = {
-        'extensions': [
-            'jinja2.ext.i18n',
-            'puente.ext.i18n',
-            'jinja2.ext.with_',
-            'jinja2.ext.loopcontrols',
-            'jinja2.ext.autoescape',
-            'pipeline.templatetags.ext.PipelineExtension',
-            'waffle.jinja.WaffleExtension',
-        ],
-        'finalize': lambda x: x if x is not None else ''
-    }
-    if isinstance(cache, MemcachedCache) and not settings.DEBUG:
-        # We're passing the _cache object directly to jinja because
-        # Django can't store binary directly; it enforces unicode on it.
-        # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
-        # and in the errors you get when you try it the other way.
-        bc = jinja2.MemcachedBytecodeCache(cache._cache,
-                                           "%s:j4:" % settings.CACHE_PREFIX)
-        config['cache_size'] = -1  # Never clear the cache
-        config['bytecode_cache'] = bc
-    return config
+TEMPLATES = [
+    {
+        'BACKEND': 'django_jinja.backend.Jinja2',
+        'DIRS': ['jinja2'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            # Use jinja2/ for jinja templates
+            'app_dirname': 'jinja2',
+            # Don't figure out which template loader to use based on
+            # file extension
+            'match_extension': '',
+            'newstyle_gettext': True,
+            'context_processors': _CONTEXT_PROCESSORS,
+            'undefined': 'jinja2.Undefined',
+            'extensions': [
+                'jinja2.ext.do',
+                'jinja2.ext.loopcontrols',
+                'jinja2.ext.with_',
+                'jinja2.ext.i18n',
+                'jinja2.ext.autoescape',
+                'puente.ext.i18n',
+                'django_jinja.builtins.extensions.CsrfExtension',
+                'django_jinja.builtins.extensions.CacheExtension',
+                'django_jinja.builtins.extensions.TimezoneExtension',
+                'django_jinja.builtins.extensions.UrlsExtension',
+                'django_jinja.builtins.extensions.StaticFilesExtension',
+                'django_jinja.builtins.extensions.DjangoFiltersExtension',
+                'pipeline.templatetags.ext.PipelineExtension',
+                'waffle.jinja.WaffleExtension',
+            ],
+        }
+    },
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['templates'],
+        'APP_DIRS': False,
+        'OPTIONS': {
+            'debug': DEBUG,
+            'context_processors': _CONTEXT_PROCESSORS,
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+        }
+    },
+]
 
 PUENTE = {
     'BASE_DIR': ROOT,
