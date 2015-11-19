@@ -1270,7 +1270,8 @@ class PageMoveTests(UserTestCase):
         """Make sure we can detect potential circular dependencies in
         parent/child relationships."""
         # Test detection at one level removed.
-        parent = document(title='Parent of circular-dependency document')
+        parent = document(title='Parent of circular-dependency document',
+                         save=True)
         child = document(title='Document with circular dependency')
         child.parent_topic = parent
         child.save()
