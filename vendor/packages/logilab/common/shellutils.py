@@ -44,15 +44,6 @@ from logilab.common import STD_BLACKLIST, _handle_blacklist
 from logilab.common.compat import str_to_bytes
 from logilab.common.deprecation import deprecated
 
-try:
-    from logilab.common.proc import ProcInfo, NoSuchProcess
-except ImportError:
-    # windows platform
-    class NoSuchProcess(Exception): pass
-
-    def ProcInfo(pid):
-        raise NoSuchProcess()
-
 
 class tempdir(object):
 
@@ -243,53 +234,6 @@ class Execute:
         self.status = os.WEXITSTATUS(cmd.returncode)
 
 Execute = deprecated('Use subprocess.Popen instead')(Execute)
-
-
-def acquire_lock(lock_file, max_try=10, delay=10, max_delay=3600):
-    """Acquire a lock represented by a file on the file system
-
-    If the process written in lock file doesn't exist anymore, we remove the
-    lock file immediately
-    If age of the lock_file is greater than max_delay, then we raise a UserWarning
-    """
-    count = abs(max_try)
-    while count:
-        try:
-            fd = os.open(lock_file, os.O_EXCL | os.O_RDWR | os.O_CREAT)
-            os.write(fd, str_to_bytes(str(os.getpid())) )
-            os.close(fd)
-            return True
-        except OSError as e:
-            if e.errno == errno.EEXIST:
-                try:
-                    fd = open(lock_file, "r")
-                    pid = int(fd.readline())
-                    pi = ProcInfo(pid)
-                    age = (time.time() - os.stat(lock_file)[stat.ST_MTIME])
-                    if age / max_delay > 1 :
-                        raise UserWarning("Command '%s' (pid %s) has locked the "
-                                          "file '%s' for %s minutes"
-                                          % (pi.name(), pid, lock_file, age/60))
-                except UserWarning:
-                    raise
-                except NoSuchProcess:
-                    os.remove(lock_file)
-                except Exception:
-                    # The try block is not essential. can be skipped.
-                    # Note: ProcInfo object is only available for linux
-                    # process information are not accessible...
-                    # or lock_file is no more present...
-                    pass
-            else:
-                raise
-            count -= 1
-            time.sleep(delay)
-    else:
-        raise Exception('Unable to acquire %s' % lock_file)
-
-def release_lock(lock_file):
-    """Release a lock represented by a file on the file system."""
-    os.remove(lock_file)
 
 
 class ProgressBar(object):

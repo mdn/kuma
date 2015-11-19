@@ -118,9 +118,12 @@ import os.path as osp
 from time import time, clock
 import warnings
 import types
+import inspect
+import traceback
 from inspect import isgeneratorfunction, isclass
 from contextlib import contextmanager
 from random import shuffle
+from itertools import dropwhile
 
 from logilab.common.fileutils import abspath_listdir
 from logilab.common import textutils
@@ -128,6 +131,7 @@ from logilab.common import testlib, STD_BLACKLIST
 # use the same unittest module as testlib
 from logilab.common.testlib import unittest, start_interactive_mode
 from logilab.common.deprecation import deprecated
+from logilab.common.debugger import Debugger, colorize_source
 import doctest
 
 import unittest as unittest_legacy
@@ -938,7 +942,7 @@ class SkipAwareTextTestRunner(unittest.TextTestRunner):
         return True # no pattern
 
     def _makeResult(self):
-        return testlib.SkipAwareTestResult(self.stream, self.descriptions,
+        return SkipAwareTestResult(self.stream, self.descriptions,
                                    self.verbosity, self.exitfirst,
                                    self.pdbmode, self.cvg, self.colorize)
 
@@ -982,6 +986,155 @@ class SkipAwareTextTestRunner(unittest.TextTestRunner):
                 self.stream.write(")")
             self.stream.writeln("")
         return result
+
+
+class SkipAwareTestResult(unittest._TextTestResult):
+
+    def __init__(self, stream, descriptions, verbosity,
+                 exitfirst=False, pdbmode=False, cvg=None, colorize=False):
+        super(SkipAwareTestResult, self).__init__(stream,
+                                                  descriptions, verbosity)
+        self.skipped = []
+        self.debuggers = []
+        self.fail_descrs = []
+        self.error_descrs = []
+        self.exitfirst = exitfirst
+        self.pdbmode = pdbmode
+        self.cvg = cvg
+        self.colorize = colorize
+        self.pdbclass = Debugger
+        self.verbose = verbosity > 1
+
+    def descrs_for(self, flavour):
+        return getattr(self, '%s_descrs' % flavour.lower())
+
+    def _create_pdb(self, test_descr, flavour):
+        self.descrs_for(flavour).append( (len(self.debuggers), test_descr) )
+        if self.pdbmode:
+            self.debuggers.append(self.pdbclass(sys.exc_info()[2]))
+
+    def _iter_valid_frames(self, frames):
+        """only consider non-testlib frames when formatting  traceback"""
+        lgc_testlib = osp.abspath(__file__)
+        std_testlib = osp.abspath(unittest.__file__)
+        invalid = lambda fi: osp.abspath(fi[1]) in (lgc_testlib, std_testlib)
+        for frameinfo in dropwhile(invalid, frames):
+            yield frameinfo
+
+    def _exc_info_to_string(self, err, test):
+        """Converts a sys.exc_info()-style tuple of values into a string.
+
+        This method is overridden here because we want to colorize
+        lines if --color is passed, and display local variables if
+        --verbose is passed
+        """
+        exctype, exc, tb = err
+        output = ['Traceback (most recent call last)']
+        frames = inspect.getinnerframes(tb)
+        colorize = self.colorize
+        frames = enumerate(self._iter_valid_frames(frames))
+        for index, (frame, filename, lineno, funcname, ctx, ctxindex) in frames:
+            filename = osp.abspath(filename)
+            if ctx is None: # pyc files or C extensions for instance
+                source = '<no source available>'
+            else:
+                source = ''.join(ctx)
+            if colorize:
+                filename = textutils.colorize_ansi(filename, 'magenta')
+                source = colorize_source(source)
+            output.append('  File "%s", line %s, in %s' % (filename, lineno, funcname))
+            output.append('    %s' % source.strip())
+            if self.verbose:
+                output.append('%r == %r' % (dir(frame), test.__module__))
+                output.append('')
+                output.append('    ' + ' local variables '.center(66, '-'))
+                for varname, value in sorted(frame.f_locals.items()):
+                    output.append('    %s: %r' % (varname, value))
+                    if varname == 'self': # special handy processing for self
+                        for varname, value in sorted(vars(value).items()):
+                            output.append('      self.%s: %r' % (varname, value))
+                output.append('    ' + '-' * 66)
+                output.append('')
+        output.append(''.join(traceback.format_exception_only(exctype, exc)))
+        return '\n'.join(output)
+
+    def addError(self, test, err):
+        """err ->  (exc_type, exc, tcbk)"""
+        exc_type, exc, _ = err
+        if isinstance(exc, testlib.SkipTest):
+            assert exc_type == SkipTest
+            self.addSkip(test, exc)
+        else:
+            if self.exitfirst:
+                self.shouldStop = True
+            descr = self.getDescription(test)
+            super(SkipAwareTestResult, self).addError(test, err)
+            self._create_pdb(descr, 'error')
+
+    def addFailure(self, test, err):
+        if self.exitfirst:
+            self.shouldStop = True
+        descr = self.getDescription(test)
+        super(SkipAwareTestResult, self).addFailure(test, err)
+        self._create_pdb(descr, 'fail')
+
+    def addSkip(self, test, reason):
+        self.skipped.append((test, reason))
+        if self.showAll:
+            self.stream.writeln("SKIPPED")
+        elif self.dots:
+            self.stream.write('S')
+
+    def printErrors(self):
+        super(SkipAwareTestResult, self).printErrors()
+        self.printSkippedList()
+
+    def printSkippedList(self):
+        # format (test, err) compatible with unittest2
+        for test, err in self.skipped:
+            descr = self.getDescription(test)
+            self.stream.writeln(self.separator1)
+            self.stream.writeln("%s: %s" % ('SKIPPED', descr))
+            self.stream.writeln("\t%s" % err)
+
+    def printErrorList(self, flavour, errors):
+        for (_, descr), (test, err) in zip(self.descrs_for(flavour), errors):
+            self.stream.writeln(self.separator1)
+            self.stream.writeln("%s: %s" % (flavour, descr))
+            self.stream.writeln(self.separator2)
+            self.stream.writeln(err)
+            self.stream.writeln('no stdout'.center(len(self.separator2)))
+            self.stream.writeln('no stderr'.center(len(self.separator2)))
+
+
+from .decorators import monkeypatch
+orig_call = testlib.TestCase.__call__
+@monkeypatch(testlib.TestCase, '__call__')
+def call(self, result=None, runcondition=None, options=None):
+    orig_call(self, result=result, runcondition=runcondition, options=options)
+    if hasattr(options, "exitfirst") and options.exitfirst:
+        # add this test to restart file
+        try:
+            restartfile = open(FILE_RESTART, 'a')
+            try:
+                descr = '.'.join((self.__class__.__module__,
+                                  self.__class__.__name__,
+                                  self._testMethodName))
+                restartfile.write(descr+os.linesep)
+            finally:
+                restartfile.close()
+        except Exception:
+            print("Error while saving succeeded test into",
+                  osp.join(os.getcwd(), FILE_RESTART),
+                  file=sys.__stderr__)
+            raise
+
+
+@monkeypatch(testlib.TestCase)
+def defaultTestResult(self):
+    """return a new instance of the defaultTestResult"""
+    return SkipAwareTestResult()
+
 
 class NonStrictTestLoader(unittest.TestLoader):
     """
@@ -1186,7 +1339,7 @@ def enable_dbc(*args):
 
 
 # monkeypatch unittest and doctest (ouch !)
-unittest._TextTestResult = testlib.SkipAwareTestResult
+unittest._TextTestResult = SkipAwareTestResult
 unittest.TextTestRunner = SkipAwareTextTestRunner
 unittest.TestLoader = NonStrictTestLoader
 unittest.TestProgram = SkipAwareTestProgram
