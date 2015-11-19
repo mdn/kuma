@@ -86,7 +86,7 @@ djangorestframework==2.4.6
 
 django-smuggler==0.6.0
 
-django-soapbox==1.1
+django-soapbox==1.2
 
 django-statici18n==1.1.3
 
