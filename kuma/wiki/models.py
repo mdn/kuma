@@ -42,13 +42,13 @@ from .content import (H2TOCFilter, H3TOCFilter, SectionTOCFilter,
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
-from .helpers import absolutify
 from .jobs import DocumentContributorsJob, DocumentZoneStackJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
 from .search import WikiDocumentType
 from .signals import render_done
+from .templatetags.jinja_helpers import absolutify
 from .utils import tidy_content
 
 

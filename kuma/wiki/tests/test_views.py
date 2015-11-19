@@ -7,22 +7,19 @@ from urlparse import urlparse
 
 import mock
 import requests_mock
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
-from pyquery import PyQuery as pq
-
+from constance.test import override_config
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.db.models import Q
-from django.test.client import (FakePayload, encode_multipart,
-                                BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT)
-from django.test.utils import override_settings
 from django.http import Http404
+from django.test.client import (BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT,
+                                FakePayload, encode_multipart)
+from django.test.utils import override_settings
 from django.utils.encoding import smart_str
-
-from constance.test import override_config
-from jingo.helpers import urlparams
+from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 
 from kuma.attachments.models import Attachment
@@ -30,19 +27,20 @@ from kuma.attachments.utils import make_test_file
 from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.models import IPBan
-from kuma.core.urlresolvers import reverse
 from kuma.core.tests import get_user
+from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase, user
 
+from . import (WikiTestCase, create_document_tree, create_template_test_users,
+               doc_rev, document, make_translation, new_document_data,
+               normalize_html, revision)
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
-from ..models import (Document, Revision, RevisionIP, DocumentZone,
-                      DocumentTag, DocumentDeletionLog)
+from ..models import (Document, DocumentDeletionLog, DocumentTag, DocumentZone,
+                      Revision, RevisionIP)
 from ..views.document import _get_seo_parent_title
-from . import (create_document_tree, doc_rev, document, new_document_data,
-               revision, normalize_html, create_template_test_users,
-               make_translation, WikiTestCase)
 
 
 class RedirectTests(UserTestCase, WikiTestCase):

@@ -27,8 +27,8 @@ from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from ..events import EditDocumentInTreeEvent
 from ..exceptions import (DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress, PageMoveError)
-from ..helpers import absolutify
 from ..models import Document, Revision, RevisionIP, TaggedDocument
+from ..templatetags.jinja_helpers import absolutify
 from ..utils import tidy_content
 from ..signals import render_done
 

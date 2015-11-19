@@ -1,19 +1,17 @@
 import datetime
 
+from constance import config
+from django.conf import settings
+from django.core.files import temp as tempfile
+from django.core.files.base import ContentFile
+from django.utils.http import parse_http_date_safe
 from nose.tools import eq_, ok_
 
-from django.conf import settings
-from django.core.files.base import ContentFile
-from django.core.files import temp as tempfile
-from django.utils.http import parse_http_date_safe
-
-from constance import config
-from jingo.helpers import urlparams
-
+from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import Document, DocumentAttachment
-from kuma.wiki.tests import document, revision, WikiTestCase
-from kuma.core.urlresolvers import reverse
+from kuma.wiki.tests import WikiTestCase, document, revision
 
 from ..models import Attachment, AttachmentRevision
 from ..utils import make_test_file

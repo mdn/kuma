@@ -4,12 +4,11 @@ except ImportError:
     from django.utils.functional import wraps
 
 import newrelic.agent
+from django.http import Http404, HttpResponsePermanentRedirect
 from waffle import flag_is_active, switch_is_active
 
-from django.http import HttpResponsePermanentRedirect, Http404
-from jingo.helpers import urlparams
-
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 
 from .exceptions import ReadOnlyException
 from .utils import locale_and_slug_from_path

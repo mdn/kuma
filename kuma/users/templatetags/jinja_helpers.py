@@ -5,17 +5,17 @@ from allauth.utils import get_request_param
 from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ugettext
+from django_jinja import library
 from honeypot.templatetags.honeypot import render_honeypot_field
-from jingo import register
 from jinja2 import Markup, contextfunction, escape
 
-from kuma.core.helpers import datetimeformat
+from kuma.core.templatetags.jinja_helpers import datetimeformat
 from kuma.core.urlresolvers import reverse
 
-from .jobs import UserGravatarURLJob
+from ..jobs import UserGravatarURLJob
 
 
-@register.function
+@library.global_function
 def gravatar_url(email, secure=True, size=220, rating='pg',
                  default=settings.DEFAULT_AVATAR):
     job = UserGravatarURLJob()
@@ -23,7 +23,7 @@ def gravatar_url(email, secure=True, size=220, rating='pg',
                    rating=rating, default=default)
 
 
-@register.function
+@library.global_function
 @contextfunction
 def ban_link(context, ban_user, banner_user):
     """Returns a link to ban a user"""
@@ -50,7 +50,7 @@ def ban_link(context, ban_user, banner_user):
     return Markup(link)
 
 
-@register.function
+@library.global_function
 def admin_link(user):
     """Returns a link to admin a user"""
     url = reverse('admin:users_user_change', args=(user.id,),
@@ -61,7 +61,7 @@ def admin_link(user):
     return Markup(link)
 
 
-@register.filter
+@library.filter
 def public_email(email):
     """Email address -> publicly displayable email."""
     return Markup('<span class="email">%s</span>' % unicode_to_html(email))
@@ -72,7 +72,7 @@ def unicode_to_html(text):
     return ''.join([u'&#%s;' % ord(i) for i in text])
 
 
-@register.function
+@library.global_function
 def user_list(users):
     """Turn a list of users into a list of links to their profiles."""
     link = u'<a href="%s">%s</a>'
@@ -82,13 +82,13 @@ def user_list(users):
 
 
 # Returns a string representation of a user
-register.function(user_display)
+library.global_function(user_display)
 
 # Returns a list of social authentication providers.
-register.function(get_providers)
+library.global_function(get_providers)
 
 
-@register.function
+@library.global_function
 @contextfunction
 def provider_login_url(context, provider_id, **params):
     """
@@ -117,7 +117,7 @@ def provider_login_url(context, provider_id, **params):
     return Markup(provider.get_login_url(request, **params))
 
 
-@register.function
+@library.global_function
 @contextfunction
 def providers_media_js(context):
     """
@@ -128,7 +128,7 @@ def providers_media_js(context):
                              for p in providers.registry.get_list()]))
 
 
-@register.function
+@library.global_function
 def social_accounts(user):
     """
     {% set accounts = social_accounts(user) %}
@@ -147,6 +147,7 @@ def social_accounts(user):
     return accounts
 
 
-@register.inclusion_tag('honeypot/honeypot_field.html')
+@library.global_function
+@library.render_with('honeypot/honeypot_field.html')
 def honeypot_field(field_name=None):
     return render_honeypot_field(field_name)

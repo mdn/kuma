@@ -21,7 +21,6 @@ from django.utils.translation import ugettext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import (condition, require_GET,
                                           require_http_methods, require_POST)
-from jingo.helpers import urlparams
 from pyquery import PyQuery as pq
 
 import kuma.wiki.content
@@ -29,6 +28,7 @@ from kuma.authkeys.decorators import accepts_auth_key
 from kuma.core.decorators import (block_user_agents, login_required,
                                   permission_required, superuser_required)
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 from kuma.search.store import referrer_url
 
 from .. import kumascript
