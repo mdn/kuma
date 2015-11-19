@@ -1,3 +1,33 @@
+Metadata-Version: 2.0
+Name: setuptools
+Version: 18.5
+Summary: Easily download, build, install, upgrade, and uninstall Python packages
+Home-page: https://bitbucket.org/pypa/setuptools
+Author: Python Packaging Authority
+Author-email: distutils-sig@python.org
+License: PSF or ZPL
+Keywords: CPAN PyPI distutils eggs package management
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Python Software Foundation License
+Classifier: License :: OSI Approved :: Zope Public License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Archiving :: Packaging
+Classifier: Topic :: System :: Systems Administration
+Classifier: Topic :: Utilities
+Provides-Extra: certs
+Requires-Dist: certifi (==2015.04.28); extra == 'certs'
+Provides-Extra: ssl
+Requires-Dist: wincertstore (==0.2); sys_platform=='win32' and extra == 'ssl'
+
 ===============================
 Installing and Using Setuptools
 ===============================
@@ -223,5 +253,16 @@ Credits
   the Python Packaging Authority (PyPA) and the larger Python community.
 
 .. _files:
+
+
+---------------
+Code of Conduct
+---------------
+
+Everyone interacting in the setuptools project's codebases, issue trackers,
+chat rooms, and mailing lists is expected to follow the
+`PyPA Code of Conduct`_.
+
+.. _PyPA Code of Conduct: https://www.pypa.io/en/latest/code-of-conduct/
 
 

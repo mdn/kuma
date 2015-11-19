@@ -95,6 +95,13 @@ except ImportError:
     import packaging.specifiers
 
 
+if (3, 0) < sys.version_info < (3, 3):
+    msg = (
+        "Support for Python 3.0-3.2 has been dropped. Future versions "
+        "will fail here."
+    )
+    warnings.warn(msg)
+
 # declare some globals that will be defined later to
 # satisfy the linters.
 require = None
@@ -1403,6 +1410,7 @@ class MarkerEvaluation(object):
         'python_version': lambda: platform.python_version()[:3],
         'platform_version': platform.version,
         'platform_machine': platform.machine,
+        'platform_python_implementation': platform.python_implementation,
         'python_implementation': platform.python_implementation,
     }
 
@@ -1518,6 +1526,17 @@ class MarkerEvaluation(object):
         """
         return cls.interpret(parser.expr(text).totuple(1)[1])
 
+    @staticmethod
+    def _translate_metadata2(env):
+        """
+        Markerlib implements Metadata 1.2 (PEP 345) environment markers.
+        Translate the variables to Metadata 2.0 (PEP 426).
+        """
+        return dict(
+            (key.replace('.', '_'), value)
+            for key, value in env
+        )
+
     @classmethod
     def _markerlib_evaluate(cls, text):
         """
@@ -1526,12 +1545,8 @@ class MarkerEvaluation(object):
         Raise SyntaxError if marker is invalid.
         """
         import _markerlib
-        # markerlib implements Metadata 1.2 (PEP 345) environment markers.
-        # Translate the variables to Metadata 2.0 (PEP 426).
-        env = _markerlib.default_environment()
-        for key in env.keys():
-            new_key = key.replace('.', '_')
-            env[new_key] = env.pop(key)
+
+        env = cls._translate_metadata2(_markerlib.default_environment())
         try:
             result = _markerlib.interpret(text, env)
         except NameError as e:
@@ -2983,12 +2998,8 @@ class Requirement:
 
     @staticmethod
     def parse(s):
-        reqs = list(parse_requirements(s))
-        if reqs:
-            if len(reqs) == 1:
-                return reqs[0]
-            raise ValueError("Expected only one requirement", s)
-        raise ValueError("No requirements found", s)
+        req, = parse_requirements(s)
+        return req
 
 
 def _get_mro(cls):

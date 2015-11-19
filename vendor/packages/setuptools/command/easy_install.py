@@ -215,10 +215,19 @@ class easy_install(Command):
         remover = rmtree if is_tree else os.unlink
         remover(path)
 
+    @staticmethod
+    def _render_version():
+        """
+        Render the Setuptools version and installation details, then exit.
+        """
+        ver = sys.version[:3]
+        dist = get_distribution('setuptools')
+        tmpl = 'setuptools {dist.version} from {dist.location} (Python {ver})'
+        print(tmpl.format(**locals()))
+        raise SystemExit()
+
     def finalize_options(self):
-        if self.version:
-            print('setuptools %s' % get_distribution('setuptools').version)
-            sys.exit()
+        self.version and self._render_version()
 
         py_version = sys.version.split()[0]
         prefix, exec_prefix = get_config_vars('prefix', 'exec_prefix')
@@ -1530,29 +1539,26 @@ class PthDistributions(Environment):
         if not self.dirty:
             return
 
-        data = '\n'.join(map(self.make_relative, self.paths))
-        if data:
+        rel_paths = list(map(self.make_relative, self.paths))
+        if rel_paths:
             log.debug("Saving %s", self.filename)
-            data = (
-                "import sys; sys.__plen = len(sys.path)\n"
-                "%s\n"
-                "import sys; new=sys.path[sys.__plen:];"
-                " del sys.path[sys.__plen:];"
-                " p=getattr(sys,'__egginsert',0); sys.path[p:p]=new;"
-                " sys.__egginsert = p+len(new)\n"
-            ) % data
+            lines = self._wrap_lines(rel_paths)
+            data = '\n'.join(lines) + '\n'
 
             if os.path.islink(self.filename):
                 os.unlink(self.filename)
-            f = open(self.filename, 'wt')
-            f.write(data)
-            f.close()
+            with open(self.filename, 'wt') as f:
+                f.write(data)
 
         elif os.path.exists(self.filename):
             log.debug("Deleting empty %s", self.filename)
             os.unlink(self.filename)
 
         self.dirty = False
+
+    @staticmethod
+    def _wrap_lines(lines):
+        return lines
 
     def add(self, dist):
         """Add `dist` to the distribution map"""
@@ -1589,6 +1595,34 @@ class PthDistributions(Environment):
             parts.append(last)
         else:
             return path
+
+
+class RewritePthDistributions(PthDistributions):
+
+    @classmethod
+    def _wrap_lines(cls, lines):
+        yield cls.prelude
+        for line in lines:
+            yield line
+        yield cls.postlude
+
+    _inline = lambda text: textwrap.dedent(text).strip().replace('\n', '; ')
+    prelude = _inline("""
+        import sys
+        sys.__plen = len(sys.path)
+        """)
+    postlude = _inline("""
+        import sys
+        new = sys.path[sys.__plen:]
+        del sys.path[sys.__plen:]
+        p = getattr(sys, '__egginsert', 0)
+        sys.path[p:p] = new
+        sys.__egginsert = p + len(new)
+        """)
+
+
+if os.environ.get('SETUPTOOLS_SYS_PATH_TECHNIQUE', 'rewrite') == 'rewrite':
+    PthDistributions = RewritePthDistributions
 
 
 def _first_line_re():
