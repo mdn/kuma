@@ -8,18 +8,19 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
+import kuma.wiki.content
 from kuma.core.tests import KumaTestCase
 from kuma.users.tests import UserTestCase
-import kuma.wiki.content
-from ..constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
-from ..content import (CodeSyntaxFilter, SectionTOCFilter, SectionIDFilter,
-                       H2TOCFilter, H3TOCFilter, SECTION_TAGS,
-                       get_seo_description, get_content_sections,
+
+from . import doc_rev, document, normalize_html
+from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_TAGS
+from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
+                       H3TOCFilter, SectionIDFilter, SectionTOCFilter,
                        extract_css_classnames, extract_html_attributes,
-                       extract_kumascript_macro_names)
-from ..helpers import bugize_text
+                       extract_kumascript_macro_names, get_content_sections,
+                       get_seo_description)
 from ..models import Document
-from . import normalize_html, doc_rev, document
+from ..templatetags.jinja_helpers import bugize_text
 
 
 class ContentSectionToolTests(UserTestCase):

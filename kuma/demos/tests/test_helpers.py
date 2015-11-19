@@ -3,7 +3,7 @@ from nose.tools import eq_
 
 from kuma.core.tests import KumaTestCase
 
-from ..helpers import tag_description
+from ..templatetags.jinja_helpers import tag_description
 
 
 class TagDescriptionTestCase(KumaTestCase):

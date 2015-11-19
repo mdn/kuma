@@ -8,7 +8,7 @@ ALLOWED_HOSTS = '*'
 
 DEBUG = True
 DEV = True
-TEMPLATE_DEBUG = DEBUG
+TEMPLATES[1]['OPTIONS']['debug'] = DEBUG
 SERVE_MEDIA = DEBUG
 
 SESSION_COOKIE_SECURE = True
@@ -34,10 +34,6 @@ INSTALLED_APPS = INSTALLED_APPS + (
     "django_extensions",
 #    "debug_toolbar",
     "devserver",
-)
-
-JINGO_EXCLUDE_APPS = JINGO_EXCLUDE_APPS + (
-    'debug_toolbar',
 )
 
 DEBUG_TOOLBAR_CONFIG = {

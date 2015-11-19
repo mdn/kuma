@@ -13,38 +13,44 @@ from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
-from django.utils.encoding import force_text
+from django.template.loader import get_template
+from django.utils import six
+from django.utils.encoding import force_text, smart_unicode
 from django.utils.html import strip_tags
 from django.utils.timezone import get_default_timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
-from jingo import env, register
+from django_jinja import library
 from pytz import timezone
 from soapbox.models import Message
 from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
-from .exceptions import DateTimeFormatError
-from .urlresolvers import reverse, split_path
+from ..exceptions import DateTimeFormatError
+from ..urlresolvers import reverse, split_path
+from ..utils import urlparams
 
 
 htmlparser = HTMLParser.HTMLParser()
 
 
-# Yanking filters from Django and 3rd party libs.
-register.filter(strip_tags)
-register.filter(defaultfilters.timesince)
-register.filter(defaultfilters.truncatewords)
-register.function(statici18n)
+# Yanking filters from Django.
+library.filter(defaultfilters.linebreaksbr)
+library.filter(strip_tags)
+library.filter(defaultfilters.timesince)
+library.filter(defaultfilters.truncatewords)
+library.global_function(statici18n)
+
+library.filter(urlparams)
 
 
-@register.filter
+@library.filter
 def paginator(pager):
     """Render list of pages."""
     return Paginator(pager).render()
 
 
-@register.function
+@library.global_function
 def url(viewname, *args, **kwargs):
     """Helper for Django's ``reverse`` in templates."""
     locale = kwargs.pop('locale', None)
@@ -83,11 +89,11 @@ class Paginator(object):
     def render(self):
         c = {'pager': self.pager, 'num_pages': self.num_pages,
              'count': self.count}
-        t = env.get_template('includes/paginator.html').render(c)
+        t = get_template('includes/paginator.html').render(c)
         return jinja2.Markup(t)
 
 
-@register.filter
+@library.filter
 def timesince(d, now=None):
     """Take two datetime objects and return the time between d and now as a
     nicely formatted string, e.g. "10 minutes".  If d is None or occurs after
@@ -139,29 +145,29 @@ def timesince(d, now=None):
     return name(count) % {'number': count}
 
 
-@register.filter
+@library.filter
 def yesno(boolean_value):
     return jinja2.Markup(_(u'Yes') if boolean_value else _(u'No'))
 
 
-@register.filter
+@library.filter
 def entity_decode(str):
     """Turn HTML entities in a string into unicode."""
     return htmlparser.unescape(str)
 
 
-@register.function
+@library.global_function
 def page_title(title):
     return u'%s | MDN' % title
 
 
-@register.filter
+@library.filter
 def level_tag(message):
     return jinja2.Markup(force_text(LEVEL_TAGS.get(message.level, ''),
                                     strings_only=True))
 
 
-@register.filter
+@library.filter
 def isotime(t):
     """Date/Time format according to ISO 8601"""
     if not hasattr(t, 'tzinfo'):
@@ -174,36 +180,36 @@ def _append_tz(t):
     return tz.localize(t)
 
 
-@register.function
+@library.global_function
 def thisyear():
     """The current year."""
     return jinja2.Markup(datetime.date.today().year)
 
 
-@register.filter
+@library.filter
 def cleank(txt):
     """Clean and link some user-supplied text."""
     return jinja2.Markup(bleach.linkify(bleach.clean(txt)))
 
 
-@register.filter
+@library.filter
 def urlencode(txt):
     """Url encode a path."""
     return urllib.quote_plus(txt.encode('utf8'))
 
 
-@register.filter
+@library.filter
 def jsonencode(data):
     return jinja2.Markup(json.dumps(data))
 
 
-@register.function
+@library.global_function
 def get_soapbox_messages(url):
     _, path = split_path(url)
     return Message.objects.match(path)
 
 
-@register.function
+@library.global_function
 def get_webfont_attributes(request):
     """
     Return data attributes based on assumptions about if user has them cached
@@ -228,12 +234,13 @@ def get_webfont_attributes(request):
     return font_attributes
 
 
-@register.inclusion_tag('core/elements/soapbox_messages.html')
+@library.global_function
+@library.render_with('core/elements/soapbox_messages.html')
 def soapbox_messages(soapbox_messages):
     return {'soapbox_messages': soapbox_messages}
 
 
-@register.function
+@library.global_function
 def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
     """Add the utm_* tracking parameters to a URL."""
     url_obj = URLObject(url_).add_query_params({
@@ -257,7 +264,7 @@ def _contextual_locale(context):
     return locale
 
 
-@register.function
+@library.global_function
 @jinja2.contextfunction
 def datetimeformat(context, value, format='shortdatetime', output='html'):
     """
@@ -312,7 +319,7 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
                          (tzvalue.isoformat(), formatted))
 
 
-@register.function
+@library.global_function
 @jinja2.contextfunction
 def number(context, n):
     """Return the localized representation of an integer or decimal.
@@ -325,6 +332,18 @@ def number(context, n):
     return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
 
 
-@register.function
+@library.global_function
 def static(path):
     return staticfiles_storage.url(path)
+
+
+@library.filter
+def as_datetime(t, fmt=None):
+    """Call ``datetime.strftime`` with the given format string."""
+    if fmt is None:
+        fmt = _(u'%B %e, %Y')
+    if not six.PY3:
+        # The datetime.strftime function strictly does not
+        # support Unicode in Python 2 but is Unicode only in 3.x.
+        fmt = fmt.encode('utf-8')
+    return smart_unicode(t.strftime(fmt)) if t else ''

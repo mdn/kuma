@@ -12,14 +12,14 @@ from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.html import conditional_escape
 from django.utils.translation import ugettext
-from jingo import register
+from django_jinja import library
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 
-from .constants import DIFF_WRAP_COLUMN
-from .jobs import DocumentZoneStackJob
-from .utils import tidy_content
+from ..constants import DIFF_WRAP_COLUMN
+from ..jobs import DocumentZoneStackJob
+from ..utils import tidy_content
 
 
 def get_compare_url(doc, from_id, to_id):
@@ -28,7 +28,7 @@ def get_compare_url(doc, from_id, to_id):
                     locale=doc.locale) + '?' + params)
 
 
-@register.filter
+@library.filter
 def bugize_text(content):
     content = jinja2.escape(content)
     regex = re.compile(r'(bug)\s+#?(\d+)', re.IGNORECASE)
@@ -40,7 +40,7 @@ def bugize_text(content):
     return content
 
 
-@register.function
+@library.global_function
 def format_comment(rev, previous_revision=None):
     """
     Massages revision comment content after the fact
@@ -61,7 +61,7 @@ def format_comment(rev, previous_revision=None):
     return comment
 
 
-@register.function
+@library.global_function
 def revisions_unified_diff(from_revision, to_revision):
     """
     Given the two revisions generate a diff between their tidied
@@ -84,7 +84,7 @@ def revisions_unified_diff(from_revision, to_revision):
     ))
 
 
-@register.function
+@library.global_function
 def diff_table(content_from, content_to, prev_id, curr_id, tidy=False):
     """
     Creates an HTML diff of the passed in content_from and content_to.
@@ -108,7 +108,7 @@ def diff_table(content_from, content_to, prev_id, curr_id, tidy=False):
     return jinja2.Markup(diff)
 
 
-@register.function
+@library.global_function
 def tag_diff_table(prev_tags, curr_tags, prev_id, curr_id):
     html_diff = difflib.HtmlDiff(wrapcolumn=DIFF_WRAP_COLUMN)
 
@@ -121,7 +121,7 @@ def tag_diff_table(prev_tags, curr_tags, prev_id, curr_id):
     return jinja2.Markup(diff)
 
 
-@register.function
+@library.global_function
 def colorize_diff(diff):
     # we're doing something horrible here because this will show up
     # in feed reader and other clients that don't load CSS files
@@ -134,13 +134,13 @@ def colorize_diff(diff):
     return diff
 
 
-@register.filter
+@library.filter
 def wiki_bleach(val):
     from kuma.wiki.models import Document
     return jinja2.Markup(Document.objects.clean_content(val))
 
 
-@register.filter
+@library.filter
 def selector_content_find(document, selector):
     """
     Provided a selector, returns the relevant content from the document
@@ -182,7 +182,7 @@ def _recursive_escape(value, esc=conditional_escape):
     return esc(DjangoJSONEncoder().default(value))
 
 
-@register.filter
+@library.filter
 def tojson(value):
     """
     Returns the JSON representation of the value.
@@ -196,7 +196,7 @@ def tojson(value):
     return jinja2.Markup(result)
 
 
-@register.function
+@library.global_function
 def document_zone_management_links(user, document):
     links = {'add': None, 'change': None}
     stack = DocumentZoneStackJob().get(document.pk)
@@ -217,7 +217,7 @@ def document_zone_management_links(user, document):
     return links
 
 
-@register.filter
+@library.filter
 def absolutify(url, site=None):
     """
     Joins a base ``Site`` URL with a URL path.
@@ -245,7 +245,7 @@ def absolutify(url, site=None):
     return urlparse.urlunparse([scheme, netloc, path, None, query, fragment])
 
 
-@register.function
+@library.global_function
 def wiki_url(path):
     """
     Create a URL pointing to Kuma.
