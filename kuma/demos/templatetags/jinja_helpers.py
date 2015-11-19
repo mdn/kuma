@@ -4,22 +4,20 @@ import hashlib
 import random
 
 import bitly_api
-import jingo
 import jinja2
-from babel import localedata
 from django.conf import settings
+from django.template.loader import get_template
 from django.utils.encoding import smart_str
-from django.utils.timezone import get_default_timezone
 from django.utils.translation import ugettext, ungettext
-from jingo import register
+from django_jinja import library
 from taggit.models import TaggedItem
 
 from kuma.core.cache import memcache
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import bitly
 
-from . import DEMO_LICENSES, DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS
-from .models import Submission
+from .. import DEMO_LICENSES, DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS
+from ..models import Submission
 
 
 TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
@@ -54,12 +52,12 @@ def register_cached_inclusion_tag(template, key_fn=None,
             out = memcache.get(cache_key)
             if out is None:
                 context = f(*args, **kw)
-                t = jingo.env.get_template(template).render(context)
+                t = get_template(template).render(context)
                 out = jinja2.Markup(t)
                 memcache.set(cache_key, out, expires)
             return out
 
-        return register.function(wrapper)
+        return library.global_function(wrapper)
     return decorator
 
 
@@ -77,23 +75,27 @@ def submission_key(prefix):
 # TOOO: All of these inclusion tags could probably be generated & registered
 # from a dict of function names and inclusion tag args, since the method bodies
 # are all identical. Might be astronaut architecture, though.
-@register.inclusion_tag('demos/elements/demos_head.html')
+@library.global_function
+@library.render_with('demos/elements/demos_head.html')
 def demos_head(request):
     return locals()
 
 
-@register.inclusion_tag('demos/elements/submission_creator.html')
+@library.global_function
+@library.render_with('demos/elements/submission_creator.html')
 def submission_creator(submission):
     return locals()
 
 
-@register.inclusion_tag('demos/elements/user_link.html')
+@library.global_function
+@library.render_with('demos/elements/user_link.html')
 def user_link(user, show_gravatar=False, gravatar_size=48,
               gravatar_default='mm'):
     return locals()
 
 
-@register.inclusion_tag('demos/elements/submission_thumb.html')
+@library.global_function
+@library.render_with('demos/elements/submission_thumb.html')
 def submission_thumb(submission, extra_class=None, thumb_width="200",
                      thumb_height="150", is_homepage=False):
     vars = locals()
@@ -146,20 +148,22 @@ def submission_listing(request, submission_list, is_paginated, paginator,
     return locals()
 
 
-@register.inclusion_tag('demos/elements/tech_tags_list.html')
+@library.global_function
+@library.render_with('demos/elements/tech_tags_list.html')
 def tech_tags_list():
     return locals()
 
 
 # Not cached, because it's small and changes based on
 # current search query string
-@register.inclusion_tag('demos/elements/search_form.html')
+@library.global_function
+@library.render_with('demos/elements/search_form.html')
 @jinja2.contextfunction
 def search_form(context):
     return new_context(**locals())
 
 
-@register.function
+@library.global_function
 def devderby_tag_to_date_url(tag):
     """Turn a devderby tag like challenge:2011:june into a date-based URL"""
     # HACK: Not super happy with this, but it works for now
@@ -169,7 +173,7 @@ def devderby_tag_to_date_url(tag):
     return reverse('demos_devderby_by_date', args=(parts[-2], parts[-1]))
 
 
-@register.function
+@library.global_function
 def license_link(license_name):
     if license_name in DEMO_LICENSES:
         return DEMO_LICENSES[license_name]['link']
@@ -177,7 +181,7 @@ def license_link(license_name):
         return license_name
 
 
-@register.function
+@library.global_function
 def license_title(license_name):
     if license_name in DEMO_LICENSES:
         return DEMO_LICENSES[license_name]['title']
@@ -185,7 +189,7 @@ def license_title(license_name):
         return license_name
 
 
-@register.function
+@library.global_function
 def tag_title(tag):
     if not tag:
         return ''
@@ -196,7 +200,7 @@ def tag_title(tag):
         return name
 
 
-@register.function
+@library.global_function
 def tag_description(tag):
     if not tag:
         return ''
@@ -207,7 +211,7 @@ def tag_description(tag):
         return name
 
 
-@register.function
+@library.global_function
 def tag_learn_more(tag):
     if not tag:
         return ''
@@ -218,7 +222,7 @@ def tag_learn_more(tag):
         return []
 
 
-@register.function
+@library.global_function
 def tag_meta(tag, other_name):
     """Get metadata for a tag or tag name."""
     # TODO: Replace usage of tag_{title,description,learn_more}?
@@ -231,23 +235,23 @@ def tag_meta(tag, other_name):
         return ''
 
 
-@register.function
+@library.global_function
 def tags_for_object(obj):
     tags = obj.taggit_tags.all()
     return tags
 
 
-@register.function
+@library.global_function
 def tech_tags_for_object(obj):
     return obj.taggit_tags.all_ns('tech')
 
 
-@register.function
+@library.global_function
 def tags_used_for_submissions():
     return TaggedItem.tags_for(Submission)
 
 
-@register.filter
+@library.filter
 def date_diff(timestamp, to=None):
     if not timestamp:
         return ""
@@ -283,74 +287,8 @@ def date_diff(timestamp, to=None):
         return date_str + " ago"
 
 
-@register.filter
-def timesince(d, now=None):
-    """Take two datetime objects and return the time between d and now as a
-    nicely formatted string, e.g. "10 minutes". If d is None or occurs after
-    now, return ''.
-
-    Units used are years, months, weeks, days, hours, and minutes. Seconds and
-    microseconds are ignored. Just one unit is displayed. For example,
-    "2 weeks" and "1 year" are possible outputs, but "2 weeks, 3 days" and "1
-    year, 5 months" are not.
-
-    Adapted from django.utils.timesince to have better i18n (not assuming
-    commas as list separators and including "ago" so order of words isn't
-    assumed), show only one time unit, and include seconds.
-
-    """
-    if d is None:
-        return u''
-    chunks = [
-        (60 * 60 * 24 * 365, lambda n: ungettext('%(number)d year ago',
-                                                 '%(number)d years ago', n)),
-        (60 * 60 * 24 * 30, lambda n: ungettext('%(number)d month ago',
-                                                '%(number)d months ago', n)),
-        (60 * 60 * 24 * 7, lambda n: ungettext('%(number)d week ago',
-                                               '%(number)d weeks ago', n)),
-        (60 * 60 * 24, lambda n: ungettext('%(number)d day ago',
-                                           '%(number)d days ago', n)),
-        (60 * 60, lambda n: ungettext('%(number)d hour ago',
-                                      '%(number)d hours ago', n)),
-        (60, lambda n: ungettext('%(number)d minute ago',
-                                 '%(number)d minutes ago', n)),
-        (1, lambda n: ungettext('%(number)d second ago',
-                                '%(number)d seconds ago', n))]
-    if not now:
-        if d.tzinfo:
-            now = datetime.datetime.now(get_default_timezone())
-        else:
-            now = datetime.datetime.now()
-
-    # Ignore microsecond part of 'd' since we removed it from 'now'
-    delta = now - (d - datetime.timedelta(0, 0, d.microsecond))
-    since = delta.days * 24 * 60 * 60 + delta.seconds
-    if since <= 0:
-        # d is in the future compared to now, stop processing.
-        return u''
-    for i, (seconds, name) in enumerate(chunks):
-        count = since // seconds
-        if count != 0:
-            break
-    return name(count) % {'number': count}
-
-
-def _babel_locale(locale):
-    """Return the Babel locale code, given a normal one."""
-    # Babel uses underscore as separator.
-    return locale.replace('-', '_')
-
-
-def _contextual_locale(context):
-    """Return locale from the context, falling back to a default if invalid."""
-    locale = context['request'].locale
-    if not localedata.exists(locale):
-        locale = settings.LANGUAGE_CODE
-    return locale
-
-
 # Note: Deprecated. Only used in kuma/demos/.
-@register.filter
+@library.filter
 def bitly_shorten(url):
     """Attempt to shorten a given URL through bit.ly / mzl.la"""
     cache_key = 'bitly:%s' % hashlib.md5(smart_str(url)).hexdigest()

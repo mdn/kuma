@@ -19,7 +19,7 @@ from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import KumaTestCase, get_user
 from kuma.users.tests import UserTestCase
 
-from . import (create_template_test_users, create_document_tree,
+from . import (create_document_tree, create_template_test_users,
                create_topical_parents_docs, doc_rev, document, normalize_html,
                revision)
 from .. import tasks
@@ -27,8 +27,8 @@ from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from ..events import EditDocumentInTreeEvent
 from ..exceptions import (DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress, PageMoveError)
-from ..helpers import absolutify
 from ..models import Document, Revision, RevisionIP, TaggedDocument
+from ..templatetags.jinja_helpers import absolutify
 from ..utils import tidy_content
 
 

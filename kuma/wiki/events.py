@@ -1,15 +1,14 @@
 import logging
 
 from django.utils.translation import ugettext
-from tidings.events import InstanceEvent
+from tidings.events import EventUnion, InstanceEvent
 
 from kuma.core.email_utils import emails_with_users_and_watches
-from kuma.core.helpers import add_utm
+from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.urlresolvers import reverse
-from tidings.events import EventUnion
 
-from .helpers import get_compare_url, revisions_unified_diff
 from .models import Document
+from .templatetags.jinja_helpers import get_compare_url, revisions_unified_diff
 
 
 log = logging.getLogger('kuma.wiki.events')
