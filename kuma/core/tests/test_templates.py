@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.template.backends.jinja2 import Jinja2
 from django.template.loader import render_to_string
@@ -45,6 +48,16 @@ class BaseTemplateTests(MockRequestTests):
 class ErrorListTests(MockRequestTests):
     """Tests for errorlist.html, which renders form validation errors."""
 
+    def setUp(self):
+        super(ErrorListTests, self).setUp()
+        params = {
+            'DIRS': [os.path.join(settings.ROOT, 'jinja2')],
+            'APP_DIRS': True,
+            'NAME': 'jinja2',
+            'OPTIONS': {},
+        }
+        self.engine = Jinja2(params)
+
     def test_escaping(self):
         """Make sure we escape HTML entities, lest we court XSS errors."""
         class MockForm(object):
@@ -62,10 +75,9 @@ class ErrorListTests(MockRequestTests):
 
         source = ("""{% from "includes/error_list.html" import errorlist %}"""
                   """{{ errorlist(form) }}""")
-        # FIXME
-        html = render_to_string(Jinja2().from_string(source),
-                                context={'form': MockForm()},
-                                request=self.request)
+        context = {'form': MockForm()}
+        html = self.engine.from_string(source).render(context)
+
         assert '<"evil&ness' not in html
         assert '&lt;&#34;evil&amp;ness-field&#34;&gt;' in html
         assert '&lt;&#34;evil&amp;ness-non-field&#34;&gt;' in html
