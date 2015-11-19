@@ -6,10 +6,13 @@ from django.contrib.sites.models import Site
 
 from kuma.core.cache import memcache
 from kuma.users.tests import UserTestCase
-from . import document, revision, WikiTestCase
-from ..helpers import (absolutify, document_zone_management_links,
-                       revisions_unified_diff, selector_content_find, tojson)
+
+from . import WikiTestCase, document, revision
 from ..models import DocumentZone
+from ..templatetags.jinja_helpers import (absolutify,
+                                          document_zone_management_links,
+                                          revisions_unified_diff,
+                                          selector_content_find, tojson)
 
 
 class HelpTests(WikiTestCase):
