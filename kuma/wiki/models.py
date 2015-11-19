@@ -801,8 +801,6 @@ class Document(NotificationsMixin, models.Model):
 
     def revert(self, revision, user, comment=None):
         old_review_tags = list(revision.review_tags.names())
-        if revision.document.original == self:
-            revision.based_on = revision
         revision.id = None
         revision.comment = ("Revert to revision of %s by %s" %
                             (revision.created, revision.creator))
@@ -811,6 +809,9 @@ class Document(NotificationsMixin, models.Model):
         revision.created = datetime.now()
         revision.creator = user
         revision.save()
+        # TODO: change to primary key check instead of object comparison
+        if revision.document.original == self:
+            revision.save(update_fields=['based_on'])
         if old_review_tags:
             revision.review_tags.set(*old_review_tags)
         revision.make_current()
@@ -1076,18 +1077,13 @@ class Document(NotificationsMixin, models.Model):
         # preserve them.
         review_tags = list(self.current_revision.review_tags.names())
 
-        # Step 3: Create (but don't yet save) a copy of our current
-        # revision, but with the new slug and title (if title is
-        # changing too).
-        moved_rev = self._moved_revision(new_slug, user, title)
-
-        # Step 4: Create (but don't yet save) a Document and Revision
+        # Step 3: Create (but don't yet save) a Document and Revision
         # to leave behind as a redirect from old location to new.
         redirect_doc, redirect_rev = self._post_move_redirects(new_slug,
                                                                user,
                                                                title)
 
-        # Step 5: Update our breadcrumbs.
+        # Step 4: Update our breadcrumbs.
         new_parent = self._get_new_parent(new_slug)
 
         # If we found a Document at what will be our parent slug, set
@@ -1096,9 +1092,14 @@ class Document(NotificationsMixin, models.Model):
         # would already have moved if it were going to).
         self.parent_topic = new_parent
 
-        # Step 6: Save this Document.
+        # Step 5: Save this Document.
         self.slug = new_slug
         self.save()
+
+        # Step 6: Create (but don't yet save) a copy of our current
+        # revision, but with the new slug and title (if title is
+        # changing too).
+        moved_rev = self._moved_revision(new_slug, user, title)
 
         # Step 7: Save the Revision that actually moves us.
         moved_rev.save(force_insert=True)
