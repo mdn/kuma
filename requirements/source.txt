@@ -97,7 +97,7 @@ django-tidings==1.1
 
 django-timezones==0.2
 
-django-waffle==0.10.1
+django-waffle==0.11
 
 django-cacheback==0.9.1
 
