@@ -9,7 +9,7 @@ sqlparse==0.1.18
 
 cssselect==0.9.1
 
-Werkzeug==0.10.4
+Werkzeug==0.11.2
 
 django-devserver==0.8.0
 
