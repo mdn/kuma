@@ -37,7 +37,7 @@ jingo==0.7.1
 
 kombu==3.0.26
 
-oauthlib==1.0.1
+oauthlib==1.0.3
 
 python-magic==0.4.6
 
