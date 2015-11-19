@@ -32,9 +32,6 @@ except ImportError:
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_mod)
 
-import jingo.monkey
-jingo.monkey.patch()
-
 from django.conf import settings
 from celery import Celery
 

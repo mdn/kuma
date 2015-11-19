@@ -1,3 +1,8 @@
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
 import functools
 import hashlib
 import logging
@@ -8,14 +13,13 @@ from itertools import islice
 
 import bitly_api
 from celery import chain, chord
-from polib import pofile
-
 from django.conf import settings
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
+from django.http import QueryDict
 from django.shortcuts import _get_queryset
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_unicode, smart_str
 from django.utils.http import urlencode
-
+from polib import pofile
 from taggit.utils import split_strip
 
 from .cache import memcache
@@ -329,3 +333,36 @@ def get_unique(content_type, object_pk, name=None, request=None,
     unique_hash = hashlib.md5(hash_text).hexdigest()
 
     return (user, ip, user_agent, unique_hash)
+
+
+def urlparams(url_, fragment=None, query_dict=None, **query):
+    """
+    Add a fragment and/or query parameters to a URL.
+
+    New query params will be appended to exising parameters, except duplicate
+    names, which will be replaced.
+    """
+    url_ = urlparse.urlparse(url_)
+    fragment = fragment if fragment is not None else url_.fragment
+
+    q = url_.query
+    new_query_dict = (QueryDict(smart_str(q), mutable=True) if
+                      q else QueryDict('', mutable=True))
+    if query_dict:
+        for k, l in query_dict.lists():
+            new_query_dict[k] = None  # Replace, don't append.
+            for v in l:
+                new_query_dict.appendlist(k, v)
+
+    for k, v in query.items():
+        # Replace, don't append.
+        if isinstance(v, list):
+            new_query_dict.setlist(k, v)
+        else:
+            new_query_dict[k] = v
+
+    query_string = urlencode([(k, v) for k, l in new_query_dict.lists() for
+                              v in l if v is not None])
+    new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
+                               url_.params, query_string, fragment)
+    return new.geturl()

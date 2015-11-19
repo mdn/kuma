@@ -1,16 +1,12 @@
-from django.test import RequestFactory
 from django.contrib.auth.models import AnonymousUser
+from django.template.backends.jinja2 import Jinja2
+from django.template.loader import render_to_string
+from django.test import RequestFactory
 from django.utils import translation
-
 from nose.tools import eq_
 from pyquery import PyQuery as pq
-import jingo
 
 from kuma.core.tests import KumaTestCase
-
-
-def setup():
-    jingo.load_helpers()
 
 
 class MockRequestTests(KumaTestCase):
@@ -33,14 +29,14 @@ class BaseTemplateTests(MockRequestTests):
         self.template = 'base.html'
 
     def test_no_dir_attribute(self):
-        html = jingo.render_to_string(self.request, self.template)
+        html = render_to_string(self.template, request=self.request)
         doc = pq(html)
         dir_attr = doc('html').attr['dir']
         eq_('ltr', dir_attr)
 
     def test_rtl_dir_attribute(self):
         translation.activate('ar')
-        html = jingo.render_to_string(self.request, self.template)
+        html = render_to_string(self.template, request=self.request)
         doc = pq(html)
         dir_attr = doc('html').attr['dir']
         eq_('rtl', dir_attr)
@@ -66,9 +62,10 @@ class ErrorListTests(MockRequestTests):
 
         source = ("""{% from "includes/error_list.html" import errorlist %}"""
                   """{{ errorlist(form) }}""")
-        html = jingo.render_to_string(self.request,
-                                      jingo.env.from_string(source),
-                                      {'form': MockForm()})
+        # FIXME
+        html = render_to_string(Jinja2().from_string(source),
+                                context={'form': MockForm()},
+                                request=self.request)
         assert '<"evil&ness' not in html
         assert '&lt;&#34;evil&amp;ness-field&#34;&gt;' in html
         assert '&lt;&#34;evil&amp;ness-non-field&#34;&gt;' in html

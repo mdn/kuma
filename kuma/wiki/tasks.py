@@ -25,9 +25,9 @@ from kuma.search.models import Index
 
 from .events import context_dict
 from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
-from .helpers import absolutify
 from .models import Document, Revision, RevisionIP
 from .search import WikiDocumentType
+from .templatetags.jinja_helpers import absolutify
 from .utils import tidy_content
 
 

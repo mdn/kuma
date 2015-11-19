@@ -104,8 +104,10 @@ def attachments_payload(attachments):
         except UnicodeEncodeError:
             obj['size'] = 0
 
-        obj['html'] = mark_safe(loader.render_to_string('attachments/includes/attachment_row.html',
-                                                        {'attachment': obj}))
+        obj['html'] = mark_safe(
+            loader.render_to_string('attachments/includes/attachment_row.html',
+                                    {'attachment': obj})
+        )
         attachments_list.append(obj)
     return attachments_list
 

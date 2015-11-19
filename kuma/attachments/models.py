@@ -2,8 +2,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.db import models
-
-import jingo
+from django.template.loader import select_template
 
 from .utils import attachment_upload_to, full_attachment_url
 
@@ -70,8 +69,7 @@ class Attachment(models.Model):
         * attachments/attachments/generic.html
         """
         rev = self.current_revision
-        env = jingo.get_env()
-        t = env.select_template([
+        t = select_template([
             'attachments/attachments/%s.html' % rev.mime_type.replace('/', '_'),
             'attachments/attachments/%s.html' % rev.mime_type.split('/')[0],
             'attachments/attachments/generic.html'])
