@@ -9,8 +9,8 @@ on how to use these modules.
 '''
 
 # The Olson database is updated several times a year.
-OLSON_VERSION = '2015d'
-VERSION = '2015.4'  # Switching to pip compatible version numbering.
+OLSON_VERSION = '2015g'
+VERSION = '2015.7'  # Switching to pip compatible version numbering.
 __version__ = VERSION
 
 OLSEN_VERSION = OLSON_VERSION # Old releases had this misspelling
@@ -241,7 +241,7 @@ class UTC(datetime.tzinfo):
         return "UTC"
 
 
-UTC = utc = UTC() # UTC is a singleton
+UTC = utc = UTC()  # UTC is a singleton
 
 
 def _UTC():
@@ -329,7 +329,7 @@ class _CountryTimezoneDict(LazyDict):
         zone_tab = open_resource('zone.tab')
         try:
             for line in zone_tab:
-                line = line.decode('US-ASCII')
+                line = line.decode('UTF-8')
                 if line.startswith('#'):
                     continue
                 code, coordinates, zone = line.split(None, 4)[:3]
@@ -357,7 +357,7 @@ class _CountryNameDict(LazyDict):
         zone_tab = open_resource('iso3166.tab')
         try:
             for line in zone_tab.readlines():
-                line = line.decode('US-ASCII')
+                line = line.decode('UTF-8')
                 if line.startswith('#'):
                     continue
                 code, name = line.split(None, 1)
@@ -599,6 +599,7 @@ all_timezones = \
  'America/Eirunepe',
  'America/El_Salvador',
  'America/Ensenada',
+ 'America/Fort_Nelson',
  'America/Fort_Wayne',
  'America/Fortaleza',
  'America/Glace_Bay',
@@ -1177,6 +1178,7 @@ common_timezones = \
  'America/Edmonton',
  'America/Eirunepe',
  'America/El_Salvador',
+ 'America/Fort_Nelson',
  'America/Fortaleza',
  'America/Glace_Bay',
  'America/Godthab',
