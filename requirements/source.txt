@@ -80,7 +80,7 @@ django-honeypot==0.5.0
 
 django-memcached-hashring==0.1.2
 
-django-nose==1.4.1
+django-nose==1.4.2
 
 djangorestframework==2.4.6
 
