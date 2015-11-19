@@ -3,9 +3,9 @@ from nose.plugins.attrib import attr
 
 from kuma.wiki.tests import revision
 
-from ..helpers import gravatar_url
-from ..models import UserBan
 from . import UserTestCase
+from ..models import UserBan
+from ..templatetags.jinja_helpers import gravatar_url
 
 
 class TestUser(UserTestCase):

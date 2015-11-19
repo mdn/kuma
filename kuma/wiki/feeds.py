@@ -10,13 +10,14 @@ from django.utils.feedgenerator import (Atom1Feed, Rss201rev2Feed,
 from django.utils.html import escape
 from django.utils.translation import ugettext as _
 
-from kuma.core.helpers import add_utm
+from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.urlresolvers import reverse
 from kuma.core.validators import valid_jsonp_callback_value
-from kuma.users.helpers import gravatar_url
+from kuma.users.templatetags.jinja_helpers import gravatar_url
 
-from .helpers import colorize_diff, diff_table, get_compare_url, tag_diff_table
 from .models import Document, Revision
+from .templatetags.jinja_helpers import (colorize_diff, diff_table,
+                                         get_compare_url, tag_diff_table)
 
 
 MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 500)
