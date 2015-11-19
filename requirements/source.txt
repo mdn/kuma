@@ -74,7 +74,7 @@ django-celery==3.1.16
 
 django-constance==1.1.1
 
-django-extensions==1.5.5
+django-extensions==1.5.9
 
 django-honeypot==0.5.0
 
