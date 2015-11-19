@@ -523,6 +523,30 @@ class TestUnusedAssignment(TestCase):
                 return
         ''', m.UnusedVariable)
 
+    @skip("todo: Difficult because it does't apply in the context of a loop")
+    def test_unusedReassignedVariable(self):
+        """
+        Shadowing a used variable can still raise an UnusedVariable warning.
+        """
+        self.flakes('''
+        def a():
+            b = 1
+            b.foo()
+            b = 2
+        ''', m.UnusedVariable)
+
+    def test_variableUsedInLoop(self):
+        """
+        Shadowing a used variable cannot raise an UnusedVariable warning in the
+        context of a loop.
+        """
+        self.flakes('''
+        def a():
+            b = True
+            while b:
+                b = False
+        ''')
+
     def test_assignToGlobal(self):
         """
         Assigning to a global and then not using that global is perfectly
@@ -964,3 +988,55 @@ class TestUnusedAssignment(TestCase):
     def test_returnOnly(self):
         """Do not crash on lone "return"."""
         self.flakes('return 2')
+
+
+class TestAsyncStatements(TestCase):
+
+    @skipIf(version_info < (3, 5), 'new in Python 3.5')
+    def test_asyncDef(self):
+        self.flakes('''
+        async def bar():
+            return 42
+        ''')
+
+    @skipIf(version_info < (3, 5), 'new in Python 3.5')
+    def test_asyncDefAwait(self):
+        self.flakes('''
+        async def read_data(db):
+            await db.fetch('SELECT ...')
+        ''')
+
+    @skipIf(version_info < (3, 5), 'new in Python 3.5')
+    def test_asyncDefUndefined(self):
+        self.flakes('''
+        async def bar():
+            return foo()
+        ''', m.UndefinedName)
+
+    @skipIf(version_info < (3, 5), 'new in Python 3.5')
+    def test_asyncFor(self):
+        self.flakes('''
+        async def read_data(db):
+            output = []
+            async for row in db.cursor():
+                output.append(row)
+            return output
+        ''')
+
+    @skipIf(version_info < (3, 5), 'new in Python 3.5')
+    def test_asyncWith(self):
+        self.flakes('''
+        async def commit(session, data):
+            async with session.transaction():
+                await session.update(data)
+        ''')
+
+    @skipIf(version_info < (3, 5), 'new in Python 3.5')
+    def test_asyncWithItem(self):
+        self.flakes('''
+        async def commit(session, data):
+            async with session.transaction() as trans:
+                await trans.begin()
+                ...
+                await trans.end()
+        ''')

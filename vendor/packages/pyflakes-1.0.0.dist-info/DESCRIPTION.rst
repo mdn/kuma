@@ -9,7 +9,7 @@ parsing the source file, not importing it, so it is safe to use on
 modules with side effects.  It's also much faster.
 
 It is `available on PyPI <https://pypi.python.org/pypi/pyflakes>`_
-and it supports all active versions of Python from 2.5 to 3.4.
+and it supports all active versions of Python from 2.5 to 3.5.
 
 
 
@@ -62,10 +62,6 @@ Share your feedback and ideas: `subscribe to the mailing-list
 .. image:: https://api.travis-ci.org/pyflakes/pyflakes.png
    :target: https://travis-ci.org/pyflakes/pyflakes
    :alt: Build status
-
-.. image:: https://pypip.in/wheel/pyflakes/badge.png
-   :target: https://pypi.python.org/pypi/pyflakes
-   :alt: Wheel Status
 
 .. _Pylint: http://www.pylint.org/
 .. _flake8: https://pypi.python.org/pypi/flake8
