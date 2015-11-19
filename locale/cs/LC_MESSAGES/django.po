@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-18 21:53+0000\n"
-"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
+"PO-Revision-Date: 2015-11-19 20:11+0000\n"
+"Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -171,7 +171,7 @@ msgstr "Komentáře"
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:66
 msgid "Uploading"
-msgstr ""
+msgstr "Nahrává se"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -264,7 +264,7 @@ msgstr ""
 
 #: kuma/authkeys/templates/authkeys/new.html:30
 msgid "Key ID"
-msgstr ""
+msgstr "ID Klíče"
 
 #: kuma/authkeys/templates/authkeys/new.html:32
 msgid "Secret"
@@ -414,29 +414,29 @@ msgstr[2] ""
 
 #: kuma/core/helpers.py:143
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #: kuma/core/helpers.py:143
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: kuma/core/helpers.py:297
 #, python-format
 msgid "Today at %s"
-msgstr ""
+msgstr "Dnes v %s"
 
 #: kuma/core/sections.py:6 kuma/landing/templates/landing/homepage.html:85
 #: templates/base.html:155
 msgid "Add-ons"
-msgstr ""
+msgstr "Doplňky"
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
-msgstr ""
+msgstr "Mozilla"
 
 #: kuma/core/sections.py:20 templates/base.html:134
 msgid "Apps"
-msgstr ""
+msgstr "Aplikace"
 
 #: kuma/core/sections.py:27
 #: kuma/core/translations/search/filter/mobile/name.py:4
@@ -447,7 +447,7 @@ msgstr ""
 #: kuma/core/sections.py:34
 #: kuma/landing/templates/landing/promote_buttons.html:117
 msgid "Web"
-msgstr ""
+msgstr "Web"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
@@ -463,7 +463,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
-msgstr ""
+msgstr "API a DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
@@ -487,29 +487,29 @@ msgstr ""
 #: kuma/landing/templates/landing/promote_buttons.html:99
 #: templates/base.html:130
 msgid "CSS"
-msgstr ""
+msgstr "CSS"
 
 #: kuma/core/translations/search/filter/firefox/name.py:4
 #: kuma/landing/templates/landing/homepage.html:81 templates/base.html:156
 msgid "Firefox"
-msgstr ""
+msgstr "Firefox"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
-msgstr ""
+msgstr "Firefox pro počítač"
 
 #: kuma/core/translations/search/filter/firefox-mobile/name.py:4
 msgid "Firefox for Android"
-msgstr ""
+msgstr "Firefox pro Android"
 
 #: kuma/core/translations/search/filter/firefox-os/name.py:4
 #: kuma/landing/templates/landing/homepage.html:82 templates/base.html:158
 msgid "Firefox OS"
-msgstr ""
+msgstr "Firefox OS"
 
 #: kuma/core/translations/search/filter/games/name.py:4
 msgid "Games"
-msgstr ""
+msgstr "Hry"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
@@ -520,7 +520,7 @@ msgstr ""
 #: kuma/landing/templates/landing/promote_buttons.html:105
 #: kuma/users/forms.py:37 templates/base.html:129
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: kuma/core/translations/search/filter/intermediate/name.py:4
 msgid "Intermediate"
@@ -531,39 +531,39 @@ msgstr ""
 #: kuma/landing/templates/landing/promote_buttons.html:111
 #: templates/base.html:131
 msgid "JavaScript"
-msgstr ""
+msgstr "Javascript"
 
 #: kuma/core/translations/search/filter/marketplace/name.py:4
 msgid "Marketplace"
-msgstr ""
+msgstr "Marketplace"
 
 #: kuma/core/translations/search/filter/mathml/name.py:4
 #: templates/base.html:135
 msgid "MathML"
-msgstr ""
+msgstr "MathML"
 
 #: kuma/core/translations/search/filter/svg/name.py:4
 #: kuma/demos/__init__.py:335
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: kuma/core/translations/search/filter/tools/name.py:4
 #: templates/base.html:100
 msgid "Tools"
-msgstr ""
+msgstr "Nástroje"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
 msgid "Web Development"
-msgstr ""
+msgstr "Vývoj webu"
 
 #: kuma/core/translations/search/filter/webgl/name.py:4
 #: kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
 msgid "WebGL"
-msgstr ""
+msgstr "WebGL"
 
 #: kuma/core/translations/search/filter/xul/name.py:4
 msgid "XUL"
-msgstr ""
+msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 msgid "Document type"
@@ -575,7 +575,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
-msgstr ""
+msgstr "Témata"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
@@ -583,19 +583,19 @@ msgstr ""
 
 #: kuma/dashboards/forms.py:10 kuma/demos/__init__.py:33
 msgid "None"
-msgstr ""
+msgstr "Nic"
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
-msgstr ""
+msgstr "Hodina"
 
 #: kuma/dashboards/forms.py:12
 msgid "Day"
-msgstr ""
+msgstr "Den"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "Týden"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
@@ -609,27 +609,27 @@ msgstr ""
 #: kuma/dashboards/forms.py:28
 #: kuma/dashboards/templates/dashboards/revisions.html:19
 msgid "User:"
-msgstr ""
+msgstr "Uživatel:"
 
 #: kuma/dashboards/forms.py:32
 #: kuma/dashboards/templates/dashboards/revisions.html:24
 msgid "Topic:"
-msgstr ""
+msgstr "Téma:"
 
 #: kuma/dashboards/forms.py:34
 #: kuma/dashboards/templates/dashboards/revisions.html:30
 msgid "Start Date:"
-msgstr ""
+msgstr "Datum zahájení:"
 
 #: kuma/dashboards/forms.py:38
 #: kuma/dashboards/templates/dashboards/revisions.html:35
 msgid "End Date:"
-msgstr ""
+msgstr "Datum ukončení:"
 
 #: kuma/dashboards/forms.py:44
 #: kuma/dashboards/templates/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "Předcházející období:"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -638,35 +638,35 @@ msgstr ""
 #: kuma/dashboards/templates/dashboards/revisions.html:44
 #: kuma/search/templates/search/results.html:210
 msgid "Filter"
-msgstr ""
+msgstr "Filtr"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:73
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:39
 msgid "Revert"
-msgstr ""
+msgstr "Vrátit"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:73
 #: kuma/wiki/feeds.py:341
 msgid "View Page"
-msgstr ""
+msgstr "Zobrazit stránku"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:73
 #: kuma/wiki/feeds.py:344
 msgid "Edit Page"
-msgstr ""
+msgstr "Upravit stránku"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:73
 #: kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:62
 msgid "History"
-msgstr ""
+msgstr "Historie"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:35
 msgid "new"
-msgstr ""
+msgstr "nový"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:36
 msgid "deleted"
-msgstr ""
+msgstr "odstraněno"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
 msgid "Ban IP from Editing"
@@ -714,11 +714,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:37
 msgid "CSS3 Animations"
-msgstr ""
+msgstr "CSS3 Animace"
 
 #: kuma/demos/__init__.py:38
 msgid "June 2011"
-msgstr ""
+msgstr "Červen 2011"
 
 #: kuma/demos/__init__.py:39
 msgid ""
@@ -744,11 +744,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:44
 msgid "HTML5 <video>"
-msgstr ""
+msgstr "HTML5 <video>"
 
 #: kuma/demos/__init__.py:45
 msgid "July 2011"
-msgstr ""
+msgstr "Červenec 2011"
 
 #: kuma/demos/__init__.py:46 kuma/demos/__init__.py:47
 msgid ""
@@ -766,7 +766,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:52
 msgid "August 2011"
-msgstr ""
+msgstr "Srpen 2011"
 
 #: kuma/demos/__init__.py:53 kuma/demos/__init__.py:54
 msgid ""
@@ -784,7 +784,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:59
 msgid "September 2011"
-msgstr ""
+msgstr "Září 2011"
 
 #: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61
 #: kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
@@ -804,7 +804,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:66
 msgid "October 2011"
-msgstr ""
+msgstr "Říjen 2011"
 
 #: kuma/demos/__init__.py:67 kuma/demos/__init__.py:68
 msgid ""
@@ -819,7 +819,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:73
 msgid "November 2011"
-msgstr ""
+msgstr "Listopad 2011"
 
 #: kuma/demos/__init__.py:74 kuma/demos/__init__.py:75
 msgid ""
@@ -835,11 +835,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:79 kuma/demos/__init__.py:303
 msgid "IndexedDB"
-msgstr ""
+msgstr "IndexedDB"
 
 #: kuma/demos/__init__.py:80
 msgid "December 2011"
-msgstr ""
+msgstr "Prosinec 2011"
 
 #: kuma/demos/__init__.py:81 kuma/demos/__init__.py:82
 msgid ""
@@ -853,7 +853,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:86
 msgid "Orientation"
-msgstr ""
+msgstr "Orientace"
 
 #: kuma/demos/__init__.py:87
 msgid "January 2012"
