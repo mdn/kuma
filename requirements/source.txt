@@ -90,7 +90,7 @@ django-soapbox==1.2
 
 django-statici18n==1.1.5
 
-django-taggit==0.16.4
+django-taggit==0.17.3
 
 django-tidings==1.1
 
