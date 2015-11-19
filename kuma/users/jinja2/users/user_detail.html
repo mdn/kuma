@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% set display_name = user_display(detail_user) %}
+{% set accounts = social_accounts(detail_user) %}
+{% set is_me = user.pk == detail_user.pk %}
+
+{% block body_attributes %}{% endblock %}
+
+{% block bodyclass %}user user-display{% endblock %}
+
+{% block title %}{{ page_title(detail_user) }}{% endblock %}
+
+{% block site_css %}
+  {{ super() }}
+  {% stylesheet 'demostudio' %}
+  {% stylesheet 'jquery-ui' %}
+  {% stylesheet 'users' %}
+{% endblock %}
+
+{% block site_js %}
+  {{ super() }}
+  {% javascript 'demostudio' %}
+{% endblock %}
+
+{% block content %}
+<section id="content">
+<div class="wrap">
+
+  <section id="content-main" class="full">
+    <section id="user-head" class="column-container column-container-reverse vcard user-head">
+      <div class="column-10">
+        <h1 class="user-title">
+            <span class="nickname">{{ detail_user.username }}</span>
+            {% if detail_user.fullname %}
+                <b class="user-title-fullname">(<span class="fn">{{ detail_user.fullname }}</span>)</b>
+            {% endif %}
+            {% if user.is_authenticated() and is_me %}
+                {% include 'socialaccount/snippets/login_service_icon.html' %}
+            {% endif %}
+        </h1>
+
+        <div class="user-buttons">
+          {% if not is_me and user.has_perm('users.add_userban') %}
+            {{ ban_link(detail_user, user) }}
+          {% endif %}
+
+          {% if user.is_superuser %}
+            {{ admin_link(detail_user) }}
+          {% endif %}
+
+          <!-- Only shown for the user and admins -->
+          {% if detail_user.allows_editing_by(user) %}
+              <a id="edit-user" href="{{ url('users.user_edit', username=detail_user.username) }}" class="button neutral">{{ _("Edit") }}<i aria-hidden="true" class="icon-pencil"></i></a>
+              {% if is_me %}
+              <button id="advanced-menu" class="neutral only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
+              <div class="submenu js-submenu" id="advanced-menu-submenu">
+                <!-- this page -->
+                <div class="submenu-column">
+                  <div class="title">{{ _('Manage') }}</div>
+                  <ul>
+                    <li><a href="{{ url('socialaccount_connections') }}" class="neutral">{{ _("Account connections") }}</a></li>
+                    <li><a href="{{ url('authkeys.list') }}" class="neutral">{{ _("API keys") }}</a></li>
+                    <li><a href="{{ url('account_email') }}" class="neutral">{{ _("Email addresses") }}</a></li>
+                  </ul>
+                </div>
+              </div>
+              {% endif %}
+          {% endif %}
+        </div>
+        {% if detail_user.title or detail_user.organization or detail_user.location or detail_user.irc_nickname %}
+        <ul class="user-info">
+          {% if detail_user.title %}<li class="title">{{ detail_user.title }}</li>{% endif %}
+          {% if detail_user.organization %}<li class="org">{{ detail_user.organization }}</li>{% endif %}
+          {% if detail_user.location %}<li class="loc">{{ detail_user.location }}</li>{% endif %}
+          {% if detail_user.irc_nickname %}<li class="irc">IRC: {{ detail_user.irc_nickname }}</li>{% endif %}
+        </ul>
+        {% endif %}
+
+        <div class="user-bio">
+          <p>{{ detail_user.bio|linebreaksbr }}</p>
+        </div>
+
+        {% set tag_ns = 'profile:interest:' %}
+        {% set tags = detail_user.tags.all_ns(tag_ns) %}
+        {% if tags|length %}
+        <div class="user-tags">
+          <h2>{{ _("Interests") }}</h2>
+          <ul>
+            {% for tag in tags %}
+              <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        {% set tag_ns = 'profile:expertise:' %}
+        {% set tags = detail_user.tags.all_ns(tag_ns) %}
+        {% if tags|length %}
+        <div class="user-tags">
+          <h2>{{ _("Areas of Expertise") }}</h2>
+          <ul>
+            {% for tag in tags %}
+              <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <div class="user-since">{% trans date_joined=datetimeformat(detail_user.date_joined, format='date') %}Member since {{ date_joined }}{% endtrans %}</div>
+      </div>
+      <div class="column-2 ">
+        <figure>
+          <img src="{{ gravatar_url(detail_user.email, size=200) }}" alt="{{ detail_user.username }}" width="200" height="200" class="user-photo avatar" />
+        </figure>
+
+        <ul class="user-links">
+        {% if detail_user.website_url %}
+          <li class="website"><i class="icon-link" aria-hidden="true"></i><a href="{{ detail_user.website_url }}" rel="me external" class="url">{{ _("Website") }}</a></li>
+        {% endif %}
+
+        {% if detail_user.twitter_url %}
+          <li class="twitter"><i class="icon-twitter" aria-hidden="true"></i><a href="{{ detail_user.twitter_url }}" rel="me external" class="url">{{ _("Twitter") }}</a></li>
+        {% endif %}
+
+        {% if accounts.github %}
+          {% for github_account in accounts.github %}{% if github_account.extra_data %}
+          <li class="github"><i class="icon-github" aria-hidden="true"></i><a href="{{ github_account.get_profile_url() }}" rel="me external" class="url">{{ _("GitHub") }}</a></li>
+          {% endif %}{% endfor %}
+        {% else %}
+          {% if detail_user.github_url %}
+            <li class="github"><i class="icon-github" aria-hidden="true"></i><a href="{{ detail_user.github_url }}" rel="me external" class="url">{{ _("GitHub") }}</a></li>
+          {% endif %}
+        {% endif %}
+
+        {% if detail_user.stackoverflow_url %}
+          <li class="stackoverflow"><i class="icon-stackexchange" aria-hidden="true"></i><a href="{{ detail_user.stackoverflow_url }}" rel="me external" class="url">{{ _("Stack Overflow") }}</a></li>
+        {% endif %}
+
+        {% if detail_user.linkedin_url %}
+          <li class="linkedin"><i class="icon-linkedin" aria-hidden="true"></i><a href="{{ detail_user.linkedin_url }}" rel="me external" class="url">{{ _("LinkedIn") }}</a></li>
+        {% endif %}
+
+        {% if detail_user.mozillians_url %}
+          <li class="mozillians"><i class="icon-group" aria-hidden="true"></i><a href="{{ detail_user.mozillians_url }}" rel="me external" class="url">{{ _("Mozillians") }}</a></li>
+        {% endif %}
+
+        {% if detail_user.facebook_url %}
+          <li class="facebook"><i class="icon-facebook" aria-hidden="true"></i><a href="{{ detail_user.facebook_url }}" rel="me external" class="url">{{ _("Facebook") }}</a></li>
+        {% endif %}
+
+        </ul>
+      </div>
+    </section>
+
+    {% if demos_paginator.count %}
+        <section id="user-demos" class="user-section">
+            {{ submission_listing(
+                request, demos_page.object_list, demos_page.has_other_pages(),
+                demos_paginator, demos_page,
+                _("Subscribe to a feed of %(display_name)s's demos", display_name=display_name),
+                url('demos_feed_profile', format='atom', username=detail_user.username), cols_per_row=4,
+                show_submit=True
+            ) }}
+        </section>
+    {% elif is_me %}
+        <section id="user-demos" class="user-section">
+          <header class="gallery-head">
+            <h2 class="count">{{ _("No Demos") }}</h2>
+          </header>
+          <p class="none">{% trans submit_url=url('kuma.demos.views.submit') %}You haven't submitted any web technology demos. Build something awesome and <a href="{{ submit_url }}">submit a demo</a>!{% endtrans %}</p>
+        </section>
+    {% endif %}
+
+          <section id="docs-activity" class="user-section">
+            <header>
+              <h2>{{ _("Recent Docs Activity") }}</h2> <a href="{{ url('dashboards.revisions') }}?user={{ detail_user.username }}" class="button">{{ _('View all activity') }}</a>
+            </header>
+
+            <table class="activity">
+              <thead>
+                <th scope="col" class="activity-page">{{ _("Page") }}</th>
+                <th scope="col" class="activity-date">{{ _("Date") }}</th>
+                <th scope="col" class="activity-summary">{{ _("Comment") }}</th>
+              </thead>
+              <tbody>
+                {% for revision in detail_user.wiki_revisions() %}
+                <tr>
+                  <th scope="row">
+                      <h3><a href="{{ revision.document.get_absolute_url() }}">{{ revision.document.title }}</a></h3>
+                      <ul class="activity-actions">
+                          <li><a href="{{ revision.document.get_edit_url() }}" class="edit">{{ _("Edit page") }}</a></li>
+                          <li>{% if revision.previous %}<a href="{{ url('wiki.compare_revisions', revision.document.slug, locale=revision.document.locale) }}?from={{ revision.previous.id }}&amp;to={{ revision.id }}" rel="nofollow, noindex" class="diff">{{ _("View complete diff") }}</a>{% endif %}</li>
+                          <li><a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="history">{{ _("View page history") }}</a></li>
+                      </ul>
+                  </th>
+                  <td>{{ datetimeformat(revision.created, format='date') }}<br />
+                      {{ datetimeformat(revision.created, format='time') }}</td>
+                  {# TODO: auto-generate smart comment like "N words changed." #}
+                  <td>{{ format_comment(revision, previous_revision=revision.previous) }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <th scope="row">
+                    {% if is_me %}
+                        {% trans docs_url=wiki_url('Project:MDN/Contributing/Creating_and_editing_pages') %}
+                        <p class="none">You haven't contributed to any MDN docs. <a href="{{ docs_url }}">Pitch in!</a></p>
+                        {% endtrans %}
+                    {% else %}
+                        <p class="none">{{ _('This user has no activity.') }}</p>
+                    {% endif %}
+                    </th>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+              </tfoot>
+            </table>
+          </section>
+
+  </section><!-- /#content-main -->
+</div>
+</section>
+{% endblock %}

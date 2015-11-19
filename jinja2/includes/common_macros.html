@@ -1,0 +1,66 @@
+{% macro li_field(form, field_name, label='', id='', classes='', note='', icon_class='', image=False, show_label=True, show_icon=True) %}
+    {% set field = form[field_name] %}
+    <li id="field_{{field_name}}" class="field {{ 'type_%s' % field.field.widget.input_type if field.field.widget.input_type }}{{ ' required' if field.field.required }}{{ ' error' if field.errors }} {{classes}}">
+        {% if show_label %}
+            <label for="{{ field.id_for_label }}">{% if show_icon %}<i class="{{ icon_class or field.field.widget.attrs['data-fa-icon'] }}" aria-hidden="true"></i>{% endif %}{{ label or field.label }}</label>
+        {% endif %}
+        {{ field|safe }}
+        {% if note %}
+            <p class="note">{{ note }}</p>
+        {% endif %}
+        {{ field.errors|safe }}
+    </li>
+{% endmacro %}
+
+{% macro search_box(settings, id=False, prefix=None, target=None,
+                    placeholder=None) %}
+  {% if placeholder is none %}
+    {% set placeholder = _('Search Firefox Help') %}
+  {% endif %}
+  <div class="support-search"{% if id %} id="{{ id }}"{% endif %} role="search">
+    {% if prefix %}
+      {{ prefix }}
+    {% endif %}
+    <form action="{{ url('search') }}" method="get" {% if target %} target="{{ target }}"{% endif %}>
+      <input type="text" class="text" name="q" placeholder="{{ placeholder }}" required="required" />
+      <button type="submit" class="img-submit" title="{{ _('Search') }}">
+        <img src="{{ static('img/btn.search.png') }}" alt="{{ _('Search') }}" />
+      </button>
+    </form>
+  </div>
+{% endmacro %}
+
+{% macro greeting(user, settings) %}
+  <div id="greeting">
+    {% if user.is_authenticated() %}
+      {{ _('Welcome, <span class="user">%(user)s</span>.', user=user) }}
+      <nav>
+        <a href="{{ user.get_absolute_url() }}">{{ _('Profile') }}</a>
+        |
+        <a href="{{ url('account_logout') }}">{{ _('Sign Out') }}</a>
+      </nav>
+    {% else %}
+      <p>
+        {% trans login_url=url('account_login') %}
+          Want to contribute?<br /> <a href="{{ login_url }}">Sign in</a>
+        {% endtrans %}
+      </p>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro content_editor(field) %}
+  {#
+  <div class="editor{% if field.errors %} invalid{% endif %}" data-media-search-url="{{ url('gallery.async') }}" data-media-gallery-url="{{ url('gallery.home') }}">
+  #}
+  <div class="editor{% if field.errors %} invalid{% endif %}">
+    <div class="editor-tools"></div>
+    {{ field|safe }}
+  </div>
+{% endmacro %}
+
+{% macro optimizely_script() %}
+  {% if waffle.switch('enable_optimizely') and config.OPTIMIZELY_PROJECT_ID and config.OPTIMIZELY_PROJECT_ID != '0' %}
+  <script src="//cdn.optimizely.com/js/{{ config.OPTIMIZELY_PROJECT_ID }}.js"></script>
+  {% endif %}
+{% endmacro %}
