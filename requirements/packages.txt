@@ -35,7 +35,7 @@ pyflakes==1.0.0
 
 pytz==2015.7
 
-six==1.9.0
+six==1.10.0
 
 translate-toolkit==1.13.0
 
