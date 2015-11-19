@@ -5,7 +5,7 @@
 
 python-dateutil==2.4.2
 
-sqlparse==0.1.16
+sqlparse==0.1.18
 
 cssselect==0.9.1
 
