@@ -39,7 +39,7 @@ kombu==3.0.26
 
 oauthlib==1.0.3
 
-python-magic==0.4.6
+python-magic==0.4.10
 
 python-memcached==1.54
 
