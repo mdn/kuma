@@ -510,7 +510,8 @@ def JINJA_CONFIG():
             'jinja2.ext.with_',
             'jinja2.ext.loopcontrols',
             'jinja2.ext.autoescape',
-            'pipeline.templatetags.ext.PipelineExtension'
+            'pipeline.templatetags.ext.PipelineExtension',
+            'waffle.jinja.WaffleExtension',
         ],
         'finalize': lambda x: x if x is not None else ''
     }
