@@ -268,8 +268,23 @@ class DocumentAdmin(admin.ModelAdmin):
                purge_documents,
                restore_documents)
     change_list_template = 'admin/wiki/document/change_list.html'
-    fields = ('locale', 'title', 'defer_rendering', 'render_expires',
-              'render_max_age', 'parent', 'parent_topic', 'category',)
+    fieldsets = (
+        (None, {
+            'fields': ('locale', 'title')
+        }),
+        ('Rendering', {
+            'fields': ('defer_rendering', 'render_expires', 'render_max_age')
+        }),
+        ('Topical Hierarchy', {
+            'fields': ('parent_topic',)
+        }),
+        ('Localization', {
+            'description': "The document should be <strong>either</strong> "
+                           "localizable, <strong>or</strong> have a parent - "
+                           "never both.",
+            'fields': ('is_localizable', 'parent')
+        })
+    )
     list_display = ('id', 'locale', 'slug', 'title',
                     document_link,
                     'modified',
