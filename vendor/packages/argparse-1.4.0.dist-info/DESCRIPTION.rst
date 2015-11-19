@@ -12,6 +12,10 @@ Python standard library. For users who still need to support Python < 2.7 or
 compatible with the module in the standard library, but also supports older
 Python versions.
 
+Also, we can fix bugs here for users who are stuck on some non-current python
+version, like e.g. 3.2.3 (which has bugs that were fixed in a later 3.2.x
+release).
+
 argparse is licensed under the Python license, for details see LICENSE.txt.
 
 
@@ -41,10 +45,11 @@ Try one of these:
 Bugs
 ----
 
-If you find a bug, please try to reproduce it with python 2.7.
+If you find a bug in argparse (pypi), please try to reproduce it with latest
+python 2.7 and 3.4 (and use argparse from stdlib).
 
 If it happens there also, please file a bug in the python.org issue tracker.
-If it does not happen in 2.7, file a bug in the argparse package issue tracker.
+If it does not happen there, file a bug in the argparse package issue tracker.
 
 
 
