@@ -2,4 +2,4 @@
 
 DEFAULT_PROTOCOL = 2
 
-from picklefield.fields import PickledObjectField # reexport
+from picklefield.fields import PickledObjectField  # noqa

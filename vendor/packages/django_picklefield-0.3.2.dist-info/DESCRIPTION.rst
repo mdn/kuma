@@ -1,23 +1,8 @@
-Metadata-Version: 2.0
-Name: django-picklefield
-Version: 0.3.1
-Summary: Pickled object field for Django
-Home-page: http://github.com/gintas/django-picklefield
-Author: Gintautas Miliauskas
-Author-email: gintautas@miliauskas.lt
-License: UNKNOWN
-Platform: UNKNOWN
-Classifier: Development Status :: 5 - Production/Stable
-Classifier: Framework :: Django
-Classifier: Intended Audience :: Developers
-Classifier: License :: OSI Approved :: MIT License
-Classifier: Programming Language :: Python
-Classifier: Programming Language :: Python :: 2.5
-Classifier: Programming Language :: Python :: 2.6
-Classifier: Programming Language :: Python :: 2.7
-Classifier: Programming Language :: Python :: 3.2
-Classifier: Programming Language :: Python :: 3.3
-Requires-Dist: six
+.. image:: https://travis-ci.org/gintas/django-picklefield.svg?branch=master
+    :target: https://travis-ci.org/gintas/django-picklefield
+
+.. image:: https://coveralls.io/repos/gintas/django-picklefield/badge.svg?branch=master&service=github
+    :target: https://coveralls.io/github/gintas/django-picklefield?branch=master
 
 -----
 About
@@ -26,13 +11,13 @@ About
 **django-picklefield** provides an implementation of a pickled object field.
 Such fields can contain any picklable objects.
 
-The implementation is taken and adopted from Django snippet #1694
-<http://www.djangosnippets.org/snippets/1694/> by Taavi Taijala, which is in
-turn based on Django snippet #513 <http://www.djangosnippets.org/snippets/513/>
-by Oliver Beattie.
+The implementation is taken and adopted from `Django snippet #1694`_ by Taavi
+Taijala, which is in turn based on `Django snippet #513`_  by Oliver Beattie.
 
 django-picklefield is available under the MIT license.
 
+.. _Django snippet #1694: http://www.djangosnippets.org/snippets/1694/
+.. _Django snippet #513: http://www.djangosnippets.org/snippets/513/
 
 -----
 Usage
@@ -64,6 +49,17 @@ to the browser, you may need to subclass the field and override the
 base64-encoded pickles, which allows reliable deserialization, but such a
 format is not convenient for parsing in the browser.  By overriding
 ``value_to_string()`` you can choose a more convenient serialization format.
+
+-------------
+Running tests
+-------------
+
+The full test suite can be run with `Tox`_::
+
+    >>> pip install tox
+    >>> tox
+
+.. _Tox: https://testrun.org/tox/latest/
 
 --------------
 Original notes
@@ -135,77 +131,84 @@ since it is never a good idea to have a PickledObjectField be user editable.
 Changes
 -------
 
+Changes in version 0.3.2
+========================
+
+* Dropped support for Django 1.3.
+* Dropped support for Python 2.5.
+* Silenced deprecation warnings on Django 1.8+.
+
 Changes in version 0.3.1
 ========================
 
- * Favor the built in json module (thanks to Simon Charette).
+* Favor the built in json module (thanks to Simon Charette).
 
 Changes in version 0.3.0
 ========================
 
- * Python 3 support (thanks to Rafal Stozek).
+* Python 3 support (thanks to Rafal Stozek).
 
 Changes in version 0.2.0
 ========================
 
- * Allow pickling of subclasses of django.db.models.Model (thanks to Simon
-   Charette).
+* Allow pickling of subclasses of django.db.models.Model (thanks to Simon
+  Charette).
 
 Changes in version 0.1.9
 ========================
 
- * Added `connection` and `prepared` parameters to `get_db_prep_value()` too
-   (thanks to Matthew Schinckel).
+* Added `connection` and `prepared` parameters to `get_db_prep_value()` too
+  (thanks to Matthew Schinckel).
 
 Changes in version 0.1.8
 ========================
 
- * Updated link to code repository.
+* Updated link to code repository.
 
 Changes in version 0.1.7
 ========================
 
- * Added `connection` and `prepared` parameters to `get_db_prep_lookup()` to
-   get rid of deprecation warnings in Django 1.2.
+* Added `connection` and `prepared` parameters to `get_db_prep_lookup()` to
+  get rid of deprecation warnings in Django 1.2.
 
 Changes in version 0.1.6
 ========================
 
- * Fixed South support (thanks aehlke@github).
+* Fixed South support (thanks aehlke@github).
 
 Changes in version 0.1.5
 ========================
 
- * Added support for South.
- * Changed default to null=False, as is common throughout Django.
+* Added support for South.
+* Changed default to null=False, as is common throughout Django.
 
 Changes in version 0.1.4
 ========================
 
- * Updated copyright statements.
+* Updated copyright statements.
 
 Changes in version 0.1.3
 ========================
 
- * Updated serialization tests (thanks to Michael Fladischer).
+* Updated serialization tests (thanks to Michael Fladischer).
 
 Changes in version 0.1.2
 ========================
 
- * Added Simplified BSD licence.
+* Added Simplified BSD licence.
 
 Changes in version 0.1.1
 ========================
 
- * Added test for serialization.
- * Added note about JSON serialization for browser.
- * Added support for different pickle protocol versions (thanks to Michael
-   Fladischer).
+* Added test for serialization.
+* Added note about JSON serialization for browser.
+* Added support for different pickle protocol versions (thanks to Michael
+  Fladischer).
 
 Changes in version 0.1
 ======================
 
- * First public release.
+* First public release.
 
 
 --------
