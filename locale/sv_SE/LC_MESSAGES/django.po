@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-13 11:55-0800\n"
-"PO-Revision-Date: 2015-11-19 15:51+0000\n"
-"Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>\n"
+"PO-Revision-Date: 2015-11-19 22:16+0000\n"
+"Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -3497,7 +3497,7 @@ msgstr "Språk"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
-msgstr ""
+msgstr "Hemsida"
 
 #: kuma/users/models.py:60
 msgid ""
@@ -3538,11 +3538,11 @@ msgstr ""
 
 #: kuma/users/models.py:107
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "Ange en giltig URL för Twitter."
 
 #: kuma/users/models.py:112
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Ange en giltig URL för GitHub."
 
 #: kuma/users/models.py:117
 msgid "Enter a valid Stack Overflow URL."
@@ -3562,7 +3562,7 @@ msgstr ""
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
-msgstr ""
+msgstr "Användarnamn krävs."
 
 #: kuma/users/signup.py:8
 #, python-format
