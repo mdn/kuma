@@ -6,6 +6,8 @@ import os
 import textwrap
 from datetime import datetime
 
+from celery import chord, task
+from constance import config
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
@@ -13,9 +15,6 @@ from django.core.mail import EmailMessage, mail_admins, send_mail
 from django.db import connection, transaction
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
-
-from celery import chord, task
-from constance import config
 from djcelery_transactions import task as transaction_task
 from lxml import etree
 
@@ -29,7 +28,6 @@ from .helpers import absolutify
 from .models import Document, Revision, RevisionIP
 from .search import WikiDocumentType
 from .utils import tidy_content
-
 
 log = logging.getLogger('kuma.wiki.tasks')
 render_lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)

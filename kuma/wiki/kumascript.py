@@ -1,15 +1,14 @@
 import base64
-from collections import defaultdict
-import json
 import hashlib
+import json
 import time
+from collections import defaultdict
 from urlparse import urljoin
 
+import requests
+from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
-
-from constance import config
-import requests
 
 from kuma.core.cache import memcache
 

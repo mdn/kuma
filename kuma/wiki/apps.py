@@ -5,7 +5,6 @@ from django.core.mail import send_mail
 from django.db.models import signals
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
-
 from elasticsearch_dsl.connections import connections as es_connections
 
 from .jobs import (DocumentContributorsJob, DocumentZoneStackJob,

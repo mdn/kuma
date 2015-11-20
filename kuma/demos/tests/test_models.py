@@ -1,29 +1,27 @@
 # -*- coding: utf-8 -*-
-from os import unlink
-from os.path import dirname, isfile, isdir
-from shutil import rmtree
 import zipfile
+from os import unlink
+from os.path import dirname, isdir, isfile
+from shutil import rmtree
+
+from constance import config
+from constance.test import override_config
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
+from django.template.defaultfilters import slugify
+from nose.tools import assert_false, eq_, ok_
+
+from kuma.users.tests import UserTestCase
+
+from . import build_hidden_submission, build_submission, make_users
+from .. import models
+from ..models import Submission
 
 try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
-
-from nose.tools import assert_false, eq_, ok_
-
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
-from django.core.files.base import ContentFile
-from django.template.defaultfilters import slugify
-
-from constance import config
-from constance.test import override_config
-
-from kuma.users.tests import UserTestCase
-
-from ..models import Submission
-from .. import models
-from . import make_users, build_submission, build_hidden_submission
 
 
 def save_valid_submission(title='hello world',

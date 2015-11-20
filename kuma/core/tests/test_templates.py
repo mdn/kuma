@@ -1,10 +1,9 @@
-from django.test import RequestFactory
+import jingo
 from django.contrib.auth.models import AnonymousUser
+from django.test import RequestFactory
 from django.utils import translation
-
 from nose.tools import eq_
 from pyquery import PyQuery as pq
-import jingo
 
 from kuma.core.tests import KumaTestCase
 

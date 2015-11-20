@@ -21,7 +21,6 @@ from kuma.core.utils import bitly
 from . import DEMO_LICENSES, DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS
 from .models import Submission
 
-
 TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
                                          'TEMPLATE_INCLUDE_CACHE_EXPIRES', 300)
 

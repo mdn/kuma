@@ -3,9 +3,9 @@ from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from kuma.users.tests import UserTestCase
-from kuma.wiki.tests import revision, WikiTestCase
 from kuma.core.urlresolvers import reverse
+from kuma.users.tests import UserTestCase
+from kuma.wiki.tests import WikiTestCase, revision
 
 from ..models import Attachment
 from ..utils import make_test_file

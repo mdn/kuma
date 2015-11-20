@@ -1,8 +1,6 @@
 from django.conf.urls import url
 
-from . import feeds
-from . import views
-
+from . import feeds, views
 
 urlpatterns = [
     url(r'^$',

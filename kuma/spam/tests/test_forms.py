@@ -1,12 +1,11 @@
+import responses
+from constance.test.utils import override_config
 from django import forms
-from django.test import SimpleTestCase, RequestFactory
+from django.test import RequestFactory, SimpleTestCase
 from django.utils import six
 from django.utils.encoding import force_unicode
-
-from constance.test.utils import override_config
 from nose.plugins.attrib import attr
 from waffle.models import Flag
-import responses
 
 from ..constants import CHECK_URL_RE, SPAM_CHECKS_FLAG, VERIFY_URL_RE
 from ..forms import AkismetFormMixin

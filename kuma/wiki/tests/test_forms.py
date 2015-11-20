@@ -1,10 +1,9 @@
+import responses
+from constance.test import override_config
 from django import forms
 from django.core import mail
 from django.test import RequestFactory
-
-from constance.test import override_config
 from nose.plugins.attrib import attr
-import responses
 from waffle.models import Flag
 
 from kuma.spam.constants import CHECK_URL_RE, SPAM_CHECKS_FLAG, VERIFY_URL_RE

@@ -16,6 +16,14 @@ performance-tests: in_vagrant
 browser-tests: on_host
 	pushd tests/ui ; ./node_modules/.bin/intern-runner config=intern-local d=developer.allizom.org b=firefox; popd
 
+travis-tests:
+	python manage.py compilejsi18n
+	coverage run manage.py test --noinput -v2
+	coverage report
+
+isort:
+	isort --recursive --atomic --apply --verbose -sp ./setup.cfg kuma/
+
 clean:
 	find kuma -name '*.pyc' -exec rm {} \;
 
@@ -44,4 +52,4 @@ on_host:
 	@if [ ${IN_VAGRANT} -eq 1 ]; then echo "*** Run on host ***"; exit 1; fi
 
 # Those tasks don't have file targets
-.PHONY: django-tests performance-tests browser-tests clean in_vagrant on_host coverage
+.PHONY: django-tests performance-tests browser-tests clean in_vagrant on_host travis-tests coverage isort

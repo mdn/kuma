@@ -1,23 +1,21 @@
 import datetime
 import json
 
+import jingo
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
-from django.utils.feedgenerator import (Atom1Feed, SyndicationFeed,
-                                        Rss201rev2Feed)
+from django.utils.feedgenerator import (Atom1Feed, Rss201rev2Feed,
+                                        SyndicationFeed)
 from django.utils.translation import ugettext as _
 
-import jingo
-
-from kuma.core.validators import valid_jsonp_callback_value
 from kuma.core.urlresolvers import reverse
+from kuma.core.validators import valid_jsonp_callback_value
 from kuma.users.helpers import gravatar_url
 
 from . import TAG_DESCRIPTIONS
 from .models import Submission
-
 
 MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 15)
 

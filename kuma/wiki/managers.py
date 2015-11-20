@@ -1,13 +1,12 @@
 from datetime import date, datetime, timedelta
 
+import bleach
+from constance import config
 from django.core import serializers
 from django.db import models
 
-import bleach
-from constance import config
-
-from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
-                        TEMPLATE_TITLE_PREFIX)
+from .constants import (ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
+                        ALLOWED_TAGS, TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
 from .queries import TransformQuerySet
 

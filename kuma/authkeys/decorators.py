@@ -1,11 +1,11 @@
 import base64
 
+from .models import Key
+
 try:
     from functools import wraps
 except ImportError:
     from django.utils.functional import wraps
-
-from .models import Key
 
 
 def accepts_auth_key(func):

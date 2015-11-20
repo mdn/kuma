@@ -1,21 +1,19 @@
 import datetime
 import hashlib
-from optparse import make_option
 import logging
 import socket
 import time
+from optparse import make_option
 
 import feedparser
 import jsonpickle
-
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.db import IntegrityError
 from django.utils import encoding
 
 from kuma.core.utils import file_lock
-from kuma.feeder.models import Feed, Entry
-
+from kuma.feeder.models import Entry, Feed
 
 log = logging.getLogger('kuma.feeder')
 

@@ -5,7 +5,6 @@ from django.shortcuts import redirect
 
 from ..models import Document, Revision
 
-
 # Legacy MindTouch redirects.
 
 MINDTOUCH_NAMESPACES = (

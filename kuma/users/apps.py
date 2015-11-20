@@ -1,12 +1,11 @@
+from allauth.account.signals import email_confirmed, user_signed_up
+from allauth.socialaccount.signals import social_account_removed
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.apps import AuthConfig
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
-
-from allauth.account.signals import user_signed_up, email_confirmed
-from allauth.socialaccount.signals import social_account_removed
 from waffle import switch_is_active
 
 from kuma.core.urlresolvers import reverse

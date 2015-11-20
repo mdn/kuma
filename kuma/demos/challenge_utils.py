@@ -1,7 +1,6 @@
 import calendar
 import datetime
 
-
 MONTH_TAG_NAMES = [
     'january',
     'february',

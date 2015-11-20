@@ -1,13 +1,11 @@
 import logging
 
 from django.db.models.signals import pre_delete
-
 from elasticsearch.exceptions import ConnectionError
 
 from kuma.wiki.signals import render_done
 
-from .signals import render_done_handler, pre_delete_handler
-
+from .signals import pre_delete_handler, render_done_handler
 
 log = logging.getLogger('kuma.search.decorators')
 

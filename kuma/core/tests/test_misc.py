@@ -3,7 +3,6 @@ from StringIO import StringIO
 from django.contrib.auth.models import AnonymousUser
 from django.core.handlers.wsgi import WSGIRequest
 from django.test import RequestFactory
-
 from nose.tools import eq_
 
 from kuma.core.tests import KumaTestCase

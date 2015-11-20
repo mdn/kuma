@@ -7,7 +7,6 @@ from django.core.mail import EmailMultiAlternatives
 from django.test import RequestFactory
 from django.utils import translation
 
-
 log = logging.getLogger('kuma.core.email')
 
 

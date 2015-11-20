@@ -1,5 +1,5 @@
+from dbgettext.registry import Options, registry
 from django.utils.text import slugify
-from dbgettext.registry import registry, Options
 
 from .models import Filter, FilterGroup
 

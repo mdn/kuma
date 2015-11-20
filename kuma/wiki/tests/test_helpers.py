@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import mock
-from nose.tools import eq_
-
 from django.contrib.sites.models import Site
+from nose.tools import eq_
 
 from kuma.core.cache import memcache
 from kuma.users.tests import UserTestCase
-from . import document, revision, WikiTestCase
+
+from . import WikiTestCase, document, revision
 from ..helpers import (absolutify, document_zone_management_links,
                        revisions_unified_diff, selector_content_find, tojson)
 from ..models import DocumentZone

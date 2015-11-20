@@ -1,13 +1,11 @@
 import mock
-from waffle.models import Switch
-
+from allauth.account.models import EmailAddress
+from allauth.account.signals import user_signed_up
 from django.conf import settings
 from django.contrib import messages as django_messages
 from django.core import mail
 from django.test import RequestFactory
-
-from allauth.account.models import EmailAddress
-from allauth.account.signals import user_signed_up
+from waffle.models import Switch
 
 from kuma.users.tasks import send_welcome_email
 

@@ -1,5 +1,4 @@
 from allauth.socialaccount import providers
-
 from allauth.socialaccount.providers.persona.provider import PersonaProvider
 
 

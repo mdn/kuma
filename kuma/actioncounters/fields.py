@@ -6,7 +6,6 @@ from django.conf import settings
 from django.db import models
 from django.db.models import F
 
-
 RECENT_PERIOD = getattr(settings, 'ACTION_COUNTER_RECENT_PERIOD', 60 * 60 * 24)
 
 

@@ -1,9 +1,8 @@
 import requests
-
 from allauth.account.utils import get_next_redirect_url
-from allauth.socialaccount.providers.oauth2.views import (OAuth2LoginView,
-                                                          OAuth2CallbackView)
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.views import (OAuth2CallbackView,
+                                                          OAuth2LoginView)
 
 from kuma.core.urlresolvers import reverse
 

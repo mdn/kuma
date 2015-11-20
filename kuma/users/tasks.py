@@ -11,7 +11,6 @@ from djcelery_transactions import task as transaction_task
 from kuma.core.email_utils import render_email
 from kuma.core.utils import strings_are_translated
 
-
 log = logging.getLogger('kuma.users.tasks')
 
 

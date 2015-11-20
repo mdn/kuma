@@ -1,14 +1,12 @@
+from allauth.exceptions import ImmediateHttpResponse
+from allauth.socialaccount.models import SocialAccount, SocialLogin
+from django.contrib import messages as django_messages
+from django.test import RequestFactory
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 
-from django.contrib import messages as django_messages
-from django.test import RequestFactory
-
-from allauth.exceptions import ImmediateHttpResponse
-from allauth.socialaccount.models import SocialLogin, SocialAccount
-
 from kuma.core.urlresolvers import reverse
-from kuma.users.adapters import KumaSocialAccountAdapter, KumaAccountAdapter
+from kuma.users.adapters import KumaAccountAdapter, KumaSocialAccountAdapter
 
 from . import UserTestCase
 

@@ -3,7 +3,7 @@ Repair breadcrumb relations for translations that are missing parent topics.
 """
 import logging
 
-from django.core.management.base import (BaseCommand)
+from django.core.management.base import BaseCommand
 
 from kuma.wiki.models import Document
 

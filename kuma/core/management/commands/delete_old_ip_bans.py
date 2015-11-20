@@ -4,6 +4,7 @@ Delete old revision IPs
 from optparse import make_option
 
 from django.core.management.base import BaseCommand
+
 from .tasks import delete_old_ip_bans
 
 

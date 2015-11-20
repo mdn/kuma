@@ -10,19 +10,16 @@ from itertools import islice
 import bitly_api
 import lockfile
 from celery import chain, chord
-from polib import pofile
-
 from django.conf import settings
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.shortcuts import _get_queryset
 from django.utils.encoding import force_unicode
 from django.utils.http import urlencode
-
+from polib import pofile
 from taggit.utils import split_strip
 
 from .cache import memcache
 from .jobs import IPBanJob
-
 
 log = logging.getLogger('kuma.core.utils')
 

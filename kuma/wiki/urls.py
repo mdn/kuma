@@ -6,7 +6,6 @@ from kuma.attachments.feeds import AttachmentsFeed
 from . import feeds, views
 from .constants import DOCUMENT_PATH_RE
 
-
 # These patterns inherit (?P<document_path>[^\$]+).
 document_patterns = [
     url(r'^$',

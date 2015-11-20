@@ -3,7 +3,6 @@ from django import forms
 from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 
-
 USERNAME_REQUIRED = _(u'Username is required.')
 USERNAME_SHORT = _(u'Username is too short (%(show_value)s characters). '
                    u'It must be at least %(limit_value)s characters.')

@@ -3,7 +3,6 @@ import json
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
-
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 
@@ -11,8 +10,8 @@ from kuma.wiki.search import WikiDocumentType
 
 from .exceptions import ValidationError
 from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                      get_filters, HighlightFilterBackend,
-                      LanguageFilterBackend, SearchQueryBackend)
+                      HighlightFilterBackend, LanguageFilterBackend,
+                      SearchQueryBackend, get_filters)
 from .jobs import AvailableFiltersJob
 from .paginator import SearchPaginator
 from .renderers import ExtendedTemplateHTMLRenderer

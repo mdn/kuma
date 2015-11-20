@@ -10,13 +10,11 @@ import urlparse
 from optparse import make_option
 
 import requests
-
 from django.conf import settings
 from django.core.cache import cache
 from django.core.management.base import BaseCommand
 
 from kuma.wiki.models import Document
-
 
 PAGE_EXISTS_KEY_TMPL = getattr(settings, 'wiki_page_exists_key_tmpl',
                                'kuma:page_exists:%s')

@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+
 from nose.tools import eq_, ok_
 
 from kuma.core.tests import KumaTestCase

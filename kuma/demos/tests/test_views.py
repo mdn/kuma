@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 import datetime
+import zipfile
 from os.path import dirname
 from StringIO import StringIO
-import zipfile
-
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
-from pyquery import PyQuery as pq
 
 from constance import config
+from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import parse_tags
@@ -17,8 +16,7 @@ from kuma.users.tests import UserTestCase
 from .. import challenge_utils
 from ..forms import SubmissionEditForm
 from ..models import Submission
-from ..tests import make_users, build_submission, build_hidden_submission
-
+from ..tests import build_hidden_submission, build_submission, make_users
 from .test_models import save_valid_submission
 
 SCREENSHOT_PATH = ('%s/fixtures/screenshot_1.png' %

@@ -1,7 +1,8 @@
-from nose.tools import eq_
 from nose.plugins.skip import SkipTest
+from nose.tools import eq_
 
 from kuma.core.tests import KumaTestCase
+
 from ..urlresolvers import get_best_language
 
 

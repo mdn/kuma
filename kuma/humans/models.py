@@ -6,7 +6,6 @@ import urllib
 
 from django.conf import settings
 
-
 GITHUB_REPOS = "https://api.github.com/repos/mozilla/kuma/contributors"
 
 

@@ -18,7 +18,6 @@ from kuma.users.helpers import gravatar_url
 from .helpers import colorize_diff, diff_table, get_compare_url, tag_diff_table
 from .models import Document, Revision
 
-
 MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 500)
 DEFAULT_FEED_ITEMS = 50
 

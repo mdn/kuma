@@ -7,21 +7,20 @@ from xml.sax.saxutils import escape
 import mock
 from constance import config
 from constance.test import override_config
-from nose.plugins.attrib import attr
-from nose.tools import eq_, ok_
-from waffle.models import Switch
-
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.test.utils import override_settings
+from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
+from waffle.models import Switch
 
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import KumaTestCase, get_user
 from kuma.users.tests import UserTestCase
 
-from . import (create_template_test_users, create_document_tree,
-               create_topical_parents_docs, doc_rev, document, normalize_html,
-               revision)
+from . import (create_document_tree, create_template_test_users,
+               create_topical_parents_docs, doc_rev, document,
+               normalize_html, revision)
 from .. import tasks
 from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from ..events import EditDocumentInTreeEvent

@@ -1,24 +1,23 @@
 import random
 
+from constance import config
 from django.conf import settings
 from django.http import HttpResponseForbidden
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.generic import ListView
-
-from constance import config
 from taggit.models import Tag
 
-from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from kuma.contentflagging.forms import ContentFlagForm
-from kuma.core.utils import parse_tags
+from kuma.contentflagging.models import FLAG_NOTIFICATIONS, ContentFlag
 from kuma.core.cache import memcache
+from kuma.core.utils import parse_tags
 from kuma.users.models import User
 
 from . import DEMOS_CACHE_NS_KEY
+from .forms import SubmissionEditForm, SubmissionNewForm
 from .models import Submission
-from .forms import SubmissionNewForm, SubmissionEditForm
 
 DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 10)
 

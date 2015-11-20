@@ -1,15 +1,14 @@
+from constance import config
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
 
-from constance import config
-
 from kuma.core.utils import parse_tags
+
 from . import TAG_DESCRIPTIONS
 from .models import Submission
-
 
 SCREENSHOT_MAXW = getattr(settings, 'DEMO_SCREENSHOT_MAX_WIDTH', 480)
 SCREENSHOT_MAXH = getattr(settings, 'DEMO_SCREENSHOT_MAX_HEIGHT', 360)

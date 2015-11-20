@@ -1,16 +1,15 @@
 import base64
 
 from django.contrib.auth.models import AnonymousUser
-from django.test import TestCase
 from django.http import HttpRequest
-
-from nose.tools import eq_, ok_
+from django.test import TestCase
 from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
 
 from kuma.users.tests import user
 
-from ..models import Key
 from ..decorators import accepts_auth_key
+from ..models import Key
 
 
 class KeyDecoratorsTest(TestCase):
