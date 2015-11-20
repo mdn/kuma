@@ -22,14 +22,12 @@ __docformat__ = "restructuredtext en"
 import email
 from encodings import search_function
 import sys
-if sys.version_info >= (2, 5):
-    from email.utils import parseaddr, parsedate
-    from email.header import decode_header
-else:
-    from email.Utils import parseaddr, parsedate
-    from email.Header import decode_header
+from email.utils import parseaddr, parsedate
+from email.header import decode_header
 
 from datetime import datetime
+
+from six import text_type, binary_type
 
 try:
     from mx.DateTime import DateTime
@@ -44,7 +42,14 @@ def decode_QP(string):
     for decoded, charset in decode_header(string):
         if not charset :
             charset = 'iso-8859-15'
-        parts.append(decoded.decode(charset, 'replace'))
+        # python 3 sometimes returns str and sometimes bytes.
+        # the 'official' fix is to use the new 'policy' APIs
+        # https://bugs.python.org/issue24797
+        # let's just handle this bug ourselves for now
+        if isinstance(decoded, binary_type):
+            decoded = decoded.decode(charset, 'replace')
+        assert isinstance(decoded, text_type)
+        parts.append(decoded)
 
     if sys.version_info < (3, 3):
         # decoding was non-RFC compliant wrt to whitespace handling
@@ -55,13 +60,13 @@ def decode_QP(string):
 def message_from_file(fd):
     try:
         return UMessage(email.message_from_file(fd))
-    except email.Errors.MessageParseError:
+    except email.errors.MessageParseError:
         return ''
 
 def message_from_string(string):
     try:
         return UMessage(email.message_from_string(string))
-    except email.Errors.MessageParseError:
+    except email.errors.MessageParseError:
         return ''
 
 class UMessage:
@@ -96,61 +101,39 @@ class UMessage:
         for part in self.message.walk():
             yield UMessage(part)
 
-    if sys.version_info < (3, 0):
-
-        def get_payload(self, index=None, decode=False):
-            message = self.message
-            if index is None:
-                payload = message.get_payload(index, decode)
-                if isinstance(payload, list):
-                    return [UMessage(msg) for msg in payload]
-                if message.get_content_maintype() != 'text':
-                    return payload
-
-                charset = message.get_content_charset() or 'iso-8859-1'
-                if search_function(charset) is None:
-                    charset = 'iso-8859-1'
-                return unicode(payload or '', charset, "replace")
-            else:
-                payload = UMessage(message.get_payload(index, decode))
-            return payload
-
-        def get_content_maintype(self):
-            return unicode(self.message.get_content_maintype())
-
-        def get_content_type(self):
-            return unicode(self.message.get_content_type())
-
-        def get_filename(self, failobj=None):
-            value = self.message.get_filename(failobj)
-            if value is failobj:
-                return value
-            try:
-                return unicode(value)
-            except UnicodeDecodeError:
-                return u'error decoding filename'
-
-    else:
-
-        def get_payload(self, index=None, decode=False):
-            message = self.message
-            if index is None:
-                payload = message.get_payload(index, decode)
-                if isinstance(payload, list):
-                    return [UMessage(msg) for msg in payload]
+    def get_payload(self, index=None, decode=False):
+        message = self.message
+        if index is None:
+            payload = message.get_payload(index, decode)
+            if isinstance(payload, list):
+                return [UMessage(msg) for msg in payload]
+            if message.get_content_maintype() != 'text':
                 return payload
-            else:
-                payload = UMessage(message.get_payload(index, decode))
-            return payload
+            if isinstance(payload, text_type):
+                return payload
 
-        def get_content_maintype(self):
-            return self.message.get_content_maintype()
+            charset = message.get_content_charset() or 'iso-8859-1'
+            if search_function(charset) is None:
+                charset = 'iso-8859-1'
+            return text_type(payload or b'', charset, "replace")
+        else:
+            payload = UMessage(message.get_payload(index, decode))
+        return payload
 
-        def get_content_type(self):
-            return self.message.get_content_type()
+    def get_content_maintype(self):
+        return text_type(self.message.get_content_maintype())
 
-        def get_filename(self, failobj=None):
-            return self.message.get_filename(failobj)
+    def get_content_type(self):
+        return text_type(self.message.get_content_type())
+
+    def get_filename(self, failobj=None):
+        value = self.message.get_filename(failobj)
+        if value is failobj:
+            return value
+        try:
+            return text_type(value)
+        except UnicodeDecodeError:
+            return u'error decoding filename'
 
     # other convenience methods ###############################################
 

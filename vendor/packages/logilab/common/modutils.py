@@ -165,7 +165,11 @@ def load_module_from_modpath(parts, path=None, use_sys=True):
             module = sys.modules.get(curname)
         if module is None:
             mp_file, mp_filename, mp_desc = find_module(part, path)
-            module = load_module(curname, mp_file, mp_filename, mp_desc)
+            try:
+                module = load_module(curname, mp_file, mp_filename, mp_desc)
+            finally:
+                if mp_file is not None:
+                    mp_file.close()
         if prevmodule:
             setattr(prevmodule, part, module)
         _file = getattr(module, '__file__', '')

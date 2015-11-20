@@ -1,13 +1,12 @@
 """Pickle field implementation for Django."""
+from base64 import b64decode, b64encode
 from copy import deepcopy
-from base64 import b64encode, b64decode
 from zlib import compress, decompress
-import six
-import django
-from django.db import models
 
-from picklefield import DEFAULT_PROTOCOL
-from picklefield.compat import force_text, loads, dumps
+from django.utils.encoding import force_text
+
+from . import DEFAULT_PROTOCOL
+from .compat import _PickledObjectField, dumps, loads
 
 
 class PickledObject(str):
@@ -26,10 +25,10 @@ class PickledObject(str):
 
 class _ObjectWrapper(object):
     """
-    A class used to wrap object that have properties that may clash with the 
+    A class used to wrap object that have properties that may clash with the
     ORM internals.
-    
-    For example, objects with the `prepare_database_save` property such as 
+
+    For example, objects with the `prepare_database_save` property such as
     `django.db.Model` subclasses won't work under certain conditions and the
     same apply for trying to retrieve any `callable` object.
     """
@@ -55,28 +54,19 @@ def dbsafe_encode(value, compress_object=False, pickle_protocol=DEFAULT_PROTOCOL
     value = dumps(deepcopy(value), protocol=pickle_protocol)
     if compress_object:
         value = compress(value)
-    value = b64encode(value).decode() # decode bytes to str
+    value = b64encode(value).decode()  # decode bytes to str
     return PickledObject(value)
 
 
 def dbsafe_decode(value, compress_object=False):
-    value = value.encode() # encode str to bytes
+    value = value.encode()  # encode str to bytes
     value = b64decode(value)
     if compress_object:
         value = decompress(value)
     return loads(value)
 
 
-def _get_subfield_superclass():
-    # hardcore trick to support django < 1.3 - there was something wrong with
-    # inheritance and SubfieldBase before django 1.3
-    # see https://github.com/django/django/commit/222c73261650201f5ce99e8dd4b1ce0d30a69eb4
-    if django.VERSION < (1,3):
-        return models.Field
-    return six.with_metaclass(models.SubfieldBase, models.Field)
-
-
-class PickledObjectField(_get_subfield_superclass()):
+class PickledObjectField(_PickledObjectField):
     """
     A field that will accept *any* python object and store it in the
     database. PickledObjectField will optionally compress its values if
@@ -86,7 +76,6 @@ class PickledObjectField(_get_subfield_superclass()):
     can still do lookups using None). This way, it is still possible to
     use the ``isnull`` lookup type correctly.
     """
-    __metaclass__ = models.SubfieldBase  # for django < 1.3
 
     def __init__(self, *args, **kwargs):
         self.compress = kwargs.pop('compress', False)
@@ -140,6 +129,9 @@ class PickledObjectField(_get_subfield_superclass()):
         value = super(PickledObjectField, self).pre_save(model_instance, add)
         return wrap_conflictual_object(value)
 
+    def from_db_value(self, value, expression, connection, context):
+        return self.to_python(value)
+
     def get_db_prep_value(self, value, connection=None, prepared=False):
         """
         Pickle and b64encode the object, optionally compressing it.
@@ -162,7 +154,7 @@ class PickledObjectField(_get_subfield_superclass()):
         return value
 
     def value_to_string(self, obj):
-        value = self._get_val_from_obj(obj)
+        value = self.value_from_object(obj)
         return self.get_db_prep_value(value)
 
     def get_internal_type(self):
@@ -173,14 +165,9 @@ class PickledObjectField(_get_subfield_superclass()):
             raise TypeError('Lookup type %s is not supported.' % lookup_type)
         # The Field model already calls get_db_prep_value before doing the
         # actual lookup, so all we need to do is limit the lookup types.
-        try:
-            return super(PickledObjectField, self).get_db_prep_lookup(
-                lookup_type, value, connection=connection, prepared=prepared)
-        except TypeError:
-            # Try not to break on older versions of Django, where the
-            # `connection` and `prepared` parameters are not available.
-            return super(PickledObjectField, self).get_db_prep_lookup(
-                lookup_type, value)
+        return super(PickledObjectField, self).get_db_prep_lookup(
+            lookup_type, value, connection=connection, prepared=prepared
+        )
 
 
 # South support; see http://south.aeracode.org/docs/tutorial/part4.html#simple-inheritance

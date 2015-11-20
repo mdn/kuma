@@ -3,12 +3,10 @@ import hashlib
 import logging
 import os
 import random
-import tempfile
 import time
 from itertools import islice
 
 import bitly_api
-import lockfile
 from celery import chain, chord
 from polib import pofile
 
@@ -83,33 +81,6 @@ def strings_are_translated(strings, locale):
     return all_strings_translated
 
 
-def file_lock(prefix):
-    """
-    Decorator that only allows one instance of the same command to run
-    at a time.
-    """
-    def decorator(f):
-        @functools.wraps(f)
-        def wrapper(self, *args, **kwargs):
-            name = '_'.join((prefix, f.__name__) + args)
-            file = os.path.join(tempfile.gettempdir(), name)
-            lock = lockfile.FileLock(file)
-            try:
-                # Try to acquire the lock without blocking.
-                lock.acquire(0)
-            except lockfile.LockError:
-                log.warning('Aborting %s; lock acquisition failed.' % name)
-                return 0
-            else:
-                # We have the lock, call the function.
-                try:
-                    return f(self, *args, **kwargs)
-                finally:
-                    lock.release()
-        return wrapper
-    return decorator
-
-
 def generate_filename_and_delete_previous(ffile, name, before_delete=None):
     """Generate a new filename for a file upload field; delete the previously
     uploaded file."""
@@ -151,13 +122,16 @@ class MemcacheLock(object):
     def locked(self):
         return bool(self.cache.get(self.key))
 
+    def time(self, attempt):
+        return (((attempt + 1) * random.random()) + 2 ** attempt) / 2.5
+
     def acquire(self):
-        for i in xrange(0, self.attempts):
+        for attempt in xrange(0, self.attempts):
             stored = self.cache.add(self.key, 1, self.expires)
             if stored:
                 return True
-            if i != self.attempts - 1:
-                sleep_time = (((i + 1) * random.random()) + 2 ** i) / 2.5
+            if attempt != self.attempts - 1:
+                sleep_time = self.time(attempt)
                 logging.debug('Sleeping for %s while trying to acquire key %s',
                               sleep_time, self.key)
                 time.sleep(sleep_time)
@@ -165,6 +139,35 @@ class MemcacheLock(object):
 
     def release(self):
         self.cache.delete(self.key)
+
+
+def memcache_lock(prefix, expires=60 * 60):
+    """
+    Decorator that only allows one instance of the same command to run
+    at a time.
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(self, *args, **kwargs):
+            name = '_'.join((prefix, func.__name__) + args)
+            lock = MemcacheLock(name, expires=expires)
+            if lock.locked():
+                log.warning('Lock %s locked; ignoring call.' % name)
+                return
+            try:
+                # Try to acquire the lock without blocking.
+                lock.acquire()
+            except MemcacheLockException:
+                log.warning('Aborting %s; lock acquisition failed.' % name)
+                return
+            else:
+                # We have the lock, call the function.
+                try:
+                    return func(self, *args, **kwargs)
+                finally:
+                    lock.release()
+        return wrapper
+    return decorator
 
 
 def get_object_or_none(klass, *args, **kwargs):

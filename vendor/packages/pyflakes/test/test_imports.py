@@ -525,6 +525,16 @@ class Test(TestCase):
             def g(): foo.is_used()
         ''')
 
+    def test_assignedToGlobal(self):
+        """
+        Binding an import to a declared global should not cause it to be
+        reported as unused.
+        """
+        self.flakes('''
+            def f(): global foo; import foo
+            def g(): foo.is_used()
+        ''')
+
     @skipIf(version_info >= (3,), 'deprecated syntax')
     def test_usedInBackquote(self):
         self.flakes('import fu; `fu`')

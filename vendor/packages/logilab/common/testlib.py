@@ -47,15 +47,12 @@ __docformat__ = "restructuredtext en"
 import sys
 import os, os.path as osp
 import re
-import traceback
-import inspect
 import difflib
 import tempfile
 import math
 import warnings
 from shutil import rmtree
 from operator import itemgetter
-from itertools import dropwhile
 from inspect import isgeneratorfunction
 
 from six import string_types
@@ -71,17 +68,17 @@ if not getattr(unittest_legacy, "__package__", None):
     except ImportError:
         raise ImportError("You have to install python-unittest2 to use %s" % __name__)
 else:
-    import unittest
+    import unittest as unittest
     from unittest import SkipTest
 
 from functools import wraps
 
-from logilab.common.debugger import Debugger, colorize_source
+from logilab.common.debugger import Debugger
 from logilab.common.decorators import cached, classproperty
 from logilab.common import textutils
 
 
-__all__ = ['main', 'unittest_main', 'find_tests', 'run_test', 'spawn']
+__all__ = ['unittest_main', 'find_tests']
 
 DEFAULT_PREFIXES = ('test', 'regrtest', 'smoketest', 'unittest',
                     'func', 'validation')
@@ -204,123 +201,6 @@ def start_interactive_mode(result):
 
 # test utils ##################################################################
 
-class SkipAwareTestResult(unittest._TextTestResult):
-
-    def __init__(self, stream, descriptions, verbosity,
-                 exitfirst=False, pdbmode=False, cvg=None, colorize=False):
-        super(SkipAwareTestResult, self).__init__(stream,
-                                                  descriptions, verbosity)
-        self.skipped = []
-        self.debuggers = []
-        self.fail_descrs = []
-        self.error_descrs = []
-        self.exitfirst = exitfirst
-        self.pdbmode = pdbmode
-        self.cvg = cvg
-        self.colorize = colorize
-        self.pdbclass = Debugger
-        self.verbose = verbosity > 1
-
-    def descrs_for(self, flavour):
-        return getattr(self, '%s_descrs' % flavour.lower())
-
-    def _create_pdb(self, test_descr, flavour):
-        self.descrs_for(flavour).append( (len(self.debuggers), test_descr) )
-        if self.pdbmode:
-            self.debuggers.append(self.pdbclass(sys.exc_info()[2]))
-
-    def _iter_valid_frames(self, frames):
-        """only consider non-testlib frames when formatting  traceback"""
-        lgc_testlib = osp.abspath(__file__)
-        std_testlib = osp.abspath(unittest.__file__)
-        invalid = lambda fi: osp.abspath(fi[1]) in (lgc_testlib, std_testlib)
-        for frameinfo in dropwhile(invalid, frames):
-            yield frameinfo
-
-    def _exc_info_to_string(self, err, test):
-        """Converts a sys.exc_info()-style tuple of values into a string.
-
-        This method is overridden here because we want to colorize
-        lines if --color is passed, and display local variables if
-        --verbose is passed
-        """
-        exctype, exc, tb = err
-        output = ['Traceback (most recent call last)']
-        frames = inspect.getinnerframes(tb)
-        colorize = self.colorize
-        frames = enumerate(self._iter_valid_frames(frames))
-        for index, (frame, filename, lineno, funcname, ctx, ctxindex) in frames:
-            filename = osp.abspath(filename)
-            if ctx is None: # pyc files or C extensions for instance
-                source = '<no source available>'
-            else:
-                source = ''.join(ctx)
-            if colorize:
-                filename = textutils.colorize_ansi(filename, 'magenta')
-                source = colorize_source(source)
-            output.append('  File "%s", line %s, in %s' % (filename, lineno, funcname))
-            output.append('    %s' % source.strip())
-            if self.verbose:
-                output.append('%r == %r' % (dir(frame), test.__module__))
-                output.append('')
-                output.append('    ' + ' local variables '.center(66, '-'))
-                for varname, value in sorted(frame.f_locals.items()):
-                    output.append('    %s: %r' % (varname, value))
-                    if varname == 'self': # special handy processing for self
-                        for varname, value in sorted(vars(value).items()):
-                            output.append('      self.%s: %r' % (varname, value))
-                output.append('    ' + '-' * 66)
-                output.append('')
-        output.append(''.join(traceback.format_exception_only(exctype, exc)))
-        return '\n'.join(output)
-
-    def addError(self, test, err):
-        """err ->  (exc_type, exc, tcbk)"""
-        exc_type, exc, _ = err
-        if isinstance(exc, SkipTest):
-            assert exc_type == SkipTest
-            self.addSkip(test, exc)
-        else:
-            if self.exitfirst:
-                self.shouldStop = True
-            descr = self.getDescription(test)
-            super(SkipAwareTestResult, self).addError(test, err)
-            self._create_pdb(descr, 'error')
-
-    def addFailure(self, test, err):
-        if self.exitfirst:
-            self.shouldStop = True
-        descr = self.getDescription(test)
-        super(SkipAwareTestResult, self).addFailure(test, err)
-        self._create_pdb(descr, 'fail')
-
-    def addSkip(self, test, reason):
-        self.skipped.append((test, reason))
-        if self.showAll:
-            self.stream.writeln("SKIPPED")
-        elif self.dots:
-            self.stream.write('S')
-
-    def printErrors(self):
-        super(SkipAwareTestResult, self).printErrors()
-        self.printSkippedList()
-
-    def printSkippedList(self):
-        # format (test, err) compatible with unittest2
-        for test, err in self.skipped:
-            descr = self.getDescription(test)
-            self.stream.writeln(self.separator1)
-            self.stream.writeln("%s: %s" % ('SKIPPED', descr))
-            self.stream.writeln("\t%s" % err)
-
-    def printErrorList(self, flavour, errors):
-        for (_, descr), (test, err) in zip(self.descrs_for(flavour), errors):
-            self.stream.writeln(self.separator1)
-            self.stream.writeln("%s: %s" % (flavour, descr))
-            self.stream.writeln(self.separator2)
-            self.stream.writeln(err)
-            self.stream.writeln('no stdout'.center(len(self.separator2)))
-            self.stream.writeln('no stderr'.center(len(self.separator2)))
 
 # Add deprecation warnings about new api used by module level fixtures in unittest2
 # http://www.voidspace.org.uk/python/articles/unittest2.shtml#setupmodule-and-teardownmodule
@@ -487,10 +367,8 @@ class TestCase(unittest.TestCase):
         This is mostly a copy/paste from unittest.py (i.e same
         variable names, same logic, except for the generative tests part)
         """
-        from logilab.common.pytest import FILE_RESTART
         if result is None:
             result = self.defaultTestResult()
-        result.pdbclass = self.pdbclass
         self._options_ = options
         # if result.cvg:
         #     result.cvg.start()
@@ -501,7 +379,12 @@ class TestCase(unittest.TestCase):
             try:
                 skip_why = (getattr(self.__class__, '__unittest_skip_why__', '')
                             or getattr(testMethod, '__unittest_skip_why__', ''))
-                self._addSkip(result, skip_why)
+                if hasattr(result, 'addSkip'):
+                    result.addSkip(self, skip_why)
+                else:
+                    warnings.warn("TestResult has no addSkip method, skips not reported",
+                                  RuntimeWarning, 2)
+                    result.addSuccess(self)
             finally:
                 result.stopTest(self)
             return
@@ -522,22 +405,6 @@ class TestCase(unittest.TestCase):
             if not self.quiet_run(result, self.tearDown):
                 return
             if not generative and success:
-                if hasattr(options, "exitfirst") and options.exitfirst:
-                    # add this test to restart file
-                    try:
-                        restartfile = open(FILE_RESTART, 'a')
-                        try:
-                            descr = '.'.join((self.__class__.__module__,
-                                              self.__class__.__name__,
-                                              self._testMethodName))
-                            restartfile.write(descr+os.linesep)
-                        finally:
-                            restartfile.close()
-                    except Exception:
-                        print("Error while saving succeeded test into",
-                              osp.join(os.getcwd(), FILE_RESTART),
-                              file=sys.__stderr__)
-                        raise
                 result.addSuccess(self)
         finally:
             # if result.cvg:
@@ -572,6 +439,11 @@ class TestCase(unittest.TestCase):
                     #    result.shouldStop = True
                 if result.shouldStop: # either on error or on exitfirst + error
                     break
+        except self.failureException:
+            result.addFailure(self, self.__exc_info())
+            success = False
+        except SkipTest as e:
+            result.addSkip(self, e)
         except:
             # if an error occurs between two yield
             result.addError(self, self.__exc_info())
@@ -605,521 +477,15 @@ class TestCase(unittest.TestCase):
             return 2
         return 0
 
-    def defaultTestResult(self):
-        """return a new instance of the defaultTestResult"""
-        return SkipAwareTestResult()
-
-    skip = _deprecate(unittest.TestCase.skipTest)
-    assertEquals = _deprecate(unittest.TestCase.assertEqual)
-    assertNotEquals = _deprecate(unittest.TestCase.assertNotEqual)
-    assertAlmostEquals = _deprecate(unittest.TestCase.assertAlmostEqual)
-    assertNotAlmostEquals = _deprecate(unittest.TestCase.assertNotAlmostEqual)
-
     def innerSkip(self, msg=None):
         """mark a generative test as skipped for the <msg> reason"""
         msg = msg or 'test was skipped'
         raise InnerTestSkipped(msg)
 
-    @deprecated('Please use assertDictEqual instead.')
-    def assertDictEquals(self, dict1, dict2, msg=None, context=None):
-        """compares two dicts
-
-        If the two dict differ, the first difference is shown in the error
-        message
-        :param dict1: a Python Dictionary
-        :param dict2: a Python Dictionary
-        :param msg: custom message (String) in case of failure
-        """
-        dict1 = dict(dict1)
-        msgs = []
-        for key, value in dict2.items():
-            try:
-                if dict1[key] != value:
-                    msgs.append('%r != %r for key %r' % (dict1[key], value,
-                        key))
-                del dict1[key]
-            except KeyError:
-                msgs.append('missing %r key' % key)
-        if dict1:
-            msgs.append('dict2 is lacking %r' % dict1)
-        if msg:
-            self.failureException(msg)
-        elif msgs:
-            if context is not None:
-                base = '%s\n' % context
-            else:
-                base = ''
-            self.fail(base + '\n'.join(msgs))
-
-    @deprecated('Please use assertCountEqual instead.')
-    def assertUnorderedIterableEquals(self, got, expected, msg=None):
-        """compares two iterable and shows difference between both
-
-        :param got: the unordered Iterable that we found
-        :param expected: the expected unordered Iterable
-        :param msg: custom message (String) in case of failure
-        """
-        got, expected = list(got), list(expected)
-        self.assertSetEqual(set(got), set(expected), msg)
-        if len(got) != len(expected):
-            if msg is None:
-                msg = ['Iterable have the same elements but not the same number',
-                       '\t<element>\t<expected>i\t<got>']
-                got_count = {}
-                expected_count = {}
-                for element in got:
-                    got_count[element] = got_count.get(element, 0) + 1
-                for element in expected:
-                    expected_count[element] = expected_count.get(element, 0) + 1
-                # we know that got_count.key() == expected_count.key()
-                # because of assertSetEqual
-                for element, count in got_count.iteritems():
-                    other_count = expected_count[element]
-                    if other_count != count:
-                        msg.append('\t%s\t%s\t%s' % (element, other_count, count))
-
-            self.fail(msg)
-
-    assertUnorderedIterableEqual = assertUnorderedIterableEquals
-    assertUnordIterEquals = assertUnordIterEqual = assertUnorderedIterableEqual
-
-    @deprecated('Please use assertSetEqual instead.')
-    def assertSetEquals(self,got,expected, msg=None):
-        """compares two sets and shows difference between both
-
-        Don't use it for iterables other than sets.
-
-        :param got: the Set that we found
-        :param expected: the second Set to be compared to the first one
-        :param msg: custom message (String) in case of failure
-        """
-
-        if not(isinstance(got, set) and isinstance(expected, set)):
-            warnings.warn("the assertSetEquals function if now intended for set only."\
-                          "use assertUnorderedIterableEquals instead.",
-                DeprecationWarning, 2)
-            return self.assertUnorderedIterableEquals(got, expected, msg)
-
-        items={}
-        items['missing'] = expected - got
-        items['unexpected'] = got - expected
-        if any(items.itervalues()):
-            if msg is None:
-                msg = '\n'.join('%s:\n\t%s' % (key, "\n\t".join(str(value) for value in values))
-                    for key, values in items.iteritems() if values)
-            self.fail(msg)
-
-    @deprecated('Please use assertListEqual instead.')
-    def assertListEquals(self, list_1, list_2, msg=None):
-        """compares two lists
-
-        If the two list differ, the first difference is shown in the error
-        message
-
-        :param list_1: a Python List
-        :param list_2: a second Python List
-        :param msg: custom message (String) in case of failure
-        """
-        _l1 = list_1[:]
-        for i, value in enumerate(list_2):
-            try:
-                if _l1[0] != value:
-                    from pprint import pprint
-                    pprint(list_1)
-                    pprint(list_2)
-                    self.fail('%r != %r for index %d' % (_l1[0], value, i))
-                del _l1[0]
-            except IndexError:
-                if msg is None:
-                    msg = 'list_1 has only %d elements, not %s '\
-                        '(at least %r missing)'% (i, len(list_2), value)
-                self.fail(msg)
-        if _l1:
-            if msg is None:
-                msg = 'list_2 is lacking %r' % _l1
-            self.fail(msg)
-
-    @deprecated('Non-standard. Please use assertMultiLineEqual instead.')
-    def assertLinesEquals(self, string1, string2, msg=None, striplines=False):
-        """compare two strings and assert that the text lines of the strings
-        are equal.
-
-        :param string1: a String
-        :param string2: a String
-        :param msg: custom message (String) in case of failure
-        :param striplines: Boolean to trigger line stripping before comparing
-        """
-        lines1 = string1.splitlines()
-        lines2 = string2.splitlines()
-        if striplines:
-            lines1 = [l.strip() for l in lines1]
-            lines2 = [l.strip() for l in lines2]
-        self.assertListEqual(lines1, lines2, msg)
-    assertLineEqual = assertLinesEquals
-
-    @deprecated('Non-standard: please copy test method to your TestCase class')
-    def assertXMLWellFormed(self, stream, msg=None, context=2):
-        """asserts the XML stream is well-formed (no DTD conformance check)
-
-        :param context: number of context lines in standard message
-                        (show all data if negative).
-                        Only available with element tree
-        """
-        try:
-            from xml.etree.ElementTree import parse
-            self._assertETXMLWellFormed(stream, parse, msg)
-        except ImportError:
-            from xml.sax import make_parser, SAXParseException
-            parser = make_parser()
-            try:
-                parser.parse(stream)
-            except SAXParseException as ex:
-                if msg is None:
-                    stream.seek(0)
-                    for _ in range(ex.getLineNumber()):
-                        line = stream.readline()
-                    pointer = ('' * (ex.getLineNumber() - 1)) + '^'
-                    msg = 'XML stream not well formed: %s\n%s%s' % (ex, line, pointer)
-                self.fail(msg)
-
-    @deprecated('Non-standard: please copy test method to your TestCase class')
-    def assertXMLStringWellFormed(self, xml_string, msg=None, context=2):
-        """asserts the XML string is well-formed (no DTD conformance check)
-
-        :param context: number of context lines in standard message
-                        (show all data if negative).
-                        Only available with element tree
-        """
-        try:
-            from xml.etree.ElementTree import fromstring
-        except ImportError:
-            from elementtree.ElementTree import fromstring
-        self._assertETXMLWellFormed(xml_string, fromstring, msg)
-
-    def _assertETXMLWellFormed(self, data, parse, msg=None, context=2):
-        """internal function used by /assertXML(String)?WellFormed/ functions
-
-        :param data: xml_data
-        :param parse: appropriate parser function for this data
-        :param msg: error message
-        :param context: number of context lines in standard message
-                        (show all data if negative).
-                        Only available with element tree
-        """
-        from xml.parsers.expat import ExpatError
-        try:
-            from xml.etree.ElementTree import ParseError
-        except ImportError:
-            # compatibility for <python2.7
-            ParseError = ExpatError
-        try:
-            parse(data)
-        except (ExpatError, ParseError) as ex:
-            if msg is None:
-                if hasattr(data, 'readlines'): #file like object
-                    data.seek(0)
-                    lines = data.readlines()
-                else:
-                    lines = data.splitlines(True)
-                nb_lines = len(lines)
-                context_lines = []
-
-                # catch when ParseError doesn't set valid lineno
-                if ex.lineno is not None:
-                    if context < 0:
-                        start = 1
-                        end   = nb_lines
-                    else:
-                        start = max(ex.lineno-context, 1)
-                        end   = min(ex.lineno+context, nb_lines)
-                    line_number_length = len('%i' % end)
-                    line_pattern = " %%%ii: %%s" % line_number_length
-
-                    for line_no in range(start, ex.lineno):
-                        context_lines.append(line_pattern % (line_no, lines[line_no-1]))
-                    context_lines.append(line_pattern % (ex.lineno, lines[ex.lineno-1]))
-                    context_lines.append('%s^\n' % (' ' * (1 + line_number_length + 2 +ex.offset)))
-                    for line_no in range(ex.lineno+1, end+1):
-                        context_lines.append(line_pattern % (line_no, lines[line_no-1]))
-
-                rich_context = ''.join(context_lines)
-                msg = 'XML stream not well formed: %s\n%s' % (ex, rich_context)
-            self.fail(msg)
-
-    @deprecated('Non-standard: please copy test method to your TestCase class')
-    def assertXMLEqualsTuple(self, element, tup):
-        """compare an ElementTree Element to a tuple formatted as follow:
-        (tagname, [attrib[, children[, text[, tail]]]])"""
-        # check tag
-        self.assertTextEquals(element.tag, tup[0])
-        # check attrib
-        if len(element.attrib) or len(tup)>1:
-            if len(tup)<=1:
-                self.fail( "tuple %s has no attributes (%s expected)"%(tup,
-                    dict(element.attrib)))
-            self.assertDictEqual(element.attrib, tup[1])
-        # check children
-        if len(element) or len(tup)>2:
-            if len(tup)<=2:
-                self.fail( "tuple %s has no children (%i expected)"%(tup,
-                    len(element)))
-            if len(element) != len(tup[2]):
-                self.fail( "tuple %s has %i children%s (%i expected)"%(tup,
-                    len(tup[2]),
-                        ('', 's')[len(tup[2])>1], len(element)))
-            for index in range(len(tup[2])):
-                self.assertXMLEqualsTuple(element[index], tup[2][index])
-        #check text
-        if element.text or len(tup)>3:
-            if len(tup)<=3:
-                self.fail( "tuple %s has no text value (%r expected)"%(tup,
-                    element.text))
-            self.assertTextEquals(element.text, tup[3])
-        #check tail
-        if element.tail or len(tup)>4:
-            if len(tup)<=4:
-                self.fail( "tuple %s has no tail value (%r expected)"%(tup,
-                    element.tail))
-            self.assertTextEquals(element.tail, tup[4])
-
-    def _difftext(self, lines1, lines2, junk=None, msg_prefix='Texts differ'):
-        junk = junk or (' ', '\t')
-        # result is a generator
-        result = difflib.ndiff(lines1, lines2, charjunk=lambda x: x in junk)
-        read = []
-        for line in result:
-            read.append(line)
-            # lines that don't start with a ' ' are diff ones
-            if not line.startswith(' '):
-                self.fail('\n'.join(['%s\n'%msg_prefix]+read + list(result)))
-
-    @deprecated('Non-standard. Please use assertMultiLineEqual instead.')
-    def assertTextEquals(self, text1, text2, junk=None,
-            msg_prefix='Text differ', striplines=False):
-        """compare two multiline strings (using difflib and splitlines())
-
-        :param text1: a Python BaseString
-        :param text2: a second Python Basestring
-        :param junk: List of Caracters
-        :param msg_prefix: String (message prefix)
-        :param striplines: Boolean to trigger line stripping before comparing
-        """
-        msg = []
-        if not isinstance(text1, string_types):
-            msg.append('text1 is not a string (%s)'%(type(text1)))
-        if not isinstance(text2, string_types):
-            msg.append('text2 is not a string (%s)'%(type(text2)))
-        if msg:
-            self.fail('\n'.join(msg))
-        lines1 = text1.strip().splitlines(True)
-        lines2 = text2.strip().splitlines(True)
-        if striplines:
-            lines1 = [line.strip() for line in lines1]
-            lines2 = [line.strip() for line in lines2]
-        self._difftext(lines1, lines2, junk,  msg_prefix)
-    assertTextEqual = assertTextEquals
-
-    @deprecated('Non-standard: please copy test method to your TestCase class')
-    def assertStreamEquals(self, stream1, stream2, junk=None,
-            msg_prefix='Stream differ'):
-        """compare two streams (using difflib and readlines())"""
-        # if stream2 is stream2, readlines() on stream1 will also read lines
-        # in stream2, so they'll appear different, although they're not
-        if stream1 is stream2:
-            return
-        # make sure we compare from the beginning of the stream
-        stream1.seek(0)
-        stream2.seek(0)
-        # compare
-        self._difftext(stream1.readlines(), stream2.readlines(), junk,
-             msg_prefix)
-
-    assertStreamEqual = assertStreamEquals
-
-    @deprecated('Non-standard: please copy test method to your TestCase class')
-    def assertFileEquals(self, fname1, fname2, junk=(' ', '\t')):
-        """compares two files using difflib"""
-        self.assertStreamEqual(open(fname1), open(fname2), junk,
-            msg_prefix='Files differs\n-:%s\n+:%s\n'%(fname1, fname2))
-
-    assertFileEqual = assertFileEquals
-
-    @deprecated('Non-standard: please copy test method to your TestCase class')
-    def assertDirEquals(self, path_a, path_b):
-        """compares two files using difflib"""
-        assert osp.exists(path_a), "%s doesn't exists" % path_a
-        assert osp.exists(path_b), "%s doesn't exists" % path_b
-
-        all_a = [ (ipath[len(path_a):].lstrip('/'), idirs, ifiles)
-                    for ipath, idirs, ifiles in os.walk(path_a)]
-        all_a.sort(key=itemgetter(0))
-
-        all_b = [ (ipath[len(path_b):].lstrip('/'), idirs, ifiles)
-                    for ipath, idirs, ifiles in os.walk(path_b)]
-        all_b.sort(key=itemgetter(0))
-
-        iter_a, iter_b = iter(all_a), iter(all_b)
-        partial_iter = True
-        ipath_a, idirs_a, ifiles_a = data_a = None, None, None
-        while True:
-            try:
-                ipath_a, idirs_a, ifiles_a = datas_a = next(iter_a)
-                partial_iter = False
-                ipath_b, idirs_b, ifiles_b = datas_b = next(iter_b)
-                partial_iter = True
-
-
-                self.assertTrue(ipath_a == ipath_b,
-                    "unexpected %s in %s while looking %s from %s" %
-                    (ipath_a, path_a, ipath_b, path_b))
-
-
-                errors = {}
-                sdirs_a = set(idirs_a)
-                sdirs_b = set(idirs_b)
-                errors["unexpected directories"] = sdirs_a - sdirs_b
-                errors["missing directories"] = sdirs_b - sdirs_a
-
-                sfiles_a = set(ifiles_a)
-                sfiles_b = set(ifiles_b)
-                errors["unexpected files"] = sfiles_a - sfiles_b
-                errors["missing files"] = sfiles_b - sfiles_a
-
-
-                msgs = [ "%s: %s"% (name, items)
-                    for name, items in errors.items() if items]
-
-                if msgs:
-                    msgs.insert(0, "%s and %s differ :" % (
-                        osp.join(path_a, ipath_a),
-                        osp.join(path_b, ipath_b),
-                        ))
-                    self.fail("\n".join(msgs))
-
-                for files in (ifiles_a, ifiles_b):
-                    files.sort()
-
-                for index, path in enumerate(ifiles_a):
-                    self.assertFileEquals(osp.join(path_a, ipath_a, path),
-                        osp.join(path_b, ipath_b, ifiles_b[index]))
-
-            except StopIteration:
-                break
-
-    assertDirEqual = assertDirEquals
-
-    def assertIsInstance(self, obj, klass, msg=None, strict=False):
-        """check if an object is an instance of a class
-
-        :param obj: the Python Object to be checked
-        :param klass: the target class
-        :param msg: a String for a custom message
-        :param strict: if True, check that the class of <obj> is <klass>;
-                       else check with 'isinstance'
-        """
-        if strict:
-            warnings.warn('[API] Non-standard. Strict parameter has vanished',
-                          DeprecationWarning, stacklevel=2)
-        if msg is None:
-            if strict:
-                msg = '%r is not of class %s but of %s'
-            else:
-                msg = '%r is not an instance of %s but of %s'
-            msg = msg % (obj, klass, type(obj))
-        if strict:
-            self.assertTrue(obj.__class__ is klass, msg)
-        else:
-            self.assertTrue(isinstance(obj, klass), msg)
-
-    @deprecated('Please use assertIsNone instead.')
-    def assertNone(self, obj, msg=None):
-        """assert obj is None
-
-        :param obj: Python Object to be tested
-        """
-        if msg is None:
-            msg = "reference to %r when None expected"%(obj,)
-        self.assertTrue( obj is None, msg )
-
-    @deprecated('Please use assertIsNotNone instead.')
-    def assertNotNone(self, obj, msg=None):
-        """assert obj is not None"""
-        if msg is None:
-            msg = "unexpected reference to None"
-        self.assertTrue( obj is not None, msg )
-
-    @deprecated('Non-standard. Please use assertAlmostEqual instead.')
-    def assertFloatAlmostEquals(self, obj, other, prec=1e-5,
-                                relative=False, msg=None):
-        """compares if two floats have a distance smaller than expected
-        precision.
-
-        :param obj: a Float
-        :param other: another Float to be comparted to <obj>
-        :param prec: a Float describing the precision
-        :param relative: boolean switching to relative/absolute precision
-        :param msg: a String for a custom message
-        """
-        if msg is None:
-            msg = "%r != %r" % (obj, other)
-        if relative:
-            prec = prec*math.fabs(obj)
-        self.assertTrue(math.fabs(obj - other) < prec, msg)
-
-    def failUnlessRaises(self, excClass, callableObj=None, *args, **kwargs):
-        """override default failUnlessRaises method to return the raised
-        exception instance.
-
-        Fail unless an exception of class excClass is thrown
-        by callableObj when invoked with arguments args and keyword
-        arguments kwargs. If a different type of exception is
-        thrown, it will not be caught, and the test case will be
-        deemed to have suffered an error, exactly as for an
-        unexpected exception.
-
-        CAUTION! There are subtle differences between Logilab and unittest2
-        - exc is not returned in standard version
-        - context capabilities in standard version
-        - try/except/else construction (minor)
-
-        :param excClass: the Exception to be raised
-        :param callableObj: a callable Object which should raise <excClass>
-        :param args: a List of arguments for <callableObj>
-        :param kwargs: a List of keyword arguments  for <callableObj>
-        """
-        # XXX cube vcslib : test_branches_from_app
-        if callableObj is None:
-            _assert = super(TestCase, self).assertRaises
-            return _assert(excClass, callableObj, *args, **kwargs)
-        try:
-            callableObj(*args, **kwargs)
-        except excClass as exc:
-            class ProxyException:
-                def __init__(self, obj):
-                    self._obj = obj
-                def __getattr__(self, attr):
-                    warn_msg = ("This exception was retrieved with the old testlib way "
-                                "`exc = self.assertRaises(Exc, callable)`, please use "
-                                "the context manager instead'")
-                    warnings.warn(warn_msg, DeprecationWarning, 2)
-                    return self._obj.__getattribute__(attr)
-            return ProxyException(exc)
-        else:
-            if hasattr(excClass, '__name__'):
-                excName = excClass.__name__
-            else:
-                excName = str(excClass)
-            raise self.failureException("%s not raised" % excName)
-
-    assertRaises = failUnlessRaises
-
     if sys.version_info >= (3,2):
         assertItemsEqual = unittest.TestCase.assertCountEqual
     else:
         assertCountEqual = unittest.TestCase.assertItemsEqual
-        if sys.version_info < (2,7):
-            def assertIsNotNone(self, value, *args, **kwargs):
-                self.assertNotEqual(None, value, *args, **kwargs)
 
 TestCase.assertItemsEqual = deprecated('assertItemsEqual is deprecated, use assertCountEqual')(
     TestCase.assertItemsEqual)
@@ -1175,40 +541,6 @@ class DocTest(TestCase):
 
     def test(self):
         """just there to trigger test execution"""
-
-MAILBOX = None
-
-class MockSMTP:
-    """fake smtplib.SMTP"""
-
-    def __init__(self, host, port):
-        self.host = host
-        self.port = port
-        global MAILBOX
-        self.reveived = MAILBOX = []
-
-    def set_debuglevel(self, debuglevel):
-        """ignore debug level"""
-
-    def sendmail(self, fromaddr, toaddres, body):
-        """push sent mail in the mailbox"""
-        self.reveived.append((fromaddr, toaddres, body))
-
-    def quit(self):
-        """ignore quit"""
-
-
-class MockConfigParser(configparser.ConfigParser):
-    """fake ConfigParser.ConfigParser"""
-
-    def __init__(self, options):
-        configparser.ConfigParser.__init__(self)
-        for section, pairs in options.iteritems():
-            self.add_section(section)
-            for key, value in pairs.iteritems():
-                self.set(section, key, value)
-    def write(self, _):
-        raise NotImplementedError()
 
 
 class MockConnection:
