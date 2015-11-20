@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-13 11:55-0800\n"
+"POT-Creation-Date: 2015-11-20 10:11-0800\n"
 "PO-Revision-Date: 2015-10-31 17:11+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,10 +44,10 @@ msgstr "此類型的檔案不被允許。"
 msgid "The file provided is not valid. File must be one of these types: %s."
 msgstr "您所提供的檔案無效，檔案類型必須是下列的其中一種: %s。"
 
-#. {id} is the revision number, {title} is the title of the document.
+#. 'id' is the revision number, 'title' is the title of the document.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
-#, fuzzy
-msgid "Attachment {id} | {title}"
+#, fuzzy, python-format
+msgid "Attachment %(id)s | %(title)s"
 msgstr "附件 {n} | {t}"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:15
@@ -78,9 +78,9 @@ msgstr "建立者:"
 msgid "MIME Type:"
 msgstr "MIME 類型:"
 
-#: kuma/attachments/templates/attachments/attachment_detail.html:44 kuma/attachments/templates/attachments/includes/attachment_row.html:6
-#, python-format
-msgid "%s bytes"
+#: kuma/attachments/templates/attachments/attachment_detail.html:44
+#, fuzzy, python-format
+msgid "%(bytes)s bytes"
 msgstr "%s 位元組"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:48
@@ -158,6 +158,11 @@ msgstr "回應"
 msgid "Uploading"
 msgstr "上傳中"
 
+#: kuma/attachments/templates/attachments/includes/attachment_row.html:6
+#, python-format
+msgid "%s bytes"
+msgstr "%s 位元組"
+
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
 msgstr "查詢金鑰"
@@ -206,7 +211,8 @@ msgid "View key usage history"
 msgstr "檢視金鑰使用紀錄"
 
 #: kuma/authkeys/templates/authkeys/list.html:26
-msgid "History ({count})"
+#, fuzzy, python-format
+msgid "History (%(count)s)"
 msgstr "歷史 ({count})"
 
 #: kuma/authkeys/templates/authkeys/list.html:35
@@ -321,58 +327,58 @@ msgstr "標題請不要超過 %(limit_value)s 字元，目前 %(show_value)s 字
 msgid "Ensure this value has at most %(limit_value)s characters (it has %(show_value)s)."
 msgstr "使用者名稱太長（%(show_value)s 個字元）。不能超過 %(limit_value)s 個字元長。"
 
-#: kuma/core/helpers.py:108 kuma/demos/helpers.py:305
+#: kuma/core/helpers.py:109 kuma/demos/helpers.py:305
 #, python-format
 msgid "%(number)d year ago"
 msgid_plural "%(number)d years ago"
 msgstr[0] "%(number)d 年前"
 
-#: kuma/core/helpers.py:110 kuma/demos/helpers.py:307
+#: kuma/core/helpers.py:111 kuma/demos/helpers.py:307
 #, python-format
 msgid "%(number)d month ago"
 msgid_plural "%(number)d months ago"
 msgstr[0] "%(number)d 個月前"
 
-#: kuma/core/helpers.py:112 kuma/demos/helpers.py:309
+#: kuma/core/helpers.py:113 kuma/demos/helpers.py:309
 #, python-format
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
 msgstr[0] "%(number)d 週前"
 
-#: kuma/core/helpers.py:114 kuma/demos/helpers.py:311
+#: kuma/core/helpers.py:115 kuma/demos/helpers.py:311
 #, python-format
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
 msgstr[0] "%(number)d 天前"
 
-#: kuma/core/helpers.py:116 kuma/demos/helpers.py:313
+#: kuma/core/helpers.py:117 kuma/demos/helpers.py:313
 #, python-format
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
 msgstr[0] "%(number)d 小時前"
 
-#: kuma/core/helpers.py:118 kuma/demos/helpers.py:315
+#: kuma/core/helpers.py:119 kuma/demos/helpers.py:315
 #, python-format
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
 msgstr[0] "%(number)d 分鐘前"
 
-#: kuma/core/helpers.py:120 kuma/demos/helpers.py:317
+#: kuma/core/helpers.py:121 kuma/demos/helpers.py:317
 #, python-format
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
 msgstr[0] "%(number)d 秒鐘前"
 
-#: kuma/core/helpers.py:143
+#: kuma/core/helpers.py:144
 msgid "Yes"
 msgstr ""
 
-#: kuma/core/helpers.py:143
+#: kuma/core/helpers.py:144
 #, fuzzy
 msgid "No"
 msgstr "無"
 
-#: kuma/core/helpers.py:297
+#: kuma/core/helpers.py:293
 #, python-format
 msgid "Today at %s"
 msgstr ""
@@ -1796,7 +1802,8 @@ msgstr ""
 #: kuma/demos/templates/demos/delete.html:10 kuma/demos/templates/demos/detail.html:9 kuma/demos/templates/demos/devderby_tag.html:5 kuma/demos/templates/demos/flag.html:10
 #: kuma/demos/templates/demos/launch.html:6 kuma/demos/templates/demos/listing_all.html:4 kuma/demos/templates/demos/listing_search.html:9 kuma/demos/templates/demos/listing_tag.html:4
 #: kuma/demos/templates/demos/submit.html:13 kuma/demos/templates/demos/submit.html:15 kuma/demos/templates/demos/submit_noauth.html:11 kuma/demos/templates/demos/terms.html:10
-msgid "{subtitle} | Demo Studio"
+#, fuzzy, python-format
+msgid "%(subtitle)s | Demo Studio"
 msgstr "{subtitle} | Demo Studio"
 
 #: kuma/demos/templates/demos/delete.html:20
@@ -1845,7 +1852,8 @@ msgstr ""
 "li> <li>檢測這些展示的原始碼，這樣您就可以這是如何工作的。</li> <li>閱讀文件以學習這些讓網路變得更好的開放標準與技術。</li> </ul>"
 
 #: kuma/demos/templates/demos/detail.html:51 kuma/demos/templates/demos/launch.html:80
-msgid "Go to the previous demo, {demo_title}"
+#, fuzzy, python-format
+msgid "Go to the previous demo, %(demo_title)s"
 msgstr "到上一個 Demo，{demo_title}"
 
 #: kuma/demos/templates/demos/detail.html:51
@@ -1853,7 +1861,8 @@ msgid "Prev"
 msgstr "上一個"
 
 #: kuma/demos/templates/demos/detail.html:55 kuma/demos/templates/demos/launch.html:84
-msgid "Go to the next demo, {demo_title}"
+#, fuzzy, python-format
+msgid "Go to the next demo, %(demo_title)s"
 msgstr "到下一個 Demo，{demo_title}"
 
 #: kuma/demos/templates/demos/detail.html:55 kuma/demos/templates/demos/detail.html:69 kuma/demos/templates/demos/home.html:47 kuma/demos/templates/demos/launch.html:84
@@ -1921,28 +1930,33 @@ msgid "Built using"
 msgstr "建立方法"
 
 #: kuma/demos/templates/demos/detail.html:156
-msgid "See more demos made with {tag_title}"
+#, fuzzy, python-format
+msgid "See more demos made with %(tag_title)s"
 msgstr "看看更多使用 {tag_title} 製作的 demo"
 
 #: kuma/demos/templates/demos/detail.html:165 kuma/demos/templates/demos/elements/submission_thumb.html:15
-msgid "This demo has been viewed {count} time"
-msgid_plural "This demo has been viewed {count} times"
+#, fuzzy, python-format
+msgid "This demo has been viewed %(num)s time"
+msgid_plural "This demo has been viewed %(num)s times"
 msgstr[0] "此 demo 已被檢視 {count} 次"
 
 #: kuma/demos/templates/demos/detail.html:165
-msgid "{count} view"
-msgid_plural "{count} views"
-msgstr[0] "{count} 個檢視數"
+#, python-format
+msgid "%(num)s view"
+msgid_plural "%(num)s views"
+msgstr[0] ""
 
 #: kuma/demos/templates/demos/detail.html:166 kuma/demos/templates/demos/elements/submission_thumb.html:16
-msgid "{count} person liked this demo"
-msgid_plural "{count} people liked this demo"
+#, fuzzy, python-format
+msgid "%(num)s person liked this demo"
+msgid_plural "%(num)s people liked this demo"
 msgstr[0] "{count} 個人喜歡此 demo"
 
 #: kuma/demos/templates/demos/detail.html:166
-msgid "{count} like"
-msgid_plural "{count} likes"
-msgstr[0] "{count} 個人喜歡"
+#, python-format
+msgid "%(num)s like"
+msgid_plural "%(num)s likes"
+msgstr[0] ""
 
 #: kuma/demos/templates/demos/detail.html:181
 msgid "Edit Demo"
@@ -1980,7 +1994,8 @@ msgstr "此 demo 係以 <a href=\"%(link)s\">%(title)s</a> 條款進行授權。
 
 # 77%
 #: kuma/demos/templates/demos/detail.html:225
-msgid "More by {creator}"
+#, fuzzy, python-format
+msgid "More by %(creator)s"
 msgstr "{creator} 的更多作品"
 
 #: kuma/demos/templates/demos/detail.html:237 kuma/demos/templates/demos/launch.html:63
@@ -2041,7 +2056,8 @@ msgid "Articles"
 msgstr "文件"
 
 #: kuma/demos/templates/demos/devderby_tag.html:8 kuma/demos/templates/demos/listing_tag.html:7
-msgid "Demos tagged {tag}"
+#, fuzzy, python-format
+msgid "Demos tagged %(tag)s"
 msgstr "被加上 {tag} 標籤的 Demo"
 
 #: kuma/demos/templates/demos/devderby_tag.html:22
@@ -2065,7 +2081,8 @@ msgid "Submissions"
 msgstr "送交作品"
 
 #: kuma/demos/templates/demos/devderby_tag.html:55 kuma/demos/templates/demos/home.html:136 kuma/demos/templates/demos/listing_tag.html:51
-msgid "Subscribe to a feed of {tag_title} demos"
+#, fuzzy, python-format
+msgid "Subscribe to a feed of %(tag_title)s demos"
 msgstr "訂閱 {tag_title} demo 的消息來源"
 
 #: kuma/demos/templates/demos/feed_item_description.html:7
@@ -2160,31 +2177,33 @@ msgid "Subscribe to a feed of all demos"
 msgstr "訂閱所有 demo 的消息來源"
 
 #: kuma/demos/templates/demos/listing_search.html:9
-#, fuzzy
-msgid "Search for \"{query}\""
+#, fuzzy, python-format
+msgid "Search for \"%(query)s\""
 msgstr "搜尋「{q}」"
 
 #: kuma/demos/templates/demos/listing_search.html:13
-#, fuzzy
-msgid "Search results for \"{query}\""
+#, fuzzy, python-format
+msgid "Search results for \"%(query)s\""
 msgstr "「{query}」的搜尋結果"
 
 #: kuma/demos/templates/demos/listing_search.html:27
-#, fuzzy
-msgid "Search demos for \"{query}\""
+#, fuzzy, python-format
+msgid "Search demos for \"%(query)s\""
 msgstr "搜尋「{q}」的 demo"
 
 #: kuma/demos/templates/demos/listing_search.html:33
-#, fuzzy
-msgid "Subscribe to a feed of search results for \"{query}\""
+#, fuzzy, python-format
+msgid "Subscribe to a feed of search results for \"%(query)s\""
 msgstr "訂閱「{q}」搜尋結果的消息來源"
 
 #: kuma/demos/templates/demos/listing_tag.html:4
-msgid "{tag_title} Demos"
+#, fuzzy, python-format
+msgid "%(tag_title)s Demos"
 msgstr "{tag_title} Demo"
 
 #: kuma/demos/templates/demos/submit.html:13 kuma/demos/templates/demos/submit.html:53
-msgid "Edit {demo_title}"
+#, fuzzy, python-format
+msgid "Edit %(demo_title)s"
 msgstr "編輯 {demo_title}"
 
 #: kuma/demos/templates/demos/submit.html:15 kuma/demos/templates/demos/submit.html:55 kuma/demos/templates/demos/submit_noauth.html:11 kuma/demos/templates/demos/submit_noauth.html:25
@@ -2356,14 +2375,16 @@ msgstr "搜尋 Demo Studio"
 msgid "Search"
 msgstr "搜尋"
 
-#: kuma/demos/templates/demos/elements/submission_creator.html:2
-msgid "See {display_name}'s profile"
-msgstr "看看 {display_name} 的使用者資料"
+#: kuma/demos/templates/demos/elements/submission_creator.html:2 kuma/demos/templates/demos/elements/user_link.html:2
+#, python-format
+msgid "See %(display_name)s's profile"
+msgstr "看看 %(display_name)s 的個人資料"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:6
-msgid "{count} Demo"
-msgid_plural "{count} Demos"
-msgstr[0] "{count} 個 Demo"
+#, python-format
+msgid "%(num)s Demo"
+msgid_plural "%(num)s Demos"
+msgstr[0] ""
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:9
 msgid "Sort demos by most recent likes and views"
@@ -2414,10 +2435,6 @@ msgstr "您正依送出的時間先後檢視 demo"
 msgid "Most Recent"
 msgstr "最近的"
 
-#: kuma/demos/templates/demos/elements/submission_listing.html:49
-msgid "{start}&ndash;{end} of {total}"
-msgstr "{total} 當中的 {start}&ndash;{end}"
-
 #: kuma/demos/templates/demos/elements/submission_listing.html:58
 msgid "Go to the first page"
 msgstr "到第一頁"
@@ -2447,13 +2464,9 @@ msgid "Feed"
 msgstr "Feed"
 
 #: kuma/demos/templates/demos/elements/submission_thumb.html:23
-msgid "Launch {title}"
+#, fuzzy, python-format
+msgid "Launch %(title)s"
 msgstr "執行 {title}"
-
-#: kuma/demos/templates/demos/elements/user_link.html:2
-#, python-format
-msgid "See %(display_name)s's profile"
-msgstr "看看 %(display_name)s 的個人資料"
 
 #: kuma/landing/templates/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
@@ -2606,7 +2619,7 @@ msgstr "宣傳 MDN"
 msgid "Contributing to the MDN codebase"
 msgstr "貢獻至 MDN codebase"
 
-#: kuma/landing/templates/landing/newsfeed.html:8
+#: kuma/landing/templates/landing/newsfeed.html:10
 #, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
 msgstr "由 %(authorlink)s 張貼於 %(entrydate)s"
@@ -2809,7 +2822,8 @@ msgid "Search Mozilla Developer Network documentation"
 msgstr "搜尋 Mozilla Developer Network 文件"
 
 #: kuma/search/templates/search/results.html:13
-msgid "Search Results for \"{query}\""
+#, fuzzy, python-format
+msgid "Search Results for \"%(query)s\""
 msgstr "「{query}」的搜尋結果"
 
 #: kuma/search/templates/search/results.html:39
@@ -2982,7 +2996,7 @@ msgstr "使用者名稱"
 msgid "Website"
 msgstr "網站"
 
-#: kuma/users/forms.py:189 kuma/users/models.py:154 kuma/users/templates/users/user_detail.html:121 kuma/wiki/templates/wiki/includes/document_macros.html:101
+#: kuma/users/forms.py:189 kuma/users/models.py:154 kuma/users/templates/users/user_detail.html:121 kuma/wiki/templates/wiki/includes/document_macros.html:109
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -3002,7 +3016,7 @@ msgstr "LinkedIn"
 msgid "Mozillians"
 msgstr "摩茲人"
 
-#: kuma/users/forms.py:234 kuma/users/models.py:164 kuma/users/templates/users/user_detail.html:147 kuma/wiki/templates/wiki/includes/document_macros.html:102
+#: kuma/users/forms.py:234 kuma/users/models.py:164 kuma/users/templates/users/user_detail.html:147 kuma/wiki/templates/wiki/includes/document_macros.html:110
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -3077,7 +3091,7 @@ msgstr "關於我"
 msgid "IRC nickname"
 msgstr "IRC 暱稱"
 
-#: kuma/users/models.py:94 kuma/wiki/templates/wiki/confirm_revision_revert.html:27 kuma/wiki/templates/wiki/create.html:75 kuma/wiki/templates/wiki/edit.html:176
+#: kuma/users/models.py:94 kuma/wiki/templates/wiki/confirm_revision_revert.html:27 kuma/wiki/templates/wiki/create.html:79 kuma/wiki/templates/wiki/edit.html:188
 msgid "Tags"
 msgstr "標籤"
 
@@ -3162,7 +3176,8 @@ msgid "Email addresses"
 msgstr "電子郵件地址"
 
 #: kuma/users/templates/account/email.html:11
-msgid "{email} is your <em>primary</em> email address"
+#, fuzzy, python-format
+msgid "%(email)s is your <em>primary</em> email address"
 msgstr "{email} 是您的<em>主要</em>電子郵件地址"
 
 #: kuma/users/templates/account/email.html:15
@@ -3454,9 +3469,10 @@ msgid ""
 msgstr "已有帳號使用選擇的電子郵件地址，<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">連結您的 %(provider_name)s 帳號。</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:155
+#, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"{privacy_url}\">privacy policy</a>."
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/templates/socialaccount/signup.html:170
@@ -3539,7 +3555,8 @@ msgid "Member since %(date_joined)s"
 msgstr "於 %(date_joined)s 年加入本站"
 
 #: kuma/users/templates/users/user_detail.html:159
-msgid "Subscribe to a feed of {display_name}'s demos"
+#, fuzzy, python-format
+msgid "Subscribe to a feed of %(display_name)s's demos"
 msgstr "訂閱 {display_name} 的 demo 的消息來源"
 
 #: kuma/users/templates/users/user_detail.html:167
@@ -3663,7 +3680,8 @@ msgid "Save Changes"
 msgstr "儲存修改"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:9
-msgid "Hi {username}!"
+#, fuzzy, python-format
+msgid "Hi %(username)s!"
 msgstr "嗨，{username}！"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
@@ -3716,7 +3734,8 @@ msgstr "別害羞，若您有任何不懂、疑問、懷疑之處，快來聯絡
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:4
-msgid "Hi {username}"
+#, fuzzy, python-format
+msgid "Hi %(username)s"
 msgstr "嗨 {username}"
 
 #. This is an email. Whitespace matters!
@@ -3753,7 +3772,8 @@ msgstr "想把 MDN 翻譯成您使用的語言？"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:33
-msgid "Mailing list: {list_link}"
+#, python-format
+msgid "Mailing list: %(list_link)s"
 msgstr ""
 
 #. This is an email. Whitespace matters!
@@ -3768,7 +3788,8 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:42
-msgid "See {irc_link} for more info about IRC."
+#, python-format
+msgid "See %(irc_link)s for more info about IRC."
 msgstr ""
 
 #. This is an email. Whitespace matters!
@@ -3780,7 +3801,8 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
-msgid "Blog: {blog_link}"
+#, python-format
+msgid "Blog: %(blog_link)s"
 msgstr ""
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
@@ -3952,8 +3974,8 @@ msgid "Changing this document's slug requires moving it and its children."
 msgstr "修改此文件的URL代稱必須連同子頁面一起移動。"
 
 # 83%
-#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:169 kuma/wiki/forms.py:553 kuma/wiki/templates/wiki/create.html:38 kuma/wiki/templates/wiki/edit.html:56 kuma/wiki/templates/wiki/edit.html:105
-#: kuma/wiki/templates/wiki/move.html:60 kuma/wiki/templates/wiki/includes/document_macros.html:58 kuma/wiki/templates/wiki/includes/translate_description.html:11
+#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:169 kuma/wiki/forms.py:553 kuma/wiki/templates/wiki/create.html:42 kuma/wiki/templates/wiki/edit.html:68 kuma/wiki/templates/wiki/edit.html:117
+#: kuma/wiki/templates/wiki/move.html:60 kuma/wiki/templates/wiki/includes/document_macros.html:66 kuma/wiki/templates/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "標題:"
 
@@ -3961,7 +3983,7 @@ msgstr "標題:"
 msgid "Title of article"
 msgstr "文章標題"
 
-#: kuma/wiki/forms.py:89 kuma/wiki/forms.py:183 kuma/wiki/templates/wiki/create.html:42 kuma/wiki/templates/wiki/includes/document_macros.html:62
+#: kuma/wiki/forms.py:89 kuma/wiki/forms.py:183 kuma/wiki/templates/wiki/create.html:46 kuma/wiki/templates/wiki/includes/document_macros.html:70
 #: kuma/wiki/templates/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "URL代稱:"
@@ -3978,16 +4000,16 @@ msgstr "分類:"
 msgid "Type of article"
 msgstr "文章類型"
 
-#: kuma/wiki/forms.py:106 kuma/wiki/templates/wiki/create.html:46 kuma/wiki/templates/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:106 kuma/wiki/templates/wiki/create.html:50 kuma/wiki/templates/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "上層:"
 
 # 80%
-#: kuma/wiki/forms.py:194 kuma/wiki/templates/wiki/edit.html:62 kuma/wiki/templates/wiki/includes/document_macros.html:67 kuma/wiki/templates/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:194 kuma/wiki/templates/wiki/edit.html:74 kuma/wiki/templates/wiki/includes/document_macros.html:75 kuma/wiki/templates/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "標籤:"
 
-#: kuma/wiki/forms.py:199 kuma/wiki/templates/wiki/edit.html:68
+#: kuma/wiki/forms.py:199 kuma/wiki/templates/wiki/edit.html:80
 msgid "Keywords:"
 msgstr "關鍵字:"
 
@@ -4005,7 +4027,7 @@ msgstr "只顯示於搜尋結果頁面"
 
 # 87%
 # 75%
-#: kuma/wiki/forms.py:220 kuma/wiki/templates/wiki/edit.html:80 kuma/wiki/templates/wiki/includes/document_macros.html:72
+#: kuma/wiki/forms.py:220 kuma/wiki/templates/wiki/edit.html:92 kuma/wiki/templates/wiki/includes/document_macros.html:80
 msgid "Content:"
 msgstr "內容:"
 
@@ -4162,7 +4184,8 @@ msgid "Load"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:4
-msgid "Compare Revisions | {document}"
+#, fuzzy, python-format
+msgid "Compare Revisions | %(document)s"
 msgstr "比較修改 | {document}"
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:13
@@ -4174,7 +4197,8 @@ msgid "Back to History"
 msgstr "回到編輯歷史"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:3
-msgid "Delete Document | {document}"
+#, fuzzy, python-format
+msgid "Delete Document | %(document)s"
 msgstr "刪除文件 | {document}"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:9
@@ -4206,7 +4230,8 @@ msgid "Are you sure you want to continue?"
 msgstr "您確定要繼續嗎？"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:2
-msgid "Revert Revision | {document}"
+#, fuzzy, python-format
+msgid "Revert Revision | %(document)s"
 msgstr "退回修改 | {document}"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:10
@@ -4231,23 +4256,29 @@ msgstr "您為什麼要回退到這筆修改？"
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/create.html:5
-msgid "Create a New {title}"
+#: kuma/wiki/templates/wiki/create.html:6
+#, fuzzy
+msgid "Create a New Template"
+msgstr "建立範本"
+
+#: kuma/wiki/templates/wiki/create.html:8
+#, fuzzy
+msgid "Create a New Article"
 msgstr "建立新的 {title}"
 
-#: kuma/wiki/templates/wiki/create.html:30
+#: kuma/wiki/templates/wiki/create.html:34
 msgid "Create a"
 msgstr "建立"
 
-#: kuma/wiki/templates/wiki/create.html:30
+#: kuma/wiki/templates/wiki/create.html:34
 msgid "New Document"
 msgstr "新文件"
 
-#: kuma/wiki/templates/wiki/create.html:32 kuma/wiki/templates/wiki/edit.html:96
+#: kuma/wiki/templates/wiki/create.html:36 kuma/wiki/templates/wiki/edit.html:108
 msgid "Draft"
 msgstr "草稿"
 
-#: kuma/wiki/templates/wiki/create.html:42
+#: kuma/wiki/templates/wiki/create.html:46
 msgid "URL segment that identifies the page"
 msgstr ""
 
@@ -4390,82 +4421,89 @@ msgstr "最近更新:"
 msgid "Hide Sidebar"
 msgstr "隱藏側邊欄"
 
-#: kuma/wiki/templates/wiki/edit.html:27
+#: kuma/wiki/templates/wiki/edit.html:6
+#, fuzzy, python-format
+msgid "%(title)s | Edit Template"
+msgstr "編輯範本"
+
+#: kuma/wiki/templates/wiki/edit.html:8
+#, fuzzy, python-format
+msgid "%(title)s | Edit Article"
+msgstr "編輯文章:"
+
+#: kuma/wiki/templates/wiki/edit.html:31
 msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/edit.html:37
+#: kuma/wiki/templates/wiki/edit.html:41
 msgid "Your Changes"
 msgstr "您的變更"
 
-#: kuma/wiki/templates/wiki/edit.html:38 kuma/wiki/templates/wiki/edit.html:46 kuma/wiki/templates/wiki/includes/document_macros.html:41 kuma/wiki/templates/wiki/includes/document_macros.html:53
-msgid "Revision {id} by <a href=\"{user_profile_url}\">{user}</a> on {date}"
+#: kuma/wiki/templates/wiki/edit.html:43 kuma/wiki/templates/wiki/edit.html:55 kuma/wiki/templates/wiki/includes/document_macros.html:42 kuma/wiki/templates/wiki/includes/document_macros.html:58
+#, fuzzy, python-format
+msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
 msgstr "由 <a href=\"{user_profile_url}\">{user}</a> 於 {date} 所做的編修 {id}"
 
-#: kuma/wiki/templates/wiki/edit.html:43
+#: kuma/wiki/templates/wiki/edit.html:51
 msgid "Current Revision:"
 msgstr "目前的線上版本:"
 
-#: kuma/wiki/templates/wiki/edit.html:74
+#: kuma/wiki/templates/wiki/edit.html:86
 msgid "Search results summary:"
 msgstr "搜尋結果摘要:"
 
-#: kuma/wiki/templates/wiki/edit.html:91
-msgid "<span class=\"title-prefix\">Editing</span> <em>{title}</em>"
-msgstr "<span class=\"title-prefix\">正在編輯</span> <em>{title}</em>"
-
-#: kuma/wiki/templates/wiki/edit.html:94
+#: kuma/wiki/templates/wiki/edit.html:106
 msgid "Edit Page Title and Properties"
 msgstr "編輯頁面標題及屬性"
 
-#: kuma/wiki/templates/wiki/edit.html:115
+#: kuma/wiki/templates/wiki/edit.html:127
 msgid "Rendering max age:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/edit.html:117
+#: kuma/wiki/templates/wiki/edit.html:129
 msgid "Days"
 msgstr "天"
 
-#: kuma/wiki/templates/wiki/edit.html:121
+#: kuma/wiki/templates/wiki/edit.html:133
 msgid "Hours"
 msgstr "小時"
 
-#: kuma/wiki/templates/wiki/edit.html:125
+#: kuma/wiki/templates/wiki/edit.html:137
 msgid "Minutes"
 msgstr "分鐘"
 
-#: kuma/wiki/templates/wiki/edit.html:134
+#: kuma/wiki/templates/wiki/edit.html:146
 msgid "Find the translation source with the lookup below and then click \"Save Changes.\""
 msgstr ""
 
-#: kuma/wiki/templates/wiki/edit.html:136 kuma/wiki/templates/wiki/includes/translate_description.html:62
+#: kuma/wiki/templates/wiki/edit.html:148 kuma/wiki/templates/wiki/includes/translate_description.html:62
 msgid "Lookup:"
 msgstr "尋找:"
 
-#: kuma/wiki/templates/wiki/edit.html:150
+#: kuma/wiki/templates/wiki/edit.html:162
 msgid "Thank you for taking the time to improve MDN!"
 msgstr "感謝您花時間改善 MDN！"
 
-#: kuma/wiki/templates/wiki/edit.html:152
+#: kuma/wiki/templates/wiki/edit.html:164
 #, python-format
 msgid "It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">Editor Guide</a>."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/edit.html:156
+#: kuma/wiki/templates/wiki/edit.html:168
 msgid "Don't be afraid to break something, you can always revert your changes."
 msgstr "別擔心會改壞什麼東西，您總是可以還原您的變更。"
 
-#: kuma/wiki/templates/wiki/edit.html:157
+#: kuma/wiki/templates/wiki/edit.html:169
 msgid "Have fun and be proud of your contribution!"
 msgstr "希望您能以您的貢獻為榮，祝您寫得愉快！"
 
-#: kuma/wiki/templates/wiki/edit.html:176
+#: kuma/wiki/templates/wiki/edit.html:188
 msgid "Learn how to tag an article"
 msgstr "了解如何用 tag 標示文件"
 
-#: kuma/wiki/templates/wiki/edit.html:178 kuma/wiki/templates/wiki/translate.html:112
+#: kuma/wiki/templates/wiki/edit.html:190 kuma/wiki/templates/wiki/translate.html:112
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
 msgstr ""
@@ -4486,12 +4524,9 @@ msgid "Edit %(locale)s translation"
 msgstr "{locale} 翻譯:"
 
 #: kuma/wiki/templates/wiki/move.html:2
-msgid "Move Article | {document}"
+#, fuzzy, python-format
+msgid "Move Article | %(document)s"
 msgstr "移動文件 | {document}"
-
-#: kuma/wiki/templates/wiki/move.html:16
-msgid "<span class=\"title-prefix\">Moving</span> <em>{title}</em>"
-msgstr "<span class=\"title-prefix\">移動</span> <em>{title}</em>"
 
 #: kuma/wiki/templates/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
@@ -4517,10 +4552,6 @@ msgstr ""
 msgid "Your requested move cannot be completed due to the following slug conflicts:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/move.html:39
-msgid "Please try a different destination slug. <strong>Double check to be sure you're trying to move to the right place!</strong>"
-msgstr ""
-
 #: kuma/wiki/templates/wiki/move.html:54
 msgid "Current Slug:"
 msgstr "目前的 slug:"
@@ -4542,8 +4573,8 @@ msgid "Parent Title"
 msgstr "副標題"
 
 #: kuma/wiki/templates/wiki/move.html:92
-#, fuzzy
-msgid "Move {count} Pages"
+#, fuzzy, python-format
+msgid "Move %(count)s Pages"
 msgstr "移動 {d} 頁"
 
 #: kuma/wiki/templates/wiki/move.html:92
@@ -4551,8 +4582,8 @@ msgid "Move Page"
 msgstr "移動頁面"
 
 #: kuma/wiki/templates/wiki/move.html:97
-#, fuzzy
-msgid "The following {count} subpages will be affected by this move:"
+#, fuzzy, python-format
+msgid "The following %(count)s subpages will be affected by this move:"
 msgstr "下列 {d} 篇子頁面將被此次移動影響:"
 
 #: kuma/wiki/templates/wiki/move.html:104
@@ -4573,17 +4604,9 @@ msgid "This is a preview of an unsaved document."
 msgstr "這是未儲存文件的預覽。"
 
 #: kuma/wiki/templates/wiki/revision.html:2
-#, fuzzy
-msgid "Revision {id} | {title} | {category}"
+#, fuzzy, python-format
+msgid "Revision %(id)s | %(title)s | %(category)s"
 msgstr "版本 {n} | {t} | {c}"
-
-#: kuma/wiki/templates/wiki/revision.html:10
-msgid "Revision"
-msgstr "修改"
-
-#: kuma/wiki/templates/wiki/revision.html:10
-msgid "of"
-msgstr "of"
 
 #: kuma/wiki/templates/wiki/revision.html:13
 msgid "Revision Information"
@@ -4602,7 +4625,8 @@ msgid "Revert to this revision"
 msgstr "還原至此版本"
 
 #: kuma/wiki/templates/wiki/select_locale.html:2
-msgid "Select language | {document}"
+#, fuzzy, python-format
+msgid "Select language | %(document)s"
 msgstr "選擇語言 | {document}"
 
 #: kuma/wiki/templates/wiki/select_locale.html:9
@@ -4628,15 +4652,13 @@ msgstr ""
 "獻程式碼</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">隱私權保護政策</a>"
 
 #: kuma/wiki/templates/wiki/translate.html:7
-msgid "Translate Article | {document}"
+#, fuzzy, python-format
+msgid "Translate Article | %(document)s"
 msgstr "翻譯文章 | {document}"
 
-#: kuma/wiki/templates/wiki/translate.html:29
-msgid "<span class=\"title-prefix\">Translating</span> <em>{title}</em>"
-msgstr "<span class=\"title-prefix\">翻譯</span> <em>{title}</em>"
-
 #: kuma/wiki/templates/wiki/translate.html:33
-msgid "Translating article to {locale}"
+#, fuzzy, python-format
+msgid "Translating article to %(locale)s"
 msgstr "正在翻譯文章至 {locale}"
 
 #: kuma/wiki/templates/wiki/translate.html:43
@@ -4644,7 +4666,8 @@ msgid "Translate Content"
 msgstr "翻譯內容"
 
 #: kuma/wiki/templates/wiki/translate.html:83
-msgid "Approved {locale} version"
+#, fuzzy, python-format
+msgid "Approved %(locale)s version"
 msgstr "已通過審查的 {locale} 版本"
 
 #: kuma/wiki/templates/wiki/translate.html:85
@@ -4656,15 +4679,18 @@ msgid "View Source"
 msgstr "檢視原始碼"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-msgid "Show {locale}"
+#, fuzzy, python-format
+msgid "Show %(locale)s"
 msgstr "顯示 {locale}"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-msgid "Hide {locale}"
+#, fuzzy, python-format
+msgid "Hide %(locale)s"
 msgstr "隱藏 {locale}"
 
 #: kuma/wiki/templates/wiki/translate.html:99
-msgid "{locale} translation:"
+#, fuzzy, python-format
+msgid "%(locale)s translation:"
 msgstr "{locale} 翻譯:"
 
 #: kuma/wiki/templates/wiki/translate.html:109
@@ -4680,7 +4706,8 @@ msgid "This document has no tags."
 msgstr "這份文件沒有標籤。"
 
 #: kuma/wiki/templates/wiki/translate.html:137
-msgid "{locale} tags"
+#, fuzzy, python-format
+msgid "%(locale)s tags"
 msgstr "{locale} 版標籤"
 
 #: kuma/wiki/templates/wiki/translate.html:144
@@ -4718,13 +4745,13 @@ msgid "Article History:"
 msgstr "文章記錄:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:40
-#, fuzzy
-msgid "You are subscribed to edits on: {title} and all its sub-articles."
+#, fuzzy, python-format
+msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
 msgstr "您已訂閱此文章的 {language} 版本。"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:44
-#, fuzzy
-msgid "You are subscribed to edits on: {title}."
+#, fuzzy, python-format
+msgid "You are subscribed to edits on: %(title)s."
 msgstr "您已訂閱此文章。"
 
 #: kuma/wiki/templates/wiki/includes/approvals.html:5
@@ -4804,72 +4831,85 @@ msgstr "詳見"
 msgid "Change Revisions"
 msgstr "變更修訂"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:37 kuma/wiki/templates/wiki/includes/document_macros.html:49
-msgid "Revision {num}:"
+#: kuma/wiki/templates/wiki/includes/document_macros.html:37 kuma/wiki/templates/wiki/includes/document_macros.html:53
+#, fuzzy, python-format
+msgid "Revision %(num)s:"
 msgstr "版本 {num}:"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:74 kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
+#: kuma/wiki/templates/wiki/includes/document_macros.html:82 kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr "伺服器正在產生內容對照。請等幾分鐘後重新整理此頁面。"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:99
+#: kuma/wiki/templates/wiki/includes/document_macros.html:107
 msgid "Share:"
 msgstr "分享:"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:103
+#: kuma/wiki/templates/wiki/includes/document_macros.html:111
 msgid "Google+"
 msgstr "Google+"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:124
+#: kuma/wiki/templates/wiki/includes/document_macros.html:128
+#, fuzzy, python-format
+msgid "Subscribe to %(title)s and all its sub-articles"
+msgstr "您已訂閱此文章。"
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:129
+#, fuzzy, python-format
+msgid "Unsubscribe from %(title)s and all its sub-articles"
+msgstr "您已取消訂閱此文章。"
+
+#: kuma/wiki/templates/wiki/includes/document_macros.html:132
 #, fuzzy
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr "您已訂閱此文章。"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:124
+#: kuma/wiki/templates/wiki/includes/document_macros.html:132
 #, fuzzy
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr "您已取消訂閱此文章。"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:135
+#: kuma/wiki/templates/wiki/includes/document_macros.html:143
 msgid "Updating subscription status"
 msgstr "更新訂閱狀態"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:136
-#, fuzzy
-msgid "Subscribe to {title}"
+#: kuma/wiki/templates/wiki/includes/document_macros.html:144
+#, fuzzy, python-format
+msgid "Subscribe to %(title)s"
 msgstr "訂閱此文章"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:137
-#, fuzzy
-msgid "Unsubscribe from {title}"
+#: kuma/wiki/templates/wiki/includes/document_macros.html:145
+#, fuzzy, python-format
+msgid "Unsubscribe from %(title)s"
 msgstr "取消訂閱此文章"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:140
-#, fuzzy
-msgid "You are now subscribed to {title}."
+#: kuma/wiki/templates/wiki/includes/document_macros.html:148
+#, fuzzy, python-format
+msgid "You are now subscribed to %(title)s."
 msgstr "您已訂閱此文章。"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:140
-#, fuzzy
-msgid "You have been unsubscribed from {title}."
+#: kuma/wiki/templates/wiki/includes/document_macros.html:148
+#, fuzzy, python-format
+msgid "You have been unsubscribed from %(title)s."
 msgstr "您已取消訂閱此文章。"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:151
-#, fuzzy
-msgid "Subscribe to <bdi>{language}</bdi> version"
+#: kuma/wiki/templates/wiki/includes/document_macros.html:159
+#, fuzzy, python-format
+msgid "Subscribe to <bdi>%(language)s</bdi> version"
 msgstr "訂閱 {language} 版"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:152
-#, fuzzy
-msgid "Unsubscribe from <bdi>{language}</bdi> version"
+#: kuma/wiki/templates/wiki/includes/document_macros.html:160
+#, fuzzy, python-format
+msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
 msgstr "取消訂閱 {language} 版"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:155
-msgid "You are now subscribed to the {language} version of this article."
+#: kuma/wiki/templates/wiki/includes/document_macros.html:163
+#, fuzzy, python-format
+msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "您已訂閱此文章的 {language} 版本。"
 
-#: kuma/wiki/templates/wiki/includes/document_macros.html:155
-msgid "You have been unsubscribed from the {language} version of this article."
+#: kuma/wiki/templates/wiki/includes/document_macros.html:163
+#, fuzzy, python-format
+msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr "您已取消訂閱此文章的 {language} 版本。"
 
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2 kuma/wiki/templates/wiki/includes/translate_description.html:50
@@ -4930,10 +4970,6 @@ msgstr "錯誤全文:"
 msgid "Couldn't find what you were looking for?"
 msgstr "找不到您在找的內容嗎？"
 
-#: kuma/wiki/templates/wiki/includes/more_help.html:7
-msgid "Browse other articles about <a href=\"{url}\">{category}</a>"
-msgstr "瀏覽其它 <a href=\"{url}\">{category}</a> 相關文章"
-
 #: kuma/wiki/templates/wiki/includes/more_help.html:10
 msgid "Ask our awesome support community for help"
 msgstr "向我們優秀的社群尋求協助"
@@ -4991,24 +5027,28 @@ msgid "Translate Description"
 msgstr "翻譯描述"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:15
-msgid "Title in {locale}:"
+#, fuzzy, python-format
+msgid "Title in %(locale)s:"
 msgstr "{locale} 標題:"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:26
-msgid "Slug in {locale}:"
+#, fuzzy, python-format
+msgid "Slug in %(locale)s:"
 msgstr "{locale} Slug:"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save Changes."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/list/documents.html:2 kuma/wiki/templates/wiki/list/needs_review.html:23
-#, fuzzy
-msgid "Found {count} documents."
-msgstr "找到 {0} 份文件。"
+#: kuma/wiki/templates/wiki/list/documents.html:2
+#, fuzzy, python-format
+msgid "Found %(num)s document."
+msgid_plural "Found %(num)s documents"
+msgstr[0] "找到 %(count)s 份文件。"
 
 #: kuma/wiki/templates/wiki/list/documents.html:6
-msgid "Articles tagged: {tag}"
+#, fuzzy, python-format
+msgid "Articles tagged: %(tag)s"
 msgstr "文章標籤: {tag}"
 
 #: kuma/wiki/templates/wiki/list/documents.html:8
@@ -5016,9 +5056,10 @@ msgid "All templates"
 msgstr "所有模板"
 
 #: kuma/wiki/templates/wiki/list/documents.html:9
-#, fuzzy
-msgid "Found {count} templates."
-msgstr "找到 {0} 個模板。"
+#, fuzzy, python-format
+msgid "Found %(num)s template."
+msgid_plural "Found %(num)s templates"
+msgstr[0] "找到 {0} 個模板。"
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
 msgid "Documents with errors"
@@ -5045,7 +5086,8 @@ msgid "There are no articles."
 msgstr "沒有文章。"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:4
-msgid "Documents for {tag} review"
+#, fuzzy, python-format
+msgid "Documents for %(tag)s review"
 msgstr "{tag} 待審文件"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:7
@@ -5053,15 +5095,22 @@ msgid "Documents for review"
 msgstr "待審文件"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:12
-msgid "Articles in Need of Review Tagged: {tag}"
+#, fuzzy, python-format
+msgid "Articles in Need of Review Tagged: %(tag)s"
 msgstr "含有下列標籤，需要審查的文件: {tag}"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
 msgstr "所有需要審查的文件"
 
+#: kuma/wiki/templates/wiki/list/needs_review.html:23
+#, fuzzy, python-format
+msgid "Found %(count)s documents."
+msgstr "找到 %(count)s 份文件。"
+
 #: kuma/wiki/templates/wiki/list/revisions.html:2
-msgid "Revision History | {document}"
+#, fuzzy, python-format
+msgid "Revision History | %(document)s"
 msgstr "編輯歷史 | {document}"
 
 #: kuma/wiki/templates/wiki/list/revisions.html:14
@@ -5093,7 +5142,8 @@ msgid "There are no tags."
 msgstr "沒有標籤。"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:3
-msgid "Localized articles tagged with: {tag}"
+#, fuzzy, python-format
+msgid "Localized articles tagged with: %(tag)s"
 msgstr "含有下列標籤，已翻譯的文件: {tag}"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:5
@@ -5414,10 +5464,6 @@ msgstr "<li><a href=\"/demos\">檢視 demo</a> 或 <a href=\"/docs\">瀏覽文�
 msgid "Search Firefox Help"
 msgstr "搜尋 Firefox 輔助說明"
 
-#: templates/includes/common_macros.html:36
-msgid "Welcome, <span class=\"user\">{user}</span>."
-msgstr "歡迎，<span class=\"user\">{user}</span>。"
-
 #: templates/includes/common_macros.html:38
 msgid "Profile"
 msgstr "個人資料"
@@ -5477,6 +5523,52 @@ msgstr "已取消訂閱"
 #: templates/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
 msgstr "您已退訂。"
+
+#~ msgid "{count} view"
+#~ msgid_plural "{count} views"
+#~ msgstr[0] "{count} 個檢視數"
+
+#~ msgid "{count} like"
+#~ msgid_plural "{count} likes"
+#~ msgstr[0] "{count} 個人喜歡"
+
+#~ msgid "See {display_name}'s profile"
+#~ msgstr "看看 {display_name} 的使用者資料"
+
+#~ msgid "{count} Demo"
+#~ msgid_plural "{count} Demos"
+#~ msgstr[0] "{count} 個 Demo"
+
+#~ msgid "{start}&ndash;{end} of {total}"
+#~ msgstr "{total} 當中的 {start}&ndash;{end}"
+
+#~ msgid "<span class=\"title-prefix\">Editing</span> <em>{title}</em>"
+#~ msgstr "<span class=\"title-prefix\">正在編輯</span> <em>{title}</em>"
+
+#~ msgid "<span class=\"title-prefix\">Moving</span> <em>{title}</em>"
+#~ msgstr "<span class=\"title-prefix\">移動</span> <em>{title}</em>"
+
+#~ msgid "Revision"
+#~ msgstr "修改"
+
+#~ msgid "of"
+#~ msgstr "of"
+
+#~ msgid "<span class=\"title-prefix\">Translating</span> <em>{title}</em>"
+#~ msgstr "<span class=\"title-prefix\">翻譯</span> <em>{title}</em>"
+
+#~ msgid "{locale} translation:"
+#~ msgstr "{locale} 翻譯:"
+
+#~ msgid "Browse other articles about <a href=\"{url}\">{category}</a>"
+#~ msgstr "瀏覽其它 <a href=\"{url}\">{category}</a> 相關文章"
+
+#, fuzzy
+#~ msgid "Found {count} documents."
+#~ msgstr "找到 {0} 份文件。"
+
+#~ msgid "Welcome, <span class=\"user\">{user}</span>."
+#~ msgstr "歡迎，<span class=\"user\">{user}</span>。"
 
 #~ msgid "http://www.w3.org/TR/html5/video.html"
 #~ msgstr "http://www.w3.org/TR/html5/video.html"
