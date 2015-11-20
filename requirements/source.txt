@@ -13,17 +13,17 @@ Werkzeug==0.10.4
 
 django-devserver==0.8.0
 
-amqp==1.4.6
+amqp==1.4.7
 
 basket-client==0.3.11
 
-billiard==3.3.0.20
+billiard==3.3.0.21
 
 bleach==1.4.1
 
 bitly_api==0.3
 
-celery==3.1.18
+celery==3.1.19
 
 elasticsearch-dsl==0.0.4
 
@@ -35,7 +35,7 @@ html5lib==0.999999
 
 jingo==0.7.1
 
-kombu==3.0.26
+kombu==3.0.29
 
 oauthlib==1.0.1
 
@@ -70,7 +70,7 @@ django-allauth==0.22.0
 
 django-appconf==1.0.1
 
-django-celery==3.1.16
+django-celery==3.1.17
 
 django-constance==1.1.1
 
