@@ -76,8 +76,7 @@ def emails_with_users_and_watches(subject,
 
     A convenience function for generating emails by repeatedly
     rendering a Django template with the given ``context_vars`` plus a
-    ``user`` and ``watches`` key for each pair in
-    ``users_and_watches``
+    ``user`` and ``watches`` key for each pair in ``users_and_watches``
 
     .. Note::
 
@@ -103,7 +102,7 @@ def emails_with_users_and_watches(subject,
         context_vars['watches'] = watch
 
         msg = EmailMultiAlternatives(
-            subject.format(**context_vars),
+            subject % context_vars,
             render_email(text_template, context_vars),
             from_email,
             [user.email],

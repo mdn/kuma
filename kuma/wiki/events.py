@@ -70,7 +70,7 @@ class EditDocumentEvent(InstanceEvent):
         log.debug('Sending edited notification email for document (id=%s)' %
                   document.id)
         subject = ugettext(
-            u'[MDN] Page "{document_title}" changed by {creator}')
+            u'[MDN] Page "%(document_title)s" changed by %(creator)s')
         context = context_dict(revision)
 
         return emails_with_users_and_watches(
