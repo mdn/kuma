@@ -4799,7 +4799,7 @@ msgstr "Etichette localizzate"
 
 #: kuma/wiki/templates/wiki/translate.html:118
 msgid "English tags"
-msgstr "Etichette {locale}"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:130
 msgid "This document has no tags."
