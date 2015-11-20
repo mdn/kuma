@@ -1,13 +1,7 @@
-import os
 import hashlib
+
 import six
-
-from django.conf import settings
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.utils.safestring import mark_safe
-
 from cacheback.base import Job, to_bytestring
-from statici18n.utils import get_filename
 
 
 class KumaJob(Job):
@@ -49,15 +43,3 @@ class IPBanJob(KumaJob):
 
     def empty(self):
         return "60/m"
-
-
-class StaticI18nJob(KumaJob):
-    lifetime = 60 * 60 * 24
-
-    def fetch(self, locale):
-        if not locale:
-            locale = settings.LANGUAGE_CODE
-        filename = get_filename(locale, settings.STATICI18N_DOMAIN)
-        path = os.path.join(settings.STATICI18N_OUTPUT_DIR, filename)
-        with staticfiles_storage.open(path) as i18n_file:
-            return mark_safe(i18n_file.read())

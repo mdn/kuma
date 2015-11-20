@@ -29,9 +29,7 @@
 {% block content %}{% endblock %}
 
 {# js #}
-<script type="text/javascript">
-    {{ inlinei18n(request.LANGUAGE_CODE) }}
-</script>
+<script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
 
 {% block site_js %}
 

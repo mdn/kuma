@@ -100,8 +100,8 @@ MDN_LANGUAGES = (
     'bm',
     'bn-BD',
     'bn-IN',
-    'cs',
     'ca',
+    'cs',
     'de',
     'ee',
     'el',
@@ -423,6 +423,7 @@ STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 STATICFILES_DIRS = (
     path('kuma', 'static'),
     path('build', 'assets'),
+    path('build', 'locale'),
 )
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
@@ -542,8 +543,9 @@ PUENTE = {
         ],
         'javascript': [
             # We can't say **.js because that would dive into any libraries.
-            ('kuma/static/js/libs/ckeditor/plugins/mdn-link/**.js',
-             'javascript')
+            ('kuma/static/js/*.js', 'javascript'),
+            ('kuma/static/js/libs/ckeditor/source/plugins/mdn-**/*.js',
+             'javascript'),
         ],
     },
 }
@@ -553,6 +555,7 @@ PUENTE = {
 # in DOMAIN_METHODS.
 # http://github.com/jbalogh/zamboni/blob/d4c64239c24aa2f1e91276909823d1d1b290f0ee/settings.py#L254
 STANDALONE_DOMAINS = ['django', 'javascript']
+STATICI18N_ROOT = 'build/locale'
 STATICI18N_DOMAIN = 'javascript'
 
 PIPELINE_DISABLE_WRAPPER = True

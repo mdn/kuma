@@ -21,20 +21,21 @@ from django.utils.translation import ungettext
 from jingo import env, register
 from pytz import timezone
 from soapbox.models import Message
+from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
 from .exceptions import DateTimeFormatError
-from .jobs import StaticI18nJob
 from .urlresolvers import reverse, split_path
 
 
 htmlparser = HTMLParser.HTMLParser()
 
 
-# Yanking filters from Django.
+# Yanking filters from Django and 3rd party libs.
 register.filter(strip_tags)
 register.filter(defaultfilters.timesince)
 register.filter(defaultfilters.truncatewords)
+register.function(statici18n)
 
 
 @register.filter
@@ -147,11 +148,6 @@ def yesno(boolean_value):
 def entity_decode(str):
     """Turn HTML entities in a string into unicode."""
     return htmlparser.unescape(str)
-
-
-@register.function
-def inlinei18n(locale):
-    return StaticI18nJob().get(locale)
 
 
 @register.function
