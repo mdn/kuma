@@ -87,9 +87,7 @@
       </ul>
     </nav>
 
-    <script type="text/javascript">
-        {{ inlinei18n(request.LANGUAGE_CODE) }}
-    </script>
+    <script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
 
     {% javascript 'main' %}
     {% javascript 'popup' %}

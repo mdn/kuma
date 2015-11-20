@@ -397,7 +397,7 @@
     // This takes the place of an ugly, ugly confirmation box :(
     var $draftDiv;
     function displayDraftBox(content) {
-        var text = gettext('You have a draft in progress.  <a href="" class="restoreLink">Restore the draft content</a> or <a href="" class="discardLink">discard the draft</a>.');
+        var text = gettext('You have a draft in progress. <a href="" class="restoreLink">Restore the draft content</a> or <a href="" class="discardLink">discard the draft</a>.');
         var $contentNode = $('#id_content');
         var editor;
 

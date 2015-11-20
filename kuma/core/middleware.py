@@ -1,6 +1,7 @@
 import contextlib
 import urllib
 
+from django.conf import settings
 from django.core import urlresolvers
 from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect
 from django.utils import translation
@@ -53,7 +54,7 @@ class LocaleURLMiddleware(object):
             return response
 
         request.path_info = '/' + prefixer.shortened_path
-        request.LANGUAGE_CODE = prefixer.locale
+        request.LANGUAGE_CODE = prefixer.locale or settings.LANGUAGE_CODE
         translation.activate(prefixer.locale)
 
     def process_response(self, request, response):

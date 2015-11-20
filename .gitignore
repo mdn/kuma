@@ -38,4 +38,5 @@ htmlcov/
 locale/**/*.mo
 /bower_components
 build/assets/css/*
+build/locale/
 !build/assets/css/README.md
