@@ -20,6 +20,14 @@
     virtualenv: "/home/vagrant/env"
     virtualenv_site_packages: yes
 
+- name: Install some more deps in the virtualenv
+  pip:
+    virtualenv: "/home/vagrant/env"
+    virtualenv_site_packages: yes
+    name: "{{ item }}"
+  with_items:
+    - gunicorn
+
 - name: Update ownership of virtualenv to vagrant
   file:
     owner: vagrant
