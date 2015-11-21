@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 06:37+0000\n"
+"PO-Revision-Date: 2015-11-21 10:21+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -1057,6 +1057,9 @@ msgid ""
 "devices. With the Camera API, users can easily take pictures and upload them"
 " to your web page."
 msgstr ""
+"Kamera API kan du komma åt (med tillstånd) kameror, mobila enheter. Med "
+"kameran API, kan användaren enkelt ta bilder och ladda upp dem till din "
+"webbsida."
 
 #: kuma/demos/__init__.py:141
 msgid "September 2012 Dev Derby Challenge - Geolocation II"
@@ -1088,6 +1091,9 @@ msgid ""
 "design. They are now even a W3C Recommendation! They can tell you a lot more"
 " about a display than just its width. What can you do with Media Queries?"
 msgstr ""
+"CSS Media Queries är nu ett gemensamt verktyg för lyhörd, mobil första "
+"webbdesign. De är nu även en W3C-rekommendation! De kan säga mycket mer om "
+"en skärm än bara dess bredd. Vad kan du göra med Media Queries?"
 
 #: kuma/demos/__init__.py:155
 msgid "November 2012 Dev Derby Challenge - Fullscreen API"
@@ -1930,10 +1936,12 @@ msgid "%(number)d %(type)s"
 msgstr "%(number)d %(type)s"
 
 #: kuma/demos/models.py:204
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
-msgstr "Vänligen håll filstorleken under %s. Nuvarande filstorlek %s"
+msgstr ""
+"Vänligen håll filstorleken under %(max_size)s. Nuvarande filstorlek "
+"%(file_size)s"
 
 #: kuma/demos/models.py:275
 msgid "Cannot process image"
@@ -2082,9 +2090,9 @@ msgstr ""
 #: kuma/demos/templates/demos/submit.html:15
 #: kuma/demos/templates/demos/submit_noauth.html:11
 #: kuma/demos/templates/demos/terms.html:10
-#, fuzzy, python-format
+#, python-format
 msgid "%(subtitle)s | Demo Studio"
-msgstr "{subtitle} | Demo Studio"
+msgstr "%(subtitle)s | Demo Studio"
 
 #: kuma/demos/templates/demos/delete.html:20
 msgid "MDN"
@@ -2153,9 +2161,9 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:51
 #: kuma/demos/templates/demos/launch.html:80
-#, fuzzy, python-format
+#, python-format
 msgid "Go to the previous demo, %(demo_title)s"
-msgstr "Gå till föregående sida"
+msgstr "Gå till föregående demo, %(demo_title)s"
 
 #: kuma/demos/templates/demos/detail.html:51
 msgid "Prev"
@@ -2322,9 +2330,9 @@ msgid ""
 msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:225
-#, fuzzy, python-format
+#, python-format
 msgid "More by %(creator)s"
-msgstr "Mer av {creator}"
+msgstr "Mer av %(creator)s"
 
 #: kuma/demos/templates/demos/detail.html:237
 #: kuma/demos/templates/demos/launch.html:63
@@ -2397,9 +2405,9 @@ msgstr "Artiklar"
 
 #: kuma/demos/templates/demos/devderby_tag.html:8
 #: kuma/demos/templates/demos/listing_tag.html:7
-#, fuzzy, python-format
+#, python-format
 msgid "Demos tagged %(tag)s"
-msgstr "Demon taggade {tag}"
+msgstr "Demon taggade %(tag)s"
 
 #: kuma/demos/templates/demos/devderby_tag.html:22
 msgid "Challenges"
@@ -2527,19 +2535,19 @@ msgid "Subscribe to a feed of all demos"
 msgstr ""
 
 #: kuma/demos/templates/demos/listing_search.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Search for \"%(query)s\""
-msgstr "Sökresultat för \"{query}\""
+msgstr "Sök efter \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_search.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search results for \"%(query)s\""
-msgstr "Sökresultat för \"{query}\""
+msgstr "Sökresultat för \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_search.html:27
-#, fuzzy, python-format
+#, python-format
 msgid "Search demos for \"%(query)s\""
-msgstr "Sökresultat för \"{query}\""
+msgstr "Sök demon efter \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_search.html:33
 #, fuzzy, python-format
@@ -4908,14 +4916,12 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/templates/wiki/create.html:6
-#, fuzzy
 msgid "Create a New Template"
-msgstr "Skapa mall"
+msgstr "Skapa en ny mall"
 
 #: kuma/wiki/templates/wiki/create.html:8
-#, fuzzy
 msgid "Create a New Article"
-msgstr "Skapa en ny {title}"
+msgstr "Skapa en ny artikel"
 
 #: kuma/wiki/templates/wiki/create.html:34
 msgid "Create a"
@@ -5089,14 +5095,14 @@ msgid "Hide Sidebar"
 msgstr "Dölj sidofält"
 
 #: kuma/wiki/templates/wiki/edit.html:6
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Template"
-msgstr "Redigera mall"
+msgstr "%(title)s | Redigera mall"
 
 #: kuma/wiki/templates/wiki/edit.html:8
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Article"
-msgstr "Titel på artikel"
+msgstr "%(title)s | Redigera artikel"
 
 #: kuma/wiki/templates/wiki/edit.html:31
 msgid ""
@@ -5401,9 +5407,9 @@ msgid "This document has no tags."
 msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:137
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s tags"
-msgstr "Lägg till översättning"
+msgstr "%(locale)s taggar"
 
 #: kuma/wiki/templates/wiki/translate.html:144
 msgid "Version Notes"
