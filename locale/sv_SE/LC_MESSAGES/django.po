@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-20 18:30+0000\n"
+"PO-Revision-Date: 2015-11-21 06:37+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -46,9 +46,9 @@ msgstr "Filen är inte giltig. Filen måste vara av en av dessa typer: %s."
 
 #. 'id' is the revision number, 'title' is the title of the document.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachment %(id)s | %(title)s"
-msgstr "Bilaga {id} | {title}"
+msgstr "Bilaga %(id)s | %(title)s"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:15
 msgid "Attachment Information"
@@ -85,9 +85,9 @@ msgid "MIME Type:"
 msgstr "MIME-typ:"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:44
-#, fuzzy, python-format
+#, python-format
 msgid "%(bytes)s bytes"
-msgstr "%s byte"
+msgstr "%(bytes)s byte"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:48
 msgid "Is approved?"
@@ -240,9 +240,9 @@ msgid "View key usage history"
 msgstr "Visa historik över nyckelanvändning"
 
 #: kuma/authkeys/templates/authkeys/list.html:26
-#, fuzzy, python-format
+#, python-format
 msgid "History (%(count)s)"
-msgstr "Historik ({count})"
+msgstr "Historik (%(count)s)"
 
 #: kuma/authkeys/templates/authkeys/list.html:35
 #, python-format
@@ -360,6 +360,8 @@ msgid ""
 "To change the status of this flag, click the following link, or paste it "
 "into your browser's location bar:"
 msgstr ""
+"Klicka på följande länk om du vill ändra status för denna flagga eller "
+"klistra in den i webbläsarens adressfält:"
 
 #: kuma/core/apps.py:16
 msgid "Core"
@@ -533,7 +535,7 @@ msgstr "Spel"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
-msgstr ""
+msgstr "Anvisningar & handledning"
 
 #: kuma/core/translations/search/filter/html/name.py:4
 #: kuma/landing/templates/landing/homepage.html:72
@@ -5372,14 +5374,14 @@ msgid "View Source"
 msgstr "Visa källa"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Show %(locale)s"
-msgstr "Visa {locale}"
+msgstr "Visa %(locale)s"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Hide %(locale)s"
-msgstr "Dölj {locale}"
+msgstr "Dölj %(locale)s"
 
 #: kuma/wiki/templates/wiki/translate.html:99
 #, fuzzy, python-format
@@ -5419,7 +5421,7 @@ msgstr ""
 #. This is in an email.
 #: kuma/wiki/templates/wiki/email/edited.ltxt:13
 msgid "View User Profile:"
-msgstr ""
+msgstr "Visa användarprofil:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
@@ -5427,15 +5429,15 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:23
 msgid "View Article:"
-msgstr ""
+msgstr "Visa artikel:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr ""
+msgstr "Redigera artikel:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "Artikelhistorik:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:40
 #, python-format
@@ -5737,7 +5739,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:6
 msgid "Translate Description"
-msgstr ""
+msgstr "Översätt beskrivning"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:15
 #, python-format
@@ -5759,24 +5761,24 @@ msgstr ""
 #, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hittade %(num)s dokument."
+msgstr[1] "Hittade %(num)s dokument"
 
 #: kuma/wiki/templates/wiki/list/documents.html:6
-#, fuzzy, python-format
+#, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr "Demon taggade {tag}"
+msgstr "Artiklar taggade: %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/documents.html:8
 msgid "All templates"
 msgstr "Alla mallar"
 
 #: kuma/wiki/templates/wiki/list/documents.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] "Hittade {count} mallar."
-msgstr[1] "Hittade {count} mallar."
+msgstr[0] "Hittade %(num)s mall."
+msgstr[1] "Hittade %(num)s mallar"
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
 msgid "Documents with errors"
@@ -5796,22 +5798,22 @@ msgstr "Alla dokument"
 
 #: kuma/wiki/templates/wiki/list/documents.html:35
 msgid "Translation updates needed"
-msgstr ""
+msgstr "Översättningsuppdateringar behövs"
 
 #: kuma/wiki/templates/wiki/list/documents.html:60
 #: kuma/wiki/templates/wiki/list/needs_review.html:33
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
-msgstr ""
+msgstr "Det finns inga artiklar."
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Documents for %(tag)s review"
-msgstr "aktuell status för flaggad granskning"
+msgstr "Dokument för %(tag)s granskning"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr ""
+msgstr "Dokument som ska granskas"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:12
 #, python-format
@@ -5823,9 +5825,9 @@ msgid "All Articles in Need of Review"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:23
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(count)s documents."
-msgstr "Hittade {count} mallar."
+msgstr "Hittade %(count)s dokument."
 
 #: kuma/wiki/templates/wiki/list/revisions.html:2
 #, python-format
@@ -5873,8 +5875,8 @@ msgstr ""
 #, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hittade %(count)s dokument."
+msgstr[1] "Hittade %(count)s dokument."
 
 #: kuma/wiki/views/delete.py:50
 msgid ""
@@ -5936,7 +5938,7 @@ msgstr ""
 #: kuma/wiki/views/misc.py:190
 #, python-format
 msgid "Failed to import data: %(error)s"
-msgstr ""
+msgstr "Det gick inte att importera data: %(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
@@ -5944,7 +5946,7 @@ msgstr ""
 
 #: kuma/wiki/views/translate.py:73
 msgid "You cannot translate this document."
-msgstr ""
+msgstr "Du kan inte översätta detta dokument."
 
 #: templates/403.html:5 templates/403.html:19 templates/handlers/400.html:5
 msgid "Permission Denied"
@@ -6036,7 +6038,7 @@ msgstr "Internt serverfel"
 
 #: templates/base.html:74
 msgid "Skip to main content"
-msgstr ""
+msgstr "Hoppa till huvudinnehåll"
 
 #: templates/base.html:75
 msgid "Select language"
@@ -6044,7 +6046,7 @@ msgstr "Välj språk"
 
 #: templates/base.html:77
 msgid "Skip to search"
-msgstr ""
+msgstr "Hoppa till sök"
 
 #: templates/base.html:104
 msgid "Contribute to MDN"
@@ -6056,7 +6058,7 @@ msgstr "Kom igång"
 
 #: templates/base.html:107
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Granska eller översätt dokument"
 
 #: templates/base.html:108
 msgid "Add a new page"
@@ -6068,11 +6070,11 @@ msgstr "Webbplatsverktyg"
 
 #: templates/base.html:113
 msgid "Revision dashboard"
-msgstr ""
+msgstr "Revisionsöversikt"
 
 #: templates/base.html:114
 msgid "Documentation status"
-msgstr ""
+msgstr "Dokumentationsstatus"
 
 #: templates/base.html:123
 msgid "Web Platform"
@@ -6088,19 +6090,19 @@ msgstr "Grafik"
 
 #: templates/base.html:133
 msgid "APIs / DOM"
-msgstr ""
+msgstr "API:er / DOM"
 
 #: templates/base.html:138
 msgid "References & Guides"
-msgstr ""
+msgstr "Referenser & guider"
 
 #: templates/base.html:140
 msgid "Learn the Web"
-msgstr ""
+msgstr "Lär dig webben"
 
 #: templates/base.html:141
 msgid "Tutorials"
-msgstr ""
+msgstr "Handledning"
 
 #: templates/base.html:142
 msgid "References"
@@ -6112,7 +6114,7 @@ msgstr ""
 
 #: templates/base.html:144
 msgid "Accessibility"
-msgstr ""
+msgstr "Hjälpmedel"
 
 #: templates/base.html:146
 msgid "...more docs"
@@ -6189,7 +6191,7 @@ msgstr ""
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"/logout\">Logga ut</a> för att försöka igen.</li>"
 
 #: templates/handlers/400.html:40
 msgid ""
@@ -6199,7 +6201,7 @@ msgstr ""
 
 #: templates/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "Sök Firefox hjälp"
 
 #: templates/includes/common_macros.html:38
 msgid "Profile"
@@ -6208,7 +6210,7 @@ msgstr "Profil"
 #: templates/includes/common_macros.html:44
 #, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr ""
+msgstr "Vill du bidra?<br /> <a href=\"%(login_url)s\">Logga in</a>"
 
 #: templates/includes/login.html:6
 msgid "Sign out"
