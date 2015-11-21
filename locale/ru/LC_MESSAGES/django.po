@@ -1,18 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 16:47+0000\n"
-"Last-Translator: Alexander <unghost@mozilla-russia.org>\n"
+"PO-Revision-Date: 2015-11-21 20:03+0300\n"
+"Last-Translator: Alexander L. Slovesnik <unghost@mozilla-russia.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Pootle 2.5.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-POOTLE-MTIME: 1448124461.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
@@ -195,11 +194,8 @@ msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"Это ваши ключи API. Они полезны для построения приложений, выполняющих "
-"задачи на MDN от вашего имени. Если вы прекратили использовать какой-либо из "
-"них или подозреваете, что один из них попал в руки лицам, которым вы не "
-"доверяете свой аккаунт, нажмите кнопку удалить ключ. Вы в любой момент легко "
-"сможете создать ему замену."
+"Это ваши ключи API. Они полезны для построения приложений, выполняющих задачи на MDN от вашего имени. Если вы прекратили использовать какой-либо из них или подозреваете, что один из них попал в "
+"руки лицам, которым вы не доверяете свой аккаунт, нажмите кнопку удалить ключ. Вы в любой момент легко сможете создать ему замену."
 
 #: kuma/authkeys/templates/authkeys/list.html:14
 msgid "Create a new key"
@@ -513,7 +509,6 @@ msgid "Tools"
 msgstr "Инструменты"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
-#, fuzzy
 msgid "Web Development"
 msgstr "Веб-разработка"
 
@@ -602,7 +597,6 @@ msgid "View Page"
 msgstr "Просмотреть страницу"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:73 kuma/wiki/feeds.py:344
-#, fuzzy
 msgid "Edit Page"
 msgstr "Редактировать страницу"
 
@@ -1208,7 +1202,7 @@ msgstr "http://www.w3.org/TR/FileAPI/"
 
 #: kuma/demos/__init__.py:263
 msgid "Fonts & Type"
-msgstr ""
+msgstr "Шрифты и Тип"
 
 #: kuma/demos/__init__.py:264
 msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
@@ -1248,9 +1242,7 @@ msgstr "http://www.w3.org/TR/html5/forms.html"
 
 #: kuma/demos/__init__.py:280
 msgid "The Geolocation API allows web applications to access the user's geographical location."
-msgstr ""
-"Geolocation API предоставляет веб-приложению доступ к географическому "
-"положению пользователя."
+msgstr "Geolocation API предоставляет веб-приложению доступ к географическому положению пользователя."
 
 #: kuma/demos/__init__.py:282
 msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
@@ -1322,9 +1314,7 @@ msgstr "http://www.w3.org/TR/IndexedDB/"
 
 #: kuma/demos/__init__.py:312
 msgid "Drag and Drop features allow the user to move elements on the screen using the mouse pointer."
-msgstr ""
-"Возможности Drag and Drop позволяют пользователю перемещать элементы по "
-"экрану, используя мышь."
+msgstr "Возможности Drag and Drop позволяют пользователю перемещать элементы по экрану, используя мышь."
 
 #: kuma/demos/__init__.py:314
 msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
@@ -1424,7 +1414,7 @@ msgstr "http://ru.wikipedia.org/wiki/WebGL"
 
 #: kuma/demos/__init__.py:356
 msgid "Khronos Spec"
-msgstr ""
+msgstr "Спецификация Khronos"
 
 #: kuma/demos/__init__.py:356
 msgid "http://www.khronos.org/webgl/"
@@ -1548,9 +1538,9 @@ msgid "Censored %(item)s"
 msgstr "Подвергнуто цензуре %(item)s"
 
 #: kuma/demos/admin.py:43
-#, fuzzy, python-format
+#, python-format
 msgid "Successfully censored %(count)d %(items)s."
-msgstr "Успешно удалено %(count)d %(items)s."
+msgstr "Успешно отцензурировано %(count)d %(items)s."
 
 #: kuma/demos/admin.py:55 kuma/demos/admin.py:125
 msgid "Are you sure?"
@@ -1826,7 +1816,6 @@ msgid "Demo Studio"
 msgstr "Demo Studio"
 
 #: kuma/demos/templates/demos/delete.html:26 kuma/demos/templates/demos/detail.html:32 kuma/demos/templates/demos/home.html:23 kuma/demos/templates/demos/elements/demos_head.html:4
-#, fuzzy
 msgid "Submit a Demo"
 msgstr "Отправить демо"
 
@@ -2022,7 +2011,7 @@ msgstr "Сообщить о проблеме"
 
 #: kuma/demos/templates/demos/detail.html:239 kuma/demos/templates/demos/detail.html:240 kuma/demos/templates/demos/detail.html:241
 msgid "Flag Content"
-msgstr ""
+msgstr "Отметить контент"
 
 #: kuma/demos/templates/demos/detail.html:239
 msgid "Demo is not working"
@@ -2038,7 +2027,7 @@ msgstr "Демо не от этого автора"
 
 #: kuma/demos/templates/demos/devderby_landing.html:11 kuma/demos/templates/demos/devderby_landing.html:23 kuma/demos/templates/demos/devderby_tag.html:33
 msgid "Dev Derby"
-msgstr ""
+msgstr "Dev Derby"
 
 #: kuma/demos/templates/demos/devderby_landing.html:22 kuma/demos/templates/demos/devderby_tag.html:32
 msgid "presents"
@@ -2046,7 +2035,7 @@ msgstr "представляет"
 
 #: kuma/demos/templates/demos/devderby_landing.html:25
 msgid "Dev Derby has ended"
-msgstr ""
+msgstr "Dev Derby завершилось"
 
 #: kuma/demos/templates/demos/devderby_landing.html:27
 #, python-format
@@ -2055,7 +2044,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/devderby_landing.html:40
 msgid "Previous Dev Derby Challenges"
-msgstr ""
+msgstr "Предыдущее Dev Derby Challenges"
 
 #: kuma/demos/templates/demos/devderby_landing.html:55 kuma/demos/templates/demos/devderby_tag.html:25
 msgid "Resources"
@@ -2092,7 +2081,7 @@ msgstr "Призы"
 
 #: kuma/demos/templates/demos/devderby_tag.html:41
 msgid "Derby Winners"
-msgstr ""
+msgstr "Победители Derby"
 
 #: kuma/demos/templates/demos/devderby_tag.html:52
 msgid "Submissions"
@@ -2478,9 +2467,7 @@ msgstr "Запустить %(title)s"
 
 #: kuma/landing/templates/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
-msgstr ""
-"Братство Mozilla Developer Network (MDN) приглашает веб-разработчиков "
-"мирового класса, чтобы изменить мир с Mozilla."
+msgstr "Братство Mozilla Developer Network (MDN) приглашает веб-разработчиков мирового класса, чтобы изменить мир с Mozilla."
 
 #: kuma/landing/templates/landing/homepage.html:14
 msgid ""
@@ -2665,7 +2652,7 @@ msgstr "Улучшенная документация"
 
 #: kuma/landing/templates/landing/promote_buttons.html:51
 msgid "Developer Powered"
-msgstr ""
+msgstr "Создана разработчиками"
 
 #: kuma/landing/templates/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
@@ -2766,7 +2753,7 @@ msgstr ""
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr ""
+msgstr "Повышенный поисковый индекс %s."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
@@ -2783,7 +2770,7 @@ msgstr ""
 #: kuma/search/admin.py:29
 #, python-format
 msgid "Demoted search index %s."
-msgstr ""
+msgstr "Пониженный поисковый индекс %s."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
@@ -2798,9 +2785,8 @@ msgid "Populate selected search index via Celery"
 msgstr ""
 
 #: kuma/search/admin.py:56
-#, fuzzy
 msgid "Is current index?"
-msgstr "Это текущая версия?"
+msgstr "Это текущий индекс?"
 
 #: kuma/search/forms.py:17
 #, python-format
@@ -2817,12 +2803,11 @@ msgstr "название группы"
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
-msgstr "Поиск временно недоступен. Пожалуйста, попытайте счастья снова в ближайшие несколько минут."
+msgstr "Поиск временно недоступен. Пожалуйста, попробуйте снова через несколько минут."
 
 #: kuma/search/utils.py:17
-#, fuzzy
 msgid "Something went wrong with the search query. Please try again in a few minutes."
-msgstr "Поиск временно недоступен. Пожалуйста, попытайте счастья снова в ближайшие несколько минут."
+msgstr "Что-то пошло не так с поисковым запросом. Пожалуйста, попробуйте снова через несколько минут."
 
 #: kuma/search/templates/search/down.html:5
 msgid "Search Unavailable"
@@ -2900,7 +2885,6 @@ msgstr[1] "найдено %(count)s документа."
 msgstr[2] "найдено %(count)s документов."
 
 #: kuma/search/templates/search/results.html:119
-#, fuzzy
 msgid "Showing all results."
 msgstr "Показываются все результаты."
 
@@ -3189,18 +3173,17 @@ msgid "Profile Inactive"
 msgstr "Профиль неактивен"
 
 #: kuma/users/templates/account/account_inactive.html:9
-#, fuzzy
 msgid "This profile is inactive."
-msgstr "Этот аккаунт заморожен."
+msgstr "Этот профиль неактивен."
 
 #: kuma/users/templates/account/email.html:3 kuma/users/templates/account/email.html:7 kuma/users/templates/users/user_detail.html:63
 msgid "Email addresses"
 msgstr "Адреса электронной почты"
 
 #: kuma/users/templates/account/email.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr "{email} - ваш <em>основной</em> адрес электронной почты"
+msgstr "%(email)s - ваш <em>основной</em> адрес электронной почты"
 
 #: kuma/users/templates/account/email.html:15
 msgid "You've also added the following email addresses:"
@@ -3231,7 +3214,6 @@ msgid "Add Email"
 msgstr "Добавить электронную почту"
 
 #: kuma/users/templates/account/email.html:60 kuma/users/templates/socialaccount/connections.html:70
-#, fuzzy
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
@@ -3261,12 +3243,9 @@ msgstr "Ссылка подтверждения электронной почт�
 #: kuma/users/templates/account/email_confirmed.html:10
 #, python-format
 msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr ""
-"Вы подтвердили, что <a href=\"mailto:%(email)s\">%(email)s</a> - адрес "
-"электронной почты для пользователя %(user_display)s."
+msgstr "Вы подтвердили, что <a href=\"mailto:%(email)s\">%(email)s</a> - адрес электронной почты для пользователя %(user_display)s."
 
 #: kuma/users/templates/account/login.html:3
-#, fuzzy
 msgid "Sign In"
 msgstr "Войти"
 
@@ -3276,12 +3255,9 @@ msgstr "Пожалуйста, войдите"
 
 #: kuma/users/templates/account/login.html:13
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using any of the services below. A MDN profile will be created for you if you don't already have one."
-msgstr ""
-"Для внесения вклада, вам нужно войти в MDN. Вы можете войти, используя один "
-"из сервисов ниже. Для вас будет создан MDN профиль, если у вас его нет."
+msgstr "Для внесения вклада, вам нужно войти в MDN. Вы можете войти, используя один из сервисов ниже. Для вас будет создан MDN профиль, если у вас его нет."
 
 #: kuma/users/templates/account/logout.html:3 kuma/users/templates/account/logout.html:8 kuma/users/templates/account/logout.html:17 templates/includes/common_macros.html:40
-#, fuzzy
 msgid "Sign Out"
 msgstr "Выйти"
 
@@ -3302,9 +3278,7 @@ msgstr "Восстановление пароля"
 
 #: kuma/users/templates/account/password_reset.html:13
 msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
-msgstr ""
-"Забыли ваш пароль? Введите свой адрес электронной почты ниже, а мы отправим "
-"вам письмо, позволяющее сбросить его."
+msgstr "Забыли ваш пароль? Введите свой адрес электронной почты ниже, а мы отправим вам письмо, позволяющее сбросить его."
 
 #: kuma/users/templates/account/password_reset.html:18
 msgid "Reset My Password"
@@ -3312,15 +3286,11 @@ msgstr "Сбросить мой пароль"
 
 #: kuma/users/templates/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
-"Пожалуйста, свяжитесь с нами, если у вас есть какие-либо проблемы с "
-"восстановлением вашего пароля."
+msgstr "Пожалуйста, свяжитесь с нами, если у вас есть какие-либо проблемы с восстановлением вашего пароля."
 
 #: kuma/users/templates/account/password_reset_done.html:14
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
-msgstr ""
-"Мы отправили вам письмо. Пожалуйста, свяжитесь с нами, если не получите его "
-"в течение нескольких минут."
+msgstr "Мы отправили вам письмо. Пожалуйста, свяжитесь с нами, если не получите его в течение нескольких минут."
 
 #: kuma/users/templates/account/password_reset_from_key.html:10
 msgid "Bad Token"
@@ -3329,12 +3299,9 @@ msgstr "Некорректный токен"
 #: kuma/users/templates/account/password_reset_from_key.html:17
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr ""
-"Ссылка для восстановления пароля некорректна, поскольку уже использовалась. "
-"Пожалуйста, запросите<a href=\"%(passwd_reset_url)s\">новую ссылку</a>."
+msgstr "Ссылка для восстановления пароля некорректна, поскольку уже использовалась. Пожалуйста, запросите<a href=\"%(passwd_reset_url)s\">новую ссылку</a>."
 
 #: kuma/users/templates/account/password_reset_from_key.html:23
-#, fuzzy
 msgid "Change password"
 msgstr "Сменить пароль"
 
@@ -3343,9 +3310,8 @@ msgid "Your password is now changed."
 msgstr "Ваш пароль изменён."
 
 #: kuma/users/templates/account/password_set.html:3 kuma/users/templates/account/password_set.html:7 kuma/users/templates/account/password_set.html:12
-#, fuzzy
 msgid "Set Password"
-msgstr "Сменить пароль"
+msgstr "Установить пароль"
 
 #: kuma/users/templates/account/signup.html:3
 msgid "Signup"
@@ -3358,8 +3324,7 @@ msgstr "Зарегистрироваться"
 #: kuma/users/templates/account/signup.html:10
 #, python-format
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
-"Уже есть профиль? Тогда, пожалуйста, <a href=\"%(login_url)s\">войдите</a>."
+msgstr "Уже есть профиль? Тогда, пожалуйста, <a href=\"%(login_url)s\">войдите</a>."
 
 #: kuma/users/templates/account/signup_closed.html:3 kuma/users/templates/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
@@ -3376,31 +3341,20 @@ msgstr "Подтвердите ваш адрес электронной почт
 
 #: kuma/users/templates/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr ""
-"Мы отправили вам на почту подтверждение. Откройте ссылку в письме, чтобы "
-"завершить процесс регистрации. Пожалуйста свяжитесь с нами, если вы не "
-"получите письма в течение нескольких минут."
+msgstr "Мы отправили вам на почту подтверждение. Откройте ссылку в письме, чтобы завершить процесс регистрации. Пожалуйста свяжитесь с нами, если вы не получите письма в течение нескольких минут."
 
 #: kuma/users/templates/account/verified_email_required.html:9
 msgid "This part of the site requires us to confirm that you are who you claim to be. For this purpose, we require that you confirm ownership of your email address."
-msgstr ""
-"Эта часть сайта требует подтверждения, что вы тот, за кого себя выдаёте. Для "
-"этого, мы требуем, чтобы вы подтвердили владение вашим адресом электронной "
-"почты."
+msgstr "Эта часть сайта требует подтверждения, что вы тот, за кого себя выдаёте. Для этого, мы требуем, чтобы вы подтвердили владение вашим адресом электронной почты."
 
 #: kuma/users/templates/account/verified_email_required.html:13
 msgid "We have sent an email to you for confirmation. Please click on the link inside this email. Please contact us if you do not receive it within a few minutes."
-msgstr ""
-"Мы отправили вам на почту подтверждение. Откройте ссылку в письме. "
-"Пожалуйста свяжитесь с нами, если вы не получите письма в течение нескольких "
-"минут."
+msgstr "Мы отправили вам на почту подтверждение. Откройте ссылку в письме. Пожалуйста свяжитесь с нами, если вы не получите письма в течение нескольких минут."
 
 #: kuma/users/templates/account/verified_email_required.html:17
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your email address</a>."
-msgstr ""
-"<strong>Замечание:</strong> вы всё ещё можете <a href=\"%"
-"(email_url)s\">изменить адрес электронной почты</a>."
+msgstr "<strong>Замечание:</strong> вы всё ещё можете <a href=\"%(email_url)s\">изменить адрес электронной почты</a>."
 
 #: kuma/users/templates/account/snippets/already_logged_in.html:1
 msgid "Note"
@@ -3454,10 +3408,7 @@ msgstr "Вход отменён"
 #: kuma/users/templates/socialaccount/login_cancelled.html:9
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
-"Вы решили отменить вход на наш сайт, используя один из ваших существующих "
-"аккаунтов. Если это была ошибка, пожалуйста, <a href=\"%"
-"(login_url)s\">войдите</a>."
+msgstr "Вы решили отменить вход на наш сайт, используя один из ваших существующих аккаунтов. Если это была ошибка, пожалуйста, <a href=\"%(login_url)s\">войдите</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:4 kuma/users/templates/socialaccount/signup.html:26
 msgid "Create your MDN profile to continue"
@@ -3467,9 +3418,7 @@ msgstr "Создайте свой MDN профиль, чтобы продолж�
 #, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
 msgstr ""
-"Профиль с таким адресом электронной почты уже существует. Чтобы присоединить "
-"Persona к вашему MDN профилю, <a href=\"%(connections_url)s\">вам нужно войти "
-"и открыть присоединённые аккаунты.</a>"
+"Профиль с таким адресом электронной почты уже существует. Чтобы присоединить Persona к вашему MDN профилю, <a href=\"%(connections_url)s\">вам нужно войти и открыть присоединённые аккаунты.</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:43
 #, python-format
@@ -3480,68 +3429,50 @@ msgid_plural ""
 "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
 "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
-"Профиль с таким адресом электронной почты уже существует. У вас уже есть MDN "
-"профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-"next=\"%(persona_next_url)s\">Да, соединить с моим MDN профилем</a>"
+"Профиль с таким адресом электронной почты уже существует. У вас уже есть MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Да, "
+"соединить с моим MDN профилем</a>"
 msgstr[1] ""
-"Профиль с такими адресами электронной почты уже существует. У вас уже есть "
-"MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" "
-"data-next=\"%(persona_next_url)s\">Да, соединить с моим MDN профилем</a>"
+"Профиль с такими адресами электронной почты уже существует. У вас уже есть MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Да, "
+"соединить с моим MDN профилем</a>"
 msgstr[2] ""
-"Профиль с такими адресами электронной почты уже существует. У вас уже есть "
-"MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" "
-"data-next=\"%(persona_next_url)s\">Да, соединить с моим MDN профилем</a>"
+"Профиль с такими адресами электронной почты уже существует. У вас уже есть MDN профиль? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Да, "
+"соединить с моим MDN профилем</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:55
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
-msgstr ""
-"Спасибо за вход на MDN с помощью %(provider_name)s. У вас есть ещё один шаг "
-"для присоединения к MDN: <strong>создайте свой MDN профиль</strong>."
+msgstr "Спасибо за вход на MDN с помощью %(provider_name)s. У вас есть ещё один шаг для присоединения к MDN: <strong>создайте свой MDN профиль</strong>."
 
 #: kuma/users/templates/socialaccount/signup.html:61
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs, submit demos, and have your own profile page."
-msgstr ""
-"Вы можете получить доступ ко всему на MDN, даже без MDN профиля. Однако, "
-"присоединяясь к MDN, вы сможете редактировать документацию, публиковать демо "
-"и иметь свою страничку."
+msgstr "Вы можете получить доступ ко всему на MDN, даже без MDN профиля. Однако, присоединяясь к MDN, вы сможете редактировать документацию, публиковать демо и иметь свою страничку."
 
 #: kuma/users/templates/socialaccount/signup.html:68
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions (edits, demos, etc.) that you make."
 msgstr ""
-"Чтобы настроить MDN профиль, пожалуйста <strong>выберите имя "
-"пользователя</strong>. Ваше имя пользователя будет отображаться на MDN, "
-"чтобы обозначить любой вклад (правки, демо и т.д.), который вы сделаете."
+"Чтобы настроить MDN профиль, пожалуйста <strong>выберите имя пользователя</strong>. Ваше имя пользователя будет отображаться на MDN, чтобы обозначить любой вклад (правки, демо и т.д.), который вы "
+"сделаете."
 
 #: kuma/users/templates/socialaccount/signup.html:74
 msgid ""
 "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions (edits, demos, etc.) that you make."
 msgstr ""
-"Чтобы настроить MDN профиль, пожалуйста <strong>выберите имя пользователя и "
-"адрес электронной почты</strong>. Ваше имя пользователя будет отображаться "
-"на MDN, чтобы обозначить любой вклад (правки, демо и т.д.), который вы "
-"сделаете."
+"Чтобы настроить MDN профиль, пожалуйста <strong>выберите имя пользователя и адрес электронной почты</strong>. Ваше имя пользователя будет отображаться на MDN, чтобы обозначить любой вклад (правки, "
+"демо и т.д.), который вы сделаете."
 
 #: kuma/users/templates/socialaccount/signup.html:82
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
-msgstr ""
-"Если у вас <strong>есть проблемы</strong> со входом или созданием MDN "
-"профиля, <strong><a href=\"%(bug_href)s\" rel=\"external\">дайте нам "
-"знать</a></strong>."
+msgstr "Если у вас <strong>есть проблемы</strong> со входом или созданием MDN профиля, <strong><a href=\"%(bug_href)s\" rel=\"external\">дайте нам знать</a></strong>."
 
 #: kuma/users/templates/socialaccount/signup.html:107
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr ""
-"Ваше имя пользователя GitHub %(username)s уже занято. Пожалуйста, выберите "
-"другое."
+msgstr "Ваше имя пользователя GitHub %(username)s уже занято. Пожалуйста, выберите другое."
 
 #: kuma/users/templates/socialaccount/signup.html:111
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
-msgstr ""
-"Пожалуйста, введите имя, которое вы хотите, чтобы позволять другим "
-"пользоватем увидеть ваш вклад."
+msgstr "Пожалуйста, введите имя, которое вы хотите, чтобы позволять другим пользоватем увидеть ваш вклад."
 
 #: kuma/users/templates/socialaccount/signup.html:125
 #, python-format
@@ -3549,9 +3480,8 @@ msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
 msgstr ""
-"Профиль с выбранным адресом электронной почты уже существует. <a href=\"%"
-"(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%"
-"(persona_next_url)s\">Подключить к нему ваш аккаунт в %(provider_name)s.</a>"
+"Профиль с выбранным адресом электронной почты уже существует. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Подключить к нему ваш аккаунт в "
+"%(provider_name)s.</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:155
 #, python-format
@@ -3559,26 +3489,21 @@ msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
 "\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Какой адрес электронной почты нам следует использовать, чтобы присылать "
-"сообщения и оповещения от MDN? Этот адрес <strong>не будет</strong> "
-"отображаться на MDN и использоваться в соответвии с нашей <a href=\"%"
-"(privacy_url)s\">политикой приватности</a>."
+"Какой адрес электронной почты нам следует использовать, чтобы присылать сообщения и оповещения от MDN? Этот адрес <strong>не будет</strong> отображаться на MDN и использоваться в соответвии с нашей "
+"<a href=\"%(privacy_url)s\">политикой приватности</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:170
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
-msgstr ""
-"с <a href=\"%(terms_url)s\">Условиями использования</a> и <a href=\"%"
-"(privacy_url)s\">Уведомлением о конфиденциальности</a> Mozilla."
+msgstr "с <a href=\"%(terms_url)s\">Условиями использования</a> и <a href=\"%(privacy_url)s\">Уведомлением о конфиденциальности</a> Mozilla."
 
 #: kuma/users/templates/socialaccount/signup.html:179
 msgid "Create my MDN profile"
 msgstr "Создать мой MDN профиль"
 
 #: kuma/users/templates/socialaccount/snippets/login_service_icon.html:2
-#, fuzzy
 msgid "Signed in with Persona"
-msgstr "Войти через Persona"
+msgstr "Вошли через Persona"
 
 #: kuma/users/templates/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
@@ -3752,9 +3677,8 @@ msgid "Add your interests first, then declare yourself an expert in selected top
 msgstr "Добавьте сначала свои интересы, а уже потом провозглашайте себя экспертом в выбранных темах."
 
 #: kuma/users/templates/users/user_edit.html:101
-#, fuzzy
 msgid "My Profiles"
-msgstr "Мои другие профили"
+msgstr "Мои профили"
 
 #: kuma/users/templates/users/user_edit.html:106 kuma/users/templates/users/user_edit.html:124
 msgid "Change"
@@ -3806,9 +3730,7 @@ msgstr "Хотите рассказать кому-нибудь о MDN? Есть
 #: kuma/users/templates/users/email/welcome/html.ltxt:38
 #, python-format
 msgid "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site."
-msgstr ""
-"Список рассылки: <a href=\"%(list_link)s\">подпишитесь</a>, чтоб рассказать "
-"нам о том, что вам интересно на MDN и задать вопросы по сайту."
+msgstr "Список рассылки: <a href=\"%(list_link)s\">подпишитесь</a>, чтоб рассказать нам о том, что вам интересно на MDN и задать вопросы по сайту."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:43
 #, python-format
@@ -3825,9 +3747,7 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/html.ltxt:60 kuma/users/templates/users/email/welcome/plain.ltxt:51
 msgid "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
-msgstr ""
-"Не стесняйтесь, если у вас есть какие-то сомнения, проблемы, вопросы: "
-"свяжитесь с нами! Мы здесь, чтобы помочь."
+msgstr "Не стесняйтесь, если у вас есть какие-то сомнения, проблемы, вопросы: свяжитесь с нами! Мы здесь, чтобы помочь."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:4
@@ -3838,9 +3758,7 @@ msgstr "Привет, %(username)s"
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:7
 msgid "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you."
-msgstr ""
-"Спасибо за создание профиля на Mozilla Developer Network (MDN) -- "
-"сообщества, делающем великолепные ресурсы для разработчиков, как вы."
+msgstr "Спасибо за создание профиля на Mozilla Developer Network (MDN) -- сообщества, делающем великолепные ресурсы для разработчиков, как вы."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:10
@@ -3848,9 +3766,8 @@ msgid ""
 "You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
 "interests."
 msgstr ""
-"Вы завершили первый шаг \"Начала работы с MDN\" созданием профиля. Сейчас "
-"можно продолжить, выбрав задачу на MDN и выполнив её! У нас есть куча "
-"вступительных задач, которые вы можете выбрать на основе ваших интересов."
+"Вы завершили первый шаг \"Начала работы с MDN\" созданием профиля. Сейчас можно продолжить, выбрав задачу на MDN и выполнив её! У нас есть куча вступительных задач, которые вы можете выбрать на "
+"основе ваших интересов."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:14
@@ -3881,9 +3798,7 @@ msgstr "Список рассылки: %(list_link)s"
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
 msgid "Subscribe to tell us about what you're interested in on MDN and ask questions about the site."
-msgstr ""
-"Подпишись, чтоб рассказать нам о том, что вам интересно на MDN и задать "
-"вопросы по сайту."
+msgstr "Подпишись, чтоб рассказать нам о том, что вам интересно на MDN и задать вопросы по сайту."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:39
@@ -3894,8 +3809,7 @@ msgstr "Чат в реальном времени: канал #mdn на irc.mozi
 #: kuma/users/templates/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr ""
-"Обратитесь к %(irc_link)s для получения дополнительной информации по IRC."
+msgstr "Обратитесь к %(irc_link)s для получения дополнительной информации по IRC."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:45
@@ -3960,7 +3874,6 @@ msgid "MDN recent changes to documents tagged %s"
 msgstr "Недавние изменения в документах MDN, помеченных %s"
 
 #: kuma/wiki/feeds.py:183
-#, fuzzy
 msgid "MDN documents in need of review"
 msgstr "Документы MDN для проверки"
 
@@ -4023,16 +3936,12 @@ msgstr "Указанный url не корректен."
 #: kuma/wiki/forms.py:39
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr ""
-"Длина url слишком мала (%(show_value)s символов). Она должна быть не менее %"
-"(limit_value)s символов."
+msgstr "Длина url слишком мала (%(show_value)s символов). Она должна быть не менее %(limit_value)s символов."
 
 #: kuma/wiki/forms.py:41
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
-"Пожалуйста, уменьшите длину url до %(limit_value)s символов или менее. "
-"Сейчас она составляет %(show_value)s символов."
+msgstr "Пожалуйста, уменьшите длину url до %(limit_value)s символов или менее. Сейчас она составляет %(show_value)s символов."
 
 #: kuma/wiki/forms.py:44
 msgid "Please provide a summary."
@@ -4046,9 +3955,7 @@ msgstr "Сводка слишком короткая (%(show_value)s симво�
 #: kuma/wiki/forms.py:47
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr ""
-"Пожалуйста, уменьшите длину сводки до %(limit_value)s символов или менее. "
-"Сейчас она составляет %(show_value)s символов."
+msgstr "Пожалуйста, уменьшите длину сводки до %(limit_value)s символов или менее. Сейчас она составляет %(show_value)s символов."
 
 #: kuma/wiki/forms.py:50
 msgid "Please provide content."
@@ -4249,14 +4156,12 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
-#, fuzzy
 msgid "Purge documents"
-msgstr "Документы MDN"
+msgstr "Вычистить документы"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
-#, fuzzy
 msgid "Documents"
-msgstr "Статья"
+msgstr "Документы"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:39
 msgid ""
@@ -4265,8 +4170,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"Следующие документы навсегда будут удалены из базы данных. Это действие "
-"нельзя будет отменить. Для отмены, нажмите кнопку \"Назад\" в вашем браузере.\n"
+"          Следующие документы будут навсегда удалены из базы данных. Это действие нельзя будет отменить. Для отмены, нажмите кнопку \"Назад\" в вашем браузере.\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
@@ -4358,9 +4263,7 @@ msgstr "Почему вы возвращаетесь к этой версии?"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:36
 msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
-msgstr ""
-"Вы собираетесь откатить документ к этой ревизии. Щёлкните \"откатить\", чтоб "
-"откатить к содержимому выше."
+msgstr "Вы собираетесь откатить документ к этой ревизии. Щёлкните \"откатить\", чтоб откатить к содержимому выше."
 
 #: kuma/wiki/templates/wiki/create.html:6
 msgid "Create a New Template"
@@ -4371,7 +4274,6 @@ msgid "Create a New Article"
 msgstr "Создать новую статью"
 
 #: kuma/wiki/templates/wiki/create.html:34
-#, fuzzy
 msgid "Create a"
 msgstr "Создать"
 
@@ -4491,9 +4393,7 @@ msgstr "Эта статья нуждается в редакционном об�
 #: kuma/wiki/templates/wiki/document.html:306
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
-msgstr ""
-"Перевод не завершен. Пожалуйста, помогите <a href=\"%"
-"(translate_url)s\">перевести эту статью</a> с английского."
+msgstr "Перевод не завершен. Пожалуйста, помогите <a href=\"%(translate_url)s\">перевести эту статью</a> с английского."
 
 #: kuma/wiki/templates/wiki/document.html:311
 msgid "This translation is in progress."
@@ -4560,9 +4460,7 @@ msgstr "Ваши изменения"
 #: kuma/wiki/templates/wiki/edit.html:43 kuma/wiki/templates/wiki/edit.html:55 kuma/wiki/templates/wiki/includes/document_macros.html:42 kuma/wiki/templates/wiki/includes/document_macros.html:58
 #, python-format
 msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr ""
-"Ревизия %(id)s от <a href=\"{user_profile_url}\">%(user)s</a>, сделанная %"
-"(date)s"
+msgstr "Ревизия %(id)s от <a href=\"%(user_profile_url)s\">%(user)s</a>, сделанная %(date)s"
 
 #: kuma/wiki/templates/wiki/edit.html:51
 msgid "Current Revision:"
@@ -4607,15 +4505,11 @@ msgstr "Спасибо вам за время, потраченное на ул�
 #: kuma/wiki/templates/wiki/edit.html:164
 #, python-format
 msgid "It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">Editor Guide</a>."
-msgstr ""
-"Похоже, что это ваш первый вклад в MDN. Вы можете найти ответы на общие "
-"вопросы по редактированию в нашем <a target=\"_blank\" href=\"%"
-"(url)s\">Руководстве редактора</a>."
+msgstr "Похоже, что это ваш первый вклад в MDN. Вы можете найти ответы на общие вопросы по редактированию в нашем <a target=\"_blank\" href=\"%(url)s\">Руководстве редактора</a>."
 
 #: kuma/wiki/templates/wiki/edit.html:168
 msgid "Don't be afraid to break something, you can always revert your changes."
-msgstr ""
-"Не бойтесь что-нибудь поломать, вы всегда можете отменить ваши изменения."
+msgstr "Не бойтесь что-нибудь поломать, вы всегда можете отменить ваши изменения."
 
 #: kuma/wiki/templates/wiki/edit.html:169
 msgid "Have fun and be proud of your contribution!"
@@ -4628,10 +4522,7 @@ msgstr "Узнайте, как добавить теги к статье"
 #: kuma/wiki/templates/wiki/edit.html:190 kuma/wiki/templates/wiki/translate.html:112
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
-msgstr ""
-"Категоризируйте статью. Это сделает статью находимой через правильные "
-"фильтры в поисковом движке. <a target=\"_blank\" href=\"%(url)s\">Прочитайте "
-"руководство по тегам</a>."
+msgstr "Категоризируйте статью. Это сделает статью находимой через правильные фильтры в поисковом движке. <a target=\"_blank\" href=\"%(url)s\">Прочитайте руководство по тегам</a>."
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:3
 #, python-format
@@ -4655,10 +4546,7 @@ msgstr "Перемещение статьи | %(document)s"
 
 #: kuma/wiki/templates/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
-msgstr ""
-"Пожалуйста, укажите новое местоположение этой страницы заполнением полей "
-"ниже. Убедитесь, что новое место назначения соответствует следующим "
-"правилам:"
+msgstr "Пожалуйста, укажите новое местоположение этой страницы заполнением полей ниже. Убедитесь, что новое место назначения соответствует следующим правилам:"
 
 #: kuma/wiki/templates/wiki/move.html:22
 msgid "Make sure the location you specify is located immediately under an existing page."
@@ -4693,9 +4581,8 @@ msgid "New Slug:"
 msgstr "Новый URL:"
 
 #: kuma/wiki/templates/wiki/move.html:81
-#, fuzzy
 msgid "Look up by Document Title"
-msgstr "Поиск по названию статьи"
+msgstr "Поиск по заголовку статьи"
 
 #: kuma/wiki/templates/wiki/move.html:84
 msgid "Parent Title"
@@ -4774,12 +4661,12 @@ msgstr ""
 "www.mozilla.org/ru/privacy\">Политика приватности</a>"
 
 #: kuma/wiki/templates/wiki/sphinx.html:43
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
 "<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2013 Mozilla Developer Network и индивидуальные участники<br /> Содержимое доступно под указанной в данном проекте лицензией. &middot; <a href=\"%(about_url)s\">О MDN</a> &middot; <a "
+"&copy; 2005-2015 Mozilla Developer Network и индивидуальные участники<br /> Содержимое доступно под указанной в данном проекте лицензией. &middot; <a href=\"%(about_url)s\">О MDN</a> &middot; <a "
 "href=\"//github.com/mozilla/kuma\">Внести вклад в код</a> &middot; <a href=\"//www.mozilla.org/ru/privacy\">Политика приватности</a>"
 
 #: kuma/wiki/templates/wiki/translate.html:7
@@ -4951,16 +4838,15 @@ msgstr "Распечатать эту статью"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
-msgstr ""
+msgstr "хлебныекрошки"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:21
 msgid "See also"
 msgstr "Смотрите также"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:29
-#, fuzzy
 msgid "Change Revisions"
-msgstr "Сравнить версии"
+msgstr "Изменить ревизии"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:37 kuma/wiki/templates/wiki/includes/document_macros.html:53
 #, python-format
@@ -4969,9 +4855,7 @@ msgstr "Ревизия %(num)s:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:82 kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
-msgstr ""
-"Сервер выполняет сравнение контента. Пожалуйста, обновите эту страницу в "
-"течение нескольких минут."
+msgstr "Сервер выполняет сравнение контента. Пожалуйста, обновите эту страницу в течение нескольких минут."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:107
 msgid "Share:"
@@ -5054,15 +4938,9 @@ msgstr "Оглавление:"
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:3
 msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
 msgid_plural "There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below."
-msgstr[0] ""
-"На этой странице возникла скриптовая ошибка. Хотя она адресуется редакторам "
-"сайта, вы можете просмотреть частичное содержимое ниже."
-msgstr[1] ""
-"На этой странице возникли скриптовые ошибки. Хотя они адресуются редакторам "
-"сайта, вы можете просмотреть частичное содержимое ниже."
-msgstr[2] ""
-"На этой странице возникли скриптовые ошибки. Хотя они адресуются редакторам "
-"сайта, вы можете просмотреть частичное содержимое ниже."
+msgstr[0] "На этой странице возникла скриптовая ошибка. Хотя она адресуется редакторам сайта, вы можете просмотреть частичное содержимое ниже."
+msgstr[1] "На этой странице возникли скриптовые ошибки. Хотя они адресуются редакторам сайта, вы можете просмотреть частичное содержимое ниже."
+msgstr[2] "На этой странице возникли скриптовые ошибки. Хотя они адресуются редакторам сайта, вы можете просмотреть частичное содержимое ниже."
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -5078,10 +4956,8 @@ msgstr[2] "Больше информации об этих ошибках"
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
 msgstr ""
-"Кто угодно с профилем MDN может отредактировать документ, чтобы исправить "
-"ошибку. Используйте <a "
-"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">руководство "
-"исправления ошибок KumaScript</a>, как отправную точку."
+"Кто угодно с профилем MDN может отредактировать документ, чтобы исправить ошибку. Используйте <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">руководство исправления ошибок KumaScript</"
+"a>, как отправную точку."
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
 msgid "Error type:"
@@ -5096,9 +4972,8 @@ msgid "Create Template"
 msgstr "Создать шаблон"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:47
-#, fuzzy
 msgid "Edit Template"
-msgstr "Редактировать страницу"
+msgstr "Редактировать шаблон"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
 msgid "Parsing macro:"
@@ -5118,9 +4993,7 @@ msgstr "Не можете найти, что ищете?"
 
 #: kuma/wiki/templates/wiki/includes/more_help.html:10
 msgid "Ask our awesome support community for help"
-msgstr ""
-"Для получения помощи задайте вопрос нашему удивительному сообществу "
-"поддержки"
+msgstr "Для получения помощи задайте вопрос нашему удивительному сообществу поддержки"
 
 #: kuma/wiki/templates/wiki/includes/more_help.html:13
 msgid "Or try searching:"
@@ -5156,9 +5029,7 @@ msgstr "Узнайте, как использовать комментарии �
 
 #: kuma/wiki/templates/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
-msgstr ""
-"Сообщите нам, почему вы сделали добавления и изменения. Это необязательно, "
-"но сделает историю страницы проще для понимания."
+msgstr "Сообщите нам, почему вы сделали добавления и изменения. Это необязательно, но сделает историю страницы проще для понимания."
 
 #: kuma/wiki/templates/wiki/includes/spam_error.html:2
 #, python-format
@@ -5170,9 +5041,7 @@ msgstr ""
 #: kuma/wiki/templates/wiki/includes/spam_error.html:11
 #, python-format
 msgid "If you believe you’ve received this message by mistake, please <a href=\"%(admin_email)s\">contact the site administrators</a>."
-msgstr ""
-"Если вы думаете, что получили это сообщение по ошибке, пожалуйста, <a href=\""
-"%(admin_email)s\">свяжитесь с администраторами сайта</a>."
+msgstr "Если вы думаете, что получили это сообщение по ошибке, пожалуйста, <a href=\"%(admin_email)s\">свяжитесь с администраторами сайта</a>."
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -5206,7 +5075,6 @@ msgid "Articles tagged: %(tag)s"
 msgstr "Демо отмеченные: %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/documents.html:8
-#, fuzzy
 msgid "All templates"
 msgstr "Все шаблоны"
 
@@ -5317,9 +5185,7 @@ msgstr[2] "Найдено %(count)s документов."
 
 #: kuma/wiki/views/delete.py:50
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
-msgstr ""
-"Документ уже существует. Замечание: Вы не можете отменить изменения в "
-"документе, которой был перемещен, пока не удалите его перенаправление."
+msgstr "Документ уже существует. Замечание: Вы не можете отменить изменения в документе, которой был перемещен, пока не удалите его перенаправление."
 
 #: kuma/wiki/views/document.py:600
 #, python-format
@@ -5420,20 +5286,20 @@ msgstr "<li><a href=\"%(logout_url)s\">Выйдите</a> и попробуйт�
 #: templates/403.html:49 templates/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
-msgstr "<li><a href=\"%(logout_url)s\">Войдите</a> и попробуйте снова.</li>"
+msgstr "<li><a href=\"%(login_url)s\">Войдите</a> и попробуйте снова.</li>"
 
 #: templates/403.html:53
 #, python-format
 msgid "<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">browse docs</a></li>"
-msgstr ""
-"<li><a href=\"%(demos_url)s\">Посмотреть демо</a> или <a href=\"%"
-"(docs_url)s\">просмотреть документацию</a></li>"
+msgstr "<li><a href=\"%(demos_url)s\">Посмотреть демо</a> или <a href=\"%(docs_url)s\">просмотреть документацию</a></li>"
 
 #: templates/403.html:58
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> от Matthew Inman из <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
+"Oatmeal</a></small></p>"
 
 #: templates/404.html:6
 msgid "Not Found"
@@ -5446,9 +5312,7 @@ msgstr "Извините, мы не можем найти то, что вы ищ
 #: templates/404.html:24
 #, python-format
 msgid "You can try a search or start over on the <a href=\"%(homepage_url)s\">home page</a>."
-msgstr ""
-"Вы можеть попытаться поискать или начать сначала на <a href=\"%"
-"(homepage_url)s\">домашней странице</a>."
+msgstr "Вы можеть попытаться поискать или начать сначала на <a href=\"%(homepage_url)s\">домашней странице</a>."
 
 #: templates/404.html:28
 #, python-format
@@ -5458,7 +5322,7 @@ msgstr ""
 #: templates/404.html:36
 #, python-format
 msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
-msgstr ""
+msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> от Matthew Inman из <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 
 #: templates/500.html:5
 msgid "Internal Server Error"
@@ -5477,9 +5341,8 @@ msgid "Skip to search"
 msgstr "Перейти к поиску"
 
 #: templates/base.html:104
-#, fuzzy
 msgid "Contribute to MDN"
-msgstr "Вклад в кодовую базу MDN"
+msgstr "Помочь MDN"
 
 #: templates/base.html:106
 msgid "Get started"
@@ -5494,9 +5357,8 @@ msgid "Add a new page"
 msgstr "Добавить новую страницу"
 
 #: templates/base.html:111
-#, fuzzy
 msgid "Site Tools"
-msgstr "Инструменты"
+msgstr "Инструменты сайта"
 
 #: templates/base.html:113
 msgid "Revision dashboard"
@@ -5622,9 +5484,7 @@ msgstr "<li><a href=\"/logout\">Выйдите</a> и попробуйте сн�
 
 #: templates/handlers/400.html:40
 msgid "<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
-msgstr ""
-"<li><a href=\"/demos\">Посмотреть демо</a> или <a href=\"/docs\">открыть "
-"документацию</a></li>"
+msgstr "<li><a href=\"/demos\">Посмотреть демо</a> или <a href=\"/docs\">открыть документацию</a></li>"
 
 #: templates/includes/common_macros.html:18
 msgid "Search Firefox Help"
@@ -5653,9 +5513,7 @@ msgstr "Войти"
 
 #: templates/includes/newsletter.html:6
 msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem."
-msgstr ""
-"Подпишитесь на переодические новости о Firefox OS, Firefox Marketplace и "
-"экосистеме открытых веб-приложений."
+msgstr "Подпишитесь на переодические новости о Firefox OS, Firefox Marketplace и экосистеме открытых веб-приложений."
 
 #: templates/includes/newsletter.html:35
 #, python-format
@@ -5683,6 +5541,8 @@ msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
 msgstr ""
+"Мы не смогли найти вашу подписку. Либо она уже была отменена, либо в ссылке для отказа от подписки есть ошибка. Пожалуйста, убедитесь, что ссылка из письма целиком скопирована в браузер. Если "
+"последняя часть ссылки в письме перенесена на вторую строку, попробуйте скопировать и вставить ссылку в браузер."
 
 #: templates/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
