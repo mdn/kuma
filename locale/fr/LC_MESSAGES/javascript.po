@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 07:20+0000\n"
+"PO-Revision-Date: 2015-11-21 07:27+0000\n"
 "Last-Translator: sphinx_knight <sphinx_knight@hotmail.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
@@ -105,31 +105,31 @@ msgstr "Revenir au tableau de compatibilité."
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
-msgstr ""
+msgstr "Les nouveaux tableaux de compatibilité sont disponibles en beta "
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
-msgstr ""
+msgstr "En savoir plus sur la beta."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "Répondre au sondage"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "Rapporter une erreur."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr ""
+msgstr "C'est rapporté. Merci !"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "Afficher l'ancien tableau."
 
 #: kuma/static/js/wiki-edit.js:400
 msgid ""
@@ -137,39 +137,44 @@ msgid ""
 " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
 "draft</a>."
 msgstr ""
+"Un brouillon avait été enregistré. <a href=\"\" "
+"class=\"restoreLink\">Restaurer le contenu du brouillon enregistré</a> ou <a"
+" href=\"\" class=\"discardLink\">effacer le brouillon</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
-msgstr ""
+msgstr "enregistré"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
-msgstr ""
+msgstr "Nouvelle étiquette…"
 
 #: kuma/static/js/wiki.js:230
 msgid "How to read CSS syntax."
-msgstr ""
+msgstr "Comment lire la syntaxe CSS."
 
 #: kuma/static/js/wiki.js:555
 msgid "Search Stack Overflow"
-msgstr ""
+msgstr "Rechercher sur Stack Overflow"
 
 #: kuma/static/js/wiki.js:668
 msgid ""
 "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
+"Votre navigateur ne supporte pas MathML. Un contenu de remplacement avec CSS"
+" a été utilisé."
 
 #: kuma/static/js/wiki.js:883
 msgid "Details"
-msgstr ""
+msgstr "Détails"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:38
 msgid "Select an attachment"
-msgstr ""
+msgstr "Sélectionner une pièce jointe"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:49
 msgid "No attachments available"
-msgstr ""
+msgstr "Aucune pièce jointe disponible"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
@@ -186,68 +191,68 @@ msgstr "Lancer"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/plugin.js:17
 msgid "Create a Redirect"
-msgstr ""
+msgstr "Créer une redirection"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:4
 msgid "MDN Redirect"
-msgstr ""
+msgstr "Redirection MDN"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
-msgstr ""
+msgstr "Document"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:65
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/plugin.js:17
 msgid "Insert Code Sample iFrame"
-msgstr ""
+msgstr "Insérer une iFrame pour une exemple de code"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:5
 msgid "Sample Finder"
-msgstr ""
+msgstr "Explorateur d'exemples"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:20
 msgid "Select a section"
-msgstr ""
+msgstr "Sélectionner une section"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:91
 msgid "Sections in Document"
-msgstr ""
+msgstr "Sections du document"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
-msgstr ""
+msgstr "Quel doit être le titre de cet exemple ?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML Content"
-msgstr ""
+msgstr "Contenu HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
-msgstr ""
+msgstr "Contenu HTML de l'exemple"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS Content"
-msgstr ""
+msgstr "Contenu CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
-msgstr ""
+msgstr "Contenu CSS de l'exemple"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
 msgid "JavaScript Content"
-msgstr ""
+msgstr "Contenu JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
-msgstr ""
+msgstr "Contenu JavaScript de l'exemple"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:52
 msgid "Insert Code Sample Template"
-msgstr ""
+msgstr "Insérer un modèle d'exemple de code"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:24
 msgid "Syntax Highlighter"
@@ -259,28 +264,28 @@ msgstr "Pas de coloration"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:27
 msgid "Embed YouTube Video"
-msgstr ""
+msgstr "Intégrer une vidéo YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:28
 msgid "Locate a YouTube Video"
-msgstr ""
+msgstr "Déterminer l'emplacement de la vidéo YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:29
 msgid "Paste YouTube Video URL"
-msgstr ""
+msgstr "Copier l'URL d'une vidéo YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
-msgstr ""
+msgstr "Facteur de forme"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:31
 msgid "You must input a valid YouTube video URL."
-msgstr ""
+msgstr "Vous devez saisir une URL valide pour une vidéo YouTube."
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:32
 msgid "The URL you've entered doesn't appear to be valid"
-msgstr ""
+msgstr "L'URL saisie ne semble pas être valide"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
-msgstr ""
+msgstr "Par défaut"
