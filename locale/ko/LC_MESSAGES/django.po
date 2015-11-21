@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-16 02:00+0000\n"
+"PO-Revision-Date: 2015-11-21 08:39+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -50,9 +50,9 @@ msgstr "제공된 파일이 유효하지 않습니다. 다음 타입 중 하나�
 #. 'id' is the revision number, 'title' is the title of the document.
 # 100%
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachment %(id)s | %(title)s"
-msgstr "첨부파일 {id} | {title}"
+msgstr "첨부파일 %(id)s | %(title)s"
 
 # 100%
 #: kuma/attachments/templates/attachments/attachment_detail.html:15
@@ -92,9 +92,9 @@ msgstr "MIME 종류:"
 
 # 100%
 #: kuma/attachments/templates/attachments/attachment_detail.html:44
-#, fuzzy, python-format
+#, python-format
 msgid "%(bytes)s bytes"
-msgstr "%s 바이트"
+msgstr "%(bytes)s 바이트"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:48
 msgid "Is approved?"
@@ -254,9 +254,9 @@ msgid "View key usage history"
 msgstr "키 사용 이력 보기"
 
 #: kuma/authkeys/templates/authkeys/list.html:26
-#, fuzzy, python-format
+#, python-format
 msgid "History (%(count)s)"
-msgstr "이력 ({count})"
+msgstr "이력 (%(count)s)"
 
 #: kuma/authkeys/templates/authkeys/list.html:35
 #, python-format
