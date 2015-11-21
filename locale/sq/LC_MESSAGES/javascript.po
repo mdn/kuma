@@ -132,8 +132,13 @@ msgid "Show old table."
 msgstr "Shfaq tabelën e vjetër."
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr "Keni në përpunim një skicë. <a href=\"\" class=\"restoreLink\">Riktheni lëndën e skicës</a> ose <a href=\"\" class=\"discardLink\">hidheni skicën tej</a>."
+msgid ""
+"You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the "
+"draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+"draft</a>."
+msgstr ""
+"Keni në përpunim një skicë. <a href=\"\" class=\"restoreLink\">Riktheni lëndën e "
+"skicës</a> ose <a href=\"\" class=\"discardLink\">hidheni skicën tej</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
@@ -280,4 +285,3 @@ msgstr "URL-ja që dhatë s’duket se është e vlefshme"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Parazgjedhje"
-
