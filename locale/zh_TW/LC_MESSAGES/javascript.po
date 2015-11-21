@@ -1,74 +1,75 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2014-06-10 04:22+0000\n"
-"Last-Translator: Peter <petercpg@mail.moztw.org>\n"
+"PO-Revision-Date: 2015-11-21 16:44+0000\n"
+"Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 1.13.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1402374150.0\n"
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
-msgstr ""
+msgstr "關閉子選單"
 
 #: kuma/static/js/components.js:530
 msgid "Close notification"
-msgstr ""
+msgstr "關閉通知"
 
 #: kuma/static/js/helpfulness.js:26
 msgid "Did this page help you?"
-msgstr ""
+msgstr "這個頁面有幫到您嗎？"
 
 #: kuma/static/js/helpfulness.js:28
 msgid "Yes"
-msgstr ""
+msgstr "有"
 
 #: kuma/static/js/helpfulness.js:30
 msgid "No"
-msgstr ""
+msgstr "沒有"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Never ask me again"
-msgstr ""
+msgstr "不要再問我"
 
 #: kuma/static/js/helpfulness.js:53
 msgid "Translate it into my language"
-msgstr ""
+msgstr "翻譯成我的語言"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "Make explanations clearer"
-msgstr ""
+msgstr "解釋得更清楚一點"
 
 #: kuma/static/js/helpfulness.js:55
 msgid "Add more details"
-msgstr ""
+msgstr "加上更多細節"
 
 #: kuma/static/js/helpfulness.js:56
 msgid "Fix incorrect information"
-msgstr ""
+msgstr "修正錯誤資訊"
 
 #: kuma/static/js/helpfulness.js:57
 msgid "Add or improve examples"
-msgstr ""
+msgstr "加入或改善範本"
 
 #: kuma/static/js/helpfulness.js:58
 msgid "My search should have lead to a different article."
-msgstr ""
+msgstr "我搜尋的東西跟這頁無關。"
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Something else"
-msgstr ""
+msgstr "其他"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Choose one..."
-msgstr ""
+msgstr "挑選一個…"
 
 #: kuma/static/js/helpfulness.js:77
 msgid "Uh oh. What would make it better?"
@@ -80,7 +81,7 @@ msgstr ""
 
 #: kuma/static/js/modal-control.js:15
 msgid "Demo Studio"
-msgstr ""
+msgstr "Demo Studio"
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
@@ -88,7 +89,7 @@ msgstr ""
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "已選擇:"
 
 #: kuma/static/js/users.js:96
 msgid "New interest..."
@@ -96,15 +97,15 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "開啟"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatability table."
-msgstr ""
+msgstr "回到相容性表格。"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
-msgstr ""
+msgstr "關閉"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
@@ -120,7 +121,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "回報錯誤。"
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
@@ -131,7 +132,10 @@ msgid "Show old table."
 msgstr ""
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+msgid ""
+"You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+" draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+"draft</a>."
 msgstr ""
 
 #: kuma/static/js/wiki-edit.js:547
@@ -148,25 +152,27 @@ msgstr ""
 
 #: kuma/static/js/wiki.js:555
 msgid "Search Stack Overflow"
-msgstr ""
+msgstr "搜尋 Stack Overflow"
 
 #: kuma/static/js/wiki.js:668
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 
 #: kuma/static/js/wiki.js:883
 msgid "Details"
-msgstr ""
+msgstr "詳細資訊"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:38
 msgid "Select an attachment"
-msgstr ""
+msgstr "選擇附件"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:49
 msgid "No attachments available"
-msgstr ""
+msgstr "沒有附件"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "附件"
 
@@ -184,15 +190,16 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:4
 msgid "MDN Redirect"
-msgstr ""
+msgstr "MDN 重導"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
-msgstr ""
+msgstr "文件"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:65
 msgid "URL"
-msgstr ""
+msgstr "網址"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/plugin.js:17
 msgid "Insert Code Sample iFrame"
@@ -276,4 +283,4 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
-msgstr ""
+msgstr "預設"
