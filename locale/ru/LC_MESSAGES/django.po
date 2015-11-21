@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 16:40+0000\n"
-"Last-Translator: bychek.ru <a@bychek.ru>\n"
+"PO-Revision-Date: 2015-11-21 16:47+0000\n"
+"Last-Translator: Alexander <unghost@mozilla-russia.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1448124054.0\n"
+"X-POOTLE-MTIME: 1448124461.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -5231,9 +5231,8 @@ msgid "Documents with no parent"
 msgstr "Документы без родителя"
 
 #: kuma/wiki/templates/wiki/list/documents.html:17
-#, fuzzy
 msgid "All documents"
-msgstr "Документы MDN"
+msgstr "Все документы"
 
 #: kuma/wiki/templates/wiki/list/documents.html:35
 msgid "Translation updates needed"
@@ -5244,32 +5243,32 @@ msgid "There are no articles."
 msgstr "Здесь нет ни одной статьи."
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Documents for %(tag)s review"
-msgstr "Статьи для проверки {tag}"
+msgstr "Статьи для проверки %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:7
 msgid "Documents for review"
 msgstr "Статьи для проверки"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:12
-#, fuzzy, python-format
+#, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr "Статьи, помеченные, как требующие проверки: {tag}"
+msgstr "Статьи, помеченные, как требующие проверки: %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
 msgstr "Все статьи, которые необходимо проверить"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:23
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(count)s documents."
-msgstr "найден %(count)s документ."
+msgstr "Найдено %(count)s документов."
 
 #: kuma/wiki/templates/wiki/list/revisions.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revision History | %(document)s"
-msgstr "История изменений | {document}"
+msgstr "История изменений | %(document)s"
 
 #: kuma/wiki/templates/wiki/list/revisions.html:14
 msgid "History of"
@@ -5302,23 +5301,25 @@ msgstr "Нет ни одного тэга."
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:3
 #, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr ""
+msgstr "Локализованные статьи с тегом: %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr ""
+msgstr "Статьи с какими либо тегами локализации"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:15
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
-msgstr[0] "найден %(count)s документ."
-msgstr[1] "найдено %(count)s документа."
-msgstr[2] "найдено %(count)s документов."
+msgstr[0] "Найден %(count)s документ."
+msgstr[1] "Найдено %(count)s документа."
+msgstr[2] "Найдено %(count)s документов."
 
 #: kuma/wiki/views/delete.py:50
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr ""
+"Документ уже существует. Замечание: Вы не можете отменить изменения в "
+"документе, которой был перемещен, пока не удалите его перенаправление."
 
 #: kuma/wiki/views/document.py:600
 #, python-format
@@ -5328,7 +5329,7 @@ msgstr "Перенаправлено с %(url)s"
 #: kuma/wiki/views/document.py:648
 #, python-format
 msgid "I learned about %(title)s on MDN."
-msgstr ""
+msgstr "Я узнал(а) о %(title)s на MDN."
 
 #: kuma/wiki/views/document.py:718
 #, python-format
@@ -5367,7 +5368,7 @@ msgstr "Вы уже проголосовали за эту статью."
 #: kuma/wiki/views/misc.py:186
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
-msgstr "Загружено %(obj_count)d объектов."
+msgstr "%(obj_count)d объектов загружено."
 
 #: kuma/wiki/views/misc.py:190
 #, python-format
@@ -5388,43 +5389,45 @@ msgstr "Доступ запрещён"
 
 #: templates/403.html:22
 msgid "The wiki is in read-only mode."
-msgstr ""
+msgstr "Вики в режиме только для чтения."
 
 #: templates/403.html:24
 msgid "Your profile has been banned from making edits."
-msgstr ""
+msgstr "Вашему профилю было запрещено делать правки."
 
 #: templates/403.html:26
 msgid "This user's profile has been banned."
-msgstr ""
+msgstr "Профиль этого пользователя был заблокирован."
 
 #: templates/403.html:28
 msgid "You must sign in to view all history"
-msgstr ""
+msgstr "Вы должны войти, чтобы просмотреть всю историю"
 
 #: templates/403.html:34 templates/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<p>Извините, %(name)s, но боимся, что мы не можем это сделать.</p>"
 
 #: templates/403.html:38 templates/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<p>Извините, но боимся, что мы не можем это сделать.</p>"
 
 #: templates/403.html:45
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(logout_url)s\">Выйдите</a> и попробуйте снова.</li>"
 
 #: templates/403.html:49 templates/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(logout_url)s\">Войдите</a> и попробуйте снова.</li>"
 
 #: templates/403.html:53
 #, python-format
 msgid "<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">browse docs</a></li>"
 msgstr ""
+"<li><a href=\"%(demos_url)s\">Посмотреть демо</a> или <a href=\"%"
+"(docs_url)s\">просмотреть документацию</a></li>"
 
 #: templates/403.html:58
 msgid ""
