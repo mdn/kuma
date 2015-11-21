@@ -46,7 +46,7 @@ msgstr "Kartelat e këtij lloji s’janë të lejueshme."
 #: kuma/attachments/views.py:147
 #, python-format
 msgid "The file provided is not valid. File must be one of these types: %s."
-msgstr "Kartela e dhënë s’është e vlefshme. Kartela duhet të jetë e një prej këtyre llojeve: %s."
+msgstr "Kartela e dhënë s’është e vlefshme. Kartela duhet të jetë një prej këtyre llojeve: %s."
 
 #. 'id' is the revision number, 'title' is the title of the document.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
