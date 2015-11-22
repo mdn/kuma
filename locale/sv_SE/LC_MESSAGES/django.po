@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 10:21+0000\n"
+"PO-Revision-Date: 2015-11-22 09:09+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -1097,11 +1097,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:155
 msgid "November 2012 Dev Derby Challenge - Fullscreen API"
-msgstr "November 2012 Dev Derby utmaning - Fullskärm API"
+msgstr "November 2012 Dev Derby utmaning - Helskärm API"
 
 #: kuma/demos/__init__.py:156
 msgid "Fullscreen API"
-msgstr "Fullskärm API"
+msgstr "Helskärm API"
 
 #: kuma/demos/__init__.py:157
 msgid "November 2012"
@@ -1113,6 +1113,9 @@ msgid ""
 "You can even detect full screen state changes and style full screen pages "
 "specially. Talk about immersive!"
 msgstr ""
+"Med helskärm API, kan du fly ramarna för webbläsarfönstret. Du kan även "
+"upptäcka tillståndsändringar för helskärm och formatera helskärmssidor "
+"speciellt. Snacka om uppslukande!"
 
 #: kuma/demos/__init__.py:162
 msgid "December 2012 Dev Derby Challenge - Offline"
@@ -1133,6 +1136,10 @@ msgid ""
 " you can better support travelers and mobile users, improve performance, and"
 " more."
 msgstr ""
+"Med de mognande offline-kapaciten för den öppna webben, kan du bygga "
+"applikationer som fungerar med eller utan en internetanslutning. Med "
+"offline-teknik, kan du bättre stödja resande och mobila användare, förbättra"
+" prestanda och mycket mer."
 
 #: kuma/demos/__init__.py:169
 msgid "January 2013 Dev Derby Challenge - Drag and Drop"
@@ -1151,6 +1158,8 @@ msgid ""
 "The Drag and Drop API brings an age-old interaction to the Web, making rich,"
 " natural, and familiar user experiences possible."
 msgstr ""
+"Dra och släpp API ger en gammal interaktion på webben, vilket ger en riklig,"
+" naturlig och bekant användarupplevelse möjlig."
 
 #: kuma/demos/__init__.py:176
 msgid "February 2013 Dev Derby Challenge - Multi-touch"
@@ -1171,6 +1180,10 @@ msgid ""
 "more. By using multi-touch, your app can respond to all the interactions "
 "users have come to expect."
 msgstr ""
+"Touch Events API kan du spåra flera pekningar samtidigt på enheter som "
+"stöder dem. Bygga komplexa spel, stöd för pinch-to-zoom och mycket mer. "
+"Genom att använda multi-touch, kan appen svara på alla interaktioner "
+"användaren kan komma att förvänta."
 
 #: kuma/demos/__init__.py:183
 msgid "March 2013 Dev Derby Challenge - Mobile"
@@ -1186,6 +1199,9 @@ msgid ""
 "limit is your creativity. What amazing experiences can you build for users "
 "on the go?"
 msgstr ""
+"Den mobila webben blir allt viktigare varje dag. Den här gången är den enda "
+"begränsningen din kreativitet. Vilka fantastiska upplevelser kan du bygga "
+"för användare på språng?"
 
 #: kuma/demos/__init__.py:190
 msgid "April 2013 Dev Derby Challenge - Web Workers"
@@ -1205,6 +1221,9 @@ msgid ""
 "Web Workers, you can create dazzling user interfaces that are not hindered "
 "by even the most computationally-intensive tasks."
 msgstr ""
+"Web Wrokers gör det enkelt för dig att köra skript i bakgrunden. Genom att "
+"använda Web Workers, kan du skapa bländande användargränssnitt som inte "
+"hindras av de mest beräkningsintensiva uppgifterna."
 
 #: kuma/demos/__init__.py:197
 msgid "May 2013 Dev Derby Challenge - getUserMedia"
@@ -1224,7 +1243,7 @@ msgstr "Maj"
 
 #: kuma/demos/__init__.py:201
 msgid "Action!"
-msgstr ""
+msgstr "Action!"
 
 #: kuma/demos/__init__.py:202 kuma/demos/__init__.py:203
 msgid ""
@@ -1232,6 +1251,9 @@ msgid ""
 "microphones of your users. No plugins needed! What can you do once you have "
 "this media? The possibilities are endless."
 msgstr ""
+"Funktionen getUserMedia kan du komma åt (med tillstånd) kameror och "
+"mikrofoner av dina användare. Inga insticksmoduler behövs! Vad kan du göra "
+"när du har detta medium? Möjligheterna är oändliga."
 
 #: kuma/demos/__init__.py:206
 msgid "June 2013 Dev Derby Challenge - WebGL II"
@@ -1251,7 +1273,7 @@ msgstr "Juni"
 
 #: kuma/demos/__init__.py:210
 msgid "Twice the 3D!"
-msgstr ""
+msgstr "Dubbelt 3D!"
 
 #: kuma/demos/__init__.py:215
 msgid "July 2013 Dev Derby Challenge - File API"
@@ -1278,12 +1300,16 @@ msgid ""
 "The File API lets you read the contents of files submitted by your users, "
 "making natural and familiar data operations possible."
 msgstr ""
+"Fil API kan du läsa innehållet i dokument som skickats in av användare, "
+"vilket gör naturliga och bekanta dataoperationer möjligt."
 
 #: kuma/demos/__init__.py:226
 msgid ""
 "Mozilla's Audio Data API extends the current HTML5 API and allows web "
 "developers to read and write raw audio data."
 msgstr ""
+"Mozillas ljuddata API utökar nuvarande HTML5 API och vilket gör att "
+"webbutvecklare att läsa och skriva råljuddata."
 
 #: kuma/demos/__init__.py:228 kuma/demos/__init__.py:236
 #: kuma/demos/__init__.py:244 kuma/demos/__init__.py:252
@@ -1344,6 +1370,8 @@ msgid ""
 "The HTML5 canvas element allows you to display scriptable renderings of 2D "
 "shapes and bitmap images."
 msgstr ""
+"HTML5 canvas element kan du visa skripttolkningar av 2D-former och "
+"bitmappsbilder."
 
 #: kuma/demos/__init__.py:236
 msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
@@ -1501,7 +1529,7 @@ msgstr "http://en.wikipedia.org/wiki/JavaScript"
 
 #: kuma/demos/__init__.py:292
 msgid "ECMA Spec"
-msgstr ""
+msgstr "ECMA specifikation"
 
 #: kuma/demos/__init__.py:292
 msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
@@ -1586,7 +1614,7 @@ msgstr "http://www.w3.org/Mobile/"
 
 #: kuma/demos/__init__.py:327
 msgid "Offline Support"
-msgstr ""
+msgstr "Offline support"
 
 #: kuma/demos/__init__.py:328
 msgid ""
@@ -2076,7 +2104,7 @@ msgstr ""
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "Ja, jag är säker"
 
 #: kuma/demos/templates/demos/delete.html:10
 #: kuma/demos/templates/demos/detail.html:9
@@ -2127,7 +2155,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/delete.html:49
 msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
-msgstr ""
+msgstr "<button type=\"submit\" class=\"remove\"><span>Ta bort demo</span></button>"
 
 #: kuma/demos/templates/demos/detail.html:30
 #: kuma/demos/templates/demos/devderby_landing.html:22
@@ -2173,7 +2201,7 @@ msgstr "Föregående"
 #: kuma/demos/templates/demos/launch.html:84
 #, python-format
 msgid "Go to the next demo, %(demo_title)s"
-msgstr ""
+msgstr "Gå till nästa demo, %(demo_title)s"
 
 #: kuma/demos/templates/demos/detail.html:55
 #: kuma/demos/templates/demos/detail.html:69
@@ -2258,39 +2286,39 @@ msgid "Built using"
 msgstr "Byggt med hjälp av"
 
 #: kuma/demos/templates/demos/detail.html:156
-#, fuzzy, python-format
+#, python-format
 msgid "See more demos made with %(tag_title)s"
-msgstr "Se fler demon skapade med {tag_title}"
+msgstr "Se fler demon skapade med %(tag_title)s"
 
 #: kuma/demos/templates/demos/detail.html:165
 #: kuma/demos/templates/demos/elements/submission_thumb.html:15
 #, python-format
 msgid "This demo has been viewed %(num)s time"
 msgid_plural "This demo has been viewed %(num)s times"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Denna demo har visats %(num)s gång"
+msgstr[1] "Denna demo har visats %(num)s gånger"
 
 #: kuma/demos/templates/demos/detail.html:165
 #, python-format
 msgid "%(num)s view"
 msgid_plural "%(num)s views"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s visning"
+msgstr[1] "%(num)s visningar"
 
 #: kuma/demos/templates/demos/detail.html:166
 #: kuma/demos/templates/demos/elements/submission_thumb.html:16
-#, fuzzy, python-format
+#, python-format
 msgid "%(num)s person liked this demo"
 msgid_plural "%(num)s people liked this demo"
-msgstr[0] "Gillar du detta demo?"
-msgstr[1] "Gillar du detta demo?"
+msgstr[0] "%(num)s person gillar denna demo"
+msgstr[1] "%(num)s personer gillar denna demo"
 
 #: kuma/demos/templates/demos/detail.html:166
 #, python-format
 msgid "%(num)s like"
 msgid_plural "%(num)s likes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s som gillar"
+msgstr[1] "%(num)s som gillar"
 
 #: kuma/demos/templates/demos/detail.html:181
 msgid "Edit Demo"
@@ -2322,6 +2350,8 @@ msgid ""
 "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP "
 "File</span>"
 msgstr ""
+"Hämta källkodspaketet <span class=\"note\">%(file_ksize)s kB &middot; ZIP-"
+"fil</span>"
 
 #: kuma/demos/templates/demos/detail.html:217
 #, python-format
@@ -2550,9 +2580,9 @@ msgid "Search demos for \"%(query)s\""
 msgstr "Sök demon efter \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_search.html:33
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to a feed of search results for \"%(query)s\""
-msgstr "Sökresultat för \"{query}\""
+msgstr ""
 
 #: kuma/demos/templates/demos/listing_tag.html:4
 #, python-format
@@ -2561,9 +2591,9 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:13
 #: kuma/demos/templates/demos/submit.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Edit %(demo_title)s"
-msgstr "Redigera e-post"
+msgstr "Redigera %(demo_title)s"
 
 #: kuma/demos/templates/demos/submit.html:15
 #: kuma/demos/templates/demos/submit.html:55
@@ -2609,7 +2639,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:113
 msgid "We support YouTube and Vimeo"
-msgstr ""
+msgstr "Vi stödjer YouTube och Vimeo"
 
 #: kuma/demos/templates/demos/submit.html:114
 msgid ""
@@ -2620,7 +2650,7 @@ msgstr ""
 #: kuma/demos/templates/demos/submit.html:119
 #: kuma/demos/templates/demos/submit_noauth.html:48
 msgid "Preparing Your Demo"
-msgstr ""
+msgstr "Förbereder din demo"
 
 #: kuma/demos/templates/demos/submit.html:120
 #, python-format
@@ -2731,6 +2761,8 @@ msgid ""
 "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN "
 "profile</a></strong>.</p>"
 msgstr ""
+"<p>Om du vill skicka in din demo, behöver du en <strong><a "
+"href=\"%(signup_url)s\">MDN profil</a></strong>.</p>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:66
 msgid "Log In to Profile"
@@ -2774,7 +2806,7 @@ msgstr "Sök"
 #: kuma/demos/templates/demos/elements/user_link.html:2
 #, python-format
 msgid "See %(display_name)s's profile"
-msgstr ""
+msgstr "Visa %(display_name)s profil"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:6
 #, python-format
@@ -3266,9 +3298,9 @@ msgid "Search Mozilla Developer Network documentation"
 msgstr ""
 
 #: kuma/search/templates/search/results.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr "Sökresultat för \"{query}\""
+msgstr "Sökresultat för \"%(query)s\""
 
 #: kuma/search/templates/search/results.html:39
 #, python-format
@@ -3353,9 +3385,8 @@ msgid "Filter by"
 msgstr "Filtrera efter"
 
 #: kuma/spam/forms.py:17
-#, fuzzy
 msgid "The submitted data contains invalid content."
-msgstr "Detta innehåller olämpligt innehåll"
+msgstr ""
 
 #: kuma/spam/forms.py:33
 msgid "The form data has not yet been validated. Please try again."
@@ -3956,7 +3987,7 @@ msgstr ""
 #: kuma/users/templates/socialaccount/signup.html:4
 #: kuma/users/templates/socialaccount/signup.html:26
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "Skapa din MDN profil för att fortsätta"
 
 #: kuma/users/templates/socialaccount/signup.html:30
 #, python-format
@@ -4278,9 +4309,9 @@ msgid "Save Changes"
 msgstr "Spara ändringar"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:9
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s!"
-msgstr "Hej {username}!"
+msgstr "Hej %(username)s!"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
 #, python-format
@@ -4352,9 +4383,9 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:4
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s"
-msgstr "Hej {username}"
+msgstr "Hej %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:7
@@ -4425,9 +4456,9 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
-#, fuzzy, python-format
+#, python-format
 msgid "Blog: %(blog_link)s"
-msgstr "Blogg: {blog_link}"
+msgstr "Blogg: %(blog_link)s"
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
@@ -4784,9 +4815,8 @@ msgid "Slug"
 msgstr "Slugg"
 
 #: kuma/wiki/models.py:1840
-#, fuzzy
 msgid "Document (optional)"
-msgstr "MDN dokumentation"
+msgstr ""
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -4799,9 +4829,8 @@ msgstr ""
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
-#, fuzzy
 msgid "Purge documents"
-msgstr "Alla dokument"
+msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
@@ -4816,9 +4845,8 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
-#, fuzzy
 msgid "\"Load documents\""
-msgstr "Alla dokument"
+msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
@@ -4853,9 +4881,9 @@ msgid "Back to History"
 msgstr "Tillbaka till historik"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Delete Document | %(document)s"
-msgstr "Ta bort dokument | {document}"
+msgstr "Ta bort dokument | %(document)s"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -5203,19 +5231,19 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:5
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "last modified at %(modified)s"
-msgstr "senast ändrad"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Edit %(locale)s translation"
-msgstr "Lägg till översättning"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Move Article | %(document)s"
-msgstr "Alla dokument"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:20
 msgid ""
@@ -5269,9 +5297,9 @@ msgid "Parent Title"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:92
-#, fuzzy, python-format
+#, python-format
 msgid "Move %(count)s Pages"
-msgstr "Flytta {d} sidor"
+msgstr "Flytta %(count)s sidor"
 
 #: kuma/wiki/templates/wiki/move.html:92
 msgid "Move Page"
@@ -5325,9 +5353,9 @@ msgid "Revert to this revision"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/select_locale.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Select language | %(document)s"
-msgstr "Välj språk | {document}"
+msgstr "Välj språk | %(document)s"
 
 #: kuma/wiki/templates/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
@@ -5367,9 +5395,9 @@ msgid "Translate Content"
 msgstr "Översätt innehåll"
 
 #: kuma/wiki/templates/wiki/translate.html:83
-#, fuzzy, python-format
+#, python-format
 msgid "Approved %(locale)s version"
-msgstr "Lägg till översättning"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Rendered"
@@ -5390,9 +5418,9 @@ msgid "Hide %(locale)s"
 msgstr "Dölj %(locale)s"
 
 #: kuma/wiki/templates/wiki/translate.html:99
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s translation:"
-msgstr "Lägg till översättning"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:109
 msgid "Translate Tags"
@@ -5534,9 +5562,9 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:37
 #: kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(num)s:"
-msgstr "Revisionsslugg:"
+msgstr "Revision %(num)s:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:82
 #: kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
@@ -5576,24 +5604,24 @@ msgid "Updating subscription status"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:144
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to %(title)s"
-msgstr "Avbryt prenumeration"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:145
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "Avbryt prenumeration"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr "Avbryt prenumeration"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr "Avbryt prenumeration"
+msgstr "Du har avregistrerat från %(title)s."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:159
 #, python-format
@@ -6144,11 +6172,11 @@ msgstr "Återkoppling"
 
 #: templates/base.html:168
 msgid "Get Firefox help"
-msgstr ""
+msgstr "Få Firefox hjälp"
 
 #: templates/base.html:169
 msgid "Get web development help"
-msgstr ""
+msgstr "Få webbutvecklingshjälp"
 
 #: templates/base.html:172
 msgid "Join the MDN community"
