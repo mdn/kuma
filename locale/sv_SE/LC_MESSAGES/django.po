@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 17:41+0000\n"
+"PO-Revision-Date: 2015-11-21 18:13+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -3988,7 +3988,7 @@ msgstr ""
 #: kuma/users/templates/socialaccount/signup.html:4
 #: kuma/users/templates/socialaccount/signup.html:26
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "Skapa din MDN profil för att fortsätta"
 
 #: kuma/users/templates/socialaccount/signup.html:30
 #, python-format
