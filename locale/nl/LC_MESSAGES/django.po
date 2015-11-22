@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-15 14:08+0000\n"
+"PO-Revision-Date: 2015-11-22 11:07+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
 "Generated-By: Babel 2.0\n"
-"X-POOTLE-MTIME: 1447596530.0\n"
+"X-POOTLE-MTIME: 1448190479.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -46,9 +46,9 @@ msgstr "Het aangeleverde bestand is niet geldig. Het bestand moet een van deze t
 
 #. 'id' is the revision number, 'title' is the title of the document.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachment %(id)s | %(title)s"
-msgstr "Bijlage {id} | {title}"
+msgstr "Bijlage %(id)s | %(title)s"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:15
 msgid "Attachment Information"
@@ -79,9 +79,9 @@ msgid "MIME Type:"
 msgstr "MIME-type:"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:44
-#, fuzzy, python-format
+#, python-format
 msgid "%(bytes)s bytes"
-msgstr "%s bytes"
+msgstr "%(bytes)s bytes"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:48
 msgid "Is approved?"
@@ -211,9 +211,9 @@ msgid "View key usage history"
 msgstr "Geschiedenis van sleutelgebruik weergeven"
 
 #: kuma/authkeys/templates/authkeys/list.html:26
-#, fuzzy, python-format
+#, python-format
 msgid "History (%(count)s)"
-msgstr "Geschiedenis ({count})"
+msgstr "Geschiedenis (%(count)s)"
 
 #: kuma/authkeys/templates/authkeys/list.html:35
 #, python-format
@@ -1840,9 +1840,9 @@ msgstr "Ja, ik weet het zeker"
 #: kuma/demos/templates/demos/delete.html:10 kuma/demos/templates/demos/detail.html:9 kuma/demos/templates/demos/devderby_tag.html:5 kuma/demos/templates/demos/flag.html:10
 #: kuma/demos/templates/demos/launch.html:6 kuma/demos/templates/demos/listing_all.html:4 kuma/demos/templates/demos/listing_search.html:9 kuma/demos/templates/demos/listing_tag.html:4
 #: kuma/demos/templates/demos/submit.html:13 kuma/demos/templates/demos/submit.html:15 kuma/demos/templates/demos/submit_noauth.html:11 kuma/demos/templates/demos/terms.html:10
-#, fuzzy, python-format
+#, python-format
 msgid "%(subtitle)s | Demo Studio"
-msgstr "{subtitle} | Demo Studio"
+msgstr "%(subtitle)s | Demo Studio"
 
 #: kuma/demos/templates/demos/delete.html:20
 msgid "MDN"
@@ -1894,18 +1894,18 @@ msgstr ""
 "documentatie om meer over de open standaarden en technologieën achter het web te leren.</li> </ul>"
 
 #: kuma/demos/templates/demos/detail.html:51 kuma/demos/templates/demos/launch.html:80
-#, fuzzy, python-format
+#, python-format
 msgid "Go to the previous demo, %(demo_title)s"
-msgstr "Naar de vorige demo, {demo_title}"
+msgstr "Naar de vorige demo, %(demo_title)s"
 
 #: kuma/demos/templates/demos/detail.html:51
 msgid "Prev"
 msgstr "Vorige"
 
 #: kuma/demos/templates/demos/detail.html:55 kuma/demos/templates/demos/launch.html:84
-#, fuzzy, python-format
+#, python-format
 msgid "Go to the next demo, %(demo_title)s"
-msgstr "Naar de volgende demo, {demo_title}"
+msgstr "Naar de volgende demo, %(demo_title)s"
 
 #: kuma/demos/templates/demos/detail.html:55 kuma/demos/templates/demos/detail.html:69 kuma/demos/templates/demos/home.html:47 kuma/demos/templates/demos/launch.html:84
 #: kuma/demos/templates/demos/elements/submission_listing.html:64 kuma/search/templates/search/results.html:159 templates/includes/paginator.html:30
@@ -1976,37 +1976,37 @@ msgid "Built using"
 msgstr "Gebouwd met behulp van"
 
 #: kuma/demos/templates/demos/detail.html:156
-#, fuzzy, python-format
+#, python-format
 msgid "See more demos made with %(tag_title)s"
-msgstr "Bekijk meer demo’s gemaakt met {tag_title}"
+msgstr "Bekijk meer demo’s gemaakt met %(tag_title)s"
 
 #: kuma/demos/templates/demos/detail.html:165 kuma/demos/templates/demos/elements/submission_thumb.html:15
-#, fuzzy, python-format
+#, python-format
 msgid "This demo has been viewed %(num)s time"
 msgid_plural "This demo has been viewed %(num)s times"
-msgstr[0] "Deze demo is {count} keer bekeken"
-msgstr[1] "Deze demo is {count} keer bekeken"
+msgstr[0] "Deze demo is %(num)s keer bekeken"
+msgstr[1] "Deze demo is %(num)s keer bekeken"
 
 #: kuma/demos/templates/demos/detail.html:165
 #, python-format
 msgid "%(num)s view"
 msgid_plural "%(num)s views"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s weergave"
+msgstr[1] "%(num)s weergaven"
 
 #: kuma/demos/templates/demos/detail.html:166 kuma/demos/templates/demos/elements/submission_thumb.html:16
-#, fuzzy, python-format
+#, python-format
 msgid "%(num)s person liked this demo"
 msgid_plural "%(num)s people liked this demo"
-msgstr[0] "{count} persoon beviel deze demo"
-msgstr[1] "{count} mensen beviel deze demo"
+msgstr[0] "%(num)s persoon beviel deze demo"
+msgstr[1] "%(num)s personen beviel deze demo"
 
 #: kuma/demos/templates/demos/detail.html:166
 #, python-format
 msgid "%(num)s like"
 msgid_plural "%(num)s likes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s like"
+msgstr[1] "%(num)s likes"
 
 #: kuma/demos/templates/demos/detail.html:181
 msgid "Edit Demo"
@@ -2044,9 +2044,9 @@ msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> licens
 msgstr "Deze demo is uitgebracht onder de <a href=\"%(link)s\">%(title)s</a>-licentie."
 
 #: kuma/demos/templates/demos/detail.html:225
-#, fuzzy, python-format
+#, python-format
 msgid "More by %(creator)s"
-msgstr "Meer van {creator}"
+msgstr "Meer van %(creator)s"
 
 #: kuma/demos/templates/demos/detail.html:237 kuma/demos/templates/demos/launch.html:63
 msgid "Report a Problem"
@@ -2111,9 +2111,9 @@ msgid "Articles"
 msgstr "Artikelen"
 
 #: kuma/demos/templates/demos/devderby_tag.html:8 kuma/demos/templates/demos/listing_tag.html:7
-#, fuzzy, python-format
+#, python-format
 msgid "Demos tagged %(tag)s"
-msgstr "Demo's met label {tag}"
+msgstr "Demo's met label %(tag)s"
 
 #: kuma/demos/templates/demos/devderby_tag.html:22
 msgid "Challenges"
@@ -2136,9 +2136,9 @@ msgid "Submissions"
 msgstr "Inzendingen"
 
 #: kuma/demos/templates/demos/devderby_tag.html:55 kuma/demos/templates/demos/home.html:136 kuma/demos/templates/demos/listing_tag.html:51
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to a feed of %(tag_title)s demos"
-msgstr "Abonneren op een feed van {tag_title}-demo’s"
+msgstr "Abonneren op een feed van %(tag_title)s-demo’s"
 
 # 100%
 #: kuma/demos/templates/demos/feed_item_description.html:7
@@ -2239,34 +2239,34 @@ msgid "Subscribe to a feed of all demos"
 msgstr "Abonneren op een feed van alle demo’s"
 
 #: kuma/demos/templates/demos/listing_search.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Search for \"%(query)s\""
-msgstr "Zoeken naar ‘{query}’"
+msgstr "Zoeken naar ‘%(query)s’"
 
 #: kuma/demos/templates/demos/listing_search.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search results for \"%(query)s\""
-msgstr "Zoekresultaten voor ‘{query}’"
+msgstr "Zoekresultaten voor ‘%(query)s’"
 
 #: kuma/demos/templates/demos/listing_search.html:27
-#, fuzzy, python-format
+#, python-format
 msgid "Search demos for \"%(query)s\""
-msgstr "Zoeken in demo’s naar ‘{query}’"
+msgstr "Zoeken in demo’s naar ‘%(query)s’"
 
 #: kuma/demos/templates/demos/listing_search.html:33
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to a feed of search results for \"%(query)s\""
-msgstr "Abonneren op een feed van zoekresultaten voor ‘{query}’"
+msgstr "Abonneren op een feed van zoekresultaten voor ‘%(query)s’"
 
 #: kuma/demos/templates/demos/listing_tag.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "%(tag_title)s Demos"
-msgstr "{tag_title}-demo’s"
+msgstr "%(tag_title)s-demo’s"
 
 #: kuma/demos/templates/demos/submit.html:13 kuma/demos/templates/demos/submit.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Edit %(demo_title)s"
-msgstr "{demo_title} bewerken"
+msgstr "%(demo_title)s bewerken"
 
 # 76%
 # 100%
@@ -2462,8 +2462,8 @@ msgstr "Profiel van %(display_name)s bekijken"
 #, python-format
 msgid "%(num)s Demo"
 msgid_plural "%(num)s Demos"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s demo"
+msgstr[1] "%(num)s demo’s"
 
 # 75%
 #: kuma/demos/templates/demos/elements/submission_listing.html:9
@@ -2546,9 +2546,9 @@ msgid "Feed"
 msgstr "Feed"
 
 #: kuma/demos/templates/demos/elements/submission_thumb.html:23
-#, fuzzy, python-format
+#, python-format
 msgid "Launch %(title)s"
-msgstr "{title} starten"
+msgstr "%(title)s starten"
 
 #: kuma/landing/templates/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
@@ -2907,9 +2907,9 @@ msgid "Search Mozilla Developer Network documentation"
 msgstr "Mozilla Developer Network-documentatie doorzoeken"
 
 #: kuma/search/templates/search/results.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr "Zoekresultaten voor ‘{query}’"
+msgstr "Zoekresultaten voor ‘%(query)s’"
 
 #: kuma/search/templates/search/results.html:39
 #, python-format
@@ -3268,9 +3268,9 @@ msgid "Email addresses"
 msgstr "E-mailadressen"
 
 #: kuma/users/templates/account/email.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr "{email} is uw <em>primaire</em> e-mailadres"
+msgstr "%(email)s is uw <em>primaire</em> e-mailadres"
 
 #: kuma/users/templates/account/email.html:15
 msgid "You've also added the following email addresses:"
@@ -3569,13 +3569,15 @@ msgstr ""
 "ermee.</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:155
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
 "\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Welk e-mailadres moeten we gebruiken om u MDN-gerelateerde berichten en meldingen te sturen? Dit adres zal <strong>niet</strong> op MDN worden weergegeven en zal worden gebruikt volgens ons <a href="
-"\"{privacy_url}\">privacybeleid</a>."
+"Welk e-mailadres moeten we gebruiken om u MDN-gerelateerde berichten en "
+"meldingen te sturen? Dit adres zal <strong>niet</strong> op MDN worden "
+"weergegeven en zal worden gebruikt volgens ons <a href=\"%"
+"(privacy_url)s\">privacybeleid</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:170
 #, python-format
@@ -3657,9 +3659,9 @@ msgid "Member since %(date_joined)s"
 msgstr "Lid sinds %(date_joined)s"
 
 #: kuma/users/templates/users/user_detail.html:159
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to a feed of %(display_name)s's demos"
-msgstr "Abonneren op een feed van demo’s van {display_name}"
+msgstr "Abonneren op een feed van demo’s van %(display_name)s"
 
 #: kuma/users/templates/users/user_detail.html:167
 msgid "No Demos"
@@ -3787,9 +3789,9 @@ msgid "Save Changes"
 msgstr "Wijzigingen opslaan"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:9
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s!"
-msgstr "Hallo {username}!"
+msgstr "Hallo %(username)s!"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
 #, python-format
@@ -3845,9 +3847,9 @@ msgstr "Wees niet verlegen, als u twijfels, problemen of vragen hebt, neem dan c
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:4
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s"
-msgstr "Hallo {username}"
+msgstr "Hallo %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:7
@@ -3885,9 +3887,9 @@ msgstr "Wilt u MDN naar uw taal vertalen?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:33
-#, fuzzy, python-format
+#, python-format
 msgid "Mailing list: %(list_link)s"
-msgstr "Mailinglijst: {list_link}"
+msgstr "Mailinglijst: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
@@ -3901,9 +3903,9 @@ msgstr "Real-time-chat: kanaal #mdn op irc.mozilla.org"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:42
-#, fuzzy, python-format
+#, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr "Zie {irc_link} voor meer info over IRC."
+msgstr "Zie %(irc_link)s voor meer info over IRC."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:45
@@ -3916,9 +3918,9 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
-#, fuzzy, python-format
+#, python-format
 msgid "Blog: %(blog_link)s"
-msgstr "Blog: {blog_link}"
+msgstr "Blog: %(blog_link)s"
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
@@ -4299,9 +4301,9 @@ msgid "Load"
 msgstr "Laden"
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr "Revisies vergelijken | {document}"
+msgstr "Revisies vergelijken | %(document)s"
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
@@ -4312,9 +4314,9 @@ msgid "Back to History"
 msgstr "Terug naar Geschiedenis"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Delete Document | %(document)s"
-msgstr "Document verwijderen | {document}"
+msgstr "Document verwijderen | %(document)s"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -4345,9 +4347,9 @@ msgid "Are you sure you want to continue?"
 msgstr "Weet u zeker dat u wilt doorgaan?"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revert Revision | %(document)s"
-msgstr "Revisie terugzetten | {document}"
+msgstr "Revisie terugzetten | %(document)s"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
@@ -4371,7 +4373,7 @@ msgstr "U gaat het document naar deze revisie terugzetten. Klik op ‘Terugzette
 
 #: kuma/wiki/templates/wiki/create.html:6
 msgid "Create a New Template"
-msgstr "Een nieuwe sjabloon maken"
+msgstr "Een nieuwe sjabloon aanmaken"
 
 #: kuma/wiki/templates/wiki/create.html:8
 msgid "Create a New Article"
@@ -4539,14 +4541,14 @@ msgid "Hide Sidebar"
 msgstr "Zijbalk verbergen"
 
 #: kuma/wiki/templates/wiki/edit.html:6
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Template"
-msgstr "Sjabloon bewerken"
+msgstr "%(title)s | Sjabloon bewerken"
 
 #: kuma/wiki/templates/wiki/edit.html:8
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Article"
-msgstr "Artikel bewerken"
+msgstr "%(title)s | Artikel bewerken"
 
 #: kuma/wiki/templates/wiki/edit.html:31
 msgid ""
@@ -4561,9 +4563,10 @@ msgid "Your Changes"
 msgstr "Uw wijzigingen"
 
 #: kuma/wiki/templates/wiki/edit.html:43 kuma/wiki/templates/wiki/edit.html:55 kuma/wiki/templates/wiki/includes/document_macros.html:42 kuma/wiki/templates/wiki/includes/document_macros.html:58
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr "Revisie {id} door <a href=\"{user_profile_url}\">{user}</a> op {date}"
+msgstr ""
+"Revisie %(id)s door <a href=\"%(user_profile_url)s\">%(user)s</a> op %(date)s"
 
 #: kuma/wiki/templates/wiki/edit.html:51
 msgid "Current Revision:"
@@ -4643,9 +4646,9 @@ msgid "Edit %(locale)s translation"
 msgstr "Vertaling naar het %(locale)s bewerken"
 
 #: kuma/wiki/templates/wiki/move.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Move Article | %(document)s"
-msgstr "Artikel verplaatsen | {document}"
+msgstr "Artikel verplaatsen | %(document)s"
 
 #: kuma/wiki/templates/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
@@ -4692,18 +4695,18 @@ msgid "Parent Title"
 msgstr "Bovenliggende titel"
 
 #: kuma/wiki/templates/wiki/move.html:92
-#, fuzzy, python-format
+#, python-format
 msgid "Move %(count)s Pages"
-msgstr "{count} pagina’s verplaatsen"
+msgstr "%(count)s pagina’s verplaatsen"
 
 #: kuma/wiki/templates/wiki/move.html:92
 msgid "Move Page"
 msgstr "Pagina verplaatsen"
 
 #: kuma/wiki/templates/wiki/move.html:97
-#, fuzzy, python-format
+#, python-format
 msgid "The following %(count)s subpages will be affected by this move:"
-msgstr "Deze verplaatsing heeft invloed op de volgende {count} subpagina’s:"
+msgstr "Deze verplaatsing heeft invloed op de volgende %(count)s subpagina’s:"
 
 #: kuma/wiki/templates/wiki/move.html:104
 msgid "No other documents will be affected by this change."
@@ -4725,9 +4728,9 @@ msgid "This is a preview of an unsaved document."
 msgstr "Dit is een voorbeeld van een niet-opgeslagen document."
 
 #: kuma/wiki/templates/wiki/revision.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(id)s | %(title)s | %(category)s"
-msgstr "Revisie {id} | {title} | {category}"
+msgstr "Revisie %(id)s | %(title)s | %(category)s"
 
 #: kuma/wiki/templates/wiki/revision.html:13
 msgid "Revision Information"
@@ -4746,9 +4749,9 @@ msgid "Revert to this revision"
 msgstr "Deze revisie terugzetten"
 
 #: kuma/wiki/templates/wiki/select_locale.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Select language | %(document)s"
-msgstr "Taal selecteren | {document}"
+msgstr "Taal selecteren | %(document)s"
 
 #: kuma/wiki/templates/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
@@ -4773,23 +4776,23 @@ msgstr ""
 "&middot; <a href=\"//github.com/mozilla/kuma\">Bijdragen aan de code</a> &middot; <a href=\"//www.mozilla.org/privacy\">Privacybeleid</a>"
 
 #: kuma/wiki/templates/wiki/translate.html:7
-#, fuzzy, python-format
+#, python-format
 msgid "Translate Article | %(document)s"
-msgstr "Artikel vertalen | {document}"
+msgstr "Artikel vertalen | %(document)s"
 
 #: kuma/wiki/templates/wiki/translate.html:33
-#, fuzzy, python-format
+#, python-format
 msgid "Translating article to %(locale)s"
-msgstr "Artikel vertalen naar het {locale}"
+msgstr "Artikel vertalen naar het %(locale)s"
 
 #: kuma/wiki/templates/wiki/translate.html:43
 msgid "Translate Content"
 msgstr "Inhoud vertalen"
 
 #: kuma/wiki/templates/wiki/translate.html:83
-#, fuzzy, python-format
+#, python-format
 msgid "Approved %(locale)s version"
-msgstr "Goedgekeurde versie voor {locale}"
+msgstr "Goedgekeurde versie voor %(locale)s"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Rendered"
@@ -4800,19 +4803,19 @@ msgid "View Source"
 msgstr "Bron weergeven"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Show %(locale)s"
-msgstr "{locale} tonen"
+msgstr "%(locale)s tonen"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Hide %(locale)s"
-msgstr "{locale} verbergen"
+msgstr "%(locale)s verbergen"
 
 #: kuma/wiki/templates/wiki/translate.html:99
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s translation:"
-msgstr "Vertaling naar het %(locale)s bewerken"
+msgstr "%(locale)se vertaling:"
 
 #: kuma/wiki/templates/wiki/translate.html:109
 msgid "Translate Tags"
@@ -4827,9 +4830,9 @@ msgid "This document has no tags."
 msgstr "Dit document heeft geen labels."
 
 #: kuma/wiki/templates/wiki/translate.html:137
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s tags"
-msgstr "{locale}e labels"
+msgstr "%(locale)se labels"
 
 #: kuma/wiki/templates/wiki/translate.html:144
 msgid "Version Notes"
@@ -4868,14 +4871,15 @@ msgid "Article History:"
 msgstr "Artikelgeschiedenis:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:40
-#, fuzzy, python-format
+#, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
-msgstr "U bent nu geabonneerd op bewerkingen van {title} en alle sub-artikelen ervan."
+msgstr ""
+"U bent geabonneerd op bewerkingen van %(title)s en alle sub-artikelen ervan."
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:44
-#, fuzzy, python-format
+#, python-format
 msgid "You are subscribed to edits on: %(title)s."
-msgstr "U bent geabonneerd op bewerkingen van {title}."
+msgstr "U bent geabonneerd op bewerkingen van %(title)s."
 
 #: kuma/wiki/templates/wiki/includes/approvals.html:5
 msgid "The following reviews have been requested:"
@@ -4954,9 +4958,9 @@ msgid "Change Revisions"
 msgstr "Revisies wijzigen"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:37 kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(num)s:"
-msgstr "Revisie {num}:"
+msgstr "Revisie %(num)s:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:82 kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
@@ -4971,14 +4975,14 @@ msgid "Google+"
 msgstr "Google+"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:128
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr "U bent nu geabonneerd op dit artikel en alle sub-artikelen ervan."
+msgstr "Abonneren op %(title)s en alle sub-artikelen ervan"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:129
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr "U bent afgemeld voor dit artikel en alle sub-artikelen ervan."
+msgstr "Afmelden voor %(title)s en alle sub-artikelen ervan"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:132
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -4993,44 +4997,44 @@ msgid "Updating subscription status"
 msgstr "Abonnementsstatus bijwerken"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:144
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to %(title)s"
-msgstr "Abonneren op {title}"
+msgstr "Abonneren op %(title)s"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:145
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "Afmelden voor {title}"
+msgstr "Afmelden voor %(title)s"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr "U bent nu geabonneerd op {title}."
+msgstr "U bent nu geabonneerd op %(title)s."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr "U bent afgemeld voor {title}."
+msgstr "U bent afgemeld voor %(title)s."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:159
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
-msgstr "Abonneren op versie in het <bdi>{language}</bdi>"
+msgstr "Abonneren op versie in het <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:160
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr "Afmelden voor versie in het <bdi>{language}</bdi>"
+msgstr "Afmelden voor versie in het <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:163
-#, fuzzy, python-format
+#, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
-msgstr "U bent nu geabonneerd op de versie in het {language} van dit artikel."
+msgstr "U bent nu geabonneerd op de versie in het %(language)s van dit artikel."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:163
-#, fuzzy, python-format
+#, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
-msgstr "U bent nu afgemeld voor de versie in het {language}van dit artikel."
+msgstr "U bent nu afgemeld voor de versie in het %(language)s van dit artikel."
 
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2 kuma/wiki/templates/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
@@ -5108,7 +5112,7 @@ msgstr "Nieuwe pagina"
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr "Wijzigingen verwerpen en een nieuw document maken?"
+msgstr "Wijzigingen verwerpen en een nieuw document aanmaken?"
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:23
 msgid "Save and Keep Editing"
@@ -5153,41 +5157,41 @@ msgid "Translate Description"
 msgstr "Beschrijving vertalen"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:15
-#, fuzzy, python-format
+#, python-format
 msgid "Title in %(locale)s:"
-msgstr "Titel in het {locale}:"
+msgstr "Titel in het %(locale)s:"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:26
-#, fuzzy, python-format
+#, python-format
 msgid "Slug in %(locale)s:"
-msgstr "Identificator in het {locale}:"
+msgstr "Identificator in het %(locale)s:"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save Changes."
 msgstr "Zoek de bron van de vertaling via het bovenstaande zoekveld en klik daarna op ‘Wijzigingen opslaan’."
 
 #: kuma/wiki/templates/wiki/list/documents.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
-msgstr[0] "%(count)s document gevonden."
-msgstr[1] "%(count)s documenten gevonden."
+msgstr[0] "%(num)s document gevonden."
+msgstr[1] "%(num)s documenten gevonden."
 
 #: kuma/wiki/templates/wiki/list/documents.html:6
-#, fuzzy, python-format
+#, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr "Artikelen met het label {tag}"
+msgstr "Artikelen met het label %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/documents.html:8
 msgid "All templates"
 msgstr "Alle sjablonen"
 
 #: kuma/wiki/templates/wiki/list/documents.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] "{count} sjablonen gevonden."
-msgstr[1] "{count} sjablonen gevonden."
+msgstr[0] "%(num)s sjabloon gevonden."
+msgstr[1] "%(num)s sjablonen gevonden."
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
 msgid "Documents with errors"
@@ -5214,32 +5218,32 @@ msgid "There are no articles."
 msgstr "Er zijn geen artikelen."
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Documents for %(tag)s review"
-msgstr "Documenten voor beoordeling met {tag}"
+msgstr "Documenten voor beoordeling met %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:7
 msgid "Documents for review"
 msgstr "Documenten voor beoordeling"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:12
-#, fuzzy, python-format
+#, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr "Artikelen voor beoordeling met het label {tag}"
+msgstr "Artikelen voor beoordeling met het label %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
 msgstr "Alle artikelen voor beoordeling"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:23
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(count)s documents."
-msgstr "%(count)s document gevonden."
+msgstr "%(count)s documenten gevonden."
 
 #: kuma/wiki/templates/wiki/list/revisions.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revision History | %(document)s"
-msgstr "Revisiegeschiedenis | {document}"
+msgstr "Revisiegeschiedenis | %(document)s"
 
 #: kuma/wiki/templates/wiki/list/revisions.html:14
 msgid "History of"
@@ -5270,9 +5274,9 @@ msgid "There are no tags."
 msgstr "Er zijn geen labels."
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr "Vertaalde artikelen met het label {tag}"
+msgstr "Vertaalde artikelen met het label %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
