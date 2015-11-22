@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 22:04+0000\n"
+"PO-Revision-Date: 2015-11-22 16:50+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -4844,14 +4844,12 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/templates/wiki/create.html:6
-#, fuzzy
 msgid "Create a New Template"
-msgstr "Vytvořit nový klíč"
+msgstr "Vytvořit novou šablonu"
 
 #: kuma/wiki/templates/wiki/create.html:8
-#, fuzzy
 msgid "Create a New Article"
-msgstr "Vytvořit nový klíč"
+msgstr "Vytvořit nový článek"
 
 #: kuma/wiki/templates/wiki/create.html:34
 msgid "Create a"
@@ -5465,9 +5463,9 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:37
 #: kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(num)s:"
-msgstr "ID revize:"
+msgstr "Revize %(num)s:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:82
 #: kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
