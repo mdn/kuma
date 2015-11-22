@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 18:13+0000\n"
+"PO-Revision-Date: 2015-11-22 09:09+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -1529,7 +1529,7 @@ msgstr "http://en.wikipedia.org/wiki/JavaScript"
 
 #: kuma/demos/__init__.py:292
 msgid "ECMA Spec"
-msgstr ""
+msgstr "ECMA specifikation"
 
 #: kuma/demos/__init__.py:292
 msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
@@ -2580,9 +2580,9 @@ msgid "Search demos for \"%(query)s\""
 msgstr "Sök demon efter \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_search.html:33
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to a feed of search results for \"%(query)s\""
-msgstr "Sökresultat för \"{query}\""
+msgstr ""
 
 #: kuma/demos/templates/demos/listing_tag.html:4
 #, python-format
@@ -2591,9 +2591,9 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:13
 #: kuma/demos/templates/demos/submit.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Edit %(demo_title)s"
-msgstr "Redigera e-post"
+msgstr "Redigera %(demo_title)s"
 
 #: kuma/demos/templates/demos/submit.html:15
 #: kuma/demos/templates/demos/submit.html:55
@@ -2639,7 +2639,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:113
 msgid "We support YouTube and Vimeo"
-msgstr ""
+msgstr "Vi stödjer YouTube och Vimeo"
 
 #: kuma/demos/templates/demos/submit.html:114
 msgid ""
@@ -2650,7 +2650,7 @@ msgstr ""
 #: kuma/demos/templates/demos/submit.html:119
 #: kuma/demos/templates/demos/submit_noauth.html:48
 msgid "Preparing Your Demo"
-msgstr ""
+msgstr "Förbereder din demo"
 
 #: kuma/demos/templates/demos/submit.html:120
 #, python-format
@@ -3298,9 +3298,9 @@ msgid "Search Mozilla Developer Network documentation"
 msgstr ""
 
 #: kuma/search/templates/search/results.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr "Sökresultat för \"{query}\""
+msgstr "Sökresultat för \"%(query)s\""
 
 #: kuma/search/templates/search/results.html:39
 #, python-format
@@ -3385,9 +3385,8 @@ msgid "Filter by"
 msgstr "Filtrera efter"
 
 #: kuma/spam/forms.py:17
-#, fuzzy
 msgid "The submitted data contains invalid content."
-msgstr "Detta innehåller olämpligt innehåll"
+msgstr ""
 
 #: kuma/spam/forms.py:33
 msgid "The form data has not yet been validated. Please try again."
@@ -4310,9 +4309,9 @@ msgid "Save Changes"
 msgstr "Spara ändringar"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:9
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s!"
-msgstr "Hej {username}!"
+msgstr "Hej %(username)s!"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
 #, python-format
@@ -4384,9 +4383,9 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:4
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s"
-msgstr "Hej {username}"
+msgstr "Hej %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:7
@@ -4457,9 +4456,9 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
-#, fuzzy, python-format
+#, python-format
 msgid "Blog: %(blog_link)s"
-msgstr "Blogg: {blog_link}"
+msgstr "Blogg: %(blog_link)s"
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
@@ -4816,9 +4815,8 @@ msgid "Slug"
 msgstr "Slugg"
 
 #: kuma/wiki/models.py:1840
-#, fuzzy
 msgid "Document (optional)"
-msgstr "MDN dokumentation"
+msgstr ""
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -4831,9 +4829,8 @@ msgstr ""
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
-#, fuzzy
 msgid "Purge documents"
-msgstr "Alla dokument"
+msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
@@ -4848,9 +4845,8 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
-#, fuzzy
 msgid "\"Load documents\""
-msgstr "Alla dokument"
+msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
@@ -4885,9 +4881,9 @@ msgid "Back to History"
 msgstr "Tillbaka till historik"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Delete Document | %(document)s"
-msgstr "Ta bort dokument | {document}"
+msgstr "Ta bort dokument | %(document)s"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -5235,19 +5231,19 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:5
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "last modified at %(modified)s"
-msgstr "senast ändrad"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Edit %(locale)s translation"
-msgstr "Lägg till översättning"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Move Article | %(document)s"
-msgstr "Alla dokument"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:20
 msgid ""
@@ -5301,9 +5297,9 @@ msgid "Parent Title"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/move.html:92
-#, fuzzy, python-format
+#, python-format
 msgid "Move %(count)s Pages"
-msgstr "Flytta {d} sidor"
+msgstr "Flytta %(count)s sidor"
 
 #: kuma/wiki/templates/wiki/move.html:92
 msgid "Move Page"
@@ -5357,9 +5353,9 @@ msgid "Revert to this revision"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/select_locale.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Select language | %(document)s"
-msgstr "Välj språk | {document}"
+msgstr "Välj språk | %(document)s"
 
 #: kuma/wiki/templates/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
@@ -5399,9 +5395,9 @@ msgid "Translate Content"
 msgstr "Översätt innehåll"
 
 #: kuma/wiki/templates/wiki/translate.html:83
-#, fuzzy, python-format
+#, python-format
 msgid "Approved %(locale)s version"
-msgstr "Lägg till översättning"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Rendered"
@@ -5422,9 +5418,9 @@ msgid "Hide %(locale)s"
 msgstr "Dölj %(locale)s"
 
 #: kuma/wiki/templates/wiki/translate.html:99
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s translation:"
-msgstr "Lägg till översättning"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:109
 msgid "Translate Tags"
@@ -5566,9 +5562,9 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:37
 #: kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(num)s:"
-msgstr "Revisionsslugg:"
+msgstr "Revision %(num)s:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:82
 #: kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
@@ -5608,24 +5604,24 @@ msgid "Updating subscription status"
 msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:144
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to %(title)s"
-msgstr "Avbryt prenumeration"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:145
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "Avbryt prenumeration"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr "Avbryt prenumeration"
+msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr "Avbryt prenumeration"
+msgstr "Du har avregistrerat från %(title)s."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:159
 #, python-format
