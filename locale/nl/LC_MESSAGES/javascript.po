@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-22 11:03+0000\n"
+"PO-Revision-Date: 2015-11-22 11:34+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
 "Generated-By: Babel 2.0\n"
-"X-POOTLE-MTIME: 1448190221.0\n"
+"X-POOTLE-MTIME: 1448192078.0\n"
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
@@ -132,7 +132,10 @@ msgid "Show old table."
 msgstr "Oude tabel tonen"
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+msgid ""
+"You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the "
+"draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+"draft</a>."
 msgstr ""
 "U hebt een onverwerkt concept. <a href=\"\" class=\"restoreLink\">Zet de inhoud "
 "van het concept terug</a> of <a href=\"\" class=\"discardLink\">verwijder het "
@@ -172,7 +175,8 @@ msgstr "Selecteer een bijlage"
 msgid "No attachments available"
 msgstr "Geen bijlagen beschikbaar"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Bijlagen"
 
@@ -192,7 +196,8 @@ msgstr "Een omleiding maken"
 msgid "MDN Redirect"
 msgstr "MDN-omleiding"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Document"
 
@@ -258,7 +263,7 @@ msgstr "Geen markering"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:27
 msgid "Embed YouTube Video"
-msgstr "YouTube-video insluiten"
+msgstr "YouTube-video inbedden"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:28
 msgid "Locate a YouTube Video"
