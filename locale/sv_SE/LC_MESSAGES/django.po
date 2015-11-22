@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-22 11:38+0000\n"
+"PO-Revision-Date: 2015-11-22 13:25+0000\n"
 "Last-Translator: az@kth.se <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -1420,6 +1420,8 @@ msgid ""
 "Media queries and orientation events let authors adjust their layout on "
 "hand-held devices such as mobile phones."
 msgstr ""
+"Medie förfrågningar och orienteringshändelser låter skaparen anpassa sin "
+"layout på handhållna enheter som mobiltelefoner."
 
 #: kuma/demos/__init__.py:252
 msgid ""
@@ -1440,6 +1442,8 @@ msgid ""
 "The File API allows web developers to use file objects in web applications, "
 "as well as selecting and accessing their data."
 msgstr ""
+"Fil API gör att webbutvecklare kan använda filobjekt i webbapplikationer, "
+"liksom att välja och få tillgång till sina uppgifter."
 
 #: kuma/demos/__init__.py:259
 msgid ""
@@ -1461,6 +1465,9 @@ msgid ""
 "typography like embedding own fonts via @font-face or controlling OpenType "
 "font features directly via CSS."
 msgstr ""
+"CSS3-teckensnitt specifikation innehåller förbättrade funktioner för "
+"teckensnitt och typografi som att bädda in egna typsnitt via @font-face "
+"eller kontrollera Opentype-teckensnitt funktioner direkt via CSS."
 
 #: kuma/demos/__init__.py:266
 msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
@@ -1484,6 +1491,9 @@ msgid ""
 "mark-up than HTML4 and remove a great deal of the need for tedious scripting"
 " and styling that was required in HTML4."
 msgstr ""
+"Formulärelement och attribut i HTML5 ge en högre grad av semantisk "
+"uppmärkning än HTML4 och ta bort en stor del av behovet av tråkiga skript "
+"och styling som krävdes i HTML4."
 
 #: kuma/demos/__init__.py:274
 msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
@@ -1502,6 +1512,8 @@ msgid ""
 "The Geolocation API allows web applications to access the user's "
 "geographical location."
 msgstr ""
+"Geolokalisering API tillåter webbapplikationer att komma åt användarens "
+"geografiska läge."
 
 #: kuma/demos/__init__.py:282
 msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
@@ -1521,6 +1533,9 @@ msgid ""
 "used for scripting interactive behavior on web pages and in web "
 "applications."
 msgstr ""
+"JavaScript är en lätt, objektorienterat programmeringsspråk, som vanligen "
+"används för skript interaktivt beteende på webbsidor och i "
+"webbapplikationer."
 
 #: kuma/demos/__init__.py:290
 msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
@@ -1547,6 +1562,8 @@ msgid ""
 "HTML5 is the newest version of the HTML standard, currently under "
 "development."
 msgstr ""
+"HTML5 är den senaste versionen av HTML-standarden, som för närvarande är "
+"under utveckling."
 
 #: kuma/demos/__init__.py:298
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
@@ -1566,6 +1583,8 @@ msgid ""
 "structured data and for high performance searches on this data using "
 "indexes."
 msgstr ""
+"IndexedDB är ett API för klientsidans lagring av stora mängder strukturerade"
+" data och för högpresterande sökningar på dessa data med hjälp av index."
 
 #: kuma/demos/__init__.py:306
 msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
@@ -1584,6 +1603,8 @@ msgid ""
 "Drag and Drop features allow the user to move elements on the screen using "
 "the mouse pointer."
 msgstr ""
+"Dra och släpp-funktioner tillåter användaren att flytta element på skärmen "
+"med muspekaren."
 
 #: kuma/demos/__init__.py:314
 msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
@@ -1602,6 +1623,8 @@ msgid ""
 "Firefox Mobile brings the true Web experience to mobile phones and other "
 "non-PC devices."
 msgstr ""
+"Firefox Mobil ger den sanna webbupplevelse till mobiltelefoner och andra "
+"icke-PC-enheter."
 
 #: kuma/demos/__init__.py:322
 msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
@@ -1624,6 +1647,8 @@ msgid ""
 "Offline caching of web applications' resources using the application cache "
 "and local storage."
 msgstr ""
+"Offline cachning av webbapplikationers resurser med hjälp av programcache "
+"och lokal lagring."
 
 #: kuma/demos/__init__.py:330
 msgid ""
@@ -1644,6 +1669,8 @@ msgid ""
 "Scalable Vector Graphics (SVG) is an XML based language for describing two-"
 "dimensional vector graphics."
 msgstr ""
+"Scalable Vector Graphics (SVG) är ett XML-baserat språk för att beskriva "
+"tvådimensionell vektorgrafik."
 
 #: kuma/demos/__init__.py:338
 msgid "https://developer.mozilla.org/en-US/docs/Web/SVG"
@@ -1666,6 +1693,8 @@ msgid ""
 "The HTML5 video element provides integrated support for playing video media "
 "without requiring plug-ins."
 msgstr ""
+"HTML5 video element ger integrerat stöd för uppspelning av video utan att "
+"kräva insticksmoduler."
 
 #: kuma/demos/__init__.py:346
 msgid ""
@@ -1688,6 +1717,8 @@ msgid ""
 "In the context of the HTML canvas element WebGL provides an API for 3D "
 "graphics in the browser."
 msgstr ""
+"Inom ramen för HTML canvas elementet WebGL tillhandahåller ett API för 3D-"
+"grafik i webbläsaren."
 
 #: kuma/demos/__init__.py:354
 msgid "https://developer.mozilla.org/en-US/docs/Web/WebGL"
@@ -1837,7 +1868,7 @@ msgstr "http://www.apache.org/licenses/"
 
 #: kuma/demos/__init__.py:406
 msgid "Public Domain (where applicable by law)"
-msgstr ""
+msgstr "Publik domän (i tillämpliga fall enligt lag)"
 
 #: kuma/demos/__init__.py:407
 msgid "http://creativecommons.org/publicdomain/zero/1.0/"
@@ -1874,7 +1905,7 @@ msgstr "Kan inte ta bort %(name)s"
 
 #: kuma/demos/embed.py:128
 msgid "Not an URL from a supported video service"
-msgstr ""
+msgstr "Inte en URL från en videotjänst som stöds"
 
 #: kuma/demos/feeds.py:90
 msgid "MDN demos"
@@ -1898,7 +1929,7 @@ msgstr "MDN utvalda demon"
 
 #: kuma/demos/feeds.py:168
 msgid "Demos featured on MDN"
-msgstr ""
+msgstr "Demon utvalda på MDN"
 
 #: kuma/demos/feeds.py:183
 #, python-format
@@ -1923,7 +1954,7 @@ msgstr "MDN demo sökning för \"%s\""
 #: kuma/demos/feeds.py:217
 #, python-format
 msgid "Search results for demo submissions matching \"%s\""
-msgstr ""
+msgstr "Sökresultat för demo inskickade matchande \"%s\""
 
 #: kuma/demos/helpers.py:107
 msgid "First Place"
@@ -2167,6 +2198,9 @@ msgid ""
 "<strong>deleted</strong>.</p> <p>This action <strong>cannot be "
 "undone</strong>."
 msgstr ""
+"<p>Du är på väg att ta bort <strong>%(demo_title)s</strong> från Demo "
+"Studio.</p> <p>Demons listning, källkod och statistik kommer att <strong>tas"
+" bort</strong>.</p> <p>Denna åtgärd <strong>kan inte ångras</strong>."
 
 #: kuma/demos/templates/demos/delete.html:49
 msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
@@ -2372,7 +2406,7 @@ msgstr ""
 #, python-format
 msgid ""
 "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
-msgstr ""
+msgstr "Denna demo är släppt under licensen <a href=\"%(link)s\">%(title)s</a>."
 
 #: kuma/demos/templates/demos/detail.html:225
 #, python-format
@@ -2424,6 +2458,9 @@ msgid ""
 " Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo "
 "Studio</a> for many more."
 msgstr ""
+"Från 2011 till 2013 skapade webbutvecklare mer än 450 demon för Dev Derby! "
+"Hitta dem nedan eller <a href=\"%(demos_url)s\">besök Demo Studio</a> för "
+"många fler."
 
 #: kuma/demos/templates/demos/devderby_landing.html:40
 msgid "Previous Dev Derby Challenges"
@@ -2479,7 +2516,7 @@ msgstr "Bidrag"
 #: kuma/demos/templates/demos/listing_tag.html:51
 #, python-format
 msgid "Subscribe to a feed of %(tag_title)s demos"
-msgstr ""
+msgstr "Prenumerera på en feed för %(tag_title)s demon"
 
 #: kuma/demos/templates/demos/feed_item_description.html:7
 msgid "Submitted by:"
@@ -2597,12 +2634,12 @@ msgstr "Sök demon efter \"%(query)s\""
 #: kuma/demos/templates/demos/listing_search.html:33
 #, python-format
 msgid "Subscribe to a feed of search results for \"%(query)s\""
-msgstr ""
+msgstr "Prenumerera på en feed med sökresultat för \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_tag.html:4
 #, python-format
 msgid "%(tag_title)s Demos"
-msgstr ""
+msgstr "%(tag_title)s Demon"
 
 #: kuma/demos/templates/demos/submit.html:13
 #: kuma/demos/templates/demos/submit.html:53
@@ -2615,7 +2652,7 @@ msgstr "Redigera %(demo_title)s"
 #: kuma/demos/templates/demos/submit_noauth.html:11
 #: kuma/demos/templates/demos/submit_noauth.html:25
 msgid "Submit a New Demo"
-msgstr ""
+msgstr "Skicka in en ny demo"
 
 #: kuma/demos/templates/demos/submit.html:60
 msgid ""
@@ -2628,13 +2665,15 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:72
 msgid "Describe Your Demo"
-msgstr ""
+msgstr "Beskriv din demo"
 
 #: kuma/demos/templates/demos/submit.html:74
 msgid ""
 "<p>Tell us more about your demo, including the name, description and the "
 "technologies used. Please list the browsers you have tested it with.</p>"
 msgstr ""
+"<p>Berätta mer om din demo, inklusive namn, beskrivning och den teknik som "
+"används. Ange de webbläsare du har testat den med.</p>"
 
 #: kuma/demos/templates/demos/submit.html:87
 msgid "Select up to five technologies used in your demo."
@@ -2650,7 +2689,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:111
 msgid "JPEG and PNG supported. Minimum size of 480x360."
-msgstr ""
+msgstr "JPEG och PNG stöds. Minsta storlek på 480 x 360."
 
 #: kuma/demos/templates/demos/submit.html:113
 msgid "We support YouTube and Vimeo"
@@ -2661,6 +2700,8 @@ msgid ""
 "If your demo has problems when displayed in an &lt;iframe&gt;, try changing "
 "this."
 msgstr ""
+"Om din demo har problem när den visas i en &lt;iframe&gt;, prova att ändra "
+"detta."
 
 #: kuma/demos/templates/demos/submit.html:119
 #: kuma/demos/templates/demos/submit_noauth.html:48
@@ -2684,13 +2725,15 @@ msgstr ""
 
 #: kuma/demos/templates/demos/submit.html:133
 msgid "Provide the Source Code"
-msgstr ""
+msgstr "Erbjud källkoden"
 
 #: kuma/demos/templates/demos/submit.html:135
 msgid ""
 "<p>Upload a ZIP file of your source code, in which the main page of your "
 "demo is named <code>index.html</code> in the root directory.</p>"
 msgstr ""
+"<p>Ladda upp en ZIP-fil av din källkod, där huvudsidan för din demo heter "
+"<code>index.html</code> i rotkatalogen.</p>"
 
 #: kuma/demos/templates/demos/submit.html:162
 #, python-format
@@ -2698,6 +2741,9 @@ msgid ""
 "I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a"
 " href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
 msgstr ""
+"Jag accepterar <a href=\"%(terms_url)s#tfc\">användarvillkoren för "
+"bidragare</a> och <a "
+"href=\"%(terms_url)s#rrd\">representationsrättighetsdetaljer</a>"
 
 #: kuma/demos/templates/demos/submit.html:177
 msgid "Submit demo"
@@ -2785,11 +2831,11 @@ msgstr "Logga in till profil"
 
 #: kuma/demos/templates/demos/terms.html:10
 msgid "Terms for Contributors"
-msgstr ""
+msgstr "Villkor för bidragare"
 
 #: kuma/demos/templates/demos/terms.html:20
 msgid "Demo Studio: Terms for Contributors"
-msgstr ""
+msgstr "Demo Studio: Villkor för bidragare"
 
 #: kuma/demos/templates/demos/terms.html:107
 msgid "Rights Representation Details"
@@ -2798,7 +2844,7 @@ msgstr ""
 #: kuma/demos/templates/demos/elements/demos_head.html:31
 #: kuma/demos/templates/demos/elements/search_form.html:4
 msgid "Search the Demo Studio"
-msgstr ""
+msgstr "Sök i Demo Studio"
 
 #: kuma/demos/templates/demos/elements/demos_head.html:33
 #: kuma/demos/templates/demos/elements/search_form.html:6
@@ -2827,16 +2873,16 @@ msgstr "Visa %(display_name)s profil"
 #, python-format
 msgid "%(num)s Demo"
 msgid_plural "%(num)s Demos"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s Demo"
+msgstr[1] "%(num)s Demon"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:9
 msgid "Sort demos by most recent likes and views"
-msgstr ""
+msgstr "Sortera demon efter flest gilla och visningar"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:9
 msgid "You are viewing demos by most recent likes and views"
-msgstr ""
+msgstr "Du visar demon efter flest gilla och visningar"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:9
 msgid "Up and Coming"
@@ -2844,11 +2890,11 @@ msgstr "Nytt och hett"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:10
 msgid "Sort demos by most views"
-msgstr ""
+msgstr "Sortera demon efter flest visningar"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:10
 msgid "You are viewing demos by most views"
-msgstr ""
+msgstr "Du visar demon efter flest visningar"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:10
 msgid "Most Viewed"
@@ -2856,23 +2902,23 @@ msgstr "Flest visningar"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:11
 msgid "Sort demos by most likes"
-msgstr ""
+msgstr "Sortera demon efter flest gilla"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:11
 msgid "You are viewing demos by most likes"
-msgstr ""
+msgstr "Du visar demon som flest gillar"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:11
 msgid "Most Liked"
-msgstr "Gillad mest"
+msgstr "Som flest gillar"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:12
 msgid "Sort demos by most recently submitted"
-msgstr ""
+msgstr "Sortera demon efter senast inskickade"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:12
 msgid "You are viewing demos by most recently submitted"
-msgstr ""
+msgstr "Du visar demon efter senast inskickade"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:12
 msgid "Most Recent"
@@ -2904,12 +2950,12 @@ msgstr "Sista"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:72
 msgid "Feed"
-msgstr ""
+msgstr "Feed"
 
 #: kuma/demos/templates/demos/elements/submission_thumb.html:23
 #, python-format
 msgid "Launch %(title)s"
-msgstr ""
+msgstr "Starta %(title)s"
 
 #: kuma/landing/templates/landing/fellowship.html:12
 msgid ""
@@ -2932,7 +2978,7 @@ msgstr ""
 #: kuma/landing/templates/landing/homepage.html:59
 #: kuma/search/templates/search/results.html:59
 msgid "Search the docs"
-msgstr ""
+msgstr "Sök i dokument"
 
 #: kuma/landing/templates/landing/homepage.html:45
 msgid "Show topics"
@@ -2957,7 +3003,7 @@ msgstr "mer..."
 
 #: kuma/landing/templates/landing/homepage.html:79
 msgid "Mozilla<br> Docs"
-msgstr ""
+msgstr "Mozilla<br> dokument"
 
 #: kuma/landing/templates/landing/homepage.html:83 templates/base.html:157
 msgid "Firefox Marketplace"
@@ -3029,7 +3075,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:138
 msgid "Get Involved"
-msgstr ""
+msgstr "Engagera dig"
 
 #: kuma/landing/templates/landing/homepage.html:140
 #, python-format
@@ -3043,7 +3089,7 @@ msgstr ""
 #: kuma/landing/templates/landing/homepage.html:147
 #: kuma/landing/templates/landing/homepage.html:154
 msgid "Help improve MDN"
-msgstr ""
+msgstr "Hjälp till att förbättra MDN"
 
 #: kuma/landing/templates/landing/homepage.html:158
 msgid ""
