@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-23 07:44+0000\n"
+"PO-Revision-Date: 2015-11-23 07:46+0000\n"
 "Last-Translator: Francesco <francesco.lodolo@mozillaitalia.org>\n"
 "Language-Team: MozillaItalia <MozillaItalia>\n"
 "Language: it\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1448264695.0\n"
+"X-POOTLE-MTIME: 1448264784.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -25,7 +25,7 @@ msgstr "nome dell’operazione"
 
 #: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128 kuma/demos/models.py:457
 msgid "date last modified"
-msgstr "Data ultima modifica"
+msgstr "data ultima modifica"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
