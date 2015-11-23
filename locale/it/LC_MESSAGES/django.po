@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-23 07:52+0000\n"
-"Last-Translator: Francesco <francesco.lodolo@mozillaitalia.org>\n"
+"PO-Revision-Date: 2015-11-23 12:51+0000\n"
+"Last-Translator: Sandro <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: MozillaItalia <MozillaItalia>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1448265160.0\n"
+"X-POOTLE-MTIME: 1448283114.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -606,7 +606,7 @@ msgstr "Visualizza storico"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:35
 msgid "new"
-msgstr "Nuovo"
+msgstr "nuovo"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:36
 msgid "deleted"
@@ -636,13 +636,13 @@ msgstr "Inviami le notifiche per l’approvazione delle versioni in inglese"
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:7 kuma/dashboards/templates/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr "Non inviarmi notifiche per le versioni inglesi in attesa"
+msgstr "Non inviarmi notifiche per le versioni inglesi in attesa di revisione"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:18 kuma/dashboards/templates/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr "Inviami le notifiche per le versioni inglesi in attesa"
+msgstr "Inviami le notifiche per le versioni inglesi in attesa di revisione"
 
 #: kuma/demos/__init__.py:34
 msgid "Removed from Derby"
@@ -3803,9 +3803,12 @@ msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"Chat in tempo reale: <a href=\"%(channel_link)s\">canale #mdn su irc.mozilla.org</a>. (Ulteriori informazioni su <a href=\"%(irc_link)s\">IRC</a>.) Sul canale potrai trovare collegati gli "
-"amministratori del team editoriale: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), e la responsabile della community "
-"Janet Swisher (jms)."
+"Chat in tempo reale: <a href=\"%(channel_link)s\">canale #mdn su "
+"irc.mozilla.org</a>. (Ulteriori informazioni su <a href=\"%"
+"(irc_link)s\">IRC</a>.) Sul canale potrai trovare collegati gli "
+"amministratori del team editoriale di MDN: Eric Shepherd (sheppy), Jean-Yves "
+"Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris "
+"Mills (chrismills) e la responsabile della community Janet Swisher (jms)."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:51
 #, python-format
@@ -3887,10 +3890,10 @@ msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
 msgstr ""
-"Sul canale potrai trovare collegati gli amministratori del team editoriale: "
-"Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), "
-"Florian Scholz (fscholz), Chris Mills (chrismills), e la responsabile della "
-"community Janet Swisher (jms)."
+"Sul canale potrai trovare collegati gli amministratori del team editoriale "
+"di MDN: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg "
+"(wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) e la "
+"responsabile della community Janet Swisher (jms)."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
