@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2014-03-16 16:58+0000\n"
-"Last-Translator: Inma <inma.barrios@mozilla-hispano.org>\n"
+"PO-Revision-Date: 2015-11-23 11:04+0000\n"
+"Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -17,79 +17,79 @@ msgstr ""
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
-msgstr ""
+msgstr "Cerrar submenú"
 
 #: kuma/static/js/components.js:530
 msgid "Close notification"
-msgstr ""
+msgstr "Cerrar notificación"
 
 #: kuma/static/js/helpfulness.js:26
 msgid "Did this page help you?"
-msgstr ""
+msgstr "¿Te resultó útil esta página?"
 
 #: kuma/static/js/helpfulness.js:28
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: kuma/static/js/helpfulness.js:30
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Never ask me again"
-msgstr ""
+msgstr "No volver a preguntar"
 
 #: kuma/static/js/helpfulness.js:53
 msgid "Translate it into my language"
-msgstr ""
+msgstr "Traducir a mi idioma"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "Make explanations clearer"
-msgstr ""
+msgstr "Hacer comentarios más completos"
 
 #: kuma/static/js/helpfulness.js:55
 msgid "Add more details"
-msgstr ""
+msgstr "Añadir más detalles"
 
 #: kuma/static/js/helpfulness.js:56
 msgid "Fix incorrect information"
-msgstr ""
+msgstr "Corregir información incorrecta"
 
 #: kuma/static/js/helpfulness.js:57
 msgid "Add or improve examples"
-msgstr ""
+msgstr "Añadir o mejorar los ejemplos"
 
 #: kuma/static/js/helpfulness.js:58
 msgid "My search should have lead to a different article."
-msgstr ""
+msgstr "Mi búsqueda debería haberme dirigido a un artículo diferente."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Something else"
-msgstr ""
+msgstr "Algo más"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Choose one..."
-msgstr ""
+msgstr "Elige uno..."
 
 #: kuma/static/js/helpfulness.js:77
 msgid "Uh oh. What would make it better?"
-msgstr ""
+msgstr "¡Wow! ¿En qué podría mejorar?"
 
 #: kuma/static/js/helpfulness.js:80
 msgid "Thanks! We'll fix it."
-msgstr ""
+msgstr "¡Gracias! Lo solucionaremos."
 
 #: kuma/static/js/modal-control.js:15
 msgid "Demo Studio"
-msgstr ""
+msgstr "Demo Studio"
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "No se ha seleccionado nada"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "Seleccionado: "
 
 #: kuma/static/js/users.js:96
 msgid "New interest..."
@@ -97,39 +97,39 @@ msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "Abrir"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatability table."
-msgstr ""
+msgstr "Volver a la tabla de compatibilidad."
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
-msgstr ""
+msgstr "Las nuevas tablas de compatibilidad están en beta "
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
-msgstr ""
+msgstr "Saber más sobre la versión beta."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "Hacer la encuesta"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "Informar de un error."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr ""
+msgstr "Enviado. ¡Gracias!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "Mostrar la tabla antigua."
 
 #: kuma/static/js/wiki-edit.js:400
 msgid ""
@@ -137,18 +137,21 @@ msgid ""
 " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
 "draft</a>."
 msgstr ""
+"Ya tienes un borrador. <a href=\"\" class=\"restoreLink\">Recupera el "
+"contenido del borrador</a> o <a href=\"\" "
+"class=\"discardLink\">descártalo</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
-msgstr ""
+msgstr "guardado"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
-msgstr ""
+msgstr "Nueva etiqueta..."
 
 #: kuma/static/js/wiki.js:230
 msgid "How to read CSS syntax."
-msgstr ""
+msgstr "Cómo leer la sintaxis CSS."
 
 #: kuma/static/js/wiki.js:555
 msgid "Search Stack Overflow"
