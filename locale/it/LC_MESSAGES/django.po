@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 17:30+0000\n"
-"Last-Translator: Sandro <gialloporpora@mozillaitalia.org>\n"
+"PO-Revision-Date: 2015-11-23 07:44+0000\n"
+"Last-Translator: Francesco <francesco.lodolo@mozillaitalia.org>\n"
 "Language-Team: MozillaItalia <MozillaItalia>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1448127051.0\n"
+"X-POOTLE-MTIME: 1448264695.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -3962,7 +3962,7 @@ msgstr "Documenti MDN per la revisione di %s"
 
 #: kuma/wiki/feeds.py:194
 msgid "MDN documents for review"
-msgstr "Documenti di MDN in attesa di revisione."
+msgstr "Documenti di MDN in attesa di revisione"
 
 #: kuma/wiki/feeds.py:224
 #, python-format
@@ -4245,10 +4245,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
-"\n"
 "I seguenti documenti verranno eliminati in maniera definitiva dal database. "
 "L’azione non può essere annullata. Se non desideri procedere con "
-"l’operazione premi il pulsante Indietro nel browser.\n"
+"l’operazione premi il pulsante Indietro nel browser."
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
@@ -5053,7 +5052,7 @@ msgstr "Tipo di errore:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:40
 msgid "In macro:"
-msgstr "Macro di input"
+msgstr "Macro di input:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:44
 msgid "Create Template"
