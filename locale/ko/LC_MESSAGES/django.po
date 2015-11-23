@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 08:39+0000\n"
+"PO-Revision-Date: 2015-11-23 02:20+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -3068,7 +3068,7 @@ msgstr "당신과 같은 개발자들을 위해 만든 브라우저 다운받기
 
 #: kuma/landing/templates/landing/homepage.html:120
 msgid "Celebrate ten years of documenting your Web."
-msgstr ""
+msgstr "웹 문서화 10주년을 축하해주세요."
 
 #: kuma/landing/templates/landing/homepage.html:124
 msgid "Build Open Web Apps"
@@ -3469,7 +3469,7 @@ msgstr "유효하지 않은 콘텐츠가 포함되어 있습니다."
 
 #: kuma/spam/forms.py:33
 msgid "The form data has not yet been validated. Please try again."
-msgstr ""
+msgstr "해당 폼 데이터는 아직 유효하지 않습니다. 다시 시도해주세요."
 
 #: kuma/spam/models.py:10
 msgid "created"
@@ -3482,10 +3482,13 @@ msgid ""
 "disconnect this account connect a different one first. To delete your MDN "
 "profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
 msgstr ""
+"죄송합니다, 적어도 하나 이상의 연결된 계정을 사용해야 로그인을 할 수 있습니다. 이 계정을 끊기 위해서는 다른 계정을 먼저 "
+"연결해주세요. 당신의 MDN 프로필을 삭제하려면 <a href=\"%(bug_form_url)s\" rel=\"nofollow\">버그를"
+" 작성해주세요</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr ""
+msgstr "이메일 주소는 사용자 이름으로 사용할 수 없습니다."
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
@@ -3690,7 +3693,7 @@ msgstr "태그"
 
 #: kuma/users/models.py:102
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "유효한 웹사이트 URL을 입력해주세요."
 
 #: kuma/users/models.py:107
 msgid "Enter a valid Twitter URL."
@@ -3706,11 +3709,11 @@ msgstr "유효한 Stack Overflow URL을 입력해주세요."
 
 #: kuma/users/models.py:122
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "유효한 LinkedIn URL을 입력해주세요."
 
 #: kuma/users/models.py:127
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "유효한 Mozillians URL을 입력해주세요."
 
 #: kuma/users/models.py:132
 msgid "Enter a valid Facebook URL."
@@ -3749,7 +3752,7 @@ msgstr "이메일 주소"
 #: kuma/users/views.py:295
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>인증됨</b>"
 
 #: kuma/users/views.py:298
 #, python-format
@@ -3758,7 +3761,7 @@ msgstr "%(email)s 미인증됨"
 
 #: kuma/users/views.py:301 kuma/users/templates/socialaccount/signup.html:142
 msgid "Other:"
-msgstr ""
+msgstr "또 다른 것들:"
 
 #: kuma/users/templates/account/account_inactive.html:3
 #: kuma/users/templates/account/account_inactive.html:7
@@ -3778,7 +3781,7 @@ msgstr "이메일 주소"
 #: kuma/users/templates/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr ""
+msgstr "%(email)s 은 당신의 <em>기본</em> 이메일 주소"
 
 #: kuma/users/templates/account/email.html:15
 msgid "You've also added the following email addresses:"
