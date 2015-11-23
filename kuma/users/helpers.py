@@ -32,10 +32,11 @@ def ban_link(context, ban_user, banner_user):
         active_ban = ban_user.active_ban
         if active_ban:
             url = reverse('admin:users_userban_change', args=(active_ban.id,))
-            title = ugettext('Banned on {ban_date} by {ban_admin}.').format(
-                ban_date=datetimeformat(context, active_ban.date,
-                                        format='date', output='json'),
-                ban_admin=active_ban.by)
+            title = ugettext('Banned on %(ban_date)s by %(ban_admin)s.') % {
+                'ban_date': datetimeformat(context, active_ban.date,
+                                           format='date', output='json'),
+                'ban_admin': active_ban.by,
+            }
             link = ('<a href="%s" class="button ban-link" title="%s">%s'
                     '<i aria-hidden="true" class="icon-ban"></i></a>'
                     % (url, title, ugettext('Banned')))
