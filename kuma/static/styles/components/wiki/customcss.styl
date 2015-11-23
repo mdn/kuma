@@ -277,6 +277,8 @@ table.html5ArticleToc {
     margin: 0 0.25em;
 }
 
+/* -- */
+
 table.withoutBorder,
 table.withoutBorder td,
 table.withoutBorder tr,
@@ -421,39 +423,6 @@ table.HTMLElmNav td {
     content: "Default ";
     color: #888;
     font-weight: normal;
-}
-
-.experimentalIcon {
-    display: inline-block;
-    width: 4px;
-    height: 4px;
-    color: #ffa500;
-    background-color: #fff;
-    border: 3px solid #ffa500;
-}
-.nonstandardIcon {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    color: #f00;
-    background-color: #f00;
-    border: 1px solid #f00;
-}
-.obsoleteIcon {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    color: #000;
-    background-color: #000;
-    border: 1px solid #000;
-}
-.deprecatedIcon {
-    display: inline-block;
-    width: 4px;
-    height: 4px;
-    color: #000;
-    background-color: #fff;
-    border: 3px solid #000;
 }
 /* Used to to create icon-badged APIs inline */
 .indexListRow {
@@ -622,26 +591,6 @@ dl {
     font-weight: 700;
 }
 
-/* color setting */
-#wikiArticle i.icon-beaker {
-    color: #09d;
-}
-/* experimental */
-#wikiArticle i.icon-warning-sign {
-    color: #db0;
-}
-/* non-standard */
-#wikiArticle i.icon-thumbs-down-alt {
-    color: #000;
-}
-/* deprecated */
-#wikiArticle i.icon-trash {
-    color: #d00;
-}
-/* obsolete */
-#wikiArticle i.icon-stethoscope {
-    color: #483d8b;
-}
 /* style for next and previous pages in tutorial */
 
 .previousPage {
@@ -726,6 +675,7 @@ a.liveSample:focus {
     font-weight: 700;
     text-align: left;
 }
+/* TODO */
 /* This is a specific item for the CSS tutorial: https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Selectors */
 /* To be removed once we have Live Examples */
 a.tutospecial:link,
@@ -766,32 +716,7 @@ a.tutospecial:active {
 #tutochallenge:target + a {
     display: none;
 }
-/* Fix for wiki-min.css */
-div.bug,
-div.warning {
-    overflow: hidden;
-}
-.page-content dd {
-    margin: 0.5em;
-}
-[dir="rtl"] .hasJS #nav-main #nav-sub-docs,
-[dir="rtl"] #nav-main .menu:hover #nav-sub-docs {
-    margin-left: -300px;
-}
-[dir="rtl"] #nav-main #nav-sub-docs li {
-    float: right;
-}
-[dir="rtl"] #nav-main #nav-sub-docs p {
-    text-align: left;
-}
-[dir="rtl"] .page-content ul {
-    padding-left: 0;
-    padding-right: 22px;
-}
-[dir="rtl"] .page-content dd {
-    padding-left: 0;
-    padding-right: 15px;
-}
+
 /* for B2G docs, to allow use of B2G lookalike UX elements */
 /* For display of Firefox OS UX screenshots in a grid */
 table.fxosScreenGrid,
@@ -811,6 +736,8 @@ div.fxosLiveSampleWrapper {
     border: 1px solid #b8b2a4;
     background-color: #f3ecdd;
 }
+
+/* -- */
 .rightButtonBox {
     float: right;
     width: 250px;
@@ -838,6 +765,7 @@ div.fxosLiveSampleWrapper {
 /*
  * Colorized icons
  */
+
 #wikiArticle i.icon-beaker,
 #wikiArticle i.icon-warning-sign,
 #wikiArticle i.icon-thumbs-down-alt,
@@ -1186,9 +1114,6 @@ a.addpage-button .right-align {
     box-shadow: none;
     font-style: italic;
     background-color: #fef9f5;
-}
-.fa-trash:before {
-    content: "\f014";
 }
 
 /*end!*/
