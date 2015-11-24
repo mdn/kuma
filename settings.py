@@ -491,6 +491,7 @@ TEMPLATES = [
             'newstyle_gettext': True,
             'context_processors': _CONTEXT_PROCESSORS,
             'undefined': 'jinja2.Undefined',
+            'environment': 'kuma.core.jinja2.KumaEnvironment',
             'extensions': [
                 'jinja2.ext.do',
                 'jinja2.ext.loopcontrols',

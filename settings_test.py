@@ -1,6 +1,7 @@
 from settings import *
 
 DEBUG = False
+TEMPLATE_DEBUG = True
 CELERY_ALWAYS_EAGER = True
 ES_LIVE_INDEX = False
 ES_URLS = ['localhost:9200']
