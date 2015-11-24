@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-18 18:59+0000\n"
-"Last-Translator: Richard Závodný <rickydesign@email.cz>\n"
+"PO-Revision-Date: 2015-11-24 14:58+0000\n"
+"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -1766,7 +1766,7 @@ msgstr ""
 
 #: kuma/demos/feeds.py:90
 msgid "MDN demos"
-msgstr ""
+msgstr "MDN dema"
 
 #: kuma/demos/feeds.py:91
 msgid "Demos submitted by MDN users"
@@ -2330,7 +2330,7 @@ msgstr ""
 #: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:145
 #: templates/base.html:163
 msgid "Demos"
-msgstr ""
+msgstr "Dema"
 
 #: kuma/demos/templates/demos/devderby_landing.html:59
 msgid "Articles"
@@ -2813,7 +2813,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr ""
+msgstr "Sdílené vědomosti <span>pro otevřený web</span>"
 
 #: kuma/landing/templates/landing/homepage.html:42
 #: kuma/landing/templates/landing/homepage.html:59
@@ -2827,7 +2827,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:66
 msgid "Web Technologies"
-msgstr ""
+msgstr "Webové technologie"
 
 #: kuma/landing/templates/landing/homepage.html:69
 msgid "Web<br />Platform"
@@ -2835,7 +2835,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:71
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "Web API &amp; DOM"
 
 #: kuma/landing/templates/landing/homepage.html:75
 #: kuma/landing/templates/landing/homepage.html:95
@@ -2856,7 +2856,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:89
 msgid "Developer<br />Tools"
-msgstr ""
+msgstr "Vývojářské<br />nástroje"
 
 #: kuma/landing/templates/landing/homepage.html:91
 msgid "Page Inspector"
@@ -2864,7 +2864,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:92
 msgid "Web Console"
-msgstr ""
+msgstr "Webová konzole"
 
 #: kuma/landing/templates/landing/homepage.html:93
 msgid "JavaScript Debugger"
@@ -2894,11 +2894,11 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:113
 msgid "Learn Web Development"
-msgstr ""
+msgstr "Naučte se vytvářet web"
 
 #: kuma/landing/templates/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "Získejte prohlížeč pro vývojáře jako jste vy"
 
 #: kuma/landing/templates/landing/homepage.html:120
 msgid "Celebrate ten years of documenting your Web."
@@ -2916,7 +2916,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:138
 msgid "Get Involved"
-msgstr ""
+msgstr "Zapojte se"
 
 #: kuma/landing/templates/landing/homepage.html:140
 #, python-format
@@ -2930,13 +2930,16 @@ msgstr ""
 #: kuma/landing/templates/landing/homepage.html:147
 #: kuma/landing/templates/landing/homepage.html:154
 msgid "Help improve MDN"
-msgstr ""
+msgstr "Pomozte vylepšit MDN"
 
 #: kuma/landing/templates/landing/homepage.html:158
 msgid ""
 "All parts of MDN (docs, demos, and the site itself) are created by an open "
 "community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
+"Všechny části MDN (dokumenty, dema a samotná stránka) jsou tvořeny otevřenou"
+" komunitou vývojářů. Prosím, přidejte se! Vyberte si jednu z cest jak "
+"pomoci:"
 
 #: kuma/landing/templates/landing/homepage.html:164
 msgid "Getting started"
@@ -6018,11 +6021,11 @@ msgstr ""
 
 #: templates/base.html:123
 msgid "Web Platform"
-msgstr ""
+msgstr "Webová platforma"
 
 #: templates/base.html:127
 msgid "Technologies"
-msgstr ""
+msgstr "Technologie"
 
 #: templates/base.html:132
 msgid "Graphics"
@@ -6034,7 +6037,7 @@ msgstr ""
 
 #: templates/base.html:138
 msgid "References & Guides"
-msgstr ""
+msgstr "Reference a návody"
 
 #: templates/base.html:140
 msgid "Learn the Web"
@@ -6070,7 +6073,7 @@ msgstr ""
 
 #: templates/base.html:163
 msgid "Developer Tools"
-msgstr ""
+msgstr "Vývojářské nástroje"
 
 #: templates/base.html:163
 msgid "Feedback"
@@ -6177,17 +6180,17 @@ msgstr ""
 
 #: templates/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr ""
+msgstr "Odhlásit od těchto e-mailů:"
 
 #: templates/tidings/unsubscribe.html:2 templates/tidings/unsubscribe.html:12
 #: templates/tidings/unsubscribe_error.html:2
 #: templates/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Odhlásit"
 
 #: templates/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr ""
+msgstr "Opravdu se chcete odhlásit?"
 
 #: templates/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
