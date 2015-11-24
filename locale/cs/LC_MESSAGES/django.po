@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-22 16:50+0000\n"
-"Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
+"PO-Revision-Date: 2015-11-18 18:59+0000\n"
+"Last-Translator: Richard Závodný <rickydesign@email.cz>\n"
 "Language-Team: none\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -278,7 +278,7 @@ msgstr "ID klíče"
 
 #: kuma/authkeys/templates/authkeys/new.html:32
 msgid "Secret"
-msgstr ""
+msgstr "Tajný"
 
 #: kuma/contentflagging/models.py:15
 msgid "This is not working for me"
