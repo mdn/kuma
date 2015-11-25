@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-25 14:22+0000\n"
+"PO-Revision-Date: 2015-11-25 18:36+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -6029,7 +6029,7 @@ msgstr "Technologie"
 
 #: templates/base.html:132
 msgid "Graphics"
-msgstr ""
+msgstr "Grafika"
 
 #: templates/base.html:133
 msgid "APIs / DOM"
@@ -6109,19 +6109,19 @@ msgstr ""
 
 #: templates/base.html:205
 msgid "About MDN"
-msgstr ""
+msgstr "O MDN"
 
 #: templates/base.html:206
 msgid "Terms"
-msgstr ""
+msgstr "Podmínky"
 
 #: templates/base.html:207
 msgid "Privacy"
-msgstr ""
+msgstr "Soukromí"
 
 #: templates/base.html:208
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: templates/base.html:209
 msgid "Contribute to the code"
@@ -6148,7 +6148,7 @@ msgstr ""
 
 #: templates/includes/common_macros.html:38
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: templates/includes/common_macros.html:44
 #, python-format
@@ -6157,15 +6157,15 @@ msgstr ""
 
 #: templates/includes/login.html:6
 msgid "Sign out"
-msgstr ""
+msgstr "Odhlásit se"
 
 #: templates/includes/login.html:17
 msgid "Sign in with"
-msgstr ""
+msgstr "Přihlásit pomocí"
 
 #: templates/includes/login.html:18
 msgid "Sign in"
-msgstr ""
+msgstr "Přihlásit se"
 
 #: templates/includes/newsletter.html:6
 msgid ""
