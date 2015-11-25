@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-25 18:36+0000\n"
+"PO-Revision-Date: 2015-11-25 20:11+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -88,7 +88,7 @@ msgstr "Typ MIME:"
 #: kuma/attachments/templates/attachments/attachment_detail.html:44
 #, python-format
 msgid "%(bytes)s bytes"
-msgstr ""
+msgstr "%(bytes)s bytů"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:48
 msgid "Is approved?"
@@ -5893,7 +5893,7 @@ msgstr ""
 
 #: templates/403.html:5 templates/403.html:19 templates/handlers/400.html:5
 msgid "Permission Denied"
-msgstr ""
+msgstr "Přístup odepřen"
 
 #: templates/403.html:22
 msgid "The wiki is in read-only mode."
@@ -5947,7 +5947,7 @@ msgstr ""
 
 #: templates/404.html:6
 msgid "Not Found"
-msgstr ""
+msgstr "Nenalezeno"
 
 #: templates/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
@@ -5985,7 +5985,7 @@ msgstr ""
 
 #: templates/base.html:75
 msgid "Select language"
-msgstr ""
+msgstr "Zvolte jazyk"
 
 #: templates/base.html:77
 msgid "Skip to search"
