@@ -1,10 +1,9 @@
+import collections
 from operator import attrgetter
 
-from django.utils.datastructures import SortedDict
-
+from django.utils.translation import ugettext
 from elasticsearch_dsl import document
-from rest_framework import serializers, pagination
-from tower import ugettext as _
+from rest_framework import pagination, serializers
 
 from . import models
 from .fields import LocaleField, SearchQueryField, SiteURLField
@@ -45,14 +44,14 @@ class FacetedFilterOptionsSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
     count = serializers.IntegerField(read_only=True)
-    active = serializers.BooleanField(read_only=True)
+    active = serializers.BooleanField(read_only=True, default=False)
     urls = FilterURLSerializer(read_only=True)
 
 
 class FacetedFilterSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
-    options = FacetedFilterOptionsSerializer(source='options')
+    options = FacetedFilterOptionsSerializer(source='options', many=True)
 
 
 class SearchSerializer(pagination.PaginationSerializer):
@@ -71,10 +70,10 @@ class SearchSerializer(pagination.PaginationSerializer):
         view = self.context['view']
 
         url = QueryURLObject(view.url)
-        filter_mapping = SortedDict((filter_['slug'], filter_)
-                                    for filter_ in view.serialized_filters)
+        filter_mapping = collections.OrderedDict((filter_['slug'], filter_)
+                                                 for filter_ in view.serialized_filters)
 
-        filter_groups = SortedDict()
+        filter_groups = collections.OrderedDict()
 
         try:
             facet_counts = [
@@ -92,8 +91,8 @@ class SearchSerializer(pagination.PaginationSerializer):
                 group_slug = None
             else:
                 # Let's check if we can get the name from the gettext catalog
-                filter_name = _(filter_['name'])
-                group_name = _(filter_['group']['name'])
+                filter_name = ugettext(filter_['name'])
+                group_name = ugettext(filter_['group']['name'])
                 group_slug = filter_['group']['slug']
 
             filter_groups.setdefault((
@@ -101,9 +100,13 @@ class SearchSerializer(pagination.PaginationSerializer):
                 group_slug,
                 filter_['group']['order']
             ), []).append(
-                Filter(url=url, page=view.current_page, name=filter_name,
-                       slug=slug, count=count, active=slug in
-                       view.selected_filters, group_name=group_name,
+                Filter(url=url,
+                       page=view.current_page,
+                       name=filter_name,
+                       slug=slug,
+                       count=count,
+                       active=slug in view.selected_filters,
+                       group_name=group_name,
                        group_slug=group_slug)
             )
 
@@ -128,7 +131,7 @@ class BaseDocumentSerializer(serializers.Serializer):
     slug = serializers.CharField(read_only=True, max_length=255)
     locale = serializers.CharField(read_only=True, max_length=7)
     url = SiteURLField('wiki.document', args=['slug'])
-    edit_url = SiteURLField('wiki.edit_document', args=['slug'])
+    edit_url = SiteURLField('wiki.edit', args=['slug'])
 
     def field_to_native(self, obj, field_name):
         if field_name == 'parent' and not getattr(obj, 'parent', None):
@@ -144,7 +147,7 @@ class BaseDocumentSerializer(serializers.Serializer):
 class DocumentSerializer(BaseDocumentSerializer):
     excerpt = serializers.SerializerMethodField('get_excerpt')
     tags = serializers.ChoiceField(read_only=True, source='tags')
-    score = serializers.FloatField(read_only=True, source='_meta.score')
+    score = serializers.FloatField(read_only=True, source='meta.score')
     explanation = serializers.SerializerMethodField('get_explanation')
     parent = BaseDocumentSerializer(read_only=True, source='parent')
 
@@ -152,7 +155,7 @@ class DocumentSerializer(BaseDocumentSerializer):
         return obj.get_excerpt()
 
     def get_explanation(self, obj):
-        return getattr(obj._meta, 'explanation', None)
+        return getattr(obj.meta, 'explanation', None)
 
 
 class FilterSerializer(serializers.ModelSerializer):
@@ -165,7 +168,7 @@ class FilterSerializer(serializers.ModelSerializer):
         read_only_fields = ('slug', 'shortcut')
 
     def get_localized_name(self, obj):
-        return _(obj.name)
+        return ugettext(obj.name)
 
 
 class GroupWithFiltersSerializer(serializers.ModelSerializer):
@@ -180,7 +183,7 @@ class GroupWithFiltersSerializer(serializers.ModelSerializer):
         fields = ('name', 'slug', 'order', 'filters')
 
     def get_localized_name(self, obj):
-        return _(obj.name)
+        return ugettext(obj.name)
 
 
 class GroupSerializer(serializers.Serializer):
@@ -194,7 +197,7 @@ class FilterWithGroupSerializer(FilterSerializer):
     group = GroupSerializer(source='group', read_only=True)
 
     def tag_names(self, obj):
-        return obj.tags.values_list('name', flat=True)
+        return [tag.name for tag in obj.tags.all()]
 
     class Meta(FilterSerializer.Meta):
         fields = FilterSerializer.Meta.fields + ('tags', 'operator', 'group')

@@ -1,0 +1,15 @@
+Welcome to Kuma.
+
+To run developer-local.allizom.org, run:
+    foreman start
+
+    (Consult ~/src/Procfile to see what services are managed by Foreman.)
+
+To run Kuma tests:
+    ~/src/manage.py test kuma
+
+To run KumaScript tests:
+    cd ~/src/kumascript && ./node_modules/.bin/nodeunit tests
+
+To update this dev environment run from the host machine:
+    vagrant provision

@@ -16,10 +16,10 @@
             "groovecoder",
             "hoosteeno",
             "jezdez",
-            "mars",
+            "jwhitlock",
             "openjck",
-            "shobson",
-            "ubernostrum"
+            "robhudson",
+            "shobson"
         ]
     },
     "bugs": {
@@ -30,8 +30,7 @@
     },
     "urls": {
         "prod": "https://developer.mozilla.org/",
-        "stage": "https://developer.allizom.org/",
-        "dev": "https://developer-dev.allizom.org/"
+        "stage": "https://developer.allizom.org/"
     },
     "keywords": [
         "python",
@@ -41,7 +40,7 @@
         "jquery",
         "ckeditor",
         "vagrant",
-        "puppet",
+        "ansible",
         "mysql",
         "elasticsearch"
     ]

@@ -1,0 +1,25 @@
+@require '../includes/vars';
+@require '../includes/mixins';
+
+{$selector-icon} {
+    bidi-style(margin-left, $icon-margin, margin-right, 0);
+    bidi-style(margin-right, 0, margin-left, $icon-margin);
+    cursor: default;
+    display: inline-block;
+
+    &:before {
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    &.no-margin {
+        bidi-style(margin-left, 0, margin-right, 0);
+        bidi-style(margin-right, 0, margin-left, 0);
+    }
+}
+
+label {$selector-icon} {
+    $label-icon-margin = ($grid-spacing / 2);
+    bidi-value(margin-left, 0, $label-icon-margin);
+    bidi-value(margin-right, $label-icon-margin, 0);
+}

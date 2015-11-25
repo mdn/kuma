@@ -8,7 +8,7 @@ from urlparse import urljoin
 from django.conf import settings
 from django.contrib.sites.models import Site
 
-import constance.config
+from constance import config
 import requests
 
 from kuma.core.cache import memcache
@@ -34,7 +34,7 @@ def should_use_rendered(doc, params, html=None):
     if doc:
         is_template = doc.is_template
         html = doc.html
-    return (constance.config.KUMASCRIPT_TIMEOUT > 0 and
+    return (config.KUMASCRIPT_TIMEOUT > 0 and
             html and
             not is_template and
             (force_macros or (not no_macros and not show_raw)))
@@ -52,7 +52,7 @@ def post(request, content, locale=settings.LANGUAGE_CODE,
     }
     add_env_headers(headers, env_vars)
     response = requests.post(url,
-                             timeout=constance.config.KUMASCRIPT_TIMEOUT,
+                             timeout=config.KUMASCRIPT_TIMEOUT,
                              data=content.encode('utf8'),
                              headers=headers)
     if response:
@@ -94,7 +94,7 @@ def get(document, cache_control, base_url, timeout=None):
     """Perform a kumascript GET request for a document locale and slug."""
     if not cache_control:
         # Default to the configured max-age for cache control.
-        max_age = constance.config.KUMASCRIPT_MAX_AGE
+        max_age = config.KUMASCRIPT_MAX_AGE
         cache_control = 'max-age=%s' % max_age
 
     if not base_url:
@@ -102,11 +102,11 @@ def get(document, cache_control, base_url, timeout=None):
         base_url = 'http://%s' % site.domain
 
     if not timeout:
-        timeout = constance.config.KUMASCRIPT_TIMEOUT
+        timeout = config.KUMASCRIPT_TIMEOUT
 
     document_locale = document.locale
     document_slug = document.slug
-    max_age = constance.config.KUMASCRIPT_MAX_AGE
+    max_age = config.KUMASCRIPT_MAX_AGE
 
     # 1063580 - Kumascript converts template name calls to lower case and bases
     # caching keys off of that.
@@ -152,10 +152,8 @@ def get(document, cache_control, base_url, timeout=None):
             files=files,
             attachments=files,  # Just for sake of verbiage?
             slug=document.slug,
-            tags=list(document.tags.values_list('name', flat=True)),
-            review_tags=list(document.current_revision
-                                     .review_tags
-                                     .values_list('name', flat=True)),
+            tags=list(document.tags.names()),
+            review_tags=list(document.current_revision.review_tags.names()),
             modified=time.mktime(document.modified.timetuple()),
             cache_control=cache_control,
         )
@@ -203,7 +201,7 @@ def get(document, cache_control, base_url, timeout=None):
                 },
             ]
 
-    except Exception, exc:
+    except Exception as exc:
         # Last resort: Something went really haywire. Kumascript server died
         # mid-request, or something. Try to report at least some hint.
         errors = [
@@ -262,7 +260,7 @@ def process_errors(response):
         if len(msgs):
             errors = msgs
 
-    except Exception, exc:
+    except Exception as exc:
         errors = [
             {
                 "level": "error",

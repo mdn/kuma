@@ -1,15 +1,14 @@
 """Models for content moderation flagging"""
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core import urlresolvers
 from django.core.mail import send_mail
 from django.db import models
-from django.template import Context, loader
+from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 
-from .utils import get_unique
+from kuma.core.utils import get_unique
 
 
 FLAG_REASONS = getattr(settings, "FLAG_REASONS", (
@@ -54,22 +53,21 @@ class ContentFlagManager(models.Manager):
         user, ip, user_agent, unique_hash = get_unique(content_type, object.pk,
                                                        request=request)
 
-        cf = ContentFlag.objects.get_or_create(
-            unique_hash=unique_hash,
-            defaults=dict(content_type=content_type,
-                          object_pk=object.pk, ip=ip,
-                          user_agent=user_agent, user=user,
-                          flag_type=flag_type,
-                          explanation=explanation))
+        defaults = dict(content_type=content_type,
+                        object_pk=object.pk, ip=ip,
+                        user_agent=user_agent, user=user,
+                        flag_type=flag_type,
+                        explanation=explanation)
+        cf = ContentFlag.objects.get_or_create(unique_hash=unique_hash,
+                                               defaults=defaults)
 
         if recipients:
-            subject = _("{object} Flagged")
-            subject = subject.format(object=object)
+            subject = _("%(object)s Flagged") % {'object': object}
+            # Note: This returns a Jinja2 template b/c of jingo.Loader.
             t = loader.get_template('contentflagging/email/flagged.ltxt')
-            url = '/admin/contentflagging/contentflag/' + str(object.pk)
-            content = t.render(Context({'url': url,
-                                        'object': object,
-                                        'flag_type': flag_type}))
+            url = '/admin/contentflagging/contentflag/%s' % object.pk
+            content = t.render({'url': url, 'object': object,
+                                'flag_type': flag_type})
             send_mail(subject, content,
                       settings.DEFAULT_FROM_EMAIL, recipients)
         return cf
@@ -110,12 +108,13 @@ class ContentFlag(models.Model):
                                      verbose_name="content type",
                                      related_name="content_type_set_for_%(class)s",)
     object_pk = models.CharField(_('object ID'), max_length=32, editable=False)
-    content_object = generic.GenericForeignKey('content_type', 'object_pk')
+    content_object = GenericForeignKey('content_type', 'object_pk')
 
     ip = models.CharField(max_length=40, editable=False, blank=True, null=True)
     user_agent = models.CharField(max_length=128, editable=False,
                                   blank=True, null=True)
-    user = models.ForeignKey(User, editable=False, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False,
+                             blank=True, null=True)
 
     # HACK: As it turns out, MySQL doesn't consider two rows with NULL values
     # in a column as duplicates. So, resorting to calculating a unique hash in

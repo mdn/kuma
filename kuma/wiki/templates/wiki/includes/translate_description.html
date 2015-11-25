@@ -12,7 +12,7 @@
                   <dd>{{ parent.title }}</dd>
                 </dl>
                 <dl class="localized">
-                  <dt><label for="{{ desc_form.title.auto_id }}" title="{{ desc_form.title.help_text }}">{{ _('Title in {locale}:')|f(locale=language) }}</label></dt>
+                  <dt><label for="{{ desc_form.title.auto_id }}" title="{{ desc_form.title.help_text }}">{{ _('Title in %(locale)s:', locale=language) }}</label></dt>
                   <dd>{{ desc_form.title|safe }}</dd>
                 </dl>
               </li>
@@ -23,7 +23,7 @@
                     <dd>{{ specific_slug }}</dd>
                   </dl>
                   <dl class="localized">
-                    <dt><label for="{{ desc_form.slug.auto_id }}" title="{{ desc_form.slug.help_text }}">{{ _('Slug in {locale}:')|f(locale=language) }}</label></dt>
+                    <dt><label for="{{ desc_form.slug.auto_id }}" title="{{ desc_form.slug.help_text }}">{{ _('Slug in %(locale)s:', locale=language) }}</label></dt>
                     <dd>{{ desc_form.slug|safe }}</dd>
                   </dl>
                 </li>
@@ -47,7 +47,7 @@
                     <dd>&nbsp;</dd>
                   </dl>
                   <dl class="localized">
-                    <dt><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label></dt>
+                    <dt><label><abbr title="{{ _('Generate table of contents') }}">{{ _('TOC:') }}</abbr></label></dt>
                     <dd>{{ revision_form.toc_depth | safe }}</dd>
                   </dl>
                 </li>
@@ -59,11 +59,11 @@
                   <dd>&nbsp;</dd>
                 </dl>
                 <dl class="localized">
-                  <dt><label>{{_('Lookup:')}}</label>
+                  <dt><label>{{ _('Lookup:') }}</label>
                     <input type="text" id="parent_text" />
                     <input type="hidden" name="parent_id" id="parent_id" value="{{ parent.id }}" />
                   </dt>
-                  <dd>{{_('Find the translation source with the lookup above and then click "Save Changes.')}}</dd>
+                  <dd>{{ _('Find the translation source with the lookup above and then click "Save Changes.') }}</dd>
                 </dl>
               </li>
               {% endif %}

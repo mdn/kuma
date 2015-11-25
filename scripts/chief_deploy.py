@@ -14,6 +14,12 @@ from commander.deploy import task, hostgroups
 
 import commander_settings as settings
 
+# Setup local executable paths
+os.environ['PATH'] = os.pathsep.join([
+    os.path.join(settings.VENV_DIR, 'bin'),  # python virtualenv executables
+    '/usr/local/bin',  # node global executables
+    os.environ['PATH']])  # The existing paths
+
 
 @task
 def update_code(ctx, tag):
@@ -27,25 +33,21 @@ def update_code(ctx, tag):
 @task
 def update_locales(ctx):
     with ctx.lcd(os.path.join(settings.SRC_DIR, 'locale')):
-        ctx.local("svn up")
         ctx.local("./compile-mo.sh .")
 
 
 @task
 def update_assets(ctx):
     with ctx.lcd(settings.SRC_DIR):
-        ctx.local("python2.6 manage.py collectstatic --noinput")
-        ctx.local("python2.6 manage.py compilejsi18n")
         ctx.local("./scripts/compile-stylesheets")
-        ctx.local("LANG=en_US.UTF-8 python2.6 manage.py compress_assets")
+        ctx.local("python2.7 manage.py compilejsi18n")
+        ctx.local("python2.7 manage.py collectstatic --noinput")
 
 
 @task
 def database(ctx):
     with ctx.lcd(settings.SRC_DIR):
-        ctx.local("python2.6 manage.py syncdb --noinput")                   # Django
-        ctx.local("python2.6 manage.py migrate --noinput")                  # South (new)
-        ctx.local("python2.6 manage.py update_badges")
+        ctx.local("python2.7 manage.py migrate --noinput")
 
 
 @task
@@ -58,19 +60,23 @@ def deploy_app(ctx):
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
     ctx.remote("service httpd restart")
 
-@hostgroups(settings.WEB_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
+
+@hostgroups(settings.KUMA_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def deploy_kumascript(ctx):
     ctx.remote("/usr/bin/supervisorctl stop all; /usr/bin/killall nodejs; /usr/bin/supervisorctl start all")
+
 
 @hostgroups(settings.WEB_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def prime_app(ctx):
     for http_port in range(80, 82):
         ctx.remote("for i in {1..10}; do curl -so /dev/null -H 'Host: %s' -I http://localhost:%s/ & sleep 1; done" % (settings.REMOTE_HOSTNAME, http_port))
 
+
 @hostgroups(settings.CELERY_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def update_celery(ctx):
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
     ctx.remote('/usr/bin/supervisorctl mrestart celery\*')
+
 
 # As far as I can tell, Chief does not pass the username to commander,
 # so I can't give a username here: (
@@ -82,6 +88,7 @@ def ping_newrelic(ctx):
     f.close()
     ctx.local('curl --silent -H "x-api-key:%s" -d "deployment[app_name]=%s" -d "deployment[revision]=%s" -d "deployment[user]=Chief" https://rpm.newrelic.com/deployments.xml' % (settings.NEWRELIC_API_KEY, settings.REMOTE_HOSTNAME, tag))
 
+
 @task
 def update_info(ctx):
     with ctx.lcd(settings.SRC_DIR):
@@ -90,11 +97,7 @@ def update_info(ctx):
         ctx.local("git log -3")
         ctx.local("git status")
         ctx.local("git submodule status")
-        ctx.local("python2.6 ./manage.py migrate --list")
-        with ctx.lcd("locale"):
-            ctx.local("svn info")
-            ctx.local("svn status")
-
+        ctx.local("python2.7 ./manage.py migrate --list")
         ctx.local("git rev-parse HEAD > media/revision.txt")
 
 

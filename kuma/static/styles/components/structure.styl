@@ -1,0 +1,97 @@
+/*
+Main CSS file for MDN.  Holds the site structure and key styles.
+
+Classes which should be mirror extensions and mixins - mixins.styl
+These classes are used within wiki content so
+we must have them available as classes as well.
+
+====================================================================== */
+
+/* grid setup for direct class uses */
+@require '../includes/mixin_draw-grid';
+draw-grid();
+
+/* columns */
+@require 'structure/cols';
+
+/*
+Pre-header
+====================================================================== */
+
+/* soapbox notice */
+@require 'structure/global-notice';
+
+/* keyboard/screen reader skip link menu */
+@require 'structure/nav-access';
+
+
+/*
+Header
+====================================================================== */
+
+@require 'structure/main-header';
+@require 'structure/tabzilla';
+@require 'structure/submenu';
+
+
+/*
+Secondary Navigation
+- login widget
+- profile (logged in) links
+-------------------------------------------------------------- */
+
+@require 'structure/nav-sec';
+@require 'structure/oauth-logged-in';
+@require 'structure/oauth-login';
+
+
+/*
+Main Navigation
+- menus & submenus
+- search bar
+-------------------------------------------------------------- */
+
+@require 'structure/main-nav';
+@require 'structure/main-nav-search';
+@require 'structure/search-wrap';
+
+/*
+Footer
+====================================================================== */
+
+@require 'structure/contentinfo';
+
+/*
+Misc - needs sorting
+====================================================================== */
+
+@require 'structure/socialaccount-providers';
+@require 'structure/feature-test-element';
+@require 'structure/pagination';
+
+
+p.field-explanation {
+    margin-bottom: 0;
+}
+
+#content-main.full {
+    clear: both;
+    float: none;
+    width: 100%;
+}
+
+.main {
+    float: left;
+    width: 670px;
+}
+
+@media $media-query-mobile {
+
+    .header-clear {
+        display: none;
+    }
+
+}
+
+
+

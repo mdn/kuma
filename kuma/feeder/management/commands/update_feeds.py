@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 from optparse import make_option
 import logging
 import socket
@@ -10,9 +11,9 @@ import jsonpickle
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.db import IntegrityError
-from django.utils import encoding, hashcompat
+from django.utils import encoding
 
-from kuma.core.utils import file_lock
+from kuma.core.utils import memcache_lock
 from kuma.feeder.models import Feed, Entry
 
 
@@ -27,7 +28,7 @@ class Command(NoArgsCommand):
                     default=False, help='Fetch even disabled feeds.'),
     )
 
-    @file_lock('kuma_feeder')
+    @memcache_lock('kuma_feeder')
     def handle_noargs(self, **options):
         """
         Locked command handler to avoid running this command more than once
@@ -96,7 +97,7 @@ class Command(NoArgsCommand):
 
         except KeyboardInterrupt:
             raise
-        except Exception, e:
+        except Exception as e:
             log.error("General Error starting loop: %s", e)
             log.exception(e)
 
@@ -203,7 +204,7 @@ class Command(NoArgsCommand):
         if dirty_feed:
             try:
                 dirty_feed = False
-                log.debug("Feed changed, updating db" % feed)
+                log.debug("Feed %s changed, updating db" % feed)
                 feed.save()
             except KeyboardInterrupt:
                 raise
@@ -224,8 +225,7 @@ class Command(NoArgsCommand):
                  Entry._meta.get_field_by_name('guid')[0].max_length)):
                 entry_guid = entry.guid
             else:
-                entry_guid = hashcompat.md5_constructor(encoding.smart_str(
-                    json_entry)).hexdigest()
+                entry_guid = hashlib.md5(encoding.smart_str(json_entry)).hexdigest()
 
             if 'updated_parsed' in entry:
                 yr, mon, d, hr, min, sec = entry.updated_parsed[:-3]
@@ -245,6 +245,6 @@ class Command(NoArgsCommand):
 
         except KeyboardInterrupt:
             raise
-        except Exception, e:
+        except Exception as e:
             log.error('General Error on %s: %s', feed.url, e)
             log.exception(e)

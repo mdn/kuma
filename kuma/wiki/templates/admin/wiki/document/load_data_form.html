@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_modify adminmedia %}
+{% load i18n admin_modify admin_static %}
 
 {% block title %}{% trans "Load documents" %} {{ block.super }}{% endblock %}
 
@@ -10,8 +10,7 @@
 
 {% block extrastyle %}
   {{ block.super }}
-  <link rel="stylesheet" type="text/css"
-        href="{% admin_media_prefix %}css/forms.css" />
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
 {% endblock %}
 
 {% block coltype %}{% if ordered_objects %}colMS{% else %}colM{% endif %}{% endblock %}
@@ -20,9 +19,9 @@
 
 {% block breadcrumbs %}{% if not is_popup %}
 <div class="breadcrumbs">
-     <a href="{% url admin:index %}">{% trans "Home" %}</a> &rsaquo;
-     <a href="{% url admin:app_list "wiki" %}">{% trans "Wiki" %}</a> &rsaquo;
-     <a href="{% url admin:wiki_document_changelist %}">{% trans "Documents" %}</a> &rsaquo;
+     <a href="{% url 'admin:index' %}">{% trans "Home" %}</a> &rsaquo;
+     <a href="{% url 'admin:app_list' "wiki" %}">{% trans "Wiki" %}</a> &rsaquo;
+     <a href="{% url 'admin:wiki_document_changelist' %}">{% trans "Documents" %}</a> &rsaquo;
      {% trans "Load documents" %}
 </div>
 {% endif %}{% endblock %}
@@ -40,22 +39,22 @@
       <fieldset class="module aligned">
         {% for field in import_file_form %}
           <div class="form-row{% if field.errors %} errors{% endif %}">
-	    <div>
-	      {% if field.errors %}
-	      <ul class="errorlist">
-		  {% for error in field.errors %}
-		    <li>{{ error }}</li>
-		  {% endfor %}
-	        </ul>
-	      {% endif %}
+        <div>
+          {% if field.errors %}
+          <ul class="errorlist">
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+            </ul>
+          {% endif %}
               <label class="required">{{ field.label }}: </label>{{ field }}
               {% if field.help_text %}<p class="help">{{ field.help_text|safe }}</p>{% endif %}
-	    </div>
+        </div>
           </div>
         {% endfor %}
       </fieldset>
       <div class="submit-row">
-	<input class="default" type="submit" name="_load"
+    <input class="default" type="submit" name="_load"
                value="{% trans "Load" %}" />
       </div>
     </div>

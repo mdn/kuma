@@ -11,15 +11,15 @@
 
   <link rel="home" href="{{ url('home') }}">
   <link rel="copyright" href="#copyright">
-  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
+  <link rel="shortcut icon" href="{{ static('img/favicon.ico') }}"/>
 
   {% block site_css %}
-  {{ css('mdn') }}
+  {% stylesheet 'mdn' %}
   {% endblock %}
 
     <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
-  <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
+  {% javascript 'html5shiv' %}
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
@@ -29,13 +29,13 @@
 {% block content %}{% endblock %}
 
 {# js #}
-<script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
+<script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
 
 {% block site_js %}
 
-  {{ js('main') }}
+  {% javascript 'main' %}
 
-  {{ js('popup') }}
+  {% javascript 'popup' %}
 
 {% endblock %}
 {% block js %}{% endblock %}

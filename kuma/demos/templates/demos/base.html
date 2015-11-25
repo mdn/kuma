@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block site_css %}
-    {{ super() }}
-    {{ css('demostudio') }}
-    {{ css('jquery-ui') }}
+  {{ super() }}
+  {% stylesheet 'demostudio' %}
+  {% stylesheet 'jquery-ui' %}
 {% endblock %}
 
 {% block site_js %}
-    {{ super() }}
-    {{ js('demostudio') }}
+  {{ super() }}
+  {% javascript 'demostudio' %}
 {% endblock %}

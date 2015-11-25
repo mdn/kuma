@@ -41,8 +41,6 @@
   CKEDITOR.dtd.$block['i'] = 1;
   delete CKEDITOR.dtd.$removeEmpty['i'];
 
-  CKEDITOR.timestamp = '{{ BUILD_ID_JS }}';
-
   CKEDITOR.editorConfig = function(config) {
     // Should be kept in sync with the list in ckeditor/source/build-config.js.
     // Defining plugins list explicitly lets us to switch easily between dev and build versions.
@@ -92,17 +90,17 @@
     // Don't use HTML entities in the output except basic ones (config.basicEntities).
     config.entities = false;
 
+    // Allows section editing to be used immediately and not lose focus on desired element
+    // http://docs.ckeditor.com/#!/guide/dev_autogrow
+    if(window.waffle && window.waffle.flag_is_active('section_edit')) {
+        config.autoGrow_onStartup = true;
+    }
+
     config.startupFocus = true;
     config.bodyClass = 'text-content redesign';
-    config.contentsCss = [
-      mdn.mediaPath + 'css/main.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/wiki.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/wiki-wysiwyg.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/wiki-syntax.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}'
-    ];
+    config.contentsCss = mdn.assets.css['editor-content'];
 
-    if (window.waffle && waffle.FLAGS.enable_customcss) {
+    if(window.waffle && window.waffle.flag_is_active('enable_customcss')) {
       config.contentsCss.push('{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1');
     }
 

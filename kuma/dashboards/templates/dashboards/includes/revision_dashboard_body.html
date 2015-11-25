@@ -4,7 +4,7 @@
 {% if waffle.switch('store_revision_ips') and user.is_superuser %}
     {% set show_ips = True %}
 {% endif %}
-{% if total %}
+{% if revisions.count %}
     <table class="dashboard-table" width="100%">
         <thead>
             <tr>
@@ -16,21 +16,20 @@
         </thead>
         <tbody>
             {% for revision in revisions %}
-
-                {% set previous_id = revision.get_previous().id %}
-                {% set revision_url = url('wiki.document', revision.document.full_path, locale=revision.document.locale) %}
+                {% set previous_id = revision.previous.id %}
+                {% set revision_url = revision.document.get_absolute_url() %}
                 <tr
                     tabindex="0"
                     class="dashboard-row {% if not previous_id %}dashboard-row-new{% endif %}"
                     data-revision-id="{{ revision.id }}"
                     data-previous-id="{{ previous_id }}"
                     data-view-url="{{ revision_url }}"
-                    data-edit-url="{{ url('wiki.edit_document', revision.document.full_path, locale=revision.document.locale) }}"
-                    data-compare-url="{{ url('wiki.compare_revisions', revision.document.full_path, locale=revision.document.locale) }}?from={{ previous_id if previous_id else revision.id }}&to={{ revision.id }}&raw=1"
-                    data-revert-url="{{ url('wiki.revert_document', revision.document.full_path, revision.id, locale=revision.document.locale) }}"
-                    data-history-url="{{ url('wiki.document_revisions', revision.document.full_path, locale=revision.document.locale) }}">
+                    data-edit-url="{{ revision.document.get_edit_url() }}"
+                    data-compare-url="{{ url('wiki.compare_revisions', revision.document.slug, locale=revision.document.locale) }}?from={{ previous_id if previous_id else revision.id }}&amp;to={{ revision.id }}&amp;raw=1"
+                    data-revert-url="{{ url('wiki.revert_document', revision.document.slug, revision.id, locale=revision.document.locale) }}"
+                    data-history-url="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}">
                     <td class="dashboard-revision">
-                        <a href="{{ url('wiki.revision', revision.document.full_path, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
+                        <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
                         <br />
                         <span class="locale">{{ revision.document.locale }}</span>
                         {% if not previous_id %}<span class="new">{{ _('new') }}</span>{% endif %}
@@ -50,11 +49,10 @@
                     <br/><a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a>
                     </span>
                     {% endif %}
-                    {% if request.user.is_superuser and revision.creator.get_profile().is_banned %}
-                        {% set active_ban = revision.creator.get_profile().active_ban() %}
+                    {% if request.user.is_superuser and revision.creator.active_ban %}
                         <div class="banned">
-                            banned {{ datetimeformat(active_ban.date, format='date') }}
-                            by {{ active_ban.by }}
+                            banned {{ datetimeformat(revision.creator.active_ban.date, format='date') }}
+                            by {{ revision.creator.active_ban.by }}
                         </div>
                     {% endif %}
                     </td>

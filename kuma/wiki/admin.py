@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib import admin
 from django.contrib import messages
+from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -10,13 +11,13 @@ from kuma.core.decorators import login_required, permission_required
 from kuma.core.urlresolvers import reverse
 
 from .decorators import check_readonly
-from .models import (Document, DocumentZone, DocumentTag,
+from .models import (Document, DocumentZone, DocumentTag, DocumentSpamAttempt,
                      Revision, RevisionIP, EditorToolbar)
 
 
 def dump_selected_documents(self, request, queryset):
     filename = "documents_%s.json" % (datetime.now().isoformat(),)
-    response = HttpResponse(mimetype="text/plain")
+    response = HttpResponse(content_type="text/plain")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     Document.objects.dump_json(queryset, response)
     return response
@@ -35,6 +36,7 @@ def purge_documents(self, request, queryset):
     selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
     return HttpResponseRedirect(redirect_url % ','.join(selected))
 purge_documents.short_description = "Permanently purge deleted documents"
+
 
 @login_required
 @staff_member_required
@@ -59,10 +61,11 @@ def purge_view(request):
                             'admin/wiki/purge_documents.html',
                             {'to_purge': to_purge})
 
-def undelete_documents(self, request, queryset):
+
+def restore_documents(self, request, queryset):
     for doc in queryset:
-        doc.undelete()
-undelete_documents.short_description = "Undelete deleted documents"
+        doc.restore()
+restore_documents.short_description = "Restore deleted documents"
 
 
 def enable_deferred_rendering_for_documents(self, request, queryset):
@@ -87,9 +90,8 @@ def force_render_documents(self, request, queryset):
         try:
             doc.render(cache_control='no-cache')
             count += 1
-        except:
+        except Exception:
             bad_count += 1
-            pass
     self.message_user(request, "Rendered %s documents, failed on %s "
                                "documents." % (count, bad_count))
 force_render_documents.short_description = (
@@ -179,6 +181,8 @@ topic_children_documents_link.short_description = "Child Documents"
 
 def topic_sibling_documents_link(self):
     """HTML link to a list of sibling documents"""
+    if not self.parent_topic:
+        return ''
     count = self.parent_topic.children.count()
     if not count:
         return ''
@@ -197,8 +201,8 @@ def document_link(self):
     """Public link to the document"""
     link = self.get_absolute_url()
     return ('<a target="_blank" href="%s">'
-            '<img src="/media/img/icons/link_external.png"> View</a>' %
-            (link,))
+            '<img src="%simg/icons/link_external.png"> View</a>' %
+            (link, settings.MEDIA_URL))
 
 document_link.allow_tags = True
 document_link.short_description = "Public"
@@ -239,9 +243,9 @@ def rendering_info(self):
     return '<ul>%s</ul>' % ''.join('<li>%s</li>' % (x % y) for x, y in (
         ('<img src="/admin-media/img/admin/icon-yes.gif" alt="%s"> '
          'Deferred rendering', self.defer_rendering),
-        ('%s (last)',        self.last_rendered_at),
-        ('%s (started)',     self.render_started_at),
-        ('%s (scheduled)',   self.render_scheduled_at),
+        ('%s (last)', self.last_rendered_at),
+        ('%s (started)', self.render_started_at),
+        ('%s (scheduled)', self.render_scheduled_at),
     ) if y)
 
 rendering_info.allow_tags = True
@@ -262,10 +266,25 @@ class DocumentAdmin(admin.ModelAdmin):
                disable_deferred_rendering_for_documents,
                repair_breadcrumbs,
                purge_documents,
-               undelete_documents)
+               restore_documents)
     change_list_template = 'admin/wiki/document/change_list.html'
-    fields = ('locale', 'title', 'defer_rendering', 'render_expires',
-              'render_max_age', 'parent', 'parent_topic', 'category',)
+    fieldsets = (
+        (None, {
+            'fields': ('locale', 'title')
+        }),
+        ('Rendering', {
+            'fields': ('defer_rendering', 'render_expires', 'render_max_age')
+        }),
+        ('Topical Hierarchy', {
+            'fields': ('parent_topic',)
+        }),
+        ('Localization', {
+            'description': "The document should be <strong>either</strong> "
+                           "localizable, <strong>or</strong> have a parent - "
+                           "never both.",
+            'fields': ('is_localizable', 'parent')
+        })
+    )
     list_display = ('id', 'locale', 'slug', 'title',
                     document_link,
                     'modified',
@@ -300,12 +319,11 @@ class DocumentAdmin(admin.ModelAdmin):
         """
         return False
 
-    def queryset(self, request):
+    def get_queryset(self, request):
         """
         The Document class has multiple managers which perform
         different filtering based on deleted status; we want the
         special admin-only one that doesn't filter.
-
         """
         qs = Document.admin_objects.all()
         # TODO: When we're on a Django version that handles admin
@@ -315,6 +333,25 @@ class DocumentAdmin(admin.ModelAdmin):
         if ordering:
             qs = qs.order_by(*ordering)
         return qs
+
+
+class DocumentTagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    search_fields = ('name',)
+    ordering = ('name',)
+
+
+class DocumentZoneAdmin(admin.ModelAdmin):
+    raw_id_fields = ('document',)
+
+
+class DocumentSpamAttemptAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'slug', 'document', 'created', 'user']
+    list_display_links = ['id', 'title', 'slug']
+    list_filter = ['created', 'document__deleted', 'document__locale']
+    ordering = ['-created']
+    search_fields = ['title', 'slug', 'user__username']
+    raw_id_fields = ['user', 'document']
 
 
 class RevisionAdmin(admin.ModelAdmin):
@@ -333,19 +370,10 @@ class RevisionIPAdmin(admin.ModelAdmin):
     list_display = ('revision', 'ip',)
 
 
-class DocumentTagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
-    search_fields = ('name',)
-    ordering = ('name',)
-
-
-class DocumentZoneAdmin(admin.ModelAdmin):
-    raw_id_fields = ('document',)
-
-
 admin.site.register(Document, DocumentAdmin)
-admin.site.register(DocumentZone, DocumentZoneAdmin)
+admin.site.register(DocumentSpamAttempt, DocumentSpamAttemptAdmin)
 admin.site.register(DocumentTag, DocumentTagAdmin)
+admin.site.register(DocumentZone, DocumentZoneAdmin)
 admin.site.register(Revision, RevisionAdmin)
 admin.site.register(RevisionIP, RevisionIPAdmin)
 admin.site.register(EditorToolbar, admin.ModelAdmin)

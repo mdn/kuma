@@ -8,7 +8,7 @@
 {% block body_attributes %}id="demos-submit"{% endblock %}
 {% block bodyclass %}section-demos plain{% endblock %}
 {% block title %}
-    {{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Submit a New Demo'))) }}
+    {{ page_title(_('%(subtitle)s | Demo Studio', subtitle=_('Submit a New Demo'))) }}
 {% endblock %}
 
 {% block content %}
@@ -59,11 +59,11 @@
     </div>
 
     {% trans %}
-        <p>To submit your demo, you need an <strong><a href="{{signup_url}}">MDN profile</a></strong>.</p>
+        <p>To submit your demo, you need an <strong><a href="{{ signup_url }}">MDN profile</a></strong>.</p>
     {% endtrans %}
 
     <p class="choices">
-        <a href="{{login_url}}" class="button">{{_('Log In to Profile')}}</a>
+        <a href="{{ login_url }}" class="button">{{_('Log In to Profile')}}</a>
     </p>
 
   </section>

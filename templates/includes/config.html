@@ -5,24 +5,23 @@
         {% if not is_sphinx %}
             {{ waffle.wafflejs() }}
         {% endif %}
-        {% if waffle.flag('static-i18njs') %}
-            {{ inlinei18n(request.locale) }}
-        {% endif %}
+
+        // This needs to be set before ckeditor.js loads
+        window.CKEDITOR_BASEPATH = '/static/js/libs/ckeditor/build/ckeditor/';
 
         // This represents the site configuration
         win.mdn = {
-            build: '{{ BUILD_ID_JS }}',
             // Properties and settings for CKEditor will go here
             ckeditor: {},
             // Feature test results and methods will be placed here
             features: {},
-            // The path to media (images, CSS, JS) in MDN
-            mediaPath: '{{ MEDIA_URL }}',
+            // The path to static assets (images, CSS, JS) in MDN
+            staticPath: '{{ STATIC_URL }}',
             // Optimizely API
             optimizely: win['optimizely'] || [],
             // Site notifications
             {% if messages %}notifications: [
-                {% for message in messages %}{% if 'wiki_redirect' not in message.tags or waffle.flag('redirect_messages') %}{message: "{{ message }}", tags: "{{ message.tags }}", level: "{{ message|level_tag }}"}{% if not loop.last %},{% endif %}{% endif %}
+                {% for message in messages %}{% if 'wiki_redirect' not in message.tags or request.user.is_superuser %}{message: "{{ message }}", tags: "{{ message.tags }}", level: "{{ message|level_tag }}"}{% if not loop.last %},{% endif %}{% endif %}
                 {% endfor %}
             ],
             {% else %}
@@ -32,12 +31,17 @@
             wiki: {
                 autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
             },
-            searchFilters: {{ command_search_filters|jsonencode }}
+            // Assets that need to be dynamically injected
+            assets: {
+                css: {
+                    'editor-content': [{% stylesheet 'editor-content' %}],
+                    'wiki-compat-tables': [{% stylesheet 'wiki-compat-tables' %}]
+                },
+                js: {
+                    'syntax-prism': [{% javascript 'syntax-prism' %}],
+                    'wiki-compat-tables': [{% javascript 'wiki-compat-tables' %}]
+                }
+            }
         };
-
-        // Ensures gettext always returns something, is always set
-        win.gettext = function(x) {
-            return x;
-        }
-    })(window);
+    })(this);
 </script>

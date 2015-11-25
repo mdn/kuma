@@ -1,6 +1,6 @@
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/document_macros.html" import build_document_crumbs with context %}
-{% block title %}{{ page_title(_('Delete Document | {document}')|f(document=document.title)) }}{% endblock %}
+{% block title %}{{ page_title(_('Delete Document | %(document)s', document=document.title)) }}{% endblock %}
 {% block content %}
 
   <article class="delete-document">
@@ -26,7 +26,7 @@
     <strong>{{ _('Last Change Date') }}</strong>
     <p>{{ datetimeformat(document.current_revision.created, format='longdatetime') }}</p>
 
-    <p>{{ _('You are about to delete this document and all of its revisions.  Please let us know why this page should be deleted.') }}</p>
+    <p>{{ _('You are about to delete this document and all of its revisions. Please let us know why this page should be deleted.') }}</p>
 
     <form action="" method="post">
       {{ csrf() }}
@@ -36,7 +36,7 @@
       <p>{{ _('Are you sure you want to continue?') }}</p>
 
       <input type="submit" value="{{ _('Delete') }}" />
-      <a href="{{ url('wiki.document', document.slug) }}">{{ _('Cancel') }}</a>
+      <a href="{{ document.get_absolute_url() }}">{{ _('Cancel') }}</a>
 
     </form>
 

@@ -1,11 +1,7 @@
-MySQL-python==1.2.3c1
-Jinja2==2.5.2
-lxml==2.2.6
+MarkupSafe==0.23
+Jinja2==2.8.0
+mysqlclient==1.3.6
+lxml==3.4.4
 coverage==3.7.1
-pyquery==0.5
-# commented out since it doesn't work on Travis with Python 2.6
-# readd once we're using a sane Python version
-# librabbitmq==1.6.1
-amqp==1.4.6
-newrelic==2.8.0.7
-Pillow==2.3.0
+newrelic==2.52.0.40
+Pillow==2.9.0

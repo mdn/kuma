@@ -1,0 +1,31 @@
+---
+language: python
+python: "2.7"
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq python-apt python-pycurl
+ - sudo apt-get remove elasticsearch
+install:
+  - pip install ansible>=1.6.0
+script:
+  # Prepare tests
+  - echo localhost > inventory
+
+  # Check syntax
+  - ansible-playbook --syntax-check -i inventory test.yml
+
+  # First run
+  - ansible-playbook -i inventory test.yml --connection=local --sudo
+
+  # Second run Idempotence test
+  - >
+    ansible-playbook -i inventory test.yml --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  - sudo /etc/init.d/elasticsearch status || exit 1
+
+elasticsearch_plugins:
+    - name: mobz/elasticsearch-head
+      dir: head

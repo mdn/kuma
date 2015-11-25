@@ -1,39 +1,29 @@
 import datetime
 import HTMLParser
-import os
+import json
 import urllib
-import urlparse
-import hashlib
-import bitly_api
 
-from django.http import QueryDict
-from django.utils.encoding import smart_str
-from django.utils.http import urlencode as urlencode_util
-from django.utils.tzinfo import LocalTimezone
-
-from babel import localedata
-from babel.dates import format_date, format_time, format_datetime
-from babel.numbers import format_decimal
 import bleach
-import pytz
-from urlobject import URLObject
-from jingo import register, env
 import jinja2
-from pytz import timezone
-from tower import ugettext_lazy as _lazy, ungettext
-
+import pytz
+from babel import localedata
+from babel.dates import format_date, format_datetime, format_time
+from babel.numbers import format_decimal
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
-from django.utils.safestring import mark_safe
-
+from django.utils.timezone import get_default_timezone
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ungettext
+from jingo import env, register
+from pytz import timezone
 from soapbox.models import Message
-from statici18n.utils import get_filename
+from statici18n.templatetags.statici18n import statici18n
+from urlobject import URLObject
 
-from .cache import memcache
 from .exceptions import DateTimeFormatError
 from .urlresolvers import reverse, split_path
 
@@ -41,10 +31,11 @@ from .urlresolvers import reverse, split_path
 htmlparser = HTMLParser.HTMLParser()
 
 
-# Yanking filters from Django.
+# Yanking filters from Django and 3rd party libs.
 register.filter(strip_tags)
 register.filter(defaultfilters.timesince)
 register.filter(defaultfilters.truncatewords)
+register.function(statici18n)
 
 
 @register.filter
@@ -58,55 +49,6 @@ def url(viewname, *args, **kwargs):
     """Helper for Django's ``reverse`` in templates."""
     locale = kwargs.pop('locale', None)
     return reverse(viewname, args=args, kwargs=kwargs, locale=locale)
-
-
-@register.filter
-def urlparams(url_, hash=None, query_dict=None, **query):
-    """
-    Add a fragment and/or query paramaters to a URL.
-
-    New query params will be appended to exising parameters, except duplicate
-    names, which will be replaced.
-    """
-    url_ = urlparse.urlparse(url_)
-    fragment = hash if hash is not None else url_.fragment
-
-    q = url_.query
-    new_query_dict = (QueryDict(smart_str(q), mutable=True) if
-                      q else QueryDict('', mutable=True))
-    if query_dict:
-        for k, l in query_dict.lists():
-            new_query_dict[k] = None  # Replace, don't append.
-            for v in l:
-                new_query_dict.appendlist(k, v)
-
-    for k, v in query.items():
-        new_query_dict[k] = v  # Replace, don't append.
-
-    query_string = urlencode_util([(k, v) for k, l in new_query_dict.lists() for
-                                  v in l if v is not None])
-    new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
-                               url_.params, query_string, fragment)
-    return new.geturl()
-
-
-bitly = bitly_api.Connection(login=getattr(settings, 'BITLY_USERNAME', ''),
-                             api_key=getattr(settings, 'BITLY_API_KEY', ''))
-
-@register.filter
-def bitly_shorten(url):
-    """Attempt to shorten a given URL through bit.ly / mzl.la"""
-    cache_key = 'bitly:%s' % hashlib.md5(smart_str(url)).hexdigest()
-    short_url = memcache.get(cache_key)
-    if short_url is None:
-        try:
-            short_url = bitly.shorten(url)['url']
-            memcache.set(cache_key, short_url, 60 * 60 * 24 * 30 * 12)
-        except (bitly_api.BitlyError, KeyError):
-            # Just in case the bit.ly service fails or the API key isn't
-            # configured, fall back to using the original URL.
-            return url
-    return short_url
 
 
 class Paginator(object):
@@ -180,7 +122,7 @@ def timesince(d, now=None):
                                 '%(number)d seconds ago', n))]
     if not now:
         if d.tzinfo:
-            now = datetime.datetime.now(LocalTimezone(d))
+            now = datetime.datetime.now(get_default_timezone())
         else:
             now = datetime.datetime.now()
 
@@ -199,25 +141,13 @@ def timesince(d, now=None):
 
 @register.filter
 def yesno(boolean_value):
-    return jinja2.Markup(_lazy(u'Yes') if boolean_value else _lazy(u'No'))
+    return jinja2.Markup(_(u'Yes') if boolean_value else _(u'No'))
 
 
 @register.filter
 def entity_decode(str):
     """Turn HTML entities in a string into unicode."""
     return htmlparser.unescape(str)
-
-
-@register.function
-def inlinei18n(locale):
-    key = 'statici18n:%s' % locale
-    path = memcache.get(key)
-    if path is None:
-        path = os.path.join(settings.STATICI18N_OUTPUT_DIR,
-                            get_filename(locale, settings.STATICI18N_DOMAIN))
-        memcache.set(key, path, 60 * 60 * 24 * 30)
-    with staticfiles_storage.open(path) as i18n_file:
-        return mark_safe(i18n_file.read())
 
 
 @register.function
@@ -264,7 +194,6 @@ def urlencode(txt):
 
 @register.filter
 def jsonencode(data):
-    import json
     return jinja2.Markup(json.dumps(data))
 
 
@@ -276,7 +205,11 @@ def get_soapbox_messages(url):
 
 @register.function
 def get_webfont_attributes(request):
-    """Return data attributes based on assumptions about if user has them cached"""
+    """
+    Return data attributes based on assumptions about if user has them cached
+    """
+    if not request:
+        return ''
     assume_loaded = 'true'
     if request.META.get('HTTP_PRAGMA') == 'no-cache':
         assume_loaded = 'false'
@@ -318,7 +251,7 @@ def _babel_locale(locale):
 
 def _contextual_locale(context):
     """Return locale from the context, falling back to a default if invalid."""
-    locale = context['request'].locale
+    locale = context['request'].LANGUAGE_CODE
     if not localedata.exists(locale):
         locale = settings.LANGUAGE_CODE
     return locale
@@ -345,9 +278,8 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
 
     user = context['request'].user
     try:
-        profile = user.get_profile()
-        if user.is_authenticated() and profile.timezone:
-            user_tz = profile.timezone
+        if user.is_authenticated() and user.timezone:
+            user_tz = timezone(user.timezone)
             tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
     except AttributeError:
         pass
@@ -358,7 +290,7 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     if format == 'shortdatetime':
         # Check if the date is today
         if value.toordinal() == datetime.date.today().toordinal():
-            formatted = _lazy(u'Today at %s') % format_time(
+            formatted = _(u'Today at %s') % format_time(
                 tzvalue, format='short', locale=locale)
         else:
             formatted = format_datetime(tzvalue, format='short', locale=locale)
@@ -391,3 +323,8 @@ def number(context, n):
     if n is None:
         return ''
     return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
+
+
+@register.function
+def static(path):
+    return staticfiles_storage.url(path)

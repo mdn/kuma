@@ -1,7 +1,7 @@
 {% extends "demos/base.html" %}
 
 {% block bodyclass %}section-demos plain{% endblock %}
-{% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Browse all demos'))) }}{% endblock %}
+{% block title %}{{ page_title(_('%(subtitle)s | Demo Studio', subtitle=_('Browse all demos'))) }}{% endblock %}
 {% block extrahead %}
     <link rel="alternate" type="application/atom+xml" title="{{_('Recent demos')}}"
       href="{{ url('demos_feed_recent', format='atom') }}" />

@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% set title = _('Select language | {document}')|f(document=document.title) %}
+{% set title = _('Select language | %(document)s', document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block content %}
@@ -8,9 +8,9 @@
 
     <h1>{{ _('Select a language to translate to:') }}</h1>
     <ul class="locales">
-      {% for locale in settings.LANGUAGES %}
-        {% if locale[0] != settings.WIKI_DEFAULT_LANGUAGE %}
-          <li><a href="{{ url('wiki.translate', document_path=document.full_path)|urlparams(tolocale=locale[0]) }}"><bdi>{{ locale[1] }} ({{ locale[0] }})</bdi></a></li>
+      {% for code, name in settings.LANGUAGES %}
+        {% if code != settings.WIKI_DEFAULT_LANGUAGE %}
+          <li><a href="{{ url('wiki.translate', document_path=document.slug)|urlparams(tolocale=code) }}"><bdi>{{ name }} ({{ code }})</bdi></a></li>
         {% endif %}
       {% endfor %}
     </ul>

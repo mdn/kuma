@@ -2,11 +2,42 @@ import calendar
 from datetime import datetime
 import hashlib
 
+from django.conf import settings
 from django.core.files import temp as tempfile
 from django.template import loader
 from django.utils import timezone
 from django.utils.http import http_date
 from django.utils.safestring import mark_safe
+
+from kuma.core.urlresolvers import reverse
+
+
+def allow_add_attachment_by(user):
+    """Returns whether the `user` is allowed to upload attachments.
+
+    This is determined by a negative permission, `disallow_add_attachment`
+    When the user has this permission, upload is disallowed unless it's
+    a superuser or staff.
+    """
+    if user.is_superuser or user.is_staff:
+        # Superusers and staff always allowed
+        return True
+    if user.has_perm('attachments.add_attachment'):
+        # Explicit add permission overrides disallow
+        return True
+    if user.has_perm('attachments.disallow_add_attachment'):
+        # Disallow generally applied via group, so per-user allow can
+        # override
+        return False
+    return True
+
+
+def full_attachment_url(attachment_id, filename):
+    path = reverse('attachments.raw_file', kwargs={
+        'attachment_id': attachment_id,
+        'filename': filename,
+    })
+    return '%s%s%s' % (settings.PROTOCOL, settings.ATTACHMENT_HOST, path)
 
 
 def convert_to_http_date(dt):
@@ -48,31 +79,30 @@ def attachment_upload_to(instance, filename):
     }
 
 
-def attachments_json(attachments):
+def attachments_payload(attachments):
     """
     Given a list of Attachments (e.g., from a Document), make some
     nice JSON out of them for easy display.
-
     """
     attachments_list = []
     for attachment in attachments:
+        current_revision = attachment.current_revision
         obj = {
             'title': attachment.title,
-            'date': str(attachment.current_revision.created),
-            'description': attachment.current_revision.description,
+            'date': str(current_revision.created),
+            'description': current_revision.description,
             'url': attachment.get_file_url(),
-            'size': 0,
-            'creator': attachment.current_revision.creator.username,
-            'creator_url': attachment.current_revision.creator.get_absolute_url(),
-            'revision': attachment.current_revision.id,
+            'creator': current_revision.creator.username,
+            'creator_url': current_revision.creator.get_absolute_url(),
+            'revision': current_revision.id,
             'id': attachment.id,
-            'mime': attachment.current_revision.mime_type
+            'mime': current_revision.mime_type
         }
         # Adding this to prevent "UnicodeEncodeError" for certain media
         try:
-            obj['size'] = attachment.current_revision.file.size
-        except:
-            pass
+            obj['size'] = current_revision.file.size
+        except UnicodeEncodeError:
+            obj['size'] = 0
 
         obj['html'] = mark_safe(loader.render_to_string('attachments/includes/attachment_row.html',
                                                         {'attachment': obj}))
@@ -82,7 +112,7 @@ def attachments_json(attachments):
 
 def make_test_file(content=None):
     """Create a fake file for testing purposes."""
-    if content == None:
+    if content is None:
         content = 'I am a test file for upload.'
     # Shamelessly stolen from Django's own file-upload tests.
     tdir = tempfile.gettempdir()

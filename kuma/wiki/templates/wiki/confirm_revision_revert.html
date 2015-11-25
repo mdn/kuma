@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% set title = _('Revert Revision | {document}')|f(document=document.title) %}
+{% set title = _('Revert Revision | %(document)s', document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% block bodyclass %}revert-document{% endblock %}
 
@@ -8,6 +8,12 @@
       <article id="delete-revision">
 
         <h1>{{ _('Are you sure you want to revert to this revision?') }}</h1>
+
+        {% if error %}
+        <ul class="errorlist">
+          <li>{{ error }}</li>
+        </ul>
+        {% endif %}
 
         <label><strong>{{ _('Document') }}</strong></label>
         <div>{{ document.title }}</div>
@@ -27,7 +33,7 @@
           {{ _('Why are you reverting to this revision?') }}
           <textarea name="comment"></textarea>
           <p>
-            {{ _('You are about to revert the document to this revision.  Click "revert" to revert to the content&nbsp;above.')|safe }}
+            {{ _('You are about to revert the document to this revision. Click "revert" to revert to the content&nbsp;above.')|safe }}
           </p>
           <div class="submit">
             <input type="submit" value="{{ _('Revert') }}" />

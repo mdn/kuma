@@ -3,14 +3,17 @@
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
 define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
 
-    // Browsers to run integration testing against. Note that version numbers must be strings if used with Sauce
-    // OnDemand. Options that will be permutated are browserName, version, platform, and platformVersion; any other
-    // capabilities options specified for an environment will be copied as-is
+    // Browsers to run integration testing against.
     config.environments = [
         { browserName: 'firefox' },
         { browserName: 'chrome' },
         { browserName: 'safari' }
     ];
+
+    config.tunnelOptions = {
+        hostname: '127.0.0.1',
+        port: 4444
+    };
 
     return cli.mixinArgs(intern.args, config);
 });

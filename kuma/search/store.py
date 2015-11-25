@@ -25,7 +25,7 @@ def referrer_url(request):
         urlpath = None
 
     if (referrer is None or urlpath is None or
-            reverse('search', locale=request.locale) != urlpath):
+            reverse('search', locale=request.LANGUAGE_CODE) != urlpath):
         return None
     return referrer
 
@@ -40,12 +40,19 @@ def ref_from_request(request):
 
 def ref_from_url(url):
     url = URL(url)
-    query = url.query.dict.get(QUERY_PARAM, '')
-    page = url.query.dict.get(PAGE_PARAM, 1)
-    filters = get_filters(url.query.multi_dict.get)
+    md5 = hashlib.md5()
+
+    try:
+        query = url.query.dict.get(QUERY_PARAM, '')
+        page = url.query.dict.get(PAGE_PARAM, 1)
+        filters = get_filters(url.query.multi_dict.get)
+    except UnicodeDecodeError:
+        query = ''
+        page = 1
+        filters = []
+
     locale = translation.get_language()
 
-    md5 = hashlib.md5()
     for value in [query, page, locale] + filters:
         md5.update(smart_str(value))
 

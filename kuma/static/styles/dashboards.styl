@@ -1,0 +1,96 @@
+/*
+    Used to style the dashboard widgets in the dashboard apps
+*/
+
+@require 'includes/vars';
+@require 'includes/mixins';
+@require 'components/banned';
+
+/* New revision dashboard styles */
+.dashboard-table {
+    width: 100%;
+
+    thead tr {
+        background: #3a3a3a;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+
+        &:hover {
+            background: $light-background-color;
+        }
+
+        &:nth-child(even) {
+            background: #f7f7f7;
+
+            &:hover {
+                background: $light-background-color;
+            }
+        }
+
+        .new, .locale, .deleted {
+            set-font-size(11px);
+            border-radius: 8px;
+            color: #fff;
+            display: inline-block;
+            margin-right: 6px;
+            padding: 2px 4px;
+        }
+        .new {
+            background: rgba-fallback(rgba(green, 0.6));
+        }
+        .locale {
+            background: rgba-fallback(rgba(#777, 0.6));
+        }
+        .deleted {
+            background: rgba-fallback(rgba(#f00, 0.6));
+        }
+    }
+
+    /* Select only the outer table cells. */
+    > thead th, .dashboard-row > td {
+        @extend $column-strip;
+        padding: 6px;
+        display: inline-block;
+        vertical-align: text-top;
+    }
+
+    .dashboard-detail {
+        display: none;
+        padding: 0 $grid-spacing;
+    }
+
+    .dashboard-slug {
+        set-smaller-font-size();
+        opacity: 0.8;
+        font-style: italic;
+        display: block;
+    }
+
+    #page-buttons {
+        li {
+            display: inline-block;
+            margin-right: $content-horizontal-spacing;
+        }
+    }
+}
+
+
+#revision-filter {
+    #id_start_date, #id_end_date {
+        width: 100px;
+    }
+    label {
+        display: inline-block;
+        margin-right: $content-horizontal-spacing;
+    }
+    .revision-field {
+        display: inline-block;
+        margin: 0 $grid-spacing ($grid-spacing / 2) 0;
+        white-space: nowrap;
+    }
+}

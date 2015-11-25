@@ -1,0 +1,82 @@
+@require 'includes/vars';
+@require 'includes/mixins';
+
+/*
+    Used for revision diff'ing tables, in the wiki and the dashboards
+*/
+
+.revision-diff {
+    clear: both;
+
+    dt {
+        clear: both;
+        font-style: normal;
+        font-weight: bold;
+        border-top: 1px dotted #ccc;
+    }
+    .rev-from {
+        width: 49%;
+        float: left;
+    }
+    .rev-to {
+        width: 49%;
+        float: right;
+    }
+    h3 {
+        font-weight: bold;
+        margin: 5px 0 0;
+    }
+}
+
+table.diff {
+    background: #fff;
+    border: 1px solid #ccc;
+    clear: both;
+    margin: 5px 0 15px;
+    width: 100%;
+    font-family: $code-inline-font-family;
+}
+
+td.diff_header {
+    text-align:right;
+}
+
+.diff_next {
+    background-color: #c0c0c0;
+}
+
+.diff_add {
+    background-color: #aaffaa;
+}
+
+.diff_chg {
+    background-color: #ffff77;
+}
+
+.diff_sub {
+    background-color: #ffaaaa;
+}
+
+/* Slug change callout */
+.slug-change {
+    set-smaller-font-size();
+    background: #d4dde4;
+    border: 1px solid #cae1f4;
+    padding: 4px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 4px 0;
+    clear: both;
+
+    {$selector-icon} {
+        bidi-style(margin-left, 0, margin-right, 0);
+    }
+
+    span {
+        white-space: nowrap;
+    }
+
+    a {
+        color: #444;
+    }
+}

@@ -1,0 +1,33 @@
+/*
+Secondary navigation, site tools and login info
+====================================================================== */
+
+#nav-sec {
+    position: absolute;
+    top: 12px;
+    bidi-style(right, 200px, left, auto);
+    z-index: 36; /* one more than the demos "learn more" button */
+
+    set-font-size($small-bump-font-size);
+    {$selector-site-font-fallback} & {
+        letter-spacing: -.005em;
+    }
+
+    > ul > li {
+        position: relative;
+        display: inline-block;
+        bidi-value(padding, 0 0 0 16px, 0 16px 0 0); /* same as main nav but we double it because only putting on left */
+    }
+}
+
+
+@media $media-query-mobile {
+
+    #nav-sec {
+        bidi-style(right, $gutter-width, left, auto);
+
+        > ul > li.nav-tools {
+            display: none;
+        }
+    }
+}

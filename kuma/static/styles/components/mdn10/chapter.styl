@@ -1,0 +1,174 @@
+$chapter-border = 2px;
+$chapter-space-between = 120px;
+
+/* container */
+.chapters {
+    position: relative;
+    overflow: hidden;
+    clearfix();
+}
+
+/* individual boxes */
+.chapter {
+    position: relative;
+    float: left;
+    margin: ($grid-spacing / 2) 0;
+    padding: $grid-spacing;
+    background-color: $light-background-color;
+    border: $chapter-border solid transparent;
+
+    /* highlight for :target match */
+    &:target {
+      border-color: $header-background-color;
+    }
+
+    &:target:nth-child(odd):before {
+      border-left-color: $header-background-color;
+    }
+
+    &:target:nth-child(even):before {
+      border-right-color: $header-background-color;
+    }
+
+    h2 {
+        vendorize(hyphens, none);
+
+        small {
+            display: block;
+            margin: 12px 0;
+
+            set-font-size(18px);
+            font-family: $heading-font-family;
+            font-weight: $light-font-weight;
+            line-height: 1;
+            letter-spacing: -0.014em;
+            {$selector-site-font-fallback} {
+                font-family: $heading-font-family-fallback;
+                line-height: 1;
+                letter-spacing: -0.044em;
+                word-spacing: 0.22em;
+            }
+        }
+    }
+}
+
+/* tweaks to live sample display for audio clips */
+.chapter-audio {
+    iframe + div {
+        display:none;
+    }
+}
+
+/* box with portrait in it gets different header */
+.chapter-portrait {
+        h2 {
+        margin-top: 10px;
+    }
+}
+
+.chapter-portrait-img {
+    line-height: 0;
+    display: inline-block;
+    border-radius: 3px;
+    height: 128px;
+    width: 128px;
+    float: none;
+    margin-right: 20px
+
+    img {
+        border-radius: 3px;
+    }
+}
+
+@media all and (min-width: 481px) {
+    .chapters {
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: $grid-spacing;
+            background-color: $header-background-color;
+        }
+    }
+
+    .chapter {
+        margin: ($grid-spacing / 2) 0 ($grid-spacing / 2) ($grid-spacing * 3);
+
+        /* arrow */
+        &:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -20px;
+            border: 20px solid $light-background-color;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            border-left: none;
+        }
+
+        /* dot on timeline */
+        &:after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: -62px;
+            background-color: #000;
+            border: 10px solid #000;
+            border-radius: 100%;
+        }
+    }
+
+    .chapter-portrait-img {
+        float: left;
+        margin-right: 10px;
+    }
+}
+
+@media all and (min-width: 769px) {
+    .chapters {
+        padding-top: $chapter-space-between;
+
+        &:before {
+            left: 50%;
+            margin-left: ($grid-spacing / 2) * -1;
+        }
+    }
+
+    .chapter {
+        width: 40%;
+        width: calc(50% - 102px);
+        float: right;
+        margin: ($grid-spacing / 2) 0 $chapter-space-between  0;
+
+
+        /* every other chapter is on left side of timeline */
+        &:nth-child(odd) {
+            float: left;
+            clear: both;
+            margin-top: ($chapter-space-between) * -1;
+            margin-bottom: ($chapter-space-between + $grid-spacing);
+        }
+
+        /* arrow */
+        &:nth-child(odd):before {
+            left: auto;
+            right: -20px;
+            border: 20px solid $light-background-color;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            border-right: none;
+        }
+
+        /* dot */
+        &:after {
+            left: -70px;
+        }
+
+        &:nth-child(odd):after {
+            left: auto;
+            right: -70px;
+        }
+    }
+}

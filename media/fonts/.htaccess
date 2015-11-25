@@ -1,5 +1,0 @@
-<FilesMatch "\.(ttf|woff|eot)$">
-    Header append vary "Origin"
-    ExpiresActive On
-    ExpiresDefault "access plus 2 weeks"
-</FilesMatch>

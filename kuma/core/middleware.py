@@ -1,13 +1,13 @@
 import contextlib
 import urllib
 
+from django.conf import settings
 from django.core import urlresolvers
-from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect
+from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
+from jingo.helpers import urlparams
 
-import tower
-
-from .helpers import urlparams
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
 from .views import handler403
 
@@ -54,8 +54,8 @@ class LocaleURLMiddleware(object):
             return response
 
         request.path_info = '/' + prefixer.shortened_path
-        request.locale = prefixer.locale
-        tower.activate(prefixer.locale)
+        request.LANGUAGE_CODE = prefixer.locale or settings.LANGUAGE_CODE
+        translation.activate(prefixer.locale)
 
     def process_response(self, request, response):
         """Unset the thread-local var we set during `process_request`."""
@@ -99,10 +99,10 @@ class RemoveSlashMiddleware(object):
     """
 
     def process_response(self, request, response):
-        if (response.status_code == 404
-                and request.path_info.endswith('/')
-                and not is_valid_path(request, request.path_info)
-                and is_valid_path(request, request.path_info[:-1])):
+        if (response.status_code == 404 and
+                request.path_info.endswith('/') and
+                not is_valid_path(request, request.path_info) and
+                is_valid_path(request, request.path_info[:-1])):
             # Use request.path because we munged app/locale in path_info.
             newurl = request.path[:-1]
             if request.GET:
@@ -126,3 +126,21 @@ def safe_query_string(request):
         yield
     finally:
         request.META['QUERY_STRING'] = qs
+
+
+class SetRemoteAddrFromForwardedFor(object):
+    """
+    Middleware that sets REMOTE_ADDR based on HTTP_X_FORWARDED_FOR, if the
+    latter is set. This is useful if you're sitting behind a reverse proxy that
+    causes each request's REMOTE_ADDR to be set to 127.0.0.1.
+    """
+    def process_request(self, request):
+        try:
+            forwarded_for = request.META['HTTP_X_FORWARDED_FOR']
+        except KeyError:
+            pass
+        else:
+            # HTTP_X_FORWARDED_FOR can be a comma-separated list of IPs.
+            # The client's IP will be the first one.
+            forwarded_for = forwarded_for.split(',')[0].strip()
+            request.META['REMOTE_ADDR'] = forwarded_for

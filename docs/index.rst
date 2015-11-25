@@ -6,19 +6,17 @@ Contents:
    :maxdepth: 2
 
    installation
-   vendor
-   installation-vagrant
-   celery
-   wsgi
-   email
-   elasticsearch
-
    development
-   migrations
    feature-toggles
-   localization
-   ckeditor
    tests
    tests-ui
-
+   tests-performance
    troubleshooting
+
+   vendor
+   celery
+   email
+   elasticsearch
+   localization
+   ckeditor
+

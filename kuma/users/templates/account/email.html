@@ -8,7 +8,7 @@
 
     {% if user.emailaddress_set.all().exists() %}
 
-      <p>{{ _('{email} is your <em>primary</em> email address')|fe(email=user.email) }}</p>
+      <p>{{ _('%(email)s is your <em>primary</em> email address', email=user.email) }}</p>
 
       {% if user.emailaddress_set.count() > 1  %}
 
@@ -57,7 +57,7 @@
     </form>
 
     <p>
-    <a href="{{ url('users.profile_edit', username=request.user.username) }}" class="button neutral">{{ _("Edit profile") }}</a>
+    <a href="{{ url('users.user_edit', username=request.user.username) }}" class="button neutral">{{ _("Edit profile") }}</a>
     </p>
 
   </div>

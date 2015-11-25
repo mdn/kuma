@@ -18,12 +18,17 @@ define(['intern/chai!assert'], function(assert) {
         },
 
         windowPropertyExists: function(remote, property) {
-            // Ensures a window[key] property exists in the page
-            // Missing global properties could be a sign of a huge problem
+            // Checks the window namespace to ensure a given key is set
 
-            return remote.execute('return typeof window.' + property + ' != "undefined"').then(function(result) {
-                assert.isTrue(result, 'The following window property exists:  ' + property);
-            });
+            return remote.executeAsync(function(property, done) {
+                var interval = setInterval(function() {
+                    if(eval('typeof window.' + property + ' != "undefined"')) {
+                        clearInterval(interval);
+                        done();
+                    }
+                }, 100);
+            }, [property]);
+
         }
     };
 

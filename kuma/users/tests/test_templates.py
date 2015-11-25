@@ -1,36 +1,42 @@
-import mock
-from nose.tools import eq_, ok_
-from pyquery import PyQuery as pq
-from waffle import Flag
+import json
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from jingo.helpers import urlparams
+from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
+from waffle.models import Flag
+import responses
 
-from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
+
+from . import UserTestCase
 from .test_views import TESTUSER_PASSWORD
-from . import (verify_strings_in_response, verify_strings_not_in_response,
-               UserTestCase)
+
+
+def add_persona_verify_response(server_response):
+    responses.add(
+        responses.POST,
+        'https://verifier.login.persona.org/verify',
+        body=json.dumps(server_response),
+        content_type='application/json',
+    )
 
 
 class SignupTests(UserTestCase):
     localizing_client = False
 
-    @mock.patch('requests.post')
-    def test_signup_page(self, mock_post):
-        user_email = "newuser@test.com"
-        mock_post.return_value = mock_resp = mock.Mock()
-        mock_resp.json.return_value = {
-            "status": "okay",
-            "email": user_email,
-            "audience": "https://developer-local.allizom.org"
-        }
+    @responses.activate
+    def test_signup_page(self):
+        add_persona_verify_response({
+            'status': 'okay',
+            'email': 'newuser@test.com',
+            'audience': 'https://developer-local.allizom.org',
+        })
 
         url = reverse('persona_login')
-        r = self.client.post(url, follow=True)
+        response = self.client.post(url, follow=True)
 
-        eq_(200, r.status_code)
-        ok_('Sign In Failure' not in r.content)
+        self.assertNotContains(response, 'Sign In Failure')
         test_strings = ['Create your MDN profile to continue',
                         'choose a username',
                         'having trouble',
@@ -38,18 +44,16 @@ class SignupTests(UserTestCase):
                         'to Mozilla',
                         'Terms',
                         'Privacy Notice']
-        verify_strings_in_response(test_strings, r)
+        for test_string in test_strings:
+            self.assertContains(response, test_string)
 
-
-    @mock.patch('requests.post')
-    def test_signup_page_disabled(self, mock_post):
-        user_email = "newuser@test.com"
-        mock_post.return_value = mock_resp = mock.Mock()
-        mock_resp.json.return_value = {
-            "status": "okay",
-            "email": user_email,
-            "audience": "https://developer-local.allizom.org"
-        }
+    @responses.activate
+    def test_signup_page_disabled(self):
+        add_persona_verify_response({
+            'status': 'okay',
+            'email': 'newuser@test.com',
+            'audience': 'https://developer-local.allizom.org',
+        })
 
         url = reverse('persona_login')
 
@@ -57,23 +61,21 @@ class SignupTests(UserTestCase):
             name='registration_disabled',
             everyone=True
         )
-        r = self.client.post(url, follow=True)
+        response = self.client.post(url, follow=True)
 
-        eq_(200, r.status_code)
-        ok_('Sign In Failure' not in r.content)
-        test_strings = ['Profile Creation Disabled']
-        verify_strings_in_response(test_strings, r)
+        self.assertNotContains(response, 'Sign In Failure')
+        self.assertContains(response, 'Profile Creation Disabled')
 
         # re-enable registration
         registration_disabled.everyone = False
         registration_disabled.save()
 
-        r = self.client.post(url, follow=True)
-        eq_(200, r.status_code)
+        response = self.client.post(url, follow=True)
         test_strings = ['Create your MDN profile to continue',
                         'choose a username',
                         'having trouble']
-        verify_strings_in_response(test_strings, r)
+        for test_string in test_strings:
+            self.assertContains(response, test_string)
 
 
 class AccountEmailTests(UserTestCase):
@@ -81,35 +83,32 @@ class AccountEmailTests(UserTestCase):
 
     def test_account_email_page_requires_signin(self):
         url = reverse('account_email')
-        r = self.client.get(url, follow=True)
-
-        eq_(200, r.status_code)
-        ok_(len(r.redirect_chain) > 0)
-        ok_('Please sign in' in r.content)
+        response = self.client.get(url, follow=True)
+        self.assertContains(response, 'Please sign in')
+        ok_(len(response.redirect_chain) > 0)
 
     def test_account_email_page_single_email(self):
-        u = User.objects.get(username='testuser')
+        u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         url = reverse('account_email')
-        r = self.client.get(url)
-        eq_(200, r.status_code)
-
-        test_strings = ['is your <em>primary</em> email address']
-        verify_strings_in_response(test_strings, r)
-
-        test_strings = ['Make Primary', 'Re-send Confirmation', 'Remove']
-        verify_strings_not_in_response(test_strings, r)
+        response = self.client.get(url)
+        self.assertContains(response, 'is your <em>primary</em> email address')
+        for test_string in ['Make Primary',
+                            'Re-send Confirmation',
+                            'Remove']:
+            self.assertNotContains(response, test_string)
 
     def test_account_email_page_multiple_emails(self):
-        u = User.objects.get(username='testuser2')
+        u = self.user_model.objects.get(username='testuser2')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         url = reverse('account_email')
-        r = self.client.get(url)
-        eq_(200, r.status_code)
-
-        test_strings = ['Make Primary', 'Re-send Confirmation', 'Remove',
-                        'Add Email', 'Edit profile']
-        verify_strings_in_response(test_strings, r)
+        response = self.client.get(url)
+        for test_string in ['Make Primary',
+                            'Re-send Confirmation',
+                            'Remove',
+                            'Add Email',
+                            'Edit profile']:
+            self.assertContains(response, test_string)
 
 
 class SocialAccountConnectionsTests(UserTestCase):
@@ -117,22 +116,19 @@ class SocialAccountConnectionsTests(UserTestCase):
 
     def test_account_connections_page_requires_signin(self):
         url = reverse('socialaccount_connections')
-        r = self.client.get(url, follow=True)
-
-        eq_(200, r.status_code)
-        ok_(len(r.redirect_chain) > 0)
-        ok_('Please sign in' in r.content)
+        response = self.client.get(url, follow=True)
+        self.assertContains(response, 'Please sign in')
+        ok_(len(response.redirect_chain) > 0)
 
     def test_account_connections_page(self):
-        u = User.objects.get(username='testuser')
+        u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         url = reverse('socialaccount_connections')
-        r = self.client.get(url)
-        test_strings = ['Disconnect', 'Connect a new account', 'Edit profile',
-                        'Connect with']
+        response = self.client.get(url)
 
-        eq_(200, r.status_code)
-        verify_strings_in_response(test_strings, r)
+        for test_string in ['Disconnect', 'Connect a new account',
+                            'Edit profile', 'Connect with']:
+            self.assertContains(response, test_string)
 
 
 class AllauthPersonaTestCase(UserTestCase):
@@ -140,38 +136,36 @@ class AllauthPersonaTestCase(UserTestCase):
     existing_persona_username = 'testuser'
     localizing_client = False
 
+    @responses.activate
     def test_persona_auth_failure_copy(self):
         """
         The explanatory page for failed Persona auth contains the
         failure copy, and does not contain success messages or a form
         to choose a username.
         """
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'failure',
-                'reason': 'this email address has been naughty'
-            }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
-            expected_strings = (
-                'Account Sign In Failure',
-                'An error occurred while attempting to sign '
-                'in with your account.',
-            )
-            verify_strings_in_response(expected_strings, r)
-            unexpected_strings = (
-                'Thanks for signing in to MDN with Persona.',
-                '<form class="submission readable-line-length" method="post" '
-                'action="/en-US/users/account/signup">',
-                '<input name="username" maxlength="30" type="text"'
-                ' autofocus="autofocus" required="required" '
-                'placeholder="Username" id="id_username" />',
-                '<input type="hidden" name="email" value="',
-                '" id="id_email" />',
-            )
-            for s in unexpected_strings:
-                ok_(s not in r.content)
+        add_persona_verify_response({
+            'status': 'failure',
+            'reason': 'this email address has been naughty'
+        })
+        response = self.client.post(reverse('persona_login'),
+                                    follow=True)
+        for expected_string in ('Account Sign In Failure',
+                                'An error occurred while attempting to sign '
+                                'in with your account.'):
+            self.assertContains(response, expected_string)
 
+        for unexpected_string in (
+            'Thanks for signing in to MDN with Persona.',
+            ('<form class="submission readable-line-length" method="post" '
+             'action="/en-US/users/account/signup">'),
+            ('<input name="username" maxlength="30" type="text"'
+             ' autofocus="autofocus" required="required" '
+             'placeholder="Username" id="id_username" />'),
+            '<input type="hidden" name="email" value="',
+                '" id="id_email" />'):
+            self.assertNotContains(response, unexpected_string)
+
+    @responses.activate
     def test_persona_auth_success_copy(self):
         """
         Successful Persona auth of a new user displays a success
@@ -179,44 +173,41 @@ class AllauthPersonaTestCase(UserTestCase):
         populated, and does not display the failure copy.
         """
         persona_signup_email = 'templates_persona_auth_copy@example.com'
+        add_persona_verify_response({
+            'status': 'okay',
+            'email': persona_signup_email,
+        })
 
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'okay',
-                'email': persona_signup_email,
-            }
-            response = self.client.post(reverse('persona_login'),
-                                        follow=True)
-            expected_strings = (
-                # Test that we got:
-                #
-                # * Persona sign-in success message
-                #
-                # * Form with action set to the account-signup URL.
-                #
-                # * Username field, blank
-                #
-                # * Hidden email address field, pre-populated with the
-                #   address used to authenticate to Persona.
-                'Thanks for signing in to MDN with Persona.',
-                '<form class="submission readable-line-length" method="post" '
-                'action="/en-US/users/account/signup">',
-                '<input name="username" maxlength="30" '
-                'type="text" autofocus="autofocus"'
-                ' required="required" '
-                'placeholder="Username" id="id_username" />',
-                '<input type="hidden" name="email" '
-                'value="%s" id="id_email" />' % persona_signup_email,
-            )
-            verify_strings_in_response(expected_strings, response)
-            unexpected_strings = (
-                '<Account Sign In Failure',
-                '<An error occurred while attempting to sign '
-                'in with your account.',
-            )
-            for s in unexpected_strings:
-                ok_(s not in response.content)
+        response = self.client.post(reverse('persona_login'),
+                                    follow=True)
+        for expected_string in (
+            # Test that we got:
+            #
+            # * Persona sign-in success message
+            #
+            # * Form with action set to the account-signup URL.
+            #
+            # * Username field, blank
+            #
+            # * Hidden email address field, pre-populated with the
+            #   address used to authenticate to Persona.
+            'Thanks for signing in to MDN with Persona.',
+            ('<form class="submission readable-line-length" method="post" '
+             'action="/en-US/users/account/signup">'),
+            ('<input autofocus="autofocus" id="id_username" '
+             'maxlength="30" name="username" placeholder="Username" '
+             'required="required" type="text" />'),
+            ('<input id="id_email" name="email" type="hidden" '
+             'value="%s" />' % persona_signup_email)):
+            self.assertContains(response, expected_string)
 
+        for unexpected_string in (
+            '<Account Sign In Failure',
+            '<An error occurred while attempting to sign '
+                'in with your account.'):
+            self.assertNotContains(response, unexpected_string)
+
+    @responses.activate
     def test_persona_signin_copy(self):
         """
         After an existing user successfully authenticates with
@@ -224,47 +215,46 @@ class AllauthPersonaTestCase(UserTestCase):
         to log in, and a logout link appear in the auth tools section
         of the page.
         """
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'okay',
-                'email': self.existing_persona_email,
-            }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
-            eq_(200, r.status_code)
+        add_persona_verify_response({
+            'status': 'okay',
+            'email': self.existing_persona_email,
+        })
 
-            profile_url = reverse(
-                'users.profile',
-                kwargs={
-                    'username': self.existing_persona_username
-                    },
-                locale=settings.WIKI_DEFAULT_LANGUAGE)
-            signout_url = urlparams(
-                reverse('account_logout',
-                        locale=settings.WIKI_DEFAULT_LANGUAGE),
-                next=reverse('home',
-                             locale=settings.WIKI_DEFAULT_LANGUAGE))
-            parsed = pq(r.content)
+        response = self.client.post(reverse('persona_login'), follow=True)
+        eq_(response.status_code, 200)
 
-            login_info = parsed.find('.header-login .user-state')
-            ok_(len(login_info.children()))
+        user_url = reverse(
+            'users.user_detail',
+            kwargs={
+                'username': self.existing_persona_username
+            },
+            locale=settings.WIKI_DEFAULT_LANGUAGE)
+        signout_url = urlparams(
+            reverse('account_logout',
+                    locale=settings.WIKI_DEFAULT_LANGUAGE),
+            next=reverse('home',
+                         locale=settings.WIKI_DEFAULT_LANGUAGE))
+        parsed = pq(response.content)
 
-            signed_in_message = login_info.children()[0]
-            ok_('title' in signed_in_message.attrib)
-            eq_('Signed in with Persona',
-                signed_in_message.attrib['title'])
+        login_info = parsed.find('.oauth-logged-in')
+        ok_(len(login_info.children()))
 
-            auth_links = login_info.children()[1].getchildren()
-            ok_(len(auth_links))
+        signed_in_message = login_info.children()[0]
+        ok_('title' in signed_in_message.attrib)
+        eq_('Signed in with Persona',
+            signed_in_message.attrib['title'])
 
-            profile_link = auth_links[0].getchildren()[0]
-            ok_('href' in profile_link.attrib)
-            eq_(profile_url, profile_link.attrib['href'])
+        auth_links = login_info.children()[1].getchildren()
+        ok_(len(auth_links))
 
-            signout_link = auth_links[1].getchildren()[0]
-            ok_('href' in signout_link.attrib)
-            eq_(signout_url.replace('%2F', '/'),  # urlparams() encodes slashes
-                signout_link.attrib['href'])
+        user_link = auth_links[0].getchildren()[0]
+        ok_('href' in user_link.attrib)
+        eq_(user_url, user_link.attrib['href'])
+
+        signout_link = auth_links[1].getchildren()[0]
+        ok_('href' in signout_link.attrib)
+        eq_(signout_url.replace('%2F', '/'),  # urlparams() encodes slashes
+            signout_link.attrib['href'])
 
     def test_persona_form_present(self):
         """
@@ -274,8 +264,8 @@ class AllauthPersonaTestCase(UserTestCase):
         """
         all_docs_url = reverse('wiki.all_documents',
                                locale=settings.WIKI_DEFAULT_LANGUAGE)
-        r = self.client.get(all_docs_url, follow=True)
-        parsed = pq(r.content)
+        response = self.client.get(all_docs_url, follow=True)
+        parsed = pq(response.content)
         request_info = '{"siteName": "%(siteName)s", "siteLogo": "%(siteLogo)s"}' % \
                        settings.SOCIALACCOUNT_PROVIDERS['persona']['REQUEST_PARAMETERS']
         stub_attrs = (
@@ -297,6 +287,7 @@ class AllauthPersonaTestCase(UserTestCase):
             ok_(auth_persona_form.attr(auth_attr[0]))
             eq_(auth_attr[1], auth_persona_form.attr(auth_attr[0]))
 
+    @responses.activate
     def test_persona_signup_copy(self):
         """
         After a new user signs up with Persona, their username, an
@@ -305,50 +296,48 @@ class AllauthPersonaTestCase(UserTestCase):
         """
         persona_signup_email = 'templates_persona_signup_copy@example.com'
         persona_signup_username = 'templates_persona_signup_copy'
+        add_persona_verify_response({
+            'status': 'okay',
+            'email': persona_signup_email,
+        })
 
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'okay',
+        self.client.post(reverse('persona_login'), follow=True)
+        data = {'website': '',
+                'username': persona_signup_username,
                 'email': persona_signup_email,
-            }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
-            data = {'website': '',
-                    'username': persona_signup_username,
-                    'email': persona_signup_email,
-                    'terms': True}
-            r = self.client.post(
-                reverse('socialaccount_signup',
-                        locale=settings.WIKI_DEFAULT_LANGUAGE),
-                data=data, follow=True)
+                'terms': True}
+        response = self.client.post(
+            reverse('socialaccount_signup',
+                    locale=settings.WIKI_DEFAULT_LANGUAGE),
+            data=data, follow=True)
 
-            profile_url = reverse(
-                'users.profile',
-                kwargs={'username': persona_signup_username},
-                locale=settings.WIKI_DEFAULT_LANGUAGE)
-            signout_url = urlparams(
-                reverse('account_logout',
-                        locale=settings.WIKI_DEFAULT_LANGUAGE),
-                next=reverse('home',
-                             locale=settings.WIKI_DEFAULT_LANGUAGE))
-            parsed = pq(r.content)
+        user_url = reverse(
+            'users.user_detail',
+            kwargs={'username': persona_signup_username},
+            locale=settings.WIKI_DEFAULT_LANGUAGE)
+        signout_url = urlparams(
+            reverse('account_logout',
+                    locale=settings.WIKI_DEFAULT_LANGUAGE),
+            next=reverse('home',
+                         locale=settings.WIKI_DEFAULT_LANGUAGE))
+        parsed = pq(response.content)
 
-            login_info = parsed.find('.header-login .user-state')
-            ok_(len(login_info.children()))
+        login_info = parsed.find('.oauth-logged-in')
+        ok_(len(login_info.children()))
 
-            signed_in_message = login_info.children()[0]
-            ok_('title' in signed_in_message.attrib)
-            eq_('Signed in with Persona',
-                signed_in_message.attrib['title'])
+        signed_in_message = login_info.children()[0]
+        ok_('title' in signed_in_message.attrib)
+        eq_('Signed in with Persona',
+            signed_in_message.attrib['title'])
 
-            auth_links = login_info.children()[1].getchildren()
-            ok_(len(auth_links))
+        auth_links = login_info.children()[1].getchildren()
+        ok_(len(auth_links))
 
-            profile_link = auth_links[0].getchildren()[0]
-            ok_('href' in profile_link.attrib)
-            eq_(profile_url, profile_link.attrib['href'])
+        user_link = auth_links[0].getchildren()[0]
+        ok_('href' in user_link.attrib)
+        eq_(user_url, user_link.attrib['href'])
 
-            signout_link = auth_links[1].getchildren()[0]
-            ok_('href' in signout_link.attrib)
-            eq_(signout_url.replace('%2F', '/'),  # urlparams() encodes slashes
-                signout_link.attrib['href'])
+        signout_link = auth_links[1].getchildren()[0]
+        ok_('href' in signout_link.attrib)
+        eq_(signout_url.replace('%2F', '/'),  # urlparams() encodes slashes
+            signout_link.attrib['href'])

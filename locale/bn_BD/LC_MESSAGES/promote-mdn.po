@@ -1,0 +1,198 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
+"POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
+"PO-Revision-Date: 2014-04-01 07:39+0000\n"
+"Last-Translator: Sekander <badsha_eee@yahoo.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: bn_BD\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.5.0\n"
+"X-POOTLE-MTIME: 1396337972.0\n"
+
+#: promote-mdn.php:190
+msgid "Reloaded values from the URL."
+msgstr "URL থেকে পুনরায় লোডকৃত মান।"
+
+#: promote-mdn.php:208
+msgid "Plugin settings saved."
+msgstr "প্লাগ-ইনের সেটিংস সংরক্ষিত হয়েছে।"
+
+#: promote-mdn.php:245
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+"MDN আপনার ডকুমেন্টস, ডেমো এবং আরও HTML, CSS, JavaScript সহ অন্যান্য ওয়েব "
+"স্ট্যান্ডার্ড এবং উন্মুক্ত ওয়েব প্রযুক্তির টুলবক্স।"
+
+#: promote-mdn.php:248
+msgid ""
+"MDN is the best online resource - for web developers, by web developers."
+msgstr ""
+"MDN ওয়েব ডেভেলপারদের জন্য, ওয়েব ডেভেলপারদের দ্বারা নির্মিত শ্রেষ্ঠ অনলাইন "
+"রিসোর্স।"
+
+#: promote-mdn.php:249
+msgid ""
+"Promote MDN automatically links keywords and phrases in your posts and pages "
+"to MDN URLs."
+msgstr ""
+"Promote MDN স্বয়ংক্রিয়ভাবে আপনার পোস্ট এবং পেজে থাকা কিওয়ার্ড এবং বাক্যাংশ "
+"MDN এর URL সমূহের সাথে লিঙ্ক করে।"
+
+#: promote-mdn.php:256
+msgid "Settings"
+msgstr "সেটিংস"
+
+#: promote-mdn.php:257
+msgid "Load keywords from URL"
+msgstr "URL থেকে কিওয়ার্ড লোড করুন"
+
+#: promote-mdn.php:257
+msgid "Preview"
+msgstr "প্রিভিউ"
+
+#: promote-mdn.php:258
+msgid "Use keywords and links specifically for %s"
+msgstr "%s এর জন্য নির্দিষ্ট লিঙ্ক এবং কিওয়ার্ড ব্যবহার"
+
+#: promote-mdn.php:259
+msgid "Reload keywords after (seconds):"
+msgstr "পরবর্তী কিওয়ার্ড রিলোড করার সময় (সেকেন্ড):"
+
+#: promote-mdn.php:260
+msgid "Reload now"
+msgstr "এখনই রিলোড করুন"
+
+#: promote-mdn.php:262
+msgid "Add links to RSS feeds"
+msgstr "RSS ফিডে লিঙ্ক যোগ"
+
+#: promote-mdn.php:263
+msgid "Open links in new window"
+msgstr "লিঙ্কগুলো নতুন উইন্ডোতে খুলুন"
+
+#: promote-mdn.php:266
+msgid "Exceptions"
+msgstr "ব্যতিক্রম"
+
+#: promote-mdn.php:267
+msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+msgstr "হেডিং ট্যাগে (h1,h2,h3,h4,h5,h6) লিঙ্ক যোগ করবেন না।"
+
+#: promote-mdn.php:268
+msgid ""
+"Do not add links to the following posts or pages (comma-separated id, slug, "
+"name):"
+msgstr ""
+"নিম্নোক্ত পেজ অথবা পোস্টে লিঙ্ক যোগ করবেন না (কমা দিয়ে আলাদা করা আইডি, "
+"স্লাগ, নাম):"
+
+#: promote-mdn.php:270
+msgid "Do not add links on the following phrases (comma-separated):"
+msgstr "নিম্নোক্ত বাক্যাংশতে লিঙ্ক যোগ করবেন না (কমা দিয়ে আলাদা করা):"
+
+#: promote-mdn.php:274
+msgid "Limits"
+msgstr "সীমা"
+
+#: promote-mdn.php:275
+msgid "Max links to generate per post:"
+msgstr "একটি পোস্টে সর্বোচ্চ লিঙ্ক থাকতে পারবেঃ"
+
+#: promote-mdn.php:276
+msgid "Max links to generate for a single keyword/phrase:"
+msgstr "একটি একক বাক্য বা কিওয়ার্ডের জন্য সর্বোচ্চ লিঙ্ক থাকতে পারবেঃ"
+
+#: promote-mdn.php:277
+msgid "Max links to generate for a single URL:"
+msgstr "একটি একক URL এর জন্য সর্বোচ্চ লিঙ্ক তৈরি করা যাবেঃ"
+
+#: promote-mdn.php:280
+msgid "Custom Keywords"
+msgstr "কাস্টম কিওয়ার্ড"
+
+#: promote-mdn.php:281
+msgid ""
+"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
+"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr ""
+"স্বয়ংক্রিয় ভাবে লিঙ্ক করার জন্য অতিরিক্ত কিওয়ার্ড সমূহ। কমা দিয়ে কিওয়ার্ড "
+"গুলোকে আলাদা করুন এবং কাঙ্খিত লিঙ্ক শেষে যুক্ত করুন। একসেট কিওয়ার্ড ও "
+"লিঙ্কের জন্য নতুন লাইন ব্যবহার করুন। যেমনঃ"
+
+#: promote-mdn.php:288
+msgid ""
+"Note: These keywords will take priority over those loaded at the URL. If you "
+"have too many custom keywords here, you may not link to MDN at all."
+msgstr ""
+"দ্রষ্টব্যঃ এই কিওয়ার্ড গুলো URL এর সাথে লোড করা কিওয়ার্ড গুলোর চেয়ে "
+"প্রাধান্য পাবে। যদি আপনার অনেক বেশি কাস্টম কিওয়ার্ড থাকে, তাহলে MDN এর সাথে "
+"লিঙ্ক না করার পরামর্শ দেয়া হচ্ছে।"
+
+#: promote-mdn.php:289
+msgid "Update options"
+msgstr "আপডেট করার অপশন সমূহ"
+
+#: promote-mdn.php:312
+msgid ""
+"Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
+"configure."
+msgstr ""
+"ইন্সটল করার জন্য ধন্যবাদ! কনফিগার করার জন্য <a href=\"%s\">সেটিংস</a> পাতায় "
+"যান।"
+
+#: promote-mdn.php:313
+msgid ""
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
+"\">setting</a> for a locale-specific URL for keywords."
+msgstr ""
+"fr_FR অনুবাদ, নির্দিষ্ট ভাষার কিওয়ার্ডের জন্য URL এর নতুন সাইডবার <a href=\"%"
+"s\">উইজেট</a>, <a href=\"%s\">সেটিং</a>"
+
+#. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
+msgid "Promote MDN"
+msgstr "MDN কে প্রচার করুন"
+
+#: promote-mdn.php:352
+msgid "hide"
+msgstr "লুকাও"
+
+#: promote-mdn.php:376
+msgid "Sidebar image and links to MDN."
+msgstr "সাইডবার ছবি এবং MDN এর লিঙ্ক সমূহ।"
+
+#: promote-mdn.php:390
+msgid "Help Promote MDN!"
+msgstr "MDN কে প্রচারে সহায়তা করুন!"
+
+#: promote-mdn.php:391
+msgid "Get the WordPress plugin"
+msgstr "ওয়ার্ডপ্রেস প্লাগিন"
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/groovecoder/wp-promote-mdn"
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
+
+#. Description of the plugin/theme
+msgid "Promote MDN automatically links keywords phrases to MDN docs"
+msgstr ""
+"Promote MDN স্বয়ংক্রিয়ভাবে কিওয়ার্ড এবং বাক্যাংশ MDN এর ডকুমেন্ট সমূহের সাথে "
+"লিঙ্ক করে"
+
+#. Author of the plugin/theme
+msgid "Luke Crouch"
+msgstr "Luke Crouch"
+
+#. Author URI of the plugin/theme
+msgid "http://groovecoder.com"
+msgstr "http://groovecoder.com"

@@ -5,8 +5,9 @@ define([
     'base/lib/login',
     'base/lib/assert',
     'base/lib/poll',
-    'base/lib/POM'
-], function(registerSuite, assert, config, libLogin, libAssert, poll, POM) {
+    'base/lib/POM',
+    'base/lib/capabilities'
+], function(registerSuite, assert, config, libLogin, libAssert, poll, POM, capabilities) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -38,20 +39,19 @@ define([
             var remote = this.remote;
 
             return remote
-                        .findByCssSelector('.oauth-login-picker .launch-persona-login')
-                        .click()
-                        .end()
-                        .getAllWindowHandles()
-                        .then(function(handles) {
-                            assert.equal(handles.length, 2);
-
-                            return remote.switchToWindow(handles[1])
-                                .getPageTitle()
-                                .then(function(title) {
-                                    assert.ok(title.toLowerCase().indexOf('persona') != -1, 'Persona window opens upon login click');
-                                    return remote.closeCurrentWindow().switchToWindow(handles[0]);
-                                });
-                        });
+                    .then(function() {
+                        return libLogin.pollForPersonaLoaded(remote);
+                    })
+                    .findByCssSelector('.oauth-login-picker .launch-persona-login')
+                    .click()
+                    .then(function() {
+                        return poll.untilPopupWindowReady(remote);
+                    })
+                    .end()
+                    .getAllWindowHandles()
+                    .then(function(handles) {
+                        assert.equal(handles.length, 2, 'There are two windows upon Persona click');
+                    });
 
         },
 
@@ -62,17 +62,11 @@ define([
 
             libLogin.getTestPersonaLoginCredentials(function(credentials) {
                 return libLogin.completePersonaWindow(remote, credentials.email, credentials.password).then(function() {
-                    return remote
-                        .then(function() {
-                                return remote
-                                    .getCurrentUrl()
-                                    .then(function(url) {
-                                        assert.isTrue(url.indexOf('/account/signup') != -1);
-                                        return libLogin.completePersonaLogout(remote).then(dfd.resolve);
-                                    });
-                        });
+                    return poll.untilUrlChanges(remote, '/account/signup').then(function() {
+                        assert.ok('User sent to registration page');
+                        return libLogin.completePersonaLogout(remote).then(dfd.resolve);
+                    });
                 });
-
             });
 
             return dfd;
@@ -86,33 +80,40 @@ define([
             libLogin.completePersonaWindow(remote).then(function() {
 
                 return remote
-                    .findByCssSelector('.user-state-profile')
-                    .then(function(element) {
-                        poll.until(element, 'isDisplayed')
-                                .then(function() {
-                                    return element
+                        .findByCssSelector('.oauth-logged-in-user')
+                        .then(function(element) {
+                            return poll.until(element, 'isDisplayed')
+                                    .then(function() {
+                                        return element
                                                 .click()
                                                 .then(function() {
+                                                     return poll.untilUrlChanges(remote, '/profiles');
+                                                })
+                                                .then(function() {
                                                     return remote
-                                                                .findById('edit-profile')
-                                                                .click()
-                                                                .end()
-                                                                .findByCssSelector('.fm-submit button[type=submit]')
-                                                                .click()
-                                                                .end()
-                                                                .findByCssSelector('.memberSince')
-                                                                .click() // Just ensuring the element is there
-                                                                .end()
-                                                                .findByCssSelector('.user-state-signout')
-                                                                .click()
-                                                                .end()
-                                                                .findByCssSelector('.oauth-login-container')
-                                                                .then(dfd.callback(function() {
-                                                                    assert.isTrue(true, 'User can sign out without problems');
-                                                                }));
+                                                            .findByCssSelector('#edit-user')
+                                                            .click()
+                                                            .end()
+                                                            .then(function() {
+                                                                 return poll.untilUrlChanges(remote, '/edit');
+                                                            })
+                                                            .findByCssSelector('.submission button[type=submit]')
+                                                            .click()
+                                                            .end()
+                                                            .then(function() {
+                                                                 return poll.untilUrlChanges(remote, '/profiles');
+                                                            })
+                                                            .sleep(capabilities.getBrowserSleepShim(remote))
+                                                            .findByCssSelector('.oauth-logged-in-signout')
+                                                            .click()
+                                                            .end()
+                                                            .sleep(capabilities.getBrowserSleepShim(remote))
+                                                            .then(dfd.callback(function() {
+                                                                assert.ok('User can sign out without problems');
+                                                            }));
                                                 });
-                                });
-                    });
+                                    });
+                        });
 
             });
 
@@ -121,15 +122,27 @@ define([
 
         'Clicking on the GitHub icon initializes GitHub login process': function() {
 
-            return this.remote
-                        .findByCssSelector('.oauth-login-picker a[data-service="GitHub"]')
-                        .click()
-                        .getCurrentUrl()
-                        .then(function(url) {
-                            assert.ok(url.toLowerCase().indexOf('github.com') != -1, 'Clicking GitHub login link goes to GitHub.com');
-                        })
-                        .goBack(); // Cleanup to go back to MDN from GitHub sign in page
+            var remote = this.remote;
 
+            // Safari hangs on this test because we cross domains to GitHub.com
+            // Unfortunately Safari has history issues
+            //
+            // From the Safari Selenium extension:
+            // "Yikes! Safari history navigation does not work.
+            // We can go forward or back, but once we do, we can no longer communicate
+            // with the page... (WARNING: The server did not provide any stacktrace information)"
+            if(capabilities.getBrowserName(remote) === 'safari') {
+                return remote;
+            }
+
+            return remote
+                    .findByCssSelector('.oauth-login-picker a[data-service="GitHub"]')
+                    .click()
+                    .then(function() {
+                        return poll.untilUrlChanges(remote, 'github.com').then(function() {
+                            assert.ok('User sent to GitHub.com');
+                        });
+                    });
         },
 
         'Sign in icons are hidden from header widget on smaller screens': function() {
@@ -139,10 +152,7 @@ define([
                         .findByCssSelector('.oauth-login-options .oauth-icon')
                         .moveMouseTo(5, 5)
                         .isDisplayed()
-                        .then(function(bool) {
-                            assert.isFalse(bool);
-                        });
-
+                        .then(assert.isFalse);
         }
     });
 

@@ -9,7 +9,7 @@
 
     <div class="dashboard">
         <h1><a href="{{ url('dashboards.revisions') }}">{{ title }}</a></h1>
-        <form method="get" id="revision-filter">
+        <form method="get" id="revision-filter" action="{{ url('dashboards.revisions') }}">
             <div class="revision-field">
                 <label for="id_locale">{{ _('Locale:') }}</label>
                 {{ form.locale }}
@@ -55,7 +55,7 @@
 
 
 {% block js %}
-{{ js('jquery-ui') }}
+{% javascript 'jquery-ui' %}
 
 <script>
 (function (jQuery) {
@@ -66,7 +66,7 @@
     var $filterForm = $('#revision-filter');
     var $pageInput = $('#revision-page');
     var $showIPsButton = $('#show_ips_btn');
-    var currentLocale = '{{ request.locale }}';
+    var currentLocale = '{{ request.LANGUAGE_CODE }}';
     var controlsTemplate = '\
     <div class="action-bar">\
         <ul id="page-buttons">\
@@ -153,7 +153,14 @@
     // AJAX loads for pagination
     $revisionReplaceBlock.on('click', '.pagination a', function (e) {
         e.preventDefault();
-        $pageInput.val(this.href.split('page=')[1]);
+        var pageNum = /page=([^&#]*)/.exec(this.href)[1];
+        var linkText = this.text.trim();
+        mdn.analytics.trackEvent({
+            category: 'Dashboard Pagination',
+            action: pageNum,
+            label: linkText
+        });
+        $pageInput.val(pageNum);
         $filterForm.submit();
     });
 

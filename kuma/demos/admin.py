@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin import helpers
-from django.contrib.admin.util import model_ngettext, get_deleted_objects
+from django.contrib.admin.utils import model_ngettext, get_deleted_objects
 from django.db import router
 from django.core.exceptions import PermissionDenied
 from django.template.response import TemplateResponse
@@ -38,7 +38,8 @@ def censor_selected(modeladmin, request, queryset):
                 modeladmin.message_user(request, _("Censored %(item)s") % {
                     "item": obj_display
                 })
-            modeladmin.message_user(request,
+            modeladmin.message_user(
+                request,
                 _("Successfully censored %(count)d %(items)s.") % {
                     "count": n, "items": model_ngettext(modeladmin.opts, n)
                 })
@@ -60,7 +61,8 @@ def censor_selected(modeladmin, request, queryset):
     }
 
     # Display the confirmation page
-    return TemplateResponse(request,
+    return TemplateResponse(
+        request,
         'admin/demos/submission/censor_selected_confirmation.html',
         context, current_app=modeladmin.admin_site.name)
 censor_selected.short_description = ugettext_lazy("Censor selected %(verbose_name_plural)s")
@@ -99,11 +101,13 @@ def delete_selected(modeladmin, request, queryset):
                 obj_display = force_unicode(obj)
                 modeladmin.log_deletion(request, obj, obj_display)
                 obj.delete()
-                modeladmin.message_user(request,
+                modeladmin.message_user(
+                    request,
                     _("Deleted and uploaded files for %(item)s") % {
                         "item": obj_display
                     })
-            modeladmin.message_user(request,
+            modeladmin.message_user(
+                request,
                 _("Successfully deleted %(count)d %(items)s.") % {
                     "count": n, "items": model_ngettext(modeladmin.opts, n)
                 })
@@ -143,12 +147,12 @@ delete_selected.short_description = ugettext_lazy("Delete selected %(verbose_nam
 
 
 class SubmissionAdmin(admin.ModelAdmin):
-    actions = (delete_selected, censor_selected,)
+    actions = (delete_selected, censor_selected)
 
     list_display = ('title', 'creator', 'featured', 'censored', 'hidden',
-                    'taggit_tags', 'modified', )
+                    'taggit_tags', 'modified')
 
-    list_editable = ('featured', 'taggit_tags', )
+    list_editable = ('featured', 'taggit_tags')
 
     search_fields = ('title', 'summary', 'description', 'taggit_tags__name')
 
@@ -162,7 +166,7 @@ class SubmissionAdmin(admin.ModelAdmin):
         }
     }
 
-    def queryset(self, request):
-        return Submission.admin_manager
+    def get_queryset(self, request):
+        return Submission.admin_manager.all()
 
 admin.site.register(Submission, SubmissionAdmin)

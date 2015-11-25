@@ -1,4 +1,4 @@
-from django.template.defaultfilters import slugify
+from django.utils.text import slugify
 from dbgettext.registry import registry, Options
 
 from .models import Filter, FilterGroup

@@ -1,0 +1,95 @@
+/*
+History-link
+====================================================================== */
+
+.bc-history-link {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 11;
+    display: block;
+    width: 100%;
+    height: 11px;
+    margin-top: -10px;
+    clear: both;
+    text-align: center;
+    font-size: 12px;
+    border-top: 1px solid rgba($bc-color-border, 0.3);
+    line-height: 1;
+    // override MDN defaults
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    background-color: transparent;
+    color: #fff;
+}
+
+/* increases hit area of the history link, making it easier to click/tap/etc, only necisary if JS is off */
+.bc-history-link:before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    margin-left: -15px;
+    display: block;
+    height: 15px;
+    width: 30px;
+
+    /* if there are icons the text is shifted left, shift the target extention as well */
+    .bc-icons +  & {
+        margin-left: -30px;
+    }
+
+}
+
+.bc-history-link i {
+    position: relative;
+    top: -4px;
+}
+
+/*
+active styles
+----------------------------------------------------------------------  */
+.active .bc-history-link {
+    z-index: 21;
+    margin-top: -8px;
+}
+
+.active .bc-history-link,
+td[tabindex]:hover .bc-history-link,
+td[tabindex]:focus .bc-history-link {
+    background-color: $bc-color-border;
+    border-top: 1px solid rgba($bc-color-border, 1);
+}
+
+for $support in $bc-support {
+
+    .active.bc-supports-{$support} .bc-history-link,
+    td[tabindex].bc-supports-{$support}:hover .bc-history-link,
+    td[tabindex].bc-supports-{$support}:focus .bc-history-link {
+        color: $bc-color- + $support;
+    }
+}
+
+
+/*
+mobile adjustments
+----------------------------------------------------------------------  */
+
+@media $media-query-small-mobile {
+    .bc-history-link {
+        width: calc(100% - 60px); /* falls back to 100% on non supporting browsers */
+        height: 20px;
+        margin-top: -20px;
+        font-size: 16px;
+    }
+
+    .bc-history-link i {
+        top: 0;
+    }
+
+
+    .active .bc-history-link {
+        margin-top: -18px;
+    }
+}

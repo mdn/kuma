@@ -1,27 +1,34 @@
-{% set show_attach_button = allow_add_attachment %}
+{% set show_attach_button = allow_add_attachment_by(request.user) %}
+{% if document and document.attachments %}
+    {% set attachment_data = attachments_payload(document.attachments) %}
+{% else %}
+    {% set attachment_data = [] %}
+{% endif %}
+{% set attachments_given = attachment_data|length > 0 %}
+{% set attachment_data_json = attachment_data|jsonencode %}
+
 <section id="page-attachments" class="wiki-block">
 
   <h3><i aria-hidden="true" class="icon-paperclip"></i>{{ _('Attachments') }} <a href="{{ wiki_url('Project:MDN/Contributing/Editor_guide/Editing#The_attachments_box') }}"><i aria-hidden="true" title="{{ _('Learn how to use Attachments') }}" class="icon-question-sign editor-help-icon"></i></a></h3>
 
-  {% if show_attach_button and attachment_form and attachment_data|length %}
+  {% if show_attach_button and attachment_form and attachments_given %}
   <p class="add">
-      <button type="button" id="page-attachments-button" class="neutral">Attach Files<i aria-hidden="true" class="icon-paperclip"></i></button>
+      <button type="button" id="page-attachments-button" class="neutral">{{ _('Attach Files') }}<i aria-hidden="true" class="icon-paperclip"></i></button>
   </p>
   {% endif %}
 
-  <p id="page-attachments-no-message" class="{% if attachment_data|length %}hidden{% endif %}">
+  <p id="page-attachments-no-message" class="{% if attachments_given %}hidden{% endif %}">
     {{ _('This document has no attachments. Images can be attached, and then embedded in the article.') }}
-    {% if show_attach_button and attachment_form and not attachment_data|length %}
-      <button id="page-attachments-button" class="neutral">Attach Files<i aria-hidden="true" class="icon-paperclip"></i></button>
+    {% if show_attach_button and attachment_form and not attachments_given %}
+      <button id="page-attachments-button" class="neutral">{{ _('Attach Files') }}<i aria-hidden="true" class="icon-paperclip"></i></button>
     {% endif %}
   </p>
 
   <script>
-    mdn.wiki.attachments = {{ (attachment_data_json | safe) or '[]' }};
+    mdn.wiki.attachments = {{ attachment_data_json }};
   </script>
 
-
-    <table cellpadding="0" cellspacing="0" id="page-attachments-table" class="{% if not attachment_data|length %}hidden{% endif %}">
+    <table cellpadding="0" cellspacing="0" id="page-attachments-table" class="{% if not attachments_given %}hidden{% endif %}">
       <thead>
         <th>{{ _('File') }}</th>
         <th>{{ _('Size') }}</th>
@@ -56,9 +63,7 @@
         <tr>
           <td colspan="4">
             <input type="submit" name="submit" value="Upload" />
-
-            {% set spinner_path = '/media/img/upload-spinner.gif' %}
-            <img src="{{ spinner_path }}" id="page-attachments-spinner" alt="{{ _('Uploading') }}" />
+            <img src="{{ static('img/upload-spinner.gif') }}" id="page-attachments-spinner" alt="{{ _('Uploading') }}" />
           </td>
         </tr>
       </tbody>

@@ -10,3 +10,18 @@ INSTALLED_APPS += (
     'kuma.actioncounters.tests',
 )
 BANISH_ENABLED = False
+
+DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
+
+LOGGING['loggers'].update({
+    'django.db.backends': {
+        'handlers': ['console'],
+        'propagate': True,
+        'level': 'WARNING',
+    },
+    'kuma.search.utils': {
+        'handlers': [],
+        'propagate': False,
+        'level': 'CRITICAL',
+    },
+})

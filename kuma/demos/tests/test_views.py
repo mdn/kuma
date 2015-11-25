@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import datetime
 from os.path import dirname
 from StringIO import StringIO
@@ -8,10 +8,7 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
-from django.conf import settings
-from django.contrib.auth.models import User
-
-import constance.config
+from constance import config
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import parse_tags
@@ -25,14 +22,14 @@ from ..tests import make_users, build_submission, build_hidden_submission
 from .test_models import save_valid_submission
 
 SCREENSHOT_PATH = ('%s/fixtures/screenshot_1.png' %
-        dirname(dirname(__file__)))
+                   dirname(dirname(__file__)))
 TESTUSER_PASSWORD = 'trustno1'
 
 
 def logged_in(test, *args, **kwargs):
     def test_new(self):
         self.client.login(username=self.testuser.username,
-                password=TESTUSER_PASSWORD)
+                          password=TESTUSER_PASSWORD)
         test(self, *args, **kwargs)
     return test_new
 
@@ -71,7 +68,7 @@ class DemoListViewsTest(UserTestCase):
     def test_search_view(self):
         try:
             self.client.get(reverse('demos_search'))
-        except:
+        except Exception:
             self.fail("Search should not ISE.")
 
 
@@ -80,7 +77,7 @@ class DemoViewsTest(UserTestCase):
 
     def setUp(self):
         super(DemoViewsTest, self).setUp()
-        self.testuser = User.objects.get(username='testuser')
+        self.testuser = self.user_model.objects.get(username='testuser')
         self.testuser.set_password(TESTUSER_PASSWORD)
         self.testuser.save()
 
@@ -259,7 +256,7 @@ class DemoViewsTest(UserTestCase):
             description='Some description goes here',
             tech_tags=('tech:audio',),
             challenge_tags=parse_tags(
-                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS)[0],
+                config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS)[0],
             license_name='gpl',
             accept_terms='1',
         ))
@@ -379,7 +376,7 @@ class DemoViewsTest(UserTestCase):
             self.client.get(reverse('demos_detail', args=[s.slug]))
             self.client.get(reverse('demos_feed_recent', args=['atom']))
             self.client.get(reverse('demos_feed_featured', args=['json']))
-        except:
+        except Exception:
             self.fail("No exceptions should have been thrown")
 
         # Forcibly delete the screenshot - should not be possible from
@@ -396,7 +393,7 @@ class DemoViewsTest(UserTestCase):
             self.client.get(reverse('demos_detail', args=[s.slug]))
             self.client.get(reverse('demos_feed_recent', args=['atom']))
             self.client.get(reverse('demos_feed_featured', args=['json']))
-        except:
+        except Exception:
             self.fail("No exceptions should have been thrown")
 
     @attr('bug745902')

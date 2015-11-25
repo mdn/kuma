@@ -55,7 +55,7 @@ The [GitHub Flow](https://guides.github.com/introduction/flow/) site is a great 
 GitHub workflow
 ---------------
 
-1. [Install our development environment](http://kuma.readthedocs.org/en/latest/installation-vagrant.html)
+1. [Install our development environment](http://kuma.readthedocs.org/en/latest/installation.html)
 2. Create a branch for your bug:
 
     ```

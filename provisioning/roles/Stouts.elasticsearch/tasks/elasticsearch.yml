@@ -1,0 +1,22 @@
+---
+
+- include: install.deb.yml
+  when: ansible_os_family == 'Debian'
+  tags: [elasticsearch, elasticsearch-install]
+
+- include: install.yum.yml
+  when: ansible_os_family == 'RedHat'
+  tags: [elasticsearch, elasticsearch-install]
+
+- include: configure.yml
+  tags: [elasticsearch, elasticsearch-configure]
+
+- include: plugins.yml
+  tags: [elasticsearch, elasticsearch-plugins]
+
+- include: proxy.yml
+  when: elasticsearch_proxy
+  tags: [elasticsearch, elasticsearch-proxy]
+
+- service: name=elasticsearch state=started enabled=yes
+  tags: [elasticsearch]

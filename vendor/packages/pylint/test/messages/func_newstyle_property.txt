@@ -1,1 +1,0 @@
-W: 16:HaNonNonNon: Use of "property" on an old style class

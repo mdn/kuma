@@ -42,25 +42,25 @@
                     <li>
                         <label for="button-design-betterdocs">
                             <input type="radio" name="button-design" value="Better Docs" id="button-design-betterdocs">
-                            <img src="{{ MEDIA_URL }}img/promote/betterdocs_foo.png" alt="{{_('Better Docs')}}" />
+                            <img src="{{ static('img/promote/betterdocs_foo.png') }}" alt="{{_('Better Docs')}}" />
                         </label>
                     </li>
                     <li>
                         <label for="button-design-devpowered">
                             <input type="radio" name="button-design" value="Developer Powered" id="button-design-devpowered">
-                            <img src="{{ MEDIA_URL }}img/promote/devpowered_foo.png" alt="{{_('Developer Powered')}}" />
+                            <img src="{{ static('img/promote/devpowered_foo.png') }}" alt="{{_('Developer Powered')}}" />
                         </label>
                     </li>
                     <li>
                         <label for="button-design-bydev">
                             <input type="radio" name="button-design" value="For Developer, By Developers" id="button-design-bydev">
-                            <img src="{{ MEDIA_URL }}img/promote/bydev_foo.png" alt="{{_('For Developers, By Developers')}}" />
+                            <img src="{{ static('img/promote/bydev_foo.png') }}" alt="{{_('For Developers, By Developers')}}" />
                         </label>
                     </li>
                     <li>
                         <label for="button-design-devtoolbox">
                             <input type="radio" name="button-design" value="Web Developer Toolbox" id="button-design-devtoolbox">
-                            <img src="{{ MEDIA_URL }}img/promote/devtoolbox_foo.png" alt="{{_('Web Developer Toolbox')}}" />
+                            <img src="{{ static('img/promote/devtoolbox_foo.png') }}" alt="{{_('Web Developer Toolbox')}}" />
                         </label>
                     </li>
                 </ul>
@@ -274,7 +274,7 @@ var buttons = rowsToObjects(
         // Update the button preview image.
         $('#button-image')
             .attr('alt', sel.alt_text)
-            .attr('src', '{{ MEDIA_URL }}img/promote/promobutton_'+sel.id+'.png');
+            .attr('src', '{{ STATIC_URL }}img/promote/promobutton_'+sel.id+'.png');
 
         $('#button-url')
             .text(sel.url)
@@ -284,7 +284,7 @@ var buttons = rowsToObjects(
         // Update the button code.
         $('#button-code').val([
             '<a href="', sel.tracked_url, '" title="', sel.alt_text, '">',
-            '<img src="{{ request.build_absolute_uri(MEDIA_URL) }}img/promote/promobutton_', sel.id, '.png" ', 
+            '<img src="{{ request.build_absolute_uri(STATIC_URL) }}img/promote/promobutton_', sel.id, '.png" ',
                 'alt="', sel.alt_text, '" />',
             '</a>'
         ].join(''));

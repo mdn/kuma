@@ -1,0 +1,90 @@
+/*
+Main header, wraps all components of logo, main, and secondary navigation
+====================================================================== */
+
+#main-header {
+    clearfix();
+    border-color: transparent;
+    border-bottom: 1px solid @border-color;
+    border-top: 2px solid #fff;
+
+    /* margin-top will be added to small-mobile media query to ensure oauth widget doesn't overly */
+    .logo {
+        bidi-value(float, left, right);
+        width: 205px;
+        height: 40px;
+        margin-top: 7px;
+        background: url($logo-sprite-url) 0 0 no-repeat;
+        background-size: 100% auto;
+        display: block;
+        direction: ltr; // ltr should be set with negative text indent
+        text-indent: -9999px;
+        overflow: hidden;
+
+        &.logo-mdn10 {
+            position: relative;
+            top: -6px;
+            height: 55px;
+            width: 153px;
+            background: no-repeat bottom left url($path-to-images + 'mdn10/logo-sprite.png');
+
+            /* this logo looks nicer on all screens, but need to protect
+                browsers that can't handle background size *cough*IE8*cough */
+            @media only screen and (-webkit-min-device-pixel-ratio: 1),
+                   only screen and (min-resolution: 100dpi) {
+
+                background-image: url($path-to-images + 'mdn10/logo-sprite@2x.png');
+                background-size: auto 115px;
+            }
+        }
+    }
+
+    a {
+        &:link, &:visited, &:hover, &:active {
+            color: $menu-link-color;
+        }
+    }
+}
+
+/* custom nav menu movement */
+@media $media-query-navigation-break {
+
+    #main-header {
+        .logo {
+            margin-top: -33px;
+
+            &.logo-mdn10 {
+                top: 0;
+            }
+        }
+    }
+}
+
+@media $media-query-mobile {
+
+    #main-header {
+        .logo {
+            margin: ($grid-spacing / 2) 0;
+            width: 140px;
+            height: 40px;
+            background-size: auto;
+
+            &.logo-mdn10 {
+                width: 153px;
+            }
+        }
+    }
+}
+
+@media $media-query-small-mobile {
+
+    #main-header {
+        .logo {
+            width: 44px;
+
+            &.logo-mdn10 {
+                width: 86px;
+            }
+        }
+    }
+}

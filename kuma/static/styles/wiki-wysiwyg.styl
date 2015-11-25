@@ -1,0 +1,122 @@
+@require 'includes/vars';
+@require 'includes/mixins';
+
+/* styles for the WYSIWYG editor which we cannot take directly from screen.css */
+html, body {
+    background: #fff;
+}
+html.maximized {
+    overflow-y: auto !important;
+}
+body {
+    padding: $grid-spacing;
+
+    font: 14px/1.5 $site-font-family;
+    {$selector-site-font-fallback} {
+        font-family: $site-font-family-fallback;
+    }
+}
+
+
+/* seo and callout plugin styles */
+.seoSummary {
+    padding: 3px;
+    border: 1px dotted #ccc;
+    position: relative;
+
+    &:before {
+        set-font-size(10px);
+        content: 'SEO Summary';
+        position: absolute;
+        top: -16px;
+        left: 0;
+        z-index: 10;
+        border: 1px dotted #fc0;
+        background: #fffea1;
+        display: block;
+        opacity: 0.8;
+        cursor: default;
+    }
+}
+
+.summary {
+    background: $light-background-color;
+    font-weight: bold;
+    padding: $grid-spacing;
+    margin-bottom: $grid-spacing;
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* syntax highlighter update */
+pre {
+    position: relative;
+}
+pre:before {
+    set-smaller-font-size();
+    font-family: arial, sans-serif;
+    font-style: italic;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 10;
+    color: #666;
+}
+
+pre {
+    @extend $code-block;
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+}
+
+createLanguageQuery(lang, content) {
+    unquote("pre[class^='brush:" + lang + "']:before, pre[class^='brush: " + lang + "']:before { content: '" + content + "' }");
+}
+createLanguageQuery('js', 'JavaScript');
+createLanguageQuery('json', 'JSON');
+createLanguageQuery('css', 'CSS');
+createLanguageQuery('bash', 'Bash');
+createLanguageQuery('cpp', 'C++');
+createLanguageQuery('java', 'Java');
+createLanguageQuery('html', 'HTML');
+createLanguageQuery('php', 'PHP');
+createLanguageQuery('python', 'Python');
+createLanguageQuery('sql', 'SQL');
+createLanguageQuery('xml', 'XML');
+
+
+/* Notify the user that a given list item will open */
+li[data-default-state='open'] > a:after {
+    content: '(defaults to "open")';
+    color: #666;
+    set-smaller-font-size();
+    font-family: arial, sans-serif;
+    font-style: italic;
+    display: inline-block;
+    padding-left: 6px;
+}
+
+details {
+    position: relative;
+    display: block;
+    border: 2px dotted #000;
+    padding: 3px;
+
+    &:before {
+        set-font-size(10px);
+        content: 'details';
+        position: absolute;
+        top: -17px;
+        left: -2px;
+        z-index: 10;
+        display: block;
+        padding: 0 2px;
+        background: #000;
+        color: #fff;
+    }
+}

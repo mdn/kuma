@@ -3,65 +3,53 @@ import json
 import sys
 import traceback
 from datetime import datetime, timedelta
-from urlparse import urlparse
-
-try:
-    from functools import wraps
-except ImportError:
-    from django.utils.functional import wraps
+from functools import wraps
 
 import newrelic.agent
-from pyquery import PyQuery
-from tower import ugettext_lazy as _lazy, ugettext as _
-
+import waffle
+from constance import config
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import resolve
 from django.db import models
-from django.db.models import Count, signals
-from django.dispatch import receiver
-from django.http import Http404
+from django.db.models import signals
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
-
-import constance.config
-import waffle
-from south.modelsinspector import add_introspection_rules
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
+from pyquery import PyQuery
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
-from teamwork.models import Team
 from tidings.models import NotificationsMixin
 
-from kuma.attachments.models import Attachment, DocumentAttachment
-from kuma.core.exceptions import ProgrammingError
+from kuma.attachments.models import Attachment
 from kuma.core.cache import memcache
-from kuma.core.fields import LocaleField
-from kuma.core.urlresolvers import reverse, split_path
+from kuma.core.exceptions import ProgrammingError
+from kuma.core.i18n import get_language_mapping
+from kuma.core.urlresolvers import reverse
 from kuma.search.decorators import register_live_index
+from kuma.spam.models import SpamAttempt
 
 from . import kumascript
 from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         KUMA_FILE_URL, REDIRECT_CONTENT, REDIRECT_HTML,
                         TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
-from .content import (extract_code_sample, extract_css_classnames,
+from .content import (H2TOCFilter, H3TOCFilter, SectionTOCFilter,
+                      extract_code_sample, extract_css_classnames,
                       extract_html_attributes, extract_kumascript_macro_names,
-                      get_content_sections, get_seo_description, H2TOCFilter,
-                      H3TOCFilter, SectionTOCFilter)
-from .jobs import DocumentZoneStackJob, DocumentZoneURLRemapsJob
+                      get_content_sections, get_seo_description)
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
+from .helpers import absolutify
+from .jobs import DocumentContributorsJob, DocumentZoneStackJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
 from .search import WikiDocumentType
 from .signals import render_done
-
-
-add_introspection_rules([], ["^utils\.OverwritingFileField"])
+from .utils import tidy_content
 
 
 def cache_with_field(field_name):
@@ -122,8 +110,9 @@ def valid_slug_parent(slug, locale):
         try:
             parent = Document.objects.get(locale=locale, slug=parent_slug)
         except Document.DoesNotExist:
-            raise Exception(_("Parent %s/%s does not exist." % (locale,
-                                                         parent_slug)))
+            raise Exception(
+                ugettext('Parent %s does not exist.' % (
+                    '%s/%s' % (locale, parent_slug))))
 
     return parent
 
@@ -131,36 +120,62 @@ def valid_slug_parent(slug, locale):
 class DocumentTag(TagBase):
     """A tag indexing a document"""
     class Meta:
-        verbose_name = _("Document Tag")
-        verbose_name_plural = _("Document Tags")
+        verbose_name = _('Document Tag')
+        verbose_name_plural = _('Document Tags')
+
+
+def tags_for(cls, model, instance=None, **extra_filters):
+    """
+    Sadly copied from taggit to work around the issue of not being
+    able to use the TaggedItemBase class that has tag field already
+    defined.
+    """
+    kwargs = extra_filters or {}
+    if instance is not None:
+        kwargs.update({
+            '%s__content_object' % cls.tag_relname(): instance
+        })
+        return cls.tag_model().objects.filter(**kwargs)
+    kwargs.update({
+        '%s__content_object__isnull' % cls.tag_relname(): False
+    })
+    return cls.tag_model().objects.filter(**kwargs).distinct()
 
 
 class TaggedDocument(ItemBase):
     """Through model, for tags on Documents"""
     content_object = models.ForeignKey('Document')
-    tag = models.ForeignKey(DocumentTag)
+    tag = models.ForeignKey(DocumentTag, related_name="%(app_label)s_%(class)s_items")
 
     objects = TaggedDocumentManager()
 
-    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
-    # don't like. But, it seems to be the only way to get *both* a custom tag
-    # *and* a custom through model.
-    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
     @classmethod
-    def tags_for(cls, model, instance=None):
-        if instance is not None:
-            return DocumentTag.objects.filter(
-                taggeddocument__content_object=instance)
-        return DocumentTag.objects.filter(
-            taggeddocument__content_object__isnull=False).distinct()
+    def tags_for(cls, *args, **kwargs):
+        return tags_for(cls, *args, **kwargs)
+
+
+class DocumentAttachment(models.Model):
+    """
+    Intermediary between Documents and Attachments. Allows storing the
+    user who attached a file to a document, and a (unique for that
+    document) name for referring to the file from the document.
+    """
+    file = models.ForeignKey(Attachment)
+    # This has to be a string ref to avoid circular import.
+    document = models.ForeignKey('wiki.Document')
+    attached_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    name = models.TextField()
+
+    class Meta:
+        db_table = 'attachments_documentattachment'
 
 
 @register_live_index
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
     CATEGORIES = (
-        (00, _lazy(u'Uncategorized')),
-        (10, _lazy(u'Reference')),
+        (00, _(u'Uncategorized')),
+        (10, _(u'Reference')),
     )
     TOC_FILTERS = {
         1: SectionTOCFilter,
@@ -189,7 +204,12 @@ class Document(NotificationsMixin, models.Model):
     # Is this document localizable or not?
     is_localizable = models.BooleanField(default=True, db_index=True)
 
-    locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
+    locale = models.CharField(
+        max_length=7,
+        choices=settings.LANGUAGES,
+        default=settings.WIKI_DEFAULT_LANGUAGE,
+        db_index=True,
+    )
 
     # Latest approved revision. L10n dashboard depends on this being so (rather
     # than being able to set it to earlier approved revisions). (Remove "+" to
@@ -243,9 +263,6 @@ class Document(NotificationsMixin, models.Model):
     # A document's category much always be that of its parent. If it has no
     # parent, it can do what it wants. This invariant is enforced in save().
     category = models.IntegerField(choices=CATEGORIES, db_index=True)
-
-    # Team to which this document belongs, if any
-    team = models.ForeignKey(Team, blank=True, null=True)
 
     # Whether this page is deleted.
     deleted = models.BooleanField(default=False, db_index=True)
@@ -394,7 +411,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Check whether a scheduled rendering has waited for too long.  Assume
         # failure, in this case, and allow another scheduling attempt.
-        timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
+        timeout = config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = datetime.now() - self.render_scheduled_at
         if duration > max_duration:
@@ -413,7 +430,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Check whether an in-progress rendering has gone on for too long.
         # Assume failure, in this case, and allow another rendering attempt.
-        timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
+        timeout = config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = datetime.now() - self.render_started_at
         if duration > max_duration:
@@ -436,7 +453,7 @@ class Document(NotificationsMixin, models.Model):
                 self.schedule_rendering(cache_control, base_url)
             except DocumentRenderingInProgress:
                 # Unable to trigger a rendering right now, so we bail.
-                raise DocumentRenderedContentNotAvailable()
+                raise DocumentRenderedContentNotAvailable
 
         # If we have a cache_control directive, try scheduling a render.
         if cache_control:
@@ -459,7 +476,7 @@ class Document(NotificationsMixin, models.Model):
                 return ('', errors)
             else:
                 # But, no such luck, so bail out.
-                raise DocumentRenderedContentNotAvailable()
+                raise DocumentRenderedContentNotAvailable
 
         return (self.rendered_html, errors)
 
@@ -506,7 +523,7 @@ class Document(NotificationsMixin, models.Model):
         self.render_started_at = now
 
         # Perform rendering and update document
-        if not constance.config.KUMASCRIPT_TIMEOUT:
+        if not config.KUMASCRIPT_TIMEOUT:
             # A timeout of 0 should shortcircuit kumascript usage.
             self.rendered_html, self.rendered_errors = self.html, []
         else:
@@ -523,7 +540,7 @@ class Document(NotificationsMixin, models.Model):
 
         # If this rendering took longer than we'd like, mark it for deferred
         # rendering in the future.
-        timeout = constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
+        timeout = config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = self.last_rendered_at - self.render_started_at
         if duration >= max_duration:
@@ -542,17 +559,13 @@ class Document(NotificationsMixin, models.Model):
 
         self.save()
 
-        # If we're a translation, rebuild our source doc's JSON so its
-        # translation list includes our last edit date.
-        if self.parent is not None:
-            parent_json = json.dumps(self.parent.build_json_data())
-            Document.objects.filter(pk=self.parent.pk).update(json=parent_json)
-
         render_done.send(sender=self.__class__, instance=self)
 
     def get_summary(self, strip_markup=True, use_rendered=True):
-        """Attempt to get the document summary from rendered content, with
-        fallback to raw HTML"""
+        """
+        Attempt to get the document summary from rendered content, with
+        fallback to raw HTML
+        """
         if use_rendered and self.rendered_html:
             src = self.rendered_html
         else:
@@ -569,32 +582,26 @@ class Document(NotificationsMixin, models.Model):
             for translation in self.other_translations:
                 revision = translation.current_revision
                 if revision.summary:
-                   summary = revision.summary
+                    summary = revision.summary
                 else:
-                   summary = translation.get_summary(strip_markup=False)
+                    summary = translation.get_summary(strip_markup=False)
                 translations.append({
                     'last_edit': revision.created.isoformat(),
                     'locale': translation.locale,
                     'localization_tags': list(revision.localization_tags
-                                                      .values_list('name',
-                                                                   flat=True)),
-                    'review_tags': list(revision.review_tags
-                                                .values_list('name',
-                                                             flat=True)),
+                                                      .names()),
+                    'review_tags': list(revision.review_tags.names()),
                     'summary': summary,
-                    'tags': list(translation.tags
-                                            .values_list('name', flat=True)),
+                    'tags': list(translation.tags.names()),
                     'title': translation.title,
                     'url': translation.get_absolute_url(),
                 })
 
         if self.current_revision:
-            review_tags = list(self.current_revision
-                                   .review_tags
-                                   .values_list('name', flat=True))
+            review_tags = list(self.current_revision.review_tags.names())
             localization_tags = list(self.current_revision
                                          .localization_tags
-                                         .values_list('name', flat=True))
+                                         .names())
             last_edit = self.current_revision.created.isoformat()
             if self.current_revision.summary:
                 summary = self.current_revision.summary
@@ -609,7 +616,7 @@ class Document(NotificationsMixin, models.Model):
         if not self.pk:
             tags = []
         else:
-            tags = list(self.tags.values_list('name', flat=True))
+            tags = list(self.tags.names())
 
         now_iso = datetime.now().isoformat()
 
@@ -756,7 +763,7 @@ class Document(NotificationsMixin, models.Model):
             # All we really need to do here is make sure category != '' (which
             # is what it is when it's missing from the DocumentForm). The extra
             # validation is just a nicety.
-            raise ValidationError(_('Please choose a category.'))
+            raise ValidationError(ugettext('Please choose a category.'))
         else:  # An article cannot have both a parent and children.
             # Make my children the same as me:
             if self.id:
@@ -793,8 +800,7 @@ class Document(NotificationsMixin, models.Model):
             return unique_attr()
 
     def revert(self, revision, user, comment=None):
-        old_review_tags = list(revision.review_tags
-                                       .values_list('name', flat=True))
+        old_review_tags = list(revision.review_tags.names())
         if revision.document.original == self:
             revision.based_on = revision
         revision.id = None
@@ -845,6 +851,9 @@ class Document(NotificationsMixin, models.Model):
 
         new_rev.summary = data.get('summary', '')
 
+        # To add comment, when Technical/Editorial review completed
+        new_rev.comment = data.get('comment', '')
+
         # Accept HTML edits, optionally by section
         new_html = data.get('content', data.get('html', False))
         if new_html:
@@ -875,14 +884,15 @@ class Document(NotificationsMixin, models.Model):
         return modified_epoch
 
     def save(self, *args, **kwargs):
+
         self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
-        self.is_redirect = 1 if self.redirect_url() else 0
+        self.is_redirect = bool(self.get_redirect_url())
 
         try:
             # Check if the slug would collide with an existing doc
             self._raise_if_collides('slug', SlugCollision)
         except UniqueCollision as err:
-            if err.existing.redirect_url() is not None:
+            if err.existing.get_redirect_url() is not None:
                 # If the existing doc is a redirect, delete it and clobber it.
                 err.existing.delete()
             else:
@@ -935,14 +945,17 @@ class Document(NotificationsMixin, models.Model):
                                 (self.id, self.title))
             self.delete(purge=True)
 
-    def undelete(self):
+    def restore(self):
+        """
+        Restores a logically deleted document by reverting the deleted
+        boolean to False. Sends pre_save and post_save Django signals to
+        follow ducktyping best practices.
+        """
         if not self.deleted:
-            raise Exception("Document is not deleted, cannot be undeleted.")
-        signals.pre_save.send(sender=self.__class__,
-                              instance=self)
+            raise Exception("Document is not deleted, cannot be restored.")
+        signals.pre_save.send(sender=self.__class__, instance=self)
         Document.deleted_objects.filter(pk=self.pk).update(deleted=False)
-        signals.post_save.send(sender=self.__class__,
-                               instance=self)
+        signals.post_save.send(sender=self.__class__, instance=self)
 
     def _post_move_redirects(self, new_slug, user, title):
         """
@@ -1024,7 +1037,6 @@ class Document(NotificationsMixin, models.Model):
         Given a new slug to be assigned to this document, return a
         list of documents (if any) which would be overwritten by
         moving this document or any of its children in that fashion.
-
         """
         conflicts = []
         try:
@@ -1038,7 +1050,7 @@ class Document(NotificationsMixin, models.Model):
             try:
                 slug = '/'.join([new_slug, child_title])
                 existing = Document.objects.get(locale=self.locale, slug=slug)
-                if not existing.redirect_url():
+                if not existing.get_redirect_url():
                     conflicts.append(existing)
             except Document.DoesNotExist:
                 pass
@@ -1047,7 +1059,6 @@ class Document(NotificationsMixin, models.Model):
     def _move_tree(self, new_slug, user=None, title=None):
         """
         Move this page and all its children.
-
         """
         # Page move is a 10-step process.
         #
@@ -1063,9 +1074,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Step 2: stash our current review tags, since we want to
         # preserve them.
-        review_tags = list(self.current_revision
-                               .review_tags
-                               .values_list('name', flat=True))
+        review_tags = list(self.current_revision.review_tags.names())
 
         # Step 3: Create (but don't yet save) a copy of our current
         # revision, but with the new slug and title (if title is
@@ -1239,7 +1248,7 @@ Full traceback:
             }
         return files
 
-    @property
+    @cached_property
     def attachments(self):
         # Is there a more elegant way to do this?
         #
@@ -1263,72 +1272,28 @@ Full traceback:
             params = models.Q(id__in=kuma_files)
         if params:
             return Attachment.objects.filter(params)
-        # If no files found, return an empty Attachment queryset.
-        return Attachment.objects.none()
+        else:
+            # If no files found, return an empty Attachment queryset.
+            return Attachment.objects.none()
 
     @property
     def show_toc(self):
         return self.current_revision and self.current_revision.toc_depth
 
-    @property
+    @cached_property
     def language(self):
-        return settings.LANGUAGES_DICT[self.locale.lower()]
+        return get_language_mapping()[self.locale.lower()]
 
-    @property
-    def full_path(self):
-        """The full path of a document consists of {slug}"""
-        # TODO: See about removing this and all references to full_path? Once
-        # upon a time, this was composed of {locale}/{slug}, but bug 754534
-        # reverted that.
-        return self.slug
-
-    def get_absolute_url(self, ui_locale=None):
-        """Build the absolute URL to this document from its full path"""
-        if not ui_locale:
-            ui_locale = self.locale
-        return reverse('wiki.document', locale=ui_locale,
-                       args=[self.full_path])
-
-    @staticmethod
-    def from_url(url, required_locale=None, id_only=False):
+    def get_absolute_url(self, endpoint='wiki.document'):
         """
-        Return the approved Document the URL represents, None if there isn't
-        one.
-
-        Return None if the URL is a 404, the URL doesn't point to the right
-        view, or the indicated document doesn't exist.
-
-        To limit the universe of discourse to a certain locale, pass in a
-        `required_locale`. To fetch only the ID of the returned Document, set
-        `id_only` to True.
+        Build the absolute URL to this document from its full path
         """
-        # Extract locale and path from URL:
-        path = urlparse(url)[2]  # never has errors AFAICT
-        locale, path = split_path(path)
-        if required_locale and locale != required_locale:
-            return None
-        path = '/' + path
+        return reverse(endpoint, locale=self.locale, args=[self.slug])
 
-        try:
-            view, view_args, view_kwargs = resolve(path)
-        except Http404:
-            return None
+    def get_edit_url(self):
+        return self.get_absolute_url(endpoint='wiki.edit')
 
-        from . import views  # Views import models; models import views.
-        if view != views.document:
-            return None
-
-        # Map locale-slug pair to Document ID:
-        doc_query = Document.objects.exclude(current_revision__isnull=True)
-        if id_only:
-            doc_query = doc_query.only('id')
-        try:
-            return doc_query.get(locale=locale,
-                                 slug=view_kwargs['document_slug'])
-        except Document.DoesNotExist:
-            return None
-
-    def redirect_url(self):
+    def get_redirect_url(self):
         """
         If I am a redirect, return the absolute URL to which I redirect.
 
@@ -1346,22 +1311,10 @@ Full traceback:
                 if len(url) > 1:
                     if url.startswith(settings.SITE_URL):
                         return url
-                    elif (url[0] == '/' and url[1] != '/'):
+                    elif url[0] == '/' and url[1] != '/':
                         return url
-                elif (len(url) == 1 and url[0] == '/'):
+                elif len(url) == 1 and url[0] == '/':
                     return url
-                else:
-                    return None
-
-    def redirect_document(self):
-        """If I am a redirect to a Document, return that Document.
-
-        Otherwise, return None.
-
-        """
-        url = self.redirect_url()
-        if url:
-            return self.from_url(url)
 
     def filter_permissions(self, user, permissions):
         """Filter permissions with custom logic"""
@@ -1376,15 +1329,12 @@ Full traceback:
             parents.append(curr)
         return parents
 
-    def get_permission_parents(self):
-        return self.get_topic_parents()
-
     def allows_revision_by(self, user):
-        """Return whether `user` is allowed to create new revisions of me.
+        """
+        Return whether `user` is allowed to create new revisions of me.
 
         The motivation behind this method is that templates and other types of
         docs may have different permissions.
-
         """
         if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.change_template_document')):
@@ -1392,12 +1342,12 @@ Full traceback:
         return True
 
     def allows_editing_by(self, user):
-        """Return whether `user` is allowed to edit document-level metadata.
+        """
+        Return whether `user` is allowed to edit document-level metadata.
 
         If the Document doesn't have a current_revision (nothing approved) then
         all the Document fields are still editable. Once there is an approved
         Revision, the Document fields can only be edited by privileged users.
-
         """
         if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.change_template_document')):
@@ -1406,10 +1356,10 @@ Full traceback:
                 user.has_perm('wiki.change_document'))
 
     def translated_to(self, locale):
-        """Return the translation of me to the given locale.
+        """
+        Return the translation of me to the given locale.
 
         If there is no such Document, return None.
-
         """
         if self.locale != settings.WIKI_DEFAULT_LANGUAGE:
             raise NotImplementedError('translated_to() is implemented only on'
@@ -1495,23 +1445,31 @@ Full traceback:
         from .events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
 
+    def tree_is_watched_by(self, user):
+        """Return whether `user` is notified of edits to me AND sub-pages."""
+        from .events import EditDocumentInTreeEvent
+        return EditDocumentInTreeEvent.is_notifying(user, self)
+
+    def parent_trees_watched_by(self, user):
+        """
+        Return any and all of this document's parents that are watched by the
+        given user.
+        """
+        return [doc for doc in self.parents if doc.tree_is_watched_by(user)]
+
     def get_document_type(self):
         return WikiDocumentType
 
-    def get_contributors(self):
-        top_creator_ids = (self.revisions.values_list('creator', flat=True)
-                                         .annotate(Count('creator'))
-                                         .order_by('-creator__count'))
-        return User.objects.filter(pk__in=list(top_creator_ids))
+    @cached_property
+    def contributors(self):
+        return DocumentContributorsJob().get(self.pk)
 
     @cached_property
     def zone_stack(self):
         return DocumentZoneStackJob().get(self.pk)
 
-
-@receiver(render_done)
-def purge_wiki_url_cache(sender, instance, **kwargs):
-    memcache.delete(u'wiki_url:%s:%s' % (instance.locale, instance.slug))
+    def get_full_url(self):
+        return absolutify(self.get_absolute_url())
 
 
 class DocumentDeletionLog(models.Model):
@@ -1520,10 +1478,16 @@ class DocumentDeletionLog(models.Model):
     """
     # We store the locale/slug because it's unique, and also because a
     # ForeignKey would delete this log when the Document gets purged.
-    locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
+    locale = models.CharField(
+        max_length=7,
+        choices=settings.LANGUAGES,
+        default=settings.WIKI_DEFAULT_LANGUAGE,
+        db_index=True,
+    )
+
     slug = models.CharField(max_length=255, db_index=True)
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     timestamp = models.DateTimeField(auto_now=True)
     reason = models.TextField()
 
@@ -1550,95 +1514,39 @@ class DocumentZone(models.Model):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
                                           self.document.title)
 
-    def save(self, *args, **kwargs):
-        super(DocumentZone, self).save(*args, **kwargs)
-
-        # Refresh the cache for the locale of this zone's attached document
-        DocumentZoneURLRemapsJob().refresh(self.document.locale)
-        invalidate_zone_stack_cache(self.document)
-
-
-def invalidate_zone_stack_cache(document, async=False):
-    """
-    reset the cache for the zone stack for all of the documents
-    in the document tree branch
-    """
-    pks = [document.pk] + [parent.pk
-                           for parent in document.get_topic_parents()]
-    job = DocumentZoneStackJob()
-    if async:
-        invalidator = job.invalidate
-    else:
-        invalidator = job.refresh
-    for pk in pks:
-        invalidator(pk)
-
-
-def invalidate_zone_urls_cache(document, async=False):
-    # if the document is a document zone
-    job = DocumentZoneURLRemapsJob()
-    if async:
-        invalidator = job.invalidate
-    else:
-        invalidator = job.refresh
-    try:
-        if document.zone:
-            # reset the cached list of zones of the document's locale
-            invalidator(document.locale)
-    except DocumentZone.DoesNotExist:
-        pass
-
-
-@receiver(signals.post_save, sender=Document)
-def invalidate_zone_caches(sender, instance, **kwargs):
-    invalidate_zone_urls_cache(instance, async=True)
-    invalidate_zone_stack_cache(instance, async=True)
-
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
     class Meta:
-        verbose_name = _("Review Tag")
-        verbose_name_plural = _("Review Tags")
+        verbose_name = _('Review Tag')
+        verbose_name_plural = _('Review Tags')
 
 
 class LocalizationTag(TagBase):
     """A tag indicating localization status, mainly for revisions"""
     class Meta:
-        verbose_name = _("Localization Tag")
-        verbose_name_plural = _("Localization Tags")
+        verbose_name = _('Localization Tag')
+        verbose_name_plural = _('Localization Tags')
 
 
 class ReviewTaggedRevision(ItemBase):
     """Through model, just for review tags on revisions"""
     content_object = models.ForeignKey('Revision')
-    tag = models.ForeignKey(ReviewTag)
+    tag = models.ForeignKey(ReviewTag, related_name="%(app_label)s_%(class)s_items")
 
-    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
-    # don't like. But, it seems to be the only way to get *both* a custom tag
-    # *and* a custom through model.
-    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
     @classmethod
-    def tags_for(cls, model, instance=None):
-        if instance is not None:
-            return ReviewTag.objects.filter(
-                reviewtaggedrevision__content_object=instance)
-        return ReviewTag.objects.filter(
-            reviewtaggedrevision__content_object__isnull=False).distinct()
+    def tags_for(cls, *args, **kwargs):
+        return tags_for(cls, *args, **kwargs)
 
 
 class LocalizationTaggedRevision(ItemBase):
     """Through model, just for localization tags on revisions"""
     content_object = models.ForeignKey('Revision')
-    tag = models.ForeignKey(LocalizationTag)
+    tag = models.ForeignKey(LocalizationTag, related_name="%(app_label)s_%(class)s_items")
 
     @classmethod
-    def tags_for(cls, model, instance=None):
-        if instance is not None:
-            return LocalizationTag.objects.filter(
-                localizationtaggedrevision__content_object=instance)
-        return LocalizationTag.objects.filter(
-            localizationtaggedrevision__content_object__isnull=False).distinct()
+    def tags_for(cls, *args, **kwargs):
+        return tags_for(cls, *args, **kwargs)
 
 
 class Revision(models.Model):
@@ -1651,11 +1559,11 @@ class Revision(models.Model):
     TOC_DEPTH_H4 = 4
 
     TOC_DEPTH_CHOICES = (
-        (TOC_DEPTH_NONE, _lazy(u'No table of contents')),
-        (TOC_DEPTH_ALL, _lazy(u'All levels')),
-        (TOC_DEPTH_H2, _lazy(u'H2 and higher')),
-        (TOC_DEPTH_H3, _lazy(u'H3 and higher')),
-        (TOC_DEPTH_H4, _lazy('H4 and higher')),
+        (TOC_DEPTH_NONE, _(u'No table of contents')),
+        (TOC_DEPTH_ALL, _(u'All levels')),
+        (TOC_DEPTH_H2, _(u'H2 and higher')),
+        (TOC_DEPTH_H3, _(u'H3 and higher')),
+        (TOC_DEPTH_H4, _('H4 and higher')),
     )
 
     document = models.ForeignKey(Document, related_name='revisions')
@@ -1667,6 +1575,7 @@ class Revision(models.Model):
 
     summary = models.TextField()  # wiki markup
     content = models.TextField()  # wiki markup
+    tidied_content = models.TextField(blank=True)  # wiki markup tidied up
 
     # Keywords are used mostly to affect search rankings. Moderators may not
     # have the language expertise to translate keywords, so we put them in the
@@ -1691,7 +1600,8 @@ class Revision(models.Model):
 
     created = models.DateTimeField(default=datetime.now, db_index=True)
     comment = models.CharField(max_length=255)
-    creator = models.ForeignKey(User, related_name='created_revisions')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name='created_revisions')
     is_approved = models.BooleanField(default=True, db_index=True)
 
     # The default locale's rev that was current when the Edit button was hit to
@@ -1710,7 +1620,7 @@ class Revision(models.Model):
         """Build the absolute URL to this revision"""
         return reverse('wiki.revision',
                        locale=self.document.locale,
-                       args=[self.document.full_path, self.pk])
+                       args=[self.document.slug, self.pk])
 
     def _based_on_is_clean(self):
         """Return a tuple: (the correct value of based_on, whether the old
@@ -1757,10 +1667,10 @@ class Revision(models.Model):
                     old = self.based_on
                     self.based_on = based_on  # Guess a correct value.
                     locale = settings.LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
-                    # TODO(erik): This error message ignores non-translations.
-                    error = _('A revision must be based on a revision of the '
-                              '%(locale)s document. Revision ID %(id)s does '
-                              'not fit those criteria.')
+                    error = ugettext(
+                        'A revision must be based on a revision of the '
+                        '%(locale)s document. Revision ID %(id)s does '
+                        'not fit those criteria.')
                     raise ValidationError(error %
                                           {'locale': locale, 'id': old.id})
 
@@ -1800,13 +1710,44 @@ class Revision(models.Model):
         self.document.save()
 
     def __unicode__(self):
-        return u'[%s] %s #%s: %s' % (self.document.locale,
-                                     self.document.title,
-                                     self.id, self.content[:50])
+        return u'[%s] %s #%s' % (self.document.locale,
+                                 self.document.title,
+                                 self.id)
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
         return self.document.extract_section(self.content, section_id)
+
+    def get_tidied_content(self, allow_none=False):
+        """
+        Return the revision content parsed and cleaned by tidy.
+
+        First, check in denormalized db field. If it's not available, schedule
+        an asynchronous task to store it.
+
+        allow_none -- To prevent CPU-hogging calls, return None instead of
+                      calling tidy_content in-process.
+        """
+        # we may be lucky and have the tidied content already denormalized
+        # in the database, if so return it
+        if self.tidied_content:
+            tidied_content = self.tidied_content
+        else:
+            from .tasks import tidy_revision_content
+            tidying_scheduled_cache_key = 'kuma:tidying_scheduled:%s' % self.pk
+            # if there isn't already a task scheduled for the revision
+            tidying_already_scheduled = memcache.get(tidying_scheduled_cache_key)
+            if not tidying_already_scheduled:
+                tidy_revision_content.delay(self.pk)
+                # we temporarily set a flag that we've scheduled a task
+                # already and don't need to schedule it the next time
+                # we use 3 days as a limit to try it again
+                memcache.set(tidying_scheduled_cache_key, 1, 60 * 60 * 24 * 3)
+            if allow_none:
+                tidied_content = None
+            else:
+                tidied_content, errors = tidy_content(self.content)
+        return tidied_content
 
     @property
     def content_cleaned(self):
@@ -1815,7 +1756,8 @@ class Revision(models.Model):
         else:
             return Document.objects.clean_content(self.content)
 
-    def get_previous(self):
+    @cached_property
+    def previous(self):
         """
         Returns the previous approved revision or None.
         """
@@ -1858,16 +1800,45 @@ class HelpfulVote(models.Model):
     document = models.ForeignKey(Document, related_name='poll_votes')
     helpful = models.BooleanField(default=False)
     created = models.DateTimeField(default=datetime.now, db_index=True)
-    creator = models.ForeignKey(User, related_name='poll_votes', null=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name='poll_votes', null=True)
     anonymous_id = models.CharField(max_length=40, db_index=True)
     user_agent = models.CharField(max_length=1000)
 
 
 class EditorToolbar(models.Model):
-    creator = models.ForeignKey(User, related_name='created_toolbars')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name='created_toolbars')
     default = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
     code = models.TextField(max_length=2000)
 
     def __unicode__(self):
         return self.name
+
+
+class DocumentSpamAttempt(SpamAttempt):
+    """
+    The wiki document specific spam attempt.
+
+    Stores title, slug and locale of the documet revision to be able
+    to see where it happens.
+    """
+    title = models.CharField(
+        verbose_name=ugettext('Title'),
+        max_length=255,
+    )
+    slug = models.CharField(
+        verbose_name=ugettext('Slug'),
+        max_length=255,
+    )
+    document = models.ForeignKey(
+        Document,
+        related_name='spam_attempts',
+        null=True,
+        blank=True,
+        verbose_name=ugettext('Document (optional)')
+    )
+
+    def __unicode__(self):
+        return u'%s (%s)' % (self.slug, self.title)

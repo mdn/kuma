@@ -24,7 +24,7 @@ define([
 
         after: function() {
             return Page.teardown();
-        },
+        }
     };
 
     // window-based objects we rely on for all MDN functionality

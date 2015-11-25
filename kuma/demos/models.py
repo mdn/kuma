@@ -9,27 +9,19 @@ import zipfile
 
 import magic
 
-try:
-    from PIL import Image
-except ImportError:
-    import Image
-
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile, ImageFieldFile
-from django.template.defaultfilters import slugify, filesizeformat
+from django.template.defaultfilters import filesizeformat
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
-import constance.config
+from constance import config
 from constance.admin import FIELDS
 from django.utils.functional import lazy
-
-import south.modelsinspector
-from threadedcomments.models import ThreadedComment
 
 from kuma.actioncounters.fields import ActionCounterField
 from kuma.core.managers import NamespacedTaggableManager
@@ -40,8 +32,6 @@ from . import challenge_utils, DEMO_LICENSES, scale_image
 from .embed import VideoEmbedURLField
 
 
-south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
-
 SCREENSHOT_MAXW = getattr(settings, 'DEMO_SCREENSHOT_MAX_WIDTH', 480)
 SCREENSHOT_MAXH = getattr(settings, 'DEMO_SCREENSHOT_MAX_HEIGHT', 360)
 
@@ -51,9 +41,11 @@ THUMBNAIL_MAXH = getattr(settings, 'DEMO_THUMBNAIL_MAX_HEIGHT', 150)
 # Set up a file system for demo uploads that can be kept separate from the rest
 # of /media if necessary. Lots of hackery here to ensure a set of sensible
 # defaults are tried.
-DEMO_UPLOADS_ROOT = getattr(settings, 'DEMO_UPLOADS_ROOT',
+DEMO_UPLOADS_ROOT = getattr(
+    settings, 'DEMO_UPLOADS_ROOT',
     '%s/uploads/demos' % getattr(settings, 'MEDIA_ROOT', 'media'))
-DEMO_UPLOADS_URL = getattr(settings, 'DEMO_UPLOADS_URL',
+DEMO_UPLOADS_URL = getattr(
+    settings, 'DEMO_UPLOADS_URL',
     '%s/uploads/demos' % getattr(settings, 'MEDIA_URL', '/media'))
 demo_uploads_fs = FileSystemStorage(location=DEMO_UPLOADS_ROOT, base_url=DEMO_UPLOADS_URL)
 
@@ -111,11 +103,11 @@ LAZY_CONSTANCE_TYPES = list(FIELDS.keys())
 LAZY_CONSTANCE_TYPES.remove(unicode)  # because we already have str in the list
 
 
-def config(name, default=None):
+def _config(name, default=None):
     """
     Just a silly wrapper arround the constance's config object.
     """
-    return getattr(constance.config, name, default)
+    return getattr(config, name, default)
 
 """
 A function to use constance's config object in an environment in which
@@ -126,38 +118,49 @@ E.g. something that is a pretty stupid idea but should show the risk as well::
     class Entry(models.Model):
         title = models.CharField(max_length=config_lazy('ENTRY_MAX_LENGTH'))
 
-.. where ``ENTRY_MAX_LENGTH`` is the name of the constance config value.
+.. where ``ENTRY_MAX_LENGTH`` is the name of the config value.
 
 """
-config_lazy = lazy(config, *LAZY_CONSTANCE_TYPES)
+config_lazy = lazy(_config, *LAZY_CONSTANCE_TYPES)
 
 
 def get_root_for_submission(instance):
     """Build a root path for demo submission files"""
-    c_name = instance.creator.username
-    return '%(h1)s/%(h2)s/%(username)s/%(slug_hash)s' % dict(
-         h1=c_name[0], h2=c_name[1], username=c_name,
-         slug_hash=md5(instance.slug).hexdigest())
+    username = instance.creator.username
+    return join(username[0], username[1], username,
+                md5(instance.slug).hexdigest())
 
 
-def mk_upload_to(field_fn):
-    """upload_to builder for file upload fields"""
-    def upload_to(instance, filename):
-        time_now = int(time())
-        return '%(base)s/%(time_now)s_%(field_fn)s' % dict(
-            time_now=time_now,
-            base=get_root_for_submission(instance), field_fn=field_fn)
-    return upload_to
+def screenshot_upload_to(instance, filename, field_filename):
+    base = get_root_for_submission(instance)
+    filename = '%s_%s' % (int(time()), field_filename)
+    return join(base, filename)
 
 
-def mk_slug_upload_to(field_fn):
-    """upload_to builder for file upload fields, includes slug in filename"""
-    def upload_to(instance, filename):
-        time_now = int(time())
-        return '%(base)s/%(slug_short)s_%(time_now)s_%(field_fn)s' % dict(
-            time_now=time_now, slug_short=instance.slug[:20],
-            base=get_root_for_submission(instance), field_fn=field_fn)
-    return upload_to
+def upload_screenshot_1(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_1.png')
+
+
+def upload_screenshot_2(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_2.png')
+
+
+def upload_screenshot_3(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_3.png')
+
+
+def upload_screenshot_4(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_4.png')
+
+
+def upload_screenshot_5(instance, filename):
+    return screenshot_upload_to(instance, filename, 'screenshot_5.png')
+
+
+def demo_package_upload_to(instance, filename):
+    base = get_root_for_submission(instance)
+    filename = '%s_%s_%s' % (instance.slug[:20], int(time()), 'demo_package.zip')
+    return join(base, filename)
 
 
 class ReplacingFieldZipFile(FieldFile):
@@ -188,7 +191,7 @@ class ReplacingZipFileField(models.FileField):
     attr_class = ReplacingFieldZipFile
 
     def __init__(self, *args, **kwargs):
-        self.max_upload_size = kwargs.pop("max_upload_size")
+        self.max_upload_size = kwargs.pop('max_upload_size', 5)
         super(ReplacingZipFileField, self).__init__(*args, **kwargs)
 
     def clean(self, *args, **kwargs):
@@ -198,23 +201,15 @@ class ReplacingZipFileField(models.FileField):
         try:
             if file._size > self.max_upload_size:
                 raise ValidationError(
-                    _('Please keep filesize under %s. Current filesize %s') %
-                    (filesizeformat(self.max_upload_size), filesizeformat(file._size))
+                    _('Please keep filesize under %(max_size)s. '
+                      'Current filesize %(file_size)s')
+                    % {'max_size': filesizeformat(self.max_upload_size),
+                       'file_size': filesizeformat(file._size)}
                 )
         except AttributeError:
             pass
 
         return data
-
-south.modelsinspector.add_introspection_rules([
-    (
-        [ReplacingZipFileField],
-        [],
-        {
-            'max_upload_size': ['max_upload_size', {'default': 5}],
-        },
-    )
-], ["^kuma.demos.models.ReplacingZipFileField"])
 
 
 class ReplacingImageWithThumbFieldFile(ImageFieldFile):
@@ -251,8 +246,9 @@ class ReplacingImageWithThumbFieldFile(ImageFieldFile):
         # Create associated scaled thumbnail image
         t_name = self.thumbnail_name()
         if t_name:
-            thumb_file = scale_image(self.storage.open(new_filename),
-                    (self.field.thumb_max_width, self.field.thumb_max_height))
+            thumb_file = scale_image(
+                self.storage.open(new_filename),
+                (self.field.thumb_max_width, self.field.thumb_max_height))
             self.storage.save(t_name, thumb_file)
 
 
@@ -272,26 +268,14 @@ class ReplacingImageWithThumbField(models.ImageField):
         data = super(ReplacingImageWithThumbField, self).clean(*args, **kwargs)
 
         # Scale the input image down to maximum full size.
-        scaled_file = scale_image(data.file,
-                (self.full_max_width, self.full_max_height))
+        scaled_file = scale_image(
+            data.file,
+            (self.full_max_width, self.full_max_height))
         if not scaled_file:
             raise ValidationError(_('Cannot process image'))
         data.file = scaled_file
 
         return data
-
-south.modelsinspector.add_introspection_rules([
-    (
-        [ReplacingImageWithThumbField],
-        [],
-        {
-            'full_max_width': ['full_max_width', {'default': SCREENSHOT_MAXW}],
-            'full_max_width': ['full_max_height', {'default': SCREENSHOT_MAXH}],
-            'full_max_width': ['full_max_width', {'default': THUMBNAIL_MAXW}],
-            'full_max_width': ['thumb_max_height', {'default': THUMBNAIL_MAXH}],
-        },
-    )
-], ["^kuma.demos.models.ReplacingImageWithThumbField"])
 
 
 class SubmissionManager(models.Manager):
@@ -301,15 +285,15 @@ class SubmissionManager(models.Manager):
         return self.get(slug=slug)
 
     # never show censored submissions
-    def get_query_set(self):
-        return super(SubmissionManager, self).get_query_set().exclude(censored=True)
+    def get_queryset(self):
+        return super(SubmissionManager, self).get_queryset().exclude(censored=True)
 
     # TODO: Make these search functions into a mixin?
 
     # See: http://www.julienphalip.com/blog/2008/08/16/adding-search-django-site-snap/
     def _normalize_query(self, query_string,
-                        findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
-                        normspace=re.compile(r'\s{2,}').sub):
+                         findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+                         normspace=re.compile(r'\s{2,}').sub):
         ''' Splits the query string in invidual keywords, getting rid of unecessary spaces
             and grouping quoted words together.
             Example:
@@ -326,10 +310,10 @@ class SubmissionManager(models.Manager):
             aims to search keywords within a model by testing the given search fields.
 
         '''
-        query = None # Query to search for every search term
+        query = None  # Query to search for every search term
         terms = self._normalize_query(query_string)
         for term in terms:
-            or_query = None # Query to search for a given term in each field
+            or_query = None  # Query to search for a given term in each field
             for field_name in search_fields:
                 q = Q(**{"%s__icontains" % field_name: term})
                 if or_query is None:
@@ -375,33 +359,34 @@ class Submission(models.Model):
     admin_manager = models.Manager()
 
     title = models.CharField(
-            _("what is your demo's name?"),
-            max_length=255, blank=False, unique=True)
-    slug = models.SlugField(_("slug"),
-            blank=False, unique=True, max_length=50)
+        _("what is your demo's name?"),
+        max_length=255, blank=False, unique=True)
+    slug = models.SlugField(
+        _("slug"),
+        blank=False, unique=True, max_length=50)
     summary = models.CharField(
-            _("describe your demo in one line"),
-            max_length=255, blank=False)
+        _("describe your demo in one line"),
+        max_length=255, blank=False)
     description = models.TextField(
-            _("describe your demo in more detail (optional)"),
-            blank=True)
+        _("describe your demo in more detail (optional)"),
+        blank=True)
 
-    featured = models.BooleanField()
+    featured = models.BooleanField(default=False)
     hidden = models.BooleanField(
-            _("Hide this demo from others?"), default=False)
-    censored = models.BooleanField()
+        _("Hide this demo from others?"), default=False)
+    censored = models.BooleanField(default=False)
     censored_url = models.URLField(
-            _("Redirect URL for censorship."),
-            verify_exists=False, blank=True, null=True)
+        _("Redirect URL for censorship."),
+        blank=True, null=True)
 
     navbar_optout = models.BooleanField(
         _('control how your demo is launched'),
         choices=(
             (True, _('Disable navigation bar, launch demo in a new window')),
             (False, _('Use navigation bar, display demo in <iframe>'))
-        )
-    )
+        ), default=False)
 
+    # FIXME: remove since it's unneeded
     comments_total = models.PositiveIntegerField(default=0)
 
     launches = ActionCounterField()
@@ -410,63 +395,67 @@ class Submission(models.Model):
     taggit_tags = NamespacedTaggableManager(blank=True)
 
     screenshot_1 = ReplacingImageWithThumbField(
-            _('Screenshot #1'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_1.png'),
-            blank=False)
+        _('Screenshot #1'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_1,
+        blank=False)
     screenshot_2 = ReplacingImageWithThumbField(
-            _('Screenshot #2'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_2.png'),
-            blank=True)
+        _('Screenshot #2'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_2,
+        blank=True)
     screenshot_3 = ReplacingImageWithThumbField(
-            _('Screenshot #3'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_3.png'),
-            blank=True)
+        _('Screenshot #3'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_3,
+        blank=True)
     screenshot_4 = ReplacingImageWithThumbField(
-            _('Screenshot #4'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_4.png'),
-            blank=True)
+        _('Screenshot #4'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_4,
+        blank=True)
     screenshot_5 = ReplacingImageWithThumbField(
-            _('Screenshot #5'),
-            max_length=255,
-            storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_5.png'),
-            blank=True)
+        _('Screenshot #5'),
+        max_length=255,
+        storage=demo_uploads_fs,
+        upload_to=upload_screenshot_5,
+        blank=True)
 
     video_url = VideoEmbedURLField(
-            _("have a video of your demo in action? (optional)"),
-            blank=True, null=True)
+        _("have a video of your demo in action? (optional)"),
+        blank=True, null=True)
 
     demo_package = ReplacingZipFileField(
-            _('select a ZIP file containing your demo'),
-            max_length=255,
-            max_upload_size=config_lazy('DEMO_MAX_ZIP_FILESIZE',
-                                        60 * 1024 * 1024),  # overridden by constance
-            storage=demo_uploads_fs,
-            upload_to=mk_slug_upload_to('demo_package.zip'),
-            blank=False)
+        _('select a ZIP file containing your demo'),
+        max_length=255,
+        max_upload_size=config_lazy('DEMO_MAX_ZIP_FILESIZE',
+                                    60 * 1024 * 1024),  # overridden by constance
+        storage=demo_uploads_fs,
+        upload_to=demo_package_upload_to,
+        blank=False)
 
     source_code_url = models.URLField(
-            _("Is your source code also available somewhere else on the web (e.g., github)? Please share the link."),
-            blank=True, null=True)
+        _("Is your source code also available somewhere else on the web (e.g., github)? Please share the link."),
+        blank=True, null=True)
     license_name = models.CharField(
-            _("Select the license that applies to your source code."),
-            max_length=64, blank=False,
-            choices=( (x['name'], x['title']) for x in DEMO_LICENSES.values()))
+        _("Select the license that applies to your source code."),
+        max_length=64, blank=False,
+        choices=[(license['name'], license['title'])
+                 for license in DEMO_LICENSES.values()]
+    )
 
-    creator = models.ForeignKey(User, blank=False, null=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, null=True)
 
-    created = models.DateTimeField(_('date created'),
-            auto_now_add=True, blank=False)
-    modified = models.DateTimeField(_('date last modified'),
-            auto_now=True, blank=False)
+    created = models.DateTimeField(
+        _('date created'),
+        auto_now_add=True, blank=False)
+    modified = models.DateTimeField(
+        _('date last modified'),
+        auto_now=True, blank=False)
 
     def natural_key(self):
         return (self.slug,)
@@ -576,7 +565,7 @@ class Submission(models.Model):
         """Fetch the screenshot URL for a given index, swallowing errors"""
         try:
             return getattr(self, 'screenshot_%s' % index).url
-        except:
+        except (AttributeError, ValueError):
             return ''
 
     def thumbnail_url(self, index='1'):
@@ -584,7 +573,7 @@ class Submission(models.Model):
         errors"""
         try:
             return getattr(self, 'screenshot_%s' % index).thumbnail_url()
-        except:
+        except (AttributeError, ValueError):
             return ''
 
     def get_flags(self):
@@ -626,41 +615,26 @@ class Submission(models.Model):
 
     @classmethod
     def allows_listing_hidden_by(cls, user):
-        if user.is_staff or user.is_superuser:
-            return True
-        return False
-
-    def allows_hiding_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        return False
+        return user.is_staff or user.is_superuser
 
     def allows_viewing_by(self, user):
         if not self.censored:
-            if user.is_staff or user.is_superuser or user == self.creator:
-                return True
-            if not self.hidden:
-                return True
-        return False
+            return (user.is_staff or
+                    user.is_superuser or
+                    user.pk == self.creator.pk or
+                    not self.hidden)
 
-    def allows_editing_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        return False
-
-    def allows_deletion_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        return False
+    def allows_managing_by(self, user):
+        return user.is_staff or user.is_superuser or user.pk == self.creator.pk
 
     @classmethod
     def get_valid_demo_zipfile_entries(cls, zf):
         """Filter a ZIP file's entries for only accepted entries"""
         # TODO: Move to zip file field?
         return [x for x in zf.infolist() if
-            not (x.filename.startswith('/') or '/..' in x.filename) and
-            not (basename(x.filename).startswith('.')) and
-            x.file_size > 0]
+                not (x.filename.startswith('/') or '/..' in x.filename) and
+                not (basename(x.filename).startswith('.')) and
+                x.file_size > 0]
 
     @classmethod
     def validate_demo_zipfile(cls, file):
@@ -669,7 +643,7 @@ class Submission(models.Model):
         # TODO: Move to zip file field?
         try:
             zf = zipfile.ZipFile(file)
-        except:
+        except IOError:
             raise ValidationError(_('ZIP file contains no acceptable files'))
 
         if zf.testzip():
@@ -690,7 +664,7 @@ class Submission(models.Model):
             if 'index.html' == name or 'demo.html' == name:
                 index_found = True
 
-            if zi.file_size > constance.config.DEMO_MAX_FILESIZE_IN_ZIP:
+            if zi.file_size > config.DEMO_MAX_FILESIZE_IN_ZIP:
                 raise ValidationError(
                     _('ZIP file contains a file that is too large: %(filename)s') %
                     {"filename": name}
@@ -700,9 +674,9 @@ class Submission(models.Model):
             # HACK: Sometimes we get "type; charset", even if charset wasn't asked for
             file_mime_type = m_mime.from_buffer(file_data).split(';')[0]
 
-            extensions = constance.config.DEMO_BLACKLIST_OVERRIDE_EXTENSIONS.split()
+            extensions = config.DEMO_BLACKLIST_OVERRIDE_EXTENSIONS.split()
             override_file_extensions = ['.%s' % extension
-                                       for extension in extensions]
+                                        for extension in extensions]
 
             if (file_mime_type in DEMO_MIMETYPE_BLACKLIST and
                     not name.endswith(tuple(override_file_extensions))):
@@ -751,13 +725,3 @@ class Submission(models.Model):
             # Extract the file from the zip into the desired location.
             fout = open(out_fn.encode('utf-8'), 'wb')
             copyfileobj(zf.open(zi), fout)
-
-def update_submission_comment_count(sender, instance, **kwargs):
-    """Update the denormalized count of comments for a submission on comment save/delete"""
-    obj = instance.content_object
-    if isinstance(obj, Submission):
-        new_total = ThreadedComment.public.all_for_object(obj).count()
-        Submission.objects.filter(pk=obj.pk).update(comments_total=new_total)
-
-models.signals.post_save.connect(update_submission_comment_count, sender=ThreadedComment)
-models.signals.post_delete.connect(update_submission_comment_count, sender=ThreadedComment)

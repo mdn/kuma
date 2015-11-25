@@ -1,0 +1,46 @@
+---
+- name: Replace default init file
+  copy:
+    src: etc/init.d/mysql
+    dest: /etc/init.d/mysql
+    owner: root
+    group: root
+    mode: 0755
+    backup: yes
+
+- name: Find out the character sets directory
+  shell: >
+    /usr/bin/mysql -uroot -p{{ mysql_root_password }}
+    -e "SELECT @@character_sets_dir;" | head -2 | tail -1
+  register: character_sets_dir
+
+- name: Check if utf8_distinct_ci collation is already installed
+  shell: "grep utf8_distinct_ci {{ character_sets_dir.stdout }}Index.xml"
+  register: utf8_distinct_ci_found
+  ignore_errors: True
+
+- name: Find out the max collation ID of the database
+  shell: >
+    /usr/bin/mysql -uroot -p{{ mysql_root_password }}
+    -e "SELECT MAX(ID) FROM INFORMATION_SCHEMA.COLLATIONS;" | head -2 | tail -1
+  register: max_collation_id
+  when: utf8_distinct_ci_found|failed and mysql_root_password
+
+- name: Store max_collation_id in a fact
+  set_fact: collation_id="{{ max_collation_id.stdout|int + 1 }}"
+  when: utf8_distinct_ci_found|failed
+
+- name: Copy collation index
+  template:
+    src: Index.xml.j2
+    dest: "{{ character_sets_dir.stdout }}Index.xml"
+    owner: root
+    group: root
+    backup: yes
+  when: utf8_distinct_ci_found|failed
+
+- name: Ensure MySQL is stopped.
+  service: name=mysql state=stopped sleep=5
+
+- name: Ensure MySQL is started.
+  service: name=mysql state=started

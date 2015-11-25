@@ -1,0 +1,5 @@
+[mysql-community-releases]
+name=Mysql Community Packages
+baseurl=http://repo.mysql.com/yum/mysql-community/el/6/$basearch/
+gpgcheck=0
+enabled=1

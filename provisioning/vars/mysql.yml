@@ -1,0 +1,25 @@
+mysql_packages:
+  - mysql-common
+  - mysql-server
+  - python-mysqldb
+  - libmysqlclient-dev
+mysql_root_password: kuma
+mysql_databases:
+  - name: kuma
+    encoding: utf8
+    collation: utf8_general_ci
+mysql_users:
+  - name: kuma
+    host: "%"
+    password: kuma
+    priv: "*.*:ALL"
+  - name: kuma
+    host: "localhost"
+    password: kuma
+    priv: "*.*:ALL"
+  - name: kuma
+    host: "10.0.2.15"
+    password: kuma
+    priv: "*.*:ALL"
+mysql_log_error: /var/log/mysql/error.log
+mysql_innodb_log_file_size: 1G

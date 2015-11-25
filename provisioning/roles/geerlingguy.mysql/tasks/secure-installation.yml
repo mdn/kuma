@@ -1,0 +1,37 @@
+---
+- name: Get list of hosts for the root user.
+  command: mysql -NBe 'SELECT Host FROM mysql.user WHERE User = "root" ORDER BY (Host="localhost") ASC'
+  register: mysql_root_hosts
+  changed_when: false
+
+# 'localhost' needs to be last for idempotency.
+- name: Update MySQL root password for localhost root account.
+  mysql_user:
+    name: "root"
+    host: "{{ item }}"
+    password: "{{ mysql_root_password }}"
+  with_items: mysql_root_hosts.stdout_lines
+
+# Has to be after the root password assignment, for idempotency.
+- name: Copy .my.cnf file with root password credentials.
+  template:
+    src: "user-my.cnf.j2"
+    dest: "{{ mysql_user_home }}/.my.cnf"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Get list of hosts for the anonymous user.
+  command: mysql -NBe 'SELECT Host FROM mysql.user WHERE User = ""'
+  register: mysql_anonymous_hosts
+  changed_when: false
+
+- name: Remove anonymous MySQL users.
+  mysql_user:
+     name: ""
+     host: "{{ item }}"
+     state: absent
+  with_items: mysql_anonymous_hosts.stdout_lines
+
+- name: Remove MySQL test database.
+  mysql_db: "name='test' state=absent"

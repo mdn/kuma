@@ -1,24 +1,26 @@
 from __future__ import with_statement
 
+import json
 import logging
 import os
+import textwrap
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
 from django.core.mail import EmailMessage, mail_admins, send_mail
 from django.db import connection, transaction
-from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
-from celery import task
+from celery import chord, task
 from constance import config
+from djcelery_transactions import task as transaction_task
 from lxml import etree
 
 from kuma.core.cache import memcache
-from kuma.core.utils import chord_flow, chunked, MemcacheLock
+from kuma.core.utils import MemcacheLock, chord_flow, chunked
 from kuma.search.models import Index
 
 from .events import context_dict
@@ -26,7 +28,7 @@ from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
 from .helpers import absolutify
 from .models import Document, Revision, RevisionIP
 from .search import WikiDocumentType
-from .signals import render_done
+from .utils import tidy_content
 
 
 log = logging.getLogger('kuma.wiki.tasks')
@@ -119,98 +121,117 @@ def render_stale_documents(log=None):
 
     pre_task = acquire_render_lock.si()
     render_tasks = [render_document_chunk.si(pks)
-                    for pks in chunked(stale_pks, 10)]
+                    for pks in chunked(stale_pks, 5)]
     post_task = release_render_lock.si()
 
     chord_flow(pre_task, render_tasks, post_task).apply_async()
 
 
 @task
-def build_json_data_for_document_task(pk, stale):
+def build_json_data_for_document(pk, stale):
     """Force-refresh cached JSON data after rendering."""
     document = Document.objects.get(pk=pk)
     document.get_json_data(stale=stale)
 
-
-@receiver(render_done)
-def build_json_data_handler(sender, instance, **kwargs):
-    build_json_data_for_document_task.delay(instance.pk, stale=False)
+    # If we're a translation, rebuild our source doc's JSON so its
+    # translation list includes our last edit date.
+    if document.parent is not None:
+        parent_json = json.dumps(document.parent.build_json_data())
+        Document.objects.filter(pk=document.parent.pk).update(json=parent_json)
 
 
 @task
 def move_page(locale, slug, new_slug, email):
-    with transaction.commit_manually():
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            transaction.rollback()
-            logging.error('Page move failed: no user with email address %s' %
-                          email)
-            return
-        try:
-            doc = Document.objects.get(locale=locale, slug=slug)
-        except Document.DoesNotExist:
-            transaction.rollback()
-            message = """
-    Page move failed.
+    transaction.set_autocommit(False)
+    User = get_user_model()
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        transaction.rollback()
+        logging.error('Page move failed: no user with email address %s' %
+                      email)
+        return
 
-    Move was requested for document with slug %(slug)s in locale
-    %(locale)s, but no such document exists.
-            """ % {'slug': slug, 'locale': locale}
-            logging.error(message)
-            send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
-                      [user.email])
-            return
-        try:
-            doc._move_tree(new_slug, user=user)
-        except PageMoveError as e:
-            transaction.rollback()
-            message = """
-    Page move failed.
+    try:
+        doc = Document.objects.get(locale=locale, slug=slug)
+    except Document.DoesNotExist:
+        transaction.rollback()
+        message = """
+            Page move failed.
 
-    Move was requested for document with slug %(slug)s in locale
-    %(locale)s, but could not be completed.
+            Move was requested for document with slug %(slug)s in locale
+            %(locale)s, but no such document exists.
+        """ % {'slug': slug, 'locale': locale}
+        logging.error(message)
+        send_mail('Page move failed',
+                  textwrap.dedent(message),
+                  settings.DEFAULT_FROM_EMAIL,
+                  [user.email])
+        transaction.set_autocommit(True)
+        return
 
-    Diagnostic info:
+    try:
+        doc._move_tree(new_slug, user=user)
+    except PageMoveError as e:
+        transaction.rollback()
+        message = """
+            Page move failed.
 
-    %(message)s
-            """ % {'slug': slug, 'locale': locale, 'message': e.message}
-            logging.error(message)
-            send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
-                      [user.email])
-            return
-        except Exception as e:
-            transaction.rollback()
-            message = """
-    Page move failed.
+            Move was requested for document with slug %(slug)s in locale
+            %(locale)s, but could not be completed.
 
-    Move was requested for document with slug %(slug)s in locale %(locale)s,
-    but could not be completed.
+            Diagnostic info:
 
-    %(info)s
-            """ % {'slug': slug, 'locale': locale, 'info': e}
-            logging.error(message)
-            send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
-                      [user.email])
-            return
+            %(message)s
+        """ % {'slug': slug, 'locale': locale, 'message': e.message}
+        logging.error(message)
+        send_mail('Page move failed',
+                  textwrap.dedent(message),
+                  settings.DEFAULT_FROM_EMAIL,
+                  [user.email])
+        transaction.set_autocommit(True)
+        return
+    except Exception as e:
+        transaction.rollback()
+        message = """
+            Page move failed.
 
-        transaction.commit()
+            Move was requested for document with slug %(slug)s in locale %(locale)s,
+            but could not be completed.
+
+            %(info)s
+        """ % {'slug': slug, 'locale': locale, 'info': e}
+        logging.error(message)
+        send_mail('Page move failed',
+                  textwrap.dedent(message),
+                  settings.DEFAULT_FROM_EMAIL,
+                  [user.email])
+        transaction.set_autocommit(True)
+        return
+
+    transaction.commit()
+    transaction.set_autocommit(True)
 
     # Now that we know the move succeeded, re-render the whole tree.
     for moved_doc in [doc] + doc.get_descendants():
         moved_doc.schedule_rendering('max-age=0')
 
     subject = 'Page move completed: ' + slug + ' (' + locale + ')'
+
     full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
+
     message = """
-Page move completed.
+        Page move completed.
 
-The move requested for the document with slug %(slug)s in locale
-%(locale)s, and all its children, has been completed.
+        The move requested for the document with slug %(slug)s in locale
+        %(locale)s, and all its children, has been completed.
 
-You can now view this document at its new location: %(full_url)s.
+        You can now view this document at its new location: %(full_url)s.
     """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
+
+    send_mail(subject,
+              textwrap.dedent(message),
+              settings.DEFAULT_FROM_EMAIL,
               [user.email])
 
 
@@ -261,7 +282,7 @@ def delete_old_revision_ips(days=30):
     RevisionIP.objects.delete_old(days=days)
 
 
-@task
+@transaction_task
 def send_first_edit_email(revision_pk):
     """ Make an 'edited' notification email for first-time editors """
     revision = Revision.objects.get(pk=revision_pk)
@@ -283,49 +304,86 @@ class WikiSitemap(GenericSitemap):
     priority = 0.5
 
 
+SITEMAP_START = u'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
 SITEMAP_ELEMENT = u'<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>'
+SITEMAP_END = u'</sitemapindex>'
 
 
 @task
-def build_sitemaps():
-    sitemap_parts = [u'<sitemapindex xmlns="http://www.sitemaps.org/'
-                     u'schemas/sitemap/0.9">']
+def build_locale_sitemap(locale):
+    """
+    For the given locale build the appropriate sitemap file and
+    returns the locale, the file names written and timestamp of the
+    build.
+    """
     now = datetime.utcnow()
     timestamp = '%s+00:00' % now.replace(microsecond=0).isoformat()
+
+    directory = os.path.join(settings.MEDIA_ROOT, 'sitemaps', locale)
+    if not os.path.isdir(directory):
+        os.makedirs(directory)
+
+    queryset = Document.objects.filter_for_list(locale=locale)
+    if queryset.exists():
+        names = []
+        info = {
+            'queryset': queryset,
+            'date_field': 'modified',
+        }
+        sitemap = WikiSitemap(info)
+        for page in range(1, sitemap.paginator.num_pages + 1):
+            urls = sitemap.get_urls(page=page)
+            if page == 1:
+                name = 'sitemap.xml'
+            else:
+                name = 'sitemap_%s.xml' % page
+            names.append(name)
+
+            rendered = smart_str(render_to_string('wiki/sitemap.xml',
+                                                  {'urls': urls}))
+            path = os.path.join(directory, name)
+            with open(path, 'w') as sitemap_file:
+                sitemap_file.write(rendered)
+
+        return locale, names, timestamp
+
+
+@task
+def build_index_sitemap(results):
+    """
+    A chord callback task that writes a sitemap index file for the
+    given results of :func:`~kuma.wiki.tasks.build_locale_sitemap` task.
+    """
+    sitemap_parts = [SITEMAP_START]
+
+    for result in results:
+        # result can be empty if no documents were found
+        if result is not None:
+            locale, names, timestamp = result
+            for name in names:
+                sitemap_url = absolutify('/sitemaps/%s/%s' % (locale, name))
+                sitemap_parts.append(SITEMAP_ELEMENT % (sitemap_url, timestamp))
+
+    sitemap_parts.append(SITEMAP_END)
+
     index_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
-
-    for locale in settings.MDN_LANGUAGES:
-        queryset = (Document.objects
-                            .filter(is_template=False,
-                                    locale=locale,
-                                    is_redirect=False)
-                            .exclude(title__startswith='User:')
-                            .exclude(slug__icontains='Talk:'))
-        if queryset.count() > 0:
-            info = {'queryset': queryset, 'date_field': 'modified'}
-
-            directory = os.path.join(settings.MEDIA_ROOT, 'sitemaps', locale)
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-
-            with open(os.path.join(directory, 'sitemap.xml'), 'w') as f:
-                f.write(smart_str(render_to_string('wiki/sitemap.xml',
-                                  {'urls': WikiSitemap(info).get_urls(page=1)})))
-
-            del info  # Force the gc to cleanup
-
-            sitemap_url = absolutify('/sitemaps/%s/sitemap.xml' % locale)
-            sitemap_parts.append(SITEMAP_ELEMENT % (sitemap_url, timestamp))
-
-        del queryset  # Force the gc to cleanup
-
-    sitemap_parts.append(u'</sitemapindex>')
-
     sitemap_tree = etree.fromstringlist(sitemap_parts)
     with open(index_path, 'w') as index_file:
         sitemap_tree.getroottree().write(index_file,
                                          encoding='utf-8',
                                          pretty_print=True)
+
+
+@task
+def build_sitemaps():
+    """
+    Build and save sitemap files for every MDN language and as a
+    callback save the sitempa index file as well.
+    """
+    tasks = [build_locale_sitemap.si(locale)
+             for locale in settings.MDN_LANGUAGES]
+    post_task = build_index_sitemap.s()
+    chord(header=tasks, body=post_task).apply_async()
 
 
 @task
@@ -373,10 +431,33 @@ def unindex_documents(ids, index_pk):
 
     :arg ids: Iterable of `Document` pks to remove.
     :arg index_pk: The `Index` pk of the index to remove items from.
-
     """
     cls = WikiDocumentType
     es = cls.get_connection('indexing')
     index = Index.objects.get(pk=index_pk)
 
     cls.bulk_delete(ids, es=es, index=index.prefixed_name)
+
+
+@task(rate_limit='120/m')
+def tidy_revision_content(pk):
+    """
+    Run tidy over the given revision's content and save it to the
+    tidy_content field if the content is not equal to the current value.
+
+    :arg pk: Primary key of `Revision` whose content needs tidying.
+    """
+    try:
+        revision = Revision.objects.get(pk=pk)
+    except Revision.DoesNotExist as exc:
+        # Retry in 2 minutes
+        log.error('Tidy was unable to get revision id: %d. Retrying.', pk)
+        tidy_revision_content.retry(countdown=60 * 2, max_retries=5, exc=exc)
+    else:
+        tidied_content, errors = tidy_content(revision.content)
+        if tidied_content != revision.tidied_content:
+            Revision.objects.filter(pk=pk).update(
+                tidied_content=tidied_content
+            )
+        # return the errors so we can look them up in the Celery task result
+        return errors

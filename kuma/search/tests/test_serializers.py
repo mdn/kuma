@@ -30,7 +30,7 @@ class SerializerTests(ElasticTestCase):
             'group': {'name': 'Group', 'slug': 'group', 'order': 1},
             'shortcut': None})
 
-    @mock.patch('kuma.search.serializers._')
+    @mock.patch('kuma.search.serializers.ugettext')
     def test_filter_serializer_with_translations(self, _mock):
         _mock.return_value = u'Juegos'
         translation.activate('es')
@@ -60,7 +60,7 @@ class SerializerTests(ElasticTestCase):
         search = search.query('match', summary='CSS')
         search = search.highlight(*WikiDocumentType.excerpt_fields)
         result = search.execute()
-        data = DocumentSerializer(result).data
+        data = DocumentSerializer(result, many=True).data
         eq_(data[0]['excerpt'], u'A <em>CSS</em> article')
 
 

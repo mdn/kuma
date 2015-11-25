@@ -1,0 +1,5 @@
+---
+
+elasticsearch_apt_repos:
+- 'ppa:webupd8team/java'
+

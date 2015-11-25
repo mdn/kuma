@@ -1,14 +1,12 @@
 import functools
+import hashlib
 import logging
 import os
 import random
-import re
-import tempfile
 import time
 from itertools import islice
 
-import commonware.log
-import lockfile
+import bitly_api
 from celery import chain, chord
 from polib import pofile
 
@@ -24,43 +22,11 @@ from .cache import memcache
 from .jobs import IPBanJob
 
 
-# this is not intended to be an all-knowing IP address regex
-IP_RE = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
+log = logging.getLogger('kuma.core.utils')
 
 
-log = commonware.log.getLogger('kuma.core.utils')
-
-
-def get_ip(request):
-    """
-    Retrieves the remote IP address from the request data.  If the user is
-    behind a proxy, they may have a comma-separated list of IP addresses, so
-    we need to account for that.  In such a case, only the first IP in the
-    list will be retrieved.  Also, some hosts that use a proxy will put the
-    REMOTE_ADDR into HTTP_X_FORWARDED_FOR.  This will handle pulling back the
-    IP from the proper place.
-
-    **NOTE** This function was taken from django-tracking (MIT LICENSE)
-             http://code.google.com/p/django-tracking/
-    """
-
-    # if neither header contain a value, just use local loopback
-    ip_address = request.META.get('HTTP_X_FORWARDED_FOR',
-                                  request.META.get('REMOTE_ADDR', '127.0.0.1'))
-    if ip_address:
-        # make sure we have one and only one IP
-        try:
-            ip_address = IP_RE.match(ip_address)
-            if ip_address:
-                ip_address = ip_address.group(0)
-            else:
-                # no IP, probably from some dirty proxy or other device
-                # throw in some bogus IP
-                ip_address = '10.0.0.1'
-        except IndexError:
-            pass
-
-    return ip_address
+bitly = bitly_api.Connection(login=getattr(settings, 'BITLY_USERNAME', ''),
+                             api_key=getattr(settings, 'BITLY_API_KEY', ''))
 
 
 def paginate(request, queryset, per_page=20):
@@ -94,14 +60,14 @@ def smart_int(string, fallback=0):
     """Convert a string to int, with fallback for invalid strings or types."""
     try:
         return int(float(string))
-    except (ValueError, TypeError):
+    except (ValueError, TypeError, OverflowError):
         return fallback
 
 
 def strings_are_translated(strings, locale):
     # http://stackoverflow.com/a/24339946/571420
     pofile_path = os.path.join(settings.ROOT, 'locale', locale, 'LC_MESSAGES',
-                               'messages.po')
+                               'django.po')
     try:
         po = pofile(pofile_path)
     except IOError:  # in case the file doesn't exist or couldn't be parsed
@@ -109,37 +75,10 @@ def strings_are_translated(strings, locale):
     all_strings_translated = True
     for string in strings:
         if not any(e for e in po if e.msgid == string and
-                   (e.translated() and 'fuzzy' not in e.flags)
-                   and not e.obsolete):
+                   (e.translated() and 'fuzzy' not in e.flags) and
+                   not e.obsolete):
             all_strings_translated = False
     return all_strings_translated
-
-
-def file_lock(prefix):
-    """
-    Decorator that only allows one instance of the same command to run
-    at a time.
-    """
-    def decorator(f):
-        @functools.wraps(f)
-        def wrapper(self, *args, **kwargs):
-            name = '_'.join((prefix, f.__name__) + args)
-            file = os.path.join(tempfile.gettempdir(), name)
-            lock = lockfile.FileLock(file)
-            try:
-                # Try to acquire the lock without blocking.
-                lock.acquire(0)
-            except lockfile.LockError:
-                log.warning('Aborting %s; lock acquisition failed.' % name)
-                return 0
-            else:
-                # We have the lock, call the function.
-                try:
-                    return f(self, *args, **kwargs)
-                finally:
-                    lock.release()
-        return wrapper
-    return decorator
 
 
 def generate_filename_and_delete_previous(ffile, name, before_delete=None):
@@ -183,13 +122,16 @@ class MemcacheLock(object):
     def locked(self):
         return bool(self.cache.get(self.key))
 
+    def time(self, attempt):
+        return (((attempt + 1) * random.random()) + 2 ** attempt) / 2.5
+
     def acquire(self):
-        for i in xrange(0, self.attempts):
+        for attempt in xrange(0, self.attempts):
             stored = self.cache.add(self.key, 1, self.expires)
             if stored:
                 return True
-            if i != self.attempts - 1:
-                sleep_time = (((i + 1) * random.random()) + 2 ** i) / 2.5
+            if attempt != self.attempts - 1:
+                sleep_time = self.time(attempt)
                 logging.debug('Sleeping for %s while trying to acquire key %s',
                               sleep_time, self.key)
                 time.sleep(sleep_time)
@@ -197,6 +139,35 @@ class MemcacheLock(object):
 
     def release(self):
         self.cache.delete(self.key)
+
+
+def memcache_lock(prefix, expires=60 * 60):
+    """
+    Decorator that only allows one instance of the same command to run
+    at a time.
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(self, *args, **kwargs):
+            name = '_'.join((prefix, func.__name__) + args)
+            lock = MemcacheLock(name, expires=expires)
+            if lock.locked():
+                log.warning('Lock %s locked; ignoring call.' % name)
+                return
+            try:
+                # Try to acquire the lock without blocking.
+                lock.acquire()
+            except MemcacheLockException:
+                log.warning('Aborting %s; lock acquisition failed.' % name)
+                return
+            else:
+                # We have the lock, call the function.
+                try:
+                    return func(self, *args, **kwargs)
+                finally:
+                    lock.release()
+        return wrapper
+    return decorator
 
 
 def get_object_or_none(klass, *args, **kwargs):
@@ -325,5 +296,36 @@ def chord_flow(pre_task, tasks, post_task):
 
 
 def limit_banned_ip_to_0(group, request):
-    ip = get_ip(request)
+    ip = request.META.get('REMOTE_ADDR', '10.0.0.1')
     return IPBanJob().get(ip)
+
+
+def get_unique(content_type, object_pk, name=None, request=None,
+               ip=None, user_agent=None, user=None):
+    """Extract a set of unique identifiers from the request.
+
+    This set will be made up of one of the following combinations, depending
+    on what's available:
+
+    * user, None, None, unique_MD5_hash
+    * None, ip, user_agent, unique_MD5_hash
+    """
+    if request:
+        if request.user.is_authenticated():
+            user = request.user
+            ip = user_agent = None
+        else:
+            user = None
+            ip = request.META.get('REMOTE_ADDR', '')
+            user_agent = request.META.get('HTTP_USER_AGENT', '')[:255]
+
+    # HACK: Build a hash of the fields that should be unique, let MySQL
+    # chew on that for a unique index. Note that any changes to this algo
+    # will create all new unique hashes that don't match any existing ones.
+    hash_text = "\n".join(unicode(x).encode('utf-8') for x in (
+        content_type.pk, object_pk, name or '', ip, user_agent,
+        (user and user.pk or 'None')
+    ))
+    unique_hash = hashlib.md5(hash_text).hexdigest()
+
+    return (user, ip, user_agent, unique_hash)

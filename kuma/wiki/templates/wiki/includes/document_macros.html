@@ -1,114 +1,11 @@
 {% macro build_document_crumbs(document) %}
   <nav class="crumbs" role="navigation"><ol xmlns:v="http://rdf.data-vocabulary.org/#" aria-label="{{ _('breadcrumbs') }}">
-    <li typeof="v:Breadcrumb"><a href="/{{ request.locale }}" rel="v:url" property="v:title">MDN</a></li>
+    <li typeof="v:Breadcrumb"><a href="/{{ request.LANGUAGE_CODE }}" rel="v:url" property="v:title">MDN</a></li>
     {% for doc in document.parents %}
-      <li class="crumb" typeof="v:Breadcrumb"><a href="{{ url('wiki.document', doc.full_path) }}" rel="v:url" property="v:title">{{ doc.title }}</a></li>
+      <li class="crumb" typeof="v:Breadcrumb"><a href="{{ doc.get_absolute_url() }}" rel="v:url" property="v:title">{{ doc.title }}</a></li>
     {% endfor %}
     <li class="crumb" typeof="v:Breadcrumb" property="v:title">{{ document.title }}</li>
   </ol></nav>
-{%- endmacro %}
-
-{% macro get_document_buttons(document, edit_link) %}
-
-  {% if document.parent %}
-    {# If there is a parent doc, use it for translating. #}
-    {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
-  {% else %}
-    {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
-  {% endif %}
-
-  {% if not edit_link %}
-    {% set edit_link = url('wiki.edit_document', document.full_path, locale=document.locale) %}
-  {% endif %}
-
-
-  <ul class="page-buttons" data-sticky="false">{% if not document.is_template %}<li><button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>{{ _('Languages') }}</span><i aria-hidden="true" class="icon-globe"></i></button>
-
-        <div class="submenu" id="languages-menu-submenu">
-          <div class="submenu-column">
-            <ul id="translations">
-              {% if document.other_translations.exists() %}
-                {% for translation in document.other_translations %}
-                  <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></bdi></li>
-                {% endfor %}
-              {% else %}
-                <li class="smaller">{{ _('No translations exist for this article.') }}</li>
-              {% endif %}
-
-              {% if document.is_localizable %}
-                <li><a href="{{ translate_url }}" rel="nofollow, noindex" id="translations-add">{{ _('Add a translation') }}</a></li>
-              {% endif %}
-            </ul>
-          </div>
-        </div></li>{% endif %}<li class="page-buttons-edit"><a href="{{ edit_link }}" class="button" data-optimizely-hook="button-edit-doc" id="edit-button">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
-
-        <div class="submenu" id="advanced-menu-submenu">
-          <!-- this page -->
-          <div class="submenu-column">
-            <div class="title">{{ _('Advanced') }}</div>
-            <ul>
-                <li><a href="{{ url('wiki.document_revisions', document.full_path) }}" rel="nofollow, noindex">{{_('History')}}</a></li>
-                {% if user.is_authenticated() and document %}
-                  <li class="page-watch">
-                    {% set subscribe_status = _('Updating subscription status') %}
-                    <form action="{{ url('wiki.subscribe_document', document.slug, locale=document.locale) }}" method="post">
-                        {{ csrf() }}
-                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ _('Subscribe to this article') }}" data-unsubscribe-text="{{ _('Unsubscribe from this article') }}" data-subscribe-message="{{ _('You are now subscribed to this article.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from this article.') }}">
-                        {% if document.is_watched_by(user) %}{{ _('Unsubscribe from this article') }}{% else %}{{ _('Subscribe to this article') }}{% endif %}
-                        </a>
-                    </form>
-
-                    {% if document.parent %}
-                    {% set parent_language = document.parent.language %}
-                    <form action="{{ url('wiki.subscribe_document', document.parent.slug, locale=document.parent.locale) }}" method="post">
-                        {{ csrf() }}
-                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ _('Subscribe to {language} version')|f(language=parent_language) }}" data-unsubscribe-text="{{ _('Unsubscribe from {language} version')|f(language=parent_language) }}" data-subscribe-message="{{ _('You are now subscribed to the {language} version of this article.')|f(language=parent_language) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from the {language} version of this article.')|f(language=parent_language) }}">
-                        {% if document.parent.is_watched_by(user) %}{{ _('Unsubscribe from {language} version')|f(language=parent_language) }}{% else %}{{ _('Subscribe to {language} version')|f(language=parent_language) }}{% endif %}
-                        </a>
-                    </form>
-                    {% endif %}
-
-                </li>{% endif %}
-                {% if user.is_authenticated() and not document.is_template %}
-                  <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}" rel="nofollow, noindex">{{ _('New sub-page') }}</a></li>
-                  <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}{% if document.parent_topic %}&parent={{ document.parent_topic.id }}{% endif %}" rel="nofollow, noindex">{{ _('Clone this page') }}</a></li>
-                {% endif %}
-                {% if user.is_authenticated() and user.has_perm('wiki.move_tree') %}
-                  <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}" rel="nofollow, noindex">{{ _('Move this page') }}</a></li>
-                {% endif %}
-                {% if user.is_superuser %}
-                  <li><a href="{{ url('admin:wiki_document_change', document.id) }}" rel="nofollow, noindex">{{ _('View in admin') }}</a></li>
-                {% endif %}
-
-{#
-    # HACK: https://bugzil.la/972545 - Don't delete pages that have children
-    # TODO: https://bugzil.la/972541 -  Deleting a page that has subpages
-#}
-                {% if user.has_perm('wiki.delete_document') and not document.children.exists() %}
-                  <li><a href="{{ url('wiki.delete_document', document.slug) }}" rel="nofollow, noindex">{{ _('Delete this page') }}</a></li>
-                {% endif %}
-
-                {% set policy_links = build_policy_admin_links(request.user, document) %}
-                {% if policy_links['change_one'] %}
-                  <li><a target="_blank" href="{{ policy_links['change_one'] }}" rel="nofollow, noindex">{{ _('Manage access policy') }}</a></li>
-                {% elif policy_links['change_list'] %}
-                  <li><a target="_blank" href="{{ policy_links['change_list'] }}" rel="nofollow, noindex">{{ _('Manage access policies') }}</a></li>
-                {% elif policy_links['add'] %}
-                  <li><a target="_blank" href="{{ policy_links['add'] }}" rel="nofollow, noindex">{{ _('Add access policy') }}</a></li>
-                {% endif %}
-
-                {% set zone_links = document_zone_management_links(request.user, document) %}
-                {% if zone_links['change'] %}
-                  <li><a target="_blank" href="{{ zone_links['change'] }}" rel="nofollow, noindex">{{ _('Manage content zone') }}</a></li>
-                {% endif %}
-                {% if zone_links['add'] and not document.is_template %}
-                  <li><a target="_blank" href="{{ zone_links['add'] }}" rel="nofollow, noindex">{{ _('Convert to content zone') }}</a></li>
-                {% endif %}
-                <li class="page-print"><a href="#" onclick="return window.print();">{{ _('Print this page') }}</a></li>
-            </ul>
-          </div>
-        </div>
-  </li></ul>
 {%- endmacro %}
 
 {% macro get_document_subnav(html) %}
@@ -126,36 +23,6 @@
   </div>
 {%- endmacro %}
 
-{% macro get_approvals_html(document, user) %}
-  {% if user.is_authenticated() and document.current_revision and document.allows_revision_by(user) %}
-    {% if document.current_revision.needs_technical_review or document.current_revision.needs_editorial_review %}
-    <section class="page-meta reviews">
-      <p>{{ _('The following reviews have been requested:') }}</p>
-
-      <form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
-        {{ csrf() }}
-        <ul>
-        {% if document.current_revision.needs_technical_review %}
-          <li>
-            <input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
-            <label for="id_approve_technical">{{ _('Technical') }}</label>
-          </li>
-        {% endif %}
-        {% if document.current_revision.needs_editorial_review %}
-          <li>
-            <input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
-            <label for="id_approve_editorial">{{ _('Editorial') }}</label>
-          </li>
-        {% endif %}
-        </ul>
-        <input type="hidden" value="{{ document.current_revision.id }}" name="revision_id" />
-        <button type="submit">{{ _('Review completed') }}</button>
-      </form>
-    </section>
-    {% endif %}
-  {% endif %}
-{%- endmacro %}
-
 {% macro revision_diff(revision_from, revision_to, revision_from_header=None, revision_to_header=None, show_picker=False) -%}
   {% if revision_from and revision_to %}
     <section class="revision-diff">
@@ -167,11 +34,15 @@
               {{ revision_from_header }}
             {% else %}
               <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id) }}" rel="nofollow, noindex">
-                {{ _('Revision {num}:')|f(num=revision_from.id) }}
+                {{ _('Revision %(num)s:', num=revision_from.id) }}
               </a>
             {% endif %}
           </h3>
-          <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision_from.id, user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime')) }}</p>
+          <p>
+          {% trans id=revision_from.id, user_profile_url=revision_from.creator.get_absolute_url(), user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime') %}
+            Revision {{ id }} by <a href="{{ user_profile_url }}">{{ user }}</a> on {{ date }}
+          {% endtrans %}
+          </p>
         </div>
         <div class="rev-to">
           <h3>
@@ -179,11 +50,15 @@
               {{ revision_to_header }}
             {% else %}
               <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id) }}" rel="nofollow, noindex">
-                {{ _('Revision {num}:')|f(num=revision_to.id) }}
+                {{ _('Revision %(num)s:', num=revision_to.id) }}
               </a>
             {% endif %}
           </h3>
-          <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision_to.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime')) }}</p>
+          <p>
+          {% trans id=revision_to.id, user_profile_url=revision_to.creator.get_absolute_url(), user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime') %}
+            Revision {{ id }} by <a href="{{ user_profile_url }}">{{ user }}</a> on {{ date }}
+          {% endtrans %}
+          </p>
         </div>
       </header>
 
@@ -203,7 +78,11 @@
         {% endif %}
 
         <dt>{{ _('Content:') }}</dt>
-        <dd>{{ diff_table(revision_from.content, revision_to.content, revision_from.id, revision_to.id) }}</dd>
+        {% if revision_from.get_tidied_content(allow_none=True) == None or revision_to.get_tidied_content(allow_none=True) == None %}
+        <dd id="doc-rendering-scheduled" class="warning">{% trans %}The server is rendering the content comparison. Please refresh this page in a few minutes.{% endtrans %}</dd>
+        {% else %}
+        <dd>{{ diff_table(revision_from.get_tidied_content(), revision_to.get_tidied_content(), revision_from.id, revision_to.id) }}</dd>
+        {% endif %}
       </dl>
     </section>
   {% endif %}
@@ -213,28 +92,90 @@
 
 
 
-{% macro share_links(document) -%}
-    {% set full_url = request.build_absolute_uri(document.get_absolute_url()) %}
+{% macro build_share_links(document) -%}
+    {% set full_url = document.get_full_url() %}
 
     {% set share_url_twitter = full_url|urlparams(utm_campaign='share', utm_source='twitter.com', utm_medium='doc share link') %}
     {% set share_url_facebook = full_url|urlparams(utm_campaign='share', utm_source='facebook.com', utm_medium='doc share link')%}
     {% set share_url_gplus = full_url|urlparams(utm_campaign='share', utm_source='plus.google.com', utm_medium='doc share link')%}
 
-    {% set short_share_url_twitter = share_url_twitter | bitly_shorten %}
-    {% set short_share_url_facebook = share_url_facebook | bitly_shorten %}
-    {% set short_share_url_gplus = share_url_gplus | bitly_shorten %}
-
-    {% set twitter_url = 'http://twitter.com/share'|urlparams(url=short_share_url_twitter, text=share_text) %}
-    {% set facebook_url = 'http://facebook.com/sharer.php?s=100&p[url]='+short_share_url_facebook+'&p[images][0]=/media/redesign/img/favicon144.png&p[title]=' + share_text %}
-    {% set gplus_url = 'https://plus.google.com/share'|urlparams(url=short_share_url_gplus) %}
+    {% set twitter_url = 'http://twitter.com/share'|urlparams(url=share_url_twitter, text=share_text) %}
+    {% set facebook_url = 'http://facebook.com/sharer.php?s=100&p[url]=' + share_url_facebook %}
+    {% set gplus_url = 'https://plus.google.com/share'|urlparams(url=share_url_gplus) %}
 
     <div class="share">
         <strong><i class="icon-share" aria-hidden="true"></i> {{ _('Share:') }}</strong>
         <ul>
-            <li><a href="{{ twitter_url }}" target="_blank" data-url="{{short_share_url_twitter}}" data-title="{{ share_text }}" class="share-link twitter"><i aria-hidden="true" class="icon-twitter"></i>{{ _('Twitter') }}</a></li>
-            <li><a href="{{ facebook_url }}" target="_blank" data-url="{{short_share_url_facebook}}" data-title="{{ share_text }}" class="share-link facebook"><i aria-hidden="true" class="icon-facebook"></i>{{ _('Facebook') }}</a></li>
-            <li><a href="{{ gplus_url }}" target="_blank" data-url="{{short_share_url_gplus}}" data-title="{{ share_text }}" class="share-link gplus"><i aria-hidden="true" class="icon-google-plus"></i>{{ _('Google+') }}</a></li>
+            <li><a href="{{ twitter_url }}" target="_blank" data-url="{{ share_url_twitter }}" data-title="{{ share_text }}" class="share-link twitter"><i aria-hidden="true" class="icon-twitter"></i>{{ _('Twitter') }}</a></li>
+            <li><a href="{{ facebook_url }}" target="_blank" data-url="{{ share_url_facebook }}" data-title="{{ share_text }}" class="share-link facebook"><i aria-hidden="true" class="icon-facebook"></i>{{ _('Facebook') }}</a></li>
+            <li><a href="{{ gplus_url }}" target="_blank" data-url="{{ share_url_gplus }}" data-title="{{ share_text }}" class="share-link gplus"><i aria-hidden="true" class="icon-google-plus"></i>{{ _('Google+') }}</a></li>
         </ul>
     </div>
+
+{%- endmacro %}
+
+
+
+{% macro contributor_links(contributors) -%}
+    {% for contributor in contributors %}
+        <a href="{{ url('users.user_detail', username=contributor.username) }}">{{ contributor.username }}</a>{% if not loop.last %}, {% endif %}
+    {% endfor %}
+{%- endmacro %}
+
+{% macro watch_tree_item(document, user) -%}
+{% set title = document.title %}
+                  <li class="page-watch">
+                    {% set subscribe_tree_text = _('Subscribe to %(title)s and all its sub-articles', title=title) %}
+                    {% set unsubscribe_tree_text = _('Unsubscribe from %(title)s and all its sub-articles', title=title) %}
+                    <form action="{{ url('wiki.subscribe_to_tree', document.slug, locale=document.locale) }}" method="post">
+                        {{ csrf() }}
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_tree_text }}" data-unsubscribe-text="{{ unsubscribe_tree_text }}" data-subscribe-message="{{ _('You are now subscribed to this article and all its sub-articles.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from this article and all its sub-articles.') }}">
+                        {% if document.tree_is_watched_by(user) %}{{ unsubscribe_tree_text }}{% else %}{{ subscribe_tree_text }}{% endif %}
+                        </a>
+                    </form>
+                  </li>
+{%- endmacro %}
+
+{% macro watch_menu_items(document, user) -%}
+                <ul>
+                  <li class="page-watch">
+                    {% set title = document.title %}
+                    {% set subscribe_status = _('Updating subscription status') %}
+                    {% set subscribe_text = _('Subscribe to %(title)s', title=title) %}
+                    {% set unsubscribe_text = _('Unsubscribe from %(title)s', title=title) %}
+                    <form action="{{ url('wiki.subscribe', document.slug, locale=document.locale) }}" method="post">
+                        {{ csrf() }}
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_text }}" data-unsubscribe-text="{{ unsubscribe_text }}" data-subscribe-message="{{ _('You are now subscribed to %(title)s.', title=title) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from %(title)s.', title=title) }}">
+                        {% if document.is_watched_by(user) %}{{ unsubscribe_text }}{% else %}{{ subscribe_text }}{% endif %}
+                        </a>
+                    </form>
+                  </li>
+
+                  {{ watch_tree_item(document, user) }}
+
+                  {% if document.parent %}
+                    <li class="page-watch">
+                    {% set parent_language = document.parent.language %}
+                    {% set subscribe_parent_text = _('Subscribe to <bdi>%(language)s</bdi> version', language=parent_language) %}
+                    {% set unsubscribe_parent_text = _('Unsubscribe from <bdi>%(language)s</bdi> version', language=parent_language) %}
+                      <form action="{{ url('wiki.subscribe', document.parent.slug, locale=document.parent.locale) }}" method="post">
+                          {{ csrf() }}
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ subscribe_parent_text }}" data-unsubscribe-text="{{ unsubscribe_parent_text }}" data-subscribe-message="{{ _('You are now subscribed to the %(language)s version of this article.', language=parent_language) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from the %(language)s version of this article.', language=parent_language) }}">
+                          {% if document.parent.is_watched_by(user) %}{{ unsubscribe_parent_text|safe }}{% else %}{{ subscribe_parent_text|safe }}{% endif %}
+                        </a>
+                      </form>
+                    </li>
+                  {% endif %}
+
+                  </ul>
+
+                  {% set watched_parent_trees = document.parent_trees_watched_by(user) %}
+                  {% if watched_parent_trees %}
+                    <ul>
+                      {% for watched_parent_tree in watched_parent_trees %}
+                        {{ watch_tree_item(watched_parent_tree, user) }}
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
 
 {%- endmacro %}

@@ -10,16 +10,19 @@ class AttachmentsFeed(DocumentsFeed):
     subtitle = _("Recent revisions to MDN file attachments")
 
     def items(self):
-        return AttachmentRevision.objects.order_by('-created')[:50]
+        return (AttachmentRevision.objects.prefetch_related('creator',
+                                                            'attachment')
+                                          .order_by('-created')[:50])
 
     def item_title(self, item):
         return item.title
 
     def item_description(self, item):
-        previous = item.get_previous()
-        if previous is None:
+        if item.get_previous() is None:
             return '<p>Created by: %s</p>' % item.creator.username
-        return "<p>Edited by %s: %s" % (item.creator.username, item.comment)
+        else:
+            return '<p>Edited by %s: %s' % (item.creator.username,
+                                            item.comment)
 
     def item_link(self, item):
         return self.request.build_absolute_uri(
@@ -29,7 +32,7 @@ class AttachmentsFeed(DocumentsFeed):
         return item.created
 
     def item_author_name(self, item):
-        return '%s' % item.creator
+        return item.creator.username
 
     def item_author_link(self, item):
         return self.request.build_absolute_uri(item.creator.get_absolute_url())

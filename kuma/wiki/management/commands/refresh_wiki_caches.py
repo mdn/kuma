@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 to_prefetch.append(url)
 
             # Get an MD5 hash of the lowercased path
-            path = doc.full_path.lower().encode('utf-8')
+            path = doc.slug.lower().encode('utf-8')
             path_hash = hashlib.md5(path).hexdigest()
 
             # Warm up the page_exists cache
@@ -71,5 +71,5 @@ class Command(BaseCommand):
                 pre_cnt += 1
                 logging.info("\t(%s/%s) %s" % (pre_cnt, pre_total, full_url))
                 requests.get(full_url)
-            except Exception, e:
+            except Exception as e:
                 logging.error("\t\tFAILED: %s; %s" % (full_url, e))

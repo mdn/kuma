@@ -1,0 +1,21 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+PATH=$HOME/src/scripts:$HOME/bin:/home/vagrant/src/kumascript/node_modules/.bin:$PATH
+export PATH
+export NODE_PATH=/usr/local/lib/node_modules:/usr/lib/node_modules
+
+# HACK: We use a self-signed SSL cert in dev; force node.js to accept it.
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+
+# More useful to start in the project directory than in user home
+cd /home/vagrant/src
+
+source /home/vagrant/env/bin/activate
+
+alias rmpyc="find . -name '*.pyc' -exec rm {} \;"

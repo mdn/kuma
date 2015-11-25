@@ -1,95 +1,35 @@
-# encoding: utf-8
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-class Migration(SchemaMigration):
-
-    def forwards(self, orm):
-        
-        # Adding model 'ContentFlag'
-        db.create_table('contentflagging_contentflag', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('flag_status', self.gf('django.db.models.fields.CharField')(default='flagged', max_length=16)),
-            ('flag_type', self.gf('django.db.models.fields.CharField')(max_length=64, db_index=True)),
-            ('explanation', self.gf('django.db.models.fields.TextField')(max_length=255, blank=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(related_name='content_type_set_for_contentflag', to=orm['contenttypes.ContentType'])),
-            ('object_pk', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('ip', self.gf('django.db.models.fields.CharField')(max_length=40, null=True, blank=True)),
-            ('session_key', self.gf('django.db.models.fields.CharField')(max_length=40, null=True, blank=True)),
-            ('user_agent', self.gf('django.db.models.fields.CharField')(max_length=128, null=True, blank=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal('contentflagging', ['ContentFlag'])
-
-        # Adding unique constraint on 'ContentFlag', fields ['content_type', 'object_pk', 'ip', 'session_key', 'user_agent', 'user']
-        db.create_unique('contentflagging_contentflag', ['content_type_id', 'object_pk', 'ip', 'session_key', 'user_agent', 'user_id'])
+from django.db import models, migrations
 
 
-    def backwards(self, orm):
-        
-        # Removing unique constraint on 'ContentFlag', fields ['content_type', 'object_pk', 'ip', 'session_key', 'user_agent', 'user']
-        db.delete_unique('contentflagging_contentflag', ['content_type_id', 'object_pk', 'ip', 'session_key', 'user_agent', 'user_id'])
+class Migration(migrations.Migration):
 
-        # Deleting model 'ContentFlag'
-        db.delete_table('contentflagging_contentflag')
+    dependencies = [
+        ('contenttypes', '0001_initial'),
+    ]
 
-
-    models = {
-        'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        'auth.permission': {
-            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
-        },
-        'contentflagging.contentflag': {
-            'Meta': {'ordering': "('-created',)", 'unique_together': "(('content_type', 'object_pk', 'ip', 'session_key', 'user_agent', 'user'),)", 'object_name': 'ContentFlag'},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'content_type_set_for_contentflag'", 'to': "orm['contenttypes.ContentType']"}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'explanation': ('django.db.models.fields.TextField', [], {'max_length': '255', 'blank': 'True'}),
-            'flag_status': ('django.db.models.fields.CharField', [], {'default': "'flagged'", 'max_length': '16'}),
-            'flag_type': ('django.db.models.fields.CharField', [], {'max_length': '64', 'db_index': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'ip': ('django.db.models.fields.CharField', [], {'max_length': '40', 'null': 'True', 'blank': 'True'}),
-            'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'object_pk': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'session_key': ('django.db.models.fields.CharField', [], {'max_length': '40', 'null': 'True', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'user_agent': ('django.db.models.fields.CharField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'})
-        },
-        'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        }
-    }
-
-    complete_apps = ['contentflagging']
+    operations = [
+        migrations.CreateModel(
+            name='ContentFlag',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('flag_status', models.CharField(default=b'flagged', max_length=16, verbose_name='current status of flag review', choices=[(b'flagged', 'Flagged'), (b'rejected', 'Flag rejected by moderator'), (b'notified', 'Creator notified'), (b'hidden', 'Content hidden by moderator'), (b'deleted', 'Content deleted by moderator')])),
+                ('flag_type', models.CharField(db_index=True, max_length=64, verbose_name='reason for flagging the content', choices=[(b'notworking', 'This demo is not working for me'), (b'inappropriate', 'This demo contains inappropriate content'), (b'plagarised', 'This demo was not created by the author'), (b'bad', 'This article is spam/inappropriate'), (b'unneeded', 'This article is obsolete/unneeded'), (b'duplicate', 'This is a duplicate of another article')])),
+                ('explanation', models.TextField(max_length=255, verbose_name='please explain what content you feel is inappropriate', blank=True)),
+                ('object_pk', models.CharField(verbose_name='object ID', max_length=32, editable=False)),
+                ('ip', models.CharField(max_length=40, null=True, editable=False, blank=True)),
+                ('user_agent', models.CharField(max_length=128, null=True, editable=False, blank=True)),
+                ('unique_hash', models.CharField(max_length=32, unique=True, null=True, editable=False, db_index=True)),
+                ('created', models.DateTimeField(auto_now_add=True, verbose_name='date submitted')),
+                ('modified', models.DateTimeField(auto_now=True, verbose_name='date last modified')),
+                ('content_type', models.ForeignKey(related_name='content_type_set_for_contentflag', editable=False, to='contenttypes.ContentType', verbose_name=b'content type')),
+            ],
+            options={
+                'ordering': ('-created',),
+                'get_latest_by': 'created',
+            },
+            bases=(models.Model,),
+        ),
+    ]

@@ -15,19 +15,19 @@
         ga('set', 'dimension1', 'Yes');
 
         // dimension2 == "Beta Tester"
-        {% if request.user.get_profile().beta_tester %}
+        {% if request.user.is_beta_tester %}
             ga('set', 'dimension2', 'Yes');
         {% endif %}
     {% endif %}
 
-    {% if waffle.flag('top_contributors') %}
-        // dimension4 == "top contributors"
-        ga('set', 'dimension4', 'Yes');
+    // dimension9 == "Section editing"
+    {% if waffle.flag('section_edit') %}
+        ga('set', 'dimension9', 'Enabled');
     {% endif %}
 
-    {% if waffle.flag('wiki_spellcheck') %}
-        // dimension3 == "Wiki Spellchecker"
-        ga('set', 'dimension3', 'Yes');
+    // dimension10 == "Watch Menu"
+    {% if waffle.flag('watch_menu') %}
+        ga('set', 'dimension10', 'Enabled');
     {% endif %}
 
     (function() {

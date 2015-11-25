@@ -8,6 +8,7 @@ import jingo
 
 from kuma.core.tests import KumaTestCase
 
+
 def setup():
     jingo.load_helpers()
 
@@ -21,7 +22,7 @@ class MockRequestTests(KumaTestCase):
         self.user = AnonymousUser()
         self.request = self.rf.get('/')
         self.request.user = self.user
-        self.request.locale = 'en-US'
+        self.request.LANGUAGE_CODE = 'en-US'
 
 
 class BaseTemplateTests(MockRequestTests):

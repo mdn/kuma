@@ -1,77 +1,94 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import django.utils.timezone
+import taggit.managers
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'FilterGroup'
-        db.create_table('search_filtergroup', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-        ))
-        db.send_create_signal('search', ['FilterGroup'])
+    dependencies = [
+        ('taggit', '0001_initial'),
+        ('contenttypes', '0001_initial'),
+    ]
 
-        # Adding model 'Filter'
-        db.create_table('search_filter', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
-            ('group', self.gf('django.db.models.fields.related.ForeignKey')(related_name='filters', to=orm['search.FilterGroup'])),
-        ))
-        db.send_create_signal('search', ['Filter'])
-
-        # Adding unique constraint on 'Filter', fields ['name', 'slug']
-        db.create_unique('search_filter', ['name', 'slug'])
-
-
-    def backwards(self, orm):
-        # Removing unique constraint on 'Filter', fields ['name', 'slug']
-        db.delete_unique('search_filter', ['name', 'slug'])
-
-        # Deleting model 'FilterGroup'
-        db.delete_table('search_filtergroup')
-
-        # Deleting model 'Filter'
-        db.delete_table('search_filter')
-
-
-    models = {
-        'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        'search.filter': {
-            'Meta': {'unique_together': "(('name', 'slug'),)", 'object_name': 'Filter'},
-            'group': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'filters'", 'to': "orm['search.FilterGroup']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
-            'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
-        },
-        'search.filtergroup': {
-            'Meta': {'object_name': 'FilterGroup'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
-        },
-        'taggit.tag': {
-            'Meta': {'object_name': 'Tag'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
-        },
-        'taggit.taggeditem': {
-            'Meta': {'object_name': 'TaggedItem'},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_tagged_items'", 'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_items'", 'to': "orm['taggit.Tag']"})
-        }
-    }
-
-    complete_apps = ['search']
+    operations = [
+        migrations.CreateModel(
+            name='Filter',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(help_text=b'the English name of the filter to be shown in the frontend UI', max_length=255, db_index=True)),
+                ('slug', models.CharField(help_text=b'the slug to be used as a query parameter in the search URL', max_length=255, db_index=True)),
+                ('shortcut', models.CharField(help_text=b'the name of the shortcut to show in the command and query UI. e.g. fxos', max_length=255, null=True, db_index=True, blank=True)),
+                ('operator', models.CharField(default=b'OR', help_text=b'The logical operator to use if more than one tag is given', max_length=3, choices=[(b'OR', b'OR'), (b'AND', b'AND')])),
+                ('enabled', models.BooleanField(default=True, help_text=b'Whether this filter is shown to users or not.')),
+                ('visible', models.BooleanField(default=True, help_text=b'Whether this filter is shown at public places, e.g. the command and query UI')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='FilterGroup',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=255)),
+                ('slug', models.CharField(help_text=b'the slug to be used as the name of the query parameter in the search URL', max_length=255, null=True, blank=True)),
+                ('order', models.IntegerField(default=1, help_text=b'An integer defining which order the filter group should show up in the sidebar')),
+            ],
+            options={
+                'ordering': ('-order', 'name'),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Index',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('name', models.CharField(help_text=b'The search index name, set to the created date when left empty', max_length=30, null=True, blank=True)),
+                ('promoted', models.BooleanField(default=False)),
+                ('populated', models.BooleanField(default=False)),
+            ],
+            options={
+                'ordering': ['-created_at'],
+                'verbose_name': 'Index',
+                'verbose_name_plural': 'Indexes',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='OutdatedObject',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('object_id', models.PositiveIntegerField()),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
+                ('index', models.ForeignKey(related_name='outdated_objects', to='search.Index')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AlterUniqueTogether(
+            name='filtergroup',
+            unique_together=set([('name', 'slug')]),
+        ),
+        migrations.AddField(
+            model_name='filter',
+            name='group',
+            field=models.ForeignKey(related_name='filters', to='search.FilterGroup', help_text=b'E.g. "Topic", "Skill level" etc'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='filter',
+            name='tags',
+            field=taggit.managers.TaggableManager(to='taggit.Tag', through='taggit.TaggedItem', help_text=b'A comma-separated list of tags. If more than one tag given a OR query is executed', verbose_name='Tags'),
+            preserve_default=True,
+        ),
+        migrations.AlterUniqueTogether(
+            name='filter',
+            unique_together=set([('name', 'slug')]),
+        ),
+    ]

@@ -1,15 +1,12 @@
-import re
-
-from django import forms
-from django.contrib import messages
-from django.contrib.auth.models import User
-from django.shortcuts import redirect
-
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialLogin
-from tower import ugettext_lazy as _
+from django import forms
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.shortcuts import redirect
+from django.utils.translation import ugettext_lazy as _
 from waffle import flag_is_active
 
 from kuma.core.urlresolvers import reverse
@@ -47,7 +44,7 @@ class KumaAccountAdapter(DefaultAccountAdapter):
         if not USERNAME_REGEX.match(username):
             raise forms.ValidationError(USERNAME_CHARACTERS)
         username = super(KumaAccountAdapter, self).clean_username(username)
-        if User.objects.filter(username=username).exists():
+        if get_user_model().objects.filter(username=username).exists():
             raise forms.ValidationError(_(u'The username you entered '
                                           u'already exists.'))
         return username
@@ -76,11 +73,11 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             # would indicate the start of the sign-in process from the edit
             # profile page) we ignore the message "account connected" message
             # as it would be misleading
-            profile_url = reverse('users.profile_edit',
-                                  kwargs={'username': request.user.username},
-                                  locale=request.locale)
+            user_url = reverse('users.user_edit',
+                               kwargs={'username': request.user.username},
+                               locale=request.LANGUAGE_CODE)
             next_url = request.session.get('sociallogin_next_url', None)
-            if next_url != profile_url:
+            if next_url != user_url:
                 return
 
         # and add an extra tag to the account messages

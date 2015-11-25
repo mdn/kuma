@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% set title = _("You've Been Banned") %}
-{% set classes = 'profile' %}
+{% set classes = 'user' %}
 {% set styles = ('users',) %}
 
 {% block breadcrumbs %}
@@ -10,11 +10,11 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('user-banned') }}
+    {% stylesheet 'user-banned' %}
 {% endblock %}
 
 {% block content %}
-<article id="profile-banned">
+<article id="user-banned">
   <h1>{{ title }}</h1>
   <p>
     {{ _('You have been banned for the following reasons:') }}

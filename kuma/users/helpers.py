@@ -1,36 +1,26 @@
-import urllib
-import hashlib
-
-from django.conf import settings
-
-from jinja2 import escape, Markup, contextfunction
-from jingo import register
-
 from allauth.account.utils import user_display
 from allauth.socialaccount import providers
+from allauth.socialaccount.templatetags.socialaccount import get_providers
+from allauth.utils import get_request_param
+from django.conf import settings
+from django.contrib import admin
+from django.utils.translation import ugettext
 from honeypot.templatetags.honeypot import render_honeypot_field
-from tower import ugettext as _
+from jingo import register
+from jinja2 import Markup, contextfunction, escape
 
-from kuma.core.urlresolvers import reverse
 from kuma.core.helpers import datetimeformat
+from kuma.core.urlresolvers import reverse
 
-DEFAULT_AVATAR = getattr(settings, 'DEFAULT_AVATAR',
-                         settings.MEDIA_URL + 'img/avatar-default.png')
+from .jobs import UserGravatarURLJob
 
 
 @register.function
-def gravatar_url(user, secure=True, size=220, rating='pg',
-                 default=DEFAULT_AVATAR):
-    """Produce a gravatar image URL from email address."""
-    base_url = (secure and 'https://secure.gravatar.com' or
-                'http://www.gravatar.com')
-    email_hash = hashlib.md5(user.email.lower().encode('utf8'))
-    params = urllib.urlencode({'s': size, 'd': default, 'r': rating})
-    return '%(base_url)s/avatar/%(hash)s?%(params)s' % {
-        'base_url': base_url,
-        'hash': email_hash.hexdigest(),
-        'params': params,
-    }
+def gravatar_url(email, secure=True, size=220, rating='pg',
+                 default=settings.DEFAULT_AVATAR):
+    job = UserGravatarURLJob()
+    return job.get(email, secure=secure, size=size,
+                   rating=rating, default=default)
 
 
 @register.function
@@ -39,24 +29,35 @@ def ban_link(context, ban_user, banner_user):
     """Returns a link to ban a user"""
     link = ''
     if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
-        if ban_user.get_profile().is_banned:
-            active_ban = ban_user.get_profile().active_ban()
+        active_ban = ban_user.active_ban
+        if active_ban:
             url = reverse('admin:users_userban_change', args=(active_ban.id,))
-            title = _('Banned on {ban_date} by {ban_admin}.').format(ban_date=datetimeformat(context, active_ban.date, format='date', output='json'), ban_admin=active_ban.by )
-            link = '<a href="%s" class="button ban-link" title="%s">%s<i aria-hidden="true" class="icon-ban"></i></a>' % (url, title, _('Banned'))
+            title = ugettext('Banned on %(ban_date)s by %(ban_admin)s.') % {
+                'ban_date': datetimeformat(context, active_ban.date,
+                                           format='date', output='json'),
+                'ban_admin': active_ban.by,
+            }
+            link = ('<a href="%s" class="button ban-link" title="%s">%s'
+                    '<i aria-hidden="true" class="icon-ban"></i></a>'
+                    % (url, title, ugettext('Banned')))
         else:
-            url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
-            link = '<a href="%s" class="button negative ban-link">%s<i aria-hidden="true" class="icon-ban"></i></a>' % (url, _('Ban User'))
+            url = '%s?user=%s&by=%s' % (
+                reverse('admin:users_userban_add'), ban_user.id,
+                banner_user.id)
+            link = ('<a href="%s" class="button negative ban-link">%s'
+                    '<i aria-hidden="true" class="icon-ban"></i></a>'
+                    % (url, ugettext('Ban User')))
     return Markup(link)
 
 
 @register.function
-@contextfunction
-def admin_link(context, user):
+def admin_link(user):
     """Returns a link to admin a user"""
-    link = ''
-    url = reverse('admin:auth_user_change', args=(user.id,))
-    link = '<a href="%s" class="button neutral">%s<i aria-hidden="true" class="icon-wrench"></i></a>' % (url, _('Admin'))
+    url = reverse('admin:users_user_change', args=(user.id,),
+                  current_app=admin.site.name)
+    link = ('<a href="%s" class="button neutral">%s'
+            '<i aria-hidden="true" class="icon-wrench"></i></a>' %
+            (url, ugettext('Admin')))
     return Markup(link)
 
 
@@ -80,6 +81,13 @@ def user_list(users):
     return Markup(list)
 
 
+# Returns a string representation of a user
+register.function(user_display)
+
+# Returns a list of social authentication providers.
+register.function(get_providers)
+
+
 @register.function
 @contextfunction
 def provider_login_url(context, provider_id, **params):
@@ -89,13 +97,23 @@ def provider_login_url(context, provider_id, **params):
     """
     request = context['request']
     provider = providers.registry.by_id(provider_id)
+    auth_params = params.get('auth_params', None)
+    scope = params.get('scope', None)
+    process = params.get('process', None)
+    if scope is '':
+        del params['scope']
+    if auth_params is '':
+        del params['auth_params']
     if 'next' not in params:
-        next = request.REQUEST.get('next')
+        next = get_request_param(request, 'next')
         if next:
             params['next'] = next
+        elif process == 'redirect':
+            params['next'] = request.get_full_path()
     else:
         if not params['next']:
             del params['next']
+    # get the login url and append params as url parameters
     return Markup(provider.get_login_url(request, **params))
 
 
@@ -132,6 +150,3 @@ def social_accounts(user):
 @register.inclusion_tag('honeypot/honeypot_field.html')
 def honeypot_field(field_name=None):
     return render_honeypot_field(field_name)
-
-
-register.function(user_display)

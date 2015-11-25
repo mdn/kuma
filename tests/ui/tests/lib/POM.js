@@ -25,12 +25,22 @@ define(['base/lib/config', 'base/lib/login'], function(config, libLogin) {
     POM.prototype.setup = function() {
         var remote = this.remote;
 
-        remote.setExecuteAsyncTimeout(config.asyncExecutionTimeout);
+        // Set timeouts for the test
+        remote.setExecuteAsyncTimeout(config.testTimeout);
+        this.timeout = config.testTimeout;
 
         // Go to the homepage, set the default size of the window
-        return this.goTo().then(function() {
-            return remote.setWindowSize(config.defaultWidth, config.defaultHeight);
-        });
+        return this.goTo()
+                // Acts as a normalizer for each test:  ensure page load is complete before running tests
+                // Mostly for Chrome
+                .executeAsync(function(done) {
+                    if(document && document.readyState === 'complete') {
+                        done();
+                    }
+                })
+                .then(function() {
+                    return remote.setWindowSize(config.defaultWidth, config.defaultHeight);
+                });
     };
 
     // Teardown the page.  This is a *must* for ensuring consistency in testing

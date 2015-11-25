@@ -1,11 +1,11 @@
 {% extends "base_popup.html" %}
 
 {% block site_css %}
-    {{ super() }}
-    {{ css('demostudio') }}
+  {{ super() }}
+  {% stylesheet 'demostudio' %}
 {% endblock %}
 
 {% block site_js %}
-    {{ super() }}
-    {{ js('demostudio') }}
+  {{ super() }}
+  {% javascript 'demostudio' %}
 {% endblock %}

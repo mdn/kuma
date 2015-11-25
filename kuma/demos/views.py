@@ -1,33 +1,26 @@
 import random
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
-from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.generic import ListView
 
-import constance.config
+from constance import config
 from taggit.models import Tag
-import threadedcomments.views
-from threadedcomments.models import ThreadedComment
-from threadedcomments.forms import ThreadedCommentForm
 
 from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from kuma.contentflagging.forms import ContentFlagForm
 from kuma.core.utils import parse_tags
 from kuma.core.cache import memcache
-from kuma.users.models import UserProfile
+from kuma.users.models import User
 
 from . import DEMOS_CACHE_NS_KEY
 from .models import Submission
 from .forms import SubmissionNewForm, SubmissionEditForm
 
-
 DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 10)
-DEMOS_LAST_NEW_COMMENT_ID = 'demos_last_new_comment_id'
 
 # bug 657779: migrated from plain tags to tech:* tags for these:
 KNOWN_TECH_TAGS = (
@@ -79,17 +72,12 @@ def detail(request, slug):
     if not submission.allows_viewing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
-    last_new_comment_id = request.session.get(DEMOS_LAST_NEW_COMMENT_ID, None)
-    if last_new_comment_id:
-        del request.session[DEMOS_LAST_NEW_COMMENT_ID]
-
     more_by = (Submission.objects.filter(creator=submission.creator)
                                  .exclude(hidden=True)
                                  .order_by('-modified').all()[:5])
 
     return render(request, 'demos/detail.html', {
         'submission': submission,
-        'last_new_comment_id': last_new_comment_id,
         'more_by': more_by
     })
 
@@ -208,7 +196,7 @@ class SearchView(ListView):
 
 
 def profile_detail(request, username):
-    return redirect('users.profile', username)
+    return redirect('users.user_detail', username)
 
 
 def like(request, slug):
@@ -247,9 +235,8 @@ def flag(request, slug):
             recipients = None
             if (flag_type in FLAG_NOTIFICATIONS and
                     FLAG_NOTIFICATIONS[flag_type]):
-                recipients = [profile.user.email for profile in
-                              UserProfile.objects.filter(
-                                  content_flagging_email=True)]
+                recipients = list(User.objects.filter(content_flagging_email=True)
+                                              .values_list('email', flat=True))
             flag, created = ContentFlag.objects.flag(
                 request=request, object=submission,
                 flag_type=flag_type,
@@ -309,7 +296,7 @@ def submit(request):
 def edit(request, slug):
     """Edit a demo"""
     submission = get_object_or_404(Submission, slug=slug)
-    if not submission.allows_editing_by(request.user):
+    if not submission.allows_managing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
     if request.method != "POST":
@@ -337,7 +324,7 @@ def edit(request, slug):
 def delete(request, slug):
     """Delete a submission"""
     submission = get_object_or_404(Submission, slug=slug)
-    if not submission.allows_deletion_by(request.user):
+    if not submission.allows_managing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
     if request.method == "POST":
@@ -349,50 +336,10 @@ def delete(request, slug):
         'submission': submission})
 
 
-@login_required
-def new_comment(request, slug, parent_id=None):
-    """Local reimplementation of threadedcomments new_comment"""
-    submission = get_object_or_404(Submission, slug=slug)
-    model = ThreadedComment
-    form_class = ThreadedCommentForm
-    threadedcomments.views._adjust_max_comment_length(form_class)
-
-    form = form_class(request.POST)
-    if form.is_valid():
-        new_comment = form.save(commit=False)
-        new_comment.ip_address = request.META.get('REMOTE_ADDR', None)
-        new_comment.content_type = (
-            ContentType.objects.get_for_model(submission))
-        new_comment.object_id = submission.id
-        new_comment.user = request.user
-        if parent_id:
-            new_comment.parent = get_object_or_404(model, id=int(parent_id))
-        new_comment.save()
-
-        request.session[DEMOS_LAST_NEW_COMMENT_ID] = new_comment.id
-
-    return redirect(submission)
-
-
-@xframe_options_sameorigin
-def delete_comment(request, slug, object_id):
-    """Delete a comment on a submission, if permitted."""
-    tc = get_object_or_404(ThreadedComment, id=int(object_id))
-    if not threadedcomments.views.can_delete_comment(tc, request.user):
-        return HttpResponseForbidden(_('access denied') + '')
-    submission = get_object_or_404(Submission, slug=slug)
-    if request.method == "POST":
-        tc.delete()
-        return redirect(submission)
-    return render(request, 'demos/delete_comment.html', {
-        'comment': tc
-    })
-
-
 def hideshow(request, slug, hide=True):
     """Hide/show a demo"""
     submission = get_object_or_404(Submission, slug=slug)
-    if not submission.allows_hiding_by(request.user):
+    if not submission.allows_managing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
     if request.method == "POST":
@@ -414,14 +361,14 @@ def devderby_landing(request):
 
     # Grab current arrangement of challenges from Constance settings
     current_challenge_tag_name = str(
-        constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
+        config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
     previous_winner_tag_name = str(
-        constance.config.DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG).strip()
+        config.DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG).strip()
     previous_challenge_tag_names = parse_tags(
-        constance.config.DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
+        config.DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
         sorted=False)
     challenge_choices = parse_tags(
-        constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
+        config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
         sorted=False)
 
     submissions_qs = (Submission.objects.all_sorted(sort_order)

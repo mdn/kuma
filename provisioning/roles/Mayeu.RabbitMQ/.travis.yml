@@ -1,0 +1,17 @@
+---
+language: python
+python: "2.7"
+before_install:
+  - sudo apt-get update -qq
+install:
+  # Install Ansible.
+  - pip install ansible==1.6.0
+
+  # Create an inventory file for testing.
+  - "printf 'rabbit-standalone ansible_ssh_host=localhost' > inventory"
+script:
+  # Check the role/playbook's syntax.
+  - "ansible-playbook -i inventory vagrant/site.yml --syntax-check"
+
+  # NOTE(retr0h): Testing standalone until we can test a cluster with travis.
+  - "ansible-playbook -vvvv -i inventory vagrant/standalone.yml --connection=local --sudo"

@@ -1,0 +1,118 @@
+/* edit, language, settings, save, and cancel buttons */
+.page-buttons, #page-buttons {
+    bidi-value(float, right, left);
+    padding: 5px 0;
+    width: auto;
+
+    &.fixed {
+        overflow-y: inherit;
+        z-index: 50;
+    }
+
+    > li {
+        margin-left: ($grid-spacing / 2);
+        display: inline-block;
+        position: relative;
+        bidi-value(text-align, left, right);
+
+        a, button, input[type='submit'], input[type='button'] {
+            set-smaller-font-size();
+            {$selector-heading-font-fallback} {
+                letter-spacing: -0.035em;
+            }
+        }
+
+        .transparent {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        {$selector-icon} {
+            set-font-size($base-bump-font-size);
+        }
+    }
+}
+
+/* Use a dark blue background color for all document edit buttons except those
+   that appear on zone landing pages. Superusers can customize zone landing page
+   style and we can't be sure that dark blue will look good on the background
+   colors they choose. */
+body:not(.zone-landing) #edit-button {
+    background-color: $blue;
+    color: $blue-background-text-color;
+}
+
+@media $media-query-small-desktop {
+
+    .page-buttons, #page-buttons {
+        &.fixed {
+            position: relative;
+        }
+    }
+}
+
+@media $media-query-mobile {
+
+    .page-buttons > li.page-buttons-edit {
+        display: none;
+    }
+}
+
+@media print {
+
+    .page-buttons{
+        display: none;
+    }
+}
+
+
+.move-page {
+
+    #page-buttons {
+        right: auto;
+        top: auto;
+        text-align: left;
+        float: none;
+        margin: $grid-spacing 0;
+        position: relative;
+    }
+}
+
+#translate-document {
+
+    header .page-buttons {
+        clear: both;
+        margin-bottom: 0;
+    }
+}
+
+#new-document,
+#edit-document,
+#translate-document {
+
+    .page-buttons {
+        z-index: 1; /* Move above the .title and .metadata classes to be clickable. */
+    }
+}
+
+#new-document,
+#edit-document,
+#translate-document,
+.move-page {
+    .page-buttons {
+        bidi-value(text-align, right, left);
+        float: none;
+        padding: 0;
+        margin-bottom: -10px;
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a, button {
+            border: 0;
+            display: inline-block;
+            box-shadow: 1px 1px 0 rgba(0,0,0,.25);
+        }
+    }
+}

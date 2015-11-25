@@ -1,0 +1,41 @@
+/*
+Contribute row at bottom
+====================================================================== */
+.home-contribute {
+    background: #fff;
+    padding: $first-content-top-padding 0;
+
+    a {
+        text-decoration: underline;
+    }
+
+    h3 {
+        set-larger-font-size();
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    li {
+        border-bottom: 1px solid #ececec;
+        padding: $content-vertical-spacing 0;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+}
+
+.home-contribute-recent {
+    margin-top: ($grid-spacing / 2);
+}
+
+@media $media-query-mobile {
+
+    .home-contribute {
+        li {
+            &:last-child {
+                border-bottom: 1px solid #ececec;
+            }
+        }
+    }
+}

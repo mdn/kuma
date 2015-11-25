@@ -1,0 +1,124 @@
+/*
+Override MDN standard styles
+====================================================================== */
+#home {
+    create-home-gradient-background($homepage-background-color);
+    remove-main-spacing();
+    use-white-logo();
+
+    /* general structure adjustments */
+    #main-header {
+        background: none;
+        border-bottom-color: rgba-fallback(rgba(255, 255, 255, 0.2));
+    }
+
+    /* update main nav menu color */
+    override-main-header-color($blue-background-text-color);
+
+    /* update the homepage search size */
+    minimize-header-search();
+
+    .search-wrap {
+        input {
+            set-placeholder-style(color, $blue-background-text-color);
+        }
+    }
+
+    main {
+        background: transparent;
+    }
+
+    h2, h3 {
+        > {$selector-icon} {
+            display: inline-block;
+            position: relative;
+            background-image: url($logo-sprite-url);
+            background-size: 132px;
+            background-position: 0 -143px;
+            background-repeat: no-repeat;
+        }
+    }
+
+    h2 {
+        > {$selector-icon} {
+            width: 64px;
+            height: 64px;
+            color: #0095dd;
+            background-position: 0 -222px;
+            background-size: 205px auto;
+            set-font-size(30px);
+            bidi-value(margin-right, ($icon-margin / 2), 0);
+            bidi-value(margin-left, 0, ($icon-margin / 2));
+
+            &.blue {
+                background-position: 0 -340px;
+                color: $blue-background-text-color;
+            }
+
+            &[class^='icon-']:before {
+                margin: 18px 0 0 0;
+                display: block;
+                text-align: center;
+            }
+        }
+    }
+
+    h3 {
+        clearfix();
+        text-transform: uppercase;
+
+        {$selector-icon} {
+            width: 42px;
+            height: 39px;
+            background-position: 0 -147px;
+            background-size: 134px auto;
+            color: #0095dd;
+            bidi-value(float, left, right);
+            bidi-value(margin-right, $icon-margin, 0);
+            bidi-value(margin-left, 0, $icon-margin);
+
+            &:before {
+                margin: 11px 0 0 0;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        &.connect {
+            span {
+                padding-top: 10px;
+            }
+        }
+
+        span {
+            bidi-value(float, left, right);
+        }
+    }
+
+    .entry-meta {
+        set-smaller-font-size();
+        font-style: italic;
+    }
+}
+
+@media $media-query-mobile {
+    #home { /* needs spcificity to over ride use of #home earlier */
+        .home-contribute h2,
+        .column-hacks > h2 {
+            set-font-size(20px);
+
+            > {$selector-icon} {
+                display: none;
+            }
+
+        }
+    }
+}
+
+/* right to left */
+html[dir='rtl'] #home {
+
+    .icon-arrow-right:before {
+        content: '\f060';
+    }
+}

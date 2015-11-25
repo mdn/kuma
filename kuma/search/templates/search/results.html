@@ -1,6 +1,6 @@
 {% extends "search/base.html" %}
 
-{% set locale = request.locale %}
+{% set locale = request.LANGUAGE_CODE %}
 {% if locale in settings.LOCALES %}
   {% set locale_native = settings.LOCALES[locale].native %}
 {% endif %}
@@ -10,7 +10,7 @@
 
 {% block title %}
   {% if query %}
-    {{ page_title(_('Search Results for "{query}"')|f(query=query)) }}
+    {{ page_title(_('Search Results for "%(query)s"', query=query)) }}
   {% else %}
     {{ page_title(_('Search')) }}
   {% endif %}
@@ -18,7 +18,7 @@
 
 {% block extrahead %}
   {% if waffle.flag('search_suggestions') %}
-  {{ css('search-suggestions') }}
+  {% stylesheet 'search-suggestions' %}
   {% endif %}
 {% endblock %}
 
@@ -34,7 +34,7 @@
         <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
         <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
-        {% if waffle.flag('search_explanation') %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
+        {% if request.user.is_superuser %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
         {% if doc.parent %}
             {% trans parent_url=doc.parent.url, parent_title=doc.parent.title, parent_language=settings.LOCALES[doc.parent.locale].native %}
             translated from <a href="{{ parent_url }}" title="{{ parent_title }}">{{ parent_title }} ({{ parent_language }})</a>
@@ -53,6 +53,9 @@
   <form id="search-form" action="{{ url('search') }}" method="get" class="search">
     <div class="results-search-form search-form dark">
       <label for="search-q" class="offscreen">{{ _('Search') }}</label>
+      <span class="search-icon">
+          <i class="icon-search" aria-hidden="true"></i>
+      </span>
       <input class="search-input" type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
     </div>
@@ -220,7 +223,7 @@
   </script>
   {% endif %}
   {% if waffle.flag('search_suggestions') %}
-  {{ js('search-suggestions') }}
+  {% javascript 'search-suggestions' %}
   <script>
   (function($) {
     var get_filters = function() {

@@ -1,2 +1,0 @@
-logilab-common >= 0.49.0
-logilab-astng >= 0.20.0

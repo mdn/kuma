@@ -1,11 +1,12 @@
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
+
+from waffle.models import Switch
 
 from kuma.users.tests import UserTestCase
+from kuma.users.models import User, UserBan
 from kuma.core.urlresolvers import reverse
-
-from pyquery import PyQuery as pq
-from waffle.models import Switch
 
 
 class RevisionsDashTest(UserTestCase):
@@ -19,6 +20,19 @@ class RevisionsDashTest(UserTestCase):
         ok_('text/html' in response['Content-Type'])
         ok_('dashboards/revisions.html' in
             [template.name for template in response.templates])
+
+    @attr('dashboards')
+    @attr('bug1203403')
+    def test_main_view_with_banned_user(self):
+        testuser = User.objects.get(username='testuser')
+        admin = User.objects.get(username='admin')
+        ban = UserBan(user=testuser, by=admin, reason='Testing')
+        ban.save()
+
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(reverse('dashboards.revisions',
+                                           locale='en-US'))
+        eq_(200, response.status_code)
 
     @attr('dashboards')
     def test_revision_list(self):

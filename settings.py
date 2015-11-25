@@ -4,9 +4,7 @@ import json
 import logging
 import os
 import platform
-import sys
 
-from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 
@@ -18,8 +16,6 @@ TEMPLATE_DEBUG = DEBUG
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
-
-ROOT_PACKAGE = os.path.basename(ROOT)
 
 ADMINS = (
     ('MDN devs', 'mdn-dev@mozilla.com'),
@@ -42,7 +38,19 @@ DATABASES = {
         'PASSWORD': 'kuma',  # Not used with sqlite3.
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
-        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
+        'OPTIONS': {
+            'sql_mode': 'TRADITIONAL',
+            'charset': 'utf8',
+            'init_command': 'SET '
+                'storage_engine=INNODB,'
+                'character_set_connection=utf8,'
+                'collation_connection=utf8_general_ci',
+        },
+        'ATOMIC_REQUESTS': True,
+        'TEST': {
+            'CHARSET': 'utf8',
+            'COLLATION': 'utf8_general_ci',
+        },
     },
 }
 
@@ -85,67 +93,70 @@ LANGUAGE_CODE = 'en-US'
 
 # Accepted locales
 MDN_LANGUAGES = (
-                 'en-US',
-                 'af',
-                 'ar',
-                 'az',
-                 'bm',
-                 'bn-BD',
-                 'bn-IN',
-                 'cs',
-                 'ca',
-                 'de',
-                 'ee',
-                 'el',
-                 'es',
-                 'fa',
-                 'ff',
-                 'fi',
-                 'fr',
-                 'fy-NL',
-                 'ga-IE',
-                 'ha',
-                 'he',
-                 'hi-IN',
-                 'hr',
-                 'hu',
-                 'id',
-                 'ig',
-                 'it',
-                 'ja',
-                 'ka',
-                 'ko',
-                 'ln',
-                 'ml',
-                 'ms',
-                 'my',
-                 'nl',
-                 'pl',
-                 'pt-BR',
-                 'pt-PT',
-                 'ro',
-                 'ru',
-                 'son',
-                 'sq',
-                 'sw',
-                 'ta',
-                 'th',
-                 'tl',
-                 'tr',
-                 'vi',
-                 'wo',
-                 'xh',
-                 'yo',
-                 'zh-CN',
-                 'zh-TW',
-                 'zu',
+    'en-US',
+    'af',
+    'ar',
+    'az',
+    'bm',
+    'bn-BD',
+    'bn-IN',
+    'ca',
+    'cs',
+    'de',
+    'ee',
+    'el',
+    'es',
+    'fa',
+    'ff',
+    'fi',
+    'fr',
+    'fy-NL',
+    'ga-IE',
+    'ha',
+    'he',
+    'hi-IN',
+    'hr',
+    'hu',
+    'id',
+    'ig',
+    'it',
+    'ja',
+    'ka',
+    'ko',
+    'ln',
+    'mg',
+    'ml',
+    'ms',
+    'my',
+    'nl',
+    'pl',
+    'pt-BR',
+    'pt-PT',
+    'ro',
+    'ru',
+    'son',
+    'sq',
+    'sv-SE',
+    'sw',
+    'ta',
+    'th',
+    'tl',
+    'tn',
+    'tr',
+    'vi',
+    'wo',
+    'xh',
+    'yo',
+    'zh-CN',
+    'zh-TW',
+    'zu',
 )
 
 RTL_LANGUAGES = (
-                 'ar',
-                 'fa',
-                 'fa-IR',
-                 'he'
+    'ar',
+    'fa',
+    'fa-IR',
+    'he'
 )
 
 DEV_POOTLE_PRODUCT_DETAILS_MAP = {
@@ -185,24 +196,9 @@ LOCALE_ALIASES = {
     'zh-Hant': 'zh-TW',
 }
 
-try:
-    DEV_LANGUAGES = [
-        loc.replace('_', '-') for loc in os.listdir(path('locale'))
-        if (os.path.isdir(path('locale', loc)) and
-            loc not in ['.svn', '.git', 'templates'])
-    ]
-    for pootle_dir in DEV_LANGUAGES:
-        if pootle_dir in DEV_POOTLE_PRODUCT_DETAILS_MAP:
-            DEV_LANGUAGES.remove(pootle_dir)
-            DEV_LANGUAGES.append(DEV_POOTLE_PRODUCT_DETAILS_MAP[pootle_dir])
-except OSError:
-    DEV_LANGUAGES = ('en-US',)
-
-PROD_LANGUAGES = MDN_LANGUAGES
-
-LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in PROD_LANGUAGES])
+LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in MDN_LANGUAGES])
 for requested_lang, delivered_lang in LOCALE_ALIASES.items():
-    if delivered_lang in PROD_LANGUAGES:
+    if delivered_lang in MDN_LANGUAGES:
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
 
 
@@ -218,34 +214,8 @@ def get_locales():
 
 LOCALES = get_locales()
 
-
-def lazy_langs():
-    """Override Django's built-in with our native names"""
-    from product_details import product_details
-    # for bug 664330
-    # from django.conf import settings
-    # langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
-    langs = PROD_LANGUAGES
-    return dict([(lang.lower(), product_details.languages[lang]['native'])
-                for lang in langs])
-
-LANGUAGES_DICT = lazy(lazy_langs, dict)()
 LANGUAGES = sorted(tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES]),
-                   key=lambda lang:lang[0])
-
-# DEKI uses different locale keys
-def lazy_language_deki_map():
-    # for bug 664330
-    # from django.conf import settings
-    # langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
-    langs = PROD_LANGUAGES
-    lang_deki_map = dict([(i, i) for i in langs])
-    lang_deki_map['en-US'] = 'en'
-    lang_deki_map['zh-CN'] = 'cn'
-    lang_deki_map['zh-TW'] = 'zh_tw'
-    return lang_deki_map
-
-LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
+                   key=lambda lang: lang[0])
 
 # List of MindTouch locales mapped to Kuma locales.
 #
@@ -277,39 +247,37 @@ LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
 # through the mapping exercise.
 
 MT_TO_KUMA_LOCALE_MAP = {
-    "en"    : "en-US",
-    "ja"    : "ja",
-    "pl"    : "pl",
-    "fr"    : "fr",
-    "es"    : "es",
-    ""      : "en-US",
-    "cn"    : "zh-CN",
-    "zh_cn" : "zh-CN",
-    "zh-cn" : "zh-CN",
-    "zh_tw" : "zh-TW",
-    "zh-tw" : "zh-TW",
-    "ko"    : "ko",
-    "pt"    : "pt-PT",
-    "de"    : "de",
-    "it"    : "it",
-    "ca"    : "ca",
-    "cs"    : "cs",
-    "ru"    : "ru",
-    "nl"    : "nl",
-    "hu"    : "hu",
-    "he"    : "he",
-    "el"    : "el",
-    "fi"    : "fi",
-    "tr"    : "tr",
-    "vi"    : "vi",
-    "ro"    : "ro",
-    "ar"    : "ar",
-    "th"    : "th",
-    "fa"    : "fa",
-    "ka"    : "ka",
+    "en": "en-US",
+    "ja": "ja",
+    "pl": "pl",
+    "fr": "fr",
+    "es": "es",
+    "": "en-US",
+    "cn": "zh-CN",
+    "zh_cn": "zh-CN",
+    "zh-cn": "zh-CN",
+    "zh_tw": "zh-TW",
+    "zh-tw": "zh-TW",
+    "ko": "ko",
+    "pt": "pt-PT",
+    "de": "de",
+    "it": "it",
+    "ca": "ca",
+    "cs": "cs",
+    "ru": "ru",
+    "nl": "nl",
+    "hu": "hu",
+    "he": "he",
+    "el": "el",
+    "fi": "fi",
+    "tr": "tr",
+    "vi": "vi",
+    "ro": "ro",
+    "ar": "ar",
+    "th": "th",
+    "fa": "fa",
+    "ka": "ka",
 }
-
-TEXT_DOMAIN = 'messages'
 
 SITE_ID = 1
 
@@ -351,7 +319,6 @@ LANGUAGE_URL_IGNORED_PATHS = (
     '1',
     'files',
     '@api',
-    'grappelli',
     '__debug__',
     '.well-known',
     'users/persona/',
@@ -370,7 +337,6 @@ TEMPLATE_LOADERS = (
 
 JINGO_EXCLUDE_APPS = (
     'admin',
-    'grappelli',
     'waffle',
     'registration',
 )
@@ -379,35 +345,23 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
+    'django.core.context_processors.static',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
-
-    'allauth.account.context_processors.account',
-    'allauth.socialaccount.context_processors.socialaccount',
 
     'kuma.core.context_processors.global_settings',
     'kuma.core.context_processors.i18n',
     'kuma.core.context_processors.next_url',
 
-    'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
-
-    'kuma.search.context_processors.search_filters',
 )
 
 MIDDLEWARE_CLASSES = (
-    # This gives us atomic success or failure on multi-row writes. It does not
-    # give us a consistent per-transaction snapshot for reads; that would need
-    # the serializable isolation level (which InnoDB does support) and code to
-    # retry transactions that roll back due to serialization failures. It's a
-    # possibility for the future. Keep in mind that memcache defeats
-    # snapshotted reads where we don't explicitly use the "uncached" manager.
-    'django.middleware.transaction.TransactionMiddleware',
-
     # LocaleURLMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.LocaleURLMiddleware',
+    'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
     'kuma.core.middleware.Forbidden403Middleware',
@@ -421,19 +375,15 @@ MIDDLEWARE_CLASSES = (
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
-
-    'badger.middleware.RecentBadgeAwardsMiddleware',
-    'kuma.wiki.badges.BadgeAwardingMiddleware',
-
     'waffle.middleware.WaffleMiddleware',
 )
 
 # Auth
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
-    'teamwork.backends.TeamworkBackend',
 )
-AUTH_PROFILE_MODULE = 'users.UserProfile'
+AUTH_USER_MODEL = 'users.User'
+
 
 PASSWORD_HASHERS = (
     'kuma.users.backends.Sha256Hasher',
@@ -443,8 +393,13 @@ PASSWORD_HASHERS = (
 )
 
 USER_AVATAR_PATH = 'uploads/avatars/'
-DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
-AVATAR_SIZE = 48  # in pixels
+DEFAULT_AVATAR = STATIC_URL + 'img/avatar.png'
+AVATAR_SIZES = [  # in pixels
+    34,   # wiki document page
+    48,   # user_link helper
+    200,  # user pages
+    220,  # default, e.g. used in feeds
+]
 ACCOUNT_ACTIVATION_DAYS = 30
 MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 
@@ -460,6 +415,15 @@ TEMPLATE_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
+    'pipeline.finders.PipelineFinder',
+)
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+STATICFILES_DIRS = (
+    path('kuma', 'static'),
+    path('build', 'assets'),
+    path('build', 'locale'),
 )
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
@@ -471,9 +435,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-
-    'grappelli.dashboard',
-    'grappelli',
+    'flat',
     'django.contrib.admin',
 
     'django.contrib.sitemaps',
@@ -492,18 +454,16 @@ INSTALLED_APPS = (
     'allauth.socialaccount',
     'kuma.users.providers.persona',
     'kuma.users.providers.github',
-    'kuma.events',
 
     # DEMOS
     'kuma.demos',
     'kuma.contentflagging',
     'kuma.actioncounters',
-    'threadedcomments',
 
     # util
-    'jingo_minify',
+    'pipeline',
     'product_details',
-    'tower',
+    'puente',
     'smuggler',
     'constance.backends.database',
     'constance',
@@ -511,7 +471,6 @@ INSTALLED_APPS = (
     'soapbox',
     'kuma.authkeys',
     'tidings',
-    'teamwork',
     'djcelery',
     'taggit',
     'dbgettext',
@@ -522,17 +481,11 @@ INSTALLED_APPS = (
     'statici18n',
     'rest_framework',
 
-    # migrations
-    'south',
-
     # testing.
     'django_nose',
 
     # other
     'kuma.humans',
-
-    'badger',
-    'cacheback',
 )
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
@@ -544,248 +497,481 @@ NOSE_ARGS = [
 # Feed fetcher config
 FEEDER_TIMEOUT = 6  # in seconds
 
+
 def JINJA_CONFIG():
     import jinja2
     from django.conf import settings
-    from django.core.cache.backends.memcached import CacheClass as MemcachedCacheClass
-    from django.core.cache import get_cache
-    cache = get_cache('memcache')
-    config = {'extensions': ['jinja2.ext.i18n', 'tower.template.i18n',
-                             'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
-                             'jinja2.ext.autoescape'],
-              'finalize': lambda x: x if x is not None else ''}
-    if isinstance(cache, MemcachedCacheClass) and not settings.DEBUG:
+    from django.core.cache.backends.memcached import MemcachedCache
+    from django.core.cache import caches
+    cache = caches['memcache']
+    config = {
+        'extensions': [
+            'jinja2.ext.i18n',
+            'puente.ext.i18n',
+            'jinja2.ext.with_',
+            'jinja2.ext.loopcontrols',
+            'jinja2.ext.autoescape',
+            'pipeline.templatetags.ext.PipelineExtension',
+            'waffle.jinja.WaffleExtension',
+        ],
+        'finalize': lambda x: x if x is not None else ''
+    }
+    if isinstance(cache, MemcachedCache) and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
         # Django can't store binary directly; it enforces unicode on it.
         # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
         # and in the errors you get when you try it the other way.
         bc = jinja2.MemcachedBytecodeCache(cache._cache,
-                                           "%s:j2:" % settings.CACHE_PREFIX)
+                                           "%s:j4:" % settings.CACHE_PREFIX)
         config['cache_size'] = -1  # Never clear the cache
         config['bytecode_cache'] = bc
     return config
 
-# Let Tower know about our additional keywords.
-# DO NOT import an ngettext variant as _lazy.
-TOWER_KEYWORDS = {
-    '_lazy': None,
+PUENTE = {
+    'BASE_DIR': ROOT,
+    'TEXT_DOMAIN': 'django',
+    # By default, all the domains you speficy will be merged into one big
+    # django.po file. If you want to separate a domain from the main .po file,
+    # specify it in this list. Make sure to include TEXT_DOMAIN in this list,
+    # even if you have other .po files you're generating
+    'STANDALONE_DOMAINS': ['django', 'javascript'],
+    # Tells the extract script what files to look for l10n in and what function
+    # handles the extraction.
+    'DOMAIN_METHODS': {
+        'django': [
+            ('vendor/**', 'ignore'),
+            ('kuma/**.py', 'python'),
+            ('kuma/*/templates/admin/**.html',
+             'django_babel.extract.extract_django'),
+            ('templates/admin/**.html', 'django_babel.extract.extract_django'),
+            ('**/templates/**.html', 'jinja2'),
+            ('**/templates/**.ltxt', 'jinja2'),
+        ],
+        'javascript': [
+            # We can't say **.js because that would dive into any libraries.
+            ('kuma/static/js/*.js', 'javascript'),
+            ('kuma/static/js/libs/ckeditor/source/plugins/mdn-**/*.js',
+             'javascript'),
+        ],
+    },
 }
 
-# Tells the extract script what files to look for l10n in and what function
-# handles the extraction.  The Tower library expects this.
-DOMAIN_METHODS = {
-    'messages': [
-        ('vendor/**', 'ignore'),
-        ('kuma/dashboards/**', 'ignore'),
-        ('kuma/core/**', 'ignore'),
-        ('kuma/**.py',
-            'tower.management.commands.extract.extract_tower_python'),
-        ('**/templates/**.html',
-            'tower.management.commands.extract.extract_tower_template'),
-        ('**/templates/**.ltxt',
-            'tower.management.commands.extract.extract_tower_template'),
-    ],
-    'javascript': [
-        # We can't say **.js because that would dive into any libraries.
-        ('media/js/libs/ckeditor/plugins/mdn-link/**.js', 'javascript')
-    ],
-}
+STATICI18N_ROOT = 'build/locale'
+STATICI18N_DOMAIN = 'javascript'
 
-# These domains will not be merged into messages.pot and will use separate PO
-# files. See the following URL for an example of how to set these domains
-# in DOMAIN_METHODS.
-# http://github.com/jbalogh/zamboni/blob/d4c64239c24aa2f1e91276909823d1d1b290f0ee/settings.py#L254
-STANDALONE_DOMAINS = [
-    'javascript',
-    ]
+PIPELINE_DISABLE_WRAPPER = True
 
-# If you have trouble extracting strings with Tower, try setting this
-# to True
-TOWER_ADD_HEADERS = True
+PIPELINE_CSS_COMPRESSOR = 'kuma.core.pipeline.cleancss.CleanCSSCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
 
-# Bundles for JS/CSS Minification
-JINGO_MINIFY_USE_STATIC = False
-CLEANCSS_BIN = '/usr/local/bin/cleancss'
-UGLIFY_BIN = '/usr/bin/uglifyjs'
-
-MINIFY_BUNDLES = {
-    'css': {
-        'mdn': (
+PIPELINE_CSS = {
+    'mdn': {
+        'source_filenames': (
             'css/font-awesome.css',
             'css/main.css',
-            'css/badges.css',
         ),
-        'jquery-ui': (
+        'output_filename': 'build/styles/mdn.css',
+        'variant': 'datauri',
+    },
+    'jquery-ui': {
+        'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'css/jqueryui/moz-jquery-plugins.css',
+            'styles/libs/jqueryui/moz-jquery-plugins.css',
             'css/jquery-ui-customizations.css',
         ),
-        'demostudio': (
+        'output_filename': 'build/styles/jquery-ui.css',
+    },
+    'demostudio': {
+        'source_filenames': (
             'css/demos.css',
         ),
-        'devderby': (
+        'output_filename': 'build/styles/demostudio.css',
+    },
+    'devderby': {
+        'source_filenames': (
             'css/devderby.css',
         ),
-        'gaia': (
+        'output_filename': 'build/styles/devderby.css',
+    },
+    'gaia': {
+        'source_filenames': (
             'css/gaia.css',
         ),
-        'home': (
+        'output_filename': 'build/styles/gaia.css',
+    },
+    'home': {
+        'source_filenames': (
             'css/home.css',
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
-            'js/libs/owl.carousel/owl-carousel/owl.theme.css',
         ),
-        'search': (
+        'output_filename': 'build/styles/home.css',
+        'variant': 'datauri',
+    },
+    'search': {
+        'source_filenames': (
             'css/search.css',
         ),
-        'search-suggestions': (
+        'output_filename': 'build/styles/search.css',
+    },
+    'search-suggestions': {
+        'source_filenames': (
             'css/search-suggestions.css',
         ),
-        'wiki': (
+        'output_filename': 'build/styles/search-suggestions.css',
+    },
+    'wiki': {
+        'source_filenames': (
             'css/wiki.css',
             'css/zones.css',
             'css/diff.css',
 
-            'js/libs/prism/themes/prism.css',
-            'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
-            'js/libs/prism/plugins/ie8/prism-ie8.css',
-            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
+            # Custom build of our Prism theme
+            'styles/libs/prism/prism.css',
+            'styles/libs/prism/prism-line-highlight.css',
+            'styles/libs/prism/prism-line-numbers.css',
+
             'js/prism-mdn/components/prism-json.css',
             'css/wiki-syntax.css',
         ),
-        'wiki-revisions': (
+        'output_filename': 'build/styles/wiki.css',
+    },
+    'wiki-revisions': {
+        'source_filenames': (
             'css/wiki-revisions.css',
         ),
-        'wiki-edit': (
+        'output_filename': 'build/styles/wiki-revisions.css',
+    },
+    'wiki-edit': {
+        'source_filenames': (
             'css/wiki-edit.css',
         ),
-        'sphinx': (
+        'output_filename': 'build/styles/wiki-edit.css',
+    },
+    'wiki-compat-tables': {
+        'source_filenames': (
+            'css/wiki-compat-tables.css',
+        ),
+        'output_filename': 'build/styles/wiki-compat-tables.css',
+        'template_name': 'pipeline/javascript-array.jinja',
+    },
+    'sphinx': {
+        'source_filenames': (
             'css/wiki.css',
             'css/sphinx.css',
         ),
-        'users': (
+        'output_filename': 'build/styles/sphinx.css',
+    },
+    'users': {
+        'source_filenames': (
             'css/users.css',
         ),
-        'tagit': (
-            'css/libs/jquery.tagit.css',
+        'output_filename': 'build/styles/users.css',
+    },
+    'tagit': {
+        'source_filenames': (
+            'styles/libs/jquery.tagit.css',
         ),
-        'promote': (
+        'output_filename': 'build/styles/tagit.css',
+    },
+    'promote': {
+        'source_filenames': (
             'css/promote.css',
         ),
-        'error': (
+        'output_filename': 'build/styles/promote.css',
+    },
+    'error': {
+        'source_filenames': (
             'css/error.css',
         ),
-        'error-404': (
+        'output_filename': 'build/styles/error.css',
+    },
+    'error-404': {
+        'source_filenames': (
             'css/error.css',
             'css/error-404.css',
         ),
-        'calendar': (
-            'css/calendar.css',
-        ),
-        'profile': (
-            'css/profile.css',
-        ),
-        'dashboards': (
+        'output_filename': 'build/styles/error-404.css',
+    },
+    'dashboards': {
+        'source_filenames': (
             'css/dashboards.css',
             'css/diff.css',
         ),
-        'newsletter': (
+        'output_filename': 'build/styles/dashboards.css',
+    },
+    'newsletter': {
+        'source_filenames': (
             'css/newsletter.css',
         ),
-        'submission': (
+        'output_filename': 'build/styles/newsletter.css',
+    },
+    'submission': {
+        'source_filenames': (
             'css/submission.css',
         ),
-        'user-banned': (
+        'output_filename': 'build/styles/submission.css',
+    },
+    'user-banned': {
+        'source_filenames': (
             'css/user-banned.css',
         ),
-        'error-403-alternate': (
+        'output_filename': 'build/styles/user-banned.css',
+    },
+    'error-403-alternate': {
+        'source_filenames': (
             'css/error-403-alternate.css',
         ),
-        'fellowship': (
+        'output_filename': 'build/styles/error-403-alternate.css',
+    },
+    'fellowship': {
+        'source_filenames': (
             'css/fellowship.css',
         ),
+        'output_filename': 'build/styles/fellowship.css',
     },
-    'js': {
-        'main': (
-            'js/libs/jquery-2.1.0.js',
+    'mdn10': {
+        'source_filenames': (
+            'css/mdn10.css',
+        ),
+        'output_filename': 'build/styles/mdn10.css',
+    },
+    'editor-content': {
+        'source_filenames': (
+            'css/main.css',
+            'css/wiki.css',
+            'css/wiki-wysiwyg.css',
+            'css/wiki-syntax.css',
+            'styles/libs/font-awesome/css/font-awesome.min.css',
+        ),
+        'output_filename': 'build/styles/editor-content.css',
+        'template_name': 'pipeline/javascript-array.jinja',
+    },
+    'demowrap': {
+        'source_filenames': (
+            'css/demowrap.css',
+            'css/demos_wrap.css',
+        ),
+        'output_filename': 'build/styles/demowrap.css',
+    },
+}
+
+PIPELINE_JS = {
+    'main': {
+        'source_filenames': (
+            'js/libs/jquery/jquery.js',
             'js/components.js',
             'js/analytics.js',
             'js/main.js',
             'js/auth.js',
-            'js/badges.js',
-            'js/social.js',
+            'js/libs/fontfaceobserver/fontfaceobserver.js',
             'js/fonts.js',
         ),
-        'home': (
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
-            'js/home.js'
-        ),
-        'popup': (
+        'output_filename': 'build/js/main.js',
+    },
+    'popup': {
+        'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
         ),
-        'profile': (
-            'js/profile.js',
+        'output_filename': 'build/js/popup.js',
+    },
+    'users': {
+        'source_filenames': (
+            'js/libs/tag-it.js',
+            'js/users.js',
             'js/moz-jquery-plugins.js',
         ),
-        'events': (
-            'js/libs/jquery.gmap-1.1.0.js',
-            'js/calendar.js',
+        'output_filename': 'build/js/users.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'social': {
+        'source_filenames': (
+            'js/social.js',
         ),
-        'demostudio': (
+        'output_filename': 'build/js/social.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'helpfulness': {
+        'source_filenames': (
+            'js/helpfulness.js',
+        ),
+        'output_filename': 'build/js/helpfulness.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'demostudio': {
+        'source_filenames': (
             'js/libs/jquery.hoverIntent.minified.js',
             'js/libs/jquery.scrollTo-1.4.2-min.js',
             'js/demos.js',
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
         ),
-        'demostudio_devderby_landing': (
+        'output_filename': 'build/js/demostudio.js',
+    },
+    'demostudio_devderby_landing': {
+        'source_filenames': (
             'js/demos-devderby-landing.js',
         ),
-        'jquery-ui': (
+        'output_filename': 'build/js/demostudio_devderby_landing.js',
+    },
+    'jquery-ui': {
+        'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/moz-jquery-plugins.js',
         ),
-        'libs/tagit': (
-            'js/libs/tag-it.js',
-        ),
-        'search': (
+        'output_filename': 'build/js/jquery-ui.js',
+    },
+    'search': {
+        'source_filenames': (
             'js/search.js',
             'js/search-navigator.js',
         ),
-        'framebuster': (
+        'output_filename': 'build/js/search.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'framebuster': {
+        'source_filenames': (
             'js/framebuster.js',
         ),
-        'syntax-prism': (
-            'js/libs/prism/prism.js',
+        'output_filename': 'build/js/framebuster.js',
+    },
+    'syntax-prism': {
+        'source_filenames': (
+            # Custom Prism build
+            "js/libs/prism/prism-core.js",
+            "js/libs/prism/prism-markup.js",
+            "js/libs/prism/prism-css.js",
+            "js/libs/prism/prism-clike.js",
+            "js/libs/prism/prism-javascript.js",
+            "js/libs/prism/prism-css-extras.js",
+            "js/libs/prism/prism-rust.js",
+            "js/libs/prism/prism-line-highlight.js",
+            "js/libs/prism/prism-line-numbers.js",
+
             'js/prism-mdn/components/prism-json.js',
-            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
-            'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
             'js/syntax-prism.js',
         ),
-        'search-suggestions': (
+        'output_filename': 'build/js/syntax-prism.js',
+        'template_name': 'pipeline/javascript-array.jinja',
+    },
+    'search-suggestions': {
+        'source_filenames': (
             'js/search-suggestions.js',
         ),
-        'wiki': (
+        'output_filename': 'build/js/search-suggestions.js',
+    },
+    'wiki': {
+        'source_filenames': (
             'js/search-navigator.js',
             'js/wiki.js',
+            'js/wiki-samples.js',
         ),
-        'wiki-edit': (
+        'output_filename': 'build/js/wiki.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'wiki-edit': {
+        'source_filenames': (
             'js/wiki-edit.js',
             'js/libs/tag-it.js',
             'js/wiki-tags-edit.js',
         ),
-        'wiki-move': (
+        'output_filename': 'build/js/wiki-edit.js',
+    },
+    'wiki-move': {
+        'source_filenames': (
             'js/wiki-move.js',
         ),
-        'newsletter': (
+        'output_filename': 'build/js/wiki-move.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'wiki-compat-tables': {
+        'source_filenames': (
+            'js/wiki-compat-tables.js',
+        ),
+        'output_filename': 'build/js/wiki-compat-tables.js',
+        'template_name': 'pipeline/javascript-array.jinja',
+    },
+    'newsletter': {
+        'source_filenames': (
             'js/newsletter.js',
         ),
-        'fellowship': (
+        'output_filename': 'build/js/newsletter.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'fellowship': {
+        'source_filenames': (
             'js/fellowship.js',
         ),
-        'fontfaceobserver': (
-            'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
+        'output_filename': 'build/js/fellowship.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'ckeditor-prod': {
+        'source_filenames': (
+            'js/libs/ckeditor/build/ckeditor/ckeditor.js',
+            'js/libs/ckeditor/build/ckeditor/adapters/jquery.js',
         ),
+        'output_filename': 'build/js/ckeditor-prod.js',
+    },
+    'ckeditor-dev': {
+        'source_filenames': (
+            'js/libs/ckeditor/source/ckeditor/ckeditor.js',
+            'js/libs/ckeditor/source/ckeditor/adapters/jquery.js',
+        ),
+        'output_filename': 'build/js/ckeditor-dev.js',
+    },
+    'carousel': {
+        'source_filenames': (
+            'js/libs/carousel.js',
+        ),
+        'output_filename': 'build/js/carousel.js',
+    },
+    'html5shiv': {
+        'source_filenames': (
+            'js/libs/html5shiv/html5shiv.js',
+        ),
+        'output_filename': 'build/js/html5shiv.js',
+    },
+    'selectivizr': {
+        'source_filenames': (
+            'js/libs/selectivizr/selectivizr.js',
+        ),
+        'output_filename': 'build/js/selectivizr.js',
+    },
+    'hoverIntent': {
+        'source_filenames': (
+            'js/libs/jquery.hoverIntent.minified.js',
+        ),
+        'output_filename': 'build/js/hoverIntent.js',
+    },
+    'modal-control': {
+        'source_filenames': (
+            'js/modal-control.js',
+        ),
+        'output_filename': 'build/js/modal-control.js',
+    },
+    'ace': {
+        'source_filenames': (
+            'js/libs/ace/ace.js',
+            'js/libs/ace/mode-javascript.js',
+            'js/libs/ace/theme-dreamweaver.js',
+            'js/libs/ace/worker-javascript.js',
+        ),
+        'output_filename': 'build/js/ace.js',
     },
 }
 
@@ -827,7 +1013,7 @@ EMAIL_FILE_PATH = '/tmp/kuma-messages'
 import djcelery
 djcelery.setup_loader()
 
-BROKER_URL = 'amqp://kuma:kuma@localhost:5672/kuma'
+BROKER_URL = 'amqp://kuma:kuma@developer-local:5672/kuma'
 
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
 CELERY_SEND_TASK_ERROR_EMAILS = True
@@ -846,6 +1032,96 @@ CELERY_ACCEPT_CONTENT = ['pickle']
 CELERY_IMPORTS = (
     'tidings.events',
 )
+
+CELERY_ANNOTATIONS = {
+    'cacheback.tasks.refresh_cache': {
+        'rate_limit': '120/m',
+    }
+}
+
+CELERY_ROUTES = {
+    'cacheback.tasks.refresh_cache': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.actioncounters.tasks.update_actioncounter_counts': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.core.tasks.clean_sessions': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.core.tasks.delete_old_ip_bans': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.humans.tasks.humans_txt': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.build_index_sitemap': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.build_locale_sitemap': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.build_sitemaps': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.delete_old_revision_ips': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.tidy_revision_content': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.wiki.tasks.update_community_stats': {
+        'queue': 'mdn_purgeable'
+    },
+    'kuma.search.tasks.prepare_index': {
+        'queue': 'mdn_search'
+    },
+    'kuma.search.tasks.finalize_index': {
+        'queue': 'mdn_search'
+    },
+    'kuma.wiki.tasks.index_documents': {
+        'queue': 'mdn_search'
+    },
+    'kuma.wiki.tasks.unindex_documents': {
+        'queue': 'mdn_search'
+    },
+    'kuma.users.tasks.send_welcome_email': {
+        'queue': 'mdn_emails'
+    },
+    'kuma.users.tasks.email_render_document_progress': {
+        'queue': 'mdn_emails'
+    },
+    'kuma.wiki.tasks.send_first_edit_email': {
+        'queue': 'mdn_emails'
+    },
+    'tidings.events._fire_task': {
+        'queue': 'mdn_emails'
+    },
+    'tidings.events.claim_watches': {
+        'queue': 'mdn_emails'
+    },
+    'kuma.wiki.tasks.move_page': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.acquire_render_lock': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.release_render_lock': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.render_document': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.render_document_chunk': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.render_stale_documents': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.build_json_data_for_document': {
+        'queue': 'mdn_wiki'
+    },
+}
 
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'
@@ -883,8 +1159,8 @@ WIKI_FLAG_REASONS = (
 FLAG_REASONS = DEMO_FLAG_REASONS + WIKI_FLAG_REASONS
 
 # bit.ly
-BITLY_API_KEY = "SET ME IN SETTINGS_LOCAL"
-BITLY_USERNAME = "SET ME IN SETTINGS_LOCAL"
+BITLY_API_KEY = None  # Set me in settings_local.py.
+BITLY_USERNAME = None  # Set me in settings_local.py.
 
 GOOGLE_MAPS_API_KEY = "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ"
 
@@ -892,17 +1168,7 @@ GOOGLE_MAPS_API_KEY = "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKc
 # Filesystem path where files uploaded for demos will be written
 DEMO_UPLOADS_ROOT = path('media/uploads/demos')
 # Base URL from where files uploaded for demos will be linked and served
-DEMO_UPLOADS_URL = '/media/uploads/demos/'
-
-# Make sure South stays out of the way during testing
-SOUTH_TESTS_MIGRATE = False
-SKIP_SOUTH_TESTS = True
-
-# Provide migrations for third-party vendor apps
-# TODO: Move migrations for our apps here, rather than living with the app?
-SOUTH_MIGRATION_MODULES = {
-    'taggit': 'migrations.south.taggit',
-}
+DEMO_UPLOADS_URL = MEDIA_URL + 'uploads/demos/'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 # must be an entry in the CACHES setting!
@@ -910,34 +1176,28 @@ CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
-
-    DEMO_BLACKLIST_OVERRIDE_EXTENSIONS = (
+    DEMO_BLACKLIST_OVERRIDE_EXTENSIONS=(
         'jsgz datagz memgz',
         'File extensions that override the mimetype blacklist in case of '
         'an ambigous mimetype such as application/gzip',
     ),
-
-    DEMO_MAX_ZIP_FILESIZE = (
+    DEMO_MAX_ZIP_FILESIZE=(
         60 * 1024 * 1024,
         "Max file size for zips uploaded to demo studio."
     ),
-
-    DEMO_MAX_FILESIZE_IN_ZIP = (
+    DEMO_MAX_FILESIZE_IN_ZIP=(
         60 * 1024 * 1024,
         "Max file size for files inside zip uploaded to demo studio."
     ),
-
-    DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = (
+    DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG=(
         "challenge:2011:september",
         "Dev derby current challenge"
     ),
-
-    DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG = (
+    DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG=(
         "system:challenge:firstplace:2011:august",
         "Tag used to find most recent winner for dev derby"
     ),
-
-    DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS = (
+    DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS=(
         ' '.join([
             "challenge:2011:september",
             "challenge:2011:october",
@@ -945,8 +1205,7 @@ CONSTANCE_CONFIG = dict(
         ]),
         "Dev derby choices displayed on submission form (space-separated tags)"
     ),
-
-    DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = (
+    DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS=(
         ' '.join([
             "challenge:2013:june",
             "challenge:2013:may",
@@ -976,126 +1235,113 @@ CONSTANCE_CONFIG = dict(
         ]),
         "Dev derby tags for previous challenges (space-separated tags)"
     ),
-
-    DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO = (
+    DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO=(
         0,
         'The ID of the demo which should be featured on the new homepage structure'
     ),
-
-    BASKET_RETRIES = (
+    BASKET_RETRIES=(
         5,
         'Number of time to retry basket post before giving up.'
     ),
-    BASKET_RETRY_WAIT = (
+    BASKET_RETRY_WAIT=(
         .5,
         'How long to wait between basket api request retries. '
         'We typically multiply this value by the retry number so, e.g., '
         'the 4th retry waits 4*.5 = 2 seconds.'
     ),
-    BASKET_API_KEY = (
+    BASKET_API_KEY=(
         '',
         'API Key to use for basket requests'
     ),
-
-    BETA_GROUP_NAME = (
+    BETA_GROUP_NAME=(
         'Beta Testers',
         'Name of the django.contrib.auth.models.Group to use as beta testers'
     ),
-
-    KUMA_DOCUMENT_RENDER_TIMEOUT = (
+    KUMA_DOCUMENT_RENDER_TIMEOUT=(
         180.0,
         'Maximum seconds to wait before considering a rendering in progress or '
         'scheduled as failed and allowing another attempt.'
     ),
-    KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = (
+    KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT=(
         10.0,
         'Maximum seconds to allow a document to spend rendering during the '
         'response cycle before flagging it to be sent to the deferred rendering '
         'queue for future renders.'
     ),
-
-    KUMASCRIPT_TIMEOUT = (
+    KUMASCRIPT_TIMEOUT=(
         0.0,
         'Maximum seconds to wait for a response from the kumascript service. '
         'On timeout, the document gets served up as-is and without macro '
         'evaluation as an attempt at graceful failure. NOTE: a value of 0 '
         'disables kumascript altogether.'
     ),
-    KUMASCRIPT_MAX_AGE = (
+    KUMASCRIPT_MAX_AGE=(
         600,
         'Maximum acceptable age (in seconds) of a cached response from '
         'kumascript. Passed along in a Cache-Control: max-age={value} header, '
         'which tells kumascript whether or not to serve up a cached response.'
     ),
-
-    KUMA_CUSTOM_CSS_PATH = (
+    KUMA_CUSTOM_CSS_PATH=(
         '/en-US/docs/Template:CustomCSS',
         'Path to a wiki document whose raw content will be loaded as a CSS '
         'stylesheet for the wiki base template. Will also cause the ?raw '
         'parameter for this path to send a Content-Type: text/css header. Empty '
         'value disables the feature altogether.',
     ),
-
-    KUMA_CUSTOM_SAMPLE_CSS_PATH = (
+    KUMA_CUSTOM_SAMPLE_CSS_PATH=(
         '/en-US/docs/Template:CustomSampleCSS',
         'Path to a wiki document whose raw content will be loaded as a CSS '
         'stylesheet for live sample template. Will also cause the ?raw '
         'parameter for this path to send a Content-Type: text/css header. Empty '
         'value disables the feature altogether.',
     ),
-
-    DIFF_CONTEXT_LINES = (
+    DIFF_CONTEXT_LINES=(
         0,
         'Number of lines of context to show in diff display.',
     ),
-
-    FEED_DIFF_CONTEXT_LINES = (
+    FEED_DIFF_CONTEXT_LINES=(
         3,
         'Number of lines of context to show in feed diff display.',
     ),
-
-    WIKI_ATTACHMENT_ALLOWED_TYPES = (
+    WIKI_ATTACHMENT_ALLOWED_TYPES=(
         'image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop',
         'Allowed file types for wiki file attachments',
     ),
-
-    KUMA_WIKI_IFRAME_ALLOWED_HOSTS = (
-        '^https?\:\/\/(developer-local.allizom.org|developer-dev.allizom.org|developer.allizom.org|mozillademos.org|testserver|localhost\:8000|(www.)?youtube.com\/embed\/(\.*))',
+    KUMA_WIKI_HREF_BLOCKED_PROTOCOLS=(
+        '(?i)^(data\:?)',
+        'Regex for protocols that are blocked for A HREFs'
+    ),
+    KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
+        '^https?\:\/\/(developer-local.allizom.org|developer.allizom.org|mozillademos.org|testserver|localhost\:8000|(www.)?youtube.com\/embed\/(\.*))',
         'Regex comprised of domain names that are allowed for IFRAME SRCs'
     ),
-
-    GOOGLE_ANALYTICS_ACCOUNT = (
+    GOOGLE_ANALYTICS_ACCOUNT=(
         '0',
         'Google Analytics Tracking Account Number (0 to disable)',
     ),
-
-    OPTIMIZELY_PROJECT_ID = (
+    OPTIMIZELY_PROJECT_ID=(
         '',
         'The ID value for optimizely Project Code script'
     ),
-
-    BLEACH_ALLOWED_TAGS = (
+    BLEACH_ALLOWED_TAGS=(
         json.dumps([
             'a', 'p', 'div',
         ]),
         "JSON array of tags allowed through Bleach",
     ),
-
-    BLEACH_ALLOWED_ATTRIBUTES = (
+    BLEACH_ALLOWED_ATTRIBUTES=(
         json.dumps({
             '*': ['id', 'class', 'style', 'lang'],
         }),
         "JSON object associating tags with lists of allowed attributes",
     ),
-
-    BLEACH_ALLOWED_STYLES = (
+    BLEACH_ALLOWED_STYLES=(
         json.dumps([
             'font-size', 'text-align',
         ]),
         "JSON array listing CSS styles allowed on tags",
     ),
-
-    WIKI_DOCUMENT_TAG_SUGGESTIONS = (
+    WIKI_DOCUMENT_TAG_SUGGESTIONS=(
         json.dumps([
             "Accessibility", "AJAX", "API", "Apps",
             "Canvas", "CSS", "Device", "DOM", "Events",
@@ -1110,8 +1356,7 @@ CONSTANCE_CONFIG = dict(
         ]),
         "JSON array listing tag suggestions for documents"
     ),
-
-    SEARCH_FILTER_TAG_OPTIONS = (
+    SEARCH_FILTER_TAG_OPTIONS=(
         json.dumps([
             "Accessibility", "AJAX", "API", "Apps",
             "Canvas", "CSS", "Device", "DOM", "Events",
@@ -1126,22 +1371,22 @@ CONSTANCE_CONFIG = dict(
         ]),
         "JSON array of tags that are enabled for search faceting"
     ),
-
-    SESSION_CLEANUP_CHUNK_SIZE = (
+    SESSION_CLEANUP_CHUNK_SIZE=(
         1000,
         'Number of expired sessions to cleanup up in one go.',
     ),
-
-    WELCOME_EMAIL_FROM = (
+    WELCOME_EMAIL_FROM=(
         "Janet Swisher <no-reply@mozilla.org>",
         'Email address from which welcome emails will be sent',
     ),
-
-    EMAIL_LIST_FOR_FIRST_EDITS = (
+    EMAIL_LIST_FOR_FIRST_EDITS=(
         "mdn-spam-watch@mozilla.com",
         "Email address to which emails will be sent for users' first edits",
     ),
-
+    AKISMET_KEY=(
+        '',
+        'API key for Akismet spam checks, leave empty to disable'
+    )
 )
 
 BASKET_URL = 'https://basket.mozilla.com'
@@ -1219,29 +1464,17 @@ LOGGING = {
 CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 
-TEAMWORK_BASE_POLICIES = {
-    'anonymous': (
-        'wiki.view_document',),
-    'authenticated': (
-        'wiki.view_document', 'wiki.add_document', 'wiki.add_revision'),
-}
-
-GRAPPELLI_ADMIN_TITLE = 'Mozilla Developer Network - Admin'
-GRAPPELLI_INDEX_DASHBOARD = 'admin_dashboard.CustomIndexDashboard'
-
 DBGETTEXT_PATH = 'kuma/core/'
 DBGETTEXT_ROOT = 'translations'
 
 
 def get_user_url(user):
     from kuma.core.urlresolvers import reverse
-    return reverse('users.profile', args=[user.username])
+    return reverse('users.user_detail', args=[user.username])
 
 ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': get_user_url
+    'users.user': get_user_url
 }
-
-OBI_BASE_URL = 'https://backpack.openbadges.org/'
 
 # Honor the X-Forwarded-Proto header for environments like local dev VM that
 # uses Apache mod_proxy instead of mod_wsgi
@@ -1273,7 +1506,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUDIENCE': 'https://developer.mozilla.org',
         'REQUEST_PARAMETERS': {
             'siteName': 'Mozilla Developer Network',
-            'siteLogo': '/media/img/opengraph-logo.png',
+            'siteLogo': STATIC_URL + 'img/opengraph-logo.png',
         }
     }
 }
@@ -1281,6 +1514,19 @@ PERSONA_VERIFIER_URL = 'https://verifier.login.persona.org/verify'
 PERSONA_INCLUDE_URL = 'https://login.persona.org/include.js'
 
 HONEYPOT_FIELD_NAME = 'website'
+
+BLOCKABLE_USER_AGENTS = [
+    "Yahoo! Slurp",
+    "Googlebot",
+    "bingbot",
+    "Applebot",
+    "YandexBot",
+    "Baiduspider",
+    "CCBot",
+    "ScoutJet",
+    "wget",
+    "curl",
+]
 
 # TODO: Once using DRF more we need to make that exception handler more generic
 REST_FRAMEWORK = {

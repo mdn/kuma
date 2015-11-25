@@ -1,8 +1,9 @@
 from datetime import datetime
 import time
 
-from django.contrib.auth.models import User, Group, Permission
-from django.template.defaultfilters import slugify
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group, Permission
+from django.utils.text import slugify
 
 from html5lib.filters._base import Filter as html5lib_Filter
 from nose.tools import nottest
@@ -31,11 +32,11 @@ def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
     defaults = {'category': Document.CATEGORIES[0][0],
-                'title': str(datetime.now()),
+                'title': unicode(datetime.now()),
                 'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
-        defaults['slug'] = slugify(defaults['title'])
+        defaults['slug'] = slugify(unicode(defaults['title']))
     d = Document(**defaults)
     if save:
         d.save()
@@ -51,24 +52,28 @@ def revision(save=False, **kwargs):
     Requires a users fixture if no creator is provided.
 
     """
-    d = None
+    doc = None
     if 'document' not in kwargs:
-        d = document()
-        d.save()
+        doc = document(save=True)
     else:
-        d = kwargs['document']
+        doc = kwargs['document']
 
-    defaults = {'summary': 'Some summary', 'content': 'Some content',
-                'comment': 'Some comment',
-                'creator': kwargs.get('creator', get_user()), 'document': d,
-                'tags': '"some", "tags"', 'toc_depth': 1}
+    defaults = {
+        'summary': 'Some summary',
+        'content': 'Some content',
+        'comment': 'Some comment',
+        'creator': kwargs.get('creator', get_user()),
+        'document': doc,
+        'tags': '"some", "tags"',
+        'toc_depth': 1,
+    }
 
     defaults.update(kwargs)
 
-    r = Revision(**defaults)
+    rev = Revision(**defaults)
     if save:
-        r.save()
-    return r
+        rev.save()
+    return rev
 
 
 def translated_revision(locale='de', **kwargs):
@@ -119,7 +124,6 @@ def new_document_data(tags=None):
         'title': 'A Test Article',
         'locale': 'en-US',
         'slug': 'a-test-article',
-        'full_path': 'en-US/a-test-article',
         'tags': ', '.join(tags or []),
         'firefox_versions': [1, 2],
         'operating_systems': [1, 3],
@@ -145,7 +149,7 @@ def normalize_html(input):
     return (kuma.wiki.content
             .parse(unicode(input))
             .filter(WhitespaceRemovalFilter)
-            .serialize())
+            .serialize(alphabetical_attributes=True))
 
 
 @nottest
@@ -159,15 +163,17 @@ def create_template_test_users():
     groups = {}
     for x in ('add', 'change', 'all'):
         group, created = Group.objects.get_or_create(
-                             name='templaters_%s' % x)
+            name='templaters_%s' % x)
         if created:
             group.permissions = perms[x]
             group.save()
         groups[x] = [group]
 
     users = {}
+    User = get_user_model()
     for x in ('none', 'add', 'change', 'all'):
-        user, created = User.objects.get_or_create(username='user_%s' % x,
+        user, created = User.objects.get_or_create(
+            username='user_%s' % x,
             defaults=dict(email='user_%s@example.com',
                           is_active=True, is_staff=False, is_superuser=False))
         if created:
@@ -197,10 +203,18 @@ def create_topical_parents_docs():
     return d1, d2
 
 
-class FakeResponse:
-    """Quick and dirty mocking stand-in for a response object"""
-    def __init__(self, **entries):
-        self.__dict__.update(entries)
+def create_document_tree():
+    root_doc = document(title="Root", slug="Root", save=True)
+    revision(document=root_doc, title="Root", slug="Root", save=True)
+    child_doc = document(title="Child", slug="Child", save=True)
+    child_doc.parent_topic = root_doc
+    child_doc.save()
+    revision(document=child_doc, title="Child", slug="Child", save=True)
+    grandchild_doc = document(title="Grandchild", slug="Grandchild",
+                              save=True)
+    grandchild_doc.parent_topic = child_doc
+    grandchild_doc.save()
+    revision(document=grandchild_doc, title="Grandchild",
+             slug="Grandchild", save=True)
 
-    def read(self):
-        return self.text
+    return root_doc, child_doc, grandchild_doc

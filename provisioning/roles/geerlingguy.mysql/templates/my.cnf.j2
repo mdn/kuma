@@ -1,0 +1,97 @@
+[client]
+#password = your_password
+port = {{ mysql_port }}
+socket = {{ mysql_socket }}
+
+[mysqld]
+port = {{ mysql_port }}
+bind-address = {{ mysql_bind_address }}
+datadir = {{ mysql_datadir }}
+socket = {{ mysql_socket }}
+
+# Logging configuration.
+{% if mysql_log_error == 'syslog' or mysql_log == 'syslog' %}
+syslog
+syslog-tag = {{ mysql_syslog_tag }}
+{% else %}
+{% if mysql_log %}
+log = {{ mysql_log }}
+{% endif %}
+log-error = {{ mysql_log_error }}
+{% endif %}
+
+{% if mysql_slow_query_log_enabled %}
+# Slow query log configuration.
+log_slow_queries = 1
+slow_query_log = 1
+slow_query_log_file = {{ mysql_slow_query_log_file }}
+long_query_time = {{ mysql_slow_query_time }}
+{% endif %}
+
+{% if mysql_replication_master %}
+# Replication
+server-id = {{ mysql_server_id }}
+
+{% if mysql_replication_role == 'master' %}
+log_bin = mysql-bin
+log-bin-index = mysql-bin.index
+expire_logs_days = {{ mysql_expire_logs_days }}
+max_binlog_size = {{ mysql_max_binlog_size }}
+
+{% for db in mysql_databases %}
+{% if db.replicate|default(1) %}
+binlog_do_db = {{ db.name }}
+{% else %}
+binlog_ignore_db = {{ db.name }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if mysql_replication_role == 'slave' %}
+read_only
+relay-log = relay-bin
+relay-log-index = relay-bin.index
+{% endif %}
+{% endif %}
+
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links = 0
+
+# User is ignored when systemd is used (fedora >= 15).
+user = mysql
+
+# http://dev.mysql.com/doc/refman/5.5/en/performance-schema.html
+;performance_schema
+
+# Memory settings.
+key_buffer_size = {{ mysql_key_buffer_size }}
+max_allowed_packet = {{ mysql_max_allowed_packet }}
+table_open_cache = {{ mysql_table_open_cache }}
+sort_buffer_size = {{ mysql_sort_buffer_size }}
+read_buffer_size = {{ mysql_read_buffer_size }}
+read_rnd_buffer_size = {{ mysql_read_rnd_buffer_size }}
+myisam_sort_buffer_size = {{ mysql_myisam_sort_buffer_size }}
+thread_cache_size = {{ mysql_thread_cache_size }}
+query_cache_size = {{ mysql_query_cache_size }}
+
+# Other settings.
+wait_timeout = {{ mysql_wait_timeout }}
+
+# Try number of CPU's * 2 for thread_concurrency.
+thread_concurrency = {{ mysql_thread_concurrency }}
+
+# InnoDB settings.
+innodb_file_per_table = {{ mysql_innodb_file_per_table }}
+innodb_buffer_pool_size = {{ mysql_innodb_buffer_pool_size }}
+innodb_additional_mem_pool_size = {{ mysql_innodb_additional_mem_pool_size }}
+innodb_log_file_size = {{ mysql_innodb_log_file_size }}
+innodb_log_buffer_size = {{ mysql_innodb_log_buffer_size }}
+innodb_flush_log_at_trx_commit = {{ mysql_innodb_flush_log_at_trx_commit }}
+innodb_lock_wait_timeout = {{ mysql_innodb_lock_wait_timeout }}
+
+[mysqldump]
+quick
+max_allowed_packet = {{ mysql_mysqldump_max_allowed_packet }}
+
+[mysqld_safe]
+pid-file = /var/run/mysqld/mysqld.pid

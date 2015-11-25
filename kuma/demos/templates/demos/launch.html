@@ -3,7 +3,7 @@
 {% set full_url = request.build_absolute_uri(submission.get_absolute_url()) %}
 {% set short_url = full_url | bitly_shorten %}
 <head>
-  <title>{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=submission.title)) }}</title>
+  <title>{{ page_title(_('%(subtitle)s | Demo Studio', subtitle=submission.title)) }}</title>
 
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -17,25 +17,23 @@
 
   <meta name="description" content="{{ submission.summary }}" />
 
-  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
-  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demos_wrap.css">
-  {{ css('jquery-ui') }}
-  <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
+  {% stylesheet 'demowrap' %}
+  {% stylesheet 'jquery-ui' %}
 
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
+  {% javascript 'html5shiv' %}
   <![endif]-->
 
 </head>
 <body>
   <header id="demobar">
-  <h4 id="logo"><a href="{{ url('demos') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-micro.png" alt="{{_('Mozilla Developer Network')}}" width="54" height="16"></a></h4>
+  <h4 id="logo"><a href="{{ url('demos') }}"><img src="{{ static('img/mdn-logo-micro.png') }}" alt="{{_('Mozilla Developer Network')}}" width="54" height="16"></a></h4>
 
     <div class="title">
       <h1 class="demo-title"><a href="{{ submission.get_absolute_url() }}">{{ submission.title }}</a></h1>
-      <p class="byline vcard">{% trans profile_link=profile_link(submission.creator) %}by {{ profile_link }}{% endtrans %}</p>
+      <p class="byline vcard">{% trans profile_link=user_link(submission.creator) %}by {{ profile_link }}{% endtrans %}</p>
     </div>
 
     <ul class="tools">
@@ -79,19 +77,20 @@
         <li><a href="{{ submission.get_absolute_url() }}">{{ _('Back') }}</a></li>
         {% set prev = submission.previous() %}
         {% if prev %}
-            <li class="prev"><a href="{{ prev.get_absolute_url() }}/launch" title="{{_('Go to the previous demo, {demo_title}') | f(demo_title=prev.title)}}">{{_('Previous')}}</a></li>
+            <li class="prev"><a href="{{ prev.get_absolute_url() }}/launch" title="{{_('Go to the previous demo, %(demo_title)s', demo_title=prev.title)}}">{{_('Previous')}}</a></li>
         {% endif %}
         {% set next = submission.next() %}
         {% if next %}
-            <li class="next"><a href="{{ next.get_absolute_url() }}/launch" title="{{_('Go to the next demo, {demo_title}') | f(demo_title=next.title)}}">{{_('Next')}}</a></li>
+            <li class="next"><a href="{{ next.get_absolute_url() }}/launch" title="{{_('Go to the next demo, %(demo_title)s', demo_title=next.title)}}">{{_('Next')}}</a></li>
         {% endif %}
             <li><a href="{{ submission.demo_package.url.replace('.zip', '/index.html') }}" title="{{_('Remove this toolbar')}}"><span class="remove-long-label">{{_('Remove toolbar')}}</span><span class="remove-short-label">X</span></a></li>
       </ul>
     </nav>
 
+    <script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
 
-    {{ js('main') }}
-    {{ js('popup') }}
+    {% javascript 'main' %}
+    {% javascript 'popup' %}
 
     <script type="text/javascript">
 
@@ -186,8 +185,8 @@
   </script>
 
   <!-- provide "report" functionality -->
-  <script type="text/javascript" src="{{MEDIA_URL}}js/libs/jquery.hoverIntent.minified.js"></script>
-  <script type="text/javascript" src="{{MEDIA_URL}}js/modal-control.js"></script>
+  {% javascript 'hoverIntent' %}
+  {% javascript 'modal-control' %}
 
 </body>
 </html>

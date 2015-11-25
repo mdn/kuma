@@ -1,10 +1,10 @@
 from celery.task import task
 
-from django.db import connection, transaction
+from django.db import connection
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 
-import constance.config
+from constance import config
 
 from .cache import memcache
 from .models import IPBan
@@ -26,7 +26,7 @@ def clean_sessions():
     """
     now = timezone.now()
     logger = clean_sessions.get_logger()
-    chunk_size = constance.config.SESSION_CLEANUP_CHUNK_SIZE
+    chunk_size = config.SESSION_CLEANUP_CHUNK_SIZE
 
     if memcache.add(LOCK_ID, now.strftime('%c'), LOCK_EXPIRE):
         total_count = get_expired_sessions(now).count()
@@ -42,7 +42,6 @@ def clean_sessions():
                 ORDER BY expire_date ASC
                 LIMIT %s;
                 """, [chunk_size])
-            transaction.commit_unless_managed()
         finally:
             logger.info('Deleted %s expired sessions' % delete_count)
             memcache.delete(LOCK_ID)

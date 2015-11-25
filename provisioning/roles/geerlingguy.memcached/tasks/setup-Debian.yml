@@ -1,0 +1,6 @@
+---
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=86400
+
+- name: Install Memcached.
+  apt: name=memcached state=installed

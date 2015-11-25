@@ -7,17 +7,17 @@ define(['./_base', './_cli', 'intern'], function(config, cli, intern) {
     // OnDemand. Options that will be permutated are browserName, version, platform, and platformVersion; any other
     // capabilities options specified for an environment will be copied as-is
     config.environments = [
-        { browserName: 'internet explorer', version: '11', platform: 'Windows 8.1' },
-        { browserName: 'internet explorer', version: '10', platform: 'Windows 8' },
-        { browserName: 'internet explorer', version: '9', platform: 'Windows 7' },
-        { browserName: 'firefox', version: '28', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
-        { browserName: 'chrome', version: '34', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
-        { browserName: 'safari', version: '6', platform: 'OS X 10.8' },
-        { browserName: 'safari', version: '7', platform: 'OS X 10.9' }
+        { browserName: 'internet explorer', version: '11', platform: ['Windows 7', 'Windows 8.1', 'Windows 10'] },
+        { browserName: 'firefox', version: ['40', '39', '38'], platform: [ 'OS X 10.9', 'OS X 10.10', 'Windows 7', 'Windows 8.1', 'Windows 10', 'Linux' ] },
+        { browserName: 'chrome', version: ['44', '45'], platform: [ 'OS X 10.9', 'OS X 10.10', 'Windows 7', 'Windows 8.1', 'Windows 10', 'Linux' ] },
+        { browserName: 'safari', version: ['9', '8'], platform: ['OS X 10.9', 'OS X 10.10'] }
     ];
 
     // Name of the tunnel class to use for WebDriver tests
     config.tunnel = 'SauceLabsTunnel';
+
+    // Format for outputting test results
+    config.reporters = ['Pretty'];
 
     return cli.mixinArgs(intern.args, config);
 });

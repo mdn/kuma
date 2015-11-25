@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block bodyclass %}profile-api-page{% endblock %}
+{% block bodyclass %}user-api-page{% endblock %}
 
 {% block site_css %}
     {{ super() }}
-    {{ css('profile') }}
-    {{ css('submission') }}
+    {% stylesheet 'users' %}
+    {% stylesheet 'submission' %}
 {% endblock %}
 
 {% block content %}

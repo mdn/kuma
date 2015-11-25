@@ -71,7 +71,7 @@ class FilterTests(ElasticTestCase):
 
         view = LanguageView.as_view()
         request = self.get_request('/fr/search?q=article')
-        eq_(request.locale, 'fr')
+        eq_(request.LANGUAGE_CODE, 'fr')
         response = view(request)
 
         eq_(response.data['count'], 7)
@@ -79,7 +79,7 @@ class FilterTests(ElasticTestCase):
         eq_(response.data['documents'][0]['locale'], 'fr')
 
         request = self.get_request('/en-US/search?q=article')
-        eq_(request.locale, 'en-US')
+        eq_(request.LANGUAGE_CODE, 'en-US')
         response = view(request)
         eq_(response.data['count'], 6)
         eq_(len(response.data['documents']), 6)
@@ -92,7 +92,7 @@ class FilterTests(ElasticTestCase):
 
         view = LanguageView.as_view()
         request = self.get_request('/en-US/search?q=pipe&locale=*')
-        eq_(request.locale, 'en-US')
+        eq_(request.LANGUAGE_CODE, 'en-US')
         response = view(request)
 
         eq_(response.data['count'], 1)
@@ -100,7 +100,7 @@ class FilterTests(ElasticTestCase):
         eq_(response.data['documents'][0]['locale'], 'fr')
 
         request = self.get_request('/en-US/search?q=pipe')
-        eq_(request.locale, 'en-US')
+        eq_(request.LANGUAGE_CODE, 'en-US')
         response = view(request)
         eq_(response.data['count'], 0)
         eq_(len(response.data['documents']), 0)

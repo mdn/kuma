@@ -1,0 +1,99 @@
+.share {
+    display: none; /* hide by default, needs to be shown by optimizely */
+    set-smaller-font-size();
+    bidi-value(text-align, right, left);
+    position: relative;
+    top: $grid-spacing;
+
+    strong {
+        bidi-style(margin-right, $content-horizontal-spacing, margin-left, 0);
+    }
+
+    ul,
+    li {
+        display: inline-block;
+        margin: 0;
+        bidi-value(padding, 0, 0); /* to over-ride default bidi-value) */
+    }
+
+    &.show {
+        display: block;
+    }
+
+
+    /*
+    Inside TOC
+    - can be removed if we decide not to put share links here
+    -------------------------------------------------------------- */
+    .toc & {
+        background-color: #fff;
+        margin: 0 -15px -5px;
+        padding: 5px 0 15px 0;
+        top: 15px;
+
+        @media $media-query-tablet {
+            background-color: transparent;
+            top: 0;
+        }
+
+        /* hide title if there isn't enough space for it in TOC */
+        /* duplicate rule because STYLUS *shakes fist* */
+        @media $media-query-between-small-desktop-and-max-width {
+            & strong {
+                offscreen();
+            }
+        }
+        @media $media-query-small-mobile {
+            & strong {
+                offscreen();
+            }
+        }
+    }
+
+    .toggle-container + &.show {
+        display: block;
+    }
+
+    .toggle-container[aria-expanded="true"] + &.show {
+        display: block;
+    }
+
+    .toggle-container[aria-expanded="false"] + &.show {
+        display: none;
+    }
+
+
+    /*
+    Inside doument-head
+    - can be removed if we decide not to put share links here
+    -------------------------------------------------------------- */
+
+    .document-head & {
+        top: -($grid-spacing / 2);
+        margin-bottom: $grid-spacing;
+        bidi-value(text-align, left, right);
+
+        strong {$selector-icon} {
+            display: none;
+        }
+    }
+}
+
+/* can be removed if we decide not to use .share-thin style */
+.share-thin strong {
+    offscreen();
+}
+
+/* can be removed if we decide not to use .share-thin style or not put them in .toc */
+.toc .share-thin ul {
+    bidi-style(margin-right, 15px, margin-left, 0);
+}
+
+/* can be removed if we decide not to use .share-group style */
+.share-group {
+    font-size: 0;
+
+    strong {
+        display: none;
+    }
+}

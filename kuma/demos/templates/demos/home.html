@@ -59,7 +59,7 @@
               <a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a>
           </h2>
           <p class="byline vcard">
-            {{ profile_link(submission.creator, show_gravatar=True) }}
+            {{ user_link(submission.creator, show_gravatar=True) }}
           </p>
           <p class="desc">
             <span class="descText">{{ submission.summary }}</span>
@@ -133,7 +133,7 @@
 
     <div class="demo-landing-gallery">
     {{ submission_listing(request, submission_list,  is_paginated, paginator, page_obj,
-        _('Subscribe to a feed of {tag_title} demos') | f(tag_title=_('recent')),
+        _('Subscribe to a feed of %(tag_title)s demos', tag_title=_('recent')),
         url('demos_feed_recent', format='rss'), cols_per_row=4,
         pagination_base_url=url('demos_all') ) }}
     </div>
@@ -314,15 +314,13 @@
 
 
         // Preload images for sake of smoothness
-        if(window.waffle && waffle.flag_is_active('demos_10th_preload')) {
-            $.each(demos, function() {
-                $('<img>').attr({
-                    'src': this.screenshot,
-                    'aria-hidden': 'true',
-                    'class': 'offscreen'
-                }).appendTo(document.body);
-            });
-        }
+        $.each(demos, function() {
+            $('<img>').attr({
+                'src': this.screenshot,
+                'aria-hidden': 'true',
+                'class': 'offscreen'
+            }).appendTo(document.body);
+        });
 
     });
 

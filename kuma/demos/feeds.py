@@ -2,7 +2,7 @@ import datetime
 import json
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
 from django.utils.feedgenerator import (Atom1Feed, SyndicationFeed,
@@ -13,6 +13,7 @@ import jingo
 
 from kuma.core.validators import valid_jsonp_callback_value
 from kuma.core.urlresolvers import reverse
+from kuma.users.helpers import gravatar_url
 
 from . import TAG_DESCRIPTIONS
 from .models import Submission
@@ -43,20 +44,21 @@ class SubmissionJSONFeedGenerator(SyndicationFeed):
         for item in self.items:
 
             # Include some of the simple elements from the preprocessed feed item
-            item_out = dict( (x, item[x]) for x in (
+            item_out = dict((x, item[x]) for x in (
                 'link', 'title', 'pubdate', 'author_name', 'author_link',
             ))
 
-            item_out['author_avatar'] = item['obj'].creator.get_profile().gravatar
+            if item['obj'].creator.email:
+                item_out['author_avatar'] = gravatar_url(item['obj'].creator.email)
 
             # Linkify the tags used in the feed item
             item_out['categories'] = dict(
-                (x, request.build_absolute_uri(reverse('demos_tag', kwargs={'tag':x})))
+                (x, request.build_absolute_uri(reverse('demos_tag', kwargs={'tag': x})))
                 for x in item['categories']
             )
 
             # Include a few more, raw from the submission object itself.
-            item_out.update( (x, unicode(getattr(item['obj'], x))) for x in (
+            item_out.update((x, unicode(getattr(item['obj'], x))) for x in (
                 'summary', 'description',
             ))
 
@@ -70,32 +72,34 @@ class SubmissionJSONFeedGenerator(SyndicationFeed):
             item_out['thumbnail'] = request.build_absolute_uri(
                 item['obj'].thumbnail_url(1))
 
-            #TODO: What else might be useful in a JSON feed of demo submissions?
+            # TODO: What else might be useful in a JSON feed of demo submissions?
             # Comment, like, view counts may change too much for caching to be useful
 
             items_out.append(item_out)
 
         data = items_out
 
-        if callback: outfile.write('%s(' % callback)
+        if callback:
+            outfile.write('%s(' % callback)
         outfile.write(json.dumps(data, default=self._encode_complex))
-        if callback: outfile.write(')')
+        if callback:
+            outfile.write(')')
 
 
 class SubmissionsFeed(Feed):
-    title     = _('MDN demos')
-    subtitle  = _('Demos submitted by MDN users')
-    link      = '/'
+    title = _('MDN demos')
+    subtitle = _('Demos submitted by MDN users')
+    link = '/'
 
     def __call__(self, request, *args, **kwargs):
         self.request = request
         return super(SubmissionsFeed, self).__call__(request, *args, **kwargs)
 
     def feed_extra_kwargs(self, obj):
-        return { 'request': self.request, }
+        return {'request': self.request}
 
     def item_extra_kwargs(self, obj):
-        return { 'obj': obj, }
+        return {'obj': obj}
 
     def get_object(self, request, format):
         if format == 'json':
@@ -112,7 +116,8 @@ class SubmissionsFeed(Feed):
         return submission.title
 
     def item_description(self, submission):
-        return jingo.render_to_string(self.request,
+        return jingo.render_to_string(
+            self.request,
             'demos/feed_item_description.html', dict(
                 request=self.request, submission=submission
             )
@@ -123,13 +128,13 @@ class SubmissionsFeed(Feed):
 
     def item_author_link(self, submission):
         return self.request.build_absolute_uri(
-            reverse('kuma.demos.views.profile_detail',
-            args=(submission.creator.username,)))
+            reverse('demos_profile_detail',
+                    args=(submission.creator.username,)))
 
     def item_link(self, submission):
         return self.request.build_absolute_uri(
             reverse('kuma.demos.views.detail',
-            args=(submission.slug,)))
+                    args=(submission.slug,)))
 
     def item_categories(self, submission):
         return submission.taggit_tags.all()
@@ -149,20 +154,17 @@ class SubmissionsFeed(Feed):
 
 
 class RecentSubmissionsFeed(SubmissionsFeed):
-
-    title    = _('MDN recent demos')
+    title = _('MDN recent demos')
     subtitle = _('Demos recently submitted to MDN')
 
     def items(self):
-        submissions = Submission.objects\
-            .exclude(hidden=True)\
-            .order_by('-modified').all()[:MAX_FEED_ITEMS]
+        submissions = (Submission.objects.exclude(hidden=True)
+                                         .order_by('-modified')[:MAX_FEED_ITEMS])
         return submissions
 
 
 class FeaturedSubmissionsFeed(SubmissionsFeed):
-
-    title    = _('MDN featured demos')
+    title = _('MDN featured demos')
     subtitle = _('Demos featured on MDN')
 
     def items(self):
@@ -178,17 +180,17 @@ class TagSubmissionsFeed(SubmissionsFeed):
     def get_object(self, request, format, tag):
         super(TagSubmissionsFeed, self).get_object(request, format)
         if tag in TAG_DESCRIPTIONS:
-            self.title    = _('MDN demos tagged %s') % TAG_DESCRIPTIONS[tag]['title']
+            self.title = _('MDN demos tagged %s') % TAG_DESCRIPTIONS[tag]['title']
             self.subtitle = TAG_DESCRIPTIONS[tag]['description']
         else:
-            self.title    = _('MDN demos tagged "%s"') % tag
+            self.title = _('MDN demos tagged "%s"') % tag
             self.subtitle = None
         return tag
 
     def items(self, tag):
-        submissions = ( Submission.objects.filter(taggit_tags__name__in=[tag])
-            .exclude(hidden=True)
-            .order_by('-modified').all()[:MAX_FEED_ITEMS] )
+        submissions = (Submission.objects.filter(taggit_tags__name__in=[tag])
+                                         .exclude(hidden=True)
+                                         .order_by('-modified')[:MAX_FEED_ITEMS])
         return submissions
 
 
@@ -196,15 +198,14 @@ class ProfileSubmissionsFeed(SubmissionsFeed):
 
     def get_object(self, request, format, username):
         super(ProfileSubmissionsFeed, self).get_object(request, format)
-        user = get_object_or_404(User, username=username)
+        user = get_object_or_404(get_user_model(), username=username)
         self.title = _("%s's MDN demos") % user.username
         return user
 
     def items(self, user):
-        submissions = Submission.objects.filter(creator=user)\
-            .exclude(hidden=True)\
-            .order_by('-modified').all()[:MAX_FEED_ITEMS]
-        return submissions
+        return (Submission.objects.filter(creator=user)
+                                  .exclude(hidden=True)
+                                  .order_by('-modified')[:MAX_FEED_ITEMS])
 
 
 class SearchSubmissionsFeed(SubmissionsFeed):

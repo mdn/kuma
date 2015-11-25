@@ -1,0 +1,112 @@
+/*
+Custom icon font for compat tables
+====================================================================== */
+@require 'base/fonts/compat-icons';
+
+[class^='ic-'], [class*=' ic-'] {
+    font-family: 'compat-icons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering - - - - -  */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ic-altname:before {
+    content: '\e601';
+}
+
+.ic-footnote:before {
+    content: '\e602';
+}
+
+.ic-prefix:before {
+    content: '\e603';
+}
+
+.ic-obsolete:before {
+    content: '\f014';
+}
+
+.ic-disabled:before {
+    content: '\f024';
+}
+
+.ic-non-standard:before {
+    content: '\f071';
+}
+
+.ic-experimental:before {
+    content: '\f0c3';
+}
+
+.ic-history:before {
+    content: '\f0dd';
+}
+
+.ic-protected:before {
+    content: '\f132';
+}
+
+/* platform icons
+----------------------------------------------------------------------  */
+
+.ic-desktop:before {
+    content: '\f108';
+}
+
+.ic-mobile:before {
+    content: '\f10a';
+}
+
+.ic-mini:before {
+    content: '\f10b';
+}
+
+.ic-android:before {
+    content: '\f17b';
+}
+
+.ic-firefox_os:before {
+    content: '\e600';
+}
+
+/* vendor icons
+----------------------------------------------------------------------  */
+
+.ic-safari:before {
+    content: '\e94a';
+}
+
+.ic-chrome:before {
+    content: '\eae5';
+}
+
+.ic-firefox:before {
+    content: '\eae6';
+}
+
+.ic-ie:before {
+    content: '\eae7';
+}
+
+.ic-opera:before {
+    content: '\eae8';
+}
+
+.ic-android_browser:before {
+    content: '\e9ca';
+}
+
+.ic-blackberry:before {
+    content: '\e604';
+}
+
+.ic-edge:before {
+    content: '\e605';
+}

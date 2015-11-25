@@ -1,8 +1,8 @@
-# This Python file uses the following encoding: utf-8
-# see also: http://www.python.org/dev/peps/pep-0263/
+# -*- coding: utf-8 -*-
 from urlparse import urljoin
 
 import bleach
+from cssselect.parser import SelectorSyntaxError
 from jinja2 import escape, Markup
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -11,17 +11,15 @@ from pyquery import PyQuery as pq
 from kuma.core.tests import KumaTestCase
 from kuma.users.tests import UserTestCase
 import kuma.wiki.content
-from kuma.wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
-                               SectionTOCFilter, SectionIDFilter,
-                               H2TOCFilter, H3TOCFilter,
-                               SECTION_TAGS, get_seo_description,
-                               get_content_sections, extract_css_classnames,
-                               extract_html_attributes,
-                               extract_kumascript_macro_names)
-from kuma.wiki.constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
-from kuma.wiki.models import Document
-from kuma.wiki.tests import normalize_html, doc_rev, document
-from kuma.wiki.helpers import bugize_text
+from ..constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
+from ..content import (CodeSyntaxFilter, SectionTOCFilter, SectionIDFilter,
+                       H2TOCFilter, H3TOCFilter, SECTION_TAGS,
+                       get_seo_description, get_content_sections,
+                       extract_css_classnames, extract_html_attributes,
+                       extract_kumascript_macro_names)
+from ..helpers import bugize_text
+from ..models import Document
+from . import normalize_html, doc_rev, document
 
 
 class ContentSectionToolTests(UserTestCase):
@@ -98,21 +96,21 @@ class ContentSectionToolTests(UserTestCase):
                       .serialize())
 
         expected = """
-        <h1 class="header1" id="Header_One">Header One</h1>
+        <h1 id="Header_One" class="header1">Header One</h1>
         <h1 id="Header_One_2">Header One</h1>
         <h1 id="Header_One_3">Header One</h1>
         <h1 id="Header_Two">Header Two</h1>
         <h1 id="someId" name="someId">Header Two</h1>
         """
 
-        eq_(result_src, expected)
+        self.assertHTMLEqual(result_src, expected)
 
         # Ensure 1, 2 doesn't turn into 3, 4
         result_src = (kuma.wiki.content
                       .parse(expected)
                       .injectSectionIDs()
                       .serialize())
-        eq_(result_src, expected)
+        self.assertHTMLEqual(result_src, expected)
 
     def test_simple_implicit_section_extract(self):
         doc_src = """
@@ -390,23 +388,21 @@ class ContentSectionToolTests(UserTestCase):
     def test_non_ascii_section_headers(self):
         headers = [
             (u'Documentation à propos de HTML',
-             'Documentation_.C3.A0_propos_de_HTML'),
+             u'Documentation_à_propos_de_HTML'),
             (u'Outils facilitant le développement HTML',
-             'Outils_facilitant_le_d.C3.A9veloppement_HTML'),
-            (u'例:\u00a0スキューと平行移動',
-             '.E4.BE.8B.3A_.E3.82.B9.E3.82.AD.E3.83.A5.E3.83.BC.E3.81.A8.E5.B9.B3.E8.A1.8C.E7.A7.BB.E5.8B.95'),
-            (u'例:\u00a0回転',
-             '.E4.BE.8B.3A_.E5.9B.9E.E8.BB.A2'),
+             u'Outils_facilitant_le_développement_HTML'),
+            (u'字面值(literals)',
+             u'字面值(literals)'),
             (u'Documentação',
-             'Documenta.C3.A7.C3.A3o'),
+             u'Documentação'),
             (u'Lektury uzupełniające',
-             'Lektury_uzupe.C5.82niaj.C4.85ce'),
+             u'Lektury_uzupełniające'),
             (u'Атрибуты',
-             '.D0.90.D1.82.D1.80.D0.B8.D0.B1.D1.83.D1.82.D1.8B'),
+             u'Атрибуты'),
             (u'HTML5 엘리먼트',
-             'HTML5_.EC.97.98.EB.A6.AC.EB.A8.BC.ED.8A.B8'),
+             u'HTML5_엘리먼트'),
             (u'Non safe title "#$%&+,/:;=?@[\\]^`{|}~',
-             u'Non_safe_title_.22.23.24.25.26.2B.2C.2F.3A.3B.3D.3F.40.5B.5C.5D.5E.60.7B.7C.7D.7E'),
+             u'Non_safe_title'),
         ]
 
         section_filter = SectionIDFilter('')
@@ -547,49 +543,6 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(SectionTOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    def test_dekiscript_macro_conversion(self):
-        doc_src = u"""
-            <span>Just a span</span>
-            <span class="notascript">Hi there</span>
-            <li><span class="script">Warning("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong>strongly</strong> discouraged!")</span></li>
-            <li><span class="script">Note("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong class="important">strongly</strong> discouraged!")</span></li>
-            <li><span class="script">MixedCaseName('parameter1', 'parameter2')</span></li>
-            <li><span class="script">template.lowercasename('border')</span></li>
-            <li><span class="script">Template.UpperCaseTemplate("foo")</span></li>
-            <li><span class="script">wiki.template('英語版章題', [ "Reusing tabs" ])</span></li>
-            <li><span class="script">template("non-standard_inline", ["Reusing tabs", "YAY"])</span></li>
-            <li><span class="script">wiki.template('英語版章題')</span></li>
-            <li><span class="script">template("non-standard_inline")</span></li>
-        """
-        expected = u"""
-            <span>Just a span</span>
-            <span class="notascript">Hi there</span>
-            <li>{{ Warning("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong>strongly</strong> discouraged!") }}</li>
-            <li>{{ Note("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong class="important">strongly</strong> discouraged!") }}</li>
-            <li>{{ MixedCaseName('parameter1', 'parameter2') }}</li>
-            <li>{{ lowercasename('border') }}</li>
-            <li>{{ UpperCaseTemplate("foo") }}</li>
-            <li>{{ 英語版章題("Reusing tabs") }}</li>
-            <li>{{ non-standard_inline("Reusing tabs", "YAY") }}</li>
-            <li>{{ 英語版章題() }}</li>
-            <li>{{ non-standard_inline() }}</li>
-        """
-
-        # Check line-by-line, to help work out any issues failure-by-failure
-        doc_src_lines = doc_src.split("\n")
-        expected_lines = expected.split("\n")
-        for i in range(0, len(doc_src_lines)):
-            result = (kuma.wiki.content
-                      .parse(doc_src_lines[i])
-                      .filter(DekiscriptMacroFilter).serialize())
-            eq_(normalize_html(expected_lines[i]), normalize_html(result))
-
-        # But, the whole thing should work in the filter, as well.
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .filter(DekiscriptMacroFilter).serialize())
-        eq_(normalize_html(expected), normalize_html(result))
-
     def test_noinclude(self):
         doc_src = u"""
             <div class="noinclude">{{ XULRefAttr() }}</div>
@@ -619,7 +572,7 @@ class ContentSectionToolTests(UserTestCase):
         try:
             result = kuma.wiki.content.filter_out_noinclude(doc_src)
             eq_('', result)
-        except:
+        except Exception:
             self.fail("There should not have been an exception")
 
     def test_sample_code_extraction(self):
@@ -712,8 +665,10 @@ class ContentSectionToolTests(UserTestCase):
         eq_(None, result['js'])
 
     def test_bug819999(self):
-        """Non-breaking spaces are turned to normal spaces in code sample
-        extraction."""
+        """
+        Non-breaking spaces are turned to normal spaces in code sample
+        extraction.
+        """
         doc_src = """
             <h2 id="bug819999">Bug 819999</h2>
             <pre class="brush: css">
@@ -728,6 +683,17 @@ class ContentSectionToolTests(UserTestCase):
         """
         result = kuma.wiki.content.extract_code_sample('bug819999', doc_src)
         ok_(result['css'].find(u'\xa0') == -1)
+
+    def test_bug1173170(self):
+        """
+        Make sure the colons in sample ids doesn't trip up the code
+        extraction due to their ambiguity with pseudo selectors
+        """
+        doc_src = """<pre id="Bug:1173170">Bug 1173170</pre>"""
+        try:
+            kuma.wiki.content.extract_code_sample('Bug:1173170', doc_src)
+        except SelectorSyntaxError:
+            self.fail("There should be no SelectorSyntaxError")
 
     def test_bugize_text(self):
         bad = 'Fixing bug #12345 again. <img src="http://davidwalsh.name" /> <a href="">javascript></a>'
@@ -827,6 +793,19 @@ class ContentSectionToolTests(UserTestCase):
                       .serialize())
         eq_(normalize_html(expected_src), normalize_html(result_src))
 
+    def test_ahref_protocol_filter_invalid_protocol(self):
+        doc_src = """
+            <p><a id="xss" href="data:text/html;base64,PHNjcmlwdD5hbGVydCgiZG9jdW1lbnQuY29va2llOiIgKyBkb2N1bWVudC5jb29raWUpOzwvc2NyaXB0Pg==">click for xss</a></p>
+            <p><a id="ok" href="/docs/ok/test">OK link</a></p>
+        """
+        result_src = (kuma.wiki.content.parse(doc_src)
+                      .filterAHrefProtocols('^(data\:?)')
+                      .serialize())
+        page = pq(result_src)
+
+        eq_(page.find('#xss').attr('href'), '')
+        eq_(page.find('#ok').attr('href'), '/docs/ok/test')
+
     def test_link_annotation(self):
         d, r = doc_rev("This document exists")
         d.save()
@@ -912,9 +891,10 @@ class ContentSectionToolTests(UserTestCase):
             doc_line = doc_lines[idx]
             expected_line = expected_lines[idx]
             result_line = (kuma.wiki.content.parse(doc_line)
-                          .annotateLinks(base_url=vars['base_url'])
-                          .serialize())
-            eq_(normalize_html(expected_line), normalize_html(result_line))
+                                            .annotateLinks(
+                                                base_url=vars['base_url'])
+                                            .serialize())
+            self.assertHTMLEqual(normalize_html(expected_line), normalize_html(result_line))
 
     @attr('bug821986')
     def test_editor_safety_filter(self):
@@ -1168,18 +1148,20 @@ class GetSEODescriptionTests(KumaTestCase):
 
     def test_html_elements_spaces(self):
         # No spaces with html tags
-        content = (u'<p><span class="seoSummary">The <strong>Document Object '
-             'Model'
-             '</strong> (<strong>DOM</strong>) is an API for '
-             '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
-             '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
-             'documents. It provides a structural representation of the '
-             'document, enabling you to modify its content and visual '
-             'presentation by using a scripting language such as '
-             '<a href="/en-US/docs/JavaScript" '
-             'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
-             'JavaScript</a>.</span></p>')
-        expected = ('The Document Object Model (DOM) is an API for HTML and '
+        content = (
+            u'<p><span class="seoSummary">The <strong>Document Object '
+            'Model'
+            '</strong> (<strong>DOM</strong>) is an API for '
+            '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
+            '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
+            'documents. It provides a structural representation of the '
+            'document, enabling you to modify its content and visual '
+            'presentation by using a scripting language such as '
+            '<a href="/en-US/docs/JavaScript" '
+            'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
+            'JavaScript</a>.</span></p>')
+        expected = (
+            'The Document Object Model (DOM) is an API for HTML and '
             'XML'
             ' documents. It provides a structural representation of the'
             ' document, enabling you to modify its content and visual'

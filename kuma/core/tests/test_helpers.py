@@ -2,30 +2,23 @@
 from collections import namedtuple
 from datetime import datetime
 
-import bitly_api
 import jingo
-import mock
-from nose.tools import eq_, ok_, assert_raises
-
-from django.conf import settings
-from django.contrib.auth.models import User
-from django.test import RequestFactory
-
-from babel.dates import format_date, format_time, format_datetime
+import pytz
+from babel.dates import format_date, format_datetime, format_time
+from nose.tools import assert_raises, eq_, ok_
 from pyquery import PyQuery as pq
-from pytz import timezone
 from soapbox.models import Message
 
-from kuma.core.cache import memcache
-from kuma.core.helpers import bitly_shorten, bitly
+from django.conf import settings
+from django.test import RequestFactory
+
 from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
-from ..helpers import (timesince, urlparams, yesno, urlencode,
-                       soapbox_messages, get_soapbox_messages,
-                       datetimeformat, jsonencode, number)
+from ..helpers import (datetimeformat, get_soapbox_messages, jsonencode,
+                       number, soapbox_messages, timesince, urlencode, yesno)
 
 
 def render(s, context={}):
@@ -39,30 +32,9 @@ class TestHelpers(KumaTestCase):
         jingo.load_helpers()
 
     def test_number(self):
-        context = {'request': namedtuple('R', 'locale')('en-US')}
+        context = {'request': namedtuple('R', 'LANGUAGE_CODE')('en-US')}
         eq_('5,000', number(context, 5000))
         eq_('', number(context, None))
-
-    def test_urlparams_unicode(self):
-        context = {'q': u'Français'}
-        eq_(u'/foo?q=Fran%C3%A7ais', urlparams('/foo', **context))
-        context['q'] = u'\u0125help'
-        eq_(u'/foo?q=%C4%A5help', urlparams('/foo', **context))
-
-    def test_urlparams_valid(self):
-        context = {'a': 'foo', 'b': 'bar'}
-        eq_(u'/foo?a=foo&b=bar', urlparams('/foo', **context))
-
-    def test_urlparams_query_string(self):
-        eq_(u'/foo?a=foo&b=bar', urlparams('/foo?a=foo', b='bar'))
-
-    def test_urlparams_multivalue(self):
-        eq_(u'/foo?a=foo&a=bar', urlparams('/foo?a=foo&a=bar'))
-        eq_(u'/foo?a=bar', urlparams('/foo?a=foo', a='bar'))
-
-    def test_urlparams_none(self):
-        """Assert a value of None doesn't make it into the query string."""
-        eq_(u'/foo', urlparams('/foo', bar=None))
 
     def test_yesno(self):
         eq_('Yes', yesno(True))
@@ -137,8 +109,8 @@ class TestDateTimeFormat(UserTestCase):
         super(TestDateTimeFormat, self).setUp()
         url_ = reverse('home')
         self.context = {'request': RequestFactory().get(url_)}
-        self.context['request'].locale = u'en-US'
-        self.context['request'].user = User.objects.get(username='testuser01')
+        self.context['request'].LANGUAGE_CODE = u'en-US'
+        self.context['request'].user = self.user_model.objects.get(username='testuser01')
 
     def test_today(self):
         """Expects shortdatetime, format: Today at {time}."""
@@ -151,7 +123,7 @@ class TestDateTimeFormat(UserTestCase):
 
     def test_locale(self):
         """Expects shortdatetime in French."""
-        self.context['request'].locale = u'fr'
+        self.context['request'].LANGUAGE_CODE = u'fr'
         value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, format='short',
                                          locale=u'fr')
@@ -169,7 +141,7 @@ class TestDateTimeFormat(UserTestCase):
     def test_longdatetime(self):
         """Expects long format."""
         value_test = datetime.fromordinal(733900)
-        tzvalue = timezone(settings.TIME_ZONE).localize(value_test)
+        tzvalue = pytz.timezone(settings.TIME_ZONE).localize(value_test)
         value_expected = format_datetime(tzvalue, format='long',
                                          locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
@@ -218,12 +190,12 @@ class TestDateTimeFormat(UserTestCase):
         """Shows time in user timezone."""
         value_test = datetime.fromordinal(733900)
         # Choose user with non default timezone
-        user = User.objects.get(username='admin')
+        user = self.user_model.objects.get(username='admin')
         self.context['request'].user = user
 
         # Convert tzvalue to user timezone
-        default_tz = timezone(settings.TIME_ZONE)
-        user_tz = user.get_profile().timezone
+        default_tz = pytz.timezone(settings.TIME_ZONE)
+        user_tz = pytz.timezone(user.timezone)
         tzvalue = default_tz.localize(value_test)
         tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
 
@@ -232,30 +204,3 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime')
         eq_(pq(value_returned)('time').text(), value_expected)
-
-
-class BitlyTestCase(KumaTestCase):
-    @mock.patch.object(memcache, 'set')  # prevent caching
-    @mock.patch.object(bitly, 'shorten')
-    def test_bitly_shorten(self, shorten, cache_set):
-        long_url = 'http://example.com/long-url'
-        short_url = 'http://bit.ly/short-url'
-
-        # the usual case of returning a dict with a URL
-        def short_mock(*args, **kwargs):
-            return {'url': short_url}
-        shorten.side_effect = short_mock
-
-        eq_(bitly_shorten(long_url), short_url)
-        shorten.assert_called_with(long_url)
-
-        # in case of a key error
-        def short_mock(*args, **kwargs):
-            return {}
-        shorten.side_effect = short_mock
-        eq_(bitly_shorten(long_url), long_url)
-        shorten.assert_called_with(long_url)
-
-        # in case of an upstream error
-        shorten.side_effect = bitly_api.BitlyError('500', 'fail fail fail')
-        eq_(bitly_shorten(long_url), long_url)

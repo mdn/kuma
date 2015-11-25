@@ -1,9 +1,9 @@
+import collections
+
 from django.conf import settings
-from django.utils.datastructures import SortedDict
 
 from elasticsearch_dsl import F, Q, query
 from rest_framework.filters import BaseFilterBackend
-from waffle import flag_is_active
 
 from kuma.wiki.search import WikiDocumentType
 
@@ -11,7 +11,7 @@ from .models import Filter, FilterGroup
 
 
 def get_filters(getter_func):
-    filters = SortedDict()
+    filters = collections.OrderedDict()
     for slug in FilterGroup.objects.values_list('slug', flat=True):
         for filters_slug in getter_func(slug, []):
             filters[filters_slug] = None
@@ -43,10 +43,10 @@ class LanguageFilterBackend(BaseFilterBackend):
 
         sq = queryset.to_dict().pop('query', query.MatchAll().to_dict())
 
-        if request.locale == settings.LANGUAGE_CODE:
-            locales = [request.locale]
+        if request.LANGUAGE_CODE == settings.LANGUAGE_CODE:
+            locales = [request.LANGUAGE_CODE]
         else:
-            locales = [request.locale, settings.LANGUAGE_CODE]
+            locales = [request.LANGUAGE_CODE, settings.LANGUAGE_CODE]
 
         positive_sq = {
             'filtered': {
@@ -57,7 +57,7 @@ class LanguageFilterBackend(BaseFilterBackend):
         negative_sq = {
             'bool': {
                 'must_not': [
-                    {'term': {'locale': request.locale}}
+                    {'term': {'locale': request.LANGUAGE_CODE}}
                 ]
             }
         }
@@ -99,7 +99,7 @@ class SearchQueryBackend(BaseFilterBackend):
                 functions=[query.SF('field_value_factor', field='boost')],
             )
 
-        if flag_is_active(request, 'search_explanation'):
+        if request.user.is_superuser:
             queryset = queryset.extra(explain=True)
 
         return queryset

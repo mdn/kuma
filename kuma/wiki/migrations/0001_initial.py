@@ -1,255 +1,293 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.db import models, migrations
 import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
-
-class Migration(SchemaMigration):
-
-    def forwards(self, orm):
-
-        # Adding model 'Document'
-        db.create_table('wiki_document', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
-            ('is_template', self.gf('django.db.models.fields.BooleanField')(default=False, db_index=True)),
-            ('is_localizable', self.gf('django.db.models.fields.BooleanField')(default=True, db_index=True)),
-            ('locale', self.gf('kuma.core.fields.LocaleField')(default='en-US', max_length=7, db_index=True)),
-            ('current_revision', self.gf('django.db.models.fields.related.ForeignKey')(related_name='current_for+', null=True, to=orm['wiki.Revision'])),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='translations', null=True, to=orm['wiki.Document'])),
-            ('html', self.gf('django.db.models.fields.TextField')()),
-            ('category', self.gf('django.db.models.fields.IntegerField')(db_index=True)),
-        ))
-        db.send_create_signal('wiki', ['Document'])
-
-        # Adding unique constraint on 'Document', fields ['parent', 'locale']
-        db.create_unique('wiki_document', ['parent_id', 'locale'])
-
-        # Adding unique constraint on 'Document', fields ['title', 'locale']
-        db.create_unique('wiki_document', ['title', 'locale'])
-
-        # Adding unique constraint on 'Document', fields ['slug', 'locale']
-        db.create_unique('wiki_document', ['slug', 'locale'])
-
-        # Adding model 'Revision'
-        db.create_table('wiki_revision', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('document', self.gf('django.db.models.fields.related.ForeignKey')(related_name='revisions', to=orm['wiki.Document'])),
-            ('summary', self.gf('django.db.models.fields.TextField')()),
-            ('content', self.gf('django.db.models.fields.TextField')()),
-            ('keywords', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('reviewed', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('significance', self.gf('django.db.models.fields.IntegerField')(null=True)),
-            ('comment', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('reviewer', self.gf('django.db.models.fields.related.ForeignKey')(related_name='reviewed_revisions', null=True, to=orm['auth.User'])),
-            ('creator', self.gf('django.db.models.fields.related.ForeignKey')(related_name='created_revisions', to=orm['auth.User'])),
-            ('is_approved', self.gf('django.db.models.fields.BooleanField')(default=False, db_index=True)),
-            ('based_on', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wiki.Revision'], null=True, blank=True)),
-        ))
-        db.send_create_signal('wiki', ['Revision'])
-
-        # Adding model 'FirefoxVersion'
-        db.create_table('wiki_firefoxversion', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('item_id', self.gf('django.db.models.fields.IntegerField')()),
-            ('document', self.gf('django.db.models.fields.related.ForeignKey')(related_name='firefox_version_set', to=orm['wiki.Document'])),
-        ))
-        db.send_create_signal('wiki', ['FirefoxVersion'])
-
-        # Adding unique constraint on 'FirefoxVersion', fields ['item_id', 'document']
-        db.create_unique('wiki_firefoxversion', ['item_id', 'document_id'])
-
-        # Adding model 'OperatingSystem'
-        db.create_table('wiki_operatingsystem', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('item_id', self.gf('django.db.models.fields.IntegerField')()),
-            ('document', self.gf('django.db.models.fields.related.ForeignKey')(related_name='operating_system_set', to=orm['wiki.Document'])),
-        ))
-        db.send_create_signal('wiki', ['OperatingSystem'])
-
-        # Adding unique constraint on 'OperatingSystem', fields ['item_id', 'document']
-        db.create_unique('wiki_operatingsystem', ['item_id', 'document_id'])
-
-        # Adding model 'HelpfulVote'
-        db.create_table('wiki_helpfulvote', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('document', self.gf('django.db.models.fields.related.ForeignKey')(related_name='poll_votes', to=orm['wiki.Document'])),
-            ('helpful', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, db_index=True)),
-            ('creator', self.gf('django.db.models.fields.related.ForeignKey')(related_name='poll_votes', null=True, to=orm['auth.User'])),
-            ('anonymous_id', self.gf('django.db.models.fields.CharField')(max_length=40, db_index=True)),
-            ('user_agent', self.gf('django.db.models.fields.CharField')(max_length=1000)),
-        ))
-        db.send_create_signal('wiki', ['HelpfulVote'])
-
-        # Adding model 'RelatedDocument'
-        db.create_table('wiki_relateddocument', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('document', self.gf('django.db.models.fields.related.ForeignKey')(related_name='related_from', to=orm['wiki.Document'])),
-            ('related', self.gf('django.db.models.fields.related.ForeignKey')(related_name='related_to', to=orm['wiki.Document'])),
-            ('in_common', self.gf('django.db.models.fields.IntegerField')()),
-        ))
-        db.send_create_signal('wiki', ['RelatedDocument'])
+from django.conf import settings
+import taggit.managers
 
 
-    def backwards(self, orm):
+class Migration(migrations.Migration):
 
-        # Removing unique constraint on 'OperatingSystem', fields ['item_id', 'document']
-        db.delete_unique('wiki_operatingsystem', ['item_id', 'document_id'])
+    dependencies = [
+        ('attachments', '0002_auto_20150430_0752'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
 
-        # Removing unique constraint on 'FirefoxVersion', fields ['item_id', 'document']
-        db.delete_unique('wiki_firefoxversion', ['item_id', 'document_id'])
-
-        # Removing unique constraint on 'Document', fields ['slug', 'locale']
-        db.delete_unique('wiki_document', ['slug', 'locale'])
-
-        # Removing unique constraint on 'Document', fields ['title', 'locale']
-        db.delete_unique('wiki_document', ['title', 'locale'])
-
-        # Removing unique constraint on 'Document', fields ['parent', 'locale']
-        db.delete_unique('wiki_document', ['parent_id', 'locale'])
-
-        # Deleting model 'Document'
-        db.delete_table('wiki_document')
-
-        # Deleting model 'Revision'
-        db.delete_table('wiki_revision')
-
-        # Deleting model 'FirefoxVersion'
-        db.delete_table('wiki_firefoxversion')
-
-        # Deleting model 'OperatingSystem'
-        db.delete_table('wiki_operatingsystem')
-
-        # Deleting model 'HelpfulVote'
-        db.delete_table('wiki_helpfulvote')
-
-        # Deleting model 'RelatedDocument'
-        db.delete_table('wiki_relateddocument')
-
-
-    models = {
-        'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        'auth.permission': {
-            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
-        },
-        'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        'tidings.watch': {
-            'Meta': {'object_name': 'Watch'},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']", 'null': 'True', 'blank': 'True'}),
-            'email': ('django.db.models.fields.EmailField', [], {'db_index': 'True', 'max_length': '75', 'null': 'True', 'blank': 'True'}),
-            'event_type': ('django.db.models.fields.CharField', [], {'max_length': '30', 'db_index': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
-            'object_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'db_index': 'True'}),
-            'secret': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
-        },
-        'taggit.tag': {
-            'Meta': {'object_name': 'Tag'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
-        },
-        'taggit.taggeditem': {
-            'Meta': {'object_name': 'TaggedItem'},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_tagged_items'", 'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_items'", 'to': "orm['taggit.Tag']"})
-        },
-        'wiki.document': {
-            'Meta': {'unique_together': "(('parent', 'locale'), ('title', 'locale'), ('slug', 'locale'))", 'object_name': 'Document'},
-            'category': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_for+'", 'null': 'True', 'to': "orm['wiki.Revision']"}),
-            'html': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_localizable': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
-            'is_template': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
-            'locale': ('kuma.core.fields.LocaleField', [], {'default': "'en-US'", 'max_length': '7', 'db_index': 'True'}),
-            'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'translations'", 'null': 'True', 'to': "orm['wiki.Document']"}),
-            'related_documents': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['wiki.Document']", 'through': "orm['wiki.RelatedDocument']", 'symmetrical': 'False'}),
-            'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
-        },
-        'wiki.firefoxversion': {
-            'Meta': {'unique_together': "(('item_id', 'document'),)", 'object_name': 'FirefoxVersion'},
-            'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'firefox_version_set'", 'to': "orm['wiki.Document']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'item_id': ('django.db.models.fields.IntegerField', [], {})
-        },
-        'wiki.helpfulvote': {
-            'Meta': {'object_name': 'HelpfulVote'},
-            'anonymous_id': ('django.db.models.fields.CharField', [], {'max_length': '40', 'db_index': 'True'}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'db_index': 'True'}),
-            'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'poll_votes'", 'null': 'True', 'to': "orm['auth.User']"}),
-            'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'poll_votes'", 'to': "orm['wiki.Document']"}),
-            'helpful': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'user_agent': ('django.db.models.fields.CharField', [], {'max_length': '1000'})
-        },
-        'wiki.operatingsystem': {
-            'Meta': {'unique_together': "(('item_id', 'document'),)", 'object_name': 'OperatingSystem'},
-            'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'operating_system_set'", 'to': "orm['wiki.Document']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'item_id': ('django.db.models.fields.IntegerField', [], {})
-        },
-        'wiki.relateddocument': {
-            'Meta': {'ordering': "['-in_common']", 'object_name': 'RelatedDocument'},
-            'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'related_from'", 'to': "orm['wiki.Document']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'in_common': ('django.db.models.fields.IntegerField', [], {}),
-            'related': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'related_to'", 'to': "orm['wiki.Document']"})
-        },
-        'wiki.revision': {
-            'Meta': {'object_name': 'Revision'},
-            'based_on': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wiki.Revision']", 'null': 'True', 'blank': 'True'}),
-            'comment': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'content': ('django.db.models.fields.TextField', [], {}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_revisions'", 'to': "orm['auth.User']"}),
-            'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['wiki.Document']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_approved': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
-            'keywords': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
-            'reviewed': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'reviewer': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'reviewed_revisions'", 'null': 'True', 'to': "orm['auth.User']"}),
-            'significance': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
-            'summary': ('django.db.models.fields.TextField', [], {})
-        }
-    }
-
-    complete_apps = ['wiki']
+    operations = [
+        migrations.CreateModel(
+            name='Document',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=255, db_index=True)),
+                ('slug', models.CharField(max_length=255, db_index=True)),
+                ('is_template', models.BooleanField(default=False, db_index=True, editable=False)),
+                ('is_redirect', models.BooleanField(default=False, db_index=True, editable=False)),
+                ('is_localizable', models.BooleanField(default=True, db_index=True)),
+                ('locale', models.CharField(default=b'en-US', max_length=7, db_index=True, choices=[(b'af', 'Afrikaans'), (b'ar', '\u0639\u0631\u0628\u064a'), (b'az', 'Az\u0259rbaycanca'), (b'bn-BD', '\u09ac\u09be\u0982\u09b2\u09be (\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6)'), (b'bn-IN', '\u09ac\u09be\u0982\u09b2\u09be (\u09ad\u09be\u09b0\u09a4)'), (b'ca', 'Catal\xe0'), (b'cs', '\u010ce\u0161tina'), (b'de', 'Deutsch'), (b'ee', 'E\u028be'), (b'el', '\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac'), (b'en-US', 'English (US)'), (b'es', 'Espa\xf1ol'), (b'fa', '\u0641\u0627\u0631\u0633\u06cc'), (b'ff', 'Pulaar-Fulfulde'), (b'fi', 'suomi'), (b'fr', 'Fran\xe7ais'), (b'fy-NL', 'Frysk'), (b'ga-IE', 'Gaeilge'), (b'ha', 'Hausa'), (b'he', '\u05e2\u05d1\u05e8\u05d9\u05ea'), (b'hi-IN', '\u0939\u093f\u0928\u094d\u0926\u0940 (\u092d\u093e\u0930\u0924)'), (b'hr', 'Hrvatski'), (b'hu', 'magyar'), (b'id', 'Bahasa Indonesia'), (b'ig', 'Igbo'), (b'it', 'Italiano'), (b'ja', '\u65e5\u672c\u8a9e'), (b'ka', '\u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8'), (b'ko', '\ud55c\uad6d\uc5b4'), (b'ln', 'Ling\xe1la'), (b'ml', '\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02'), (b'ms', 'Melayu'), (b'nl', 'Nederlands'), (b'pl', 'Polski'), (b'pt-BR', 'Portugu\xeas (do\xa0Brasil)'), (b'pt-PT', 'Portugu\xeas (Europeu)'), (b'ro', 'rom\xe2n\u0103'), (b'ru', '\u0420\u0443\u0441\u0441\u043a\u0438\u0439'), (b'sq', 'Shqip'), (b'sw', 'Kiswahili'), (b'ta', '\u0ba4\u0bae\u0bbf\u0bb4\u0bcd'), (b'th', '\u0e44\u0e17\u0e22'), (b'tr', 'T\xfcrk\xe7e'), (b'vi', 'Ti\u1ebfng Vi\u1ec7t'), (b'wo', 'Wolof'), (b'xh', 'isiXhosa'), (b'yo', 'Yor\xf9b\xe1'), (b'zh-CN', '\u4e2d\u6587 (\u7b80\u4f53)'), (b'zh-TW', '\u6b63\u9ad4\u4e2d\u6587 (\u7e41\u9ad4)'), (b'zu', 'isiZulu')])),
+                ('json', models.TextField(null=True, editable=False, blank=True)),
+                ('html', models.TextField(editable=False)),
+                ('rendered_html', models.TextField(null=True, editable=False, blank=True)),
+                ('rendered_errors', models.TextField(null=True, editable=False, blank=True)),
+                ('defer_rendering', models.BooleanField(default=False, db_index=True)),
+                ('render_scheduled_at', models.DateTimeField(null=True, db_index=True)),
+                ('render_started_at', models.DateTimeField(null=True, db_index=True)),
+                ('last_rendered_at', models.DateTimeField(null=True, db_index=True)),
+                ('render_max_age', models.IntegerField(null=True, blank=True)),
+                ('render_expires', models.DateTimeField(db_index=True, null=True, blank=True)),
+                ('category', models.IntegerField(db_index=True, choices=[(0, 'Uncategorized'), (10, 'Reference')])),
+                ('deleted', models.BooleanField(default=False, db_index=True)),
+                ('modified', models.DateTimeField(db_index=True, auto_now=True, null=True)),
+                ('body_html', models.TextField(null=True, editable=False, blank=True)),
+                ('quick_links_html', models.TextField(null=True, editable=False, blank=True)),
+                ('zone_subnav_local_html', models.TextField(null=True, editable=False, blank=True)),
+                ('toc_html', models.TextField(null=True, editable=False, blank=True)),
+                ('summary_html', models.TextField(null=True, editable=False, blank=True)),
+                ('summary_text', models.TextField(null=True, editable=False, blank=True)),
+            ],
+            options={
+                'permissions': (('view_document', 'Can view document'), ('add_template_document', 'Can add Template:* document'), ('change_template_document', 'Can change Template:* document'), ('move_tree', 'Can move a tree of documents'), ('purge_document', 'Can permanently delete document'), ('restore_document', 'Can restore deleted document')),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DocumentAttachment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.TextField()),
+                ('attached_by', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
+                ('document', models.ForeignKey(to='wiki.Document')),
+                ('file', models.ForeignKey(to='attachments.Attachment')),
+            ],
+            options={
+                'db_table': 'attachments_documentattachment',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DocumentDeletionLog',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('locale', models.CharField(default=b'en-US', max_length=7, db_index=True, choices=[(b'af', 'Afrikaans'), (b'ar', '\u0639\u0631\u0628\u064a'), (b'az', 'Az\u0259rbaycanca'), (b'bn-BD', '\u09ac\u09be\u0982\u09b2\u09be (\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6)'), (b'bn-IN', '\u09ac\u09be\u0982\u09b2\u09be (\u09ad\u09be\u09b0\u09a4)'), (b'ca', 'Catal\xe0'), (b'cs', '\u010ce\u0161tina'), (b'de', 'Deutsch'), (b'ee', 'E\u028be'), (b'el', '\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac'), (b'en-US', 'English (US)'), (b'es', 'Espa\xf1ol'), (b'fa', '\u0641\u0627\u0631\u0633\u06cc'), (b'ff', 'Pulaar-Fulfulde'), (b'fi', 'suomi'), (b'fr', 'Fran\xe7ais'), (b'fy-NL', 'Frysk'), (b'ga-IE', 'Gaeilge'), (b'ha', 'Hausa'), (b'he', '\u05e2\u05d1\u05e8\u05d9\u05ea'), (b'hi-IN', '\u0939\u093f\u0928\u094d\u0926\u0940 (\u092d\u093e\u0930\u0924)'), (b'hr', 'Hrvatski'), (b'hu', 'magyar'), (b'id', 'Bahasa Indonesia'), (b'ig', 'Igbo'), (b'it', 'Italiano'), (b'ja', '\u65e5\u672c\u8a9e'), (b'ka', '\u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8'), (b'ko', '\ud55c\uad6d\uc5b4'), (b'ln', 'Ling\xe1la'), (b'ml', '\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02'), (b'ms', 'Melayu'), (b'nl', 'Nederlands'), (b'pl', 'Polski'), (b'pt-BR', 'Portugu\xeas (do\xa0Brasil)'), (b'pt-PT', 'Portugu\xeas (Europeu)'), (b'ro', 'rom\xe2n\u0103'), (b'ru', '\u0420\u0443\u0441\u0441\u043a\u0438\u0439'), (b'sq', 'Shqip'), (b'sw', 'Kiswahili'), (b'ta', '\u0ba4\u0bae\u0bbf\u0bb4\u0bcd'), (b'th', '\u0e44\u0e17\u0e22'), (b'tr', 'T\xfcrk\xe7e'), (b'vi', 'Ti\u1ebfng Vi\u1ec7t'), (b'wo', 'Wolof'), (b'xh', 'isiXhosa'), (b'yo', 'Yor\xf9b\xe1'), (b'zh-CN', '\u4e2d\u6587 (\u7b80\u4f53)'), (b'zh-TW', '\u6b63\u9ad4\u4e2d\u6587 (\u7e41\u9ad4)'), (b'zu', 'isiZulu')])),
+                ('slug', models.CharField(max_length=255, db_index=True)),
+                ('timestamp', models.DateTimeField(auto_now=True)),
+                ('reason', models.TextField()),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DocumentTag',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=100, verbose_name='Name')),
+                ('slug', models.SlugField(unique=True, max_length=100, verbose_name='Slug')),
+            ],
+            options={
+                'verbose_name': 'Document Tag',
+                'verbose_name_plural': 'Document Tags',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DocumentZone',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('styles', models.TextField(null=True, blank=True)),
+                ('url_root', models.CharField(help_text=b'alternative URL path root for documents under this zone', max_length=255, null=True, db_index=True, blank=True)),
+                ('document', models.OneToOneField(related_name='zone', to='wiki.Document')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='EditorToolbar',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('default', models.BooleanField(default=False)),
+                ('name', models.CharField(max_length=100)),
+                ('code', models.TextField(max_length=2000)),
+                ('creator', models.ForeignKey(related_name='created_toolbars', to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='HelpfulVote',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('helpful', models.BooleanField(default=False)),
+                ('created', models.DateTimeField(default=datetime.datetime.now, db_index=True)),
+                ('anonymous_id', models.CharField(max_length=40, db_index=True)),
+                ('user_agent', models.CharField(max_length=1000)),
+                ('creator', models.ForeignKey(related_name='poll_votes', to=settings.AUTH_USER_MODEL, null=True)),
+                ('document', models.ForeignKey(related_name='poll_votes', to='wiki.Document')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='LocalizationTag',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=100, verbose_name='Name')),
+                ('slug', models.SlugField(unique=True, max_length=100, verbose_name='Slug')),
+            ],
+            options={
+                'verbose_name': 'Localization Tag',
+                'verbose_name_plural': 'Localization Tags',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='LocalizationTaggedRevision',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ReviewTag',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=100, verbose_name='Name')),
+                ('slug', models.SlugField(unique=True, max_length=100, verbose_name='Slug')),
+            ],
+            options={
+                'verbose_name': 'Review Tag',
+                'verbose_name_plural': 'Review Tags',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ReviewTaggedRevision',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Revision',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=255, null=True, db_index=True)),
+                ('slug', models.CharField(max_length=255, null=True, db_index=True)),
+                ('summary', models.TextField()),
+                ('content', models.TextField()),
+                ('keywords', models.CharField(max_length=255, blank=True)),
+                ('tags', models.CharField(max_length=255, blank=True)),
+                ('toc_depth', models.IntegerField(default=1, choices=[(0, 'No table of contents'), (1, 'All levels'), (2, 'H2 and higher'), (3, 'H3 and higher'), (4, 'H4 and higher')])),
+                ('render_max_age', models.IntegerField(null=True, blank=True)),
+                ('created', models.DateTimeField(default=datetime.datetime.now, db_index=True)),
+                ('comment', models.CharField(max_length=255)),
+                ('is_approved', models.BooleanField(default=True, db_index=True)),
+                ('is_mindtouch_migration', models.BooleanField(default=False, help_text=b'Did this revision come from MindTouch?', db_index=True)),
+                ('based_on', models.ForeignKey(blank=True, to='wiki.Revision', null=True)),
+                ('creator', models.ForeignKey(related_name='created_revisions', to=settings.AUTH_USER_MODEL)),
+                ('document', models.ForeignKey(related_name='revisions', to='wiki.Document')),
+                ('localization_tags', taggit.managers.TaggableManager(to='wiki.LocalizationTag', through='wiki.LocalizationTaggedRevision', help_text='A comma-separated list of tags.', verbose_name='Tags')),
+                ('review_tags', taggit.managers.TaggableManager(to='wiki.ReviewTag', through='wiki.ReviewTaggedRevision', help_text='A comma-separated list of tags.', verbose_name='Tags')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='RevisionIP',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('ip', models.CharField(db_index=True, max_length=40, null=True, editable=False, blank=True)),
+                ('revision', models.ForeignKey(to='wiki.Revision')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='TaggedDocument',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('content_object', models.ForeignKey(to='wiki.Document')),
+                ('tag', models.ForeignKey(to='wiki.DocumentTag')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='reviewtaggedrevision',
+            name='content_object',
+            field=models.ForeignKey(to='wiki.Revision'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='reviewtaggedrevision',
+            name='tag',
+            field=models.ForeignKey(to='wiki.ReviewTag'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='localizationtaggedrevision',
+            name='content_object',
+            field=models.ForeignKey(to='wiki.Revision'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='localizationtaggedrevision',
+            name='tag',
+            field=models.ForeignKey(to='wiki.LocalizationTag'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='document',
+            name='current_revision',
+            field=models.ForeignKey(related_name='current_for+', to='wiki.Revision', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='document',
+            name='files',
+            field=models.ManyToManyField(to='attachments.Attachment', through='wiki.DocumentAttachment'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='document',
+            name='parent',
+            field=models.ForeignKey(related_name='translations', blank=True, to='wiki.Document', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='document',
+            name='parent_topic',
+            field=models.ForeignKey(related_name='children', blank=True, to='wiki.Document', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='document',
+            name='tags',
+            field=taggit.managers.TaggableManager(to='wiki.DocumentTag', through='wiki.TaggedDocument', help_text='A comma-separated list of tags.', verbose_name='Tags'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='document',
+            name='team',
+            field=models.ForeignKey(blank=True, to='wiki.DocumentTag', null=True),
+            preserve_default=True,
+        ),
+        migrations.AlterUniqueTogether(
+            name='document',
+            unique_together=set([('parent', 'locale'), ('slug', 'locale')]),
+        ),
+    ]

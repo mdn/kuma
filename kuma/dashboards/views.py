@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -21,7 +21,8 @@ def revisions(request):
     filter_form = RevisionDashboardForm(request.GET)
     page = request.GET.get('page', 1)
 
-    revisions = (Revision.objects.select_related('creator')
+    revisions = (Revision.objects.prefetch_related('creator__bans',
+                                                   'document')
                                  .order_by('-created')
                                  .defer('content'))
 
@@ -66,21 +67,13 @@ def revisions(request):
                         timezone.now())
             start_date = end_date - datetime.timedelta(seconds=seconds)
             query_kwargs['created__range'] = [start_date, end_date]
-            
+
     if query_kwargs:
         revisions = revisions.filter(**query_kwargs)
-        total = revisions.count()
-    else:
-        # If no filters, just do a straight count(). It's the same
-        # result, but much faster to compute.
-        total = Revision.objects.count()
 
-    # Only bother with this if we're actually going to get
-    # some revisions from it. Otherwise it's a pointless but
-    # potentially complex query.
     revisions = paginate(request, revisions, per_page=PAGE_SIZE)
 
-    context = {'revisions': revisions, 'page': page, 'total': total}
+    context = {'revisions': revisions, 'page': page}
 
     # Serve the response HTML conditionally upon reques type
     if request.is_ajax():
@@ -100,13 +93,12 @@ def user_lookup(request):
     if request.is_ajax():
         user = request.GET.get('user', '')
         if user:
-            matches = User.objects.filter(username__istartswith=user)
+            matches = get_user_model().objects.filter(username__istartswith=user)
             for match in matches:
                 userlist.append({'label': match.username})
 
     data = json.dumps(userlist)
-    return HttpResponse(data,
-                        content_type='application/json; charset=utf-8')
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
 
 
 @require_GET

@@ -1,0 +1,17 @@
+- name: install EPEL repository (RedHat)
+  command: "{{ item }}"
+  with_items:
+    - wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    - rpm -Uvh epel-release-6*.rpm
+
+- name: install rabbitmq-server dependencies (RedHat)
+  yum: name="{{ item }}" state=present
+  with_items:
+    - erlang
+    - libselinux-python
+
+- name: install rabbitmq-server (RedHat)
+  yum: name=http://www.rabbitmq.com/releases/rabbitmq-server/v3.3.5/rabbitmq-server-3.3.5-1.noarch.rpm state=present
+
+- name: enable rabbitmq-server to survive reboot
+  service: name=rabbitmq-server enabled=yes

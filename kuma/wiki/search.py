@@ -24,14 +24,6 @@ from kuma.core.utils import chord_flow, chunked
 log = logging.getLogger('kuma.wiki.search')
 
 
-# Configure Elasticsearch connections for connection pooling.
-connections.configure(
-    default={'hosts': settings.ES_URLS},
-    indexing={'hosts': settings.ES_URLS,
-              'timeout': settings.ES_INDEXING_TIMEOUT},
-)
-
-
 class WikiDocumentType(document.DocType):
     excerpt_fields = ['summary', 'content']
     exclude_slugs = ['Talk:', 'User:', 'User_talk:', 'Template_talk:',
@@ -76,11 +68,11 @@ class WikiDocumentType(document.DocType):
             'id': obj.id,
             'title': obj.title,
             'slug': obj.slug,
-            'summary': obj.get_summary(strip_markup=True),
+            'summary': obj.get_summary_text(),
             'locale': obj.locale,
             'modified': obj.modified,
-            'content': strip_tags(obj.rendered_html),
-            'tags': list(obj.tags.values_list('name', flat=True)),
+            'content': strip_tags(obj.rendered_html or ''),
+            'tags': list(obj.tags.names()),
             'kumascript_macros': obj.extract_kumascript_macro_names(),
             'css_classnames': obj.extract_css_classnames(),
             'html_attributes': obj.extract_html_attributes(),
@@ -275,10 +267,11 @@ class WikiDocumentType(document.DocType):
                          for exclude in cls.exclude_slugs]))
 
     def get_excerpt(self):
-        if getattr(self, 'highlight', False):
+        highlighted = self.meta.get('highlight')
+        if highlighted:
             for excerpt_field in self.excerpt_fields:
-                if excerpt_field in self.highlight:
-                    return u'…'.join(self.highlight[excerpt_field])
+                if excerpt_field in highlighted:
+                    return u'…'.join(highlighted[excerpt_field])
         return self.summary
 
     @classmethod
@@ -315,8 +308,12 @@ class WikiDocumentType(document.DocType):
             chord_flow(pre_task, index_tasks, post_task).apply_async()
 
         message = _(
-            'Indexing {total} documents into {n} chunks of size {size} into '
-            'index {index}.'.format(total=total, n=total_chunks,
-                                    size=chunk_size,
-                                    index=index.prefixed_name))
+            'Indexing %(total)d documents into %(total_chunks)d chunks of '
+            'size %(size)d into index %(index)s.' % {
+                'total': total,
+                'total_chunks': total_chunks,
+                'size': chunk_size,
+                'index': index.prefixed_name
+            }
+        )
         return message

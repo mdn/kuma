@@ -1,0 +1,64 @@
+/* clear table styles, this class is mostly applied to divs now,
+   need the extra specificity of body to over-ride .textcontent table {} declaration */
+body .topicpage-table {
+    clear: both;
+    width: auto;
+    border: none;
+    display: block;
+    border-collapse: collapse;
+
+    tr,
+    th,
+    td {
+        border: none;
+        display: block;
+        padding: 0;
+        vertical-align: top;
+    }
+}
+
+/* styles for elements inside .topicpage-table */
+.topicpage-table {
+    h2 {
+        font-family: $heading-font-family;
+        {$selector-heading-font-fallback} {
+            font-family: $heading-font-family-fallback;
+        }
+    }
+
+    ul {
+        padding-left: $grid-spacing;
+    }
+
+    small {
+        font-size: $smaller-font-size;
+    }
+}
+
+/* Simulate two columns, if enough space is available    */
+@media $media-query-small-desktop-and-up {
+    body .topicpage-table {
+        display: table;
+        border-collapse: separate;
+        border-spacing: $grid-spacing 0;
+
+        tr {
+            display: table-row;
+        }
+
+        th,
+        td,
+        .section {
+            display: table-cell;
+            width: 50%;
+
+            &:first-of-type {
+                bidi-style(padding-right, $grid-spacing, padding-left, 0);
+                bidi-style(margin-right, $grid-spacing, padding-left, 0);
+                bidi-style(border-right, solid 6px #eaeff2, border-left, none);
+            }
+        }
+    }
+}
+
+

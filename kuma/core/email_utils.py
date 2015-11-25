@@ -1,44 +1,14 @@
-import contextlib
 import logging
 from functools import wraps
 
+import jingo
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.test import RequestFactory
 from django.utils import translation
 
-import jingo
-import tower
-
 
 log = logging.getLogger('kuma.core.email')
-
-
-@contextlib.contextmanager
-def uselocale(locale):
-    """Context manager for setting locale and returning
-    to previous locale.
-
-    This is useful for when doing translations for things run by
-    celery workers or out of the HTTP request handling path.
-
-    >>> with uselocale('xx'):
-    ...     subj = _('Subject of my email')
-    ...     msg = render_email(email_template, email_kwargs)
-    ...     mail.send_mail(subj, msg, ...)
-    ...
-
-    In Kitsune, you can get the right locale from Profile.locale and
-    also request.LANGUAGE_CODE.
-
-    If Kitsune is handling an HTTP request already, you don't have to
-    run uselocale---the locale will already be set correctly.
-
-    """
-    currlocale = translation.get_language()
-    tower.activate(locale)
-    yield
-    tower.activate(currlocale)
 
 
 def safe_translation(f):
@@ -51,7 +21,7 @@ def safe_translation(f):
     @wraps(f)
     def wrapper(locale, *args, **kwargs):
         try:
-            with uselocale(locale):
+            with translation.override(locale):
                 return f(locale, *args, **kwargs)
         except (TypeError, KeyError, ValueError, IndexError) as e:
             # Types of errors, and examples.
@@ -66,7 +36,7 @@ def safe_translation(f):
             #    '{0} {1}'.format(42)
             log.error('Bad translation in locale "%s": %s', locale, e)
 
-            with uselocale(settings.WIKI_DEFAULT_LANGUAGE):
+            with translation.override(settings.WIKI_DEFAULT_LANGUAGE):
                 return f(settings.WIKI_DEFAULT_LANGUAGE, *args, **kwargs)
 
     return wrapper
@@ -87,7 +57,7 @@ def render_email(template, context):
         """
         req = RequestFactory()
         req.META = {}
-        req.locale = locale
+        req.LANGUAGE_CODE = locale
 
         return jingo.render_to_string(req, template, context)
 
@@ -106,8 +76,7 @@ def emails_with_users_and_watches(subject,
 
     A convenience function for generating emails by repeatedly
     rendering a Django template with the given ``context_vars`` plus a
-    ``user`` and ``watches`` key for each pair in
-    ``users_and_watches``
+    ``user`` and ``watches`` key for each pair in ``users_and_watches``
 
     .. Note::
 
@@ -120,7 +89,7 @@ def emails_with_users_and_watches(subject,
     :arg context_vars: a map which becomes the Context passed in to the
         template and the subject string
     :arg from_email: the from email address
-    :arg default_local: the local to default to if not user.profile.locale
+    :arg default_local: the local to default to if not user.locale
     :arg extra_kwargs: additional kwargs to pass into EmailMessage constructor
 
     :returns: generator of EmailMessage objects
@@ -133,7 +102,7 @@ def emails_with_users_and_watches(subject,
         context_vars['watches'] = watch
 
         msg = EmailMultiAlternatives(
-            subject.format(**context_vars),
+            subject % context_vars,
             render_email(text_template, context_vars),
             from_email,
             [user.email],
@@ -146,8 +115,8 @@ def emails_with_users_and_watches(subject,
         return msg
 
     for user, watch in users_and_watches:
-        if hasattr(user, 'profile'):
-            locale = user.profile.locale
+        if hasattr(user, 'locale'):
+            locale = user.locale
         else:
             locale = default_locale
 

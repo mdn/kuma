@@ -1,10 +1,3 @@
-import re
-from decimal import Decimal
-
-from django.conf import settings
-from django.utils.encoding import force_text
-from django.utils.formats import number_format
-
 from jingo import register
 
 

@@ -1,71 +1,54 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.utils.html import escape
+from jingo.helpers import urlparams
+
 from kuma.core.urlresolvers import reverse
 
-from taggit.forms import TagWidget
-
-from kuma.core.managers import NamespacedTaggableManager
-from .models import UserBan, UserProfile
-
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
-
-
-class ExtendedUserAdmin(UserAdmin):
-    # extend the admin view of users to show date_joined field; add a filter on the field too
-    list_display = ('username', 'email', 'first_name', 'last_name', 'date_joined', 'is_staff', 'is_active')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'date_joined',)
-    ordering = ('-date_joined',)
-
-
-admin.site.unregister(User)
-admin.site.register(User, ExtendedUserAdmin)
+from .models import User, UserBan
 
 
 class UserBanAdmin(admin.ModelAdmin):
     fields = ('user', 'by', 'reason', 'is_active')
-    list_display = ('user', 'by', 'reason')
+    list_display = ('user', 'by', 'reason', 'is_active')
+    list_editable = ('is_active',)
     list_filter = ('is_active',)
     raw_id_fields = ('user', 'by')
     search_fields = ('user__username', 'reason', 'by__username')
 
-
 admin.site.register(UserBan, UserBanAdmin)
 
 
-class ProfileAdmin(admin.ModelAdmin):
+class UserAdmin(BaseUserAdmin):
+    """
+    Extends the admin view of users to show date_joined field
+    add a filter on the field too
+    """
+    list_display = ('username', 'fullname', 'email',
+                    'bio', 'website', 'revisions',
+                    'date_joined', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'date_joined')
+    ordering = ('-date_joined',)
+    search_fields = ('username', 'homepage', 'title', 'fullname',
+                     'organization', 'location', 'bio', 'email', 'tags__name')
 
-    list_display = ('user_name', 'related_user', 'fullname', 'title',
-                    'organization', 'location','content_flagging_email',
-                    'tags', )
+    def revisions(self, obj):
+        """HTML link to user's revisions with count"""
+        link = urlparams(reverse('dashboards.revisions'),
+                         user=obj.username)
+        count = obj.created_revisions.count()
+        return ('<a href="%(link)s"><strong>%(count)s</strong></a>' %
+                {'link': link, 'count': count})
 
-    list_editable = ('content_flagging_email', 'tags', )
+    revisions.allow_tags = True
 
-    search_fields = ('user__username', 'homepage', 'title', 'fullname',
-                     'organization', 'location', 'bio', 'misc',
-                     'user__email', 'tags__name', )
+    def website(self, obj):
+        """HTML link to user's website"""
+        if obj.website_url:
+            return ('<a href="%(url)s"><strong>%(url)s</strong></a>' %
+                    {'url': escape(obj.website_url)})
+        return ""
 
-    list_filter = ()
+    website.allow_tags = True
 
-    formfield_overrides = {
-        NamespacedTaggableManager: {
-            "widget": TagWidget(attrs={"size": 45})
-        }
-    }
-
-    def related_user(self, obj):
-        """HTML link to related user account"""
-        link = reverse('admin:auth_user_change', args=(obj.user.id,))
-        # TODO: Needs l10n? Maybe not a priority for an admin page.
-        return ('<a href="%(link)s"><strong>User %(id)s</strong></a>' % dict(
-            link=link, id=obj.user.id, username=obj.user.username))
-
-    related_user.allow_tags = True
-    related_user.short_description = 'User account'
-
-    def user_name(self, obj):
-        return obj.user.username
-
-    user_name.short_description = 'User name'
-
-
-admin.site.register(UserProfile, ProfileAdmin)
+admin.site.register(User, UserAdmin)

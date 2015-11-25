@@ -5,19 +5,19 @@ define(['intern'], function(intern) {
     var defaultLocale = 'en-US';
 
     return {
-
         // URLs
         domain: domain,
         url: httpsAddress,
         homepageUrl: httpsAddress + defaultLocale,
         demosHomepageUrl: httpsAddress + defaultLocale + '/demos',
+        productionDomain: 'developer.mozilla.org',
 
         // Locales
         defaultLocale: defaultLocale,
 
         // Set the default browser dimentions
         defaultWidth: 1240,
-        defaultHeight: 500,
+        defaultHeight: 800,
 
         // Important media queries
         mediaQueries: {
@@ -31,9 +31,9 @@ define(['intern'], function(intern) {
         personaUsername: intern.args.u || '',
         personaPassword: intern.args.p || '',
 
-        // Async testing in milliseconds
-        testTimeout: 22000,
-        asyncExecutionTimeout: 4000,
+        // Testing timeouts in milliseconds
+        // Set high so that remote runners like BrowserStack can complete in case of slow site
+        testTimeout: 60000,
 
         // Wiki-specific
         wikiDocumentSlug: intern.args.wd || ''

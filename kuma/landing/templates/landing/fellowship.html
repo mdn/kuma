@@ -4,7 +4,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('fellowship') }}
+    {% stylesheet 'fellowship' %}
 {% endblock %}
 
 {% block extrahead %}
@@ -46,15 +46,9 @@
         <div class="column-9">
             <div class="media media-small-mobile-stack media-reverse">
                 <div class="media-side">
-                    {% if waffle.flag('fellowship_applications_open') %}
-                        <a class="cta" href="http://www.surveygizmo.com/s3/1998528/PILOT-Developer-Fellowship-Application">
-                            <span class="cta-head">Apply now!</span>
-                        </a>
-                    {% else %}
-                        <div class="cta negative">
-                            <span class="cta-head">Applications<br> are closed.</span>
-                        </div>
-                    {% endif %}
+                    <div class="cta negative">
+                        <span class="cta-head">Applications<br> are closed.</span>
+                    </div>
                 </div>
                 <div class="media-body">
                     <p>Launching in Q1 2015, the Mozilla Developer Fellowship intends to accelerate the involvement of highly-skilled and experienced web developers with the open web.</p>
@@ -92,7 +86,7 @@
                         <dd>Experienced Web developer with expertise in JavaScript, CSS, HTML as well as with efficient network interaction (queuing resource fetching, etc.). Self-starter and autonomous worker</dd>
                         <dt>Mentor information</dt>
                         <dd>Brittany Storoz, Mozilla Apps Engineering.<br>
-                            Github: <a href="https://github.com/brittanystoroz">brittanystoroz</a><br>
+                            GitHub: <a href="https://github.com/brittanystoroz">brittanystoroz</a><br>
                             Twitter: <a href="https://twitter.com/brittanystoroz">@brittanystoroz</a></dd>
                     </dl>
                 </details>
@@ -107,7 +101,7 @@
                         <dd>Computer graphics experience with programmable shaders and the OpenGL, OpenGL ES, WebGL, or Direct3D APIs. Command of JavaScript and module systems preferred.</dd>
                         <dt>Mentor information</dt>
                         <dd>Nick Desaulniers, Sleeps at Desk.<br>
-                           Github: <a href="https://github.com/nickdesaulniers">nickdesaulniers</a><br>
+                           GitHub: <a href="https://github.com/nickdesaulniers">nickdesaulniers</a><br>
                            Twitter: <a href="https://twitter.com/LostOracle">@LostOracle</a>
                         </dd>
                     </dl>
@@ -123,7 +117,7 @@
                         <dd>Experienced Web developer with expertise in JavaScript, CSS, HTML. Knowledge of server-side development, caching and network layers preferred.</dd>
                         <dt>Mentor information</dt>
                         <dd>Harald Kirschner, Web Craftsman.<br>
-                            Github: <a href="https://github.com/digitarald">digitarald</a><br>
+                            GitHub: <a href="https://github.com/digitarald">digitarald</a><br>
                             Twitter: <a href="https://twitter.com/digitarald">@digitarald</a>
                         </dd>
                     </dl>
@@ -139,7 +133,7 @@
                         <dd>Experienced Web developer with expertise in JavaScript, CSS, HTML and/or other key technologies. Proficient in written and spoken English.</dd>
                         <dt>Mentor information</dt>
                         <dd>Chris Mills, Senior Technology Writer, Mozilla Developer Network.<br>
-                            Github: <a href="https://github.com/ChrisDavidMills">ChrisDavidMills</a><br>
+                            GitHub: <a href="https://github.com/ChrisDavidMills">ChrisDavidMills</a><br>
                             Twitter: <a href="https://twitter.com/chrisdavidmills">@chrisdavidmills</a>
                         </dd>
                     </dl>
@@ -173,47 +167,14 @@
             <p>If you’ve read all of this and still have a question, contact Diane Tate at <a href="mailto:diane@mozilla.com">diane@mozilla.com</a>. If you don’t have specific questions and just want to introduce yourself, please use the application form.</p>
 
 
-            {% if waffle.flag('fellowship_applications_open') %}
-            <section class="section-apply">
-                <h2 class="offscreen">Apply now.</h2>
-
-                <div class="media media-small-mobile-stack">
-                    <div class="media-side">
-                        <a class="cta" href="http://www.surveygizmo.com/s3/1998528/PILOT-Developer-Fellowship-Application"><span class="cta-head"> Apply now!</span></a>
-                    </div>
-                    <div class="media-body">
-                        <p><a href="http://www.surveygizmo.com/s3/1998528/PILOT-Developer-Fellowship-Application">Applications are open now</a> and we will accept them through April 1, 2015.</p>
-                    </div>
-                </div>
-
-
-                <div class="media media-small-mobile-stack">
-                    <div class="media-side">
-                        <div class="cta">
-                            <h3 class="cta-head">Share This</h3>
-                            <ul>
-                                <li><a class="twitter" href="https://www.twitter.com/intent/tweet?url=https://developer.mozilla.org{{ url('fellowship') }}" title="Twitter" target="_blank">Twitter</a></li>
-                                <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://developer.mozilla.org{{ url('fellowship') }}" title="Facebook" target="_blank">Facebook</a></li>
-                                <li><a class="g-plus" href="https://plus.google.com/share?url=https://developer.mozilla.org{{ url('fellowship') }}" title="Google+" target="_blank">Google+</a></li>
-                            </ul>
-                        </div><!-- .share-widget -->
-                    </div>
-                    <div class="media-body">
-                        <p>Excited about this opportunity? Share it with your friends.</p>
-                    </div>
-                </div>
-            </section>
-
-            {% else %}
-                <h2>Applications are closed.</h2>
-                <p>The application period has ended. Watch this space for information about our 2015 Fellows!</p>
-            {% endif %}
+            <h2>Applications are closed.</h2>
+            <p>The application period has ended. Watch this space for information about our 2015 Fellows!</p>
 
         </div><!-- .column-9 -->
 
         <div class="column-3" dir="ltr">
             <figure class="hero">
-                <img src="/media/img/fellowship.jpg" alt="A group of people at a Mozilla event, the man in the foreground is wearing a Firefox t-shirt.">
+                <img src="{{ static('img/fellowship.jpg') }}" alt="A group of people at a Mozilla event, the man in the foreground is wearing a Firefox t-shirt.">
                 <p><small><a href="https://www.flickr.com/photos/roland/10081117356">Photo courtesy Roland Tanglao on Flickr.</a></small></p>
             </figure>
             <div class="pullquote">
@@ -232,5 +193,5 @@
 
 {% block js %}
   {{ super() }}
-  {{ js('fellowship') }}
+  {% javascript 'fellowship' %}
 {% endblock %}

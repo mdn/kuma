@@ -4,7 +4,7 @@
         <ul class="object-tools">
           {% if has_add_permission %}
           <li>
-            <a href="{% url wiki.load_documents %}{% if is_popup %}?_popup=1{% endif %}">
+            <a href="{% url 'wiki.load_documents' %}{% if is_popup %}?_popup=1{% endif %}">
               {{ _("Load documents") }}
             </a>
           <li>

@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-
-from kuma.core.helpers import urlparams
+from jingo.helpers import urlparams
 
 from .exceptions import ReadOnlyException
 from .jobs import DocumentZoneURLRemapsJob
@@ -24,16 +23,24 @@ class DocumentZoneMiddleware(object):
     incoming path_info to point at the internal wiki path
     """
     def process_request(self, request):
-        remaps = DocumentZoneURLRemapsJob().get(request.locale)
+        # https://bugzil.la/1189222
+        # Don't redirect POST $subscribe requests to GET zone url
+        if request.method == 'POST' and '$subscribe' in request.path:
+            return None
+
+        remaps = DocumentZoneURLRemapsJob().get(request.LANGUAGE_CODE)
         for original_path, new_path in remaps:
 
-            if request.path_info.startswith(original_path):
+            if (
+                request.path_info == original_path or
+                request.path_info.startswith(u''.join([original_path, '/']))
+            ):
                 # Is this a request for the "original" wiki path? Redirect to
                 # new URL root, if so.
                 new_path = request.path_info.replace(original_path,
                                                      new_path,
                                                      1)
-                new_path = '/%s%s' % (request.locale, new_path)
+                new_path = '/%s%s' % (request.LANGUAGE_CODE, new_path)
 
                 query = request.GET.copy()
                 if 'lang' in query:

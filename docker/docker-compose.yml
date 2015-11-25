@@ -1,0 +1,42 @@
+web:
+  build: ../
+  command: python manage.py runserver --settings=settings_docker 0.0.0.0:8000
+  volumes:
+    - ../:/app
+  ports:
+    - "8000:8000"
+  links:
+    - memcached
+    - mysql
+    - elasticsearch
+    - redis
+  environment:
+    - DATABASE_URL=mysql://kuma:kuma@mysql/kuma
+    - MEMCACHE_LOCATION=memcached:11211
+    - ELASTICSEARCH_LOCATION=elasticsearch:9200
+    - REDIS_LOCATION=redis:6379
+    - PYTHONDONTWRITEBYTECODE=1
+
+memcached:
+  image: memcached
+
+mysql-data:
+  build: ./images/mysql-data
+  volumes:
+    - /var/lib/mysql
+
+mysql:
+  build: ./images/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=docker
+    - MYSQL_USER=kuma
+    - MYSQL_PASSWORD=kuma
+    - MYSQL_DATABASE=kuma
+  volumes_from:
+    - mysql-data
+
+elasticsearch:
+  image: elasticsearch:1.7
+
+redis:
+  image: redis

@@ -2,7 +2,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki', 'all') }}
+    {% stylesheet 'wiki' %}
 
     {% if config.KUMA_CUSTOM_CSS_PATH and waffle.flag('enable_customcss') %}
       <link rel="stylesheet" type="text/css"
@@ -10,6 +10,7 @@
     {% endif %}
 {% endblock %}
 
-{% if not scripts %}
-  {% set scripts = ('wiki',) %}
-{% endif %}
+{% block site_js %}
+    {{ super() }}
+    {% javascript 'wiki' %}
+{% endblock %}

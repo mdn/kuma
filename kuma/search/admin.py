@@ -1,8 +1,7 @@
-from django import forms
 from django.contrib import admin, messages
-from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
+from .forms import IndexModelForm
 from .models import Filter, FilterGroup, Index
 
 
@@ -41,19 +40,6 @@ def populate(modeladmin, request, queryset):
     message = index.populate()
     messages.info(request, message)
 populate.short_description = _("Populate selected search index via Celery")
-
-
-class IndexModelForm(forms.ModelForm):
-
-    class Meta:
-        model = Index
-
-    def clean(self):
-        current_index = Index.objects.get_current()
-        if current_index.successor:
-            raise ValidationError(_('There is already a successor to '
-                                    'the current index %s' % current_index))
-        return self.cleaned_data
 
 
 class IndexAdmin(admin.ModelAdmin):

@@ -1,7 +1,4 @@
-# coding=utf-8
-
-# This Python file uses the following encoding: utf-8
-# see also: http://www.python.org/dev/peps/pep-0263/
+# -*- coding: utf-8 -*-
 from os import unlink
 from os.path import dirname, isfile, isdir
 from shutil import rmtree
@@ -14,15 +11,16 @@ except ImportError:
 
 from nose.tools import assert_false, eq_, ok_
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
-from django.test import TestCase
 
-import constance.config
+from constance import config
+from constance.test import override_config
 
-from kuma.core.tests import override_constance_settings
+from kuma.users.tests import UserTestCase
+
 from ..models import Submission
 from .. import models
 from . import make_users, build_submission, build_hidden_submission
@@ -30,17 +28,19 @@ from . import make_users, build_submission, build_hidden_submission
 
 def save_valid_submission(title='hello world',
                           desc='This is a hello world demo'):
+    User = get_user_model()
     testuser = User.objects.get(username='testuser')
     s = Submission(title=title, slug=slugify(title),
-        description=desc,
-        summary=desc,
-        creator=testuser)
+                   description=desc,
+                   summary=desc,
+                   creator=testuser)
     fout = StringIO()
     zf = zipfile.ZipFile(fout, 'w')
     zf.writestr('index.html', """<html> </html>""")
     zf.close()
     s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
-    s.screenshot_1.save('screenshot_1.jpg',
+    s.screenshot_1.save(
+        'screenshot_1.jpg',
         ContentFile(
             open('%s/fixtures/screenshot_1.png' % (dirname(dirname(__file__))))
             .read()
@@ -50,19 +50,20 @@ def save_valid_submission(title='hello world',
     return s
 
 
-class DemoPackageTest(TestCase):
+class DemoPackageTest(UserTestCase):
 
     def setUp(self):
+        super(DemoPackageTest, self).setUp()
         self.user, self.admin_user, self.other_user = make_users()
 
-        hidden_prev_demo = build_hidden_submission(self.other_user,
-                                                   'hidden-submission-1')
+        build_hidden_submission(self.other_user,
+                                'hidden-submission-1')
 
         self.submission = build_submission(self.user)
         self.old_blacklist = models.DEMO_MIMETYPE_BLACKLIST
 
-        hidden_next_demo = build_hidden_submission(self.other_user,
-                                                   'hidden-submission-2')
+        build_hidden_submission(self.other_user,
+                                'hidden-submission-2')
 
     def tearDown(self):
         models.DEMO_MIMETYPE_BLACKLIST = self.old_blacklist
@@ -72,9 +73,9 @@ class DemoPackageTest(TestCase):
         """Demo package with no files is invalid"""
 
         s = Submission(title='Hello world', slug='hello-world',
-            description='This is a hello world demo',
-            video_url='http://www.youtube.com/watch?v=dQw4w9WgXcQ',
-            creator=self.user)
+                       description='This is a hello world demo',
+                       video_url='http://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                       creator=self.user)
 
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
@@ -147,7 +148,7 @@ class DemoPackageTest(TestCase):
 
         try:
             s.clean()
-        except:
+        except ValidationError:
             self.fail("The last zip file should have been okay")
 
         unlink(s.demo_package.path)
@@ -164,7 +165,7 @@ class DemoPackageTest(TestCase):
 
         try:
             s.clean()
-        except:
+        except ValidationError:
             self.fail("The last zip file should have been okay")
 
         unlink(s.demo_package.path)
@@ -178,7 +179,8 @@ class DemoPackageTest(TestCase):
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
 
-        zf.writestr('index.html',
+        zf.writestr(
+            'index.html',
             """<html>
                 <head>
                   <link rel="stylesheet" href="css/main.css" type="text/css" />
@@ -190,16 +192,16 @@ class DemoPackageTest(TestCase):
             </html>""")
 
         zf.writestr('css/main.css',
-            'h1 { color: red }')
+                    'h1 { color: red }')
 
         zf.writestr('js/main.js',
-            'alert("HELLO WORLD");')
+                    'alert("HELLO WORLD");')
 
         zf.close()
 
         s = Submission(title='Hello world', slug='hello-world',
-            description='This is a hello world demo',
-            creator=self.user)
+                       description='This is a hello world demo',
+                       creator=self.user)
 
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
         s.demo_package.close()
@@ -231,8 +233,8 @@ class DemoPackageTest(TestCase):
         zf.close()
 
         s = Submission(title='Hello world', slug='hello-world',
-            description='This is a hello world demo',
-            creator=self.user)
+                       description='This is a hello world demo',
+                       creator=self.user)
 
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
         s.demo_package.close()
@@ -262,8 +264,8 @@ class DemoPackageTest(TestCase):
         zf.close()
 
         s = Submission(title='Hello world', slug='hello-world',
-            description='This is a hello world demo',
-            creator=self.user)
+                       description='This is a hello world demo',
+                       creator=self.user)
 
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
         s.demo_package.close()
@@ -285,11 +287,9 @@ class DemoPackageTest(TestCase):
         """Bug 741660: Try testing a real .zip with non-ASCII filenames"""
         zip_fn = '%s/fixtures/css3_clock.zip' % dirname(dirname(__file__))
 
-        zf = zipfile.ZipFile(zip_fn)
-
         s = Submission(title='Hello world', slug='hello-world',
-            description='This is a hello world demo',
-            creator=self.user)
+                       description='This is a hello world demo',
+                       creator=self.user)
 
         s.demo_package.save('play_demo.zip', ContentFile(open(zip_fn).read()))
         s.demo_package.close()
@@ -316,8 +316,8 @@ class DemoPackageTest(TestCase):
         zf.close()
 
         s = Submission(title='Hello world', slug='hello-world',
-            description='This is a hello world demo',
-            creator=self.user)
+                       description='This is a hello world demo',
+                       creator=self.user)
 
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
         s.demo_package.close()
@@ -340,7 +340,7 @@ class DemoPackageTest(TestCase):
         ok_(not isfile('%s/js/main.js' % path))
         ok_(not isdir(path))
 
-    @override_constance_settings(DEMO_MAX_FILESIZE_IN_ZIP=1024*1024)
+    @override_config(DEMO_MAX_FILESIZE_IN_ZIP=1024 * 1024)
     def test_demo_file_size_limit(self):
         """Demo package with any individual file >1MB in size is invalid"""
         s = self.submission
@@ -349,14 +349,14 @@ class DemoPackageTest(TestCase):
         # settings change,
         # so force it directly in the field
         s.demo_package.field.max_upload_size = (
-            constance.config.DEMO_MAX_FILESIZE_IN_ZIP
+            config.DEMO_MAX_FILESIZE_IN_ZIP
         )
 
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
         zf.writestr('index.html', """<html> </html>""")
         zf.writestr('bigfile.txt',
-                    'x' * (constance.config.DEMO_MAX_FILESIZE_IN_ZIP + 1))
+                    'x' * (config.DEMO_MAX_FILESIZE_IN_ZIP + 1))
         zf.close()
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
@@ -380,9 +380,7 @@ class DemoPackageTest(TestCase):
         # TODO: Need more file types?
         types = (
             (['text/plain'], 'Hi there, I am bad'),
-            #( [ 'application/xml' ], '<?xml version="1.0"?><hi>I am bad</hi>' ),
             (['application/zip', 'application/x-zip'], sub_fout.getvalue()),
-            #( [ 'image/x-ico' ], open('media/img/favicon.ico','r').read() ),
         )
 
         for blist, fdata in types:
@@ -402,7 +400,7 @@ class DemoPackageTest(TestCase):
                                      'ZIP file contains an unacceptable file: badfile',
                                      s.clean)
 
-    @override_constance_settings(DEMO_BLACKLIST_OVERRIDE_EXTENSIONS="yada")
+    @override_config(DEMO_BLACKLIST_OVERRIDE_EXTENSIONS="yada")
     def test_demo_blacklist_override(self):
         """bug 1095649"""
         sub_fout = StringIO()
@@ -437,10 +435,10 @@ class DemoPackageTest(TestCase):
         s = self.submission
         s.hidden = True
 
-        assert_false(s.allows_hiding_by(self.other_user))
+        assert_false(s.allows_managing_by(self.other_user))
         assert_false(s.allows_viewing_by(self.other_user))
-        ok_(s.allows_hiding_by(self.user))
-        ok_(s.allows_hiding_by(self.admin_user))
+        ok_(s.allows_managing_by(self.user))
+        ok_(s.allows_managing_by(self.admin_user))
 
     def test_censored_demo_shows_only_in_admin_interface(self):
         s = self.submission
@@ -465,8 +463,8 @@ class DemoPackageTest(TestCase):
         zf.close()
 
         s = Submission(title='Hello world', slug='hello-world',
-            description='This is a hello world demo',
-            creator=self.user)
+                       description='This is a hello world demo',
+                       creator=self.user)
 
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
         s.demo_package.close()

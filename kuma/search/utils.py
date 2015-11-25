@@ -1,10 +1,10 @@
 import logging
 
 import elasticsearch
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
-from tower import ugettext_lazy as _
 from urlobject import URLObject
 
 
@@ -13,6 +13,9 @@ log = logging.getLogger('kuma.search.utils')
 
 SEARCH_DOWN_DETAIL = _('Search is temporarily unavailable. '
                        'Please try again in a few minutes.')
+
+SEARCH_ERROR_DETAIL = _('Something went wrong with the search query. '
+                        'Please try again in a few minutes.')
 
 
 class QueryURLObject(URLObject):
@@ -54,11 +57,15 @@ class QueryURLObject(URLObject):
         """
         clean_params = {}
         for param, default in params.items():
-            if isinstance(default, list) and len(default) == 1:
-                default = default[0]
+            if isinstance(default, (list, tuple)):
+                # set all items with an empty value to an empty string
+                default = [item or '' for item in default]
+                if len(default) == 1:
+                    default = default[0]
             if isinstance(default, basestring):
                 default = default.strip()
-            if default not in ('', None):
+            # make sure the parameter name and value aren't empty
+            if param and default:
                 clean_params[param] = default
         return clean_params
 
@@ -68,13 +75,17 @@ def search_exception_handler(exc):
     # to get the standard error response.
     response = exception_handler(exc)
 
-    if (response is None and
-            isinstance(exc, elasticsearch.ElasticsearchException)):
-        # FIXME: This really should return a 503 error instead but Zeus
-        # doesn't let that through and displays a generic error page in that
-        # case which we don't want here
-        log.error('Elasticsearch exception: %s' % exc)
-        return Response({'error': SEARCH_DOWN_DETAIL},
-                        status=status.HTTP_200_OK)
+    if response is None:
+        if isinstance(exc, elasticsearch.ElasticsearchException):
+            # FIXME: This really should return a 503 error instead but Zeus
+            # doesn't let that through and displays a generic error page in that
+            # case which we don't want here
+            log.error('Elasticsearch exception: %s' % exc)
+            return Response({'detail': SEARCH_DOWN_DETAIL},
+                            status=status.HTTP_200_OK)
+        elif isinstance(exc, UnicodeDecodeError):
+            log.error('UnicodeDecodeError exception: %s' % exc)
+            return Response({'detail': SEARCH_ERROR_DETAIL},
+                            status=status.HTTP_404_NOT_FOUND)
 
     return response

@@ -1,0 +1,61 @@
+---
+- name: Create Apache SSL directory
+  file:
+    path: /etc/apache2/ssl
+    state: directory
+    owner: root
+    group: root
+
+- name: Add SSL certificate file.
+  copy:
+    src: apache2/ssl/apache.crt
+    dest: /etc/apache2/ssl/apache.crt
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+
+- name: Add SSL key file.
+  copy:
+    src: apache2/ssl/apache.key
+    dest: /etc/apache2/ssl/apache.key
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+
+- name: Add apache vhosts configuration.
+  copy:
+    src: apache2/vhosts.conf
+    dest: /etc/apache2/sites-available/kuma.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+
+- name: Add vhost symlink in sites-enabled.
+  file:
+    src: "/etc/apache2/sites-available/kuma.conf"
+    dest: "/etc/apache2/sites-enabled/kuma.conf"
+    state: link
+  notify: restart apache
+
+- name: Add all server configuration.
+  copy:
+    src: apache2/all-servers.conf
+    dest: /etc/apache2/conf-available/all-servers.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+
+- name: Add config symlink in conf-enabled.
+  file:
+    src: "/etc/apache2/conf-available/all-servers.conf"
+    dest: "/etc/apache2/conf-enabled/all-servers.conf"
+    state: link
+  notify: restart apache
+
+- name: Disable default vhost
+  command: a2dissite 000-default
+  notify: restart apache

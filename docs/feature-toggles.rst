@@ -1,3 +1,4 @@
+===============
 Feature Toggles
 ===============
 
@@ -11,10 +12,10 @@ Some site features are controlled using `constance`_. You control these
 features in the django admin site's `constance section`_.
 
 Waffle Features
----------------
+===============
 
 Switches
-~~~~~~~~
+--------
 
 `Waffle switches`_ are simple booleans - they are either on or off.
 
@@ -24,15 +25,15 @@ Switches
 * ``wiki_error_on_delete`` - throw an error if a user tries to delete a page
 * ``render_stale_document_async`` - render stale documents in a background
   sub-task
+* ``spam_checks_enabled`` - toggle spam checks site wide
 
 Flags
-~~~~~
+-----
 
 `Waffle flags`_ control behavior by specific users, groups, percentages, and
 other advanced criteria.
 
 * ``events_map`` - show the map on the events page
-* ``search_explanation`` - show search results scoring details
 * ``search_doc_navigator`` - show the search doc navigator feature
 * ``search_drilldown_faceting`` - treat search filters as "drill-down" filters
   - i.e., combine them with "AND" logic
@@ -41,13 +42,13 @@ other advanced criteria.
 * ``registration_disabled`` - enable/disable new user registration
 * ``social_account_research`` - enable/disable social account research on the
   "Sign in to Edit" page
-* ``github_login`` - enable/disable sign in via github
 * ``kumaediting`` - enable/disable wiki editing
 * ``kumabanned`` - (deprecated) added to users to mark them as banned
 * ``enable_customcss`` - enable/disable Template:CustomCSS styles in wiki pages
-* ``top_contributors`` - enable/disable the "Top Contributors" feature on wiki
   pages
 * ``page_move`` - enable/disable page move feature
+* ``wiki_spam_exempted`` - exempt users and user groups from checking
+  submissions for spam
 
 Constance Features
 ------------------

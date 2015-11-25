@@ -1,0 +1,124 @@
+/*
+share-link
+====================================================================== */
+.share-link {
+    border: 1px solid rgba-fallback(rgba(255,255,255,0.2));
+    border-radius: 2px;
+    box-shadow: none;
+    color: #fff;
+    bidi-value(margin, 0 $content-horizontal-spacing $content-vertical-spacing 0, 0 0 $content-vertical-spacing $content-horizontal-spacing);
+    padding: 3px;
+
+    &.facebook {
+        background-color: rgb(59, 89, 152);
+    }
+    &.twitter {
+        background-color: rgb(0, 172, 237);
+    }
+    &.gplus {
+        background-color: rgb(221, 75, 57);
+    }
+
+    {$selector-icon} {
+        bidi-style(margin-left, 0, margin-right, 4px);
+        bidi-style(margin-right, 4px, margin-left, 0);
+    }
+
+
+    /*
+    share-thin (can be removed if we decid not to use the share-thin style)
+    ====================================================================== */
+
+    .share-thin & {
+        display: inline-block;
+        width: 0;
+        height: 20px;
+        bidi-value(padding, 0 0 0 25px, 0 25px 0 0);
+        overflow: hidden;
+        vertical-align: middle;
+        position: relative;
+        border: 2px solid transparent;
+
+        &:focus,
+        &:hover {
+            border: 2px solid rgba(255,255,255, 0.5);
+        }
+
+        {$selector-icon} {
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            bidi-value(margin-left, -0.4em, -0.4em); /* using ems because relative to text size */
+        }
+
+        &.facebook {$selector-icon} {
+            bidi-value(margin-left, -0.25em, -0.25em); /* using ems because relative to text size */
+        }
+
+        &.gplus {$selector-icon} {
+            bidi-value(margin-left, -0.35em, -0.35em); /* using ems because relative to text size */
+        }
+
+
+        @media $media-query-small-desktop {
+            height: 40px;
+            bidi-style(padding-left, 40px, padding-right, 0);
+            font-size: 24px;
+
+            {$selector-icon} {
+                top: 10px;
+            }
+        }
+    }
+
+
+    /*
+    share-group (can be removed if we decide not to use the share-group style)
+    ====================================================================== */
+    $share-group-link-border-width = 2px;
+
+
+    .share-group & {
+        display: inline-block;
+        width: 0;
+        height: 30px;
+        bidi-value(padding, 0 0 0 30px, 0 30px 0 0);
+        overflow: hidden;
+        vertical-align: middle;
+        position: relative;
+        font-size: 18px;
+        bidi-value(margin, 0, 0);
+        border-radius: 0;
+        border: $share-group-link-border-width solid rgba-fallback(rgba(255,255,255,0.5), $text-color);
+        background-color: $link-color;
+
+        &:hover,
+        &:focus {
+            color: $text-color;
+        }
+
+        {$selector-icon} {
+            position: absolute;
+            top: 7px;
+            left: 50%;
+            bidi-value(margin-left, -0.4em, -0.4em); /* using ems because relative to text size */
+        }
+
+        &.twitter {
+            bidi-value(border-radius, 10px 0 0 10px, 0 10px 10px 0);
+            bidi-style(border-right-width, 0, border-left-width, $share-group-link-border-width);
+        }
+
+        &.facebook {
+            border-left-width: 0;
+            border-right-width: 0;
+        }
+
+        &.gplus {
+            bidi-value(border-radius, 0 10px 10px 0, 10px 0 0 10px);
+            bidi-style(border-left-width, 0, border-right-width, $share-group-link-border-width);
+        }
+    }
+}
+
+

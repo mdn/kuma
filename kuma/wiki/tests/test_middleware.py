@@ -1,8 +1,8 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+from nose.plugins.attrib import attr
 from nose.tools import eq_
 
 from kuma.core.cache import memcache
-from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import DocumentZone
 from kuma.wiki.tests import revision
@@ -114,35 +114,28 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         response = self.client.get(url, follow=False)
         eq_(200, response.status_code)
 
-    def test_reverse_rewrite(self):
-        """Ensure reverse() URLs are remapped"""
-        # HACK: This actually exercises code in kuma/core/urlresolvers.py, but
-        # lives here to share fixtures and such with other wiki URL remap code.
-        url = reverse('wiki.document',
-                      args=[self.other_doc.slug],
-                      locale='en-US')
-        eq_('/en-US/docs/otherPage', url)
-        url = reverse('wiki.edit_document',
-                      args=[self.other_doc.slug],
-                      locale='en-US')
-        eq_('/en-US/docs/otherPage$edit', url)
+    @attr('bug1189596')
+    def test_zone_url_ends_with_slash(self):
+        """Ensure urls only rewrite with a '/' at the end of url_root"""
+        zone_url_root = 'Firéfox'
+        zone_root_content = 'This is the Firéfox zone'
 
-        url = reverse('wiki.document',
-                      args=[self.middle_doc.slug],
-                      locale='en-US')
-        eq_('/en-US/ExtraWiki/Middle', url)
-        url = reverse('wiki.edit_document',
-                      args=[self.middle_doc.slug],
-                      locale='en-US')
-        eq_('/en-US/ExtraWiki/Middle$edit', url)
+        root_rev = revision(title='Firéfox', slug='Mozilla/Firéfox',
+                            content=zone_root_content,
+                            is_approved=True, save=True)
+        root_doc = root_rev.document
 
-        url = reverse('wiki.edit_document',
-                      args=[self.middle_doc.slug])
-        eq_('/ExtraWiki/Middle$edit', url)
+        root_zone = DocumentZone(document=root_doc)
+        root_zone.url_root = zone_url_root
+        root_zone.save()
 
-        self.root_zone.url_root = 'NewRoot'
-        self.root_zone.save()
+        none_zone_rev = revision(title='Firéfox for iOS',
+                                 slug='Mozilla/Firéfox_for_iOS',
+                                 content='Page outside zone with same prefix',
+                                 is_approved=True, save=True)
+        non_zone_doc = none_zone_rev.document
+        non_zone_doc.save()
 
-        url = reverse('wiki.edit_document',
-                      args=[self.middle_doc.slug])
-        eq_('/NewRoot/Middle$edit', url)
+        url = '/en-US/docs/%s' % non_zone_doc.slug
+        response = self.client.get(url, follow=False)
+        eq_(200, response.status_code)
