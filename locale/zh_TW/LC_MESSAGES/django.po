@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 16:55+0000\n"
+"PO-Revision-Date: 2015-11-25 02:02+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
@@ -343,17 +343,17 @@ msgstr "送出日期"
 #: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:2
 #, python-format
 msgid "%(object)s has been flagged %(flag_type)s"
-msgstr ""
+msgstr "%(object)s 已被標示 %(flag_type)s"
 
 #: kuma/contentflagging/templates/contentflagging/email/flagged.ltxt:6
 msgid ""
 "To change the status of this flag, click the following link, or paste it "
 "into your browser's location bar:"
-msgstr ""
+msgstr "要變更此旗標的狀態，請點擊下列鏈結，或將其貼到您瀏覽器的網址列:"
 
 #: kuma/core/apps.py:16
 msgid "Core"
-msgstr ""
+msgstr "核心"
 
 #: kuma/core/form_fields.py:57
 #, fuzzy, python-format
@@ -586,27 +586,25 @@ msgid "None"
 msgstr "無"
 
 #: kuma/dashboards/forms.py:11
-#, fuzzy
 msgid "Hour"
 msgstr "小時"
 
 #: kuma/dashboards/forms.py:12
-#, fuzzy
 msgid "Day"
 msgstr "天"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "週"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30 天"
 
 #: kuma/dashboards/forms.py:24
 #: kuma/dashboards/templates/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "語系:"
 
 #: kuma/dashboards/forms.py:28
 #: kuma/dashboards/templates/dashboards/revisions.html:19
@@ -634,7 +632,6 @@ msgid "Preceding Period:"
 msgstr ""
 
 #: kuma/dashboards/templates/dashboards/revisions.html:2
-#, fuzzy
 msgid "Revision Dashboard"
 msgstr "編修主控台"
 
@@ -669,13 +666,12 @@ msgid "new"
 msgstr ""
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:36
-#, fuzzy
 msgid "deleted"
-msgstr "刪除"
+msgstr "已刪除"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "封鎖 IP 不讓其進行編輯"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
 #, fuzzy
@@ -687,28 +683,28 @@ msgstr "這個使用者之下沒有您能管理的角色"
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:8
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "停止在有英語文章通過審核時接收 Email 通知"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:20
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "有英語文章通過審核時接收 Email 通知"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:7
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr ""
+msgstr "停止在有英語文章等待審核時接收 Email 通知"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:18
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr ""
+msgstr "有英語文章等待審核時接收 Email 通知"
 
 #: kuma/demos/__init__.py:34
 msgid "Removed from Derby"
