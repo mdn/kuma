@@ -1,6 +1,6 @@
 Metadata-Version: 2.0
 Name: setuptools
-Version: 18.5
+Version: 18.6.1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 Home-page: https://bitbucket.org/pypa/setuptools
 Author: Python Packaging Authority
