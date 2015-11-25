@@ -250,6 +250,7 @@ assets locally, follow these steps:
 #. In settings_local.py, set ``DEV = False``
 #. Run ``vagrant ssh`` to enter the virtual machine
 #. Run ``compile-stylesheets``
+#. Run ``./manage.py compilejsi18n``
 #. Run ``./manage.py collectstatic``
 #. Edit the file /etc/apache2/sites-enabled/kuma.conf and uncomment any lines
    pertaining to hosting static files
