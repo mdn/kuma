@@ -52,7 +52,7 @@
                 {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
               </div>
                <div class="revision-list-cell revision-list-prev">
-              {% if rev.previous_revision %}
+              {% if not loop.last %}
                 <a href="{{ url('wiki.compare_revisions', document.slug) }}?to={{ rev.id }}&amp;from={{ rev.previous_revision.id }}" rel="nofollow, noindex">{{ _('Previous') }}</a>
               {% endif %}
               </div>
