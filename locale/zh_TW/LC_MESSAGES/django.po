@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-25 02:02+0000\n"
+"PO-Revision-Date: 2015-11-25 03:31+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
@@ -663,7 +663,7 @@ msgstr "歷史紀錄"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:35
 msgid "new"
-msgstr ""
+msgstr "新"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:36
 msgid "deleted"
@@ -674,9 +674,8 @@ msgid "Ban IP from Editing"
 msgstr "封鎖 IP 不讓其進行編輯"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
-#, fuzzy
 msgid "There are no revisions matching this filter set."
-msgstr "這個使用者之下沒有您能管理的角色"
+msgstr "沒有符合這些條件的修改。"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
