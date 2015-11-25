@@ -2,9 +2,9 @@ import requests
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, QueryDict
+from django.middleware.csrf import get_token
 from django.shortcuts import redirect
-from django.template import RequestContext
-from django.views.decorators.http import require_POST, require_GET
+from django.views.decorators.http import require_GET, require_POST
 
 from allauth.socialaccount.helpers import complete_social_login
 from allauth.socialaccount.helpers import render_authentication_error
@@ -22,18 +22,7 @@ from .provider import PersonaProvider
 def persona_csrf(request):
     """Fetch a CSRF token for the frontend JavaScript."""
     # Bluntly stolen from django-browserid
-
-    # Different CSRF libraries (namely session_csrf) store the CSRF
-    # token in different places. The only way to retrieve the token
-    # that works with both the built-in CSRF and session_csrf is to
-    # pull it from the template context processors via
-    # RequestContext.
-    context = RequestContext(request)
-
-    # csrf_token might be a lazy value that triggers side-effects,
-    # so we need to force it to a string.
-    csrf_token = unicode(context.get('csrf_token', ''))
-
+    csrf_token = get_token(request)
     return HttpResponse(csrf_token)
 
 
