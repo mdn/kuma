@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-24 14:58+0000\n"
+"PO-Revision-Date: 2015-11-25 14:22+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -3696,11 +3696,11 @@ msgstr ""
 #: kuma/users/templates/account/logout.html:17
 #: templates/includes/common_macros.html:40
 msgid "Sign Out"
-msgstr ""
+msgstr "Odhlásit se"
 
 #: kuma/users/templates/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Opravdu se chcete odhlásit?"
 
 #: kuma/users/templates/account/password_change.html:3
 #: kuma/users/templates/account/password_change.html:8
@@ -6077,7 +6077,7 @@ msgstr "Vývojářské nástroje"
 
 #: templates/base.html:163
 msgid "Feedback"
-msgstr ""
+msgstr "Zpětná vazba"
 
 #: templates/base.html:168
 msgid "Get Firefox help"
