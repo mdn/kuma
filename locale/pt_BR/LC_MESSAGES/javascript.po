@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-25 10:33+0000\n"
+"PO-Revision-Date: 2015-11-26 12:11+0000\n"
 "Last-Translator: Marco Aurélio <ouesten@me.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
@@ -65,7 +65,7 @@ msgstr "Minha pesquisa deveria ter me levado a um artigo diferente."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Something else"
-msgstr ""
+msgstr "Algo mais"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Choose one..."
@@ -81,11 +81,11 @@ msgstr "Obrigado! Vamos consertar."
 
 #: kuma/static/js/modal-control.js:15
 msgid "Demo Studio"
-msgstr ""
+msgstr "Demo Studio"
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "Nada selecionado"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
@@ -117,19 +117,19 @@ msgstr "Mais sobre o beta."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "Responda a pesquisa"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "Informar um erro."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr ""
+msgstr "Informado. Obrigado!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "Mostrar tabela antiga."
 
 #: kuma/static/js/wiki-edit.js:400
 msgid ""
@@ -137,6 +137,9 @@ msgid ""
 " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
 "draft</a>."
 msgstr ""
+"Você tem um rascunho em andamento. <a href=\"\" "
+"class=\"restoreLink\">Restaurar conteúdo do rascunho</a> ou <a href=\"\" "
+"class=\"discardLink\">descartá-lo</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
@@ -148,16 +151,18 @@ msgstr "Nova etiqueta..."
 
 #: kuma/static/js/wiki.js:230
 msgid "How to read CSS syntax."
-msgstr ""
+msgstr "Como ler uma sintaxe CSS."
 
 #: kuma/static/js/wiki.js:555
 msgid "Search Stack Overflow"
-msgstr ""
+msgstr "Pesquisar no Stack Overflow"
 
 #: kuma/static/js/wiki.js:668
 msgid ""
 "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
+"Seu navegador não suporta MathML. Ao invés disso, foi utilizado um recurso "
+"CSS."
 
 #: kuma/static/js/wiki.js:883
 msgid "Details"
@@ -251,35 +256,35 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:24
 msgid "Syntax Highlighter"
-msgstr ""
+msgstr "Destacar sintaxe"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:30
 msgid "No Highlight"
-msgstr ""
+msgstr "Sem destaque"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:27
 msgid "Embed YouTube Video"
-msgstr ""
+msgstr "Integrar vídeo do YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:28
 msgid "Locate a YouTube Video"
-msgstr ""
+msgstr "Localizar um vídeo do YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:29
 msgid "Paste YouTube Video URL"
-msgstr ""
+msgstr "Colar URL do vídeo do YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
-msgstr ""
+msgstr "Formato da tela"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:31
 msgid "You must input a valid YouTube video URL."
-msgstr ""
+msgstr "Você deve fornecer um URL válido de um vídeo do YouTube."
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:32
 msgid "The URL you've entered doesn't appear to be valid"
-msgstr ""
+msgstr "A URL informada não parece ser válida"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
