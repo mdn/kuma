@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-26 21:44+0000\n"
-"Last-Translator: Rodrigo Padula <rodrigopadula@gmail.com>\n"
+"PO-Revision-Date: 2015-11-27 16:19+0000\n"
+"Last-Translator: Marco Aurélio <ouesten@me.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -2746,29 +2746,29 @@ msgid "Subscribe to a feed of all demos"
 msgstr "Subscreva para um feed de todos os demos"
 
 #: kuma/demos/templates/demos/listing_search.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Search for \"%(query)s\""
-msgstr "Buscar por \"{query}\""
+msgstr "Pesquisar por \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_search.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search results for \"%(query)s\""
-msgstr "Buscar resultados para \"{query}\""
+msgstr "Pesquisar resultados para \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_search.html:27
-#, fuzzy, python-format
+#, python-format
 msgid "Search demos for \"%(query)s\""
-msgstr "Buscar demonstrações por \"{query}\""
+msgstr "Pesquisar demonstrações por \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_search.html:33
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to a feed of search results for \"%(query)s\""
-msgstr "Assinar um feed de resultados de pesquisa para \"{query}\""
+msgstr "Assinar um feed de resultados de pesquisa para \"%(query)s\""
 
 #: kuma/demos/templates/demos/listing_tag.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "%(tag_title)s Demos"
-msgstr "{tag_title} Demos"
+msgstr "%(tag_title)s Demos"
 
 #: kuma/demos/templates/demos/submit.html:13
 #: kuma/demos/templates/demos/submit.html:53
@@ -6363,7 +6363,7 @@ msgstr "Todos os modelos"
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
 msgstr[0] "%(num)s template encontrado."
-msgstr[1] ""
+msgstr[1] "%(num)s templates encontrados."
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
 msgid "Documents with errors"
@@ -6415,9 +6415,9 @@ msgid "Found %(count)s documents."
 msgstr "Encontrado %(count)s documento."
 
 #: kuma/wiki/templates/wiki/list/revisions.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revision History | %(document)s"
-msgstr "Histórico de revisão | {document}"
+msgstr "Histórico de revisão | %(document)s"
 
 #: kuma/wiki/templates/wiki/list/revisions.html:14
 msgid "History of"
@@ -6448,9 +6448,9 @@ msgid "There are no tags."
 msgstr "Não há etiquetas."
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr "Artigos localizados com a tag: {tag}"
+msgstr "Artigos localizados com a tag: %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
