@@ -329,14 +329,12 @@ class ViewTests(UserTestCase, WikiTestCase):
         eq_(resp.content, 'Foo bar <a href="http://example.com">baz</a>')
 
     @override_settings(CELERY_ALWAYS_EAGER=True)
-    @mock.patch('waffle.flag_is_active')
-    @mock.patch('kuma.wiki.jobs.DocumentContributorsJob.get')
+    @mock.patch('waffle.flag_is_active', return_value=True)
+    @mock.patch('kuma.wiki.jobs.DocumentContributorsJob.get', return_value=[
+        {'id': 1, 'username': 'ringo', 'email': 'ringo@apple.co.uk'},
+        {'id': 2, 'username': 'john', 'email': 'lennon@apple.co.uk'},
+    ])
     def test_footer_contributors(self, get_contributors, flag_is_active):
-        get_contributors.return_value = [
-            {'id': 1, 'username': 'ringo', 'email': 'ringo@apple.co.uk'},
-            {'id': 2, 'username': 'john', 'email': 'lennon@apple.co.uk'},
-        ]
-        flag_is_active.return_value = True
         d, r = doc_rev('some content')
         resp = self.client.get(d.get_absolute_url())
         page = pq(resp.content)
@@ -645,10 +643,10 @@ class BannedIPTests(UserTestCase, WikiTestCase):
         self.ip = '127.0.0.1'
         self.ip_ban = IPBan.objects.create(ip=self.ip)
         self.doc, rev = doc_rev()
-        self.edit_url = reverse('wiki.edit',
-                                args=[self.doc.slug])
+        self.edit_url = reverse('wiki.edit', args=[self.doc.slug])
 
     def tearDown(self):
+        super(BannedIPTests, self).tearDown()
         cache.clear()
 
     def test_banned_ip_cant_get_edit(self):
@@ -667,6 +665,9 @@ class BannedIPTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
 
 
+TEST_CONTENT = "TEST CONTENT"
+
+
 class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     """
     Tests for usage of the kumascript service.
@@ -679,78 +680,55 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     def setUp(self):
         super(KumascriptIntegrationTests, self).setUp()
         self.d, self.r = doc_rev()
-        self.r.content = "TEST CONTENT"
+        self.r.content = TEST_CONTENT
         self.r.save()
         self.d.tags.set('foo', 'bar', 'baz')
-        self.url = reverse('wiki.document',
-                           args=(self.d.slug,),
-                           locale=self.d.locale)
-
-        # TODO: upgrade mock to 0.8.0 so we can do this.
-
-        # self.mock_kumascript_get = (
-        #         mock.patch('kuma.wiki.kumascript.get'))
-        # self.mock_kumascript_get.return_value = self.d.html
-
-    def tearDown(self):
-        super(KumascriptIntegrationTests, self).tearDown()
-
-        # TODO: upgrade mock to 0.8.0 so we can do this.
-
-        # self.mock_kumascript_get.stop()
+        self.url = self.d.get_absolute_url()
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
-    @mock.patch('kuma.wiki.kumascript.get')
+    @mock.patch('kuma.wiki.kumascript.get', return_value=(TEST_CONTENT, None))
     def test_basic_view(self, mock_kumascript_get):
         """When kumascript timeout is non-zero, the service should be used"""
-        mock_kumascript_get.return_value = (self.d.html, None)
         self.client.get(self.url, follow=False)
-        ok_(mock_kumascript_get.called,
-            "kumascript should have been used")
+        ok_(mock_kumascript_get.called, "kumascript should have been used")
 
     @override_config(KUMASCRIPT_TIMEOUT=0.0)
-    @mock.patch('kuma.wiki.kumascript.get')
+    @mock.patch('kuma.wiki.kumascript.get', return_value=(TEST_CONTENT, None))
     def test_disabled(self, mock_kumascript_get):
         """When disabled, the kumascript service should not be used"""
-        mock_kumascript_get.return_value = (self.d.html, None)
         self.client.get(self.url, follow=False)
         ok_(not mock_kumascript_get.called,
             "kumascript not should have been used")
 
     @override_config(KUMASCRIPT_TIMEOUT=0.0)
-    @mock.patch('kuma.wiki.kumascript.get')
     @override_settings(CELERY_ALWAYS_EAGER=True)
+    @mock.patch('kuma.wiki.kumascript.get', return_value=(TEST_CONTENT, None))
     def test_disabled_rendering(self, mock_kumascript_get):
         """When disabled, the kumascript service should not be used
         in rendering"""
-        mock_kumascript_get.return_value = (self.d.html, None)
         self.d.schedule_rendering('max-age=0')
         ok_(not mock_kumascript_get.called,
             "kumascript not should have been used")
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
-    @mock.patch('kuma.wiki.kumascript.get')
+    @mock.patch('kuma.wiki.kumascript.get', return_value=(TEST_CONTENT, None))
     def test_nomacros(self, mock_kumascript_get):
-        mock_kumascript_get.return_value = (self.d.html, None)
         self.client.get('%s?nomacros' % self.url, follow=False)
         ok_(not mock_kumascript_get.called,
             "kumascript should not have been used")
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
-    @mock.patch('kuma.wiki.kumascript.get')
+    @mock.patch('kuma.wiki.kumascript.get', return_value=(TEST_CONTENT, None))
     def test_raw(self, mock_kumascript_get):
-        mock_kumascript_get.return_value = (self.d.html, None)
         self.client.get('%s?raw' % self.url, follow=False)
         ok_(not mock_kumascript_get.called,
             "kumascript should not have been used")
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
-    @mock.patch('kuma.wiki.kumascript.get')
+    @mock.patch('kuma.wiki.kumascript.get', return_value=(TEST_CONTENT, None))
     def test_raw_macros(self, mock_kumascript_get):
-        mock_kumascript_get.return_value = (self.d.html, None)
         self.client.get('%s?raw&macros' % self.url, follow=False)
-        ok_(mock_kumascript_get.called,
-            "kumascript should have been used")
+        ok_(mock_kumascript_get.called, "kumascript should have been used")
 
     @responses.activate
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
@@ -860,7 +838,9 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
             "logs": [
                 {"level": "debug",
                  "message": "Message #1",
-                 "args": ['TestError', {}, {'name': 'SomeMacro', 'token': {'args': 'arguments here'}}],
+                 "args": ['TestError', {},
+                          {'name': 'SomeMacro',
+                           'token': {'args': 'arguments here'}}],
                  "time": "12:32:03 GMT-0400 (EDT)",
                  "timestamp": "1331829123101000"},
                 {"level": "warning",
@@ -978,7 +958,7 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
                            locale=settings.WIKI_DEFAULT_LANGUAGE)
             revision(save=True, document=doc)
             response = self.client.get(reverse('wiki.document', args=[slug],
-                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
+                                               locale=settings.WIKI_DEFAULT_LANGUAGE))
             page = pq(response.content)
 
             ok_(page.find('title').text() in aught_titles)
@@ -1016,7 +996,7 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
 
             # Connect to newly created page
             response = self.client.get(reverse('wiki.document', args=[slug],
-                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
+                                               locale=settings.WIKI_DEFAULT_LANGUAGE))
             page = pq(response.content)
             meta_content = page.find('meta[name=description]').attr('content')
             eq_(str(meta_content).decode('utf-8'),
@@ -1270,7 +1250,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'slug': exist_slug
         })
         resp = self.client.post(reverse('wiki.edit',
-                                args=['some-new-title']), data)
+                                        args=['some-new-title']), data)
         eq_(200, resp.status_code)
         p = pq(resp.content)
 
@@ -2416,12 +2396,10 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                     locale=settings.WIKI_DEFAULT_LANGUAGE))
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
-    @mock.patch('kuma.wiki.kumascript.get')
+    @mock.patch('kuma.wiki.kumascript.get',
+                return_value=('lorem ipsum dolor sit amet', None))
     def test_revert(self, mock_kumascript_get):
         self.client.login(username='admin', password='testpass')
-
-        mock_kumascript_get.return_value = (
-            'lorem ipsum dolor sit amet', None)
 
         data = new_document_data()
         data['title'] = 'A Test Article For Reverting'
@@ -2438,19 +2416,18 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.post(reverse('wiki.edit',
                                             args=[doc.slug]), data)
 
-        mock_kumascript_get.called = False
+        mock_kumascript_get.reset_mock()
         response = self.client.post(reverse('wiki.revert_document',
                                             args=[doc.slug, rev.id]),
                                     {'revert': True, 'comment': 'Blah blah'})
-        ok_(mock_kumascript_get.called,
-            "kumascript should have been used")
+        ok_(mock_kumascript_get.called, "kumascript should have been used")
 
         ok_(302 == response.status_code)
         rev = doc.revisions.order_by('-id').all()[0]
         ok_('lorem ipsum dolor sit amet' == rev.content)
         ok_('Blah blah' in rev.comment)
 
-        mock_kumascript_get.called = False
+        mock_kumascript_get.reset_mock()
         rev = doc.revisions.order_by('-id').all()[1]
         response = self.client.post(reverse('wiki.revert_document',
                                             args=[doc.slug, rev.id]),
@@ -2458,8 +2435,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(302 == response.status_code)
         rev = doc.revisions.order_by('-id').all()[0]
         ok_(': ' not in rev.comment)
-        ok_(mock_kumascript_get.called,
-            "kumascript should have been used")
+        ok_(mock_kumascript_get.called, "kumascript should have been used")
 
     def test_revert_moved(self):
         doc = document(slug='move-me', save=True)
@@ -3518,6 +3494,7 @@ class CodeSampleViewFileServingTests(UserTestCase, WikiTestCase):
         eq_(response['Location'], attachment.get_file_url())
 
 
+@override_config(KUMASCRIPT_TIMEOUT=5.0, KUMASCRIPT_MAX_AGE=600)
 class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
     """Tests for the deferred rendering system and interaction with views"""
     localizing_client = True
@@ -3536,19 +3513,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         self.d.html = self.raw_content
         self.d.rendered_html = self.rendered_content
         self.d.save()
+        self.url = self.d.get_absolute_url()
 
-        self.url = reverse('wiki.document',
-                           args=(self.d.slug,),
-                           locale=self.d.locale)
-
-        config.KUMASCRIPT_TIMEOUT = 5.0
-        config.KUMASCRIPT_MAX_AGE = 600
-
-    def tearDown(self):
-        super(DeferredRenderingViewTests, self).tearDown()
-
-        config.KUMASCRIPT_TIMEOUT = 0
-        config.KUMASCRIPT_MAX_AGE = 0
 
     @mock.patch('kuma.wiki.kumascript.get')
     def test_rendered_content(self, mock_kumascript_get):
@@ -4077,7 +4043,9 @@ class PageMoveTests(UserTestCase, WikiTestCase):
     def setUp(self):
         super(PageMoveTests, self).setUp()
         page_move_flag = Flag.objects.create(name='page_move')
-        page_move_flag.users = self.user_model.objects.filter(is_superuser=True)
+        page_move_flag.users = self.user_model.objects.filter(
+            is_superuser=True
+        )
         page_move_flag.save()
 
     def test_move_conflict(self):
