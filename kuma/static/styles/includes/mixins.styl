@@ -50,6 +50,13 @@ set-larger-font-size() {
     set-font-size($base-bump-font-size);
 }
 
+media-query-emify(value) {
+    /* media queries work of browser base font size (16px),
+       even if we change html font size */
+    v = unit(value / 16px, 'em');
+    return round(v, 3);
+}
+
 /* vendor prefixes */
 
 
