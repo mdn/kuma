@@ -114,4 +114,4 @@ django-sundial==1.0.1
 
 django-pipeline==1.5.4
 
-django-celery-transactions==0.3.5
+django-celery-transactions==0.3.6
