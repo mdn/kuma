@@ -374,6 +374,8 @@ class Catalog(object):
         else:
             headers.append(('PO-Revision-Date', self.revision_date))
         headers.append(('Last-Translator', self.last_translator))
+        if self.locale is not None:
+            headers.append(('Language', str(self.locale)))
         if (self.locale is not None) and ('LANGUAGE' in self.language_team):
             headers.append(('Language-Team',
                            self.language_team.replace('LANGUAGE',
@@ -457,6 +459,7 @@ class Catalog(object):
     POT-Creation-Date: 1990-04-01 15:30+0000
     PO-Revision-Date: 1990-08-03 12:00+0000
     Last-Translator: John Doe <jd@example.com>
+    Language: de_DE
     Language-Team: de_DE <de@example.com>
     Plural-Forms: nplurals=2; plural=(n != 1)
     MIME-Version: 1.0

@@ -5,7 +5,7 @@
 
 anyjson==0.3.3
 
-Babel==2.0
+Babel==2.1.1
 
 BeautifulSoup==3.2.1
 
