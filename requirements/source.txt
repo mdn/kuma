@@ -52,6 +52,8 @@ raven==3.3.12
 
 requests==2.8.1
 
+requests-mock==0.7.0
+
 requests-oauthlib==0.5.0
 
 puente==0.3
@@ -111,9 +113,5 @@ django-flat-theme==1.1.1
 django-sundial==1.0.1
 
 django-pipeline==1.5.4
-
-cookies==2.2.1
-
-responses==0.5.0
 
 django-celery-transactions==0.3.5
