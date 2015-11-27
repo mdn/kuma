@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-24 14:38+0000\n"
-"Last-Translator: Zilmar <zilmar.jr@gmail.com>\n"
+"PO-Revision-Date: 2015-11-26 21:44+0000\n"
+"Last-Translator: Rodrigo Padula <rodrigopadula@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -704,9 +704,8 @@ msgid "Ban IP from Editing"
 msgstr "Banir IP para edições"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
-#, fuzzy
 msgid "There are no revisions matching this filter set."
-msgstr "Não existem papéis para gerenciar para este usuário."
+msgstr "Não existem revisões coincidentes com este conjunto de filtros."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -2262,9 +2261,8 @@ msgstr ""
 " Isto não pode ser revertido."
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:23
-#, fuzzy
 msgid "Explanation URL (optional):"
-msgstr "Explicação:"
+msgstr "URL de explicação (opcional):"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
 msgid "Yes, I'm sure"
@@ -2282,9 +2280,9 @@ msgstr "Sim, tenho certeza"
 #: kuma/demos/templates/demos/submit.html:15
 #: kuma/demos/templates/demos/submit_noauth.html:11
 #: kuma/demos/templates/demos/terms.html:10
-#, fuzzy, python-format
+#, python-format
 msgid "%(subtitle)s | Demo Studio"
-msgstr "{subtitle} | Estúdio de Demos"
+msgstr "%(subtitle)s | Demo Studio"
 
 #: kuma/demos/templates/demos/delete.html:20
 msgid "MDN"
@@ -2478,7 +2476,7 @@ msgstr[1] "Este demo foi visualizado {count} vezes"
 #, python-format
 msgid "%(num)s view"
 msgid_plural "%(num)s views"
-msgstr[0] ""
+msgstr[0] "%(num)s visualização"
 msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:166
@@ -2493,7 +2491,7 @@ msgstr[1] "{count} pessoas curtiram esse demo"
 #, python-format
 msgid "%(num)s like"
 msgid_plural "%(num)s likes"
-msgstr[0] ""
+msgstr[0] "%(num)s curtida(s)"
 msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:181
@@ -2774,9 +2772,9 @@ msgstr "{tag_title} Demos"
 
 #: kuma/demos/templates/demos/submit.html:13
 #: kuma/demos/templates/demos/submit.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Edit %(demo_title)s"
-msgstr "Editar {demo_title}"
+msgstr "Editar %(demo_title)s"
 
 #: kuma/demos/templates/demos/submit.html:15
 #: kuma/demos/templates/demos/submit.html:55
@@ -3047,7 +3045,7 @@ msgstr "Veja o perfil de %(display_name)s"
 #, python-format
 msgid "%(num)s Demo"
 msgid_plural "%(num)s Demos"
-msgstr[0] ""
+msgstr[0] "%(num)s Demo"
 msgstr[1] ""
 
 # 75%
@@ -5855,7 +5853,7 @@ msgstr "Esta é uma pré-visualização de um documento não salvo."
 #: kuma/wiki/templates/wiki/revision.html:2
 #, python-format
 msgid "Revision %(id)s | %(title)s | %(category)s"
-msgstr ""
+msgstr "Revisão %(id)s | %(title)s | %(category)s"
 
 #: kuma/wiki/templates/wiki/revision.html:13
 msgid "Revision Information"
@@ -5939,14 +5937,14 @@ msgid "View Source"
 msgstr "Visualizar fonte"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Show %(locale)s"
-msgstr "Mostrar {locale}"
+msgstr "Exibir %(locale)s"
 
 #: kuma/wiki/templates/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Hide %(locale)s"
-msgstr "Ocultar {locale}"
+msgstr "Ocultar %(locale)s"
 
 #: kuma/wiki/templates/wiki/translate.html:99
 #, fuzzy, python-format
@@ -6093,9 +6091,9 @@ msgstr "Alterar Revisões"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:37
 #: kuma/wiki/templates/wiki/includes/document_macros.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(num)s:"
-msgstr "Revisão {num}:"
+msgstr "Revisão %(num)s:"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:82
 #: kuma/wiki/templates/wiki/includes/revision_diff_table.html:8
@@ -6137,9 +6135,9 @@ msgid "Updating subscription status"
 msgstr "Atualizando o estado da subscrição"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:144
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to %(title)s"
-msgstr "Subscreva para {title}"
+msgstr "Subscreva para %(title)s"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:145
 #, fuzzy, python-format
@@ -6327,9 +6325,9 @@ msgid "Translate Description"
 msgstr "Traduzir descrição"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:15
-#, fuzzy, python-format
+#, python-format
 msgid "Title in %(locale)s:"
-msgstr "Título em {locale}:"
+msgstr "Título em %(locale)s:"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:26
 #, fuzzy, python-format
@@ -6361,11 +6359,11 @@ msgid "All templates"
 msgstr "Todos os modelos"
 
 #: kuma/wiki/templates/wiki/list/documents.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] "Encontrado %(count)s documento."
-msgstr[1] "Encontrados %(count)s documentos."
+msgstr[0] "%(num)s template encontrado."
+msgstr[1] ""
 
 #: kuma/wiki/templates/wiki/list/documents.html:11
 msgid "Documents with errors"
