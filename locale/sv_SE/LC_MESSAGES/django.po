@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-28 12:41+0000\n"
+"PO-Revision-Date: 2015-11-28 13:58+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -3509,7 +3509,7 @@ msgstr ""
 
 #: kuma/users/forms.py:23
 msgid "You must agree to the privacy policy."
-msgstr ""
+msgstr "Du måste godkänna sekretesspolicyn."
 
 #: kuma/users/forms.py:38
 msgid "Plain text"
@@ -3521,7 +3521,7 @@ msgstr "Skicka mig nyhetsbrevet"
 
 #: kuma/users/forms.py:42
 msgid "Preferred format"
-msgstr ""
+msgstr "Format som föredras"
 
 #: kuma/users/forms.py:47 kuma/users/signup.py:32
 msgid "I agree"
@@ -3592,11 +3592,11 @@ msgstr "Facebook"
 
 #: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "Expertområden måste vara en delmängd av intressen"
 
 #: kuma/users/forms.py:275
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Det här fältet kan inte vara tomt."
 
 #: kuma/users/forms.py:281
 msgid "Username already in use."
@@ -3621,7 +3621,7 @@ msgstr "Admin"
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_user)s bannlyst av %(banned_by)s"
 
 #: kuma/users/models.py:32
 #, python-format
@@ -3671,7 +3671,7 @@ msgstr "Taggar"
 
 #: kuma/users/models.py:102
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Ange en giltig webbplats URL."
 
 #: kuma/users/models.py:107
 msgid "Enter a valid Twitter URL."
@@ -3683,19 +3683,19 @@ msgstr "Ange en giltig URL för GitHub."
 
 #: kuma/users/models.py:117
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Ange en giltig Stack Overflow URL."
 
 #: kuma/users/models.py:122
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Ange en giltig LinkedIn URL."
 
 #: kuma/users/models.py:127
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Ange en giltig Mozillians URL."
 
 #: kuma/users/models.py:132
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "Ange en giltig Facebook URL."
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
@@ -3717,11 +3717,11 @@ msgstr ""
 
 #: kuma/users/signup.py:13
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "Du måste godkänna användarvillkoren."
 
 #: kuma/users/tasks.py:38 kuma/users/templates/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr ""
+msgstr "Ta nästa steg för att engagera dig på MDN!"
 
 #: kuma/users/views.py:236
 msgid "Email address"
@@ -3730,12 +3730,12 @@ msgstr "E-postadress"
 #: kuma/users/views.py:295
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>Verifierad</b>"
 
 #: kuma/users/views.py:298
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s Ej verifierade"
 
 #: kuma/users/views.py:301 kuma/users/templates/socialaccount/signup.html:142
 msgid "Other:"
@@ -3904,7 +3904,7 @@ msgstr ""
 
 #: kuma/users/templates/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Felaktig tecken"
 
 #: kuma/users/templates/account/password_reset_from_key.html:17
 #, python-format
@@ -4633,15 +4633,15 @@ msgstr ""
 
 #: kuma/wiki/forms.py:36
 msgid "Name Your Article"
-msgstr ""
+msgstr "Namnge din artikel"
 
 #: kuma/wiki/forms.py:37
 msgid "Please provide a slug."
-msgstr ""
+msgstr "Vänligen ange en slugg."
 
 #: kuma/wiki/forms.py:38
 msgid "The slug provided is not valid."
-msgstr ""
+msgstr "Sluggen som tillhandahålls är inte giltig."
 
 #: kuma/wiki/forms.py:39
 #, python-format
@@ -4984,6 +4984,8 @@ msgid ""
 "You are about to delete this document and all of its revisions. Please let "
 "us know why this page should be deleted."
 msgstr ""
+"Du är på väg att ta bort det här dokumentet och alla dess ändringar. "
+"Informera oss om varför den här sidan bör tas bort."
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
@@ -4992,11 +4994,11 @@ msgstr "Är du säker på att du vill fortsätta?"
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:2
 #, python-format
 msgid "Revert Revision | %(document)s"
-msgstr ""
+msgstr "Återställ revision | %(document)s"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
-msgstr ""
+msgstr "Är du säker på att du vill återställa denna revision?"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:18
 msgid "Document"
@@ -5015,6 +5017,8 @@ msgid ""
 "You are about to revert the document to this revision. Click \"revert\" to "
 "revert to the content&nbsp;above."
 msgstr ""
+"Du håller på att återställa dokumentet till denna revision. Klicka på "
+"\"återställ\" för att återställa till innehållet&nbsp;ovan."
 
 #: kuma/wiki/templates/wiki/create.html:6
 msgid "Create a New Template"
@@ -5098,13 +5102,13 @@ msgstr "bidragare"
 #, python-format
 msgid "by %(count)s contributor:"
 msgid_plural "by %(count)s contributors:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "av %(count)s bidragare:"
+msgstr[1] "av %(count)s bidragare:"
 
 #: kuma/wiki/templates/wiki/document.html:200
 #, python-format
 msgid "View profile: %(username)s"
-msgstr ""
+msgstr "Visa profil: %(username)s"
 
 #: kuma/wiki/templates/wiki/document.html:223
 msgid "Show Sidebar"
@@ -5112,7 +5116,7 @@ msgstr "Visa sidofält"
 
 #: kuma/wiki/templates/wiki/document.html:237
 msgid "In This Article"
-msgstr ""
+msgstr "I denna artikel"
 
 #: kuma/wiki/templates/wiki/document.html:262
 #, python-format
@@ -5139,11 +5143,11 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/document.html:295
 msgid "This article is in need of a technical review."
-msgstr ""
+msgstr "Denna artikel är i behov av en teknisk granskning."
 
 #: kuma/wiki/templates/wiki/document.html:300
 msgid "This article is in need of an editorial review."
-msgstr ""
+msgstr "Denna artikel är i behov av en redaktionell granskning."
 
 #: kuma/wiki/templates/wiki/document.html:306
 #, python-format
@@ -5223,6 +5227,8 @@ msgstr "Dina ändringar"
 msgid ""
 "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
 msgstr ""
+"Revision %(id)s av <a href=\"%(user_profile_url)s\">%(user)s</a> den "
+"%(date)s"
 
 #: kuma/wiki/templates/wiki/edit.html:51
 msgid "Current Revision:"
@@ -5279,6 +5285,8 @@ msgstr ""
 msgid ""
 "Don't be afraid to break something, you can always revert your changes."
 msgstr ""
+"Var inte rädd för att förstöra något, du kan alltid återställa dina "
+"ändringar."
 
 #: kuma/wiki/templates/wiki/edit.html:169
 msgid "Have fun and be proud of your contribution!"
@@ -5381,11 +5389,11 @@ msgstr "Flytta sida"
 #: kuma/wiki/templates/wiki/move.html:97
 #, python-format
 msgid "The following %(count)s subpages will be affected by this move:"
-msgstr ""
+msgstr "Följande %(count)s undersidor kommer att påverkas av denna flytt:"
 
 #: kuma/wiki/templates/wiki/move.html:104
 msgid "No other documents will be affected by this change."
-msgstr ""
+msgstr "Inga andra dokument kommer att påverkas av denna förändring."
 
 #: kuma/wiki/templates/wiki/move_requested.html:2
 msgid "Page move requested"
@@ -5401,29 +5409,29 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
-msgstr ""
+msgstr "Detta är en förhandsgranskning av ett dokument som inte har sparats."
 
 #: kuma/wiki/templates/wiki/revision.html:2
 #, python-format
 msgid "Revision %(id)s | %(title)s | %(category)s"
-msgstr ""
+msgstr "Revision %(id)s | %(title)s | %(category)s"
 
 #: kuma/wiki/templates/wiki/revision.html:13
 msgid "Revision Information"
-msgstr ""
+msgstr "Revisionsinformation"
 
 #: kuma/wiki/templates/wiki/revision.html:60
 msgid "Revision Content"
-msgstr ""
+msgstr "Revisionsinnehåll"
 
 #: kuma/wiki/templates/wiki/revision.html:67
 msgid "Revision Source"
-msgstr ""
+msgstr "Revisionskälla"
 
 #: kuma/wiki/templates/wiki/revision.html:74
 #: kuma/wiki/templates/wiki/list/revisions.html:70
 msgid "Revert to this revision"
-msgstr ""
+msgstr "Återställ till denna revision"
 
 #: kuma/wiki/templates/wiki/select_locale.html:2
 #, python-format
@@ -5514,7 +5522,7 @@ msgstr "%(locale)s taggar"
 
 #: kuma/wiki/templates/wiki/translate.html:144
 msgid "Version Notes"
-msgstr ""
+msgstr "Versionsanteckningar"
 
 #: kuma/wiki/templates/wiki/translate.html:146
 msgid "Localization flags"
@@ -5523,7 +5531,7 @@ msgstr "Översättningsflaggor"
 #: kuma/wiki/templates/wiki/email/edited.ltxt:4
 #, python-format
 msgid "%(creator)s changed %(document_title)s."
-msgstr ""
+msgstr "%(creator)s ändrade %(document_title)s."
 
 #. This is in an email.
 #: kuma/wiki/templates/wiki/email/edited.ltxt:13
@@ -5681,17 +5689,17 @@ msgstr ""
 #: kuma/wiki/templates/wiki/includes/document_macros.html:144
 #, python-format
 msgid "Subscribe to %(title)s"
-msgstr ""
+msgstr "Prenumerera på %(title)s"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:145
 #, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr ""
+msgstr "Avsluta prenumeration från %(title)s"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:148
 #, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr ""
+msgstr "Du prenumererar nu på %(title)s."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:148
 #, python-format
@@ -5701,12 +5709,12 @@ msgstr "Du har avregistrerat från %(title)s."
 #: kuma/wiki/templates/wiki/includes/document_macros.html:159
 #, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Prenumerera på version <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:160
 #, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Avsluta prenumeration från version <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:163
 #, python-format
@@ -5814,11 +5822,11 @@ msgstr "Förhandsgranska ändringar"
 
 #: kuma/wiki/templates/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr ""
+msgstr "Granskning behövs?"
 
 #: kuma/wiki/templates/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr ""
+msgstr "Revisionskommentar"
 
 #: kuma/wiki/templates/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
@@ -5992,6 +6000,8 @@ msgid ""
 "Document already exists. Note: You cannot revert a document that has been "
 "moved until you delete its redirect."
 msgstr ""
+"Dokument finns redan. Obs: Du kan inte återställa ett dokument som har "
+"flyttats förrän du tar bort dess omdirigering."
 
 #: kuma/wiki/views/document.py:600
 #, python-format
