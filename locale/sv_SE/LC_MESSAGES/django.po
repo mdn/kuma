@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-28 11:01+0000\n"
+"PO-Revision-Date: 2015-11-28 11:47+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -3916,7 +3916,7 @@ msgstr ""
 
 #: kuma/users/templates/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr ""
+msgstr "Ändra lösenord"
 
 #: kuma/users/templates/account/password_reset_from_key.html:26
 #: kuma/users/templates/account/password_reset_from_key_done.html:8
@@ -3927,7 +3927,7 @@ msgstr "Ditt lösenord är nu ändrat."
 #: kuma/users/templates/account/password_set.html:7
 #: kuma/users/templates/account/password_set.html:12
 msgid "Set Password"
-msgstr "Sätt lösenord"
+msgstr "Ange lösenord"
 
 #: kuma/users/templates/account/signup.html:3
 msgid "Signup"
@@ -4241,7 +4241,7 @@ msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:167
 msgid "No Demos"
-msgstr ""
+msgstr "Inga demon"
 
 #: kuma/users/templates/users/user_detail.html:169
 #, python-format
@@ -4334,7 +4334,7 @@ msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:85
 msgid "Interests (tags)"
-msgstr ""
+msgstr "Intressen (taggar)"
 
 #: kuma/users/templates/users/user_edit.html:86
 msgid ""
@@ -4344,13 +4344,15 @@ msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:92
 msgid "Areas of expertise"
-msgstr ""
+msgstr "Kompetensområden"
 
 #: kuma/users/templates/users/user_edit.html:93
 msgid ""
 "Add your interests first, then declare yourself an expert in selected "
 "topics."
 msgstr ""
+"Lägga till dina intressen först, förklara sedan dig själv som expert i "
+"utvalda ämnen."
 
 #: kuma/users/templates/users/user_edit.html:101
 msgid "My Profiles"
@@ -6338,11 +6340,13 @@ msgid ""
 "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the "
 "Open Web apps ecosystem."
 msgstr ""
+"Prenumerera på regelbundna nyheter om Firefox OS, Firefox Marketplace och "
+"ekosystemet för öppna webbappar."
 
 #: templates/includes/newsletter.html:35
 #, python-format
 msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
-msgstr ""
+msgstr "till <a href=\"%(privacy_url)s\">sekretesspolicy</a>"
 
 #: templates/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
