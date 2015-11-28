@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 17:05+0000\n"
-"Last-Translator: Alexander <unghost@mozilla-russia.org>\n"
+"PO-Revision-Date: 2015-11-28 15:30+0000\n"
+"Last-Translator: bychek.ru <a@bychek.ru>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1448125531.0\n"
+"X-POOTLE-MTIME: 1448724605.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
 msgid "object ID"
@@ -1072,7 +1072,7 @@ msgstr "Июнь"
 
 #: kuma/demos/__init__.py:210
 msgid "Twice the 3D!"
-msgstr ""
+msgstr "Двойной 3D!"
 
 #: kuma/demos/__init__.py:215
 msgid "July 2013 Dev Derby Challenge - File API"
@@ -1097,10 +1097,14 @@ msgstr "Файл найден"
 #: kuma/demos/__init__.py:220 kuma/demos/__init__.py:221
 msgid "The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."
 msgstr ""
+"File API позволяет читать контент файлов, выбранных пользователями, делая "
+"возможными естественные и знакомые операции с данными."
 
 #: kuma/demos/__init__.py:226
 msgid "Mozilla's Audio Data API extends the current HTML5 API and allows web developers to read and write raw audio data."
 msgstr ""
+"Mozilla's Audio Data API расширяет текущее HTML5 API и позволяет "
+"веб-разработчикам читать и писать необработанные аудио данные."
 
 #: kuma/demos/__init__.py:228 kuma/demos/__init__.py:236 kuma/demos/__init__.py:244 kuma/demos/__init__.py:252 kuma/demos/__init__.py:259 kuma/demos/__init__.py:266 kuma/demos/__init__.py:274
 #: kuma/demos/__init__.py:282 kuma/demos/__init__.py:290 kuma/demos/__init__.py:298 kuma/demos/__init__.py:306 kuma/demos/__init__.py:314 kuma/demos/__init__.py:322 kuma/demos/__init__.py:330
@@ -1135,6 +1139,8 @@ msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
 #: kuma/demos/__init__.py:234
 msgid "The HTML5 canvas element allows you to display scriptable renderings of 2D shapes and bitmap images."
 msgstr ""
+"HTML5 canvas элемент позволяет вам отображать 2D фигиры и bitmap изображения "
+"скриптами."
 
 #: kuma/demos/__init__.py:236
 msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
@@ -1156,6 +1162,9 @@ msgstr "CSS3"
 msgid ""
 "Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
 msgstr ""
+"Cascading Style Sheets уровня 3 (CSS3) представляет несколько новых "
+"возможностей и свойств для улучшения форматирования и вида документов, "
+"написанных разными видами языков разметки HTML или XML."
 
 #: kuma/demos/__init__.py:244
 msgid "https://developer.mozilla.org/en-US/docs/Web/CSS"
@@ -1176,6 +1185,8 @@ msgstr "Устройство"
 #: kuma/demos/__init__.py:250
 msgid "Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."
 msgstr ""
+"Медиа запросы и события смены ориентации позволяют разработчикам настроить "
+"их макеты для портативных устройств, таких как мобильные телефоны."
 
 #: kuma/demos/__init__.py:252
 msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
@@ -1192,6 +1203,8 @@ msgstr "Файлы"
 #: kuma/demos/__init__.py:257
 msgid "The File API allows web developers to use file objects in web applications, as well as selecting and accessing their data."
 msgstr ""
+"File API позволяет веб-разработчикам использовать файловые объекты в "
+"веб-приложениях, а также выбор и доступ к их содержимому."
 
 #: kuma/demos/__init__.py:259
 msgid "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
@@ -1208,6 +1221,9 @@ msgstr "Шрифты и Тип"
 #: kuma/demos/__init__.py:264
 msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
 msgstr ""
+"Спецификация CSS3-Font содержит улучшенные возможности для шрифтов и "
+"типографии, например, вставка своих шрифтов через @font-face или "
+"контролирование OpenType шрифтов напрямую через CSS."
 
 #: kuma/demos/__init__.py:266
 msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
@@ -1228,6 +1244,9 @@ msgstr "Формы"
 #: kuma/demos/__init__.py:272
 msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 msgstr ""
+"Элементы форм и атрибуты в HTML5 представляют степень семантической разметки "
+"выше HTML4, а также избавляют от необходимости написания утомительных "
+"сценариев и стилей, требовавшихся в HTML4."
 
 #: kuma/demos/__init__.py:274
 msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
@@ -1260,6 +1279,9 @@ msgstr "http://dev.w3.org/geo/api/spec-source.html"
 #: kuma/demos/__init__.py:288
 msgid "JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."
 msgstr ""
+"JavaScript - легкий, объекто-ориентированный язык программирования, обычно "
+"используемый для интерактивного поведения на веб-страницах и в "
+"веб-приложениях."
 
 #: kuma/demos/__init__.py:290
 msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
@@ -1300,6 +1322,9 @@ msgstr "http://dev.w3.org/html5/spec/Overview.html"
 #: kuma/demos/__init__.py:304
 msgid "IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."
 msgstr ""
+"IndexedDB - API хранилища на строне клиента для значительного количества "
+"структурированных данных с высокопроизводительным поиском этих данных, "
+"используя индексы."
 
 #: kuma/demos/__init__.py:306
 msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
@@ -1332,6 +1357,8 @@ msgstr "http://www.w3.org/TR/html5/dnd.html"
 #: kuma/demos/__init__.py:320
 msgid "Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."
 msgstr ""
+"Мобильный Firefox предоставляет реальное взаимодействие с Интернетом для "
+"мобильных телефонов и других не ПК устройств."
 
 #: kuma/demos/__init__.py:322
 msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
@@ -1352,6 +1379,8 @@ msgstr "Оффлайн поддержка"
 #: kuma/demos/__init__.py:328
 msgid "Offline caching of web applications' resources using the application cache and local storage."
 msgstr ""
+"Оффлайн кеширование ресурсов веб-приложений, используя кеш приложений и "
+"локальное хранилище."
 
 #: kuma/demos/__init__.py:330
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
@@ -1368,6 +1397,8 @@ msgstr "http://dev.w3.org/html5/webstorage/"
 #: kuma/demos/__init__.py:336
 msgid "Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."
 msgstr ""
+"Мастабируемая векторная графика (SVG) - основанный на XML язык описания "
+"векторной графики в двухмерном пространстве."
 
 #: kuma/demos/__init__.py:338
 msgid "https://developer.mozilla.org/en-US/docs/Web/SVG"
@@ -1388,6 +1419,8 @@ msgstr "Видео"
 #: kuma/demos/__init__.py:344
 msgid "The HTML5 video element provides integrated support for playing video media without requiring plug-ins."
 msgstr ""
+"Элемент HTML5 видео представляет интегрированную поддержку проигрыванния "
+"видео без необходимости плагинов."
 
 #: kuma/demos/__init__.py:346
 msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video"
@@ -1404,6 +1437,8 @@ msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
 #: kuma/demos/__init__.py:352
 msgid "In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."
 msgstr ""
+"В контексте HTML canvas элемент WebGL представляет API для 3D графики в "
+"браузере."
 
 #: kuma/demos/__init__.py:354
 msgid "https://developer.mozilla.org/en-US/docs/Web/WebGL"
@@ -1428,6 +1463,8 @@ msgstr "WebSockets"
 #: kuma/demos/__init__.py:360
 msgid "WebSockets is a technology that makes it possible to open an interactive communication session between the user's browser and a server."
 msgstr ""
+"WebSockets - технология, делающая возможным открытие интерактивной "
+"коммуникационной сессии между браузером пользователя и сервером."
 
 #: kuma/demos/__init__.py:362
 msgid "https://developer.mozilla.org/en-US/docs/WebSockets"
@@ -1444,6 +1481,8 @@ msgstr "http://dev.w3.org/html5/websockets/"
 #: kuma/demos/__init__.py:368
 msgid "Web Workers provide a simple means for web content to run scripts in background threads."
 msgstr ""
+"Web Workers предоставляют простые средства веб контенту запускать скрипты в "
+"фоновых потоках."
 
 #: kuma/demos/__init__.py:370
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers"
@@ -1464,6 +1503,8 @@ msgstr "XMLHttpRequest"
 #: kuma/demos/__init__.py:376
 msgid "XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."
 msgstr ""
+"XMLHttpRequest (XHR) используется для отправки HTTP запросов напрямую на "
+"сервер и загрузки данных напрямую обратно в скрипт."
 
 #: kuma/demos/__init__.py:378
 msgid "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
@@ -1480,6 +1521,8 @@ msgstr "http://www.w3.org/TR/XMLHttpRequest/"
 #: kuma/demos/__init__.py:384
 msgid "Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."
 msgstr ""
+"Отследить движение пальца пользователя по сенсорному экрану, мониторя сырые "
+"события прикосновения, генирируемые системой."
 
 #: kuma/demos/__init__.py:386
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
@@ -1852,6 +1895,13 @@ msgid ""
 "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
 "open standards and technologies that power the Web.</li> </ul>"
 msgstr ""
+"<p>Добро пожаловать в Mozilla Demo Studio, где такие как вы разработчики "
+"могут разрабатывать, делиться, демонстрировать и узнавать всё о веб "
+"технологиях. Посмотрите, что можно сделать, исследуя Демо студию:</p> <ul> "
+"<li>Посмотреть демо, показывающие, что можно сделать с HTML, CSS и "
+"JavaScript.</li> <li>Исследовать исходный код демо и увидеть, как они "
+"работают.</li> <li>Прочитать документацию, чтобы узнать о открытых "
+"стандартах и технологиях, составляющих Web.</li> </ul>"
 
 #: kuma/demos/templates/demos/detail.html:51 kuma/demos/templates/demos/launch.html:80
 #, python-format
@@ -2042,6 +2092,9 @@ msgstr "Dev Derby завершилось"
 #, python-format
 msgid "From 2011 until 2013, web developers created more than 450 demos for the Dev Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo Studio</a> for many more."
 msgstr ""
+"С 2011 до 2013, веб-разработчики создали более чем 450 демо для Dev Derby! "
+"Найдите их ниже, или <a href=\"%(demos_url)s\">посетите Демо студию</a> для "
+"просмотра множества других демо."
 
 #: kuma/demos/templates/demos/devderby_landing.html:40
 msgid "Previous Dev Derby Challenges"
@@ -2359,7 +2412,7 @@ msgstr "Демо Студия: Условия для участников"
 
 #: kuma/demos/templates/demos/terms.html:107
 msgid "Rights Representation Details"
-msgstr ""
+msgstr "Подробнее о правильном представлении"
 
 #: kuma/demos/templates/demos/elements/demos_head.html:31 kuma/demos/templates/demos/elements/search_form.html:4
 msgid "Search the Demo Studio"
@@ -2630,7 +2683,7 @@ msgstr "Продвижение MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:19
 msgid "Spread some developer love."
-msgstr ""
+msgstr "Распространите немного любви к разработчику."
 
 #: kuma/landing/templates/landing/promote_buttons.html:20
 msgid ""
@@ -2749,7 +2802,7 @@ msgstr "MDN - ваш набор инструментов разработчик�
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
-msgstr ""
+msgstr "Невозможно продвинуть более одного индекса одновременно."
 
 #: kuma/search/admin.py:15
 #, python-format
@@ -2758,15 +2811,17 @@ msgstr "Повышенный поисковый индекс %s."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
-msgstr ""
+msgstr "Продвинуть выбранный поисковый индекс до текущего индекса"
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
-msgstr ""
+msgstr "Невозможно понизить более одного индекса одновременно."
 
 #: kuma/search/admin.py:24
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
 msgstr ""
+"Не возможно понизить индекс, если он только один. Сначала создайте и "
+"заполните один новый."
 
 #: kuma/search/admin.py:29
 #, python-format
@@ -2776,10 +2831,12 @@ msgstr "Пониженный поисковый индекс %s."
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
 msgstr ""
+"Понизить выбранный поисковый индекс (с автоматическим переключением к "
+"предыдущему индексу)"
 
 #: kuma/search/admin.py:37
 msgid "Can't populate more than one index at once."
-msgstr ""
+msgstr "Невозможно заполнить больше одного индекса одновременно."
 
 #: kuma/search/admin.py:42
 msgid "Populate selected search index via Celery"
@@ -2792,7 +2849,7 @@ msgstr "Это текущий индекс?"
 #: kuma/search/forms.py:17
 #, python-format
 msgid "There is already a successor to the current index %s"
-msgstr ""
+msgstr "Уже есть преемник для текущего индекса %s"
 
 #: kuma/search/serializers.py:94
 msgid "name"
@@ -2921,6 +2978,10 @@ msgid ""
 "Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
 "\"nofollow\">file a bug</a>."
 msgstr ""
+"Извините, у вас должен быть как минимум один присоединённый аккаунт для "
+"входа. Чтобы отсоединить этот аккаунт, присоедините сначала другой. Для "
+"удаления вашего MDN профиля, пожалуйста, <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">создайте сообщение об ошибке</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -4154,6 +4215,8 @@ msgstr "Документ (необязательно)"
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
 msgstr ""
+"Индексирование %(total)d документов на %(total_chunks)d частей размером %"
+"(size)d в индекс %(index)s.total"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
@@ -4477,7 +4540,7 @@ msgstr "Редактировать свойства и заголовок ста
 
 #: kuma/wiki/templates/wiki/edit.html:127
 msgid "Rendering max age:"
-msgstr ""
+msgstr "Максимальный срок рендеринга:"
 
 #: kuma/wiki/templates/wiki/edit.html:129
 msgid "Days"
@@ -4552,6 +4615,8 @@ msgstr "Пожалуйста, укажите новое местоположен
 #: kuma/wiki/templates/wiki/move.html:22
 msgid "Make sure the location you specify is located immediately under an existing page."
 msgstr ""
+"Убедитесь, что указанное вами местоположение расположено сразу под "
+"существующей страницей."
 
 #: kuma/wiki/templates/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
@@ -4691,7 +4756,7 @@ msgstr "Утверждённая %(locale)s версия"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Rendered"
-msgstr ""
+msgstr "Посмотреть обработанное"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Source"
