@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-28 11:47+0000\n"
+"PO-Revision-Date: 2015-11-28 12:41+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -4977,7 +4977,7 @@ msgstr "Senast ändrad av"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
-msgstr ""
+msgstr "Senast ändrad den"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:29
 msgid ""
@@ -5456,7 +5456,7 @@ msgstr ""
 #: kuma/wiki/templates/wiki/translate.html:7
 #, python-format
 msgid "Translate Article | %(document)s"
-msgstr ""
+msgstr "Översätt artikel | %(document)s"
 
 #: kuma/wiki/templates/wiki/translate.html:33
 #, python-format
@@ -5550,27 +5550,29 @@ msgstr "Artikelhistorik:"
 #, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
 msgstr ""
+"Du prenumererar på redigeringar på: %(title)s och alla dess underordnade "
+"artiklar."
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:44
 #, python-format
 msgid "You are subscribed to edits on: %(title)s."
-msgstr ""
+msgstr "Du prenumererar på redigeringar på: %(title)s."
 
 #: kuma/wiki/templates/wiki/includes/approvals.html:5
 msgid "The following reviews have been requested:"
-msgstr ""
+msgstr "Följande granskningar har begärts:"
 
 #: kuma/wiki/templates/wiki/includes/approvals.html:13
 msgid "Technical"
-msgstr ""
+msgstr "Teknisk"
 
 #: kuma/wiki/templates/wiki/includes/approvals.html:19
 msgid "Editorial"
-msgstr ""
+msgstr "Redaktionell"
 
 #: kuma/wiki/templates/wiki/includes/approvals.html:24
 msgid "Review completed"
-msgstr ""
+msgstr "Granskning färdig"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:19
 msgid "Languages"
@@ -5611,11 +5613,11 @@ msgstr "Ta bort denna artikel"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:86
 msgid "Manage content zone"
-msgstr ""
+msgstr "Hantera innehållszon"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:89
 msgid "Convert to content zone"
-msgstr ""
+msgstr "Konvertera till innehållszon"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:91
 msgid "Print this article"
@@ -5623,7 +5625,7 @@ msgstr "Skriv ut denna artikel"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
-msgstr ""
+msgstr "breadcrumbs"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:21
 msgid "See also"
@@ -5851,12 +5853,12 @@ msgstr "Översätt beskrivning"
 #: kuma/wiki/templates/wiki/includes/translate_description.html:15
 #, python-format
 msgid "Title in %(locale)s:"
-msgstr ""
+msgstr "Titel i %(locale)s:"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:26
 #, python-format
 msgid "Slug in %(locale)s:"
-msgstr ""
+msgstr "Slugg i %(locale)s:"
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:66
 msgid ""
@@ -5925,11 +5927,11 @@ msgstr "Dokument som ska granskas"
 #: kuma/wiki/templates/wiki/list/needs_review.html:12
 #, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr ""
+msgstr "Artiklar i behov av granskning taggade: %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
-msgstr ""
+msgstr "Alla artiklar i behov av granskning"
 
 #: kuma/wiki/templates/wiki/list/needs_review.html:23
 #, python-format
@@ -5994,12 +5996,12 @@ msgstr ""
 #: kuma/wiki/views/document.py:600
 #, python-format
 msgid "Redirected from %(url)s"
-msgstr ""
+msgstr "Omdirigerad från %(url)s"
 
 #: kuma/wiki/views/document.py:648
 #, python-format
 msgid "I learned about %(title)s on MDN."
-msgstr ""
+msgstr "Jag lärde mig om %(title)s på MDN."
 
 #: kuma/wiki/views/document.py:718
 #, python-format
@@ -6219,7 +6221,7 @@ msgstr "Referenser"
 
 #: templates/base.html:143
 msgid "Developer Guides"
-msgstr ""
+msgstr "Handledning för utvecklare"
 
 #: templates/base.html:144
 msgid "Accessibility"
@@ -6255,7 +6257,7 @@ msgstr "Få webbutvecklingshjälp"
 
 #: templates/base.html:172
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Gå med i MDN-gemenskapen"
 
 #: templates/base.html:173
 msgid "Report a content problem"
@@ -6272,6 +6274,9 @@ msgid ""
 "contributors.</p> <p>Content is available under <a "
 "href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
+"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network och enskilda "
+"bidragsgivare.</p> <p>Innehållet är tillgängligt under <a "
+"href=\"%(copyright_url)s\">dessa licenser</a>.</p>"
 
 #: templates/base.html:205
 msgid "About MDN"
@@ -6374,14 +6379,19 @@ msgid ""
 "wraps onto a second line in the email, try copying and pasting the link into"
 " the browser."
 msgstr ""
+"Vi kunde inte hitta din prenumeration. Antingen har du redan avslutat den "
+"eller var det ett fel i avregistreringslänken. Se till att hela länken från "
+"e-posten följer med till webbläsaren. Om den sista delen av länken radbryts "
+"på en andra rad i mejlet, försök kopiera och klistra in länken i "
+"webbläsaren."
 
 #: templates/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
-msgstr ""
+msgstr "Prenumeration avslutad"
 
 #: templates/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr ""
+msgstr "Du har avslutat prenumerationen."
 
 #~ msgid "{count} Demo"
 #~ msgid_plural "{count} Demos"
