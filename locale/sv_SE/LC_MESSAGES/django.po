@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-26 18:47+0000\n"
-"Last-Translator: jleidel <jleidel@mozilla.com>\n"
+"PO-Revision-Date: 2015-11-28 11:01+0000\n"
+"Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -2235,6 +2235,12 @@ msgid ""
 "documentation to learn about the open standards and technologies that power "
 "the Web.</li> </ul>"
 msgstr ""
+"<p>Välkommen till Mozilla Demo Studio, där utvecklare som du kan utveckla, "
+"dela, demonstrera och lära sig allt om webbtekniker. Se vad som är möjligt "
+"genom att utforska Demo Studio.</p> <ul> <li>Visa demon som demonstrerar vad"
+" HTML, CSS och JavaScript kan göra.</li> <li>Inspektera källkoden för de "
+"demon så att du kan se hur de fungerar.</li> <li>Läs dokumentation för att "
+"lära dig om öppna standarder och teknologier som driver webben.</li> </ul>"
 
 #: kuma/demos/templates/demos/detail.html:51
 #: kuma/demos/templates/demos/launch.html:80
@@ -3129,7 +3135,7 @@ msgstr ""
 #: kuma/landing/templates/landing/promote_buttons.html:5
 #: kuma/landing/templates/landing/promote_buttons.html:17
 msgid "Promote MDN"
-msgstr ""
+msgstr "Främja MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:19
 msgid "Spread some developer love."
