@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-28 17:04+0000\n"
+"PO-Revision-Date: 2015-11-28 17:18+0000\n"
 "Last-Translator: Rodrigo Padula <rodrigopadula@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
@@ -2469,7 +2469,7 @@ msgstr "Veja mais demos feitos com %(tag_title)s"
 #, python-format
 msgid "This demo has been viewed %(num)s time"
 msgid_plural "This demo has been viewed %(num)s times"
-msgstr[0] "Este demo foi visualizado %(num)s vez(es)"
+msgstr[0] "Este demo foi visualizado %(num)s vez"
 msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:165
@@ -2484,14 +2484,14 @@ msgstr[1] ""
 #, python-format
 msgid "%(num)s person liked this demo"
 msgid_plural "%(num)s people liked this demo"
-msgstr[0] "%(num)s pessoa curtiu esse demo"
+msgstr[0] "%(num)s pessoa curtiu este demo"
 msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:166
 #, python-format
 msgid "%(num)s like"
 msgid_plural "%(num)s likes"
-msgstr[0] "%(num)s curtidas"
+msgstr[0] "%(num)s curtida"
 msgstr[1] ""
 
 #: kuma/demos/templates/demos/detail.html:181
@@ -3045,7 +3045,7 @@ msgstr "Veja o perfil de %(display_name)s"
 #, python-format
 msgid "%(num)s Demo"
 msgid_plural "%(num)s Demos"
-msgstr[0] "%(num)s Demo"
+msgstr[0] "%(num)s demo"
 msgstr[1] ""
 
 # 75%
@@ -5283,11 +5283,13 @@ msgid "Document (optional)"
 msgstr "Documento (opcional)"
 
 #: kuma/wiki/search.py:310
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d "
 "into index %(index)s.total"
-msgstr "indexando {total} documentos em {n} segmentos de {size} em {index}."
+msgstr ""
+"Indexando %(total)d documentos em %(total_chunks)d segmentos de tamanho "
+"%(size)d em %(index)s.total"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
@@ -5335,9 +5337,9 @@ msgid "Load"
 msgstr "Carregar"
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr "Comparar revisões | {document}"
+msgstr "Comparar revisões | %(document)s"
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
@@ -5641,10 +5643,11 @@ msgstr "Suas alterações"
 #: kuma/wiki/templates/wiki/edit.html:43 kuma/wiki/templates/wiki/edit.html:55
 #: kuma/wiki/templates/wiki/includes/document_macros.html:42
 #: kuma/wiki/templates/wiki/includes/document_macros.html:58
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr "Revisão {id} por <a href=\"{user_profile_url}\">{user}</a> em {date}"
+msgstr ""
+"Revisão %(id)s por <a href=\"%(user_profile_url)s\">%(user)s</a> em %(date)s"
 
 #: kuma/wiki/templates/wiki/edit.html:51
 msgid "Current Revision:"
@@ -5997,9 +6000,10 @@ msgid "Article History:"
 msgstr "Histórico do Artigo:"
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:40
-#, fuzzy, python-format
+#, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
-msgstr "Você já se subscreveu para a versão em {language} deste artigo."
+msgstr ""
+"Você está inscrito para edições em: %(title)s e todos seus sub-artigos."
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:44
 #, python-format
