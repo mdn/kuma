@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-28 13:58+0000\n"
+"PO-Revision-Date: 2015-11-28 14:48+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -2748,8 +2748,8 @@ msgid ""
 " href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
 msgstr ""
 "Jag accepterar <a href=\"%(terms_url)s#tfc\">användarvillkoren för "
-"bidragare</a> och <a "
-"href=\"%(terms_url)s#rrd\">representationsrättighetsdetaljer</a>"
+"bidragare</a> och <a href=\"%(terms_url)s#rrd\">detaljer om "
+"representationsrättigheter</a>"
 
 #: kuma/demos/templates/demos/submit.html:177
 msgid "Submit demo"
@@ -2845,7 +2845,7 @@ msgstr "Demo Studio: Villkor för bidragare"
 
 #: kuma/demos/templates/demos/terms.html:107
 msgid "Rights Representation Details"
-msgstr ""
+msgstr "Detaljer om representationsrättigheter"
 
 #: kuma/demos/templates/demos/elements/demos_head.html:31
 #: kuma/demos/templates/demos/elements/search_form.html:4
@@ -3059,25 +3059,27 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:113
 msgid "Learn Web Development"
-msgstr ""
+msgstr "Läs om webbutveckling"
 
 #: kuma/landing/templates/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "Hämta webbläsaren för utvecklare som du"
 
 #: kuma/landing/templates/landing/homepage.html:120
 msgid "Celebrate ten years of documenting your Web."
-msgstr ""
+msgstr "Fira tio år av dokumentering av din webb."
 
 #: kuma/landing/templates/landing/homepage.html:124
 msgid "Build Open Web Apps"
-msgstr ""
+msgstr "Bygg öppna webbappar"
 
 #: kuma/landing/templates/landing/homepage.html:133
 msgid ""
 "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-"
 "hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
+"<a href=\"http://hacks.mozilla.org\">läs mer på hacks.mozilla.org <i aria-"
+"hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/templates/landing/homepage.html:138
 msgid "Get Involved"
@@ -3109,7 +3111,7 @@ msgstr "Komma igång"
 
 #: kuma/landing/templates/landing/homepage.html:165
 msgid "Editorial review"
-msgstr ""
+msgstr "Redaktionell granskning"
 
 #: kuma/landing/templates/landing/homepage.html:166
 msgid "Technical review"
@@ -3121,16 +3123,16 @@ msgstr "Översätter"
 
 #: kuma/landing/templates/landing/homepage.html:172
 msgid "Promoting MDN"
-msgstr ""
+msgstr "Främjande av MDN"
 
 #: kuma/landing/templates/landing/homepage.html:173
 msgid "Contributing to the MDN codebase"
-msgstr ""
+msgstr "Bidra till MDN kodbas"
 
 #: kuma/landing/templates/landing/newsfeed.html:10
 #, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
-msgstr ""
+msgstr "Postad %(entrydate)s av %(authorlink)s"
 
 #: kuma/landing/templates/landing/promote_buttons.html:5
 #: kuma/landing/templates/landing/promote_buttons.html:17
@@ -3162,7 +3164,7 @@ msgstr "Välj en knappstil"
 
 #: kuma/landing/templates/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr ""
+msgstr "Bättre dokument"
 
 #: kuma/landing/templates/landing/promote_buttons.html:51
 msgid "Developer Powered"
@@ -3170,11 +3172,11 @@ msgstr ""
 
 #: kuma/landing/templates/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr ""
+msgstr "För utvecklare, av utvecklare"
 
 #: kuma/landing/templates/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr ""
+msgstr "Webbutvecklarverktyg"
 
 #: kuma/landing/templates/landing/promote_buttons.html:70
 msgid "Choose a color"
@@ -3206,79 +3208,80 @@ msgstr "Din källkod:"
 
 #: kuma/landing/templates/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr ""
+msgstr "Din knapp kommer att ta folk till:"
 
 #: kuma/landing/templates/landing/promote_buttons.html:162
 #: kuma/landing/templates/landing/promote_buttons.html:166
 #: kuma/landing/templates/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr ""
+msgstr "Bättre CSS dokument för en bättre webb på MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:163
 #: kuma/landing/templates/landing/promote_buttons.html:167
 #: kuma/landing/templates/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr ""
+msgstr "Bättre HTML dokument för en bättre webb på MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:164
 #: kuma/landing/templates/landing/promote_buttons.html:168
 #: kuma/landing/templates/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr ""
+msgstr "Bättre JavaScript dokument för en bättre webb på MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:165
 #: kuma/landing/templates/landing/promote_buttons.html:169
 #: kuma/landing/templates/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr ""
+msgstr "Bättre webbdokument för en bättre webb på MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:174
 #: kuma/landing/templates/landing/promote_buttons.html:178
 #: kuma/landing/templates/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs, demos and more."
-msgstr ""
+msgstr "MDN drivs av utvecklare för CSS dokument, demon och mycket mer."
 
 #: kuma/landing/templates/landing/promote_buttons.html:175
 #: kuma/landing/templates/landing/promote_buttons.html:179
 #: kuma/landing/templates/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs, demos and more."
-msgstr ""
+msgstr "MDN drivs av utvecklare för HTML dokument, demon och mycket mer."
 
 #: kuma/landing/templates/landing/promote_buttons.html:176
 #: kuma/landing/templates/landing/promote_buttons.html:180
 #: kuma/landing/templates/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs, demos and more."
 msgstr ""
+"MDN drivs av utvecklare för JavaScript dokument, demon och mycket mer."
 
 #: kuma/landing/templates/landing/promote_buttons.html:177
 #: kuma/landing/templates/landing/promote_buttons.html:181
 #: kuma/landing/templates/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs, demos and more."
-msgstr ""
+msgstr "MDN drivs av utvecklare för webbdokument, demon och mycket mer."
 
 #: kuma/landing/templates/landing/promote_buttons.html:186
 #: kuma/landing/templates/landing/promote_buttons.html:190
 #: kuma/landing/templates/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
-msgstr ""
+msgstr "CSS dokument av utvecklare, för utvecklare på MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:187
 #: kuma/landing/templates/landing/promote_buttons.html:191
 #: kuma/landing/templates/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
-msgstr ""
+msgstr "HTML dokument av utvecklare, för utvecklare på MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:188
 #: kuma/landing/templates/landing/promote_buttons.html:192
 #: kuma/landing/templates/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
-msgstr ""
+msgstr "JavaScript dokument av utvecklare, för utvecklare på MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:189
 #: kuma/landing/templates/landing/promote_buttons.html:193
 #: kuma/landing/templates/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Webbdokument av utvecklare, för utvecklare på MDN"
 
 #: kuma/landing/templates/landing/promote_buttons.html:198
 #: kuma/landing/templates/landing/promote_buttons.html:199
@@ -3287,6 +3290,8 @@ msgid ""
 "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
 "JavaScript and other Web standards and open technologies."
 msgstr ""
+"MDN är dina verktyg för webbutveckling av dokument, demon och mer om HTML, "
+"CSS, JavaScript och andra webbstandarder och öppna teknologier."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
@@ -3348,12 +3353,13 @@ msgstr "gruppnamn"
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
 msgstr ""
+"Sökning är ej tillgänglig för tillfället. Försök igen om några minuter."
 
 #: kuma/search/utils.py:17
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
-msgstr ""
+msgstr "Något fick fel med sökfrågan. Vänligen försök igen senare."
 
 #: kuma/search/templates/search/down.html:5
 msgid "Search Unavailable"
@@ -3362,7 +3368,7 @@ msgstr "Sökning är inte tillgänglig"
 #. Search Mozilla Developer Network documentation
 #: kuma/search/templates/search/plugin.html:5
 msgid "Search Mozilla Developer Network documentation"
-msgstr ""
+msgstr "Sök i Mozilla Deverloper Network dokumentation"
 
 #: kuma/search/templates/search/results.html:13
 #, python-format
@@ -3375,6 +3381,8 @@ msgid ""
 "translated from <a href=\"%(parent_url)s\" "
 "title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 msgstr ""
+"översatt från <a href=\"%(parent_url)s\" "
+"title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 
 #: kuma/search/templates/search/results.html:51
 msgid "MDN Site Search"
@@ -3430,8 +3438,8 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s dokument hittade."
+msgstr[1] "%(count)s dokument hittade."
 
 #: kuma/search/templates/search/results.html:119
 msgid "Showing all results."
@@ -4011,7 +4019,7 @@ msgstr ""
 
 #: kuma/users/templates/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
-msgstr ""
+msgstr "Ett fel uppstod vid försök att logga in med ditt konto."
 
 #: kuma/users/templates/socialaccount/connections.html:3
 msgid "Account Connections"
@@ -4489,13 +4497,13 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:26
 msgid "Want to translate MDN to your language?"
-msgstr ""
+msgstr "Vill du översätta MDN till ditt språk?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:33
 #, python-format
 msgid "Mailing list: %(list_link)s"
-msgstr ""
+msgstr "E-postlista: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
@@ -4507,13 +4515,13 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:39
 msgid "Real-time chat: #mdn channel on irc.mozilla.org"
-msgstr ""
+msgstr "Realtidschatt: #mdn kanalen på irc.mozilla.org"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr ""
+msgstr "Se %(irc_link)s för mer information om IRC."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:45
@@ -4536,15 +4544,15 @@ msgstr "Wiki"
 
 #: kuma/wiki/constants.py:206
 msgid "Technical - code samples, APIs, or technologies"
-msgstr ""
+msgstr "Teknisk - kodexempel, API:er eller teknologier"
 
 #: kuma/wiki/constants.py:207
 msgid "Editorial - prose, grammar, or content"
-msgstr ""
+msgstr "Redaktionell - prosa, grammatik eller innehåll"
 
 #: kuma/wiki/constants.py:212
 msgid "Localization in progress - not completely translated yet."
-msgstr ""
+msgstr "Översättning pågår - inte helt översatt ännu."
 
 #: kuma/wiki/content.py:699
 msgid "Edit section"
@@ -4552,7 +4560,7 @@ msgstr "Redigera sektion"
 
 #: kuma/wiki/events.py:72
 msgid "[MDN] Page \"{document_title}\" changed by {creator}"
-msgstr ""
+msgstr "[MDN] Sidan \"{document_title}\" ändrad av {creator}"
 
 #: kuma/wiki/feeds.py:27
 msgid "MDN documents"
@@ -4560,7 +4568,7 @@ msgstr "MDN-dokument"
 
 #: kuma/wiki/feeds.py:28
 msgid "Documents authored by MDN users"
-msgstr ""
+msgstr "Dokument ändrade av MDN användare"
 
 #: kuma/wiki/feeds.py:29
 msgid "/"
@@ -4568,24 +4576,24 @@ msgstr "/"
 
 #: kuma/wiki/feeds.py:147
 msgid "MDN recent document changes"
-msgstr ""
+msgstr "MDN senaste dokumentändringar"
 
 #: kuma/wiki/feeds.py:148
 msgid "Recent changes to MDN documents"
-msgstr ""
+msgstr "Senaste ändringarna för MDN dokument"
 
 #: kuma/wiki/feeds.py:155
 #, python-format
 msgid "MDN recent changes to documents tagged %s"
-msgstr ""
+msgstr "MDN senaste ändringar i dokument taggade %s"
 
 #: kuma/wiki/feeds.py:183
 msgid "MDN documents in need of review"
-msgstr ""
+msgstr "MDN dokument i behov av granskning"
 
 #: kuma/wiki/feeds.py:184
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr ""
+msgstr "Senaste ändringarna till MDN dokument som behöver granskas"
 
 #: kuma/wiki/feeds.py:190
 #, python-format
@@ -5304,6 +5312,9 @@ msgid ""
 "filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the"
 " Tagging Guide</a>."
 msgstr ""
+"Kategorisera artikeln. Det kommer att göra artikeln mer sökbar under rätt "
+"filter i sökmotorn. <a target=\"_blank\" href=\"%(url)s\">Läs guiden "
+"taggning</a>."
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:3
 #, python-format
