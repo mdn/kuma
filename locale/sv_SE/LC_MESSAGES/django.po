@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-29 16:59+0000\n"
+"PO-Revision-Date: 2015-11-29 17:56+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -2787,6 +2787,9 @@ msgid ""
 "community. We'll be able to bring you a better, more customized experience "
 "and you will have a place to show off the amazing work you do.</p>"
 msgstr ""
+"<p>Dela dina utvecklarintressen och kompetensområden med MDN gemenskapen. Vi"
+" kommer att kunna ge dig en bättre, mer anpassad upplevelse och du kommer "
+"att ha en plats att visa upp ditt fantastiska arbete du gör.</p>"
 
 #: kuma/demos/templates/demos/submit.html:195
 msgid "Go to your profile"
@@ -2798,6 +2801,9 @@ msgid ""
 " experimenting with the latest technologies, we invite you to submit your "
 "own demos to share with (or show off to) other web developers.</p>"
 msgstr ""
+"<p>Om du skapar en häpnadsväckande nytt sätt att uppleva webben eller bara "
+"experimenterar med den senaste tekniken, vi inbjuder dig att skicka in dina "
+"egna demon för att dela med (eller visa upp till) andra webbutvecklare.</p>"
 
 #: kuma/demos/templates/demos/submit_noauth.html:36
 msgid "Before You Begin"
@@ -3427,14 +3433,18 @@ msgid_plural ""
 "%(count)s documents found for \"%(query)s\" in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
+"%(count)s dokument hittad för \"%(query)s\" i %(locale_native)s och "
+"%(default_locale_native)s."
 msgstr[1] ""
+"%(count)s dokument hittade för \"%(query)s\" i %(locale_native)s och "
+"%(default_locale_native)s."
 
 #: kuma/search/templates/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s dokument hittad i %(locale_native)s."
+msgstr[1] "%(count)s dokument hittade i %(locale_native)s."
 
 #: kuma/search/templates/search/results.html:94
 #, python-format
@@ -3444,14 +3454,17 @@ msgid_plural ""
 "%(count)s documents found in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
+"%(count)s dokument hittad i %(locale_native)s och %(default_locale_native)s."
 msgstr[1] ""
+"%(count)s dokument hittade i %(locale_native)s och "
+"%(default_locale_native)s."
 
 #: kuma/search/templates/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s dokument hittad för \"%(query)s\"."
+msgstr[1] "%(count)s dokument hittade för \"%(query)s\"."
 
 #: kuma/search/templates/search/results.html:110
 #, python-format
