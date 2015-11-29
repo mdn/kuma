@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-29 15:54+0000\n"
+"PO-Revision-Date: 2015-11-29 16:59+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -4725,6 +4725,8 @@ msgid ""
 "The slug is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
+"Sluggen är för kort (%(show_value)s tecken). Den måste minst vara "
+"%(limit_value)s tecken."
 
 #: kuma/wiki/forms.py:41
 #, python-format
@@ -4732,10 +4734,12 @@ msgid ""
 "Please keep the length of the slug to %(limit_value)s characters or less. It"
 " is currently %(show_value)s characters."
 msgstr ""
+"Håll längden på din slugg till %(limit_value)s tecken eller mindre. För "
+"tillfället är den %(show_value)s tecken."
 
 #: kuma/wiki/forms.py:44
 msgid "Please provide a summary."
-msgstr ""
+msgstr "Vänligen ange en sammanfattning."
 
 #: kuma/wiki/forms.py:45
 #, python-format
@@ -4743,6 +4747,8 @@ msgid ""
 "The summary is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
+"Sammanfattningen är för kort (%(show_value)s tecken). Den måste minst vara "
+"%(limit_value)s tecken."
 
 #: kuma/wiki/forms.py:47
 #, python-format
@@ -4750,10 +4756,12 @@ msgid ""
 "Please keep the length of the summary to %(limit_value)s characters or less."
 " It is currently %(show_value)s characters."
 msgstr ""
+"Håll längden på din sammanfattning till %(limit_value)s tecken eller mindre."
+" För tillfället är den %(show_value)s tecken."
 
 #: kuma/wiki/forms.py:50
 msgid "Please provide content."
-msgstr ""
+msgstr "Vänligen ange ett innehåll."
 
 #: kuma/wiki/forms.py:51
 #, python-format
@@ -4761,6 +4769,8 @@ msgid ""
 "The content is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
+"Innehållet är för kort (%(show_value)s tecken). Det måste minst vara "
+"%(limit_value)s tecken."
 
 #: kuma/wiki/forms.py:53
 #, python-format
@@ -4768,6 +4778,8 @@ msgid ""
 "Please keep the length of the content to %(limit_value)s characters or less."
 " It is currently %(show_value)s characters."
 msgstr ""
+"Håll längden på ditt innehåll till %(limit_value)s tecken eller mindre. För "
+"tillfället är den %(show_value)s tecken."
 
 #: kuma/wiki/forms.py:56
 #, python-format
@@ -4775,6 +4787,8 @@ msgid ""
 "Please keep the length of the comment to %(limit_value)s characters or less."
 " It is currently %(show_value)s characters."
 msgstr ""
+"Håll längden på din kommentar till %(limit_value)s tecken eller mindre. För "
+"tillfället är den %(show_value)s tecken."
 
 #: kuma/wiki/forms.py:59
 msgid "Another document with this slug already exists."
@@ -4790,7 +4804,7 @@ msgstr "Detta dokument ändrades medan du redigerade det."
 
 #: kuma/wiki/forms.py:64
 msgid "Changing this document's slug requires moving it and its children."
-msgstr ""
+msgstr "Ändra detta dokuments slugg kräver att det och dess barn flyttas."
 
 #: kuma/wiki/forms.py:80 kuma/wiki/forms.py:169 kuma/wiki/forms.py:553
 #: kuma/wiki/templates/wiki/create.html:42
@@ -5746,24 +5760,28 @@ msgstr "Google+"
 #: kuma/wiki/templates/wiki/includes/document_macros.html:128
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Prenumerera på %(title)s och alla dess underordnade artiklar"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:129
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
 msgstr ""
+"Avsluta prenumeration från %(title)s och alla dess underordnade artiklar"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:132
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr ""
+"Du prenumererar nu på denna artikel och alla dess underordnade artiklar."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:132
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr ""
+"Du har avslutat prenumerationen från denna artikel och alla dess "
+"underordnade artiklar."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:143
 msgid "Updating subscription status"
-msgstr ""
+msgstr "Uppdaterar prenumerationsstatus"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:144
 #, python-format
