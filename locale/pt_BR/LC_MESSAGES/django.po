@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-28 18:37+0000\n"
-"Last-Translator: João Paulo Polles <joaopaulopolles@gmail.com>\n"
+"PO-Revision-Date: 2015-11-29 15:18+0000\n"
+"Last-Translator: Marco Aurélio <ouesten@me.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -2470,14 +2470,14 @@ msgstr "Veja mais demos feitos com %(tag_title)s"
 msgid "This demo has been viewed %(num)s time"
 msgid_plural "This demo has been viewed %(num)s times"
 msgstr[0] "Esta demo foi visualizada %(num)s vez"
-msgstr[1] ""
+msgstr[1] "Esta demo foi visualizada %(num)s vezes"
 
 #: kuma/demos/templates/demos/detail.html:165
 #, python-format
 msgid "%(num)s view"
 msgid_plural "%(num)s views"
 msgstr[0] "%(num)s visualização"
-msgstr[1] ""
+msgstr[1] "%(num)s visualizações"
 
 #: kuma/demos/templates/demos/detail.html:166
 #: kuma/demos/templates/demos/elements/submission_thumb.html:16
@@ -2485,14 +2485,14 @@ msgstr[1] ""
 msgid "%(num)s person liked this demo"
 msgid_plural "%(num)s people liked this demo"
 msgstr[0] "%(num)s pessoa curtiu este demo"
-msgstr[1] ""
+msgstr[1] "%(num)s pessoa curtiram este demo"
 
 #: kuma/demos/templates/demos/detail.html:166
 #, python-format
 msgid "%(num)s like"
 msgid_plural "%(num)s likes"
 msgstr[0] "%(num)s curtida"
-msgstr[1] ""
+msgstr[1] "%(num)s curtidas"
 
 #: kuma/demos/templates/demos/detail.html:181
 msgid "Edit Demo"
@@ -3046,7 +3046,7 @@ msgstr "Veja o perfil de %(display_name)s"
 msgid "%(num)s Demo"
 msgid_plural "%(num)s Demos"
 msgstr[0] "%(num)s demo"
-msgstr[1] ""
+msgstr[1] "%(num)s demos"
 
 # 75%
 # 100%
