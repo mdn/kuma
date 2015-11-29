@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-28 14:48+0000\n"
+"PO-Revision-Date: 2015-11-29 15:54+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -2668,6 +2668,11 @@ msgid ""
 " complete the form below to ensure your demo is submitted to the Demo Studio"
 " successfully.</p>"
 msgstr ""
+"<p>Om du skapar ett fantastiskt nytt sätt att uppleva webben eller bara "
+"experimenterar med de senaste teknikerna, inbjuder vi dig att skicka in dina"
+" egna demon för att dela med (eller visa upp för) andra webbutvecklare.</p> "
+"<p>Fyll i formuläret nedan för att säkerställa att din demo lämnas till Demo"
+" Studio framgångsrikt.</p>"
 
 #: kuma/demos/templates/demos/submit.html:72
 msgid "Describe Your Demo"
@@ -2691,7 +2696,7 @@ msgstr "Visa upp ditt demo"
 
 #: kuma/demos/templates/demos/submit.html:102
 msgid "Provide at least one screenshot of your demo in action"
-msgstr ""
+msgstr "Ge åtminstone en skärmdump av din demo när den körs"
 
 #: kuma/demos/templates/demos/submit.html:111
 msgid "JPEG and PNG supported. Minimum size of 480x360."
@@ -2968,6 +2973,8 @@ msgid ""
 "The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
 "web developers to come change the world with Mozilla."
 msgstr ""
+"Mozilla Developer Networks (MDN) Kamratskapsprogram bjuder in "
+"världsklasswebbutvecklare för att komma och förändra världen med Mozilla."
 
 #: kuma/landing/templates/landing/homepage.html:14
 msgid ""
@@ -2975,10 +2982,13 @@ msgid ""
 "technologies including HTML, CSS, and APIs for both Web sites and HTML5 "
 "Apps. It also documents Mozilla products, like Firefox OS."
 msgstr ""
+"Mozilla Developer Network (MDN) ger information om öppna webbtekniker "
+"inklusive HTML, CSS, och API:er för både webbplatser och HTML5-appar. Den "
+"dokumenterar också Mozilla-produkter, som Firefox OS."
 
 #: kuma/landing/templates/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr ""
+msgstr "Delad kunskap <span>för den öppna webben</span>"
 
 #: kuma/landing/templates/landing/homepage.html:42
 #: kuma/landing/templates/landing/homepage.html:59
@@ -2996,11 +3006,11 @@ msgstr "Webbteknologier"
 
 #: kuma/landing/templates/landing/homepage.html:69
 msgid "Web<br />Platform"
-msgstr ""
+msgstr "Webb<br />plattform"
 
 #: kuma/landing/templates/landing/homepage.html:71
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "Webb API:er &amp; DOM"
 
 #: kuma/landing/templates/landing/homepage.html:75
 #: kuma/landing/templates/landing/homepage.html:95
@@ -3048,14 +3058,16 @@ msgid ""
 "Get Web technology news from Mozilla, get help from other developers, and "
 "more!"
 msgstr ""
+"Få webbtekniknyheter från Mozilla, få hjälp från andra utvecklare och mycket"
+" mer!"
 
 #: kuma/landing/templates/landing/homepage.html:101
 msgid "Learn more and sign up!"
-msgstr ""
+msgstr "Läs mer och registrera dig!"
 
 #: kuma/landing/templates/landing/homepage.html:110
 msgid "Open Web and Mobile"
-msgstr ""
+msgstr "Öppen webb och mobil"
 
 #: kuma/landing/templates/landing/homepage.html:113
 msgid "Learn Web Development"
@@ -3093,6 +3105,10 @@ msgid ""
 "class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
+"<p class=\"numbers\"> <span class=\"row1\">Anslut till <span "
+"class=\"number\">%(contributors)s</span> bidragare</span> <span "
+"class=\"row2\">i <span class=\"number\">%(locales)s</span> språk och "
+"språkversioner </span> <span class=\"row3\">runt om i världen.</span> </p>"
 
 #: kuma/landing/templates/landing/homepage.html:147
 #: kuma/landing/templates/landing/homepage.html:154
@@ -3104,6 +3120,9 @@ msgid ""
 "All parts of MDN (docs, demos, and the site itself) are created by an open "
 "community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
+"Alla delar av MDN (dokumentation, demon och webbsidan i sig) är skapade av "
+"en öppen gemenskap av utvecklare. Gå med oss! Välj ett av dessa sätt att "
+"hjälpa till:"
 
 #: kuma/landing/templates/landing/homepage.html:164
 msgid "Getting started"
@@ -3448,12 +3467,12 @@ msgstr "Visar alla resultat."
 #: kuma/search/templates/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "Visar resultat %(start)s till %(end)s."
 
 #: kuma/search/templates/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "Sök igen endast i %(default_locale_native)s"
 
 #: kuma/search/templates/search/results.html:176
 msgid "Filter by"
@@ -3461,11 +3480,11 @@ msgstr "Filtrera efter"
 
 #: kuma/spam/forms.py:17
 msgid "The submitted data contains invalid content."
-msgstr ""
+msgstr "Inskickad data innehåller ogiltigt innehåll."
 
 #: kuma/spam/forms.py:33
 msgid "The form data has not yet been validated. Please try again."
-msgstr ""
+msgstr "Formulärdata har ännu inte validerats. Försök igen."
 
 #: kuma/spam/models.py:10
 msgid "created"
@@ -3478,6 +3497,10 @@ msgid ""
 "disconnect this account connect a different one first. To delete your MDN "
 "profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
 msgstr ""
+"Tyvärr, du måste ha minst ett anslutet konto för att logga in. För att byta "
+"till ett annat konto, anslut det kontot först. För att ta bort din MDN "
+"profil, <a href=\"%(bug_form_url)s\" rel=\"nofollow\">skicka in en "
+"felrapport</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -3497,6 +3520,8 @@ msgid ""
 "You have completed the first step of <a href=\"%s\">getting started with "
 "MDN</a>"
 msgstr ""
+"Du har genomfört det första steget för <a href=\"%s\">att komma igång med "
+"MDN</a>"
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
@@ -3514,6 +3539,8 @@ msgstr "hash"
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr ""
+"Användarnamn kan endast innehålla bokstäver, siffror och dessa tecken: . - _"
+" +"
 
 #: kuma/users/forms.py:23
 msgid "You must agree to the privacy policy."
@@ -3649,6 +3676,8 @@ msgid ""
 "This URL has an invalid format. Valid URLs look like "
 "http://example.com/my_page."
 msgstr ""
+"Denna URL har ett ogiltigt format. Giltiga URL:er ser ut som följande "
+"http://example.com/my_page."
 
 #: kuma/users/models.py:70
 msgid "Name"
@@ -3715,6 +3744,8 @@ msgid ""
 "Username is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
+"Användarnamnet är för kort (%(show_value)s tecken). Det måste vara "
+"åtminstone %(limit_value)s tecken."
 
 #: kuma/users/signup.py:10
 #, python-format
@@ -3722,6 +3753,8 @@ msgid ""
 "Username is too long (%(show_value)s characters). It must be %(limit_value)s"
 " characters or less."
 msgstr ""
+"Användarnamnet är för långt (%(show_value)s tecken). Det måste vara "
+"%(limit_value)s tecken eller mindre."
 
 #: kuma/users/signup.py:13
 msgid "You must agree to the terms of use."
@@ -3767,7 +3800,7 @@ msgstr "E-postadresser"
 #: kuma/users/templates/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr ""
+msgstr "%(email)s är din <em>primära</em> e-postadress"
 
 #: kuma/users/templates/account/email.html:15
 msgid "You've also added the following email addresses:"
@@ -3790,6 +3823,8 @@ msgid ""
 "<strong>Warning:</strong>\"You have not added any email addresses to this "
 "profile. Without one you cannot receive notifications."
 msgstr ""
+"<strong>Varning:</strong>\"Du har inte lagt till någon e-postadress till den"
+" här profilen. Utan en e-postadress kan du inte ta emot aviseringar."
 
 #: kuma/users/templates/account/email.html:49
 msgid "Add email address"
@@ -3834,6 +3869,8 @@ msgid ""
 "This email confirmation link expired or is invalid. Please <a "
 "href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr ""
+"Denna e-postbekräftelselänk har gått ut eller är ogiltig. Vänligen <a "
+"href=\"%(email_url)s\">be om ett nytt bekräftelsemejl</a>."
 
 #: kuma/users/templates/account/email_confirmed.html:10
 #, python-format
@@ -3841,6 +3878,8 @@ msgid ""
 "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
 "email address for user %(user_display)s."
 msgstr ""
+"Du har bekräftat att <a href=\"mailto:%(email)s\">%(email)s</a> är en "
+"e-postadress för användaren %(user_display)s."
 
 #: kuma/users/templates/account/login.html:3
 msgid "Sign In"
@@ -3856,6 +3895,9 @@ msgid ""
 "any of the services below. A MDN profile will be created for you if you "
 "don't already have one."
 msgstr ""
+"För att bidra, måste du logga in på MDN. Du kan logga in med någon av "
+"tjänsterna nedan. En MDN profil kommer att skapas för dig om du inte redan "
+"har en."
 
 #: kuma/users/templates/account/logout.html:3
 #: kuma/users/templates/account/logout.html:8
@@ -3921,6 +3963,9 @@ msgid ""
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
 msgstr ""
+"Återställningslänken för lösenordet var ogiltig, möjligen för att den redan "
+"har använts.  Vänligen begär en <a href=\"%(passwd_reset_url)s\">ny "
+"återställning av lösenord</a>."
 
 #: kuma/users/templates/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -4015,7 +4060,7 @@ msgstr "OpenID-inloggning"
 #: kuma/users/templates/socialaccount/authentication_error.html:3
 #: kuma/users/templates/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Kontoinloggning misslyckades"
 
 #: kuma/users/templates/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
@@ -4023,16 +4068,16 @@ msgstr "Ett fel uppstod vid försök att logga in med ditt konto."
 
 #: kuma/users/templates/socialaccount/connections.html:3
 msgid "Account Connections"
-msgstr ""
+msgstr "Anslutna konton"
 
 #: kuma/users/templates/socialaccount/connections.html:6
 #: kuma/users/templates/users/user_detail.html:61
 msgid "Account connections"
-msgstr ""
+msgstr "Anslutna konton"
 
 #: kuma/users/templates/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
-msgstr ""
+msgstr "Du kan logga in till din profil med hjälp av något av följande:"
 
 #: kuma/users/templates/socialaccount/connections.html:50
 msgid "Disconnect"
@@ -4191,7 +4236,7 @@ msgstr "Logga in med GitHub"
 #: kuma/users/templates/users/apps_newsletter.html:7
 #: templates/includes/newsletter.html:4
 msgid "Firefox Apps & Hacks Newsletter"
-msgstr ""
+msgstr "Firefox appar & Hacks nyhetsbrev"
 
 #: kuma/users/templates/users/apps_newsletter.html:14
 #, python-format
@@ -4199,6 +4244,8 @@ msgid ""
 "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the "
 "newsletter."
 msgstr ""
+"<a href=\"%(profile_edit_url)s\">Redigera din profil</a> för att gå med i "
+"nyhetsbrevet."
 
 #: kuma/users/templates/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -4213,6 +4260,8 @@ msgid ""
 "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click "
 "here</a> to appeal this ban.</p>"
 msgstr ""
+"<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klicka "
+"här</a> för att överklaga denna bannlysning.</p>"
 
 #: kuma/users/templates/users/user_detail.html:53 kuma/wiki/content.py:718
 #: kuma/wiki/templates/wiki/includes/buttons.html:40
@@ -4245,7 +4294,7 @@ msgstr "Medlem sedan %(date_joined)s"
 #: kuma/users/templates/users/user_detail.html:159
 #, python-format
 msgid "Subscribe to a feed of %(display_name)s's demos"
-msgstr ""
+msgstr "Prenumerera på en feed för %(display_name)s demon"
 
 #: kuma/users/templates/users/user_detail.html:167
 msgid "No Demos"
@@ -4260,7 +4309,7 @@ msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:175
 msgid "Recent Docs Activity"
-msgstr ""
+msgstr "Senaste dokumentaktivitet"
 
 #: kuma/users/templates/users/user_detail.html:175
 msgid "View all activity"
@@ -4338,7 +4387,7 @@ msgstr "Om mig"
 
 #: kuma/users/templates/users/user_edit.html:79
 msgid "words remaining"
-msgstr ""
+msgstr "kvarvarande ord"
 
 #: kuma/users/templates/users/user_edit.html:85
 msgid "Interests (tags)"
@@ -4397,6 +4446,9 @@ msgid ""
 "Network (MDN)</a> - a community making great resources for developers like "
 "you."
 msgstr ""
+"Tack för att du skapade en profil på <a href=\"%(mdn_link)s\">Mozilla "
+"Developer Network (MDN)</a> - en gemenskap med stora resurser för utvecklare"
+" som du."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:16
 #, python-format
@@ -4404,6 +4456,8 @@ msgid ""
 "You've completed the first step of <a href=\"%(started_link)s\">Getting "
 "Started on MDN</a> by creating a profile."
 msgstr ""
+"Du har slutfört det första steget för <a href=\"%(started_link)s\">att komma"
+" igång på MDN</a> genom att skapa en profil."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:21
 #, python-format
@@ -4414,6 +4468,11 @@ msgid ""
 "href=\"%(both_link)s\">like both words and code</a>, or you want to <a "
 "href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
+"Nu, fortsätt genom att välja en uppgift på MDN och slutföra den! Vi har en "
+"massa introaktiviteter du kan välja mellan, om du <a "
+"href=\"%(words_link)s\">gillar ord</a>, <a href=\"%(code_link)s\">gillar "
+"kod</a>, <a href=\"%(both_link)s\">gillar både ord och kod</a>eller du vill "
+"<a href=\"%(translate_link)s\">översätta MDN till ditt språk</a>."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -4425,6 +4484,7 @@ msgstr "Prata med oss!"
 msgid ""
 "Want to talk to someone about MDN? There are a few ways you can do that:"
 msgstr ""
+"Vill du prata med någon om MDN? Det finns några sätt du kan göra det på:"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:38
 #, python-format
@@ -4432,6 +4492,8 @@ msgid ""
 "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what "
 "you're interested in on MDN and ask questions about the site."
 msgstr ""
+"E-postlista: <a href=\"%(list_link)s\">Prenumerera</a> för att berätta om "
+"vad du är intresserad av på MDN och ställ frågor om webbplatsen."
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:43
 #, python-format
@@ -4482,17 +4544,17 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr ""
+msgstr "Gillar du ord?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:18
 msgid "Like code?"
-msgstr ""
+msgstr "Gillar du kod?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:22
 msgid "Like both words and code?"
-msgstr ""
+msgstr "Gillar du både ord och kod?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:26
@@ -4511,6 +4573,8 @@ msgid ""
 "Subscribe to tell us about what you're interested in on MDN and ask "
 "questions about the site."
 msgstr ""
+"Prenumerera för att berätta om vad du är intresserad av på MDN och ställ "
+"frågor om webbplatsen."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:39
@@ -4598,24 +4662,24 @@ msgstr "Senaste ändringarna till MDN dokument som behöver granskas"
 #: kuma/wiki/feeds.py:190
 #, python-format
 msgid "MDN documents for %s review"
-msgstr ""
+msgstr "MDN dokument för %s granskning"
 
 #: kuma/wiki/feeds.py:194
 msgid "MDN documents for review"
-msgstr ""
+msgstr "MDN dokument för granskning"
 
 #: kuma/wiki/feeds.py:224
 #, python-format
 msgid "MDN '%s' translations in need of update"
-msgstr ""
+msgstr "MDN '%s' översättningar i behov av uppdatering"
 
 #: kuma/wiki/feeds.py:260
 msgid "MDN recent revisions"
-msgstr ""
+msgstr "MDN senaste revisioner"
 
 #: kuma/wiki/feeds.py:261
 msgid "Recent revisions to MDN documents"
-msgstr ""
+msgstr "Senaste revisionerna för MDN dokument"
 
 #: kuma/wiki/feeds.py:352
 msgid "Show comparison"
@@ -4631,6 +4695,8 @@ msgid ""
 "The title is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
+"Titeln är för kort (%(show_value)s tecken). Den måste minst vara "
+"%(limit_value)s tecken."
 
 #: kuma/wiki/forms.py:33
 #, python-format
@@ -4638,6 +4704,8 @@ msgid ""
 "Please keep the length of the title to %(limit_value)s characters or less. "
 "It is currently %(show_value)s characters."
 msgstr ""
+"Håll längden på din titel till %(limit_value)s tecken eller mindre. För "
+"tillfället är den %(show_value)s tecken."
 
 #: kuma/wiki/forms.py:36
 msgid "Name Your Article"
@@ -4714,7 +4782,7 @@ msgstr "Det finns redan ett annat dokument med denna slugg."
 
 #: kuma/wiki/forms.py:60
 msgid "Another document with this metadata already exists."
-msgstr ""
+msgstr "Ett annat dokument med denna metadata finns redan."
 
 #: kuma/wiki/forms.py:62
 msgid "This document was modified while you were editing it."
