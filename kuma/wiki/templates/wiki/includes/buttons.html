@@ -39,7 +39,7 @@
 
       <li class="page-buttons-edit"><a href="{{ edit_link }}" class="button" data-optimizely-hook="button-edit-doc" id="edit-button">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
 
-        {% if user.is_authenticated() and document and waffle.flag('watch_menu') %}
+        {% if user.is_authenticated() and document %}
         <li><button id="watch-menu" class="only-icon" aria-haspopup="true" aria-owns="watch-menu-submenu" aria-expanded="false"><span>{{ _('Watch') }}</span><i aria-hidden="true" class="icon-eye"></i></button>
         <div class="submenu js-submenu" id="watch-menu-submenu">
             <div class="submenu-column">
@@ -55,9 +55,6 @@
           <!-- this page -->
           <div class="submenu-column">
             <div class="title">{{ _('Advanced') }}</div>
-                {% if user.is_authenticated() and document and not waffle.flag('watch_menu') %}
-                {{ watch_menu_items_html }}
-                {% endif %}
             <ul>
                 <li><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow, noindex">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
