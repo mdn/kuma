@@ -144,7 +144,7 @@
 
         var $form = $link.closest('form');
 
-        var notification = mdn.Notifier.growl($link.data('subscribe-status'), { duration: 0 });
+        var notification = mdn.Notifier.growl($link.data('subscribe-status'), { duration: 0, type: 'text' });
 
         $link.addClass('disabled');
         $.ajax($form.attr('action'), {
