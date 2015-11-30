@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-29 12:07+0000\n"
+"PO-Revision-Date: 2015-11-29 12:13+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: cs\n"
@@ -28,15 +28,15 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:28
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #: kuma/static/js/helpfulness.js:30
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Never ask me again"
-msgstr ""
+msgstr "Znovu se neptat"
 
 #: kuma/static/js/helpfulness.js:53
 msgid "Translate it into my language"
@@ -84,11 +84,11 @@ msgstr ""
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "Nic nevybráno"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "Vybráno: "
 
 #: kuma/static/js/users.js:96
 msgid "New interest..."
