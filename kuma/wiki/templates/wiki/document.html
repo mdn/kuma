@@ -404,10 +404,6 @@
 
 {% block js %}
 
-  {% if waffle.flag('helpfulness') %}
-    {% javascript 'helpfulness' %}
-  {% endif %}
-
   {% if waffle.flag('section_edit') %}
     <script type="text/javascript">
         (function($) {

@@ -785,15 +785,6 @@ PIPELINE_JS = {
             'async': True,
         },
     },
-    'helpfulness': {
-        'source_filenames': (
-            'js/helpfulness.js',
-        ),
-        'output_filename': 'build/js/helpfulness.js',
-        'extra_context': {
-            'async': True,
-        },
-    },
     'demostudio': {
         'source_filenames': (
             'js/libs/jquery.hoverIntent.minified.js',
@@ -864,6 +855,7 @@ PIPELINE_JS = {
             'js/wiki.js',
             'js/wiki-samples.js',
             'js/social.js',
+            'js/helpfulness.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
