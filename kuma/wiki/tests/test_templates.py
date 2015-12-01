@@ -568,7 +568,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         new_rev = self.d.revisions.order_by('-id')[0]
         # There are no approved revisions, so it's based_on nothing:
         eq_(None, new_rev.based_on)
-        edited_fire.assert_called()
+        ok_(edited_fire.called)
 
     def test_new_revision_POST_removes_old_tags(self):
         """Changing the tags on a document removes the old tags from
@@ -892,7 +892,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(data['keywords'], rev.keywords)
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
-        edited_fire.assert_called()
+        ok_(edited_fire.called)
 
     def _create_and_approve_first_translation(self):
         """Returns the revision."""
@@ -938,7 +938,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(data['keywords'], rev.keywords)
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
-        edited_fire.assert_called()
+        ok_(edited_fire.called)
 
         # subsequent translations should NOT include slug input
         self.client.logout()

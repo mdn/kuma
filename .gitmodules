@@ -161,16 +161,12 @@
 [submodule "vendor/src/pipeline"]
 	path = vendor/src/pipeline
 	url = https://github.com/cyberdelia/django-pipeline.git
-[submodule "vendor/src/responses"]
-	path = vendor/src/responses
-	url = https://github.com/getsentry/responses.git
-[submodule "vendor/src/cookies"]
-	path = vendor/src/cookies
-	url = https://gitlab.com/sashahart/cookies.git
-	ignore = untracked
 [submodule "vendor/src/django-celery-transactions"]
 	path = vendor/src/django-celery-transactions
 	url = git://github.com/fellowshipofone/django-celery-transactions.git
 [submodule "vendor/src/puente"]
 	path = vendor/src/puente
 	url = git://github.com/mozilla/puente.git
+[submodule "vendor/src/requests-mock"]
+	path = vendor/src/requests-mock
+	url = https://github.com/openstack/requests-mock.git

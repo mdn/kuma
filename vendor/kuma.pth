@@ -5,7 +5,6 @@ src/bitly-api-python
 src/bleach
 src/celery
 src/commonware
-src/cookies
 src/cssselect
 src/django
 src/django-allauth
@@ -50,8 +49,8 @@ src/python-openid
 src/pytidylib
 src/raven-python
 src/requests
+src/requests-mock
 src/requests-oauthlib
-src/responses
 src/sqlparse
 src/urllib3
 src/urlobject

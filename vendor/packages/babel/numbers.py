@@ -134,6 +134,10 @@ def get_territory_currencies(territory, start_date=None, end_date=None,
 
     result = []
     for currency_code, start, end, is_tender in curs:
+        if start:
+            start = date_(*start)
+        if end:
+            end = date_(*end)
         if ((is_tender and tender) or \
             (not is_tender and non_tender)) and _is_active(start, end):
             if include_details:
