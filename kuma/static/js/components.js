@@ -152,10 +152,11 @@
             });
         });
 
-        // Gets the open parent
+        /* Gets the open parent (un-used)
         function getOpenParent() {
             return $.fn.mozMenu.$openMenu.submenu;
         }
+        */
 
         // Clears the current timeout, interrupting fade-ins and outs as necessary
         function clear(timeout) {
@@ -617,7 +618,6 @@
                     var stateObj = this;
                     var state = this.state;
                     var className = this.className;
-                    var iconName = this.iconName;
                     handle[state] = function(message, delay) {
                         var $item = handle.item;
 
