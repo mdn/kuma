@@ -78,8 +78,10 @@
             var htmlCode = $sample.find('pre[class*=html]').text();
             var cssCode = $sample.find('pre[class*=css]').text();
             var jsCode = $sample.find('pre[class*=js]').text();
-            var title = $sample.find('h2[name=' + section + ']').text();
-
+            // jquery can't handled all our IDs, need to use vanailla js for this
+            // http://stackoverflow.com/questions/7695898/uncaught-exception-syntax-error-unrecognized-expression-jquery
+            var title = doc.getElementById(section);
+            title = title ? title.textContent : '';
             // check that there is enough data to add buttons
             if(htmlCode.length || cssCode.length || jsCode.length){
                 // add buttons if we have good data
