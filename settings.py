@@ -785,15 +785,6 @@ PIPELINE_JS = {
             'async': True,
         },
     },
-    'social': {
-        'source_filenames': (
-            'js/social.js',
-        ),
-        'output_filename': 'build/js/social.js',
-        'extra_context': {
-            'async': True,
-        },
-    },
     'helpfulness': {
         'source_filenames': (
             'js/helpfulness.js',
@@ -872,6 +863,7 @@ PIPELINE_JS = {
             'js/search-navigator.js',
             'js/wiki.js',
             'js/wiki-samples.js',
+            'js/social.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
