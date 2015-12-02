@@ -8,14 +8,12 @@ class SearchPaginator(Paginator):
     The normal Paginator does a .count() query and then a slice. Since ES
     results contain the total number of results, we can take an optimistic
     slice and then adjust the count.
-
     """
     def validate_number(self, number):
         """
         Validates the given 1-based page number.
 
         This class overrides the default behavior and ignores the upper bound.
-
         """
         try:
             number = int(number)
@@ -31,7 +29,6 @@ class SearchPaginator(Paginator):
 
         This class overrides the default behavior and ignores "orphans" and
         assigns the count from the ES result to the Paginator.
-
         """
         number = self.validate_number(number)
         bottom = (number - 1) * self.per_page
@@ -45,8 +42,7 @@ class SearchPaginator(Paginator):
         # Update the `_count`.
         self._count = page.object_list.total
         # Also store the aggregations, if any.
-        if hasattr(result, 'aggregations'):
-            page.aggregations = result.aggregations
+        page.aggregations = getattr(result, 'aggregations', None)
 
         # Now that we have the count validate that the page number isn't higher
         # than the possible number of pages and adjust accordingly.

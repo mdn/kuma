@@ -84,7 +84,7 @@ django-memcached-hashring==0.1.2
 
 django-nose==1.4.2
 
-djangorestframework==2.4.6
+djangorestframework==3.3.2
 
 django-smuggler==0.6.1
 
