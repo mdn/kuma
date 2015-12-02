@@ -308,10 +308,10 @@
               {% endif %}
               {% if fallback_reason %}
                 <div id="doc-pending-fallback" class="warning">
-                  {% trans help_link=help_link, locale=settings.LOCALES[request.LANGUAGE_CODE].native %}
-                    Our volunteers haven't translated this article into {{ locale }} yet.
+                  <p><bdi>{% trans help_link=help_link, locale=settings.LOCALES[request.LANGUAGE_CODE].native %}
+                    Our volunteers haven't translated this article into <bdi>{{ locale }}</bdi> yet.
                     <a href="{{ help_link }}">Join us and help get the job done!</a>
-                  {% endtrans %}
+                  {% endtrans %}</bdi></p>
                 </div>
               {% endif %}
 
