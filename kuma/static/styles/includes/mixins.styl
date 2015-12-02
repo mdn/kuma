@@ -532,3 +532,21 @@ box-theme($color) {
     background: theme-pale-light($color);
     border-color: theme-pale-medium($color);
 }
+
+/* pull aside
+   - assumes content has a bottom margin of its own
+   - floats to the right until there's not enough space for it
+-------------------------------------------------------------- */
+
+pull-aside() {
+    @extend $column-4;
+    min-width: 200px;
+    bidi-value(float, right, left);
+    bidi-value(margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0);
+
+    @media $media-query-small-mobile {
+        width: 100%;
+        bidi-value(margin, 0, 0);
+    }
+}
+
