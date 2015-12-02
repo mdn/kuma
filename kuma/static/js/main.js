@@ -7,6 +7,23 @@
     mdn.analytics.trackClientErrors();
 
     /*
+        Feature detection
+    */
+
+    win.mdn.features.localStorage = (function() {
+        var uid = new Date;
+        var result;
+        try {
+            localStorage.setItem(uid, uid);
+            result = localStorage.getItem(uid) == uid;
+            localStorage.removeItem(uid);
+            return result;
+        } catch (exception) {
+            return false;
+        }
+    }());
+
+    /*
         Submenus
         - main and secondary navigation
         - language and admin menus

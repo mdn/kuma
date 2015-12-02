@@ -144,7 +144,7 @@
         Show notifications about account association status as part of the
         registration process.
     */
-    if('localStorage' in win) (function() {
+    if(win.mdn.features.localStorage) (function() {
         try {
             var $browserRegister = $('#browser_register');
             var matchKey = 'account-match-for';
@@ -186,7 +186,7 @@
     /*
         Fire off events when the user logs in and logs out.
     */
-    if('localStorage' in win) (function() {
+    if(win.mdn.features.localStorage) (function() {
         var serviceKey = 'login-service';
         var serviceStored = localStorage.getItem(serviceKey);
         var serviceCurrent = $(doc.body).data(serviceKey);
