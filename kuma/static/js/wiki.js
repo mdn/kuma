@@ -539,13 +539,29 @@
     });
 
     /*
-        Toggle kumascript error detail pane
+        Kumascript error detected
     */
-    $('.kserrors-details-toggle').toggleMessage({
-        toggleCallback: function() {
-            $('.kserrors-details').toggleClass('hidden');
-        }
-    });
+    // is there an error?
+    var $kserrors = $('#kserrors');
+    if($kserrors.length){
+        // enable the details toggle
+        var $kserrorsToggle = $kserrors.find('.kserrors-details-toggle');
+        var $kserrorsDetails = $kserrors.find('.kserrors-details');
+        $kserrorsToggle.toggleMessage({
+            toggleCallback: function() {
+                $kserrorsDetails.toggleClass('hidden');
+            }
+        });
+        // loop through error list and log errors
+        var $kserrorsList = $('#kserrors-list');
+        $kserrorsList.each(function(){
+            var $thisError = $(this);
+            var errorType = $thisError.find('.kserror-type').text().trim();
+            var errorMacro = $thisError.find('.kserror-macro').text().trim();
+            var errorParse = $thisError.find('.kserror-parse').text().trim().replace(/\s\s+/g, ' ');
+            mdn.analytics.trackError('Kumascript Error', errorType, 'in: ' + errorMacro + '; parsing: ' + errorParse );
+        });
+    }
 
 
     /*
