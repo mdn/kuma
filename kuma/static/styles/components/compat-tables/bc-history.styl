@@ -7,6 +7,7 @@ History
     box-sizing: border-box;
     border-top: 4px solid $bc-color-border;
     border-bottom: 3px solid $bc-color-border;
+    padding-left: 200px;
     overflow: hidden;
     cursor: default;
 }
@@ -23,7 +24,6 @@ History
         display: block;
         visibility: visible;
         height: 0;
-        padding-left: 200px;
     }
 
     /* creates a block to fill the space under the absolutely
@@ -37,9 +37,17 @@ History
         float: right;
     }
 
+.bc-history-head {
+    padding-top: $bc-grid-spacing;
+    padding-left: $bc-grid-spacing;
+    margin-bottom: $bc-grid-spacing;
+    set-font-size($base-bump-font-size);
+    text-align: left;
+}
+
 .bc-history dl {
     text-align: left;
-    margin: 10px;
+    margin: $bc-grid-spacing;
     margin-left: 160px;
 }
 
@@ -60,7 +68,7 @@ History
     margin-bottom: 0; //override .text-content defaults
     padding-top: 4px;
     padding-left: 0; //override .text-content defaults
-    padding-bottom: 10px;
+    padding-bottom: $bc-grid-spacing;
     font-weight: normal; //override .text-content defaults
 }
 
@@ -72,8 +80,8 @@ History
 
 .bc-history-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: $bc-grid-spacing;
+    right: $bc-grid-spacing;
 }
 
 .bc-supports {
@@ -111,13 +119,13 @@ bc-history-tablet-display() {
 @media $media-query-small-mobile {
 
     .bc-history dl {
-       margin-left: 10px;
+       margin-left: $bc-grid-spacing;
     }
 
     .bc-history dt {
-        margin-top: 10px;
+        margin-top: $bc-grid-spacing;
         margin-left: 0;
-        margin-bottom: 10px;
+        margin-bottom: $bc-grid-spacing;
     }
 
     .bc-history dd {
