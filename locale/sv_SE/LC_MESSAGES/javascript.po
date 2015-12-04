@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-11-21 06:25+0000\n"
-"Last-Translator: az@kth.se <az@kth.se>\n"
+"PO-Revision-Date: 2015-12-04 14:13+0000\n"
+"Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -99,7 +99,6 @@ msgid "Open"
 msgstr "Öppna"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-#, fuzzy
 msgid "Return to compatibility table."
 msgstr "Tillbaka till kompatibilitetstabell."
 
@@ -132,8 +131,14 @@ msgid "Show old table."
 msgstr "Visa gammal tabell."
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr "Du har ett förslag under utveckling. <a href=\"\" class=\"restoreLink\">Återställ förslagsinnehållet</a> eller <a href=\"\" class=\"discardLink\">kasta förslaget</a>."
+msgid ""
+"You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+" draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+"draft</a>."
+msgstr ""
+"Du har ett förslag under utveckling. <a href=\"\" "
+"class=\"restoreLink\">Återställ förslagsinnehållet</a> eller <a href=\"\" "
+"class=\"discardLink\">kasta förslaget</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
@@ -152,8 +157,10 @@ msgid "Search Stack Overflow"
 msgstr "Sök Stack Overflow"
 
 #: kuma/static/js/wiki.js:684
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Din webbläsare stöder inte MathML. En CSS fallback har använts i stället."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Din webbläsare stöder inte MathML. En CSS fallback har använts i stället."
 
 #: kuma/static/js/wiki.js:899
 msgid "Details"
@@ -167,7 +174,8 @@ msgstr "Välj en bilaga"
 msgid "No attachments available"
 msgstr "Inga bilagor tillgängliga"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Bilagor"
 
@@ -187,7 +195,8 @@ msgstr "Skapa en omdirigering"
 msgid "MDN Redirect"
 msgstr "MDN omdirigera"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
