@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-11-22 11:34+0000\n"
+"PO-Revision-Date: 2015-12-04 20:57+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
 "Generated-By: Babel 2.0\n"
-"X-POOTLE-MTIME: 1448192067.0\n"
+"X-POOTLE-MTIME: 1449262622.0\n"
 
 #: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:110
 msgid "object ID"
@@ -287,9 +287,9 @@ msgid "Content deleted by moderator"
 msgstr "Inhoud verwijderd door moderator"
 
 #: kuma/contentflagging/models.py:65
-#, fuzzy, python-format
+#, python-format
 msgid "%(object)s Flagged"
-msgstr "{object} gemarkeerd"
+msgstr "%(object)s gemarkeerd"
 
 #: kuma/contentflagging/models.py:97
 msgid "current status of flag review"
@@ -3125,9 +3125,9 @@ msgid "Username already in use."
 msgstr "Gebruikersnaam wordt al gebruikt."
 
 #: kuma/users/helpers.py:35
-#, fuzzy, python-format
+#, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
-msgstr "Geblokkeerd op {ban_date} door {ban_admin}."
+msgstr "Geblokkeerd op %(ban_date)s door %(ban_admin)s."
 
 #: kuma/users/helpers.py:42
 msgid "Banned"
@@ -3943,9 +3943,9 @@ msgid "Edit section"
 msgstr "Sectie bewerken"
 
 #: kuma/wiki/events.py:72
-#, fuzzy, python-format
+#, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr "[MDN] Pagina ‘{document_title}’ is gewijzigd door {creator}"
+msgstr "[MDN] Pagina ‘%(document_title)s’ is gewijzigd door %(creator)s"
 
 #: kuma/wiki/feeds.py:27
 msgid "MDN documents"
@@ -4448,11 +4448,11 @@ msgid "contributors"
 msgstr "medewerkers"
 
 #: kuma/wiki/templates/wiki/document.html:187
-#, fuzzy, python-format
+#, python-format
 msgid "By %(count)s contributor:"
 msgid_plural "By %(count)s contributors:"
-msgstr[0] "door %(count)s medewerker:"
-msgstr[1] "door %(count)s medewerkers:"
+msgstr[0] "Door %(count)s medewerker:"
+msgstr[1] "Door %(count)s medewerkers:"
 
 #: kuma/wiki/templates/wiki/document.html:196
 #, python-format
@@ -4508,9 +4508,12 @@ msgid "This translation is in progress."
 msgstr "Aan deze vertaling wordt gewerkt."
 
 #: kuma/wiki/templates/wiki/document.html:311
-#, fuzzy, python-format
+#, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
-msgstr "Onze vrijwilligers hebben dit artikel nog niet naar het %(locale)s vertaald. <a href=\"%(help_link)s\">Doe mee en help de klus te klaren!</a>"
+msgstr ""
+"Onze vrijwilligers hebben dit artikel nog niet naar het <bdi>%"
+"(locale)s</bdi> vertaald. <a href=\"%(help_link)s\">Doe mee en help de klus te "
+"klaren!</a>"
 
 #: kuma/wiki/templates/wiki/document.html:322
 msgid "This article doesn't have any content yet."

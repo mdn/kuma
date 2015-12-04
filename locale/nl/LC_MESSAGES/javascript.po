@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-11-22 11:34+0000\n"
+"PO-Revision-Date: 2015-12-04 20:55+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
 "Generated-By: Babel 2.0\n"
-"X-POOTLE-MTIME: 1448192078.0\n"
+"X-POOTLE-MTIME: 1449262553.0\n"
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
@@ -100,9 +100,8 @@ msgid "Open"
 msgstr "Openen"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-#, fuzzy
 msgid "Return to compatibility table."
-msgstr "Terug naar compatibiliteitstabel."
+msgstr "Terug naar compatibiliteitstabel"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
