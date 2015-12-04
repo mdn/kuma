@@ -51,7 +51,7 @@ msgstr "O ficheiro fornecido não é válido. O ficheiro tem de ser de um destes
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
 #, python-format
 msgid "Attachment %(id)s | %(title)s"
-msgstr "Anexo %{id}s | %{title}s"
+msgstr "Anexo %(id)s | %(title)s"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:15
 msgid "Attachment Information"
