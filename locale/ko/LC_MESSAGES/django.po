@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-23 02:20+0000\n"
-"Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
+"PO-Revision-Date: 2015-12-03 08:56+0000\n"
+"Last-Translator: thechunsik <thechunsik@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -374,7 +374,7 @@ msgstr ""
 
 #: kuma/core/apps.py:16
 msgid "Core"
-msgstr ""
+msgstr "코어"
 
 #: kuma/core/form_fields.py:57
 #, python-format
@@ -628,7 +628,7 @@ msgstr ""
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30일"
 
 #: kuma/dashboards/forms.py:24
 #: kuma/dashboards/templates/dashboards/revisions.html:14
@@ -701,7 +701,7 @@ msgstr "삭제됨"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "편집이 금지된 IP"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
 msgid "There are no revisions matching this filter set."
@@ -712,7 +712,7 @@ msgstr "이 필터와 일치하는 변경 내역이 없습니다."
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:8
 #: kuma/dashboards/templates/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "영문 변경사항이 승인되는 경우 메일 받지 않기"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -726,7 +726,7 @@ msgstr "한국어 변경사항이 승인되면 메일 받기"
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:7
 #: kuma/dashboards/templates/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr ""
+msgstr "영문 리뷰가 대기 중인 경우 메일 받지 않기"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -2116,7 +2116,7 @@ msgstr ""
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "예, 확신합니다"
 
 #: kuma/demos/templates/demos/delete.html:10
 #: kuma/demos/templates/demos/detail.html:9
@@ -2323,7 +2323,7 @@ msgstr[0] "조회수: {count}회"
 #, python-format
 msgid "%(num)s view"
 msgid_plural "%(num)s views"
-msgstr[0] ""
+msgstr[0] "%(num)s 조회"
 
 #: kuma/demos/templates/demos/detail.html:166
 #: kuma/demos/templates/demos/elements/submission_thumb.html:16
@@ -2336,7 +2336,7 @@ msgstr[0] "{count}명현재 데모를 좋아함"
 #, python-format
 msgid "%(num)s like"
 msgid_plural "%(num)s likes"
-msgstr[0] ""
+msgstr[0] "%(num)s 좋아요"
 
 #: kuma/demos/templates/demos/detail.html:181
 msgid "Edit Demo"
@@ -3627,7 +3627,7 @@ msgstr ""
 
 #: kuma/users/helpers.py:41
 msgid "Banned"
-msgstr ""
+msgstr "금지됨"
 
 #: kuma/users/helpers.py:48
 msgid "Ban User"
@@ -3640,7 +3640,7 @@ msgstr "관리자"
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_by)s에 의해 금지된 %(banned_user)s"
 
 #: kuma/users/models.py:32
 #, python-format
@@ -3936,7 +3936,7 @@ msgstr "이메일을 전송하였습니다. 메일을 못 받으시면 우리에
 
 #: kuma/users/templates/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "잘못된 토큰"
 
 #: kuma/users/templates/account/password_reset_from_key.html:17
 #, fuzzy, python-format
