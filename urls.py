@@ -6,7 +6,6 @@ from django.shortcuts import redirect
 from django.views.static import serve
 
 from kuma.attachments import views as attachment_views
-from kuma.contentflagging.views import flagged
 from kuma.core import views as core_views
 from kuma.wiki.admin import purge_view
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
@@ -20,8 +19,6 @@ handler500 = core_views.handler500
 
 urlpatterns = [
     url('', include('kuma.landing.urls')),
-    url(r'^demos/', include('kuma.demos.urls')),
-    url(r'^demos', lambda x: redirect('demos')),
     url(r'^events',
         lambda x: redirect('https://mozilla.org/contribute/events'),
         name='events'),
@@ -44,11 +41,6 @@ urlpatterns = [
 
     url(r'^files/', include('kuma.attachments.urls')),
     url(r'^', include('kuma.dashboards.urls')),
-
-    # Flagged content.
-    url(r'^flagged/$',
-        flagged,
-        name='contentflagging.flagged'),
 
     # Users
     url('', include('kuma.users.urls')),

@@ -7,7 +7,6 @@ define({
     // Functional test suite(s) to run in each browser once non-functional tests are completed
     functionalSuites: [
         'tests/header',
-        'tests/demos',
         'tests/env',
         'tests/footer',
         'tests/homepage',

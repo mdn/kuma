@@ -78,30 +78,28 @@ class TestUrlEncode(KumaTestCase):
 class TestSoapbox(KumaTestCase):
 
     def test_global_message(self):
-        m = Message(message="Global", is_global=True, is_active=True, url="/")
+        m = Message(message='Global', is_global=True, is_active=True, url='/')
         m.save()
-        eq_(m.message, get_soapbox_messages("/")[0].message)
-        eq_(m.message, get_soapbox_messages("/en-US/")[0].message)
-        eq_(m.message, get_soapbox_messages("/fr/demos/")[0].message)
+        eq_(m.message, get_soapbox_messages('/')[0].message)
+        eq_(m.message, get_soapbox_messages('/en-US/')[0].message)
 
     def test_subsection_message(self):
-        m = Message(message="Derby", is_global=False, is_active=True,
-                    url="/demos/devderby")
+        m = Message(message='Search down', is_global=False, is_active=True,
+                    url='/search')
         m.save()
-        eq_(0, len(get_soapbox_messages("/")))
-        eq_(0, len(get_soapbox_messages("/demos")))
-        eq_(0, len(get_soapbox_messages("/en-US/demos")))
-        eq_(m.message, get_soapbox_messages(
-            "/en-US/demos/devderby")[0].message)
-        eq_(m.message, get_soapbox_messages("/de/demos/devderby")[0].message)
+        eq_(0, len(get_soapbox_messages('/')))
+        eq_(0, len(get_soapbox_messages('/docs')))
+        eq_(0, len(get_soapbox_messages('/en-US/docs')))
+        eq_(m.message, get_soapbox_messages('/en-US/search')[0].message)
+        eq_(m.message, get_soapbox_messages('/de/search')[0].message)
 
     def test_message_with_url_is_link(self):
-        m = Message(message="Go to http://bit.ly/sample-demo", is_global=True,
-                    is_active=True, url="/")
+        m = Message(message='Go to http://bit.ly/sample-demo', is_global=True,
+                    is_active=True, url='/')
         m.save()
         ok_('Go to <a href="http://bit.ly/sample-demo">'
             'http://bit.ly/sample-demo</a>' in
-            soapbox_messages(get_soapbox_messages("/")))
+            soapbox_messages(get_soapbox_messages('/')))
 
 
 class TestDateTimeFormat(UserTestCase):

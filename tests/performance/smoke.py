@@ -39,10 +39,6 @@ class SmokeBehavior(TaskSet):
     def learn_zone_js_basics(self):
         self.client.get('/en-US/Learn/Getting_started_with_the_web/JavaScript_basics')
 
-    @task(weight=34)
-    def demos_home(self):
-        self.client.get('/en-US/demos/')
-
     @task(weight=30)
     def learn_zone_home(self):
         self.client.get('/en-US/Learn')
