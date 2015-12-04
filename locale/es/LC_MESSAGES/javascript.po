@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-11-23 11:37+0000\n"
+"PO-Revision-Date: 2015-12-04 14:12+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: es\n"
@@ -100,7 +100,6 @@ msgid "Open"
 msgstr "Abrir"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-#, fuzzy
 msgid "Return to compatibility table."
 msgstr "Volver a la tabla de compatibilidad."
 
@@ -133,8 +132,14 @@ msgid "Show old table."
 msgstr "Mostrar la tabla antigua."
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr "Ya tienes un borrador. <a href=\"\" class=\"restoreLink\">Recupera el contenido del borrador</a> o <a href=\"\" class=\"discardLink\">descártalo</a>."
+msgid ""
+"You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+" draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+"draft</a>."
+msgstr ""
+"Ya tienes un borrador. <a href=\"\" class=\"restoreLink\">Recupera el "
+"contenido del borrador</a> o <a href=\"\" "
+"class=\"discardLink\">descártalo</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
@@ -153,8 +158,11 @@ msgid "Search Stack Overflow"
 msgstr "Buscar en Stack Overflow"
 
 #: kuma/static/js/wiki.js:684
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Tu navegador no admite MathML. En su lugar, se ha utilizado otro recurso CSS."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Tu navegador no admite MathML. En su lugar, se ha utilizado otro recurso "
+"CSS."
 
 #: kuma/static/js/wiki.js:899
 msgid "Details"
@@ -168,7 +176,8 @@ msgstr "Selecciona un archivo adjunto"
 msgid "No attachments available"
 msgstr "No hay archivos adjuntos disponibles"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Archivos adjuntos"
 
@@ -188,7 +197,8 @@ msgstr "Crear una Redirección"
 msgid "MDN Redirect"
 msgstr "Redirección a MDN"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Documento"
 
