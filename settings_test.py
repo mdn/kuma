@@ -14,8 +14,6 @@ INSTALLED_APPS += (
 )
 BANISH_ENABLED = False
 
-DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
-
 LOGGING['loggers'].update({
     'django.db.backends': {
         'handlers': ['console'],

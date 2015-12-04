@@ -13,7 +13,6 @@
 
 {% block site_css %}
   {{ super() }}
-  {% stylesheet 'demostudio' %}
   {% stylesheet 'jquery-ui' %}
   {% stylesheet 'users' %}
   {% stylesheet 'newsletter' %}
@@ -22,7 +21,6 @@
 
 {% block site_js %}
   {{ super() }}
-  {% javascript 'demostudio' %}
   {% javascript 'users' %}
   {% javascript 'newsletter' %}
 {% endblock %}

@@ -9,7 +9,6 @@ define(['intern'], function(intern) {
         domain: domain,
         url: httpsAddress,
         homepageUrl: httpsAddress + defaultLocale,
-        demosHomepageUrl: httpsAddress + defaultLocale + '/demos',
         productionDomain: 'developer.mozilla.org',
 
         // Locales
