@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
 "PO-Revision-Date: 2015-11-20 20:14+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "关闭子菜单"
 
-#: kuma/static/js/components.js:530
+#: kuma/static/js/components.js:536
 msgid "Close notification"
 msgstr "关闭通知"
 
@@ -100,7 +100,8 @@ msgid "Open"
 msgstr "打开"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatability table."
+#, fuzzy
+msgid "Return to compatibility table."
 msgstr "返回兼容性表格。"
 
 #: kuma/static/js/wiki-compat-tables.js:25
@@ -132,13 +133,8 @@ msgid "Show old table."
 msgstr "显示旧式表格。"
 
 #: kuma/static/js/wiki-edit.js:400
-msgid ""
-"You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
-" draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
-"draft</a>."
-msgstr ""
-"您有一篇之前的草稿。您可以<a href=\"\" class=\"restoreLink\">恢复草稿内容</a>或者<a href=\"\" "
-"class=\"discardLink\">丢弃草稿</a>。"
+msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+msgstr "您有一篇之前的草稿。您可以<a href=\"\" class=\"restoreLink\">恢复草稿内容</a>或者<a href=\"\" class=\"discardLink\">丢弃草稿</a>。"
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
@@ -152,16 +148,15 @@ msgstr "新建标签..."
 msgid "How to read CSS syntax."
 msgstr "如何阅读 CSS 语法。"
 
-#: kuma/static/js/wiki.js:555
+#: kuma/static/js/wiki.js:571
 msgid "Search Stack Overflow"
 msgstr "搜索 Stack Overflow"
 
-#: kuma/static/js/wiki.js:668
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
+#: kuma/static/js/wiki.js:684
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "您的浏览器不支持 MathML。已使用后备的 CSS 代替。"
 
-#: kuma/static/js/wiki.js:883
+#: kuma/static/js/wiki.js:899
 msgid "Details"
 msgstr "详细信息"
 
@@ -173,8 +168,7 @@ msgstr "选择一个附件"
 msgid "No attachments available"
 msgstr "没有可用的附件"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "附件"
 
@@ -194,8 +188,7 @@ msgstr "创建一个重定向"
 msgid "MDN Redirect"
 msgstr "MDN 重定向"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "文档"
 

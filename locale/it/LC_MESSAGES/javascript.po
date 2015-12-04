@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
 "PO-Revision-Date: 2015-11-21 17:29+0000\n"
 "Last-Translator: Sandro <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Chiudi sottomenu"
 
-#: kuma/static/js/components.js:530
+#: kuma/static/js/components.js:536
 msgid "Close notification"
 msgstr "Chiudi notifica"
 
@@ -99,7 +99,8 @@ msgid "Open"
 msgstr "Apri"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatability table."
+#, fuzzy
+msgid "Return to compatibility table."
 msgstr "Ritorna alla tabella di compatibilità."
 
 #: kuma/static/js/wiki-compat-tables.js:25
@@ -132,10 +133,7 @@ msgstr "Visualizza la tabella utilizzando il vecchio formato."
 
 #: kuma/static/js/wiki-edit.js:400
 msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr ""
-"È presente una bozza per questo documento. <a href=\"\" "
-"class=\"restoreLink\">Ripristina il contenuto della bozza</a> oppure <a "
-"href=\"\" class=\"discardLink\">eliminala</a>."
+msgstr "È presente una bozza per questo documento. <a href=\"\" class=\"restoreLink\">Ripristina il contenuto della bozza</a> oppure <a href=\"\" class=\"discardLink\">eliminala</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
@@ -149,17 +147,15 @@ msgstr "Nuovo tag."
 msgid "How to read CSS syntax."
 msgstr "Come interpretare la sintassi CSS."
 
-#: kuma/static/js/wiki.js:555
+#: kuma/static/js/wiki.js:571
 msgid "Search Stack Overflow"
 msgstr "Ricerca su Stack Overflow"
 
-#: kuma/static/js/wiki.js:668
+#: kuma/static/js/wiki.js:684
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
-"Il browser in uso non interpreta la tecnologia MathML. È stata quindi "
-"utilizzata una versione alternativa basata sui CSS."
+msgstr "Il browser in uso non interpreta la tecnologia MathML. È stata quindi utilizzata una versione alternativa basata sui CSS."
 
-#: kuma/static/js/wiki.js:883
+#: kuma/static/js/wiki.js:899
 msgid "Details"
 msgstr "Informazioni"
 

@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
 "PO-Revision-Date: 2015-11-20 20:27+0000\n"
 "Last-Translator: Michael Köhler <michael.koehler1@gmx.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Untermenü schließen"
 
-#: kuma/static/js/components.js:530
+#: kuma/static/js/components.js:536
 msgid "Close notification"
 msgstr "Benachrichtigung schließen"
 
@@ -100,7 +100,8 @@ msgid "Open"
 msgstr "Öffnen"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatability table."
+#, fuzzy
+msgid "Return to compatibility table."
 msgstr "Zur Kompatibilitätstabelle zurückkehren."
 
 #: kuma/static/js/wiki-compat-tables.js:25
@@ -132,14 +133,8 @@ msgid "Show old table."
 msgstr "Alte Tabelle anzeigen."
 
 #: kuma/static/js/wiki-edit.js:400
-msgid ""
-"You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
-" draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
-"draft</a>."
-msgstr ""
-"Sie haben einen Entwurf in Arbeit. <a href=\"\" class=\"restoreLink\">Laden "
-"Sie den Inhalt des Entwurfs</a> oder <a href=\"\" "
-"class=\"discardLink\">verwerfen Sie den Entwurf</a>."
+msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+msgstr "Sie haben einen Entwurf in Arbeit. <a href=\"\" class=\"restoreLink\">Laden Sie den Inhalt des Entwurfs</a> oder <a href=\"\" class=\"discardLink\">verwerfen Sie den Entwurf</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
@@ -153,18 +148,15 @@ msgstr "Neues Schlagwort…"
 msgid "How to read CSS syntax."
 msgstr "Wie man die CSS-Syntax liest."
 
-#: kuma/static/js/wiki.js:555
+#: kuma/static/js/wiki.js:571
 msgid "Search Stack Overflow"
 msgstr "Stack Overflow durchsuchen"
 
-#: kuma/static/js/wiki.js:668
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
-"Ihr Browser unterstützt kein MathML. Stattdessen wurde eine CSS-Alternative "
-"verwendet."
+#: kuma/static/js/wiki.js:684
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr "Ihr Browser unterstützt kein MathML. Stattdessen wurde eine CSS-Alternative verwendet."
 
-#: kuma/static/js/wiki.js:883
+#: kuma/static/js/wiki.js:899
 msgid "Details"
 msgstr "Details"
 
@@ -176,8 +168,7 @@ msgstr "Wählen Sie einen Anhang aus"
 msgid "No attachments available"
 msgstr "Keine Anhänge verfügbar"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Anhänge"
 
@@ -197,8 +188,7 @@ msgstr "Eine Weiterleitung einrichten"
 msgid "MDN Redirect"
 msgstr "MDN-Weiterleitung"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 

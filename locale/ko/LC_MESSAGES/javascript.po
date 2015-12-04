@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
 "PO-Revision-Date: 2013-12-09 01:55+0000\n"
 "Last-Translator: Channy <channy@mozilla.or.kr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr ""
 
-#: kuma/static/js/components.js:530
+#: kuma/static/js/components.js:536
 msgid "Close notification"
 msgstr ""
 
@@ -100,7 +100,7 @@ msgid "Open"
 msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatability table."
+msgid "Return to compatibility table."
 msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:25
@@ -132,10 +132,7 @@ msgid "Show old table."
 msgstr ""
 
 #: kuma/static/js/wiki-edit.js:400
-msgid ""
-"You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
-" draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
-"draft</a>."
+msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
 msgstr ""
 
 #: kuma/static/js/wiki-edit.js:547
@@ -150,16 +147,15 @@ msgstr ""
 msgid "How to read CSS syntax."
 msgstr ""
 
-#: kuma/static/js/wiki.js:555
+#: kuma/static/js/wiki.js:571
 msgid "Search Stack Overflow"
 msgstr ""
 
-#: kuma/static/js/wiki.js:668
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
+#: kuma/static/js/wiki.js:684
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 
-#: kuma/static/js/wiki.js:883
+#: kuma/static/js/wiki.js:899
 msgid "Details"
 msgstr ""
 
@@ -171,8 +167,7 @@ msgstr ""
 msgid "No attachments available"
 msgstr ""
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "첨부 파일"
 
@@ -192,8 +187,7 @@ msgstr ""
 msgid "MDN Redirect"
 msgstr ""
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr ""
 
