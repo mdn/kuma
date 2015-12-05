@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-05 18:03+0000\n"
+"PO-Revision-Date: 2015-12-05 18:31+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -3345,19 +3345,19 @@ msgstr ""
 #: kuma/search/admin.py:29
 #, python-format
 msgid "Demoted search index %s."
-msgstr ""
+msgstr "Nedgradera sökindex %s."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
-msgstr ""
+msgstr "Nedgradera valda sökindex (automatisk återgång till tidigare index)"
 
 #: kuma/search/admin.py:37
 msgid "Can't populate more than one index at once."
-msgstr ""
+msgstr "Går inte att fylla i fler än ett index åt gången."
 
 #: kuma/search/admin.py:42
 msgid "Populate selected search index via Celery"
-msgstr ""
+msgstr "Fyll i valda sökindex via Celery"
 
 #: kuma/search/admin.py:56
 msgid "Is current index?"
@@ -5948,7 +5948,7 @@ msgstr "Redigera mall"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
-msgstr ""
+msgstr "Tolkar macro:"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
@@ -5956,7 +5956,7 @@ msgstr "Redigera dokument"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
-msgstr ""
+msgstr "Fel i fulltext:"
 
 #: kuma/wiki/templates/wiki/includes/more_help.html:4
 msgid "Couldn't find what you were looking for?"
@@ -5964,7 +5964,7 @@ msgstr "Kunde du inte hitta det du letar efter?"
 
 #: kuma/wiki/templates/wiki/includes/more_help.html:10
 msgid "Ask our awesome support community for help"
-msgstr ""
+msgstr "Fråga våra fantastiska medarbetare om hjälp"
 
 #: kuma/wiki/templates/wiki/includes/more_help.html:13
 msgid "Or try searching:"
@@ -6182,20 +6182,20 @@ msgstr "Jag lärde mig om %(title)s på MDN."
 #: kuma/wiki/views/document.py:718
 #, python-format
 msgid "Unsupported content-type: %s"
-msgstr ""
+msgstr "Typen av innehåll stöds inte: %s"
 
 #: kuma/wiki/views/document.py:725
 #, python-format
 msgid "Request parsing error: %s"
-msgstr ""
+msgstr "Begär tolkningsfel: %s"
 
 #: kuma/wiki/views/document.py:745
 msgid "ETag precondition failed"
-msgstr ""
+msgstr "ETag förhandsvillkor misslyckades"
 
 #: kuma/wiki/views/edit.py:115
 msgid "Sections may only be edited inline."
-msgstr ""
+msgstr "Sektioner kan endast redigeras inline."
 
 #: kuma/wiki/views/misc.py:59
 msgid ""
