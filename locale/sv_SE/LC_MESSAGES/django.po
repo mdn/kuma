@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-05 18:31+0000\n"
+"PO-Revision-Date: 2015-12-05 19:28+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -3361,12 +3361,12 @@ msgstr "Fyll i valda sökindex via Celery"
 
 #: kuma/search/admin.py:56
 msgid "Is current index?"
-msgstr ""
+msgstr "Är aktuellt index?"
 
 #: kuma/search/forms.py:17
 #, python-format
 msgid "There is already a successor to the current index %s"
-msgstr ""
+msgstr "Det finns redan en efterträdare till det aktuella indexet %s"
 
 #: kuma/search/serializers.py:94
 msgid "name"
@@ -4439,6 +4439,9 @@ msgid ""
 "new features first and we send the occasional email asking for help testing "
 "specific things."
 msgstr ""
+"Vi vill gärna ha dina synpunkter på webbplatsförändringar! Beta-testare få "
+"tillgång till nya funktioner först och vi skickar tillfälliga mejl som ber "
+"om hjälp att testa specifika saker."
 
 #: kuma/users/templates/users/user_edit.html:66
 msgid "Primary Email"
@@ -5421,11 +5424,13 @@ msgid ""
 "Find the translation source with the lookup below and then click \"Save "
 "Changes.\""
 msgstr ""
+"Hitta översättningskällan med sökverktyget nedan och klicka sedan på \"Spara"
+" ändringar.\""
 
 #: kuma/wiki/templates/wiki/edit.html:148
 #: kuma/wiki/templates/wiki/includes/translate_description.html:62
 msgid "Lookup:"
-msgstr ""
+msgstr "Sökverktyg:"
 
 #: kuma/wiki/templates/wiki/edit.html:162
 msgid "Thank you for taking the time to improve MDN!"
@@ -5996,13 +6001,15 @@ msgstr "Revisionskommentar"
 
 #: kuma/wiki/templates/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr ""
+msgstr "Lär dig att använda revisionskommentarer"
 
 #: kuma/wiki/templates/wiki/includes/revision_comment.html:3
 msgid ""
 "Tell us why you made additions and changes. It is optional, but will make "
 "page history easier to understand."
 msgstr ""
+"Berätta varför du gjorde tillägg och ändringar. Det är valfritt, men kommer "
+"att göra sidhistoriken lättare att förstå."
 
 #: kuma/wiki/templates/wiki/includes/spam_error.html:2
 #, python-format
@@ -6012,6 +6019,10 @@ msgid ""
 "deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
 "belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"Ditt bidrag innefattar innehåll som inte kanske lämpar sig för MDN. "
+"Upprepade försök att skicka in olämpliga material kan resultera i ditt konto"
+" inaktiveras. Se vår guide “<a href=\"%(does_this_belong_url)s\">Hör detta "
+"hemma på MDN?</a>” för detaljer om vad som är lämpligt material."
 
 #: kuma/wiki/templates/wiki/includes/spam_error.html:11
 #, python-format
@@ -6019,6 +6030,8 @@ msgid ""
 "If you believe you’ve received this message by mistake, please <a "
 "href=\"%(admin_email)s\">contact the site administrators</a>."
 msgstr ""
+"Om du tror att du har fått detta meddelande av misstag, vänligen <a "
+"href=\"%(admin_email)s\">kontakta webbplatsens administratörer</a>."
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -6039,6 +6052,8 @@ msgid ""
 "Find the translation source with the lookup above and then click \"Save "
 "Changes."
 msgstr ""
+"Hitta översättningskällan med sökverktyget ovan och klicka sedan på \"Spara "
+"ändringar.\""
 
 #: kuma/wiki/templates/wiki/list/documents.html:2
 #, python-format
@@ -6202,14 +6217,17 @@ msgid ""
 "Autosuggest requires a partial title. For a full document index, see the "
 "main page."
 msgstr ""
+"Automatiska förslag kräver en partiell titel. För en full dokumentindex, se "
+"huvudsidan."
 
 #: kuma/wiki/views/misc.py:141
 msgid "Glad to hear it &mdash; thanks for the feedback!"
-msgstr ""
+msgstr "Kul att höra &mdash; tack för återkopplingen!"
 
 #: kuma/wiki/views/misc.py:144
 msgid "Sorry to hear that. Perhaps one of the solutions below can help."
 msgstr ""
+"Ledsen att höra det. Kanske kan en av lösningarna som anges nedan hjälpa."
 
 #: kuma/wiki/views/misc.py:155
 msgid "You already voted on this Article."
