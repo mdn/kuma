@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-05 17:10+0000\n"
+"PO-Revision-Date: 2015-12-05 18:03+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -3321,12 +3321,12 @@ msgstr ""
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
-msgstr ""
+msgstr "Kan inte uppgradera mer än ett index åt gången."
 
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr ""
+msgstr "Uppgradera sökindex %s."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
@@ -3334,7 +3334,7 @@ msgstr ""
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
-msgstr ""
+msgstr "Går inte att nedgradera mer än ett index åt gången."
 
 #: kuma/search/admin.py:24
 msgid ""
@@ -4205,6 +4205,9 @@ msgid ""
 "address</strong>. Your username will be displayed on MDN to identify any "
 "contributions (edits, demos, etc.) that you make."
 msgstr ""
+"För att konfigurera din MDN profil, vänligen <strong>Välj ett användarnamn "
+"och e-postadress</strong>. Ditt användarnamn kommer att visas på MDN för att"
+" identifiera eventuella bidrag (redigeringar, demon, etc.) som du gör."
 
 #: kuma/users/templates/socialaccount/signup.html:82
 #, python-format
@@ -4213,18 +4216,23 @@ msgid ""
 "profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
 "know</a></strong>."
 msgstr ""
+"Om du <strong>har problem med att</strong> logga in eller skapa en MDN "
+"profil, <strong><a href=\"%(bug_href)s\" rel=\"external\">Berätta för "
+"oss</a></strong>."
 
 #: kuma/users/templates/socialaccount/signup.html:107
 #, python-format
 msgid ""
 "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr ""
+msgstr "Ditt GitHub användarnamn %(username)s är redan taget. Välj en annat."
 
 #: kuma/users/templates/socialaccount/signup.html:111
 msgid ""
 "Please enter the name you'd like to display to other users to identify your "
 "contributions."
 msgstr ""
+"Skriv in det namn du vill ska visas för andra användare för att identifiera "
+"dina bidrag."
 
 #: kuma/users/templates/socialaccount/signup.html:125
 #, python-format
@@ -4234,6 +4242,10 @@ msgid ""
 "next=\"%(persona_next_url)s\">Connect your %(provider_name)s account to "
 "it.</a>"
 msgstr ""
+"Det finns redan en profil med den valda e-postadressen. <a "
+"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Anslut ditt %(provider_name)s konto till "
+"den.</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:155
 #, python-format
@@ -4243,6 +4255,9 @@ msgid ""
 "and will be used according to our <a href=\"%(privacy_url)s\">privacy "
 "policy</a>."
 msgstr ""
+"Vilken e-postadress ska vi använda för att skicka MDN relaterade meddelanden"
+" och aviseringar? Denna adress kommer <strong>inte</strong> att visas på MDN"
+" och används enligt vår <a href=\"%(privacy_url)s\">sekretesspolicy</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:170
 #, python-format
@@ -4250,6 +4265,8 @@ msgid ""
 "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
 "href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
+"till Mozillas <a href=\"%(terms_url)s\">villkor</a> och <a "
+"href=\"%(privacy_url)s\">sekretesspolicy</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:179
 msgid "Create my MDN profile"
@@ -5959,11 +5976,11 @@ msgstr "Ny sida"
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr ""
+msgstr "Ignorera ändringar och skapa ett nytt dokument?"
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:23
 msgid "Save and Keep Editing"
-msgstr ""
+msgstr "Spara och fortsätt redigera"
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:31
 msgid "Preview Changes"
