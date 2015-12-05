@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-04 18:01+0000\n"
+"PO-Revision-Date: 2015-12-05 17:10+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -4036,6 +4036,9 @@ msgid ""
 "finalize the signup process. Please contact us if you do not receive it "
 "within a few minutes."
 msgstr ""
+"Vi har skickat ett mejl till dig för bekräftelse. Följ länken för att "
+"slutföra registreringsprocessen. Kontakta oss om du inte får det inom några "
+"minuter."
 
 #: kuma/users/templates/account/verified_email_required.html:9
 msgid ""
@@ -4043,6 +4046,9 @@ msgid ""
 "be. For this purpose, we require that you confirm ownership of your email "
 "address."
 msgstr ""
+"Denna del av webbplatsen kräver att vi ska bekräfta att du är den du påstår "
+"dig vara. För detta ändamål kräver vi att du bekräftar ägandet av din "
+"e-postadress."
 
 #: kuma/users/templates/account/verified_email_required.html:13
 msgid ""
@@ -4050,6 +4056,8 @@ msgid ""
 "inside this email. Please contact us if you do not receive it within a few "
 "minutes."
 msgstr ""
+"Vi har skickat ett mejl till dig för bekräftelse. Klicka på länken i detta "
+"mejl. Kontakta oss om du inte får det inom några minuter."
 
 #: kuma/users/templates/account/verified_email_required.html:17
 #, python-format
@@ -4057,6 +4065,8 @@ msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
 "email address</a>."
 msgstr ""
+"<strong>Obs:</strong> du kan fortfarande <a href=\"%(email_url)s\">ändra din"
+" e-postadress</a>."
 
 #: kuma/users/templates/account/snippets/already_logged_in.html:1
 msgid "Note"
@@ -4118,6 +4128,9 @@ msgid ""
 "accounts. If this was a mistake, please proceed to <a "
 "href=\"%(login_url)s\">sign in</a>."
 msgstr ""
+"Du har beslutat att avbryta inloggningen på vår webbplats med ett av dina "
+"befintliga konton. Om detta var ett misstag, vänligen gå till <a "
+"href=\"%(login_url)s\">logga in</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:4
 #: kuma/users/templates/socialaccount/signup.html:26
@@ -4131,6 +4144,9 @@ msgid ""
 " MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
 "your social account connections.</a>"
 msgstr ""
+"Det finns redan en profil med denna e-postadress. För att ansluta Persona "
+"till din MDN profil, <a href=\"%(connections_url)s\">måste du logga in och "
+"besöka din socialt anslutna konton.</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:43
 #, python-format
@@ -4145,7 +4161,14 @@ msgid_plural ""
 "=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, connect "
 "with my MDN profile</a>"
 msgstr[0] ""
+"Det finns redan en profil med en e-postadress nedan. Har du redan en MDN "
+"profil? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" "
+"data-next=\"%(persona_next_url)s\">Ja, ansluta med min MDN profil</a>"
 msgstr[1] ""
+"Det finns redan en profil med en av dessa e-postadresser nedan. Har du redan"
+" en MDN profil? <a href=\"%(persona_login_url)s\" class=\"launch-persona-"
+"login\" data-next=\"%(persona_next_url)s\">Ja, ansluta med min MDN "
+"profil</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:55
 #, python-format
@@ -4153,6 +4176,8 @@ msgid ""
 "Thanks for signing in to MDN with %(provider_name)s. You have one more step "
 "to join MDN: <strong>create your MDN profile</strong>."
 msgstr ""
+"Tack för att du loggar in på MDN med %(provider_name)s. Du har ytterligare "
+"ett steg för att gå med MDN: <strong>skapa din MDN profil</strong>."
 
 #: kuma/users/templates/socialaccount/signup.html:61
 msgid ""
@@ -4160,6 +4185,9 @@ msgid ""
 "However, by joining MDN, you'll be able to edit docs, submit demos, and have"
 " your own profile page."
 msgstr ""
+"Du kan komma åt allt på MDN webbplats även utan en MDN profil. Om du går med"
+" i MDN, kommer du att kunna redigera dokument, skicka in demon och ha din "
+"egen profilsida."
 
 #: kuma/users/templates/socialaccount/signup.html:68
 msgid ""
@@ -4167,6 +4195,9 @@ msgid ""
 "username will be displayed on MDN to identify any contributions (edits, "
 "demos, etc.) that you make."
 msgstr ""
+"För att konfigurera din MDN profil, vänligen <strong>Välj ett "
+"användarnamn</strong>. Ditt användarnamn kommer att visas på MDN för att "
+"identifiera eventuella bidrag (redigeringar, demon, etc.) som du gör."
 
 #: kuma/users/templates/socialaccount/signup.html:74
 msgid ""
@@ -4321,6 +4352,8 @@ msgid ""
 "You haven't submitted any web technology demos. Build something awesome and "
 "<a href=\"%(submit_url)s\">submit a demo</a>!"
 msgstr ""
+"Du har inte skickat in några webbteknologidemon. Bygga något fantastiskt och"
+" <a href=\"%(submit_url)s\">skicka in en demo</a>!"
 
 #: kuma/users/templates/users/user_detail.html:175
 msgid "Recent Docs Activity"
@@ -4360,6 +4393,8 @@ msgid ""
 "<p class=\"none\">You haven't contributed to any MDN docs. <a "
 "href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
+"<p class=\"none\">Du har inte bidragit till något MDN dokument. <a "
+"href=\"%(docs_url)s\">Hjälp till!</a></p>"
 
 #: kuma/users/templates/users/user_detail.html:208
 msgid "This user has no activity."
@@ -4379,7 +4414,7 @@ msgstr "Visa profil"
 
 #: kuma/users/templates/users/user_edit.html:52
 msgid "You're editing a different profile than your own. Please take care!"
-msgstr ""
+msgstr "Du redigerar en annan profil än din egen. Var försiktig!"
 
 #: kuma/users/templates/users/user_edit.html:63
 msgid ""
@@ -5506,7 +5541,7 @@ msgstr "Inga andra dokument kommer att påverkas av denna förändring."
 
 #: kuma/wiki/templates/wiki/move_requested.html:2
 msgid "Page move requested"
-msgstr ""
+msgstr "Sidflyttning begärd"
 
 #: kuma/wiki/templates/wiki/move_requested.html:9
 #, python-format
@@ -5832,13 +5867,14 @@ msgstr "Avsluta prenumeration från version <bdi>%(language)s</bdi>"
 #: kuma/wiki/templates/wiki/includes/document_macros.html:163
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
-msgstr ""
+msgstr "Du prenumererar nu på version %(language)s av denna artikel."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:163
 #, python-format
 msgid ""
 "You have been unsubscribed from the %(language)s version of this article."
 msgstr ""
+"Du har avslutat prenumerationen från version %(language)s av denna artikel."
 
 #: kuma/wiki/templates/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/templates/wiki/includes/translate_description.html:50
@@ -5867,8 +5903,8 @@ msgstr "Dölj felinformation"
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Mer information om detta fel"
+msgstr[1] "Mer information om dessa fel"
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:19
 msgid ""
@@ -5915,7 +5951,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/includes/more_help.html:13
 msgid "Or try searching:"
-msgstr ""
+msgstr "Eller testa att söka:"
 
 #: kuma/wiki/templates/wiki/includes/page_buttons.html:16
 msgid "New Page"
@@ -6099,7 +6135,7 @@ msgstr "Översatta artiklar taggade med: %(tag)s"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr ""
+msgstr "Artiklar taggade med översättningstaggar"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:15
 #, python-format
@@ -6165,7 +6201,7 @@ msgstr "Du har redan röstat på denna artikel."
 #: kuma/wiki/views/misc.py:186
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
-msgstr ""
+msgstr "%(obj_count)d objekt laddade."
 
 #: kuma/wiki/views/misc.py:190
 #, python-format
@@ -6174,7 +6210,7 @@ msgstr "Det gick inte att importera data: %(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
-msgstr ""
+msgstr "Dokumentet har redigerats; vänligen granska igen."
 
 #: kuma/wiki/views/translate.py:73
 msgid "You cannot translate this document."
@@ -6203,11 +6239,11 @@ msgstr "Du måste logga in på visa all historik"
 #: templates/403.html:34 templates/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<p>Vi beklagar %(name)s, vi kan tyvärr inte göra det.</p>"
 
 #: templates/403.html:38 templates/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<p>Vi beklagar, vi kan tyvärr inte göra det.</p>"
 
 #: templates/403.html:45
 #, python-format
@@ -6235,6 +6271,10 @@ msgid ""
 "rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a "
 "href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
 msgstr ""
+"<p class=\"attrib\"><small><a "
+"href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
+"rel=\"nofollow\">Tumbeasts</a> av Matthew Inman från <a "
+"href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
 
 #: templates/404.html:6
 msgid "Not Found"
@@ -6250,6 +6290,8 @@ msgid ""
 "You can try a search or start over on the <a href=\"%(homepage_url)s\">home "
 "page</a>."
 msgstr ""
+"Du kan testa en sökning eller börja om på <a "
+"href=\"%(homepage_url)s\">hemsidan</a>."
 
 #: templates/404.html:28
 #, python-format
@@ -6258,6 +6300,9 @@ msgid ""
 "page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a"
 " bug</a>. Thanks!"
 msgstr ""
+"Om du följde en dokumentationslänk kan du logga in och skapa sidan. Annars "
+"<a href=\"%(bug_form_url)s\" rel=\"nofollow\">skicka in en felrapport</a>. "
+"Tack!"
 
 #: templates/404.html:36
 #, python-format
@@ -6265,6 +6310,8 @@ msgid ""
 "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew "
 "Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr ""
+"<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> av Matthew "
+"Inman från <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 
 #: templates/500.html:5
 msgid "Internal Server Error"
