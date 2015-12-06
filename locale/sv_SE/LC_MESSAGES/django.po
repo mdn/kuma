@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-06 12:32+0000\n"
+"PO-Revision-Date: 2015-12-06 14:43+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -5453,7 +5453,7 @@ msgstr "Sökverktyg:"
 
 #: kuma/wiki/templates/wiki/edit.html:162
 msgid "Thank you for taking the time to improve MDN!"
-msgstr ""
+msgstr "Tack för att du tog dig tid att förbättra MDN!"
 
 #: kuma/wiki/templates/wiki/edit.html:164
 #, python-format
@@ -5462,6 +5462,9 @@ msgid ""
 "to common editing questions within our <a target=\"_blank\" "
 "href=\"%(url)s\">Editor Guide</a>."
 msgstr ""
+"Det verkar som detta är ditt första bidrag till MDN. Du kan hitta svar på "
+"vanliga redigeringsfrågor inom vår <a target=\"_blank\" "
+"href=\"%(url)s\">redigeringsguide</a>."
 
 #: kuma/wiki/templates/wiki/edit.html:168
 msgid ""
@@ -5516,6 +5519,8 @@ msgid ""
 "Please specify the new location for this page by filling out the fields "
 "below. Be sure your new destination follows these rules:"
 msgstr ""
+"Ange den nya platsen för den här sidan genom att fylla i fälten nedan. Var "
+"noga med din nya destination följer dessa regler:"
 
 #: kuma/wiki/templates/wiki/move.html:22
 msgid ""
