@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-05 19:28+0000\n"
+"PO-Revision-Date: 2015-12-06 12:32+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -3330,7 +3330,7 @@ msgstr "Uppgradera sökindex %s."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
-msgstr ""
+msgstr "Uppgradera valt sökindex till aktuellt index"
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
@@ -3341,6 +3341,8 @@ msgid ""
 "Can't demote the index if there is only one. Create and populate a new one "
 "first."
 msgstr ""
+"Går inte att nedgradera index om det bara finns ett. Skapa ett och fyll i "
+"ett nytt först."
 
 #: kuma/search/admin.py:29
 #, python-format
@@ -4589,6 +4591,8 @@ msgid ""
 "Don't be shy, if you have any doubt, problems, questions: contact us! We are"
 " here to help."
 msgstr ""
+"Var inte blyg, om du har några tvivel, problem, frågor: kontakta oss! Vi är "
+"här för att hjälpa till."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:4
@@ -5122,6 +5126,7 @@ msgstr "Ta bort dokument | %(document)s"
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
 msgstr ""
+"Kan inte ta bort sidor med undersidor tills vi har åtgärdat detta fel:"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:17
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:21
@@ -5204,7 +5209,7 @@ msgstr "Utkast"
 
 #: kuma/wiki/templates/wiki/create.html:46
 msgid "URL segment that identifies the page"
-msgstr ""
+msgstr "URL-segmentet som identifierar sidan"
 
 #: kuma/wiki/templates/wiki/deletion_log.html:2
 #: kuma/wiki/templates/wiki/deletion_log.html:7
@@ -5293,6 +5298,9 @@ msgid ""
 "progress</abbr>. If the content below seems stale or if something is "
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
+"En uppdatering av detta dokument <abbr title=\"%(started_at)s\">pågår för "
+"närvarande</abbr>. Om innehållet nedan verkar gammal eller om något saknas, "
+"vänligen <a href=\"%(url)s\">ladda denna sidan</a> om några minuter."
 
 #: kuma/wiki/templates/wiki/document.html:272
 #, python-format
@@ -5301,6 +5309,9 @@ msgid ""
 "scheduled</abbr>. If the content below seems stale or if something is "
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
+"En uppdatering av detta dokument <abbr title=\"%(scheduled_at)s\">har "
+"schemalagts</abbr>. Om innehållet nedan verkar gammal eller om något saknas,"
+" vänligen <a href=\"%(url)s\">ladda denna sidan</a> om några minuter."
 
 #: kuma/wiki/templates/wiki/document.html:288
 msgid "This article is in need of a technical review."
@@ -5316,6 +5327,8 @@ msgid ""
 "This translation is incomplete. Please help <a "
 "href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
+"Denna översättning är ofullständig. Hjälp till att<a "
+"href=\"%(translate_url)s\">översätta denna artikel</a> från engelska."
 
 #: kuma/wiki/templates/wiki/document.html:304
 msgid "This translation is in progress."
@@ -5327,6 +5340,9 @@ msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
 "yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
+"Våra volontärer har inte översatt denna artikel till <bdi>%s (locale)</bdi> "
+"ännu. <a href=\"%(help_link)s\">Gå med oss och hjälpa till att få jobbet "
+"gjort!</a>"
 
 #: kuma/wiki/templates/wiki/document.html:322
 msgid "This article doesn't have any content yet."
@@ -5339,6 +5355,9 @@ msgid ""
 "use %(title)s</a> to see example use cases and how many pages use this "
 "macro."
 msgstr ""
+"Söka efter <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">sidor som "
+"använder %(title)s</a> för att se exempel av användningsfall och hur många "
+"sidor använder makrot."
 
 #: kuma/wiki/templates/wiki/document.html:338
 msgid "This article doesn't have approved content yet."
@@ -5453,7 +5472,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/edit.html:169
 msgid "Have fun and be proud of your contribution!"
-msgstr ""
+msgstr "Ha kul och vara stolt över ditt bidrag!"
 
 #: kuma/wiki/templates/wiki/edit.html:188
 msgid "Learn how to tag an article"
@@ -5503,25 +5522,30 @@ msgid ""
 "Make sure the location you specify is located immediately under an existing "
 "page."
 msgstr ""
+"Kontrollera att den plats du anger finns omedelbart under en befintlig sida."
 
 #: kuma/wiki/templates/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
-msgstr ""
+msgstr "Inkludera inte URL-schemat (\"-https://\")."
 
 #: kuma/wiki/templates/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "Ange endast delen av den URL som följer \"/docs/\"."
 
 #: kuma/wiki/templates/wiki/move.html:25
 msgid ""
 "Don't include a trailing slash (this will be removed for you if you include "
 "it, but you should leave it out)."
 msgstr ""
+"Inkludera inte ett avslutande snedstreck (detta tas bort för dig om du ta "
+"med det, men du bör inte ha med det)."
 
 #: kuma/wiki/templates/wiki/move.html:31
 msgid ""
 "Your requested move cannot be completed due to the following slug conflicts:"
 msgstr ""
+"Din begära flyttning kan inte slutföras på grund av följande "
+"sluggkonflikter:"
 
 #: kuma/wiki/templates/wiki/move.html:54
 msgid "Current Slug:"
@@ -5616,6 +5640,10 @@ msgid ""
 "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"Innehållet är tillgänglig under en licens som är specifik för detta projekt."
+" &middot; <a href=\"%(about_url)s\">Om MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Bidra till koden</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Sekretesspolicy</a>"
 
 #: kuma/wiki/templates/wiki/sphinx.html:43
 #, python-format
@@ -5626,6 +5654,11 @@ msgid ""
 "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"&copy; 2005-2015 Mozilla Developer Network och enskilda bidragare<br /> "
+"Innehållet är tillgänglig under en licens som är specifik för detta projekt."
+" &middot; <a href=\"%(about_url)s\">Om MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Bidra till koden</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Sekretesspolicy</a>"
 
 #: kuma/wiki/templates/wiki/translate.html:7
 #, python-format
@@ -5648,7 +5681,7 @@ msgstr "Godkänd %(locale)s version"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Rendered"
-msgstr ""
+msgstr "Visa rendering"
 
 #: kuma/wiki/templates/wiki/translate.html:85
 msgid "View Source"
@@ -5821,6 +5854,8 @@ msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
 msgstr ""
+"Servern renderar innehållet för jämförelsen. Vänligen uppdatera den här "
+"sidan om några minuter."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:107
 msgid "Share:"
@@ -5916,7 +5951,11 @@ msgid_plural ""
 "There were scripting errors on this page. While those are being addressed by"
 " site editors, you can view partial content below."
 msgstr[0] ""
+"Det fanns ett skriptfel på denna sida. Medan felet korrigeras av sidans "
+"författare, kan du se partiellt innehåll nedan."
 msgstr[1] ""
+"Det fanns flera skriptfel på denna sida. Medan felen korrigeras av sidans "
+"författare, kan du se partiellt innehåll nedan."
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -5934,6 +5973,10 @@ msgid ""
 "href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
 "troubleshooting guide</a> as a starting point."
 msgstr ""
+"Vem som helst med en MDN profil kan redigera ett dokument för att åtgärda "
+"ett fel. Använd <a "
+"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
+"felsökningsguide</a> som utgångspunkt."
 
 #: kuma/wiki/templates/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
