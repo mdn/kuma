@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-06 14:43+0000\n"
+"PO-Revision-Date: 2015-12-06 18:41+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -4470,6 +4470,8 @@ msgid ""
 "Separate tags with commas or spaces. Join multi-word tags with double "
 "quotes, like \"web standards\"."
 msgstr ""
+"Separera taggar med kommatecken eller blanksteg. Sätt ihop flera taggar av "
+"med citationstecken, som \"webb tekniker\"."
 
 #: kuma/users/templates/users/user_edit.html:92
 msgid "Areas of expertise"
@@ -4606,6 +4608,8 @@ msgid ""
 "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a "
 "community making great resources for developers like you."
 msgstr ""
+"Tack för att du skapade en profil på Mozilla Developer Network (MDN) -- en "
+"gemenskap med stora resurser för utvecklare som du."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:10
@@ -4614,6 +4618,9 @@ msgid ""
 "profile. Now, keep going by picking a task on MDN, and doing it! We have a "
 "bunch of intro tasks you can choose based on your interests."
 msgstr ""
+"Du har slutfört det första steget för att komma igång på MDN genom att skapa"
+" en profil. Fortsätt genom att välja en uppgift på MDN och gör den! Vi har "
+"en massor av introuppgifter som du kan välja baserat på dina intressen."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:14
@@ -5081,6 +5088,8 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          Följande dokument kommer att tas bort permanent från databasen. Denna åtgärd kan inte ångras. För att avbryta, tryck på knappen \"Bakåt\" i din webbläsare."
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
@@ -5290,6 +5299,9 @@ msgid ""
 "This document is being rendered for the first time by the system. Please <a "
 "href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
+"Det här dokumentet renderas för första gången av systemet. Vänligen <a "
+"href=\"%(url)s\">ladda om sidan</a> om några minuter för att se hela "
+"innehållet."
 
 #: kuma/wiki/templates/wiki/document.html:263
 #, python-format
@@ -5395,6 +5407,10 @@ msgid ""
 "since you started editing. You may save again, but try to resolve any "
 "conflicts by hand so that the changes made since you started are not lost."
 msgstr ""
+"Läs igenom skillnaderna mellan dina ändringar och de förändringar som "
+"sparats sedan du började redigera. Du kan spara igen, men försök att lösa "
+"eventuella konflikter för hand så att de ändringar som gjorts sedan du "
+"började inte går förlorade."
 
 #: kuma/wiki/templates/wiki/edit.html:41
 msgid "Your Changes"
@@ -5424,7 +5440,7 @@ msgstr "Redigera sidtitel och egenskaper"
 
 #: kuma/wiki/templates/wiki/edit.html:127
 msgid "Rendering max age:"
-msgstr ""
+msgstr "Rendering maxålder:"
 
 #: kuma/wiki/templates/wiki/edit.html:129
 msgid "Days"
@@ -5601,6 +5617,9 @@ msgid ""
 "href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when "
 "it finishes, or if any errors occur during the move.</p>"
 msgstr ""
+"<h1>Planerad flytt av sida</h1> <p>Flyttar %(old_slug)s till <a "
+"href=\"%(new_url)s\">%(new_slug)s</a></p> <p> Du får ett mejl när det är "
+"klart eller om fel uppstår under flytten.</p>"
 
 #: kuma/wiki/templates/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
