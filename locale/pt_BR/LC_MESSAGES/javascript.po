@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-04 14:11+0000\n"
+"PO-Revision-Date: 2015-11-26 12:11+0000\n"
 "Last-Translator: Marco Aurélio <ouesten@me.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
@@ -73,7 +73,7 @@ msgstr "Escolha um..."
 
 #: kuma/static/js/helpfulness.js:77
 msgid "Uh oh. What would make it better?"
-msgstr "O que poderia melhorar?"
+msgstr "Opa. O que poderia melhorar?"
 
 #: kuma/static/js/helpfulness.js:80
 msgid "Thanks! We'll fix it."
