@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-05 23:54+0000\n"
+"PO-Revision-Date: 2015-12-08 19:02+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -30,7 +30,7 @@ msgstr "datum poslední úpravy"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr ""
+msgstr "MDN poslední změny souboru"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
@@ -186,7 +186,7 @@ msgstr "Vyhledávací klíč"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
-msgstr ""
+msgstr "Hashovaný tajný klíč"
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
@@ -260,6 +260,10 @@ msgid ""
 " This will be your only means of identifying this key later, other than the "
 "date and time of its creation. So, be as clear as you can.</p>"
 msgstr ""
+"<p>Níže popište zamýšlené využití klíče. <p><strong>POZNÁMKA:</strong> Kromě"
+" data a času vytvoření to bude jediný způsob, jak můžete později "
+"identifikovat tento klíč, pokuste se jej proto vyjádřit co možná "
+"nejlépe.</p>"
 
 #: kuma/authkeys/templates/authkeys/new.html:16
 msgid "Create"
@@ -282,11 +286,11 @@ msgstr "ID klíče"
 
 #: kuma/authkeys/templates/authkeys/new.html:32
 msgid "Secret"
-msgstr "Tajný"
+msgstr "Tajný klíč"
 
 #: kuma/contentflagging/models.py:15
 msgid "This is not working for me"
-msgstr ""
+msgstr "Nefunguje mi to"
 
 #: kuma/contentflagging/models.py:16
 msgid "This contains inappropriate content"
@@ -310,7 +314,7 @@ msgstr "Označení odmítnuto moderátorem"
 
 #: kuma/contentflagging/models.py:30
 msgid "Creator notified"
-msgstr ""
+msgstr "Tvůrce byl upozorněn"
 
 #: kuma/contentflagging/models.py:31
 msgid "Content hidden by moderator"
@@ -323,7 +327,7 @@ msgstr "Obsah smazán moderátorem"
 #: kuma/contentflagging/models.py:65
 #, python-format
 msgid "%(object)s Flagged"
-msgstr ""
+msgstr "%(object)s označen"
 
 #: kuma/contentflagging/models.py:97
 msgid "current status of flag review"
@@ -685,11 +689,11 @@ msgstr "odstraněno"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Zablokovat editaci z této IP adresy"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
 msgid "There are no revisions matching this filter set."
-msgstr ""
+msgstr "Nastavenému filtru neodpovídají žádné revize."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
