@@ -35,8 +35,10 @@
 
 {% set buttons = get_document_buttons(document, help_link) %}
 {% set crumbs = build_document_crumbs(document) %}
-{% set share_links = build_share_links(document) %}
 
+{% if waffle.flag('share_links') %}
+  {% set share_links = build_share_links(document) %}
+{% endif %}
 
 {% set content_class = 'column-all' %}
 {% if show_left and show_right %}
@@ -179,15 +181,17 @@
 
         <h1>{{ document.title }}</h1>
 
-        {{ share_links }}
+        {% if waffle.flag('share_links') %}
+          {{ share_links }}
+        {% endif %}
 
         {% if has_contributors %}
         <div class="contributor-avatars" data-all-text="{{ _('Show all') }}&hellip;<span class='hidden'>{{ _('contributors') }}</span>" {% if contributors_count > contributors_limit %}data-has-hidden="1"{% endif %}>
             <span class="quickstat">
             {% trans count=contributors_count %}
-            By {{ count }} contributor:
+            by {{ count }} contributor:
             {% pluralize %}
-            By {{ count }} contributors:
+            by {{ count }} contributors:
             {% endtrans %}
             </span>
             <ul>
@@ -234,6 +238,9 @@
                 <ol class="toggle-container">
                   {{ toc_html|safe }}
                 </ol>
+                {% if waffle.flag('share_links') %}
+                  {{ share_links }}
+                {% endif %}
               </div>
               {% endif %}
               </div>
@@ -339,6 +346,11 @@
                 {% endif %}
               </article>
 
+            {% if waffle.flag('share_links') %}
+              {{ share_links }}
+            {% endif %}
+
+
               {% if not is_zone_root %}
 
                 <!-- contributors -->
@@ -403,6 +415,14 @@
 {% endblock %}
 
 {% block js %}
+  <script type="text/javascript">
+      {# This can be removed once the social network button multivariate test is completed. #}
+      mdn.optimizely.push(['activate', 2796520257]);
+  </script>
+
+  {% if waffle.flag('share_links') %}
+    {% javascript 'social' %}
+  {% endif %}
 
   {% if waffle.flag('section_edit') %}
     <script type="text/javascript">
