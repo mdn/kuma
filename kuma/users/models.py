@@ -93,9 +93,6 @@ class User(AbstractUser):
 
     tags = NamespacedTaggableManager(verbose_name=_(u'Tags'), blank=True)
 
-    # should this user receive contentflagging emails?
-    content_flagging_email = models.BooleanField(default=False)
-
     WEBSITE_VALIDATORS = {
         'website': validators.RegexValidator(
             r'^https?://',

@@ -12,14 +12,8 @@
 
 {% block site_css %}
   {{ super() }}
-  {% stylesheet 'demostudio' %}
   {% stylesheet 'jquery-ui' %}
   {% stylesheet 'users' %}
-{% endblock %}
-
-{% block site_js %}
-  {{ super() }}
-  {% javascript 'demostudio' %}
 {% endblock %}
 
 {% block content %}
@@ -150,25 +144,6 @@
         </ul>
       </div>
     </section>
-
-    {% if demos_paginator.count %}
-        <section id="user-demos" class="user-section">
-            {{ submission_listing(
-                request, demos_page.object_list, demos_page.has_other_pages(),
-                demos_paginator, demos_page,
-                _("Subscribe to a feed of %(display_name)s's demos", display_name=display_name),
-                url('demos_feed_profile', format='atom', username=detail_user.username), cols_per_row=4,
-                show_submit=True
-            ) }}
-        </section>
-    {% elif is_me %}
-        <section id="user-demos" class="user-section">
-          <header class="gallery-head">
-            <h2 class="count">{{ _("No Demos") }}</h2>
-          </header>
-          <p class="none">{% trans submit_url=url('kuma.demos.views.submit') %}You haven't submitted any web technology demos. Build something awesome and <a href="{{ submit_url }}">submit a demo</a>!{% endtrans %}</p>
-        </section>
-    {% endif %}
 
           <section id="docs-activity" class="user-section">
             <header>

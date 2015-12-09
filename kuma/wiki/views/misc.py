@@ -1,22 +1,17 @@
 # -*- coding: utf-8 -*-
 import newrelic.agent
 from django.contrib import messages
-from django.db.models import Q
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_GET, require_POST
 from smuggler.forms import ImportForm
 
-from kuma.contentflagging.models import FLAG_NOTIFICATIONS, ContentFlag
 from kuma.core.decorators import block_user_agents, superuser_required
-from kuma.users.models import User
 
 from ..constants import ALLOWED_TAGS, REDIRECT_CONTENT
-from ..decorators import allow_CORS_GET, process_document_path
-from ..forms import DocumentContentFlagForm
+from ..decorators import allow_CORS_GET
 from ..models import Document, EditorToolbar, HelpfulVote
 from ..utils import locale_and_slug_from_path
 
@@ -84,40 +79,6 @@ def autosuggest_documents(request):
         docs_list.append(data)
 
     return JsonResponse(docs_list, safe=False)
-
-
-@block_user_agents
-@xframe_options_sameorigin
-@process_document_path
-def flag(request, document_slug, document_locale):
-    """
-    Flag a document for something.
-    """
-    doc = get_object_or_404(Document,
-                            slug=document_slug,
-                            locale=document_locale)
-
-    if request.method == 'POST':
-        form = DocumentContentFlagForm(data=request.POST)
-        if form.is_valid():
-            flag_type = form.cleaned_data['flag_type']
-            recipients = None
-            if (flag_type in FLAG_NOTIFICATIONS and
-                    FLAG_NOTIFICATIONS[flag_type]):
-                query = Q(email__isnull=True) | Q(email='')
-                recipients = list(User.objects.exclude(query)
-                                              .values_list('email', flat=True))
-
-            flag, created = ContentFlag.objects.flag(
-                request=request, object=doc,
-                flag_type=flag_type,
-                explanation=form.cleaned_data['explanation'],
-                recipients=recipients)
-            return redirect(doc)
-    else:
-        form = DocumentContentFlagForm(data=request.GET)
-
-    return render(request, 'wiki/flag.html', {'form': form, 'doc': doc})
 
 
 @block_user_agents

@@ -5,7 +5,6 @@ import logging
 import os
 import platform
 
-from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 
 _Language = namedtuple(u'Language', u'english native iso639_1')
@@ -455,11 +454,6 @@ INSTALLED_APPS = (
     'kuma.users.providers.persona',
     'kuma.users.providers.github',
 
-    # DEMOS
-    'kuma.demos',
-    'kuma.contentflagging',
-    'kuma.actioncounters',
-
     # util
     'pipeline',
     'product_details',
@@ -580,18 +574,6 @@ PIPELINE_CSS = {
             'css/jquery-ui-customizations.css',
         ),
         'output_filename': 'build/styles/jquery-ui.css',
-    },
-    'demostudio': {
-        'source_filenames': (
-            'css/demos.css',
-        ),
-        'output_filename': 'build/styles/demostudio.css',
-    },
-    'devderby': {
-        'source_filenames': (
-            'css/devderby.css',
-        ),
-        'output_filename': 'build/styles/devderby.css',
     },
     'gaia': {
         'source_filenames': (
@@ -785,22 +767,6 @@ PIPELINE_JS = {
             'async': True,
         },
     },
-    'demostudio': {
-        'source_filenames': (
-            'js/libs/jquery.hoverIntent.minified.js',
-            'js/libs/jquery.scrollTo-1.4.2-min.js',
-            'js/demos.js',
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/modal-control.js',
-        ),
-        'output_filename': 'build/js/demostudio.js',
-    },
-    'demostudio_devderby_landing': {
-        'source_filenames': (
-            'js/demos-devderby-landing.js',
-        ),
-        'output_filename': 'build/js/demostudio_devderby_landing.js',
-    },
     'jquery-ui': {
         'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
@@ -936,12 +902,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/selectivizr.js',
     },
-    'hoverIntent': {
-        'source_filenames': (
-            'js/libs/jquery.hoverIntent.minified.js',
-        ),
-        'output_filename': 'build/js/hoverIntent.js',
-    },
     'modal-control': {
         'source_filenames': (
             'js/modal-control.js',
@@ -1025,9 +985,6 @@ CELERY_ANNOTATIONS = {
 
 CELERY_ROUTES = {
     'cacheback.tasks.refresh_cache': {
-        'queue': 'mdn_purgeable'
-    },
-    'kuma.actioncounters.tasks.update_actioncounter_counts': {
         'queue': 'mdn_purgeable'
     },
     'kuma.core.tasks.clean_sessions': {
@@ -1127,32 +1084,11 @@ TIDINGS_FROM_ADDRESS = 'notifications@developer.mozilla.org'
 TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
 
-# content flagging
-DEMO_FLAG_REASONS = (
-    ('notworking', _('This demo is not working for me')),
-    ('inappropriate', _('This demo contains inappropriate content')),
-    ('plagarised', _('This demo was not created by the author')),
-)
-
-WIKI_FLAG_REASONS = (
-    ('bad', _('This article is spam/inappropriate')),
-    ('unneeded', _('This article is obsolete/unneeded')),
-    ('duplicate', _('This is a duplicate of another article')),
-)
-
-FLAG_REASONS = DEMO_FLAG_REASONS + WIKI_FLAG_REASONS
-
 # bit.ly
 BITLY_API_KEY = None  # Set me in settings_local.py.
 BITLY_USERNAME = None  # Set me in settings_local.py.
 
 GOOGLE_MAPS_API_KEY = "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ"
-
-# demo studio uploads
-# Filesystem path where files uploaded for demos will be written
-DEMO_UPLOADS_ROOT = path('media/uploads/demos')
-# Base URL from where files uploaded for demos will be linked and served
-DEMO_UPLOADS_URL = MEDIA_URL + 'uploads/demos/'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 # must be an entry in the CACHES setting!
@@ -1160,69 +1096,6 @@ CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
-    DEMO_BLACKLIST_OVERRIDE_EXTENSIONS=(
-        'jsgz datagz memgz',
-        'File extensions that override the mimetype blacklist in case of '
-        'an ambigous mimetype such as application/gzip',
-    ),
-    DEMO_MAX_ZIP_FILESIZE=(
-        60 * 1024 * 1024,
-        "Max file size for zips uploaded to demo studio."
-    ),
-    DEMO_MAX_FILESIZE_IN_ZIP=(
-        60 * 1024 * 1024,
-        "Max file size for files inside zip uploaded to demo studio."
-    ),
-    DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG=(
-        "challenge:2011:september",
-        "Dev derby current challenge"
-    ),
-    DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG=(
-        "system:challenge:firstplace:2011:august",
-        "Tag used to find most recent winner for dev derby"
-    ),
-    DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS=(
-        ' '.join([
-            "challenge:2011:september",
-            "challenge:2011:october",
-            "challenge:2011:november",
-        ]),
-        "Dev derby choices displayed on submission form (space-separated tags)"
-    ),
-    DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS=(
-        ' '.join([
-            "challenge:2013:june",
-            "challenge:2013:may",
-            "challenge:2013:april",
-            "challenge:2013:march",
-            "challenge:2013:february",
-            "challenge:2013:january",
-            "challenge:2012:december",
-            "challenge:2012:november",
-            "challenge:2012:october",
-            "challenge:2012:september",
-            "challenge:2012:august",
-            "challenge:2012:july",
-            "challenge:2012:june",
-            "challenge:2012:may",
-            "challenge:2012:april",
-            "challenge:2012:march",
-            "challenge:2012:february",
-            "challenge:2012:january",
-            "challenge:2011:december",
-            "challenge:2011:november",
-            "challenge:2011:october",
-            "challenge:2011:september",
-            "challenge:2011:august",
-            "challenge:2011:july",
-            "challenge:2011:june",
-        ]),
-        "Dev derby tags for previous challenges (space-separated tags)"
-    ),
-    DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO=(
-        0,
-        'The ID of the demo which should be featured on the new homepage structure'
-    ),
     BASKET_RETRIES=(
         5,
         'Number of time to retry basket post before giving up.'

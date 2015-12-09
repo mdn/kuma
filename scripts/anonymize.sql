@@ -71,15 +71,12 @@ SET FOREIGN_KEY_CHECKS=0;
 -- wiki_taggeddocument
 
 TRUNCATE account_emailconfirmation;
-TRUNCATE actioncounters_actioncounterunique;
-TRUNCATE actioncounters_testmodel;
 TRUNCATE auth_message;
 TRUNCATE authkeys_key;
 TRUNCATE authkeys_keyaction;
 TRUNCATE celery_taskmeta;
 TRUNCATE celery_tasksetmeta;
 TRUNCATE constance_config;
-TRUNCATE contentflagging_contentflag;
 TRUNCATE core_ipban;
 TRUNCATE django_admin_log;
 TRUNCATE django_cache;
@@ -180,9 +177,6 @@ UPDATE auth_user SET
 UPDATE auth_user SET
     website_url = CONCAT("https://example.com/", MD5(CONCAT(website_url, @common_hash_secret)))
     WHERE website_url != "";
-
-DELETE FROM demos_submission WHERE hidden=1;
-DELETE FROM demos_submission WHERE censored=1;
 
 UPDATE wiki_revisionip SET
     ip = CONCAT('192.168.', SUBSTRING_INDEX(ip, '.', -2))

@@ -1,2 +1,0 @@
-{% set display_name = user_display(user) %}
-<a href="{{ user.get_absolute_url() }}" class="url fn" title="{% trans %}See {{ display_name }}'s profile{% endtrans %}">{% if show_gravatar and user.email %}<img src="{{ gravatar_url(user.email, size=gravatar_size) }}" class="photo avatar" width="{{ gravatar_size }}" height="{{ gravatar_size }}" border="0" /> {% endif %}<span>{{ display_name }}</span></a>

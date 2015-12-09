@@ -13,7 +13,6 @@ from django.utils.translation import ugettext
 from taggit.utils import parse_tags
 
 import kuma.wiki.content
-from kuma.contentflagging.forms import ContentFlagForm
 from kuma.core.form_fields import StrippedCharField
 from kuma.spam.forms import AkismetFormMixin
 
@@ -595,9 +594,3 @@ class TreeMoveForm(forms.Form):
 
 class DocumentDeletionForm(forms.Form):
     reason = forms.CharField(widget=forms.Textarea(attrs={'autofocus': 'true'}))
-
-
-class DocumentContentFlagForm(ContentFlagForm):
-    flag_type = forms.ChoiceField(
-        choices=settings.WIKI_FLAG_REASONS,
-        widget=forms.RadioSelect)
