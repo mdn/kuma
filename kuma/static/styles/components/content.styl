@@ -215,6 +215,7 @@ ul.directory-tree {
 div.bug {
     font-style: italic;
     prevent-last-child-bottom-spacing();
+    overflow: hidden;
 
     pre {
         color: $text-color;
@@ -232,6 +233,8 @@ div.bug {
     @extend $column-3;
     min-width: 200px;
     z-index: 2;
+
+    prevent-last-child-bottom-spacing();
 
     @media $media-query-small-mobile {
         width: 100%;

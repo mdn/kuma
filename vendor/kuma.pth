@@ -5,8 +5,9 @@ src/bitly-api-python
 src/bleach
 src/celery
 src/commonware
-src/cookies
 src/cssselect
+src/dj-database-url
+src/dj-email-url
 src/django
 src/django-allauth
 src/django-appconf
@@ -44,14 +45,15 @@ src/puente
 src/py-amqp
 src/pyquery
 src/python-dateutil
+src/python-decouple
 src/python-magic
 src/python-memcached
 src/python-openid
 src/pytidylib
 src/raven-python
 src/requests
+src/requests-mock
 src/requests-oauthlib
-src/responses
 src/sqlparse
 src/urllib3
 src/urlobject

@@ -1,0 +1,16 @@
+.compact {
+    dt {
+      display: inline;
+    }
+
+    dd {
+      display: inline;
+      margin-bottom: 0;
+      bidi-style(padding-left, $content-horizontal-spacing, padding-right, 0);
+
+        &:after {
+          content: '\A';
+          white-space: pre;
+        }
+    }
+}

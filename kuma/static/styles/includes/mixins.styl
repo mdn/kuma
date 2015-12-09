@@ -221,12 +221,10 @@ set-message-base(remove-last-spacing = true) {
     padding: ($grid-spacing / 2);
     margin-bottom: $grid-spacing;
     set-smaller-font-size();
+    overflow: hidden;
 
     if(remove-last-spacing) {
-        & *:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
+        prevent-last-child-bottom-spacing();
     }
 }
 

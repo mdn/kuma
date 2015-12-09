@@ -149,9 +149,6 @@
 [submodule "vendor/src/django-devserver"]
 	path = vendor/src/django-devserver
 	url = https://github.com/dcramer/django-devserver
-[submodule "vendor/src/elasticsearch-dsl-py"]
-	path = vendor/src/elasticsearch-dsl-py
-	url = https://github.com/elastic/elasticsearch-dsl-py
 [submodule "vendor/src/django-flat-theme"]
 	path = vendor/src/django-flat-theme
 	url = https://github.com/elky/django-flat-theme.git
@@ -161,16 +158,24 @@
 [submodule "vendor/src/pipeline"]
 	path = vendor/src/pipeline
 	url = https://github.com/cyberdelia/django-pipeline.git
-[submodule "vendor/src/responses"]
-	path = vendor/src/responses
-	url = https://github.com/getsentry/responses.git
-[submodule "vendor/src/cookies"]
-	path = vendor/src/cookies
-	url = https://gitlab.com/sashahart/cookies.git
-	ignore = untracked
 [submodule "vendor/src/django-celery-transactions"]
 	path = vendor/src/django-celery-transactions
 	url = git://github.com/fellowshipofone/django-celery-transactions.git
 [submodule "vendor/src/puente"]
 	path = vendor/src/puente
 	url = git://github.com/mozilla/puente.git
+[submodule "vendor/src/requests-mock"]
+	path = vendor/src/requests-mock
+	url = https://github.com/openstack/requests-mock.git
+[submodule "vendor/src/elasticsearch-dsl-py"]
+	path = vendor/src/elasticsearch-dsl-py
+	url = https://github.com/elastic/elasticsearch-dsl-py
+[submodule "vendor/src/python-decouple"]
+	path = vendor/src/python-decouple
+	url = https://github.com/henriquebastos/python-decouple.git
+[submodule "vendor/src/dj-database-url"]
+	path = vendor/src/dj-database-url
+	url = https://github.com/kennethreitz/dj-database-url.git
+[submodule "vendor/src/dj-email-url"]
+	path = vendor/src/dj-email-url
+	url = https://github.com/migonzalvar/dj-email-url.git

@@ -104,7 +104,7 @@
     {% set gplus_url = 'https://plus.google.com/share'|urlparams(url=share_url_gplus) %}
 
     <div class="share">
-        <strong><i class="icon-share" aria-hidden="true"></i> {{ _('Share:') }}</strong>
+        <strong>{{ _('Share:') }}</strong>
         <ul>
             <li><a href="{{ twitter_url }}" target="_blank" data-url="{{ share_url_twitter }}" data-title="{{ share_text }}" class="share-link twitter"><i aria-hidden="true" class="icon-twitter"></i>{{ _('Twitter') }}</a></li>
             <li><a href="{{ facebook_url }}" target="_blank" data-url="{{ share_url_facebook }}" data-title="{{ share_text }}" class="share-link facebook"><i aria-hidden="true" class="icon-facebook"></i>{{ _('Facebook') }}</a></li>

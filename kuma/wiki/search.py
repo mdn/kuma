@@ -267,7 +267,7 @@ class WikiDocumentType(document.DocType):
                          for exclude in cls.exclude_slugs]))
 
     def get_excerpt(self):
-        highlighted = self.meta.get('highlight')
+        highlighted = getattr(self.meta, 'highlight', None)
         if highlighted:
             for excerpt_field in self.excerpt_fields:
                 if excerpt_field in highlighted:

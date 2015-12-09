@@ -192,36 +192,14 @@ A possible ``/home/vagrant/src/.env`` file could look like this for example::
 Database
 ~~~~~~~~
 
-At a minimum, you will need to define a database connection. An example
-configuration is::
+At a minimum, you will need to define a database connection. The default
+database configuration is::
 
-    DATABASES = {
-        'default': {
-            'NAME': 'kuma',
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': 'localhost',
-            'PORT': '3306',
-            'USER': 'kuma',
-            'PASSWORD': 'kuma',
-            'OPTIONS': {
-                'sql_mode': 'TRADITIONAL',
-                'charset': 'utf8',
-                'init_command': 'SET '
-                    'storage_engine=INNODB,'
-                    'character_set_connection=utf8,'
-                    'collation_connection=utf8_general_ci',
-            },
-            'ATOMIC_REQUESTS': True,
-            'TEST': {
-                'CHARSET': 'utf8',
-                'COLLATION': 'utf8_general_ci',
-            },
-        },
-    }
+    DATABASE_URL = 'mysql://kuma:kuma@localhost:3306/kuma'
 
-Note the two values ``CHARSET`` and ``COLLATION`` of the ``TEST`` setting.
-Without these, the test suite will use MySQL's (moronic) defaults when
-creating the test database (see below) and lots of tests will fail. Hundreds.
+In other words, it uses MySQL default, the username and password of 'kuma'
+when trying to access the database 'kuma'. We automatically use MySQL's InnoDB
+storage engine if configured.
 
 Once you've set up the database, you can generate the schema with Django's
 ``migrate`` command::
@@ -233,12 +211,12 @@ This will generate an empty database, which will get you started!
 Assets
 ~~~~~~
 
-If you want to see images and have the pages formatted with CSS you need to
-set your ``settings_local.py`` with the following::
+Kuma will automatically run in debug mode, with the ``DEBUG`` setting
+turned to ``True``. That will make it serve images and have the pages
+formatted with CSS automatically.
 
-    DEBUG = True
-    TEMPLATE_DEBUG = DEBUG
-    SERVE_MEDIA = True
+Setting ``DEBUG = false`` in your ``.env`` file will put the installation
+in production mode and ask for minified assets.
 
 Production assets
 *****************
@@ -246,15 +224,14 @@ Production assets
 Assets are compressed on production. To emulate production and test compressed
 assets locally, follow these steps:
 
-#. In settings_local.py, set ``DEBUG = False``
-#. In settings_local.py, set ``DEV = False``
+#. In .env, set ``DEBUG = false``
 #. Run ``vagrant ssh`` to enter the virtual machine
 #. Run ``compile-stylesheets``
+#. Run ``./manage.py compilejsi18n``
 #. Run ``./manage.py collectstatic``
 #. Edit the file /etc/apache2/sites-enabled/kuma.conf and uncomment any lines
    pertaining to hosting static files
 #. Run ``sudo service apache2 restart``
-
 
 Mozilla Product Details
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -267,12 +244,10 @@ to disk. To set this up, just run::
 
 ...to do the initial fetch or run it again to update it.
 
-
 Secure Cookies
 ~~~~~~~~~~~~~~
 
 To prevent error messages like ``Forbidden (CSRF cookie not set.):``, you need to
-set your ``settings_local.py`` with the following::
+set your ``.env`` with the following::
 
-    CSRF_COOKIE_SECURE = False
-
+    CSRF_COOKIE_SECURE = false

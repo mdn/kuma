@@ -152,10 +152,11 @@
             });
         });
 
-        // Gets the open parent
+        /* Gets the open parent (un-used)
         function getOpenParent() {
             return $.fn.mozMenu.$openMenu.submenu;
         }
+        */
 
         // Clears the current timeout, interrupting fade-ins and outs as necessary
         function clear(timeout) {
@@ -456,7 +457,8 @@
             duration: 3000, // How long should the item be shown?  '0' means the message needs to be removed manually or via the handle.
             url: null, // Should clicking the item go anywhere?
             onclick: null, // What should happen if they click on the notification?
-            onclose: null // What should happen upon closing of individual notification?
+            onclose: null, // What should happen upon closing of individual notification?
+            type: 'html' // html or text?
         };
 
         var processedKey = 'data-processed';
@@ -484,6 +486,10 @@
         // Updates an item's HTML
         function updateMessageHTML($item, message) {
             $item.find('.notification-message').html(message);
+        }
+
+        function updateMessageText($item, message) {
+            $item.find('.notification-message').text(message);
         }
 
         // Enacts options upon an item, used by both discover and growl
@@ -559,6 +565,8 @@
                 return $notifications;
             },
             growl: function(message, options) {
+                var updateFunc = updateMessageHTML;
+
                 // Create the tray for the first message
                 if(!$tray) {
                     $tray = $('<div class="notification-tray" role="status" aria-live="polite"></div>').appendTo(doc.body);
@@ -567,6 +575,9 @@
                 // Merge options with defaults
                 options = $.extend({}, defaults, options || {});
 
+                if (options.type === 'text') {
+                    updateFunc = updateMessageText;
+                }
                 // Create the growl message, add to tray
                 var $item = $('<div class="notification">' + message + '</div>');
 
@@ -581,7 +592,7 @@
                     item: $item,
                     options: options,
                     updateMessage: function(message) {
-                        updateMessageHTML(this.item, message);
+                        updateFunc(this.item, message);
                         return this;
                     },
                     close: function(delay, callback) {
@@ -607,14 +618,13 @@
                     var stateObj = this;
                     var state = this.state;
                     var className = this.className;
-                    var iconName = this.iconName;
                     handle[state] = function(message, delay) {
                         var $item = handle.item;
 
                         $item.addClass(className);
                         $item.find('.notification-img i').attr('class', stateObj.iconName);
 
-                        if(message) updateMessageHTML($item, message);
+                        if(message) updateFunc($item, message);
                         if(delay) this.close(delay);
 
                         return this;

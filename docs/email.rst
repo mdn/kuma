@@ -17,25 +17,29 @@ So now you know you aren't emailing real users, but you'd still like to email
 yourself and test email in general. There are a few settings you'll need to
 use.
 
-First, set the ``EMAIL_BACKEND``. This document assumes you're using the SMTP
-mail backend.
+By default kuma is configured to print the email it sends in your console
+when you run it as plain text. That means the full raw source of every email
+will be visible where you run ``foreman start`` or ``./manage.py runserver``
+manually.
 
-::
+In case you want to override that default (not recommended) to have the emails
+really being sent out, you need to override a setting by modifying your
+``.env`` file in the root directory of the kuma source code. Set the
+``EMAIL_URL`` variable in ``.env`` like so::
 
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_URL = 'smtp://'
 
 If you have ``sendmail`` installed and working, that should do it. However, you
 might get caught in spam filters. An easy workaround for spam filters or not
 having sendmail working is to send email via a Gmail account.
 
-::
+Add to your ``.env`` file::
 
-    EMAIL_USE_TLS = True
-    EMAIL_PORT = 587
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = '<your gmail address>@gmail.com'
-    EMAIL_HOST_PASSWORD = '<your gmail password>'
+    EMAIL_URL = 'smtps://<your gmail address>:<your gmail password>@smtp.gmail.com:587/'
 
 Yeah, you need to put your Gmail password in a plain text file on your
 computer. It's not for everyone. Be **very** careful copying and pasting
-settings from ``settings_local.py`` if you go this route.
+settings from ``.env`` if you go this route.
+
+The ``.env`` file should **never** checked into Git and is therefore listed
+the ``.gitignore`` file.

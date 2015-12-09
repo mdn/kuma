@@ -277,6 +277,8 @@ table.html5ArticleToc {
     margin: 0 0.25em;
 }
 
+/* -- */
+
 table.withoutBorder,
 table.withoutBorder td,
 table.withoutBorder tr,
@@ -422,39 +424,6 @@ table.HTMLElmNav td {
     color: #888;
     font-weight: normal;
 }
-
-.experimentalIcon {
-    display: inline-block;
-    width: 4px;
-    height: 4px;
-    color: #ffa500;
-    background-color: #fff;
-    border: 3px solid #ffa500;
-}
-.nonstandardIcon {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    color: #f00;
-    background-color: #f00;
-    border: 1px solid #f00;
-}
-.obsoleteIcon {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    color: #000;
-    background-color: #000;
-    border: 1px solid #000;
-}
-.deprecatedIcon {
-    display: inline-block;
-    width: 4px;
-    height: 4px;
-    color: #000;
-    background-color: #fff;
-    border: 3px solid #000;
-}
 /* Used to to create icon-badged APIs inline */
 .indexListRow {
     vendorize-value(display, flex);
@@ -527,89 +496,8 @@ div.action-driven > div {
         font-family: $heading-font-family-fallback;
     }
 }
-/* New theme action-driven */
-.card-grid > li > span:first-of-type {
-    font-weight: bold;
-}
-ul.card-grid {
-    list-style-type: none;
-    padding-left: 0;
-}
-ul.card-grid li {
-    margin-bottom: 25px;
-    padding: 10px;
-}
-@media $media-query-tablet-and-up {
-    ul.card-grid {
-        list-style: none outside none;
-        padding-left: 40px;
-    }
-    .card-grid {
-        border-spacing: 30px 0px;
-        padding-bottom: 25px;
-    }
-    .card-grid > li > span:first-of-type {
-        font-weight: normal;
-    }
-    .card-grid > li {
-        background-color: #ccc;
-        background-image: -moz-linear-gradient(center top, #ddd 0px, #bbb 100%);
-        border-radius: 6px;
-        background-clip: padding-box;
-        box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
-        display: table-cell;
-        margin: 3px 12px 20px;
-        padding: 20px;
-        position: relative;
-        vertical-align: top;
-        width: 200px;
-        word-wrap: break-word;
-        z-index: 1;
-        min-height: 130px;
-    }
-    .card-grid > li:before {
-        left: 1px;
-        position: absolute;
-        right: 1px;
-        top: 1px;
-        z-index: -1;
-    }
-    .card-grid > li img {
-        float: left;
-        max-width: 35%;
-    }
-    .double-card {
-        width: 430px !important;
-    }
-    .card-grid > li > ul > li {
-        margin-bottom: 0px;
-        list-style-type: disc;
-        padding-bottom: 0px;
-        padding-top: 6px;
-    }
-    .card-grid > li > ul {
-        margin-bottom: 25px;
-    }
-    .card-grid > li span {
-        display: block;
-        margin-bottom: 12px;
 
-        font-family: $heading-font-family;
-        font-size: 22px;
-        letter-spacing: -1px;
-        line-height: 22px;
-        {$selector-heading-font-fallback} {
-            font-family: $heading-font-family-fallback;
-        }
-    }
-}
-.card-grid > li {
-    background-color: rgba-fallback(rgba(234,239,242,0.5));
-    border-radius: 0;
-    box-shadow: 3px 3px 0 3px rgba(212,221,228,0.5);
-    background-image: none;
-}
-
+/* */
 
 dl {
     margin-bottom: 20px;
@@ -622,26 +510,6 @@ dl {
     font-weight: 700;
 }
 
-/* color setting */
-#wikiArticle i.icon-beaker {
-    color: #09d;
-}
-/* experimental */
-#wikiArticle i.icon-warning-sign {
-    color: #db0;
-}
-/* non-standard */
-#wikiArticle i.icon-thumbs-down-alt {
-    color: #000;
-}
-/* deprecated */
-#wikiArticle i.icon-trash {
-    color: #d00;
-}
-/* obsolete */
-#wikiArticle i.icon-stethoscope {
-    color: #483d8b;
-}
 /* style for next and previous pages in tutorial */
 
 .previousPage {
@@ -726,6 +594,7 @@ a.liveSample:focus {
     font-weight: 700;
     text-align: left;
 }
+/* TODO */
 /* This is a specific item for the CSS tutorial: https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Selectors */
 /* To be removed once we have Live Examples */
 a.tutospecial:link,
@@ -766,32 +635,7 @@ a.tutospecial:active {
 #tutochallenge:target + a {
     display: none;
 }
-/* Fix for wiki-min.css */
-div.bug,
-div.warning {
-    overflow: hidden;
-}
-.page-content dd {
-    margin: 0.5em;
-}
-[dir="rtl"] .hasJS #nav-main #nav-sub-docs,
-[dir="rtl"] #nav-main .menu:hover #nav-sub-docs {
-    margin-left: -300px;
-}
-[dir="rtl"] #nav-main #nav-sub-docs li {
-    float: right;
-}
-[dir="rtl"] #nav-main #nav-sub-docs p {
-    text-align: left;
-}
-[dir="rtl"] .page-content ul {
-    padding-left: 0;
-    padding-right: 22px;
-}
-[dir="rtl"] .page-content dd {
-    padding-left: 0;
-    padding-right: 15px;
-}
+
 /* for B2G docs, to allow use of B2G lookalike UX elements */
 /* For display of Firefox OS UX screenshots in a grid */
 table.fxosScreenGrid,
@@ -811,6 +655,8 @@ div.fxosLiveSampleWrapper {
     border: 1px solid #b8b2a4;
     background-color: #f3ecdd;
 }
+
+/* -- */
 .rightButtonBox {
     float: right;
     width: 250px;
@@ -838,6 +684,7 @@ div.fxosLiveSampleWrapper {
 /*
  * Colorized icons
  */
+
 #wikiArticle i.icon-beaker,
 #wikiArticle i.icon-warning-sign,
 #wikiArticle i.icon-thumbs-down-alt,
@@ -1000,69 +847,6 @@ dd.landingPageList {
     text-decoration: underline;
 }
 
-/* new community box */
-.communitybox {
-    background-color: $homepage-background-color;
-    background-image: url($path-to-images + "blueprint.png");
-}
-.communitybox,
-.communitybox a,
-.communitybox a:hover,
-.communitybox a:focus,
-.communitybox a:visited {
-    color: #fff;
-}
-.communitybox .communitysubhead {
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 11px;
-    padding-bottom: 6px;
-}
-.communitybox ul {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style-type: none;
-}
-.communitybox ul.communitymailinglist li {
-    display: inline-block;
-    margin-right: 4px;
-    margin-top: 6px;
-}
-.communitybox ul.communitymailinglist a {
-    background: rgba-fallback(rgba(255,255,255,0.3));
-    display: inline-block;
-    color: #fff;
-    padding: 3px 6px;
-    border-radius: 3px;
-}
-.communitybox .communitycontact {
-    font-size: 14px;
-    margin-top: 13px;
-}
-.communitybox .communitycontact a {
-    border-bottom: 1px solid rgba-fallback(rgba(255,255,255,0.6));
-}
-.communitybox .communitycontact a:hover,
-.communitybox .communitycontact a:focus {
-    text-decoration: none;
-    border-bottom: 1px solid rgba-fallback(rgba(255,255,255,0.9));
-}
-.communitybox strong {
-    font-size: 15px;
-    font-weight: bold;
-}
-/* Default glossary links style to ease readability */
-a.glossaryLink:not(.new):link,
-a.glossaryLink:not(.new):hover,
-a.glossaryLink:not(.new):visited,
-a.glossaryLink:not(.new):focus,
-a.glossaryLink:not(.new):active {
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px dashed #aaa;
-    cursor: help;
-}
-
 /* download buttons */
 
 a.download-button {
@@ -1085,9 +869,6 @@ a.download-button:visited {
 }
 a.download-button:link {
     color: #fff;
-}
-a.download-button .right-align {
-    float: right;
 }
 
 /* download box stuff */
@@ -1126,41 +907,7 @@ span.comment {
 pre span.comment {
     display: inline;
 }
-/* "Add a page" button for the Inbox */
-div.addpage-button {
-    width: 100%;
-    text-align: center;
-}
-a.addpage-button {
-    margin-bottom: 20px;
-    padding: 18px 40px;
-    text-align: center;
-    border-radius: 6px;
-    font-size: 28px;
-    display: inline-block;
-    background-color: #70a300;
-    white-space: nowrap;
-    color: #fff;
-    text-shadow: 0px 1px 0px rgba(0,0,0,0.25);
-    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.2), 0px -1px 0px 0px rgba(0,0,0,0.3) inset;
-}
-a.addpage-button:hover {
-    color: #c8c8c8;
-}
-a.addpage-button:visited {
-    color: #fff;
-}
-a.addpage-button:link {
-    color: #fff;
-}
-a.addpage-button div {
-    color: #fff;
-    text-align: center;
-    font-size: 11px;
-}
-a.addpage-button .right-align {
-    float: right;
-}
+
 /* This is styling for the Learning Box place on articles */
 .text-content table.learn-box {
     border: 1px solid #f69855;
@@ -1186,9 +933,6 @@ a.addpage-button .right-align {
     box-shadow: none;
     font-style: italic;
     background-color: #fef9f5;
-}
-.fa-trash:before {
-    content: "\f014";
 }
 
 /*end!*/

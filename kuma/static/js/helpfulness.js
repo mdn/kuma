@@ -3,7 +3,7 @@
     var waitBeforeAsking = 60000;
     var articleTracker = doc.location.pathname + '#answered-helpful';
     // this feature requires localStorage
-    if (('localStorage' in win)) {
+    if (win.mdn.features.localStorage) {
         var ignore = localStorage.getItem('helpful-ignore') === 'true'; // true if ever clicked ignore
         var articleAskedRecently = parseInt(localStorage.getItem(articleTracker), 10) > Date.now();
         var helpfulnessAskedRecently = parseInt(localStorage.getItem('helpfulnessTracker'), 10) > Date.now();

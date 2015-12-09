@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-20 22:07+0000\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"PO-Revision-Date: 2015-12-04 20:17+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1438706669.0\n"
 
-#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
+#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:110
 msgid "object ID"
 msgstr "对象 ID"
 
@@ -23,7 +23,7 @@ msgstr "对象 ID"
 msgid "name of the action"
 msgstr "动作名称"
 
-#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128
+#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:127
 #: kuma/demos/models.py:457
 msgid "date last modified"
 msgstr "最后修改日期"
@@ -318,22 +318,23 @@ msgid "Content deleted by moderator"
 msgstr "内容已被管理员删除"
 
 #: kuma/contentflagging/models.py:65
-msgid "{object} Flagged"
-msgstr "已标记 {object}"
+#, python-format
+msgid "%(object)s Flagged"
+msgstr "已标记 %(object)s"
 
-#: kuma/contentflagging/models.py:98
+#: kuma/contentflagging/models.py:97
 msgid "current status of flag review"
 msgstr "当前的审查标记状态"
 
-#: kuma/contentflagging/models.py:101
+#: kuma/contentflagging/models.py:100
 msgid "reason for flagging the content"
 msgstr "标识内容的原因"
 
-#: kuma/contentflagging/models.py:104
+#: kuma/contentflagging/models.py:103
 msgid "please explain what content you feel is inappropriate"
 msgstr "请解释一下您感觉哪些内容是不恰当的"
 
-#: kuma/contentflagging/models.py:126
+#: kuma/contentflagging/models.py:125
 msgid "date submitted"
 msgstr "提交日期"
 
@@ -653,7 +654,7 @@ msgid "Edit Page"
 msgstr "编辑页面"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:73
-#: kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:62
+#: kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:59
 msgid "History"
 msgstr "历史记录"
 
@@ -3464,18 +3465,19 @@ msgid "Username already in use."
 msgstr "用户名已被使用。"
 
 #: kuma/users/helpers.py:35
-msgid "Banned on {ban_date} by {ban_admin}."
-msgstr "已被 {ban_admin} 于 {ban_date} 封禁。"
+#, python-format
+msgid "Banned on %(ban_date)s by %(ban_admin)s."
+msgstr "已被 %(ban_admin)s 于 %(ban_date)s 封禁。"
 
-#: kuma/users/helpers.py:41
+#: kuma/users/helpers.py:42
 msgid "Banned"
 msgstr "已封禁"
 
-#: kuma/users/helpers.py:48
+#: kuma/users/helpers.py:49
 msgid "Ban User"
 msgstr "封禁用户"
 
-#: kuma/users/helpers.py:59
+#: kuma/users/helpers.py:60
 msgid "Admin"
 msgstr "管理员"
 
@@ -4147,7 +4149,7 @@ msgid "Comment"
 msgstr "评论"
 
 #: kuma/users/templates/users/user_detail.html:190
-#: kuma/wiki/templates/wiki/document.html:412
+#: kuma/wiki/templates/wiki/document.html:400
 msgid "Edit page"
 msgstr "编辑页面"
 
@@ -4156,7 +4158,7 @@ msgid "View complete diff"
 msgstr "查看完整比对"
 
 #: kuma/users/templates/users/user_detail.html:192
-#: kuma/wiki/templates/wiki/document.html:413
+#: kuma/wiki/templates/wiki/document.html:401
 msgid "View page history"
 msgstr "查看页面历史"
 
@@ -4444,8 +4446,9 @@ msgid "Edit section"
 msgstr "编辑段落"
 
 #: kuma/wiki/events.py:72
-msgid "[MDN] Page \"{document_title}\" changed by {creator}"
-msgstr "[MDN] 页面 \"{document_title}\" 已由 {creator} 更改"
+#, python-format
+msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
+msgstr "[MDN] 页面 \"%(document_title)s\" 已由 %(creator)s 更改"
 
 #: kuma/wiki/feeds.py:27
 msgid "MDN documents"
@@ -4952,68 +4955,68 @@ msgstr "删除原因"
 msgid "Restore this document"
 msgstr "恢复此文档"
 
-#: kuma/wiki/templates/wiki/document.html:89
+#: kuma/wiki/templates/wiki/document.html:87
 #: templates/includes/lang_switcher.html:2
 msgid "Other languages:"
 msgstr "其他语言："
 
-#: kuma/wiki/templates/wiki/document.html:100
+#: kuma/wiki/templates/wiki/document.html:98
 #: templates/includes/lang_switcher.html:15
 msgid "Go"
 msgstr "转到"
 
-#: kuma/wiki/templates/wiki/document.html:169
+#: kuma/wiki/templates/wiki/document.html:167
 msgid "Previous Search Result"
 msgstr "前一个搜索结果"
 
-#: kuma/wiki/templates/wiki/document.html:169
-#: kuma/wiki/templates/wiki/document.html:179
+#: kuma/wiki/templates/wiki/document.html:167
+#: kuma/wiki/templates/wiki/document.html:177
 msgid "No Previous Search Result"
 msgstr "没有更靠前的搜索结果"
 
-#: kuma/wiki/templates/wiki/document.html:175
+#: kuma/wiki/templates/wiki/document.html:173
 msgid "Your Search Results"
 msgstr "您的搜索结果"
 
-#: kuma/wiki/templates/wiki/document.html:179
+#: kuma/wiki/templates/wiki/document.html:177
 msgid "Next Search Result"
 msgstr "后一个搜索结果"
 
-#: kuma/wiki/templates/wiki/document.html:189
+#: kuma/wiki/templates/wiki/document.html:185
 msgid "Show all"
 msgstr "全部显示"
 
-#: kuma/wiki/templates/wiki/document.html:189
+#: kuma/wiki/templates/wiki/document.html:185
 msgid "contributors"
 msgstr "贡献者"
 
-#: kuma/wiki/templates/wiki/document.html:191
+#: kuma/wiki/templates/wiki/document.html:187
 #, python-format
-msgid "by %(count)s contributor:"
-msgid_plural "by %(count)s contributors:"
+msgid "By %(count)s contributor:"
+msgid_plural "By %(count)s contributors:"
 msgstr[0] "%(count)s 位贡献者："
 
-#: kuma/wiki/templates/wiki/document.html:200
+#: kuma/wiki/templates/wiki/document.html:196
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "查看个人资料：%(username)s"
 
-#: kuma/wiki/templates/wiki/document.html:223
+#: kuma/wiki/templates/wiki/document.html:219
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: kuma/wiki/templates/wiki/document.html:237
+#: kuma/wiki/templates/wiki/document.html:233
 msgid "In This Article"
 msgstr "在本文章中"
 
-#: kuma/wiki/templates/wiki/document.html:262
+#: kuma/wiki/templates/wiki/document.html:255
 #, python-format
 msgid ""
 "This document is being rendered for the first time by the system. Please <a "
 "href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "系统首次渲染此文档。请几分钟后<a href=\"%(url)s\">重新加载此页</a>，以查看全部内容。"
 
-#: kuma/wiki/templates/wiki/document.html:270
+#: kuma/wiki/templates/wiki/document.html:263
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in "
@@ -5024,7 +5027,7 @@ msgstr ""
 "title=\"%(started_at)s\">此时此刻</abbr>正在修改这份文档。如果你发现下面的内容过时或者出现了某些错误，请稍等几分钟后<a"
 " href=\"%(url)s\">刷新该页面</a>。"
 
-#: kuma/wiki/templates/wiki/document.html:279
+#: kuma/wiki/templates/wiki/document.html:272
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been "
@@ -5035,37 +5038,39 @@ msgstr ""
 "title=\"%(scheduled_at)s\">已经计划</abbr>对这篇文档进行更新。如果发现下面的内容过时或者有某些错误，请用一点时间<a "
 "href=\"%(url)s\">重新载入这个页面</a>。"
 
-#: kuma/wiki/templates/wiki/document.html:295
+#: kuma/wiki/templates/wiki/document.html:288
 msgid "This article is in need of a technical review."
 msgstr "这篇文章需要技术审查。"
 
-#: kuma/wiki/templates/wiki/document.html:300
+#: kuma/wiki/templates/wiki/document.html:293
 msgid "This article is in need of an editorial review."
 msgstr "这篇文章需要编辑方面的审查。"
 
-#: kuma/wiki/templates/wiki/document.html:306
+#: kuma/wiki/templates/wiki/document.html:299
 #, python-format
 msgid ""
 "This translation is incomplete. Please help <a "
 "href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "这篇翻译不完整。请帮忙从英语<a href=\"%(translate_url)s\">翻译这篇文章</a>。"
 
-#: kuma/wiki/templates/wiki/document.html:311
+#: kuma/wiki/templates/wiki/document.html:304
 msgid "This translation is in progress."
 msgstr "翻译正在进行中。"
 
-#: kuma/wiki/templates/wiki/document.html:318
+#: kuma/wiki/templates/wiki/document.html:311
 #, python-format
 msgid ""
-"Our volunteers haven't translated this article into %(locale)s yet. <a "
-"href=\"%(help_link)s\">Join us and help get the job done!</a>"
-msgstr "我们的志愿者还没有将这篇文章翻译为 %(locale)s 。<a href=\"%(help_link)s\">加入我们帮助完成翻译！</a>"
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
+"yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
+msgstr ""
+"我们的志愿者还没有将这篇文章翻译为 <bdi>%(locale)s</bdi>。<a "
+"href=\"%(help_link)s\">加入我们帮助完成翻译！</a>"
 
-#: kuma/wiki/templates/wiki/document.html:329
+#: kuma/wiki/templates/wiki/document.html:322
 msgid "This article doesn't have any content yet."
 msgstr "本文章目前没有任何内容。"
 
-#: kuma/wiki/templates/wiki/document.html:332
+#: kuma/wiki/templates/wiki/document.html:325
 #, python-format
 msgid ""
 "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that "
@@ -5075,23 +5080,23 @@ msgstr ""
 "搜索使用了 <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">%(title)s "
 "的页面</a>来查看有多少例子使用此用例和多少页面使用此宏。"
 
-#: kuma/wiki/templates/wiki/document.html:345
+#: kuma/wiki/templates/wiki/document.html:338
 msgid "This article doesn't have approved content yet."
 msgstr "本文章目前没有任何审核通过的内容。"
 
-#: kuma/wiki/templates/wiki/document.html:358
+#: kuma/wiki/templates/wiki/document.html:346
 msgid "Document Tags and Contributors"
 msgstr "文档标签和贡献者"
 
-#: kuma/wiki/templates/wiki/document.html:364
+#: kuma/wiki/templates/wiki/document.html:352
 msgid "Contributors to this page:"
 msgstr "此页面的贡献者："
 
-#: kuma/wiki/templates/wiki/document.html:370
+#: kuma/wiki/templates/wiki/document.html:358
 msgid "Last updated by:"
 msgstr "最后编辑者:"
 
-#: kuma/wiki/templates/wiki/document.html:385
+#: kuma/wiki/templates/wiki/document.html:373
 msgid "Hide Sidebar"
 msgstr "隐藏侧边栏"
 
@@ -5503,35 +5508,35 @@ msgstr "添加翻译"
 msgid "Watch"
 msgstr "关注"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:66
+#: kuma/wiki/templates/wiki/includes/buttons.html:63
 msgid "New sub-article"
 msgstr "新建子文章"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:67
+#: kuma/wiki/templates/wiki/includes/buttons.html:64
 msgid "Clone this article"
 msgstr "克隆此文章"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:70
+#: kuma/wiki/templates/wiki/includes/buttons.html:67
 msgid "Move this article"
 msgstr "移动此文章"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:73
+#: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr "以管理员查看"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:81
+#: kuma/wiki/templates/wiki/includes/buttons.html:78
 msgid "Delete this article"
 msgstr "删除此文章"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:86
+#: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
 msgstr "管理内容区域"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:89
+#: kuma/wiki/templates/wiki/includes/buttons.html:86
 msgid "Convert to content zone"
 msgstr "转化为内容区域"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:91
+#: kuma/wiki/templates/wiki/includes/buttons.html:88
 msgid "Print this article"
 msgstr "打印此文章"
 
@@ -5669,31 +5674,31 @@ msgstr ""
 "href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
 "故障排除指南</a> 作为一个起点。"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
 msgstr "错误类型："
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:40
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
 msgstr "宏："
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:44
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
 msgstr "创建模板"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:47
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
 msgstr "编辑模板"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
 msgstr "解析宏："
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
 msgstr "编辑文档"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:54
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
 msgstr "错误全文："
 

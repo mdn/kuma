@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-23 10:44+0000\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"PO-Revision-Date: 2015-12-04 14:49+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1445794745.0\n"
 
-#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
+#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:110
 msgid "object ID"
 msgstr "ID del objeto"
 
@@ -23,7 +23,7 @@ msgstr "ID del objeto"
 msgid "name of the action"
 msgstr "nombre de la acción"
 
-#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128
+#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:127
 #: kuma/demos/models.py:457
 msgid "date last modified"
 msgstr "fecha de última modificación"
@@ -339,22 +339,23 @@ msgid "Content deleted by moderator"
 msgstr "Contenido eliminado por el moderador"
 
 #: kuma/contentflagging/models.py:65
-msgid "{object} Flagged"
-msgstr "{object} marcado"
+#, python-format
+msgid "%(object)s Flagged"
+msgstr "%(object)s marcado"
 
-#: kuma/contentflagging/models.py:98
+#: kuma/contentflagging/models.py:97
 msgid "current status of flag review"
 msgstr "estado actual de la marca para revisión"
 
-#: kuma/contentflagging/models.py:101
+#: kuma/contentflagging/models.py:100
 msgid "reason for flagging the content"
 msgstr "razón para marcar el contenido"
 
-#: kuma/contentflagging/models.py:104
+#: kuma/contentflagging/models.py:103
 msgid "please explain what content you feel is inappropriate"
 msgstr "explica qué contenido crees que es poco apropiado"
 
-#: kuma/contentflagging/models.py:126
+#: kuma/contentflagging/models.py:125
 msgid "date submitted"
 msgstr "fecha de envío"
 
@@ -691,7 +692,7 @@ msgid "Edit Page"
 msgstr "Editar página"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:73
-#: kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:62
+#: kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:59
 msgid "History"
 msgstr "Historial"
 
@@ -3834,18 +3835,19 @@ msgid "Username already in use."
 msgstr "Ya existe el nombre de usuario."
 
 #: kuma/users/helpers.py:35
-msgid "Banned on {ban_date} by {ban_admin}."
-msgstr "Entrada denegada el {ban_date} por {ban_admin}."
+#, python-format
+msgid "Banned on %(ban_date)s by %(ban_admin)s."
+msgstr "Entrada denegada el %(ban_date)s por %(ban_admin)s."
 
-#: kuma/users/helpers.py:41
+#: kuma/users/helpers.py:42
 msgid "Banned"
 msgstr "Entrada denegada"
 
-#: kuma/users/helpers.py:48
+#: kuma/users/helpers.py:49
 msgid "Ban User"
 msgstr "Prohibir usuario"
 
-#: kuma/users/helpers.py:59
+#: kuma/users/helpers.py:60
 msgid "Admin"
 msgstr "Administrador"
 
@@ -4580,7 +4582,7 @@ msgid "Comment"
 msgstr "Comentario"
 
 #: kuma/users/templates/users/user_detail.html:190
-#: kuma/wiki/templates/wiki/document.html:412
+#: kuma/wiki/templates/wiki/document.html:400
 msgid "Edit page"
 msgstr "Editar página"
 
@@ -4589,7 +4591,7 @@ msgid "View complete diff"
 msgstr "Ver diff completo"
 
 #: kuma/users/templates/users/user_detail.html:192
-#: kuma/wiki/templates/wiki/document.html:413
+#: kuma/wiki/templates/wiki/document.html:401
 msgid "View page history"
 msgstr "Ver historial de la página"
 
@@ -4905,8 +4907,9 @@ msgid "Edit section"
 msgstr "Editar sección"
 
 #: kuma/wiki/events.py:72
-msgid "[MDN] Page \"{document_title}\" changed by {creator}"
-msgstr "[MDN] Página \"{document_title}\" cambiada por {creator}"
+#, python-format
+msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
+msgstr "[MDN] La página \"%(document_title)s\" ha sido cambiada por %(creator)s"
 
 #: kuma/wiki/feeds.py:27
 msgid "MDN documents"
@@ -5454,62 +5457,62 @@ msgstr "Razón por la que se borra"
 msgid "Restore this document"
 msgstr "Restaurar el documento"
 
-#: kuma/wiki/templates/wiki/document.html:89
+#: kuma/wiki/templates/wiki/document.html:87
 #: templates/includes/lang_switcher.html:2
 msgid "Other languages:"
 msgstr "Otros idiomas:"
 
-#: kuma/wiki/templates/wiki/document.html:100
+#: kuma/wiki/templates/wiki/document.html:98
 #: templates/includes/lang_switcher.html:15
 msgid "Go"
 msgstr "Ir"
 
-#: kuma/wiki/templates/wiki/document.html:169
+#: kuma/wiki/templates/wiki/document.html:167
 msgid "Previous Search Result"
 msgstr "Resultado anterior de la búsqueda"
 
-#: kuma/wiki/templates/wiki/document.html:169
-#: kuma/wiki/templates/wiki/document.html:179
+#: kuma/wiki/templates/wiki/document.html:167
+#: kuma/wiki/templates/wiki/document.html:177
 msgid "No Previous Search Result"
 msgstr "No hay resultados anteriores de la búsqueda"
 
-#: kuma/wiki/templates/wiki/document.html:175
+#: kuma/wiki/templates/wiki/document.html:173
 msgid "Your Search Results"
 msgstr "Los resultados de tu búsqueda"
 
-#: kuma/wiki/templates/wiki/document.html:179
+#: kuma/wiki/templates/wiki/document.html:177
 msgid "Next Search Result"
 msgstr "Siguiente resultado de la búsqueda"
 
-#: kuma/wiki/templates/wiki/document.html:189
+#: kuma/wiki/templates/wiki/document.html:185
 msgid "Show all"
 msgstr "Mostrar todo"
 
-#: kuma/wiki/templates/wiki/document.html:189
+#: kuma/wiki/templates/wiki/document.html:185
 msgid "contributors"
 msgstr "colaboradores"
 
-#: kuma/wiki/templates/wiki/document.html:191
+#: kuma/wiki/templates/wiki/document.html:187
 #, python-format
-msgid "by %(count)s contributor:"
-msgid_plural "by %(count)s contributors:"
-msgstr[0] "por %(count)s colaborador:"
-msgstr[1] "por %(count)s colaboradores:"
+msgid "By %(count)s contributor:"
+msgid_plural "By %(count)s contributors:"
+msgstr[0] "Por %(count)s colaborador(es):"
+msgstr[1] "Por %(count)s colaborador:"
 
-#: kuma/wiki/templates/wiki/document.html:200
+#: kuma/wiki/templates/wiki/document.html:196
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "Ver perfil: %(username)s"
 
-#: kuma/wiki/templates/wiki/document.html:223
+#: kuma/wiki/templates/wiki/document.html:219
 msgid "Show Sidebar"
 msgstr "Mostrar la barra lateral"
 
-#: kuma/wiki/templates/wiki/document.html:237
+#: kuma/wiki/templates/wiki/document.html:233
 msgid "In This Article"
 msgstr "En este artículo"
 
-#: kuma/wiki/templates/wiki/document.html:262
+#: kuma/wiki/templates/wiki/document.html:255
 #, python-format
 msgid ""
 "This document is being rendered for the first time by the system. Please <a "
@@ -5519,7 +5522,7 @@ msgstr ""
 "favor, <a href=\"%(url)s\">recarga esta página</a> dentro de unos minutos "
 "para ver el contenido completo."
 
-#: kuma/wiki/templates/wiki/document.html:270
+#: kuma/wiki/templates/wiki/document.html:263
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in "
@@ -5531,7 +5534,7 @@ msgstr ""
 " detenido o si falta algo, por favor, <a href=\"%(url)s\">recarga esta "
 "página</a> dentro de unos minutos."
 
-#: kuma/wiki/templates/wiki/document.html:279
+#: kuma/wiki/templates/wiki/document.html:272
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been "
@@ -5543,15 +5546,15 @@ msgstr ""
 "actualizado o no está completo, <a href=\"%(url)s\">recarga esta página</a> "
 "dentro de unos minutos."
 
-#: kuma/wiki/templates/wiki/document.html:295
+#: kuma/wiki/templates/wiki/document.html:288
 msgid "This article is in need of a technical review."
 msgstr "Este articulo necesita una revisión técnica."
 
-#: kuma/wiki/templates/wiki/document.html:300
+#: kuma/wiki/templates/wiki/document.html:293
 msgid "This article is in need of an editorial review."
 msgstr "Este articulo necesita una revisión editorial."
 
-#: kuma/wiki/templates/wiki/document.html:306
+#: kuma/wiki/templates/wiki/document.html:299
 #, python-format
 msgid ""
 "This translation is incomplete. Please help <a "
@@ -5560,25 +5563,26 @@ msgstr ""
 "Esta traducción está incompleta. Por favor, ayuda a <a "
 "href=\"%(translate_url)s\">traducir este artículo</a> del inglés."
 
-#: kuma/wiki/templates/wiki/document.html:311
+#: kuma/wiki/templates/wiki/document.html:304
 msgid "This translation is in progress."
 msgstr "Traducción en curso"
 
-#: kuma/wiki/templates/wiki/document.html:318
+#: kuma/wiki/templates/wiki/document.html:311
 #, python-format
 msgid ""
-"Our volunteers haven't translated this article into %(locale)s yet. <a "
-"href=\"%(help_link)s\">Join us and help get the job done!</a>"
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
+"yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
-"Nuestros voluntarios aún no han traducido este artículo al %(locale)s. <a "
-"href=\"%(help_link)s\">¡Únete a nosotros y ayuda a traducirlo!</a>"
+"Nuestros voluntarios aún no han traducido este artículo al "
+"<bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Únete a nosotros y ayúdanos"
+" a traducirlo</a>"
 
 # 85%
-#: kuma/wiki/templates/wiki/document.html:329
+#: kuma/wiki/templates/wiki/document.html:322
 msgid "This article doesn't have any content yet."
 msgstr "Este artículo aún no tiene contenido aprobado."
 
-#: kuma/wiki/templates/wiki/document.html:332
+#: kuma/wiki/templates/wiki/document.html:325
 #, python-format
 msgid ""
 "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that "
@@ -5589,23 +5593,23 @@ msgstr ""
 " %(title)s</a> para ver ejemplos prácticos y saber el número de páginas que "
 "utilizan esta macro."
 
-#: kuma/wiki/templates/wiki/document.html:345
+#: kuma/wiki/templates/wiki/document.html:338
 msgid "This article doesn't have approved content yet."
 msgstr "Este artículo aún no tiene contenido aprobado."
 
-#: kuma/wiki/templates/wiki/document.html:358
+#: kuma/wiki/templates/wiki/document.html:346
 msgid "Document Tags and Contributors"
 msgstr "Etiquetas y colaboradores del documento"
 
-#: kuma/wiki/templates/wiki/document.html:364
+#: kuma/wiki/templates/wiki/document.html:352
 msgid "Contributors to this page:"
 msgstr "Colaboradores en esta página:"
 
-#: kuma/wiki/templates/wiki/document.html:370
+#: kuma/wiki/templates/wiki/document.html:358
 msgid "Last updated by:"
 msgstr "Última actualización por:"
 
-#: kuma/wiki/templates/wiki/document.html:385
+#: kuma/wiki/templates/wiki/document.html:373
 msgid "Hide Sidebar"
 msgstr "Ocultar la barra lateral"
 
@@ -6043,35 +6047,35 @@ msgstr "Añadir traducción"
 msgid "Watch"
 msgstr "Seguir"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:66
+#: kuma/wiki/templates/wiki/includes/buttons.html:63
 msgid "New sub-article"
 msgstr "Nuevo sub-artículo"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:67
+#: kuma/wiki/templates/wiki/includes/buttons.html:64
 msgid "Clone this article"
 msgstr "Clonar este artículo"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:70
+#: kuma/wiki/templates/wiki/includes/buttons.html:67
 msgid "Move this article"
 msgstr "Mover este artículo"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:73
+#: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr "Ver en administrador"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:81
+#: kuma/wiki/templates/wiki/includes/buttons.html:78
 msgid "Delete this article"
 msgstr "Eliminar este artículo"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:86
+#: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
 msgstr "Administrar la zona de contenido"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:89
+#: kuma/wiki/templates/wiki/includes/buttons.html:86
 msgid "Convert to content zone"
 msgstr "Convertir a zona de contenido"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:91
+#: kuma/wiki/templates/wiki/includes/buttons.html:88
 msgid "Print this article"
 msgstr "Imprimir este artículo"
 
@@ -6221,31 +6225,31 @@ msgstr ""
 "href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">guía para "
 "solucionar problemas de KumaScript</a>."
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
 msgstr "Tipo de error:"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:40
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
 msgstr "En la macro:"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:44
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
 msgstr "Crear plantilla"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:47
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
 msgstr "Editar plantilla"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
 msgstr "Analizando macro:"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
 msgstr "Editar documento"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:54
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
 msgstr "Descripción completa del error:"
 

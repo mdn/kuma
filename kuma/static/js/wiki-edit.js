@@ -187,7 +187,7 @@
     var DRAFT_NAME;
     var DRAFT_TIMEOUT_ID;
 
-    var supportsLocalStorage = ('localStorage' in win);
+    var supportsLocalStorage = win.mdn.features.localStorage;
     var $form = $('#wiki-page-edit');
     var isTranslation;
     var isTemplate;

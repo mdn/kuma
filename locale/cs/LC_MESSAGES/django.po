@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-22 16:50+0000\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"PO-Revision-Date: 2015-12-08 19:02+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Generated-By: Babel 2.0\n"
 "X-Generator: Pontoon\n"
 
-#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
+#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:110
 msgid "object ID"
 msgstr "ID objektu"
 
@@ -23,18 +23,18 @@ msgstr "ID objektu"
 msgid "name of the action"
 msgstr "název akce"
 
-#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128
+#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:127
 #: kuma/demos/models.py:457
 msgid "date last modified"
 msgstr "datum poslední úpravy"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr ""
+msgstr "MDN poslední změny souboru"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
-msgstr ""
+msgstr "Nedávné revize příloh souborů MDN"
 
 #: kuma/attachments/forms.py:9
 msgid "Files of this type are not permitted."
@@ -43,7 +43,7 @@ msgstr "Soubory tohoto typu nejsou povoleny."
 #: kuma/attachments/views.py:147
 #, python-format
 msgid "The file provided is not valid. File must be one of these types: %s."
-msgstr ""
+msgstr "Zadaný soubor není platný. Soubor musí být jeden s těchto typů: %s."
 
 #. 'id' is the revision number, 'title' is the title of the document.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
@@ -88,7 +88,7 @@ msgstr "Typ MIME:"
 #: kuma/attachments/templates/attachments/attachment_detail.html:44
 #, python-format
 msgid "%(bytes)s bytes"
-msgstr ""
+msgstr "%(bytes)s bytů"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:48
 msgid "Is approved?"
@@ -133,6 +133,8 @@ msgid ""
 "This document has no attachments. Images can be attached, and then embedded "
 "in the article."
 msgstr ""
+"Dokument nemá žádné přílohy. Obrázky mohou být přiloženy a následně vloženy "
+"do článku."
 
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:33
 #: kuma/attachments/templates/attachments/includes/attachment_list.html:51
@@ -180,15 +182,15 @@ msgstr "%s bajtů"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr ""
+msgstr "Vyhledávací klíč"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
-msgstr ""
+msgstr "Hashovaný tajný klíč"
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
-msgstr ""
+msgstr "Popis zamýšleného použití"
 
 #: kuma/authkeys/templates/authkeys/delete.html:7
 #: kuma/authkeys/templates/authkeys/history.html:8
@@ -249,6 +251,8 @@ msgid ""
 "You need a special permission to use API keys. You may request permission by"
 " <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
+"K použití API klíčů potřebujete speciální oprávnění. Můžete o něj požádat "
+"vytvořením <a href=\"%(bugzilla_url)s\">chyby</a>."
 
 #: kuma/authkeys/templates/authkeys/new.html:7
 msgid ""
@@ -256,6 +260,10 @@ msgid ""
 " This will be your only means of identifying this key later, other than the "
 "date and time of its creation. So, be as clear as you can.</p>"
 msgstr ""
+"<p>Níže popište zamýšlené využití klíče. <p><strong>POZNÁMKA:</strong> Kromě"
+" data a času vytvoření to bude jediný způsob, jak můžete později "
+"identifikovat tento klíč, pokuste se jej proto vyjádřit co možná "
+"nejlépe.</p>"
 
 #: kuma/authkeys/templates/authkeys/new.html:16
 msgid "Create"
@@ -278,11 +286,11 @@ msgstr "ID klíče"
 
 #: kuma/authkeys/templates/authkeys/new.html:32
 msgid "Secret"
-msgstr ""
+msgstr "Tajný klíč"
 
 #: kuma/contentflagging/models.py:15
 msgid "This is not working for me"
-msgstr ""
+msgstr "Nefunguje mi to"
 
 #: kuma/contentflagging/models.py:16
 msgid "This contains inappropriate content"
@@ -306,33 +314,34 @@ msgstr "Označení odmítnuto moderátorem"
 
 #: kuma/contentflagging/models.py:30
 msgid "Creator notified"
-msgstr ""
+msgstr "Tvůrce byl upozorněn"
 
 #: kuma/contentflagging/models.py:31
 msgid "Content hidden by moderator"
-msgstr ""
+msgstr "Obsah skryt moderátorem"
 
 #: kuma/contentflagging/models.py:32
 msgid "Content deleted by moderator"
-msgstr ""
+msgstr "Obsah smazán moderátorem"
 
 #: kuma/contentflagging/models.py:65
-msgid "{object} Flagged"
-msgstr ""
+#, python-format
+msgid "%(object)s Flagged"
+msgstr "%(object)s označen"
 
-#: kuma/contentflagging/models.py:98
+#: kuma/contentflagging/models.py:97
 msgid "current status of flag review"
 msgstr ""
 
-#: kuma/contentflagging/models.py:101
+#: kuma/contentflagging/models.py:100
 msgid "reason for flagging the content"
 msgstr ""
 
-#: kuma/contentflagging/models.py:104
+#: kuma/contentflagging/models.py:103
 msgid "please explain what content you feel is inappropriate"
 msgstr ""
 
-#: kuma/contentflagging/models.py:126
+#: kuma/contentflagging/models.py:125
 msgid "date submitted"
 msgstr "datum podání"
 
@@ -465,7 +474,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
-msgstr ""
+msgstr "Doplňky a rozšíření"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
@@ -643,7 +652,7 @@ msgstr "Předcházející období:"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:2
 msgid "Revision Dashboard"
-msgstr ""
+msgstr "Panel revizí"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:44
 #: kuma/search/templates/search/results.html:210
@@ -666,7 +675,7 @@ msgid "Edit Page"
 msgstr "Upravit stránku"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:73
-#: kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:62
+#: kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:59
 msgid "History"
 msgstr "Historie"
 
@@ -680,11 +689,11 @@ msgstr "odstraněno"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:49
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Zablokovat editaci z této IP adresy"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:66
 msgid "There are no revisions matching this filter set."
-msgstr ""
+msgstr "Nastavenému filtru neodpovídají žádné revize."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -806,11 +815,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:64
 msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
-msgstr ""
+msgstr "Říjen 2011 Dev Derby Challenge - CSS Media Queries"
 
 #: kuma/demos/__init__.py:65
 msgid "CSS Media Queries"
-msgstr ""
+msgstr "CSS Media Queries"
 
 #: kuma/demos/__init__.py:66
 msgid "October 2011"
@@ -885,7 +894,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:94
 msgid "February 2012"
-msgstr ""
+msgstr "Únor 2012"
 
 #: kuma/demos/__init__.py:95 kuma/demos/__init__.py:96
 msgid ""
@@ -903,7 +912,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:101
 msgid "March 2012"
-msgstr ""
+msgstr "Březen 2012"
 
 #: kuma/demos/__init__.py:102 kuma/demos/__init__.py:103
 msgid ""
@@ -917,11 +926,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
 msgid "Audio"
-msgstr ""
+msgstr "Zvuk"
 
 #: kuma/demos/__init__.py:108
 msgid "April 2012"
-msgstr ""
+msgstr "Duben 2012"
 
 #: kuma/demos/__init__.py:109 kuma/demos/__init__.py:110
 msgid ""
@@ -969,7 +978,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:128
 msgid "No JavaScript"
-msgstr ""
+msgstr "Žádný JavaScript"
 
 #: kuma/demos/__init__.py:129
 msgid "July 2012"
@@ -993,7 +1002,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:136
 msgid "August 2012"
-msgstr ""
+msgstr "Srpen 2012"
 
 #: kuma/demos/__init__.py:137 kuma/demos/__init__.py:138
 msgid ""
@@ -1043,7 +1052,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:157
 msgid "November 2012"
-msgstr ""
+msgstr "Prosinec 2012"
 
 #: kuma/demos/__init__.py:158 kuma/demos/__init__.py:159
 msgid ""
@@ -1319,7 +1328,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:249
 msgid "Device"
-msgstr ""
+msgstr "Zařízení"
 
 #: kuma/demos/__init__.py:250
 msgid ""
@@ -1766,7 +1775,7 @@ msgstr ""
 
 #: kuma/demos/feeds.py:90
 msgid "MDN demos"
-msgstr ""
+msgstr "MDN dema"
 
 #: kuma/demos/feeds.py:91
 msgid "Demos submitted by MDN users"
@@ -2330,7 +2339,7 @@ msgstr ""
 #: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:145
 #: templates/base.html:163
 msgid "Demos"
-msgstr ""
+msgstr "Dema"
 
 #: kuma/demos/templates/demos/devderby_landing.html:59
 msgid "Articles"
@@ -2813,7 +2822,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr ""
+msgstr "Sdílené vědomosti <span>pro otevřený web</span>"
 
 #: kuma/landing/templates/landing/homepage.html:42
 #: kuma/landing/templates/landing/homepage.html:59
@@ -2827,7 +2836,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:66
 msgid "Web Technologies"
-msgstr ""
+msgstr "Webové technologie"
 
 #: kuma/landing/templates/landing/homepage.html:69
 msgid "Web<br />Platform"
@@ -2835,7 +2844,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:71
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "Web API &amp; DOM"
 
 #: kuma/landing/templates/landing/homepage.html:75
 #: kuma/landing/templates/landing/homepage.html:95
@@ -2856,7 +2865,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:89
 msgid "Developer<br />Tools"
-msgstr ""
+msgstr "Vývojářské<br />nástroje"
 
 #: kuma/landing/templates/landing/homepage.html:91
 msgid "Page Inspector"
@@ -2864,7 +2873,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:92
 msgid "Web Console"
-msgstr ""
+msgstr "Webová konzole"
 
 #: kuma/landing/templates/landing/homepage.html:93
 msgid "JavaScript Debugger"
@@ -2894,11 +2903,11 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:113
 msgid "Learn Web Development"
-msgstr ""
+msgstr "Naučte se vytvářet web"
 
 #: kuma/landing/templates/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "Získejte prohlížeč pro vývojáře jako jste vy"
 
 #: kuma/landing/templates/landing/homepage.html:120
 msgid "Celebrate ten years of documenting your Web."
@@ -2916,7 +2925,7 @@ msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:138
 msgid "Get Involved"
-msgstr ""
+msgstr "Zapojte se"
 
 #: kuma/landing/templates/landing/homepage.html:140
 #, python-format
@@ -2930,13 +2939,16 @@ msgstr ""
 #: kuma/landing/templates/landing/homepage.html:147
 #: kuma/landing/templates/landing/homepage.html:154
 msgid "Help improve MDN"
-msgstr ""
+msgstr "Pomozte vylepšit MDN"
 
 #: kuma/landing/templates/landing/homepage.html:158
 msgid ""
 "All parts of MDN (docs, demos, and the site itself) are created by an open "
 "community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
+"Všechny části MDN (dokumenty, dema a samotná stránka) jsou tvořeny otevřenou"
+" komunitou vývojářů. Prosím, přidejte se! Vyberte si jednu z cest jak "
+"pomoci:"
 
 #: kuma/landing/templates/landing/homepage.html:164
 msgid "Getting started"
@@ -3444,18 +3456,19 @@ msgid "Username already in use."
 msgstr ""
 
 #: kuma/users/helpers.py:35
-msgid "Banned on {ban_date} by {ban_admin}."
+#, python-format
+msgid "Banned on %(ban_date)s by %(ban_admin)s."
 msgstr ""
 
-#: kuma/users/helpers.py:41
+#: kuma/users/helpers.py:42
 msgid "Banned"
 msgstr ""
 
-#: kuma/users/helpers.py:48
+#: kuma/users/helpers.py:49
 msgid "Ban User"
 msgstr ""
 
-#: kuma/users/helpers.py:59
+#: kuma/users/helpers.py:60
 msgid "Admin"
 msgstr ""
 
@@ -3508,7 +3521,7 @@ msgstr ""
 #: kuma/wiki/templates/wiki/create.html:79
 #: kuma/wiki/templates/wiki/edit.html:188
 msgid "Tags"
-msgstr ""
+msgstr "Štítky"
 
 #: kuma/users/models.py:102
 msgid "Enter a valid website URL."
@@ -3693,11 +3706,11 @@ msgstr ""
 #: kuma/users/templates/account/logout.html:17
 #: templates/includes/common_macros.html:40
 msgid "Sign Out"
-msgstr ""
+msgstr "Odhlásit se"
 
 #: kuma/users/templates/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Opravdu se chcete odhlásit?"
 
 #: kuma/users/templates/account/password_change.html:3
 #: kuma/users/templates/account/password_change.html:8
@@ -4102,7 +4115,7 @@ msgid "Comment"
 msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:190
-#: kuma/wiki/templates/wiki/document.html:412
+#: kuma/wiki/templates/wiki/document.html:400
 msgid "Edit page"
 msgstr ""
 
@@ -4111,7 +4124,7 @@ msgid "View complete diff"
 msgstr ""
 
 #: kuma/users/templates/users/user_detail.html:192
-#: kuma/wiki/templates/wiki/document.html:413
+#: kuma/wiki/templates/wiki/document.html:401
 msgid "View page history"
 msgstr ""
 
@@ -4167,13 +4180,15 @@ msgstr ""
 
 #: kuma/users/templates/users/user_edit.html:85
 msgid "Interests (tags)"
-msgstr ""
+msgstr "Zájmy (štítky)"
 
 #: kuma/users/templates/users/user_edit.html:86
 msgid ""
 "Separate tags with commas or spaces. Join multi-word tags with double "
 "quotes, like \"web standards\"."
 msgstr ""
+"Jednotlivé štítky oddělujte čárkami nebo mezerami. Víceslovné štítky "
+"zapisujte v uvozovkách, například takto: \"webové standardy\"."
 
 #: kuma/users/templates/users/user_edit.html:92
 msgid "Areas of expertise"
@@ -4382,7 +4397,8 @@ msgid "Edit section"
 msgstr ""
 
 #: kuma/wiki/events.py:72
-msgid "[MDN] Page \"{document_title}\" changed by {creator}"
+#, python-format
+msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr ""
 
 #: kuma/wiki/feeds.py:27
@@ -4589,7 +4605,7 @@ msgstr ""
 #: kuma/wiki/templates/wiki/includes/document_macros.html:75
 #: kuma/wiki/templates/wiki/includes/document_tag.html:4
 msgid "Tags:"
-msgstr ""
+msgstr "Štítky:"
 
 #: kuma/wiki/forms.py:199 kuma/wiki/templates/wiki/edit.html:80
 msgid "Keywords:"
@@ -4653,7 +4669,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:124
 msgid "Document Tags"
-msgstr ""
+msgstr "Štítky dokumentu"
 
 #: kuma/wiki/models.py:177
 msgid "Uncategorized"
@@ -4886,70 +4902,70 @@ msgstr ""
 msgid "Restore this document"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:89
+#: kuma/wiki/templates/wiki/document.html:87
 #: templates/includes/lang_switcher.html:2
 msgid "Other languages:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:100
+#: kuma/wiki/templates/wiki/document.html:98
 #: templates/includes/lang_switcher.html:15
 msgid "Go"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:169
+#: kuma/wiki/templates/wiki/document.html:167
 msgid "Previous Search Result"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:169
-#: kuma/wiki/templates/wiki/document.html:179
+#: kuma/wiki/templates/wiki/document.html:167
+#: kuma/wiki/templates/wiki/document.html:177
 msgid "No Previous Search Result"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:175
+#: kuma/wiki/templates/wiki/document.html:173
 msgid "Your Search Results"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:179
+#: kuma/wiki/templates/wiki/document.html:177
 msgid "Next Search Result"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:189
+#: kuma/wiki/templates/wiki/document.html:185
 msgid "Show all"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:189
+#: kuma/wiki/templates/wiki/document.html:185
 msgid "contributors"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:191
+#: kuma/wiki/templates/wiki/document.html:187
 #, python-format
-msgid "by %(count)s contributor:"
-msgid_plural "by %(count)s contributors:"
+msgid "By %(count)s contributor:"
+msgid_plural "By %(count)s contributors:"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: kuma/wiki/templates/wiki/document.html:200
+#: kuma/wiki/templates/wiki/document.html:196
 #, python-format
 msgid "View profile: %(username)s"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:223
+#: kuma/wiki/templates/wiki/document.html:219
 msgid "Show Sidebar"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:237
+#: kuma/wiki/templates/wiki/document.html:233
 msgid "In This Article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:262
+#: kuma/wiki/templates/wiki/document.html:255
 #, python-format
 msgid ""
 "This document is being rendered for the first time by the system. Please <a "
 "href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:270
+#: kuma/wiki/templates/wiki/document.html:263
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in "
@@ -4957,7 +4973,7 @@ msgid ""
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:279
+#: kuma/wiki/templates/wiki/document.html:272
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been "
@@ -4965,37 +4981,37 @@ msgid ""
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:295
+#: kuma/wiki/templates/wiki/document.html:288
 msgid "This article is in need of a technical review."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:300
+#: kuma/wiki/templates/wiki/document.html:293
 msgid "This article is in need of an editorial review."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:306
+#: kuma/wiki/templates/wiki/document.html:299
 #, python-format
 msgid ""
 "This translation is incomplete. Please help <a "
 "href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:311
+#: kuma/wiki/templates/wiki/document.html:304
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:318
+#: kuma/wiki/templates/wiki/document.html:311
 #, python-format
 msgid ""
-"Our volunteers haven't translated this article into %(locale)s yet. <a "
-"href=\"%(help_link)s\">Join us and help get the job done!</a>"
+"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
+"yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:329
+#: kuma/wiki/templates/wiki/document.html:322
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:332
+#: kuma/wiki/templates/wiki/document.html:325
 #, python-format
 msgid ""
 "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that "
@@ -5003,23 +5019,23 @@ msgid ""
 "macro."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:345
+#: kuma/wiki/templates/wiki/document.html:338
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:358
+#: kuma/wiki/templates/wiki/document.html:346
 msgid "Document Tags and Contributors"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:364
+#: kuma/wiki/templates/wiki/document.html:352
 msgid "Contributors to this page:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:370
+#: kuma/wiki/templates/wiki/document.html:358
 msgid "Last updated by:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:385
+#: kuma/wiki/templates/wiki/document.html:373
 msgid "Hide Sidebar"
 msgstr ""
 
@@ -5329,16 +5345,16 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/translate.html:118
 msgid "English tags"
-msgstr ""
+msgstr "Anglické štítky"
 
 #: kuma/wiki/templates/wiki/translate.html:130
 msgid "This document has no tags."
-msgstr ""
+msgstr "Dokument nemá žádné štítky."
 
 #: kuma/wiki/templates/wiki/translate.html:137
 #, python-format
 msgid "%(locale)s tags"
-msgstr ""
+msgstr "%(locale)s štítky"
 
 #: kuma/wiki/templates/wiki/translate.html:144
 msgid "Version Notes"
@@ -5417,35 +5433,35 @@ msgstr ""
 msgid "Watch"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:66
+#: kuma/wiki/templates/wiki/includes/buttons.html:63
 msgid "New sub-article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:67
+#: kuma/wiki/templates/wiki/includes/buttons.html:64
 msgid "Clone this article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:70
+#: kuma/wiki/templates/wiki/includes/buttons.html:67
 msgid "Move this article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:73
+#: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:81
+#: kuma/wiki/templates/wiki/includes/buttons.html:78
 msgid "Delete this article"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:86
+#: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:89
+#: kuma/wiki/templates/wiki/includes/buttons.html:86
 msgid "Convert to content zone"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:91
+#: kuma/wiki/templates/wiki/includes/buttons.html:88
 msgid "Print this article"
 msgstr ""
 
@@ -5584,31 +5600,31 @@ msgid ""
 "troubleshooting guide</a> as a starting point."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:40
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:44
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:47
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:54
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
 msgstr ""
 
@@ -5795,11 +5811,11 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/list/tags.html:2
 msgid "All Tags"
-msgstr ""
+msgstr "Všechny štítky"
 
 #: kuma/wiki/templates/wiki/list/tags.html:18
 msgid "There are no tags."
-msgstr ""
+msgstr "Žádné štítky tady nejsou."
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:3
 #, python-format
@@ -5808,7 +5824,7 @@ msgstr ""
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr ""
+msgstr "Články s jakýmikoli lokalizačními štítky"
 
 #: kuma/wiki/templates/wiki/list/with_localization_tags.html:15
 #, python-format
@@ -5890,7 +5906,7 @@ msgstr ""
 
 #: templates/403.html:5 templates/403.html:19 templates/handlers/400.html:5
 msgid "Permission Denied"
-msgstr ""
+msgstr "Přístup odepřen"
 
 #: templates/403.html:22
 msgid "The wiki is in read-only mode."
@@ -5944,7 +5960,7 @@ msgstr ""
 
 #: templates/404.html:6
 msgid "Not Found"
-msgstr ""
+msgstr "Nenalezeno"
 
 #: templates/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
@@ -5982,7 +5998,7 @@ msgstr ""
 
 #: templates/base.html:75
 msgid "Select language"
-msgstr ""
+msgstr "Zvolte jazyk"
 
 #: templates/base.html:77
 msgid "Skip to search"
@@ -6018,15 +6034,15 @@ msgstr ""
 
 #: templates/base.html:123
 msgid "Web Platform"
-msgstr ""
+msgstr "Webová platforma"
 
 #: templates/base.html:127
 msgid "Technologies"
-msgstr ""
+msgstr "Technologie"
 
 #: templates/base.html:132
 msgid "Graphics"
-msgstr ""
+msgstr "Grafika"
 
 #: templates/base.html:133
 msgid "APIs / DOM"
@@ -6034,7 +6050,7 @@ msgstr ""
 
 #: templates/base.html:138
 msgid "References & Guides"
-msgstr ""
+msgstr "Reference a návody"
 
 #: templates/base.html:140
 msgid "Learn the Web"
@@ -6070,11 +6086,11 @@ msgstr ""
 
 #: templates/base.html:163
 msgid "Developer Tools"
-msgstr ""
+msgstr "Vývojářské nástroje"
 
 #: templates/base.html:163
 msgid "Feedback"
-msgstr ""
+msgstr "Zpětná vazba"
 
 #: templates/base.html:168
 msgid "Get Firefox help"
@@ -6106,19 +6122,19 @@ msgstr ""
 
 #: templates/base.html:205
 msgid "About MDN"
-msgstr ""
+msgstr "O MDN"
 
 #: templates/base.html:206
 msgid "Terms"
-msgstr ""
+msgstr "Podmínky"
 
 #: templates/base.html:207
 msgid "Privacy"
-msgstr ""
+msgstr "Soukromí"
 
 #: templates/base.html:208
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: templates/base.html:209
 msgid "Contribute to the code"
@@ -6145,7 +6161,7 @@ msgstr ""
 
 #: templates/includes/common_macros.html:38
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: templates/includes/common_macros.html:44
 #, python-format
@@ -6154,15 +6170,15 @@ msgstr ""
 
 #: templates/includes/login.html:6
 msgid "Sign out"
-msgstr ""
+msgstr "Odhlásit se"
 
 #: templates/includes/login.html:17
 msgid "Sign in with"
-msgstr ""
+msgstr "Přihlásit pomocí"
 
 #: templates/includes/login.html:18
 msgid "Sign in"
-msgstr ""
+msgstr "Přihlásit se"
 
 #: templates/includes/newsletter.html:6
 msgid ""
@@ -6177,17 +6193,17 @@ msgstr ""
 
 #: templates/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr ""
+msgstr "Odhlásit od těchto e-mailů:"
 
 #: templates/tidings/unsubscribe.html:2 templates/tidings/unsubscribe.html:12
 #: templates/tidings/unsubscribe_error.html:2
 #: templates/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Odhlásit"
 
 #: templates/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr ""
+msgstr "Opravdu se chcete odhlásit?"
 
 #: templates/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
@@ -6208,4 +6224,4 @@ msgstr ""
 
 #: templates/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr ""
+msgstr "Byl jste odhlášen z odběru novinek."

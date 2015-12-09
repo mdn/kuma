@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 06:25+0000\n"
-"Last-Translator: az@kth.se <az@kth.se>\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"PO-Revision-Date: 2015-12-04 14:13+0000\n"
+"Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Stäng undermeny"
 
-#: kuma/static/js/components.js:530
+#: kuma/static/js/components.js:536
 msgid "Close notification"
 msgstr "Stäng avisering"
 
@@ -99,7 +99,7 @@ msgid "Open"
 msgstr "Öppna"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatability table."
+msgid "Return to compatibility table."
 msgstr "Tillbaka till kompatibilitetstabell."
 
 #: kuma/static/js/wiki-compat-tables.js:25
@@ -152,17 +152,17 @@ msgstr "Ny tagg..."
 msgid "How to read CSS syntax."
 msgstr "Hur man läser CSS-syntax."
 
-#: kuma/static/js/wiki.js:555
+#: kuma/static/js/wiki.js:571
 msgid "Search Stack Overflow"
 msgstr "Sök Stack Overflow"
 
-#: kuma/static/js/wiki.js:668
+#: kuma/static/js/wiki.js:684
 msgid ""
 "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 "Din webbläsare stöder inte MathML. En CSS fallback har använts i stället."
 
-#: kuma/static/js/wiki.js:883
+#: kuma/static/js/wiki.js:899
 msgid "Details"
 msgstr "Detaljer"
 

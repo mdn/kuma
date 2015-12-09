@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-21 01:53+0000\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"PO-Revision-Date: 2015-12-04 14:09+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ja\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "サブメニューを閉じる"
 
-#: kuma/static/js/components.js:530
+#: kuma/static/js/components.js:536
 msgid "Close notification"
 msgstr "通知を閉じる"
 
@@ -100,7 +100,7 @@ msgid "Open"
 msgstr "開く"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatability table."
+msgid "Return to compatibility table."
 msgstr "互換性の表へ戻る"
 
 #: kuma/static/js/wiki-compat-tables.js:25
@@ -152,16 +152,16 @@ msgstr "新しいタグ..."
 msgid "How to read CSS syntax."
 msgstr "CSS 構文の読み方"
 
-#: kuma/static/js/wiki.js:555
+#: kuma/static/js/wiki.js:571
 msgid "Search Stack Overflow"
 msgstr "Stack Overflow を検索"
 
-#: kuma/static/js/wiki.js:668
+#: kuma/static/js/wiki.js:684
 msgid ""
 "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "お使いのブラウザは MathML に対応していません。代わりに CSS フォールバックを表示します。"
 
-#: kuma/static/js/wiki.js:883
+#: kuma/static/js/wiki.js:899
 msgid "Details"
 msgstr "詳細"
 

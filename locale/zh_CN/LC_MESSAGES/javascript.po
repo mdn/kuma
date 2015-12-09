@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2015-11-20 20:14+0000\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"PO-Revision-Date: 2015-12-04 14:04+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_CN\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "关闭子菜单"
 
-#: kuma/static/js/components.js:530
+#: kuma/static/js/components.js:536
 msgid "Close notification"
 msgstr "关闭通知"
 
@@ -100,7 +100,7 @@ msgid "Open"
 msgstr "打开"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatability table."
+msgid "Return to compatibility table."
 msgstr "返回兼容性表格。"
 
 #: kuma/static/js/wiki-compat-tables.js:25
@@ -152,16 +152,16 @@ msgstr "新建标签..."
 msgid "How to read CSS syntax."
 msgstr "如何阅读 CSS 语法。"
 
-#: kuma/static/js/wiki.js:555
+#: kuma/static/js/wiki.js:571
 msgid "Search Stack Overflow"
 msgstr "搜索 Stack Overflow"
 
-#: kuma/static/js/wiki.js:668
+#: kuma/static/js/wiki.js:684
 msgid ""
 "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "您的浏览器不支持 MathML。已使用后备的 CSS 代替。"
 
-#: kuma/static/js/wiki.js:883
+#: kuma/static/js/wiki.js:899
 msgid "Details"
 msgstr "详细信息"
 

@@ -38,8 +38,9 @@ $indicator-block-heading {
 }
 
 $indicator-system {
-    border-width: 2px
-    border-style: solid;
+    /* need to specifically declare RTL to over-ride RTL inherited from set-message-base */
+    bidi-value(border-width, 2px, 2px);
+    bidi-value(border-style, solid, solid);
     font-size: $base-font-size;
 }
 

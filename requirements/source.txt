@@ -25,9 +25,9 @@ bitly_api==0.3
 
 celery==3.1.19
 
-elasticsearch-dsl==0.0.4
+elasticsearch-dsl==0.0.9
 
-elasticsearch==1.6.0
+elasticsearch==1.9.0
 
 hash_ring==1.3.1
 
@@ -49,6 +49,8 @@ pytidylib==0.2.4
 raven==3.3.12
 
 requests==2.8.1
+
+requests-mock==0.7.0
 
 requests-oauthlib==0.5.0
 
@@ -84,7 +86,7 @@ django-nose==1.4.2
 
 djangorestframework==2.4.6
 
-django-smuggler==0.6.0
+django-smuggler==0.6.1
 
 django-soapbox==1.2
 
@@ -112,8 +114,10 @@ django-sundial==1.0.1
 
 django-pipeline==1.5.4
 
-cookies==2.2.1
+django-celery-transactions==0.3.6
 
-responses==0.5.0
+python-decouple==3.0
 
-django-celery-transactions==0.3.5
+dj-database-url==0.3.0
+
+dj-email-url==0.0.4

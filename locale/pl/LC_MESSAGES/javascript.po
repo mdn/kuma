@@ -1,170 +1,172 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0N\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
-"PO-Revision-Date: 2014-08-02 18:40+0100\n"
-"Last-Translator: Leszek Życzkowski <leszekz@gmail.com>\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"PO-Revision-Date: 2015-12-02 17:58+0000\n"
+"Last-Translator: Michał Dziewoński <mdziewonski@mozilla.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 1.13.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1383812056.0\n"
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
-msgstr ""
+msgstr "Zamknij podmenu"
 
-#: kuma/static/js/components.js:530
+#: kuma/static/js/components.js:536
 msgid "Close notification"
-msgstr ""
+msgstr "Zamknij powiadomienie"
 
 #: kuma/static/js/helpfulness.js:26
 msgid "Did this page help you?"
-msgstr ""
+msgstr "Czy ta strona jest pomocna?"
 
 #: kuma/static/js/helpfulness.js:28
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: kuma/static/js/helpfulness.js:30
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Never ask me again"
-msgstr ""
+msgstr "Nie pytaj ponownie"
 
 #: kuma/static/js/helpfulness.js:53
 msgid "Translate it into my language"
-msgstr ""
+msgstr "Wymaga tłumaczenia na mój język"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "Make explanations clearer"
-msgstr ""
+msgstr "Wymaga uproszczenia informacji"
 
 #: kuma/static/js/helpfulness.js:55
 msgid "Add more details"
-msgstr ""
+msgstr "Wymaga więcej szczegółów"
 
 #: kuma/static/js/helpfulness.js:56
 msgid "Fix incorrect information"
-msgstr ""
+msgstr "Wymaga poprawienia błędnych informacji"
 
 #: kuma/static/js/helpfulness.js:57
 msgid "Add or improve examples"
-msgstr ""
+msgstr "Wymaga dodania lub ulepszenia przykładów"
 
 #: kuma/static/js/helpfulness.js:58
 msgid "My search should have lead to a different article."
-msgstr ""
+msgstr "Ta strona nie pasuje do mojego wyszukiwania."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Something else"
-msgstr ""
+msgstr "Coś innego"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Choose one..."
-msgstr ""
+msgstr "Wybierz jedno..."
 
 #: kuma/static/js/helpfulness.js:77
 msgid "Uh oh. What would make it better?"
-msgstr ""
+msgstr "Ups. Jak możemy ją ulepszyć?"
 
 #: kuma/static/js/helpfulness.js:80
 msgid "Thanks! We'll fix it."
-msgstr ""
+msgstr "Dziękujemy! Popracujemy nad tym."
 
 #: kuma/static/js/modal-control.js:15
 msgid "Demo Studio"
-msgstr ""
+msgstr "Demo Studio"
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "Brak wyboru"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "Wybrane: "
 
 #: kuma/static/js/users.js:96
 msgid "New interest..."
-msgstr ""
+msgstr "Nowe zainteresowanie..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "Otwórz"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatability table."
-msgstr ""
+#, fuzzy
+msgid "Return to compatibility table."
+msgstr "Wróć do tabeli kompatybilności."
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
-msgstr ""
+msgstr "Zamknij"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
-msgstr ""
+msgstr "Nowe tabele kompatybilności są w fazie beta "
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
-msgstr ""
+msgstr "Więcej o fazie beta."
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "Wypełnij ankietę"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "Zgłoś błąd."
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr ""
+msgstr "Zgłoszono. Dziękujemy!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "Pokaż starą tabelę."
 
 #: kuma/static/js/wiki-edit.js:400
 msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr ""
+msgstr "Masz niedokończoną wersję roboczą. <a href=\"\" class=\"restoreLink\">Przywróć wersję roboczą</a> or <a href=\"\" class=\"discardLink\">odrzuć wersję roboczą</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
-msgstr ""
+msgstr "zapisano"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
-msgstr ""
+msgstr "Nowa etykieta..."
 
 #: kuma/static/js/wiki.js:230
 msgid "How to read CSS syntax."
-msgstr ""
+msgstr "Jak czytać CSS."
 
-#: kuma/static/js/wiki.js:555
+#: kuma/static/js/wiki.js:571
 msgid "Search Stack Overflow"
-msgstr ""
+msgstr "Przeszukaj Stack Overflow"
 
-#: kuma/static/js/wiki.js:668
+#: kuma/static/js/wiki.js:684
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
+msgstr "Twoja przeglądarka nie obsługuje MathML. Zamiast tego korzystasz z alternatywnej wersji CSS."
 
-#: kuma/static/js/wiki.js:883
+#: kuma/static/js/wiki.js:899
 msgid "Details"
-msgstr ""
+msgstr "Szczegóły"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:38
 msgid "Select an attachment"
-msgstr ""
+msgstr "Wybierz załącznik"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:49
 msgid "No attachments available"
-msgstr ""
+msgstr "Brak załączników"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
@@ -180,100 +182,100 @@ msgstr "Uruchom"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/plugin.js:17
 msgid "Create a Redirect"
-msgstr ""
+msgstr "Stwórz przekierowanie"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:4
 msgid "MDN Redirect"
-msgstr ""
+msgstr "Przekierowanie MDN"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:65
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/plugin.js:17
 msgid "Insert Code Sample iFrame"
-msgstr ""
+msgstr "Wstaw próbkę kodu iFrame"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:5
 msgid "Sample Finder"
-msgstr ""
+msgstr "Wyszukiwarka przykładów"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:20
 msgid "Select a section"
-msgstr ""
+msgstr "Wybierz sekcję"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:91
 msgid "Sections in Document"
-msgstr ""
+msgstr "Sekcje dokumentu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
-msgstr ""
+msgstr "Jaki ma być tytuł przykładu?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML Content"
-msgstr ""
+msgstr "Zawartość HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
-msgstr ""
+msgstr "Przykładowa zawartość HTML"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS Content"
-msgstr ""
+msgstr "Zawartość CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
-msgstr ""
+msgstr "Przykładowa zawartość CSS"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
 msgid "JavaScript Content"
-msgstr ""
+msgstr "Zawartość JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
-msgstr ""
+msgstr "Przykładowa zawartość JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:52
 msgid "Insert Code Sample Template"
-msgstr ""
+msgstr "Wstaw szablon przykładowego kodu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:24
 msgid "Syntax Highlighter"
-msgstr ""
+msgstr "Podświetl składnię"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:30
 msgid "No Highlight"
-msgstr ""
+msgstr "Bez podświetlenia"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:27
 msgid "Embed YouTube Video"
-msgstr ""
+msgstr "Wstaw wideo z YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:28
 msgid "Locate a YouTube Video"
-msgstr ""
+msgstr "Znajdź wideo z YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:29
 msgid "Paste YouTube Video URL"
-msgstr ""
+msgstr "Wklej URL wideo z YouTube"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
-msgstr ""
+msgstr "Skala obrazu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:31
 msgid "You must input a valid YouTube video URL."
-msgstr ""
+msgstr "Podaj prawidłowy URL wideo z YouTube."
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:32
 msgid "The URL you've entered doesn't appear to be valid"
-msgstr ""
+msgstr "Podany URL nie wygląda na poprawny"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
-msgstr ""
+msgstr "Domyślny"

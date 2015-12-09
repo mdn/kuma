@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
 "PO-Revision-Date: 2014-03-28 01:49+0000\n"
 "Last-Translator: Gábor <kelemeng@ubuntu.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr ""
 
-#: kuma/static/js/components.js:530
+#: kuma/static/js/components.js:536
 msgid "Close notification"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgid "Open"
 msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:25
-msgid "Return to compatability table."
+msgid "Return to compatibility table."
 msgstr ""
 
 #: kuma/static/js/wiki-compat-tables.js:25
@@ -146,15 +146,15 @@ msgstr ""
 msgid "How to read CSS syntax."
 msgstr ""
 
-#: kuma/static/js/wiki.js:555
+#: kuma/static/js/wiki.js:571
 msgid "Search Stack Overflow"
 msgstr ""
 
-#: kuma/static/js/wiki.js:668
+#: kuma/static/js/wiki.js:684
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 
-#: kuma/static/js/wiki.js:883
+#: kuma/static/js/wiki.js:899
 msgid "Details"
 msgstr ""
 

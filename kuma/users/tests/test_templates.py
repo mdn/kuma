@@ -1,6 +1,4 @@
-import json
-
-import responses
+import requests_mock
 from django.conf import settings
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
@@ -13,21 +11,22 @@ from . import UserTestCase
 from .test_views import TESTUSER_PASSWORD
 
 
-def add_persona_verify_response(server_response):
-    responses.add(
-        responses.POST,
-        'https://verifier.login.persona.org/verify',
-        body=json.dumps(server_response),
-        content_type='application/json',
+def add_persona_verify_response(mock_requests, data):
+    mock_requests.post(
+        settings.PERSONA_VERIFIER_URL,
+        json=data,
+        headers={
+            'content_type': 'application/json',
+        }
     )
 
 
+@requests_mock.mock()
 class SignupTests(UserTestCase):
     localizing_client = False
 
-    @responses.activate
-    def test_signup_page(self):
-        add_persona_verify_response({
+    def test_signup_page(self, mock_requests):
+        add_persona_verify_response(mock_requests, {
             'status': 'okay',
             'email': 'newuser@test.com',
             'audience': 'https://developer-local.allizom.org',
@@ -47,9 +46,8 @@ class SignupTests(UserTestCase):
         for test_string in test_strings:
             self.assertContains(response, test_string)
 
-    @responses.activate
-    def test_signup_page_disabled(self):
-        add_persona_verify_response({
+    def test_signup_page_disabled(self, mock_requests):
+        add_persona_verify_response(mock_requests, {
             'status': 'okay',
             'email': 'newuser@test.com',
             'audience': 'https://developer-local.allizom.org',
@@ -136,19 +134,18 @@ class AllauthPersonaTestCase(UserTestCase):
     existing_persona_username = 'testuser'
     localizing_client = False
 
-    @responses.activate
-    def test_persona_auth_failure_copy(self):
+    @requests_mock.mock()
+    def test_persona_auth_failure_copy(self, mock_requests):
         """
         The explanatory page for failed Persona auth contains the
         failure copy, and does not contain success messages or a form
         to choose a username.
         """
-        add_persona_verify_response({
+        add_persona_verify_response(mock_requests, {
             'status': 'failure',
             'reason': 'this email address has been naughty'
         })
-        response = self.client.post(reverse('persona_login'),
-                                    follow=True)
+        response = self.client.post(reverse('persona_login'), follow=True)
         for expected_string in ('Account Sign In Failure',
                                 'An error occurred while attempting to sign '
                                 'in with your account.'):
@@ -165,15 +162,15 @@ class AllauthPersonaTestCase(UserTestCase):
                 '" id="id_email" />'):
             self.assertNotContains(response, unexpected_string)
 
-    @responses.activate
-    def test_persona_auth_success_copy(self):
+    @requests_mock.mock()
+    def test_persona_auth_success_copy(self, mock_requests):
         """
         Successful Persona auth of a new user displays a success
         message and the Persona-specific signup form, correctly
         populated, and does not display the failure copy.
         """
         persona_signup_email = 'templates_persona_auth_copy@example.com'
-        add_persona_verify_response({
+        add_persona_verify_response(mock_requests, {
             'status': 'okay',
             'email': persona_signup_email,
         })
@@ -207,15 +204,15 @@ class AllauthPersonaTestCase(UserTestCase):
                 'in with your account.'):
             self.assertNotContains(response, unexpected_string)
 
-    @responses.activate
-    def test_persona_signin_copy(self):
+    @requests_mock.mock()
+    def test_persona_signin_copy(self, mock_requests):
         """
         After an existing user successfully authenticates with
         Persona, their username, an indication that Persona was used
         to log in, and a logout link appear in the auth tools section
         of the page.
         """
-        add_persona_verify_response({
+        add_persona_verify_response(mock_requests, {
             'status': 'okay',
             'email': self.existing_persona_email,
         })
@@ -287,8 +284,8 @@ class AllauthPersonaTestCase(UserTestCase):
             ok_(auth_persona_form.attr(auth_attr[0]))
             eq_(auth_attr[1], auth_persona_form.attr(auth_attr[0]))
 
-    @responses.activate
-    def test_persona_signup_copy(self):
+    @requests_mock.mock()
+    def test_persona_signup_copy(self, mock_requests):
         """
         After a new user signs up with Persona, their username, an
         indication that Persona was used to log in, and a logout link
@@ -296,7 +293,7 @@ class AllauthPersonaTestCase(UserTestCase):
         """
         persona_signup_email = 'templates_persona_signup_copy@example.com'
         persona_signup_username = 'templates_persona_signup_copy'
-        add_persona_verify_response({
+        add_persona_verify_response(mock_requests, {
             'status': 'okay',
             'email': persona_signup_email,
         })

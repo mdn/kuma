@@ -38,7 +38,7 @@ locale files without updating Verbatim, localizers will have merge head-aches.
         $ python manage.py merge
         $ rm locale/**/*.po~  # Remove .po backup files created by merge.
 
-#.  Commit the files.
+#.  Commit the files::
 
         $ cd locale
         $ git add -A

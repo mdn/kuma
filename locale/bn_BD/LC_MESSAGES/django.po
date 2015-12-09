@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-11-20 10:11-0800\n"
+"POT-Creation-Date: 2015-12-04 05:22-0800\n"
 "PO-Revision-Date: 2014-06-22 19:25+0000\n"
 "Last-Translator: Zobayer Ahmed <zobayer_mc@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: Pootle 2.5.0\n"
 "X-POOTLE-MTIME: 1403465128.0\n"
 
-#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:111
+#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:110
 msgid "object ID"
 msgstr "অবজেক্ট আইডি"
 
@@ -22,7 +22,7 @@ msgstr "অবজেক্ট আইডি"
 msgid "name of the action"
 msgstr "অ্যাকশনের নাম"
 
-#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:128 kuma/demos/models.py:457
+#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:127 kuma/demos/models.py:457
 msgid "date last modified"
 msgstr "সর্বশেষ হালনাগাদের তারিখ"
 
@@ -287,22 +287,23 @@ msgid "Content deleted by moderator"
 msgstr "মডারেটর কনটেন্ট মুছে দিয়েছেন"
 
 #: kuma/contentflagging/models.py:65
-msgid "{object} Flagged"
+#, fuzzy, python-format
+msgid "%(object)s Flagged"
 msgstr "{object} ফ্ল্যাগকৃত"
 
-#: kuma/contentflagging/models.py:98
+#: kuma/contentflagging/models.py:97
 msgid "current status of flag review"
 msgstr "ফ্ল্যাগ পর্যালোচনার বর্তমান অবস্থা"
 
-#: kuma/contentflagging/models.py:101
+#: kuma/contentflagging/models.py:100
 msgid "reason for flagging the content"
 msgstr "কনটেন্ট ফ্ল্যাগ করার কারণ"
 
-#: kuma/contentflagging/models.py:104
+#: kuma/contentflagging/models.py:103
 msgid "please explain what content you feel is inappropriate"
 msgstr "যে বিষয়বস্তুটি আপনার কাছে অসামঞ্জস্যপূর্ণ মনে হয়েছে তা ব্যাখ্যা করুন"
 
-#: kuma/contentflagging/models.py:126
+#: kuma/contentflagging/models.py:125
 msgid "date submitted"
 msgstr "জমা দেয়ার তারিখ"
 
@@ -605,7 +606,7 @@ msgstr "পৃষ্ঠা প্রদর্শন করুন"
 msgid "Edit Page"
 msgstr "পৃষ্ঠা সম্পাদন করুন"
 
-#: kuma/dashboards/templates/dashboards/revisions.html:73 kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:62
+#: kuma/dashboards/templates/dashboards/revisions.html:73 kuma/wiki/feeds.py:365 kuma/wiki/templates/wiki/includes/buttons.html:59
 msgid "History"
 msgstr "ইতিহাস"
 
@@ -3073,18 +3074,19 @@ msgid "Username already in use."
 msgstr "ইউজারনেম আবশ্যক।"
 
 #: kuma/users/helpers.py:35
-msgid "Banned on {ban_date} by {ban_admin}."
+#, python-format
+msgid "Banned on %(ban_date)s by %(ban_admin)s."
 msgstr ""
 
-#: kuma/users/helpers.py:41
+#: kuma/users/helpers.py:42
 msgid "Banned"
 msgstr ""
 
-#: kuma/users/helpers.py:48
+#: kuma/users/helpers.py:49
 msgid "Ban User"
 msgstr "নিষেধাজ্ঞা জারি করুন"
 
-#: kuma/users/helpers.py:59
+#: kuma/users/helpers.py:60
 msgid "Admin"
 msgstr ""
 
@@ -3650,7 +3652,7 @@ msgstr "পৃষ্ঠা"
 msgid "Comment"
 msgstr "মন্তব্য"
 
-#: kuma/users/templates/users/user_detail.html:190 kuma/wiki/templates/wiki/document.html:412
+#: kuma/users/templates/users/user_detail.html:190 kuma/wiki/templates/wiki/document.html:400
 msgid "Edit page"
 msgstr "পৃষ্ঠা সম্পাদন"
 
@@ -3658,7 +3660,7 @@ msgstr "পৃষ্ঠা সম্পাদন"
 msgid "View complete diff"
 msgstr "সম্পূর্ণ পরিবর্তন দেখুন"
 
-#: kuma/users/templates/users/user_detail.html:192 kuma/wiki/templates/wiki/document.html:413
+#: kuma/users/templates/users/user_detail.html:192 kuma/wiki/templates/wiki/document.html:401
 msgid "View page history"
 msgstr "পৃষ্ঠার ইতিহাস দেখুন"
 
@@ -3892,7 +3894,8 @@ msgid "Edit section"
 msgstr "সম্পাদনা বিভাগ"
 
 #: kuma/wiki/events.py:72
-msgid "[MDN] Page \"{document_title}\" changed by {creator}"
+#, fuzzy, python-format
+msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] \"{document_title}\" পেজটি {creator} দ্বারা পরিবর্তিত হয়েছে"
 
 #: kuma/wiki/feeds.py:27
@@ -4364,66 +4367,66 @@ msgstr "মুছে ফেলার কারণ"
 msgid "Restore this document"
 msgstr "এই ডকুমেন্টটি পুনরূদ্ধার করুন"
 
-#: kuma/wiki/templates/wiki/document.html:89 templates/includes/lang_switcher.html:2
+#: kuma/wiki/templates/wiki/document.html:87 templates/includes/lang_switcher.html:2
 msgid "Other languages:"
 msgstr "অন্যান্য ভাষাসমূহ:"
 
-#: kuma/wiki/templates/wiki/document.html:100 templates/includes/lang_switcher.html:15
+#: kuma/wiki/templates/wiki/document.html:98 templates/includes/lang_switcher.html:15
 msgid "Go"
 msgstr "যাও"
 
-#: kuma/wiki/templates/wiki/document.html:169
+#: kuma/wiki/templates/wiki/document.html:167
 msgid "Previous Search Result"
 msgstr "পূর্ববর্তী অনুসন্ধান ফলাফল"
 
-#: kuma/wiki/templates/wiki/document.html:169 kuma/wiki/templates/wiki/document.html:179
+#: kuma/wiki/templates/wiki/document.html:167 kuma/wiki/templates/wiki/document.html:177
 msgid "No Previous Search Result"
 msgstr "পূর্বের কোনো অনুসন্ধান ফলাফল নেই"
 
-#: kuma/wiki/templates/wiki/document.html:175
+#: kuma/wiki/templates/wiki/document.html:173
 msgid "Your Search Results"
 msgstr "আপনার অনুসন্ধান ফলাফল"
 
-#: kuma/wiki/templates/wiki/document.html:179
+#: kuma/wiki/templates/wiki/document.html:177
 msgid "Next Search Result"
 msgstr "পরবর্তী অনুসন্ধান ফলাফল"
 
-#: kuma/wiki/templates/wiki/document.html:189
+#: kuma/wiki/templates/wiki/document.html:185
 #, fuzzy
 msgid "Show all"
 msgstr "সাইডবার দেখাও"
 
-#: kuma/wiki/templates/wiki/document.html:189
+#: kuma/wiki/templates/wiki/document.html:185
 #, fuzzy
 msgid "contributors"
 msgstr "করট্রিবিউটর দের জন্য নিয়মাবলী"
 
-#: kuma/wiki/templates/wiki/document.html:191
+#: kuma/wiki/templates/wiki/document.html:187
 #, python-format
-msgid "by %(count)s contributor:"
-msgid_plural "by %(count)s contributors:"
+msgid "By %(count)s contributor:"
+msgid_plural "By %(count)s contributors:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kuma/wiki/templates/wiki/document.html:200
+#: kuma/wiki/templates/wiki/document.html:196
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "প্রোফাইল দেখুন: %(username)s"
 
-#: kuma/wiki/templates/wiki/document.html:223
+#: kuma/wiki/templates/wiki/document.html:219
 msgid "Show Sidebar"
 msgstr "সাইডবার দেখাও"
 
-#: kuma/wiki/templates/wiki/document.html:237
+#: kuma/wiki/templates/wiki/document.html:233
 msgid "In This Article"
 msgstr "এই নিবন্ধে"
 
-#: kuma/wiki/templates/wiki/document.html:262
+#: kuma/wiki/templates/wiki/document.html:255
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "এই নথিটি প্রথমবারের মতো সিস্টেম রেন্ডার করেছে। পরিবর্তনগুলো দেখতে কিছু মিনিটের মধ্যে <a href=\"%(url)s\">পাতাটি রিলোড করুন</a>।"
 
-#: kuma/wiki/templates/wiki/document.html:270
+#: kuma/wiki/templates/wiki/document.html:263
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
@@ -4431,7 +4434,7 @@ msgid ""
 msgstr ""
 "বর্তমানে নথিটির একটু হালনাগাদ<abbr title=\"%(started_at)s\">এইমুহুর্তে চলছে</abbr>। নিচের কন্টেন্ট যদি নতুনত্বহীন বা এটাতে কিছু নেই বলে মনে হয় তবে কিছু মিনিটের মধ্যে <a href=\"%(url)s\">পাতাটি রিলোড করুন</a>।"
 
-#: kuma/wiki/templates/wiki/document.html:279
+#: kuma/wiki/templates/wiki/document.html:272
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
@@ -4439,56 +4442,56 @@ msgid ""
 msgstr ""
 "এই নথিটির একটি হালনাগাদ <abbr title=\"%(scheduled_at)s\">শিডিউল করা হয়েছে</abbr>। নিচের কন্টেন্ট যদি নতুনত্বহীন বা এটাতে কিছু নেই বলে মনে হয় তবে কিছু মিনিটের মধ্যে <a href=\"%(url)s\">পাতাটি রিলোড করুন</a>।"
 
-#: kuma/wiki/templates/wiki/document.html:295
+#: kuma/wiki/templates/wiki/document.html:288
 msgid "This article is in need of a technical review."
 msgstr "এই নিবন্ধটির টেকনিক্যাল রিভিউ দরকার।"
 
-#: kuma/wiki/templates/wiki/document.html:300
+#: kuma/wiki/templates/wiki/document.html:293
 msgid "This article is in need of an editorial review."
 msgstr "এই নিবন্ধটির সম্পাদকীয় রিভিউ দরকার।"
 
-#: kuma/wiki/templates/wiki/document.html:306
+#: kuma/wiki/templates/wiki/document.html:299
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:311
+#: kuma/wiki/templates/wiki/document.html:304
 #, fuzzy
 msgid "This translation is in progress."
 msgstr "এই নিবন্ধটি অনুবাদ প্রক্রিয়ার মধ্যে রয়েছে।"
 
-#: kuma/wiki/templates/wiki/document.html:318
+#: kuma/wiki/templates/wiki/document.html:311
 #, python-format
-msgid "Our volunteers haven't translated this article into %(locale)s yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
+msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:329
+#: kuma/wiki/templates/wiki/document.html:322
 msgid "This article doesn't have any content yet."
 msgstr "এই নিবন্ধটির এখনো কোনো বিষয়বস্তু নেই।"
 
-#: kuma/wiki/templates/wiki/document.html:332
+#: kuma/wiki/templates/wiki/document.html:325
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:345
+#: kuma/wiki/templates/wiki/document.html:338
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/document.html:358
+#: kuma/wiki/templates/wiki/document.html:346
 msgid "Document Tags and Contributors"
 msgstr "ডকুমেন্ট ট্যাগ এবং অবদানকারী"
 
-#: kuma/wiki/templates/wiki/document.html:364
+#: kuma/wiki/templates/wiki/document.html:352
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "MDN কোডবেসে অবদান রাখা"
 
-#: kuma/wiki/templates/wiki/document.html:370
+#: kuma/wiki/templates/wiki/document.html:358
 msgid "Last updated by:"
 msgstr "সর্বশেষ হালনাগাদ করেছেন:"
 
-#: kuma/wiki/templates/wiki/document.html:385
+#: kuma/wiki/templates/wiki/document.html:373
 msgid "Hide Sidebar"
 msgstr "সাইডবার লুকানো"
 
@@ -4863,39 +4866,39 @@ msgstr ""
 msgid "Watch"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:66
+#: kuma/wiki/templates/wiki/includes/buttons.html:63
 #, fuzzy
 msgid "New sub-article"
 msgstr "নতুন প্রবন্ধের ইউআরএল"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:67
+#: kuma/wiki/templates/wiki/includes/buttons.html:64
 #, fuzzy
 msgid "Clone this article"
 msgstr "এই নিবন্ধে"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:70
+#: kuma/wiki/templates/wiki/includes/buttons.html:67
 #, fuzzy
 msgid "Move this article"
 msgstr "এই নিবন্ধে"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:73
+#: kuma/wiki/templates/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:81
+#: kuma/wiki/templates/wiki/includes/buttons.html:78
 #, fuzzy
 msgid "Delete this article"
 msgstr "এই মন্তব্যটি মুছে দিন"
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:86
+#: kuma/wiki/templates/wiki/includes/buttons.html:83
 msgid "Manage content zone"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:89
+#: kuma/wiki/templates/wiki/includes/buttons.html:86
 msgid "Convert to content zone"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/buttons.html:91
+#: kuma/wiki/templates/wiki/includes/buttons.html:88
 #, fuzzy
 msgid "Print this article"
 msgstr "এই নিবন্ধে"
@@ -5023,33 +5026,33 @@ msgstr[1] ""
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:28
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:40
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:44
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:47
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:49
 #, fuzzy
 msgid "Edit Template"
 msgstr "পৃষ্ঠা সম্পাদন"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
 msgstr ""
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:50
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:60
 #, fuzzy
 msgid "Edit Document"
 msgstr "ডকুমেন্ট"
 
-#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:54
+#: kuma/wiki/templates/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
 msgstr ""
 
