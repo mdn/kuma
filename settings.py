@@ -877,12 +877,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/selectivizr.js',
     },
-    'modal-control': {
-        'source_filenames': (
-            'js/modal-control.js',
-        ),
-        'output_filename': 'build/js/modal-control.js',
-    },
     'ace': {
         'source_filenames': (
             'js/libs/ace/ace.js',
