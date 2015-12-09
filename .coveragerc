@@ -3,4 +3,4 @@ source = kuma
 branch = 1
 
 [report]
-omit = *tests*,*migrations*,*vendor*,*/management/commands/*
+omit = *tests*,*migrations*,*/management/commands/*

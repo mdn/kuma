@@ -2,11 +2,6 @@
 import os
 import sys
 
-import kuma
-
-# setup sys.path to use vendor etc.
-kuma.setup()
-
 from django.core.management import execute_from_command_line
 
 # Don't try to force a new setting module on us
