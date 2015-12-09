@@ -56,6 +56,6 @@ CACHES = {
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CLEANCSS_BIN = '/usr/local/bin/cleancss'
-UGLIFY_BIN = '/usr/local/bin/uglifyjs'
+PIPELINE_UGLIFYJS_BINARY = '/usr/local/bin/uglifyjs'
 
 SERVE_MEDIA = True

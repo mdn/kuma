@@ -22,8 +22,10 @@ if [ -f bin/install_nodejs ]; then
     npm install -g uglify-js@2.4.13
 fi
 
+mkdir -p /app/static /app/media
 $HOME/scripts/compile-stylesheets
-python $MANAGE_FILE compilejsi18n --noinput &> /dev/null
-python $MANAGE_FILE collectstatic --noinput &> /dev/null
+python $MANAGE_FILE update_product_details
+python $MANAGE_FILE compilejsi18n
+python $MANAGE_FILE collectstatic --noinput
 
 echo "-----> Post-compile done"

@@ -1,5 +1,9 @@
-import tidylib
 from django.conf import settings
+
+try:
+    import tidylib
+except ImportError:
+    tidylib = None
 
 
 def locale_and_slug_from_path(path, request=None, path_locale=None):
@@ -44,6 +48,8 @@ def locale_and_slug_from_path(path, request=None, path_locale=None):
 
 
 def tidy_content(content):
+    if not tidylib:
+        return content
     options = {
         'output-xhtml': 0,
         'force-output': 1,

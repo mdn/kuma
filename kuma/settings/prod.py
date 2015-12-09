@@ -26,3 +26,6 @@ CELERYD_MAX_TASKS_PER_CHILD = 500
 
 ES_INDEX_PREFIX = 'mdnprod'
 ES_LIVE_INDEX = True
+
+PIPELINE_CLEANCSS_BINARY = '/app/.heroku/vendor/node/bin/cleancss'
+PIPELINE_UGLIFYJS_BINARY = '/app/.heroku/vendor/node/bin/uglifyjs'

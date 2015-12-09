@@ -13,7 +13,10 @@ from django.core.urlresolvers import reverse_lazy
 _Language = namedtuple(u'Language', u'english native iso639_1')
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-path = lambda *a: os.path.join(ROOT, *a)
+
+
+def path(*parts):
+    return os.path.join(ROOT, *parts)
 
 
 class TupleCsv(Csv):
@@ -304,9 +307,7 @@ MT_TO_KUMA_LOCALE_MAP = {
 
 SITE_ID = 1
 
-PROD_DETAILS_DIR = config('PROD_DETAILS_DIR',
-                          default=path('..', 'product_details_json'))
-MDC_PAGES_DIR = path('..', 'mdc_pages')
+PROD_DETAILS_DIR = config('PROD_DETAILS_DIR', default=path('product_details_json'))
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
