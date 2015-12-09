@@ -865,12 +865,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/ckeditor-dev.js',
     },
-    'carousel': {
-        'source_filenames': (
-            'js/libs/carousel.js',
-        ),
-        'output_filename': 'build/js/carousel.js',
-    },
     'html5shiv': {
         'source_filenames': (
             'js/libs/html5shiv/html5shiv.js',
