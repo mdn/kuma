@@ -1026,8 +1026,7 @@ EMAIL_FILE_PATH = '/tmp/kuma-messages'
 import djcelery
 djcelery.setup_loader()
 
-BROKER_URL = config('BROKER_URL',
-                    default='amqp://kuma:kuma@developer-local:5672/kuma')
+BROKER_URL = config('BROKER_URL', default='redis://127.0.0.1:6379/0')
 
 CELERY_ALWAYS_EAGER = config('CELERY_ALWAYS_EAGER', True, cast=bool)
 CELERY_SEND_TASK_ERROR_EMAILS = True
@@ -1402,7 +1401,8 @@ CONSTANCE_CONFIG = dict(
 BASKET_URL = 'https://basket.mozilla.com'
 BASKET_APPS_NEWSLETTER = 'app-dev'
 
-KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
+KUMASCRIPT_URL_TEMPLATE = config('KUMASCRIPT_URL_TEMPLATE',
+                                 'http://localhost:9080/docs/{path}')
 
 # Elasticsearch related settings.
 ES_DEFAULT_NUM_REPLICAS = 1

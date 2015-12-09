@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -veo pipefail
+
+source $BIN_DIR/utils
+
+# The post_compile hook is run by heroku-buildpack-python
+
+echo "-----> Running post-compile hook"
+
+MANAGE_FILE=$(find . -maxdepth 3 -type f -name 'manage.py' -printf '%d\t%P\n' | sort -nk1 | cut -f2 | head -1)
+MANAGE_FILE=${MANAGE_FILE:-fakepath}
+
+if [ -f bin/install_nodejs ]; then
+    echo "-----> Running install_nodejs"
+    chmod +x bin/install_nodejs
+    bin/install_nodejs
+
+    npm install -g clean-css@2.2.16
+    npm install -g csslint@0.10.0
+    npm install -g jshint@2.7.0
+    npm install -g stylus@0.49.2
+    npm install -g uglify-js@2.4.13
+fi
+
+$HOME/scripts/compile-stylesheets
+python $MANAGE_FILE compilejsi18n --noinput &> /dev/null
+python $MANAGE_FILE collectstatic --noinput &> /dev/null
+
+echo "-----> Post-compile done"

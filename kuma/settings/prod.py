@@ -7,7 +7,15 @@ DEFAULT_FROM_EMAIL = 'no-reply@developer.mozilla.org'
 SERVER_EMAIL = 'mdn-prod-noreply@mozilla.com'
 
 # Cache
-CACHES['memcache']['TIMEOUT'] = 60 * 60 * 24
+CACHES['memcache'] = {
+    'BACKEND': 'django_redis.cache.RedisCache',
+    'LOCATION': config('REDIS_URL', 'redis://127.0.0.1:6379/1'),
+    'OPTIONS': {
+        'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+    }
+}
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'memcache'
 
 MEDIA_URL = 'https://developer.cdn.mozilla.net/media/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
