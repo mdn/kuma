@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-10 15:59+0000\n"
+"PO-Revision-Date: 2015-12-10 16:24+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -6070,7 +6070,7 @@ msgstr "Reference"
 
 #: templates/base.html:143
 msgid "Developer Guides"
-msgstr ""
+msgstr "Vývojářské příručky"
 
 #: templates/base.html:144
 msgid "Accessibility"
