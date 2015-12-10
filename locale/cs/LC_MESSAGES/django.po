@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-08 19:02+0000\n"
+"PO-Revision-Date: 2015-12-10 15:59+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -1437,23 +1437,23 @@ msgstr ""
 
 #: kuma/demos/__init__.py:290
 msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-msgstr ""
+msgstr "https://developer.mozilla.org/cs/docs/Web/JavaScript"
 
 #: kuma/demos/__init__.py:291
 msgid "http://en.wikipedia.org/wiki/JavaScript"
-msgstr ""
+msgstr "https://cs.wikipedia.org/wiki/JavaScript"
 
 #: kuma/demos/__init__.py:292
 msgid "ECMA Spec"
-msgstr ""
+msgstr "ECMA scpecifikace"
 
 #: kuma/demos/__init__.py:292
 msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
-msgstr ""
+msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
 
 #: kuma/demos/__init__.py:295 kuma/landing/templates/landing/homepage.html:72
 msgid "HTML5"
-msgstr ""
+msgstr "HTML5"
 
 #: kuma/demos/__init__.py:296
 msgid ""
@@ -1463,15 +1463,15 @@ msgstr ""
 
 #: kuma/demos/__init__.py:298
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
-msgstr ""
+msgstr "https://developer.mozilla.org/cs/docs/Web/Guide/HTML/HTML5"
 
 #: kuma/demos/__init__.py:299
 msgid "http://en.wikipedia.org/wiki/Html5"
-msgstr ""
+msgstr "https://cs.wikipedia.org/wiki/HTML5"
 
 #: kuma/demos/__init__.py:300
 msgid "http://dev.w3.org/html5/spec/Overview.html"
-msgstr ""
+msgstr "http://dev.w3.org/html5/spec/Overview.html"
 
 #: kuma/demos/__init__.py:304
 msgid ""
@@ -1482,7 +1482,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:306
 msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
-msgstr ""
+msgstr "https://developer.mozilla.org/cs/docs/IndexedDB"
 
 #: kuma/demos/__init__.py:307
 msgid "http://en.wikipedia.org/wiki/IndexedDB"
@@ -1497,10 +1497,12 @@ msgid ""
 "Drag and Drop features allow the user to move elements on the screen using "
 "the mouse pointer."
 msgstr ""
+"Funkce táhni a pusť uživateli umožňuje uživatelům přesouvat prvky na stránce"
+" kurzorem myši."
 
 #: kuma/demos/__init__.py:314
 msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
-msgstr ""
+msgstr "https://developer.mozilla.org/cs/docs/DragDrop/Drag_and_Drop"
 
 #: kuma/demos/__init__.py:315
 msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
@@ -1508,29 +1510,31 @@ msgstr ""
 
 #: kuma/demos/__init__.py:316
 msgid "http://www.w3.org/TR/html5/dnd.html"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/dnd.html"
 
 #: kuma/demos/__init__.py:320
 msgid ""
 "Firefox Mobile brings the true Web experience to mobile phones and other "
 "non-PC devices."
 msgstr ""
+"Mobilní Firefox přináší skutečný zážitek z webu do mobilních telefonů a "
+"jiných nepočítačových zařízení."
 
 #: kuma/demos/__init__.py:322
 msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
-msgstr ""
+msgstr "https://developer.mozilla.org/cs/docs/Mozilla/Mobile"
 
 #: kuma/demos/__init__.py:323
 msgid "http://en.wikipedia.org/wiki/Mobile_web"
-msgstr ""
+msgstr "https://cs.wikipedia.org/wiki/Mobilní_web"
 
 #: kuma/demos/__init__.py:324
 msgid "http://www.w3.org/Mobile/"
-msgstr ""
+msgstr "http://www.w3.org/Mobile/"
 
 #: kuma/demos/__init__.py:327
 msgid "Offline Support"
-msgstr ""
+msgstr "Offline podpora"
 
 #: kuma/demos/__init__.py:328
 msgid ""
@@ -2849,7 +2853,7 @@ msgstr "Web API &amp; DOM"
 #: kuma/landing/templates/landing/homepage.html:75
 #: kuma/landing/templates/landing/homepage.html:95
 msgid "more..."
-msgstr ""
+msgstr "více..."
 
 #: kuma/landing/templates/landing/homepage.html:79
 msgid "Mozilla<br> Docs"
@@ -4677,7 +4681,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:178
 msgid "Reference"
-msgstr ""
+msgstr "Reference"
 
 #: kuma/wiki/models.py:766
 msgid "Please choose a category."
@@ -6054,15 +6058,15 @@ msgstr "Reference a návody"
 
 #: templates/base.html:140
 msgid "Learn the Web"
-msgstr ""
+msgstr "Naučte se web"
 
 #: templates/base.html:141
 msgid "Tutorials"
-msgstr ""
+msgstr "Tutoriály"
 
 #: templates/base.html:142
 msgid "References"
-msgstr ""
+msgstr "Reference"
 
 #: templates/base.html:143
 msgid "Developer Guides"
@@ -6070,11 +6074,11 @@ msgstr ""
 
 #: templates/base.html:144
 msgid "Accessibility"
-msgstr ""
+msgstr "Přístupnost"
 
 #: templates/base.html:146
 msgid "...more docs"
-msgstr ""
+msgstr "...více dokumentů"
 
 #: templates/base.html:150
 msgid "Mozilla Docs"

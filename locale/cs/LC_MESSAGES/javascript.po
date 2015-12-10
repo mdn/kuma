@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-05 23:44+0000\n"
+"PO-Revision-Date: 2015-12-05 23:41+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: cs\n"
@@ -40,7 +40,7 @@ msgstr "Znovu se neptat"
 
 #: kuma/static/js/helpfulness.js:53
 msgid "Translate it into my language"
-msgstr ""
+msgstr "Přeložte stránku do mého jazyka"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "Make explanations clearer"
@@ -48,15 +48,15 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:55
 msgid "Add more details"
-msgstr ""
+msgstr "Přidejte více detailů"
 
 #: kuma/static/js/helpfulness.js:56
 msgid "Fix incorrect information"
-msgstr ""
+msgstr "Opravte nesprávné informace"
 
 #: kuma/static/js/helpfulness.js:57
 msgid "Add or improve examples"
-msgstr ""
+msgstr "Přidejte nebo vylepšete příklady"
 
 #: kuma/static/js/helpfulness.js:58
 msgid "My search should have lead to a different article."
@@ -72,7 +72,7 @@ msgstr "Vyberte jednu z možností..."
 
 #: kuma/static/js/helpfulness.js:77
 msgid "Uh oh. What would make it better?"
-msgstr ""
+msgstr "To nás mrzí. Co můžeme udělat, abychom to napravili?"
 
 #: kuma/static/js/helpfulness.js:80
 msgid "Thanks! We'll fix it."
@@ -213,11 +213,11 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:20
 msgid "Select a section"
-msgstr ""
+msgstr "Vybrat část"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:91
 msgid "Sections in Document"
-msgstr ""
+msgstr "Části dokumentu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
