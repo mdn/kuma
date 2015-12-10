@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-09 20:00+0000\n"
+"PO-Revision-Date: 2015-12-10 16:37+0000\n"
 "Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -4597,6 +4597,9 @@ msgid ""
 "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for "
 "the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 msgstr ""
+"Bloggar: På <a href=\"%(blog_link)s\"> about:community</a> bloggen, kolla "
+"efter poster taggade med <a href=\"%(tagged_link)s\">Developer "
+"Engagement</a>."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/html.ltxt:60
