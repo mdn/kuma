@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-10 16:24+0000\n"
+"PO-Revision-Date: 2015-12-11 19:46+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -6082,7 +6082,7 @@ msgstr "...více dokumentů"
 
 #: templates/base.html:150
 msgid "Mozilla Docs"
-msgstr ""
+msgstr "Dokumenty Mozilly"
 
 #: templates/base.html:159 templates/includes/login.html:20
 msgid "Persona"
