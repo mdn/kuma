@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-11 16:59+0000\n"
+"PO-Revision-Date: 2015-12-11 19:56+0000\n"
 "Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: MozillaItalia <MozillaItalia>\n"
 "Language: it\n"
@@ -335,9 +335,9 @@ msgid "Content deleted by moderator"
 msgstr "Contenuto eliminato dal moderatore"
 
 #: kuma/contentflagging/models.py:65
-#, fuzzy, python-format
+#, python-format
 msgid "%(object)s Flagged"
-msgstr "{object} è stato segnalato"
+msgstr "L’oggetto %(object)s è stato segnalato"
 
 #: kuma/contentflagging/models.py:97
 msgid "current status of flag review"
@@ -3773,9 +3773,9 @@ msgid "Username already in use."
 msgstr "Questo nome utente è già utilizzato."
 
 #: kuma/users/helpers.py:35
-#, fuzzy, python-format
+#, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
-msgstr "Espulso in data {ban_date} da {ban_admin}."
+msgstr "Espulso in data %(ban_date)s da %(ban_admin)s."
 
 #: kuma/users/helpers.py:42
 msgid "Banned"
@@ -4853,9 +4853,10 @@ msgid "Edit section"
 msgstr "Modifica sezione"
 
 #: kuma/wiki/events.py:72
-#, fuzzy, python-format
+#, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr "[MDN] La pagina \"{document_title}\" è stata modificata da {creator}"
+msgstr ""
+"[MDN] La pagina “%(document_title)s” è stata modificata da %(creator)s"
 
 #: kuma/wiki/feeds.py:27
 msgid "MDN documents"
@@ -5429,7 +5430,7 @@ msgid "contributors"
 msgstr "Collaboratori"
 
 #: kuma/wiki/templates/wiki/document.html:187
-#, fuzzy, python-format
+#, python-format
 msgid "By %(count)s contributor:"
 msgid_plural "By %(count)s contributors:"
 msgstr[0] "di %(count)s collaboratore:"
@@ -5503,13 +5504,14 @@ msgid "This translation is in progress."
 msgstr "Traduzione in corso."
 
 #: kuma/wiki/templates/wiki/document.html:311
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
 "yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
-"I volontari di MDN non hanno ancora tradotto questo articolo in %(locale)s. "
-"<a href=\"%(help_link)s\">Registrati per tradurlo tu.</a>"
+"I volontari di MDN non hanno ancora tradotto questo articolo in "
+"<bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Registrati per tradurlo "
+"tu.</a>"
 
 #: kuma/wiki/templates/wiki/document.html:322
 msgid "This article doesn't have any content yet."
