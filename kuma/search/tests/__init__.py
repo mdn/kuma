@@ -34,7 +34,7 @@ class ElasticTestCase(UserTestCase):
             # python 2.6 has no setUpClass, but that's okay
             pass
 
-        if not getattr(settings, 'ES_URLS', None):
+        if not getattr(settings, 'ES_HOSTS', None):
             cls.skipme = True
             return
 

@@ -61,10 +61,10 @@ class WikiConfig(AppConfig):
         # Configure Elasticsearch connections for connection pooling.
         es_connections.configure(
             default={
-                'hosts': settings.ES_URLS,
+                'hosts': settings.ES_HOSTS,
             },
             indexing={
-                'hosts': settings.ES_URLS,
+                'hosts': settings.ES_HOSTS,
                 'timeout': settings.ES_INDEXING_TIMEOUT,
             },
         )

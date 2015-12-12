@@ -6,9 +6,9 @@ from django.core import urlresolvers
 from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
-from jingo.helpers import urlparams
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
+from .utils import urlparams
 from .views import handler403
 
 

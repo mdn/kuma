@@ -5,7 +5,7 @@
 # directory in our PATH.
 #
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=1092364
-PATH=/usr/local/bin:$PATH
+PATH=/app/.heroku/vendor/node/bin:/usr/local/bin:$PATH
 
 BASEDIR=$(dirname $0)
 CSSDIR=$BASEDIR/../build/assets/css

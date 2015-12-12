@@ -15,10 +15,10 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db.models import Q
 
 from kuma.core.utils import chunked
-from kuma.wiki.helpers import absolutify
 from kuma.wiki.models import Document, DocumentRenderingInProgress
 from kuma.wiki.tasks import (email_render_document_progress, render_document,
                              render_document_chunk)
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
 log = logging.getLogger('kuma.wiki.management.commands.render_document')

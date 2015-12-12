@@ -1,33 +1,32 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 import time
 import urllib
+from datetime import datetime
 
-from BeautifulSoup import BeautifulSoup
 import mock
-from nose import SkipTest
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
-from pyquery import PyQuery as pq
-
+from BeautifulSoup import BeautifulSoup
+from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
-from django.utils.http import urlquote
 from django.test.utils import override_settings
-
-from constance import config
-from jingo.helpers import urlparams
+from django.utils.http import urlquote
+from nose import SkipTest
+from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
 from waffle.models import Flag
 
 from kuma.core.tests import SkippedTestCase
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase
-from ..events import EditDocumentEvent
+
+from . import (WikiTestCase, create_topical_parents_docs, document,
+               new_document_data, revision)
 from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
-from ..models import Document, Revision, HelpfulVote, DocumentTag
-from . import (WikiTestCase, document, revision, new_document_data,
-               create_topical_parents_docs)
+from ..events import EditDocumentEvent
+from ..models import Document, DocumentTag, HelpfulVote, Revision
 
 
 DOCUMENT_EDITED_EMAIL_CONTENT = """

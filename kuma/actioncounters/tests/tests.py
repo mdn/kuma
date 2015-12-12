@@ -2,10 +2,9 @@ from django.core.exceptions import MultipleObjectsReturned
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
+
 from django.contrib.contenttypes.models import ContentType
-from django.db import IntegrityError
-from django.http import HttpRequest
-from django.test import TransactionTestCase
+from django.test import TransactionTestCase, RequestFactory
 
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -16,6 +15,7 @@ from .models import TestModel
 
 
 class ActionCountersTest(TransactionTestCase):
+    rf = RequestFactory()
 
     def setUp(self):
         super(ActionCountersTest, self).setUp()
@@ -28,12 +28,12 @@ class ActionCountersTest(TransactionTestCase):
         self.obj_1 = TestModel(title="alpha")
         self.obj_1.save()
 
-    def mk_request(self, user=None, ip='192.168.123.123', user_agent='FakeBrowser 1.0'):
-        request = HttpRequest()
+    def mk_request(self, user=None, ip='192.168.123.123',
+                   user_agent='FakeBrowser 1.0'):
+        request = self.rf.get('/',
+                              HTTP_USER_AGENT=user_agent,
+                              REMOTE_ADDR=ip)
         request.user = user and user or AnonymousUser()
-        request.method = 'GET'
-        request.META['REMOTE_ADDR'] = ip
-        request.META['HTTP_USER_AGENT'] = user_agent
         return request
 
     @attr('bug694544')
@@ -44,11 +44,9 @@ class ActionCountersTest(TransactionTestCase):
             obj_1 = self.obj_1
             obj_1_ct = ContentType.objects.get_for_model(obj_1)
 
-            request = self.mk_request(user_agent=u"Some\xef\xbf\xbdbrowser")
-            user, ip, user_agent, unique_hash = get_unique(obj_1_ct,
-                                                           obj_1.pk,
-                                                           name=action_name,
-                                                           request=request)
+            request = self.mk_request(user_agent="Some\xef\xbf\xbdbrowser")
+            user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
+                                                           action_name, request)
         except UnicodeDecodeError:
             ok_(False, "UnicodeDecodeError should not be thrown")
 
@@ -64,20 +62,27 @@ class ActionCountersTest(TransactionTestCase):
 
         request = self.mk_request()
         user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
-                                                       name=action_name,
-                                                       request=request)
+                                                       action_name, request)
 
         # Create an initial counter record directly.
-        u1 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
-                                 name=action_name, total=1, ip=ip,
-                                 user_agent=user_agent, user=user)
+        u1 = ActionCounterUnique(content_type=obj_1_ct,
+                                 object_pk=obj_1.pk,
+                                 name=action_name,
+                                 total=1,
+                                 ip=ip,
+                                 user_agent=user_agent,
+                                 user=user)
         u1.save()
 
         # Adding a duplicate counter should be prevented at the model level.
         try:
-            u2 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
-                                     name=action_name, total=1, ip=ip,
-                                     user_agent=user_agent, user=user)
+            u2 = ActionCounterUnique(content_type=obj_1_ct,
+                                     object_pk=obj_1.pk,
+                                     name=action_name,
+                                     total=1,
+                                     ip=ip,
+                                     user_agent=user_agent,
+                                     user=user)
             u2.save()
             ok_(False, "This should have triggered an IntegrityError")
         except IntegrityError:
@@ -86,8 +91,10 @@ class ActionCountersTest(TransactionTestCase):
         # Try get_unique_for_request, which should turn up the single unique
         # record created earlier.
         try:
-            (u, created) = ActionCounterUnique.objects.get_unique_for_request(
-                obj_1, action_name, request)
+            u, created = (ActionCounterUnique.objects
+                                             .get_unique_for_request(obj_1,
+                                                                     action_name,
+                                                                     request))
             eq_(False, created)
         except MultipleObjectsReturned:
             ok_(False, "MultipleObjectsReturned should not be raised")

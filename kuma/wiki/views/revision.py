@@ -13,8 +13,8 @@ from kuma.core.utils import smart_int
 
 from .. import kumascript
 from ..decorators import prevent_indexing, process_document_path
-from ..helpers import format_comment
 from ..models import Document, Revision
+from ..templatetags.jinja_helpers import format_comment
 
 
 @block_user_agents

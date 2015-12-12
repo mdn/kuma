@@ -19,7 +19,7 @@ from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import KumaTestCase, get_user
 from kuma.users.tests import UserTestCase
 
-from . import (create_template_test_users, create_document_tree,
+from . import (create_document_tree, create_template_test_users,
                create_topical_parents_docs, doc_rev, document, normalize_html,
                revision)
 from .. import tasks
@@ -27,8 +27,8 @@ from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from ..events import EditDocumentInTreeEvent
 from ..exceptions import (DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress, PageMoveError)
-from ..helpers import absolutify
 from ..models import Document, Revision, RevisionIP, TaggedDocument
+from ..templatetags.jinja_helpers import absolutify
 from ..utils import tidy_content
 
 
@@ -97,13 +97,13 @@ class DocumentTests(UserTestCase):
         # Check fields of translated doc
         ok_('translations' in data)
         eq_(de_doc.locale, data['translations'][0]['locale'])
-        result_l10n_tags = sorted([str(x) for x
-                                   in data['translations'][0]['localization_tags']])
+        result_l10n_tags = sorted([str(x)
+                                   for x in data['translations'][0]['localization_tags']])
         eq_(expected_l10n_tags, result_l10n_tags)
         result_tags = sorted([str(x) for x in data['translations'][0]['tags']])
         eq_(expected_tags, result_tags)
-        result_review_tags = sorted([str(x) for x
-                                     in data['translations'][0]['review_tags']])
+        result_review_tags = sorted([str(x)
+                                     for x in data['translations'][0]['review_tags']])
         eq_(expected_review_tags, result_review_tags)
         eq_(de_doc.current_revision.summary, data['translations'][0]['summary'])
         eq_(de_doc.title, data['translations'][0]['title'])
@@ -284,11 +284,14 @@ class DocumentTests(UserTestCase):
         bambino = document(locale='es', title='el test', parent=parent,
                            save=True)
 
-        children = Document.objects.filter(parent=parent).order_by('locale').values_list('pk', flat=True)
+        children = (Document.objects.filter(parent=parent)
+                                    .order_by('locale')
+                                    .values_list('pk', flat=True))
         eq_(list(children),
             list(parent.other_translations.values_list('pk', flat=True)))
 
-        enfant_translation_pks = enfant.other_translations.values_list('pk', flat=True)
+        enfant_translation_pks = (enfant.other_translations
+                                        .values_list('pk', flat=True))
         ok_(parent.pk in enfant_translation_pks)
         ok_(bambino.pk in enfant_translation_pks)
         eq_(False, enfant.pk in enfant_translation_pks)
@@ -808,11 +811,11 @@ class DumpAndLoadJsonTests(UserTestCase):
 
         # For good measure, ensure no documents missing revisions in the dump.
         doc_no_rev = (Document.objects
-                      .filter(current_revision__isnull=True))[0]
+                              .filter(current_revision__isnull=True))[0]
         no_rev_cnt = len([x for x in data
-                          if x['model'] == 'wiki.document' and
-                          x['fields']['slug'] == doc_no_rev.slug and
-                          x['fields']['locale'] == doc_no_rev.locale])
+                          if (x['model'] == 'wiki.document' and
+                              x['fields']['slug'] == doc_no_rev.slug and
+                              x['fields']['locale'] == doc_no_rev.locale)])
         eq_(0, no_rev_cnt,
             "There should be no document exported without revision")
 
@@ -1270,7 +1273,8 @@ class PageMoveTests(UserTestCase):
         """Make sure we can detect potential circular dependencies in
         parent/child relationships."""
         # Test detection at one level removed.
-        parent = document(title='Parent of circular-dependency document')
+        parent = document(title='Parent of circular-dependency document',
+                          save=True)
         child = document(title='Document with circular dependency')
         child.parent_topic = parent
         child.save()

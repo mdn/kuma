@@ -5,15 +5,14 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
-from django.utils.feedgenerator import (Atom1Feed, SyndicationFeed,
-                                        Rss201rev2Feed)
+from django.template.loader import render_to_string
+from django.utils.feedgenerator import (Atom1Feed, Rss201rev2Feed,
+                                        SyndicationFeed)
 from django.utils.translation import ugettext as _
 
-import jingo
-
-from kuma.core.validators import valid_jsonp_callback_value
 from kuma.core.urlresolvers import reverse
-from kuma.users.helpers import gravatar_url
+from kuma.core.validators import valid_jsonp_callback_value
+from kuma.users.templatetags.jinja_helpers import gravatar_url
 
 from . import TAG_DESCRIPTIONS
 from .models import Submission
@@ -116,12 +115,10 @@ class SubmissionsFeed(Feed):
         return submission.title
 
     def item_description(self, submission):
-        return jingo.render_to_string(
-            self.request,
-            'demos/feed_item_description.html', dict(
-                request=self.request, submission=submission
-            )
-        )
+        return render_to_string(
+            'demos/feed_item_description.html',
+            context={'request': self.request, 'submission': submission},
+            request=self.request)
 
     def item_author_name(self, submission):
         return '%s' % submission.creator

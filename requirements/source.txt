@@ -33,8 +33,6 @@ hash_ring==1.3.1
 
 html5lib==0.999999
 
-jingo==0.7.1
-
 kombu==3.0.29
 
 oauthlib==1.0.3
@@ -64,7 +62,7 @@ URLObject==2.4.0
 
 pyquery==1.2.9
 
-Django==1.7.11
+Django==1.8.6
 
 commonware==0.4.3
 
@@ -79,6 +77,8 @@ django-constance==1.1.1
 django-extensions==1.5.9
 
 django-honeypot==0.5.0
+
+django-jinja==1.4.1
 
 django-memcached-hashring==0.1.2
 
@@ -115,3 +115,9 @@ django-sundial==1.0.1
 django-pipeline==1.5.4
 
 django-celery-transactions==0.3.6
+
+python-decouple==3.0
+
+dj-database-url==0.3.0
+
+dj-email-url==0.0.4

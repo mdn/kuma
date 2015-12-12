@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.cache import cache
-from django import test
 from django.test import TestCase, TransactionTestCase
 from django.test.client import Client
 from django.utils.translation import trans_real
@@ -125,20 +124,6 @@ class KumaTestMixin(object):
         trans_real.deactivate()
         trans_real._translations = {}  # Django fails to clear this cache.
         trans_real.activate(settings.LANGUAGE_CODE)
-
-        global JINJA_INSTRUMENTED
-        if not JINJA_INSTRUMENTED:
-            import jinja2
-            old_render = jinja2.Template.render
-
-            def instrumented_render(self, *args, **kwargs):
-                context = dict(*args, **kwargs)
-                test.signals.template_rendered.send(sender=self, template=self,
-                                                    context=context)
-                return old_render(self, *args, **kwargs)
-
-            jinja2.Template.render = instrumented_render
-            JINJA_INSTRUMENTED = True
 
     def get_messages(self, request):
         # Django 1.4 RequestFactory requests can't be used to test views that
