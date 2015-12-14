@@ -16,6 +16,12 @@
 
     // create a notification
     function inquire() {
+        // check we haven't asked on another page since we set timeout to trigger this
+        var helpfulnessAskedRecently = parseInt(localStorage.getItem('helpfulnessTracker'), 10) > Date.now();
+        if (helpfulnessAskedRecently) {
+            return;
+        }
+
         // dimension7 is "helpfulness"
         if(win.ga) ga('set', 'dimension7', 'Yes');
 
