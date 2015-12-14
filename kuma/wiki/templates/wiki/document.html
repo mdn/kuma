@@ -37,7 +37,6 @@
 {% set crumbs = build_document_crumbs(document) %}
 {% set share_links = build_share_links(document) %}
 
-
 {% set content_class = 'column-all' %}
 {% if show_left and show_right %}
   {% set content_class = 'column-half' %}
@@ -179,15 +178,13 @@
 
         <h1>{{ document.title }}</h1>
 
-        {{ share_links }}
-
         {% if has_contributors %}
         <div class="contributor-avatars" data-all-text="{{ _('Show all') }}&hellip;<span class='hidden'>{{ _('contributors') }}</span>" {% if contributors_count > contributors_limit %}data-has-hidden="1"{% endif %}>
             <span class="quickstat">
             {% trans count=contributors_count %}
-            By {{ count }} contributor:
+            by {{ count }} contributor:
             {% pluralize %}
-            By {{ count }} contributors:
+            by {{ count }} contributors:
             {% endtrans %}
             </span>
             <ul>
@@ -338,6 +335,8 @@
                   {{ _("This article doesn't have approved content yet.") }}
                 {% endif %}
               </article>
+
+              {{ share_links }}
 
               {% if not is_zone_root %}
 

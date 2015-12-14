@@ -1,15 +1,13 @@
 .share {
-
-    .document-head & {
-        top: -($grid-spacing / 2);
-        margin-bottom: $grid-spacing;
-        bidi-value(text-align, left, right);
-    }
-
     set-smaller-font-size();
     bidi-value(text-align, right, left);
     position: relative;
     top: $grid-spacing;
+
+    strong {
+        display: inline-block;
+        margin-bottom: $content-vertical-spacing;
+    }
 
     ul,
     li {
@@ -18,4 +16,3 @@
         bidi-value(padding, 0, 0); /* to over-ride default bidi-value) */
     }
 }
-
