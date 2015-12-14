@@ -34,7 +34,7 @@
               {% if error_meta %}
                 {% set template_name = error_meta.name %}
                 {% if '$' not in template_name %}
-                  {% set template_slug = 'Template: %s' % template_name %}
+                  {% set template_slug = 'Template:%s' % template_name %}
                   {% set edit_url = url('wiki.edit', template_slug) %}
                   {% set new_url = url('wiki.create') + '?slug=Template:%s' % template_name %}
                 {% endif %}
