@@ -136,6 +136,7 @@ MDN_LANGUAGES = (
     'ru',
     'son',
     'sq',
+    'sr',
     'sv-SE',
     'sw',
     'ta',
