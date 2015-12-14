@@ -662,7 +662,7 @@ def document(request, document_slug, document_locale):
         'body_html': body_html,
         'contributors': contributors,
         'contributors_count': contributors_count,
-        'contributors_limit': 13,
+        'contributors_limit': 6,
         'has_contributors': has_contributors,
         'fallback_reason': fallback_reason,
         'kumascript_errors': ks_errors,

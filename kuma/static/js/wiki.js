@@ -583,59 +583,46 @@
     */
     (function (){
         var hiddenClass = 'hidden';
+        var shownClass = 'shown';
         var $contributors = $('.contributor-avatars');
-        var $hiddenContributors;
         var $showAllContributors;
 
         function loadImages(selector) {
             return $contributors.find(selector).mozLazyloadImage();
         }
 
-        // Don't bother with contributor bar if it starts hidden
-        if($contributors.css('display') === 'none') return;
+        function initToggle() {
+            $showAllContributors = $('<button id="contributors-toggle" type="button" class="transparent" data-alternate-message="' + $contributors.data('alternate-message') + '">' + $contributors.data('all-text') + '</button>');
 
-        // Start displaying first contributors in list
-        loadImages('li.shown noscript');
-
-        // Setup "Show all Contributors block"
-        if ($contributors.data('has-hidden')) {
-            $showAllContributors = $('<button type="button" class="transparent">' + $contributors.data('all-text') + '</button>');
-
-            $showAllContributors.on('keypress click', function(e) {
-                var isKeyPress = e.type === 'keypress';
-                var isEnterKey = isKeyPress && e.which === 13;
-
-                // Ignore keypresses that aren't the ENTER key
-                if(isKeyPress && !isEnterKey) return;
-
-                mdn.analytics.trackEvent({
-                    category: 'Top Contributors',
-                    action: 'Show all'
-                });
-
-                // Show all LI elements
-                $hiddenContributors = $contributors.find('li.' + hiddenClass);
-                $hiddenContributors.removeClass(hiddenClass);
-
-                // Start loading images which were hidden
-                loadImages('noscript');
-
-                // Focus on the first hidden element
-                if(isEnterKey) {
-                    $($hiddenContributors.get(0)).find('a').get(0).focus();
-                }
-
-                // Remove the "Show all" button
-                $(this).remove();
-
+            // toggle message and state of hidden
+            $showAllContributors.toggleMessage({
+                toggleCallback: toggleImages
             });
 
             // Inject the show all button
             $showAllContributors.appendTo($contributors);
         }
 
-        // Track clicks on avatars for the sake of Google Analytics tracking
-        $contributors.on('click', 'a', function(e) {
+        function toggleImages() {
+            var $hiddenContributors;
+            $hiddenContributors = $contributors.find('li.' + hiddenClass);
+            if($hiddenContributors.length) {
+                mdn.analytics.trackEvent({
+                    category: 'Top Contributors',
+                    action: 'Show all'
+                });
+
+                // Show all LI elements
+                $hiddenContributors.removeClass(hiddenClass);
+
+                // Start loading images which were hidden
+                loadImages('noscript');
+            } else {
+                $contributors.find('li:not(.' + shownClass + ')' ).addClass(hiddenClass);
+            }
+        }
+
+        function trackAvatar(){
             var newTab = (e.metaKey || e.ctrlKey);
             var href = this.href;
             var index = $(this).parent().index() + 1;
@@ -646,16 +633,30 @@
             };
 
             if (newTab) {
-              mdn.analytics.trackEvent(data);
+                mdn.analytics.trackEvent(data);
             } else {
-              e.preventDefault();
-              mdn.analytics.trackEvent(data, function() {
-                win.location = href;
-              });
+                e.preventDefault();
+                mdn.analytics.trackEvent(data, function() {
+                    win.location = href;
+                });
             }
-        });
+        }
 
-        // Allow focus into and out of the list itself
+        // Don't bother with contributor bar if it starts hidden
+        if($contributors.css('display') === 'none') return;
+
+        // Start displaying first contributors in list
+        loadImages('li.' + shownClass + ' noscript');
+
+        // Track clicks on avatars for the sake of Google Analytics tracking
+        $contributors.on('click', 'a', trackAvatar);
+
+        // Setup "Show all Contributors block"
+        if ($contributors.data('has-hidden')) {
+            initToggle();
+        }
+
+        // Trigger CSS on focus into and out of the list itself
         $contributors.find('ul').on('focusin focusout', function(e) {
             $(this)[(e.type === 'focusin' ? 'add' : 'remove') + 'Class']('focused');
         });
