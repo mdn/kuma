@@ -530,11 +530,6 @@ def JINJA_CONFIG():
 PUENTE = {
     'BASE_DIR': ROOT,
     'TEXT_DOMAIN': 'django',
-    # By default, all the domains you speficy will be merged into one big
-    # django.po file. If you want to separate a domain from the main .po file,
-    # specify it in this list. Make sure to include TEXT_DOMAIN in this list,
-    # even if you have other .po files you're generating
-    'STANDALONE_DOMAINS': ['django', 'javascript'],
     # Tells the extract script what files to look for l10n in and what function
     # handles the extraction.
     'DOMAIN_METHODS': {
