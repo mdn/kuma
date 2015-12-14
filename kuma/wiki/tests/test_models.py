@@ -19,7 +19,7 @@ from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import KumaTestCase, get_user
 from kuma.users.tests import UserTestCase
 
-from . import (create_template_test_users, create_document_tree,
+from . import (create_document_tree, create_template_test_users,
                create_topical_parents_docs, doc_rev, document, normalize_html,
                revision)
 from .. import tasks
@@ -30,6 +30,7 @@ from ..exceptions import (DocumentRenderedContentNotAvailable,
 from ..helpers import absolutify
 from ..models import Document, Revision, RevisionIP, TaggedDocument
 from ..utils import tidy_content
+from ..signals import render_done
 
 
 def _objects_eq(manager, list_):
@@ -913,46 +914,28 @@ class DeferredRenderingTests(UserTestCase):
         eq_(self.rendered_content, result_rendered)
 
     @attr('bug875349')
-    @override_config(KUMASCRIPT_TIMEOUT=1.0)
-    @override_settings(CELERY_ALWAYS_EAGER=True)
-    @mock.patch('kuma.wiki.kumascript.get')
-    def test_build_json_on_render(self, mock_kumascript_get):
+    @mock.patch('kuma.wiki.models.render_done')
+    def test_build_json_on_render(self, mock_render_done):
         """
         A document's json field is refreshed on render(), but not on save()
         """
-        mock_kumascript_get.return_value = (self.rendered_content, None)
-
-        # Initially empty json field should be filled in after render()
-        eq_(self.d1.json, None)
-        self.d1.render()
-        # reloading from db to get the updates done in the celery task
-        self.d1 = Document.objects.get(pk=self.d1.pk)
-        ok_(self.d1.json is not None)
-
-        time.sleep(1.0)  # Small clock-tick to age the results.
-
-        # Change the doc title, saving does not actually change the json field.
-        self.d1.title = "New title"
         self.d1.save()
-        ok_(self.d1.title != self.d1.get_json_data()['title'])
-        self.d1 = Document.objects.get(pk=self.d1.pk)
+        ok_(not mock_render_done.send.called)
+        mock_render_done.reset()
 
-        # However, rendering refreshes the json field.
         self.d1.render()
-        self.d1 = Document.objects.get(pk=self.d1.pk)
-        eq_(self.d1.title, self.d1.get_json_data()['title'])
+        ok_(mock_render_done.send.called)
 
-        # In case we logically delete a document with a changed title
-        # we don't update the json blob
-        deleted_title = 'Deleted title'
-        self.d1.title = deleted_title
-        self.d1.save()
-        self.d1.delete()
-        self.d1.render()
+    @mock.patch('kuma.wiki.tasks.build_json_data_for_document')
+    def test_render_signal(self, build_json_task):
+        render_done.send(sender=Document, instance=self.d1)
+        ok_(build_json_task.delay.called)
 
-        time.sleep(1.0)  # Small clock-tick to age the results.
-        self.d1 = Document.objects.get(pk=self.d1.pk)
-        ok_(deleted_title != self.d1.get_json_data()['title'])
+    @mock.patch('kuma.wiki.tasks.build_json_data_for_document')
+    def test_render_signal_doc_deleted(self, build_json_task):
+        self.d1.deleted = True
+        render_done.send(sender=Document, instance=self.d1)
+        ok_(not build_json_task.delay.called)
 
     @mock.patch('kuma.wiki.kumascript.get')
     @override_settings(CELERY_ALWAYS_EAGER=True)
