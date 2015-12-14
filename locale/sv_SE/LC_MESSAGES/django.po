@@ -5397,7 +5397,7 @@ msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
 "yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
-"Våra volontärer har inte översatt denna artikel till <bdi>%s (locale)</bdi> "
+"Våra volontärer har inte översatt denna artikel till <bdi>%(locale)s</bdi> "
 "ännu. <a href=\"%(help_link)s\">Gå med oss och hjälpa till att få jobbet "
 "gjort!</a>"
 
