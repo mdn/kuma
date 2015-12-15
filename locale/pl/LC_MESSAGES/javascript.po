@@ -60,8 +60,8 @@ msgid "Add or improve examples"
 msgstr "Wymaga dodania lub ulepszenia przykładów"
 
 #: kuma/static/js/helpfulness.js:58
-msgid "My search should have lead to a different article."
-msgstr "Ta strona nie pasuje do mojego wyszukiwania."
+msgid "My search should have led to a different article"
+msgstr "Ta strona nie pasuje do mojego wyszukiwania"
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Something else"
