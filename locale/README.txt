@@ -2,18 +2,11 @@ We are using English strings for gettext message ids.
 
 Instructions:
 1) ./manage.py extract
-2) ./manage.py verbatimize --rename
-   This will copy the POT files created in step 1 to templates/LC_MESSAGES
-3) ./manage.py merge
-
+2) ./manage.py merge
 Optional:
-4) locale/compile-mo.sh locale
+3) locale/compile-mo.sh locale
+
 
 New Locales:
-Assuming you want to add 'fr':
-1) mkdir -p locale/fr/LC_MESSAGES
-2) ./manage.py merge
-
-or
-1) msginit --no-translator -l fr -i templates/LC_MESSAGES/django.pot -o fr/LC_MESSAGES/django.po
-2) repeat for other POT files
+Assuming you want to add the locale 'xx':
+1) make locale LOCALE=xx

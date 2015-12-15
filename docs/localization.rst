@@ -6,8 +6,7 @@ Kuma is localized with `gettext <http://www.gnu.org/software/gettext/>`_.
 User-facing strings in the code or templates need to be marked for gettext
 localization.
 
-We use `Pontoon <https://pontoon.mozilla.org/>`_ or
-`Verbatim <http://localize.mozilla.org/>`_ to provide an easy interface
+We use `Pontoon <https://pontoon.mozilla.org/>`_ to provide an easy interface
 to localizing these files. Localizers are also free to download the PO files
 and use whatever tool they are comfortable with.
 
@@ -28,10 +27,6 @@ translation catalogs::
 
 Updating the Localizations
 ==========================
-When we add or update strings, we need to update `Verbatim <http://localize.mozilla.org/>`_
-templates and PO files for localizers. If you commit changes to the
-locale files without updating Verbatim, localizers will have merge head-aches.
-
 #.  Run the following in the virtual machine (see :doc:`installation`)::
 
         $ python manage.py extract
@@ -44,28 +39,8 @@ locale files without updating Verbatim, localizers will have merge head-aches.
         $ git add -A
         $ git commit -m "MDN string update YYYY-MM-DD"
 
-.. note:: You need verbatim permissions for the following. If you don't have permissions, email `groovecoder <mailto:lcrouch@mozilla.com>`_ or `mathjazz <mailto:matjaz@mozilla.com>`_ to do the following ...
-
-#.  Go to the `MDN templates on Verbatim
-    <https://localize.mozilla.org/templates/mdn/>`_
-
-#.  Click 'Update all from VCS'
-
-#.  ssh to sm-verbatim01 (See `L10n:Verbtim
-    <https://wiki.mozilla.org/L10n:Verbatim>`_ on wiki.mozilla.org)
-
-#.  Update all locales against templates::
-
-        sudo su verbatim
-        cd /data/www/localize.mozilla.org/verbatim/pootle_env/Pootle
-        POOTLE_SETTINGS=localsettings.py python2.6 manage.py
-        update_against_templates --project=mdn -v 2
-
 Adding a new Locale
 ===================
-
-#.  Follow `the "Add locale" instructions on wiki.mozilla.org
-    <https://wiki.mozilla.org/L10n:Verbatim#Adding_a_locale_to_a_Verbatim_project>`_.
 
 #.  Update `languages.json` file via product details::
 

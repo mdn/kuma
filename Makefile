@@ -43,5 +43,11 @@ in_vagrant:
 on_host:
 	@if [ ${IN_VAGRANT} -eq 1 ]; then echo "*** Run on host ***"; exit 1; fi
 
+locale:
+	@mkdir -p locale/$(LOCALE)/LC_MESSAGES && \
+		for pot in locale/templates/LC_MESSAGES/* ; do \
+			msginit --no-translator -l $(LOCALE) -i $$pot -o locale/$(LOCALE)/LC_MESSAGES/`basename -s .pot $$pot`.po ; \
+		done
+
 # Those tasks don't have file targets
-.PHONY: django-tests performance-tests browser-tests clean in_vagrant on_host coverage
+.PHONY: django-tests performance-tests browser-tests clean in_vagrant on_host coverage locale
