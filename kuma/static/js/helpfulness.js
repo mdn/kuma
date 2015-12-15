@@ -61,7 +61,7 @@
             {val: 'Needs-More-Info', text: gettext('Add more details')},
             {val: 'Needs-Correction', text: gettext('Fix incorrect information')},
             {val: 'Needs-Examples', text: gettext('Add or improve examples')},
-            {val: 'SEO', text: gettext('My search should have lead to a different article.')},
+            {val: 'SEO', text: gettext('My search should have led to a different article')},
             {val: 'Other', text: gettext('Something else')}
         ]
         var $select = $('<select />').attr({
