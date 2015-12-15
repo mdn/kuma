@@ -37,3 +37,5 @@
     - bobbyrenwick.pip
     - nodesource.node
     - kuma
+  environment:
+    PYTHONDONTWRITEBYTECODE: 1
