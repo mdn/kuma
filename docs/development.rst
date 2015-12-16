@@ -252,9 +252,8 @@ assets locally, follow these steps:
 #. Run ``compile-stylesheets``
 #. Run ``./manage.py compilejsi18n``
 #. Run ``./manage.py collectstatic``
-#. Edit the file /etc/apache2/sites-enabled/kuma.conf and uncomment any lines
-   pertaining to hosting static files
-#. Run ``sudo service apache2 restart``
+#. Stop ``foreman`` if it's already running
+#. Run ``foreman start``
 
 
 Mozilla Product Details

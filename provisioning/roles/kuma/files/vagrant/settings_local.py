@@ -108,3 +108,7 @@ if SENTRY_DSN:
     )
 
 SOCIALACCOUNT_PROVIDERS['persona']['AUDIENCE'] = 'https://developer-local.allizom.org'
+
+# Don't cache non-versioned static files in DEBUG mode
+if DEBUG:
+    WHITENOISE_MAX_AGE = 0

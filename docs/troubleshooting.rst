@@ -31,7 +31,7 @@ It is usually easier to see and debug problems if you run MDN processes
 individually, instead of running them via ``foreman``. You can run each process
 exactly as it is listed in ``Procfile``
 
--  ``runserver`` - runs the Django development server
+-  ``gunicorn`` - runs the Django development server
 
 -  ``celery worker`` - runs the celery worker process for tasks
 

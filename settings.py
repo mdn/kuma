@@ -556,6 +556,9 @@ PUENTE = {
 STATICI18N_ROOT = 'build/locale'
 STATICI18N_DOMAIN = 'javascript'
 
+# Cache non-versioned static files for one week
+WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
+
 PIPELINE_DISABLE_WRAPPER = True
 
 PIPELINE_CSS_COMPRESSOR = 'kuma.core.pipeline.cleancss.CleanCSSCompressor'
