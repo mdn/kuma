@@ -312,7 +312,6 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.create'))
         doc = pq(response.content)
         eq_("Name Your Article", doc('input#id_title').attr('placeholder'))
-        eq_("10", doc('input#id_category').attr('value'))
 
     @mock.patch.object(Site.objects, 'get_current')
     def test_new_document_POST(self, get_current):
@@ -328,7 +327,6 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         eq_([('http://testserver/en-US/docs/%s' % d.slug, 302)],
             response.redirect_chain)
         eq_(settings.WIKI_DEFAULT_LANGUAGE, d.locale)
-        eq_(data['category'], d.category)
         eq_(tags, sorted(t.name for t in d.tags.all()))
         r = d.revisions.all()[0]
         eq_(data['keywords'], r.keywords)
@@ -374,34 +372,6 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         ul = doc('article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Please provide content.', ul('li').text())
-
-    def test_new_document_POST_invalid_category(self):
-        """Try to create a new document with an invalid category value."""
-        self.client.login(username='admin', password='testpass')
-        data = new_document_data(['tag1', 'tag2'])
-        data['category'] = 963
-        response = self.client.post(reverse('wiki.create'), data,
-                                    follow=True)
-        doc = pq(response.content)
-        ul = doc('article > ul.errorlist')
-        eq_(1, len(ul))
-        assert ('Select a valid choice. 963 is not one of the available '
-                'choices.' in ul('li').text())
-
-    def test_new_document_missing_category(self):
-        """Test the DocumentForm's category validation.
-
-        Submit the form without a category set, and it should complain, even
-        though it's not a strictly required field (because it cannot be set for
-        translations).
-
-        """
-        self.client.login(username='admin', password='testpass')
-        data = new_document_data()
-        del data['category']
-        response = self.client.post(reverse('wiki.create'), data,
-                                    follow=True)
-        self.assertContains(response, 'Please choose a category.')
 
     def test_slug_collision_validation(self):
         """Trying to create document with existing locale/slug should
@@ -657,7 +627,6 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
 
 
 class DocumentListTests(UserTestCase, WikiTestCase):
-    """Tests for the All and Category template"""
     localizing_client = True
 
     def setUp(self):
@@ -668,15 +637,6 @@ class DocumentListTests(UserTestCase, WikiTestCase):
 
         # Create a document in different locale to make sure it doesn't show
         _create_document(parent=self.doc, locale='es')
-
-    def test_category_list(self):
-        """Verify the category documents list view."""
-        response = self.client.get(reverse('wiki.category',
-                                   args=[self.doc.category]))
-        doc = pq(response.content)
-        cat = self.doc.category
-        eq_(Document.objects.filter(category=cat, locale=self.locale).count(),
-            len(doc('#document-list ul.document-list li')))
 
     def test_all_list(self):
         """Verify the all documents list view."""
@@ -1188,8 +1148,7 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',
-                 category=10, locale=locale, parent=parent,
-                 is_localizable=True)
+                 locale=locale, parent=parent, is_localizable=True)
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
                  content='<div>Lorem Ipsum</div>', creator_id=8,

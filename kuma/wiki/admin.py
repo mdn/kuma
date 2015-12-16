@@ -294,7 +294,7 @@ class DocumentAdmin(admin.ModelAdmin):
                     revision_links,)
     list_display_links = ('id', 'slug',)
     list_filter = ('defer_rendering', 'is_template', 'is_localizable',
-                   'category', 'locale', 'deleted')
+                   'locale', 'deleted')
     raw_id_fields = ('parent', 'parent_topic',)
     readonly_fields = ('id', 'current_revision')
     search_fields = ('title', 'slug', 'html', 'current_revision__tags')

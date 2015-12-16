@@ -3,7 +3,6 @@
         "pk": 8, 
         "model": "wiki.document", 
         "fields": {
-            "category": 10, 
             "parent": null, 
             "title": "Template:test", 
             "locale": "en-US", 
@@ -20,7 +19,6 @@
         "pk": 9, 
         "model": "wiki.document", 
         "fields": {
-            "category": 10, 
             "parent": null, 
             "title": "test-template", 
             "locale": "en-US", 

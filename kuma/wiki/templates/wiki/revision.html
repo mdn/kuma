@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% set title = _('Revision %(id)s | %(title)s | %(category)s', id=revision.id, title=document.title, category=document.get_category_display()) %}
+{% set title = _('Revision %(id)s | %(title)s', id=revision.id, title=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 {% set classes = 'document' %}

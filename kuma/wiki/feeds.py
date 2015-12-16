@@ -147,9 +147,8 @@ class DocumentsRecentFeed(DocumentsFeed):
     title = _('MDN recent document changes')
     subtitle = _('Recent changes to MDN documents')
 
-    def get_object(self, request, format, tag=None, category=None):
+    def get_object(self, request, format, tag=None):
         super(DocumentsRecentFeed, self).get_object(request, format)
-        self.category = category
         self.tag = tag
         if tag:
             self.title = _('MDN recent changes to documents tagged %s' % tag)
@@ -164,7 +163,6 @@ class DocumentsRecentFeed(DocumentsFeed):
         # to speed up retrieval (max MAX_FEED_ITEMS size)
         item_pks = (Document.objects
                             .filter_for_list(tag_name=self.tag,
-                                             category=self.category,
                                              locale=self.locale)
                             .filter(current_revision__isnull=False)
                             .order_by('-current_revision__created')

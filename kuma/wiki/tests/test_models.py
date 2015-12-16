@@ -179,35 +179,6 @@ class DocumentTests(UserTestCase):
         _objects_eq(getattr(parent, direct_attr), [e1, e2])
         _objects_eq(getattr(child, direct_attr), [])
 
-    def test_category_inheritance(self):
-        """A document's categories must always be those of its parent."""
-        some_category = Document.CATEGORIES[1][0]
-        other_category = Document.CATEGORIES[0][0]
-
-        # Notice if somebody ever changes the default on the category field,
-        # which would invalidate our test:
-        assert some_category != document().category
-
-        parent = document(category=some_category)
-        parent.save()
-        child = document(parent=parent, locale='de')
-        child.save()
-
-        # Make sure child sees stuff set on parent:
-        eq_(some_category, child.category)
-
-        # Child'd category should revert to parent's on save:
-        child.category = other_category
-        child.save()
-        eq_(some_category, child.category)
-
-        # Changing the parent category should change the child's:
-        parent.category = other_category
-
-        parent.save()
-        eq_(other_category,
-            parent.translations.get(locale=child.locale).category)
-
     def _test_int_sets_and_descriptors(self, enum_class, attr):
         """Test our lightweight int sets & descriptors' getting and setting."""
         d = document()
@@ -248,27 +219,6 @@ class DocumentTests(UserTestCase):
         d = document(is_localizable=True, locale='de')
         d.save()
         assert not d.is_localizable
-
-    def test_validate_category_on_save(self):
-        """Make sure invalid categories can't be saved.
-
-        Invalid categories cause errors when viewing documents.
-
-        """
-        d = document(category=9999)
-        self.assertRaises(ValidationError, d.save)
-
-    def test_new_doc_does_not_update_categories(self):
-        """Make sure that creating a new document doesn't change the
-        category of all the other documents."""
-        d1 = document(category=10)
-        d1.save()
-        assert d1.pk
-        d2 = document(category=00)
-        assert not d2.pk
-        d2._clean_category()
-        d1prime = Document.objects.get(pk=d1.pk)
-        eq_(10, d1prime.category)
 
     @attr('doc_translations')
     def test_other_translations(self):

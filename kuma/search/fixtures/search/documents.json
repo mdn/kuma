@@ -3,7 +3,6 @@
         "pk": 1,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "title": "an article title",
             "locale": "en-US",
             "current_revision": 21,
@@ -16,7 +15,6 @@
         "pk": 2,
         "model": "wiki.document",
         "fields": {
-            "category": 30,
             "title": "japanese article",
             "locale": "ja",
             "current_revision": 14,
@@ -29,7 +27,6 @@
         "pk": 3,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "parent": 1,
             "title": "spanish article",
             "locale": "es",
@@ -43,7 +40,6 @@
         "pk": 4,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "parent": 1,
             "title": "le title",
             "locale": "fr",
@@ -57,7 +53,6 @@
         "pk": 5,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "parent": null,
             "title": "lorem ipsum",
             "locale": "en-US",
@@ -71,7 +66,6 @@
         "pk": 6,
         "model": "wiki.document",
         "fields": {
-            "category": 11,
             "parent": null,
             "title": "redirect lorem ipsum",
             "locale": "en-US",
