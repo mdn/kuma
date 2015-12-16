@@ -1,8 +1,6 @@
 {% extends "wiki/base.html" %}
 {% set counter = ngettext('Found %(num)s document.', 'Found %(num)s documents', count) %}
-{% if category %}
-  {% set title = category %}
-{% elif tag %}
+{% if tag %}
   {% set title = _('Articles tagged: %(tag)s', tag=tag) %}
 {% elif is_templates %}
   {% set title = _('All templates') %}
@@ -20,10 +18,7 @@
 {% set crumbs = [(None, title)] %}
 
 {% block extrahead %}
-  {% if category %}
-      <link rel="alternate" type="application/atom+xml" title="{{title}}"
-          href="{{ url('wiki.feeds.recent_documents_category', format='atom', category=category) }}" />
-  {% elif tag %}
+  {% if tag %}
       <link rel="alternate" type="application/atom+xml" title="{{title}}"
           href="{{ url('wiki.feeds.recent_documents', format='atom', tag=tag) }}" />
   {% else %}

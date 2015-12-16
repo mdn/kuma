@@ -151,9 +151,6 @@ urlpatterns = [
     url(r'^/localization-tag/?',
         views.list.with_localization_tag,
         name='wiki.list_with_localization_tags'),
-    url(r'^/category/(?P<category>\d+)$',
-        views.list.documents,
-        name='wiki.category'),
 
     # Feeds
     url(r'^/feeds/(?P<format>[^/]+)/all/?',
@@ -165,9 +162,6 @@ urlpatterns = [
     url(r'^/feeds/(?P<format>[^/]+)/tag/(?P<tag>[^/]+)',
         feeds.DocumentsRecentFeed(),
         name="wiki.feeds.recent_documents"),
-    url(r'^/feeds/(?P<format>[^/]+)/category/(?P<category>[^/]+)',
-        feeds.DocumentsRecentFeed(),
-        name="wiki.feeds.recent_documents_category"),
     url(r'^/feeds/(?P<format>[^/]+)/needs-review/(?P<tag>[^/]+)',
         feeds.DocumentsReviewFeed(),
         name="wiki.feeds.list_review_tag"),

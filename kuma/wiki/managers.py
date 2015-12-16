@@ -61,9 +61,8 @@ class BaseDocumentManager(models.Manager):
         # assumed everyone is allowed.
         return True
 
-    def filter_for_list(self, locale=None, category=None, tag=None,
-                        tag_name=None, errors=None, noparent=None,
-                        toplevel=None):
+    def filter_for_list(self, locale=None, tag=None, tag_name=None,
+                        errors=None, noparent=None, toplevel=None):
         docs = (self.filter(is_template=False, is_redirect=False)
                     .exclude(slug__startswith='User:')
                     .exclude(slug__startswith='Talk:')
@@ -73,11 +72,6 @@ class BaseDocumentManager(models.Manager):
                     .order_by('slug'))
         if locale:
             docs = docs.filter(locale=locale)
-        if category:
-            try:
-                docs = docs.filter(category=int(category))
-            except ValueError:
-                pass
         if tag:
             docs = docs.filter(tags__in=[tag])
         if tag_name:
@@ -152,9 +146,9 @@ class BaseDocumentManager(models.Manager):
             # fields from Document and Revision models and knocking out what we
             # don't want? Serializer doesn't support exclusion list directly.
             'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
-            'parent', 'parent_topic', 'category', 'document', 'is_redirect',
-            'summary', 'content', 'comment',
-            'keywords', 'tags', 'toc_depth', 'is_approved',
+            'parent', 'parent_topic', 'document', 'is_redirect', 'summary',
+            'content', 'comment', 'keywords', 'tags', 'toc_depth',
+            'is_approved',
             'creator',  # HACK: Replaced on import, but deserialize needs it
             'is_mindtouch_migration',
         )

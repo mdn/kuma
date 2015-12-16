@@ -15,18 +15,10 @@ from ..queries import MultiQuerySet
 
 @block_user_agents
 @require_GET
-def documents(request, category=None, tag=None):
+def documents(request, tag=None):
     """
-    List wiki documents depending on the optionally given category or tag.
+    List wiki documents depending on the optionally given tag.
     """
-    category_id = None
-    if category:
-        try:
-            category_id = int(category)
-            category = unicode(dict(Document.CATEGORIES)[category_id])
-        except (KeyError, ValueError):
-            raise Http404
-
     # Taggit offers a slug - but use name here, because the slugification
     # stinks and is hard to customize.
     tag_obj = None
@@ -37,13 +29,11 @@ def documents(request, category=None, tag=None):
                 tag_obj = matching_tag
                 break
     docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
-                                            category=category_id,
                                             tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
         'count': docs.count(),
-        'category': category,
         'tag': tag,
     }
     return render(request, 'wiki/list/documents.html', context)

@@ -173,10 +173,6 @@ class DocumentAttachment(models.Model):
 @register_live_index
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
-    CATEGORIES = (
-        (00, _(u'Uncategorized')),
-        (10, _(u'Reference')),
-    )
     TOC_FILTERS = {
         1: SectionTOCFilter,
         2: H2TOCFilter,
@@ -259,10 +255,6 @@ class Document(NotificationsMixin, models.Model):
 
     # Time after which this document needs re-rendering
     render_expires = models.DateTimeField(blank=True, null=True, db_index=True)
-
-    # A document's category much always be that of its parent. If it has no
-    # parent, it can do what it wants. This invariant is enforced in save().
-    category = models.IntegerField(choices=CATEGORIES, db_index=True)
 
     # Whether this page is deleted.
     deleted = models.BooleanField(default=False, db_index=True)
@@ -724,7 +716,6 @@ class Document(NotificationsMixin, models.Model):
     def clean(self):
         """Translations can't be localizable."""
         self._clean_is_localizable()
-        self._clean_category()
 
     def _clean_is_localizable(self):
         """is_localizable == allowed to have translations. Make sure that isn't
@@ -753,21 +744,6 @@ class Document(NotificationsMixin, models.Model):
             raise ValidationError('"%s": document has %s translations but is '
                                   'not localizable.' %
                                   (unicode(self), self.translations.count()))
-
-    def _clean_category(self):
-        """Make sure a doc's category is the same as its parent's."""
-        parent = self.parent
-        if parent:
-            self.category = parent.category
-        elif self.category not in (id for id, name in self.CATEGORIES):
-            # All we really need to do here is make sure category != '' (which
-            # is what it is when it's missing from the DocumentForm). The extra
-            # validation is just a nicety.
-            raise ValidationError(ugettext('Please choose a category.'))
-        else:  # An article cannot have both a parent and children.
-            # Make my children the same as me:
-            if self.id:
-                self.translations.all().update(category=self.category)
 
     def _attr_for_redirect(self, attr, template):
         """Return the slug or title for a new redirect.
@@ -822,7 +798,7 @@ class Document(NotificationsMixin, models.Model):
         revise this document"""
         curr_rev = self.current_revision
         new_rev = Revision(creator=user, document=self, content=self.html)
-        for n in ('title', 'slug', 'category', 'render_max_age'):
+        for n in ('title', 'slug', 'render_max_age'):
             setattr(new_rev, n, getattr(self, n))
         if curr_rev:
             new_rev.toc_depth = curr_rev.toc_depth
@@ -901,11 +877,6 @@ class Document(NotificationsMixin, models.Model):
         # These are too important to leave to a (possibly omitted) is_valid
         # call:
         self._clean_is_localizable()
-        # Everything is validated before save() is called, so the only thing
-        # that could cause save() to exit prematurely would be an exception,
-        # which would cause a rollback, which would negate any category changes
-        # we make here, so don't worry:
-        self._clean_category()
 
         if not self.parent_topic and self.parent:
             # If this is a translation without a topic parent, try to get one.
@@ -966,7 +937,6 @@ class Document(NotificationsMixin, models.Model):
         redirect_doc = Document(locale=self.locale,
                                 title=self.title,
                                 slug=self.slug,
-                                category=self.category,
                                 is_localizable=False)
         content = REDIRECT_CONTENT % {
             'href': reverse('wiki.document',

@@ -92,15 +92,6 @@ class DocumentForm(forms.ModelForm):
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
 
-    category = forms.ChoiceField(choices=Document.CATEGORIES,
-                                 initial=10,
-                                 # Required for non-translations, which is
-                                 # enforced in Document.clean().
-                                 required=False,
-                                 label=_(u'Category:'),
-                                 help_text=_(u'Type of article'),
-                                 widget=forms.HiddenInput())
-
     parent_topic = forms.ModelChoiceField(queryset=Document.objects.all(),
                                           required=False,
                                           label=_(u'Parent:'))
@@ -109,7 +100,7 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ('title', 'slug', 'category', 'locale')
+        fields = ('title', 'slug', 'locale')
 
     def __init__(self, *args, **kwargs):
         # when creating a new document with a parent, this will be set

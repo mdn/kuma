@@ -765,8 +765,7 @@ def _document_PUT(request, document_slug, document_locale):
         # Create and save the new document; we'll revise it immediately.
         doc = Document(slug=document_slug, locale=document_locale,
                        title=data.get('title', document_slug),
-                       parent_topic=parent_doc,
-                       category=Document.CATEGORIES[0][0])
+                       parent_topic=parent_doc)
         doc.save()
         section_id = None  # No section editing for new document!
         is_new = True
