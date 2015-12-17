@@ -26,6 +26,7 @@ Switches
 * ``render_stale_document_async`` - render stale documents in a background
   sub-task
 * ``spam_checks_enabled`` - toggle spam checks site wide
+* ``spam_submissions_enabled`` - toggle Akismet spam/spam submission ability
 
 Flags
 -----

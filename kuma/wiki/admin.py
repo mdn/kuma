@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.utils.html import escape
 
 from kuma.core.admin import DisabledDeletionMixin
 from kuma.core.decorators import login_required, permission_required
@@ -366,7 +367,7 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
         admin_link = reverse('admin:wiki_revision_change',
                              args=[obj.revision.id])
         return ('<a target="_blank" href="%s">%s</a>' %
-                (admin_link, obj.revision))
+                (admin_link, escape(obj.revision)))
     revision_with_link.allow_tags = True
     revision_with_link.short_description = "Revision"
 

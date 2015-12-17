@@ -45,6 +45,7 @@
                         <a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a><br>
                         {% set revision_ip = revision.revisionip_set.first() %}
                         {% if show_ips and revision_ip %}
+                        {% set ban_ip_url = url('admin:core_ipban_add')|urlparams(ip=revision_ip.ip) %}
                         <dl class="revision_ip compact">
                             <dt>{{ _('IP:') }}</dt>
                             <dd>{{ revision_ip.ip }} <a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a></dd>
@@ -56,7 +57,6 @@
                             <dt>{{ _('Referrer:') }}</dt>
                             <dd>{{ revision_ip.referrer }}</dd>
                             {% endif %}
-                            {% set ban_ip_url = url('admin:core_ipban_add')|urlparams(ip=revision_ip.ip) %}
                         </dl>
                         {% endif %}
                         {% if request.user.is_superuser and revision.creator.active_ban %}
