@@ -7,7 +7,7 @@
                 <th class="dashboard-revision">Revision</th>
                 <th class="dashboard-title">Title</th>
                 <th class="dashboard-comment">Comment</th>
-                <th class="dashboard-author">Author{% if show_ips %} <button id="show_ips_btn">Toggle IPs</button>{% endif %}</th>
+                <th class="dashboard-author">Author{% if show_ips %} <button id="show_ips_btn">{{ _('Toggle IPs') }}</button>{% endif %}</th>
                 {% if show_spam_submission %}
                 <th class="dashboard-spam">Akismet</th>
                 {% endif %}
@@ -42,12 +42,12 @@
                         {{ format_comment(revision) }}
                     </td>
                     <td class="dashboard-author">
-                        <a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a>
+                        <a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a><br>
                         {% set revision_ip = revision.revisionip_set.first() %}
                         {% if show_ips and revision_ip %}
                         <dl class="revision_ip compact">
                             <dt>{{ _('IP:') }}</dt>
-                            <dd>{{ revision_ip.ip }}</dd>
+                            <dd>{{ revision_ip.ip }} <a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a></dd>
                             {% if revision_ip.user_agent %}
                             <dt>{{ _('User agent:') }}</dt>
                             <dd>{{ revision_ip.user_agent }}</dd>
@@ -58,7 +58,6 @@
                             {% endif %}
                             {% set ban_ip_url = url('admin:core_ipban_add')|urlparams(ip=revision_ip.ip) %}
                         </dl>
-                        <a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a>
                         {% endif %}
                         {% if request.user.is_superuser and revision.creator.active_ban %}
                             <div class="banned">
@@ -71,23 +70,31 @@
                     {% if show_spam_submission %}
                     <td class="dashboard-spam">
                         {% set submissions = revision.akismet_submissions.all() %}
+
                         {% if submissions.count() > 0 %}
-                        <dl class="compact">
-                            <dt>{{ _('Sent as') }}</dt>
-                            {% for submission in submissions %}
-                            <dd>
-                                {{ _('%(submission_type)s at %(sent_date)s by %(user)s',
-                                     submission_type=submission.type,
-                                     sent_date=datetimeformat(submission.sent, format='datetime'),
-                                     user=user_display(submission.sender)) }}
-                            </dd>
-                            {% endfor %}
-                        </dl>
+                            <dl>
+                                {% for submission in submissions %}
+                                {% set submission_class = submission.type %}
+                                <dt class="submission-{{ submission_class }}">{{ _('Submitted as %(submission_type)s',
+                                         submission_type=submission.type) }}</dt>
+                                <dd>
+                                    {{ _('%(sent_date)s by %(user)s',
+                                         sent_date=datetimeformat(submission.sent, format='datetime'),
+                                         user=user_display(submission.sender)) }}
+                                </dd>
+                                {% endfor %}
+                            </dl>
+                            {% set re_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id) %}
+                            <a class="button" href="{{ re_submission_url }}" target="_blank">{{ _('Resubmit') }}</a>
+                        {% else %}
+                            {{ _('Submit as:') }}<br>
+                            {% set spam_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id, type='spam') %}
+                            {% set ham_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id, type='ham') %}
+
+                            <a class="button" href="{{ spam_submission_url }}" target="_blank">{{ _('spam') }}</a>
+                            <a class="button" href="{{ ham_submission_url }}" target="_blank">{{ _('ham') }}</a>
+
                         {% endif %}
-                        {% set spam_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id, type='spam') %}
-                        {% set ham_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id, type='ham') %}
-                        {{ _('Submit as') }} <a class="button" href="{{ spam_submission_url }}" target="_blank">{{ _('spam') }}</a>
-                        <a class="button" href="{{ ham_submission_url }}" target="_blank">{{ _('ham') }}</a>
                     </td>
                     {% endif %}
                 </tr>

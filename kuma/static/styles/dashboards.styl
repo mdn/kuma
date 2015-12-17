@@ -9,6 +9,7 @@
 /* New revision dashboard styles */
 .dashboard-table {
     width: 100%;
+    border-collapse: collapse;
 
     thead tr {
         background: #3a3a3a;
@@ -17,17 +18,13 @@
     }
 
     tbody tr {
-        border-bottom: 1px solid #ccc;
         cursor: pointer;
+        border-top: 1px solid rgba-fallback(rgba($text-color, 0.4));
 
         &:hover {
             background: $light-background-color;
-        }
 
-        &:nth-child(even) {
-            background: #f7f7f7;
-
-            &:hover {
+            & + .dashboard-detail {
                 background: $light-background-color;
             }
         }
@@ -52,16 +49,26 @@
     }
 
     /* Select only the outer table cells. */
-    > thead th, .dashboard-row > td {
+    > thead th,
+    .dashboard-row > td {
         @extend $column-2;
         padding: 6px;
-        display: inline-block;
         vertical-align: text-top;
     }
 
-    .dashboard-detail {
-        display: none;
-        padding: 0 $grid-spacing;
+    .dashboard-title,
+    .dashboard-comment,
+    .dashboard-author {
+        @extend $column-3;
+    }
+
+    .dashboard-spam {
+        @extend $column-1;
+        word-break: break-all;
+    }
+
+    .dashboard-title {
+        word-break: break-all;
     }
 
     .dashboard-slug {
@@ -71,10 +78,30 @@
         display: block;
     }
 
+    .dashboard-detail {
+        border-top: 0;
+    }
+
+    .dashboard-detail-details {
+        display: none;
+        padding: 0 6px;
+    }
+
+    .submission-spam {
+        font-weight: bold;
+        color: $negative;
+    }
+
+    .submission-ham {
+        font-weight: bold;
+        color: $positive;
+    }
+
     #page-buttons {
         li {
             display: inline-block;
-            margin-right: $content-horizontal-spacing;
+            bidi-style(margin-right, $content-horizontal-spacing, margin-left, 0);
+            margin-top: $content-vertical-spacing;
         }
     }
 }
