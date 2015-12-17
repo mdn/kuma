@@ -111,6 +111,8 @@ Install and run everything
 
 .. _the badge: https://badges.mozilla.org/badges/badge/Installed-and-ran-Kuma
 
+.. _create a user:
+
 Create an admin user
 ====================
 
@@ -171,16 +173,16 @@ To enable KumaScript:
 #. Visit the `constance config admin panel`_
 #. Change ``KUMASCRIPT_TIMEOUT`` to 600
 #. Click "Save" at the bottom
+#. Import the `KumaScript auto-loaded modules`_::
 
-KumaScript is now enabled. You will also need to import the `KumaScript auto-loaded modules`_.
-You can simply copy & paste them from the production site to your local site at
-the same slugs. Or you can get a .json file to load in your local django admin
-interface as described in `this bugzilla comment`_.
+    vagrant ssh
+    python manage.py import_kumascript_modules
+
+.. note:: You must `create a user`_ to import kumascript modules.
 
 .. _KumaScript: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/KumaScript
 .. _constance config admin panel: https://developer-local.allizom.org/admin/constance/config/
 .. _KumaScript auto-loaded modules: https://developer.mozilla.org/en-US/docs/MDN/Kuma/Introduction_to_KumaScript#Auto-loaded_modules
-.. _this comment: https://github.com/mozilla/kuma/issues/2518#issuecomment-53665362
 
 .. _GitHub Auth:
 

@@ -173,7 +173,7 @@ def load_documents(request):
         file_data = None
         form = ImportForm(request.POST, request.FILES)
         if form.is_valid():
-            uploaded_file = request.FILES['file']
+            uploaded_file = request.FILES['uploads']
             if uploaded_file.multiple_chunks():
                 file_data = open(uploaded_file.temporary_file_path(), 'r')
             else:
