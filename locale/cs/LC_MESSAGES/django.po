@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-11 19:46+0000\n"
+"PO-Revision-Date: 2015-12-17 16:05+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -379,57 +379,57 @@ msgstr ""
 #, python-format
 msgid "%(number)d year ago"
 msgid_plural "%(number)d years ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "před %(number)d rokem"
+msgstr[1] "před %(number)d lety"
+msgstr[2] "před %(number)d lety"
 
 #: kuma/core/helpers.py:111 kuma/demos/helpers.py:307
 #, python-format
 msgid "%(number)d month ago"
 msgid_plural "%(number)d months ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "před %(number)d měsícem"
+msgstr[1] "před %(number)d měsíci"
+msgstr[2] "před %(number)d měsíci"
 
 #: kuma/core/helpers.py:113 kuma/demos/helpers.py:309
 #, python-format
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "před %(number)d týdnem"
+msgstr[1] "před %(number)d týdny"
+msgstr[2] "před %(number)d týdny"
 
 #: kuma/core/helpers.py:115 kuma/demos/helpers.py:311
 #, python-format
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "před %(number)d dnem"
+msgstr[1] "před %(number)d dny"
+msgstr[2] "před %(number)d dny"
 
 #: kuma/core/helpers.py:117 kuma/demos/helpers.py:313
 #, python-format
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "před %(number)d hodinou"
+msgstr[1] "před %(number)d hodinami"
+msgstr[2] "před %(number)d hodinami"
 
 #: kuma/core/helpers.py:119 kuma/demos/helpers.py:315
 #, python-format
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "před %(number)d minutou"
+msgstr[1] "před %(number)d minutami"
+msgstr[2] "před %(number)d minutami"
 
 #: kuma/core/helpers.py:121 kuma/demos/helpers.py:317
 #, python-format
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "před %(number)d sekundou"
+msgstr[1] "před %(number)d sekundami"
+msgstr[2] "před %(number)d sekundami"
 
 #: kuma/core/helpers.py:144
 msgid "Yes"
@@ -470,7 +470,7 @@ msgstr "Web"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Moz Hacks"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
@@ -729,7 +729,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:36
 msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
-msgstr ""
+msgstr "Dev Derby Challenge Červen 2011 - CSS3 animace"
 
 #: kuma/demos/__init__.py:37
 msgid "CSS3 Animations"
@@ -759,7 +759,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:43
 msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
-msgstr ""
+msgstr "Dev Derby Challenge Červenec 2011 - HTML5 <video>"
 
 #: kuma/demos/__init__.py:44
 msgid "HTML5 <video>"
@@ -777,7 +777,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:50
 msgid "August 2011 Dev Derby Challenge - History API"
-msgstr ""
+msgstr "Dev Derby Challenge Srpen 2011 - History API"
 
 #: kuma/demos/__init__.py:51
 msgid "History API"
@@ -795,7 +795,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:57
 msgid "September 2011 Dev Derby Challenge - Geolocation"
-msgstr ""
+msgstr "Dev Derby Challenge Září 2011 - Geolokace"
 
 #: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
 msgid "Geolocation"
@@ -834,7 +834,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:71
 msgid "November 2011 Dev Derby Challenge - Canvas"
-msgstr ""
+msgstr "Dev Derby Challenge Listopad 2011 - Canvas"
 
 #: kuma/demos/__init__.py:73
 msgid "November 2011"
@@ -908,7 +908,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:100
 msgid "CSS 3D Transforms"
-msgstr ""
+msgstr "CSS 3D transformace"
 
 #: kuma/demos/__init__.py:101
 msgid "March 2012"
@@ -919,10 +919,12 @@ msgid ""
 "CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS "
 "to be transformed in three-dimensional space."
 msgstr ""
+"CSS 3D transformace rozšiřují CSS transformace tím, že dovolují "
+"transformovat elementy vykreslené CSS v trojrozměrném prostoru."
 
 #: kuma/demos/__init__.py:106
 msgid "April 2012 Dev Derby Challenge - Audio"
-msgstr ""
+msgstr "Dev Derby Challenge Duben 2012 - Audio"
 
 #: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
 msgid "Audio"
