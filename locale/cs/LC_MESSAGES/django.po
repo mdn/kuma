@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-04 05:22-0800\n"
-"PO-Revision-Date: 2015-12-17 16:05+0000\n"
+"PO-Revision-Date: 2015-12-17 16:19+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -815,7 +815,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:64
 msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
-msgstr "Říjen 2011 Dev Derby Challenge - CSS Media Queries"
+msgstr "Dev Derby Challenge Říjen 2011 - CSS Media Queries"
 
 #: kuma/demos/__init__.py:65
 msgid "CSS Media Queries"
@@ -850,7 +850,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:78
 msgid "December 2011 Dev Derby Challenge - IndexedDB"
-msgstr ""
+msgstr "Dev Derby Challenge Prosinec 2011 - IndexedDB"
 
 #: kuma/demos/__init__.py:79 kuma/demos/__init__.py:303
 msgid "IndexedDB"
@@ -868,7 +868,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:85
 msgid "January 2012 Dev Derby Challenge - Orientation"
-msgstr ""
+msgstr "Dev Derby Challenge Leden 2012 - Orientace"
 
 #: kuma/demos/__init__.py:86
 msgid "Orientation"
@@ -886,7 +886,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:92
 msgid "February 2012 Dev Derby Challenge - Touch Events"
-msgstr ""
+msgstr "Dev Derby Challenge Únor 2012 - Dotykové události"
 
 #: kuma/demos/__init__.py:93
 msgid "Touch Events"
@@ -904,7 +904,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:99
 msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
-msgstr ""
+msgstr "Dev Derby Challenge Březen 2012 - CSS 3D transformace"
 
 #: kuma/demos/__init__.py:100
 msgid "CSS 3D Transforms"
@@ -942,7 +942,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:113
 msgid "May 2012 Dev Derby Challenge - WebSockets API"
-msgstr ""
+msgstr "Dev Derby Challenge Květen 2012 - WebSockets API"
 
 #: kuma/demos/__init__.py:114
 msgid "WebSockets API"
@@ -961,7 +961,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:120
 msgid "June 2012 Dev Derby Challenge - WebGL"
-msgstr ""
+msgstr "Dev Derby Challenge Červen 2012 - WebGL"
 
 #: kuma/demos/__init__.py:122
 msgid "June 2012"
@@ -976,7 +976,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:127
 msgid "July 2012 Dev Derby Challenge - No JavaScript"
-msgstr ""
+msgstr "Dev Derby Challenge Červenec 2012 - Žádný JavaScript"
 
 #: kuma/demos/__init__.py:128
 msgid "No JavaScript"
@@ -996,7 +996,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:134
 msgid "August 2012 Dev Derby Challenge - Camera API"
-msgstr ""
+msgstr "Dev Derby Challenge Srpen 2012 - API kamery"
 
 #: kuma/demos/__init__.py:135
 msgid "Camera API"
@@ -1015,7 +1015,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:141
 msgid "September 2012 Dev Derby Challenge - Geolocation II"
-msgstr ""
+msgstr "Dev Derby Challenge Září 2012 - Geolokace II"
 
 #: kuma/demos/__init__.py:142
 msgid "Geolocation II"
@@ -1027,7 +1027,7 @@ msgstr "Září 2012"
 
 #: kuma/demos/__init__.py:148
 msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
-msgstr ""
+msgstr "Dev Derby Challenge Říjen 2012 - CSS Media Queries II"
 
 #: kuma/demos/__init__.py:149
 msgid "CSS Media Queries II"
@@ -1046,7 +1046,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:155
 msgid "November 2012 Dev Derby Challenge - Fullscreen API"
-msgstr ""
+msgstr "Dev Derby Challenge Listopad 2012 - Fullscreen API"
 
 #: kuma/demos/__init__.py:156
 msgid "Fullscreen API"
@@ -1065,7 +1065,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:162
 msgid "December 2012 Dev Derby Challenge - Offline"
-msgstr ""
+msgstr "Dev Derby Challenge Prosinec 2012 - Offline"
 
 #: kuma/demos/__init__.py:163
 msgid "Offline"
@@ -1085,7 +1085,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:169
 msgid "January 2013 Dev Derby Challenge - Drag and Drop"
-msgstr ""
+msgstr "Dev Derby Challenge Leden 2013 - Táhni a pusť"
 
 #: kuma/demos/__init__.py:170 kuma/demos/__init__.py:311
 msgid "Drag and Drop"
@@ -1103,7 +1103,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:176
 msgid "February 2013 Dev Derby Challenge - Multi-touch"
-msgstr ""
+msgstr "Dev Derby Challenge Únor 2013 - Multi-touch"
 
 #: kuma/demos/__init__.py:177 kuma/demos/__init__.py:383
 msgid "Multi-touch"
@@ -1138,7 +1138,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:190
 msgid "April 2013 Dev Derby Challenge - Web Workers"
-msgstr ""
+msgstr "Dev Derby Challenge Duben 2013 - Web Workers"
 
 #: kuma/demos/__init__.py:191 kuma/demos/__init__.py:367
 msgid "Web Workers"
@@ -1157,7 +1157,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:197
 msgid "May 2013 Dev Derby Challenge - getUserMedia"
-msgstr ""
+msgstr "Dev Derby Challenge Květen 2013 - getUserMedia"
 
 #: kuma/demos/__init__.py:198
 msgid "getUserMedia"
@@ -1184,7 +1184,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:206
 msgid "June 2013 Dev Derby Challenge - WebGL II"
-msgstr ""
+msgstr "Dev Derby Challenge Červen 2013 - WebGL II"
 
 #: kuma/demos/__init__.py:207
 msgid "WebGL II"
@@ -1204,7 +1204,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:215
 msgid "July 2013 Dev Derby Challenge - File API"
-msgstr ""
+msgstr "Dev Derby Challenge Červenec 2013 - souborové API"
 
 #: kuma/demos/__init__.py:216
 msgid "File API"
@@ -2309,7 +2309,7 @@ msgstr ""
 #: kuma/demos/templates/demos/devderby_landing.html:23
 #: kuma/demos/templates/demos/devderby_tag.html:33
 msgid "Dev Derby"
-msgstr ""
+msgstr "Dev Derby"
 
 #: kuma/demos/templates/demos/devderby_landing.html:22
 #: kuma/demos/templates/demos/devderby_tag.html:32
@@ -2318,7 +2318,7 @@ msgstr ""
 
 #: kuma/demos/templates/demos/devderby_landing.html:25
 msgid "Dev Derby has ended"
-msgstr ""
+msgstr "Dev Derby skončilo"
 
 #: kuma/demos/templates/demos/devderby_landing.html:27
 #, python-format
@@ -2327,10 +2327,13 @@ msgid ""
 " Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo "
 "Studio</a> for many more."
 msgstr ""
+"Od roku 2011 až do roku 2013 vývojáři vytvořili více než 450 demonstrací pro"
+" Dev Derby! Podívejte se na ně níže nebo <a href=\"%(demos_url)s\">navštivte"
+" Demo Studio</a>, kde najdete mnohé další."
 
 #: kuma/demos/templates/demos/devderby_landing.html:40
 msgid "Previous Dev Derby Challenges"
-msgstr ""
+msgstr "Předchozí Dev Derby Challenges"
 
 #: kuma/demos/templates/demos/devderby_landing.html:55
 #: kuma/demos/templates/demos/devderby_tag.html:25
