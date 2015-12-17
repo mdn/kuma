@@ -61,10 +61,6 @@ class DocumentSerializer(BaseDocumentSerializer):
         source='meta.score',
         allow_null=True,
     )
-    explanation = serializers.ReadOnlyField(
-        source='meta.explanation',
-        allow_null=True,
-    )
     parent = BaseDocumentSerializer(read_only=True, allow_null=True)
 
 
