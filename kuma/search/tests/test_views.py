@@ -225,3 +225,10 @@ class ViewTests(ElasticTestCase):
         self.assertContains(response,
                             ('Search index: %s' %
                              Index.objects.get_current().name))
+
+    def test_score(self):
+        response = self.client.get('/en-US/search.json')
+        self.assertEqual(response.status_code, 200)
+        self.assertGreater(response.data['documents'], 0)
+        for document in response.data['documents']:
+            self.assertIn('score', document)
