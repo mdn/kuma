@@ -20,9 +20,9 @@ Install and run everything
    .. note:: (Windows) After installing VirtualBox you need to set
               ``PATH=C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe;``
 
-#. Install vagrant >= 1.7 using the installer from `vagrantup.com <http://vagrantup.com/>`_
+#. Install Vagrant >= 1.7 using the installer from `vagrantup.com <http://vagrantup.com/>`_
 
-#. Install `Ansible <http://docs.ansible.com/>`_ on your machine so that
+#. Install `Ansible <http://docs.ansible.com/>`_ 1.9.x on your machine so that
    Vagrant is able to set up the VM the way we need it.
 
    See the `Ansible Installation docs <http://docs.ansible.com/intro_installation.html>`_
