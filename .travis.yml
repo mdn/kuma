@@ -9,6 +9,7 @@ language: python
 python:
     - "2.7"
 services:
+    - postgresql
     - memcached
     - elasticsearch
 env:
@@ -20,7 +21,7 @@ env:
     global:
         - DJANGO_SETTINGS_MODULE=kuma.settings.travis
         - DEBIAN_FRONTEND=noninteractive
-        - DATABASE_URL=mysql://root:kuma@localhost:3306/kuma
+        - DATABASE_URL=postgres://kuma:kuma@localhost/kuma
         - CFLAGS=-O0
 matrix:
     allow_failures:
@@ -30,7 +31,9 @@ before_install:
     - pip install -U pip
 install:
     - pip install -r requirements/travis.txt
-    - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=mysql,pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
+    - if [[ $TOXENV == 'py27' ]]; then ansible-playbook -vvv --tags=pipeline --connection=local --inventory-file=provisioning/inventory provisioning/travis.yml; fi
+before_script:
+  - psql -c 'create database kuma;' -U postgres
 script: tox -v
 after_failure:
     - dmesg | tail

@@ -1,5 +1,9 @@
 from .local import *  # noqa
 
+
+DATABASES['default']['USER'] = 'postgres'
+DATABASES['default']['PASSWORD'] = ''
+
 DEBUG = False
 CELERY_ALWAYS_EAGER = True
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True

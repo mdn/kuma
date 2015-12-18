@@ -48,36 +48,12 @@ STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
 MANAGERS = ADMINS
 
-DEFAULT_DATABASE = config('DATABASE_URL',
-                          default='mysql://kuma:kuma@localhost:3306/kuma',
-                          cast=dj_database_url.parse)
-if 'mysql' in DEFAULT_DATABASE['ENGINE']:
-    DEFAULT_DATABASE.update({
-        'OPTIONS': {
-            'sql_mode': 'TRADITIONAL',
-            'charset': 'utf8',
-            'use_unicode': True,
-            'init_command': 'SET '
-                            'innodb_strict_mode=1,'
-                            'storage_engine=INNODB,'
-                            'character_set_connection=utf8,'
-                            'collation_connection=utf8_general_ci',
-        },
-        'ATOMIC_REQUESTS': True,
-        'TEST': {
-            'CHARSET': 'utf8',
-            'COLLATION': 'utf8_general_ci',
-        },
-    })
-
 DATABASES = {
-    'default': DEFAULT_DATABASE,
+    'default': config('DATABASE_URL',
+                      default='postgres://kuma:kuma@localhost/kuma',
+                      cast=dj_database_url.parse),
 }
 
-
-SILENCED_SYSTEM_CHECKS = [
-    'django_mysql.W003',
-]
 
 # Cache Settings
 CACHE_PREFIX = 'kuma'
@@ -518,7 +494,6 @@ INSTALLED_APPS = (
     'kuma.dashboards',
     'statici18n',
     'rest_framework',
-    'django_mysql',
 
     # other
     'kuma.humans',

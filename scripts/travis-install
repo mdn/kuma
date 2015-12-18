@@ -13,13 +13,6 @@ then
     # product details
     tar -C .. -zxf etc/data/product_details_json.tar.gz
 
-    # completely and utterly remove Travis' MySQL and let the Ansible role install it
-    sudo apt-get remove --purge 'mysql*'
-    sudo apt-get autoremove
-    sudo apt-get autoclean
-    sudo rm -rf /var/lib/mysql
-    sudo truncate -s 0 /var/log/mysql/error.log
-
     # limit elasticsearch / java memory usage to avoid OOM Killer
     sudo service elasticsearch stop;
     echo "ES_HEAP_SIZE=256m" | sudo tee --append /etc/default/elasticsearch

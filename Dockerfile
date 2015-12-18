@@ -13,7 +13,7 @@ RUN apt-get update && \
     libtidy-0.99-0 \
     libtidy-dev \
     gettext \
-    mysql-client  # Only for local dev.
+    postgresql-client  # Only for local dev.
 
 WORKDIR /app
 COPY . /app
