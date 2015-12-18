@@ -47,8 +47,7 @@ python-openid==2.2.5
 
 pytidylib==0.2.4
 
-# FIXME: not the newest version given errormill constraints
-raven==3.3.12
+raven==5.9.2
 
 requests==2.8.1
 
