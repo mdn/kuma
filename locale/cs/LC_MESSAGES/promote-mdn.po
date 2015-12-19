@@ -5,14 +5,15 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
+"PO-Revision-Date: 2015-12-19 20:43+0000\n"
+"Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
+"Language-Team: none\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-08-26 22:16:54+00:00\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Pontoon\n"
 
 #: promote-mdn.php:190
 msgid "Reloaded values from the URL."
@@ -20,7 +21,7 @@ msgstr ""
 
 #: promote-mdn.php:208
 msgid "Plugin settings saved."
-msgstr ""
+msgstr "Nastavení zásuvného modulu uloženo."
 
 #: promote-mdn.php:245
 msgid ""
@@ -35,21 +36,21 @@ msgstr ""
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr ""
 
 #: promote-mdn.php:256
 msgid "Settings"
-msgstr ""
+msgstr "Nastavení"
 
 #: promote-mdn.php:257
 msgid "Load keywords from URL"
-msgstr ""
+msgstr "Načíst klíčová slova z URL adresy"
 
 #: promote-mdn.php:257
 msgid "Preview"
-msgstr ""
+msgstr "Náhled"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
@@ -61,23 +62,23 @@ msgstr ""
 
 #: promote-mdn.php:260
 msgid "Reload now"
-msgstr ""
+msgstr "Načíst znovu"
 
 #: promote-mdn.php:262
 msgid "Add links to RSS feeds"
-msgstr ""
+msgstr "Přidat odkazy na RSS kanály"
 
 #: promote-mdn.php:263
 msgid "Open links in new window"
-msgstr ""
+msgstr "Otevřít odkazy v novém okně"
 
 #: promote-mdn.php:266
 msgid "Exceptions"
-msgstr ""
+msgstr "Výjimky"
 
 #: promote-mdn.php:267
 msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
-msgstr ""
+msgstr "Nepřidávejte odkazy značkám pro nadpisy (h1, h2, h3, h4, h5, h6)."
 
 #: promote-mdn.php:268
 msgid ""
@@ -91,7 +92,7 @@ msgstr ""
 
 #: promote-mdn.php:274
 msgid "Limits"
-msgstr ""
+msgstr "Omezení"
 
 #: promote-mdn.php:275
 msgid "Max links to generate per post:"
@@ -107,7 +108,7 @@ msgstr ""
 
 #: promote-mdn.php:280
 msgid "Custom Keywords"
-msgstr ""
+msgstr "Vlastní klíčová slova"
 
 #: promote-mdn.php:281
 msgid ""
@@ -117,24 +118,26 @@ msgstr ""
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
 
 #: promote-mdn.php:289
 msgid "Update options"
-msgstr ""
+msgstr "Aktualizovat nastavení"
 
 #: promote-mdn.php:312
 msgid ""
 "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to "
 "configure."
 msgstr ""
+"Děkujeme za instalaci! Přejděte na <a href=\"%s\">nastavení</a> pro "
+"konfiguraci."
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr ""
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
@@ -145,7 +148,7 @@ msgstr ""
 
 #: promote-mdn.php:352
 msgid "hide"
-msgstr ""
+msgstr "skrýt"
 
 #: promote-mdn.php:376
 msgid "Sidebar image and links to MDN."
@@ -157,11 +160,11 @@ msgstr ""
 
 #: promote-mdn.php:391
 msgid "Get the WordPress plugin"
-msgstr ""
+msgstr "Získejte WordPress plugin"
 
 #. Plugin URI of the plugin/theme
 msgid "http://github.com/groovecoder/wp-promote-mdn"
-msgstr ""
+msgstr "http://github.com/groovecoder/wp-promote-mdn"
 
 #. Description of the plugin/theme
 msgid "Promote MDN automatically links keywords phrases to MDN docs"
@@ -169,8 +172,8 @@ msgstr ""
 
 #. Author of the plugin/theme
 msgid "Luke Crouch"
-msgstr ""
+msgstr "Luke Crouch"
 
 #. Author URI of the plugin/theme
 msgid "http://groovecoder.com"
-msgstr ""
+msgstr "http://groovecoder.com"
