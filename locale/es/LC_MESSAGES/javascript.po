@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"POT-Creation-Date: 2015-12-19 09:39-0800\n"
 "PO-Revision-Date: 2015-12-04 14:12+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,59 +23,59 @@ msgstr "Cerrar submenú"
 msgid "Close notification"
 msgstr "Cerrar notificación"
 
-#: kuma/static/js/helpfulness.js:26
+#: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
 msgstr "¿Te resultó útil esta página?"
 
-#: kuma/static/js/helpfulness.js:28
+#: kuma/static/js/helpfulness.js:34
 msgid "Yes"
 msgstr "Sí"
 
-#: kuma/static/js/helpfulness.js:30
+#: kuma/static/js/helpfulness.js:36
 msgid "No"
 msgstr "No"
 
-#: kuma/static/js/helpfulness.js:32
+#: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
 msgstr "No volver a preguntar"
 
-#: kuma/static/js/helpfulness.js:53
+#: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
 msgstr "Traducir a mi idioma"
 
-#: kuma/static/js/helpfulness.js:54
+#: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
 msgstr "Hacer comentarios más completos"
 
-#: kuma/static/js/helpfulness.js:55
+#: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
 msgstr "Añadir más detalles"
 
-#: kuma/static/js/helpfulness.js:56
+#: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
 msgstr "Corregir información incorrecta"
 
-#: kuma/static/js/helpfulness.js:57
+#: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
 msgstr "Añadir o mejorar los ejemplos"
 
-#: kuma/static/js/helpfulness.js:58
+#: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
 msgstr "Mi búsqueda debería haberme dirigido a un artículo diferente"
 
-#: kuma/static/js/helpfulness.js:59
+#: kuma/static/js/helpfulness.js:65
 msgid "Something else"
 msgstr "Algo más"
 
-#: kuma/static/js/helpfulness.js:63
+#: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."
 msgstr "Elige uno..."
 
-#: kuma/static/js/helpfulness.js:77
+#: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
 msgstr "¡Wow! ¿En qué podría mejorar?"
 
-#: kuma/static/js/helpfulness.js:80
+#: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
 msgstr "¡Gracias! Lo solucionaremos."
 

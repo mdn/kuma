@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"POT-Creation-Date: 2015-12-19 09:39-0800\n"
 "PO-Revision-Date: 2015-12-04 14:04+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,59 +23,59 @@ msgstr "關閉子選單"
 msgid "Close notification"
 msgstr "關閉通知"
 
-#: kuma/static/js/helpfulness.js:26
+#: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
 msgstr "這個頁面有幫到您嗎？"
 
-#: kuma/static/js/helpfulness.js:28
+#: kuma/static/js/helpfulness.js:34
 msgid "Yes"
 msgstr "有"
 
-#: kuma/static/js/helpfulness.js:30
+#: kuma/static/js/helpfulness.js:36
 msgid "No"
 msgstr "沒有"
 
-#: kuma/static/js/helpfulness.js:32
+#: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
 msgstr "不要再問我"
 
-#: kuma/static/js/helpfulness.js:53
+#: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
 msgstr "翻譯成我的語言"
 
-#: kuma/static/js/helpfulness.js:54
+#: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
 msgstr "解釋得更清楚一點"
 
-#: kuma/static/js/helpfulness.js:55
+#: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
 msgstr "加上更多細節"
 
-#: kuma/static/js/helpfulness.js:56
+#: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
 msgstr "修正錯誤資訊"
 
-#: kuma/static/js/helpfulness.js:57
+#: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
 msgstr "加入或改善範本"
 
-#: kuma/static/js/helpfulness.js:58
+#: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
 msgstr "我搜尋的東西跟這頁無關"
 
-#: kuma/static/js/helpfulness.js:59
+#: kuma/static/js/helpfulness.js:65
 msgid "Something else"
 msgstr "其他"
 
-#: kuma/static/js/helpfulness.js:63
+#: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."
 msgstr "挑選一個…"
 
-#: kuma/static/js/helpfulness.js:77
+#: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
 msgstr "喔喔，有什麼可以做得更好的地方嗎？"
 
-#: kuma/static/js/helpfulness.js:80
+#: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
 msgstr "感謝！我們會盡快修復。"
 

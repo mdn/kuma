@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"POT-Creation-Date: 2015-12-19 09:40-0800\n"
 "PO-Revision-Date: 2015-12-04 20:57+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -393,7 +393,7 @@ msgstr "Nee"
 msgid "Today at %s"
 msgstr "Vandaag om %s"
 
-#: kuma/core/sections.py:6 kuma/landing/templates/landing/homepage.html:85 templates/base.html:155
+#: kuma/core/sections.py:6 kuma/landing/templates/landing/homepage.html:85 templates/base.html:154
 msgid "Add-ons"
 msgstr "Add-ons"
 
@@ -403,7 +403,7 @@ msgstr "Add-ons"
 msgid "Mozilla"
 msgstr "Mozilla"
 
-#: kuma/core/sections.py:20 templates/base.html:134
+#: kuma/core/sections.py:20 templates/base.html:133
 msgid "Apps"
 msgstr "Apps"
 
@@ -452,13 +452,13 @@ msgstr "Codevoorbeelden"
 # docs, Key Topics for Web Developers - 목록 항목,
 # web, Popular Web Documentation - 링크 텍스트
 # 75%
-#: kuma/core/translations/search/filter/css/name.py:4 kuma/landing/templates/landing/homepage.html:73 kuma/landing/templates/landing/promote_buttons.html:99 templates/base.html:130
+#: kuma/core/translations/search/filter/css/name.py:4 kuma/landing/templates/landing/homepage.html:73 kuma/landing/templates/landing/promote_buttons.html:99 templates/base.html:129
 msgid "CSS"
 msgstr "CSS"
 
 # 77%
 # 100%
-#: kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/templates/landing/homepage.html:81 templates/base.html:156
+#: kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/templates/landing/homepage.html:81 templates/base.html:155
 msgid "Firefox"
 msgstr "Firefox"
 
@@ -470,7 +470,7 @@ msgstr "Firefox voor desktop"
 msgid "Firefox for Android"
 msgstr "Firefox voor Android"
 
-#: kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/templates/landing/homepage.html:82 templates/base.html:158
+#: kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/templates/landing/homepage.html:82 templates/base.html:157
 msgid "Firefox OS"
 msgstr "Firefox OS"
 
@@ -484,7 +484,7 @@ msgstr "Handleiding en zelfstudie"
 
 # 80%
 #: kuma/core/translations/search/filter/html/name.py:4 kuma/landing/templates/landing/homepage.html:72 kuma/landing/templates/landing/promote_buttons.html:105 kuma/users/forms.py:37
-#: templates/base.html:129
+#: templates/base.html:128
 msgid "HTML"
 msgstr "HTML"
 
@@ -493,7 +493,7 @@ msgid "Intermediate"
 msgstr "Gemiddeld"
 
 #: kuma/core/translations/search/filter/js/name.py:4 kuma/demos/__init__.py:287 kuma/landing/templates/landing/homepage.html:74 kuma/landing/templates/landing/promote_buttons.html:111
-#: templates/base.html:131
+#: templates/base.html:130
 msgid "JavaScript"
 msgstr "JavaScript"
 
@@ -501,7 +501,7 @@ msgstr "JavaScript"
 msgid "Marketplace"
 msgstr "Marketplace"
 
-#: kuma/core/translations/search/filter/mathml/name.py:4 templates/base.html:135
+#: kuma/core/translations/search/filter/mathml/name.py:4 templates/base.html:134
 msgid "MathML"
 msgstr "MathML"
 
@@ -1588,6 +1588,11 @@ msgstr "%(count)d %(items)s met succes gecensureerd."
 msgid "Are you sure?"
 msgstr "Weet u het zeker?"
 
+#: kuma/demos/admin.py:68
+#, python-format
+msgid "Censor selected %(verbose_name_plural)s"
+msgstr ""
+
 #: kuma/demos/admin.py:106
 #, python-format
 msgid "Deleted and uploaded files for %(item)s"
@@ -1602,6 +1607,11 @@ msgstr "%(count)d %(items)s met succes verwijderd."
 #, python-format
 msgid "Cannot delete %(name)s"
 msgstr "Kan %(name)s niet verwijderen"
+
+#: kuma/demos/admin.py:146
+#, python-format
+msgid "Delete selected %(verbose_name_plural)s"
+msgstr ""
 
 #: kuma/demos/embed.py:128
 msgid "Not an URL from a supported video service"
@@ -2103,7 +2113,7 @@ msgstr "Bronnen"
 msgid "Docs"
 msgstr "Documenten"
 
-#: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:145 templates/base.html:163
+#: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:144 templates/base.html:162
 msgid "Demos"
 msgstr "Demo’s"
 
@@ -2450,7 +2460,7 @@ msgstr "Demo Studio doorzoeken"
 #: kuma/demos/templates/demos/elements/demos_head.html:33 kuma/demos/templates/demos/elements/search_form.html:6 kuma/landing/templates/landing/homepage.html:38
 #: kuma/landing/templates/landing/homepage.html:48 kuma/landing/templates/landing/homepage.html:55 kuma/landing/templates/landing/homepage.html:60 kuma/search/templates/search/base.html:2
 #: kuma/search/templates/search/results.html:15 kuma/search/templates/search/results.html:52 kuma/search/templates/search/results.html:55 kuma/search/templates/search/results.html:60
-#: templates/base.html:181 templates/base.html:182 templates/base.html:184 templates/includes/common_macros.html:26 templates/includes/common_macros.html:27
+#: templates/base.html:180 templates/base.html:181 templates/base.html:183 templates/includes/common_macros.html:26 templates/includes/common_macros.html:27
 msgid "Search"
 msgstr "Zoeken"
 
@@ -2595,7 +2605,7 @@ msgstr "meer…"
 msgid "Mozilla<br> Docs"
 msgstr "Mozilla<br> Docs"
 
-#: kuma/landing/templates/landing/homepage.html:83 templates/base.html:157
+#: kuma/landing/templates/landing/homepage.html:83 templates/base.html:156
 msgid "Firefox Marketplace"
 msgstr "Firefox Marketplace"
 
@@ -2882,14 +2892,6 @@ msgstr "Is dit de huidige index?"
 msgid "There is already a successor to the current index %s"
 msgstr "Er is al een opvolger voor de huidige index %s"
 
-#: kuma/search/serializers.py:94
-msgid "name"
-msgstr "naam"
-
-#: kuma/search/serializers.py:95
-msgid "groupname"
-msgstr "groepsnaam"
-
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
 msgstr "De zoekfunctie is tijdelijk niet beschikbaar. Probeer het over enkele minuten nog eens."
@@ -2897,6 +2899,14 @@ msgstr "De zoekfunctie is tijdelijk niet beschikbaar. Probeer het over enkele mi
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
 msgstr "Er ging iets mis met de zoekopdracht. Probeer het over enkele minuten opnieuw."
+
+#: kuma/search/views.py:95
+msgid "name"
+msgstr "naam"
+
+#: kuma/search/views.py:96
+msgid "groupname"
+msgstr "groepsnaam"
 
 #: kuma/search/templates/search/down.html:5
 msgid "Search Unavailable"
@@ -3689,7 +3699,7 @@ msgstr "Pagina"
 msgid "Comment"
 msgstr "Reactie"
 
-#: kuma/users/templates/users/user_detail.html:190 kuma/wiki/templates/wiki/document.html:400
+#: kuma/users/templates/users/user_detail.html:190 kuma/wiki/templates/wiki/document.html:399
 msgid "Edit page"
 msgstr "Pagina bewerken"
 
@@ -3697,7 +3707,7 @@ msgstr "Pagina bewerken"
 msgid "View complete diff"
 msgstr "Volledige diff bekijken"
 
-#: kuma/users/templates/users/user_detail.html:192 kuma/wiki/templates/wiki/document.html:401
+#: kuma/users/templates/users/user_detail.html:192 kuma/wiki/templates/wiki/document.html:400
 msgid "View page history"
 msgstr "Paginageschiedenis weergeven"
 
@@ -4414,65 +4424,65 @@ msgid "Restore this document"
 msgstr "Dit document terugzetten"
 
 # 100%
-#: kuma/wiki/templates/wiki/document.html:87 templates/includes/lang_switcher.html:2
+#: kuma/wiki/templates/wiki/document.html:86 templates/includes/lang_switcher.html:2
 msgid "Other languages:"
 msgstr "Andere talen:"
 
 # 100%
-#: kuma/wiki/templates/wiki/document.html:98 templates/includes/lang_switcher.html:15
+#: kuma/wiki/templates/wiki/document.html:97 templates/includes/lang_switcher.html:15
 msgid "Go"
 msgstr "Ga"
 
-#: kuma/wiki/templates/wiki/document.html:167
+#: kuma/wiki/templates/wiki/document.html:166
 msgid "Previous Search Result"
 msgstr "Vorig zoekresultaat"
 
-#: kuma/wiki/templates/wiki/document.html:167 kuma/wiki/templates/wiki/document.html:177
+#: kuma/wiki/templates/wiki/document.html:166 kuma/wiki/templates/wiki/document.html:176
 msgid "No Previous Search Result"
 msgstr "Geen vorig zoekresultaat"
 
-#: kuma/wiki/templates/wiki/document.html:173
+#: kuma/wiki/templates/wiki/document.html:172
 msgid "Your Search Results"
 msgstr "Uw zoekresultaten"
 
-#: kuma/wiki/templates/wiki/document.html:177
+#: kuma/wiki/templates/wiki/document.html:176
 msgid "Next Search Result"
 msgstr "Volgend zoekresultaat"
 
-#: kuma/wiki/templates/wiki/document.html:185
+#: kuma/wiki/templates/wiki/document.html:182
 msgid "Show all"
 msgstr "Alles tonen"
 
-#: kuma/wiki/templates/wiki/document.html:185
+#: kuma/wiki/templates/wiki/document.html:182
 msgid "contributors"
 msgstr "medewerkers"
 
-#: kuma/wiki/templates/wiki/document.html:187
-#, python-format
-msgid "By %(count)s contributor:"
-msgid_plural "By %(count)s contributors:"
+#: kuma/wiki/templates/wiki/document.html:184
+#, fuzzy, python-format
+msgid "by %(count)s contributor:"
+msgid_plural "by %(count)s contributors:"
 msgstr[0] "Door %(count)s medewerker:"
 msgstr[1] "Door %(count)s medewerkers:"
 
-#: kuma/wiki/templates/wiki/document.html:196
+#: kuma/wiki/templates/wiki/document.html:193
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "Profiel weergeven: %(username)s"
 
-#: kuma/wiki/templates/wiki/document.html:219
+#: kuma/wiki/templates/wiki/document.html:216
 msgid "Show Sidebar"
 msgstr "Zijbalk tonen"
 
-#: kuma/wiki/templates/wiki/document.html:233
+#: kuma/wiki/templates/wiki/document.html:230
 msgid "In This Article"
 msgstr "In dit artikel"
 
-#: kuma/wiki/templates/wiki/document.html:255
+#: kuma/wiki/templates/wiki/document.html:252
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "Dit document wordt voor het eerst door het systeem weergegeven. <a href=\"%(url)s\">Vernieuw deze pagina</a> over enkele minuten om de volledige inhoud te bekijken."
 
-#: kuma/wiki/templates/wiki/document.html:263
+#: kuma/wiki/templates/wiki/document.html:260
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
@@ -4481,7 +4491,7 @@ msgstr ""
 "Er wordt momenteel een <abbr title=\"%(started_at)s\">update van dit document</abbr> uitgevoerd. Als de onderstaande inhoud er vreemd uitziet of als er iets ontbreekt, <a href=\"%(url)s\">vernieuw "
 "dan deze pagina</a> over enkele minuten."
 
-#: kuma/wiki/templates/wiki/document.html:272
+#: kuma/wiki/templates/wiki/document.html:269
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
@@ -4490,57 +4500,54 @@ msgstr ""
 "Er is een update van dit document <abbr title=\"%(scheduled_at)s\">gepland</abbr>. Als de onderstaande inhoud er vreemd uitziet of als er iets ontbreekt, <a href=\"%(url)s\">vernieuw dan deze "
 "pagina</a> over enkele minuten."
 
-#: kuma/wiki/templates/wiki/document.html:288
+#: kuma/wiki/templates/wiki/document.html:285
 msgid "This article is in need of a technical review."
 msgstr "Dit artikel heeft een technische beoordeling nodig."
 
-#: kuma/wiki/templates/wiki/document.html:293
+#: kuma/wiki/templates/wiki/document.html:290
 msgid "This article is in need of an editorial review."
 msgstr "Dit artikel heeft een redactionele beoordeling nodig."
 
-#: kuma/wiki/templates/wiki/document.html:299
+#: kuma/wiki/templates/wiki/document.html:296
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "Deze vertaling is niet volledig. Help <a href=\"%(translate_url)s\">dit artikel te vertalen</a> vanuit het Engels."
 
-#: kuma/wiki/templates/wiki/document.html:304
+#: kuma/wiki/templates/wiki/document.html:301
 msgid "This translation is in progress."
 msgstr "Aan deze vertaling wordt gewerkt."
 
-#: kuma/wiki/templates/wiki/document.html:311
+#: kuma/wiki/templates/wiki/document.html:308
 #, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
-msgstr ""
-"Onze vrijwilligers hebben dit artikel nog niet naar het <bdi>%"
-"(locale)s</bdi> vertaald. <a href=\"%(help_link)s\">Doe mee en help de klus te "
-"klaren!</a>"
+msgstr "Onze vrijwilligers hebben dit artikel nog niet naar het <bdi>%(locale)s</bdi> vertaald. <a href=\"%(help_link)s\">Doe mee en help de klus te klaren!</a>"
 
-#: kuma/wiki/templates/wiki/document.html:322
+#: kuma/wiki/templates/wiki/document.html:319
 msgid "This article doesn't have any content yet."
 msgstr "Dit artikel heeft nog geen inhoud."
 
-#: kuma/wiki/templates/wiki/document.html:325
+#: kuma/wiki/templates/wiki/document.html:322
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "Zoek naar <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pagina’s die %(title)s</a> gebruiken om use-case-voorbeelden en het aantal pagina’s dat deze macro gebruikt te zien."
 
-#: kuma/wiki/templates/wiki/document.html:338
+#: kuma/wiki/templates/wiki/document.html:335
 msgid "This article doesn't have approved content yet."
 msgstr "Dit artikel heeft nog geen goedgekeurde inhoud."
 
-#: kuma/wiki/templates/wiki/document.html:346
+#: kuma/wiki/templates/wiki/document.html:345
 msgid "Document Tags and Contributors"
 msgstr "Documentlabels en -medewerkers"
 
-#: kuma/wiki/templates/wiki/document.html:352
+#: kuma/wiki/templates/wiki/document.html:351
 msgid "Contributors to this page:"
 msgstr "Aan deze pagina hebben bijgedragen:"
 
-#: kuma/wiki/templates/wiki/document.html:358
+#: kuma/wiki/templates/wiki/document.html:357
 msgid "Last updated by:"
 msgstr "Laatst bijgewerkt door:"
 
-#: kuma/wiki/templates/wiki/document.html:373
+#: kuma/wiki/templates/wiki/document.html:372
 msgid "Hide Sidebar"
 msgstr "Zijbalk verbergen"
 
@@ -5464,124 +5471,120 @@ msgstr "Aan de slag"
 msgid "Review or localize docs"
 msgstr "Documenten beoordelen of vertalen"
 
-#: templates/base.html:108
-msgid "Add a new page"
-msgstr "Een nieuwe pagina toevoegen"
-
-#: templates/base.html:111
+#: templates/base.html:110
 msgid "Site Tools"
 msgstr "Website-hulpmiddelen"
 
-#: templates/base.html:113
+#: templates/base.html:112
 msgid "Revision dashboard"
 msgstr "Revisiedashboard"
 
-#: templates/base.html:114
+#: templates/base.html:113
 msgid "Documentation status"
 msgstr "Documentatiestatus"
 
-#: templates/base.html:123
+#: templates/base.html:122
 msgid "Web Platform"
 msgstr "Webplatform"
 
-#: templates/base.html:127
+#: templates/base.html:126
 msgid "Technologies"
 msgstr "Technologieën"
 
-#: templates/base.html:132
+#: templates/base.html:131
 msgid "Graphics"
 msgstr "Graphics"
 
-#: templates/base.html:133
+#: templates/base.html:132
 msgid "APIs / DOM"
 msgstr "API’s / DOM"
 
-#: templates/base.html:138
+#: templates/base.html:137
 msgid "References & Guides"
 msgstr "Referenties en gidsen"
 
-#: templates/base.html:140
+#: templates/base.html:139
 msgid "Learn the Web"
 msgstr "Het web leren"
 
-#: templates/base.html:141
+#: templates/base.html:140
 msgid "Tutorials"
 msgstr "Handleidingen"
 
-#: templates/base.html:142
+#: templates/base.html:141
 msgid "References"
 msgstr "Referenties"
 
-#: templates/base.html:143
+#: templates/base.html:142
 msgid "Developer Guides"
 msgstr "Gidsen voor ontwikkelaars"
 
-#: templates/base.html:144
+#: templates/base.html:143
 msgid "Accessibility"
 msgstr "Toegankelijkheid"
 
-#: templates/base.html:146
+#: templates/base.html:145
 msgid "...more docs"
 msgstr "…meer documenten"
 
-#: templates/base.html:150
+#: templates/base.html:149
 msgid "Mozilla Docs"
 msgstr "Mozilla Docs"
 
-#: templates/base.html:159 templates/includes/login.html:20
+#: templates/base.html:158 templates/includes/login.html:20
 msgid "Persona"
 msgstr "Persona"
 
-#: templates/base.html:163
+#: templates/base.html:162
 msgid "Developer Tools"
 msgstr "Hulpmiddelen voor ontwikkelaars"
 
-#: templates/base.html:163
+#: templates/base.html:162
 msgid "Feedback"
 msgstr "Feedback"
 
-#: templates/base.html:168
+#: templates/base.html:167
 msgid "Get Firefox help"
 msgstr "Hulp bij Firefox verkrijgen"
 
-#: templates/base.html:169
+#: templates/base.html:168
 msgid "Get web development help"
 msgstr "Hulp bij webontwikkeling verkrijgen"
 
-#: templates/base.html:172
+#: templates/base.html:171
 msgid "Join the MDN community"
 msgstr "Deelnemen aan de MDN-gemeenschap"
 
-#: templates/base.html:173
+#: templates/base.html:172
 msgid "Report a content problem"
 msgstr "Een inhoudsprobleem melden"
 
-#: templates/base.html:174
+#: templates/base.html:173
 msgid "Report a bug"
 msgstr "Een bug melden"
 
-#: templates/base.html:200
+#: templates/base.html:199
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network en individuele medewerkers.</p> <p>Inhoud is beschikbaar onder <a href=\"%(copyright_url)s\">deze licenties</a>.</p>"
 
-#: templates/base.html:205
+#: templates/base.html:204
 msgid "About MDN"
 msgstr "Over MDN"
 
-#: templates/base.html:206
+#: templates/base.html:205
 msgid "Terms"
 msgstr "Voorwaarden"
 
-#: templates/base.html:207
+#: templates/base.html:206
 msgid "Privacy"
 msgstr "Privacy"
 
-#: templates/base.html:208
+#: templates/base.html:207
 msgid "Cookies"
 msgstr "Cookies"
 
-#: templates/base.html:209
+#: templates/base.html:208
 msgid "Contribute to the code"
 msgstr "Bijdragen aan de code"
 
@@ -5663,6 +5666,9 @@ msgstr "Afgemeld"
 #: templates/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
 msgstr "U bent afgemeld."
+
+#~ msgid "Add a new page"
+#~ msgstr "Een nieuwe pagina toevoegen"
 
 #~ msgid "{count} view"
 #~ msgid_plural "{count} views"

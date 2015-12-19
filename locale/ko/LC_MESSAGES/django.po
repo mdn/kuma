@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"POT-Creation-Date: 2015-12-19 09:40-0800\n"
 "PO-Revision-Date: 2015-12-03 08:56+0000\n"
 "Last-Translator: thechunsik <thechunsik@gmail.com>\n"
 "Language-Team: none\n"
@@ -401,7 +401,7 @@ msgstr "아니오"
 msgid "Today at %s"
 msgstr "%s의 오늘"
 
-#: kuma/core/sections.py:6 kuma/landing/templates/landing/homepage.html:85 templates/base.html:155
+#: kuma/core/sections.py:6 kuma/landing/templates/landing/homepage.html:85 templates/base.html:154
 msgid "Add-ons"
 msgstr "부가 기능"
 
@@ -410,7 +410,7 @@ msgid "Mozilla"
 msgstr "Mozilla"
 
 # 100%
-#: kuma/core/sections.py:20 templates/base.html:134
+#: kuma/core/sections.py:20 templates/base.html:133
 msgid "Apps"
 msgstr "앱"
 
@@ -459,12 +459,12 @@ msgstr "코드 샘플"
 
 # docs, Key Topics for Web Developers - 목록 항목,
 # web, Popular Web Documentation - 링크 텍스트
-#: kuma/core/translations/search/filter/css/name.py:4 kuma/landing/templates/landing/homepage.html:73 kuma/landing/templates/landing/promote_buttons.html:99 templates/base.html:130
+#: kuma/core/translations/search/filter/css/name.py:4 kuma/landing/templates/landing/homepage.html:73 kuma/landing/templates/landing/promote_buttons.html:99 templates/base.html:129
 msgid "CSS"
 msgstr "CSS"
 
 # 77%
-#: kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/templates/landing/homepage.html:81 templates/base.html:156
+#: kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/templates/landing/homepage.html:81 templates/base.html:155
 msgid "Firefox"
 msgstr "Firefox"
 
@@ -476,7 +476,7 @@ msgstr "Firefox 데스크톱"
 msgid "Firefox for Android"
 msgstr "Firefox 안드로이드"
 
-#: kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/templates/landing/homepage.html:82 templates/base.html:158
+#: kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/templates/landing/homepage.html:82 templates/base.html:157
 msgid "Firefox OS"
 msgstr "Firefox OS"
 
@@ -489,7 +489,7 @@ msgid "How-To & Tutorial"
 msgstr "배우기 및 학습 문서"
 
 #: kuma/core/translations/search/filter/html/name.py:4 kuma/landing/templates/landing/homepage.html:72 kuma/landing/templates/landing/promote_buttons.html:105 kuma/users/forms.py:37
-#: templates/base.html:129
+#: templates/base.html:128
 msgid "HTML"
 msgstr "HTML"
 
@@ -498,7 +498,7 @@ msgid "Intermediate"
 msgstr "중급자"
 
 #: kuma/core/translations/search/filter/js/name.py:4 kuma/demos/__init__.py:287 kuma/landing/templates/landing/homepage.html:74 kuma/landing/templates/landing/promote_buttons.html:111
-#: templates/base.html:131
+#: templates/base.html:130
 msgid "JavaScript"
 msgstr "자바스크립트"
 
@@ -506,7 +506,7 @@ msgstr "자바스크립트"
 msgid "Marketplace"
 msgstr "마켓플레이스"
 
-#: kuma/core/translations/search/filter/mathml/name.py:4 templates/base.html:135
+#: kuma/core/translations/search/filter/mathml/name.py:4 templates/base.html:134
 msgid "MathML"
 msgstr "MathML"
 
@@ -1601,6 +1601,11 @@ msgstr "%(count)d개 %(items)s을 검토 완료했습니다."
 msgid "Are you sure?"
 msgstr "확실합니까?"
 
+#: kuma/demos/admin.py:68
+#, python-format
+msgid "Censor selected %(verbose_name_plural)s"
+msgstr ""
+
 #: kuma/demos/admin.py:106
 #, python-format
 msgid "Deleted and uploaded files for %(item)s"
@@ -1615,6 +1620,11 @@ msgstr "%(count)d개 %(items)s이 삭제 완료되었습니다."
 #, python-format
 msgid "Cannot delete %(name)s"
 msgstr "다음을 삭제할 수 없음: %(name)s"
+
+#: kuma/demos/admin.py:146
+#, python-format
+msgid "Delete selected %(verbose_name_plural)s"
+msgstr ""
 
 #: kuma/demos/embed.py:128
 msgid "Not an URL from a supported video service"
@@ -2104,7 +2114,7 @@ msgstr "자원"
 msgid "Docs"
 msgstr "기술 문서"
 
-#: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:145 templates/base.html:163
+#: kuma/demos/templates/demos/devderby_landing.html:58 templates/base.html:144 templates/base.html:162
 msgid "Demos"
 msgstr "MDN 데모"
 
@@ -2444,7 +2454,7 @@ msgstr "Demo Studio 검색"
 #: kuma/demos/templates/demos/elements/demos_head.html:33 kuma/demos/templates/demos/elements/search_form.html:6 kuma/landing/templates/landing/homepage.html:38
 #: kuma/landing/templates/landing/homepage.html:48 kuma/landing/templates/landing/homepage.html:55 kuma/landing/templates/landing/homepage.html:60 kuma/search/templates/search/base.html:2
 #: kuma/search/templates/search/results.html:15 kuma/search/templates/search/results.html:52 kuma/search/templates/search/results.html:55 kuma/search/templates/search/results.html:60
-#: templates/base.html:181 templates/base.html:182 templates/base.html:184 templates/includes/common_macros.html:26 templates/includes/common_macros.html:27
+#: templates/base.html:180 templates/base.html:181 templates/base.html:183 templates/includes/common_macros.html:26 templates/includes/common_macros.html:27
 msgid "Search"
 msgstr "검색"
 
@@ -2586,7 +2596,7 @@ msgstr "자세히..."
 msgid "Mozilla<br> Docs"
 msgstr "Mozilla<br> 문서"
 
-#: kuma/landing/templates/landing/homepage.html:83 templates/base.html:157
+#: kuma/landing/templates/landing/homepage.html:83 templates/base.html:156
 msgid "Firefox Marketplace"
 msgstr "Firefox 마켓플레이스"
 
@@ -2873,14 +2883,6 @@ msgstr "현재 인덱스인가요?"
 msgid "There is already a successor to the current index %s"
 msgstr "현재 인덱스 %s는 이미 포함되어 있습니다."
 
-#: kuma/search/serializers.py:94
-msgid "name"
-msgstr "이름"
-
-#: kuma/search/serializers.py:95
-msgid "groupname"
-msgstr "그룹명"
-
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
 msgstr "검색이 일시적으로 사용할 수 없습니다. 몇 분 후 다시 시도하세요."
@@ -2888,6 +2890,14 @@ msgstr "검색이 일시적으로 사용할 수 없습니다. 몇 분 후 다시
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
 msgstr "검색 쿼리의 무엇인가가 잘 못 되었습니다. 몇 분 후 다시 시도하세요."
+
+#: kuma/search/views.py:95
+msgid "name"
+msgstr "이름"
+
+#: kuma/search/views.py:96
+msgid "groupname"
+msgstr "그룹명"
 
 #: kuma/search/templates/search/down.html:5
 msgid "Search Unavailable"
@@ -3691,7 +3701,7 @@ msgstr "페이지"
 msgid "Comment"
 msgstr "댓글"
 
-#: kuma/users/templates/users/user_detail.html:190 kuma/wiki/templates/wiki/document.html:400
+#: kuma/users/templates/users/user_detail.html:190 kuma/wiki/templates/wiki/document.html:399
 msgid "Edit page"
 msgstr "페이지 편집"
 
@@ -3699,7 +3709,7 @@ msgstr "페이지 편집"
 msgid "View complete diff"
 msgstr "모든 차이점 보기"
 
-#: kuma/users/templates/users/user_detail.html:192 kuma/wiki/templates/wiki/document.html:401
+#: kuma/users/templates/users/user_detail.html:192 kuma/wiki/templates/wiki/document.html:400
 msgid "View page history"
 msgstr "페이지 이력 보기"
 
@@ -4442,63 +4452,63 @@ msgstr "삭제 사유"
 msgid "Restore this document"
 msgstr "현재 문서 복원"
 
-#: kuma/wiki/templates/wiki/document.html:87 templates/includes/lang_switcher.html:2
+#: kuma/wiki/templates/wiki/document.html:86 templates/includes/lang_switcher.html:2
 msgid "Other languages:"
 msgstr "다른 언어:"
 
-#: kuma/wiki/templates/wiki/document.html:98 templates/includes/lang_switcher.html:15
+#: kuma/wiki/templates/wiki/document.html:97 templates/includes/lang_switcher.html:15
 msgid "Go"
 msgstr "이동"
 
-#: kuma/wiki/templates/wiki/document.html:167
+#: kuma/wiki/templates/wiki/document.html:166
 msgid "Previous Search Result"
 msgstr "이전 검색 결과"
 
-#: kuma/wiki/templates/wiki/document.html:167 kuma/wiki/templates/wiki/document.html:177
+#: kuma/wiki/templates/wiki/document.html:166 kuma/wiki/templates/wiki/document.html:176
 msgid "No Previous Search Result"
 msgstr "이전 검색 결과 없음"
 
-#: kuma/wiki/templates/wiki/document.html:173
+#: kuma/wiki/templates/wiki/document.html:172
 msgid "Your Search Results"
 msgstr "검색 결과"
 
-#: kuma/wiki/templates/wiki/document.html:177
+#: kuma/wiki/templates/wiki/document.html:176
 msgid "Next Search Result"
 msgstr "다음 검색 결과"
 
-#: kuma/wiki/templates/wiki/document.html:185
+#: kuma/wiki/templates/wiki/document.html:182
 msgid "Show all"
 msgstr "전체 보기"
 
-#: kuma/wiki/templates/wiki/document.html:185
+#: kuma/wiki/templates/wiki/document.html:182
 msgid "contributors"
 msgstr "공헌자"
 
-#: kuma/wiki/templates/wiki/document.html:187
+#: kuma/wiki/templates/wiki/document.html:184
 #, fuzzy, python-format
-msgid "By %(count)s contributor:"
-msgid_plural "By %(count)s contributors:"
+msgid "by %(count)s contributor:"
+msgid_plural "by %(count)s contributors:"
 msgstr[0] "공헌자 숫자: %(count)s명"
 
-#: kuma/wiki/templates/wiki/document.html:196
+#: kuma/wiki/templates/wiki/document.html:193
 #, python-format
 msgid "View profile: %(username)s"
 msgstr "프로필: %(username)s"
 
-#: kuma/wiki/templates/wiki/document.html:219
+#: kuma/wiki/templates/wiki/document.html:216
 msgid "Show Sidebar"
 msgstr "사이드바 보기"
 
-#: kuma/wiki/templates/wiki/document.html:233
+#: kuma/wiki/templates/wiki/document.html:230
 msgid "In This Article"
 msgstr "현재 문서 내"
 
-#: kuma/wiki/templates/wiki/document.html:255
+#: kuma/wiki/templates/wiki/document.html:252
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "이 문서는 시스템이 처음으로 표시한 것입니다. 모든 콘텐트를 보려면 몇 분 뒤에 <a href=\"%(url)s\">페이지를 새로 고침</a>해 주세요."
 
-#: kuma/wiki/templates/wiki/document.html:263
+#: kuma/wiki/templates/wiki/document.html:260
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
@@ -4506,7 +4516,7 @@ msgid ""
 msgstr ""
 "이 문서에 대한 업데이트가 <abbr title=\"%(started_at)s\">현재 진행중입니다</abbr>. 만약 아래의 콘텐트가 낡았거나 무엇인가 빠졌다면, 몇 분 후에 <a href=\"%(url)s\">이 페이지를 새로고침</a>해 주세요."
 
-#: kuma/wiki/templates/wiki/document.html:272
+#: kuma/wiki/templates/wiki/document.html:269
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
@@ -4515,57 +4525,57 @@ msgstr ""
 "이 문서에 대한 업데이트가 <abbr title=\"%(scheduled_at)s\">예약되어 있습니다</abbr>. 만약 아래의 콘텐트가 낡았거나 무엇인가 빠졌다면, 몇 분 후에 <a href=\"%(url)s\">이 페이지를 새로고침</a>해 주세"
 "요."
 
-#: kuma/wiki/templates/wiki/document.html:288
+#: kuma/wiki/templates/wiki/document.html:285
 msgid "This article is in need of a technical review."
 msgstr "이 문서는 기술적인 검토가 필요합니다."
 
-#: kuma/wiki/templates/wiki/document.html:293
+#: kuma/wiki/templates/wiki/document.html:290
 msgid "This article is in need of an editorial review."
 msgstr "현재 문서는 편집 검토가 필요합니다."
 
-#: kuma/wiki/templates/wiki/document.html:299
+#: kuma/wiki/templates/wiki/document.html:296
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "현재 번역은 완벽하지 않습니다. 한국어로 <a href=\"%(translate_url)s\">문서 번역</a>에 동참해주세요."
 
-#: kuma/wiki/templates/wiki/document.html:304
+#: kuma/wiki/templates/wiki/document.html:301
 msgid "This translation is in progress."
 msgstr "번역 작업 진행중입니다."
 
-#: kuma/wiki/templates/wiki/document.html:311
+#: kuma/wiki/templates/wiki/document.html:308
 #, fuzzy, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr "아직 자원 봉사자들이 %(locale)s로 현재 문서를 번역하지 않았습니다. <a href=\"%(help_link)s\">가입해서 이 문서가 번역되는 일에 함께 해 주세요!</a>"
 
 # 85%
-#: kuma/wiki/templates/wiki/document.html:322
+#: kuma/wiki/templates/wiki/document.html:319
 msgid "This article doesn't have any content yet."
 msgstr "이 글에는 아직 내용이 없습니다."
 
-#: kuma/wiki/templates/wiki/document.html:325
+#: kuma/wiki/templates/wiki/document.html:322
 #, fuzzy, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "여러 매크로를 사용하고 예제 케이스를 보기 위해 <a href=\"%(search_link)s\">%(title)s 사용 문서</a>를 검색합니다."
 
-#: kuma/wiki/templates/wiki/document.html:338
+#: kuma/wiki/templates/wiki/document.html:335
 msgid "This article doesn't have approved content yet."
 msgstr "현재 문서는 아직 승인된 내용이 없습니다."
 
-#: kuma/wiki/templates/wiki/document.html:346
+#: kuma/wiki/templates/wiki/document.html:345
 msgid "Document Tags and Contributors"
 msgstr "문서 태그 및 공헌자"
 
-#: kuma/wiki/templates/wiki/document.html:352
+#: kuma/wiki/templates/wiki/document.html:351
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "이 페이지의 공헌자: %(contributors)s"
 
 # 100%
-#: kuma/wiki/templates/wiki/document.html:358
+#: kuma/wiki/templates/wiki/document.html:357
 msgid "Last updated by:"
 msgstr "최종 변경:"
 
-#: kuma/wiki/templates/wiki/document.html:373
+#: kuma/wiki/templates/wiki/document.html:372
 msgid "Hide Sidebar"
 msgstr "사이드바 숨기기"
 
@@ -5513,138 +5523,134 @@ msgstr "시작하기"
 msgid "Review or localize docs"
 msgstr ""
 
-#: templates/base.html:108
-msgid "Add a new page"
-msgstr ""
-
-#: templates/base.html:111
+#: templates/base.html:110
 #, fuzzy
 msgid "Site Tools"
 msgstr "검색 도구"
 
-#: templates/base.html:113
+#: templates/base.html:112
 #, fuzzy
 msgid "Revision dashboard"
 msgstr "변경 사항 대시보드"
 
-#: templates/base.html:114
+#: templates/base.html:113
 #, fuzzy
 msgid "Documentation status"
 msgstr "MDN 문서"
 
-#: templates/base.html:123
+#: templates/base.html:122
 msgid "Web Platform"
 msgstr "웹 플랫폼"
 
-#: templates/base.html:127
+#: templates/base.html:126
 msgid "Technologies"
 msgstr "기술 목록"
 
-#: templates/base.html:132
+#: templates/base.html:131
 msgid "Graphics"
 msgstr "그래픽"
 
-#: templates/base.html:133
+#: templates/base.html:132
 msgid "APIs / DOM"
 msgstr "API 및 DOM"
 
-#: templates/base.html:138
+#: templates/base.html:137
 msgid "References & Guides"
 msgstr "문서 참조 및 가이드"
 
-#: templates/base.html:140
+#: templates/base.html:139
 #, fuzzy
 msgid "Learn the Web"
 msgstr "웹 사이트 만들기"
 
-#: templates/base.html:141
+#: templates/base.html:140
 msgid "Tutorials"
 msgstr "튜토리얼"
 
-#: templates/base.html:142
+#: templates/base.html:141
 msgid "References"
 msgstr "참조문서"
 
-#: templates/base.html:143
+#: templates/base.html:142
 msgid "Developer Guides"
 msgstr "개발자 가이드"
 
-#: templates/base.html:144
+#: templates/base.html:143
 msgid "Accessibility"
 msgstr "...문서 더보기"
 
-#: templates/base.html:146
+#: templates/base.html:145
 msgid "...more docs"
 msgstr "...문서 더 보기"
 
-#: templates/base.html:150
+#: templates/base.html:149
 #, fuzzy
 msgid "Mozilla Docs"
 msgstr "Mozilla 랩"
 
-#: templates/base.html:159 templates/includes/login.html:20
+#: templates/base.html:158 templates/includes/login.html:20
 msgid "Persona"
 msgstr "Persona"
 
-#: templates/base.html:163
+#: templates/base.html:162
 msgid "Developer Tools"
 msgstr "개발자 도구"
 
-#: templates/base.html:163
+#: templates/base.html:162
 #, fuzzy
 msgid "Feedback"
 msgstr "피드"
 
-#: templates/base.html:168
+#: templates/base.html:167
 #, fuzzy
 msgid "Get Firefox help"
 msgstr "Firefox 도움말 검색"
 
-#: templates/base.html:169
+#: templates/base.html:168
 #, fuzzy
 msgid "Get web development help"
 msgstr "모든 웹 개발 도구"
 
-#: templates/base.html:172
+#: templates/base.html:171
 #, fuzzy
 msgid "Join the MDN community"
 msgstr "커뮤니티 참여하기"
 
-#: templates/base.html:173
+#: templates/base.html:172
 #, fuzzy
 msgid "Report a content problem"
 msgstr "오류 보고"
 
 # 100%
-#: templates/base.html:174
+#: templates/base.html:173
 msgid "Report a bug"
 msgstr "문제점 알려주기"
 
-#: templates/base.html:200
+#: templates/base.html:199
 #, fuzzy, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
 "<bdi>&copy; 2005-%(thisyear)s Mozilla 개발자 네트워크 및 개별 공헌자<br /> 콘텐츠 라이센스 고지<a href=\"%(copyright_url)s\">these licenses</a> &middot; <a href=\"%(about_url)s\">MDN 소개</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">코드 공헌</a> &middot; <a href=\"//www.mozilla.org/privacy/websites/\">개인 정보 보호 정책</a></bdi>"
 
-#: templates/base.html:205
+#: templates/base.html:204
 msgid "About MDN"
 msgstr "MDN 소개"
 
-#: templates/base.html:206
+#: templates/base.html:205
 msgid "Terms"
 msgstr ""
 
-#: templates/base.html:207
+#: templates/base.html:206
 #, fuzzy
 msgid "Privacy"
 msgstr "개인 정보 보호 정책"
 
-#: templates/base.html:208
+#: templates/base.html:207
 msgid "Cookies"
 msgstr "쿠키"
 
-#: templates/base.html:209
+#: templates/base.html:208
 #, fuzzy
 msgid "Contribute to the code"
 msgstr "MDN 웹 사이트 개발 참여"

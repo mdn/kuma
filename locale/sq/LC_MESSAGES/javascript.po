@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-04 05:22-0800\n"
+"POT-Creation-Date: 2015-12-19 09:39-0800\n"
 "PO-Revision-Date: 2015-11-21 17:09+0200\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,59 +23,59 @@ msgstr "Mbylle nënmenunë"
 msgid "Close notification"
 msgstr "Mbylle njoftimin"
 
-#: kuma/static/js/helpfulness.js:26
+#: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
 msgstr "A ju ndihmoi kjo faqe?"
 
-#: kuma/static/js/helpfulness.js:28
+#: kuma/static/js/helpfulness.js:34
 msgid "Yes"
 msgstr "Po"
 
-#: kuma/static/js/helpfulness.js:30
+#: kuma/static/js/helpfulness.js:36
 msgid "No"
 msgstr "Jo"
 
-#: kuma/static/js/helpfulness.js:32
+#: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
 msgstr "Mos më pyet më kurrë"
 
-#: kuma/static/js/helpfulness.js:53
+#: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
 msgstr "Përkthejeni në gjuhën time"
 
-#: kuma/static/js/helpfulness.js:54
+#: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
 msgstr "Bëjini shpjegimet më të qarta"
 
-#: kuma/static/js/helpfulness.js:55
+#: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
 msgstr "Shtoni më tepër hollësi"
 
-#: kuma/static/js/helpfulness.js:56
+#: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
 msgstr "Ndreqni të dhëna të pasakta"
 
-#: kuma/static/js/helpfulness.js:57
+#: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
 msgstr "Shtoni ose përmirësoni shembuj"
 
-#: kuma/static/js/helpfulness.js:58
+#: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
 msgstr "Kërkimi im do të duhej të shpinte në një tjetër artikull"
 
-#: kuma/static/js/helpfulness.js:59
+#: kuma/static/js/helpfulness.js:65
 msgid "Something else"
 msgstr "Diçka tjetër"
 
-#: kuma/static/js/helpfulness.js:63
+#: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."
 msgstr "Zgjidhni një..."
 
-#: kuma/static/js/helpfulness.js:77
+#: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
 msgstr "Hmmm. Çfarë do ta përmirësonte?"
 
-#: kuma/static/js/helpfulness.js:80
+#: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
 msgstr "Faleminderit! Do ta ndreqim."
 

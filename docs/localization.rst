@@ -31,7 +31,6 @@ Updating the Localizations
 
         $ python manage.py extract
         $ python manage.py merge
-        $ rm locale/**/*.po~  # Remove .po backup files created by merge.
 
 #.  Commit the files::
 
