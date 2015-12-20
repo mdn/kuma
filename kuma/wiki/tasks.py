@@ -244,7 +244,7 @@ def update_community_stats():
             FROM
               (SELECT DISTINCT creator_id
                FROM wiki_revision
-               WHERE created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS contributors
+               WHERE created >= NOW() - INTERVAL '1 year') AS contributors
             """)
         contributors = cursor.fetchone()
 
@@ -252,10 +252,9 @@ def update_community_stats():
             SELECT count(locale)
             FROM
               (SELECT DISTINCT wd.locale
-               FROM wiki_document wd,
-                                  wiki_revision wr
+               FROM wiki_document wd, wiki_revision wr
                WHERE wd.id = wr.document_id
-                 AND wr.created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS locales
+                 AND wr.created >= NOW() - INTERVAL '1 year') AS locales
             """)
         locales = cursor.fetchone()
     finally:
