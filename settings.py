@@ -145,6 +145,7 @@ MDN_LANGUAGES = (
     'tl',
     'tn',
     'tr',
+    'uk',
     'vi',
     'wo',
     'xh',
