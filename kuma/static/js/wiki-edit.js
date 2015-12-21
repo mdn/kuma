@@ -396,8 +396,13 @@
     // Injects a DIV with language to the effect of "you had a previous draft, want to restore it?"
     // This takes the place of an ugly, ugly confirmation box :(
     var $draftDiv;
-    function displayDraftBox(content) {
-        var text = gettext('You have a draft in progress. <a href="" class="restoreLink">Restore the draft content</a> or <a href="" class="discardLink">discard the draft</a>.');
+    function displayDraftBox(content, draft_time) {
+        var draft_time_str = draft_time ? draft_time : gettext('an unknown date');
+        var draft = gettext('You have a draft from:');
+        var restore = gettext('Restore the draft content');
+        var discard = gettext('Discard the draft');
+
+        var text = draft + ' ' + draft_time_str + '. <a href="" class="restoreLink">' + restore + '</a>. <a href="" class="discardLink">'+ discard +'</a>.';
         var $contentNode = $('#id_content');
         var editor;
 
@@ -544,6 +549,9 @@
     function saveDraft(val) {
         if (supportsLocalStorage) {
             localStorage.setItem(DRAFT_NAME, val || $form.find('textarea[name=content]').val());
+            var now = new Date();
+            var nowString = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+            localStorage.setItem(DRAFT_NAME + '#save-time', nowString);
             updateDraftState(gettext('saved'));
         }
     }
@@ -565,12 +573,13 @@
 
                 treatedDraft = $.trim(treatDraft(prev_draft)),
                 treatedServer = treatDraft($form.find('textarea[name=content]').val().trim());
-            if (prev_draft){
+            if (prev_draft) {
                 // draft matches server so discard draft
                 if (treatedDraft == treatedServer) {
                     clearDraft();
                 } else {
-                    displayDraftBox(prev_draft);
+                    var draft_time = localStorage.getItem(DRAFT_NAME + '#save-time');
+                    displayDraftBox(prev_draft, draft_time);
                 }
             }
         }
