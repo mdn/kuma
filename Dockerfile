@@ -17,8 +17,8 @@ RUN apt-get update && \
 WORKDIR /app
 COPY . /app
 
-RUN pip install --build ./build --cache-dir ./cache --no-deps \
-    -r requirements/compiled.txt && \
+RUN python scripts/peep.py --build ./build --cache-dir ./cache --no-deps \
+    -r requirements/compiled.txt -r requirements/default.txt && \
     rm -r build cache
 
 RUN npm install -g \

@@ -3,7 +3,7 @@
 *.sw?
 .vagrant
 kuma.box
-settings_local.py
+/settings_local.py
 pip-log.txt
 .coverage
 coverage.xml

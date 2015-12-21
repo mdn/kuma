@@ -1,7 +1,17 @@
+# sha256: LiSsXQBNtXFJdqBKwOgMbfbkfpjDVMssDYL4h51Pj9s
+Jinja2==2.7.3
+
+# sha256: pOwa_1m5WhS0XrLiN2GgF56YMZ2lp-t2tW6ozce4ccM
 MarkupSafe==0.23
-Jinja2==2.8.0
+
+# sha256: H2OoqxEVMKD_msrrEYB08R51ZLfBJPLn_Fb8rGQa7PI
 mysqlclient==1.3.6
+
+# sha256: s9NiusRxFydHzaNRMjjxFcvWxfi45jGb9ql6eJJyQJk
 lxml==3.4.4
-coverage==3.7.1
+
+# sha256: WbUVu327zdMH-BesOIVOgIOev6M8XbeX9lRQeTyUXA0
 newrelic==2.52.0.40
+
+# sha256: DxedfnXnyDtjQblZXKHzlN5wgUhKnjUq1m1VOhw9qik
 Pillow==2.9.0

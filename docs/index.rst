@@ -13,10 +13,8 @@ Contents:
    tests-performance
    troubleshooting
 
-   vendor
    celery
    email
    elasticsearch
    localization
    ckeditor
-

@@ -458,6 +458,7 @@ INSTALLED_APPS = (
     'dbgettext',
     'honeypot',
     'cacheback',
+    'django_extensions',
 
     'kuma.dashboards',
     'statici18n',
@@ -534,7 +535,6 @@ PUENTE = {
     # handles the extraction.
     'DOMAIN_METHODS': {
         'django': [
-            ('vendor/**', 'ignore'),
             ('kuma/**.py', 'python'),
             ('kuma/*/templates/admin/**.html',
              'django_babel.extract.extract_django'),
