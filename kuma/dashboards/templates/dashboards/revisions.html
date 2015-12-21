@@ -111,7 +111,7 @@
 
     // Hide IPs & wire Toggle IPs button, if present
     $('.revision_ip').toggle();
-    $showIPsButton.click(function(e) {
+    $showIPsButton.on('click', function(e) {
         $('.revision_ip').toggle();
     });
 
