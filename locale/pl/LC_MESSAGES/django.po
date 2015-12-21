@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2015-12-20 01:12+0000\n"
+"PO-Revision-Date: 2015-12-21 23:15+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -329,9 +329,9 @@ msgid "Content deleted by moderator"
 msgstr "Zawartość została usunięta przez moderatora"
 
 #: kuma/contentflagging/models.py:65
-#, fuzzy, python-format
+#, python-format
 msgid "%(object)s Flagged"
-msgstr "{object} Oznaczony"
+msgstr "%(object)s Oznaczony"
 
 #: kuma/contentflagging/models.py:97
 msgid "current status of flag review"
@@ -789,9 +789,8 @@ msgid "August 2011 Dev Derby Challenge - History API"
 msgstr "Wcześniejsze konkursy Dev Derby"
 
 #: kuma/demos/__init__.py:51
-#, fuzzy
 msgid "History API"
-msgstr "Historia"
+msgstr "API Historia"
 
 #: kuma/demos/__init__.py:52
 msgid "August 2011"
@@ -808,9 +807,8 @@ msgid "September 2011 Dev Derby Challenge - Geolocation"
 msgstr ""
 
 #: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
-#, fuzzy
 msgid "Geolocation"
-msgstr "Lokalizacja"
+msgstr "Geolokalizacja"
 
 #: kuma/demos/__init__.py:59
 msgid "September 2011"
@@ -919,9 +917,8 @@ msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
 msgstr ""
 
 #: kuma/demos/__init__.py:100
-#, fuzzy
 msgid "CSS 3D Transforms"
-msgstr "Stosowanie transformacji CSS"
+msgstr "Transformacje CSS 3D"
 
 #: kuma/demos/__init__.py:101
 msgid "March 2012"
@@ -1033,9 +1030,8 @@ msgid "September 2012 Dev Derby Challenge - Geolocation II"
 msgstr ""
 
 #: kuma/demos/__init__.py:142
-#, fuzzy
 msgid "Geolocation II"
-msgstr "Lokalizacja"
+msgstr "Geolokalizacja II"
 
 #: kuma/demos/__init__.py:143
 msgid "September 2012"
@@ -1208,9 +1204,8 @@ msgid "June 2013 Dev Derby Challenge - WebGL II"
 msgstr "Wcześniejsze konkursy Dev Derby"
 
 #: kuma/demos/__init__.py:207
-#, fuzzy
 msgid "WebGL II"
-msgstr "WebGL"
+msgstr "WebGL II"
 
 #: kuma/demos/__init__.py:208
 msgid "June 2013"
@@ -1269,9 +1264,8 @@ msgstr ""
 #: kuma/demos/__init__.py:354 kuma/demos/__init__.py:362
 #: kuma/demos/__init__.py:370 kuma/demos/__init__.py:378
 #: kuma/demos/__init__.py:386
-#, fuzzy
 msgid "MDN Documentation"
-msgstr "Dokumenty MDN"
+msgstr "Dokumentacja MDN"
 
 #: kuma/demos/__init__.py:228
 msgid ""
@@ -1288,9 +1282,8 @@ msgstr ""
 #: kuma/demos/__init__.py:355 kuma/demos/__init__.py:363
 #: kuma/demos/__init__.py:371 kuma/demos/__init__.py:379
 #: kuma/demos/__init__.py:387
-#, fuzzy
 msgid "Wikipedia Article"
-msgstr "Zobacz artykuł:"
+msgstr "Artykuł na Wikipedii"
 
 #: kuma/demos/__init__.py:229
 msgid "http://en.wikipedia.org/wiki/HTML5_audio"
@@ -1374,9 +1367,8 @@ msgid "http://www.w3.org/TR/css3-mediaqueries/"
 msgstr ""
 
 #: kuma/demos/__init__.py:256
-#, fuzzy
 msgid "Files"
-msgstr "Plik"
+msgstr "Pliki"
 
 #: kuma/demos/__init__.py:257
 msgid ""
@@ -1813,44 +1805,38 @@ msgid "Not an URL from a supported video service"
 msgstr ""
 
 #: kuma/demos/feeds.py:90
-#, fuzzy
 msgid "MDN demos"
-msgstr "Dema"
+msgstr "Dema MDN"
 
 #: kuma/demos/feeds.py:91
-#, fuzzy
 msgid "Demos submitted by MDN users"
-msgstr "Dokumenty autorstwa użytkowników MDN"
+msgstr "Dema przesłane przez użytkowników MDN"
 
 #: kuma/demos/feeds.py:157
-#, fuzzy
 msgid "MDN recent demos"
-msgstr "Najnowsze dema"
+msgstr "Najnowsze dema MDN"
 
 #: kuma/demos/feeds.py:158
-#, fuzzy
 msgid "Demos recently submitted to MDN"
-msgstr "Sortuj dema wg ostatnio przesłanych"
+msgstr "Dema ostatnio przesłane do MDN"
 
 #: kuma/demos/feeds.py:167
-#, fuzzy
 msgid "MDN featured demos"
 msgstr "Polecane dema"
 
 #: kuma/demos/feeds.py:168
-#, fuzzy
 msgid "Demos featured on MDN"
-msgstr "Porównaj na MDN:"
+msgstr "Dema polecane na MDN"
 
 #: kuma/demos/feeds.py:183
-#, fuzzy, python-format
+#, python-format
 msgid "MDN demos tagged %s"
-msgstr "Dema oznaczone {tag}"
+msgstr "Dema oznaczone %s"
 
 #: kuma/demos/feeds.py:186
-#, fuzzy, python-format
+#, python-format
 msgid "MDN demos tagged \"%s\""
-msgstr "Dema oznaczone {tag}"
+msgstr "Dema oznaczone „%s”"
 
 #: kuma/demos/feeds.py:202
 #, python-format
@@ -1858,9 +1844,9 @@ msgid "%s's MDN demos"
 msgstr ""
 
 #: kuma/demos/feeds.py:216
-#, fuzzy, python-format
+#, python-format
 msgid "MDN demo search for \"%s\""
-msgstr "Indeks %s został zdegradowany."
+msgstr "Szukaj dema dla „%s”"
 
 #: kuma/demos/feeds.py:217
 #, python-format
@@ -1884,9 +1870,8 @@ msgid "Finalist"
 msgstr ""
 
 #: kuma/demos/helpers.py:111
-#, fuzzy
 msgid "Featured"
-msgstr "Polecane dema"
+msgstr "Polecane"
 
 #: kuma/demos/helpers.py:266
 msgid "year"
@@ -1936,14 +1921,12 @@ msgid "what is your demo's name?"
 msgstr ""
 
 #: kuma/demos/models.py:365
-#, fuzzy
 msgid "slug"
-msgstr "Nowy ciąg słów:"
+msgstr "ciąg słów"
 
 #: kuma/demos/models.py:368
-#, fuzzy
 msgid "describe your demo in one line"
-msgstr "Opisz demo"
+msgstr "opisz demo w jednym wierszu"
 
 #: kuma/demos/models.py:371
 msgid "describe your demo in more detail (optional)"
@@ -1994,9 +1977,8 @@ msgid "have a video of your demo in action? (optional)"
 msgstr ""
 
 #: kuma/demos/models.py:433
-#, fuzzy
 msgid "select a ZIP file containing your demo"
-msgstr "Zaznacz maksymalnie pięć technologii użytych w tym demie"
+msgstr "wybierz plik ZIP zawierający twoje demo"
 
 #: kuma/demos/models.py:442
 msgid ""
@@ -2009,9 +1991,8 @@ msgid "Select the license that applies to your source code."
 msgstr ""
 
 #: kuma/demos/models.py:454
-#, fuzzy
 msgid "date created"
-msgstr "Utworzono"
+msgstr "data utworzenia"
 
 #: kuma/demos/models.py:647 kuma/demos/models.py:654
 msgid "ZIP file contains no acceptable files"
@@ -2037,9 +2018,8 @@ msgstr ""
 
 #: kuma/demos/views.py:73 kuma/demos/views.py:300 kuma/demos/views.py:328
 #: kuma/demos/views.py:343
-#, fuzzy
 msgid "access denied"
-msgstr "Dostęp zabroniony"
+msgstr "dostęp zabroniony"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:6
 #: kuma/demos/templates/demos/devderby_tag.html:21
@@ -2079,9 +2059,9 @@ msgstr ""
 #: kuma/demos/templates/demos/submit.html:15
 #: kuma/demos/templates/demos/submit_noauth.html:11
 #: kuma/demos/templates/demos/terms.html:10
-#, fuzzy, python-format
+#, python-format
 msgid "%(subtitle)s | Demo Studio"
-msgstr "{subtitle} | Demo Studio"
+msgstr "%(subtitle)s | Demo Studio"
 
 #: kuma/demos/templates/demos/delete.html:20
 msgid "MDN"
@@ -2162,9 +2142,9 @@ msgstr ""
 
 #: kuma/demos/templates/demos/detail.html:51
 #: kuma/demos/templates/demos/launch.html:80
-#, fuzzy, python-format
+#, python-format
 msgid "Go to the previous demo, %(demo_title)s"
-msgstr "Przejdź do poprzedniego dema, {demo_title}"
+msgstr "Przejdź do poprzedniego dema, %(demo_title)s"
 
 #: kuma/demos/templates/demos/detail.html:51
 msgid "Prev"
@@ -2172,9 +2152,9 @@ msgstr "Poprzednie"
 
 #: kuma/demos/templates/demos/detail.html:55
 #: kuma/demos/templates/demos/launch.html:84
-#, fuzzy, python-format
+#, python-format
 msgid "Go to the next demo, %(demo_title)s"
-msgstr "Przejdź do następnego dema, {demo_title}"
+msgstr "Przejdź do następnego dema, %(demo_title)s"
 
 #: kuma/demos/templates/demos/detail.html:55
 #: kuma/demos/templates/demos/detail.html:69
@@ -2259,18 +2239,18 @@ msgid "Built using"
 msgstr "Użyte technologie:"
 
 #: kuma/demos/templates/demos/detail.html:156
-#, fuzzy, python-format
+#, python-format
 msgid "See more demos made with %(tag_title)s"
-msgstr "Zobacz więcej dem oznaczonych etykietą {tag_title}"
+msgstr "Zobacz więcej dem oznaczonych etykietą %(tag_title)s"
 
 #: kuma/demos/templates/demos/detail.html:165
 #: kuma/demos/templates/demos/elements/submission_thumb.html:15
-#, fuzzy, python-format
+#, python-format
 msgid "This demo has been viewed %(num)s time"
 msgid_plural "This demo has been viewed %(num)s times"
-msgstr[0] "To demo było oglądane {count} raz"
-msgstr[1] "To demo było oglądane {count} razy"
-msgstr[2] "To demo było oglądane {count} razy"
+msgstr[0] "To demo było oglądane %(num)s raz"
+msgstr[1] "To demo było oglądane %(num)s razy"
+msgstr[2] "To demo było oglądane %(num)s razy"
 
 #: kuma/demos/templates/demos/detail.html:165
 #, python-format
@@ -2282,12 +2262,12 @@ msgstr[2] ""
 
 #: kuma/demos/templates/demos/detail.html:166
 #: kuma/demos/templates/demos/elements/submission_thumb.html:16
-#, fuzzy, python-format
+#, python-format
 msgid "%(num)s person liked this demo"
 msgid_plural "%(num)s people liked this demo"
-msgstr[0] "{count} osobie podoba się to demo"
-msgstr[1] "{count} osobom podoba się to demo"
-msgstr[2] "{count} osobom podoba się to demo"
+msgstr[0] "%(num)s osobie podoba się to demo"
+msgstr[1] "%(num)s osobom podoba się to demo"
+msgstr[2] "%(num)s osobom podoba się to demo"
 
 #: kuma/demos/templates/demos/detail.html:166
 #, python-format
@@ -2318,9 +2298,8 @@ msgid "More About This Demo From The Author"
 msgstr "Więcej informacji od autora o tym demie"
 
 #: kuma/demos/templates/demos/detail.html:207
-#, fuzzy
 msgid "About this Demo"
-msgstr "Usunąć to demo?"
+msgstr "Informacje o tym demie"
 
 #: kuma/demos/templates/demos/detail.html:209
 #, python-format
@@ -2338,9 +2317,9 @@ msgstr ""
 "To demo jest wydane na zasadach licencji <a href=\"%(link)s\">%(title)s</a>."
 
 #: kuma/demos/templates/demos/detail.html:225
-#, fuzzy, python-format
+#, python-format
 msgid "More by %(creator)s"
-msgstr "Więcej autorstwa {creator}"
+msgstr "Więcej autorstwa %(creator)s"
 
 #: kuma/demos/templates/demos/detail.html:237
 #: kuma/demos/templates/demos/launch.html:63
@@ -2416,9 +2395,9 @@ msgstr "Artykuły"
 
 #: kuma/demos/templates/demos/devderby_tag.html:8
 #: kuma/demos/templates/demos/listing_tag.html:7
-#, fuzzy, python-format
+#, python-format
 msgid "Demos tagged %(tag)s"
-msgstr "Dema oznaczone {tag}"
+msgstr "Dema oznaczone %(tag)s"
 
 #: kuma/demos/templates/demos/devderby_tag.html:22
 msgid "Challenges"
@@ -2443,9 +2422,9 @@ msgstr "Wysyłki"
 #: kuma/demos/templates/demos/devderby_tag.html:55
 #: kuma/demos/templates/demos/home.html:136
 #: kuma/demos/templates/demos/listing_tag.html:51
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to a feed of %(tag_title)s demos"
-msgstr "Subskrybuj kanał dem „{tag_title}”"
+msgstr "Subskrybuj kanał dem „%(tag_title)s”"
 
 #: kuma/demos/templates/demos/feed_item_description.html:7
 msgid "Submitted by:"
@@ -2495,9 +2474,8 @@ msgstr "Uruchom"
 
 #: kuma/demos/templates/demos/home.html:106
 #: kuma/demos/templates/demos/home.html:107
-#, fuzzy
 msgid "Search demos"
-msgstr "Szukaj dokumentacji"
+msgstr "Szukaj dem"
 
 #: kuma/demos/templates/demos/home.html:111
 msgid "<b>or</b>"
@@ -2547,35 +2525,35 @@ msgid "Subscribe to a feed of all demos"
 msgstr "Subskrybuj kanał wszystkich dem"
 
 #: kuma/demos/templates/demos/listing_search.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Search for \"%(query)s\""
-msgstr "Szukaj „{q}”"
+msgstr "Szukaj „%(query)s”"
 
 #: kuma/demos/templates/demos/listing_search.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search results for \"%(query)s\""
-msgstr "Wyniki szukania dla „{query}”"
+msgstr "Wyniki szukania dla „%(query)s”"
 
 #: kuma/demos/templates/demos/listing_search.html:27
-#, fuzzy, python-format
+#, python-format
 msgid "Search demos for \"%(query)s\""
-msgstr "Szukaj dem dla „{q}”"
+msgstr "Szukaj dem dla „%(query)s”"
 
 #: kuma/demos/templates/demos/listing_search.html:33
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to a feed of search results for \"%(query)s\""
-msgstr "Subskrybuj kanał wyników szukania dla „{q}”"
+msgstr "Subskrybuj kanał wyników szukania dla „%(query)s”"
 
 #: kuma/demos/templates/demos/listing_tag.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "%(tag_title)s Demos"
-msgstr "Dema {tag_title}"
+msgstr "Dema %(tag_title)s"
 
 #: kuma/demos/templates/demos/submit.html:13
 #: kuma/demos/templates/demos/submit.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Edit %(demo_title)s"
-msgstr "Edytuj {demo_title}"
+msgstr "Edytuj %(demo_title)s"
 
 #: kuma/demos/templates/demos/submit.html:15
 #: kuma/demos/templates/demos/submit.html:55
@@ -2808,9 +2786,8 @@ msgid "Terms for Contributors"
 msgstr "Regulamin dla twórców"
 
 #: kuma/demos/templates/demos/terms.html:20
-#, fuzzy
 msgid "Demo Studio: Terms for Contributors"
-msgstr "Regulamin dla twórców"
+msgstr "Demo Studio: Regulamin dla twórców"
 
 #: kuma/demos/templates/demos/terms.html:107
 msgid "Rights Representation Details"
@@ -2840,9 +2817,9 @@ msgstr "Szukaj"
 
 #: kuma/demos/templates/demos/elements/submission_creator.html:2
 #: kuma/demos/templates/demos/elements/user_link.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "See %(display_name)s's profile"
-msgstr "Zobacz profil {display_name}"
+msgstr "Zobacz profil %(display_name)s"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:6
 #, python-format
@@ -2929,9 +2906,9 @@ msgid "Feed"
 msgstr "Kanał"
 
 #: kuma/demos/templates/demos/elements/submission_thumb.html:23
-#, fuzzy, python-format
+#, python-format
 msgid "Launch %(title)s"
-msgstr "Uruchom {title}"
+msgstr "Uruchom %(title)s"
 
 #: kuma/landing/templates/landing/fellowship.html:12
 msgid ""
@@ -2961,9 +2938,8 @@ msgid "Search the docs"
 msgstr "Szukaj dokumentacji"
 
 #: kuma/landing/templates/landing/homepage.html:45
-#, fuzzy
 msgid "Show topics"
-msgstr "Wyświetl porównanie"
+msgstr "Wyświetl tematy"
 
 #: kuma/landing/templates/landing/homepage.html:66
 msgid "Web Technologies"
@@ -2983,9 +2959,8 @@ msgid "more..."
 msgstr "więcej…"
 
 #: kuma/landing/templates/landing/homepage.html:79
-#, fuzzy
 msgid "Mozilla<br> Docs"
-msgstr "Mozilla"
+msgstr "Dokumenty<br>Mozilli"
 
 #: kuma/landing/templates/landing/homepage.html:83 templates/base.html:156
 msgid "Firefox Marketplace"
@@ -3036,9 +3011,8 @@ msgid "Open Web and Mobile"
 msgstr "Open Web i Mobile"
 
 #: kuma/landing/templates/landing/homepage.html:113
-#, fuzzy
 msgid "Learn Web Development"
-msgstr "Web Development"
+msgstr "Dowiedz się o Web Development"
 
 #: kuma/landing/templates/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
@@ -3049,9 +3023,8 @@ msgid "Celebrate ten years of documenting your Web."
 msgstr ""
 
 #: kuma/landing/templates/landing/homepage.html:124
-#, fuzzy
 msgid "Build Open Web Apps"
-msgstr "Aplikacje Open Web"
+msgstr "Twórz aplikacje Open Web"
 
 #: kuma/landing/templates/landing/homepage.html:133
 msgid ""
@@ -3066,17 +3039,18 @@ msgid "Get Involved"
 msgstr "Dołącz do nas"
 
 #: kuma/landing/templates/landing/homepage.html:140
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span "
 "class=\"number\">%(contributors)s</span> contributors</span> <span "
 "class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<span class=\"row1\">Dołącz do<span class=\"number\">5453</span> "
-"współtwórców, którzy tworzą i tłumaczą</span> <span class=\"row2\">w <span "
-"class=\"number\">36</span> językach</span> <span class=\"row3\">z całego "
-"świata.</span>"
+"<p class=\"numbers\"> <span class=\"row1\">Dołącz do <span "
+"class=\"number\">%(contributors)s</span> współtwórców, którzy tworzą i "
+"tłumaczą</span> <span class=\"row2\">w <span "
+"class=\"number\">%(locales)s</span> językach i lokalizacjach</span> <span "
+"class=\"row3\">z całego świata.</span> </p>"
 
 #: kuma/landing/templates/landing/homepage.html:147
 #: kuma/landing/templates/landing/homepage.html:154
@@ -3354,7 +3328,6 @@ msgstr ""
 "Wyszukiwanie jest tymczasowo niedostępne. Spróbuj ponownie za kilka minut."
 
 #: kuma/search/utils.py:17
-#, fuzzy
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
@@ -3379,9 +3352,9 @@ msgid "Search Mozilla Developer Network documentation"
 msgstr "Przeszukaj dokumentację Mozilla Developer Network"
 
 #: kuma/search/templates/search/results.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr "Wyniki szukania dla „{query}”"
+msgstr "Wyniki szukania dla „%(query)s”"
 
 #: kuma/search/templates/search/results.html:39
 #, python-format
@@ -3492,18 +3465,16 @@ msgid "Filter by"
 msgstr "Filtruj wg"
 
 #: kuma/spam/forms.py:17
-#, fuzzy
 msgid "The submitted data contains invalid content."
-msgstr "To zawiera niewłaściwą treść"
+msgstr "To zawiera niewłaściwą treść."
 
 #: kuma/spam/forms.py:33
 msgid "The form data has not yet been validated. Please try again."
 msgstr ""
 
 #: kuma/spam/models.py:10
-#, fuzzy
 msgid "created"
-msgstr "Utworzono"
+msgstr "utworzono"
 
 #: kuma/users/adapters.py:17
 #, fuzzy, python-format
@@ -3563,9 +3534,8 @@ msgid "Plain text"
 msgstr ""
 
 #: kuma/users/forms.py:40
-#, fuzzy
 msgid "Send me the newsletter"
-msgstr "Zobacz następne demo"
+msgstr "Wyślij mi biuletyn"
 
 #: kuma/users/forms.py:42
 msgid "Preferred format"
@@ -3597,9 +3567,8 @@ msgid "Expertise"
 msgstr "Obszary wiedzy specjalistycznej"
 
 #: kuma/users/forms.py:173
-#, fuzzy
 msgid "Username"
-msgstr "Cześć {username}"
+msgstr "Nazwa użytkownika"
 
 #: kuma/users/forms.py:180 kuma/users/models.py:139
 #: kuma/users/templates/users/user_detail.html:117
@@ -3609,9 +3578,8 @@ msgstr ""
 #: kuma/users/forms.py:189 kuma/users/models.py:154
 #: kuma/users/templates/users/user_detail.html:121
 #: kuma/wiki/templates/wiki/includes/document_macros.html:109
-#, fuzzy
 msgid "Twitter"
-msgstr "Udostępnij na Twitterze"
+msgstr "Twitter"
 
 #: kuma/users/forms.py:198 kuma/users/models.py:149
 #: kuma/users/templates/users/user_detail.html:126
@@ -3632,16 +3600,14 @@ msgstr ""
 
 #: kuma/users/forms.py:225 kuma/users/models.py:144
 #: kuma/users/templates/users/user_detail.html:143
-#, fuzzy
 msgid "Mozillians"
-msgstr "Mozilla"
+msgstr "Mozillianie"
 
 #: kuma/users/forms.py:234 kuma/users/models.py:164
 #: kuma/users/templates/users/user_detail.html:147
 #: kuma/wiki/templates/wiki/includes/document_macros.html:110
-#, fuzzy
 msgid "Facebook"
-msgstr "Udostępnij na Facebooku"
+msgstr "Facebook"
 
 #: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
@@ -3683,14 +3649,12 @@ msgid "%s (no longer active)"
 msgstr ""
 
 #: kuma/users/models.py:51
-#, fuzzy
 msgid "Language"
 msgstr "Języki"
 
 #: kuma/users/models.py:56
-#, fuzzy
 msgid "Homepage"
-msgstr "Początek"
+msgstr "Strona startowa"
 
 #: kuma/users/models.py:60
 msgid ""
@@ -3711,7 +3675,6 @@ msgid "Location"
 msgstr "Lokalizacja"
 
 #: kuma/users/models.py:85
-#, fuzzy
 msgid "About Me"
 msgstr "Informacje o mnie"
 
