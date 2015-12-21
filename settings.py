@@ -534,7 +534,6 @@ PUENTE = {
     # handles the extraction.
     'DOMAIN_METHODS': {
         'django': [
-            ('vendor/**', 'ignore'),
             ('kuma/**.py', 'python'),
             ('kuma/*/templates/admin/**.html',
              'django_babel.extract.extract_django'),

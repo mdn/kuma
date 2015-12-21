@@ -1,0 +1,9 @@
+coverage==3.7.1
+django-debug-toolbar==1.4
+django-devserver==0.8.0
+gunicorn==19.4.1
+locustio==0.7.3
+pep8==1.6.2
+pyflakes==1.0.0
+sqlparse==0.1.18
+tox==2.2.1
