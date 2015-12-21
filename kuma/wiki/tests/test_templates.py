@@ -1,33 +1,31 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 import time
 import urllib
+from datetime import datetime
 
-from BeautifulSoup import BeautifulSoup
 import mock
-from nose import SkipTest
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
-from pyquery import PyQuery as pq
-
+from BeautifulSoup import BeautifulSoup
+from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
-from django.utils.http import urlquote
 from django.test.utils import override_settings
-
-from constance import config
+from django.utils.http import urlquote
 from jingo.helpers import urlparams
+from nose import SkipTest
+from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
 from waffle.models import Flag
 
-from kuma.core.tests import SkippedTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
-from ..events import EditDocumentEvent
+
+from . import (WikiTestCase, create_topical_parents_docs, document,
+               new_document_data, revision)
 from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
-from ..models import Document, Revision, HelpfulVote, DocumentTag
-from . import (WikiTestCase, document, revision, new_document_data,
-               create_topical_parents_docs)
+from ..events import EditDocumentEvent
+from ..models import Document, DocumentTag, Revision
 
 
 DOCUMENT_EDITED_EMAIL_CONTENT = """
@@ -1064,64 +1062,6 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         link = doc('#doc-content a')
         eq_('Prueba', link.text())
         eq_('/es/docs/prueba', link[0].attrib['href'])
-
-
-class HelpfulVoteTests(UserTestCase, SkippedTestCase):
-
-    def setUp(self):
-        super(HelpfulVoteTests, self).setUp()
-        self.document = _create_document()
-
-    def test_vote_yes(self):
-        """Test voting helpful."""
-        d = self.document
-        user = self.user_model.objects.get(username='testuser')
-        self.client.login(username='testuser', password='testpass')
-        response = self.client.post(reverse('wiki.document_vote',
-                                            args=[self.document.slug]),
-                                    {'helpful': 'Yes'}, follow=True)
-
-        eq_(200, response.status_code)
-        votes = HelpfulVote.objects.filter(document=d, creator=user)
-        eq_(1, votes.count())
-        assert votes[0].helpful
-
-    def test_vote_no(self):
-        """Test voting not helpful."""
-        d = self.document
-        user = self.user_model.objects.get(username='testuser')
-        self.client.login(username='testuser', password='testpass')
-        response = self.client.post(reverse('wiki.document_vote', args=[d.slug]),
-                                    {'not-helpful': 'No'}, follow=True)
-        eq_(200, response.status_code)
-        votes = HelpfulVote.objects.filter(document=d, creator=user)
-        eq_(1, votes.count())
-        assert not votes[0].helpful
-
-    def test_vote_anonymous(self):
-        """Test that voting works for anonymous user."""
-        d = self.document
-        response = self.client.post(reverse('wiki.document_vote', args=[d.slug]),
-                                    {'helpful': 'Yes'}, follow=True)
-        eq_(200, response.status_code)
-        votes = HelpfulVote.objects.filter(document=d, creator=None)
-        votes = votes.exclude(anonymous_id=None)
-        eq_(1, votes.count())
-        assert votes[0].helpful
-
-    def test_vote_ajax(self):
-        """Test voting via ajax."""
-        d = self.document
-        url = reverse('wiki.document_vote', args=[d.slug])
-        response = self.client.post(url, data={'helpful': 'Yes'},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
-        eq_('{"message": "Glad to hear it &mdash; thanks for the feedback!"}',
-            response.content)
-        votes = HelpfulVote.objects.filter(document=d, creator=None)
-        votes = votes.exclude(anonymous_id=None)
-        eq_(1, votes.count())
-        assert votes[0].helpful
 
 
 class SelectLocaleTests(UserTestCase, WikiTestCase):
