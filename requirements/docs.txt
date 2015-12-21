@@ -1,2 +1,8 @@
-Sphinx
+# sha256: CjoiZeHvsN76ci0fQpcw3J35da3DxgrH0rQyvfA8BB0
+Pygments==2.0.2
+
+# sha256: OtTLiatLql-buZVIqaH7USez7oOlITuD2k3nV4r9yJE
+Sphinx==1.3.3
+
+# sha256: gzVOWrenj6HFuYeZ-JRYPEXpwrHYQgxkxqd4th7kUF4
 mdn-sphinx-theme==2015.2

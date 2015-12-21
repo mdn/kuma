@@ -1,0 +1,20 @@
+# sha256: 0a6hxKphuDZtakLdNlBiL7-cY07STq9_N5yLlw5e1E4
+coverage==3.7.1
+
+# sha256: gPnTaQ4NuDDDdq6XFygUjXYN1k1ETRwJJ0fWY6DXL3M
+django-nose==1.4.2
+
+# sha256: Ig4fl-zi3vNFSu7MUHBBlRjk4Wxao50h61CaOPR4R-w
+locustio==0.7.3
+
+# sha256: 2tzdwK77-Z7qIU4PEjK5Ty-pvZj6g1NxHayxEr_Luyo
+nose==1.3.7
+
+# sha256: SqEp342QB7GSv4IBP0FVM5lGUtfKqTDQAmh-tCpsKkE
+pep8==1.6.2
+
+# sha256: Bx0SHp57MwWKobpd57zpuXv6MUnP4ay7ZYfCH8HI7aE
+pyflakes==1.0.0
+
+# sha256: GCPJPKN4CSwQu95CghPT9QZrMK2wnlwAEIeoPj4KQCo
+tox==2.3.1

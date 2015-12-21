@@ -1,5 +1,11 @@
+# sha256: wl70c4sI_fswlCR8AS8_0bKZcqy9N_mIBwsqhfX77gA
 ansible==1.9.2
-codecov
-tox==2.2.1
-lxml==3.5.0
-python-magic==0.4.10
+
+# sha256: X3mpXRNV7Rt-6SRB_Nl4lPeckhj062LvVDO7hA0BhG4
+codecov==1.6.3
+
+# sha256: GCPJPKN4CSwQu95CghPT9QZrMK2wnlwAEIeoPj4KQCo
+tox==2.3.1
+
+# sha256: 0a6hxKphuDZtakLdNlBiL7-cY07STq9_N5yLlw5e1E4
+coverage==3.7.1

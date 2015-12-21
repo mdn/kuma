@@ -30,43 +30,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Uncomment to enable a real celery queue
 CELERY_ALWAYS_EAGER = False
 
-INSTALLED_APPS = INSTALLED_APPS + (
-    "django_extensions",
-#    "debug_toolbar",
-    "devserver",
-)
-
-DEBUG_TOOLBAR_CONFIG = {
-    "INTERCEPT_REDIRECTS": False,
-}
-
-DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.versions.VersionsPanel',
-    'debug_toolbar.panels.timer.TimerPanel',
-    'debug_toolbar.panels.settings.SettingsPanel',
-    'debug_toolbar.panels.headers.HeadersPanel',
-    'debug_toolbar.panels.request.RequestPanel',
-    'debug_toolbar.panels.templates.TemplatesPanel',
-    'debug_toolbar.panels.cache.CachePanel',
-    'debug_toolbar.panels.sql.SQLPanel',
-    'debug_toolbar.panels.signals.SignalsPanel',
-    'debug_toolbar.panels.logging.LoggingPanel',
-    'debug_toolbar.panels.redirects.RedirectsPanel',
-)
-
-DEVSERVER_MODULES = (
-    # sql modules interfere with saving some KumaScript templates
-    #'devserver.modules.sql.SQLRealTimeModule',
-    #'devserver.modules.sql.SQLSummaryModule',
-    'devserver.modules.profile.ProfileSummaryModule',
-
-    # Modules not enabled by default
-    #'devserver.modules.ajax.AjaxDumpModule',
-    #'devserver.modules.profile.MemoryUseModule',
-    #'devserver.modules.cache.CacheSummaryModule',
-    #'devserver.modules.profile.LineProfilerModule',
-)
-
 # This is used to hash some things in Django.
 SECRET_KEY = 'jenny8675309'
 
