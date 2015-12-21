@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET
 from smuggler.forms import ImportForm
 
 from kuma.contentflagging.models import FLAG_NOTIFICATIONS, ContentFlag
@@ -17,8 +17,7 @@ from kuma.users.models import User
 from ..constants import ALLOWED_TAGS, REDIRECT_CONTENT
 from ..decorators import allow_CORS_GET, process_document_path
 from ..forms import DocumentContentFlagForm
-from ..models import Document, EditorToolbar, HelpfulVote
-from ..utils import locale_and_slug_from_path
+from ..models import Document, EditorToolbar
 
 
 def ckeditor_config(request):
@@ -118,46 +117,6 @@ def flag(request, document_slug, document_locale):
         form = DocumentContentFlagForm(data=request.GET)
 
     return render(request, 'wiki/flag.html', {'form': form, 'doc': doc})
-
-
-@block_user_agents
-@require_POST
-def helpful_vote(request, document_path):
-    """
-    Vote for Helpful/Not Helpful document
-    """
-    document_locale, document_slug, needs_redirect = (
-        locale_and_slug_from_path(document_path, request))
-
-    document = get_object_or_404(
-        Document, locale=document_locale, slug=document_slug)
-
-    if not document.has_voted(request):
-        ua = request.META.get('HTTP_USER_AGENT', '')[:1000]  # 1000 max_length
-        vote = HelpfulVote(document=document, user_agent=ua)
-
-        if 'helpful' in request.POST:
-            vote.helpful = True
-            message = ugettext(
-                'Glad to hear it &mdash; thanks for the feedback!')
-        else:
-            message = ugettext(
-                'Sorry to hear that. Perhaps one of the solutions '
-                'below can help.')
-
-        if request.user.is_authenticated():
-            vote.creator = request.user
-        else:
-            vote.anonymous_id = request.anonymous.anonymous_id
-
-        vote.save()
-    else:
-        message = ugettext('You already voted on this Article.')
-
-    if request.is_ajax():
-        return JsonResponse({'message': message})
-
-    return redirect(document)
 
 
 @block_user_agents

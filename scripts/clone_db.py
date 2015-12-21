@@ -103,7 +103,6 @@ TABLES_TO_DUMP=[x.strip() for x in """
     wiki_documenttag
     wiki_documentzone
     wiki_editortoolbar
-    wiki_helpfulvote
     wiki_localizationtag
     wiki_localizationtaggedrevision
     wiki_reviewtag

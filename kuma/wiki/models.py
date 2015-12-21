@@ -1396,20 +1396,6 @@ Full traceback:
                  for grandchild in child.get_descendants(limit, levels + 1)]
         return results
 
-    def has_voted(self, request):
-        """Did the user already vote for this document?"""
-        if request.user.is_authenticated():
-            qs = HelpfulVote.objects.filter(document=self,
-                                            creator=request.user)
-        elif request.anonymous.has_id:
-            anon_id = request.anonymous.anonymous_id
-            qs = HelpfulVote.objects.filter(document=self,
-                                            anonymous_id=anon_id)
-        else:
-            return False
-
-        return qs.exists()
-
     def is_watched_by(self, user):
         """Return whether `user` is notified of edits to me."""
         from .events import EditDocumentEvent
@@ -1763,17 +1749,6 @@ class RevisionIP(models.Model):
                           blank=True, null=True)
 
     objects = RevisionIPManager()
-
-
-class HelpfulVote(models.Model):
-    """Helpful or Not Helpful vote on Document."""
-    document = models.ForeignKey(Document, related_name='poll_votes')
-    helpful = models.BooleanField(default=False)
-    created = models.DateTimeField(default=datetime.now, db_index=True)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                related_name='poll_votes', null=True)
-    anonymous_id = models.CharField(max_length=40, db_index=True)
-    user_agent = models.CharField(max_length=1000)
 
 
 class EditorToolbar(models.Model):

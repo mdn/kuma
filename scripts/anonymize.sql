@@ -62,7 +62,6 @@ SET FOREIGN_KEY_CHECKS=0;
 -- wiki_documenttag
 -- wiki_documentzone
 -- wiki_editortoolbar
--- wiki_helpfulvote
 -- wiki_localizationtag
 -- wiki_localizationtaggedrevision
 -- wiki_reviewtag
