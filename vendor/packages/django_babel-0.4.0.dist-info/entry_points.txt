@@ -1,3 +1,0 @@
-[babel.extractors]
-django = django_babel.extract:extract_django
-
