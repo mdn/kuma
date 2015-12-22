@@ -12,6 +12,9 @@ django-tests: in_vagrant
 performance-tests: in_vagrant
 	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
 
+install:
+	python scripts/peep.py install -r requirements/default.txt
+
 # Note: this target should be run from the host machine with selenium running
 browser-tests: on_host
 	pushd tests/ui ; ./node_modules/.bin/intern-runner config=intern-local d=developer.allizom.org b=firefox; popd
@@ -50,4 +53,4 @@ locale:
 		done
 
 # Those tasks don't have file targets
-.PHONY: django-tests performance-tests browser-tests clean in_vagrant on_host coverage locale
+.PHONY: django-tests performance-tests browser-tests clean in_vagrant on_host coverage locale install

@@ -46,8 +46,8 @@ django-appconf==1.0.1
 # sha256: syja4OWUAx17D_3tUf1t9gZ31FCa7jZ3ATo6L3baTnA
 django-babel==0.4.0
 
-# sha256: QfrsV0bopoakDk2zwRlUXaT_t2TPQ4RvpFNpA61Y9wA
-django-cacheback==0.9.1
+# sha256: L8IeDteO6OTMB6wsWTayf5VsmcgfxPll6W-ycXEYCBk
+django-cacheback==1.0
 
 # sha256: JUqVsKQ4bfH9lJgjlC9jEsgPujyIxe-tecrYZIvF_rU
 django-celery==3.1.17
