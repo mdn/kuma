@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2015-12-21 23:15+0000\n"
+"PO-Revision-Date: 2015-12-21 23:32+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -252,6 +252,8 @@ msgid ""
 "You need a special permission to use API keys. You may request permission by"
 " <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
+"Aby używać kluczy API musisz mieć specjalne uprawnienia. Możesz poprosić o "
+"te uprawnienia <a href=\"%(bugzilla_url)s\">wypełniając zgłoszenie</a>."
 
 #: kuma/authkeys/templates/authkeys/new.html:7
 msgid ""
@@ -3722,22 +3724,22 @@ msgid "Username is required."
 msgstr ""
 
 #: kuma/users/signup.py:8
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Username is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
-"Treść jest zbyt krótka (liczba znaków: %(show_value)s) – musi mieć co "
-"najmniej %(limit_value)s znaków."
+"Nazwa użytkownika jest za krótka (liczba znaków: %(show_value)s) – musi mieć"
+" co najmniej %(limit_value)s znaków."
 
 #: kuma/users/signup.py:10
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Username is too long (%(show_value)s characters). It must be %(limit_value)s"
 " characters or less."
 msgstr ""
-"Treść jest zbyt krótka (liczba znaków: %(show_value)s) – musi mieć co "
-"najmniej %(limit_value)s znaków."
+"Nazwa użytkownika jest za długa (liczba znaków: %(show_value)s) – musi mieć "
+"co najmniej %(limit_value)s znaków."
 
 #: kuma/users/signup.py:13
 msgid "You must agree to the terms of use."
@@ -3748,9 +3750,8 @@ msgid "Take the next step to get involved on MDN!"
 msgstr "Zrób kolejny krok, by zaangażować się na MDN!"
 
 #: kuma/users/views.py:236
-#, fuzzy
 msgid "Email address"
-msgstr "Adresy e-mail"
+msgstr "Adres e-mail"
 
 #: kuma/users/views.py:295
 #, python-format
@@ -3758,9 +3759,9 @@ msgid "%(email)s <b>Verified</b>"
 msgstr ""
 
 #: kuma/users/views.py:298
-#, fuzzy, python-format
+#, python-format
 msgid "%(email)s Unverified"
-msgstr "Nie zweryfikowany"
+msgstr "%(email)s Nie zweryfikowany"
 
 #: kuma/users/views.py:301 kuma/users/templates/socialaccount/signup.html:142
 msgid "Other:"
@@ -3782,9 +3783,9 @@ msgid "Email addresses"
 msgstr "Adresy e-mail"
 
 #: kuma/users/templates/account/email.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr "{email} jest twoim <em>podstawowym</em> adresem e-mail"
+msgstr "%(email)s jest twoim <em>podstawowym</em> adresem e-mail"
 
 #: kuma/users/templates/account/email.html:15
 msgid "You've also added the following email addresses:"
@@ -3948,7 +3949,6 @@ msgid ""
 msgstr ""
 
 #: kuma/users/templates/account/password_reset_from_key.html:23
-#, fuzzy
 msgid "Change password"
 msgstr "Zmień hasło"
 
@@ -3980,12 +3980,10 @@ msgstr "Masz już profil? <a href=\"%(login_url)s\">Zaloguj się</a>."
 
 #: kuma/users/templates/account/signup_closed.html:3
 #: kuma/users/templates/account/signup_closed.html:7
-#, fuzzy
 msgid "Profile Creation Disabled"
-msgstr "Data utworzenia"
+msgstr "Rejestracja jest wyłączona"
 
 #: kuma/users/templates/account/signup_closed.html:9
-#, fuzzy
 msgid "We are sorry, but profile creation is currently disabled."
 msgstr "Przepraszamy, ale rejestracja obecnie jest nieczynna."
 
