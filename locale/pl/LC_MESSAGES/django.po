@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2015-12-22 22:21+0000\n"
+"PO-Revision-Date: 2015-12-22 23:00+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -1075,7 +1075,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:141
 msgid "September 2012 Dev Derby Challenge - Geolocation II"
-msgstr ""
+msgstr "Konkurs Dev Derby Wrzesień 2012 – Geolokalizacja II"
 
 #: kuma/demos/__init__.py:142
 msgid "Geolocation II"
@@ -1083,19 +1083,19 @@ msgstr "Geolokalizacja II"
 
 #: kuma/demos/__init__.py:143
 msgid "September 2012"
-msgstr ""
+msgstr "Wrzesień 2012"
 
 #: kuma/demos/__init__.py:148
 msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
-msgstr ""
+msgstr "Konkurs Dev Derby Październik 2012 – CSS Media Queries II"
 
 #: kuma/demos/__init__.py:149
 msgid "CSS Media Queries II"
-msgstr ""
+msgstr "CSS Media Queries II"
 
 #: kuma/demos/__init__.py:150
 msgid "October 2012"
-msgstr ""
+msgstr "Październik 2012"
 
 #: kuma/demos/__init__.py:151 kuma/demos/__init__.py:152
 msgid ""
@@ -1103,18 +1103,23 @@ msgid ""
 "design. They are now even a W3C Recommendation! They can tell you a lot more"
 " about a display than just its width. What can you do with Media Queries?"
 msgstr ""
+"Technologia CSS Media Queries jest obecnie powszechnie stosowanym narzędziem"
+" do projektowania dla urządzeń mobilnych stron internetowych wchodzących w "
+"interakcję z użytkownikiem. Ma nawet rekomendację organizacji W3C! Może "
+"powiedzieć ci o wiele więcej o wyświetlaczu niż tylko jego szerokość. Co "
+"można zrobić za pomocą Media Queries?"
 
 #: kuma/demos/__init__.py:155
 msgid "November 2012 Dev Derby Challenge - Fullscreen API"
-msgstr ""
+msgstr "Konkurs Dev Derby Listopad 2012 – API Fullscreen"
 
 #: kuma/demos/__init__.py:156
 msgid "Fullscreen API"
-msgstr ""
+msgstr "API Fullscreen"
 
 #: kuma/demos/__init__.py:157
 msgid "November 2012"
-msgstr ""
+msgstr "Listopad 2012"
 
 #: kuma/demos/__init__.py:158 kuma/demos/__init__.py:159
 msgid ""
@@ -1122,18 +1127,21 @@ msgid ""
 "You can even detect full screen state changes and style full screen pages "
 "specially. Talk about immersive!"
 msgstr ""
+"Za pomocą API Fullscreen można uciec od ograniczeń okna przeglądarki. Można "
+"wykryć przejścia w tryb pełnoekranowy i nadać stronom specjalny styl w "
+"trakcie przeglądania w tym trybie. Dyskusja o tym jest zajmująca!"
 
 #: kuma/demos/__init__.py:162
 msgid "December 2012 Dev Derby Challenge - Offline"
-msgstr ""
+msgstr "Konkurs Dev Derby Grudzień 2012 – Offline"
 
 #: kuma/demos/__init__.py:163
 msgid "Offline"
-msgstr ""
+msgstr "Offline"
 
 #: kuma/demos/__init__.py:164
 msgid "December 2012"
-msgstr ""
+msgstr "Grudzień 2012"
 
 #: kuma/demos/__init__.py:165 kuma/demos/__init__.py:166
 msgid ""
@@ -1142,36 +1150,42 @@ msgid ""
 " you can better support travelers and mobile users, improve performance, and"
 " more."
 msgstr ""
+"Dzięki możliwościom technologii offline można tworzyć aplikacje działające "
+"zarówno, gdy masz lub nie masz połączenia z internetem. Używając tych "
+"technologii, można lepiej obsługiwać podróżujących i przemieszczających się "
+"użytkowników, zwiększać wydajność i więcej."
 
 #: kuma/demos/__init__.py:169
 msgid "January 2013 Dev Derby Challenge - Drag and Drop"
-msgstr ""
+msgstr "Konkurs Dev Derby Styczeń 2013 – Przeciągnij i upuść"
 
 #: kuma/demos/__init__.py:170 kuma/demos/__init__.py:311
 msgid "Drag and Drop"
-msgstr ""
+msgstr "Przeciągnij i upuść"
 
 #: kuma/demos/__init__.py:171
 msgid "January 2013"
-msgstr ""
+msgstr "Styczeń 2013"
 
 #: kuma/demos/__init__.py:172 kuma/demos/__init__.py:173
 msgid ""
 "The Drag and Drop API brings an age-old interaction to the Web, making rich,"
 " natural, and familiar user experiences possible."
 msgstr ""
+"API Drag&Drop przenosi znaną od dawna technologię do internetu, czyniąc "
+"doznania użytkowników bogatszymi, naturalnymi i przyjaznymi."
 
 #: kuma/demos/__init__.py:176
 msgid "February 2013 Dev Derby Challenge - Multi-touch"
-msgstr ""
+msgstr "Konkurs Dev Derby Luty 2013 – Multi-touch"
 
 #: kuma/demos/__init__.py:177 kuma/demos/__init__.py:383
 msgid "Multi-touch"
-msgstr ""
+msgstr "Multi-touch"
 
 #: kuma/demos/__init__.py:178
 msgid "February 2013"
-msgstr ""
+msgstr "Luty 2013"
 
 #: kuma/demos/__init__.py:179 kuma/demos/__init__.py:180
 msgid ""
@@ -1180,15 +1194,18 @@ msgid ""
 "more. By using multi-touch, your app can respond to all the interactions "
 "users have come to expect."
 msgstr ""
+"API Touch Events umożliwia śledzenie zdarzeń wielodotyku na urządzeniach "
+"obsługujących tę technologię. Można ją używać przy tworzeniu złożonych gier,"
+" obsługuje pinch-to-zoom i więcej. Używając tej technologii twoja aplikacja "
+"może odpowiedzieć na wszystkie interakcje, jakie oczekują użytkownicy."
 
 #: kuma/demos/__init__.py:183
-#, fuzzy
 msgid "March 2013 Dev Derby Challenge - Mobile"
-msgstr "Wcześniejsze konkursy Dev Derby"
+msgstr "Konkurs Dev Derby Marzec 2013 – Mobile"
 
 #: kuma/demos/__init__.py:185
 msgid "March 2013"
-msgstr ""
+msgstr "Marzec 2013"
 
 #: kuma/demos/__init__.py:186 kuma/demos/__init__.py:187
 msgid ""
@@ -1196,20 +1213,21 @@ msgid ""
 "limit is your creativity. What amazing experiences can you build for users "
 "on the go?"
 msgstr ""
+"Mobilny internet staje się coraz ważniejszy na co dzień. Tym razem jedynym "
+"ograniczeniem jest twoja kreatywność. Jakie wspaniałe rzeczy możesz zbudować"
+" dla użytkowników mobilnych?"
 
 #: kuma/demos/__init__.py:190
-#, fuzzy
 msgid "April 2013 Dev Derby Challenge - Web Workers"
-msgstr "Wcześniejsze konkursy Dev Derby"
+msgstr "Konkurs Dev Derby Kwiecień 2013 – Web Workers"
 
 #: kuma/demos/__init__.py:191 kuma/demos/__init__.py:367
-#, fuzzy
 msgid "Web Workers"
-msgstr "Web o' Wonder"
+msgstr "Web Workers"
 
 #: kuma/demos/__init__.py:192
 msgid "April 2013"
-msgstr ""
+msgstr "Kwiecień 2013"
 
 #: kuma/demos/__init__.py:193 kuma/demos/__init__.py:194
 msgid ""
@@ -1217,27 +1235,29 @@ msgid ""
 "Web Workers, you can create dazzling user interfaces that are not hindered "
 "by even the most computationally-intensive tasks."
 msgstr ""
+"Web Workers umożliwia uruchamianie skryptów w tle. Korzystając z Web "
+"Workers, można tworzyć olśniewające interfejsy użytkownika, które nie są "
+"hamowane przez nawet najbardziej intensywne obliczeniowo zadania."
 
 #: kuma/demos/__init__.py:197
 msgid "May 2013 Dev Derby Challenge - getUserMedia"
-msgstr ""
+msgstr "Konkurs Dev Derby Maj 2013 – getUserMedia"
 
 #: kuma/demos/__init__.py:198
 msgid "getUserMedia"
-msgstr ""
+msgstr "getUserMedia"
 
 #: kuma/demos/__init__.py:199
 msgid "May 2013"
-msgstr ""
+msgstr "Maj 2013"
 
 #: kuma/demos/__init__.py:200
 msgid "May"
-msgstr ""
+msgstr "Maj"
 
 #: kuma/demos/__init__.py:201
-#, fuzzy
 msgid "Action!"
-msgstr "Lokalizacja"
+msgstr "Akcja!"
 
 #: kuma/demos/__init__.py:202 kuma/demos/__init__.py:203
 msgid ""
@@ -1245,11 +1265,13 @@ msgid ""
 "microphones of your users. No plugins needed! What can you do once you have "
 "this media? The possibilities are endless."
 msgstr ""
+"Funkcja getUserMedia umożliwia dostęp (za zgodą) do kamer i mikrofonów "
+"użytkowników. Nie potrzeba żadnych wtyczek! Co możesz zrobić, gdy masz to "
+"medium? Możliwości są nieograniczone."
 
 #: kuma/demos/__init__.py:206
-#, fuzzy
 msgid "June 2013 Dev Derby Challenge - WebGL II"
-msgstr "Wcześniejsze konkursy Dev Derby"
+msgstr "Konkurs Dev Derby Czerwiec 2013 – WebGL II"
 
 #: kuma/demos/__init__.py:207
 msgid "WebGL II"
@@ -1257,49 +1279,51 @@ msgstr "WebGL II"
 
 #: kuma/demos/__init__.py:208
 msgid "June 2013"
-msgstr ""
+msgstr "Czerwiec 2013"
 
 #: kuma/demos/__init__.py:209
 msgid "June"
-msgstr ""
+msgstr "Czerwiec"
 
 #: kuma/demos/__init__.py:210
 msgid "Twice the 3D!"
-msgstr ""
+msgstr "Dwa razy 3D!"
 
 #: kuma/demos/__init__.py:215
-#, fuzzy
 msgid "July 2013 Dev Derby Challenge - File API"
-msgstr "Wcześniejsze konkursy Dev Derby"
+msgstr "Konkurs Dev Derby Lipiec 2013 – File API"
 
 #: kuma/demos/__init__.py:216
-#, fuzzy
 msgid "File API"
-msgstr "Plik"
+msgstr "File API"
 
 #: kuma/demos/__init__.py:217
 msgid "July 2013"
-msgstr ""
+msgstr "Lipiec 2013"
 
 #: kuma/demos/__init__.py:218
 msgid "July"
-msgstr ""
+msgstr "Lipiec"
 
 #: kuma/demos/__init__.py:219
 msgid "File found"
-msgstr ""
+msgstr "Znaleziono plik"
 
 #: kuma/demos/__init__.py:220 kuma/demos/__init__.py:221
 msgid ""
 "The File API lets you read the contents of files submitted by your users, "
 "making natural and familiar data operations possible."
 msgstr ""
+"File API umożliwia odczytywanie zawartości plików przesłanych przez "
+"użytkowników, umożliwiając wykonywanie natywnych operacji na danych."
 
 #: kuma/demos/__init__.py:226
 msgid ""
 "Mozilla's Audio Data API extends the current HTML5 API and allows web "
 "developers to read and write raw audio data."
 msgstr ""
+"API Mozilli Audio Data rozszerza obecne API HTML5 i umożliwia programistom "
+"internetowym czytanie i pisanie danych audio w postaci nieprzetworzonej."
 
 #: kuma/demos/__init__.py:228 kuma/demos/__init__.py:236
 #: kuma/demos/__init__.py:244 kuma/demos/__init__.py:252
@@ -1319,6 +1343,7 @@ msgstr "Dokumentacja MDN"
 msgid ""
 "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 msgstr ""
+"https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 
 #: kuma/demos/__init__.py:229 kuma/demos/__init__.py:237
 #: kuma/demos/__init__.py:245 kuma/demos/__init__.py:267
@@ -1335,7 +1360,7 @@ msgstr "Artykuł na Wikipedii"
 
 #: kuma/demos/__init__.py:229
 msgid "http://en.wikipedia.org/wiki/HTML5_audio"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
 
 #: kuma/demos/__init__.py:230 kuma/demos/__init__.py:238
 #: kuma/demos/__init__.py:246 kuma/demos/__init__.py:253
@@ -1348,29 +1373,31 @@ msgstr ""
 #: kuma/demos/__init__.py:372 kuma/demos/__init__.py:380
 #: kuma/demos/__init__.py:388
 msgid "W3C Spec"
-msgstr ""
+msgstr "Specyfikacja W3C"
 
 #: kuma/demos/__init__.py:230
 msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
 
 #: kuma/demos/__init__.py:234
 msgid ""
 "The HTML5 canvas element allows you to display scriptable renderings of 2D "
 "shapes and bitmap images."
 msgstr ""
+"Element HTML5 <canvas> umożliwia wyświetlanie, skryptowo renderowanych "
+"kształtów 2D i obrazków bitmapowych"
 
 #: kuma/demos/__init__.py:236
 msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
 
 #: kuma/demos/__init__.py:237
 msgid "http://en.wikipedia.org/wiki/Canvas_element"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Canvas_element"
 
 #: kuma/demos/__init__.py:238
 msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
 
 #: kuma/demos/__init__.py:241 kuma/landing/templates/landing/homepage.html:73
 msgid "CSS3"
@@ -1382,37 +1409,43 @@ msgid ""
 "properties to enhance the formatting and look of documents written in "
 "different kinds of markup languages like HTML or XML."
 msgstr ""
+"Kaskadowe arkusze stylów poziomu 3 (CSS3) dostarczają różne nowe funkcje i "
+"możliwości rozszerzające formatowanie i wygląd dokumentów napisanych w "
+"różnych rodzajach języków, takich jak HTML czy XML."
 
 #: kuma/demos/__init__.py:244
 msgid "https://developer.mozilla.org/en-US/docs/Web/CSS"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS"
 
 #: kuma/demos/__init__.py:245
 msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
 
 #: kuma/demos/__init__.py:246
 msgid "http://www.w3.org/TR/css3-roadmap/"
-msgstr ""
+msgstr "http://www.w3.org/TR/css3-roadmap/"
 
 #: kuma/demos/__init__.py:249
 msgid "Device"
-msgstr ""
+msgstr "Urządzenia"
 
 #: kuma/demos/__init__.py:250
 msgid ""
 "Media queries and orientation events let authors adjust their layout on "
 "hand-held devices such as mobile phones."
 msgstr ""
+"Media queries i detekcja orientacji umożliwiają autorom dostosować wygląd "
+"swoich aplikacji do urządzeń przenośnych, takich jak telefony komórkowe."
 
 #: kuma/demos/__init__.py:252
 msgid ""
 "https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
 msgstr ""
+"https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
 
 #: kuma/demos/__init__.py:253
 msgid "http://www.w3.org/TR/css3-mediaqueries/"
-msgstr ""
+msgstr "http://www.w3.org/TR/css3-mediaqueries/"
 
 #: kuma/demos/__init__.py:256
 msgid "Files"
@@ -1423,19 +1456,22 @@ msgid ""
 "The File API allows web developers to use file objects in web applications, "
 "as well as selecting and accessing their data."
 msgstr ""
+"API File umożliwia programistom internetowym korzystanie z obiektów file w "
+"aplikacjach internetowych, jak również wybór i dostęp do ich danych."
 
 #: kuma/demos/__init__.py:259
 msgid ""
 "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
 msgstr ""
+"https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
 
 #: kuma/demos/__init__.py:260
 msgid "http://www.w3.org/TR/FileAPI/"
-msgstr ""
+msgstr "http://www.w3.org/TR/FileAPI/"
 
 #: kuma/demos/__init__.py:263
 msgid "Fonts & Type"
-msgstr ""
+msgstr "Czcionki"
 
 #: kuma/demos/__init__.py:264
 msgid ""
@@ -1443,22 +1479,25 @@ msgid ""
 "typography like embedding own fonts via @font-face or controlling OpenType "
 "font features directly via CSS."
 msgstr ""
+"Specyfikacja CSS3-Font zawiera udoskonalone funkcje czcionek i typografii, "
+"takie jak umieszczanie własnych czcionek za pomocą @ font-face lub "
+"kontrolowanie funkcji czcionek OpenType bezpośrednio za pomocą CSS."
 
 #: kuma/demos/__init__.py:266
 msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
 
 #: kuma/demos/__init__.py:267
 msgid "http://en.wikipedia.org/wiki/Web_typography"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_typography"
 
 #: kuma/demos/__init__.py:268
 msgid "http://www.w3.org/TR/css3-fonts/"
-msgstr ""
+msgstr "http://www.w3.org/TR/css3-fonts/"
 
 #: kuma/demos/__init__.py:271
 msgid "Forms"
-msgstr ""
+msgstr "Formularze"
 
 #: kuma/demos/__init__.py:272
 msgid ""
@@ -1466,36 +1505,41 @@ msgid ""
 "mark-up than HTML4 and remove a great deal of the need for tedious scripting"
 " and styling that was required in HTML4."
 msgstr ""
+"Elementy i atrybuty formularza w HTML5 dostarczają wyższy stopień "
+"semantycznych znaczników niż HTML4 i znacznie zmniejszają potrzebę tworzenia"
+" żmudnych skryptów i stylizacji, niż było to wymagane w HTML4."
 
 #: kuma/demos/__init__.py:274
 msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
 
 #: kuma/demos/__init__.py:275
 msgid "http://en.wikipedia.org/wiki/HTML_forms"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/HTML_forms"
 
 #: kuma/demos/__init__.py:276
 msgid "http://www.w3.org/TR/html5/forms.html"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/forms.html"
 
 #: kuma/demos/__init__.py:280
 msgid ""
 "The Geolocation API allows web applications to access the user's "
 "geographical location."
 msgstr ""
+"API geolokalizacji umożliwia aplikacjom internetowym dostęp do położenia "
+"geograficznego użytkownika."
 
 #: kuma/demos/__init__.py:282
 msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
 
 #: kuma/demos/__init__.py:283
 msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
 
 #: kuma/demos/__init__.py:284
 msgid "http://dev.w3.org/geo/api/spec-source.html"
-msgstr ""
+msgstr "http://dev.w3.org/geo/api/spec-source.html"
 
 #: kuma/demos/__init__.py:288
 msgid ""
@@ -1503,22 +1547,25 @@ msgid ""
 "used for scripting interactive behavior on web pages and in web "
 "applications."
 msgstr ""
+"JavaScript to lekki, obiektowo zorientowany język programowania często "
+"używany do tworzenia skryptów interaktywnych zachowań na stronach i w "
+"aplikacjach internetowych."
 
 #: kuma/demos/__init__.py:290
 msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
 
 #: kuma/demos/__init__.py:291
 msgid "http://en.wikipedia.org/wiki/JavaScript"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/JavaScript"
 
 #: kuma/demos/__init__.py:292
 msgid "ECMA Spec"
-msgstr ""
+msgstr "Specyfikacja ECMA"
 
 #: kuma/demos/__init__.py:292
 msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
-msgstr ""
+msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
 
 #: kuma/demos/__init__.py:295 kuma/landing/templates/landing/homepage.html:72
 msgid "HTML5"
@@ -1528,19 +1575,19 @@ msgstr "HTML5"
 msgid ""
 "HTML5 is the newest version of the HTML standard, currently under "
 "development."
-msgstr ""
+msgstr "HTML5 to najnowsza wersja standardu HTML – nadal w fazie rozwoju."
 
 #: kuma/demos/__init__.py:298
 msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
 
 #: kuma/demos/__init__.py:299
 msgid "http://en.wikipedia.org/wiki/Html5"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Html5"
 
 #: kuma/demos/__init__.py:300
 msgid "http://dev.w3.org/html5/spec/Overview.html"
-msgstr ""
+msgstr "http://dev.w3.org/html5/spec/Overview.html"
 
 #: kuma/demos/__init__.py:304
 msgid ""
@@ -1548,207 +1595,235 @@ msgid ""
 "structured data and for high performance searches on this data using "
 "indexes."
 msgstr ""
+"IndexedDB to API dla przechowywania po stronie klienta znacznych ilości "
+"danych strukturalnych i wysokiej skuteczności przeszukiwania tych danych za "
+"pomocą indeksów."
 
 #: kuma/demos/__init__.py:306
 msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/IndexedDB"
 
 #: kuma/demos/__init__.py:307
 msgid "http://en.wikipedia.org/wiki/IndexedDB"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/IndexedDB"
 
 #: kuma/demos/__init__.py:308
 msgid "http://www.w3.org/TR/IndexedDB/"
-msgstr ""
+msgstr "http://www.w3.org/TR/IndexedDB/"
 
 #: kuma/demos/__init__.py:312
 msgid ""
 "Drag and Drop features allow the user to move elements on the screen using "
 "the mouse pointer."
 msgstr ""
+"Funkcje przeciągnij i upuść umożliwiają użytkownikowi przemieszczanie "
+"elementów na ekranie za pomocą myszy."
 
 #: kuma/demos/__init__.py:314
 msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
 
 #: kuma/demos/__init__.py:315
 msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Drag-and-drop"
 
 #: kuma/demos/__init__.py:316
 msgid "http://www.w3.org/TR/html5/dnd.html"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/dnd.html"
 
 #: kuma/demos/__init__.py:320
 msgid ""
 "Firefox Mobile brings the true Web experience to mobile phones and other "
 "non-PC devices."
 msgstr ""
+"Firefox Mobile przenosi prawdziwe oblicze internetu do telefonów komórkowych"
+" i innych urządzeń przenośnych."
 
 #: kuma/demos/__init__.py:322
 msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
 
 #: kuma/demos/__init__.py:323
 msgid "http://en.wikipedia.org/wiki/Mobile_web"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Mobile_web"
 
 #: kuma/demos/__init__.py:324
 msgid "http://www.w3.org/Mobile/"
-msgstr ""
+msgstr "http://www.w3.org/Mobile/"
 
 #: kuma/demos/__init__.py:327
 msgid "Offline Support"
-msgstr ""
+msgstr "Obsługa offline"
 
 #: kuma/demos/__init__.py:328
 msgid ""
 "Offline caching of web applications' resources using the application cache "
 "and local storage."
 msgstr ""
+"Buforowanie w trybie offline zasobów aplikacji internetowych za pomocą "
+"pamięci podręcznej aplikacji i pamięci lokalnej."
 
 #: kuma/demos/__init__.py:330
 msgid ""
 "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
 msgstr ""
+"https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
 
 #: kuma/demos/__init__.py:331
 msgid "http://en.wikipedia.org/wiki/Web_Storage"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_Storage"
 
 #: kuma/demos/__init__.py:332
 msgid "http://dev.w3.org/html5/webstorage/"
-msgstr ""
+msgstr "http://dev.w3.org/html5/webstorage/"
 
 #: kuma/demos/__init__.py:336
 msgid ""
 "Scalable Vector Graphics (SVG) is an XML based language for describing two-"
 "dimensional vector graphics."
 msgstr ""
+"Skalowalna grafika wektorowa (ang. Scalable Vector Graphics (SVG)), to "
+"oparty na XML język opisu dwuwymiarowej grafiki wektorowej."
 
 #: kuma/demos/__init__.py:338
 msgid "https://developer.mozilla.org/en-US/docs/Web/SVG"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/SVG"
 
 #: kuma/demos/__init__.py:339
 msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
 
 #: kuma/demos/__init__.py:340
 msgid "http://www.w3.org/TR/SVG11/"
-msgstr ""
+msgstr "http://www.w3.org/TR/SVG11/"
 
 #: kuma/demos/__init__.py:343
 msgid "Video"
-msgstr ""
+msgstr "Wideo"
 
 #: kuma/demos/__init__.py:344
 msgid ""
 "The HTML5 video element provides integrated support for playing video media "
 "without requiring plug-ins."
 msgstr ""
+"Element HTML5 &lt;video&gt; służy do odtwarzania plików wideo bez "
+"konieczności instalowania dodatkowych wtyczek."
 
 #: kuma/demos/__init__.py:346
 msgid ""
 "https://developer.mozilla.org/en-"
 "US/docs/Web/HTML/Using_HTML5_audio_and_video"
 msgstr ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/HTML/Using_HTML5_audio_and_video"
 
 #: kuma/demos/__init__.py:347
 msgid "http://en.wikipedia.org/wiki/HTML5_video"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/HTML5_video"
 
 #: kuma/demos/__init__.py:348
 msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
-msgstr ""
+msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
 
 #: kuma/demos/__init__.py:352
 msgid ""
 "In the context of the HTML canvas element WebGL provides an API for 3D "
 "graphics in the browser."
 msgstr ""
+"Korzystając z występującego w HTML5 elementu canvas, WebGL zapewnia dostęp "
+"do trójwymiarowego API w przeglądarce internetowej."
 
 #: kuma/demos/__init__.py:354
 msgid "https://developer.mozilla.org/en-US/docs/Web/WebGL"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/Web/WebGL"
 
 #: kuma/demos/__init__.py:355
 msgid "http://en.wikipedia.org/wiki/WebGL"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/WebGL"
 
 #: kuma/demos/__init__.py:356
 msgid "Khronos Spec"
-msgstr ""
+msgstr "Specyfikacja Khronos"
 
 #: kuma/demos/__init__.py:356
 msgid "http://www.khronos.org/webgl/"
-msgstr ""
+msgstr "http://www.khronos.org/webgl/"
 
 #: kuma/demos/__init__.py:359
 msgid "WebSockets"
-msgstr ""
+msgstr "WebSockets"
 
 #: kuma/demos/__init__.py:360
 msgid ""
 "WebSockets is a technology that makes it possible to open an interactive "
 "communication session between the user's browser and a server."
 msgstr ""
+"WebSockets to technologia, która umożliwia otwarcie sesji interaktywnej "
+"komunikacji pomiędzy przeglądarką użytkownika a serwerem."
 
 #: kuma/demos/__init__.py:362
 msgid "https://developer.mozilla.org/en-US/docs/WebSockets"
-msgstr ""
+msgstr "https://developer.mozilla.org/en-US/docs/WebSockets"
 
 #: kuma/demos/__init__.py:363
 msgid "http://en.wikipedia.org/wiki/Web_Sockets"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_Sockets"
 
 #: kuma/demos/__init__.py:364
 msgid "http://dev.w3.org/html5/websockets/"
-msgstr ""
+msgstr "http://dev.w3.org/html5/websockets/"
 
 #: kuma/demos/__init__.py:368
 msgid ""
 "Web Workers provide a simple means for web content to run scripts in "
 "background threads."
 msgstr ""
+"Web Workers dostarcza treściom internetowym prosty sposób uruchamiania "
+"skryptów w tle."
 
 #: kuma/demos/__init__.py:370
 msgid ""
 "https://developer.mozilla.org/en-"
 "US/docs/Web/Guide/Performance/Using_web_workers"
 msgstr ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/Guide/Performance/Using_web_workers"
 
 #: kuma/demos/__init__.py:371
 msgid "http://en.wikipedia.org/wiki/Web_Workers"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/Web_Workers"
 
 #: kuma/demos/__init__.py:372
 msgid "http://www.w3.org/TR/workers/"
-msgstr ""
+msgstr "http://www.w3.org/TR/workers/"
 
 #: kuma/demos/__init__.py:375
 msgid "XMLHttpRequest"
-msgstr ""
+msgstr "XMLHttpRequest"
 
 #: kuma/demos/__init__.py:376
 msgid ""
 "XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver "
 "and load the response data directly back into the script."
 msgstr ""
+"XMLHttpRequest (XHR) jest używane do wysyłania żądania HTTP bezpośrednio do "
+"serwera i wczytywania danych odpowiedzi z powrotem bezpośrednio do skryptu."
 
 #: kuma/demos/__init__.py:378
 msgid ""
 "https://developer.mozilla.org/en-"
 "US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
 msgstr ""
+"https://developer.mozilla.org/en-"
+"US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
 
 #: kuma/demos/__init__.py:379
 msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/XMLHttpRequest"
 
 #: kuma/demos/__init__.py:380
 msgid "http://www.w3.org/TR/XMLHttpRequest/"
-msgstr ""
+msgstr "http://www.w3.org/TR/XMLHttpRequest/"
 
 #: kuma/demos/__init__.py:384
 msgid ""
@@ -1771,35 +1846,35 @@ msgstr ""
 
 #: kuma/demos/__init__.py:394
 msgid "MPL/GPL/LGPL"
-msgstr ""
+msgstr "MPL/GPL/LGPL"
 
 #: kuma/demos/__init__.py:395
 msgid "http://www.mozilla.org/MPL/"
-msgstr ""
+msgstr "http://www.mozilla.org/MPL/"
 
 #: kuma/demos/__init__.py:397
 msgid "GPL"
-msgstr ""
+msgstr "GPL"
 
 #: kuma/demos/__init__.py:398
 msgid "http://www.opensource.org/licenses/gpl-license.php"
-msgstr ""
+msgstr "http://www.opensource.org/licenses/gpl-license.php"
 
 #: kuma/demos/__init__.py:400
 msgid "BSD"
-msgstr ""
+msgstr "BSD"
 
 #: kuma/demos/__init__.py:401
 msgid "http://www.opensource.org/licenses/bsd-license.php"
-msgstr ""
+msgstr "http://www.opensource.org/licenses/bsd-license.php"
 
 #: kuma/demos/__init__.py:403
 msgid "Apache"
-msgstr ""
+msgstr "Apache"
 
 #: kuma/demos/__init__.py:404
 msgid "http://www.apache.org/licenses/"
-msgstr ""
+msgstr "http://www.apache.org/licenses/"
 
 #: kuma/demos/__init__.py:406
 msgid "Public Domain (where applicable by law)"
@@ -2002,23 +2077,23 @@ msgstr ""
 
 #: kuma/demos/models.py:398
 msgid "Screenshot #1"
-msgstr ""
+msgstr "Zrzut ekranu #1"
 
 #: kuma/demos/models.py:404
 msgid "Screenshot #2"
-msgstr ""
+msgstr "Zrzut ekranu #2"
 
 #: kuma/demos/models.py:410
 msgid "Screenshot #3"
-msgstr ""
+msgstr "Zrzut ekranu #3"
 
 #: kuma/demos/models.py:416
 msgid "Screenshot #4"
-msgstr ""
+msgstr "Zrzut ekranu #4"
 
 #: kuma/demos/models.py:422
 msgid "Screenshot #5"
-msgstr ""
+msgstr "Zrzut ekranu #5"
 
 #: kuma/demos/models.py:429
 msgid "have a video of your demo in action? (optional)"
