@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2015-12-22 09:36+0000\n"
+"PO-Revision-Date: 2015-12-22 22:21+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -389,61 +389,61 @@ msgstr ""
 #, python-format
 msgid "%(number)d year ago"
 msgid_plural "%(number)d years ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d rok temu"
+msgstr[1] "%(number)d lata temu"
+msgstr[2] "%(number)d lat temu"
 
 #: kuma/core/helpers.py:111 kuma/demos/helpers.py:307
 #, python-format
 msgid "%(number)d month ago"
 msgid_plural "%(number)d months ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d miesiąc temu"
+msgstr[1] "%(number)d miesiące temu"
+msgstr[2] "%(number)d miesięcy temu"
 
 #: kuma/core/helpers.py:113 kuma/demos/helpers.py:309
 #, python-format
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d tydzień temu"
+msgstr[1] "%(number)d tygodnie temu"
+msgstr[2] "%(number)d tygodni temu"
 
 #: kuma/core/helpers.py:115 kuma/demos/helpers.py:311
 #, python-format
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d dzień temu"
+msgstr[1] "%(number)d dni temu"
+msgstr[2] "%(number)d dni temu"
 
 #: kuma/core/helpers.py:117 kuma/demos/helpers.py:313
 #, python-format
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d godzinę temu"
+msgstr[1] "%(number)d godziny temu"
+msgstr[2] "%(number)d godzin temu"
 
 #: kuma/core/helpers.py:119 kuma/demos/helpers.py:315
 #, python-format
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d minutę temu"
+msgstr[1] "%(number)d minuty temu"
+msgstr[2] "%(number)d minut temu"
 
 #: kuma/core/helpers.py:121 kuma/demos/helpers.py:317
 #, python-format
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d sekundę temu"
+msgstr[1] "%(number)d sekundy temu"
+msgstr[2] "%(number)d sekund temu"
 
 #: kuma/core/helpers.py:144
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: kuma/core/helpers.py:144
 msgid "No"
@@ -612,7 +612,7 @@ msgstr "Wszystkie języki"
 
 #: kuma/dashboards/forms.py:10 kuma/demos/__init__.py:33
 msgid "None"
-msgstr ""
+msgstr "Brak"
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
@@ -624,16 +624,16 @@ msgstr "Dzień"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "Tydzień"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30 dni"
 
 #: kuma/dashboards/forms.py:24
 #: kuma/dashboards/templates/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "Lokalizacje:"
 
 #: kuma/dashboards/forms.py:28
 #: kuma/dashboards/templates/dashboards/revisions.html:19
@@ -658,7 +658,7 @@ msgstr "Zakończenie:"
 #: kuma/dashboards/forms.py:44
 #: kuma/dashboards/templates/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "Poprzedni okres:"
 
 #: kuma/dashboards/templates/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -691,7 +691,7 @@ msgstr "Historia"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:35
 msgid "new"
-msgstr ""
+msgstr "nowy"
 
 #: kuma/dashboards/templates/dashboards/includes/revision_dashboard_body.html:36
 msgid "deleted"
@@ -735,11 +735,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:34
 msgid "Removed from Derby"
-msgstr ""
+msgstr "Usunięto z konkursu Derby"
 
 #: kuma/demos/__init__.py:36
 msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
-msgstr ""
+msgstr "Konkurs Dev Derby Czerwiec 2011 – Animacje CSS3 "
 
 #: kuma/demos/__init__.py:37
 msgid "CSS3 Animations"
@@ -747,7 +747,7 @@ msgstr "Animacje CSS3"
 
 #: kuma/demos/__init__.py:38
 msgid "June 2011"
-msgstr ""
+msgstr "Czerwiec 2011"
 
 #: kuma/demos/__init__.py:39
 msgid ""
@@ -755,6 +755,9 @@ msgid ""
 "appearance or position of elements, with no or minimal JavaScript, and with "
 "greater control than transitions."
 msgstr ""
+"Animacje CSS umożliwiają zmianę wartości właściwości w czasie, by animować "
+"wygląd lub położenie elementów bez lub z minimalnym udziałem JavaScriptu i z"
+" większą kontrolą niż efekty przejścia."
 
 #: kuma/demos/__init__.py:40
 msgid ""
@@ -766,29 +769,38 @@ msgid ""
 " achieve these effects without Flash or Silverlight, to make creative "
 "dynamic interfaces and engaging animations with CSS3."
 msgstr ""
+"Animacje CSS3 są nową funkcją nowoczesnych przeglądarek, takich jak Firefox,"
+" które dodają większą elastyczność, kontrolę stylu i nowe doznania podczas "
+"przeglądania internetu. Animacje CSS3 umożliwiają zmianę wartości w czasie, "
+"bez lub z minimalnym udziałem JavaScriptu i lepsze sterowanie niż efekty "
+"przejścia CSS. Przejdź od statycznych właściwości do animacji wyglądu i "
+"pozycji elementów HTML. Możesz osiągnąć te efekty bez Flasha czy "
+"Slverlighta, tworząc dynamiczne interfejsy i czarujące animacje za pomocą "
+"CSS3."
 
 #: kuma/demos/__init__.py:43
 msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
-msgstr ""
+msgstr "Konkurs Dev Derby Lipiec 2011 – HTML5 <video>"
 
 #: kuma/demos/__init__.py:44
 msgid "HTML5 <video>"
-msgstr ""
+msgstr "HTML5 <video>"
 
 #: kuma/demos/__init__.py:45
 msgid "July 2011"
-msgstr ""
+msgstr "Lipiec 2011"
 
 #: kuma/demos/__init__.py:46 kuma/demos/__init__.py:47
 msgid ""
 "The HTML5 <video> element lets you embed and control video media directly in"
 " web pages, without resorting to plug-ins."
 msgstr ""
+"lement HTML5 <video> umożliwia osadzanie i zarządzanie mediami wideo "
+"bezpośrednio na stronie internetowej bez używania wtyczek."
 
 #: kuma/demos/__init__.py:50
-#, fuzzy
 msgid "August 2011 Dev Derby Challenge - History API"
-msgstr "Wcześniejsze konkursy Dev Derby"
+msgstr "Konkurs Dev Derby Sierpień 2011 – API historii"
 
 #: kuma/demos/__init__.py:51
 msgid "History API"
@@ -796,17 +808,20 @@ msgstr "API Historia"
 
 #: kuma/demos/__init__.py:52
 msgid "August 2011"
-msgstr ""
+msgstr "Sierpień 2011"
 
 #: kuma/demos/__init__.py:53 kuma/demos/__init__.py:54
 msgid ""
 "The History API in modern browsers enables live changes to the document "
 "without breaking the back button and allows apps to be bookmarked."
 msgstr ""
+"API historii w nowoczesnych przeglądarkach rejestruje na bieżąco zmiany w "
+"dokumentach bez naciskania przycisku powrotu i umożliwia dodawanie zakładek "
+"do aplikacji."
 
 #: kuma/demos/__init__.py:57
 msgid "September 2011 Dev Derby Challenge - Geolocation"
-msgstr ""
+msgstr "Konkurs Dev Derby Wrzesień 2011 – Geolokalizacja"
 
 #: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
 msgid "Geolocation"
@@ -814,7 +829,7 @@ msgstr "Geolokalizacja"
 
 #: kuma/demos/__init__.py:59
 msgid "September 2011"
-msgstr ""
+msgstr "Wrzesień 2011"
 
 #: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61
 #: kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
@@ -823,18 +838,22 @@ msgid ""
 " and use it to enhance the browsing experience or enable advanced location-"
 "aware features."
 msgstr ""
+"Za pomocą geolokalizacji można, za zgodą użytkownika, określić miejsce, w "
+"którym aktualnie się znajduje i użyć tę informację do zwiększenia możliwości"
+" przeglądania lub włączyć zaawansowane funkcje informacyjne powiązane z "
+"lokalizacją."
 
 #: kuma/demos/__init__.py:64
 msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
-msgstr ""
+msgstr "Konkurs Dev Derby Październik 2011 – CSS Media Queries"
 
 #: kuma/demos/__init__.py:65
 msgid "CSS Media Queries"
-msgstr ""
+msgstr "CSS Media Queries"
 
 #: kuma/demos/__init__.py:66
 msgid "October 2011"
-msgstr ""
+msgstr "Październik 2011"
 
 #: kuma/demos/__init__.py:67 kuma/demos/__init__.py:68
 msgid ""
@@ -842,15 +861,18 @@ msgid ""
 "tailoring the user experience for a range of screen sizes, including "
 "desktops, tablets, and mobiles."
 msgstr ""
+"CSS Media Queries umożliwiają programistom stron i aplikacji internetowych "
+"tworzenie wchodzących w interakcję z użytkownikiem internetowych projektów "
+"dopasowujących się do posiadanego przez użytkownika ekranu urządzenia – "
+"desktopów, tabletów i urządzeń przenośnych."
 
 #: kuma/demos/__init__.py:71
-#, fuzzy
 msgid "November 2011 Dev Derby Challenge - Canvas"
-msgstr "Wcześniejsze konkursy Dev Derby"
+msgstr "Konkurs Dev Derby Listopad 2011 – Canvas"
 
 #: kuma/demos/__init__.py:73
 msgid "November 2011"
-msgstr ""
+msgstr "Listopad 2011"
 
 #: kuma/demos/__init__.py:74 kuma/demos/__init__.py:75
 msgid ""
@@ -859,64 +881,75 @@ msgid ""
 "provides a graphics context with its own state and methods that make it easy"
 " to control and draw in."
 msgstr ""
+"Canvas umożliwia malowanie internetu, używając do renderowania i animacji "
+"obiektów 2D, obrazków bitmapowych i zaawansowanych efektów graficznych "
+"JavaScriptu. Każdy element <canvas> dostarcza graficzny kontekst z jego "
+"własnym stanem i metodami ułatwiającymi zarządzanie i rysowanie."
 
 #: kuma/demos/__init__.py:78
 msgid "December 2011 Dev Derby Challenge - IndexedDB"
-msgstr ""
+msgstr "Konkurs Dev Derby Grudzień 2011 – IndexedDB"
 
 #: kuma/demos/__init__.py:79 kuma/demos/__init__.py:303
 msgid "IndexedDB"
-msgstr ""
+msgstr "IndexedDB"
 
 #: kuma/demos/__init__.py:80
 msgid "December 2011"
-msgstr ""
+msgstr "Grudzień 2011"
 
 #: kuma/demos/__init__.py:81 kuma/demos/__init__.py:82
 msgid ""
 "IndexedDB lets web applications store significant amounts of structured data"
 " locally, for faster access, online or offline."
 msgstr ""
+"Indeksowanie bazy danych (IndexedDB) umożliwia aplikacjom internetowym "
+"przechowywanie lokalnie, dużych ilości danych strukturalnych w celu "
+"szybkiego dostępu do nich zarówno w trybie offline, jak i online."
 
 #: kuma/demos/__init__.py:85
 msgid "January 2012 Dev Derby Challenge - Orientation"
-msgstr ""
+msgstr "Konkurs Dev Derby Styczeń 2012 – Orientacja"
 
 #: kuma/demos/__init__.py:86
 msgid "Orientation"
-msgstr ""
+msgstr "Orientacja"
 
 #: kuma/demos/__init__.py:87
 msgid "January 2012"
-msgstr ""
+msgstr "Styczeń 2012"
 
 #: kuma/demos/__init__.py:88 kuma/demos/__init__.py:89
 msgid ""
 "Orientation features in HTML5 access the motion and orientation data of "
 "devices with accelerometers."
 msgstr ""
+"Za pomocą funkcji orientacji w HTML5 można przekazywać dane o ruchu i "
+"położeniu urządzeń do akcelerometrów."
 
 #: kuma/demos/__init__.py:92
 msgid "February 2012 Dev Derby Challenge - Touch Events"
-msgstr ""
+msgstr "Konkurs Dev Derby Luty 2012 – Zdarzenia dotyku"
 
 #: kuma/demos/__init__.py:93
 msgid "Touch Events"
-msgstr ""
+msgstr "Zdarzenia dotyku"
 
 #: kuma/demos/__init__.py:94
 msgid "February 2012"
-msgstr ""
+msgstr "Luty 2012"
 
 #: kuma/demos/__init__.py:95 kuma/demos/__init__.py:96
 msgid ""
 "Touch Events help you make websites and applications more engaging by "
 "responding appropriately when users interact with touch screens."
 msgstr ""
+"Zdarzenia dotyku pomagają stworzyć bardziej interesujące strony internetowe "
+"i aplikacje odpowiednio reagując na dotknięcie ekranu dotykowego."
 
 #: kuma/demos/__init__.py:99
 msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
-msgstr ""
+msgstr "Konkurs Dev Derby Marzec 2012 – Transformacje CSS 3D"
 
 #: kuma/demos/__init__.py:100
 msgid "CSS 3D Transforms"
@@ -924,44 +957,47 @@ msgstr "Transformacje CSS 3D"
 
 #: kuma/demos/__init__.py:101
 msgid "March 2012"
-msgstr ""
+msgstr "Marzec 2012"
 
 #: kuma/demos/__init__.py:102 kuma/demos/__init__.py:103
 msgid ""
 "CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS "
 "to be transformed in three-dimensional space."
 msgstr ""
+"Transformacje CSS 3D rozszerzają transformacje CSS o dodanie trzeciego "
+"wymiaru. Teraz elementy mogą być renderowane przez CSS trójwymiarowo."
 
 #: kuma/demos/__init__.py:106
-#, fuzzy
 msgid "April 2012 Dev Derby Challenge - Audio"
-msgstr "Wcześniejsze konkursy Dev Derby"
+msgstr "Konkurs Dev Derby Kwiecień 2012 – Audio"
 
 #: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: kuma/demos/__init__.py:108
 msgid "April 2012"
-msgstr ""
+msgstr "Kwiecień 2012"
 
 #: kuma/demos/__init__.py:109 kuma/demos/__init__.py:110
 msgid ""
 "The HTML5 audio element lets you embed sound in webpages without requiring "
 "your users to rely on plug-ins."
 msgstr ""
+"Element HTML5 audio umożliwia osadzenie dźwięków na stronach internetowych "
+"bez potrzeby używania do ich odtwarzania specjalnych wtyczek."
 
 #: kuma/demos/__init__.py:113
 msgid "May 2012 Dev Derby Challenge - WebSockets API"
-msgstr ""
+msgstr "Konkurs Dev Derby Maj 2012 – API WebSockets"
 
 #: kuma/demos/__init__.py:114
 msgid "WebSockets API"
-msgstr ""
+msgstr "API WebSockets"
 
 #: kuma/demos/__init__.py:115
 msgid "May 2012"
-msgstr ""
+msgstr "Maj 2012"
 
 #: kuma/demos/__init__.py:116 kuma/demos/__init__.py:117
 msgid ""
@@ -969,15 +1005,17 @@ msgid ""
 "the browser and a server, for scalable and real-time data flow. No more "
 "server polling!"
 msgstr ""
+"Za pomocą API WebSockets i protokołu, możesz pomiędzy przeglądarką i "
+"serwerem otworzyć dwudrożny kanał dla skalowalnego i w czasie rzeczywistym "
+"przepływu danych. Nigdy więcej odpytywania serwera."
 
 #: kuma/demos/__init__.py:120
-#, fuzzy
 msgid "June 2012 Dev Derby Challenge - WebGL"
-msgstr "Wcześniejsze konkursy Dev Derby"
+msgstr "Konkurs Dev Derby Czerwiec 2012 – WebGL"
 
 #: kuma/demos/__init__.py:122
 msgid "June 2012"
-msgstr ""
+msgstr "Czerwiec 2012"
 
 #: kuma/demos/__init__.py:123 kuma/demos/__init__.py:124
 #: kuma/demos/__init__.py:211 kuma/demos/__init__.py:212
@@ -985,19 +1023,20 @@ msgid ""
 "WebGL brings the power of OpenGL, for creating interactive 3D graphics, to "
 "the Web, with no plug-ins required."
 msgstr ""
+"WebGL dostarcza mocy OpenGL do tworzenia interaktywnej grafiki 3D na "
+"potrzeby internetu bez konieczności używania wtyczek."
 
 #: kuma/demos/__init__.py:127
 msgid "July 2012 Dev Derby Challenge - No JavaScript"
-msgstr ""
+msgstr "Konkurs Dev Derby Lipiec 2012 – Bez JavaScriptu"
 
 #: kuma/demos/__init__.py:128
-#, fuzzy
 msgid "No JavaScript"
-msgstr "JavaScript"
+msgstr "Bez JavaScriptu"
 
 #: kuma/demos/__init__.py:129
 msgid "July 2012"
-msgstr ""
+msgstr "Lipiec 2012"
 
 #: kuma/demos/__init__.py:130 kuma/demos/__init__.py:131
 msgid ""
@@ -1006,19 +1045,23 @@ msgid ""
 "fingertips. Animate pages with CSS, validate user input with HTML, and more."
 " What else can you do without JavaScript?"
 msgstr ""
+"Tworzenie zawierających wspaniałe doznania aplikacji internetowych nigdy nie"
+" było łatwiejsze. Dzisiejsze otwarte standardy internetowe ze wspaniałymi "
+"funkcjami są pod ręką. Można tworzyć animowane strony za pomocą CSS, "
+"sprawdzać dane wprowadzane przez użytkowników za pomocą HTML-a i dużo "
+"więcej. Co można jeszcze zrobić, nie używając JavaScriptu?"
 
 #: kuma/demos/__init__.py:134
-#, fuzzy
 msgid "August 2012 Dev Derby Challenge - Camera API"
-msgstr "Wcześniejsze konkursy Dev Derby"
+msgstr "Konkurs Dev Derby Sierpień 2012 – API Camera"
 
 #: kuma/demos/__init__.py:135
 msgid "Camera API"
-msgstr ""
+msgstr "API Camera"
 
 #: kuma/demos/__init__.py:136
 msgid "August 2012"
-msgstr ""
+msgstr "Sierpień 2012"
 
 #: kuma/demos/__init__.py:137 kuma/demos/__init__.py:138
 msgid ""
@@ -1026,6 +1069,9 @@ msgid ""
 "devices. With the Camera API, users can easily take pictures and upload them"
 " to your web page."
 msgstr ""
+"API Camera umożliwia dostęp – włącznie z uprawnieniami  – do kamer urządzeń "
+"przenośnych. Za pomocą tego API użytkownicy mogą łatwo robić zdjęcia i "
+"przesyłać je na swoją stronę internetową."
 
 #: kuma/demos/__init__.py:141
 msgid "September 2012 Dev Derby Challenge - Geolocation II"
