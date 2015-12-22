@@ -106,7 +106,7 @@ and duriing deployment to stage and prod.
 Here's what that folder contains:
 
 - ``compiled.txt`` - contains dependencies that require a compiler and may
-  need to be treated differently dependending on environment
+  need to be treated differently depending on environment
 
 - ``default.txt`` - contains the default dependencies that are used in all
   environments
@@ -155,7 +155,7 @@ file, e.g.::
     # sha256: paFCZIUSX_kQWjcNx9em6npTILXRgCcjA9QppD-BL-U
     django-pipeline==1.6.0
 
-Then verify if the hash stil matches and install the new dependency in the VM::
+Then verify if the hash still matches and install the new dependency in the VM::
 
     script/peep.py install -r requirements/default.txt
 
