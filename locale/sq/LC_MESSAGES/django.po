@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2015-12-24 17:45+0000\n"
+"PO-Revision-Date: 2015-12-24 18:16+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: sq\n"
 "Language: sq\n"
@@ -335,9 +335,9 @@ msgid "Content deleted by moderator"
 msgstr "Lëndë e fshirë nga moderatori"
 
 #: kuma/contentflagging/models.py:65
-#, fuzzy, python-format
+#, python-format
 msgid "%(object)s Flagged"
-msgstr "{object} Me Shenjë"
+msgstr "%(object)s Me Shenjë"
 
 #: kuma/contentflagging/models.py:97
 msgid "current status of flag review"
@@ -3733,9 +3733,9 @@ msgid "Username already in use."
 msgstr "Ky emër përdoruesi është tashmë në përdorim."
 
 #: kuma/users/helpers.py:35
-#, fuzzy, python-format
+#, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
-msgstr "Përzënë më {ban_date} nga {ban_admin}."
+msgstr "Përzënë më %(ban_date)s nga %(ban_admin)s."
 
 #: kuma/users/helpers.py:42
 msgid "Banned"
@@ -4806,9 +4806,9 @@ msgid "Edit section"
 msgstr "Përpunoni ndarjen"
 
 #: kuma/wiki/events.py:72
-#, fuzzy, python-format
+#, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr "[MDN] Faqja \"{document_title}\" u ndryshua nga {creator}"
+msgstr "[MDN] Faqja \"%(document_title)s\" u ndryshua nga %(creator)s"
 
 #: kuma/wiki/feeds.py:27
 msgid "MDN documents"
@@ -5378,7 +5378,7 @@ msgid "contributors"
 msgstr "pjesëmarrës"
 
 #: kuma/wiki/templates/wiki/document.html:184
-#, fuzzy, python-format
+#, python-format
 msgid "by %(count)s contributor:"
 msgid_plural "by %(count)s contributors:"
 msgstr[0] "nga %(count)s pjesëmarrës:"
@@ -5452,13 +5452,14 @@ msgid "This translation is in progress."
 msgstr "Përkthimi është në kryerje e sipër."
 
 #: kuma/wiki/templates/wiki/document.html:308
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
 "yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
-"Vullnetarët tanë s’e kanë përkthyer ende në %(locale)s këtë artikull. <a "
-"href=\"%(help_link)s\">Bashkohuni dhe ndihmoni të mbarohet kjo punë!</a>"
+"Vullnetarët tanë s’e kanë përkthyer ende në <bdi>%(locale)s</bdi> këtë "
+"artikull. <a href=\"%(help_link)s\">Merrni pjesë dhe ndihmoni të mbarohet "
+"kjo punë!</a>"
 
 #: kuma/wiki/templates/wiki/document.html:319
 msgid "This article doesn't have any content yet."
