@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2015-12-24 14:27+0000\n"
+"PO-Revision-Date: 2015-12-24 14:47+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -3634,41 +3634,39 @@ msgstr "Podana nazwa użytkownika już istnieje."
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "Użytkownik"
 
 #: kuma/users/apps.py:69
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You have completed the first step of <a href=\"%s\">getting started with "
 "MDN</a>"
-msgstr ""
-"Tworząc profil wykonałeś/wykonałaś <a href=\"%(started_link)s\">pierwszy "
-"kroku na MDN</a>."
+msgstr "Wykonano pierwszy krok z <a href=\"%s\">przyłączenia sie do MDN</a>"
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "algorytm"
 
 #: kuma/users/backends.py:33
 msgid "salt"
-msgstr ""
+msgstr "salt"
 
 #: kuma/users/backends.py:34
 msgid "hash"
-msgstr ""
+msgstr "hash"
 
 #: kuma/users/constants.py:6
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
-msgstr ""
+msgstr "Nazwa użytkownika może zawierać tylko litery, cyfry i znaki: . - _ +"
 
 #: kuma/users/forms.py:23
 msgid "You must agree to the privacy policy."
-msgstr ""
+msgstr "Musisz zaakceptować zasady ochrony prywatności."
 
 #: kuma/users/forms.py:38
 msgid "Plain text"
-msgstr ""
+msgstr "Zwykły tekst"
 
 #: kuma/users/forms.py:40
 msgid "Send me the newsletter"
@@ -3676,30 +3674,29 @@ msgstr "Wyślij mi biuletyn"
 
 #: kuma/users/forms.py:42
 msgid "Preferred format"
-msgstr ""
+msgstr "Preferowany format"
 
 #: kuma/users/forms.py:47 kuma/users/signup.py:32
 msgid "I agree"
-msgstr ""
+msgstr "Zgadzam się"
 
 #: kuma/users/forms.py:50
 msgid "Your country"
-msgstr ""
+msgstr "Kraj"
 
 #: kuma/users/forms.py:151 kuma/users/models.py:41
 msgid "Timezone"
-msgstr ""
+msgstr "Strefa czasowa"
 
 #: kuma/users/forms.py:157
 msgid "Beta tester"
-msgstr ""
+msgstr "Beta tester"
 
 #: kuma/users/forms.py:161 kuma/users/templates/users/user_detail.html:87
 msgid "Interests"
 msgstr "Zainteresowania"
 
 #: kuma/users/forms.py:167
-#, fuzzy
 msgid "Expertise"
 msgstr "Obszary wiedzy specjalistycznej"
 
@@ -3710,7 +3707,7 @@ msgstr "Nazwa użytkownika"
 #: kuma/users/forms.py:180 kuma/users/models.py:139
 #: kuma/users/templates/users/user_detail.html:117
 msgid "Website"
-msgstr ""
+msgstr "Witryna"
 
 #: kuma/users/forms.py:189 kuma/users/models.py:154
 #: kuma/users/templates/users/user_detail.html:121
@@ -3728,12 +3725,12 @@ msgstr "GitHub"
 #: kuma/users/forms.py:207 kuma/users/models.py:169
 #: kuma/users/templates/users/user_detail.html:135
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Stack Overflow"
 
 #: kuma/users/forms.py:216 kuma/users/models.py:159
 #: kuma/users/templates/users/user_detail.html:139
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: kuma/users/forms.py:225 kuma/users/models.py:144
 #: kuma/users/templates/users/user_detail.html:143
@@ -3748,42 +3745,42 @@ msgstr "Facebook"
 
 #: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "Obszary wiedzy muszą być podzestawem zainteresowań"
 
 #: kuma/users/forms.py:275
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "To pole nie może pozostać puste."
 
 #: kuma/users/forms.py:281
 msgid "Username already in use."
-msgstr ""
+msgstr "Nazwa użytkownika jest już zajęta."
 
 #: kuma/users/helpers.py:35
 #, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
-msgstr ""
+msgstr "Zablokowany na %(ban_date)s przez %(ban_admin)s."
 
 #: kuma/users/helpers.py:42
 msgid "Banned"
-msgstr ""
+msgstr "Zablokowany"
 
 #: kuma/users/helpers.py:49
 msgid "Ban User"
-msgstr ""
+msgstr "Blokowanie użytkowników"
 
 #: kuma/users/helpers.py:60
 msgid "Admin"
-msgstr ""
+msgstr "Administrator"
 
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_user)s zablokowany przez %(banned_by)s"
 
 #: kuma/users/models.py:32
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s (nie jest już aktywy)"
 
 #: kuma/users/models.py:51
 msgid "Language"
@@ -3798,14 +3795,16 @@ msgid ""
 "This URL has an invalid format. Valid URLs look like "
 "http://example.com/my_page."
 msgstr ""
+"Ten adres URL ma nieprawidłowy format. Prawidłowy adres URL wygląda jak "
+"http://example.com/my_page."
 
 #: kuma/users/models.py:70
 msgid "Name"
-msgstr ""
+msgstr "Nazwa"
 
 #: kuma/users/models.py:75
 msgid "Organization"
-msgstr ""
+msgstr "Organizacja"
 
 #: kuma/users/models.py:80
 msgid "Location"
@@ -3817,7 +3816,7 @@ msgstr "Informacje o mnie"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
-msgstr ""
+msgstr "Pseudonim IRC"
 
 #: kuma/users/models.py:94
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:27
@@ -3828,35 +3827,35 @@ msgstr "Etykiety"
 
 #: kuma/users/models.py:102
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Wprowadź prawidłowy adres URL strony."
 
 #: kuma/users/models.py:107
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "Wprowadź prawidłowy adres URL Twittera."
 
 #: kuma/users/models.py:112
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Wprowadź prawidłowy adres URL GitHuba."
 
 #: kuma/users/models.py:117
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Wprowadź prawidłowy adres URL Stack Overflow."
 
 #: kuma/users/models.py:122
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Wprowadź prawidłowy adres URL LinkedIn."
 
 #: kuma/users/models.py:127
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Wprowadź prawidłowy adres URL Mozillian."
 
 #: kuma/users/models.py:132
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "Wprowadź prawidłowy adres URL Facebooka."
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
-msgstr ""
+msgstr "Nazwa użytkownika jest wymagana."
 
 #: kuma/users/signup.py:8
 #, python-format
@@ -3878,7 +3877,7 @@ msgstr ""
 
 #: kuma/users/signup.py:13
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "Musisz zaakceptować regulamin."
 
 #: kuma/users/tasks.py:38 kuma/users/templates/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
@@ -3891,7 +3890,7 @@ msgstr "Adres e-mail"
 #: kuma/users/views.py:295
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>Zweryfikowano</b>"
 
 #: kuma/users/views.py:298
 #, python-format
