@@ -4,10 +4,16 @@ $see-also-outdent = 6px;
 
     margin-bottom: $grid-spacing;
     position: relative;
+    background-color: #fff;
 
     set-smaller-font-size();
     {$selector-heading-font-fallback} {
         letter-spacing: -0.002em;
+    }
+
+    /* need to give it a fake border when appearing on zones */
+    .zone-landing-header-preview-base & {
+        box-shadow: ($see-also-outdent * -1) 0 0 #fff;
     }
 
     a {
