@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2015-12-24 13:43+0000\n"
+"PO-Revision-Date: 2015-12-24 14:27+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -2163,7 +2163,7 @@ msgstr "Początek"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:9
 msgid "Censor multiple objects"
-msgstr ""
+msgstr "Cenzoruj wiele obiektów"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:14
 #, python-format
@@ -2171,14 +2171,16 @@ msgid ""
 "Are you sure you want to censor the selected %(object_name)s objects? This "
 "cannot be reversed."
 msgstr ""
+"Czy na pewno chcesz cenzurować wybrane %(object_name)s obiektów? Tej "
+"operacji nie można odwrócić."
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:23
 msgid "Explanation URL (optional):"
-msgstr ""
+msgstr "Adres URL zawierający wyjaśnienie (opcjonalne):"
 
 #: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
 msgid "Yes, I'm sure"
-msgstr ""
+msgstr "Tak, na pewno"
 
 #: kuma/demos/templates/demos/delete.html:10
 #: kuma/demos/templates/demos/detail.html:9
@@ -2389,9 +2391,9 @@ msgstr[2] "To demo było oglądane %(num)s razy"
 #, python-format
 msgid "%(num)s view"
 msgid_plural "%(num)s views"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s odsłona"
+msgstr[1] "%(num)s odsłony"
+msgstr[2] "%(num)s odsłon"
 
 #: kuma/demos/templates/demos/detail.html:166
 #: kuma/demos/templates/demos/elements/submission_thumb.html:16
@@ -2406,9 +2408,9 @@ msgstr[2] "%(num)s osobom podoba się to demo"
 #, python-format
 msgid "%(num)s like"
 msgid_plural "%(num)s likes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s osoba lubi to"
+msgstr[1] "%(num)s osoby lubią to"
+msgstr[2] "%(num)s osób lubi to"
 
 #: kuma/demos/templates/demos/detail.html:181
 msgid "Edit Demo"
@@ -2638,7 +2640,7 @@ msgstr "autor: %(profile_link)s"
 
 #: kuma/demos/templates/demos/launch.html:77
 msgid "Back"
-msgstr ""
+msgstr "Wróć"
 
 #: kuma/demos/templates/demos/launch.html:86
 msgid "Remove this toolbar"
@@ -2958,9 +2960,9 @@ msgstr "Zobacz profil %(display_name)s"
 #, python-format
 msgid "%(num)s Demo"
 msgid_plural "%(num)s Demos"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s demo"
+msgstr[1] "%(num)s dema"
+msgstr[2] "%(num)s dem"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:9
 msgid "Sort demos by most recent likes and views"
@@ -3016,7 +3018,7 @@ msgstr "Przejdź do pierwszej strony"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:58
 msgid "First"
-msgstr ""
+msgstr "Pierwsza"
 
 #: kuma/demos/templates/demos/elements/submission_listing.html:61
 msgid "Go to the previous page"
@@ -3048,6 +3050,8 @@ msgid ""
 "The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
 "web developers to come change the world with Mozilla."
 msgstr ""
+"Program Fellowship z Mozilla Developer Network (MDN) zaprasza światowej "
+"klasy twórców internetowych do zmiany Świata razem z Mozillą."
 
 #: kuma/landing/templates/landing/homepage.html:14
 msgid ""
@@ -3121,7 +3125,7 @@ msgstr "Debugger JavaScript"
 
 #: kuma/landing/templates/landing/homepage.html:94
 msgid "Performance Tools"
-msgstr ""
+msgstr "Narzędzia do oceny wydajności"
 
 #: kuma/landing/templates/landing/homepage.html:99
 msgid "Connect"
@@ -3149,11 +3153,11 @@ msgstr "Dowiedz się o Web Development"
 
 #: kuma/landing/templates/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "Pobierz przeglądarkę dla programistów takich jak ty"
 
 #: kuma/landing/templates/landing/homepage.html:120
 msgid "Celebrate ten years of documenting your Web."
-msgstr ""
+msgstr "Świętuj dziesięć lat dokumentowania sieci Web."
 
 #: kuma/landing/templates/landing/homepage.html:124
 msgid "Build Open Web Apps"
@@ -3603,30 +3607,30 @@ msgstr "To zawiera niewłaściwą treść."
 
 #: kuma/spam/forms.py:33
 msgid "The form data has not yet been validated. Please try again."
-msgstr ""
+msgstr "Dane z formularza nie zostały jeszcze zatwierdzone. Spróbuj ponownie."
 
 #: kuma/spam/models.py:10
 msgid "created"
 msgstr "utworzono"
 
 #: kuma/users/adapters.py:17
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Sorry, you must have at least one connected account so you can sign in. To "
 "disconnect this account connect a different one first. To delete your MDN "
 "profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
 msgstr ""
-"Jeśli próbowałeś/próbowałaś otworzyć odnośnik do dokumentacji, możesz "
-"zalogować się i utworzyć stronę. Jeśli nie, <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">zgłoś błąd</a>. Dziękujemy!"
+"Aby się logować, musisz mieć przynajmniej jedno działające konto. Aby "
+"wyłączyć to konto musisz zalogować z innego konta. Aby usunąć profil MDN <a "
+"href=\"%(bug_form_url)s\" rel=\"nofollow\">wypełnij zgłoszenie</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr ""
+msgstr "Adres e-mail nie może być użyty jako nazwa użytkownika."
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr ""
+msgstr "Podana nazwa użytkownika już istnieje."
 
 #: kuma/users/apps.py:24
 msgid "User"
