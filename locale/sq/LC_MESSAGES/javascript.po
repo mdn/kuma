@@ -1,9 +1,10 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:39-0800\n"
-"PO-Revision-Date: 2015-11-21 17:09+0200\n"
+"PO-Revision-Date: 2015-12-24 17:42+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sq\n"
@@ -11,8 +12,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Translate Toolkit 1.13.0\n"
 "Generated-By: Babel 2.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1383819910.0\n"
 
 #: kuma/static/js/components.js:75
@@ -100,7 +101,6 @@ msgid "Open"
 msgstr "Hape"
 
 #: kuma/static/js/wiki-compat-tables.js:25
-#, fuzzy
 msgid "Return to compatibility table."
 msgstr "Rikthehuni te tabela e përputhshmërive."
 
@@ -133,8 +133,14 @@ msgid "Show old table."
 msgstr "Shfaq tabelën e vjetër."
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr "Keni në përpunim një skicë. <a href=\"\" class=\"restoreLink\">Riktheni lëndën e skicës</a> ose <a href=\"\" class=\"discardLink\">hidheni skicën tej</a>."
+msgid ""
+"You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+" draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+"draft</a>."
+msgstr ""
+"Keni në përpunim një skicë. <a href=\"\" class=\"restoreLink\">Riktheni "
+"lëndën e skicës</a> ose <a href=\"\" class=\"discardLink\">hidheni skicën "
+"tej</a>."
 
 #: kuma/static/js/wiki-edit.js:547
 msgid "saved"
@@ -153,7 +159,8 @@ msgid "Search Stack Overflow"
 msgstr "Kërkoni te Stack Overflow"
 
 #: kuma/static/js/wiki.js:684
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Shfletuesi juaj nuk mbulon MathML. Në vend të tij është përdorur CSS."
 
 #: kuma/static/js/wiki.js:899
@@ -168,7 +175,8 @@ msgstr "Përzgjidhni një bashkëngjitje"
 msgid "No attachments available"
 msgstr "S’ka bashkëngjitje"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Bashkangjitje"
 
@@ -188,7 +196,8 @@ msgstr "Krijoni një Ridrejtim"
 msgid "MDN Redirect"
 msgstr "Ridrejtim MDN-je"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
@@ -198,7 +207,7 @@ msgstr "URL"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/plugin.js:17
 msgid "Insert Code Sample iFrame"
-msgstr ""
+msgstr "Futni iFrame Shembull Kodi"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:5
 msgid "Sample Finder"
@@ -242,7 +251,7 @@ msgstr "Shembull Lënde JavaScript"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:52
 msgid "Insert Code Sample Template"
-msgstr ""
+msgstr "Futni Gjedhe Shembull Kodi"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:24
 msgid "Syntax Highlighter"
