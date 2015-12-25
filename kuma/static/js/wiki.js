@@ -329,42 +329,67 @@
 
     })();
 
+    /*
+        Track clicks on access menu items
+    */
+    $('#nav-access').on('click contextmenu', 'a', function(event) {
+        var $thisLink = $(this);
+        var url = $thisLink.attr('href');
 
+        var data = {
+            category: 'Access Links',
+            action: $thisLink.text(),
+            label: $thisLink.attr('href')
+        };
+
+        mdn.analytics.trackLink(event, url, data);
+
+        // dimension11 is "skiplinks user"
+        if(win.ga) ga('set', 'dimension11', 'Yes');
+    });
 
     /*
         Track clicks on TOC links
     */
-    $('#toc').on('click', 'a', function() {
+    $('#toc').on('click contextmenu', 'a', function(event) {
         var $thisLink = $(this);
+        var url = $thisLink.attr('href');
 
-        mdn.analytics.trackEvent( {
+        var data = {
             category: 'TOC Links',
             action: $thisLink.text(),
             label: $thisLink.attr('href')
-        });
+        };
+
+        mdn.analytics.trackLink(event, url, data);
+    });
+
+    /*
+        Track clicks on main nav links
+    */
+    $('#main-nav').on('click contextmenu', 'a', function(event) {
+        var url = this.href;
+        var data = {
+            category: 'Wiki',
+            action: 'Main Nav',
+            label: url
+        };
+
+        mdn.analytics.trackLink(event, url, data);
     });
 
     /*
         Track clicks on Crumb links
     */
-    $('.crumbs').on('click', 'a', function(e) {
+    $('.crumbs').on('click contextmenu', 'a', function(event) {
         var url = this.href;
-        var newTab = (e.metaKey || e.ctrlKey);
         var data = {
             category: 'Wiki',
             action: 'Crumbs',
             label: url
         };
 
-        if(newTab) {
-            mdn.analytics.trackEvent(data);
-        }
-        else {
-            e.preventDefault();
-            mdn.analytics.trackEvent(data, function() {
-                window.location = url;
-            });
-        }
+        mdn.analytics.trackLink(event, url, data);
     });
 
 
@@ -524,15 +549,19 @@
         });
         // loop through error list and log errors
         var $kserrorsList = $('#kserrors-list');
-        $kserrorsList.each(function(){
-            var $thisError = $(this);
-            var errorType = $thisError.find('.kserror-type').text().trim();
-            var errorMacro = $thisError.find('.kserror-macro').text().trim();
-            var errorParse = $thisError.find('.kserror-parse').text().trim().replace(/\s\s+/g, ' ');
-            mdn.analytics.trackError('Kumascript Error', errorType, 'in: ' + errorMacro + '; parsing: ' + errorParse );
-        });
+        if($kserrorsList.length){
+            $kserrorsList.each(function(){
+                var $thisError = $(this);
+                var errorType = $thisError.find('.kserror-type').text().trim();
+                var errorMacro = $thisError.find('.kserror-macro').text().trim();
+                var errorParse = $thisError.find('.kserror-parse').text().trim().replace(/\s\s+/g, ' ');
+                mdn.analytics.trackError('Kumascript Error', errorType, 'in: ' + errorMacro + '; parsing: ' + errorParse );
+            });
+        } else {
+            // generic error recorded - no details if user not logged in
+            mdn.analytics.trackError('Kumascript Error', 'generic error');
+        }
     }
-
 
     /*
         Stack overflow search form, used for dev program
@@ -592,9 +621,10 @@
             }
         }
 
-        function trackAvatar(){
-            var newTab = (e.metaKey || e.ctrlKey);
-            var href = this.href;
+
+        // Track clicks on avatars for the sake of Google Analytics tracking
+        $contributors.on('click', 'a', function(event) {
+            var url = this.href;
             var index = $(this).parent().index() + 1;
             var data = {
                 category: 'Top Contributors',
@@ -602,15 +632,8 @@
                 label: index
             };
 
-            if (newTab) {
-                mdn.analytics.trackEvent(data);
-            } else {
-                e.preventDefault();
-                mdn.analytics.trackEvent(data, function() {
-                    win.location = href;
-                });
-            }
-        }
+            mdn.analytics.trackLink(event, url, data);
+        });
 
         // Don't bother with contributor bar if it starts hidden
         if($contributors.css('display') === 'none') return;
@@ -618,8 +641,6 @@
         // Start displaying first contributors in list
         loadImages('li.' + shownClass + ' noscript');
 
-        // Track clicks on avatars for the sake of Google Analytics tracking
-        $contributors.on('click', 'a', trackAvatar);
 
         // Setup "Show all Contributors block"
         if ($contributors.data('has-hidden')) {
@@ -627,8 +648,8 @@
         }
 
         // Trigger CSS on focus into and out of the list itself
-        $contributors.find('ul').on('focusin focusout', function(e) {
-            $(this)[(e.type === 'focusin' ? 'add' : 'remove') + 'Class']('focused');
+        $contributors.find('ul').on('focusin focusout', function(event) {
+            $(this)[(event.type === 'focusin' ? 'add' : 'remove') + 'Class']('focused');
         });
     })();
 

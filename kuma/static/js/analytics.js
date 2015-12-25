@@ -105,6 +105,23 @@
             });
         },
 
+        trackLink: function(event, url, data) {
+            // ctrl or cmd click or context menu
+            var newTab = (event.metaKey || event.ctrlKey || event.type == 'contextmenu');
+            // is a same page anchor
+            var isAnchor = (url.indexOf("#") == 0);
+
+            if(newTab || isAnchor) {
+                mdn.analytics.trackEvent(data);
+            }
+            else {
+                event.preventDefault();
+                mdn.analytics.trackEvent(data, function() {
+                    window.location = url;
+                });
+            }
+        },
+
         /*
             Track specific clientside errors created by our code
             this article was a lot of help: http://blog.gospodarets.com/track_javascript_angularjs_and_jquery_errors_with_google_analytics/
