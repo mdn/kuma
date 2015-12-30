@@ -228,23 +228,20 @@ div.bug {
 }
 
 .callout-box {
+    pull-aside();
+    bidi-value(margin-bottom, $grid-spacing, $grid-spacing); /* override behaviour of pull-aside */
+    box-sizing: border-box;
     background: $light-background-color;
     border: 1px solid #f1f1f1;
-    bidi-value(float, right, left);
-    bidi-value(margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0);
     padding: $grid-spacing;
     position: relative;
     text-align: center;
-    @extend $column-3;
     min-width: 200px;
     z-index: 2;
 
-    prevent-last-child-bottom-spacing();
-
+    /* override behaviour of pull-aside */
     @media $media-query-small-mobile {
-        width: 100%;
-        box-sizing: border-box;
-        bidi-value(margin, 0 0 ($grid-spacing / 2) 0, 0 0 ($grid-spacing / 2) 0);
+        bidi-value(margin-bottom, $grid-spacing, $grid-spacing);
     }
 }
 
