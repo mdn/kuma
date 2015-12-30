@@ -37,6 +37,7 @@
 {% set crumbs = build_document_crumbs(document) %}
 {% set share_links = build_share_links(document) %}
 
+
 {% set content_class = 'column-all' %}
 {% if show_left and show_right %}
   {% set content_class = 'column-half' %}
@@ -176,17 +177,8 @@
             <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-right"></i></a>
           </span>
 
-        <h1>{{ document.title }}</h1>
-
         {% if has_contributors %}
-        <div class="contributor-avatars" data-all-text="{{ _('Show all') }}&hellip;<span class='hidden'>{{ _('contributors') }}</span>" {% if contributors_count > contributors_limit %}data-has-hidden="1"{% endif %}>
-            <span class="quickstat">
-            {% trans count=contributors_count %}
-            by {{ count }} contributor:
-            {% pluralize %}
-            by {{ count }} contributors:
-            {% endtrans %}
-            </span>
+        <div class="contributor-avatars" data-all-text="{{ _('see all contributors') }}" data-alternate-message="{{ _('hide contributors') }}" {% if contributors_count > contributors_limit %}data-has-hidden="1"{% endif %}>
             <ul>
             {% for contributor in contributors %}
                 <li class="{% if loop.index > contributors_limit %}hidden{% else %}shown{% endif %}">
@@ -197,6 +189,8 @@
             </ul>
         </div>
         {% endif %}
+
+        <h1>{{ document.title }}</h1>
 
       </div>
       {% endif %}
