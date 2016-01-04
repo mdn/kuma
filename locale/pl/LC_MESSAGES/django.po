@@ -5898,7 +5898,7 @@ msgstr "Historia artykułu:"
 #: kuma/wiki/templates/wiki/email/edited.ltxt:40
 #, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
-msgstr "Subskrybujesz edycję artykułu: %s(title)s i jego powiązane artykuły."
+msgstr "Subskrybujesz edycję artykułu: %(title)s i jego powiązane artykuły."
 
 #: kuma/wiki/templates/wiki/email/edited.ltxt:44
 #, python-format
