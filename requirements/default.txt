@@ -197,14 +197,14 @@ pytz==2015.7
 # sha256: ivyytfIatxFGp4bH5xyIO9MtgZGld9aVAXtkhntxzKw
 raven==3.3.12
 
-# sha256: ifGx8l3Ne2j1FOjTQaWy60ZvlgrnVoIuqrSAo8GoHCg
-requests==2.8.1
+# sha256: ET-7pVManjSUW302szoIToul0GZLcDyBp8Vy2RkZpbg
+requests==2.9.1
 
 # sha256: 5hBWzbgJ_MbtR3cbdAVP46tMNlnX9mwypSVujPAT4K8
 requests-mock==0.7.0
 
-# sha256: x9LubC6MWKD9YMLX0hzpPI0rIuep8jLUv5FTJq-0ea8
-requests-oauthlib==0.5.0
+# sha256: aelHw8ttQmp9yv2NmFTT3rVrAWUBe_zu9aF-N6pE-BM
+requests-oauthlib==0.6.0
 
 # sha256: D_eMQD2bzPWkJabTGhKqa0fxwhyk3CVzp-LzKpczXrE
 six==1.10.0
@@ -212,8 +212,8 @@ six==1.10.0
 # sha256: 3Lv0kFjkGWoG6YjZ3B52IyGrDQV8S-A1uE48ETU_wvg
 translate-toolkit==1.13.0
 
-# sha256: ily8RMFy272fTe5isecZfJK0Vrr-UieQQlCcq1uJyD4
-urllib3==1.12
+# sha256: _-iFnKT9-wIcLo4NMDP2xes3L41MP9VFVSMFWigGpDc
+urllib3==1.14
 
 # sha256: 9RJysShG25ivUwsKZPZZPSsehAXwqlgChbN86ACbjZw
 URLObject==2.4.0
