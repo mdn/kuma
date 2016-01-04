@@ -1,8 +1,8 @@
 # sha256: 0a6hxKphuDZtakLdNlBiL7-cY07STq9_N5yLlw5e1E4
 coverage==3.7.1
 
-# sha256: gPnTaQ4NuDDDdq6XFygUjXYN1k1ETRwJJ0fWY6DXL3M
-django-nose==1.4.2
+# sha256: kvdDM2cBF0bMPL09XmfcwRBmyLhWe5pRSUju6hH6WEM
+django-nose==1.4.3
 
 # sha256: Ig4fl-zi3vNFSu7MUHBBlRjk4Wxao50h61CaOPR4R-w
 locustio==0.7.3
