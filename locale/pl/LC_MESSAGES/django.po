@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2015-12-24 14:47+0000\n"
+"PO-Revision-Date: 2016-01-04 12:09+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -4072,7 +4072,7 @@ msgstr ""
 
 #: kuma/users/templates/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Zły token"
 
 #: kuma/users/templates/account/password_reset_from_key.html:17
 #, python-format
@@ -4081,6 +4081,8 @@ msgid ""
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
 msgstr ""
+"Odnośnik do resetowania hasła nie zadziałał. Prawdopodobnie był już użyty. "
+"Poproś o <a href=\"%(passwd_reset_url)s\">ponowne zresetowanie hasła</a>."
 
 #: kuma/users/templates/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -4241,6 +4243,9 @@ msgid ""
 " MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
 "your social account connections.</a>"
 msgstr ""
+"Profil z takim adresem e-mail już istnieje. Aby podłączyć Persona do profilu"
+" MDN należy, <a href=\"%(connections_url)s\">zalogować się do swojego konta "
+"społecznościowego i przejść do połączeń.</a>"
 
 #: kuma/users/templates/socialaccount/signup.html:43
 #, python-format
@@ -4530,7 +4535,7 @@ msgstr "Zobacz profil"
 
 #: kuma/users/templates/users/user_edit.html:52
 msgid "You're editing a different profile than your own. Please take care!"
-msgstr ""
+msgstr "Edytujesz nie swój profil. Zachowaj ostrożność!"
 
 #: kuma/users/templates/users/user_edit.html:63
 msgid ""
@@ -4752,7 +4757,7 @@ msgstr "Chcesz tłumaczyć MDN na swój język?"
 #: kuma/users/templates/users/email/welcome/plain.ltxt:33
 #, python-format
 msgid "Mailing list: %(list_link)s"
-msgstr ""
+msgstr "Lista milingowa: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
@@ -4767,13 +4772,13 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:39
 msgid "Real-time chat: #mdn channel on irc.mozilla.org"
-msgstr ""
+msgstr "Czat w czasie rzeczywistym: #mdn channel on irc.mozilla.org"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr ""
+msgstr "Przejdź na %(irc_link)s, by uzyskać więcej informacji na temat IRC-a."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:45
@@ -4794,12 +4799,12 @@ msgstr ""
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
 #, python-format
 msgid "Blog: %(blog_link)s"
-msgstr ""
+msgstr "Blog: %(blog_link)s"
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:206
 msgid "Technical - code samples, APIs, or technologies"
@@ -5187,6 +5192,8 @@ msgid ""
 "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d "
 "into index %(index)s.total"
 msgstr ""
+"Indeksowanie %(total)d dokumentów do %(total_chunks)d elementów rozmiaru "
+"%(size)d do indeksu %(index)s."
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
@@ -5208,6 +5215,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          Następujące dokumenty zostaną trwale usunięte z bazy danych. Tej czynności nie można cofnąć. Aby anulować, naciśnij przycisk „Wstecz” w swojej przeglądarce.\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 #, fuzzy
@@ -5217,7 +5227,7 @@ msgstr "Dokumenty MDN"
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
 msgid "Add %(name)s"
-msgstr ""
+msgstr "Dodaj %(name)s"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
@@ -5228,11 +5238,11 @@ msgstr "Dokumenty MDN"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
-msgstr ""
+msgstr "Popraw poniższe błędy."
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "Wczytaj"
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:4
 #, fuzzy, python-format
@@ -5274,7 +5284,7 @@ msgstr "Zapisz zmiany"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
-msgstr ""
+msgstr "Data ostatniej zmiany"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:29
 msgid ""
@@ -5637,7 +5647,7 @@ msgstr ""
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:3
 #, python-format
 msgid "View %(locale)s parent"
-msgstr ""
+msgstr "Zobacz lokalizację %(locale)s"
 
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:5
 #: kuma/wiki/templates/wiki/feed_docs_updated.html:11
@@ -5660,26 +5670,32 @@ msgid ""
 "Please specify the new location for this page by filling out the fields "
 "below. Be sure your new destination follows these rules:"
 msgstr ""
+"Określ nową lokalizację dla tej strony, wypełniając poniższe pola. Upewnij "
+"się, że nowa lokalizacja spełnia następujące reguły:"
 
 #: kuma/wiki/templates/wiki/move.html:22
 msgid ""
 "Make sure the location you specify is located immediately under an existing "
 "page."
 msgstr ""
+"Upewnij się, że określona lokalizacja znajduje się bezpośrednio pod "
+"istniejącą stroną."
 
 #: kuma/wiki/templates/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
-msgstr ""
+msgstr "Nie dodawaj („https://”)."
 
 #: kuma/wiki/templates/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "Dodaj tylko następującą część  adresu URL „/docs/”."
 
 #: kuma/wiki/templates/wiki/move.html:25
 msgid ""
 "Don't include a trailing slash (this will be removed for you if you include "
 "it, but you should leave it out)."
 msgstr ""
+"Nie dodawaj końcowego ukośnika. Zostanie on usunięty, więc lepiej go pominąć"
+" ."
 
 #: kuma/wiki/templates/wiki/move.html:31
 #, fuzzy
@@ -5940,7 +5956,7 @@ msgstr "Dodaj tłumaczenie"
 #: kuma/wiki/templates/wiki/includes/buttons.html:43
 #: kuma/wiki/templates/wiki/includes/buttons.html:46
 msgid "Watch"
-msgstr ""
+msgstr "Obserwuj"
 
 #: kuma/wiki/templates/wiki/includes/buttons.html:63
 #, fuzzy
@@ -6004,6 +6020,7 @@ msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
 msgstr ""
+"Serwer renderuje porównanie zawartości. Odśwież stronę za kilku minut."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:107
 #, fuzzy
@@ -6012,7 +6029,7 @@ msgstr "Udostępnij"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:111
 msgid "Google+"
-msgstr ""
+msgstr "Google+"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:128
 #, fuzzy, python-format
@@ -6036,7 +6053,7 @@ msgstr "Anulowano subskrypcję tych powiadomień."
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:143
 msgid "Updating subscription status"
-msgstr ""
+msgstr "Aktualizacja stanu subskrypcji"
 
 #: kuma/wiki/templates/wiki/includes/document_macros.html:144
 #, fuzzy, python-format
@@ -6212,6 +6229,11 @@ msgid ""
 "deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
 "belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"Twoje zgłoszenie zawiera treści, które mogą być nieodpowiednie dla MDN. "
+"Powtarzające się próby przesłania nieodpowiedniego materiału mogą spowodować"
+" dezaktywację konta. Zobacz naszą instrukcję “<a "
+"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>”, by poznać "
+"szczegółowe informacje na temat tego, co jest odpowiednim materiałem."
 
 #: kuma/wiki/templates/wiki/includes/spam_error.html:11
 #, python-format
@@ -6219,6 +6241,8 @@ msgid ""
 "If you believe you’ve received this message by mistake, please <a "
 "href=\"%(admin_email)s\">contact the site administrators</a>."
 msgstr ""
+"Jeśli uważasz, że jest to pomyłkowa wiadomość, prosimy o <a "
+"href=\"%(admin_email)s\">kontakt z administratorami strony</a>."
 
 #: kuma/wiki/templates/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -6371,6 +6395,8 @@ msgid ""
 "Document already exists. Note: You cannot revert a document that has been "
 "moved until you delete its redirect."
 msgstr ""
+"Dokument już istnieje. Nie można przywrócić przeniesionego dokumentu do "
+"czasu usunięcia jego przekierowania."
 
 #: kuma/wiki/views/document.py:600
 #, python-format
@@ -6380,7 +6406,7 @@ msgstr "Przekierowano z %(url)s"
 #: kuma/wiki/views/document.py:648
 #, python-format
 msgid "I learned about %(title)s on MDN."
-msgstr ""
+msgstr "Dowiedziałem się o %(title)s na MDN."
 
 #: kuma/wiki/views/document.py:718
 #, python-format
