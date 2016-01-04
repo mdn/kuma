@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('wiki', '0012_auto_20151105_1131'),
+        ('wiki', '0014_spam_set_null'),
     ]
 
     operations = [

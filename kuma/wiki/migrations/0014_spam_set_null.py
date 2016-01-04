@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wiki', '0011_create_spam_data'),
+        ('wiki', '0013_remove_helpfulvote'),
     ]
 
     operations = [

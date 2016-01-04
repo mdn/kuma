@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wiki', '0013_auto_20151106_1057'),
+        ('wiki', '0015_add_revision_akismet_submission'),
     ]
 
     operations = [
