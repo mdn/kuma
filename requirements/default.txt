@@ -100,8 +100,8 @@ django-statici18n==1.1.5
 # sha256: OhU6SdMsnSQP2JYlwtAumdG8N2mKp4hiWwIinggniug
 django-sundial==1.0.1
 
-# sha256: PQA9h73bKxJgQlgyn5V3xRaZicSE4Nd8UYhM6exTksg
-django-taggit==0.17.3
+# sha256: OlRklb8D7pnAnCoFC81rWxniz5sUH6E4vBmGQTYg7Xs
+django-taggit==0.17.6
 
 # sha256: i_nxaEVoCVzAcZwurdZSvTAw9F6YrAcg9wxaOKRZEl4
 django-tidings==1.1
