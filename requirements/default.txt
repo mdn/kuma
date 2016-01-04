@@ -34,8 +34,8 @@ cssselect==0.9.1
 # sha256: nbpWEfvyeJM0c0n9UcwZEctANoKnFjNzrazFZdEeLkw
 diff-match-patch==20121119
 
-# sha256: j7aT7P5M1v-a4xNv8KHqpKyuAa8ie7geZG3CutMpXM8
-Django==1.8.7
+# sha256: BYFpY8u63RMbzuj7UGnYaVeW4l0IHsJO_2K8H8jtiRo
+Django==1.8.8
 
 # sha256: IppqWmP_VfnrRtTa44Y7p3VzW_YL_Ba_TiBC8hTxjh0
 django-allauth==0.24.1
