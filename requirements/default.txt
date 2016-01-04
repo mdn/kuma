@@ -1,5 +1,5 @@
-# sha256: F4GIS1PgEgnuztE8odlB8acCYIiXTttvticoY4vQLdo
-amqp==1.4.7
+# sha256: lNKmgifnmEvUD19xxoOXMGIq_4pGM_Ke3h_90NJAeV4
+amqp==1.4.8
 
 # sha256: N4Ethjya0-NcBzTELgvwMgzow77YLNIK1UyzTRWBV7o
 anyjson==0.3.3
@@ -13,8 +13,8 @@ basket-client==0.3.11
 # sha256: aoy0QBER4BG1ecjFKlHNq5cAQcxUOBS72Vd6RSn-HNs
 BeautifulSoup==3.2.1
 
-# sha256: lwX3jwqXG5GnCzsZqnhiQBtus7C__CouBwLtXurM2uk
-billiard==3.3.0.21
+# sha256: 0hYYE4cxf4aWxtHICiSRJY0DdJPB8MbrWJkqVJSB534
+billiard==3.3.0.22
 
 # sha256: VNCAMILM8yqQ9B5DxhENxLhoaJuse-lauPLmgEkJkLM
 bitly-api==0.3
@@ -145,8 +145,8 @@ importlib==1.0.3
 # sha256: Cb8ZeNHQBJQ8KjWQCftdCbZyd7uq-a7SgYVrPAY5eec
 jsonpickle==0.9.2
 
-# sha256: T7MFbn3PYTDlr1jv9K9C23L1aLtnKL3bjA-v60RjAg0
-kombu==3.0.29
+# sha256: QGyfTK0dEawHskWuIV9tjuEn22PoMx4MhxCLuvF5HI4
+kombu==3.0.32
 
 # sha256: 4I-6OWieWk36F1dJh0gR5RbwGWVlRIdN7-BRVAc_adQ
 logilab-astng==0.24.3
