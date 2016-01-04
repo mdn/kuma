@@ -218,8 +218,8 @@ urllib3==1.14
 # sha256: 9RJysShG25ivUwsKZPZZPSsehAXwqlgChbN86ACbjZw
 URLObject==2.4.0
 
-# sha256: tqk-kJsx4-FGWVhP9zKYZCdZBd3BuGU4Yb3-HllyUPQ
-Werkzeug==0.11.2
+# sha256: aUkbUwUVfDxuDwSnAZhNaud_1yn8HJrNJQd_HfOFMms
+Werkzeug==0.11.3
 
 # sha256: yS7Tot2HxUqeIAJPsKIG_lkcNSx0X_8h6PjGzawghuo
 wheel==0.26.0
