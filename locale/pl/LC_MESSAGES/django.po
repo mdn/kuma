@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2016-01-04 12:09+0000\n"
+"PO-Revision-Date: 2016-01-04 13:09+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -367,7 +367,7 @@ msgstr ""
 
 #: kuma/core/apps.py:16
 msgid "Core"
-msgstr ""
+msgstr "Podstawowe"
 
 #: kuma/core/form_fields.py:57
 #, python-format
@@ -4352,7 +4352,7 @@ msgstr ""
 "nim</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:155
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and "
 "notifications? This address will <strong>not</strong> be displayed on MDN "
@@ -4362,16 +4362,16 @@ msgstr ""
 "Jakiego adresu e-mail mamy używać, by wysyłać ci związane z MDN wiadomości i"
 " powiadomienia? Ten adres <strong>nie będzie</strong> wyświetlany na "
 "stronach MDN i będzie używany zgodnie z naszymi <a "
-"href=\"{privacy_url}\">zasadami ochrony prywatności</a>."
+"href=\"%(privacy_url)s\">zasadami ochrony prywatności</a>."
 
 #: kuma/users/templates/socialaccount/signup.html:170
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
 "href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
-"<li><a href=\"%(demos_url)s\">Zobacz dema</a> lub <a "
-"href=\"%(docs_url)s\">przejrzyj dokumenty</a></li>"
+"do <a href=\"%(terms_url)s\">Regulaminów</a> i <a "
+"href=\"%(privacy_url)s\">Zasad ochrony prywatności</a> Mozilli."
 
 #: kuma/users/templates/socialaccount/signup.html:179
 msgid "Create my MDN profile"
@@ -4454,14 +4454,14 @@ msgid "Areas of Expertise"
 msgstr "Obszary wiedzy specjalistycznej"
 
 #: kuma/users/templates/users/user_detail.html:108
-#, fuzzy, python-format
+#, python-format
 msgid "Member since %(date_joined)s"
-msgstr "Członek od {date}"
+msgstr "Członek od %(date_joined)s"
 
 #: kuma/users/templates/users/user_detail.html:159
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to a feed of %(display_name)s's demos"
-msgstr "Subskrybuj kanał dem {display_name}"
+msgstr "Subskrybuj kanał dem %(display_name)s"
 
 #: kuma/users/templates/users/user_detail.html:167
 msgid "No Demos"
@@ -4611,9 +4611,9 @@ msgid "Save Changes"
 msgstr "Zapisz zmiany"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:9
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s!"
-msgstr "Witaj {username}!"
+msgstr "Witaj %(username)s!"
 
 #: kuma/users/templates/users/email/welcome/html.ltxt:11
 #, python-format
@@ -4708,9 +4708,9 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:4
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s"
-msgstr "Cześć {username}"
+msgstr "Cześć %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:7
@@ -4761,13 +4761,12 @@ msgstr "Lista milingowa: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:36
-#, fuzzy
 msgid ""
 "Subscribe to tell us about what you're interested in on MDN and ask "
 "questions about the site."
 msgstr ""
-"Lista mailingowa: <a href=\"%(list_link)s\">subskrybuj listę</a>, by "
-"powiedzieć nam, co cię interesuje w MDN i zadawać pytania dotyczące witryny."
+"Subskrybuj listę, by powiedzieć nam, co cię interesuje w MDN i zadawać "
+"pytania dotyczące witryny."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:39
@@ -4782,18 +4781,15 @@ msgstr "Przejdź na %(irc_link)s, by uzyskać więcej informacji na temat IRC-a.
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:45
-#, fuzzy
 msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
 "Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"Czat: <a href=\"%(channel_link)s\">kanał #mdn na irc.mozilla.org</a>. Więcej"
-" informacji o <a href=\\\"%(irc_link)s\\\">IRC-u</a>. Na IRC-u znajdziesz "
-"osoby piszące artykuły i administratorów: Erica Shepherda (sheppy), Jean-"
-"Yves Perriera (teoli), Willa Bamberga (wbamberg), Floriana Scholza "
-"(fscholz), Chrisa Millsa (chrismills), i opiekunkę społeczności Janet "
-"Swisher (jms)."
+"Na IRC-u znajdziesz osoby piszące artykuły i administratorów: Erica "
+"Shepherda (sheppy), Jean-Yves Perriera (teoli), Willa Bamberga (wbamberg), "
+"Floriana Scholza (fscholz), Chrisa Millsa (chrismills) i mnie Janet Swisher "
+"(jms) opiekunkę społeczności MDN."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/templates/users/email/welcome/plain.ltxt:48
@@ -5177,14 +5173,12 @@ msgstr ""
 " spełnia tych kryteriów."
 
 #: kuma/wiki/models.py:1832
-#, fuzzy
 msgid "Slug"
-msgstr "Ciąg znaków:"
+msgstr "Ciąg słów"
 
 #: kuma/wiki/models.py:1840
-#, fuzzy
 msgid "Document (optional)"
-msgstr "Dokumenty MDN"
+msgstr "Dokument (opcjonalne)"
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -5199,15 +5193,13 @@ msgstr ""
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
-#, fuzzy
 msgid "Purge documents"
-msgstr "Dokumenty MDN"
+msgstr "Oczyść dokumenty"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
-#, fuzzy
 msgid "Documents"
-msgstr "Dokument"
+msgstr "Dokumenty"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:39
 msgid ""
@@ -5220,9 +5212,8 @@ msgstr ""
 "        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
-#, fuzzy
 msgid "\"Load documents\""
-msgstr "Dokumenty MDN"
+msgstr "\"Wczytaj dokumenty\""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
@@ -5232,9 +5223,8 @@ msgstr "Dodaj %(name)s"
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
-#, fuzzy
 msgid "Load documents"
-msgstr "Dokumenty MDN"
+msgstr "Wczytaj dokumenty"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
@@ -5245,9 +5235,9 @@ msgid "Load"
 msgstr "Wczytaj"
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr "Porównywanie wersji | {document}"
+msgstr "Porównywanie wersji | %(document)s"
 
 #: kuma/wiki/templates/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
@@ -5258,9 +5248,9 @@ msgid "Back to History"
 msgstr "Wróć do historii"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Delete Document | %(document)s"
-msgstr "Usuwanie dokumentu | {document}"
+msgstr "Usuwanie dokumentu | %(document)s"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -5278,9 +5268,8 @@ msgid "Creation Date"
 msgstr "Data utworzenia"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:23
-#, fuzzy
 msgid "Last Change By"
-msgstr "Zapisz zmiany"
+msgstr "Ostatnie zmiany"
 
 #: kuma/wiki/templates/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
@@ -5299,9 +5288,9 @@ msgid "Are you sure you want to continue?"
 msgstr "Czy na pewno chcesz kontynuować?"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revert Revision | %(document)s"
-msgstr "Przywróć wersję | {document}"
+msgstr "Przywróć wersję | %(document)s"
 
 #: kuma/wiki/templates/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
@@ -5328,17 +5317,14 @@ msgstr ""
 "powrócić do powyższej&nbsp;zawartości."
 
 #: kuma/wiki/templates/wiki/create.html:6
-#, fuzzy
 msgid "Create a New Template"
-msgstr "Utwórz szablon"
+msgstr "Utwórz nowy szablon"
 
 #: kuma/wiki/templates/wiki/create.html:8
-#, fuzzy
 msgid "Create a New Article"
-msgstr "Utwórz nowy artykuł {title}"
+msgstr "Utwórz nowy artykuł"
 
 #: kuma/wiki/templates/wiki/create.html:34
-#, fuzzy
 msgid "Create a"
 msgstr "Utwórz"
 
@@ -5361,11 +5347,9 @@ msgid "Document Deleted"
 msgstr "Dokument został usunięty"
 
 #: kuma/wiki/templates/wiki/deletion_log.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "This document was deleted on %(when)s."
-msgstr ""
-"Ten dokument został usunięty przez <a href=\"%(url)s\">%(username)s</a> w "
-"dniu %(when)s."
+msgstr "Ten dokument został usunięty w dniu %(when)s."
 
 #: kuma/wiki/templates/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
@@ -6593,7 +6577,7 @@ msgstr "Pierwsze kroki"
 
 #: templates/base.html:107
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Sprawdzaj lub tłumacz dokumenty"
 
 #: templates/base.html:110
 #, fuzzy
@@ -6681,7 +6665,7 @@ msgstr "Znajdź pomoc dla programistów"
 
 #: templates/base.html:171
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Dołącz do społeczności MDN"
 
 #: templates/base.html:172
 msgid "Report a content problem"
@@ -6713,15 +6697,15 @@ msgstr "Informacje o mnie"
 
 #: templates/base.html:205
 msgid "Terms"
-msgstr ""
+msgstr "Regulaminy"
 
 #: templates/base.html:206
 msgid "Privacy"
-msgstr ""
+msgstr "Prywatność"
 
 #: templates/base.html:207
 msgid "Cookies"
-msgstr ""
+msgstr "Ciasteczka"
 
 #: templates/base.html:208
 #, fuzzy
@@ -6731,7 +6715,7 @@ msgstr "Współtworzenie kodu źródłowego MDN"
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Server Elasticsearch: %(backend)s"
 
 #: templates/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
