@@ -141,12 +141,9 @@ urlpatterns = [
     url(r'^/needs-review/?',
         views.list.needs_review,
         name='wiki.list_review'),
-    url(r'^/localization-tag/(?P<tag>[^/]+)$',
-        views.list.with_localization_tag,
-        name='wiki.list_with_localization_tag'),
-    url(r'^/localization-tag/?',
-        views.list.with_localization_tag,
-        name='wiki.list_with_localization_tags'),
+    url(r'^/localization-in-progress$',
+        views.list.with_localization_in_progress,
+        name='wiki.list_with_localization_in_progress'),
 
     # Feeds
     url(r'^/feeds/(?P<format>[^/]+)/all/?',

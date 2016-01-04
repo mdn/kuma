@@ -62,8 +62,8 @@ class DocumentTests(UserTestCase):
         # Create a translation with some tags
         de_doc = document(parent=doc, locale='de', save=True)
         revision(document=de_doc, save=True)
-        expected_l10n_tags = ['inprogress']
-        de_doc.current_revision.localization_tags.set(*expected_l10n_tags)
+        de_doc.current_revision.localization_in_progress = True
+        de_doc.current_revision.save()
         de_doc.tags.set(*expected_tags)
         de_doc.current_revision.review_tags.set(*expected_review_tags)
 
@@ -98,9 +98,10 @@ class DocumentTests(UserTestCase):
         # Check fields of translated doc
         ok_('translations' in data)
         eq_(de_doc.locale, data['translations'][0]['locale'])
-        result_l10n_tags = sorted([str(x) for x
-                                   in data['translations'][0]['localization_tags']])
-        eq_(expected_l10n_tags, result_l10n_tags)
+        result_l10n_tags = sorted(
+            [str(x) for x in
+             data['translations'][0]['localization_tags']])
+        eq_(['inprogress'], result_l10n_tags)
         result_tags = sorted([str(x) for x in data['translations'][0]['tags']])
         eq_(expected_tags, result_tags)
         result_review_tags = sorted([str(x) for x
@@ -393,7 +394,8 @@ class DocumentTestsWithFixture(UserTestCase):
         for title in orig_path:
             doc = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title=title,
                            parent_topic=doc, save=True)
-            revision(document=doc, title=title, save=True)
+            revision(document=doc, title=title, localization_in_progress=True,
+                     save=True)
             docs.append(doc)
 
         # Translate, but leave gaps for stubs
