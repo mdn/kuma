@@ -7,5 +7,5 @@ codecov==1.6.3
 # sha256: GCPJPKN4CSwQu95CghPT9QZrMK2wnlwAEIeoPj4KQCo
 tox==2.3.1
 
-# sha256: 0a6hxKphuDZtakLdNlBiL7-cY07STq9_N5yLlw5e1E4
-coverage==3.7.1
+# sha256: hbEnW216YczIAkpOmkyeiWOUd27c4aXQdewRb5GSVGI
+coverage==4.0.3

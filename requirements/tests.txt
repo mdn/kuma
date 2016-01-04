@@ -1,5 +1,5 @@
-# sha256: 0a6hxKphuDZtakLdNlBiL7-cY07STq9_N5yLlw5e1E4
-coverage==3.7.1
+# sha256: hbEnW216YczIAkpOmkyeiWOUd27c4aXQdewRb5GSVGI
+coverage==4.0.3
 
 # sha256: kvdDM2cBF0bMPL09XmfcwRBmyLhWe5pRSUju6hH6WEM
 django-nose==1.4.3
