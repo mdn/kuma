@@ -61,8 +61,8 @@ django-constance==1.1.1
 # sha256: Qp4peWB-BOIbfOwBQn0Akk9ZxXIZdUhrPVI__AEYRrg
 django-dbgettext==0.1.1
 
-# sha256: FBllrkO742oGgqTRUn7YK8XUwgMRP5EXElel2XZO3YI
-django-extensions==1.5.9
+# sha256: -Y-ZHSsDkDOsX6pjjA0a-ycgq_TZ14FXPDWS1omUgKE
+django-extensions==1.6.1
 
 # sha256: sNxTpy1qd8kJ2V00d3i7wtVNs5NaqPKx_Oa4bMmTn2c
 django-flat-theme==1.1.1
