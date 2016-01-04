@@ -4,8 +4,8 @@ amqp==1.4.8
 # sha256: N4Ethjya0-NcBzTELgvwMgzow77YLNIK1UyzTRWBV7o
 anyjson==0.3.3
 
-# sha256: Mkl4VT2qT65UwLt6NguohtG_vjrGKZkVhX__VfEz_rc
-Babel==2.1.1
+# sha256: _tB8vNyz3nm1OoIg7r7SHJP427Pbzh2caxxLCeiuzys
+Babel==2.2.0
 
 # sha256: SPn2n5cJiLPfLIpWhNqItS8RXhleyluJYXLbD4wCYOM
 basket-client==0.3.11
