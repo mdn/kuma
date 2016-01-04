@@ -64,8 +64,8 @@ django-dbgettext==0.1.1
 # sha256: -Y-ZHSsDkDOsX6pjjA0a-ycgq_TZ14FXPDWS1omUgKE
 django-extensions==1.6.1
 
-# sha256: sNxTpy1qd8kJ2V00d3i7wtVNs5NaqPKx_Oa4bMmTn2c
-django-flat-theme==1.1.1
+# sha256: MjARx-2k-1dgT9n-7laMWnib_0wMCJISjwUkaTboATo
+django-flat-theme==1.1.3
 
 # sha256: liME8hBV8FxzxB8lBvWpT1uUHoMaIDto5Uy1AWvbjV4
 django-honeypot==0.5.0
