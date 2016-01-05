@@ -112,7 +112,7 @@
     // Hide IPs & wire Toggle IPs button, if present
     $('.revision_ip').toggle();
     $showIPsButton.on('click', function(e) {
-        $('.revision_ip').toggle();
+        $('.revision_ip').slideToggle();
     });
 
     // Focus on the first item, if there
@@ -124,13 +124,14 @@
     // When an item is clicked, load its detail
     $revisionReplaceBlock.on('click mdn:click', '.dashboard-row', function (e) {
         var $this = $(this);
+        var $thisParent = $this.parent();
         var $detail;
 
         // Don't interrupt links and stop if a request is already running
         if (e.target.tagName == 'A' || $this.attr('data-running')) return;
 
         if ($this.attr('data-loaded')) {
-            $this.find('.dashboard-detail').slideToggle();
+            $this.next('.dashboard-detail').find('.dashboard-detail-details').slideToggle();
         } else {
             $this.attr('data-running', 1);
             $.ajax({
@@ -143,7 +144,8 @@
                                         .replace('$editurl', $this.attr('data-edit-url'))
                                         .replace('$historyurl', $this.attr('data-history-url'));
 
-                $detail = $('<div class="dashboard-detail">' + controls + content + '</div>').appendTo($this).slideDown();
+                $detail = $('<tr class="dashboard-detail"><td colspan="5"><div class="dashboard-detail-details">' + controls + content + '</div></td></tr>').insertAfter($this);
+                $this.next('.dashboard-detail').find('.dashboard-detail-details').slideToggle();
                 $this.attr('data-loaded', 1);
                 $this.removeAttr('data-running');
             });

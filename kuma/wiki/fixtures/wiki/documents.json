@@ -253,6 +253,20 @@
         }
     },
     {
+        "pk": 30,
+        "model": "wiki.revision",
+        "fields": {
+            "title": "Seventh revision of the article.",
+            "is_approved": true,
+            "created": "2013-08-15 09:30:00",
+            "summary": "Seventh revision of the article.",
+            "content": "Seventh revision of the article.",
+            "keywords": "",
+            "document": 6,
+            "creator": 10,
+            "slug": "article-with-revisions"
+        }
+    },    {
         "pk": 100,
         "model": "wiki.documenttag",
         "fields": {

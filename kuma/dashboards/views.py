@@ -6,9 +6,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.http import require_GET
+import waffle
 
-from kuma.wiki.models import Document, Revision
 from kuma.core.utils import paginate
+from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
+from kuma.wiki.models import Document, Revision
 
 from .forms import RevisionDashboardForm
 from . import PAGE_SIZE
@@ -22,7 +24,8 @@ def revisions(request):
     page = request.GET.get('page', 1)
 
     revisions = (Revision.objects.prefetch_related('creator__bans',
-                                                   'document')
+                                                   'document',
+                                                   'akismet_submissions')
                                  .order_by('-created')
                                  .defer('content'))
 
@@ -73,7 +76,18 @@ def revisions(request):
 
     revisions = paginate(request, revisions, per_page=PAGE_SIZE)
 
-    context = {'revisions': revisions, 'page': page}
+    context = {
+        'revisions': revisions,
+        'page': page,
+        'show_ips': (
+            waffle.switch_is_active('store_revision_ips') and
+            request.user.is_superuser
+        ),
+        'show_spam_submission': (
+            waffle.flag_is_active(request, SPAM_SUBMISSIONS_FLAG) and
+            request.user.is_superuser
+        ),
+    }
 
     # Serve the response HTML conditionally upon reques type
     if request.is_ajax():

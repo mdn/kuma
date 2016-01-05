@@ -249,3 +249,12 @@ DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
 KUMA_FILE_URL = re.compile(r'/files/(?P<file_id>\d+)/.+\..+')
 
 SPAM_EXEMPTED_FLAG = 'wiki_spam_exempted'
+SPAM_SUBMISSION_REVISION_FIELDS = [
+    'title',
+    'slug',
+    'summary',
+    'content',
+    'comment',
+    'tags',
+    'keywords',
+]
