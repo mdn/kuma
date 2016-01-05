@@ -1,0 +1,19 @@
+FROM python:2.7.10
+
+# This is a work in progress.
+
+RUN useradd --create-home --home-dir /app --shell /bin/bash app
+WORKDIR /app
+
+RUN apt-get update && \
+  apt-get install -y \
+    libtidy-0.99-0
+
+COPY requirements/compiled.txt /app/requirements/compiled.txt
+
+RUN pip install --build ./build --no-cache-dir \
+    --disable-pip-version-check \
+    -r requirements/compiled.txt && \
+    rm -rf ./build
+
+COPY . /app
