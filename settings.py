@@ -730,13 +730,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/main.js',
     },
-    'popup': {
-        'source_filenames': (
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/modal-control.js',
-        ),
-        'output_filename': 'build/js/popup.js',
-    },
     'users': {
         'source_filenames': (
             'js/libs/tag-it.js',
