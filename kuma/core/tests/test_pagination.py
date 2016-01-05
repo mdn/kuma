@@ -4,7 +4,7 @@ import pyquery
 
 from ..urlresolvers import reverse
 from ..utils import paginate
-from ..helpers import paginator
+from ..templatetags.jinja_helpers import paginator
 
 
 def test_paginated_url():

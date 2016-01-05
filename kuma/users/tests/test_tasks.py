@@ -39,11 +39,11 @@ class TestWelcomeEmails(UserTestCase):
                                                    strings_are_translated):
         strings_are_translated.return_value = False
         testuser = self.user_model.objects.get(username='testuser')
-        send_welcome_email(testuser.pk, 'tlh')  # mev!
+        send_welcome_email(testuser.pk, 'en-NZ')
         self.assertEqual([], mail.outbox)
 
         strings_are_translated.return_value = True
-        send_welcome_email(testuser.pk, 'tlh')  # Qapla'!
+        send_welcome_email(testuser.pk, 'en-NZ')
         self.assertEqual(1, len(mail.outbox))
 
     def test_welcome_mail_for_verified_email(self):

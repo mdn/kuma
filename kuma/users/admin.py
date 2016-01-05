@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import escape
-from jingo.helpers import urlparams
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 
 from .models import User, UserBan
 

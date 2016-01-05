@@ -163,11 +163,10 @@ class DemoPackageTest(UserTransactionTestCase):
             flag_dict[sub][0].content_object.title)
 
         ok_(doc in flag_dict)
-        eq_(2, len(flag_dict[doc]))
-        eq_('le title',
-            flag_dict[doc][0].content_object.title)
-        eq_('getElementByID',
-            flag_dict[doc][1].content_object.title)
+        self.assertSetEqual(
+            set(f.content_object.title for f in flag_dict[doc]),
+            set(['le title', 'getElementByID'])
+        )
 
     def test_flag_email(self):
         request = _mock_request()

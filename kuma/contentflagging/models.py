@@ -63,7 +63,6 @@ class ContentFlagManager(models.Manager):
 
         if recipients:
             subject = _("%(object)s Flagged") % {'object': object}
-            # Note: This returns a Jinja2 template b/c of jingo.Loader.
             t = loader.get_template('contentflagging/email/flagged.ltxt')
             url = '/admin/contentflagging/contentflag/%s' % object.pk
             content = t.render({'url': url, 'object': object,

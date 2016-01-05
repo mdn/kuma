@@ -1,9 +1,9 @@
 import logging
 from functools import wraps
 
-import jingo
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.test import RequestFactory
 from django.utils import translation
 
@@ -59,7 +59,7 @@ def render_email(template, context):
         req.META = {}
         req.LANGUAGE_CODE = locale
 
-        return jingo.render_to_string(req, template, context)
+        return render_to_string(template, context, request=req)
 
     return _render(translation.get_language())
 

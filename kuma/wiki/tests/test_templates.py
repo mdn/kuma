@@ -11,7 +11,6 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.test.utils import override_settings
 from django.utils.http import urlquote
-from jingo.helpers import urlparams
 from nose import SkipTest
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
@@ -19,6 +18,7 @@ from pyquery import PyQuery as pq
 from waffle.models import Flag
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase
 
 from . import (WikiTestCase, create_topical_parents_docs, document,

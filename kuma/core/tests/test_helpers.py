@@ -2,34 +2,25 @@
 from collections import namedtuple
 from datetime import datetime
 
-import jingo
 import pytz
 from babel.dates import format_date, format_datetime, format_time
+from django.conf import settings
+from django.test import RequestFactory
 from nose.tools import assert_raises, eq_, ok_
 from pyquery import PyQuery as pq
 from soapbox.models import Message
-
-from django.conf import settings
-from django.test import RequestFactory
 
 from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
-from ..helpers import (datetimeformat, get_soapbox_messages, jsonencode,
-                       number, soapbox_messages, timesince, urlencode, yesno)
-
-
-def render(s, context={}):
-    t = jingo.env.from_string(s)
-    return t.render(**context)
+from ..templatetags.jinja_helpers import (datetimeformat, get_soapbox_messages,
+                                          jsonencode, number, soapbox_messages,
+                                          timesince, urlencode, yesno)
 
 
 class TestHelpers(KumaTestCase):
-
-    def setUp(self):
-        jingo.load_helpers()
 
     def test_number(self):
         context = {'request': namedtuple('R', 'LANGUAGE_CODE')('en-US')}

@@ -2,11 +2,11 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from constance.test import override_config
-from jingo.helpers import urlparams
 import requests_mock
 from waffle.models import Flag
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.users.tests import UserTestCase

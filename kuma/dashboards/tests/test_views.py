@@ -1,4 +1,3 @@
-from jingo.helpers import urlparams
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
@@ -6,6 +5,7 @@ from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
 from kuma.users.tests import UserTestCase
 from kuma.users.models import User, UserBan
