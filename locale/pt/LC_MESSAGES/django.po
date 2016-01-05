@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-12-19 09:40-0800\n"
-"PO-Revision-Date: 2015-12-20 01:36+0000\n"
+"PO-Revision-Date: 2016-01-05 18:29+0000\n"
 "Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_PT\n"
@@ -33,7 +33,7 @@ msgstr "data da última modificação"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr "Alterações de ficheiros recentes na MDN"
+msgstr "Alterações recentes de ficheiros na MDN"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
@@ -41,14 +41,14 @@ msgstr "Revisões recentes a ficheiros anexados na MDN"
 
 #: kuma/attachments/forms.py:9
 msgid "Files of this type are not permitted."
-msgstr "Ficheiros deste tipo não são permitidos."
+msgstr "Não são permitidos ficheiros deste tipo."
 
 #: kuma/attachments/views.py:147
 #, python-format
 msgid "The file provided is not valid. File must be one of these types: %s."
 msgstr ""
-"O ficheiro fornecido não é válido. O ficheiro tem de ser de um destes tipos:"
-" %s."
+"O ficheiro fornecido não é válido. O ficheiro tem de ser um destes tipos: "
+"%s."
 
 #. 'id' is the revision number, 'title' is the title of the document.
 #: kuma/attachments/templates/attachments/attachment_detail.html:3
@@ -102,7 +102,7 @@ msgstr "Está aprovado?"
 #: kuma/attachments/templates/attachments/attachment_detail.html:52
 #: kuma/wiki/templates/wiki/revision.html:38
 msgid "Is current revision?"
-msgstr "É revisão atual?"
+msgstr "É a revisão atual?"
 
 #: kuma/attachments/templates/attachments/attachment_detail.html:60
 msgid "Attachment Preview"
@@ -3360,7 +3360,7 @@ msgstr "Web aberta e móvel"
 
 #: kuma/landing/templates/landing/homepage.html:113
 msgid "Learn Web Development"
-msgstr "Aprender Programação Wev"
+msgstr "Aprender programação Web"
 
 #: kuma/landing/templates/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
@@ -4406,7 +4406,7 @@ msgstr "Ocorreu um erro ao tentar iniciar sessão com a sua conta."
 
 #: kuma/users/templates/socialaccount/connections.html:3
 msgid "Account Connections"
-msgstr "Ligações da Conta"
+msgstr "Ligações da conta"
 
 #: kuma/users/templates/socialaccount/connections.html:6
 #: kuma/users/templates/users/user_detail.html:61
@@ -5868,7 +5868,7 @@ msgstr "Editar tradução %(locale)s"
 #: kuma/wiki/templates/wiki/move.html:2
 #, python-format
 msgid "Move Article | %(document)s"
-msgstr "Mover Artigo | %(document)s"
+msgstr "Mover artigo | %(document)s"
 
 #: kuma/wiki/templates/wiki/move.html:20
 msgid ""
@@ -6790,7 +6790,7 @@ msgstr "Rever ou traduzir documentação"
 
 #: templates/base.html:110
 msgid "Site Tools"
-msgstr "Ferramentas do sítio"
+msgstr "Ferramentas do site"
 
 #: templates/base.html:112
 msgid "Revision dashboard"
@@ -6982,7 +6982,7 @@ msgstr "Anular subscrição destas mensagens:"
 #: templates/tidings/unsubscribe_error.html:2
 #: templates/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr "Cancelar subscrição"
+msgstr "Anular subscrição"
 
 #: templates/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
@@ -7001,14 +7001,14 @@ msgid ""
 " the browser."
 msgstr ""
 "Não conseguimos encontrar a sua subscrição. Ou já foi cancelada, ou existe "
-"um erro na ligação de anulação da subscrição. Por favor confirme que a "
-"totalidade da ligação chegou ao navegador. Se a última parte da ligação "
-"quebra para uma segunda linha no e-mail, tente copiar e colar a ligação no "
-"navegador."
+"um erro na ligação de anulação da subscrição. Por favor, certifique-se de "
+"que a totalidade da ligação chegou ao navegador. Se a última parte da "
+"ligação quebra para uma segunda linha no e-mail, tente copiar e colar a "
+"ligação no navegador."
 
 #: templates/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
-msgstr "Subscrição cancelada"
+msgstr "Subscrição anulada"
 
 #: templates/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
