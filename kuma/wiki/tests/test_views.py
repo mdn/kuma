@@ -349,6 +349,29 @@ class ViewTests(UserTestCase, WikiTestCase):
         ok_('<svg>' not in ct)
         ok_('<a href="#">Hahaha</a>' in ct)
 
+    def test_template_revision_content(self):
+        doc = document(title='Testing Template', slug='Template:Testing', save=True)
+        r = revision(save=True, document=doc, is_approved=True)
+
+        resp = self.client.get(r.get_absolute_url())
+        page = pq(resp.content)
+
+        ok_('Revision Source' in resp.content)
+        ok_('Revision Content' not in resp.content)
+        eq_(page.find('#doc-source').parent().attr('open'), 'open')
+
+    def test_article_revision_content(self):
+        doc = document(title='Testing Article', slug='Article', save=True)
+        r = revision(save=True, document=doc, is_approved=True)
+
+        resp = self.client.get(r.get_absolute_url())
+        page = pq(resp.content)
+
+        ok_('Revision Source' in resp.content)
+        ok_('Revision Content' in resp.content)
+        eq_(page.find('#wikiArticle').parent().attr('open'), 'open')
+        eq_(page.find('#doc-source').parent().attr('open'), None)
+
     def test_raw_css_view(self):
         """The raw source for a document can be requested"""
         self.client.login(username='admin', password='testpass')
