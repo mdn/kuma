@@ -475,7 +475,7 @@ FEEDER_TIMEOUT = 6  # in seconds
 TEMPLATES = [
     {
         'BACKEND': 'django_jinja.backend.Jinja2',
-        'DIRS': ['jinja2'],
+        'DIRS': [path('jinja2')],
         'APP_DIRS': True,
         'OPTIONS': {
             # Use jinja2/ for jinja templates
@@ -507,7 +507,7 @@ TEMPLATES = [
     },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [path('templates')],
         'APP_DIRS': False,
         'OPTIONS': {
             'debug': DEBUG,
