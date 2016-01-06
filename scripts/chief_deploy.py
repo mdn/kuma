@@ -126,8 +126,8 @@ def setup_dependencies(ctx):
         ctx.local('virtualenv-2.7 --relocatable %s' % settings.VENV_DIR)
 
         # Fix lib64 symlink to be relative instead of absolute.
-        ctx.local('rm -f virtualenv/lib64')
-        with ctx.lcd('virtualenv'):
+        ctx.local('rm -f %s' % os.path.join(settings.VENV_DIR, 'lib64'))
+        with ctx.lcd(settings.VENV_DIR):
             ctx.local('ln -s lib lib64')
 
 
