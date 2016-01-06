@@ -109,7 +109,10 @@ def setup_dependencies(ctx):
         # Creating a virtualenv tries to open virtualenv/bin/python for
         # writing, but because virtualenv is using it, it fails.
         # So we delete it and let virtualenv create a new one.
-        ctx.local('rm -f virtualenv/bin/python virtualenv/bin/python2.7')
+        python = os.path.join(VENV_BIN, 'python')
+        python27 = os.path.join(VENV_BIN, 'python2.7')
+        ctx.local('rm -f %s' % python)
+        ctx.local('rm -f %s' % python27)
         ctx.local('virtualenv-2.7 --no-site-packages %s' % settings.VENV_DIR)
 
         # Activate virtualenv to append to the correct path to $PATH.
@@ -117,7 +120,6 @@ def setup_dependencies(ctx):
         execfile(activate_env, dict(__file__=activate_env))
 
         ctx.local('pip --version')
-        python = os.path.join(VENV_BIN, 'python')
         ctx.local('%s scripts/peep.py install -r requirements/default.txt' %
                   python)
         # Make the virtualenv relocatable
