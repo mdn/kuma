@@ -465,18 +465,9 @@ INSTALLED_APPS = (
     'statici18n',
     'rest_framework',
 
-    # testing.
-    'django_nose',
-
     # other
     'kuma.humans',
 )
-
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-NOSE_ARGS = [
-    '--traverse-namespace',  # make sure `./manage.py test kuma` works
-]
 
 # Feed fetcher config
 FEEDER_TIMEOUT = 6  # in seconds
