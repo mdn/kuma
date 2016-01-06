@@ -1,6 +1,8 @@
 import os
-import site
 from datetime import datetime
+
+# setting which Django settings module we want
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings_local')
 
 # Remember when mod_wsgi loaded this file so we can track it in nagios.
 wsgi_loaded = datetime.now()
