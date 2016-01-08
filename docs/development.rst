@@ -143,7 +143,7 @@ safe of the dependency you added above, e.g.::
 Check if the file you downloaded contains what you expect and then use peep
 to calculate a hash of the file you downloaded::
 
-    script/peep.py django-pipeline-1.6.0.tar.gz
+    scripts/peep.py hash django-pipeline-1.6.0.tar.gz
 
 This will print out a hash in the form of::
 
@@ -157,7 +157,7 @@ file, e.g.::
 
 Then verify if the hash still matches and install the new dependency in the VM::
 
-    script/peep.py install -r requirements/default.txt
+    scripts/peep.py install -r requirements/default.txt
 
 Updating a requirement
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -165,7 +165,7 @@ Updating a requirement
 Follow the same steps as when adding a requirement but replace the old peep
 hash in the requirements file. Don't forget to run afterwards::
 
-    script/peep.py install -r requirements/default.txt
+    scripts/peep.py install -r requirements/default.txt
 
 Front-end dependencies
 ----------------------
