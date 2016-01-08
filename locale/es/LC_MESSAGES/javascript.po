@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-19 09:39-0800\n"
+"POT-Creation-Date: 2016-01-08 08:40-0800\n"
 "PO-Revision-Date: 2015-12-04 14:12+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,6 +96,10 @@ msgid "New interest..."
 msgstr "Nuevo interés..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
+msgid "Open implementation notes"
+msgstr ""
+
+#: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
 msgstr "Abrir"
 
@@ -132,10 +136,22 @@ msgid "Show old table."
 msgstr "Mostrar la tabla antigua."
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr "Ya tienes un borrador. <a href=\"\" class=\"restoreLink\">Recupera el contenido del borrador</a> o <a href=\"\" class=\"discardLink\">descártalo</a>."
+msgid "an unknown date"
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:547
+#: kuma/static/js/wiki-edit.js:401
+msgid "You have a draft from:"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:402
+msgid "Restore the draft content"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:403
+msgid "Discard the draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:555
 msgid "saved"
 msgstr "guardado"
 
@@ -151,11 +167,11 @@ msgstr "Cómo leer la sintaxis CSS."
 msgid "Search Stack Overflow"
 msgstr "Buscar en Stack Overflow"
 
-#: kuma/static/js/wiki.js:684
+#: kuma/static/js/wiki.js:685
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Tu navegador no admite MathML. En su lugar, se ha utilizado otro recurso CSS."
 
-#: kuma/static/js/wiki.js:899
+#: kuma/static/js/wiki.js:900
 msgid "Details"
 msgstr "Detalles"
 
@@ -278,3 +294,6 @@ msgstr "La URL que has introducido parece que no es válida"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Predeterminada"
+
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "Ya tienes un borrador. <a href=\"\" class=\"restoreLink\">Recupera el contenido del borrador</a> o <a href=\"\" class=\"discardLink\">descártalo</a>."

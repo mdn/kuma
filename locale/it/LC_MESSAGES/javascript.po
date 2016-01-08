@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-19 09:39-0800\n"
+"POT-Creation-Date: 2016-01-08 08:40-0800\n"
 "PO-Revision-Date: 2015-12-11 16:51+0000\n"
 "Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,6 +96,10 @@ msgid "New interest..."
 msgstr "Nuovo interesse."
 
 #: kuma/static/js/wiki-compat-tables.js:23
+msgid "Open implementation notes"
+msgstr ""
+
+#: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
 msgstr "Apri"
 
@@ -132,10 +136,22 @@ msgid "Show old table."
 msgstr "Visualizza la tabella utilizzando il vecchio formato."
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr "È presente una bozza per questo documento. <a href=\"\" class=\"restoreLink\">Ripristina il contenuto della bozza</a> oppure <a href=\"\" class=\"discardLink\">eliminala</a>."
+msgid "an unknown date"
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:547
+#: kuma/static/js/wiki-edit.js:401
+msgid "You have a draft from:"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:402
+msgid "Restore the draft content"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:403
+msgid "Discard the draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:555
 msgid "saved"
 msgstr "Salvato"
 
@@ -151,11 +167,11 @@ msgstr "Come interpretare la sintassi CSS."
 msgid "Search Stack Overflow"
 msgstr "Ricerca su Stack Overflow"
 
-#: kuma/static/js/wiki.js:684
+#: kuma/static/js/wiki.js:685
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Il browser in uso non interpreta la tecnologia MathML. È stata quindi utilizzata una versione alternativa basata sui CSS."
 
-#: kuma/static/js/wiki.js:899
+#: kuma/static/js/wiki.js:900
 msgid "Details"
 msgstr "Informazioni"
 
@@ -278,3 +294,6 @@ msgstr "L’indirizzo inserito non sembra essere valido."
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Predefinito"
+
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "È presente una bozza per questo documento. <a href=\"\" class=\"restoreLink\">Ripristina il contenuto della bozza</a> oppure <a href=\"\" class=\"discardLink\">eliminala</a>."
