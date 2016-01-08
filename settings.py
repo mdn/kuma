@@ -349,8 +349,9 @@ _CONTEXT_PROCESSORS = (
 MIDDLEWARE_CLASSES = (
     # LocaleURLMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
-    'kuma.core.middleware.LocaleURLMiddleware',
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'kuma.core.middleware.LocaleURLMiddleware',
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
     'kuma.core.middleware.Forbidden403Middleware',
@@ -362,7 +363,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
     'waffle.middleware.WaffleMiddleware',
 )
