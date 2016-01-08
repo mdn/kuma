@@ -528,11 +528,9 @@ PUENTE = {
     'DOMAIN_METHODS': {
         'django': [
             ('kuma/**.py', 'python'),
-            ('kuma/*/templates/admin/**.html',
-             'django_babel.extract.extract_django'),
-            ('templates/admin/**.html', 'django_babel.extract.extract_django'),
-            ('**/templates/**.html', 'jinja2'),
-            ('**/templates/**.ltxt', 'jinja2'),
+            ('**/templates/**.html', 'django_babel.extract.extract_django'),
+            ('**/jinja2/**.html', 'jinja2'),
+            ('**/jinja2/**.ltxt', 'jinja2'),
         ],
         'javascript': [
             # We can't say **.js because that would dive into any libraries.

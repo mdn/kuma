@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-19 09:39-0800\n"
+"POT-Creation-Date: 2016-01-08 08:40-0800\n"
 "PO-Revision-Date: 2015-12-08 01:16+0000\n"
 "Last-Translator: Cláudio Esperança <cesperanc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,6 +96,10 @@ msgid "New interest..."
 msgstr "Novo interesse..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
+msgid "Open implementation notes"
+msgstr ""
+
+#: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
 msgstr "Abrir"
 
@@ -132,10 +136,22 @@ msgid "Show old table."
 msgstr "Mostrar tabela antiga."
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr "Tem um rascunho pendente. <a href=\"\" class=\"restoreLink\">Reponha o conteúdo do rascunho</a> ou <a href=\"\" class=\"discardLink\">descarte o rascunho</a>."
+msgid "an unknown date"
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:547
+#: kuma/static/js/wiki-edit.js:401
+msgid "You have a draft from:"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:402
+msgid "Restore the draft content"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:403
+msgid "Discard the draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:555
 msgid "saved"
 msgstr "guardado"
 
@@ -151,11 +167,11 @@ msgstr "Como ler a sintaxe CSS."
 msgid "Search Stack Overflow"
 msgstr "Pesquisar o Stack Overflow"
 
-#: kuma/static/js/wiki.js:684
+#: kuma/static/js/wiki.js:685
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "O seu navegador não suporta MathML. Será utilizado um mecanismo alternativo de substituição em CSS."
 
-#: kuma/static/js/wiki.js:899
+#: kuma/static/js/wiki.js:900
 msgid "Details"
 msgstr "Detalhes"
 
@@ -278,3 +294,6 @@ msgstr "O URL que introduziu parece ser inválido"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Predefinido"
+
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "Tem um rascunho pendente. <a href=\"\" class=\"restoreLink\">Reponha o conteúdo do rascunho</a> ou <a href=\"\" class=\"discardLink\">descarte o rascunho</a>."

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-12-19 09:39-0800\n"
+"POT-Creation-Date: 2016-01-08 08:40-0800\n"
 "PO-Revision-Date: 2015-12-04 14:04+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,6 +96,10 @@ msgid "New interest..."
 msgstr "新興趣…"
 
 #: kuma/static/js/wiki-compat-tables.js:23
+msgid "Open implementation notes"
+msgstr ""
+
+#: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
 msgstr "開啟"
 
@@ -132,10 +136,22 @@ msgid "Show old table."
 msgstr "顯示舊版表格。"
 
 #: kuma/static/js/wiki-edit.js:400
-msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-msgstr "您尚有編輯中的草稿。<a href=\"\" class=\"restoreLink\">回復草稿內容</a> 或 <a href=\"\" class=\"discardLink\">捨棄草稿</a>。"
+msgid "an unknown date"
+msgstr ""
 
-#: kuma/static/js/wiki-edit.js:547
+#: kuma/static/js/wiki-edit.js:401
+msgid "You have a draft from:"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:402
+msgid "Restore the draft content"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:403
+msgid "Discard the draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:555
 msgid "saved"
 msgstr "已儲存"
 
@@ -151,11 +167,11 @@ msgstr "如何閱讀 CSS 語法。"
 msgid "Search Stack Overflow"
 msgstr "搜尋 Stack Overflow"
 
-#: kuma/static/js/wiki.js:684
+#: kuma/static/js/wiki.js:685
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "您的瀏覽器不支援 MathML，已改用 CSS 顯示。"
 
-#: kuma/static/js/wiki.js:899
+#: kuma/static/js/wiki.js:900
 msgid "Details"
 msgstr "詳細資訊"
 
@@ -278,3 +294,6 @@ msgstr "您輸入的網址看起來不正確"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "預設"
+
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "您尚有編輯中的草稿。<a href=\"\" class=\"restoreLink\">回復草稿內容</a> 或 <a href=\"\" class=\"discardLink\">捨棄草稿</a>。"
