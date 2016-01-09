@@ -14,8 +14,7 @@ from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
 from django.template.loader import get_template
-from django.utils import six
-from django.utils.encoding import force_text, smart_unicode
+from django.utils.encoding import force_text
 from django.utils.html import strip_tags
 from django.utils.timezone import get_default_timezone
 from django.utils.translation import ugettext_lazy as _
@@ -335,15 +334,3 @@ def number(context, n):
 @library.global_function
 def static(path):
     return staticfiles_storage.url(path)
-
-
-@library.filter
-def as_datetime(t, fmt=None):
-    """Call ``datetime.strftime`` with the given format string."""
-    if fmt is None:
-        fmt = _(u'%B %e, %Y')
-    if not six.PY3:
-        # The datetime.strftime function strictly does not
-        # support Unicode in Python 2 but is Unicode only in 3.x.
-        fmt = fmt.encode('utf-8')
-    return smart_unicode(t.strftime(fmt)) if t else ''
