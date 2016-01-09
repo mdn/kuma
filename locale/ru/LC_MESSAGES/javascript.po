@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-08 08:40-0800\n"
-"PO-Revision-Date: 2015-12-04 14:12+0000\n"
+"PO-Revision-Date: 2016-01-09 07:36+0000\n"
 "Last-Translator: bychek.ru <a@bychek.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ru\n"
@@ -97,7 +97,7 @@ msgstr "Новый интерес..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "Открыть заметки реализации"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
@@ -137,19 +137,19 @@ msgstr "Показать старую таблицу."
 
 #: kuma/static/js/wiki-edit.js:400
 msgid "an unknown date"
-msgstr ""
+msgstr "неизвестная дата"
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "You have a draft from:"
-msgstr ""
+msgstr "У вас есть черновик от:"
 
 #: kuma/static/js/wiki-edit.js:402
 msgid "Restore the draft content"
-msgstr ""
+msgstr "Восстановить контент черновика"
 
 #: kuma/static/js/wiki-edit.js:403
 msgid "Discard the draft"
-msgstr ""
+msgstr "Удалить черновик"
 
 #: kuma/static/js/wiki-edit.js:555
 msgid "saved"
@@ -168,8 +168,11 @@ msgid "Search Stack Overflow"
 msgstr "Поиск по Stack Overflow"
 
 #: kuma/static/js/wiki.js:685
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Ваш браузер не поддерживает MathML. Вместо него используется аварийное решение на CSS."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Ваш браузер не поддерживает MathML. Вместо него используется аварийное "
+"решение на CSS."
 
 #: kuma/static/js/wiki.js:900
 msgid "Details"
@@ -183,7 +186,8 @@ msgstr "Выбрать вложение"
 msgid "No attachments available"
 msgstr "Нет вложений"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Прикреплённые файлы"
 
@@ -203,7 +207,8 @@ msgstr "Создать перенаправление"
 msgid "MDN Redirect"
 msgstr "MDN перенаправление"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Документ"
 
@@ -295,5 +300,11 @@ msgstr "URL, который вы ввели, выглядит неправиль
 msgid "Default"
 msgstr "По умолчанию"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "У вас имеется черновик. <a href=\"\" class=\"restoreLink\">Восстановить контент черновика</a> или <a href=\"\" class=\"discardLink\">удалить его</a>."
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "У вас имеется черновик. <a href=\"\" class=\"restoreLink\">Восстановить "
+#~ "контент черновика</a> или <a href=\"\" class=\"discardLink\">удалить "
+#~ "его</a>."
