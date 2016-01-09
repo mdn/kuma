@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-08 08:40-0800\n"
-"PO-Revision-Date: 2016-01-09 06:06+0000\n"
+"PO-Revision-Date: 2016-01-09 06:35+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -371,9 +371,9 @@ msgid "Search Firefox Help"
 msgstr "Recherche dans l'aide de Firefox"
 
 #: jinja2/includes/common_macros.html:36
-#, fuzzy, python-format
+#, python-format
 msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr "Bienvenue, <span class=\"user\">{user}</span>."
+msgstr "Bienvenue, <span class=\"user\">%(user)s</span>."
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
@@ -968,7 +968,7 @@ msgstr "Aujourd'hui à %s"
 #: kuma/core/templatetags/jinja_helpers.py:344
 #, python-format
 msgid "%B %e, %Y"
-msgstr ""
+msgstr "%e %B %Y"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
@@ -1140,7 +1140,7 @@ msgstr "Historique"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
-msgstr ""
+msgstr "Activer/désactiver les IP"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:34
 msgid "new"
@@ -1152,54 +1152,50 @@ msgstr "supprimé"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:50
 msgid "IP:"
-msgstr ""
+msgstr "IP&nbsp;:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
 msgid "Ban IP from Editing"
 msgstr "Interdire les éditions depuis cette adresse IP"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
-#, fuzzy
 msgid "User agent:"
-msgstr "Nom d'utilisateur :"
+msgstr "Agent utilisateur&nbsp;:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:57
-#, fuzzy
 msgid "Referrer:"
-msgstr "Référence"
+msgstr "Referrer&nbsp;:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:64
-#, fuzzy, python-format
+#, python-format
 msgid "banned %(ban_date)s by %(user)s"
-msgstr "Banni(e) le %(ban_date)s par %(ban_admin)s."
+msgstr "banni(e) le %(ban_date)s par %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:78
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Enregistré comme %(submission_type)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:81
-#, fuzzy, python-format
+#, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr "Publié le %(entrydate)s par %(authorlink)s"
+msgstr "Le %(sent_date)s par %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
-#, fuzzy
 msgid "Resubmit"
-msgstr "Envoyer"
+msgstr "Renvoyer"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
-#, fuzzy
 msgid "Submit as:"
-msgstr "Envoyer"
+msgstr "Envoyer en tant que&nbsp;:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:94
 msgid "spam"
-msgstr ""
+msgstr "contenu indésirable"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:95
 msgid "ham"
-msgstr ""
+msgstr "contenu acceptable"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:107
 msgid "There are no revisions matching this filter set."
@@ -4129,9 +4125,9 @@ msgid "The submitted data contains invalid content."
 msgstr "Les données envoyées comportent du contenu invalide."
 
 #: kuma/spam/forms.py:87
-#, fuzzy
 msgid "The submitted data contains invalid content. Please try again."
-msgstr "Les données envoyées comportent du contenu invalide."
+msgstr ""
+"Les données envoyées comportent du contenu invalide. Veuillez réessayer."
 
 # 87%
 # 100%
@@ -4141,7 +4137,7 @@ msgstr "créé"
 
 #: kuma/spam/models.py:27
 msgid "Spam"
-msgstr ""
+msgstr "Contenu indésirable"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
@@ -5706,9 +5702,8 @@ msgstr ""
 "de révision %(id)s en correspond pas à ce critère."
 
 #: kuma/wiki/models.py:1754
-#, fuzzy
 msgid "IP address"
-msgstr "Adresse de courrier électronique"
+msgstr "Adresse IP"
 
 #: kuma/wiki/models.py:1762
 msgid "User-Agent"
@@ -5716,21 +5711,19 @@ msgstr "Agent utilisateur"
 
 #: kuma/wiki/models.py:1767
 msgid "HTTP Referrer"
-msgstr ""
+msgstr "Referrer HTTP"
 
 #: kuma/wiki/models.py:1788
 msgid "Revision"
 msgstr "Révision"
 
 #: kuma/wiki/models.py:1794
-#, fuzzy
 msgid "Akismet submission"
-msgstr "Soumissions"
+msgstr "Entrée Akismet"
 
 #: kuma/wiki/models.py:1795
-#, fuzzy
 msgid "Akismet submissions"
-msgstr "Soumissions"
+msgstr "Entrées Akismet"
 
 #: kuma/wiki/models.py:1838
 msgid "Slug"
@@ -5898,14 +5891,12 @@ msgid "Next Search Result"
 msgstr "Prochain résultat de recherche"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
-#, fuzzy
 msgid "see all contributors"
-msgstr "contributeurs"
+msgstr "voir tous les contributeurs"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
-#, fuzzy
 msgid "hide contributors"
-msgstr "contributeurs"
+msgstr "masquer les contributeurs"
 
 #: kuma/wiki/jinja2/wiki/document.html:185
 #, python-format
@@ -6263,9 +6254,9 @@ msgid "This is a preview of an unsaved document."
 msgstr "Ceci est un aperçu d'un document non enregistré."
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(id)s | %(title)s"
-msgstr "Révision %(id)s | %(title)s | %(category)s"
+msgstr "Révision %(id)s | %(title)s"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
