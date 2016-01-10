@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-08 08:40-0800\n"
-"PO-Revision-Date: 2015-12-04 14:13+0000\n"
+"PO-Revision-Date: 2016-01-10 21:12+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv_SE\n"
@@ -96,7 +96,7 @@ msgstr "Nytt intresse..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "Öppna implementeringsanteckningar"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
@@ -136,19 +136,19 @@ msgstr "Visa gammal tabell."
 
 #: kuma/static/js/wiki-edit.js:400
 msgid "an unknown date"
-msgstr ""
+msgstr "ett okänt datum"
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "You have a draft from:"
-msgstr ""
+msgstr "Du har ett utkast från:"
 
 #: kuma/static/js/wiki-edit.js:402
 msgid "Restore the draft content"
-msgstr ""
+msgstr "Återställ innehållet från utkast"
 
 #: kuma/static/js/wiki-edit.js:403
 msgid "Discard the draft"
-msgstr ""
+msgstr "Kasta utkastet"
 
 #: kuma/static/js/wiki-edit.js:555
 msgid "saved"
@@ -167,8 +167,10 @@ msgid "Search Stack Overflow"
 msgstr "Sök Stack Overflow"
 
 #: kuma/static/js/wiki.js:685
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Din webbläsare stöder inte MathML. En CSS fallback har använts i stället."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Din webbläsare stöder inte MathML. En CSS fallback har använts i stället."
 
 #: kuma/static/js/wiki.js:900
 msgid "Details"
@@ -182,7 +184,8 @@ msgstr "Välj en bilaga"
 msgid "No attachments available"
 msgstr "Inga bilagor tillgängliga"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Bilagor"
 
@@ -202,7 +205,8 @@ msgstr "Skapa en omdirigering"
 msgid "MDN Redirect"
 msgstr "MDN omdirigera"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
@@ -294,5 +298,11 @@ msgstr "Den URL som du har angett verkar inte vara giltig"
 msgid "Default"
 msgstr "Standard"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "Du har ett förslag under utveckling. <a href=\"\" class=\"restoreLink\">Återställ förslagsinnehållet</a> eller <a href=\"\" class=\"discardLink\">kasta förslaget</a>."
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "Du har ett förslag under utveckling. <a href=\"\" "
+#~ "class=\"restoreLink\">Återställ förslagsinnehållet</a> eller <a href=\"\" "
+#~ "class=\"discardLink\">kasta förslaget</a>."
