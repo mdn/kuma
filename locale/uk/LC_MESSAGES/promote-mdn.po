@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Promote MDN 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
 "POT-Creation-Date: 2012-08-26 22:16:54+00:00\n"
-"PO-Revision-Date: 2016-01-10 11:54+0000\n"
-"Last-Translator: yuraantonov11 <yuraantonov11@gmail.com>\n"
+"PO-Revision-Date: 2016-01-10 23:16+0000\n"
+"Last-Translator: Yuriy Antonov <yuraantonov11@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr "Перегляд"
 
 #: promote-mdn.php:258
 msgid "Use keywords and links specifically for %s"
-msgstr ""
+msgstr "Використовуйте ключові слова та посилання спеціально для %s"
 
 #: promote-mdn.php:259
 msgid "Reload keywords after (seconds):"
@@ -142,7 +142,7 @@ msgstr ""
 #. Plugin Name of the plugin/theme
 #: promote-mdn.php:352 promote-mdn.php:375 promote-mdn.php:382
 msgid "Promote MDN"
-msgstr ""
+msgstr "Просування MDN"
 
 #: promote-mdn.php:352
 msgid "hide"

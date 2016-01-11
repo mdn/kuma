@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-08 08:40-0800\n"
-"PO-Revision-Date: 2016-01-10 15:25+0000\n"
+"PO-Revision-Date: 2016-01-10 23:53+0000\n"
 "Last-Translator: Yuriy Antonov <yuraantonov11@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: jinja2/403.html:28
 msgid "You must sign in to view all history"
-msgstr ""
+msgstr "Ви мусите увійти, щоб переглянути всю історію"
 
 #: jinja2/403.html:34 jinja2/handlers/400.html:21
 #, python-format
@@ -182,7 +182,7 @@ msgstr ""
 
 #: jinja2/base.html:132
 msgid "APIs / DOM"
-msgstr ""
+msgstr "API / DOM"
 
 #: jinja2/base.html:133 kuma/core/sections.py:20
 msgid "Apps"
@@ -880,11 +880,11 @@ msgstr[2] ""
 
 #: kuma/core/templatetags/jinja_helpers.py:150
 msgid "Yes"
-msgstr ""
+msgstr "Так"
 
 #: kuma/core/templatetags/jinja_helpers.py:150
 msgid "No"
-msgstr ""
+msgstr "Ні"
 
 #: kuma/core/templatetags/jinja_helpers.py:300
 #, python-format
@@ -952,16 +952,16 @@ msgstr ""
 #: kuma/core/translations/search/filter/svg/name.py:4
 #: kuma/demos/__init__.py:335
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
 msgid "Web Development"
-msgstr ""
+msgstr "Веб-розробка"
 
 #: kuma/core/translations/search/filter/webgl/name.py:4
 #: kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
 msgid "WebGL"
-msgstr ""
+msgstr "WebGL"
 
 #: kuma/core/translations/search/filter/xul/name.py:4
 msgid "XUL"
@@ -969,7 +969,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 msgid "Document type"
-msgstr ""
+msgstr "Тип документу"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
 msgid "Skill level"
@@ -989,24 +989,24 @@ msgstr ""
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
-msgstr ""
+msgstr "Година"
 
 #: kuma/dashboards/forms.py:12
 msgid "Day"
-msgstr ""
+msgstr "День"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "Тиждень"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30 днів"
 
 #: kuma/dashboards/forms.py:24
 #: kuma/dashboards/jinja2/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "Мова:"
 
 #: kuma/dashboards/forms.py:28
 #: kuma/dashboards/jinja2/dashboards/revisions.html:19
@@ -1058,7 +1058,7 @@ msgstr ""
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:364
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
-msgstr ""
+msgstr "Історія"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
@@ -1161,11 +1161,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:37
 msgid "CSS3 Animations"
-msgstr ""
+msgstr "CSS3 анімації"
 
 #: kuma/demos/__init__.py:38
 msgid "June 2011"
-msgstr ""
+msgstr "Червень 2011"
 
 #: kuma/demos/__init__.py:39
 msgid ""
@@ -1195,7 +1195,7 @@ msgstr "HTML5 <video>"
 
 #: kuma/demos/__init__.py:45
 msgid "July 2011"
-msgstr ""
+msgstr "Липень 2011"
 
 #: kuma/demos/__init__.py:46 kuma/demos/__init__.py:47
 msgid ""
@@ -1209,11 +1209,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:51
 msgid "History API"
-msgstr ""
+msgstr "API Історії"
 
 #: kuma/demos/__init__.py:52
 msgid "August 2011"
-msgstr ""
+msgstr "Серпень 2011"
 
 #: kuma/demos/__init__.py:53 kuma/demos/__init__.py:54
 msgid ""
@@ -1227,11 +1227,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
 msgid "Geolocation"
-msgstr ""
+msgstr "Геолокація"
 
 #: kuma/demos/__init__.py:59
 msgid "September 2011"
-msgstr ""
+msgstr "Вересень 2011"
 
 #: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61
 #: kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
@@ -1251,7 +1251,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:66
 msgid "October 2011"
-msgstr ""
+msgstr "Жовтень 2011"
 
 #: kuma/demos/__init__.py:67 kuma/demos/__init__.py:68
 msgid ""
@@ -1266,7 +1266,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:73
 msgid "November 2011"
-msgstr ""
+msgstr "Листопад 2011"
 
 #: kuma/demos/__init__.py:74 kuma/demos/__init__.py:75
 msgid ""
@@ -1286,7 +1286,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:80
 msgid "December 2011"
-msgstr ""
+msgstr "Грудень 2011"
 
 #: kuma/demos/__init__.py:81 kuma/demos/__init__.py:82
 msgid ""
@@ -1300,11 +1300,11 @@ msgstr ""
 
 #: kuma/demos/__init__.py:86
 msgid "Orientation"
-msgstr ""
+msgstr "Орієнтація"
 
 #: kuma/demos/__init__.py:87
 msgid "January 2012"
-msgstr ""
+msgstr "Січень 2012"
 
 #: kuma/demos/__init__.py:88 kuma/demos/__init__.py:89
 msgid ""
@@ -1354,7 +1354,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
 msgid "Audio"
-msgstr ""
+msgstr "Аудіо"
 
 #: kuma/demos/__init__.py:108
 msgid "April 2012"
@@ -1372,7 +1372,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:114
 msgid "WebSockets API"
-msgstr ""
+msgstr "WebSockets API"
 
 #: kuma/demos/__init__.py:115
 msgid "May 2012"
@@ -1410,7 +1410,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:129
 msgid "July 2012"
-msgstr ""
+msgstr "Липень 2012"
 
 #: kuma/demos/__init__.py:130 kuma/demos/__init__.py:131
 msgid ""
@@ -1476,7 +1476,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:156
 msgid "Fullscreen API"
-msgstr ""
+msgstr "API Повноекранного режиму"
 
 #: kuma/demos/__init__.py:157
 msgid "November 2012"
@@ -1634,7 +1634,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:216
 msgid "File API"
-msgstr ""
+msgstr "API Файлів"
 
 #: kuma/demos/__init__.py:217
 msgid "July 2013"
@@ -1678,6 +1678,7 @@ msgstr ""
 msgid ""
 "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 msgstr ""
+"https://developer.mozilla.org/uk/docs/Web/API/Geolocation/Using_geolocation"
 
 #: kuma/demos/__init__.py:229 kuma/demos/__init__.py:237
 #: kuma/demos/__init__.py:245 kuma/demos/__init__.py:267
@@ -1733,7 +1734,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:241 kuma/landing/jinja2/landing/homepage.html:73
 msgid "CSS3"
-msgstr ""
+msgstr "CSS3"
 
 #: kuma/demos/__init__.py:242
 msgid ""
@@ -1790,7 +1791,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:260
 msgid "http://www.w3.org/TR/FileAPI/"
-msgstr ""
+msgstr "http://www.w3.org/TR/FileAPI/"
 
 #: kuma/demos/__init__.py:263
 msgid "Fonts & Type"
@@ -1847,14 +1848,15 @@ msgstr ""
 #: kuma/demos/__init__.py:282
 msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
 msgstr ""
+"https://developer.mozilla.org/uk/docs/Web/API/Geolocation/Using_geolocation"
 
 #: kuma/demos/__init__.py:283
 msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
-msgstr ""
+msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
 
 #: kuma/demos/__init__.py:284
 msgid "http://dev.w3.org/geo/api/spec-source.html"
-msgstr ""
+msgstr "http://dev.w3.org/geo/api/spec-source.html"
 
 #: kuma/demos/__init__.py:288
 msgid ""
@@ -2100,6 +2102,7 @@ msgid ""
 "https://developer.mozilla.org/en-"
 "US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
 msgstr ""
+"https://developer.mozilla.org/uk/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
 
 #: kuma/demos/__init__.py:379
 msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
@@ -2107,7 +2110,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:380
 msgid "http://www.w3.org/TR/XMLHttpRequest/"
-msgstr ""
+msgstr "http://www.w3.org/TR/XMLHttpRequest/"
 
 #: kuma/demos/__init__.py:384
 msgid ""
@@ -2126,7 +2129,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:388
 msgid "http://www.w3.org/2010/webevents/charter/"
-msgstr ""
+msgstr "http://www.w3.org/2010/webevents/charter/"
 
 #: kuma/demos/__init__.py:394
 msgid "MPL/GPL/LGPL"
@@ -2138,19 +2141,19 @@ msgstr ""
 
 #: kuma/demos/__init__.py:397
 msgid "GPL"
-msgstr ""
+msgstr "GPL"
 
 #: kuma/demos/__init__.py:398
 msgid "http://www.opensource.org/licenses/gpl-license.php"
-msgstr ""
+msgstr "http://www.opensource.org/licenses/gpl-license.php"
 
 #: kuma/demos/__init__.py:400
 msgid "BSD"
-msgstr ""
+msgstr "BSD"
 
 #: kuma/demos/__init__.py:401
 msgid "http://www.opensource.org/licenses/bsd-license.php"
-msgstr ""
+msgstr "http://www.opensource.org/licenses/bsd-license.php"
 
 #: kuma/demos/__init__.py:403
 msgid "Apache"
@@ -2158,7 +2161,7 @@ msgstr ""
 
 #: kuma/demos/__init__.py:404
 msgid "http://www.apache.org/licenses/"
-msgstr ""
+msgstr "http://www.apache.org/licenses/"
 
 #: kuma/demos/__init__.py:406
 msgid "Public Domain (where applicable by law)"
@@ -2392,7 +2395,7 @@ msgstr ""
 
 #: kuma/demos/jinja2/demos/delete.html:20
 msgid "MDN"
-msgstr ""
+msgstr "MDN"
 
 #: kuma/demos/jinja2/demos/delete.html:21
 #: kuma/demos/jinja2/demos/detail.html:14 kuma/demos/jinja2/demos/home.html:14
@@ -3809,12 +3812,12 @@ msgstr ""
 #: kuma/users/forms.py:207 kuma/users/models.py:169
 #: kuma/users/jinja2/users/user_detail.html:135
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Stack Overflow"
 
 #: kuma/users/forms.py:216 kuma/users/models.py:159
 #: kuma/users/jinja2/users/user_detail.html:139
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: kuma/users/forms.py:225 kuma/users/models.py:144
 #: kuma/users/jinja2/users/user_detail.html:143
@@ -3825,7 +3828,7 @@ msgstr ""
 #: kuma/users/jinja2/users/user_detail.html:147
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:110
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
@@ -3851,7 +3854,7 @@ msgstr ""
 
 #: kuma/users/models.py:51
 msgid "Language"
-msgstr ""
+msgstr "Мова"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
@@ -5795,7 +5798,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:111
 msgid "Google+"
-msgstr ""
+msgstr "Google +"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -6243,7 +6246,7 @@ msgstr ""
 
 #: kuma/wiki/views/translate.py:72
 msgid "You cannot translate this document."
-msgstr ""
+msgstr "Ви не можете перекладати цей документ."
 
 #: templates/admin/search/index/change_list.html:8
 #, python-format
