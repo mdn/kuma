@@ -840,11 +840,6 @@ msgstr "아니오"
 msgid "Today at %s"
 msgstr "%s의 오늘"
 
-#: kuma/core/templatetags/jinja_helpers.py:344
-#, python-format
-msgid "%B %e, %Y"
-msgstr ""
-
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
 msgstr "부가 기능 및 확장 기능"
@@ -4667,7 +4662,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1788
 msgid "Revision"
-msgstr "리비전 (%s):"
+msgstr "리비전"
 
 # DevDerby 부메뉴
 #: kuma/wiki/models.py:1794
@@ -5359,7 +5354,7 @@ msgstr "리비전 비교"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, fuzzy, python-format
 msgid "Revision %(num)s:"
-msgstr "리비전 {num}:"
+msgstr "리비전 %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:82 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
@@ -5633,7 +5628,7 @@ msgstr "%(count)s개 문서를 찾았습니다."
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, fuzzy, python-format
 msgid "Revision History | %(document)s"
-msgstr "리비전 이력 | {document}"
+msgstr "리비전 이력 | %(document)s"
 
 # 100%
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14

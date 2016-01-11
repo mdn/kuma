@@ -359,7 +359,7 @@ msgstr "Sök Firefox hjälp"
 #: jinja2/includes/common_macros.html:36
 #, python-format
 msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr "Välkommen <span class=\"user\">{user}</span>."
+msgstr "Välkommen <span class=\"user\">%(user)s</span>."
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
@@ -931,11 +931,6 @@ msgstr "Nej"
 #, python-format
 msgid "Today at %s"
 msgstr "Idag vid %s"
-
-#: kuma/core/templatetags/jinja_helpers.py:344
-#, python-format
-msgid "%B %e, %Y"
-msgstr "%e %B %Y"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"

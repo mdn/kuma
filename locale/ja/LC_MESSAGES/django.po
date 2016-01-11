@@ -926,11 +926,6 @@ msgstr "いいえ"
 msgid "Today at %s"
 msgstr "今日 %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:344
-#, python-format
-msgid "%B %e, %Y"
-msgstr "%Y 年 %B %e 日"
-
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
 msgstr "アドオンと拡張機能"

@@ -965,11 +965,6 @@ msgstr "Non"
 msgid "Today at %s"
 msgstr "Aujourd'hui à %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:344
-#, python-format
-msgid "%B %e, %Y"
-msgstr "%e %B %Y"
-
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
 msgstr "Modules complémentaires & Extensions"

@@ -812,11 +812,6 @@ msgstr "Nie"
 msgid "Today at %s"
 msgstr "Dzisiaj o %s"
 
-#: kuma/core/templatetags/jinja_helpers.py:344
-#, python-format
-msgid "%B %e, %Y"
-msgstr ""
-
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
 msgstr "Dodatki i rozszerzenia"
@@ -4579,7 +4574,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1788
 msgid "Revision"
-msgstr "Wersja %s"
+msgstr "Wersja"
 
 #: kuma/wiki/models.py:1794
 #, fuzzy
