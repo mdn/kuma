@@ -130,8 +130,8 @@ funcsigs==0.4
 # sha256: BK-ioGq33MqdgXF7Qgp6FIJgYemyYUpcd90kx1zPl-Q
 futures==3.0.3
 
-# sha256: rTWd7at96aNF2LdaLB3jJiqQlMJ4jkCxgbZuSeKwn28
-gunicorn==19.4.4
+# sha256: xX8bAFpLkJMzA8je7Zvt61CTMapqCpkAI6V5blK9iYg
+gunicorn==19.4.5
 
 # sha256: -GuWUXvFy32_NLu8Uc3VloFwh3tDvBq3yes5NFz_Tdc
 hash-ring==1.3.1
