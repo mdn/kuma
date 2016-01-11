@@ -6,7 +6,7 @@
       <p class="entry-summary">{{ e.summary|strip_tags|entity_decode|truncatewords(50) }}</p>
       <p class="entry-meta vcard">
       {% set author_link = '<cite class="author fn">%s</cite>' % e.author %}
-      {% set entry_date = '<time class="updated" datetime="%(stamp)s" title="%(stamp)s">%(date)s</time>' % {'stamp': entry.last_published|as_datetime('%Y-%m-%d'), 'date': entry.last_published|as_datetime} %}
+      {% set entry_date = '<time class="updated" datetime="%(stamp)s" title="%(stamp)s">%(date)s</time>' % {'stamp': entry.last_published.strftime('%Y-%m-%d'), 'date': entry.last_published.strftime('%B %d, %Y')} %}
       {% trans authorlink=author_link|safe, entrydate=entry_date|safe %}
         Posted {{ entrydate }} by {{ authorlink }}
       {% endtrans %}
