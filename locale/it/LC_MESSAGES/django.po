@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-08 08:40-0800\n"
-"PO-Revision-Date: 2016-01-11 09:09+0000\n"
-"Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
+"PO-Revision-Date: 2016-01-11 12:25+0000\n"
+"Last-Translator: Francesco Lodolo <francesco.lodolo@mozillaitalia.org>\n"
 "Language-Team: MozillaItalia <MozillaItalia>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
 msgid "Permission Denied"
-msgstr "Invia nuovamente"
+msgstr "Permesso negato"
 
 #: jinja2/403.html:22
 msgid "The wiki is in read-only mode."
@@ -945,7 +945,7 @@ msgstr "Oggi alle %s"
 #: kuma/core/templatetags/jinja_helpers.py:344
 #, python-format
 msgid "%B %e, %Y"
-msgstr ""
+msgstr "%e %B %Y"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
@@ -1125,7 +1125,7 @@ msgstr "eliminato"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:50
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
 msgid "Ban IP from Editing"
@@ -1164,11 +1164,11 @@ msgstr "Invia come:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:94
 msgid "spam"
-msgstr ""
+msgstr "spam"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:95
 msgid "ham"
-msgstr ""
+msgstr "ham"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:107
 msgid "There are no revisions matching this filter set."
@@ -4045,19 +4045,19 @@ msgstr "creato"
 
 #: kuma/spam/models.py:27
 msgid "Spam"
-msgstr ""
+msgstr "Spam"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
-msgstr ""
+msgstr "Ham"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "inviato a"
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "tipo"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -5596,11 +5596,11 @@ msgstr "Indirizzo IP"
 
 #: kuma/wiki/models.py:1762
 msgid "User-Agent"
-msgstr ""
+msgstr "User-Agent"
 
 #: kuma/wiki/models.py:1767
 msgid "HTTP Referrer"
-msgstr ""
+msgstr "Riferimento HTTP"
 
 #: kuma/wiki/models.py:1788
 msgid "Revision"
@@ -6794,11 +6794,12 @@ msgstr "Informazioni di invio a Akismet"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
-msgstr ""
+msgstr "Per la procedura di invio ad Akismet salva il modulo sottostante."
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_list.html:4
 msgid "Select an Akismet submission for more details"
 msgstr ""
+"Seleziona una tipologia di invio ad Akismet per ulteriori informazioni"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:100
 #: kuma/wiki/templatetags/jinja_helpers.py:101
