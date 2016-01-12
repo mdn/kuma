@@ -383,7 +383,8 @@ def build_sitemaps():
     tasks = [build_locale_sitemap.si(locale)
              for locale in settings.MDN_LANGUAGES]
     post_task = build_index_sitemap.s()
-    chord(header=tasks, body=post_task).apply_async()
+    # we retry the chord unlock 300 times, so 5 mins with an interval of 1s
+    chord(header=tasks, body=post_task).apply_async(max_retries=300, interval=1)
 
 
 @task
