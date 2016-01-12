@@ -698,12 +698,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/fellowship.css',
     },
-    'mdn10': {
-        'source_filenames': (
-            'css/mdn10.css',
-        ),
-        'output_filename': 'build/styles/mdn10.css',
-    },
     'editor-content': {
         'source_filenames': (
             'css/main.css',
