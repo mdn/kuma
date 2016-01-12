@@ -198,20 +198,6 @@
       <!-- start the main content container -->
         <div id="wiki-column-container" class="{% if show_right %}wiki-right-present{% else %}wiki-right-closed wiki-right-none{% endif %} {% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
 
-          {% if show_left and not is_zone_root %}
-          <!-- additional controls row; hidden unless needed -->
-          <div id="wiki-controls" class="column-container column-container-reverse">
-            <div class="column-strip">
-              <!-- Show TOC "show" link -->
-            </div>
-            <div class="column-half">
-            </div>
-            <div class="column-strip quick-links hidden">
-              <a href="#show-quick-links" class="title smaller" id="show-quick-links"><i aria-hidden="true" class="icon-caret-down"></i>{{ _('Show Sidebar') }}</a>
-            </div>
-          </div>
-          {% endif %}
-
           <!-- content row with three strips -->
           <div class="column-container column-container-reverse">
 
@@ -362,8 +348,6 @@
               <div id="wiki-left" class="column-strip wiki-column">
 
               {% if not is_zone_root %}
-
-                <a href="#quick-links" class="title smaller" id="quick-links-toggle"><i aria-hidden="true" class="icon-caret-up"></i>{{ _('Hide Sidebar') }}</a>
 
                 {% if zone_subnav_html %}
                   <!-- zone subnav -->

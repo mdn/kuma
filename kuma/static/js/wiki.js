@@ -7,43 +7,13 @@
     $('.toggleable').mozTogglers();
 
     /*
-        Toggle for quick links show/hide
+        Toggle for quick links with nested lists
     */
     (function() {
-        // Set up the quick links for the toggler
+        // Set up the quick links with the toggler
         var $quickLinks = $('#quick-links');
         setupTogglers($quickLinks.find('> ul > li, > ol > li'));
         $quickLinks.find('.toggleable').mozTogglers();
-
-        var $columnContainer = $('#wiki-column-container');
-        var $quickLinksControl = $('#wiki-controls .quick-links');
-
-        var child = $('#wiki-left').get(0);
-        if(child) {
-            var parent = child.parentNode;
-        }
-
-        // Quick Link toggles
-        $('#quick-links-toggle, #show-quick-links').on('click', function(e) {
-            e.preventDefault();
-            $(child).toggleClass('column-closed');
-            $columnContainer.toggleClass('wiki-left-closed');
-            $quickLinksControl.toggleClass('hidden');
-
-            if($(child).hasClass('column-closed')) {
-                parent.removeChild(child);
-            }
-            else {
-                parent.appendChild(child);
-            }
-
-            mdn.analytics.trackEvent({
-                category: 'Wiki',
-                action: 'Sidebar',
-                label: (this.id === 'quick-links-toggle' ? 'Hide' : 'Show')
-            });
-
-        });
     })();
 
     /*
