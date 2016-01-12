@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-08 08:40-0800\n"
-"PO-Revision-Date: 2016-01-11 21:18+0000\n"
+"PO-Revision-Date: 2016-01-12 00:48+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -1153,7 +1153,7 @@ msgstr "%(sent_date)s przez %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
 msgid "Resubmit"
-msgstr "Prześlij ponownie"
+msgstr "Prześlij ponowni"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 msgid "Submit as:"
@@ -6731,7 +6731,7 @@ msgstr "Szczegóły przesyłania do Akismeta"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
-msgstr "Aby przesłać do Akismeta, należy zapisać poniższy formularz."
+msgstr "Aby wysłać do Akismeta, należy zapisać poniższy formularz."
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_list.html:4
 msgid "Select an Akismet submission for more details"
