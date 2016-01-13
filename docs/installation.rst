@@ -124,13 +124,12 @@ You will want to make yourself an admin user to enable important site features.
    ``<< YOUR_USERNAME >>`` with the username you used when signing up for
    Persona)::
 
-    vagrant ssh
-    mysql -ukuma -pkuma kuma -e "UPDATE auth_user set is_staff = 1, is_active=1, is_superuser = 1 WHERE username = '<< YOUR_USERNAME >>';"
+      vagrant ssh
+      python manage.py ihavepower "<< YOUR_USERNAME >>"
 
    You should see::
 
-      Query OK, 1 row affected (0.01 sec)
-      Rows matched: 1  Changed: 1  Warnings: 0
+      Done!
 
 Enable the wiki
 ===============
