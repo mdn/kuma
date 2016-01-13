@@ -41,14 +41,14 @@ Updating the Localizations
 Adding a new Locale
 ===================
 
-#.  Update `languages.json` file via product details::
+#. Update `languages.json` file via product details::
 
-        $ ./manage.py update_product_details
-        $ cp ../product_details_json/languages.json kuma/languages.json
+       $ ./manage.py update_product_details
+       $ cp ../product_details_json/languages.json kuma/languages.json
 
-#.  Add the locale to `MDN_LANGUAGES` in `settings.py`
+#. Add the locale to `MDN_LANGUAGES` in `settings.py`
 
-#.  Add the locale to the `locale/` folder by following the instructions in
+#. Add the locale to the `locale/` folder by following the instructions in
    `locale/README.txt`.
 
 #. Create the `jsi18n` file for the new locale::
