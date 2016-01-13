@@ -196,8 +196,10 @@ configuration values that may be worthwhile to look at. In case something
 doesn't suffice for your machine, please let us know!
 
 To change the config values, simply create a dotenv_ file (``.env``) in the
-directory (``/home/vagrant/src/.env`` in the Vagrant VM) and write
-``<KEY>=<VALUE>`` for each configuration variable you'd like to set.
+repository root directory--this is also ``/home/vagrant/src/.env`` in the
+Vagrant VM.
+
+Write ``<KEY>=<VALUE>`` for each configuration variable you'd like to set.
 
 Here's the configuration variables that are available for Vagrant:
 
@@ -323,3 +325,4 @@ set your ``settings_local.py`` with the following::
 
 .. _pip: https://pip.pypa.io/
 .. _peep: https://pypi.python.org/pypi/peep
+.. _PyPI: https://pypi.python.org/pypi/
