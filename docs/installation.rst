@@ -215,7 +215,7 @@ Now you can sign in with GitHub at https://developer-local.allizom.org/
 .. _Errors:
 
 Errors during `vagrant up`
---------------------------
+==========================
 
 ``vagrant up`` starts the virtual machine. The first time you run
 ``vagrant up`` it also `provisions <https://docs.vagrantup.com/v2/cli/provision.html>`_
@@ -237,7 +237,7 @@ If you see the same error over and over, please ask for :ref:`more help <more-he
 .. _Ansible: http://docs.ansible.com/
 
 Django database migrations
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 If you see errors that have "Django database migrations" in their
 title try to manually run them in the VM to see more about them.
@@ -249,7 +249,7 @@ To do so::
 If you get an error, please ask for :ref:`more help <more-help>`.
 
 Ubuntu
-~~~~~~
+------
 
 On Ubuntu, ``vagrant up`` might fail after being unable to mount NFS shared
 folders. First, make sure you have the nfs-common and nfs-server packages
