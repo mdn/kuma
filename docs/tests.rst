@@ -6,6 +6,14 @@ Kuma has a fairly comprehensive Python test suite. Changes should not break
 tests--only change a test if there is a good reason to change the expected
 behavior--and new code should come with tests.
 
+
+Setup
+=====
+
+Before you run the tests, you have to run the ``collectstatic`` command::
+
+    ./manage.py collectstatic
+
 Running the Test Suite
 ======================
 
