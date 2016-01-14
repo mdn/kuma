@@ -1,6 +1,5 @@
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
-
-from kuma.users.models import User
 
 
 class Command(BaseCommand):
@@ -12,6 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         username = options['username'][0]
+        User = get_user_model()
 
         try:
             user = User.objects.get(username=username)
