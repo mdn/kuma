@@ -45,4 +45,6 @@ Development
 Getting Started
 ===============
 
-Want to help make MDN great? Our `contribution guide <CONTRIBUTING.md>`_ lists some good first projects and offers direction on submitting code.
+Want to help make MDN great? Our `contribution guide
+<https://github.com/mozilla/kuma/blob/master/CONTRIBUTING.md>`_ lists some good
+first projects and offers direction on submitting code.

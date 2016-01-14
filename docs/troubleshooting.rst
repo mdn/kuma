@@ -14,7 +14,6 @@ We have a script that attempts to fix some of the most common problems with
 Kuma that are described below::
 
   pushd .
-  # open https://www.youtube.com/watch?v=ckIMuvumYrg
   cd /path/to/kuma
   vagrant halt
   make clean
@@ -59,14 +58,17 @@ Errors after switching branches
    the latest files it needs.::
 
        git submodule update --init
-       find . -name "*.pyc" | xargs rm -f
+       make clean
 
 -  If you see ``DatabaseError: (1146, "Table '...' doesn't exist")`` errors,
    you probably need to run database migrations.::
 
        python manage.py migrate
 
-   Note: If you are using a VM, this is done when you re-run the Puppet setup.
+   .. Note:
+
+      If you are using a VM, this is done when you re-run the Vagrant
+      provisioning.
 
 
 Errors with KumaScript
