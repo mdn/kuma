@@ -106,7 +106,7 @@ ALLOWED_ATTRIBUTES['mfenced'] += ['close', 'open', 'separators']
 ALLOWED_ATTRIBUTES['mfrac'] += ['bevelled', 'denomalign', 'linethickness',
                                 'numalign']
 ALLOWED_ATTRIBUTES['mi'] += ['dir', 'mathsize', 'mathvariant']
-ALLOWED_ATTRIBUTES['mi'] += ['mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mn'] += ['dir', 'mathsize', 'mathvariant']
 ALLOWED_ATTRIBUTES['mmultiscripts'] += ['subscriptshift', 'superscriptshift']
 ALLOWED_ATTRIBUTES['mo'] += ['largeop', 'lspace', 'maxsize', 'minsize',
                              'movablelimits', 'rspace', 'separator',
