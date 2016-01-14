@@ -14,7 +14,7 @@
     {% endif %}
   {% endif %}
   {% for page in pager.page_range %}
-    <li{{ ' selected' if page == pager.number }}>
+    <li{% if page == pager.number %} class="selected"{% endif %}>
       <a href="{{ pager.url|urlparams(page=page) }}">{{ page }}</a>
     </li>
   {% endfor %}
