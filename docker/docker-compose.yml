@@ -1,6 +1,6 @@
 web:
   build: ../
-  command: python manage.py runserver --settings=settings_docker 0.0.0.0:8000
+  command: python manage.py runserver --settings=kuma.settings.docker 0.0.0.0:8000
   volumes:
     - ../:/app
   ports:

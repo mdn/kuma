@@ -26,7 +26,7 @@ def requires_good_connection(fun):
         except ConnectionError:
             log.error('Either your ElasticSearch process is not quite '
                       'ready to rumble, is not running at all, or ES_URLS'
-                      'is set wrong in your settings_local.py file.')
+                      'is set wrong in your .env file.')
     return _requires_good_connection
 
 

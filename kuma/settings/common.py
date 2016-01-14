@@ -3,53 +3,74 @@ from collections import namedtuple
 import json
 import logging
 import os
+from os.path import dirname
 import platform
+
+from decouple import config, Csv
+import djcelery
+import dj_database_url
+import dj_email_url
 
 from django.core.urlresolvers import reverse_lazy
 
 _Language = namedtuple(u'Language', u'english native iso639_1')
 
+# Set up django-celery
+djcelery.setup_loader()
 
-DEBUG = False
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
-path = lambda *a: os.path.join(ROOT, *a)
+def path(*parts):
+    return os.path.join(ROOT, *parts)
 
-ADMINS = (
-    ('MDN devs', 'mdn-dev@mozilla.com'),
-)
 
-PROTOCOL = 'https://'
-DOMAIN = 'developer.mozilla.org'
-SITE_URL = PROTOCOL + DOMAIN
+class TupleCsv(Csv):
+
+    def __call__(self, value):
+        split_values = super(TupleCsv, self).__call__(value)
+        return tuple((value, value) for value in split_values)
+
+
+DEBUG = config('DEBUG', default=False, cast=bool)
+TEMPLATE_DEBUG = DEBUG
+
+ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
+
+ADMINS = config('ADMIN_EMAILS',
+                default='mdn-dev@mozilla.com',
+                cast=TupleCsv())
+
+PROTOCOL = config('PROTOCOL', default='https://')
+DOMAIN = config('DOMAIN', default='developer.mozilla.org')
+SITE_URL = config('SITE_URL', default=PROTOCOL + DOMAIN)
 PRODUCTION_URL = SITE_URL
-STAGING_URL = PROTOCOL + 'developer.allizom.org'
-USE_X_FORWARDED_HOST = True
+STAGING_DOMAIN = 'developer.allizom.org'
+STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'kuma',  # Or path to database file if using sqlite3.
-        'USER': 'kuma',  # Not used with sqlite3.
-        'PASSWORD': 'kuma',  # Not used with sqlite3.
-        'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
+DEFAULT_DATABASE = config('DATABASE_URL',
+                          default='mysql://kuma:kuma@localhost:3306/kuma',
+                          cast=dj_database_url.parse)
+if 'mysql' in DEFAULT_DATABASE['ENGINE']:
+    DEFAULT_DATABASE.update({
         'OPTIONS': {
             'sql_mode': 'TRADITIONAL',
             'charset': 'utf8',
+            'use_unicode': True,
             'init_command': 'SET '
-                'storage_engine=INNODB,'
-                'character_set_connection=utf8,'
-                'collation_connection=utf8_general_ci',
+                            'storage_engine=INNODB,'
+                            'character_set_connection=utf8,'
+                            'collation_connection=utf8_general_ci',
         },
         'ATOMIC_REQUESTS': True,
         'TEST': {
             'CHARSET': 'utf8',
             'COLLATION': 'utf8_general_ci',
         },
-    },
+    })
+
+DATABASES = {
+    'default': DEFAULT_DATABASE,
 }
 
 # Cache Settings
@@ -66,11 +87,19 @@ CACHES = {
         'BACKEND': 'memcached_hashring.backend.MemcachedHashRingCache',
         'TIMEOUT': CACHE_COUNT_TIMEOUT * 60,
         'KEY_PREFIX': CACHE_PREFIX,
-        'LOCATION': ['127.0.0.1:11211'],
+        'LOCATION': config('MEMCACHE_SERVERS',
+                           default='127.0.0.1:11211',
+                           cast=Csv()),
     },
 }
 
 CACHEBACK_CACHE_ALIAS = 'memcache'
+
+# Email
+vars().update(config('EMAIL_URL',
+                     default='console://',
+                     cast=dj_email_url.parse))
+EMAIL_SUBJECT_PREFIX = '[mdn] '
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
@@ -198,6 +227,7 @@ LOCALE_ALIASES = {
 }
 
 LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in MDN_LANGUAGES])
+
 for requested_lang, delivered_lang in LOCALE_ALIASES.items():
     if delivered_lang in MDN_LANGUAGES:
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
@@ -248,42 +278,43 @@ LANGUAGES = sorted(tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES]),
 # through the mapping exercise.
 
 MT_TO_KUMA_LOCALE_MAP = {
-    "en": "en-US",
-    "ja": "ja",
-    "pl": "pl",
-    "fr": "fr",
-    "es": "es",
-    "": "en-US",
-    "cn": "zh-CN",
-    "zh_cn": "zh-CN",
-    "zh-cn": "zh-CN",
-    "zh_tw": "zh-TW",
-    "zh-tw": "zh-TW",
-    "ko": "ko",
-    "pt": "pt-PT",
-    "de": "de",
-    "it": "it",
-    "ca": "ca",
-    "cs": "cs",
-    "ru": "ru",
-    "nl": "nl",
-    "hu": "hu",
-    "he": "he",
-    "el": "el",
-    "fi": "fi",
-    "tr": "tr",
-    "vi": "vi",
-    "ro": "ro",
-    "ar": "ar",
-    "th": "th",
-    "fa": "fa",
-    "ka": "ka",
+    'en': 'en-US',
+    'ja': 'ja',
+    'pl': 'pl',
+    'fr': 'fr',
+    'es': 'es',
+    '': 'en-US',
+    'cn': 'zh-CN',
+    'zh_cn': 'zh-CN',
+    'zh-cn': 'zh-CN',
+    'zh_tw': 'zh-TW',
+    'zh-tw': 'zh-TW',
+    'ko': 'ko',
+    'pt': 'pt-PT',
+    'de': 'de',
+    'it': 'it',
+    'ca': 'ca',
+    'cs': 'cs',
+    'ru': 'ru',
+    'nl': 'nl',
+    'hu': 'hu',
+    'he': 'he',
+    'el': 'el',
+    'fi': 'fi',
+    'tr': 'tr',
+    'vi': 'vi',
+    'ro': 'ro',
+    'ar': 'ar',
+    'th': 'th',
+    'fa': 'fa',
+    'ka': 'ka',
 }
 
 SITE_ID = 1
 
-PROD_DETAILS_DIR = path('../product_details_json')
-MDC_PAGES_DIR = path('../mdc_pages')
+PROD_DETAILS_DIR = config('PROD_DETAILS_DIR',
+                          default=path('..', 'product_details_json'))
+MDC_PAGES_DIR = path('..', 'mdc_pages')
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -327,7 +358,8 @@ LANGUAGE_URL_IGNORED_PATHS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
+SECRET_KEY = config('SECRET_KEY',
+                    default='#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z')
 
 _CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -391,7 +423,7 @@ AVATAR_SIZES = [  # in pixels
 ACCOUNT_ACTIVATION_DAYS = 30
 MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'kuma.urls'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -877,11 +909,14 @@ PIPELINE_JS = {
 
 #
 # Session cookies
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE',
+                               default=True, cast=bool)
 SESSION_COOKIE_HTTPONLY = True
 
-# Cookie prefix from PHPBB settings.
-PHPBB_COOKIE_PREFIX = 'phpbb3_jzxvr'
+# bug 856061
+ALLOWED_HOSTS = config('ALLOWED_HOSTS',
+                       default='developer-local.allizom.org, mdn-local.mozillademos.org',
+                       cast=Csv())
 
 # Maximum length of the filename. Forms should use this and raise
 # ValidationError if the length is exceeded.
@@ -909,20 +944,16 @@ IMAGE_ALLOWED_MIMETYPES = 'image/jpeg,image/png,image/gif'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = '/tmp/kuma-messages'
 
-# Celery
-import djcelery
-djcelery.setup_loader()
+BROKER_URL = config('BROKER_URL',
+                    default='amqp://kuma:kuma@developer-local:5672/kuma')
 
-BROKER_URL = 'amqp://kuma:kuma@developer-local:5672/kuma'
-
-CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
+CELERY_ALWAYS_EAGER = config('CELERY_ALWAYS_EAGER', True, cast=bool)
 CELERY_SEND_TASK_ERROR_EMAILS = True
 CELERY_SEND_EVENTS = True
 CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_TRACK_STARTED = True
-
 CELERYD_LOG_LEVEL = logging.INFO
-CELERYD_CONCURRENCY = 4
+CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
 
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
@@ -1035,16 +1066,12 @@ TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 
-
 TIDINGS_FROM_ADDRESS = 'notifications@developer.mozilla.org'
 TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
-
 # bit.ly
-BITLY_API_KEY = None  # Set me in settings_local.py.
-BITLY_USERNAME = None  # Set me in settings_local.py.
-
-GOOGLE_MAPS_API_KEY = "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ"
+BITLY_USERNAME = config('BITLY_USERNAME', default='')
+BITLY_API_KEY = config('BITLY_API_KEY', default='')
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 # must be an entry in the CACHES setting!
@@ -1205,19 +1232,18 @@ CONSTANCE_CONFIG = dict(
 BASKET_URL = 'https://basket.mozilla.com'
 BASKET_APPS_NEWSLETTER = 'app-dev'
 
-KUMASCRIPT_URL_TEMPLATE = 'http://developer.mozilla.org:9080/docs/{path}'
+KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
 
 # Elasticsearch related settings.
 ES_DEFAULT_NUM_REPLICAS = 1
 ES_DEFAULT_NUM_SHARDS = 5
 ES_DEFAULT_REFRESH_INTERVAL = '5s'
-ES_DISABLED = True
 ES_INDEX_PREFIX = 'mdn'
 ES_INDEXES = {'default': 'main_index'}
 # Specify the extra timeout in seconds for the indexing ES connection.
 ES_INDEXING_TIMEOUT = 30
 ES_LIVE_INDEX = False
-ES_URLS = ['localhost:9200']
+ES_URLS = config('ES_URLS', default='127.0.0.1:9200', cast=Csv())
 
 LOG_LEVEL = logging.WARN
 SYSLOG_TAG = 'http_app_kuma'
@@ -1274,7 +1300,7 @@ LOGGING = {
     },
 }
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
 
 DBGETTEXT_PATH = 'kuma/core/'
@@ -1288,6 +1314,8 @@ def get_user_url(user):
 ABSOLUTE_URL_OVERRIDES = {
     'users.user': get_user_url
 }
+
+USE_X_FORWARDED_HOST = True
 
 # Honor the X-Forwarded-Proto header for environments like local dev VM that
 # uses Apache mod_proxy instead of mod_wsgi
@@ -1345,3 +1373,10 @@ BLOCKABLE_USER_AGENTS = [
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'kuma.search.utils.search_exception_handler'
 }
+
+SENTRY_DSN = config('SENTRY_DSN', default=None)
+
+if SENTRY_DSN:
+    INSTALLED_APPS = INSTALLED_APPS + (
+        'raven.contrib.django.raven_compat',
+    )

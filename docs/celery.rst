@@ -51,10 +51,8 @@ RabbitMQ takes very little configuration.
 That should do it. You may need to use ``sudo`` for ``rabbitmqctl``. It depends
 on the OS and how Rabbit was installed.
 
-
 Celery
 ======
-
 
 Installing
 ----------
@@ -66,13 +64,12 @@ Configuring and Running
 -----------------------
 
 We set some reasonable defaults for Celery in ``settings.py``. These can be
-overridden either in ``settings_local.py`` or via the command line when running
+overridden either in your ``.env`` file or via the command line when running
 ``manage.py celeryd``.
 
-In ``settings_local.py`` you should set at least this, if you want to use
-Celery::
+In your ``.env`` file you should set at least this, if you want to use Celery::
 
-    CELERY_ALWAYS_EAGER = False
+    CELERY_ALWAYS_EAGER = false
 
 This defaults to ``True``, which causes all task processing to be done online.
 This lets you run Kuma even if you don't have Rabbit or want to deal with
@@ -80,7 +77,6 @@ running workers all the time.
 
 You can also configure the log level or concurrency. Here are the defaults::
 
-    CELERYD_LOG_LEVEL = logging.INFO
     CELERYD_CONCURRENCY = 4
 
 Then to start the Celery workers, you just need to run::
