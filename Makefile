@@ -1,5 +1,5 @@
 target = kuma
-requirements = -r requirements/default.txt -r requirements/tests.txt
+requirements = -r requirements/default.txt -r requirements/testing.txt
 # set Django settings module if not already set as env var
 export DJANGO_SETTINGS_MODULE ?= kuma.settings.testing
 
