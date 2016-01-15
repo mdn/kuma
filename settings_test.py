@@ -23,9 +23,3 @@ LOGGING['loggers'].update({
         'level': 'CRITICAL',
     },
 })
-
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-NOSE_ARGS = [
-    '--traverse-namespace',  # make sure `./manage.py test kuma` works
-]
