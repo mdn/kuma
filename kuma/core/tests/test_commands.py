@@ -27,5 +27,5 @@ class TestIHavePowerCommand(UserTestCase):
         call_command('ihavepower', 'fordprefect', stdout=out)
 
         ford = self.user_model.objects.get(username='fordprefect')
-        assert ford.is_staff == True
-        assert ford.is_superuser == True
+        assert ford.is_staff is True
+        assert ford.is_superuser is True
