@@ -1,10 +1,10 @@
-from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 
+from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import user
 

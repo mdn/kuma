@@ -4,6 +4,7 @@ import urllib
 from datetime import datetime
 
 import mock
+import pytest
 from BeautifulSoup import BeautifulSoup
 from constance import config
 from django.conf import settings
@@ -11,12 +12,10 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.test.utils import override_settings
 from django.utils.http import urlquote
-from nose import SkipTest
-from nose.plugins.attrib import attr
-from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 from waffle.models import Flag
 
+from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase
@@ -68,7 +67,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         ok_(config.KUMA_CUSTOM_CSS_PATH in response.content)
 
-    @attr("breadcrumbs")
     def test_document_breadcrumbs(self):
         """Create docs with topical parent/child rel, verify breadcrumbs."""
         d1, d2 = create_topical_parents_docs()
@@ -200,7 +198,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         doc = pq(resp.content)
         assert 'Add a translation' not in doc('.page-buttons #translations li').text()
 
-    @attr('toc')
     def test_toc_depth(self):
         """Toggling show_toc on/off through the toc_depth field should
         cause table of contents to appear/disappear."""
@@ -221,7 +218,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' not in response.content)
 
-    @attr('toc')
     def test_show_toc_hidden_input_for_templates(self):
         """Toggling show_toc on/off through the toc_depth field should
         cause table of contents to appear/disappear."""
@@ -273,7 +269,6 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(1, len(doc('form#wiki-page-edit input[name="title"]')))
 
-    @attr('bug1052047')
     def test_new_document_includes_review_block(self):
         """
         New document page includes 'Review Needed?' section.
@@ -643,7 +638,6 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         eq_(Document.objects.filter(locale=self.locale).count(),
             len(doc('#document-list ul.document-list li')))
 
-    @attr('tags')
     def test_tag_list(self):
         """Verify the tagged documents list view."""
         tag = DocumentTag(name='Test Tag', slug='test-tag')
@@ -655,11 +649,11 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(1, len(doc('#document-list ul.document-list li')))
 
-    # http://bugzil.la/871638
-    @attr('tags')
     def test_tag_list_duplicates(self):
         """
         Verify the tagged documents list view, even for duplicate tags
+
+        http://bugzil.la/871638
         """
         en_tag = DocumentTag(name='CSS Reference', slug='css-reference')
         en_tag.save()
@@ -905,13 +899,13 @@ class TranslateTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(0, len(doc('form input[name="slug"]')))
 
+    @pytest.mark.xfail(reason='Figure out wtf is going on with this test')
     def test_translate_form_maintains_based_on_rev(self):
         """
         Revision.based_on should be the rev that was current when the
         Translate button was clicked, even if other revisions happen while the
         user is editing.
         """
-        raise SkipTest("Figure out WTF is going on with this one.")
         _test_form_maintains_based_on_rev(self.client,
                                           self.d,
                                           'wiki.translate',
@@ -973,8 +967,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         existing_rev = document.revisions.all()[0]
         eq_(existing_rev.content, doc('#id_content').text())
 
+    @pytest.mark.xfail(reason='Figure out wtf is going on with this test.')
     def test_translate_based_on(self):
-        raise SkipTest("Figure out WTF is going on with this one.")
         """Test translating based on a non-current revision."""
         # Create the base revision
         base_rev = self._create_and_approve_first_translation()
@@ -1048,8 +1042,8 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_('Test Content', doc('article#wikiArticle h1').text())
 
+    @pytest.mark.xfail(reason='broken test')
     def test_preview_locale(self):
-        raise SkipTest
         """Preview the wiki syntax content."""
         # Create a test document and translation.
         d = _create_document()

@@ -6,10 +6,9 @@ from django.template.backends.jinja2 import Jinja2
 from django.template.loader import render_to_string
 from django.test import RequestFactory
 from django.utils import translation
-from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_
 
 
 class MockRequestTests(KumaTestCase):

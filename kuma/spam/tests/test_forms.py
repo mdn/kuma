@@ -5,7 +5,6 @@ from django.utils.encoding import force_unicode
 
 import requests_mock
 from constance.test.utils import override_config
-from nose.plugins.attrib import attr
 from waffle.models import Flag
 
 from ..constants import CHECK_URL, SPAM_CHECKS_FLAG, VERIFY_URL
@@ -33,7 +32,6 @@ class AkismetContentTestForm(AkismetCheckTestForm):
     content = forms.CharField()
 
 
-@attr('spam')
 @requests_mock.mock()
 class AkismetFormTests(SimpleTestCase):
     rf = RequestFactory()

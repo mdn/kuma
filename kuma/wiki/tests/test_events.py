@@ -1,7 +1,6 @@
 import mock
-from nose.tools import eq_
 
-from kuma.core.tests import get_user
+from kuma.core.tests import eq_, get_user
 from kuma.users.tests import UserTestCase
 from . import WikiTestCase, revision
 from ..events import context_dict, EditDocumentEvent

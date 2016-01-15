@@ -8,8 +8,6 @@ ES_URLS = ['localhost:9200']
 
 INSTALLED_APPS += (
     'kuma.core.tests.taggit_extras',
-    # testing.
-    'django_nose',
 )
 BANISH_ENABLED = False
 

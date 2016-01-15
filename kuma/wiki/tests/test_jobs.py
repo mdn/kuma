@@ -1,8 +1,8 @@
 from datetime import timedelta
 
 from django.test.utils import override_settings
-from nose.tools import eq_, ok_
 
+from kuma.core.tests import eq_, ok_
 from kuma.users.tests import UserTestCase, user
 
 from . import revision

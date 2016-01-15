@@ -1,12 +1,10 @@
-from nose.plugins.attrib import attr
-from nose.tools import eq_, ok_
-
 from django.contrib import messages as django_messages
 from django.test import RequestFactory
 
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.models import SocialLogin, SocialAccount
 
+from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.users.adapters import KumaSocialAccountAdapter, KumaAccountAdapter
 
@@ -21,7 +19,6 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         super(KumaSocialAccountAdapterTestCase, self).setUp()
         self.adapter = KumaSocialAccountAdapter()
 
-    @attr('bug1055870')
     def test_pre_social_login_overwrites_session_var(self):
         """ https://bugzil.la/1055870 """
         # Set up a pre-existing GitHub sign-in session
@@ -43,7 +40,6 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
             "receiver should have over-written sociallogin_provider "
             "session variable")
 
-    @attr('bug1063830')
     def test_pre_social_login_error_for_unmatched_login(self):
         """ https://bugzil.la/1063830 """
 
@@ -81,7 +77,6 @@ class KumaAccountAdapterTestCase(UserTestCase):
         super(KumaAccountAdapterTestCase, self).setUp()
         self.adapter = KumaAccountAdapter()
 
-    @attr('bug1054461')
     def test_account_connected_message(self):
         """ https://bugzil.la/1054461 """
         message_template = 'socialaccount/messages/account_connected.txt'

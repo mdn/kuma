@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import mock
-from nose.tools import eq_
 
 from django.contrib.sites.models import Site
 
 from kuma.core.cache import memcache
+from kuma.core.tests import eq_
 from kuma.users.tests import UserTestCase
 
 from . import WikiTestCase, document, revision

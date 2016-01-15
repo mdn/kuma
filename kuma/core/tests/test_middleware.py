@@ -1,7 +1,6 @@
-from nose.tools import eq_
 from django.test import RequestFactory
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_
 from ..middleware import SetRemoteAddrFromForwardedFor
 
 

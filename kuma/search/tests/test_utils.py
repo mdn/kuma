@@ -1,7 +1,6 @@
 from __future__ import absolute_import
-from nose.tools import eq_, ok_
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_, ok_
 
 from ..store import referrer_url
 from ..utils import QueryURLObject

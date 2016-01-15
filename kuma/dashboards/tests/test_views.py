@@ -1,9 +1,8 @@
-from nose.plugins.attrib import attr
-from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
 from waffle.models import Flag, Switch
 
+from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
@@ -11,7 +10,6 @@ from kuma.users.tests import UserTestCase
 from kuma.users.models import User, UserBan
 
 
-@attr('dashboards')
 class RevisionsDashTest(UserTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
@@ -23,7 +21,6 @@ class RevisionsDashTest(UserTestCase):
         ok_('dashboards/revisions.html' in
             [template.name for template in response.templates])
 
-    @attr('bug1203403')
     def test_main_view_with_banned_user(self):
         testuser = User.objects.get(username='testuser')
         admin = User.objects.get(username='admin')

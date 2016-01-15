@@ -4,7 +4,6 @@ from django.test import RequestFactory
 
 import requests_mock
 from constance.test import override_config
-from nose.plugins.attrib import attr
 from waffle.models import Flag
 
 from kuma.spam.constants import CHECK_URL, SPAM_CHECKS_FLAG, VERIFY_URL
@@ -35,11 +34,12 @@ class RevisionFormTests(UserTransactionTestCase):
             defaults={'everyone': None},
         )
 
-    @attr('bug821986')
     def test_form_onload_attr_filter(self):
         """
         RevisionForm should strip out any harmful onload attributes from
         input markup
+
+        bug 821986
         """
         rev = revision(save=True, is_approved=True, content="""
             <svg><circle onload=confirm(3)>
@@ -172,7 +172,6 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertTrue(rev_form.is_valid())
         self.assertEqual(rev_form.cleaned_data['tags'], '"JavaScript"')
 
-    @attr('spam')
     @requests_mock.mock()
     def test_akismet_enabled(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')
@@ -197,7 +196,6 @@ class RevisionFormTests(UserTransactionTestCase):
         # now disabled because the test user is exempted from the spam check
         self.assertFalse(rev_form.akismet_enabled())
 
-    @attr('spam')
     @requests_mock.mock()
     def test_akismet_error(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')
@@ -235,7 +233,6 @@ class RevisionFormTests(UserTransactionTestCase):
         except forms.ValidationError as exc:
             self.assertHTMLEqual(exc.message, rev_form.akismet_error_message)
 
-    @attr('spam')
     @requests_mock.mock()
     def test_akismet_parameters(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')

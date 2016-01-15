@@ -1,5 +1,4 @@
-from nose.tools import ok_, eq_
-
+from kuma.core.tests import eq_, ok_
 from kuma.wiki.models import Document
 from kuma.wiki.signals import render_done
 

@@ -1,6 +1,5 @@
 from django.test import SimpleTestCase
 from constance.test import override_config
-from nose.plugins.attrib import attr
 from waffle.models import Flag
 import mock
 import requests
@@ -11,7 +10,6 @@ from ..constants import (CHECK_URL, HAM_URL, SPAM_CHECKS_FLAG,
                          SPAM_URL, VERIFY_URL)
 
 
-@attr('spam')
 @override_config(AKISMET_KEY='api-key')
 class AkismetClientTests(SimpleTestCase):
 

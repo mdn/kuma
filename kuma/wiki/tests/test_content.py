@@ -4,12 +4,10 @@ from urlparse import urljoin
 import bleach
 from cssselect.parser import SelectorSyntaxError
 from jinja2 import escape, Markup
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 import kuma.wiki.content
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_, ok_
 from kuma.users.tests import UserTestCase
 
 from . import doc_rev, document, normalize_html
@@ -411,7 +409,6 @@ class ContentSectionToolTests(UserTestCase):
         for original, slugified in headers:
             ok_(slugified == section_filter.slugify(original))
 
-    @attr('toc')
     def test_generate_toc(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -461,7 +458,6 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(SectionTOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    @attr('toc')
     def test_generate_toc_h2(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -489,7 +485,6 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(H2TOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    @attr('toc')
     def test_generate_toc_h3(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -897,7 +892,6 @@ class ContentSectionToolTests(UserTestCase):
                                             .serialize())
             self.assertHTMLEqual(normalize_html(expected_line), normalize_html(result_line))
 
-    @attr('bug821986')
     def test_editor_safety_filter(self):
         """Markup that's hazardous for editing should be stripped"""
         doc_src = """

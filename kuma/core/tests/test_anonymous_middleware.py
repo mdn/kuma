@@ -1,10 +1,8 @@
-from nose.tools import eq_
-
 from django.http import HttpResponse
 from django.conf import settings
 from django.test import RequestFactory
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_
 
 from ..anonymous import AnonymousIdentityMiddleware
 

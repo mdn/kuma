@@ -17,8 +17,6 @@ from django.test.client import (BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT,
                                 FakePayload, encode_multipart)
 from django.test.utils import override_settings
 from django.utils.encoding import smart_str
-from nose.plugins.attrib import attr
-from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 
@@ -27,7 +25,7 @@ from kuma.attachments.utils import make_test_file
 from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.models import IPBan
-from kuma.core.tests import get_user
+from kuma.core.tests import eq_, get_user, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase, user
@@ -135,8 +133,8 @@ class ViewTests(UserTestCase, WikiTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
     localizing_client = True
 
-    @attr('bug875349')
     def test_json_view(self):
+        """bug 875349"""
         expected_tags = sorted(['foo', 'bar', 'baz'])
         expected_review_tags = sorted(['tech', 'editorial'])
 
@@ -223,8 +221,8 @@ class ViewTests(UserTestCase, WikiTestCase):
             '<ol><li><a href="#Head_3" rel="internal">Head 3</a>'
             '</ol></li></ol>')
 
-    @attr('bug875349')
     def test_children_view(self):
+        """bug 875349"""
         test_content = '<p>Test <a href="http://example.com">Summary</a></p>'
 
         def _make_doc(title, slug, parent=None, is_redir=False):
@@ -924,7 +922,6 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         except UnicodeDecodeError:
             self.fail("Data wasn't posted as utf8")
 
-    @attr('bug1197971')
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
     @mock.patch('kuma.wiki.kumascript.post')
     def test_dont_render_previews_for_deferred_docs(self, mock_post):
@@ -932,6 +929,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         When a user previews a document with deferred rendering,
         we want to force the preview to skip the kumascript POST,
         so that big previews can't use up too many kumascript connections.
+
+        bug 1197971
         """
         self.d.defer_rendering = True
         self.d.save()
@@ -949,8 +948,8 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
     """Tests for the document seo logic"""
     localizing_client = True
 
-    @attr('bug1190212')
     def test_get_seo_parent_doesnt_throw_404(self):
+        """bug 1190212"""
         slug_dict = {'seo_root': 'Root/Does/Not/Exist'}
         try:
             _get_seo_parent_title(slug_dict, 'bn-BD')
@@ -1064,9 +1063,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(response['X-Robots-Tag'], 'noindex')
 
-    @attr('bug821986')
     def test_editor_safety_filter(self):
-        """Safety filter should be applied before rendering editor"""
+        """Safety filter should be applied before rendering editor
+
+        bug 821986
+        """
         self.client.login(username='admin', password='testpass')
 
         r = revision(save=True, content="""
@@ -1134,7 +1135,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc = Document.objects.get(slug=slug, locale=loc)
         eq_(comment, doc.current_revision.comment)
 
-    @attr('toc')
     def test_toc_initial(self):
         self.client.login(username='admin', password='testpass')
 
@@ -1153,7 +1153,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         if not found_selected:
             raise AssertionError("No ToC depth initially selected.")
 
-    @attr('retitle')
     def test_retitling_solo_doc(self):
         """ Editing just title of non-parent doc:
             * Changes title
@@ -1182,7 +1181,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         except Document.DoesNotExist:
             pass
 
-    @attr('retitle')
     def test_retitling_parent_doc(self):
         """ Editing just title of parent doc:
             * Changes title
@@ -1233,7 +1231,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            locale=d.locale).slug)
         assert "REDIRECT" not in Document.objects.get(slug=old_slug).html
 
-    @attr('clobber')
     def test_slug_collision_errors(self):
         """When an attempt is made to retitle an article and another with that
         title already exists, there should be form errors"""
@@ -1266,7 +1263,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(p.find('.errorlist').length > 0)
         ok_(p.find('.errorlist a[href="#id_slug"]').length > 0)
 
-    @attr('clobber')
     def test_redirect_can_be_clobbered(self):
         """When an attempt is made to retitle an article, and another article
         with that title exists but is a redirect, there should be no errors and
@@ -1986,7 +1982,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(content('li.metadata-choose-parent'))
         ok_(str(parent.id) in content.html())
 
-    @attr('tags')
     @mock.patch.object(Site.objects, 'get_current')
     def test_document_tags(self, get_current):
         """Document tags can be edited through revisions"""
@@ -2047,7 +2042,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                  args=[path]), data)
         assert_tag_state(ts2, ts1)
 
-    @attr('review_tags')
     @mock.patch.object(Site.objects, 'get_current')
     def test_review_tags(self, get_current):
         """Review tags can be managed on document revisions"""
@@ -2152,7 +2146,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            args=('atom', 'editorial', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
 
-    @attr('review-tags')
     def test_quick_review(self):
         """Test the quick-review button."""
         self.client.login(username='admin', password='testpass')
@@ -2210,7 +2203,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 ok_(expected_str in rev.comment)
             eq_(data_dict['expected_tags'], review_tags)
 
-    @attr('midair')
     def test_edit_midair_collision(self):
         self.client.login(username='admin', password='testpass')
 
@@ -2254,7 +2246,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(unicode(MIDAIR_COLLISION).encode('utf-8') in resp.content,
             "Midair collision message should appear")
 
-    @attr('toc')
     def test_toc_toggle_off(self):
         """Toggling of table of contents in revisions"""
         self.client.login(username='admin', password='testpass')
@@ -2271,7 +2262,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc = Document.objects.get(slug=d.slug, locale=d.locale)
         eq_(0, doc.current_revision.toc_depth)
 
-    @attr('toc')
     def test_toc_toggle_on(self):
         """Toggling of table of contents in revisions"""
         self.client.login(username='admin', password='testpass')
@@ -2541,7 +2531,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         _check_message_for_headers(testuser_message, 'testuser')
         _check_message_for_headers(admin_message, 'admin')
 
-    @attr('edit_emails')
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_watched_edits(self, get_current):
         """
@@ -2593,7 +2582,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert rev.document.title in message.body
         assert 'sub-articles' not in message.body
 
-    @attr('edit_emails')
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_child_edit_in_watched_tree(self, get_current):
         """
@@ -2620,7 +2608,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert testuser2.email in message.to
         assert 'sub-articles' in message.body
 
-    @attr('edit_emails')
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_grandchild_edit_in_watched_tree(self, get_current):
         """
@@ -2647,7 +2634,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert testuser2.email in message.to
         assert 'sub-articles' in message.body
 
-    @attr('edit_emails')
     @mock.patch.object(Site.objects, 'get_current')
     def test_single_email_when_watching_doc_and_tree(self, get_current):
         """
@@ -2769,9 +2755,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
-    @attr('bug821986')
     def test_raw_editor_safety_filter(self):
-        """Safety filter should be applied before rendering editor"""
+        """Safety filter should be applied before rendering editor
+
+        bug 821986
+        """
         self.client.login(username='admin', password='testpass')
         d, r = doc_rev("""
             <p onload=alert(3)>FOO</p>
@@ -2845,8 +2833,6 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
-    @attr('midair')
-    @attr('rawsection')
     def test_raw_section_edit(self):
         self.client.login(username='admin', password='testpass')
         d, r = doc_rev("""
@@ -2900,7 +2886,6 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
-    @attr('midair')
     def test_midair_section_merge(self):
         """If a page was changed while someone was editing, but the changes
         didn't affect the specific section being edited, then ignore the midair
@@ -3003,7 +2988,6 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                     .current_revision.id),
             unicode(response['x-kuma-revision']))
 
-    @attr('midair')
     def test_midair_section_collision(self):
         """If both a revision and the edited section has changed, then a
         section edit is a collision."""
@@ -3593,7 +3577,6 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         p = pq(resp.content)
         eq_(1, p.find('#doc-render-raw-fallback').length)
 
-    @attr('schedule_rendering')
     @mock.patch.object(Document, 'schedule_rendering')
     @mock.patch('kuma.wiki.kumascript.get')
     def test_schedule_rendering(self, mock_kumascript_get,
