@@ -7,7 +7,7 @@ endif
 
 # Note: these targets should be run from the kuma vm
 django-tests: in_vagrant
-	python manage.py test
+	py.test
 
 performance-tests: in_vagrant
 	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
