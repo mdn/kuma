@@ -8,7 +8,6 @@ ES_URLS = ['localhost:9200']
 
 INSTALLED_APPS += (
     'kuma.core.tests.taggit_extras',
-    'kuma.actioncounters.tests',
     # testing.
     'django_nose',
 )
