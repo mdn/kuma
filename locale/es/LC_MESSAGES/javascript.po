@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-08 08:40-0800\n"
+"POT-Creation-Date: 2016-01-15 11:45-0800\n"
 "PO-Revision-Date: 2016-01-09 17:19+0000\n"
 "Last-Translator: Daniel Añez Scott <danielscott171@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,10 +78,6 @@ msgstr "¡Wow! ¿En qué podría mejorar?"
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
 msgstr "¡Gracias! Lo solucionaremos."
-
-#: kuma/static/js/modal-control.js:15
-msgid "Demo Studio"
-msgstr "Demo Studio"
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
@@ -159,22 +155,19 @@ msgstr "guardado"
 msgid "New tag..."
 msgstr "Nueva etiqueta..."
 
-#: kuma/static/js/wiki.js:230
+#: kuma/static/js/wiki.js:200
 msgid "How to read CSS syntax."
 msgstr "Cómo leer la sintaxis CSS."
 
-#: kuma/static/js/wiki.js:571
+#: kuma/static/js/wiki.js:541
 msgid "Search Stack Overflow"
 msgstr "Buscar en Stack Overflow"
 
-#: kuma/static/js/wiki.js:685
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
-"Tu navegador no admite MathML. En su lugar, se ha utilizado otro recurso "
-"CSS."
+#: kuma/static/js/wiki.js:655
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr "Tu navegador no admite MathML. En su lugar, se ha utilizado otro recurso CSS."
 
-#: kuma/static/js/wiki.js:900
+#: kuma/static/js/wiki.js:870
 msgid "Details"
 msgstr "Detalles"
 
@@ -186,8 +179,7 @@ msgstr "Selecciona un archivo adjunto"
 msgid "No attachments available"
 msgstr "No hay archivos adjuntos disponibles"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Archivos adjuntos"
 
@@ -207,8 +199,7 @@ msgstr "Crear una Redirección"
 msgid "MDN Redirect"
 msgstr "Redirección a MDN"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Documento"
 
@@ -300,11 +291,8 @@ msgstr "La URL que has introducido parece que no es válida"
 msgid "Default"
 msgstr "Predeterminada"
 
-#~ msgid ""
-#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
-#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
-#~ "draft</a>."
-#~ msgstr ""
-#~ "Ya tienes un borrador. <a href=\"\" class=\"restoreLink\">Recupera el "
-#~ "contenido del borrador</a> o <a href=\"\" "
-#~ "class=\"discardLink\">descártalo</a>."
+#~ msgid "Demo Studio"
+#~ msgstr "Demo Studio"
+
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "Ya tienes un borrador. <a href=\"\" class=\"restoreLink\">Recupera el contenido del borrador</a> o <a href=\"\" class=\"discardLink\">descártalo</a>."

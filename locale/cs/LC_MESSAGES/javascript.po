@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-08 08:40-0800\n"
+"POT-Creation-Date: 2016-01-15 11:45-0800\n"
 "PO-Revision-Date: 2015-12-05 23:41+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,10 +77,6 @@ msgstr "To nás mrzí. Co můžeme udělat, abychom to napravili?"
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
 msgstr "Děkujeme! Zkusíme to opravit."
-
-#: kuma/static/js/modal-control.js:15
-msgid "Demo Studio"
-msgstr "Demo Studio"
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
@@ -158,19 +154,19 @@ msgstr "uloženo"
 msgid "New tag..."
 msgstr "Nový štítek..."
 
-#: kuma/static/js/wiki.js:230
+#: kuma/static/js/wiki.js:200
 msgid "How to read CSS syntax."
 msgstr "Jak číst CSS syntaxi."
 
-#: kuma/static/js/wiki.js:571
+#: kuma/static/js/wiki.js:541
 msgid "Search Stack Overflow"
 msgstr "Prohledat Stack Overflow"
 
-#: kuma/static/js/wiki.js:685
+#: kuma/static/js/wiki.js:655
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Váš prohlížeč nepodporuje MathML, proto byl namísto něj použit CSS fallback."
 
-#: kuma/static/js/wiki.js:900
+#: kuma/static/js/wiki.js:870
 msgid "Details"
 msgstr "Detaily"
 
@@ -293,6 +289,9 @@ msgstr "Zadaná URL není validní"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Výchozí"
+
+#~ msgid "Demo Studio"
+#~ msgstr "Demo Studio"
 
 #~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
 #~ msgstr "Máte rozepsaný koncept. Můžete <a href=\"\" class=\"restoreLink\">obnovit obsah konceptu</a> nebo jej <a href=\"\" class=\"discardLink\">zahodit</a>."

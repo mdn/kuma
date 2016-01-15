@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-08 08:40-0800\n"
+"POT-Creation-Date: 2016-01-15 11:45-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Γιώργος Φιωτάκης <fiotakis@otenet.gr>\n"
 "Language-Team: el <fiotakis@otenet.gr>\n"
@@ -52,12 +52,7 @@ msgstr "<li><a href=\"/logout\">Αποσυνδεθείτε</a> για να πρ�
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr "<li><a href=\"/logout\">Αποσυνδεθείτε</a> για να προσπαθήσετε ξανά.</li>"
 
-#: jinja2/403.html:53
-#, python-format
-msgid "<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">browse docs</a></li>"
-msgstr ""
-
-#: jinja2/403.html:58
+#: jinja2/403.html:55
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
@@ -90,8 +85,7 @@ msgstr ""
 msgid "Internal Server Error"
 msgstr "Εσωτερικό σφάλμα διακομιστή"
 
-#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:91 jinja2/base.html:93 jinja2/base_popup.html:5 kuma/demos/jinja2/demos/launch.html:32
-#: kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:91 jinja2/base.html:93 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
@@ -155,7 +149,7 @@ msgstr "HTML"
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:130 kuma/core/translations/search/filter/js/name.py:4 kuma/demos/__init__.py:287 kuma/landing/jinja2/landing/homepage.html:74 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:130 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:74 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
@@ -200,113 +194,104 @@ msgstr ""
 msgid "Accessibility"
 msgstr ""
 
-#: jinja2/base.html:144 jinja2/base.html:162 kuma/demos/jinja2/demos/devderby_landing.html:58
-msgid "Demos"
-msgstr "Demo"
-
-#: jinja2/base.html:145
+#: jinja2/base.html:144
 msgid "...more docs"
 msgstr ""
 
-#: jinja2/base.html:149
+#: jinja2/base.html:148
 #, fuzzy
 msgid "Mozilla Docs"
 msgstr "Mozilla"
 
 # Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
-#: jinja2/base.html:154 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:85
+#: jinja2/base.html:153 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:85
 msgid "Add-ons"
 msgstr "Προσθετα"
 
-#: jinja2/base.html:155 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:81
+#: jinja2/base.html:154 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:81
 #, fuzzy
 msgid "Firefox"
 msgstr "Firefox 4"
 
-#: jinja2/base.html:156 kuma/landing/jinja2/landing/homepage.html:83
+#: jinja2/base.html:155 kuma/landing/jinja2/landing/homepage.html:83
 msgid "Firefox Marketplace"
 msgstr ""
 
-#: jinja2/base.html:157 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:82
+#: jinja2/base.html:156 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:82
 msgid "Firefox OS"
 msgstr ""
 
-#: jinja2/base.html:158 jinja2/includes/login.html:20
+#: jinja2/base.html:157 jinja2/includes/login.html:20
 msgid "Persona"
 msgstr ""
 
-#: jinja2/base.html:162
+#: jinja2/base.html:161
 msgid "Developer Tools"
 msgstr ""
 
-#: jinja2/base.html:162
+#: jinja2/base.html:161
 #, fuzzy
 msgid "Feedback"
 msgstr "Αρχείο ροής"
 
-#: jinja2/base.html:167
+#: jinja2/base.html:166
 #, fuzzy
 msgid "Get Firefox help"
 msgstr "Firefox 4"
 
-#: jinja2/base.html:168
+#: jinja2/base.html:167
 #, fuzzy
 msgid "Get web development help"
 msgstr "Όλα τα εργαλεία για ανάπτυξη στο διαδίκτυο"
 
-#: jinja2/base.html:171
+#: jinja2/base.html:170
 msgid "Join the MDN community"
 msgstr ""
 
-#: jinja2/base.html:172
+#: jinja2/base.html:171
 #, fuzzy
 msgid "Report a content problem"
 msgstr "Αναφορά προβλήματος"
 
-#: jinja2/base.html:173
+#: jinja2/base.html:172
 #, fuzzy
 msgid "Report a bug"
 msgstr "Αναφορά προβλήματος"
 
-#: jinja2/base.html:180 jinja2/base.html:181 jinja2/base.html:183 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/demos/jinja2/demos/elements/demos_head.html:33
-#: kuma/demos/jinja2/demos/elements/search_form.html:6 kuma/landing/jinja2/landing/homepage.html:38 kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55
-#: kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2 kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52
-#: kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
+#: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
+#: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: jinja2/base.html:199
+#: jinja2/base.html:198
 #, fuzzy, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "Το περιεχόμενο διατίθεται σύμφωνα με <a href=\"%(copyright_url)s\">αυτές τις άδειες χρήσης</a>"
 
-#: jinja2/base.html:204
+#: jinja2/base.html:203
 msgid "About MDN"
 msgstr "Περί MDN"
 
-#: jinja2/base.html:205
+#: jinja2/base.html:204
 msgid "Terms"
 msgstr ""
 
-#: jinja2/base.html:206
+#: jinja2/base.html:205
 msgid "Privacy"
 msgstr ""
 
-#: jinja2/base.html:207
+#: jinja2/base.html:206
 msgid "Cookies"
 msgstr ""
 
-#: jinja2/base.html:208
+#: jinja2/base.html:207
 msgid "Contribute to the code"
 msgstr ""
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
 msgstr "<li><a href=\"/logout\">Αποσυνδεθείτε</a> για να προσπαθήσετε ξανά.</li>"
-
-#: jinja2/handlers/400.html:40
-msgid "<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
-msgstr "<li><a href=\"/demos\">Δείτε τα demo</a> ή <a href=\"/docs\">περιηγηθείτε στα έγγραφα</a></li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
@@ -351,7 +336,7 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: jinja2/includes/login.html:21 kuma/users/forms.py:198 kuma/users/models.py:149 kuma/users/jinja2/users/user_detail.html:126 kuma/users/jinja2/users/user_detail.html:130
+#: jinja2/includes/login.html:21 kuma/users/forms.py:198 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
 msgid "GitHub"
 msgstr ""
 
@@ -368,13 +353,11 @@ msgstr ""
 msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
 msgstr ""
 
-#: jinja2/includes/paginator.html:6 kuma/demos/jinja2/demos/detail.html:68 kuma/demos/jinja2/demos/home.html:46 kuma/demos/jinja2/demos/launch.html:80
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:61 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
+#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
 msgstr "Προηγούμενη"
 
-#: jinja2/includes/paginator.html:30 kuma/demos/jinja2/demos/detail.html:55 kuma/demos/jinja2/demos/detail.html:69 kuma/demos/jinja2/demos/home.html:47 kuma/demos/jinja2/demos/launch.html:84
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:64 kuma/search/jinja2/search/results.html:159
+#: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
 msgstr "Επόμενο"
 
@@ -413,18 +396,6 @@ msgstr ""
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
 msgstr ""
-
-#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:109
-msgid "object ID"
-msgstr "object ID"
-
-#: kuma/actioncounters/models.py:48
-msgid "name of the action"
-msgstr "όνομα ενέργειας"
-
-#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:126 kuma/demos/models.py:457
-msgid "date last modified"
-msgstr "ημερομηνία τελευταίας τροποποίησης"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
@@ -531,7 +502,7 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/users/jinja2/users/user_detail.html:181 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/users/jinja2/users/user_detail.html:156 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
 msgstr ""
 
@@ -638,73 +609,6 @@ msgstr ""
 msgid "Secret"
 msgstr ""
 
-#: kuma/contentflagging/models.py:15
-msgid "This is not working for me"
-msgstr "Δεν δουλεύει στο σύστημα μου"
-
-#: kuma/contentflagging/models.py:16
-msgid "This contains inappropriate content"
-msgstr "Περιέχει ανάρμοστο περιεχόμενο"
-
-#: kuma/contentflagging/models.py:17
-msgid "This was not created by the author"
-msgstr "Δεν είναι δημιουργία του συντάκτη"
-
-#: kuma/contentflagging/models.py:18
-msgid "The author is fake"
-msgstr "Τα στοιχεία του συντάκτη είναι ψευδή"
-
-#: kuma/contentflagging/models.py:28
-msgid "Flagged"
-msgstr "Σημειωμένο"
-
-#: kuma/contentflagging/models.py:29
-msgid "Flag rejected by moderator"
-msgstr "Η αναφορά σημείωσης απορρίφθηκε από τους διαχειριστές"
-
-#: kuma/contentflagging/models.py:30
-msgid "Creator notified"
-msgstr "Ειδοποιήθηκε ο δημιουργός"
-
-#: kuma/contentflagging/models.py:31
-msgid "Content hidden by moderator"
-msgstr "Το περιεχόμενο αποκρύφτηκε από τους διαχειριστές"
-
-#: kuma/contentflagging/models.py:32
-msgid "Content deleted by moderator"
-msgstr "Το περιεχόμενο διαγράφτηκε από τους διαχειριστές"
-
-#: kuma/contentflagging/models.py:65
-#, python-format
-msgid "%(object)s Flagged"
-msgstr ""
-
-#: kuma/contentflagging/models.py:96
-msgid "current status of flag review"
-msgstr "Τρέχουσα κατάσταση αξιολόγησης αναφοράς"
-
-#: kuma/contentflagging/models.py:99
-msgid "reason for flagging the content"
-msgstr "Αιτία αναφοράς περιεχομένου"
-
-#: kuma/contentflagging/models.py:102
-msgid "please explain what content you feel is inappropriate"
-msgstr "Παρακαλούμε εξηγήστε τι θεωρείτε ανάρμοστο στο περιεχόμενο"
-
-#: kuma/contentflagging/models.py:124
-msgid "date submitted"
-msgstr "ημερομηνία υποβολής"
-
-#. This is an email. Whitespace matters!
-#: kuma/contentflagging/jinja2/contentflagging/email/flagged.ltxt:2
-#, python-format
-msgid "%(object)s has been flagged %(flag_type)s"
-msgstr ""
-
-#: kuma/contentflagging/jinja2/contentflagging/email/flagged.ltxt:6
-msgid "To change the status of this flag, click the following link, or paste it into your browser's location bar:"
-msgstr ""
-
 #: kuma/core/apps.py:13
 msgid "Core"
 msgstr ""
@@ -725,7 +629,7 @@ msgid "Mozilla"
 msgstr "Mozilla"
 
 # Χωρίς τόνους λόγω του css text-transform: uppercase.
-#: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4 kuma/demos/__init__.py:184 kuma/demos/__init__.py:319
+#: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
 msgstr "Κινητα"
 
@@ -738,64 +642,64 @@ msgstr "Διαδικτυο"
 msgid "Moz Hacks"
 msgstr ""
 
-#: kuma/core/templatetags/jinja_helpers.py:115
+#: kuma/core/templatetags/jinja_helpers.py:114
 #, python-format
 msgid "%(number)d year ago"
 msgid_plural "%(number)d years ago"
 msgstr[0] "%(number)d χρόνο"
 msgstr[1] "%(number)d χρόνια"
 
-#: kuma/core/templatetags/jinja_helpers.py:117
+#: kuma/core/templatetags/jinja_helpers.py:116
 #, python-format
 msgid "%(number)d month ago"
 msgid_plural "%(number)d months ago"
 msgstr[0] "%(number)d μήνα"
 msgstr[1] "%(number)d μήνες"
 
-#: kuma/core/templatetags/jinja_helpers.py:119
+#: kuma/core/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
 msgstr[0] "%(number)d εβδομάδα"
 msgstr[1] "%(number)d εβδομάδες"
 
-#: kuma/core/templatetags/jinja_helpers.py:121
+#: kuma/core/templatetags/jinja_helpers.py:120
 #, python-format
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
 msgstr[0] "%(number)d ημέρα"
 msgstr[1] "%(number)d ημέρες"
 
-#: kuma/core/templatetags/jinja_helpers.py:123
+#: kuma/core/templatetags/jinja_helpers.py:122
 #, python-format
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
 msgstr[0] "%(number)d ώρα"
 msgstr[1] "%(number)d ώρες"
 
-#: kuma/core/templatetags/jinja_helpers.py:125
+#: kuma/core/templatetags/jinja_helpers.py:124
 #, python-format
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
 msgstr[0] "%(number)d λεπτό"
 msgstr[1] "%(number)d λεπτά"
 
-#: kuma/core/templatetags/jinja_helpers.py:127
+#: kuma/core/templatetags/jinja_helpers.py:126
 #, python-format
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
 msgstr[0] "%(number)d δευτερόλεπτο"
 msgstr[1] "%(number)d δευτερόλεπτα"
 
-#: kuma/core/templatetags/jinja_helpers.py:150
+#: kuma/core/templatetags/jinja_helpers.py:149
 msgid "Yes"
 msgstr ""
 
-#: kuma/core/templatetags/jinja_helpers.py:150
+#: kuma/core/templatetags/jinja_helpers.py:149
 msgid "No"
 msgstr ""
 
-#: kuma/core/templatetags/jinja_helpers.py:300
+#: kuma/core/templatetags/jinja_helpers.py:299
 #, python-format
 msgid "Today at %s"
 msgstr "Σήμερα στις %s"
@@ -823,7 +727,7 @@ msgstr ""
 msgid "I'm Learning"
 msgstr "Εκμαθηση"
 
-#: kuma/core/translations/search/filter/canvas/name.py:4 kuma/demos/__init__.py:72 kuma/demos/__init__.py:233
+#: kuma/core/translations/search/filter/canvas/name.py:4
 msgid "Canvas"
 msgstr "Canvas"
 
@@ -858,7 +762,7 @@ msgstr "Μέσο επίπεδο"
 msgid "Marketplace"
 msgstr ""
 
-#: kuma/core/translations/search/filter/svg/name.py:4 kuma/demos/__init__.py:335
+#: kuma/core/translations/search/filter/svg/name.py:4
 msgid "SVG"
 msgstr "SVG"
 
@@ -867,7 +771,7 @@ msgstr "SVG"
 msgid "Web Development"
 msgstr "/en/Web_Development"
 
-#: kuma/core/translations/search/filter/webgl/name.py:4 kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
+#: kuma/core/translations/search/filter/webgl/name.py:4
 msgid "WebGL"
 msgstr "WebGL"
 
@@ -892,7 +796,7 @@ msgstr ""
 msgid "All Locales"
 msgstr ""
 
-#: kuma/dashboards/forms.py:10 kuma/demos/__init__.py:33
+#: kuma/dashboards/forms.py:10
 msgid "None"
 msgstr ""
 
@@ -1052,1841 +956,6 @@ msgstr ""
 msgid "Get emailed when English reviews are waiting"
 msgstr ""
 
-#: kuma/demos/__init__.py:34
-msgid "Removed from Derby"
-msgstr ""
-
-#: kuma/demos/__init__.py:36
-msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
-msgstr ""
-
-#: kuma/demos/__init__.py:37
-msgid "CSS3 Animations"
-msgstr ""
-
-#: kuma/demos/__init__.py:38
-msgid "June 2011"
-msgstr ""
-
-#: kuma/demos/__init__.py:39
-msgid "CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions."
-msgstr ""
-
-#: kuma/demos/__init__.py:40
-msgid ""
-"CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
-"over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
-"effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
-msgstr ""
-
-#: kuma/demos/__init__.py:43
-msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
-msgstr ""
-
-#: kuma/demos/__init__.py:44
-msgid "HTML5 <video>"
-msgstr ""
-
-#: kuma/demos/__init__.py:45
-msgid "July 2011"
-msgstr ""
-
-#: kuma/demos/__init__.py:46 kuma/demos/__init__.py:47
-msgid "The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins."
-msgstr ""
-
-#: kuma/demos/__init__.py:50
-msgid "August 2011 Dev Derby Challenge - History API"
-msgstr ""
-
-#: kuma/demos/__init__.py:51
-msgid "History API"
-msgstr ""
-
-#: kuma/demos/__init__.py:52
-msgid "August 2011"
-msgstr ""
-
-#: kuma/demos/__init__.py:53 kuma/demos/__init__.py:54
-msgid "The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."
-msgstr ""
-
-#: kuma/demos/__init__.py:57
-msgid "September 2011 Dev Derby Challenge - Geolocation"
-msgstr ""
-
-#: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
-msgid "Geolocation"
-msgstr "Γεωτοποθεσία"
-
-#: kuma/demos/__init__.py:59
-msgid "September 2011"
-msgstr ""
-
-#: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61 kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
-msgid "With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."
-msgstr ""
-
-#: kuma/demos/__init__.py:64
-msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
-msgstr ""
-
-#: kuma/demos/__init__.py:65
-msgid "CSS Media Queries"
-msgstr ""
-
-#: kuma/demos/__init__.py:66
-msgid "October 2011"
-msgstr ""
-
-#: kuma/demos/__init__.py:67 kuma/demos/__init__.py:68
-msgid "CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."
-msgstr ""
-
-#: kuma/demos/__init__.py:71
-msgid "November 2011 Dev Derby Challenge - Canvas"
-msgstr ""
-
-#: kuma/demos/__init__.py:73
-msgid "November 2011"
-msgstr ""
-
-#: kuma/demos/__init__.py:74 kuma/demos/__init__.py:75
-msgid ""
-"Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
-"methods that make it easy to control and draw in."
-msgstr ""
-
-#: kuma/demos/__init__.py:78
-msgid "December 2011 Dev Derby Challenge - IndexedDB"
-msgstr ""
-
-#: kuma/demos/__init__.py:79 kuma/demos/__init__.py:303
-msgid "IndexedDB"
-msgstr "IndexedDB"
-
-#: kuma/demos/__init__.py:80
-msgid "December 2011"
-msgstr ""
-
-#: kuma/demos/__init__.py:81 kuma/demos/__init__.py:82
-msgid "IndexedDB lets web applications store significant amounts of structured data locally, for faster access, online or offline."
-msgstr ""
-
-#: kuma/demos/__init__.py:85
-msgid "January 2012 Dev Derby Challenge - Orientation"
-msgstr ""
-
-#: kuma/demos/__init__.py:86
-msgid "Orientation"
-msgstr ""
-
-#: kuma/demos/__init__.py:87
-msgid "January 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:88 kuma/demos/__init__.py:89
-msgid "Orientation features in HTML5 access the motion and orientation data of devices with accelerometers."
-msgstr ""
-
-#: kuma/demos/__init__.py:92
-msgid "February 2012 Dev Derby Challenge - Touch Events"
-msgstr ""
-
-#: kuma/demos/__init__.py:93
-msgid "Touch Events"
-msgstr ""
-
-#: kuma/demos/__init__.py:94
-msgid "February 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:95 kuma/demos/__init__.py:96
-msgid "Touch Events help you make websites and applications more engaging by responding appropriately when users interact with touch screens."
-msgstr ""
-
-#: kuma/demos/__init__.py:99
-msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
-msgstr ""
-
-#: kuma/demos/__init__.py:100
-msgid "CSS 3D Transforms"
-msgstr ""
-
-#: kuma/demos/__init__.py:101
-msgid "March 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:102 kuma/demos/__init__.py:103
-msgid "CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS to be transformed in three-dimensional space."
-msgstr ""
-
-#: kuma/demos/__init__.py:106
-msgid "April 2012 Dev Derby Challenge - Audio"
-msgstr ""
-
-#: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
-msgid "Audio"
-msgstr "Audio"
-
-#: kuma/demos/__init__.py:108
-msgid "April 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:109 kuma/demos/__init__.py:110
-msgid "The HTML5 audio element lets you embed sound in webpages without requiring your users to rely on plug-ins."
-msgstr ""
-
-#: kuma/demos/__init__.py:113
-msgid "May 2012 Dev Derby Challenge - WebSockets API"
-msgstr ""
-
-#: kuma/demos/__init__.py:114
-msgid "WebSockets API"
-msgstr ""
-
-#: kuma/demos/__init__.py:115
-msgid "May 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:116 kuma/demos/__init__.py:117
-msgid "With the Websocket API and protocol, you can open a two-way channel between the browser and a server, for scalable and real-time data flow. No more server polling!"
-msgstr ""
-
-#: kuma/demos/__init__.py:120
-msgid "June 2012 Dev Derby Challenge - WebGL"
-msgstr ""
-
-#: kuma/demos/__init__.py:122
-msgid "June 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:123 kuma/demos/__init__.py:124 kuma/demos/__init__.py:211 kuma/demos/__init__.py:212
-msgid "WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."
-msgstr ""
-
-#: kuma/demos/__init__.py:127
-msgid "July 2012 Dev Derby Challenge - No JavaScript"
-msgstr ""
-
-#: kuma/demos/__init__.py:128
-msgid "No JavaScript"
-msgstr ""
-
-#: kuma/demos/__init__.py:129
-msgid "July 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:130 kuma/demos/__init__.py:131
-msgid ""
-"Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
-"input with HTML, and more. What else can you do without JavaScript?"
-msgstr ""
-
-#: kuma/demos/__init__.py:134
-msgid "August 2012 Dev Derby Challenge - Camera API"
-msgstr ""
-
-#: kuma/demos/__init__.py:135
-msgid "Camera API"
-msgstr ""
-
-#: kuma/demos/__init__.py:136
-msgid "August 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:137 kuma/demos/__init__.py:138
-msgid "The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."
-msgstr ""
-
-#: kuma/demos/__init__.py:141
-msgid "September 2012 Dev Derby Challenge - Geolocation II"
-msgstr ""
-
-#: kuma/demos/__init__.py:142
-msgid "Geolocation II"
-msgstr ""
-
-#: kuma/demos/__init__.py:143
-msgid "September 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:148
-msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
-msgstr ""
-
-#: kuma/demos/__init__.py:149
-msgid "CSS Media Queries II"
-msgstr ""
-
-#: kuma/demos/__init__.py:150
-msgid "October 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:151 kuma/demos/__init__.py:152
-msgid ""
-"CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can "
-"you do with Media Queries?"
-msgstr ""
-
-#: kuma/demos/__init__.py:155
-msgid "November 2012 Dev Derby Challenge - Fullscreen API"
-msgstr ""
-
-#: kuma/demos/__init__.py:156
-msgid "Fullscreen API"
-msgstr ""
-
-#: kuma/demos/__init__.py:157
-msgid "November 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:158 kuma/demos/__init__.py:159
-msgid "With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"
-msgstr ""
-
-#: kuma/demos/__init__.py:162
-msgid "December 2012 Dev Derby Challenge - Offline"
-msgstr ""
-
-#: kuma/demos/__init__.py:163
-msgid "Offline"
-msgstr ""
-
-#: kuma/demos/__init__.py:164
-msgid "December 2012"
-msgstr ""
-
-#: kuma/demos/__init__.py:165 kuma/demos/__init__.py:166
-msgid ""
-"With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile "
-"users, improve performance, and more."
-msgstr ""
-
-#: kuma/demos/__init__.py:169
-msgid "January 2013 Dev Derby Challenge - Drag and Drop"
-msgstr ""
-
-#: kuma/demos/__init__.py:170 kuma/demos/__init__.py:311
-msgid "Drag and Drop"
-msgstr "Σύρσιμο και απόθεση "
-
-#: kuma/demos/__init__.py:171
-msgid "January 2013"
-msgstr ""
-
-#: kuma/demos/__init__.py:172 kuma/demos/__init__.py:173
-msgid "The Drag and Drop API brings an age-old interaction to the Web, making rich, natural, and familiar user experiences possible."
-msgstr ""
-
-#: kuma/demos/__init__.py:176
-msgid "February 2013 Dev Derby Challenge - Multi-touch"
-msgstr ""
-
-#: kuma/demos/__init__.py:177 kuma/demos/__init__.py:383
-msgid "Multi-touch"
-msgstr "Multi-touch"
-
-#: kuma/demos/__init__.py:178
-msgid "February 2013"
-msgstr ""
-
-#: kuma/demos/__init__.py:179 kuma/demos/__init__.py:180
-msgid ""
-"The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond "
-"to all the interactions users have come to expect."
-msgstr ""
-
-#: kuma/demos/__init__.py:183
-msgid "March 2013 Dev Derby Challenge - Mobile"
-msgstr ""
-
-#: kuma/demos/__init__.py:185
-msgid "March 2013"
-msgstr ""
-
-#: kuma/demos/__init__.py:186 kuma/demos/__init__.py:187
-msgid "The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"
-msgstr ""
-
-#: kuma/demos/__init__.py:190
-msgid "April 2013 Dev Derby Challenge - Web Workers"
-msgstr ""
-
-#: kuma/demos/__init__.py:191 kuma/demos/__init__.py:367
-msgid "Web Workers"
-msgstr "Web Workers"
-
-#: kuma/demos/__init__.py:192
-msgid "April 2013"
-msgstr ""
-
-#: kuma/demos/__init__.py:193 kuma/demos/__init__.py:194
-msgid ""
-"Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive "
-"tasks."
-msgstr ""
-
-#: kuma/demos/__init__.py:197
-msgid "May 2013 Dev Derby Challenge - getUserMedia"
-msgstr ""
-
-#: kuma/demos/__init__.py:198
-msgid "getUserMedia"
-msgstr ""
-
-#: kuma/demos/__init__.py:199
-msgid "May 2013"
-msgstr ""
-
-#: kuma/demos/__init__.py:200
-msgid "May"
-msgstr ""
-
-#: kuma/demos/__init__.py:201
-msgid "Action!"
-msgstr ""
-
-#: kuma/demos/__init__.py:202 kuma/demos/__init__.py:203
-msgid ""
-"The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."
-msgstr ""
-
-#: kuma/demos/__init__.py:206
-msgid "June 2013 Dev Derby Challenge - WebGL II"
-msgstr ""
-
-#: kuma/demos/__init__.py:207
-msgid "WebGL II"
-msgstr ""
-
-#: kuma/demos/__init__.py:208
-msgid "June 2013"
-msgstr ""
-
-#: kuma/demos/__init__.py:209
-msgid "June"
-msgstr ""
-
-#: kuma/demos/__init__.py:210
-msgid "Twice the 3D!"
-msgstr ""
-
-#: kuma/demos/__init__.py:215
-msgid "July 2013 Dev Derby Challenge - File API"
-msgstr ""
-
-#: kuma/demos/__init__.py:216
-msgid "File API"
-msgstr ""
-
-#: kuma/demos/__init__.py:217
-msgid "July 2013"
-msgstr ""
-
-#: kuma/demos/__init__.py:218
-msgid "July"
-msgstr ""
-
-#: kuma/demos/__init__.py:219
-msgid "File found"
-msgstr ""
-
-#: kuma/demos/__init__.py:220 kuma/demos/__init__.py:221
-msgid "The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."
-msgstr ""
-
-#: kuma/demos/__init__.py:226
-msgid "Mozilla's Audio Data API extends the current HTML5 API and allows web developers to read and write raw audio data."
-msgstr "Το Audio Data API του Mozilla, επεκτείνει το τρέχον HTML5 API και επιτρέπει στους προγραμματιστές δικτυακών εφαρμογών να διαβάσουν και να γράψουν ασυμπίεστα δεδομένα ήχου."
-
-#: kuma/demos/__init__.py:228 kuma/demos/__init__.py:236 kuma/demos/__init__.py:244 kuma/demos/__init__.py:252 kuma/demos/__init__.py:259 kuma/demos/__init__.py:266 kuma/demos/__init__.py:274
-#: kuma/demos/__init__.py:282 kuma/demos/__init__.py:290 kuma/demos/__init__.py:298 kuma/demos/__init__.py:306 kuma/demos/__init__.py:314 kuma/demos/__init__.py:322 kuma/demos/__init__.py:330
-#: kuma/demos/__init__.py:338 kuma/demos/__init__.py:346 kuma/demos/__init__.py:354 kuma/demos/__init__.py:362 kuma/demos/__init__.py:370 kuma/demos/__init__.py:378 kuma/demos/__init__.py:386
-msgid "MDN Documentation"
-msgstr "Τεκμηρίωση MDN"
-
-#: kuma/demos/__init__.py:228
-msgid "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
-msgstr ""
-
-#: kuma/demos/__init__.py:229 kuma/demos/__init__.py:237 kuma/demos/__init__.py:245 kuma/demos/__init__.py:267 kuma/demos/__init__.py:275 kuma/demos/__init__.py:283 kuma/demos/__init__.py:291
-#: kuma/demos/__init__.py:299 kuma/demos/__init__.py:307 kuma/demos/__init__.py:315 kuma/demos/__init__.py:323 kuma/demos/__init__.py:331 kuma/demos/__init__.py:339 kuma/demos/__init__.py:347
-#: kuma/demos/__init__.py:355 kuma/demos/__init__.py:363 kuma/demos/__init__.py:371 kuma/demos/__init__.py:379 kuma/demos/__init__.py:387
-msgid "Wikipedia Article"
-msgstr "Άρθρο στη Wikipedia"
-
-#: kuma/demos/__init__.py:229
-msgid "http://en.wikipedia.org/wiki/HTML5_audio"
-msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
-
-#: kuma/demos/__init__.py:230 kuma/demos/__init__.py:238 kuma/demos/__init__.py:246 kuma/demos/__init__.py:253 kuma/demos/__init__.py:260 kuma/demos/__init__.py:268 kuma/demos/__init__.py:276
-#: kuma/demos/__init__.py:284 kuma/demos/__init__.py:300 kuma/demos/__init__.py:308 kuma/demos/__init__.py:316 kuma/demos/__init__.py:324 kuma/demos/__init__.py:332 kuma/demos/__init__.py:340
-#: kuma/demos/__init__.py:348 kuma/demos/__init__.py:364 kuma/demos/__init__.py:372 kuma/demos/__init__.py:380 kuma/demos/__init__.py:388
-msgid "W3C Spec"
-msgstr "Προδιαγραφή W3C"
-
-#: kuma/demos/__init__.py:230
-#, fuzzy
-msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
-msgstr "http://www.w3.org/TR/html5/video.html#audio"
-
-#: kuma/demos/__init__.py:234
-msgid "The HTML5 canvas element allows you to display scriptable renderings of 2D shapes and bitmap images."
-msgstr "Το στοιχείο HTML5 canvas επιτρέπει την προβολή  δισδιάστατων σχημάτων και εικόνων bitmap των οποίων η απεικόνιση μπορεί να γίνει μέσω σεναρίων εντολών."
-
-#: kuma/demos/__init__.py:236
-msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
-msgstr ""
-
-#: kuma/demos/__init__.py:237
-msgid "http://en.wikipedia.org/wiki/Canvas_element"
-msgstr "http://en.wikipedia.org/wiki/Canvas_element"
-
-#: kuma/demos/__init__.py:238
-#, fuzzy
-msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
-msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
-
-#: kuma/demos/__init__.py:241 kuma/landing/jinja2/landing/homepage.html:73
-msgid "CSS3"
-msgstr "CSS3"
-
-#: kuma/demos/__init__.py:242
-msgid ""
-"Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
-msgstr ""
-"Η τρίτη έκδοση των επικαλυπτώμενων φύλλων στυλ ( Cascading Style Sheets - CSS3) παρέχει διάφορα νέα χαρακτηριστικά και ιδιότητες για τη βελτίωση της μορφοποίησης και της εμφάνισης εγγράφων "
-"γραμμένων με διάφορες γλώσσες markup, όπως η HTML ή η XML."
-
-#: kuma/demos/__init__.py:244
-msgid "https://developer.mozilla.org/en-US/docs/Web/CSS"
-msgstr ""
-
-#: kuma/demos/__init__.py:245
-msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
-msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
-
-#: kuma/demos/__init__.py:246
-msgid "http://www.w3.org/TR/css3-roadmap/"
-msgstr "http://www.w3.org/TR/css3-roadmap/"
-
-#: kuma/demos/__init__.py:249
-msgid "Device"
-msgstr "Συσκευή"
-
-#: kuma/demos/__init__.py:250
-msgid "Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."
-msgstr "Τα Media queries και τα orientation events επιτρέπουν στους δημιουργούς να προσαρμόσουν το σχεδιασμό τους σε συσκευές παλάμης όπως τα κινητά και οι ταμπλέτες."
-
-#: kuma/demos/__init__.py:252
-msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
-msgstr ""
-
-#: kuma/demos/__init__.py:253
-msgid "http://www.w3.org/TR/css3-mediaqueries/"
-msgstr "http://www.w3.org/TR/css3-mediaqueries/"
-
-#: kuma/demos/__init__.py:256
-msgid "Files"
-msgstr "Αρχεία"
-
-#: kuma/demos/__init__.py:257
-msgid "The File API allows web developers to use file objects in web applications, as well as selecting and accessing their data."
-msgstr "Το API αρχείων επιτρέπει στους προγραμματιστές δικτυακών εφαρμογών τη χρήση αντικειμέων αρχείων στις εφαρμογές τους καθώς και την πρόσβαση και επιλογή των δεδομένων τους."
-
-#: kuma/demos/__init__.py:259
-msgid "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
-msgstr ""
-
-#: kuma/demos/__init__.py:260
-msgid "http://www.w3.org/TR/FileAPI/"
-msgstr "http://www.w3.org/TR/FileAPI/"
-
-#: kuma/demos/__init__.py:263
-msgid "Fonts & Type"
-msgstr "Fonts & Type"
-
-#: kuma/demos/__init__.py:264
-msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
-msgstr ""
-"Οι προδιαγραφές του  CSS3-Font περιέχουν βελτιωμένα χαρακτηριστικά για γραμματοσειρές και τυπογραφία, όπως την ενσωμάτωση σε σελίδες των δικών τους γραμματοσειρών μέσω του @font-face ή τον άμεσο "
-"έλεγχο χαρακτηριστικών  γραμματοσειρών OpenType μέσω CSS."
-
-#: kuma/demos/__init__.py:266
-msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
-msgstr ""
-
-#: kuma/demos/__init__.py:267
-msgid "http://en.wikipedia.org/wiki/Web_typography"
-msgstr "http://en.wikipedia.org/wiki/Web_typography"
-
-#: kuma/demos/__init__.py:268
-msgid "http://www.w3.org/TR/css3-fonts/"
-msgstr "http://www.w3.org/TR/css3-fonts/"
-
-#: kuma/demos/__init__.py:271
-msgid "Forms"
-msgstr "Φόρμες"
-
-#: kuma/demos/__init__.py:272
-msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
-msgstr ""
-"Τα στοιχεία και οι ιδιότητες φορμών της HTML5 παρέχουν περισσότερο έλεγχο απ' ό,τι στην HTML4 και διευκολύνουν τη διαχείριση αφού δεν είναι πια αναγκαία η χρήση πολύπλοκων σεναρίων εντολών και η "
-"εφαρμογή στυλ που απαιτούσε η HTML4."
-
-#: kuma/demos/__init__.py:274
-msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
-msgstr ""
-
-#: kuma/demos/__init__.py:275
-msgid "http://en.wikipedia.org/wiki/HTML_forms"
-msgstr "http://en.wikipedia.org/wiki/HTML_forms"
-
-#: kuma/demos/__init__.py:276
-msgid "http://www.w3.org/TR/html5/forms.html"
-msgstr "http://www.w3.org/TR/html5/forms.html"
-
-#: kuma/demos/__init__.py:280
-msgid "The Geolocation API allows web applications to access the user's geographical location."
-msgstr "Το API γεωτοποθεσίας (Geolocation) επιτρέπει στις δικτυακές εφαρμογές την πρόσβαση σε δεδομένα γεωγραφικής τοποθεσίας του χρήστη."
-
-#: kuma/demos/__init__.py:282
-msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
-msgstr ""
-
-#: kuma/demos/__init__.py:283
-msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
-msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
-
-#: kuma/demos/__init__.py:284
-msgid "http://dev.w3.org/geo/api/spec-source.html"
-msgstr "http://dev.w3.org/geo/api/spec-source.html"
-
-#: kuma/demos/__init__.py:288
-msgid "JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."
-msgstr ""
-"Η JavaScript είναι, μια ελαφριά, αντικειμενοστραφής γλώσσα προγραμματισμού, που χρησιμοποιείται συχνά για τη δημιουργία σεναρίων εντολών διαδραστικής αλληλεπίδρασης σε ιστοσελίδες και δικτυακές "
-"εφαρμογές."
-
-#: kuma/demos/__init__.py:290
-msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-msgstr ""
-
-#: kuma/demos/__init__.py:291
-msgid "http://en.wikipedia.org/wiki/JavaScript"
-msgstr "http://en.wikipedia.org/wiki/JavaScript"
-
-#: kuma/demos/__init__.py:292
-msgid "ECMA Spec"
-msgstr "Προδιαγραφή ECMA"
-
-#: kuma/demos/__init__.py:292
-msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
-msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
-
-#: kuma/demos/__init__.py:295 kuma/landing/jinja2/landing/homepage.html:72
-msgid "HTML5"
-msgstr "HTML5"
-
-#: kuma/demos/__init__.py:296
-msgid "HTML5 is the newest version of the HTML standard, currently under development."
-msgstr "Η HTML5 είναι η νεότερη έκδοση του πρότυπου HTML και προς το παρόν βρίσκεται ακόμα υπό ανάπτυξη."
-
-#: kuma/demos/__init__.py:298
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
-msgstr ""
-
-#: kuma/demos/__init__.py:299
-msgid "http://en.wikipedia.org/wiki/Html5"
-msgstr "http://en.wikipedia.org/wiki/Html5"
-
-#: kuma/demos/__init__.py:300
-msgid "http://dev.w3.org/html5/spec/Overview.html"
-msgstr "http://dev.w3.org/html5/spec/Overview.html"
-
-#: kuma/demos/__init__.py:304
-msgid "IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."
-msgstr "Το IndexedDB είναι ένα  API για την αποθήκευση σημαντικού όγκου δομημένων δεδομένων  στην πλευρά του χρήστη και για υψηλών επιδόσεων αναζητήσεις με τη χρήση ευρετηρίων σ' αυτά τα δεδομένα."
-
-#: kuma/demos/__init__.py:306
-msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
-msgstr ""
-
-#: kuma/demos/__init__.py:307
-msgid "http://en.wikipedia.org/wiki/IndexedDB"
-msgstr "http://en.wikipedia.org/wiki/IndexedDB"
-
-#: kuma/demos/__init__.py:308
-msgid "http://www.w3.org/TR/IndexedDB/"
-msgstr "http://www.w3.org/TR/IndexedDB/"
-
-#: kuma/demos/__init__.py:312
-msgid "Drag and Drop features allow the user to move elements on the screen using the mouse pointer."
-msgstr "Τα χαρακτηριστικά για σύρσιμο και απόθεση (Drag and Drop) επιτρέπουν στον χρήστη τη μετακίνηση στοιχείων πάνω στην οθόνη με τη χρήση του ποντικιού."
-
-#: kuma/demos/__init__.py:314
-msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
-msgstr ""
-
-#: kuma/demos/__init__.py:315
-msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
-msgstr "http://en.wikipedia.org/wiki/Drag-and-drop"
-
-#: kuma/demos/__init__.py:316
-msgid "http://www.w3.org/TR/html5/dnd.html"
-msgstr "http://www.w3.org/TR/html5/dnd.html"
-
-#: kuma/demos/__init__.py:320
-msgid "Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."
-msgstr "Ο Firefox για κινητά προσφέρει την πραγματική εμπειρία του διαδικτύου σε κινητά τηλέφωνα κι άλλες συσκευές εκτός των υπολογιστών."
-
-#: kuma/demos/__init__.py:322
-msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
-msgstr ""
-
-#: kuma/demos/__init__.py:323
-msgid "http://en.wikipedia.org/wiki/Mobile_web"
-msgstr "http://en.wikipedia.org/wiki/Mobile_web"
-
-#: kuma/demos/__init__.py:324
-msgid "http://www.w3.org/Mobile/"
-msgstr "http://www.w3.org/Mobile/"
-
-#: kuma/demos/__init__.py:327
-msgid "Offline Support"
-msgstr "Offline Support"
-
-#: kuma/demos/__init__.py:328
-msgid "Offline caching of web applications' resources using the application cache and local storage."
-msgstr "Εκτός σύνδεσης caching πόρων διαδικτυακών εφαρμογών με τη χρήση application cache και local storage."
-
-#: kuma/demos/__init__.py:330
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
-msgstr ""
-
-#: kuma/demos/__init__.py:331
-msgid "http://en.wikipedia.org/wiki/Web_Storage"
-msgstr "http://en.wikipedia.org/wiki/Web_Storage"
-
-#: kuma/demos/__init__.py:332
-msgid "http://dev.w3.org/html5/webstorage/"
-msgstr "http://dev.w3.org/html5/webstorage/"
-
-#: kuma/demos/__init__.py:336
-msgid "Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."
-msgstr "Η Scalable Vector Graphics (SVG) είναι μια γλώσσα βασισμένη σε XML που χρησιμοποιείται για να περιγράψει διανυσματικά γραφικά δυο διαστάσεων."
-
-#: kuma/demos/__init__.py:338
-msgid "https://developer.mozilla.org/en-US/docs/Web/SVG"
-msgstr ""
-
-#: kuma/demos/__init__.py:339
-msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
-msgstr "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
-
-#: kuma/demos/__init__.py:340
-msgid "http://www.w3.org/TR/SVG11/"
-msgstr "http://www.w3.org/TR/SVG11/"
-
-#: kuma/demos/__init__.py:343
-msgid "Video"
-msgstr "Video"
-
-#: kuma/demos/__init__.py:344
-msgid "The HTML5 video element provides integrated support for playing video media without requiring plug-ins."
-msgstr "Το στοιχείο video της HTML5 παρέχει ενσωματωμένη υποστήριξη για την αναπαραγωγή βίντεο χωρίς την απαίτηση πρόσθετων λειτουργιών."
-
-#: kuma/demos/__init__.py:346
-msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video"
-msgstr ""
-
-#: kuma/demos/__init__.py:347
-msgid "http://en.wikipedia.org/wiki/HTML5_video"
-msgstr "http://en.wikipedia.org/wiki/HTML5_video"
-
-#: kuma/demos/__init__.py:348
-#, fuzzy
-msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
-msgstr "http://www.w3.org/TR/html5/video.html#audio"
-
-#: kuma/demos/__init__.py:352
-msgid "In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."
-msgstr "Μέσα στα πλαίσια του στοιχείου canvas της HTML, το WebGL παρέχει ένα  API για την υλοποίηση τρισδιάστατων γραφικών στον περιηγητή."
-
-#: kuma/demos/__init__.py:354
-msgid "https://developer.mozilla.org/en-US/docs/Web/WebGL"
-msgstr ""
-
-#: kuma/demos/__init__.py:355
-msgid "http://en.wikipedia.org/wiki/WebGL"
-msgstr "http://en.wikipedia.org/wiki/WebGL"
-
-#: kuma/demos/__init__.py:356
-msgid "Khronos Spec"
-msgstr "Khronos Spec"
-
-#: kuma/demos/__init__.py:356
-msgid "http://www.khronos.org/webgl/"
-msgstr "http://www.khronos.org/webgl/"
-
-#: kuma/demos/__init__.py:359
-msgid "WebSockets"
-msgstr "WebSockets"
-
-#: kuma/demos/__init__.py:360
-msgid "WebSockets is a technology that makes it possible to open an interactive communication session between the user's browser and a server."
-msgstr "Τα WebSockets είναι μια τεχνολογία που προσφέρει τη δυνατότητα αμφίδρομης επικοινωνίας μέσω του περιηγητή του χρήστη και ενός διακομιστή."
-
-#: kuma/demos/__init__.py:362
-msgid "https://developer.mozilla.org/en-US/docs/WebSockets"
-msgstr ""
-
-#: kuma/demos/__init__.py:363
-msgid "http://en.wikipedia.org/wiki/Web_Sockets"
-msgstr "http://en.wikipedia.org/wiki/Web_Sockets"
-
-#: kuma/demos/__init__.py:364
-msgid "http://dev.w3.org/html5/websockets/"
-msgstr "http://dev.w3.org/html5/websockets/"
-
-#: kuma/demos/__init__.py:368
-msgid "Web Workers provide a simple means for web content to run scripts in background threads."
-msgstr "Τα Web Workers προσφέρουν τη δυνατότητα σε ιστοσελίδες να εκτελούν με απλό τρόπο σενάρια εντολών στο παρασκήνιο."
-
-#: kuma/demos/__init__.py:370
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers"
-msgstr ""
-
-#: kuma/demos/__init__.py:371
-msgid "http://en.wikipedia.org/wiki/Web_Workers"
-msgstr "http://en.wikipedia.org/wiki/Web_Workers"
-
-#: kuma/demos/__init__.py:372
-msgid "http://www.w3.org/TR/workers/"
-msgstr "http://www.w3.org/TR/workers/"
-
-#: kuma/demos/__init__.py:375
-msgid "XMLHttpRequest"
-msgstr "XMLHttpRequest"
-
-#: kuma/demos/__init__.py:376
-msgid "XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."
-msgstr "Το XMLHttpRequest (XHR) χρησιμοποιείται για να στέλνει αιτήματα HTTP απευθείας σε ένα διακομιστή και να φορτώνει τα δεδομένα της απόκρισης του επίσης απευθείας στο σενάριο εντολών."
-
-#: kuma/demos/__init__.py:378
-msgid "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
-msgstr ""
-
-#: kuma/demos/__init__.py:379
-msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
-msgstr "http://en.wikipedia.org/wiki/XMLHttpRequest"
-
-#: kuma/demos/__init__.py:380
-msgid "http://www.w3.org/TR/XMLHttpRequest/"
-msgstr "http://www.w3.org/TR/XMLHttpRequest/"
-
-#: kuma/demos/__init__.py:384
-msgid "Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."
-msgstr "Χρησιμοποιείται για την ανίχνευση της κίνησης των δαχτύλων ενός χρήστη σε μια οθόνη επαφής, παρακολουθώντας τα ακατέργαστα δεδομένα επαφής που παράγονται από το σύστημα."
-
-#: kuma/demos/__init__.py:386
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
-msgstr ""
-
-#: kuma/demos/__init__.py:387
-msgid "http://en.wikipedia.org/wiki/Multi-touch"
-msgstr "http://en.wikipedia.org/wiki/Multi-touch"
-
-#: kuma/demos/__init__.py:388
-msgid "http://www.w3.org/2010/webevents/charter/"
-msgstr "http://www.w3.org/2010/webevents/charter/"
-
-#: kuma/demos/__init__.py:394
-msgid "MPL/GPL/LGPL"
-msgstr "MPL/GPL/LGPL"
-
-#: kuma/demos/__init__.py:395
-msgid "http://www.mozilla.org/MPL/"
-msgstr "http://www.mozilla.org/MPL/"
-
-#: kuma/demos/__init__.py:397
-msgid "GPL"
-msgstr "GPL"
-
-#: kuma/demos/__init__.py:398
-msgid "http://www.opensource.org/licenses/gpl-license.php"
-msgstr "http://www.opensource.org/licenses/gpl-license.php"
-
-#: kuma/demos/__init__.py:400
-msgid "BSD"
-msgstr "BSD"
-
-#: kuma/demos/__init__.py:401
-msgid "http://www.opensource.org/licenses/bsd-license.php"
-msgstr "http://www.opensource.org/licenses/bsd-license.php"
-
-#: kuma/demos/__init__.py:403
-msgid "Apache"
-msgstr "Apache"
-
-#: kuma/demos/__init__.py:404
-msgid "http://www.apache.org/licenses/"
-msgstr "http://www.apache.org/licenses/"
-
-#: kuma/demos/__init__.py:406
-msgid "Public Domain (where applicable by law)"
-msgstr "Δημόσιας χρήσης (όπου επιτρέπεται από το νόμο)"
-
-#: kuma/demos/__init__.py:407
-msgid "http://creativecommons.org/publicdomain/zero/1.0/"
-msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
-
-#: kuma/demos/admin.py:38
-#, python-format
-msgid "Censored %(item)s"
-msgstr ""
-
-#: kuma/demos/admin.py:43
-#, python-format
-msgid "Successfully censored %(count)d %(items)s."
-msgstr ""
-
-#: kuma/demos/admin.py:55 kuma/demos/admin.py:125
-msgid "Are you sure?"
-msgstr ""
-
-#: kuma/demos/admin.py:68
-#, python-format
-msgid "Censor selected %(verbose_name_plural)s"
-msgstr ""
-
-#: kuma/demos/admin.py:106
-#, python-format
-msgid "Deleted and uploaded files for %(item)s"
-msgstr ""
-
-#: kuma/demos/admin.py:111
-#, python-format
-msgid "Successfully deleted %(count)d %(items)s."
-msgstr ""
-
-#: kuma/demos/admin.py:123
-#, python-format
-msgid "Cannot delete %(name)s"
-msgstr ""
-
-#: kuma/demos/admin.py:146
-#, python-format
-msgid "Delete selected %(verbose_name_plural)s"
-msgstr ""
-
-#: kuma/demos/embed.py:128
-msgid "Not an URL from a supported video service"
-msgstr ""
-
-#: kuma/demos/feeds.py:89
-msgid "MDN demos"
-msgstr "Demo στο MDN"
-
-#: kuma/demos/feeds.py:90
-msgid "Demos submitted by MDN users"
-msgstr "Demo που έχουν δημιουργηθεί από χρήστες του MDN"
-
-#: kuma/demos/feeds.py:154
-msgid "MDN recent demos"
-msgstr "Πρόσφατα demo του MDN"
-
-#: kuma/demos/feeds.py:155
-msgid "Demos recently submitted to MDN"
-msgstr "Demo που υποβλήθηκαν πρόσφατα στο MDN"
-
-#: kuma/demos/feeds.py:164
-msgid "MDN featured demos"
-msgstr "Προβεβλημένα demo στο MDN"
-
-#: kuma/demos/feeds.py:165
-msgid "Demos featured on MDN"
-msgstr "Demo που προβάλλονται στο MDN"
-
-#: kuma/demos/feeds.py:180
-#, python-format
-msgid "MDN demos tagged %s"
-msgstr "Demo στο MDN με ετικέτα: %s"
-
-#: kuma/demos/feeds.py:183
-#, python-format
-msgid "MDN demos tagged \"%s\""
-msgstr "Demo στο MDN με ετικέτα «%s»"
-
-#: kuma/demos/feeds.py:199
-#, python-format
-msgid "%s's MDN demos"
-msgstr "%s's MDN demo"
-
-#: kuma/demos/feeds.py:213
-#, python-format
-msgid "MDN demo search for \"%s\""
-msgstr "Αναζήτηση στα demo του MDN για «%s»"
-
-#: kuma/demos/feeds.py:214
-#, python-format
-msgid "Search results for demo submissions matching \"%s\""
-msgstr "Αποτελέσματα αναζήτησης για demo που ταιριάζουν με «%s»"
-
-#: kuma/demos/models.py:204
-#, fuzzy, python-format
-msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
-msgstr "Παρακαλούμε το μέγεθος αρχείου να είναι μικρότερο από %s. Τρέχον μέγεθος αρχείου: %s"
-
-#: kuma/demos/models.py:275
-msgid "Cannot process image"
-msgstr "Δεν είναι δυνατή η επεξεργασία της εικόνας"
-
-#: kuma/demos/models.py:362
-msgid "what is your demo's name?"
-msgstr "Τι όνομα έχει το demo σας;"
-
-#: kuma/demos/models.py:365
-msgid "slug"
-msgstr "slug"
-
-#: kuma/demos/models.py:368
-msgid "describe your demo in one line"
-msgstr "Περιγράψτε το demo σας σε μια γραμμή"
-
-#: kuma/demos/models.py:371
-msgid "describe your demo in more detail (optional)"
-msgstr "Περιγράψτε το demo σε με περισσότερες λεπτομέρειες (προαιρετικό)"
-
-#: kuma/demos/models.py:376
-msgid "Hide this demo from others?"
-msgstr ""
-
-#: kuma/demos/models.py:379
-msgid "Redirect URL for censorship."
-msgstr ""
-
-#: kuma/demos/models.py:383
-msgid "control how your demo is launched"
-msgstr "Επιλέξτε πως θα εκκινήται το demo σας "
-
-#: kuma/demos/models.py:385
-msgid "Disable navigation bar, launch demo in a new window"
-msgstr "Απενεργοποίηση της εργαλειοθήκης διευθύνσεων, εκκίνηση demo σε νέο παράθυρο"
-
-#: kuma/demos/models.py:386
-msgid "Use navigation bar, display demo in <iframe>"
-msgstr "Χρήση εργαλειοθήκης διευθύνσεων, προβολή demo σε <iframe>"
-
-#: kuma/demos/models.py:398
-msgid "Screenshot #1"
-msgstr "Στιγμιότυπο οθόνης #1"
-
-#: kuma/demos/models.py:404
-msgid "Screenshot #2"
-msgstr "Στιγμιότυπο οθόνης #2"
-
-#: kuma/demos/models.py:410
-msgid "Screenshot #3"
-msgstr "Στιγμιότυπο οθόνης #3"
-
-#: kuma/demos/models.py:416
-msgid "Screenshot #4"
-msgstr "Στιγμιότυπο οθόνης #4"
-
-#: kuma/demos/models.py:422
-msgid "Screenshot #5"
-msgstr "Στιγμιότυπο οθόνης #5"
-
-#: kuma/demos/models.py:429
-msgid "have a video of your demo in action? (optional)"
-msgstr "Έχετε βίντεο του demo σας σε δράση; (προαιρετικό)"
-
-#: kuma/demos/models.py:433
-msgid "select a ZIP file containing your demo"
-msgstr "Επιλέξτε ένα αρχείο ZIP που περιέχει το demo σας"
-
-#: kuma/demos/models.py:442
-msgid "Is your source code also available somewhere else on the web (e.g., github)? Please share the link."
-msgstr "Υπάρχει διαθέσιμος ο πηγαίος κώδικας σας κάπου άλλου στο διαδίκτυο (π.χ. στο github); Σας παρακαλούμε να δώσετε το δεσμό."
-
-#: kuma/demos/models.py:445
-msgid "Select the license that applies to your source code."
-msgstr "Επιλέξτε την άδεια που έχει ισχύ στον πηγαίο κώδικα σας."
-
-#: kuma/demos/models.py:454
-msgid "date created"
-msgstr "ημερομηνία που δημιουργήθηκε"
-
-#: kuma/demos/models.py:647 kuma/demos/models.py:654
-msgid "ZIP file contains no acceptable files"
-msgstr "Το αρχείο ZIP δεν περιέχει αποδεκτά αρχεία"
-
-#: kuma/demos/models.py:650
-msgid "ZIP file corrupted"
-msgstr "Το  αρχείο ZIP είναι κατεστραμμένο"
-
-#: kuma/demos/models.py:669
-#, python-format
-msgid "ZIP file contains a file that is too large: %(filename)s"
-msgstr "Το αρχείο ZIP περιλαμβάνει τουλάχιστον ένα πολύ μεγάλο αρχείο: %(filename)s"
-
-#: kuma/demos/models.py:684
-#, python-format
-msgid "ZIP file contains an unacceptable file: %(filename)s"
-msgstr "Το αρχείο ZIP  περιέχει τουλάχιστον ένα μη αποδεκτό αρχείο: %(filename)s"
-
-#: kuma/demos/models.py:688
-msgid "HTML index not found in ZIP"
-msgstr "Δεν βρέθηκε HTML index στο αρχείο  ZIP"
-
-#: kuma/demos/views.py:73 kuma/demos/views.py:300 kuma/demos/views.py:328 kuma/demos/views.py:343
-msgid "access denied"
-msgstr "απαγορεύεται η πρόσβαση"
-
-#: kuma/demos/jinja2/demos/delete.html:10 kuma/demos/jinja2/demos/detail.html:9 kuma/demos/jinja2/demos/devderby_tag.html:5 kuma/demos/jinja2/demos/flag.html:10 kuma/demos/jinja2/demos/launch.html:6
-#: kuma/demos/jinja2/demos/listing_all.html:4 kuma/demos/jinja2/demos/listing_search.html:9 kuma/demos/jinja2/demos/listing_tag.html:4 kuma/demos/jinja2/demos/submit.html:13
-#: kuma/demos/jinja2/demos/submit.html:15 kuma/demos/jinja2/demos/submit_noauth.html:11 kuma/demos/jinja2/demos/terms.html:10
-#, fuzzy, python-format
-msgid "%(subtitle)s | Demo Studio"
-msgstr "{subtitle} | Demo Studio"
-
-#: kuma/demos/jinja2/demos/delete.html:20
-msgid "MDN"
-msgstr "MDN"
-
-#: kuma/demos/jinja2/demos/delete.html:21 kuma/demos/jinja2/demos/detail.html:14 kuma/demos/jinja2/demos/home.html:14 kuma/demos/jinja2/demos/launch.html:15
-msgid "Demo Studio"
-msgstr "Demo Studio"
-
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
-#: kuma/demos/jinja2/demos/delete.html:26 kuma/demos/jinja2/demos/detail.html:32 kuma/demos/jinja2/demos/home.html:23 kuma/demos/jinja2/demos/elements/demos_head.html:4
-msgid "Submit a Demo"
-msgstr "Υποβολη demo"
-
-#: kuma/demos/jinja2/demos/delete.html:38
-msgid "Remove this demo?"
-msgstr "Αφαίρεση αυτού του demo;"
-
-#: kuma/demos/jinja2/demos/delete.html:40
-#, python-format
-msgid ""
-"<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
-"<strong>cannot be undone</strong>."
-msgstr ""
-"<p>Πρόκειται να αφαιρέσετε το <strong>%(demo_title)s</strong> από το Demo Studio.</p> <p>Η παρουσίαση του demo, ο πηγαίος κώδικας και τα στατιστικά του θα <strong>διαγραφούν</strong>.</p> <p>Αυτή η "
-"ενέργεια <strong>δεν είναι αναστρέψιμη</strong>."
-
-#: kuma/demos/jinja2/demos/delete.html:49
-msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/detail.html:30 kuma/demos/jinja2/demos/devderby_landing.html:22 kuma/demos/jinja2/demos/devderby_tag.html:32 kuma/demos/jinja2/demos/home.html:21
-#: kuma/demos/jinja2/demos/submit.html:45 kuma/demos/jinja2/demos/submit_noauth.html:20 kuma/demos/jinja2/demos/elements/demos_head.html:2
-msgid "Mozilla Demo Studio"
-msgstr "Mozilla Demo Studio"
-
-#: kuma/demos/jinja2/demos/detail.html:33 kuma/demos/jinja2/demos/home.html:24 kuma/demos/jinja2/demos/listing_tag.html:37 kuma/demos/jinja2/demos/elements/demos_head.html:5
-msgid "Learn More"
-msgstr "Μάθετε περισότερα"
-
-#: kuma/demos/jinja2/demos/detail.html:35 kuma/demos/jinja2/demos/home.html:26 kuma/demos/jinja2/demos/elements/demos_head.html:7
-msgid ""
-"<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-"<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
-"open standards and technologies that power the Web.</li> </ul>"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/detail.html:51 kuma/demos/jinja2/demos/launch.html:80
-#, fuzzy, python-format
-msgid "Go to the previous demo, %(demo_title)s"
-msgstr "Μετάβαση στο προηγούμενο demo, {demo_title}"
-
-#: kuma/demos/jinja2/demos/detail.html:51
-msgid "Prev"
-msgstr "Προηγούμενο"
-
-#: kuma/demos/jinja2/demos/detail.html:55 kuma/demos/jinja2/demos/launch.html:84
-#, fuzzy, python-format
-msgid "Go to the next demo, %(demo_title)s"
-msgstr "Μετάβαση στο επόμενο demo, {demo_title}"
-
-#: kuma/demos/jinja2/demos/detail.html:68
-msgid "See the previous image"
-msgstr "Δείτε την προηγούμενη εικόνα"
-
-#: kuma/demos/jinja2/demos/detail.html:69
-msgid "See the next image"
-msgstr "Δείτε την επόμενη εικόνα"
-
-#: kuma/demos/jinja2/demos/detail.html:102
-#, python-format
-msgid "By %(creator_link)s on %(create_date)s"
-msgstr ""
-
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
-#: kuma/demos/jinja2/demos/detail.html:117
-msgid "Launch Demo"
-msgstr "Εκκινηση demo"
-
-#: kuma/demos/jinja2/demos/detail.html:124 kuma/demos/jinja2/demos/launch.html:46
-msgid "You like this demo. Undo?"
-msgstr "Αυτό το demo σας αρέσει. Να γίνει αναίρεση;"
-
-#: kuma/demos/jinja2/demos/detail.html:124 kuma/demos/jinja2/demos/launch.html:46
-msgid "You Like"
-msgstr "Σας αρέσει"
-
-#: kuma/demos/jinja2/demos/detail.html:130 kuma/demos/jinja2/demos/launch.html:52
-msgid "Do you like this demo?"
-msgstr "Σας αρέσει το demo;"
-
-#: kuma/demos/jinja2/demos/detail.html:130 kuma/demos/jinja2/demos/launch.html:52
-msgid "Like It"
-msgstr "Μου άρεσει"
-
-#: kuma/demos/jinja2/demos/detail.html:135 kuma/demos/jinja2/demos/launch.html:56
-msgid "Share this demo with your social network"
-msgstr "Μοιραστείτε αυτό το demo στο κοινωνικό σας δίκτυο"
-
-#: kuma/demos/jinja2/demos/detail.html:135 kuma/demos/jinja2/demos/detail.html:137 kuma/demos/jinja2/demos/launch.html:56
-msgid "Share It"
-msgstr "Διαμοιρασμός"
-
-#: kuma/demos/jinja2/demos/detail.html:138 kuma/demos/jinja2/demos/launch.html:58
-msgid "Share on Twitter"
-msgstr "Διαμοιρασμός στο Twitter"
-
-#: kuma/demos/jinja2/demos/detail.html:139 kuma/demos/jinja2/demos/launch.html:59
-msgid "Share on Facebook"
-msgstr "Διαμοιρασμός στο Facebook"
-
-#: kuma/demos/jinja2/demos/detail.html:153
-msgid "Built using"
-msgstr "Φτιάχτηκε με χρήση"
-
-#: kuma/demos/jinja2/demos/detail.html:156
-#, fuzzy, python-format
-msgid "See more demos made with %(tag_title)s"
-msgstr "Δείτε περισσότερα demo που φτιάχτηκαν με {tag_title}"
-
-#: kuma/demos/jinja2/demos/detail.html:165 kuma/demos/jinja2/demos/elements/submission_thumb.html:15
-#, fuzzy, python-format
-msgid "This demo has been viewed %(num)s time"
-msgid_plural "This demo has been viewed %(num)s times"
-msgstr[0] "Αυτό το demo έχει προβληθεί {count} φορά"
-msgstr[1] "Αυτό το demo έχει προβληθεί {count} φορές"
-
-#: kuma/demos/jinja2/demos/detail.html:165
-#, python-format
-msgid "%(num)s view"
-msgid_plural "%(num)s views"
-msgstr[0] ""
-msgstr[1] ""
-
-#: kuma/demos/jinja2/demos/detail.html:166 kuma/demos/jinja2/demos/elements/submission_thumb.html:16
-#, fuzzy, python-format
-msgid "%(num)s person liked this demo"
-msgid_plural "%(num)s people liked this demo"
-msgstr[0] "Αυτό το demo αρέσει σε {count} άτομο"
-msgstr[1] "Αυτό το demo αρέσει σε {count} άτομα"
-
-#: kuma/demos/jinja2/demos/detail.html:166
-#, python-format
-msgid "%(num)s like"
-msgid_plural "%(num)s likes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: kuma/demos/jinja2/demos/detail.html:181
-msgid "Edit Demo"
-msgstr "Επεξεργασία demo"
-
-#: kuma/demos/jinja2/demos/detail.html:183
-msgid "Remove demo"
-msgstr "Αφαίρεση demo"
-
-#: kuma/demos/jinja2/demos/detail.html:186
-msgid "Show demo"
-msgstr "Προβολή demo"
-
-#: kuma/demos/jinja2/demos/detail.html:189
-msgid "Hide demo"
-msgstr "Απόκρυψη demo"
-
-#: kuma/demos/jinja2/demos/detail.html:196
-msgid "More About This Demo From The Author"
-msgstr "Περισσότερα σχετικά μ' αυτό το demo από το δημιουργό του"
-
-#: kuma/demos/jinja2/demos/detail.html:207
-#, fuzzy
-msgid "About this Demo"
-msgstr "Αφαίρεση αυτού του demo;"
-
-#: kuma/demos/jinja2/demos/detail.html:209
-#, python-format
-msgid "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP File</span>"
-msgstr "Κάντε λήψη του αρχείου <span class=\"note\">ZIP %(file_ksize)s KB &middot; με τον πηγαίο κώδικα</span>"
-
-#: kuma/demos/jinja2/demos/detail.html:217
-#, python-format
-msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
-msgstr "Αυτό το demo διατίθεται σύμφωνα με την άδεια <a href=\"%(link)s\">%(title)s</a>."
-
-#: kuma/demos/jinja2/demos/detail.html:225
-#, fuzzy, python-format
-msgid "More by %(creator)s"
-msgstr "Περισσότερα από τον/την {creator_link}"
-
-#: kuma/demos/jinja2/demos/detail.html:237 kuma/demos/jinja2/demos/launch.html:63
-msgid "Report a Problem"
-msgstr "Αναφορά προβλήματος"
-
-#: kuma/demos/jinja2/demos/detail.html:239 kuma/demos/jinja2/demos/detail.html:240 kuma/demos/jinja2/demos/detail.html:241
-msgid "Flag Content"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/detail.html:239
-msgid "Demo is not working"
-msgstr "Το demo δεν λειτουργεί"
-
-#: kuma/demos/jinja2/demos/detail.html:240
-msgid "Demo is inappropriate"
-msgstr "Το demo έχει ανάρμοστο περιεχόμενο"
-
-#: kuma/demos/jinja2/demos/detail.html:241
-msgid "Demo is not by this author"
-msgstr "Το demo ανήκει σε άλλο προγραμματιστή"
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:11 kuma/demos/jinja2/demos/devderby_landing.html:23 kuma/demos/jinja2/demos/devderby_tag.html:33
-msgid "Dev Derby"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:22 kuma/demos/jinja2/demos/devderby_tag.html:32
-msgid "presents"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:25
-msgid "Dev Derby has ended"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:27
-#, python-format
-msgid "From 2011 until 2013, web developers created more than 450 demos for the Dev Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo Studio</a> for many more."
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:40
-msgid "Previous Dev Derby Challenges"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:55 kuma/demos/jinja2/demos/devderby_tag.html:25
-msgid "Resources"
-msgstr ""
-
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
-#: kuma/demos/jinja2/demos/devderby_landing.html:57 kuma/search/jinja2/search/results.html:141
-msgid "Docs"
-msgstr "Εγγραφα"
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:59
-msgid "Articles"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:8 kuma/demos/jinja2/demos/listing_tag.html:7
-#, fuzzy, python-format
-msgid "Demos tagged %(tag)s"
-msgstr "Demo με ετικέτα: {tag}"
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:21 kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:6 kuma/wiki/templates/admin/wiki/purge_documents.html:22
-#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
-msgid "Home"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:22
-msgid "Challenges"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:23
-msgid "Judging"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:24
-msgid "Prizes"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:41
-msgid "Derby Winners"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:52
-msgid "Submissions"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:55 kuma/demos/jinja2/demos/home.html:136 kuma/demos/jinja2/demos/listing_tag.html:51
-#, fuzzy, python-format
-msgid "Subscribe to a feed of %(tag_title)s demos"
-msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
-
-#: kuma/demos/jinja2/demos/feed_item_description.html:7
-msgid "Submitted by:"
-msgstr "Υποβλήθηκε από:"
-
-#: kuma/demos/jinja2/demos/feed_item_description.html:9
-msgid "Tagged as:"
-msgstr "Έχει ετικέτα:"
-
-#: kuma/demos/jinja2/demos/flag.html:24
-msgid "Flag this demo?"
-msgstr "Να γίνει αναφορά του demo;"
-
-#: kuma/demos/jinja2/demos/flag.html:30
-msgid "<button type=\"submit\" name=\"action_create\">Flag content</button>"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/home.html:8 kuma/demos/jinja2/demos/listing_all.html:6
-msgid "Recent demos"
-msgstr "Πρόσφατα demo"
-
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
-#: kuma/demos/jinja2/demos/home.html:10
-msgid "Featured demos"
-msgstr "Προβεβλημενα demo"
-
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
-#: kuma/demos/jinja2/demos/home.html:42
-msgid "Featured Demos"
-msgstr "Προβεβλημενα demo"
-
-#: kuma/demos/jinja2/demos/home.html:46
-msgid "See the previous demo"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/home.html:47
-msgid "See the next demo"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/home.html:66 kuma/demos/jinja2/demos/elements/submission_thumb.html:21
-msgid "Details"
-msgstr ""
-
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
-#: kuma/demos/jinja2/demos/home.html:69
-msgid "Launch"
-msgstr "Εκκινηση"
-
-#: kuma/demos/jinja2/demos/home.html:106 kuma/demos/jinja2/demos/home.html:107
-#, fuzzy
-msgid "Search demos"
-msgstr "Αναζήτηση στα demo για «{q}»"
-
-#: kuma/demos/jinja2/demos/home.html:111
-msgid "<b>or</b>"
-msgstr ""
-
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
-#: kuma/demos/jinja2/demos/home.html:114 kuma/demos/jinja2/demos/elements/demos_head.html:18 kuma/demos/jinja2/demos/elements/tech_tags_list.html:2
-msgid "Browse by Technology"
-msgstr "Περιηγηση με βαση την τεχνολογια"
-
-#: kuma/demos/jinja2/demos/home.html:136
-msgid "recent"
-msgstr "πρόσφατο"
-
-#: kuma/demos/jinja2/demos/launch.html:36
-#, python-format
-msgid "by %(profile_link)s"
-msgstr "από τον/την %(profile_link)s"
-
-#: kuma/demos/jinja2/demos/launch.html:77
-msgid "Back"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/launch.html:86
-msgid "Remove this toolbar"
-msgstr "Αφαίρεση αυτής της εργαλειοθήκης"
-
-#: kuma/demos/jinja2/demos/launch.html:86
-msgid "Remove toolbar"
-msgstr "Αφαίρεση της εργαλειοθήκης"
-
-#: kuma/demos/jinja2/demos/listing_all.html:4 kuma/demos/jinja2/demos/listing_all.html:20
-msgid "Browse all demos"
-msgstr "Περιήγηση σε όλα τα demo"
-
-#: kuma/demos/jinja2/demos/listing_all.html:26
-msgid "Subscribe to a feed of all demos"
-msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για όλα τα demo"
-
-#: kuma/demos/jinja2/demos/listing_search.html:9
-#, fuzzy, python-format
-msgid "Search for \"%(query)s\""
-msgstr "Αναζήτηση για «{q}»"
-
-#: kuma/demos/jinja2/demos/listing_search.html:13
-#, fuzzy, python-format
-msgid "Search results for \"%(query)s\""
-msgstr "Αποτελέσματα αναζήτησης για «{q}»"
-
-#: kuma/demos/jinja2/demos/listing_search.html:27
-#, fuzzy, python-format
-msgid "Search demos for \"%(query)s\""
-msgstr "Αναζήτηση στα demo για «{q}»"
-
-#: kuma/demos/jinja2/demos/listing_search.html:33
-#, fuzzy, python-format
-msgid "Subscribe to a feed of search results for \"%(query)s\""
-msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για αποτελέσματα αναζήτησης του «{q}»"
-
-#: kuma/demos/jinja2/demos/listing_tag.html:4
-#, fuzzy, python-format
-msgid "%(tag_title)s Demos"
-msgstr "Demo με ετικέτα: {tag_title}"
-
-#: kuma/demos/jinja2/demos/submit.html:13 kuma/demos/jinja2/demos/submit.html:53
-#, fuzzy, python-format
-msgid "Edit %(demo_title)s"
-msgstr "Επεξεργασία {demo_title}"
-
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
-#: kuma/demos/jinja2/demos/submit.html:15 kuma/demos/jinja2/demos/submit.html:55 kuma/demos/jinja2/demos/submit_noauth.html:11 kuma/demos/jinja2/demos/submit_noauth.html:25
-msgid "Submit a New Demo"
-msgstr "Υποβολη νεου demo"
-
-#: kuma/demos/jinja2/demos/submit.html:60
-msgid ""
-"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-"web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
-msgstr ""
-"<p>Είτε φτιάχνετε ένα νέο θαυμαστό τόπο στο διαδίκτυο, είτε απλά πειραματίζεστε με τη νέα τεχνολογία, σας προσκαλούμε να προσθέσετε τα δικά σας  demo για να μοιραστείτε τις εμπειρίες σας (ή απλά να "
-"τα επιδείξετε) με άλλους προγραμματιστές.</p> <p>Σας παρακαλούμε να συμπληρώσετε την παρακάτω φόρμα για να είστε σίγουροι ότι το demo σας θα υποβληθεί με επιτυχία στο Demo Studio.</p>"
-
-#: kuma/demos/jinja2/demos/submit.html:72
-msgid "Describe Your Demo"
-msgstr "Περιγράψτε το demo σας"
-
-#: kuma/demos/jinja2/demos/submit.html:74
-msgid "<p>Tell us more about your demo, including the name, description and the technologies used. Please list the browsers you have tested it with.</p>"
-msgstr ""
-"<p>Πείτε μας περισσότερα για το demo σας και συμπεριλάβετε σ' αυτά το όνομα, την περιγραφή και τις τεχνολογίες που χρησιμοποιεί. Παρακαλούμε αναφέρετε τους περιηγητές πάνω στους οποίους το "
-"δοκιμάσατε.</p>"
-
-#: kuma/demos/jinja2/demos/submit.html:87
-msgid "Select up to five technologies used in your demo."
-msgstr "Επιλέξτε μέχρι πέντε τεχνολογίες που χρησιμοποιείτε στο demo σας."
-
-#: kuma/demos/jinja2/demos/submit.html:98
-msgid "Show Off Your Demo"
-msgstr "Επιδείξετε το demo σας"
-
-#: kuma/demos/jinja2/demos/submit.html:102
-msgid "Provide at least one screenshot of your demo in action"
-msgstr "Δώστε τουλάχιστον ένα στιγμιότυπο οθόνης του demo σας σε δράση"
-
-#: kuma/demos/jinja2/demos/submit.html:111
-msgid "JPEG and PNG supported. Minimum size of 480x360."
-msgstr "Υποστηρίζονται αρχεία JPEG και PNG. Ελάχιστη ανάλυση 480x360."
-
-#: kuma/demos/jinja2/demos/submit.html:113
-msgid "We support YouTube and Vimeo"
-msgstr "Υποστηρίζουμε το YouTube και το Vimeo"
-
-#: kuma/demos/jinja2/demos/submit.html:114
-msgid "If your demo has problems when displayed in an &lt;iframe&gt;, try changing this."
-msgstr ""
-
-#: kuma/demos/jinja2/demos/submit.html:119 kuma/demos/jinja2/demos/submit_noauth.html:48
-msgid "Preparing Your Demo"
-msgstr "Ετοιμάζοντας το demo σας"
-
-#: kuma/demos/jinja2/demos/submit.html:120
-#, fuzzy, python-format
-msgid ""
-"<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-"should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX "
-"to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-"under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
-msgstr ""
-"<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο βασικό "
-"κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> <li>Αν το "
-"demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s\">λογαριασμό "
-"στο MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να συμπεριλάβετε "
-"δεσμούς στις σελίδες των δημιουργών του.</li> </ul>"
-
-#: kuma/demos/jinja2/demos/submit.html:133
-msgid "Provide the Source Code"
-msgstr "Παραθέστε τον πηγαίο κώδικα"
-
-#: kuma/demos/jinja2/demos/submit.html:135
-msgid "<p>Upload a ZIP file of your source code, in which the main page of your demo is named <code>index.html</code> in the root directory.</p>"
-msgstr ""
-"<p>Αποστείλετε ένα αρχείο ZIP  με τον πηγαίο κώδικα σας, στο οποίο η κεντρική σελίδα του demo σας θα βρίσκεται στο βασικό κατάλογο του συμπιεσμένου αρχείου και θα έχει όνομα <code>index.html</code>."
-"</p>"
-
-#: kuma/demos/jinja2/demos/submit.html:162
-#, python-format
-msgid "I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
-msgstr ""
-
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
-#: kuma/demos/jinja2/demos/submit.html:177
-msgid "Submit demo"
-msgstr "Υποβολη demo"
-
-#: kuma/demos/jinja2/demos/submit.html:178
-msgid "or"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/submit.html:178
-msgid "Discard Demo"
-msgstr "Απόρριψη demo"
-
-#: kuma/demos/jinja2/demos/submit.html:180
-msgid "Save changes"
-msgstr "Αποθήκευση αλλαγών"
-
-#: kuma/demos/jinja2/demos/submit.html:181 kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
-msgid "Discard Changes"
-msgstr "Απόρριψη αλλαγών"
-
-#: kuma/demos/jinja2/demos/submit.html:189
-msgid "Update Your Profile"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/submit.html:190
-msgid ""
-"<p>Share your developer interests and areas of expertise with the MDN community. We'll be able to bring you a better, more customized experience and you will have a place to show off the amazing "
-"work you do.</p>"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/submit.html:195
-msgid "Go to your profile"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:27
-msgid ""
-"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-"web developers.</p>"
-msgstr ""
-"<p>Είτε δημιουργείτε μια απίθανη νέα εμπειρία για τους χρήστες του διαδικτύου, είτε απλά πειραματίζεστε με τις τελευταίες εξελίξεις της τεχνολογίας, σας προσκαλούμε να υποβάλετε τα demo σας και να "
-"τα μοιραστείτε (ή απλά να τα δείξετε) με άλλους δημιουργούς.</p>"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:36
-msgid "Before You Begin"
-msgstr "Πριν ξεκινήσετε"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:37
-#, fuzzy
-msgid ""
-"<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-"<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-"range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
-msgstr ""
-"<ul> <li>Θα πρέπει να είστε διατεθειμένοι να <strong>παρέχετε τον πηγαίο κώδικα</strong> του demo σας. Τα demo φιλοξενούνται στους διακομιστές του Demo Studio.</li> <li>Ο πηγαίος κώδικας του demo "
-"σας θα πρέπει να διατίθεται σύμφωνα με τους όρους μιας  <strong>ανοικτής άδειας χρήσης</strong>, όπως οι MPL, GPL, ή BSD.</li> <li>Το demo σας θα πρέπει να πραγματεύεται <strong>ανοικτές "
-"τεχνολογίες για το διαδίκτυο</strong>, όπως η HTML5 και το CSS3.</li> <li>Το demo σας θα πρέπει να υποστηρίζεται από μια ευρεία γκάμα <strong>σύγχρονων περιηγητών</strong>, όπως οι Firefox, Chrome, "
-"Safari, και Opera.</li> </ul>"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:49
-#, fuzzy
-msgid ""
-"<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-"root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-"demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-"
-"SA license and include links to the authors' websites.</li> </ul>"
-msgstr ""
-"<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο βασικό "
-"κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> <li>Αν το "
-"demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s\">λογαριασμό "
-"στο MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να συμπεριλάβετε "
-"δεσμούς στις σελίδες των δημιουργών του.</li> </ul>"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:61
-#, fuzzy, python-format
-msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
-msgstr "<p>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <strong><a href=\"%(signup_url)s\">λογαριασμό στο MDN</a></strong>.</p>"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:66
-#, fuzzy
-msgid "Log In to Profile"
-msgstr "Σύνδεση σε λογαριασμό"
-
-#: kuma/demos/jinja2/demos/terms.html:10
-msgid "Terms for Contributors"
-msgstr "Όροι συντελεστών"
-
-#: kuma/demos/jinja2/demos/terms.html:20
-#, fuzzy
-msgid "Demo Studio: Terms for Contributors"
-msgstr "Όροι συντελεστών"
-
-#: kuma/demos/jinja2/demos/terms.html:107
-msgid "Rights Representation Details"
-msgstr "Λεπτομέρειες δικαιωμάτων αναπαραγωγής"
-
-#: kuma/demos/jinja2/demos/elements/demos_head.html:31 kuma/demos/jinja2/demos/elements/search_form.html:4
-msgid "Search the Demo Studio"
-msgstr "Αναζήτηση στο Demo Studio"
-
-#: kuma/demos/jinja2/demos/elements/submission_creator.html:2 kuma/demos/jinja2/demos/elements/user_link.html:2
-#, fuzzy, python-format
-msgid "See %(display_name)s's profile"
-msgstr "Δείτε το προφίλ του/της {display_name}"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:6
-#, python-format
-msgid "%(num)s Demo"
-msgid_plural "%(num)s Demos"
-msgstr[0] ""
-msgstr[1] ""
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:9
-msgid "Sort demos by most recent likes and views"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:9
-msgid "You are viewing demos by most recent likes and views"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:9
-msgid "Up and Coming"
-msgstr "Επερχόμενα"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:10
-msgid "Sort demos by most views"
-msgstr "Ταξινόμηση demo κατά αριθμό προβολών"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:10
-msgid "You are viewing demos by most views"
-msgstr "Βλέπετε τα demo που έχουν τις περισσότερες προβολές"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:10
-msgid "Most Viewed"
-msgstr "Περισσότερες προβολές"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:11
-msgid "Sort demos by most likes"
-msgstr "Ταξινόμηση demo με βάση τα περισσότερα «μου αρέσει»"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:11
-msgid "You are viewing demos by most likes"
-msgstr "Βλέπετε τα demo που αρέσουν στους περισσότερους χρήστες"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:11
-msgid "Most Liked"
-msgstr "Περισσότερο αρεστά"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:12
-msgid "Sort demos by most recently submitted"
-msgstr "Ταξινόμηση των demo με βάση τα πιο πρόσφατα"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:12
-msgid "You are viewing demos by most recently submitted"
-msgstr "Βλέπετε τα demo που έχουν υποβληθεί πιο πρόσφατα."
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:12
-msgid "Most Recent"
-msgstr "Πιο πρόσφατα"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:58
-msgid "Go to the first page"
-msgstr "Μετάβαση στην πρώτη σελίδα"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:58
-msgid "First"
-msgstr ""
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:61
-msgid "Go to the previous page"
-msgstr "Μετάβαση στην προηγούμενη σελίδα"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:64
-msgid "Go to the next page"
-msgstr "Μετάβαση στην επόμενη σελίδα"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:67
-msgid "Go to the last page"
-msgstr "Μετάβαση στην τελευταία σελίδα"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:67
-msgid "Last"
-msgstr "Τελευταία"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:72
-msgid "Feed"
-msgstr "Αρχείο ροής"
-
-#: kuma/demos/jinja2/demos/elements/submission_thumb.html:23
-#, fuzzy, python-format
-msgid "Launch %(title)s"
-msgstr "Εκκίνηση {title}"
-
-#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:9
-msgid "Censor multiple objects"
-msgstr ""
-
-#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:14
-#, python-format
-msgid "Are you sure you want to censor the selected %(object_name)s objects? This cannot be reversed."
-msgstr ""
-
-#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:23
-msgid "Explanation URL (optional):"
-msgstr ""
-
-#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
-msgid "Yes, I'm sure"
-msgstr ""
-
-#: kuma/demos/templatetags/jinja_helpers.py:109
-msgid "First Place"
-msgstr ""
-
-#: kuma/demos/templatetags/jinja_helpers.py:110
-msgid "Second Place"
-msgstr ""
-
-#: kuma/demos/templatetags/jinja_helpers.py:111
-msgid "Third Place"
-msgstr ""
-
-#: kuma/demos/templatetags/jinja_helpers.py:112
-msgid "Finalist"
-msgstr ""
-
-#: kuma/demos/templatetags/jinja_helpers.py:113
-msgid "Featured"
-msgstr ""
-
-#: kuma/demos/templatetags/jinja_helpers.py:270
-msgid "year"
-msgid_plural "years"
-msgstr[0] "έτος"
-msgstr[1] "έτη"
-
-#: kuma/demos/templatetags/jinja_helpers.py:271
-msgid "month"
-msgid_plural "months"
-msgstr[0] "μήνας"
-msgstr[1] "μήνες"
-
-#: kuma/demos/templatetags/jinja_helpers.py:272
-msgid "week"
-msgid_plural "weeks"
-msgstr[0] "εβδομάδα"
-msgstr[1] "εβδομάδες"
-
-#: kuma/demos/templatetags/jinja_helpers.py:273
-msgid "day"
-msgid_plural "days"
-msgstr[0] "ημέρα"
-msgstr[1] "ημέρες"
-
-#: kuma/demos/templatetags/jinja_helpers.py:281
-#, python-format
-msgid "%(number)d %(type)s"
-msgstr "%(number)d %(type)s"
-
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
 msgstr ""
@@ -2923,6 +992,14 @@ msgstr ""
 #: kuma/landing/jinja2/landing/homepage.html:71
 msgid "Web APIs &amp; DOM"
 msgstr ""
+
+#: kuma/landing/jinja2/landing/homepage.html:72
+msgid "HTML5"
+msgstr "HTML5"
+
+#: kuma/landing/jinja2/landing/homepage.html:73
+msgid "CSS3"
+msgstr "CSS3"
 
 #: kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/homepage.html:95
 msgid "more..."
@@ -3012,7 +1089,7 @@ msgid "Help improve MDN"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:158
-msgid "All parts of MDN (docs, demos, and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
+msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:164
@@ -3134,19 +1211,19 @@ msgid "Better Web docs for a better Web on MDN"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
-msgid "MDN is Developer Powered for CSS docs, demos and more."
+msgid "MDN is Developer Powered for CSS docs and more."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175 kuma/landing/jinja2/landing/promote_buttons.html:179 kuma/landing/jinja2/landing/promote_buttons.html:183
-msgid "MDN is Developer Powered for HTML docs, demos and more."
+msgid "MDN is Developer Powered for HTML docs and more."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176 kuma/landing/jinja2/landing/promote_buttons.html:180 kuma/landing/jinja2/landing/promote_buttons.html:184
-msgid "MDN is Developer Powered for JavaScript docs, demos and more."
+msgid "MDN is Developer Powered for JavaScript docs and more."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
-msgid "MDN is Developer Powered for Web docs, demos and more."
+msgid "MDN is Developer Powered for Web docs and more."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
@@ -3166,7 +1243,7 @@ msgid "Web docs by developers, for developers on MDN"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
-msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
+msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
 msgstr ""
 
 #: kuma/search/admin.py:11
@@ -3317,6 +1394,11 @@ msgstr ""
 msgid "Search again in %(default_locale_native)s only"
 msgstr ""
 
+# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
+#: kuma/search/jinja2/search/results.html:141
+msgid "Docs"
+msgstr "Εγγραφα"
+
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
 msgstr ""
@@ -3425,7 +1507,7 @@ msgstr ""
 msgid "Beta tester"
 msgstr ""
 
-#: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:87
+#: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:81
 msgid "Interests"
 msgstr ""
 
@@ -3437,27 +1519,27 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: kuma/users/forms.py:180 kuma/users/models.py:139 kuma/users/jinja2/users/user_detail.html:117
+#: kuma/users/forms.py:180 kuma/users/models.py:136 kuma/users/jinja2/users/user_detail.html:111
 msgid "Website"
 msgstr ""
 
-#: kuma/users/forms.py:189 kuma/users/models.py:154 kuma/users/jinja2/users/user_detail.html:121 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/users/forms.py:189 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:115 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:207 kuma/users/models.py:169 kuma/users/jinja2/users/user_detail.html:135
+#: kuma/users/forms.py:207 kuma/users/models.py:166 kuma/users/jinja2/users/user_detail.html:129
 msgid "Stack Overflow"
 msgstr ""
 
-#: kuma/users/forms.py:216 kuma/users/models.py:159 kuma/users/jinja2/users/user_detail.html:139
+#: kuma/users/forms.py:216 kuma/users/models.py:156 kuma/users/jinja2/users/user_detail.html:133
 msgid "LinkedIn"
 msgstr ""
 
-#: kuma/users/forms.py:225 kuma/users/models.py:144 kuma/users/jinja2/users/user_detail.html:143
+#: kuma/users/forms.py:225 kuma/users/models.py:141 kuma/users/jinja2/users/user_detail.html:137
 msgid "Mozillians"
 msgstr ""
 
-#: kuma/users/forms.py:234 kuma/users/models.py:164 kuma/users/jinja2/users/user_detail.html:147 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
+#: kuma/users/forms.py:234 kuma/users/models.py:161 kuma/users/jinja2/users/user_detail.html:141 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
 msgid "Facebook"
 msgstr ""
 
@@ -3519,31 +1601,31 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: kuma/users/models.py:102
+#: kuma/users/models.py:99
 msgid "Enter a valid website URL."
 msgstr ""
 
-#: kuma/users/models.py:107
+#: kuma/users/models.py:104
 msgid "Enter a valid Twitter URL."
 msgstr ""
 
-#: kuma/users/models.py:112
+#: kuma/users/models.py:109
 msgid "Enter a valid GitHub URL."
 msgstr ""
 
-#: kuma/users/models.py:117
+#: kuma/users/models.py:114
 msgid "Enter a valid Stack Overflow URL."
 msgstr ""
 
-#: kuma/users/models.py:122
+#: kuma/users/models.py:119
 msgid "Enter a valid LinkedIn URL."
 msgstr ""
 
-#: kuma/users/models.py:127
+#: kuma/users/models.py:124
 msgid "Enter a valid Mozillians URL."
 msgstr ""
 
-#: kuma/users/models.py:132
+#: kuma/users/models.py:129
 msgid "Enter a valid Facebook URL."
 msgstr ""
 
@@ -3569,21 +1651,21 @@ msgstr ""
 msgid "Take the next step to get involved on MDN!"
 msgstr ""
 
-#: kuma/users/views.py:236
+#: kuma/users/views.py:214
 msgid "Email address"
 msgstr ""
 
-#: kuma/users/views.py:295
+#: kuma/users/views.py:273
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr ""
 
-#: kuma/users/views.py:298
+#: kuma/users/views.py:276
 #, python-format
 msgid "%(email)s Unverified"
 msgstr ""
 
-#: kuma/users/views.py:301 kuma/users/jinja2/socialaccount/signup.html:142
+#: kuma/users/views.py:279 kuma/users/jinja2/socialaccount/signup.html:142
 msgid "Other:"
 msgstr ""
 
@@ -3595,7 +1677,7 @@ msgstr ""
 msgid "This profile is inactive."
 msgstr ""
 
-#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/user_detail.html:63
+#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/user_detail.html:57
 msgid "Email addresses"
 msgstr ""
 
@@ -3798,7 +1880,7 @@ msgstr ""
 msgid "Account Connections"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/user_detail.html:61
+#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/user_detail.html:55
 msgid "Account connections"
 msgstr ""
 
@@ -3854,16 +1936,15 @@ msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more st
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
-msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs, submit demos, and have your own profile page."
+msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:68
-msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions (edits, demos, etc.) that you make."
+msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:74
-msgid ""
-"To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions (edits, demos, etc.) that you make."
+msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:82
@@ -3944,80 +2025,66 @@ msgstr ""
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/content.py:718 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:718 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
 msgstr "Επεξεργασία"
 
-#: kuma/users/jinja2/users/user_detail.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
+#: kuma/users/jinja2/users/user_detail.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
 #, fuzzy
 msgid "Advanced"
 msgstr "Προχωρημένο επίπεδο"
 
-#: kuma/users/jinja2/users/user_detail.html:59
+#: kuma/users/jinja2/users/user_detail.html:53
 msgid "Manage"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:62
+#: kuma/users/jinja2/users/user_detail.html:56
 msgid "API keys"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:100
+#: kuma/users/jinja2/users/user_detail.html:94
 msgid "Areas of Expertise"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:108
+#: kuma/users/jinja2/users/user_detail.html:102
 #, python-format
 msgid "Member since %(date_joined)s"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:159
-#, fuzzy, python-format
-msgid "Subscribe to a feed of %(display_name)s's demos"
-msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo του/της {display_name}"
-
-#: kuma/users/jinja2/users/user_detail.html:167
-msgid "No Demos"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:169
-#, python-format
-msgid "You haven't submitted any web technology demos. Build something awesome and <a href=\"%(submit_url)s\">submit a demo</a>!"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:175
+#: kuma/users/jinja2/users/user_detail.html:150
 msgid "Recent Docs Activity"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:175
+#: kuma/users/jinja2/users/user_detail.html:150
 msgid "View all activity"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:180
+#: kuma/users/jinja2/users/user_detail.html:155
 msgid "Page"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:182 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
+#: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
 msgstr "Σχόλιο"
 
-#: kuma/users/jinja2/users/user_detail.html:190 kuma/wiki/jinja2/wiki/document.html:393
+#: kuma/users/jinja2/users/user_detail.html:165 kuma/wiki/jinja2/wiki/document.html:377
 msgid "Edit page"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:191
+#: kuma/users/jinja2/users/user_detail.html:166
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:192 kuma/wiki/jinja2/wiki/document.html:394
+#: kuma/users/jinja2/users/user_detail.html:167 kuma/wiki/jinja2/wiki/document.html:378
 msgid "View page history"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:204
+#: kuma/users/jinja2/users/user_detail.html:179
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:208
+#: kuma/users/jinja2/users/user_detail.html:183
 msgid "This user has no activity."
 msgstr ""
 
@@ -4025,74 +2092,74 @@ msgstr ""
 msgid "Edit Your Profile"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:40
+#: kuma/users/jinja2/users/user_edit.html:38
 msgid "Change your avatar at"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:44
+#: kuma/users/jinja2/users/user_edit.html:42
 msgid "View profile"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:52
+#: kuma/users/jinja2/users/user_edit.html:50
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:63
+#: kuma/users/jinja2/users/user_edit.html:61
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:66
+#: kuma/users/jinja2/users/user_edit.html:64
 msgid "Primary Email"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:67
+#: kuma/users/jinja2/users/user_edit.html:65
 #, fuzzy
 msgid "Edit email"
 msgstr "Επεξεργασία demo"
 
-#: kuma/users/jinja2/users/user_edit.html:79
+#: kuma/users/jinja2/users/user_edit.html:77
 #, fuzzy
 msgid "About me"
 msgstr "Περί MDN"
 
-#: kuma/users/jinja2/users/user_edit.html:79
+#: kuma/users/jinja2/users/user_edit.html:77
 msgid "words remaining"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:85
+#: kuma/users/jinja2/users/user_edit.html:83
 msgid "Interests (tags)"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:86
+#: kuma/users/jinja2/users/user_edit.html:84
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:92
+#: kuma/users/jinja2/users/user_edit.html:90
 msgid "Areas of expertise"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:93
+#: kuma/users/jinja2/users/user_edit.html:91
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:101
+#: kuma/users/jinja2/users/user_edit.html:99
 #, fuzzy
 msgid "My Profiles"
 msgstr "από τον/την %(profile_link)s"
 
-#: kuma/users/jinja2/users/user_edit.html:106 kuma/users/jinja2/users/user_edit.html:124
+#: kuma/users/jinja2/users/user_edit.html:104 kuma/users/jinja2/users/user_edit.html:122
 msgid "Change"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:112
+#: kuma/users/jinja2/users/user_edit.html:110
 msgid "Use your Persona account to sign in."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:132
+#: kuma/users/jinja2/users/user_edit.html:130
 msgid "Use your GitHub account to sign in."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:153 kuma/users/jinja2/users/user_edit.html:161 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
+#: kuma/users/jinja2/users/user_edit.html:151 kuma/users/jinja2/users/user_edit.html:159 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Save Changes"
 msgstr ""
 
@@ -4323,154 +2390,154 @@ msgstr ""
 msgid "Show comparison"
 msgstr ""
 
-#: kuma/wiki/forms.py:31
+#: kuma/wiki/forms.py:30
 msgid "Please provide a title."
 msgstr ""
 
-#: kuma/wiki/forms.py:32
+#: kuma/wiki/forms.py:31
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:34
+#: kuma/wiki/forms.py:33
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:37
+#: kuma/wiki/forms.py:36
 msgid "Name Your Article"
 msgstr ""
 
-#: kuma/wiki/forms.py:38
+#: kuma/wiki/forms.py:37
 msgid "Please provide a slug."
 msgstr ""
 
-#: kuma/wiki/forms.py:39
+#: kuma/wiki/forms.py:38
 msgid "The slug provided is not valid."
 msgstr ""
 
-#: kuma/wiki/forms.py:40
+#: kuma/wiki/forms.py:39
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:42
+#: kuma/wiki/forms.py:41
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:45
+#: kuma/wiki/forms.py:44
 msgid "Please provide a summary."
 msgstr ""
 
-#: kuma/wiki/forms.py:46
+#: kuma/wiki/forms.py:45
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:48
+#: kuma/wiki/forms.py:47
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:51
+#: kuma/wiki/forms.py:50
 msgid "Please provide content."
 msgstr ""
 
-#: kuma/wiki/forms.py:52
+#: kuma/wiki/forms.py:51
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:54
+#: kuma/wiki/forms.py:53
 #, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:57
+#: kuma/wiki/forms.py:56
 #, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr ""
 
-#: kuma/wiki/forms.py:60
+#: kuma/wiki/forms.py:59
 msgid "Another document with this slug already exists."
 msgstr ""
 
-#: kuma/wiki/forms.py:61
+#: kuma/wiki/forms.py:60
 msgid "Another document with this metadata already exists."
 msgstr ""
 
-#: kuma/wiki/forms.py:63
+#: kuma/wiki/forms.py:62
 msgid "This document was modified while you were editing it."
 msgstr ""
 
-#: kuma/wiki/forms.py:65
+#: kuma/wiki/forms.py:64
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
+#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:612 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr ""
 
-#: kuma/wiki/forms.py:82 kuma/wiki/forms.py:160 kuma/wiki/forms.py:614
+#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613
 msgid "Title of article"
 msgstr ""
 
-#: kuma/wiki/forms.py:90 kuma/wiki/forms.py:173 kuma/wiki/jinja2/wiki/create.html:44 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:89 kuma/wiki/forms.py:172 kuma/wiki/jinja2/wiki/create.html:44 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:91 kuma/wiki/forms.py:174
+#: kuma/wiki/forms.py:90 kuma/wiki/forms.py:173
 msgid "Article URL"
 msgstr ""
 
-#: kuma/wiki/forms.py:98 kuma/wiki/jinja2/wiki/create.html:48 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:97 kuma/wiki/jinja2/wiki/create.html:48 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr ""
 
-#: kuma/wiki/forms.py:184 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:183 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr ""
 
-#: kuma/wiki/forms.py:189 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:188 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
 msgstr ""
 
-#: kuma/wiki/forms.py:190
+#: kuma/wiki/forms.py:189
 msgid "Affects search results"
 msgstr ""
 
-#: kuma/wiki/forms.py:198
+#: kuma/wiki/forms.py:197
 msgid "Search result summary:"
 msgstr ""
 
-#: kuma/wiki/forms.py:199
+#: kuma/wiki/forms.py:198
 msgid "Only displayed on search results page"
 msgstr ""
 
-#: kuma/wiki/forms.py:210 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
+#: kuma/wiki/forms.py:209 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
 msgstr ""
 
-#: kuma/wiki/forms.py:219
+#: kuma/wiki/forms.py:218
 msgid "Comment:"
 msgstr ""
 
-#: kuma/wiki/forms.py:222
+#: kuma/wiki/forms.py:221
 msgid "Tag this revision for review?"
 msgstr ""
 
-#: kuma/wiki/forms.py:229
+#: kuma/wiki/forms.py:228
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:620
+#: kuma/wiki/forms.py:619
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:621
+#: kuma/wiki/forms.py:620
 msgid "New article URL"
 msgstr ""
 
@@ -4718,83 +2785,75 @@ msgid "View profile: %(username)s"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:210
-msgid "Show Sidebar"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:224
 msgid "In This Article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:246
+#: kuma/wiki/jinja2/wiki/document.html:232
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:254
+#: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
 "a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:263
+#: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
 "in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:279
+#: kuma/wiki/jinja2/wiki/document.html:265
 msgid "This article is in need of a technical review."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:284
+#: kuma/wiki/jinja2/wiki/document.html:270
 msgid "This article is in need of an editorial review."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:290
+#: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:295
+#: kuma/wiki/jinja2/wiki/document.html:281
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:302
+#: kuma/wiki/jinja2/wiki/document.html:288
 #, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:313
+#: kuma/wiki/jinja2/wiki/document.html:299
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:316
+#: kuma/wiki/jinja2/wiki/document.html:302
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:329
+#: kuma/wiki/jinja2/wiki/document.html:315
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:339
+#: kuma/wiki/jinja2/wiki/document.html:325
 #, fuzzy
 msgid "Document Tags and Contributors"
 msgstr "Όροι συντελεστών"
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:331
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "Μετάβαση στην πρώτη σελίδα"
 
-#: kuma/wiki/jinja2/wiki/document.html:351
+#: kuma/wiki/jinja2/wiki/document.html:337
 msgid "Last updated by:"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/document.html:366
-msgid "Hide Sidebar"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
@@ -5362,6 +3421,10 @@ msgstr ""
 msgid "Preview Changes"
 msgstr ""
 
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
+msgid "Discard Changes"
+msgstr "Απόρριψη αλλαγών"
+
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
 msgstr ""
@@ -5534,6 +3597,10 @@ msgstr[1] ""
 msgid "Purge documents"
 msgstr "Αναφέρετε αυτό το σχόλιο"
 
+#: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
+msgid "Home"
+msgstr ""
+
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
 #, fuzzy
 msgid "Documents"
@@ -5622,16 +3689,16 @@ msgstr ""
 msgid "Sections may only be edited inline."
 msgstr ""
 
-#: kuma/wiki/views/misc.py:58
+#: kuma/wiki/views/misc.py:53
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
 msgstr ""
 
-#: kuma/wiki/views/misc.py:145
+#: kuma/wiki/views/misc.py:106
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
 msgstr ""
 
-#: kuma/wiki/views/misc.py:149
+#: kuma/wiki/views/misc.py:110
 #, python-format
 msgid "Failed to import data: %(error)s"
 msgstr ""
@@ -5648,6 +3715,875 @@ msgstr ""
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
+
+#~ msgid "Demos"
+#~ msgstr "Demo"
+
+#~ msgid "<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
+#~ msgstr "<li><a href=\"/demos\">Δείτε τα demo</a> ή <a href=\"/docs\">περιηγηθείτε στα έγγραφα</a></li>"
+
+#~ msgid "object ID"
+#~ msgstr "object ID"
+
+#~ msgid "name of the action"
+#~ msgstr "όνομα ενέργειας"
+
+#~ msgid "date last modified"
+#~ msgstr "ημερομηνία τελευταίας τροποποίησης"
+
+#~ msgid "This is not working for me"
+#~ msgstr "Δεν δουλεύει στο σύστημα μου"
+
+#~ msgid "This contains inappropriate content"
+#~ msgstr "Περιέχει ανάρμοστο περιεχόμενο"
+
+#~ msgid "This was not created by the author"
+#~ msgstr "Δεν είναι δημιουργία του συντάκτη"
+
+#~ msgid "The author is fake"
+#~ msgstr "Τα στοιχεία του συντάκτη είναι ψευδή"
+
+#~ msgid "Flagged"
+#~ msgstr "Σημειωμένο"
+
+#~ msgid "Flag rejected by moderator"
+#~ msgstr "Η αναφορά σημείωσης απορρίφθηκε από τους διαχειριστές"
+
+#~ msgid "Creator notified"
+#~ msgstr "Ειδοποιήθηκε ο δημιουργός"
+
+#~ msgid "Content hidden by moderator"
+#~ msgstr "Το περιεχόμενο αποκρύφτηκε από τους διαχειριστές"
+
+#~ msgid "Content deleted by moderator"
+#~ msgstr "Το περιεχόμενο διαγράφτηκε από τους διαχειριστές"
+
+#~ msgid "current status of flag review"
+#~ msgstr "Τρέχουσα κατάσταση αξιολόγησης αναφοράς"
+
+#~ msgid "reason for flagging the content"
+#~ msgstr "Αιτία αναφοράς περιεχομένου"
+
+#~ msgid "please explain what content you feel is inappropriate"
+#~ msgstr "Παρακαλούμε εξηγήστε τι θεωρείτε ανάρμοστο στο περιεχόμενο"
+
+#~ msgid "date submitted"
+#~ msgstr "ημερομηνία υποβολής"
+
+#~ msgid "Geolocation"
+#~ msgstr "Γεωτοποθεσία"
+
+#~ msgid "IndexedDB"
+#~ msgstr "IndexedDB"
+
+#~ msgid "Audio"
+#~ msgstr "Audio"
+
+#~ msgid "Drag and Drop"
+#~ msgstr "Σύρσιμο και απόθεση "
+
+#~ msgid "Multi-touch"
+#~ msgstr "Multi-touch"
+
+#~ msgid "Web Workers"
+#~ msgstr "Web Workers"
+
+#~ msgid "Mozilla's Audio Data API extends the current HTML5 API and allows web developers to read and write raw audio data."
+#~ msgstr "Το Audio Data API του Mozilla, επεκτείνει το τρέχον HTML5 API και επιτρέπει στους προγραμματιστές δικτυακών εφαρμογών να διαβάσουν και να γράψουν ασυμπίεστα δεδομένα ήχου."
+
+#~ msgid "MDN Documentation"
+#~ msgstr "Τεκμηρίωση MDN"
+
+#~ msgid "Wikipedia Article"
+#~ msgstr "Άρθρο στη Wikipedia"
+
+#~ msgid "http://en.wikipedia.org/wiki/HTML5_audio"
+#~ msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
+
+#~ msgid "W3C Spec"
+#~ msgstr "Προδιαγραφή W3C"
+
+#, fuzzy
+#~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
+#~ msgstr "http://www.w3.org/TR/html5/video.html#audio"
+
+#~ msgid "The HTML5 canvas element allows you to display scriptable renderings of 2D shapes and bitmap images."
+#~ msgstr "Το στοιχείο HTML5 canvas επιτρέπει την προβολή  δισδιάστατων σχημάτων και εικόνων bitmap των οποίων η απεικόνιση μπορεί να γίνει μέσω σεναρίων εντολών."
+
+#~ msgid "http://en.wikipedia.org/wiki/Canvas_element"
+#~ msgstr "http://en.wikipedia.org/wiki/Canvas_element"
+
+#, fuzzy
+#~ msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
+#~ msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
+
+#~ msgid ""
+#~ "Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
+#~ msgstr ""
+#~ "Η τρίτη έκδοση των επικαλυπτώμενων φύλλων στυλ ( Cascading Style Sheets - CSS3) παρέχει διάφορα νέα χαρακτηριστικά και ιδιότητες για τη βελτίωση της μορφοποίησης και της εμφάνισης εγγράφων "
+#~ "γραμμένων με διάφορες γλώσσες markup, όπως η HTML ή η XML."
+
+#~ msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
+#~ msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
+
+#~ msgid "http://www.w3.org/TR/css3-roadmap/"
+#~ msgstr "http://www.w3.org/TR/css3-roadmap/"
+
+#~ msgid "Device"
+#~ msgstr "Συσκευή"
+
+#~ msgid "Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."
+#~ msgstr "Τα Media queries και τα orientation events επιτρέπουν στους δημιουργούς να προσαρμόσουν το σχεδιασμό τους σε συσκευές παλάμης όπως τα κινητά και οι ταμπλέτες."
+
+#~ msgid "http://www.w3.org/TR/css3-mediaqueries/"
+#~ msgstr "http://www.w3.org/TR/css3-mediaqueries/"
+
+#~ msgid "Files"
+#~ msgstr "Αρχεία"
+
+#~ msgid "The File API allows web developers to use file objects in web applications, as well as selecting and accessing their data."
+#~ msgstr "Το API αρχείων επιτρέπει στους προγραμματιστές δικτυακών εφαρμογών τη χρήση αντικειμέων αρχείων στις εφαρμογές τους καθώς και την πρόσβαση και επιλογή των δεδομένων τους."
+
+#~ msgid "http://www.w3.org/TR/FileAPI/"
+#~ msgstr "http://www.w3.org/TR/FileAPI/"
+
+#~ msgid "Fonts & Type"
+#~ msgstr "Fonts & Type"
+
+#~ msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
+#~ msgstr ""
+#~ "Οι προδιαγραφές του  CSS3-Font περιέχουν βελτιωμένα χαρακτηριστικά για γραμματοσειρές και τυπογραφία, όπως την ενσωμάτωση σε σελίδες των δικών τους γραμματοσειρών μέσω του @font-face ή τον άμεσο "
+#~ "έλεγχο χαρακτηριστικών  γραμματοσειρών OpenType μέσω CSS."
+
+#~ msgid "http://en.wikipedia.org/wiki/Web_typography"
+#~ msgstr "http://en.wikipedia.org/wiki/Web_typography"
+
+#~ msgid "http://www.w3.org/TR/css3-fonts/"
+#~ msgstr "http://www.w3.org/TR/css3-fonts/"
+
+#~ msgid "Forms"
+#~ msgstr "Φόρμες"
+
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgstr ""
+#~ "Τα στοιχεία και οι ιδιότητες φορμών της HTML5 παρέχουν περισσότερο έλεγχο απ' ό,τι στην HTML4 και διευκολύνουν τη διαχείριση αφού δεν είναι πια αναγκαία η χρήση πολύπλοκων σεναρίων εντολών και η "
+#~ "εφαρμογή στυλ που απαιτούσε η HTML4."
+
+#~ msgid "http://en.wikipedia.org/wiki/HTML_forms"
+#~ msgstr "http://en.wikipedia.org/wiki/HTML_forms"
+
+#~ msgid "http://www.w3.org/TR/html5/forms.html"
+#~ msgstr "http://www.w3.org/TR/html5/forms.html"
+
+#~ msgid "The Geolocation API allows web applications to access the user's geographical location."
+#~ msgstr "Το API γεωτοποθεσίας (Geolocation) επιτρέπει στις δικτυακές εφαρμογές την πρόσβαση σε δεδομένα γεωγραφικής τοποθεσίας του χρήστη."
+
+#~ msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
+#~ msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
+
+#~ msgid "http://dev.w3.org/geo/api/spec-source.html"
+#~ msgstr "http://dev.w3.org/geo/api/spec-source.html"
+
+#~ msgid "JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."
+#~ msgstr ""
+#~ "Η JavaScript είναι, μια ελαφριά, αντικειμενοστραφής γλώσσα προγραμματισμού, που χρησιμοποιείται συχνά για τη δημιουργία σεναρίων εντολών διαδραστικής αλληλεπίδρασης σε ιστοσελίδες και δικτυακές "
+#~ "εφαρμογές."
+
+#~ msgid "http://en.wikipedia.org/wiki/JavaScript"
+#~ msgstr "http://en.wikipedia.org/wiki/JavaScript"
+
+#~ msgid "ECMA Spec"
+#~ msgstr "Προδιαγραφή ECMA"
+
+#~ msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+#~ msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+
+#~ msgid "HTML5 is the newest version of the HTML standard, currently under development."
+#~ msgstr "Η HTML5 είναι η νεότερη έκδοση του πρότυπου HTML και προς το παρόν βρίσκεται ακόμα υπό ανάπτυξη."
+
+#~ msgid "http://en.wikipedia.org/wiki/Html5"
+#~ msgstr "http://en.wikipedia.org/wiki/Html5"
+
+#~ msgid "http://dev.w3.org/html5/spec/Overview.html"
+#~ msgstr "http://dev.w3.org/html5/spec/Overview.html"
+
+#~ msgid "IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."
+#~ msgstr "Το IndexedDB είναι ένα  API για την αποθήκευση σημαντικού όγκου δομημένων δεδομένων  στην πλευρά του χρήστη και για υψηλών επιδόσεων αναζητήσεις με τη χρήση ευρετηρίων σ' αυτά τα δεδομένα."
+
+#~ msgid "http://en.wikipedia.org/wiki/IndexedDB"
+#~ msgstr "http://en.wikipedia.org/wiki/IndexedDB"
+
+#~ msgid "http://www.w3.org/TR/IndexedDB/"
+#~ msgstr "http://www.w3.org/TR/IndexedDB/"
+
+#~ msgid "Drag and Drop features allow the user to move elements on the screen using the mouse pointer."
+#~ msgstr "Τα χαρακτηριστικά για σύρσιμο και απόθεση (Drag and Drop) επιτρέπουν στον χρήστη τη μετακίνηση στοιχείων πάνω στην οθόνη με τη χρήση του ποντικιού."
+
+#~ msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
+#~ msgstr "http://en.wikipedia.org/wiki/Drag-and-drop"
+
+#~ msgid "http://www.w3.org/TR/html5/dnd.html"
+#~ msgstr "http://www.w3.org/TR/html5/dnd.html"
+
+#~ msgid "Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."
+#~ msgstr "Ο Firefox για κινητά προσφέρει την πραγματική εμπειρία του διαδικτύου σε κινητά τηλέφωνα κι άλλες συσκευές εκτός των υπολογιστών."
+
+#~ msgid "http://en.wikipedia.org/wiki/Mobile_web"
+#~ msgstr "http://en.wikipedia.org/wiki/Mobile_web"
+
+#~ msgid "http://www.w3.org/Mobile/"
+#~ msgstr "http://www.w3.org/Mobile/"
+
+#~ msgid "Offline Support"
+#~ msgstr "Offline Support"
+
+#~ msgid "Offline caching of web applications' resources using the application cache and local storage."
+#~ msgstr "Εκτός σύνδεσης caching πόρων διαδικτυακών εφαρμογών με τη χρήση application cache και local storage."
+
+#~ msgid "http://en.wikipedia.org/wiki/Web_Storage"
+#~ msgstr "http://en.wikipedia.org/wiki/Web_Storage"
+
+#~ msgid "http://dev.w3.org/html5/webstorage/"
+#~ msgstr "http://dev.w3.org/html5/webstorage/"
+
+#~ msgid "Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."
+#~ msgstr "Η Scalable Vector Graphics (SVG) είναι μια γλώσσα βασισμένη σε XML που χρησιμοποιείται για να περιγράψει διανυσματικά γραφικά δυο διαστάσεων."
+
+#~ msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+#~ msgstr "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+
+#~ msgid "http://www.w3.org/TR/SVG11/"
+#~ msgstr "http://www.w3.org/TR/SVG11/"
+
+#~ msgid "Video"
+#~ msgstr "Video"
+
+#~ msgid "The HTML5 video element provides integrated support for playing video media without requiring plug-ins."
+#~ msgstr "Το στοιχείο video της HTML5 παρέχει ενσωματωμένη υποστήριξη για την αναπαραγωγή βίντεο χωρίς την απαίτηση πρόσθετων λειτουργιών."
+
+#~ msgid "http://en.wikipedia.org/wiki/HTML5_video"
+#~ msgstr "http://en.wikipedia.org/wiki/HTML5_video"
+
+#, fuzzy
+#~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
+#~ msgstr "http://www.w3.org/TR/html5/video.html#audio"
+
+#~ msgid "In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."
+#~ msgstr "Μέσα στα πλαίσια του στοιχείου canvas της HTML, το WebGL παρέχει ένα  API για την υλοποίηση τρισδιάστατων γραφικών στον περιηγητή."
+
+#~ msgid "http://en.wikipedia.org/wiki/WebGL"
+#~ msgstr "http://en.wikipedia.org/wiki/WebGL"
+
+#~ msgid "Khronos Spec"
+#~ msgstr "Khronos Spec"
+
+#~ msgid "http://www.khronos.org/webgl/"
+#~ msgstr "http://www.khronos.org/webgl/"
+
+#~ msgid "WebSockets"
+#~ msgstr "WebSockets"
+
+#~ msgid "WebSockets is a technology that makes it possible to open an interactive communication session between the user's browser and a server."
+#~ msgstr "Τα WebSockets είναι μια τεχνολογία που προσφέρει τη δυνατότητα αμφίδρομης επικοινωνίας μέσω του περιηγητή του χρήστη και ενός διακομιστή."
+
+#~ msgid "http://en.wikipedia.org/wiki/Web_Sockets"
+#~ msgstr "http://en.wikipedia.org/wiki/Web_Sockets"
+
+#~ msgid "http://dev.w3.org/html5/websockets/"
+#~ msgstr "http://dev.w3.org/html5/websockets/"
+
+#~ msgid "Web Workers provide a simple means for web content to run scripts in background threads."
+#~ msgstr "Τα Web Workers προσφέρουν τη δυνατότητα σε ιστοσελίδες να εκτελούν με απλό τρόπο σενάρια εντολών στο παρασκήνιο."
+
+#~ msgid "http://en.wikipedia.org/wiki/Web_Workers"
+#~ msgstr "http://en.wikipedia.org/wiki/Web_Workers"
+
+#~ msgid "http://www.w3.org/TR/workers/"
+#~ msgstr "http://www.w3.org/TR/workers/"
+
+#~ msgid "XMLHttpRequest"
+#~ msgstr "XMLHttpRequest"
+
+#~ msgid "XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."
+#~ msgstr "Το XMLHttpRequest (XHR) χρησιμοποιείται για να στέλνει αιτήματα HTTP απευθείας σε ένα διακομιστή και να φορτώνει τα δεδομένα της απόκρισης του επίσης απευθείας στο σενάριο εντολών."
+
+#~ msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
+#~ msgstr "http://en.wikipedia.org/wiki/XMLHttpRequest"
+
+#~ msgid "http://www.w3.org/TR/XMLHttpRequest/"
+#~ msgstr "http://www.w3.org/TR/XMLHttpRequest/"
+
+#~ msgid "Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."
+#~ msgstr "Χρησιμοποιείται για την ανίχνευση της κίνησης των δαχτύλων ενός χρήστη σε μια οθόνη επαφής, παρακολουθώντας τα ακατέργαστα δεδομένα επαφής που παράγονται από το σύστημα."
+
+#~ msgid "http://en.wikipedia.org/wiki/Multi-touch"
+#~ msgstr "http://en.wikipedia.org/wiki/Multi-touch"
+
+#~ msgid "http://www.w3.org/2010/webevents/charter/"
+#~ msgstr "http://www.w3.org/2010/webevents/charter/"
+
+#~ msgid "MPL/GPL/LGPL"
+#~ msgstr "MPL/GPL/LGPL"
+
+#~ msgid "http://www.mozilla.org/MPL/"
+#~ msgstr "http://www.mozilla.org/MPL/"
+
+#~ msgid "GPL"
+#~ msgstr "GPL"
+
+#~ msgid "http://www.opensource.org/licenses/gpl-license.php"
+#~ msgstr "http://www.opensource.org/licenses/gpl-license.php"
+
+#~ msgid "BSD"
+#~ msgstr "BSD"
+
+#~ msgid "http://www.opensource.org/licenses/bsd-license.php"
+#~ msgstr "http://www.opensource.org/licenses/bsd-license.php"
+
+#~ msgid "Apache"
+#~ msgstr "Apache"
+
+#~ msgid "http://www.apache.org/licenses/"
+#~ msgstr "http://www.apache.org/licenses/"
+
+#~ msgid "Public Domain (where applicable by law)"
+#~ msgstr "Δημόσιας χρήσης (όπου επιτρέπεται από το νόμο)"
+
+#~ msgid "http://creativecommons.org/publicdomain/zero/1.0/"
+#~ msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
+
+#~ msgid "MDN demos"
+#~ msgstr "Demo στο MDN"
+
+#~ msgid "Demos submitted by MDN users"
+#~ msgstr "Demo που έχουν δημιουργηθεί από χρήστες του MDN"
+
+#~ msgid "MDN recent demos"
+#~ msgstr "Πρόσφατα demo του MDN"
+
+#~ msgid "Demos recently submitted to MDN"
+#~ msgstr "Demo που υποβλήθηκαν πρόσφατα στο MDN"
+
+#~ msgid "MDN featured demos"
+#~ msgstr "Προβεβλημένα demo στο MDN"
+
+#~ msgid "Demos featured on MDN"
+#~ msgstr "Demo που προβάλλονται στο MDN"
+
+#~ msgid "MDN demos tagged %s"
+#~ msgstr "Demo στο MDN με ετικέτα: %s"
+
+#~ msgid "MDN demos tagged \"%s\""
+#~ msgstr "Demo στο MDN με ετικέτα «%s»"
+
+#~ msgid "%s's MDN demos"
+#~ msgstr "%s's MDN demo"
+
+#~ msgid "MDN demo search for \"%s\""
+#~ msgstr "Αναζήτηση στα demo του MDN για «%s»"
+
+#~ msgid "Search results for demo submissions matching \"%s\""
+#~ msgstr "Αποτελέσματα αναζήτησης για demo που ταιριάζουν με «%s»"
+
+#, fuzzy
+#~ msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
+#~ msgstr "Παρακαλούμε το μέγεθος αρχείου να είναι μικρότερο από %s. Τρέχον μέγεθος αρχείου: %s"
+
+#~ msgid "Cannot process image"
+#~ msgstr "Δεν είναι δυνατή η επεξεργασία της εικόνας"
+
+#~ msgid "what is your demo's name?"
+#~ msgstr "Τι όνομα έχει το demo σας;"
+
+#~ msgid "slug"
+#~ msgstr "slug"
+
+#~ msgid "describe your demo in one line"
+#~ msgstr "Περιγράψτε το demo σας σε μια γραμμή"
+
+#~ msgid "describe your demo in more detail (optional)"
+#~ msgstr "Περιγράψτε το demo σε με περισσότερες λεπτομέρειες (προαιρετικό)"
+
+#~ msgid "control how your demo is launched"
+#~ msgstr "Επιλέξτε πως θα εκκινήται το demo σας "
+
+#~ msgid "Disable navigation bar, launch demo in a new window"
+#~ msgstr "Απενεργοποίηση της εργαλειοθήκης διευθύνσεων, εκκίνηση demo σε νέο παράθυρο"
+
+#~ msgid "Use navigation bar, display demo in <iframe>"
+#~ msgstr "Χρήση εργαλειοθήκης διευθύνσεων, προβολή demo σε <iframe>"
+
+#~ msgid "Screenshot #1"
+#~ msgstr "Στιγμιότυπο οθόνης #1"
+
+#~ msgid "Screenshot #2"
+#~ msgstr "Στιγμιότυπο οθόνης #2"
+
+#~ msgid "Screenshot #3"
+#~ msgstr "Στιγμιότυπο οθόνης #3"
+
+#~ msgid "Screenshot #4"
+#~ msgstr "Στιγμιότυπο οθόνης #4"
+
+#~ msgid "Screenshot #5"
+#~ msgstr "Στιγμιότυπο οθόνης #5"
+
+#~ msgid "have a video of your demo in action? (optional)"
+#~ msgstr "Έχετε βίντεο του demo σας σε δράση; (προαιρετικό)"
+
+#~ msgid "select a ZIP file containing your demo"
+#~ msgstr "Επιλέξτε ένα αρχείο ZIP που περιέχει το demo σας"
+
+#~ msgid "Is your source code also available somewhere else on the web (e.g., github)? Please share the link."
+#~ msgstr "Υπάρχει διαθέσιμος ο πηγαίος κώδικας σας κάπου άλλου στο διαδίκτυο (π.χ. στο github); Σας παρακαλούμε να δώσετε το δεσμό."
+
+#~ msgid "Select the license that applies to your source code."
+#~ msgstr "Επιλέξτε την άδεια που έχει ισχύ στον πηγαίο κώδικα σας."
+
+#~ msgid "date created"
+#~ msgstr "ημερομηνία που δημιουργήθηκε"
+
+#~ msgid "ZIP file contains no acceptable files"
+#~ msgstr "Το αρχείο ZIP δεν περιέχει αποδεκτά αρχεία"
+
+#~ msgid "ZIP file corrupted"
+#~ msgstr "Το  αρχείο ZIP είναι κατεστραμμένο"
+
+#~ msgid "ZIP file contains a file that is too large: %(filename)s"
+#~ msgstr "Το αρχείο ZIP περιλαμβάνει τουλάχιστον ένα πολύ μεγάλο αρχείο: %(filename)s"
+
+#~ msgid "ZIP file contains an unacceptable file: %(filename)s"
+#~ msgstr "Το αρχείο ZIP  περιέχει τουλάχιστον ένα μη αποδεκτό αρχείο: %(filename)s"
+
+#~ msgid "HTML index not found in ZIP"
+#~ msgstr "Δεν βρέθηκε HTML index στο αρχείο  ZIP"
+
+#~ msgid "access denied"
+#~ msgstr "απαγορεύεται η πρόσβαση"
+
+#, fuzzy
+#~ msgid "%(subtitle)s | Demo Studio"
+#~ msgstr "{subtitle} | Demo Studio"
+
+#~ msgid "MDN"
+#~ msgstr "MDN"
+
+#~ msgid "Demo Studio"
+#~ msgstr "Demo Studio"
+
+# Χωρίς τόνους λόγω του css text-transform: uppercase.
+#~ msgid "Submit a Demo"
+#~ msgstr "Υποβολη demo"
+
+#~ msgid "Remove this demo?"
+#~ msgstr "Αφαίρεση αυτού του demo;"
+
+#~ msgid ""
+#~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
+#~ "<strong>cannot be undone</strong>."
+#~ msgstr ""
+#~ "<p>Πρόκειται να αφαιρέσετε το <strong>%(demo_title)s</strong> από το Demo Studio.</p> <p>Η παρουσίαση του demo, ο πηγαίος κώδικας και τα στατιστικά του θα <strong>διαγραφούν</strong>.</p> "
+#~ "<p>Αυτή η ενέργεια <strong>δεν είναι αναστρέψιμη</strong>."
+
+#~ msgid "Mozilla Demo Studio"
+#~ msgstr "Mozilla Demo Studio"
+
+#~ msgid "Learn More"
+#~ msgstr "Μάθετε περισότερα"
+
+#, fuzzy
+#~ msgid "Go to the previous demo, %(demo_title)s"
+#~ msgstr "Μετάβαση στο προηγούμενο demo, {demo_title}"
+
+#~ msgid "Prev"
+#~ msgstr "Προηγούμενο"
+
+#, fuzzy
+#~ msgid "Go to the next demo, %(demo_title)s"
+#~ msgstr "Μετάβαση στο επόμενο demo, {demo_title}"
+
+#~ msgid "See the previous image"
+#~ msgstr "Δείτε την προηγούμενη εικόνα"
+
+#~ msgid "See the next image"
+#~ msgstr "Δείτε την επόμενη εικόνα"
+
+# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
+#~ msgid "Launch Demo"
+#~ msgstr "Εκκινηση demo"
+
+#~ msgid "You like this demo. Undo?"
+#~ msgstr "Αυτό το demo σας αρέσει. Να γίνει αναίρεση;"
+
+#~ msgid "You Like"
+#~ msgstr "Σας αρέσει"
+
+#~ msgid "Do you like this demo?"
+#~ msgstr "Σας αρέσει το demo;"
+
+#~ msgid "Like It"
+#~ msgstr "Μου άρεσει"
+
+#~ msgid "Share this demo with your social network"
+#~ msgstr "Μοιραστείτε αυτό το demo στο κοινωνικό σας δίκτυο"
+
+#~ msgid "Share It"
+#~ msgstr "Διαμοιρασμός"
+
+#~ msgid "Share on Twitter"
+#~ msgstr "Διαμοιρασμός στο Twitter"
+
+#~ msgid "Share on Facebook"
+#~ msgstr "Διαμοιρασμός στο Facebook"
+
+#~ msgid "Built using"
+#~ msgstr "Φτιάχτηκε με χρήση"
+
+#, fuzzy
+#~ msgid "See more demos made with %(tag_title)s"
+#~ msgstr "Δείτε περισσότερα demo που φτιάχτηκαν με {tag_title}"
+
+#, fuzzy
+#~ msgid "This demo has been viewed %(num)s time"
+#~ msgid_plural "This demo has been viewed %(num)s times"
+#~ msgstr[0] "Αυτό το demo έχει προβληθεί {count} φορά"
+#~ msgstr[1] "Αυτό το demo έχει προβληθεί {count} φορές"
+
+#, fuzzy
+#~ msgid "%(num)s person liked this demo"
+#~ msgid_plural "%(num)s people liked this demo"
+#~ msgstr[0] "Αυτό το demo αρέσει σε {count} άτομο"
+#~ msgstr[1] "Αυτό το demo αρέσει σε {count} άτομα"
+
+#~ msgid "Edit Demo"
+#~ msgstr "Επεξεργασία demo"
+
+#~ msgid "Remove demo"
+#~ msgstr "Αφαίρεση demo"
+
+#~ msgid "Show demo"
+#~ msgstr "Προβολή demo"
+
+#~ msgid "Hide demo"
+#~ msgstr "Απόκρυψη demo"
+
+#~ msgid "More About This Demo From The Author"
+#~ msgstr "Περισσότερα σχετικά μ' αυτό το demo από το δημιουργό του"
+
+#, fuzzy
+#~ msgid "About this Demo"
+#~ msgstr "Αφαίρεση αυτού του demo;"
+
+#~ msgid "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP File</span>"
+#~ msgstr "Κάντε λήψη του αρχείου <span class=\"note\">ZIP %(file_ksize)s KB &middot; με τον πηγαίο κώδικα</span>"
+
+#~ msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
+#~ msgstr "Αυτό το demo διατίθεται σύμφωνα με την άδεια <a href=\"%(link)s\">%(title)s</a>."
+
+#, fuzzy
+#~ msgid "More by %(creator)s"
+#~ msgstr "Περισσότερα από τον/την {creator_link}"
+
+#~ msgid "Report a Problem"
+#~ msgstr "Αναφορά προβλήματος"
+
+#~ msgid "Demo is not working"
+#~ msgstr "Το demo δεν λειτουργεί"
+
+#~ msgid "Demo is inappropriate"
+#~ msgstr "Το demo έχει ανάρμοστο περιεχόμενο"
+
+#~ msgid "Demo is not by this author"
+#~ msgstr "Το demo ανήκει σε άλλο προγραμματιστή"
+
+#, fuzzy
+#~ msgid "Demos tagged %(tag)s"
+#~ msgstr "Demo με ετικέτα: {tag}"
+
+#, fuzzy
+#~ msgid "Subscribe to a feed of %(tag_title)s demos"
+#~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
+
+#~ msgid "Submitted by:"
+#~ msgstr "Υποβλήθηκε από:"
+
+#~ msgid "Tagged as:"
+#~ msgstr "Έχει ετικέτα:"
+
+#~ msgid "Flag this demo?"
+#~ msgstr "Να γίνει αναφορά του demo;"
+
+#~ msgid "Recent demos"
+#~ msgstr "Πρόσφατα demo"
+
+# Χωρίς τόνους λόγω του css text-transform: uppercase.
+#~ msgid "Featured demos"
+#~ msgstr "Προβεβλημενα demo"
+
+# Χωρίς τόνους λόγω του css text-transform: uppercase.
+#~ msgid "Featured Demos"
+#~ msgstr "Προβεβλημενα demo"
+
+# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
+#~ msgid "Launch"
+#~ msgstr "Εκκινηση"
+
+#, fuzzy
+#~ msgid "Search demos"
+#~ msgstr "Αναζήτηση στα demo για «{q}»"
+
+# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
+#~ msgid "Browse by Technology"
+#~ msgstr "Περιηγηση με βαση την τεχνολογια"
+
+#~ msgid "recent"
+#~ msgstr "πρόσφατο"
+
+#~ msgid "by %(profile_link)s"
+#~ msgstr "από τον/την %(profile_link)s"
+
+#~ msgid "Remove this toolbar"
+#~ msgstr "Αφαίρεση αυτής της εργαλειοθήκης"
+
+#~ msgid "Remove toolbar"
+#~ msgstr "Αφαίρεση της εργαλειοθήκης"
+
+#~ msgid "Browse all demos"
+#~ msgstr "Περιήγηση σε όλα τα demo"
+
+#~ msgid "Subscribe to a feed of all demos"
+#~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για όλα τα demo"
+
+#, fuzzy
+#~ msgid "Search for \"%(query)s\""
+#~ msgstr "Αναζήτηση για «{q}»"
+
+#, fuzzy
+#~ msgid "Search results for \"%(query)s\""
+#~ msgstr "Αποτελέσματα αναζήτησης για «{q}»"
+
+#, fuzzy
+#~ msgid "Search demos for \"%(query)s\""
+#~ msgstr "Αναζήτηση στα demo για «{q}»"
+
+#, fuzzy
+#~ msgid "Subscribe to a feed of search results for \"%(query)s\""
+#~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για αποτελέσματα αναζήτησης του «{q}»"
+
+#, fuzzy
+#~ msgid "%(tag_title)s Demos"
+#~ msgstr "Demo με ετικέτα: {tag_title}"
+
+#, fuzzy
+#~ msgid "Edit %(demo_title)s"
+#~ msgstr "Επεξεργασία {demo_title}"
+
+# Χωρίς τόνους λόγω του css text-transform: uppercase.
+#~ msgid "Submit a New Demo"
+#~ msgstr "Υποβολη νεου demo"
+
+#~ msgid ""
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ msgstr ""
+#~ "<p>Είτε φτιάχνετε ένα νέο θαυμαστό τόπο στο διαδίκτυο, είτε απλά πειραματίζεστε με τη νέα τεχνολογία, σας προσκαλούμε να προσθέσετε τα δικά σας  demo για να μοιραστείτε τις εμπειρίες σας (ή απλά "
+#~ "να τα επιδείξετε) με άλλους προγραμματιστές.</p> <p>Σας παρακαλούμε να συμπληρώσετε την παρακάτω φόρμα για να είστε σίγουροι ότι το demo σας θα υποβληθεί με επιτυχία στο Demo Studio.</p>"
+
+#~ msgid "Describe Your Demo"
+#~ msgstr "Περιγράψτε το demo σας"
+
+#~ msgid "<p>Tell us more about your demo, including the name, description and the technologies used. Please list the browsers you have tested it with.</p>"
+#~ msgstr ""
+#~ "<p>Πείτε μας περισσότερα για το demo σας και συμπεριλάβετε σ' αυτά το όνομα, την περιγραφή και τις τεχνολογίες που χρησιμοποιεί. Παρακαλούμε αναφέρετε τους περιηγητές πάνω στους οποίους το "
+#~ "δοκιμάσατε.</p>"
+
+#~ msgid "Select up to five technologies used in your demo."
+#~ msgstr "Επιλέξτε μέχρι πέντε τεχνολογίες που χρησιμοποιείτε στο demo σας."
+
+#~ msgid "Show Off Your Demo"
+#~ msgstr "Επιδείξετε το demo σας"
+
+#~ msgid "Provide at least one screenshot of your demo in action"
+#~ msgstr "Δώστε τουλάχιστον ένα στιγμιότυπο οθόνης του demo σας σε δράση"
+
+#~ msgid "JPEG and PNG supported. Minimum size of 480x360."
+#~ msgstr "Υποστηρίζονται αρχεία JPEG και PNG. Ελάχιστη ανάλυση 480x360."
+
+#~ msgid "We support YouTube and Vimeo"
+#~ msgstr "Υποστηρίζουμε το YouTube και το Vimeo"
+
+#~ msgid "Preparing Your Demo"
+#~ msgstr "Ετοιμάζοντας το demo σας"
+
+#, fuzzy
+#~ msgid ""
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο "
+#~ "βασικό κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> "
+#~ "<li>Αν το demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s"
+#~ "\">λογαριασμό στο MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να "
+#~ "συμπεριλάβετε δεσμούς στις σελίδες των δημιουργών του.</li> </ul>"
+
+#~ msgid "Provide the Source Code"
+#~ msgstr "Παραθέστε τον πηγαίο κώδικα"
+
+#~ msgid "<p>Upload a ZIP file of your source code, in which the main page of your demo is named <code>index.html</code> in the root directory.</p>"
+#~ msgstr ""
+#~ "<p>Αποστείλετε ένα αρχείο ZIP  με τον πηγαίο κώδικα σας, στο οποίο η κεντρική σελίδα του demo σας θα βρίσκεται στο βασικό κατάλογο του συμπιεσμένου αρχείου και θα έχει όνομα <code>index.html</"
+#~ "code>.</p>"
+
+# Χωρίς τόνους λόγω του css text-transform: uppercase.
+#~ msgid "Submit demo"
+#~ msgstr "Υποβολη demo"
+
+#~ msgid "Discard Demo"
+#~ msgstr "Απόρριψη demo"
+
+#~ msgid "Save changes"
+#~ msgstr "Αποθήκευση αλλαγών"
+
+#~ msgid ""
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
+#~ msgstr ""
+#~ "<p>Είτε δημιουργείτε μια απίθανη νέα εμπειρία για τους χρήστες του διαδικτύου, είτε απλά πειραματίζεστε με τις τελευταίες εξελίξεις της τεχνολογίας, σας προσκαλούμε να υποβάλετε τα demo σας και "
+#~ "να τα μοιραστείτε (ή απλά να τα δείξετε) με άλλους δημιουργούς.</p>"
+
+#~ msgid "Before You Begin"
+#~ msgstr "Πριν ξεκινήσετε"
+
+#, fuzzy
+#~ msgid ""
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li>Θα πρέπει να είστε διατεθειμένοι να <strong>παρέχετε τον πηγαίο κώδικα</strong> του demo σας. Τα demo φιλοξενούνται στους διακομιστές του Demo Studio.</li> <li>Ο πηγαίος κώδικας του "
+#~ "demo σας θα πρέπει να διατίθεται σύμφωνα με τους όρους μιας  <strong>ανοικτής άδειας χρήσης</strong>, όπως οι MPL, GPL, ή BSD.</li> <li>Το demo σας θα πρέπει να πραγματεύεται <strong>ανοικτές "
+#~ "τεχνολογίες για το διαδίκτυο</strong>, όπως η HTML5 και το CSS3.</li> <li>Το demo σας θα πρέπει να υποστηρίζεται από μια ευρεία γκάμα <strong>σύγχρονων περιηγητών</strong>, όπως οι Firefox, "
+#~ "Chrome, Safari, και Opera.</li> </ul>"
+
+#, fuzzy
+#~ msgid ""
+#~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο "
+#~ "βασικό κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> "
+#~ "<li>Αν το demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s"
+#~ "\">λογαριασμό στο MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να "
+#~ "συμπεριλάβετε δεσμούς στις σελίδες των δημιουργών του.</li> </ul>"
+
+#, fuzzy
+#~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
+#~ msgstr "<p>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <strong><a href=\"%(signup_url)s\">λογαριασμό στο MDN</a></strong>.</p>"
+
+#, fuzzy
+#~ msgid "Log In to Profile"
+#~ msgstr "Σύνδεση σε λογαριασμό"
+
+#~ msgid "Terms for Contributors"
+#~ msgstr "Όροι συντελεστών"
+
+#, fuzzy
+#~ msgid "Demo Studio: Terms for Contributors"
+#~ msgstr "Όροι συντελεστών"
+
+#~ msgid "Rights Representation Details"
+#~ msgstr "Λεπτομέρειες δικαιωμάτων αναπαραγωγής"
+
+#~ msgid "Search the Demo Studio"
+#~ msgstr "Αναζήτηση στο Demo Studio"
+
+#, fuzzy
+#~ msgid "See %(display_name)s's profile"
+#~ msgstr "Δείτε το προφίλ του/της {display_name}"
+
+#~ msgid "Up and Coming"
+#~ msgstr "Επερχόμενα"
+
+#~ msgid "Sort demos by most views"
+#~ msgstr "Ταξινόμηση demo κατά αριθμό προβολών"
+
+#~ msgid "You are viewing demos by most views"
+#~ msgstr "Βλέπετε τα demo που έχουν τις περισσότερες προβολές"
+
+#~ msgid "Most Viewed"
+#~ msgstr "Περισσότερες προβολές"
+
+#~ msgid "Sort demos by most likes"
+#~ msgstr "Ταξινόμηση demo με βάση τα περισσότερα «μου αρέσει»"
+
+#~ msgid "You are viewing demos by most likes"
+#~ msgstr "Βλέπετε τα demo που αρέσουν στους περισσότερους χρήστες"
+
+#~ msgid "Most Liked"
+#~ msgstr "Περισσότερο αρεστά"
+
+#~ msgid "Sort demos by most recently submitted"
+#~ msgstr "Ταξινόμηση των demo με βάση τα πιο πρόσφατα"
+
+#~ msgid "You are viewing demos by most recently submitted"
+#~ msgstr "Βλέπετε τα demo που έχουν υποβληθεί πιο πρόσφατα."
+
+#~ msgid "Most Recent"
+#~ msgstr "Πιο πρόσφατα"
+
+#~ msgid "Go to the first page"
+#~ msgstr "Μετάβαση στην πρώτη σελίδα"
+
+#~ msgid "Go to the previous page"
+#~ msgstr "Μετάβαση στην προηγούμενη σελίδα"
+
+#~ msgid "Go to the next page"
+#~ msgstr "Μετάβαση στην επόμενη σελίδα"
+
+#~ msgid "Go to the last page"
+#~ msgstr "Μετάβαση στην τελευταία σελίδα"
+
+#~ msgid "Last"
+#~ msgstr "Τελευταία"
+
+#~ msgid "Feed"
+#~ msgstr "Αρχείο ροής"
+
+#, fuzzy
+#~ msgid "Launch %(title)s"
+#~ msgstr "Εκκίνηση {title}"
+
+#~ msgid "year"
+#~ msgid_plural "years"
+#~ msgstr[0] "έτος"
+#~ msgstr[1] "έτη"
+
+#~ msgid "month"
+#~ msgid_plural "months"
+#~ msgstr[0] "μήνας"
+#~ msgstr[1] "μήνες"
+
+#~ msgid "week"
+#~ msgid_plural "weeks"
+#~ msgstr[0] "εβδομάδα"
+#~ msgstr[1] "εβδομάδες"
+
+#~ msgid "day"
+#~ msgid_plural "days"
+#~ msgstr[0] "ημέρα"
+#~ msgstr[1] "ημέρες"
+
+#~ msgid "%(number)d %(type)s"
+#~ msgstr "%(number)d %(type)s"
+
+#, fuzzy
+#~ msgid "Subscribe to a feed of %(display_name)s's demos"
+#~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo του/της {display_name}"
 
 #~ msgid "{count} view"
 #~ msgid_plural "{count} views"

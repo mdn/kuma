@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-08 08:40-0800\n"
+"POT-Creation-Date: 2016-01-15 11:45-0800\n"
 "PO-Revision-Date: 2016-01-01 11:40+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
@@ -64,12 +64,7 @@ msgstr "<li><a href=\"%(logout_url)s\">로그 아웃</a> 후 다시 시도 하�
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr "<li><a href=\"%(login_url)s\">로그인</a> 후 다시 시도합니다.</li>"
 
-#: jinja2/403.html:53
-#, python-format
-msgid "<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">browse docs</a></li>"
-msgstr "<li><a href=\"%(demos_url)s\">데모를 보거나</a> 또는 <a href=\"%(docs_url)s\">문서 탐색하기</a></li>"
-
-#: jinja2/403.html:58
+#: jinja2/403.html:55
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
@@ -108,8 +103,7 @@ msgid "Internal Server Error"
 msgstr "내부 서버 오류"
 
 # 메인 페이지 제목
-#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:91 jinja2/base.html:93 jinja2/base_popup.html:5 kuma/demos/jinja2/demos/launch.html:32
-#: kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:91 jinja2/base.html:93 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla 개발자 네트워크"
 
@@ -175,7 +169,7 @@ msgstr "HTML"
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:130 kuma/core/translations/search/filter/js/name.py:4 kuma/demos/__init__.py:287 kuma/landing/jinja2/landing/homepage.html:74 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:130 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:74 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "자바스크립트"
 
@@ -221,107 +215,102 @@ msgstr "개발자 가이드"
 msgid "Accessibility"
 msgstr "...문서 더보기"
 
-#: jinja2/base.html:144 jinja2/base.html:162 kuma/demos/jinja2/demos/devderby_landing.html:58
-msgid "Demos"
-msgstr "MDN 데모"
-
-#: jinja2/base.html:145
+#: jinja2/base.html:144
 msgid "...more docs"
 msgstr "...문서 더 보기"
 
-#: jinja2/base.html:149
+#: jinja2/base.html:148
 #, fuzzy
 msgid "Mozilla Docs"
 msgstr "Mozilla 랩"
 
-#: jinja2/base.html:154 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:85
+#: jinja2/base.html:153 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:85
 msgid "Add-ons"
 msgstr "부가 기능"
 
 # 77%
-#: jinja2/base.html:155 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:81
+#: jinja2/base.html:154 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:81
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:156 kuma/landing/jinja2/landing/homepage.html:83
+#: jinja2/base.html:155 kuma/landing/jinja2/landing/homepage.html:83
 msgid "Firefox Marketplace"
 msgstr "Firefox 마켓플레이스"
 
-#: jinja2/base.html:157 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:82
+#: jinja2/base.html:156 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:82
 msgid "Firefox OS"
 msgstr "Firefox OS"
 
-#: jinja2/base.html:158 jinja2/includes/login.html:20
+#: jinja2/base.html:157 jinja2/includes/login.html:20
 msgid "Persona"
 msgstr "Persona"
 
-#: jinja2/base.html:162
+#: jinja2/base.html:161
 msgid "Developer Tools"
 msgstr "개발자 도구"
 
-#: jinja2/base.html:162
+#: jinja2/base.html:161
 #, fuzzy
 msgid "Feedback"
 msgstr "피드"
 
-#: jinja2/base.html:167
+#: jinja2/base.html:166
 #, fuzzy
 msgid "Get Firefox help"
 msgstr "Firefox 도움말 검색"
 
-#: jinja2/base.html:168
+#: jinja2/base.html:167
 #, fuzzy
 msgid "Get web development help"
 msgstr "모든 웹 개발 도구"
 
-#: jinja2/base.html:171
+#: jinja2/base.html:170
 #, fuzzy
 msgid "Join the MDN community"
 msgstr "커뮤니티 참여하기"
 
-#: jinja2/base.html:172
+#: jinja2/base.html:171
 #, fuzzy
 msgid "Report a content problem"
 msgstr "오류 보고"
 
 # 100%
-#: jinja2/base.html:173
+#: jinja2/base.html:172
 msgid "Report a bug"
 msgstr "문제점 알려주기"
 
 # 검색 버튼
-#: jinja2/base.html:180 jinja2/base.html:181 jinja2/base.html:183 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/demos/jinja2/demos/elements/demos_head.html:33
-#: kuma/demos/jinja2/demos/elements/search_form.html:6 kuma/landing/jinja2/landing/homepage.html:38 kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55
-#: kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2 kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52
-#: kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
+#: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
+#: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "검색"
 
-#: jinja2/base.html:199
+#: jinja2/base.html:198
 #, fuzzy, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
 "<bdi>&copy; 2005-%(thisyear)s Mozilla 개발자 네트워크 및 개별 공헌자<br /> 콘텐츠 라이센스 고지<a href=\"%(copyright_url)s\">these licenses</a> &middot; <a href=\"%(about_url)s\">MDN 소개</a> "
 "&middot; <a href=\"//github.com/mozilla/kuma\">코드 공헌</a> &middot; <a href=\"//www.mozilla.org/privacy/websites/\">개인 정보 보호 정책</a></bdi>"
 
-#: jinja2/base.html:204
+#: jinja2/base.html:203
 msgid "About MDN"
 msgstr "MDN 소개"
 
-#: jinja2/base.html:205
+#: jinja2/base.html:204
 msgid "Terms"
 msgstr ""
 
-#: jinja2/base.html:206
+#: jinja2/base.html:205
 #, fuzzy
 msgid "Privacy"
 msgstr "개인 정보 보호 정책"
 
-#: jinja2/base.html:207
+#: jinja2/base.html:206
 msgid "Cookies"
 msgstr "쿠키"
 
-#: jinja2/base.html:208
+#: jinja2/base.html:207
 #, fuzzy
 msgid "Contribute to the code"
 msgstr "MDN 웹 사이트 개발 참여"
@@ -329,10 +318,6 @@ msgstr "MDN 웹 사이트 개발 참여"
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
 msgstr "<li><a href=\"/logout\">로그 아웃</a> 후 다시 하기.</li>"
-
-#: jinja2/handlers/400.html:40
-msgid "<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
-msgstr "<li><a href=\"/demos\">데모 보기</a> 또는 <a href=\"/docs\">문서 탐색하기</a></li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
@@ -376,7 +361,7 @@ msgstr "로그인:"
 msgid "Sign in"
 msgstr "로그인"
 
-#: jinja2/includes/login.html:21 kuma/users/forms.py:198 kuma/users/models.py:149 kuma/users/jinja2/users/user_detail.html:126 kuma/users/jinja2/users/user_detail.html:130
+#: jinja2/includes/login.html:21 kuma/users/forms.py:198 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
 msgid "GitHub"
 msgstr "GitHub"
 
@@ -394,13 +379,11 @@ msgstr "Firefox OS, 마켓플레이스, 오픈웹 앱 생태계에 대한 뉴스
 msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
 msgstr "<a href=\"%(privacy_url)s\">개인정보 취급방침</a>"
 
-#: jinja2/includes/paginator.html:6 kuma/demos/jinja2/demos/detail.html:68 kuma/demos/jinja2/demos/home.html:46 kuma/demos/jinja2/demos/launch.html:80
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:61 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
+#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
 msgstr "이전"
 
-#: jinja2/includes/paginator.html:30 kuma/demos/jinja2/demos/detail.html:55 kuma/demos/jinja2/demos/detail.html:69 kuma/demos/jinja2/demos/home.html:47 kuma/demos/jinja2/demos/launch.html:84
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:64 kuma/search/jinja2/search/results.html:159
+#: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
 msgstr "다음"
 
@@ -440,18 +423,6 @@ msgstr "구독해지"
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
 msgstr "구독 취소하였습니다."
-
-#: kuma/actioncounters/models.py:46 kuma/contentflagging/models.py:109
-msgid "object ID"
-msgstr "오브젝트 ID"
-
-#: kuma/actioncounters/models.py:48
-msgid "name of the action"
-msgstr "액션명"
-
-#: kuma/actioncounters/models.py:66 kuma/contentflagging/models.py:126 kuma/demos/models.py:457
-msgid "date last modified"
-msgstr "최종 변경일"
 
 # 100%
 #: kuma/attachments/feeds.py:9
@@ -569,7 +540,7 @@ msgstr "파일"
 msgid "Size"
 msgstr "크기"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/users/jinja2/users/user_detail.html:181 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/users/jinja2/users/user_detail.html:156 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
 msgstr "날짜"
 
@@ -684,75 +655,6 @@ msgstr "키 ID"
 msgid "Secret"
 msgstr "비밀키"
 
-#: kuma/contentflagging/models.py:15
-msgid "This is not working for me"
-msgstr "현재 데모는 동작하지 않음"
-
-#: kuma/contentflagging/models.py:16
-msgid "This contains inappropriate content"
-msgstr "부적절한 콘텐츠가 포함되어 있음"
-
-#: kuma/contentflagging/models.py:17
-msgid "This was not created by the author"
-msgstr "현재 개발자가 만든 데모 아님"
-
-#: kuma/contentflagging/models.py:18
-msgid "The author is fake"
-msgstr "개발자는 가짜임"
-
-# https://github.com/fwenzel/mdn/blob/master/apps/contentflagging/models.py
-#: kuma/contentflagging/models.py:28
-msgid "Flagged"
-msgstr "문제 보고"
-
-#: kuma/contentflagging/models.py:29
-msgid "Flag rejected by moderator"
-msgstr "관리자에 문제 제안 거절"
-
-# 문제 보고 후 상태의 하나.
-#: kuma/contentflagging/models.py:30
-msgid "Creator notified"
-msgstr "개발자 통지 완료"
-
-#: kuma/contentflagging/models.py:31
-msgid "Content hidden by moderator"
-msgstr "이 콘텐츠는 관리자가 표시 안함 변경"
-
-#: kuma/contentflagging/models.py:32
-msgid "Content deleted by moderator"
-msgstr "이 콘텐츠는 관리자가 삭제함"
-
-#: kuma/contentflagging/models.py:65
-#, fuzzy, python-format
-msgid "%(object)s Flagged"
-msgstr "{object} 플래그 첨부"
-
-#: kuma/contentflagging/models.py:96
-msgid "current status of flag review"
-msgstr "문제 보고 검토의 현재 상태"
-
-#: kuma/contentflagging/models.py:99
-msgid "reason for flagging the content"
-msgstr "콘텐츠 문제 보고 사유"
-
-#: kuma/contentflagging/models.py:102
-msgid "please explain what content you feel is inappropriate"
-msgstr "부적절 콘텐츠에 대한 설명"
-
-#: kuma/contentflagging/models.py:124
-msgid "date submitted"
-msgstr "제출일"
-
-#. This is an email. Whitespace matters!
-#: kuma/contentflagging/jinja2/contentflagging/email/flagged.ltxt:2
-#, python-format
-msgid "%(object)s has been flagged %(flag_type)s"
-msgstr ""
-
-#: kuma/contentflagging/jinja2/contentflagging/email/flagged.ltxt:6
-msgid "To change the status of this flag, click the following link, or paste it into your browser's location bar:"
-msgstr ""
-
 #: kuma/core/apps.py:13
 msgid "Core"
 msgstr "코어"
@@ -771,7 +673,7 @@ msgstr "이 값은 최대 %(limit_value)s 자까지 입력 가능합니다(현�
 msgid "Mozilla"
 msgstr "Mozilla"
 
-#: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4 kuma/demos/__init__.py:184 kuma/demos/__init__.py:319
+#: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
 msgstr "모바일"
 
@@ -785,57 +687,57 @@ msgstr "웹"
 msgid "Moz Hacks"
 msgstr "개발자 블로그"
 
-#: kuma/core/templatetags/jinja_helpers.py:115
+#: kuma/core/templatetags/jinja_helpers.py:114
 #, python-format
 msgid "%(number)d year ago"
 msgid_plural "%(number)d years ago"
 msgstr[0] "%(number)d년 전"
 
-#: kuma/core/templatetags/jinja_helpers.py:117
+#: kuma/core/templatetags/jinja_helpers.py:116
 #, python-format
 msgid "%(number)d month ago"
 msgid_plural "%(number)d months ago"
 msgstr[0] "%(number)d 개월 전"
 
-#: kuma/core/templatetags/jinja_helpers.py:119
+#: kuma/core/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
 msgstr[0] "%(number)d 주일 전"
 
-#: kuma/core/templatetags/jinja_helpers.py:121
+#: kuma/core/templatetags/jinja_helpers.py:120
 #, python-format
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
 msgstr[0] "%(number)d일 전"
 
-#: kuma/core/templatetags/jinja_helpers.py:123
+#: kuma/core/templatetags/jinja_helpers.py:122
 #, python-format
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
 msgstr[0] "%(number)d시간 전"
 
-#: kuma/core/templatetags/jinja_helpers.py:125
+#: kuma/core/templatetags/jinja_helpers.py:124
 #, python-format
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
 msgstr[0] "%(number)d분 전"
 
-#: kuma/core/templatetags/jinja_helpers.py:127
+#: kuma/core/templatetags/jinja_helpers.py:126
 #, python-format
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
 msgstr[0] "%(number)d 초 전"
 
-#: kuma/core/templatetags/jinja_helpers.py:150
+#: kuma/core/templatetags/jinja_helpers.py:149
 msgid "Yes"
 msgstr "네"
 
-#: kuma/core/templatetags/jinja_helpers.py:150
+#: kuma/core/templatetags/jinja_helpers.py:149
 msgid "No"
 msgstr "아니오"
 
-#: kuma/core/templatetags/jinja_helpers.py:300
+#: kuma/core/templatetags/jinja_helpers.py:299
 #, python-format
 msgid "Today at %s"
 msgstr "%s의 오늘"
@@ -861,7 +763,7 @@ msgid "I'm Learning"
 msgstr "초보자"
 
 # docs Key Topics for Web Developers - 목록 항목
-#: kuma/core/translations/search/filter/canvas/name.py:4 kuma/demos/__init__.py:72 kuma/demos/__init__.py:233
+#: kuma/core/translations/search/filter/canvas/name.py:4
 msgid "Canvas"
 msgstr "캔버스"
 
@@ -893,7 +795,7 @@ msgstr "중급자"
 msgid "Marketplace"
 msgstr "마켓플레이스"
 
-#: kuma/core/translations/search/filter/svg/name.py:4 kuma/demos/__init__.py:335
+#: kuma/core/translations/search/filter/svg/name.py:4
 msgid "SVG"
 msgstr "SVG"
 
@@ -902,7 +804,7 @@ msgid "Web Development"
 msgstr "웹 개발"
 
 # docs Key Topics for Web Developers - 목록 항목
-#: kuma/core/translations/search/filter/webgl/name.py:4 kuma/demos/__init__.py:121 kuma/demos/__init__.py:351
+#: kuma/core/translations/search/filter/webgl/name.py:4
 msgid "WebGL"
 msgstr "WebGL"
 
@@ -927,7 +829,7 @@ msgid "All Locales"
 msgstr "모든 지역"
 
 # 100%
-#: kuma/dashboards/forms.py:10 kuma/demos/__init__.py:33
+#: kuma/dashboards/forms.py:10
 msgid "None"
 msgstr "없음"
 
@@ -1088,1873 +990,6 @@ msgstr "영문 리뷰가 대기 중인 경우 메일 받지 않기"
 msgid "Get emailed when English reviews are waiting"
 msgstr "한국어 리뷰가 대기중이면 메일 받기"
 
-# 100%
-#: kuma/demos/__init__.py:34
-msgid "Removed from Derby"
-msgstr "Derby 에서 삭제됨"
-
-#: kuma/demos/__init__.py:36
-msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
-msgstr "June 2011 Dev Derby Challenge - CSS3 애니메이션"
-
-#: kuma/demos/__init__.py:37
-msgid "CSS3 Animations"
-msgstr "CSS3 애니메이션"
-
-#: kuma/demos/__init__.py:38
-msgid "June 2011"
-msgstr "2011 6월"
-
-#: kuma/demos/__init__.py:39
-msgid "CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions."
-msgstr "CSS3 애니메이션은 시간의 변화에 따라 프로퍼티 값을 변화시켜 요소 외관이나 위치를 변화시킵니다. JavaScript 코드를 최소한으로 줄여 transitions 보다 뛰어난 제어를 할 수 있습니다."
-
-#: kuma/demos/__init__.py:40
-msgid ""
-"CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
-"over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
-"effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
-msgstr ""
-"CSS3 애니메이션은 한층 더 뛰어난 유연성과 스타일의 제어, 새로운 웹 체험을 Firefox 와 같은 최신 브라우저의 새로운 기능입니다. CSS3 애니메이션은 시간의 경과에 의해 프로퍼티의 값을 변화시켜 요소의 외관"
-"이나 위치를 변화시킵니다. JavaScript 코드를 최소한으로 줄여 CSS Transitions 보다 뛰어난 제어를 할 수 있습니다. HTML 요소의 모양과 위치를 움직이는 정적인 속성을 뛰어넘습니다. 이러한 효과는 Flash나 "
-"Silverlight 를 필요로 하지 않습니다. 창의적이고 동적인 인터페이스를 CSS3의 애니메이션으로 실현할 수 있습니다."
-
-#: kuma/demos/__init__.py:43
-msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
-msgstr "2011년 7월 Dev Derby Challenge - HTML5 <video>"
-
-#: kuma/demos/__init__.py:44
-msgid "HTML5 <video>"
-msgstr "HTML5 <video>"
-
-#: kuma/demos/__init__.py:45
-msgid "July 2011"
-msgstr "2011 7월"
-
-#: kuma/demos/__init__.py:46 kuma/demos/__init__.py:47
-msgid "The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins."
-msgstr "HTML5 <video> 속성은 동영상과 이를 직접 조정할 수 있는 컨트롤러를 웹페이지에 삽입할 수 있습니다. 그것도 별도의 플러그인이 필요하지 않습니다."
-
-#: kuma/demos/__init__.py:50
-msgid "August 2011 Dev Derby Challenge - History API"
-msgstr "2011 8월 Dev Derby Challenge - History API"
-
-#: kuma/demos/__init__.py:51
-msgid "History API"
-msgstr "History API"
-
-#: kuma/demos/__init__.py:52
-msgid "August 2011"
-msgstr "2011년 8월"
-
-#: kuma/demos/__init__.py:53 kuma/demos/__init__.py:54
-msgid "The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."
-msgstr "최근의 브라우저의 History API는 뒤로 이동 버튼을 쓰지 않고도 웹 문서를 북마크에 추가할 수 있도록 합니다."
-
-#: kuma/demos/__init__.py:57
-msgid "September 2011 Dev Derby Challenge - Geolocation"
-msgstr "2011 9월 Dev Derby Challenge - 지오로케이션"
-
-#: kuma/demos/__init__.py:58 kuma/demos/__init__.py:279
-msgid "Geolocation"
-msgstr "지오로케이션"
-
-#: kuma/demos/__init__.py:59
-msgid "September 2011"
-msgstr "2011년 9월"
-
-#: kuma/demos/__init__.py:60 kuma/demos/__init__.py:61 kuma/demos/__init__.py:144 kuma/demos/__init__.py:145
-msgid "With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."
-msgstr ""
-"Geolocation을 사용하면 (사용자의 동의 하에서) 사용자의 물리적인 현재 위치를 취득할 수 있고 그것을 사용하여 보다 좋은 웹 브라우징 경험이나 위치 정보를 사용한 다양한 콘텐츠를 제출할 수 있습니다. "
-
-#: kuma/demos/__init__.py:64
-msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
-msgstr "2011년 10월 Dev Derby Challenge - CSS 미디어 쿼리"
-
-# docs Key Topics for Web Developers - 목록 항목
-#: kuma/demos/__init__.py:65
-msgid "CSS Media Queries"
-msgstr "CSS 미디어 쿼리-"
-
-#: kuma/demos/__init__.py:66
-msgid "October 2011"
-msgstr "2011년 10월"
-
-#: kuma/demos/__init__.py:67 kuma/demos/__init__.py:68
-msgid "CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."
-msgstr "CSS 미디어 쿼리는 웹 개발자가 웹 디자인 방식을 이용하여 데스크탑이나 태블릿, 모바일 기기의 각 사용자 환경에 맞춘 화면 크기를 만들어 낼 수 있도록 도와 줍니다."
-
-# 100%
-#: kuma/demos/__init__.py:71
-msgid "November 2011 Dev Derby Challenge - Canvas"
-msgstr "2011년 11월 Dev Derby Challenge - 캔버스"
-
-# 100%
-#: kuma/demos/__init__.py:73
-msgid "November 2011"
-msgstr "2011년 11월"
-
-#: kuma/demos/__init__.py:74 kuma/demos/__init__.py:75
-msgid ""
-"Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
-"methods that make it easy to control and draw in."
-msgstr ""
-"캔버스는 웹을 자바스크립트로 2D 모양, 비트맵 이미지, 고급 그래픽 효과를 가능하게 만듭니다. 개별 <canvas> 엘리먼트는 그래픽 컨텍스트를 제공해서 개별 상태와 메소드를 통해 제어하고 그리는 것이 쉽도록 "
-"만들어 줍니다."
-
-# 100%
-#: kuma/demos/__init__.py:78
-msgid "December 2011 Dev Derby Challenge - IndexedDB"
-msgstr "2011년 12월 Dev Derby Challenge - Indexed DB"
-
-#: kuma/demos/__init__.py:79 kuma/demos/__init__.py:303
-msgid "IndexedDB"
-msgstr "IndexedDB"
-
-# 78%
-#: kuma/demos/__init__.py:80
-msgid "December 2011"
-msgstr "2011년 12월"
-
-#: kuma/demos/__init__.py:81 kuma/demos/__init__.py:82
-msgid "IndexedDB lets web applications store significant amounts of structured data locally, for faster access, online or offline."
-msgstr "IndexedDB를 통해서 웹 애플리케이션은 빠른 접속과 온,오프라인 상관없이 상당한 양의 구조적인 데이터를 로컬에 저장이 가능합니다. "
-
-# 100%
-#: kuma/demos/__init__.py:85
-msgid "January 2012 Dev Derby Challenge - Orientation"
-msgstr "2012년 1월 Dev Derby 챌린지 - 오리엔테이션"
-
-# 100%
-#: kuma/demos/__init__.py:86
-msgid "Orientation"
-msgstr "오리엔테이션"
-
-# 100%
-#: kuma/demos/__init__.py:87
-msgid "January 2012"
-msgstr "2012년 1월"
-
-#: kuma/demos/__init__.py:88 kuma/demos/__init__.py:89
-msgid "Orientation features in HTML5 access the motion and orientation data of devices with accelerometers."
-msgstr "HTML5에서 오리엔테이션 기능은 가속도계를 가진 기기의 움직임과 방향성 데이터에 접근할 수 있습니다."
-
-# 100%
-#: kuma/demos/__init__.py:92
-msgid "February 2012 Dev Derby Challenge - Touch Events"
-msgstr "2012 2월 Dev Derby 챌린지 - 터치 이벤트"
-
-# 100%
-#: kuma/demos/__init__.py:93
-msgid "Touch Events"
-msgstr "터치 이벤트"
-
-# 100%
-#: kuma/demos/__init__.py:94
-msgid "February 2012"
-msgstr "2012년 2월"
-
-#: kuma/demos/__init__.py:95 kuma/demos/__init__.py:96
-msgid "Touch Events help you make websites and applications more engaging by responding appropriately when users interact with touch screens."
-msgstr "터치 이벤트로 여러분은 터치스크린으로 터치할 때 적절한 반응을 보임으로 웹사이트와 애플리케이션이 더 몰입되도록 할 수 있습니다."
-
-# 100%
-#: kuma/demos/__init__.py:99
-msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
-msgstr "2012년 3월 Dev Derby 챌린지 - CSS 3D 변환"
-
-# docs, Key Topics for Web Developers - 목록 항목
-# 82%
-#: kuma/demos/__init__.py:100
-msgid "CSS 3D Transforms"
-msgstr "CSS 3D 트랜스폼"
-
-# 100%
-#: kuma/demos/__init__.py:101
-msgid "March 2012"
-msgstr "2012년 3월"
-
-#: kuma/demos/__init__.py:102 kuma/demos/__init__.py:103
-msgid "CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS to be transformed in three-dimensional space."
-msgstr "CSS 3D 변환은 CSS로 표현되는 엘리먼트를 3차원 공간에서 변형될 수 있게 CSS 변환을 확장했습니다."
-
-# 100%
-#: kuma/demos/__init__.py:106
-msgid "April 2012 Dev Derby Challenge - Audio"
-msgstr "2012년 4월 Dev Derby 챌린지 - 오디오"
-
-# docs Key Topics for Web Developers - 목록 항목
-#: kuma/demos/__init__.py:107 kuma/demos/__init__.py:225
-msgid "Audio"
-msgstr "오디오"
-
-# 100%
-#: kuma/demos/__init__.py:108
-msgid "April 2012"
-msgstr "2012년 4월"
-
-#: kuma/demos/__init__.py:109 kuma/demos/__init__.py:110
-msgid "The HTML5 audio element lets you embed sound in webpages without requiring your users to rely on plug-ins."
-msgstr "HTML5 오디오 엘리먼트로 여러분은 웹페이지에 사용자들이 다른 플러그인에 의지하지 않고도 사운드를 들려줄 수 있습니다."
-
-# 100%
-#: kuma/demos/__init__.py:113
-msgid "May 2012 Dev Derby Challenge - WebSockets API"
-msgstr "2012년 5월 Dev Derby 챌린지 - 웹소켓 API"
-
-# 100%
-#: kuma/demos/__init__.py:114
-msgid "WebSockets API"
-msgstr "웹소켓 API"
-
-# 100%
-#: kuma/demos/__init__.py:115
-msgid "May 2012"
-msgstr "2012년 5월"
-
-#: kuma/demos/__init__.py:116 kuma/demos/__init__.py:117
-msgid "With the Websocket API and protocol, you can open a two-way channel between the browser and a server, for scalable and real-time data flow. No more server polling!"
-msgstr "웹소켓 API와 프로토콜을 이용해서, 여러분은 브라우저와 서버 사이에 양방향 채널을 열어서, 확장성 있고 실시간의 데이터 전송이 가능합니다. 더 이상 서버 폴링을 하지 않아도 됩니다!"
-
-# 100%
-#: kuma/demos/__init__.py:120
-msgid "June 2012 Dev Derby Challenge - WebGL"
-msgstr "2012년 6월 Dev Derby 챌린지 - 웹GL"
-
-# 88%
-#: kuma/demos/__init__.py:122
-msgid "June 2012"
-msgstr "2012년 6월"
-
-#: kuma/demos/__init__.py:123 kuma/demos/__init__.py:124 kuma/demos/__init__.py:211 kuma/demos/__init__.py:212
-msgid "WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."
-msgstr "웹GL은 플러그인 설치하지 않고도, 인터랙티브한 3D 그래픽을 만들 수 있는, OpenGL 파워를 웹으로 가져왔습니다."
-
-# 100%
-#: kuma/demos/__init__.py:127
-msgid "July 2012 Dev Derby Challenge - No JavaScript"
-msgstr "2012년 7월 Dev Derby 챌린지 - 자바스크립트 제외"
-
-# 76%
-#: kuma/demos/__init__.py:128
-msgid "No JavaScript"
-msgstr "자바스크립트 제외"
-
-# 88%
-#: kuma/demos/__init__.py:129
-msgid "July 2012"
-msgstr "2012년 7월"
-
-#: kuma/demos/__init__.py:130 kuma/demos/__init__.py:131
-msgid ""
-"Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
-"input with HTML, and more. What else can you do without JavaScript?"
-msgstr ""
-"웹을 위한 풍부한 사용자 경험을 만드는 것은 전에 없이 쉬워졌습니다. 오늘의 오픈 웹 표준으로 여러분의 손가락 끝에서 가장 파워풀한 특징들을 사용할 수 있습니다. CSS로 페이지를 움직이고, HTML로 사용자의 "
-"입력값을 검증하고, 다른 것도 가능합니다. 자바스크립트 없이 여러분은 어떤 다른 것을 할 수 있나요?"
-
-# 84%
-#: kuma/demos/__init__.py:134
-msgid "August 2012 Dev Derby Challenge - Camera API"
-msgstr "2011 8월 Dev Derby Challenge - 카메라 API"
-
-# 100%
-#: kuma/demos/__init__.py:135
-msgid "Camera API"
-msgstr "카메라 API"
-
-# 90%
-#: kuma/demos/__init__.py:136
-msgid "August 2012"
-msgstr "2012년 8월"
-
-#: kuma/demos/__init__.py:137 kuma/demos/__init__.py:138
-msgid "The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."
-msgstr "카메라 API를 통해서 여러분은 (승인 하에) 모바일 기기의 카메라를 접근할 수 있습니다. 카메라 API로 사용자는 쉽게 사진을 찍어서 여러분의 웹 페이지에 업로드할 수 있습니다."
-
-#: kuma/demos/__init__.py:141
-msgid "September 2012 Dev Derby Challenge - Geolocation II"
-msgstr "2012년 9월 Dev Derby Challenge - Geolocation II"
-
-#: kuma/demos/__init__.py:142
-msgid "Geolocation II"
-msgstr "Geolocation II"
-
-# 92%
-#: kuma/demos/__init__.py:143
-msgid "September 2012"
-msgstr "2012년 9월"
-
-# 92%
-#: kuma/demos/__init__.py:148
-msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
-msgstr "2011년 10월 Dev Derby Challenge - CSS 미디어 쿼리 II"
-
-# docs Key Topics for Web Developers - 목록 항목
-# 85%
-#: kuma/demos/__init__.py:149
-msgid "CSS Media Queries II"
-msgstr "CSS 미디어 쿼리 II"
-
-# 91%
-#: kuma/demos/__init__.py:150
-msgid "October 2012"
-msgstr "2012년 10월"
-
-#: kuma/demos/__init__.py:151 kuma/demos/__init__.py:152
-msgid ""
-"CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can "
-"you do with Media Queries?"
-msgstr ""
-"CSS 미디어 쿼리는 이제 반응형, 모바일-우선 웹 디자인의 보편적인 도구가 되어있습니다. 지금은 심지어 W3C 레커멘데이션이기도 합니다! 디스플레이의 단지 폭 이상에 대한 더 많은 것을 알려줄 것입니다. 여러"
-"분은 미디어 쿼리로 무엇을 하시겠습니까?"
-
-#: kuma/demos/__init__.py:155
-msgid "November 2012 Dev Derby Challenge - Fullscreen API"
-msgstr "2012년 11월 Dev Derby Challenge - Fullscreen API"
-
-#: kuma/demos/__init__.py:156
-msgid "Fullscreen API"
-msgstr "Fullscreen API"
-
-#: kuma/demos/__init__.py:157
-msgid "November 2012"
-msgstr "2012년 11월"
-
-#: kuma/demos/__init__.py:158 kuma/demos/__init__.py:159
-msgid "With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"
-msgstr "Fullscreen API를 이용하면 일반 브라우저 화면에서 전체 화면 보기를 사용할 수 있습니다. 화면의 상태 변화를 탐지하고 전체 화면 모드를 설정할 수 있습니다."
-
-#: kuma/demos/__init__.py:162
-msgid "December 2012 Dev Derby Challenge - Offline"
-msgstr "2012년 12월 Dev Derby Challenge - 오프라인 기능"
-
-#: kuma/demos/__init__.py:163
-msgid "Offline"
-msgstr "오프라인 기능"
-
-#: kuma/demos/__init__.py:164
-msgid "December 2012"
-msgstr "2012년 12월"
-
-#: kuma/demos/__init__.py:165 kuma/demos/__init__.py:166
-msgid ""
-"With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile "
-"users, improve performance, and more."
-msgstr "오프라인 기능을 활용하면 인터넷 접속 없이도 구동 되는 앱을 만들 수 있습니다. 인터넷 접속이 안되는 여행자나 모바일 사용자를 위해 독립적인 서비스를 제공할 수 있습니다."
-
-#: kuma/demos/__init__.py:169
-msgid "January 2013 Dev Derby Challenge - Drag and Drop"
-msgstr "2013년 1월 Dev Derby Challenge - 드래그 앤 드롭"
-
-# docs Key Topics for Web Developers - 목록 항목
-#: kuma/demos/__init__.py:170 kuma/demos/__init__.py:311
-msgid "Drag and Drop"
-msgstr "드래그 앤 드롭"
-
-#: kuma/demos/__init__.py:171
-msgid "January 2013"
-msgstr "2013년 1월"
-
-#: kuma/demos/__init__.py:172 kuma/demos/__init__.py:173
-msgid "The Drag and Drop API brings an age-old interaction to the Web, making rich, natural, and familiar user experiences possible."
-msgstr "드래그앤드롭 API를 이용하면 웹에서 데스크톱의 사용자 친화적인 경험을 그대로 구현해 줄 수 있습니다."
-
-#: kuma/demos/__init__.py:176
-msgid "February 2013 Dev Derby Challenge - Multi-touch"
-msgstr "2013년 2월 Dev Derby Challenge - 멀티터치"
-
-#: kuma/demos/__init__.py:177 kuma/demos/__init__.py:383
-msgid "Multi-touch"
-msgstr "멀티 터치"
-
-#: kuma/demos/__init__.py:178
-msgid "February 2013"
-msgstr "2013년 2월"
-
-#: kuma/demos/__init__.py:179 kuma/demos/__init__.py:180
-msgid ""
-"The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond "
-"to all the interactions users have come to expect."
-msgstr "멀티 터치 API는 동시에 여러 터치를 인식하고 이를 지원하기 위한 것으로 복잡한 게임이나 확대 축소 기능 등을 지원합니다. 멀티 터치를 통해 사용자가 하는 모든 동작을 인식하고 반응할 수 있습니다."
-
-#: kuma/demos/__init__.py:183
-msgid "March 2013 Dev Derby Challenge - Mobile"
-msgstr "2013년 3월 Dev Derby Challenge - 모바일"
-
-#: kuma/demos/__init__.py:185
-msgid "March 2013"
-msgstr "2013년 3월"
-
-#: kuma/demos/__init__.py:186 kuma/demos/__init__.py:187
-msgid "The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"
-msgstr "모바일 웹은 오늘날 더 중요해지고 있습니다. 여러분의 창의력을 한계를 없애고 더 멋진 웹 앱을 만들어 보십시오."
-
-#: kuma/demos/__init__.py:190
-msgid "April 2013 Dev Derby Challenge - Web Workers"
-msgstr "2013년 4월 Dev Derby Challenge - 웹 워커"
-
-# docs Key Topics for Web Developers - 목록 항목
-#: kuma/demos/__init__.py:191 kuma/demos/__init__.py:367
-msgid "Web Workers"
-msgstr "웹 워커"
-
-#: kuma/demos/__init__.py:192
-msgid "April 2013"
-msgstr "2013년 4월"
-
-#: kuma/demos/__init__.py:193 kuma/demos/__init__.py:194
-msgid ""
-"Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive "
-"tasks."
-msgstr "웹 워커(Web Workers)는 스크립트를 백그라운드로 실행할 수 있고, 사용자들이 모르게 시간이 많이 걸리는 복잡하고 어려운 작업들을 멀티 프로세스로 실행할 수 있습니다. "
-
-#: kuma/demos/__init__.py:197
-msgid "May 2013 Dev Derby Challenge - getUserMedia"
-msgstr "2013년 5월 Dev Derby Challenge - getUserMedia"
-
-#: kuma/demos/__init__.py:198
-msgid "getUserMedia"
-msgstr "getUserMedia"
-
-#: kuma/demos/__init__.py:199
-msgid "May 2013"
-msgstr "2013년 5월"
-
-# 100%
-#: kuma/demos/__init__.py:200
-msgid "May"
-msgstr "5월"
-
-#: kuma/demos/__init__.py:201
-msgid "Action!"
-msgstr "실행하기"
-
-#: kuma/demos/__init__.py:202 kuma/demos/__init__.py:203
-msgid ""
-"The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."
-msgstr "getUserMedia 기능은 사용자의 허가하에 카메라 및 마이크 등을 제어합니다. 플러그인 없이 사진 및 오디오를 녹화 및 캡쳐할 수 있습니다."
-
-#: kuma/demos/__init__.py:206
-msgid "June 2013 Dev Derby Challenge - WebGL II"
-msgstr "2013년 6월 Dev Derby Challenge - WebGL II"
-
-#: kuma/demos/__init__.py:207
-msgid "WebGL II"
-msgstr "WebGL II"
-
-#: kuma/demos/__init__.py:208
-msgid "June 2013"
-msgstr "2013년 6월"
-
-#: kuma/demos/__init__.py:209
-msgid "June"
-msgstr "6월"
-
-#: kuma/demos/__init__.py:210
-msgid "Twice the 3D!"
-msgstr "3D를 두배로!"
-
-#: kuma/demos/__init__.py:215
-msgid "July 2013 Dev Derby Challenge - File API"
-msgstr "2013년 7월 Dev Derby Challenge - File API"
-
-#: kuma/demos/__init__.py:216
-msgid "File API"
-msgstr "파일 API"
-
-#: kuma/demos/__init__.py:217
-msgid "July 2013"
-msgstr "2013년 7월"
-
-#: kuma/demos/__init__.py:218
-msgid "July"
-msgstr "7월"
-
-#: kuma/demos/__init__.py:219
-msgid "File found"
-msgstr "파일 찾음"
-
-#: kuma/demos/__init__.py:220 kuma/demos/__init__.py:221
-msgid "The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."
-msgstr "File API는 사용자들이 로컬 PC의 파일을 다양한 방법으로 다룰 수 있는 기능을 제공합니다."
-
-#: kuma/demos/__init__.py:226
-msgid "Mozilla's Audio Data API extends the current HTML5 API and allows web developers to read and write raw audio data."
-msgstr "Mozilla의 오디오 데이터 API는 현재 HTML5 API를 확장하고 웹 개발자들이 원본 오디오 데이터를 읽고 쓰게 할 수 있습니다."
-
-#: kuma/demos/__init__.py:228 kuma/demos/__init__.py:236 kuma/demos/__init__.py:244 kuma/demos/__init__.py:252 kuma/demos/__init__.py:259 kuma/demos/__init__.py:266 kuma/demos/__init__.py:274
-#: kuma/demos/__init__.py:282 kuma/demos/__init__.py:290 kuma/demos/__init__.py:298 kuma/demos/__init__.py:306 kuma/demos/__init__.py:314 kuma/demos/__init__.py:322 kuma/demos/__init__.py:330
-#: kuma/demos/__init__.py:338 kuma/demos/__init__.py:346 kuma/demos/__init__.py:354 kuma/demos/__init__.py:362 kuma/demos/__init__.py:370 kuma/demos/__init__.py:378 kuma/demos/__init__.py:386
-msgid "MDN Documentation"
-msgstr "MDN 문서"
-
-#: kuma/demos/__init__.py:228
-msgid "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
-msgstr "https://developer.mozilla.org/ko/docs/Introducing_the_Audio_API_Extension"
-
-#: kuma/demos/__init__.py:229 kuma/demos/__init__.py:237 kuma/demos/__init__.py:245 kuma/demos/__init__.py:267 kuma/demos/__init__.py:275 kuma/demos/__init__.py:283 kuma/demos/__init__.py:291
-#: kuma/demos/__init__.py:299 kuma/demos/__init__.py:307 kuma/demos/__init__.py:315 kuma/demos/__init__.py:323 kuma/demos/__init__.py:331 kuma/demos/__init__.py:339 kuma/demos/__init__.py:347
-#: kuma/demos/__init__.py:355 kuma/demos/__init__.py:363 kuma/demos/__init__.py:371 kuma/demos/__init__.py:379 kuma/demos/__init__.py:387
-msgid "Wikipedia Article"
-msgstr "위키백과 문서"
-
-#: kuma/demos/__init__.py:229
-msgid "http://en.wikipedia.org/wiki/HTML5_audio"
-msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
-
-#: kuma/demos/__init__.py:230 kuma/demos/__init__.py:238 kuma/demos/__init__.py:246 kuma/demos/__init__.py:253 kuma/demos/__init__.py:260 kuma/demos/__init__.py:268 kuma/demos/__init__.py:276
-#: kuma/demos/__init__.py:284 kuma/demos/__init__.py:300 kuma/demos/__init__.py:308 kuma/demos/__init__.py:316 kuma/demos/__init__.py:324 kuma/demos/__init__.py:332 kuma/demos/__init__.py:340
-#: kuma/demos/__init__.py:348 kuma/demos/__init__.py:364 kuma/demos/__init__.py:372 kuma/demos/__init__.py:380 kuma/demos/__init__.py:388
-msgid "W3C Spec"
-msgstr "W3C 사양"
-
-#: kuma/demos/__init__.py:230
-msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
-msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
-
-#: kuma/demos/__init__.py:234
-msgid "The HTML5 canvas element allows you to display scriptable renderings of 2D shapes and bitmap images."
-msgstr "HTML5의 Canvas 요소를 이용하여 자바스크립트로 2D 그래픽 및 비트맵 이미지를 표시할 수 있습니다."
-
-#: kuma/demos/__init__.py:236
-msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
-msgstr "https://developer.mozilla.org/ko/docs/HTML/Canvas"
-
-#: kuma/demos/__init__.py:237
-msgid "http://en.wikipedia.org/wiki/Canvas_element"
-msgstr "http://en.wikipedia.org/wiki/Canvas_element"
-
-#: kuma/demos/__init__.py:238
-msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
-msgstr "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
-
-#: kuma/demos/__init__.py:241 kuma/landing/jinja2/landing/homepage.html:73
-msgid "CSS3"
-msgstr "CSS3"
-
-#: kuma/demos/__init__.py:242
-msgid ""
-"Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
-msgstr "Cascading Style Sheets level 3 (CSS3)는 HTML이나 XML 과 같이 다른 종류의 마크업 언어로 쓰여진 문서의 서식이나 외관을 변경하는 새로운 기능과 속성을 제출합니다."
-
-#: kuma/demos/__init__.py:244
-msgid "https://developer.mozilla.org/en-US/docs/Web/CSS"
-msgstr "https://developer.mozilla.org/ko/docs/Web/CSS"
-
-#: kuma/demos/__init__.py:245
-msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
-msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
-
-#: kuma/demos/__init__.py:246
-msgid "http://www.w3.org/TR/css3-roadmap/"
-msgstr "http://www.w3.org/TR/css3-roadmap/"
-
-#: kuma/demos/__init__.py:249
-msgid "Device"
-msgstr "디바이스"
-
-#: kuma/demos/__init__.py:250
-msgid "Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."
-msgstr "미디어 쿼리와 화면 방향 이벤트는 웹 개발자가 휴대 전화 등의 각 디바이스 상에서 레이아웃을 조정할 수 있도록 합니다."
-
-#: kuma/demos/__init__.py:252
-msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
-msgstr "https://developer.mozilla.org/ko/docs/WebAPI/Detecting_device_orientation"
-
-#: kuma/demos/__init__.py:253
-msgid "http://www.w3.org/TR/css3-mediaqueries/"
-msgstr "http://www.w3.org/TR/css3-mediaqueries/"
-
-# docs Key Topics for Web Developers - 목록 항목
-#: kuma/demos/__init__.py:256
-msgid "Files"
-msgstr "파일"
-
-#: kuma/demos/__init__.py:257
-msgid "The File API allows web developers to use file objects in web applications, as well as selecting and accessing their data."
-msgstr "File API는 웹 개발자가 웹 애플리케이션으로 파일 오브젝트를 사용하여 데이터 선택이나 접근을 가능하게 합니다."
-
-#: kuma/demos/__init__.py:259
-msgid "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
-msgstr "https://developer.mozilla.org/ko/docs/using_files_from_web_applications"
-
-#: kuma/demos/__init__.py:260
-msgid "http://www.w3.org/TR/FileAPI/"
-msgstr "http://www.w3.org/TR/FileAPI/"
-
-# Browse by Technology의 1 항목
-#: kuma/demos/__init__.py:263
-msgid "Fonts & Type"
-msgstr "웹 글꼴"
-
-#: kuma/demos/__init__.py:264
-msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
-msgstr "CSS3-Font 사양에는 @font-face을 통한 글꼴 선택이나 CSS로부터 OpenType 글꼴 기능의 직접 제어 등 글꼴과 서체의 고급 기능이 포함됩니다."
-
-#: kuma/demos/__init__.py:266
-msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
-msgstr "https://developer.mozilla.org/ko/docs/Web/CSS/@font-face"
-
-#: kuma/demos/__init__.py:267
-msgid "http://en.wikipedia.org/wiki/Web_typography"
-msgstr "http://en.wikipedia.org/wiki/Web_typography"
-
-#: kuma/demos/__init__.py:268
-msgid "http://www.w3.org/TR/css3-fonts/"
-msgstr "http://www.w3.org/TR/css3-fonts/"
-
-#: kuma/demos/__init__.py:271
-msgid "Forms"
-msgstr "웹 폼"
-
-#: kuma/demos/__init__.py:272
-msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
-msgstr "HTML5에서 새로운 Form 관련 요소와 속성은 한층 더 기능적인 마크업을 제출하여 HTML4  사용 시 많은 유효성 확인 스크립트와 스타일 설정 중복 작업을 감소시킵니다."
-
-#: kuma/demos/__init__.py:274
-msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
-msgstr "https://developer.mozilla.org/ko/docs/Web/HTML/Forms_in_HTML"
-
-#: kuma/demos/__init__.py:275
-msgid "http://en.wikipedia.org/wiki/HTML_forms"
-msgstr "http://en.wikipedia.org/wiki/HTML_forms"
-
-#: kuma/demos/__init__.py:276
-msgid "http://www.w3.org/TR/html5/forms.html"
-msgstr "http://www.w3.org/TR/html5/forms.html"
-
-#: kuma/demos/__init__.py:280
-msgid "The Geolocation API allows web applications to access the user's geographical location."
-msgstr "지오로케이션 API 를 사용하면 사용자의 지리정보를 가져올 수 있습니다."
-
-#: kuma/demos/__init__.py:282
-msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
-msgstr "https://developer.mozilla.org/ko/docs/WebAPI/Using_geolocation"
-
-#: kuma/demos/__init__.py:283
-msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
-msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
-
-#: kuma/demos/__init__.py:284
-msgid "http://dev.w3.org/geo/api/spec-source.html"
-msgstr "http://dev.w3.org/geo/api/spec-source.html"
-
-#: kuma/demos/__init__.py:288
-msgid "JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."
-msgstr "JavaScript는 가벼운 객체 지향 프로그램 언어입니다. 일반적으로 웹 페이지나 웹 애플리케이션 위에서 대화적인 동작을 기술하기 위해서 사용됩니다."
-
-#: kuma/demos/__init__.py:290
-msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-msgstr "https://developer.mozilla.org/ko/docs/Web/JavaScript"
-
-#: kuma/demos/__init__.py:291
-msgid "http://en.wikipedia.org/wiki/JavaScript"
-msgstr "http://ko.wikipedia.org/wiki/JavaScript"
-
-#: kuma/demos/__init__.py:292
-msgid "ECMA Spec"
-msgstr "ECMA 사양"
-
-#: kuma/demos/__init__.py:292
-msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
-msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
-
-#: kuma/demos/__init__.py:295 kuma/landing/jinja2/landing/homepage.html:72
-msgid "HTML5"
-msgstr "HTML5"
-
-#: kuma/demos/__init__.py:296
-msgid "HTML5 is the newest version of the HTML standard, currently under development."
-msgstr "HTML5는 현재 개발중인 HTML 표준의 새로운 버전입니다."
-
-#: kuma/demos/__init__.py:298
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
-msgstr "https://developer.mozilla.org/ko/docs/Web/Guide/HTML/HTML5"
-
-#: kuma/demos/__init__.py:299
-msgid "http://en.wikipedia.org/wiki/Html5"
-msgstr "http://ko.wikipedia.org/wiki/HTML5"
-
-#: kuma/demos/__init__.py:300
-msgid "http://dev.w3.org/html5/spec/Overview.html"
-msgstr "http://dev.w3.org/html5/spec/Overview.html"
-
-#: kuma/demos/__init__.py:304
-msgid "IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."
-msgstr "IndexedDB는 클라이언트 사이드 스토리지를 위한 API 입니다. 이를 이용하여 클라이언트 측에 있는 대량 구조적 DB 인텍스를 이용하여 빠르게 검색할 수 있습니다."
-
-#: kuma/demos/__init__.py:306
-msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
-msgstr "https://developer.mozilla.org/ko/docs/IndexedDB"
-
-#: kuma/demos/__init__.py:307
-msgid "http://en.wikipedia.org/wiki/IndexedDB"
-msgstr "http://en.wikipedia.org/wiki/IndexedDB"
-
-#: kuma/demos/__init__.py:308
-msgid "http://www.w3.org/TR/IndexedDB/"
-msgstr "http://www.w3.org/TR/IndexedDB/"
-
-#: kuma/demos/__init__.py:312
-msgid "Drag and Drop features allow the user to move elements on the screen using the mouse pointer."
-msgstr "드래그 앤 드롭 기능은 사용자가 마우스 포인터를 사용해 화면상의 요소를 이동할 수 있도록 합니다."
-
-#: kuma/demos/__init__.py:314
-msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
-msgstr "https://developer.mozilla.org/ko/docs/DragDrop/Drag_and_Drop"
-
-#: kuma/demos/__init__.py:315
-msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
-msgstr "http://en.wikipedia.org/wiki/Drag-and-drop"
-
-#: kuma/demos/__init__.py:316
-msgid "http://www.w3.org/TR/html5/dnd.html"
-msgstr "http://www.w3.org/TR/html5/dnd.html"
-
-#: kuma/demos/__init__.py:320
-msgid "Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."
-msgstr "Firefox Mobile는 웹의 진정한 모습을 휴대 전화나 모바일 디바이스에서도 이용하게 합니다."
-
-#: kuma/demos/__init__.py:322
-msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
-msgstr "https://developer.mozilla.org/ko/docs/Mozilla/Mobile"
-
-#: kuma/demos/__init__.py:323
-msgid "http://en.wikipedia.org/wiki/Mobile_web"
-msgstr "http://en.wikipedia.org/wiki/Mobile_web"
-
-#: kuma/demos/__init__.py:324
-msgid "http://www.w3.org/Mobile/"
-msgstr "http://www.w3.org/Mobile/"
-
-#: kuma/demos/__init__.py:327
-msgid "Offline Support"
-msgstr "오프라인 지원"
-
-#: kuma/demos/__init__.py:328
-msgid "Offline caching of web applications' resources using the application cache and local storage."
-msgstr "웹 애플리케이션 자원의 오프라인 캐싱은 애플리케이션 캐시와 로컬 스토리지를 사용합니다."
-
-#: kuma/demos/__init__.py:330
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
-msgstr "https://developer.mozilla.org/ko/docs/Web/Guide/DOM/Storage#localStorage"
-
-#: kuma/demos/__init__.py:331
-msgid "http://en.wikipedia.org/wiki/Web_Storage"
-msgstr "http://en.wikipedia.org/wiki/Web_Storage"
-
-#: kuma/demos/__init__.py:332
-msgid "http://dev.w3.org/html5/webstorage/"
-msgstr "http://dev.w3.org/html5/webstorage/"
-
-#: kuma/demos/__init__.py:336
-msgid "Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."
-msgstr "Scalable Vector Graphics(SVG)은 2차원의 벡터 그래픽스를 기술하기 위한 XML 기반의 언어입니다."
-
-#: kuma/demos/__init__.py:338
-msgid "https://developer.mozilla.org/en-US/docs/Web/SVG"
-msgstr "https://developer.mozilla.org/ko/docs/Web/SVG"
-
-#: kuma/demos/__init__.py:339
-msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
-msgstr "http://ko.wikipedia.org/wiki/Scalable_Vector_Graphics"
-
-#: kuma/demos/__init__.py:340
-msgid "http://www.w3.org/TR/SVG11/"
-msgstr "http://www.w3.org/TR/SVG11/"
-
-#: kuma/demos/__init__.py:343
-msgid "Video"
-msgstr "동영상"
-
-#: kuma/demos/__init__.py:344
-msgid "The HTML5 video element provides integrated support for playing video media without requiring plug-ins."
-msgstr "HTML5의 video 요소는 플러그인을 이용하지 않고 비디오 미디어를 재생하기 위한 통합된 지원를 제출합니다."
-
-#: kuma/demos/__init__.py:346
-msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video"
-msgstr "https://developer.mozilla.org/ko/docs/Web/HTML/Using_HTML5_audio_and_video"
-
-#: kuma/demos/__init__.py:347
-msgid "http://en.wikipedia.org/wiki/HTML5_video"
-msgstr "http://en.wikipedia.org/wiki/HTML5_video"
-
-#: kuma/demos/__init__.py:348
-msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
-msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
-
-#: kuma/demos/__init__.py:352
-msgid "In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."
-msgstr "HTML의 Canvas 요소 내의 WebGL은 브라우저에서 3D 그래픽을 사용하기 위한 API을 제공합니다."
-
-#: kuma/demos/__init__.py:354
-msgid "https://developer.mozilla.org/en-US/docs/Web/WebGL"
-msgstr "https://developer.mozilla.org/ko/docs/Web/WebGL"
-
-#: kuma/demos/__init__.py:355
-msgid "http://en.wikipedia.org/wiki/WebGL"
-msgstr "http://ko.wikipedia.org/wiki/WebGL"
-
-#: kuma/demos/__init__.py:356
-msgid "Khronos Spec"
-msgstr "Khronos 사양"
-
-#: kuma/demos/__init__.py:356
-msgid "http://www.khronos.org/webgl/"
-msgstr "http://www.khronos.org/webgl/"
-
-#: kuma/demos/__init__.py:359
-msgid "WebSockets"
-msgstr "웹 소켓"
-
-#: kuma/demos/__init__.py:360
-msgid "WebSockets is a technology that makes it possible to open an interactive communication session between the user's browser and a server."
-msgstr "웹 소켓은 사용자 브라우저와 서버 사이의 대화 중심 세션을 여는 것을 가능하게 하는 기술입니다."
-
-#: kuma/demos/__init__.py:362
-msgid "https://developer.mozilla.org/en-US/docs/WebSockets"
-msgstr "https://developer.mozilla.org/ko/docs/WebSockets"
-
-#: kuma/demos/__init__.py:363
-msgid "http://en.wikipedia.org/wiki/Web_Sockets"
-msgstr "http://ko.wikipedia.org/wiki/WebSocket"
-
-#: kuma/demos/__init__.py:364
-msgid "http://dev.w3.org/html5/websockets/"
-msgstr "http://dev.w3.org/html5/websockets/"
-
-#: kuma/demos/__init__.py:368
-msgid "Web Workers provide a simple means for web content to run scripts in background threads."
-msgstr "웹 워커는 백그라운드 쓰레드에서 스크립트를 실행하는 웹 콘텐트를 위해 간단한 수단을 제공합니다."
-
-#: kuma/demos/__init__.py:370
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers"
-msgstr "https://developer.mozilla.org/ko/docs/Web/Guide/Performance/Using_web_workers"
-
-#: kuma/demos/__init__.py:371
-msgid "http://en.wikipedia.org/wiki/Web_Workers"
-msgstr "http://en.wikipedia.org/wiki/Web_Workers"
-
-#: kuma/demos/__init__.py:372
-msgid "http://www.w3.org/TR/workers/"
-msgstr "http://www.w3.org/TR/workers/"
-
-#: kuma/demos/__init__.py:375
-msgid "XMLHttpRequest"
-msgstr "XMLHttpRequest"
-
-#: kuma/demos/__init__.py:376
-msgid "XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."
-msgstr "XMLHttpRequest(XHR)는 HTTP 요구를 웹 서버에 직접 보내 그 응답 데이터를 자바스크립트에 직접 읽어들이기 위해서 사용됩니다."
-
-#: kuma/demos/__init__.py:378
-msgid "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
-msgstr "https://developer.mozilla.org/ko/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
-
-#: kuma/demos/__init__.py:379
-msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
-msgstr "http://ko.wikipedia.org/wiki/XMLHttpRequest"
-
-#: kuma/demos/__init__.py:380
-msgid "http://www.w3.org/TR/XMLHttpRequest/"
-msgstr "http://www.w3.org/TR/XMLHttpRequest/"
-
-#: kuma/demos/__init__.py:384
-msgid "Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."
-msgstr "터치 스크린상에서 사용자 손가락의 움직임을 추적하여 생성된 터치 이벤트를 이용합니다."
-
-#: kuma/demos/__init__.py:386
-msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
-msgstr "https://developer.mozilla.org/ko/docs/Web/Guide/DOM/Events/Touch_events"
-
-#: kuma/demos/__init__.py:387
-msgid "http://en.wikipedia.org/wiki/Multi-touch"
-msgstr "http://en.wikipedia.org/wiki/Multi-touch"
-
-#: kuma/demos/__init__.py:388
-msgid "http://www.w3.org/2010/webevents/charter/"
-msgstr "http://www.w3.org/2010/webevents/charter/"
-
-#: kuma/demos/__init__.py:394
-msgid "MPL/GPL/LGPL"
-msgstr "MPL/GPL/LGPL"
-
-#: kuma/demos/__init__.py:395
-msgid "http://www.mozilla.org/MPL/"
-msgstr "http://www.mozilla.org/MPL/"
-
-#: kuma/demos/__init__.py:397
-msgid "GPL"
-msgstr "GPL"
-
-#: kuma/demos/__init__.py:398
-msgid "http://www.opensource.org/licenses/gpl-license.php"
-msgstr "http://www.opensource.org/licenses/gpl-license.php"
-
-#: kuma/demos/__init__.py:400
-msgid "BSD"
-msgstr "BSD"
-
-#: kuma/demos/__init__.py:401
-msgid "http://www.opensource.org/licenses/bsd-license.php"
-msgstr "http://www.opensource.org/licenses/bsd-license.php"
-
-#: kuma/demos/__init__.py:403
-msgid "Apache"
-msgstr "Apache"
-
-#: kuma/demos/__init__.py:404
-msgid "http://www.apache.org/licenses/"
-msgstr "http://www.apache.org/licenses/"
-
-#: kuma/demos/__init__.py:406
-msgid "Public Domain (where applicable by law)"
-msgstr "공개 도메인 (법률에 의해 적용 가능 지역 한정)"
-
-#: kuma/demos/__init__.py:407
-msgid "http://creativecommons.org/publicdomain/zero/1.0/"
-msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
-
-#: kuma/demos/admin.py:38
-#, python-format
-msgid "Censored %(item)s"
-msgstr "%(item)s 검토완료"
-
-#: kuma/demos/admin.py:43
-#, python-format
-msgid "Successfully censored %(count)d %(items)s."
-msgstr "%(count)d개 %(items)s을 검토 완료했습니다."
-
-#: kuma/demos/admin.py:55 kuma/demos/admin.py:125
-msgid "Are you sure?"
-msgstr "확실합니까?"
-
-#: kuma/demos/admin.py:68
-#, python-format
-msgid "Censor selected %(verbose_name_plural)s"
-msgstr ""
-
-#: kuma/demos/admin.py:106
-#, python-format
-msgid "Deleted and uploaded files for %(item)s"
-msgstr "%(item)s 삭제 및 업로드 파일 목록"
-
-#: kuma/demos/admin.py:111
-#, python-format
-msgid "Successfully deleted %(count)d %(items)s."
-msgstr "%(count)d개 %(items)s이 삭제 완료되었습니다."
-
-#: kuma/demos/admin.py:123
-#, python-format
-msgid "Cannot delete %(name)s"
-msgstr "다음을 삭제할 수 없음: %(name)s"
-
-#: kuma/demos/admin.py:146
-#, python-format
-msgid "Delete selected %(verbose_name_plural)s"
-msgstr ""
-
-#: kuma/demos/embed.py:128
-msgid "Not an URL from a supported video service"
-msgstr "지원가능한 동영상 URL이 아닙니다"
-
-#: kuma/demos/feeds.py:89
-msgid "MDN demos"
-msgstr "MDN 데모"
-
-#: kuma/demos/feeds.py:90
-msgid "Demos submitted by MDN users"
-msgstr "MDN 사용자 제출 데모"
-
-#: kuma/demos/feeds.py:154
-msgid "MDN recent demos"
-msgstr "MDN 최신 데모"
-
-#: kuma/demos/feeds.py:155
-msgid "Demos recently submitted to MDN"
-msgstr "MDN 최근 제출 데모"
-
-#: kuma/demos/feeds.py:164
-msgid "MDN featured demos"
-msgstr "MDN 우수 데모"
-
-#: kuma/demos/feeds.py:165
-msgid "Demos featured on MDN"
-msgstr "MDN 우수 데모"
-
-#: kuma/demos/feeds.py:180
-#, python-format
-msgid "MDN demos tagged %s"
-msgstr "%s 태그된 MDN 데모"
-
-#: kuma/demos/feeds.py:183
-#, python-format
-msgid "MDN demos tagged \"%s\""
-msgstr "태그 \"%s\"된 MDN 데모"
-
-#: kuma/demos/feeds.py:199
-#, python-format
-msgid "%s's MDN demos"
-msgstr "%s MDN 데모"
-
-#: kuma/demos/feeds.py:213
-#, python-format
-msgid "MDN demo search for \"%s\""
-msgstr "MDN 데모의 \"%s\" 검색 결과"
-
-#: kuma/demos/feeds.py:214
-#, python-format
-msgid "Search results for demo submissions matching \"%s\""
-msgstr "\"%s\"에 부합하는 제출 데모 검색 결과"
-
-#: kuma/demos/models.py:204
-#, python-format
-msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
-msgstr "파일 크기를 %(max_size)s이하로 해 주십시오. 현재 파일 크기 %(file_size)s"
-
-#: kuma/demos/models.py:275
-msgid "Cannot process image"
-msgstr "이미지를 처리할 수 없음"
-
-#: kuma/demos/models.py:362
-msgid "what is your demo's name?"
-msgstr "데모 제목은 무엇인가요?"
-
-# Dkongo의 용어.짧은 라벨을 나타내는 형태(신문 용어)인것 같다.겉(표)에는 나오지 않는 듯한 것으로 그대로.
-#: kuma/demos/models.py:365
-msgid "slug"
-msgstr "slug"
-
-#: kuma/demos/models.py:368
-msgid "describe your demo in one line"
-msgstr "데모에 대한 한줄 요약"
-
-#: kuma/demos/models.py:371
-msgid "describe your demo in more detail (optional)"
-msgstr "데모에 대한 자세한 설명(선택 사항)"
-
-#: kuma/demos/models.py:376
-msgid "Hide this demo from others?"
-msgstr "데모를 비공개로 하시겠습니까?"
-
-#: kuma/demos/models.py:379
-msgid "Redirect URL for censorship."
-msgstr "심의를 위하여 페이지를 이동합니다."
-
-#: kuma/demos/models.py:383
-msgid "control how your demo is launched"
-msgstr "데모 실행 방식 제어"
-
-#: kuma/demos/models.py:385
-msgid "Disable navigation bar, launch demo in a new window"
-msgstr "주소 이동창 없이 새 창으로 데모 실행"
-
-#: kuma/demos/models.py:386
-msgid "Use navigation bar, display demo in <iframe>"
-msgstr "주소 이동창을 이용하고 <iframe> 안에 데모 표시"
-
-#: kuma/demos/models.py:398
-msgid "Screenshot #1"
-msgstr "스크린 샷 #1"
-
-#: kuma/demos/models.py:404
-msgid "Screenshot #2"
-msgstr "스크린 샷 #2"
-
-#: kuma/demos/models.py:410
-msgid "Screenshot #3"
-msgstr "스크린 샷 #3"
-
-#: kuma/demos/models.py:416
-msgid "Screenshot #4"
-msgstr "스크린 샷 #4"
-
-#: kuma/demos/models.py:422
-msgid "Screenshot #5"
-msgstr "스크린 샷 #5"
-
-#: kuma/demos/models.py:429
-msgid "have a video of your demo in action? (optional)"
-msgstr "데모 동영상 업로드 (선택 사항)"
-
-#: kuma/demos/models.py:433
-msgid "select a ZIP file containing your demo"
-msgstr "데모 압축 ZIP 파일"
-
-#: kuma/demos/models.py:442
-msgid "Is your source code also available somewhere else on the web (e.g., github)? Please share the link."
-msgstr "소스 코드를 (github 등)에서 다운로드 할 수 있으면 링크 주소를 입력해 주십시오."
-
-#: kuma/demos/models.py:445
-msgid "Select the license that applies to your source code."
-msgstr "소스 코드에 적용하는 라이센스를 선택해 주십시오."
-
-#: kuma/demos/models.py:454
-msgid "date created"
-msgstr "올린일: "
-
-#: kuma/demos/models.py:647 kuma/demos/models.py:654
-msgid "ZIP file contains no acceptable files"
-msgstr "ZIP 파일에 허용할 수 없는 파일이 포함되어 있음"
-
-#: kuma/demos/models.py:650
-msgid "ZIP file corrupted"
-msgstr "ZIP 파일이 손상됨"
-
-#: kuma/demos/models.py:669
-#, python-format
-msgid "ZIP file contains a file that is too large: %(filename)s"
-msgstr "ZIP 파일에 크기의 너무 큰 파일이 포함되어 있습니다: %(filename)s"
-
-#: kuma/demos/models.py:684
-#, python-format
-msgid "ZIP file contains an unacceptable file: %(filename)s"
-msgstr "ZIP 파일에 허용 할 수 없는 파일이 포함되어 있습니다.: %(filename)s"
-
-#: kuma/demos/models.py:688
-msgid "HTML index not found in ZIP"
-msgstr "ZIP 패키지 중에 HTML의 index 파일이 없습니다"
-
-#: kuma/demos/views.py:73 kuma/demos/views.py:300 kuma/demos/views.py:328 kuma/demos/views.py:343
-msgid "access denied"
-msgstr "접근 거부"
-
-#: kuma/demos/jinja2/demos/delete.html:10 kuma/demos/jinja2/demos/detail.html:9 kuma/demos/jinja2/demos/devderby_tag.html:5 kuma/demos/jinja2/demos/flag.html:10 kuma/demos/jinja2/demos/launch.html:6
-#: kuma/demos/jinja2/demos/listing_all.html:4 kuma/demos/jinja2/demos/listing_search.html:9 kuma/demos/jinja2/demos/listing_tag.html:4 kuma/demos/jinja2/demos/submit.html:13
-#: kuma/demos/jinja2/demos/submit.html:15 kuma/demos/jinja2/demos/submit_noauth.html:11 kuma/demos/jinja2/demos/terms.html:10
-#, fuzzy, python-format
-msgid "%(subtitle)s | Demo Studio"
-msgstr "{subtitle} | 데모 스튜디오"
-
-#: kuma/demos/jinja2/demos/delete.html:20
-msgid "MDN"
-msgstr "MDN"
-
-#: kuma/demos/jinja2/demos/delete.html:21 kuma/demos/jinja2/demos/detail.html:14 kuma/demos/jinja2/demos/home.html:14 kuma/demos/jinja2/demos/launch.html:15
-msgid "Demo Studio"
-msgstr "데모 스튜디오"
-
-#: kuma/demos/jinja2/demos/delete.html:26 kuma/demos/jinja2/demos/detail.html:32 kuma/demos/jinja2/demos/home.html:23 kuma/demos/jinja2/demos/elements/demos_head.html:4
-msgid "Submit a Demo"
-msgstr "데모 제출"
-
-#: kuma/demos/jinja2/demos/delete.html:38
-msgid "Remove this demo?"
-msgstr "현재 데모를 삭제하시겠습니까?"
-
-#: kuma/demos/jinja2/demos/delete.html:40
-#, python-format
-msgid ""
-"<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
-"<strong>cannot be undone</strong>."
-msgstr ""
-"<p>Demo Studio로부터 <strong>%(demo_title)s</strong>을 삭제 합니다.</p> <p>해당 데모의 공개 목록에 등록된 소스 코드 및 통계 데이터는<strong>삭제</strong>됩니다.</p> <p>이 동작은 <strong>취소할 수 없"
-"습니다</strong>."
-
-#: kuma/demos/jinja2/demos/delete.html:49
-msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
-msgstr "<button type=\"submit\" class=\"remove\"><span>데모 삭제</span></button>"
-
-#: kuma/demos/jinja2/demos/detail.html:30 kuma/demos/jinja2/demos/devderby_landing.html:22 kuma/demos/jinja2/demos/devderby_tag.html:32 kuma/demos/jinja2/demos/home.html:21
-#: kuma/demos/jinja2/demos/submit.html:45 kuma/demos/jinja2/demos/submit_noauth.html:20 kuma/demos/jinja2/demos/elements/demos_head.html:2
-msgid "Mozilla Demo Studio"
-msgstr "Mozilla 데모 스튜디오"
-
-#: kuma/demos/jinja2/demos/detail.html:33 kuma/demos/jinja2/demos/home.html:24 kuma/demos/jinja2/demos/listing_tag.html:37 kuma/demos/jinja2/demos/elements/demos_head.html:5
-msgid "Learn More"
-msgstr "자세히 보기"
-
-#: kuma/demos/jinja2/demos/detail.html:35 kuma/demos/jinja2/demos/home.html:26 kuma/demos/jinja2/demos/elements/demos_head.html:7
-msgid ""
-"<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-"<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
-"open standards and technologies that power the Web.</li> </ul>"
-msgstr ""
-"<p>Mozilla 데모 스튜디오는 여러분과 같은 웹 개발자가 웹에 관한 모든 기술을 개발 또는 공유하고, 데모를 통해 학습할 수 있습니다. Demo Studio을 많이 이용해 주시기 바랍니다.</p> <ul> <li>HTML, CSS, "
-"JavaScript을 사용해서 할 수 있는 것을 소개한 데모를 보십시오.</li> <li>데모로 사용된 소스 코드를 조사하고 구조를 살펴 보십시오.</li> <li>문서를 읽고 웹을 움직이고 있는 공개 표준과 기술을 배우십시오."
-"</li> </ul>"
-
-#: kuma/demos/jinja2/demos/detail.html:51 kuma/demos/jinja2/demos/launch.html:80
-#, fuzzy, python-format
-msgid "Go to the previous demo, %(demo_title)s"
-msgstr "이전 데모 &rarr; {demo_title}"
-
-#: kuma/demos/jinja2/demos/detail.html:51
-msgid "Prev"
-msgstr "이전"
-
-#: kuma/demos/jinja2/demos/detail.html:55 kuma/demos/jinja2/demos/launch.html:84
-#, fuzzy, python-format
-msgid "Go to the next demo, %(demo_title)s"
-msgstr "다음 데모 &rarr; {demo_title}"
-
-#: kuma/demos/jinja2/demos/detail.html:68
-msgid "See the previous image"
-msgstr "이전 이미지 보기"
-
-#: kuma/demos/jinja2/demos/detail.html:69
-msgid "See the next image"
-msgstr "다음 이미지 보기"
-
-# 97%
-# 100%
-#: kuma/demos/jinja2/demos/detail.html:102
-#, python-format
-msgid "By %(creator_link)s on %(create_date)s"
-msgstr "개발자: %(creator_link)s  올린일: %(create_date)s"
-
-#: kuma/demos/jinja2/demos/detail.html:117
-msgid "Launch Demo"
-msgstr "데모 실행"
-
-#: kuma/demos/jinja2/demos/detail.html:124 kuma/demos/jinja2/demos/launch.html:46
-msgid "You like this demo. Undo?"
-msgstr "현재 데모를 평가하셨습니다. 계속할까요?"
-
-# Like it 버튼을 누르는 곳의 문자열에 변화한다
-#: kuma/demos/jinja2/demos/detail.html:124 kuma/demos/jinja2/demos/launch.html:46
-msgid "You Like"
-msgstr "좋아요"
-
-#: kuma/demos/jinja2/demos/detail.html:130 kuma/demos/jinja2/demos/launch.html:52
-msgid "Do you like this demo?"
-msgstr "현재 데모가 마음에 들었습니까?"
-
-#: kuma/demos/jinja2/demos/detail.html:130 kuma/demos/jinja2/demos/launch.html:52
-msgid "Like It"
-msgstr "좋아요 완료"
-
-#: kuma/demos/jinja2/demos/detail.html:135 kuma/demos/jinja2/demos/launch.html:56
-msgid "Share this demo with your social network"
-msgstr "현재 데모 소셜 네트워크 공유"
-
-#: kuma/demos/jinja2/demos/detail.html:135 kuma/demos/jinja2/demos/detail.html:137 kuma/demos/jinja2/demos/launch.html:56
-msgid "Share It"
-msgstr "현재 데모 공유"
-
-#: kuma/demos/jinja2/demos/detail.html:138 kuma/demos/jinja2/demos/launch.html:58
-msgid "Share on Twitter"
-msgstr "Twitter로 공유"
-
-#: kuma/demos/jinja2/demos/detail.html:139 kuma/demos/jinja2/demos/launch.html:59
-msgid "Share on Facebook"
-msgstr "Facebook로 공유"
-
-#: kuma/demos/jinja2/demos/detail.html:153
-msgid "Built using"
-msgstr "이용 기술"
-
-#: kuma/demos/jinja2/demos/detail.html:156
-#, fuzzy, python-format
-msgid "See more demos made with %(tag_title)s"
-msgstr "{tag_title} 붙인 데모 보기"
-
-#: kuma/demos/jinja2/demos/detail.html:165 kuma/demos/jinja2/demos/elements/submission_thumb.html:15
-#, fuzzy, python-format
-msgid "This demo has been viewed %(num)s time"
-msgid_plural "This demo has been viewed %(num)s times"
-msgstr[0] "조회수: {count}회"
-
-#: kuma/demos/jinja2/demos/detail.html:165
-#, python-format
-msgid "%(num)s view"
-msgid_plural "%(num)s views"
-msgstr[0] "%(num)s 조회"
-
-#: kuma/demos/jinja2/demos/detail.html:166 kuma/demos/jinja2/demos/elements/submission_thumb.html:16
-#, fuzzy, python-format
-msgid "%(num)s person liked this demo"
-msgid_plural "%(num)s people liked this demo"
-msgstr[0] "{count}명현재 데모를 좋아함"
-
-#: kuma/demos/jinja2/demos/detail.html:166
-#, python-format
-msgid "%(num)s like"
-msgid_plural "%(num)s likes"
-msgstr[0] "%(num)s 좋아요"
-
-#: kuma/demos/jinja2/demos/detail.html:181
-msgid "Edit Demo"
-msgstr "데모 편집"
-
-#: kuma/demos/jinja2/demos/detail.html:183
-msgid "Remove demo"
-msgstr "데모 삭제"
-
-#: kuma/demos/jinja2/demos/detail.html:186
-msgid "Show demo"
-msgstr "데모 표시"
-
-#: kuma/demos/jinja2/demos/detail.html:189
-msgid "Hide demo"
-msgstr "데모 숨기기"
-
-# 개발자가 상세 설명을 기입해 있다고 표시된다
-#: kuma/demos/jinja2/demos/detail.html:196
-msgid "More About This Demo From The Author"
-msgstr "현재 데모에 대한 개발자 댓글"
-
-#: kuma/demos/jinja2/demos/detail.html:207
-msgid "About this Demo"
-msgstr "데모 소개"
-
-#: kuma/demos/jinja2/demos/detail.html:209
-#, python-format
-msgid "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP File</span>"
-msgstr "소스 다운로드 <span class=\"note\">%(file_ksize)s KB &middot; ZIP 파일</span>"
-
-#: kuma/demos/jinja2/demos/detail.html:217
-#, python-format
-msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
-msgstr "현재 데모는 <a href=\"%(link)s\">%(title)s</a> 라이센스 하에 공개되고 있습니다."
-
-# 77%
-#: kuma/demos/jinja2/demos/detail.html:225
-#, fuzzy, python-format
-msgid "More by %(creator)s"
-msgstr "더 많은 정보 보기 {creator}"
-
-#: kuma/demos/jinja2/demos/detail.html:237 kuma/demos/jinja2/demos/launch.html:63
-msgid "Report a Problem"
-msgstr "오류 보고"
-
-#: kuma/demos/jinja2/demos/detail.html:239 kuma/demos/jinja2/demos/detail.html:240 kuma/demos/jinja2/demos/detail.html:241
-msgid "Flag Content"
-msgstr "콘텐츠 표시"
-
-#: kuma/demos/jinja2/demos/detail.html:239
-msgid "Demo is not working"
-msgstr "현재 데모 동작 안함"
-
-#: kuma/demos/jinja2/demos/detail.html:240
-msgid "Demo is inappropriate"
-msgstr "현재 데모 부적절함"
-
-#: kuma/demos/jinja2/demos/detail.html:241
-msgid "Demo is not by this author"
-msgstr "현재 데모는 본 개발자의 것이 아님"
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:11 kuma/demos/jinja2/demos/devderby_landing.html:23 kuma/demos/jinja2/demos/devderby_tag.html:33
-msgid "Dev Derby"
-msgstr "Dev Derby"
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:22 kuma/demos/jinja2/demos/devderby_tag.html:32
-msgid "presents"
-msgstr "제출"
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:25
-msgid "Dev Derby has ended"
-msgstr "Dev Derby 종료됨"
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:27
-#, python-format
-msgid "From 2011 until 2013, web developers created more than 450 demos for the Dev Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo Studio</a> for many more."
-msgstr ""
-"2011년 부터 2013년까지 웹개발자들은 Dev Derby를 위해 450개 이상의 데모를 만들었습니다! 아래에서 찾아보거나 <a href=\"%(demos_url)s\">데모 스튜디오</a>를 방문하여 더 많은 데모를 찾아볼 수 있습니다."
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:40
-msgid "Previous Dev Derby Challenges"
-msgstr "이전 행사"
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:55 kuma/demos/jinja2/demos/devderby_tag.html:25
-msgid "Resources"
-msgstr "자원"
-
-# 메인 페이지 DOCS 탭
-#: kuma/demos/jinja2/demos/devderby_landing.html:57 kuma/search/jinja2/search/results.html:141
-msgid "Docs"
-msgstr "기술 문서"
-
-#: kuma/demos/jinja2/demos/devderby_landing.html:59
-msgid "Articles"
-msgstr "문서"
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:8 kuma/demos/jinja2/demos/listing_tag.html:7
-#, fuzzy, python-format
-msgid "Demos tagged %(tag)s"
-msgstr "{tag} 태그 데모"
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:21 kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:6 kuma/wiki/templates/admin/wiki/purge_documents.html:22
-#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
-msgid "Home"
-msgstr "홈페이지"
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:22
-msgid "Challenges"
-msgstr "도전하기"
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:23
-msgid "Judging"
-msgstr "심사"
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:24
-msgid "Prizes"
-msgstr "상품"
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:41
-msgid "Derby Winners"
-msgstr "Derby 우승자"
-
-# DevDerby 부메뉴
-#: kuma/demos/jinja2/demos/devderby_tag.html:52
-msgid "Submissions"
-msgstr "신청하기"
-
-#: kuma/demos/jinja2/demos/devderby_tag.html:55 kuma/demos/jinja2/demos/home.html:136 kuma/demos/jinja2/demos/listing_tag.html:51
-#, fuzzy, python-format
-msgid "Subscribe to a feed of %(tag_title)s demos"
-msgstr "{tag_title} 태그 데모 피드 구독"
-
-#: kuma/demos/jinja2/demos/feed_item_description.html:7
-msgid "Submitted by:"
-msgstr "제출자:"
-
-#: kuma/demos/jinja2/demos/feed_item_description.html:9
-msgid "Tagged as:"
-msgstr "태그:"
-
-#: kuma/demos/jinja2/demos/flag.html:24
-msgid "Flag this demo?"
-msgstr "현재 데모의 오류를 보고하시겠습니까?"
-
-#: kuma/demos/jinja2/demos/flag.html:30
-msgid "<button type=\"submit\" name=\"action_create\">Flag content</button>"
-msgstr "<button type=\"submit\" name=\"action_create\">콘텐츠 표시</button>"
-
-#: kuma/demos/jinja2/demos/home.html:8 kuma/demos/jinja2/demos/listing_all.html:6
-msgid "Recent demos"
-msgstr "최신 데모"
-
-#: kuma/demos/jinja2/demos/home.html:10
-msgid "Featured demos"
-msgstr "우수 데모"
-
-#: kuma/demos/jinja2/demos/home.html:42
-msgid "Featured Demos"
-msgstr "우수 데모"
-
-# 77%
-# 100%
-#: kuma/demos/jinja2/demos/home.html:46
-msgid "See the previous demo"
-msgstr "이전 데모 보기"
-
-#: kuma/demos/jinja2/demos/home.html:47
-msgid "See the next demo"
-msgstr "다음 데모 보기"
-
-# 100%
-#: kuma/demos/jinja2/demos/home.html:66 kuma/demos/jinja2/demos/elements/submission_thumb.html:21
-msgid "Details"
-msgstr "자세한 내용"
-
-#: kuma/demos/jinja2/demos/home.html:69
-msgid "Launch"
-msgstr "데모 실행"
-
-#: kuma/demos/jinja2/demos/home.html:106 kuma/demos/jinja2/demos/home.html:107
-msgid "Search demos"
-msgstr "데모 검색"
-
-#: kuma/demos/jinja2/demos/home.html:111
-msgid "<b>or</b>"
-msgstr "<b>또는</b>"
-
-#: kuma/demos/jinja2/demos/home.html:114 kuma/demos/jinja2/demos/elements/demos_head.html:18 kuma/demos/jinja2/demos/elements/tech_tags_list.html:2
-msgid "Browse by Technology"
-msgstr "기술별로 분류"
-
-#: kuma/demos/jinja2/demos/home.html:136
-msgid "recent"
-msgstr "최신순"
-
-#: kuma/demos/jinja2/demos/launch.html:36
-#, python-format
-msgid "by %(profile_link)s"
-msgstr "- %(profile_link)s"
-
-#: kuma/demos/jinja2/demos/launch.html:77
-msgid "Back"
-msgstr "뒤로가기"
-
-#: kuma/demos/jinja2/demos/launch.html:86
-msgid "Remove this toolbar"
-msgstr "현재 도구 모음 제거"
-
-#: kuma/demos/jinja2/demos/launch.html:86
-msgid "Remove toolbar"
-msgstr "도구 모음 제거"
-
-#: kuma/demos/jinja2/demos/listing_all.html:4 kuma/demos/jinja2/demos/listing_all.html:20
-msgid "Browse all demos"
-msgstr "모든 데모 보기"
-
-#: kuma/demos/jinja2/demos/listing_all.html:26
-msgid "Subscribe to a feed of all demos"
-msgstr "모든 데모 피드 구독"
-
-#: kuma/demos/jinja2/demos/listing_search.html:9
-#, fuzzy, python-format
-msgid "Search for \"%(query)s\""
-msgstr "\"{query}\" 검색"
-
-#: kuma/demos/jinja2/demos/listing_search.html:13
-#, fuzzy, python-format
-msgid "Search results for \"%(query)s\""
-msgstr "\"{query}\" 검색 결과"
-
-#: kuma/demos/jinja2/demos/listing_search.html:27
-#, fuzzy, python-format
-msgid "Search demos for \"%(query)s\""
-msgstr "\"{query}\" 데모 검색"
-
-#: kuma/demos/jinja2/demos/listing_search.html:33
-#, fuzzy, python-format
-msgid "Subscribe to a feed of search results for \"%(query)s\""
-msgstr "\"{query}\" 검색 결과 구독"
-
-#: kuma/demos/jinja2/demos/listing_tag.html:4
-#, fuzzy, python-format
-msgid "%(tag_title)s Demos"
-msgstr "{tag_title} 데모"
-
-#: kuma/demos/jinja2/demos/submit.html:13 kuma/demos/jinja2/demos/submit.html:53
-#, fuzzy, python-format
-msgid "Edit %(demo_title)s"
-msgstr "{demo_title} 편집"
-
-#: kuma/demos/jinja2/demos/submit.html:15 kuma/demos/jinja2/demos/submit.html:55 kuma/demos/jinja2/demos/submit_noauth.html:11 kuma/demos/jinja2/demos/submit_noauth.html:25
-msgid "Submit a New Demo"
-msgstr "새로운 데모 제출하기"
-
-#: kuma/demos/jinja2/demos/submit.html:60
-msgid ""
-"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-"web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
-msgstr ""
-"<p>여러분이 웹을 경험하기 위한 놀랍고 새로운 방법을 만들거나 또는 최신 기술로 그냥 실험을 하는 것이든지, 우리는 여러분의 데모를 제출해서 다른 웹 개발자들과 공유하기에 (또는 자랑하기에) 여러분을 초대"
-"합니다.</p> <p>아래의 양식을 채워서 데모 스튜디오에 성공적으로 제출해주세요.</p>"
-
-#: kuma/demos/jinja2/demos/submit.html:72
-msgid "Describe Your Demo"
-msgstr "데모 설명"
-
-#: kuma/demos/jinja2/demos/submit.html:74
-msgid "<p>Tell us more about your demo, including the name, description and the technologies used. Please list the browsers you have tested it with.</p>"
-msgstr "<p>여러분의 데모에 사용되고 있는 기술에 대해서 입력해 주시고, 현재 데모를 테스트한 브라우저를 목록을 적어주십시오.</p>"
-
-#: kuma/demos/jinja2/demos/submit.html:87
-msgid "Select up to five technologies used in your demo."
-msgstr "데모에 사용되고 있는 기술을 5개까지 선택해 주십시오."
-
-#: kuma/demos/jinja2/demos/submit.html:98
-msgid "Show Off Your Demo"
-msgstr "데모 공개"
-
-#: kuma/demos/jinja2/demos/submit.html:102
-msgid "Provide at least one screenshot of your demo in action"
-msgstr "동작하는 모습을 담은 스크린샷을 한 장 이상 준비하세요."
-
-#: kuma/demos/jinja2/demos/submit.html:111
-msgid "JPEG and PNG supported. Minimum size of 480x360."
-msgstr "JPEG 및 PNG 형식만 대응하고 있습니다. 최소 크기는 480x360 픽셀입니다."
-
-#: kuma/demos/jinja2/demos/submit.html:113
-msgid "We support YouTube and Vimeo"
-msgstr "YouTube 및 Vimeo을 지원하고 있습니다"
-
-#: kuma/demos/jinja2/demos/submit.html:114
-msgid "If your demo has problems when displayed in an &lt;iframe&gt;, try changing this."
-msgstr "데모가 &lt;iframe&gt;에 표시하는데 문제가 있으면, 이 부분을 변경해 보십시오."
-
-#: kuma/demos/jinja2/demos/submit.html:119 kuma/demos/jinja2/demos/submit_noauth.html:48
-msgid "Preparing Your Demo"
-msgstr "데모 제출를 위한 준비"
-
-#: kuma/demos/jinja2/demos/submit.html:120
-#, python-format
-msgid ""
-"<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-"should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX "
-"to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-"under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
-msgstr ""
-"<ul> <li>여러분의 데모 소스 코드는 ZIP 파일로 압축하여 주십시오.</li> <li>여러분의 데모의 메인 페이지는 ZIP 의 루트 디렉토리에 <code>index.html</code>이라는 이름의 파일로 해 주십시오.</li> <li>여러"
-"분의 데모는 클라이언트 사이드의 기술(HTML, CSS, JavaScript)로 구성하여야 합니다. PHP나 Ruby와 같은 서버 사이드 언어는 지원되고 있지 않습니다.</li> <li>여러분의 데모가 외부 자원을 필요로 하는 경우는 "
-"AJAX를 사용해서 접근해야 합니다.</li> <li>데모를 제출하려면 <a href=\"%(signup_url)s\">MDN 계정</a>이 필요합니다.</li> <li>데모의 상세란에 CC-BY-SA 아래에서 허가할 수 없는 써드파티의 콘텐츠를 명기하"
-"고 그 저작자의 웹 사이트 링크를 포함해 주십시오.</li> </ul>"
-
-#: kuma/demos/jinja2/demos/submit.html:133
-msgid "Provide the Source Code"
-msgstr "소스 코드를 제출"
-
-# 로그인 사용자에 대해서 표시되는 소스 제출 페이지의 업로드 파일 지정 박스의 설명문
-#: kuma/demos/jinja2/demos/submit.html:135
-msgid "<p>Upload a ZIP file of your source code, in which the main page of your demo is named <code>index.html</code> in the root directory.</p>"
-msgstr "<p>소스 코드의 ZIP 파일을 업로드해 주십시오. 데모의 메인 페이지는 루트 디렉토리로 <code>index.html</code>가 되어야합니다.</p>"
-
-# 링크 앞은 https://developer.mozilla.org/ko/demos/terms
-#: kuma/demos/jinja2/demos/submit.html:162
-#, python-format
-msgid "I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
-msgstr "<a href=\"%(terms_url)s#tfc\">공헌자 규약</a>과 <a href=\"%(terms_url)s#rrd\">권리 표기에 관한 상세</a> 내용에 동의"
-
-#: kuma/demos/jinja2/demos/submit.html:177
-msgid "Submit demo"
-msgstr "데모 제출"
-
-# 100%
-#: kuma/demos/jinja2/demos/submit.html:178
-msgid "or"
-msgstr "또는"
-
-#: kuma/demos/jinja2/demos/submit.html:178
-msgid "Discard Demo"
-msgstr "데모 파기"
-
-#: kuma/demos/jinja2/demos/submit.html:180
-msgid "Save changes"
-msgstr "변경 저장"
-
-#: kuma/demos/jinja2/demos/submit.html:181 kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
-msgid "Discard Changes"
-msgstr "변경 파기"
-
-# 78%
-#: kuma/demos/jinja2/demos/submit.html:189
-msgid "Update Your Profile"
-msgstr "프로필 편집"
-
-#: kuma/demos/jinja2/demos/submit.html:190
-msgid ""
-"<p>Share your developer interests and areas of expertise with the MDN community. We'll be able to bring you a better, more customized experience and you will have a place to show off the amazing "
-"work you do.</p>"
-msgstr ""
-"<p>여러분의 개발에 대한 관심과 전문 영역을 MDN 커뮤니티에서 공유하세요. 저희는 여러분에게 더 낫고, 더 사용자화된 경험을 가져다주고 여러분은 직접 만든 놀라운 작품을 선보일 수 있는 공간을 갖게 될 것입"
-"니다.</p>"
-
-# 100%
-#: kuma/demos/jinja2/demos/submit.html:195
-msgid "Go to your profile"
-msgstr "프로필로 이동"
-
-# 로그인 후의 데모 제출 화면의 제일 모두의 문언
-#: kuma/demos/jinja2/demos/submit_noauth.html:27
-msgid ""
-"<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-"web developers.</p>"
-msgstr "<p>여러분이 개발한 것이 아직 웹에서 경험하지 못했던 새로운 것인지 최신의 기술 성과를 경험하는 것인지에 상관없이 다양한 데모를 웹 개발자와 공유(또는 자랑)하기를 추천합니다.</p>"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:36
-msgid "Before You Begin"
-msgstr "시작하기 전에"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:37
-msgid ""
-"<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-"<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-"range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
-msgstr ""
-"<ul> <li>여러분은 데모의 <strong>소스 코드를 제출</strong>해야 합니다. 데모는 Demo Studio 의 서버에 저장됩니다.</li> <li>여러분의 데모의 소스 코드의 라이센스는 MPL, GPL, BSD 와 같은 <strong>오픈 라"
-"이센스</strong>를 사용해야 합니다.</li> <li>여러분의 데모는 HTML5 및 CSS3 와 같은 <strong>개방적인 웹 기술</strong>을 사용해야 합니다.</li> <li>여러분의 데모는 Firefox, Chrome, Safari 및 Opera와 같"
-"은 <strong>최신 웹 브라우저</strong>를 폭넓게 지원해야 합니다.</li> </ul>"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:49
-msgid ""
-"<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-"root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-"demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-"
-"SA license and include links to the authors' websites.</li> </ul>"
-msgstr ""
-"<ul> <li>데모의 소스 코드는 <strong>ZIP 파일</strong>에 압축하여 주십시오.</li> <li>데모의 메인 페이지는 ZIP의 루트 디렉토리내의 <strong><code>index.html</code></strong> (이)라는 이름의 파일로 해 주"
-"십시오.</li> <li>여러분의 데모는<strong>클라이언트 사이드의 기술</strong> (HTML CSS JavaScript)로 구성하여야 합니다. PHP나 Ruby와 같은 서버 사이드의 언어는 지원되고 있지 않습니다.</li> <li>여러분의 "
-"데모가 외부 자원을 필요로 하는 경우는 그것들에 <strong>AkoX</strong> 그리고 접근 해 주십시오.</li> <li>데모의 상세란에 CC-BY-SA (표시-계승) 아래에서 허가할 수 없는 써드파티의 콘텐츠를 명기해 그 개발"
-"자의 Web 사이트로의 링크를 기술해 주십시오.</li> </ul>"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:61
-#, python-format
-msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
-msgstr "<p>데모를 제출하려면 <strong><a href=\"%(signup_url)s\">MDN 계정</a></strong>이 필요합니다.</p>"
-
-#: kuma/demos/jinja2/demos/submit_noauth.html:66
-msgid "Log In to Profile"
-msgstr "계정 로그인"
-
-#: kuma/demos/jinja2/demos/terms.html:10
-msgid "Terms for Contributors"
-msgstr "공헌자 규약"
-
-#: kuma/demos/jinja2/demos/terms.html:20
-msgid "Demo Studio: Terms for Contributors"
-msgstr "데모 스튜디오: 기여자 목록"
-
-#: kuma/demos/jinja2/demos/terms.html:107
-msgid "Rights Representation Details"
-msgstr "권리 표기에 관한 상세"
-
-#: kuma/demos/jinja2/demos/elements/demos_head.html:31 kuma/demos/jinja2/demos/elements/search_form.html:4
-msgid "Search the Demo Studio"
-msgstr "Demo Studio 검색"
-
-#: kuma/demos/jinja2/demos/elements/submission_creator.html:2 kuma/demos/jinja2/demos/elements/user_link.html:2
-#, python-format
-msgid "See %(display_name)s's profile"
-msgstr "%(display_name)s의 프로필 보기"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:6
-#, python-format
-msgid "%(num)s Demo"
-msgid_plural "%(num)s Demos"
-msgstr[0] ""
-
-# 75%
-# 100%
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:9
-msgid "Sort demos by most recent likes and views"
-msgstr "최신 좋아요 순으로 데모 보기"
-
-# 75%
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:9
-msgid "You are viewing demos by most recent likes and views"
-msgstr "보고 계신 것은 최신 좋아요 및 조회수 순서의 데모입니다"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:9
-msgid "Up and Coming"
-msgstr "최신 데모"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:10
-msgid "Sort demos by most views"
-msgstr "조회 순으로 정렬"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:10
-msgid "You are viewing demos by most views"
-msgstr "조회순으로 데모 보기"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:10
-msgid "Most Viewed"
-msgstr "조회 순"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:11
-msgid "Sort demos by most likes"
-msgstr "좋아요 순으로 정렬"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:11
-msgid "You are viewing demos by most likes"
-msgstr "좋아요 순으로 데모 보기"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:11
-msgid "Most Liked"
-msgstr "좋아요 순"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:12
-msgid "Sort demos by most recently submitted"
-msgstr "제출 일자순으로 정렬"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:12
-msgid "You are viewing demos by most recently submitted"
-msgstr "제출 일자 순으로 데모 보기"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:12
-msgid "Most Recent"
-msgstr "제출일 순"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:58
-msgid "Go to the first page"
-msgstr "첫페이지"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:58
-msgid "First"
-msgstr "1등"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:61
-msgid "Go to the previous page"
-msgstr "이전 페이지"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:64
-msgid "Go to the next page"
-msgstr "다음의 페이지로 진행된다"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:67
-msgid "Go to the last page"
-msgstr "다음 페이지"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:67
-msgid "Last"
-msgstr "마지막"
-
-#: kuma/demos/jinja2/demos/elements/submission_listing.html:72
-msgid "Feed"
-msgstr "피드"
-
-#: kuma/demos/jinja2/demos/elements/submission_thumb.html:23
-#, fuzzy, python-format
-msgid "Launch %(title)s"
-msgstr "{title} 실행"
-
-#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:9
-msgid "Censor multiple objects"
-msgstr ""
-
-#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:14
-#, python-format
-msgid "Are you sure you want to censor the selected %(object_name)s objects? This cannot be reversed."
-msgstr ""
-
-#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:23
-msgid "Explanation URL (optional):"
-msgstr ""
-
-#: kuma/demos/templates/admin/demos/submission/censor_selected_confirmation.html:31
-msgid "Yes, I'm sure"
-msgstr "예, 확신합니다"
-
-#: kuma/demos/templatetags/jinja_helpers.py:109
-msgid "First Place"
-msgstr "1등"
-
-#: kuma/demos/templatetags/jinja_helpers.py:110
-msgid "Second Place"
-msgstr "2등"
-
-#: kuma/demos/templatetags/jinja_helpers.py:111
-msgid "Third Place"
-msgstr "3등"
-
-#: kuma/demos/templatetags/jinja_helpers.py:112
-msgid "Finalist"
-msgstr "최종 참가자"
-
-#: kuma/demos/templatetags/jinja_helpers.py:113
-msgid "Featured"
-msgstr "중요"
-
-#: kuma/demos/templatetags/jinja_helpers.py:270
-msgid "year"
-msgid_plural "years"
-msgstr[0] "년"
-
-#: kuma/demos/templatetags/jinja_helpers.py:271
-msgid "month"
-msgid_plural "months"
-msgstr[0] "개월"
-
-#: kuma/demos/templatetags/jinja_helpers.py:272
-msgid "week"
-msgid_plural "weeks"
-msgstr[0] "주간"
-
-#: kuma/demos/templatetags/jinja_helpers.py:273
-msgid "day"
-msgid_plural "days"
-msgstr[0] "일"
-
-#: kuma/demos/templatetags/jinja_helpers.py:281
-#, python-format
-msgid "%(number)d %(type)s"
-msgstr "%(number)d %(type)s"
-
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
 msgstr "모질라 개발자 네트워크(MDN) 펠로우십 프로그램은 모질라와 함께 세상을 바꿀 세계 최고의 웹 개발자들을 초대하고 있습니다."
@@ -2989,6 +1024,14 @@ msgstr "웹 플랫폼"
 #: kuma/landing/jinja2/landing/homepage.html:71
 msgid "Web APIs &amp; DOM"
 msgstr "Web API 및 DOM"
+
+#: kuma/landing/jinja2/landing/homepage.html:72
+msgid "HTML5"
+msgstr "HTML5"
+
+#: kuma/landing/jinja2/landing/homepage.html:73
+msgid "CSS3"
+msgstr "CSS3"
 
 #: kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/homepage.html:95
 msgid "more..."
@@ -3076,7 +1119,8 @@ msgid "Help improve MDN"
 msgstr "MDN 참여하기"
 
 #: kuma/landing/jinja2/landing/homepage.html:158
-msgid "All parts of MDN (docs, demos, and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
+#, fuzzy
+msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "MDN의 모든 영역(문서, 데모, 웹 사이트)는 개발자 커뮤니티에 의해 만들어집니다. 지금 참여하셔서 함께 만들어 주십시오."
 
 #: kuma/landing/jinja2/landing/homepage.html:164
@@ -3199,19 +1243,23 @@ msgid "Better Web docs for a better Web on MDN"
 msgstr "MDN의 더 나은 웹을 위한 개선된 웹 문서"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
-msgid "MDN is Developer Powered for CSS docs, demos and more."
+#, fuzzy
+msgid "MDN is Developer Powered for CSS docs and more."
 msgstr "MDN은 CSS 문서, 데모 등은 개발자에 의해 제공됩니다."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175 kuma/landing/jinja2/landing/promote_buttons.html:179 kuma/landing/jinja2/landing/promote_buttons.html:183
-msgid "MDN is Developer Powered for HTML docs, demos and more."
+#, fuzzy
+msgid "MDN is Developer Powered for HTML docs and more."
 msgstr "MDN은 HTML 문서, 데모 등은 개발자에 의해 제공됩니다."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176 kuma/landing/jinja2/landing/promote_buttons.html:180 kuma/landing/jinja2/landing/promote_buttons.html:184
-msgid "MDN is Developer Powered for JavaScript docs, demos and more."
+#, fuzzy
+msgid "MDN is Developer Powered for JavaScript docs and more."
 msgstr "MDN은 Javascript 문서, 데모 등은 개발자에 의해 제공됩니다."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
-msgid "MDN is Developer Powered for Web docs, demos and more."
+#, fuzzy
+msgid "MDN is Developer Powered for Web docs and more."
 msgstr "MDN은 Web 문서, 데모 등은 개발자에 의해 제공됩니다."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
@@ -3231,7 +1279,8 @@ msgid "Web docs by developers, for developers on MDN"
 msgstr "개발자에 의한 웹 문서, MDN의 개발자를 위한"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
-msgid "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."
+#, fuzzy
+msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
 msgstr "MDN은 HTML, CSS, Javascript와 다른 웹 표준 그리고 공개 기술들에 관한 문서와 데모 등을 여러분에게 제공해주기 위한 웹 개발자 도구상자입니다."
 
 #: kuma/search/admin.py:11
@@ -3374,6 +1423,11 @@ msgstr "결과 보기:  %(start)s - %(end)s."
 msgid "Search again in %(default_locale_native)s only"
 msgstr "%(default_locale_native)s 만 다시 검색하기"
 
+# 메인 페이지 DOCS 탭
+#: kuma/search/jinja2/search/results.html:141
+msgid "Docs"
+msgstr "기술 문서"
+
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
 msgstr "검색 설정"
@@ -3482,7 +1536,7 @@ msgstr "표준시간대"
 msgid "Beta tester"
 msgstr "베타 테스터"
 
-#: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:87
+#: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:81
 msgid "Interests"
 msgstr "관심사"
 
@@ -3495,28 +1549,28 @@ msgstr "전문 기술"
 msgid "Username"
 msgstr "사용자이름"
 
-#: kuma/users/forms.py:180 kuma/users/models.py:139 kuma/users/jinja2/users/user_detail.html:117
+#: kuma/users/forms.py:180 kuma/users/models.py:136 kuma/users/jinja2/users/user_detail.html:111
 msgid "Website"
 msgstr "웹 사이트"
 
 # 각 페이지 2단째 헤더 - Twitter 링크
-#: kuma/users/forms.py:189 kuma/users/models.py:154 kuma/users/jinja2/users/user_detail.html:121 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/users/forms.py:189 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:115 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:207 kuma/users/models.py:169 kuma/users/jinja2/users/user_detail.html:135
+#: kuma/users/forms.py:207 kuma/users/models.py:166 kuma/users/jinja2/users/user_detail.html:129
 msgid "Stack Overflow"
 msgstr "Stack Overflow"
 
-#: kuma/users/forms.py:216 kuma/users/models.py:159 kuma/users/jinja2/users/user_detail.html:139
+#: kuma/users/forms.py:216 kuma/users/models.py:156 kuma/users/jinja2/users/user_detail.html:133
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: kuma/users/forms.py:225 kuma/users/models.py:144 kuma/users/jinja2/users/user_detail.html:143
+#: kuma/users/forms.py:225 kuma/users/models.py:141 kuma/users/jinja2/users/user_detail.html:137
 msgid "Mozillians"
 msgstr "Mozilla 공헌자"
 
-#: kuma/users/forms.py:234 kuma/users/models.py:164 kuma/users/jinja2/users/user_detail.html:147 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
+#: kuma/users/forms.py:234 kuma/users/models.py:161 kuma/users/jinja2/users/user_detail.html:141 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
 msgid "Facebook"
 msgstr "페이스북"
 
@@ -3582,31 +1636,31 @@ msgstr "IRC 닉네임"
 msgid "Tags"
 msgstr "태그"
 
-#: kuma/users/models.py:102
+#: kuma/users/models.py:99
 msgid "Enter a valid website URL."
 msgstr "유효한 웹사이트 URL을 입력해주세요."
 
-#: kuma/users/models.py:107
+#: kuma/users/models.py:104
 msgid "Enter a valid Twitter URL."
 msgstr "유효한 Twitter URL을 입력해주세요."
 
-#: kuma/users/models.py:112
+#: kuma/users/models.py:109
 msgid "Enter a valid GitHub URL."
 msgstr "유효한 GitHub URL을 입력해주세요."
 
-#: kuma/users/models.py:117
+#: kuma/users/models.py:114
 msgid "Enter a valid Stack Overflow URL."
 msgstr "유효한 Stack Overflow URL을 입력해주세요."
 
-#: kuma/users/models.py:122
+#: kuma/users/models.py:119
 msgid "Enter a valid LinkedIn URL."
 msgstr "유효한 LinkedIn URL을 입력해주세요."
 
-#: kuma/users/models.py:127
+#: kuma/users/models.py:124
 msgid "Enter a valid Mozillians URL."
 msgstr "유효한 Mozillians URL을 입력해주세요."
 
-#: kuma/users/models.py:132
+#: kuma/users/models.py:129
 msgid "Enter a valid Facebook URL."
 msgstr "유효한 Facebook URL을 입력해주세요."
 
@@ -3632,21 +1686,21 @@ msgstr "이용 약관에 동의하셔야 합니다."
 msgid "Take the next step to get involved on MDN!"
 msgstr "MDN 참여하기 위한 다음 단계"
 
-#: kuma/users/views.py:236
+#: kuma/users/views.py:214
 msgid "Email address"
 msgstr "이메일 주소"
 
-#: kuma/users/views.py:295
+#: kuma/users/views.py:273
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>인증됨</b>"
 
-#: kuma/users/views.py:298
+#: kuma/users/views.py:276
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s 미인증됨"
 
-#: kuma/users/views.py:301 kuma/users/jinja2/socialaccount/signup.html:142
+#: kuma/users/views.py:279 kuma/users/jinja2/socialaccount/signup.html:142
 msgid "Other:"
 msgstr "또 다른 것들:"
 
@@ -3658,7 +1712,7 @@ msgstr "프로필 비활성화"
 msgid "This profile is inactive."
 msgstr "이 프로필은 비활성화상태 입니다."
 
-#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/user_detail.html:63
+#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/user_detail.html:57
 msgid "Email addresses"
 msgstr "이메일 주소"
 
@@ -3876,7 +1930,7 @@ msgstr "소셜 계정으로 로그인 시도가 실패했습니다."
 msgid "Account Connections"
 msgstr "계정 연결"
 
-#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/user_detail.html:61
+#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/user_detail.html:55
 msgid "Account connections"
 msgstr "계정 연결"
 
@@ -3934,16 +1988,15 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 #, fuzzy
-msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs, submit demos, and have your own profile page."
+msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
 msgstr "귀하는 계정 없이도 MDN 웹사이트의 모든 것에 접근할 수 있습니다만, 회원으로 가입을 하신다면 문서를 수정하고, 데모를 제출하고 귀하 자신의 프로필 페이지를 가질 수 있습니다."
 
 #: kuma/users/jinja2/socialaccount/signup.html:68
-msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions (edits, demos, etc.) that you make."
+msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:74
-msgid ""
-"To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions (edits, demos, etc.) that you make."
+msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:82
@@ -4029,81 +2082,67 @@ msgstr "아래 이유로 계정을 차단합니다."
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">차단 해제 요청</a> (영문 작성 필요)</p>"
 
-#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/content.py:718 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:718 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
 msgstr "편집"
 
-#: kuma/users/jinja2/users/user_detail.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
+#: kuma/users/jinja2/users/user_detail.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
 msgid "Advanced"
 msgstr "고급"
 
-#: kuma/users/jinja2/users/user_detail.html:59
+#: kuma/users/jinja2/users/user_detail.html:53
 #, fuzzy
 msgid "Manage"
 msgstr "관리 업무"
 
-#: kuma/users/jinja2/users/user_detail.html:62
+#: kuma/users/jinja2/users/user_detail.html:56
 #, fuzzy
 msgid "API keys"
 msgstr "API 키 관리"
 
-#: kuma/users/jinja2/users/user_detail.html:100
+#: kuma/users/jinja2/users/user_detail.html:94
 msgid "Areas of Expertise"
 msgstr "전문 영역"
 
-#: kuma/users/jinja2/users/user_detail.html:108
+#: kuma/users/jinja2/users/user_detail.html:102
 #, fuzzy, python-format
 msgid "Member since %(date_joined)s"
 msgstr "등록일: {date}"
 
-#: kuma/users/jinja2/users/user_detail.html:159
-#, fuzzy, python-format
-msgid "Subscribe to a feed of %(display_name)s's demos"
-msgstr "{display_name} 데모 피드 구독"
-
-#: kuma/users/jinja2/users/user_detail.html:167
-msgid "No Demos"
-msgstr "데모 없음"
-
-#: kuma/users/jinja2/users/user_detail.html:169
-#, python-format
-msgid "You haven't submitted any web technology demos. Build something awesome and <a href=\"%(submit_url)s\">submit a demo</a>!"
-msgstr "웹 기술 데모를 아직 추가하지 않았습니다. 멋진 것을 만드셨다면, <a href=\"%(submit_url)s\">데모 제출</a> 바랍니다."
-
-#: kuma/users/jinja2/users/user_detail.html:175
+#: kuma/users/jinja2/users/user_detail.html:150
 msgid "Recent Docs Activity"
 msgstr "최근 문서 활동"
 
-#: kuma/users/jinja2/users/user_detail.html:175
+#: kuma/users/jinja2/users/user_detail.html:150
 msgid "View all activity"
 msgstr "전체 활동 보기"
 
-#: kuma/users/jinja2/users/user_detail.html:180
+#: kuma/users/jinja2/users/user_detail.html:155
 msgid "Page"
 msgstr "페이지"
 
-#: kuma/users/jinja2/users/user_detail.html:182 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
+#: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
 msgstr "댓글"
 
-#: kuma/users/jinja2/users/user_detail.html:190 kuma/wiki/jinja2/wiki/document.html:393
+#: kuma/users/jinja2/users/user_detail.html:165 kuma/wiki/jinja2/wiki/document.html:377
 msgid "Edit page"
 msgstr "페이지 편집"
 
-#: kuma/users/jinja2/users/user_detail.html:191
+#: kuma/users/jinja2/users/user_detail.html:166
 msgid "View complete diff"
 msgstr "모든 차이점 보기"
 
-#: kuma/users/jinja2/users/user_detail.html:192 kuma/wiki/jinja2/wiki/document.html:394
+#: kuma/users/jinja2/users/user_detail.html:167 kuma/wiki/jinja2/wiki/document.html:378
 msgid "View page history"
 msgstr "페이지 이력 보기"
 
-#: kuma/users/jinja2/users/user_detail.html:204
+#: kuma/users/jinja2/users/user_detail.html:179
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr "<p class=\"none\">보내주신 MDN문서가 아무것도 없습니다. <a href=\"%(docs_url)s\">힘내시죠!</a></p>"
 
-#: kuma/users/jinja2/users/user_detail.html:208
+#: kuma/users/jinja2/users/user_detail.html:183
 msgid "This user has no activity."
 msgstr "활동 사항이 없습니다."
 
@@ -4111,74 +2150,74 @@ msgstr "활동 사항이 없습니다."
 msgid "Edit Your Profile"
 msgstr "프로필 편집"
 
-#: kuma/users/jinja2/users/user_edit.html:40
+#: kuma/users/jinja2/users/user_edit.html:38
 msgid "Change your avatar at"
 msgstr "아바타 변경"
 
-#: kuma/users/jinja2/users/user_edit.html:44
+#: kuma/users/jinja2/users/user_edit.html:42
 msgid "View profile"
 msgstr "프로필 보기"
 
-#: kuma/users/jinja2/users/user_edit.html:52
+#: kuma/users/jinja2/users/user_edit.html:50
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:63
+#: kuma/users/jinja2/users/user_edit.html:61
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:66
+#: kuma/users/jinja2/users/user_edit.html:64
 msgid "Primary Email"
 msgstr "기본 이메일"
 
-#: kuma/users/jinja2/users/user_edit.html:67
+#: kuma/users/jinja2/users/user_edit.html:65
 msgid "Edit email"
 msgstr "이메일 편집"
 
 # 사용자 프로파일의 편집 페이지
-#: kuma/users/jinja2/users/user_edit.html:79
+#: kuma/users/jinja2/users/user_edit.html:77
 msgid "About me"
 msgstr "자기 소개"
 
-#: kuma/users/jinja2/users/user_edit.html:79
+#: kuma/users/jinja2/users/user_edit.html:77
 msgid "words remaining"
 msgstr "남은 단어"
 
-#: kuma/users/jinja2/users/user_edit.html:85
+#: kuma/users/jinja2/users/user_edit.html:83
 msgid "Interests (tags)"
 msgstr "관심 (태그)"
 
-#: kuma/users/jinja2/users/user_edit.html:86
+#: kuma/users/jinja2/users/user_edit.html:84
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr "태그는 쉼표나 공백으로 분리하세요. 구(句)는 \"웹 표준\"처럼 인용부호로 감싸주세요."
 
-#: kuma/users/jinja2/users/user_edit.html:92
+#: kuma/users/jinja2/users/user_edit.html:90
 msgid "Areas of expertise"
 msgstr "전문 영역"
 
-#: kuma/users/jinja2/users/user_edit.html:93
+#: kuma/users/jinja2/users/user_edit.html:91
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr "관심사를 추가하고, 선택된 토픽의 전문가로 선언하세요."
 
-#: kuma/users/jinja2/users/user_edit.html:101
+#: kuma/users/jinja2/users/user_edit.html:99
 msgid "My Profiles"
 msgstr "내 프로필"
 
-#: kuma/users/jinja2/users/user_edit.html:106 kuma/users/jinja2/users/user_edit.html:124
+#: kuma/users/jinja2/users/user_edit.html:104 kuma/users/jinja2/users/user_edit.html:122
 msgid "Change"
 msgstr "변경"
 
-#: kuma/users/jinja2/users/user_edit.html:112
+#: kuma/users/jinja2/users/user_edit.html:110
 msgid "Use your Persona account to sign in."
 msgstr "로그인을 위해서 Persona 계정을 사용하세요."
 
-#: kuma/users/jinja2/users/user_edit.html:132
+#: kuma/users/jinja2/users/user_edit.html:130
 msgid "Use your GitHub account to sign in."
 msgstr "로그인 하려믄 GitHub 계정을 사용하세요."
 
 # 91%
 # 100%
-#: kuma/users/jinja2/users/user_edit.html:153 kuma/users/jinja2/users/user_edit.html:161 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
+#: kuma/users/jinja2/users/user_edit.html:151 kuma/users/jinja2/users/user_edit.html:159 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Save Changes"
 msgstr "변경 사항 저장"
 
@@ -4430,162 +2469,162 @@ msgstr "MDN 문서의 최신 변경 사항"
 msgid "Show comparison"
 msgstr "비교한 문서 보여주기"
 
-#: kuma/wiki/forms.py:31
+#: kuma/wiki/forms.py:30
 msgid "Please provide a title."
 msgstr "제목을 입력해 주세요."
 
-#: kuma/wiki/forms.py:32
+#: kuma/wiki/forms.py:31
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "제목이 너무 짧습니다(%(show_value)s자). 최소 %(limit_value)s자이어야 합니다."
 
-#: kuma/wiki/forms.py:34
+#: kuma/wiki/forms.py:33
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "제목은 %(limit_value)s자 이하여야 합니다. 현재 %(show_value)s자입니다."
 
-#: kuma/wiki/forms.py:37
+#: kuma/wiki/forms.py:36
 msgid "Name Your Article"
 msgstr "문서 이름"
 
-#: kuma/wiki/forms.py:38
+#: kuma/wiki/forms.py:37
 msgid "Please provide a slug."
 msgstr "슬러그를 제공해 주세요."
 
-#: kuma/wiki/forms.py:39
+#: kuma/wiki/forms.py:38
 msgid "The slug provided is not valid."
 msgstr "제공된 슬러그가 유효하지 않습니다."
 
-#: kuma/wiki/forms.py:40
+#: kuma/wiki/forms.py:39
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "슬러그가 너무 짧습니다(%(show_value)s 캐릭터). 적어도 %(limit_value)s 문자 보다 커야 합니다."
 
-#: kuma/wiki/forms.py:42
+#: kuma/wiki/forms.py:41
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "%(limit_value)s자 이하로 슬러그의 길이를 지켜주세요. 현재 %(show_value)s자 입니다."
 
-#: kuma/wiki/forms.py:45
+#: kuma/wiki/forms.py:44
 msgid "Please provide a summary."
 msgstr "요약을 적어 주세요."
 
-#: kuma/wiki/forms.py:46
+#: kuma/wiki/forms.py:45
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "개요가 너무 짧습니다(%(show_value)s자). 최소 %(limit_value)s자이어야 합니다."
 
-#: kuma/wiki/forms.py:48
+#: kuma/wiki/forms.py:47
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "%(limit_value)s 이하로 개요의 길이를 지켜주세요. 현재 %(show_value)s 입니다."
 
-#: kuma/wiki/forms.py:51
+#: kuma/wiki/forms.py:50
 msgid "Please provide content."
 msgstr "내용을 적어 주세요."
 
-#: kuma/wiki/forms.py:52
+#: kuma/wiki/forms.py:51
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "내용이 너무 짧습니다(%(show_value)s 자). 최소한 %(limit_value)s자이어야 합니다."
 
-#: kuma/wiki/forms.py:54
+#: kuma/wiki/forms.py:53
 #, fuzzy, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "내용의 길이는 % (limit_value)s자 이하여야 합니다 . 현재 % (show_value)s자입니다."
 
-#: kuma/wiki/forms.py:57
+#: kuma/wiki/forms.py:56
 #, fuzzy, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "코멘트의 길이는 % (limit_value)s자 이하여야 합니다 . 현재 % (show_value)s자입니다."
 
-#: kuma/wiki/forms.py:60
+#: kuma/wiki/forms.py:59
 msgid "Another document with this slug already exists."
 msgstr "이 슬러그의 다른 문서가 이미 있습니다."
 
-#: kuma/wiki/forms.py:61
+#: kuma/wiki/forms.py:60
 msgid "Another document with this metadata already exists."
 msgstr "이 메타 데이터의 다른 문서가 이미 존재합니다."
 
-#: kuma/wiki/forms.py:63
+#: kuma/wiki/forms.py:62
 msgid "This document was modified while you were editing it."
 msgstr "편집하는 동안 이 문서가 수정되었습니다."
 
-#: kuma/wiki/forms.py:65
+#: kuma/wiki/forms.py:64
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "현재 문서 짧은 URL을 변경하려면 하위 문서로 이동이 필요합니다."
 
 # https://github.com/mozilla/kuma/blob/master/apps/devmo/models.py
 # 83%
-#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
+#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:612 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "제목:"
 
-#: kuma/wiki/forms.py:82 kuma/wiki/forms.py:160 kuma/wiki/forms.py:614
+#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613
 msgid "Title of article"
 msgstr "문서 제목"
 
-#: kuma/wiki/forms.py:90 kuma/wiki/forms.py:173 kuma/wiki/jinja2/wiki/create.html:44 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:89 kuma/wiki/forms.py:172 kuma/wiki/jinja2/wiki/create.html:44 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "슬러그:"
 
-#: kuma/wiki/forms.py:91 kuma/wiki/forms.py:174
+#: kuma/wiki/forms.py:90 kuma/wiki/forms.py:173
 msgid "Article URL"
 msgstr "문서 URL"
 
 # 100%
-#: kuma/wiki/forms.py:98 kuma/wiki/jinja2/wiki/create.html:48 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:97 kuma/wiki/jinja2/wiki/create.html:48 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "부모:"
 
 # 80%
-#: kuma/wiki/forms.py:184 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:183 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "태그:"
 
-#: kuma/wiki/forms.py:189 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:188 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
 msgstr "키워드:"
 
-#: kuma/wiki/forms.py:190
+#: kuma/wiki/forms.py:189
 msgid "Affects search results"
 msgstr "검색 결과에 적용"
 
-#: kuma/wiki/forms.py:198
+#: kuma/wiki/forms.py:197
 msgid "Search result summary:"
 msgstr "검색 결과 요약:"
 
-#: kuma/wiki/forms.py:199
+#: kuma/wiki/forms.py:198
 msgid "Only displayed on search results page"
 msgstr "검색 결과 페이지에만 보이기"
 
 # 87%
 # 75%
-#: kuma/wiki/forms.py:210 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
+#: kuma/wiki/forms.py:209 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
 msgstr "내용:"
 
 # 87%
 # 100%
-#: kuma/wiki/forms.py:219
+#: kuma/wiki/forms.py:218
 msgid "Comment:"
 msgstr "의견:"
 
-#: kuma/wiki/forms.py:222
+#: kuma/wiki/forms.py:221
 msgid "Tag this revision for review?"
 msgstr "검토를 위해 이 리비전에 태그할까요?"
 
-#: kuma/wiki/forms.py:229
+#: kuma/wiki/forms.py:228
 msgid "Tag this revision for localization?"
 msgstr "새 번역을 위한 리비전 태그하시겠습니까?"
 
-#: kuma/wiki/forms.py:620
+#: kuma/wiki/forms.py:619
 msgid "New slug:"
 msgstr "새 짧은 URL(영문):"
 
-#: kuma/wiki/forms.py:621
+#: kuma/wiki/forms.py:620
 msgid "New article URL"
 msgstr "새 문서 URL"
 
@@ -4844,19 +2883,15 @@ msgid "View profile: %(username)s"
 msgstr "프로필: %(username)s"
 
 #: kuma/wiki/jinja2/wiki/document.html:210
-msgid "Show Sidebar"
-msgstr "사이드바 보기"
-
-#: kuma/wiki/jinja2/wiki/document.html:224
 msgid "In This Article"
 msgstr "현재 문서 내"
 
-#: kuma/wiki/jinja2/wiki/document.html:246
+#: kuma/wiki/jinja2/wiki/document.html:232
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr "이 문서는 시스템이 처음으로 표시한 것입니다. 모든 콘텐트를 보려면 몇 분 뒤에 <a href=\"%(url)s\">페이지를 새로 고침</a>해 주세요."
 
-#: kuma/wiki/jinja2/wiki/document.html:254
+#: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
@@ -4864,7 +2899,7 @@ msgid ""
 msgstr ""
 "이 문서에 대한 업데이트가 <abbr title=\"%(started_at)s\">현재 진행중입니다</abbr>. 만약 아래의 콘텐트가 낡았거나 무엇인가 빠졌다면, 몇 분 후에 <a href=\"%(url)s\">이 페이지를 새로고침</a>해 주세요."
 
-#: kuma/wiki/jinja2/wiki/document.html:263
+#: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
@@ -4873,59 +2908,55 @@ msgstr ""
 "이 문서에 대한 업데이트가 <abbr title=\"%(scheduled_at)s\">예약되어 있습니다</abbr>. 만약 아래의 콘텐트가 낡았거나 무엇인가 빠졌다면, 몇 분 후에 <a href=\"%(url)s\">이 페이지를 새로고침</a>해 주세"
 "요."
 
-#: kuma/wiki/jinja2/wiki/document.html:279
+#: kuma/wiki/jinja2/wiki/document.html:265
 msgid "This article is in need of a technical review."
 msgstr "이 문서는 기술적인 검토가 필요합니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:284
+#: kuma/wiki/jinja2/wiki/document.html:270
 msgid "This article is in need of an editorial review."
 msgstr "현재 문서는 편집 검토가 필요합니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:290
+#: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "현재 번역은 완벽하지 않습니다. 한국어로 <a href=\"%(translate_url)s\">문서 번역</a>에 동참해주세요."
 
-#: kuma/wiki/jinja2/wiki/document.html:295
+#: kuma/wiki/jinja2/wiki/document.html:281
 msgid "This translation is in progress."
 msgstr "번역 작업 진행중입니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:302
+#: kuma/wiki/jinja2/wiki/document.html:288
 #, fuzzy, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr "아직 자원 봉사자들이 %(locale)s로 현재 문서를 번역하지 않았습니다. <a href=\"%(help_link)s\">가입해서 이 문서가 번역되는 일에 함께 해 주세요!</a>"
 
 # 85%
-#: kuma/wiki/jinja2/wiki/document.html:313
+#: kuma/wiki/jinja2/wiki/document.html:299
 msgid "This article doesn't have any content yet."
 msgstr "이 글에는 아직 내용이 없습니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:316
+#: kuma/wiki/jinja2/wiki/document.html:302
 #, fuzzy, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr "여러 매크로를 사용하고 예제 케이스를 보기 위해 <a href=\"%(search_link)s\">%(title)s 사용 문서</a>를 검색합니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:329
+#: kuma/wiki/jinja2/wiki/document.html:315
 msgid "This article doesn't have approved content yet."
 msgstr "현재 문서는 아직 승인된 내용이 없습니다."
 
-#: kuma/wiki/jinja2/wiki/document.html:339
+#: kuma/wiki/jinja2/wiki/document.html:325
 msgid "Document Tags and Contributors"
 msgstr "문서 태그 및 공헌자"
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:331
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "이 페이지의 공헌자: %(contributors)s"
 
 # 100%
-#: kuma/wiki/jinja2/wiki/document.html:351
+#: kuma/wiki/jinja2/wiki/document.html:337
 msgid "Last updated by:"
 msgstr "최종 변경:"
-
-#: kuma/wiki/jinja2/wiki/document.html:366
-msgid "Hide Sidebar"
-msgstr "사이드바 숨기기"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, fuzzy, python-format
@@ -5510,6 +3541,10 @@ msgstr "저장해서 변경 보관하기"
 msgid "Preview Changes"
 msgstr "변경 사항 미리보기"
 
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
+msgid "Discard Changes"
+msgstr "변경 파기"
+
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
 msgstr "검토가 필요한가요?"
@@ -5680,6 +3715,10 @@ msgstr[0] "%(count)s개 문서를 찾았습니다."
 msgid "Purge documents"
 msgstr "MDN 문서"
 
+#: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
+msgid "Home"
+msgstr "홈페이지"
+
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
 #, fuzzy
 msgid "Documents"
@@ -5769,18 +3808,18 @@ msgstr "ETag 이전 조건 실패"
 msgid "Sections may only be edited inline."
 msgstr "항목 내 인라인 편집만 가능합니다."
 
-#: kuma/wiki/views/misc.py:58
+#: kuma/wiki/views/misc.py:53
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
 msgstr "자동 완성은 제목 부분만 가능합니다. 전체 문서 목록을 보려면 첫 페이지를 보십시오."
 
 # 100%
-#: kuma/wiki/views/misc.py:145
+#: kuma/wiki/views/misc.py:106
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
 msgstr "%(obj_count)d 개 객체가 로드되었습니다."
 
 # 100%
-#: kuma/wiki/views/misc.py:149
+#: kuma/wiki/views/misc.py:110
 #, python-format
 msgid "Failed to import data: %(error)s"
 msgstr "데이터 가져오기 실패: %(error)s"
@@ -5797,6 +3836,1462 @@ msgstr "이 문서를 번역할 수 없습니다."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
+
+#~ msgid "<li><a href=\"%(demos_url)s\">View demos</a> or <a href=\"%(docs_url)s\">browse docs</a></li>"
+#~ msgstr "<li><a href=\"%(demos_url)s\">데모를 보거나</a> 또는 <a href=\"%(docs_url)s\">문서 탐색하기</a></li>"
+
+#~ msgid "Demos"
+#~ msgstr "MDN 데모"
+
+#~ msgid "<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse docs</a></li>"
+#~ msgstr "<li><a href=\"/demos\">데모 보기</a> 또는 <a href=\"/docs\">문서 탐색하기</a></li>"
+
+#~ msgid "object ID"
+#~ msgstr "오브젝트 ID"
+
+#~ msgid "name of the action"
+#~ msgstr "액션명"
+
+#~ msgid "date last modified"
+#~ msgstr "최종 변경일"
+
+#~ msgid "This is not working for me"
+#~ msgstr "현재 데모는 동작하지 않음"
+
+#~ msgid "This contains inappropriate content"
+#~ msgstr "부적절한 콘텐츠가 포함되어 있음"
+
+#~ msgid "This was not created by the author"
+#~ msgstr "현재 개발자가 만든 데모 아님"
+
+#~ msgid "The author is fake"
+#~ msgstr "개발자는 가짜임"
+
+# https://github.com/fwenzel/mdn/blob/master/apps/contentflagging/models.py
+#~ msgid "Flagged"
+#~ msgstr "문제 보고"
+
+#~ msgid "Flag rejected by moderator"
+#~ msgstr "관리자에 문제 제안 거절"
+
+# 문제 보고 후 상태의 하나.
+#~ msgid "Creator notified"
+#~ msgstr "개발자 통지 완료"
+
+#~ msgid "Content hidden by moderator"
+#~ msgstr "이 콘텐츠는 관리자가 표시 안함 변경"
+
+#~ msgid "Content deleted by moderator"
+#~ msgstr "이 콘텐츠는 관리자가 삭제함"
+
+#, fuzzy
+#~ msgid "%(object)s Flagged"
+#~ msgstr "{object} 플래그 첨부"
+
+#~ msgid "current status of flag review"
+#~ msgstr "문제 보고 검토의 현재 상태"
+
+#~ msgid "reason for flagging the content"
+#~ msgstr "콘텐츠 문제 보고 사유"
+
+#~ msgid "please explain what content you feel is inappropriate"
+#~ msgstr "부적절 콘텐츠에 대한 설명"
+
+#~ msgid "date submitted"
+#~ msgstr "제출일"
+
+# 100%
+#~ msgid "Removed from Derby"
+#~ msgstr "Derby 에서 삭제됨"
+
+#~ msgid "June 2011 Dev Derby Challenge - CSS3 Animations"
+#~ msgstr "June 2011 Dev Derby Challenge - CSS3 애니메이션"
+
+#~ msgid "CSS3 Animations"
+#~ msgstr "CSS3 애니메이션"
+
+#~ msgid "June 2011"
+#~ msgstr "2011 6월"
+
+#~ msgid "CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions."
+#~ msgstr "CSS3 애니메이션은 시간의 변화에 따라 프로퍼티 값을 변화시켜 요소 외관이나 위치를 변화시킵니다. JavaScript 코드를 최소한으로 줄여 transitions 보다 뛰어난 제어를 할 수 있습니다."
+
+#~ msgid ""
+#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property "
+#~ "values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can "
+#~ "achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
+#~ msgstr ""
+#~ "CSS3 애니메이션은 한층 더 뛰어난 유연성과 스타일의 제어, 새로운 웹 체험을 Firefox 와 같은 최신 브라우저의 새로운 기능입니다. CSS3 애니메이션은 시간의 경과에 의해 프로퍼티의 값을 변화시켜 요소의 "
+#~ "외관이나 위치를 변화시킵니다. JavaScript 코드를 최소한으로 줄여 CSS Transitions 보다 뛰어난 제어를 할 수 있습니다. HTML 요소의 모양과 위치를 움직이는 정적인 속성을 뛰어넘습니다. 이러한 효과는 "
+#~ "Flash나 Silverlight 를 필요로 하지 않습니다. 창의적이고 동적인 인터페이스를 CSS3의 애니메이션으로 실현할 수 있습니다."
+
+#~ msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
+#~ msgstr "2011년 7월 Dev Derby Challenge - HTML5 <video>"
+
+#~ msgid "HTML5 <video>"
+#~ msgstr "HTML5 <video>"
+
+#~ msgid "July 2011"
+#~ msgstr "2011 7월"
+
+#~ msgid "The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins."
+#~ msgstr "HTML5 <video> 속성은 동영상과 이를 직접 조정할 수 있는 컨트롤러를 웹페이지에 삽입할 수 있습니다. 그것도 별도의 플러그인이 필요하지 않습니다."
+
+#~ msgid "August 2011 Dev Derby Challenge - History API"
+#~ msgstr "2011 8월 Dev Derby Challenge - History API"
+
+#~ msgid "History API"
+#~ msgstr "History API"
+
+#~ msgid "August 2011"
+#~ msgstr "2011년 8월"
+
+#~ msgid "The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."
+#~ msgstr "최근의 브라우저의 History API는 뒤로 이동 버튼을 쓰지 않고도 웹 문서를 북마크에 추가할 수 있도록 합니다."
+
+#~ msgid "September 2011 Dev Derby Challenge - Geolocation"
+#~ msgstr "2011 9월 Dev Derby Challenge - 지오로케이션"
+
+#~ msgid "Geolocation"
+#~ msgstr "지오로케이션"
+
+#~ msgid "September 2011"
+#~ msgstr "2011년 9월"
+
+#~ msgid "With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."
+#~ msgstr ""
+#~ "Geolocation을 사용하면 (사용자의 동의 하에서) 사용자의 물리적인 현재 위치를 취득할 수 있고 그것을 사용하여 보다 좋은 웹 브라우징 경험이나 위치 정보를 사용한 다양한 콘텐츠를 제출할 수 있습니다. "
+
+#~ msgid "October 2011 Dev Derby Challenge - CSS Media Queries"
+#~ msgstr "2011년 10월 Dev Derby Challenge - CSS 미디어 쿼리"
+
+# docs Key Topics for Web Developers - 목록 항목
+#~ msgid "CSS Media Queries"
+#~ msgstr "CSS 미디어 쿼리-"
+
+#~ msgid "October 2011"
+#~ msgstr "2011년 10월"
+
+#~ msgid "CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."
+#~ msgstr "CSS 미디어 쿼리는 웹 개발자가 웹 디자인 방식을 이용하여 데스크탑이나 태블릿, 모바일 기기의 각 사용자 환경에 맞춘 화면 크기를 만들어 낼 수 있도록 도와 줍니다."
+
+# 100%
+#~ msgid "November 2011 Dev Derby Challenge - Canvas"
+#~ msgstr "2011년 11월 Dev Derby Challenge - 캔버스"
+
+# 100%
+#~ msgid "November 2011"
+#~ msgstr "2011년 11월"
+
+#~ msgid ""
+#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
+#~ "methods that make it easy to control and draw in."
+#~ msgstr ""
+#~ "캔버스는 웹을 자바스크립트로 2D 모양, 비트맵 이미지, 고급 그래픽 효과를 가능하게 만듭니다. 개별 <canvas> 엘리먼트는 그래픽 컨텍스트를 제공해서 개별 상태와 메소드를 통해 제어하고 그리는 것이 쉽도"
+#~ "록 만들어 줍니다."
+
+# 100%
+#~ msgid "December 2011 Dev Derby Challenge - IndexedDB"
+#~ msgstr "2011년 12월 Dev Derby Challenge - Indexed DB"
+
+#~ msgid "IndexedDB"
+#~ msgstr "IndexedDB"
+
+# 78%
+#~ msgid "December 2011"
+#~ msgstr "2011년 12월"
+
+#~ msgid "IndexedDB lets web applications store significant amounts of structured data locally, for faster access, online or offline."
+#~ msgstr "IndexedDB를 통해서 웹 애플리케이션은 빠른 접속과 온,오프라인 상관없이 상당한 양의 구조적인 데이터를 로컬에 저장이 가능합니다. "
+
+# 100%
+#~ msgid "January 2012 Dev Derby Challenge - Orientation"
+#~ msgstr "2012년 1월 Dev Derby 챌린지 - 오리엔테이션"
+
+# 100%
+#~ msgid "Orientation"
+#~ msgstr "오리엔테이션"
+
+# 100%
+#~ msgid "January 2012"
+#~ msgstr "2012년 1월"
+
+#~ msgid "Orientation features in HTML5 access the motion and orientation data of devices with accelerometers."
+#~ msgstr "HTML5에서 오리엔테이션 기능은 가속도계를 가진 기기의 움직임과 방향성 데이터에 접근할 수 있습니다."
+
+# 100%
+#~ msgid "February 2012 Dev Derby Challenge - Touch Events"
+#~ msgstr "2012 2월 Dev Derby 챌린지 - 터치 이벤트"
+
+# 100%
+#~ msgid "Touch Events"
+#~ msgstr "터치 이벤트"
+
+# 100%
+#~ msgid "February 2012"
+#~ msgstr "2012년 2월"
+
+#~ msgid "Touch Events help you make websites and applications more engaging by responding appropriately when users interact with touch screens."
+#~ msgstr "터치 이벤트로 여러분은 터치스크린으로 터치할 때 적절한 반응을 보임으로 웹사이트와 애플리케이션이 더 몰입되도록 할 수 있습니다."
+
+# 100%
+#~ msgid "March 2012 Dev Derby Challenge - CSS 3D Transforms"
+#~ msgstr "2012년 3월 Dev Derby 챌린지 - CSS 3D 변환"
+
+# docs, Key Topics for Web Developers - 목록 항목
+# 82%
+#~ msgid "CSS 3D Transforms"
+#~ msgstr "CSS 3D 트랜스폼"
+
+# 100%
+#~ msgid "March 2012"
+#~ msgstr "2012년 3월"
+
+#~ msgid "CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS to be transformed in three-dimensional space."
+#~ msgstr "CSS 3D 변환은 CSS로 표현되는 엘리먼트를 3차원 공간에서 변형될 수 있게 CSS 변환을 확장했습니다."
+
+# 100%
+#~ msgid "April 2012 Dev Derby Challenge - Audio"
+#~ msgstr "2012년 4월 Dev Derby 챌린지 - 오디오"
+
+# docs Key Topics for Web Developers - 목록 항목
+#~ msgid "Audio"
+#~ msgstr "오디오"
+
+# 100%
+#~ msgid "April 2012"
+#~ msgstr "2012년 4월"
+
+#~ msgid "The HTML5 audio element lets you embed sound in webpages without requiring your users to rely on plug-ins."
+#~ msgstr "HTML5 오디오 엘리먼트로 여러분은 웹페이지에 사용자들이 다른 플러그인에 의지하지 않고도 사운드를 들려줄 수 있습니다."
+
+# 100%
+#~ msgid "May 2012 Dev Derby Challenge - WebSockets API"
+#~ msgstr "2012년 5월 Dev Derby 챌린지 - 웹소켓 API"
+
+# 100%
+#~ msgid "WebSockets API"
+#~ msgstr "웹소켓 API"
+
+# 100%
+#~ msgid "May 2012"
+#~ msgstr "2012년 5월"
+
+#~ msgid "With the Websocket API and protocol, you can open a two-way channel between the browser and a server, for scalable and real-time data flow. No more server polling!"
+#~ msgstr "웹소켓 API와 프로토콜을 이용해서, 여러분은 브라우저와 서버 사이에 양방향 채널을 열어서, 확장성 있고 실시간의 데이터 전송이 가능합니다. 더 이상 서버 폴링을 하지 않아도 됩니다!"
+
+# 100%
+#~ msgid "June 2012 Dev Derby Challenge - WebGL"
+#~ msgstr "2012년 6월 Dev Derby 챌린지 - 웹GL"
+
+# 88%
+#~ msgid "June 2012"
+#~ msgstr "2012년 6월"
+
+#~ msgid "WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."
+#~ msgstr "웹GL은 플러그인 설치하지 않고도, 인터랙티브한 3D 그래픽을 만들 수 있는, OpenGL 파워를 웹으로 가져왔습니다."
+
+# 100%
+#~ msgid "July 2012 Dev Derby Challenge - No JavaScript"
+#~ msgstr "2012년 7월 Dev Derby 챌린지 - 자바스크립트 제외"
+
+# 76%
+#~ msgid "No JavaScript"
+#~ msgstr "자바스크립트 제외"
+
+# 88%
+#~ msgid "July 2012"
+#~ msgstr "2012년 7월"
+
+#~ msgid ""
+#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate "
+#~ "user input with HTML, and more. What else can you do without JavaScript?"
+#~ msgstr ""
+#~ "웹을 위한 풍부한 사용자 경험을 만드는 것은 전에 없이 쉬워졌습니다. 오늘의 오픈 웹 표준으로 여러분의 손가락 끝에서 가장 파워풀한 특징들을 사용할 수 있습니다. CSS로 페이지를 움직이고, HTML로 사용자"
+#~ "의 입력값을 검증하고, 다른 것도 가능합니다. 자바스크립트 없이 여러분은 어떤 다른 것을 할 수 있나요?"
+
+# 84%
+#~ msgid "August 2012 Dev Derby Challenge - Camera API"
+#~ msgstr "2011 8월 Dev Derby Challenge - 카메라 API"
+
+# 100%
+#~ msgid "Camera API"
+#~ msgstr "카메라 API"
+
+# 90%
+#~ msgid "August 2012"
+#~ msgstr "2012년 8월"
+
+#~ msgid "The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."
+#~ msgstr "카메라 API를 통해서 여러분은 (승인 하에) 모바일 기기의 카메라를 접근할 수 있습니다. 카메라 API로 사용자는 쉽게 사진을 찍어서 여러분의 웹 페이지에 업로드할 수 있습니다."
+
+#~ msgid "September 2012 Dev Derby Challenge - Geolocation II"
+#~ msgstr "2012년 9월 Dev Derby Challenge - Geolocation II"
+
+#~ msgid "Geolocation II"
+#~ msgstr "Geolocation II"
+
+# 92%
+#~ msgid "September 2012"
+#~ msgstr "2012년 9월"
+
+# 92%
+#~ msgid "October 2012 Dev Derby Challenge - CSS Media Queries II"
+#~ msgstr "2011년 10월 Dev Derby Challenge - CSS 미디어 쿼리 II"
+
+# docs Key Topics for Web Developers - 목록 항목
+# 85%
+#~ msgid "CSS Media Queries II"
+#~ msgstr "CSS 미디어 쿼리 II"
+
+# 91%
+#~ msgid "October 2012"
+#~ msgstr "2012년 10월"
+
+#~ msgid ""
+#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What "
+#~ "can you do with Media Queries?"
+#~ msgstr ""
+#~ "CSS 미디어 쿼리는 이제 반응형, 모바일-우선 웹 디자인의 보편적인 도구가 되어있습니다. 지금은 심지어 W3C 레커멘데이션이기도 합니다! 디스플레이의 단지 폭 이상에 대한 더 많은 것을 알려줄 것입니다. 여"
+#~ "러분은 미디어 쿼리로 무엇을 하시겠습니까?"
+
+#~ msgid "November 2012 Dev Derby Challenge - Fullscreen API"
+#~ msgstr "2012년 11월 Dev Derby Challenge - Fullscreen API"
+
+#~ msgid "Fullscreen API"
+#~ msgstr "Fullscreen API"
+
+#~ msgid "November 2012"
+#~ msgstr "2012년 11월"
+
+#~ msgid "With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"
+#~ msgstr "Fullscreen API를 이용하면 일반 브라우저 화면에서 전체 화면 보기를 사용할 수 있습니다. 화면의 상태 변화를 탐지하고 전체 화면 모드를 설정할 수 있습니다."
+
+#~ msgid "December 2012 Dev Derby Challenge - Offline"
+#~ msgstr "2012년 12월 Dev Derby Challenge - 오프라인 기능"
+
+#~ msgid "Offline"
+#~ msgstr "오프라인 기능"
+
+#~ msgid "December 2012"
+#~ msgstr "2012년 12월"
+
+#~ msgid ""
+#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and "
+#~ "mobile users, improve performance, and more."
+#~ msgstr "오프라인 기능을 활용하면 인터넷 접속 없이도 구동 되는 앱을 만들 수 있습니다. 인터넷 접속이 안되는 여행자나 모바일 사용자를 위해 독립적인 서비스를 제공할 수 있습니다."
+
+#~ msgid "January 2013 Dev Derby Challenge - Drag and Drop"
+#~ msgstr "2013년 1월 Dev Derby Challenge - 드래그 앤 드롭"
+
+# docs Key Topics for Web Developers - 목록 항목
+#~ msgid "Drag and Drop"
+#~ msgstr "드래그 앤 드롭"
+
+#~ msgid "January 2013"
+#~ msgstr "2013년 1월"
+
+#~ msgid "The Drag and Drop API brings an age-old interaction to the Web, making rich, natural, and familiar user experiences possible."
+#~ msgstr "드래그앤드롭 API를 이용하면 웹에서 데스크톱의 사용자 친화적인 경험을 그대로 구현해 줄 수 있습니다."
+
+#~ msgid "February 2013 Dev Derby Challenge - Multi-touch"
+#~ msgstr "2013년 2월 Dev Derby Challenge - 멀티터치"
+
+#~ msgid "Multi-touch"
+#~ msgstr "멀티 터치"
+
+#~ msgid "February 2013"
+#~ msgstr "2013년 2월"
+
+#~ msgid ""
+#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can "
+#~ "respond to all the interactions users have come to expect."
+#~ msgstr ""
+#~ "멀티 터치 API는 동시에 여러 터치를 인식하고 이를 지원하기 위한 것으로 복잡한 게임이나 확대 축소 기능 등을 지원합니다. 멀티 터치를 통해 사용자가 하는 모든 동작을 인식하고 반응할 수 있습니다."
+
+#~ msgid "March 2013 Dev Derby Challenge - Mobile"
+#~ msgstr "2013년 3월 Dev Derby Challenge - 모바일"
+
+#~ msgid "March 2013"
+#~ msgstr "2013년 3월"
+
+#~ msgid "The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"
+#~ msgstr "모바일 웹은 오늘날 더 중요해지고 있습니다. 여러분의 창의력을 한계를 없애고 더 멋진 웹 앱을 만들어 보십시오."
+
+#~ msgid "April 2013 Dev Derby Challenge - Web Workers"
+#~ msgstr "2013년 4월 Dev Derby Challenge - 웹 워커"
+
+# docs Key Topics for Web Developers - 목록 항목
+#~ msgid "Web Workers"
+#~ msgstr "웹 워커"
+
+#~ msgid "April 2013"
+#~ msgstr "2013년 4월"
+
+#~ msgid ""
+#~ "Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive "
+#~ "tasks."
+#~ msgstr "웹 워커(Web Workers)는 스크립트를 백그라운드로 실행할 수 있고, 사용자들이 모르게 시간이 많이 걸리는 복잡하고 어려운 작업들을 멀티 프로세스로 실행할 수 있습니다. "
+
+#~ msgid "May 2013 Dev Derby Challenge - getUserMedia"
+#~ msgstr "2013년 5월 Dev Derby Challenge - getUserMedia"
+
+#~ msgid "getUserMedia"
+#~ msgstr "getUserMedia"
+
+#~ msgid "May 2013"
+#~ msgstr "2013년 5월"
+
+# 100%
+#~ msgid "May"
+#~ msgstr "5월"
+
+#~ msgid "Action!"
+#~ msgstr "실행하기"
+
+#~ msgid ""
+#~ "The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."
+#~ msgstr "getUserMedia 기능은 사용자의 허가하에 카메라 및 마이크 등을 제어합니다. 플러그인 없이 사진 및 오디오를 녹화 및 캡쳐할 수 있습니다."
+
+#~ msgid "June 2013 Dev Derby Challenge - WebGL II"
+#~ msgstr "2013년 6월 Dev Derby Challenge - WebGL II"
+
+#~ msgid "WebGL II"
+#~ msgstr "WebGL II"
+
+#~ msgid "June 2013"
+#~ msgstr "2013년 6월"
+
+#~ msgid "June"
+#~ msgstr "6월"
+
+#~ msgid "Twice the 3D!"
+#~ msgstr "3D를 두배로!"
+
+#~ msgid "July 2013 Dev Derby Challenge - File API"
+#~ msgstr "2013년 7월 Dev Derby Challenge - File API"
+
+#~ msgid "File API"
+#~ msgstr "파일 API"
+
+#~ msgid "July 2013"
+#~ msgstr "2013년 7월"
+
+#~ msgid "July"
+#~ msgstr "7월"
+
+#~ msgid "File found"
+#~ msgstr "파일 찾음"
+
+#~ msgid "The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."
+#~ msgstr "File API는 사용자들이 로컬 PC의 파일을 다양한 방법으로 다룰 수 있는 기능을 제공합니다."
+
+#~ msgid "Mozilla's Audio Data API extends the current HTML5 API and allows web developers to read and write raw audio data."
+#~ msgstr "Mozilla의 오디오 데이터 API는 현재 HTML5 API를 확장하고 웹 개발자들이 원본 오디오 데이터를 읽고 쓰게 할 수 있습니다."
+
+#~ msgid "MDN Documentation"
+#~ msgstr "MDN 문서"
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Introducing_the_Audio_API_Extension"
+
+#~ msgid "Wikipedia Article"
+#~ msgstr "위키백과 문서"
+
+#~ msgid "http://en.wikipedia.org/wiki/HTML5_audio"
+#~ msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
+
+#~ msgid "W3C Spec"
+#~ msgstr "W3C 사양"
+
+#~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
+#~ msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
+
+#~ msgid "The HTML5 canvas element allows you to display scriptable renderings of 2D shapes and bitmap images."
+#~ msgstr "HTML5의 Canvas 요소를 이용하여 자바스크립트로 2D 그래픽 및 비트맵 이미지를 표시할 수 있습니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/HTML/Canvas"
+#~ msgstr "https://developer.mozilla.org/ko/docs/HTML/Canvas"
+
+#~ msgid "http://en.wikipedia.org/wiki/Canvas_element"
+#~ msgstr "http://en.wikipedia.org/wiki/Canvas_element"
+
+#~ msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
+#~ msgstr "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
+
+#~ msgid ""
+#~ "Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
+#~ msgstr "Cascading Style Sheets level 3 (CSS3)는 HTML이나 XML 과 같이 다른 종류의 마크업 언어로 쓰여진 문서의 서식이나 외관을 변경하는 새로운 기능과 속성을 제출합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/CSS"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/CSS"
+
+#~ msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
+#~ msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
+
+#~ msgid "http://www.w3.org/TR/css3-roadmap/"
+#~ msgstr "http://www.w3.org/TR/css3-roadmap/"
+
+#~ msgid "Device"
+#~ msgstr "디바이스"
+
+#~ msgid "Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."
+#~ msgstr "미디어 쿼리와 화면 방향 이벤트는 웹 개발자가 휴대 전화 등의 각 디바이스 상에서 레이아웃을 조정할 수 있도록 합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation"
+#~ msgstr "https://developer.mozilla.org/ko/docs/WebAPI/Detecting_device_orientation"
+
+#~ msgid "http://www.w3.org/TR/css3-mediaqueries/"
+#~ msgstr "http://www.w3.org/TR/css3-mediaqueries/"
+
+# docs Key Topics for Web Developers - 목록 항목
+#~ msgid "Files"
+#~ msgstr "파일"
+
+#~ msgid "The File API allows web developers to use file objects in web applications, as well as selecting and accessing their data."
+#~ msgstr "File API는 웹 개발자가 웹 애플리케이션으로 파일 오브젝트를 사용하여 데이터 선택이나 접근을 가능하게 합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/using_files_from_web_applications"
+#~ msgstr "https://developer.mozilla.org/ko/docs/using_files_from_web_applications"
+
+#~ msgid "http://www.w3.org/TR/FileAPI/"
+#~ msgstr "http://www.w3.org/TR/FileAPI/"
+
+# Browse by Technology의 1 항목
+#~ msgid "Fonts & Type"
+#~ msgstr "웹 글꼴"
+
+#~ msgid "The CSS3-Font specification contains enhanced features for fonts and typography like embedding own fonts via @font-face or controlling OpenType font features directly via CSS."
+#~ msgstr "CSS3-Font 사양에는 @font-face을 통한 글꼴 선택이나 CSS로부터 OpenType 글꼴 기능의 직접 제어 등 글꼴과 서체의 고급 기능이 포함됩니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/CSS/@font-face"
+
+#~ msgid "http://en.wikipedia.org/wiki/Web_typography"
+#~ msgstr "http://en.wikipedia.org/wiki/Web_typography"
+
+#~ msgid "http://www.w3.org/TR/css3-fonts/"
+#~ msgstr "http://www.w3.org/TR/css3-fonts/"
+
+#~ msgid "Forms"
+#~ msgstr "웹 폼"
+
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgstr "HTML5에서 새로운 Form 관련 요소와 속성은 한층 더 기능적인 마크업을 제출하여 HTML4  사용 시 많은 유효성 확인 스크립트와 스타일 설정 중복 작업을 감소시킵니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/HTML/Forms_in_HTML"
+
+#~ msgid "http://en.wikipedia.org/wiki/HTML_forms"
+#~ msgstr "http://en.wikipedia.org/wiki/HTML_forms"
+
+#~ msgid "http://www.w3.org/TR/html5/forms.html"
+#~ msgstr "http://www.w3.org/TR/html5/forms.html"
+
+#~ msgid "The Geolocation API allows web applications to access the user's geographical location."
+#~ msgstr "지오로케이션 API 를 사용하면 사용자의 지리정보를 가져올 수 있습니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
+#~ msgstr "https://developer.mozilla.org/ko/docs/WebAPI/Using_geolocation"
+
+#~ msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
+#~ msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
+
+#~ msgid "http://dev.w3.org/geo/api/spec-source.html"
+#~ msgstr "http://dev.w3.org/geo/api/spec-source.html"
+
+#~ msgid "JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."
+#~ msgstr "JavaScript는 가벼운 객체 지향 프로그램 언어입니다. 일반적으로 웹 페이지나 웹 애플리케이션 위에서 대화적인 동작을 기술하기 위해서 사용됩니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/JavaScript"
+
+#~ msgid "http://en.wikipedia.org/wiki/JavaScript"
+#~ msgstr "http://ko.wikipedia.org/wiki/JavaScript"
+
+#~ msgid "ECMA Spec"
+#~ msgstr "ECMA 사양"
+
+#~ msgid "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+#~ msgstr "http://www.ecma-international.org/publications/standards/Ecma-262.htm"
+
+#~ msgid "HTML5 is the newest version of the HTML standard, currently under development."
+#~ msgstr "HTML5는 현재 개발중인 HTML 표준의 새로운 버전입니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/Guide/HTML/HTML5"
+
+#~ msgid "http://en.wikipedia.org/wiki/Html5"
+#~ msgstr "http://ko.wikipedia.org/wiki/HTML5"
+
+#~ msgid "http://dev.w3.org/html5/spec/Overview.html"
+#~ msgstr "http://dev.w3.org/html5/spec/Overview.html"
+
+#~ msgid "IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes."
+#~ msgstr "IndexedDB는 클라이언트 사이드 스토리지를 위한 API 입니다. 이를 이용하여 클라이언트 측에 있는 대량 구조적 DB 인텍스를 이용하여 빠르게 검색할 수 있습니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/IndexedDB"
+#~ msgstr "https://developer.mozilla.org/ko/docs/IndexedDB"
+
+#~ msgid "http://en.wikipedia.org/wiki/IndexedDB"
+#~ msgstr "http://en.wikipedia.org/wiki/IndexedDB"
+
+#~ msgid "http://www.w3.org/TR/IndexedDB/"
+#~ msgstr "http://www.w3.org/TR/IndexedDB/"
+
+#~ msgid "Drag and Drop features allow the user to move elements on the screen using the mouse pointer."
+#~ msgstr "드래그 앤 드롭 기능은 사용자가 마우스 포인터를 사용해 화면상의 요소를 이동할 수 있도록 합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop"
+#~ msgstr "https://developer.mozilla.org/ko/docs/DragDrop/Drag_and_Drop"
+
+#~ msgid "http://en.wikipedia.org/wiki/Drag-and-drop"
+#~ msgstr "http://en.wikipedia.org/wiki/Drag-and-drop"
+
+#~ msgid "http://www.w3.org/TR/html5/dnd.html"
+#~ msgstr "http://www.w3.org/TR/html5/dnd.html"
+
+#~ msgid "Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."
+#~ msgstr "Firefox Mobile는 웹의 진정한 모습을 휴대 전화나 모바일 디바이스에서도 이용하게 합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Mozilla/Mobile"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Mozilla/Mobile"
+
+#~ msgid "http://en.wikipedia.org/wiki/Mobile_web"
+#~ msgstr "http://en.wikipedia.org/wiki/Mobile_web"
+
+#~ msgid "http://www.w3.org/Mobile/"
+#~ msgstr "http://www.w3.org/Mobile/"
+
+#~ msgid "Offline Support"
+#~ msgstr "오프라인 지원"
+
+#~ msgid "Offline caching of web applications' resources using the application cache and local storage."
+#~ msgstr "웹 애플리케이션 자원의 오프라인 캐싱은 애플리케이션 캐시와 로컬 스토리지를 사용합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/Guide/DOM/Storage#localStorage"
+
+#~ msgid "http://en.wikipedia.org/wiki/Web_Storage"
+#~ msgstr "http://en.wikipedia.org/wiki/Web_Storage"
+
+#~ msgid "http://dev.w3.org/html5/webstorage/"
+#~ msgstr "http://dev.w3.org/html5/webstorage/"
+
+#~ msgid "Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."
+#~ msgstr "Scalable Vector Graphics(SVG)은 2차원의 벡터 그래픽스를 기술하기 위한 XML 기반의 언어입니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/SVG"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/SVG"
+
+#~ msgid "http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+#~ msgstr "http://ko.wikipedia.org/wiki/Scalable_Vector_Graphics"
+
+#~ msgid "http://www.w3.org/TR/SVG11/"
+#~ msgstr "http://www.w3.org/TR/SVG11/"
+
+#~ msgid "Video"
+#~ msgstr "동영상"
+
+#~ msgid "The HTML5 video element provides integrated support for playing video media without requiring plug-ins."
+#~ msgstr "HTML5의 video 요소는 플러그인을 이용하지 않고 비디오 미디어를 재생하기 위한 통합된 지원를 제출합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/HTML/Using_HTML5_audio_and_video"
+
+#~ msgid "http://en.wikipedia.org/wiki/HTML5_video"
+#~ msgstr "http://en.wikipedia.org/wiki/HTML5_video"
+
+#~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
+#~ msgstr "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
+
+#~ msgid "In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."
+#~ msgstr "HTML의 Canvas 요소 내의 WebGL은 브라우저에서 3D 그래픽을 사용하기 위한 API을 제공합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/WebGL"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/WebGL"
+
+#~ msgid "http://en.wikipedia.org/wiki/WebGL"
+#~ msgstr "http://ko.wikipedia.org/wiki/WebGL"
+
+#~ msgid "Khronos Spec"
+#~ msgstr "Khronos 사양"
+
+#~ msgid "http://www.khronos.org/webgl/"
+#~ msgstr "http://www.khronos.org/webgl/"
+
+#~ msgid "WebSockets"
+#~ msgstr "웹 소켓"
+
+#~ msgid "WebSockets is a technology that makes it possible to open an interactive communication session between the user's browser and a server."
+#~ msgstr "웹 소켓은 사용자 브라우저와 서버 사이의 대화 중심 세션을 여는 것을 가능하게 하는 기술입니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/WebSockets"
+#~ msgstr "https://developer.mozilla.org/ko/docs/WebSockets"
+
+#~ msgid "http://en.wikipedia.org/wiki/Web_Sockets"
+#~ msgstr "http://ko.wikipedia.org/wiki/WebSocket"
+
+#~ msgid "http://dev.w3.org/html5/websockets/"
+#~ msgstr "http://dev.w3.org/html5/websockets/"
+
+#~ msgid "Web Workers provide a simple means for web content to run scripts in background threads."
+#~ msgstr "웹 워커는 백그라운드 쓰레드에서 스크립트를 실행하는 웹 콘텐트를 위해 간단한 수단을 제공합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/Guide/Performance/Using_web_workers"
+
+#~ msgid "http://en.wikipedia.org/wiki/Web_Workers"
+#~ msgstr "http://en.wikipedia.org/wiki/Web_Workers"
+
+#~ msgid "http://www.w3.org/TR/workers/"
+#~ msgstr "http://www.w3.org/TR/workers/"
+
+#~ msgid "XMLHttpRequest"
+#~ msgstr "XMLHttpRequest"
+
+#~ msgid "XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."
+#~ msgstr "XMLHttpRequest(XHR)는 HTTP 요구를 웹 서버에 직접 보내 그 응답 데이터를 자바스크립트에 직접 읽어들이기 위해서 사용됩니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
+
+#~ msgid "http://en.wikipedia.org/wiki/XMLHttpRequest"
+#~ msgstr "http://ko.wikipedia.org/wiki/XMLHttpRequest"
+
+#~ msgid "http://www.w3.org/TR/XMLHttpRequest/"
+#~ msgstr "http://www.w3.org/TR/XMLHttpRequest/"
+
+#~ msgid "Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."
+#~ msgstr "터치 스크린상에서 사용자 손가락의 움직임을 추적하여 생성된 터치 이벤트를 이용합니다."
+
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events"
+#~ msgstr "https://developer.mozilla.org/ko/docs/Web/Guide/DOM/Events/Touch_events"
+
+#~ msgid "http://en.wikipedia.org/wiki/Multi-touch"
+#~ msgstr "http://en.wikipedia.org/wiki/Multi-touch"
+
+#~ msgid "http://www.w3.org/2010/webevents/charter/"
+#~ msgstr "http://www.w3.org/2010/webevents/charter/"
+
+#~ msgid "MPL/GPL/LGPL"
+#~ msgstr "MPL/GPL/LGPL"
+
+#~ msgid "http://www.mozilla.org/MPL/"
+#~ msgstr "http://www.mozilla.org/MPL/"
+
+#~ msgid "GPL"
+#~ msgstr "GPL"
+
+#~ msgid "http://www.opensource.org/licenses/gpl-license.php"
+#~ msgstr "http://www.opensource.org/licenses/gpl-license.php"
+
+#~ msgid "BSD"
+#~ msgstr "BSD"
+
+#~ msgid "http://www.opensource.org/licenses/bsd-license.php"
+#~ msgstr "http://www.opensource.org/licenses/bsd-license.php"
+
+#~ msgid "Apache"
+#~ msgstr "Apache"
+
+#~ msgid "http://www.apache.org/licenses/"
+#~ msgstr "http://www.apache.org/licenses/"
+
+#~ msgid "Public Domain (where applicable by law)"
+#~ msgstr "공개 도메인 (법률에 의해 적용 가능 지역 한정)"
+
+#~ msgid "http://creativecommons.org/publicdomain/zero/1.0/"
+#~ msgstr "http://creativecommons.org/publicdomain/zero/1.0/"
+
+#~ msgid "Censored %(item)s"
+#~ msgstr "%(item)s 검토완료"
+
+#~ msgid "Successfully censored %(count)d %(items)s."
+#~ msgstr "%(count)d개 %(items)s을 검토 완료했습니다."
+
+#~ msgid "Are you sure?"
+#~ msgstr "확실합니까?"
+
+#~ msgid "Deleted and uploaded files for %(item)s"
+#~ msgstr "%(item)s 삭제 및 업로드 파일 목록"
+
+#~ msgid "Successfully deleted %(count)d %(items)s."
+#~ msgstr "%(count)d개 %(items)s이 삭제 완료되었습니다."
+
+#~ msgid "Cannot delete %(name)s"
+#~ msgstr "다음을 삭제할 수 없음: %(name)s"
+
+#~ msgid "Not an URL from a supported video service"
+#~ msgstr "지원가능한 동영상 URL이 아닙니다"
+
+#~ msgid "MDN demos"
+#~ msgstr "MDN 데모"
+
+#~ msgid "Demos submitted by MDN users"
+#~ msgstr "MDN 사용자 제출 데모"
+
+#~ msgid "MDN recent demos"
+#~ msgstr "MDN 최신 데모"
+
+#~ msgid "Demos recently submitted to MDN"
+#~ msgstr "MDN 최근 제출 데모"
+
+#~ msgid "MDN featured demos"
+#~ msgstr "MDN 우수 데모"
+
+#~ msgid "Demos featured on MDN"
+#~ msgstr "MDN 우수 데모"
+
+#~ msgid "MDN demos tagged %s"
+#~ msgstr "%s 태그된 MDN 데모"
+
+#~ msgid "MDN demos tagged \"%s\""
+#~ msgstr "태그 \"%s\"된 MDN 데모"
+
+#~ msgid "%s's MDN demos"
+#~ msgstr "%s MDN 데모"
+
+#~ msgid "MDN demo search for \"%s\""
+#~ msgstr "MDN 데모의 \"%s\" 검색 결과"
+
+#~ msgid "Search results for demo submissions matching \"%s\""
+#~ msgstr "\"%s\"에 부합하는 제출 데모 검색 결과"
+
+#~ msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
+#~ msgstr "파일 크기를 %(max_size)s이하로 해 주십시오. 현재 파일 크기 %(file_size)s"
+
+#~ msgid "Cannot process image"
+#~ msgstr "이미지를 처리할 수 없음"
+
+#~ msgid "what is your demo's name?"
+#~ msgstr "데모 제목은 무엇인가요?"
+
+# Dkongo의 용어.짧은 라벨을 나타내는 형태(신문 용어)인것 같다.겉(표)에는 나오지 않는 듯한 것으로 그대로.
+#~ msgid "slug"
+#~ msgstr "slug"
+
+#~ msgid "describe your demo in one line"
+#~ msgstr "데모에 대한 한줄 요약"
+
+#~ msgid "describe your demo in more detail (optional)"
+#~ msgstr "데모에 대한 자세한 설명(선택 사항)"
+
+#~ msgid "Hide this demo from others?"
+#~ msgstr "데모를 비공개로 하시겠습니까?"
+
+#~ msgid "Redirect URL for censorship."
+#~ msgstr "심의를 위하여 페이지를 이동합니다."
+
+#~ msgid "control how your demo is launched"
+#~ msgstr "데모 실행 방식 제어"
+
+#~ msgid "Disable navigation bar, launch demo in a new window"
+#~ msgstr "주소 이동창 없이 새 창으로 데모 실행"
+
+#~ msgid "Use navigation bar, display demo in <iframe>"
+#~ msgstr "주소 이동창을 이용하고 <iframe> 안에 데모 표시"
+
+#~ msgid "Screenshot #1"
+#~ msgstr "스크린 샷 #1"
+
+#~ msgid "Screenshot #2"
+#~ msgstr "스크린 샷 #2"
+
+#~ msgid "Screenshot #3"
+#~ msgstr "스크린 샷 #3"
+
+#~ msgid "Screenshot #4"
+#~ msgstr "스크린 샷 #4"
+
+#~ msgid "Screenshot #5"
+#~ msgstr "스크린 샷 #5"
+
+#~ msgid "have a video of your demo in action? (optional)"
+#~ msgstr "데모 동영상 업로드 (선택 사항)"
+
+#~ msgid "select a ZIP file containing your demo"
+#~ msgstr "데모 압축 ZIP 파일"
+
+#~ msgid "Is your source code also available somewhere else on the web (e.g., github)? Please share the link."
+#~ msgstr "소스 코드를 (github 등)에서 다운로드 할 수 있으면 링크 주소를 입력해 주십시오."
+
+#~ msgid "Select the license that applies to your source code."
+#~ msgstr "소스 코드에 적용하는 라이센스를 선택해 주십시오."
+
+#~ msgid "date created"
+#~ msgstr "올린일: "
+
+#~ msgid "ZIP file contains no acceptable files"
+#~ msgstr "ZIP 파일에 허용할 수 없는 파일이 포함되어 있음"
+
+#~ msgid "ZIP file corrupted"
+#~ msgstr "ZIP 파일이 손상됨"
+
+#~ msgid "ZIP file contains a file that is too large: %(filename)s"
+#~ msgstr "ZIP 파일에 크기의 너무 큰 파일이 포함되어 있습니다: %(filename)s"
+
+#~ msgid "ZIP file contains an unacceptable file: %(filename)s"
+#~ msgstr "ZIP 파일에 허용 할 수 없는 파일이 포함되어 있습니다.: %(filename)s"
+
+#~ msgid "HTML index not found in ZIP"
+#~ msgstr "ZIP 패키지 중에 HTML의 index 파일이 없습니다"
+
+#~ msgid "access denied"
+#~ msgstr "접근 거부"
+
+#, fuzzy
+#~ msgid "%(subtitle)s | Demo Studio"
+#~ msgstr "{subtitle} | 데모 스튜디오"
+
+#~ msgid "MDN"
+#~ msgstr "MDN"
+
+#~ msgid "Demo Studio"
+#~ msgstr "데모 스튜디오"
+
+#~ msgid "Submit a Demo"
+#~ msgstr "데모 제출"
+
+#~ msgid "Remove this demo?"
+#~ msgstr "현재 데모를 삭제하시겠습니까?"
+
+#~ msgid ""
+#~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
+#~ "<strong>cannot be undone</strong>."
+#~ msgstr ""
+#~ "<p>Demo Studio로부터 <strong>%(demo_title)s</strong>을 삭제 합니다.</p> <p>해당 데모의 공개 목록에 등록된 소스 코드 및 통계 데이터는<strong>삭제</strong>됩니다.</p> <p>이 동작은 <strong>취소할 "
+#~ "수 없습니다</strong>."
+
+#~ msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
+#~ msgstr "<button type=\"submit\" class=\"remove\"><span>데모 삭제</span></button>"
+
+#~ msgid "Mozilla Demo Studio"
+#~ msgstr "Mozilla 데모 스튜디오"
+
+#~ msgid "Learn More"
+#~ msgstr "자세히 보기"
+
+#~ msgid ""
+#~ "<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
+#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
+#~ "open standards and technologies that power the Web.</li> </ul>"
+#~ msgstr ""
+#~ "<p>Mozilla 데모 스튜디오는 여러분과 같은 웹 개발자가 웹에 관한 모든 기술을 개발 또는 공유하고, 데모를 통해 학습할 수 있습니다. Demo Studio을 많이 이용해 주시기 바랍니다.</p> <ul> <li>HTML, CSS, "
+#~ "JavaScript을 사용해서 할 수 있는 것을 소개한 데모를 보십시오.</li> <li>데모로 사용된 소스 코드를 조사하고 구조를 살펴 보십시오.</li> <li>문서를 읽고 웹을 움직이고 있는 공개 표준과 기술을 배우십시"
+#~ "오.</li> </ul>"
+
+#, fuzzy
+#~ msgid "Go to the previous demo, %(demo_title)s"
+#~ msgstr "이전 데모 &rarr; {demo_title}"
+
+#~ msgid "Prev"
+#~ msgstr "이전"
+
+#, fuzzy
+#~ msgid "Go to the next demo, %(demo_title)s"
+#~ msgstr "다음 데모 &rarr; {demo_title}"
+
+#~ msgid "See the previous image"
+#~ msgstr "이전 이미지 보기"
+
+#~ msgid "See the next image"
+#~ msgstr "다음 이미지 보기"
+
+# 97%
+# 100%
+#~ msgid "By %(creator_link)s on %(create_date)s"
+#~ msgstr "개발자: %(creator_link)s  올린일: %(create_date)s"
+
+#~ msgid "Launch Demo"
+#~ msgstr "데모 실행"
+
+#~ msgid "You like this demo. Undo?"
+#~ msgstr "현재 데모를 평가하셨습니다. 계속할까요?"
+
+# Like it 버튼을 누르는 곳의 문자열에 변화한다
+#~ msgid "You Like"
+#~ msgstr "좋아요"
+
+#~ msgid "Do you like this demo?"
+#~ msgstr "현재 데모가 마음에 들었습니까?"
+
+#~ msgid "Like It"
+#~ msgstr "좋아요 완료"
+
+#~ msgid "Share this demo with your social network"
+#~ msgstr "현재 데모 소셜 네트워크 공유"
+
+#~ msgid "Share It"
+#~ msgstr "현재 데모 공유"
+
+#~ msgid "Share on Twitter"
+#~ msgstr "Twitter로 공유"
+
+#~ msgid "Share on Facebook"
+#~ msgstr "Facebook로 공유"
+
+#~ msgid "Built using"
+#~ msgstr "이용 기술"
+
+#, fuzzy
+#~ msgid "See more demos made with %(tag_title)s"
+#~ msgstr "{tag_title} 붙인 데모 보기"
+
+#, fuzzy
+#~ msgid "This demo has been viewed %(num)s time"
+#~ msgid_plural "This demo has been viewed %(num)s times"
+#~ msgstr[0] "조회수: {count}회"
+
+#~ msgid "%(num)s view"
+#~ msgid_plural "%(num)s views"
+#~ msgstr[0] "%(num)s 조회"
+
+#, fuzzy
+#~ msgid "%(num)s person liked this demo"
+#~ msgid_plural "%(num)s people liked this demo"
+#~ msgstr[0] "{count}명현재 데모를 좋아함"
+
+#~ msgid "%(num)s like"
+#~ msgid_plural "%(num)s likes"
+#~ msgstr[0] "%(num)s 좋아요"
+
+#~ msgid "Edit Demo"
+#~ msgstr "데모 편집"
+
+#~ msgid "Remove demo"
+#~ msgstr "데모 삭제"
+
+#~ msgid "Show demo"
+#~ msgstr "데모 표시"
+
+#~ msgid "Hide demo"
+#~ msgstr "데모 숨기기"
+
+# 개발자가 상세 설명을 기입해 있다고 표시된다
+#~ msgid "More About This Demo From The Author"
+#~ msgstr "현재 데모에 대한 개발자 댓글"
+
+#~ msgid "About this Demo"
+#~ msgstr "데모 소개"
+
+#~ msgid "Download the Source <span class=\"note\">%(file_ksize)s KB &middot; ZIP File</span>"
+#~ msgstr "소스 다운로드 <span class=\"note\">%(file_ksize)s KB &middot; ZIP 파일</span>"
+
+#~ msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
+#~ msgstr "현재 데모는 <a href=\"%(link)s\">%(title)s</a> 라이센스 하에 공개되고 있습니다."
+
+# 77%
+#, fuzzy
+#~ msgid "More by %(creator)s"
+#~ msgstr "더 많은 정보 보기 {creator}"
+
+#~ msgid "Report a Problem"
+#~ msgstr "오류 보고"
+
+#~ msgid "Flag Content"
+#~ msgstr "콘텐츠 표시"
+
+#~ msgid "Demo is not working"
+#~ msgstr "현재 데모 동작 안함"
+
+#~ msgid "Demo is inappropriate"
+#~ msgstr "현재 데모 부적절함"
+
+#~ msgid "Demo is not by this author"
+#~ msgstr "현재 데모는 본 개발자의 것이 아님"
+
+#~ msgid "Dev Derby"
+#~ msgstr "Dev Derby"
+
+#~ msgid "presents"
+#~ msgstr "제출"
+
+#~ msgid "Dev Derby has ended"
+#~ msgstr "Dev Derby 종료됨"
+
+#~ msgid "From 2011 until 2013, web developers created more than 450 demos for the Dev Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo Studio</a> for many more."
+#~ msgstr ""
+#~ "2011년 부터 2013년까지 웹개발자들은 Dev Derby를 위해 450개 이상의 데모를 만들었습니다! 아래에서 찾아보거나 <a href=\"%(demos_url)s\">데모 스튜디오</a>를 방문하여 더 많은 데모를 찾아볼 수 있습니"
+#~ "다."
+
+#~ msgid "Previous Dev Derby Challenges"
+#~ msgstr "이전 행사"
+
+#~ msgid "Resources"
+#~ msgstr "자원"
+
+#~ msgid "Articles"
+#~ msgstr "문서"
+
+#, fuzzy
+#~ msgid "Demos tagged %(tag)s"
+#~ msgstr "{tag} 태그 데모"
+
+#~ msgid "Challenges"
+#~ msgstr "도전하기"
+
+#~ msgid "Judging"
+#~ msgstr "심사"
+
+#~ msgid "Prizes"
+#~ msgstr "상품"
+
+#~ msgid "Derby Winners"
+#~ msgstr "Derby 우승자"
+
+# DevDerby 부메뉴
+#~ msgid "Submissions"
+#~ msgstr "신청하기"
+
+#, fuzzy
+#~ msgid "Subscribe to a feed of %(tag_title)s demos"
+#~ msgstr "{tag_title} 태그 데모 피드 구독"
+
+#~ msgid "Submitted by:"
+#~ msgstr "제출자:"
+
+#~ msgid "Tagged as:"
+#~ msgstr "태그:"
+
+#~ msgid "Flag this demo?"
+#~ msgstr "현재 데모의 오류를 보고하시겠습니까?"
+
+#~ msgid "<button type=\"submit\" name=\"action_create\">Flag content</button>"
+#~ msgstr "<button type=\"submit\" name=\"action_create\">콘텐츠 표시</button>"
+
+#~ msgid "Recent demos"
+#~ msgstr "최신 데모"
+
+#~ msgid "Featured demos"
+#~ msgstr "우수 데모"
+
+#~ msgid "Featured Demos"
+#~ msgstr "우수 데모"
+
+# 77%
+# 100%
+#~ msgid "See the previous demo"
+#~ msgstr "이전 데모 보기"
+
+#~ msgid "See the next demo"
+#~ msgstr "다음 데모 보기"
+
+# 100%
+#~ msgid "Details"
+#~ msgstr "자세한 내용"
+
+#~ msgid "Launch"
+#~ msgstr "데모 실행"
+
+#~ msgid "Search demos"
+#~ msgstr "데모 검색"
+
+#~ msgid "<b>or</b>"
+#~ msgstr "<b>또는</b>"
+
+#~ msgid "Browse by Technology"
+#~ msgstr "기술별로 분류"
+
+#~ msgid "recent"
+#~ msgstr "최신순"
+
+#~ msgid "by %(profile_link)s"
+#~ msgstr "- %(profile_link)s"
+
+#~ msgid "Back"
+#~ msgstr "뒤로가기"
+
+#~ msgid "Remove this toolbar"
+#~ msgstr "현재 도구 모음 제거"
+
+#~ msgid "Remove toolbar"
+#~ msgstr "도구 모음 제거"
+
+#~ msgid "Browse all demos"
+#~ msgstr "모든 데모 보기"
+
+#~ msgid "Subscribe to a feed of all demos"
+#~ msgstr "모든 데모 피드 구독"
+
+#, fuzzy
+#~ msgid "Search for \"%(query)s\""
+#~ msgstr "\"{query}\" 검색"
+
+#, fuzzy
+#~ msgid "Search results for \"%(query)s\""
+#~ msgstr "\"{query}\" 검색 결과"
+
+#, fuzzy
+#~ msgid "Search demos for \"%(query)s\""
+#~ msgstr "\"{query}\" 데모 검색"
+
+#, fuzzy
+#~ msgid "Subscribe to a feed of search results for \"%(query)s\""
+#~ msgstr "\"{query}\" 검색 결과 구독"
+
+#, fuzzy
+#~ msgid "%(tag_title)s Demos"
+#~ msgstr "{tag_title} 데모"
+
+#, fuzzy
+#~ msgid "Edit %(demo_title)s"
+#~ msgstr "{demo_title} 편집"
+
+#~ msgid "Submit a New Demo"
+#~ msgstr "새로운 데모 제출하기"
+
+#~ msgid ""
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ msgstr ""
+#~ "<p>여러분이 웹을 경험하기 위한 놀랍고 새로운 방법을 만들거나 또는 최신 기술로 그냥 실험을 하는 것이든지, 우리는 여러분의 데모를 제출해서 다른 웹 개발자들과 공유하기에 (또는 자랑하기에) 여러분을 "
+#~ "초대합니다.</p> <p>아래의 양식을 채워서 데모 스튜디오에 성공적으로 제출해주세요.</p>"
+
+#~ msgid "Describe Your Demo"
+#~ msgstr "데모 설명"
+
+#~ msgid "<p>Tell us more about your demo, including the name, description and the technologies used. Please list the browsers you have tested it with.</p>"
+#~ msgstr "<p>여러분의 데모에 사용되고 있는 기술에 대해서 입력해 주시고, 현재 데모를 테스트한 브라우저를 목록을 적어주십시오.</p>"
+
+#~ msgid "Select up to five technologies used in your demo."
+#~ msgstr "데모에 사용되고 있는 기술을 5개까지 선택해 주십시오."
+
+#~ msgid "Show Off Your Demo"
+#~ msgstr "데모 공개"
+
+#~ msgid "Provide at least one screenshot of your demo in action"
+#~ msgstr "동작하는 모습을 담은 스크린샷을 한 장 이상 준비하세요."
+
+#~ msgid "JPEG and PNG supported. Minimum size of 480x360."
+#~ msgstr "JPEG 및 PNG 형식만 대응하고 있습니다. 최소 크기는 480x360 픽셀입니다."
+
+#~ msgid "We support YouTube and Vimeo"
+#~ msgstr "YouTube 및 Vimeo을 지원하고 있습니다"
+
+#~ msgid "If your demo has problems when displayed in an &lt;iframe&gt;, try changing this."
+#~ msgstr "데모가 &lt;iframe&gt;에 표시하는데 문제가 있으면, 이 부분을 변경해 보십시오."
+
+#~ msgid "Preparing Your Demo"
+#~ msgstr "데모 제출를 위한 준비"
+
+#~ msgid ""
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li>여러분의 데모 소스 코드는 ZIP 파일로 압축하여 주십시오.</li> <li>여러분의 데모의 메인 페이지는 ZIP 의 루트 디렉토리에 <code>index.html</code>이라는 이름의 파일로 해 주십시오.</li> <li>여"
+#~ "러분의 데모는 클라이언트 사이드의 기술(HTML, CSS, JavaScript)로 구성하여야 합니다. PHP나 Ruby와 같은 서버 사이드 언어는 지원되고 있지 않습니다.</li> <li>여러분의 데모가 외부 자원을 필요로 하는 경"
+#~ "우는 AJAX를 사용해서 접근해야 합니다.</li> <li>데모를 제출하려면 <a href=\"%(signup_url)s\">MDN 계정</a>이 필요합니다.</li> <li>데모의 상세란에 CC-BY-SA 아래에서 허가할 수 없는 써드파티의 콘텐츠"
+#~ "를 명기하고 그 저작자의 웹 사이트 링크를 포함해 주십시오.</li> </ul>"
+
+#~ msgid "Provide the Source Code"
+#~ msgstr "소스 코드를 제출"
+
+# 로그인 사용자에 대해서 표시되는 소스 제출 페이지의 업로드 파일 지정 박스의 설명문
+#~ msgid "<p>Upload a ZIP file of your source code, in which the main page of your demo is named <code>index.html</code> in the root directory.</p>"
+#~ msgstr "<p>소스 코드의 ZIP 파일을 업로드해 주십시오. 데모의 메인 페이지는 루트 디렉토리로 <code>index.html</code>가 되어야합니다.</p>"
+
+# 링크 앞은 https://developer.mozilla.org/ko/demos/terms
+#~ msgid "I accept the <a href=\"%(terms_url)s#tfc\">Terms for Contributors</a> and <a href=\"%(terms_url)s#rrd\">Rights Representation Details</a>"
+#~ msgstr "<a href=\"%(terms_url)s#tfc\">공헌자 규약</a>과 <a href=\"%(terms_url)s#rrd\">권리 표기에 관한 상세</a> 내용에 동의"
+
+#~ msgid "Submit demo"
+#~ msgstr "데모 제출"
+
+# 100%
+#~ msgid "or"
+#~ msgstr "또는"
+
+#~ msgid "Discard Demo"
+#~ msgstr "데모 파기"
+
+#~ msgid "Save changes"
+#~ msgstr "변경 저장"
+
+# 78%
+#~ msgid "Update Your Profile"
+#~ msgstr "프로필 편집"
+
+#~ msgid ""
+#~ "<p>Share your developer interests and areas of expertise with the MDN community. We'll be able to bring you a better, more customized experience and you will have a place to show off the amazing "
+#~ "work you do.</p>"
+#~ msgstr ""
+#~ "<p>여러분의 개발에 대한 관심과 전문 영역을 MDN 커뮤니티에서 공유하세요. 저희는 여러분에게 더 낫고, 더 사용자화된 경험을 가져다주고 여러분은 직접 만든 놀라운 작품을 선보일 수 있는 공간을 갖게 될 "
+#~ "것입니다.</p>"
+
+# 100%
+#~ msgid "Go to your profile"
+#~ msgstr "프로필로 이동"
+
+# 로그인 후의 데모 제출 화면의 제일 모두의 문언
+#~ msgid ""
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
+#~ msgstr "<p>여러분이 개발한 것이 아직 웹에서 경험하지 못했던 새로운 것인지 최신의 기술 성과를 경험하는 것인지에 상관없이 다양한 데모를 웹 개발자와 공유(또는 자랑)하기를 추천합니다.</p>"
+
+#~ msgid "Before You Begin"
+#~ msgstr "시작하기 전에"
+
+#~ msgid ""
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li>여러분은 데모의 <strong>소스 코드를 제출</strong>해야 합니다. 데모는 Demo Studio 의 서버에 저장됩니다.</li> <li>여러분의 데모의 소스 코드의 라이센스는 MPL, GPL, BSD 와 같은 <strong>오픈 "
+#~ "라이센스</strong>를 사용해야 합니다.</li> <li>여러분의 데모는 HTML5 및 CSS3 와 같은 <strong>개방적인 웹 기술</strong>을 사용해야 합니다.</li> <li>여러분의 데모는 Firefox, Chrome, Safari 및 Opera"
+#~ "와 같은 <strong>최신 웹 브라우저</strong>를 폭넓게 지원해야 합니다.</li> </ul>"
+
+#~ msgid ""
+#~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li>데모의 소스 코드는 <strong>ZIP 파일</strong>에 압축하여 주십시오.</li> <li>데모의 메인 페이지는 ZIP의 루트 디렉토리내의 <strong><code>index.html</code></strong> (이)라는 이름의 파일로 "
+#~ "해 주십시오.</li> <li>여러분의 데모는<strong>클라이언트 사이드의 기술</strong> (HTML CSS JavaScript)로 구성하여야 합니다. PHP나 Ruby와 같은 서버 사이드의 언어는 지원되고 있지 않습니다.</li> <li>"
+#~ "여러분의 데모가 외부 자원을 필요로 하는 경우는 그것들에 <strong>AkoX</strong> 그리고 접근 해 주십시오.</li> <li>데모의 상세란에 CC-BY-SA (표시-계승) 아래에서 허가할 수 없는 써드파티의 콘텐츠를 명"
+#~ "기해 그 개발자의 Web 사이트로의 링크를 기술해 주십시오.</li> </ul>"
+
+#~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
+#~ msgstr "<p>데모를 제출하려면 <strong><a href=\"%(signup_url)s\">MDN 계정</a></strong>이 필요합니다.</p>"
+
+#~ msgid "Log In to Profile"
+#~ msgstr "계정 로그인"
+
+#~ msgid "Terms for Contributors"
+#~ msgstr "공헌자 규약"
+
+#~ msgid "Demo Studio: Terms for Contributors"
+#~ msgstr "데모 스튜디오: 기여자 목록"
+
+#~ msgid "Rights Representation Details"
+#~ msgstr "권리 표기에 관한 상세"
+
+#~ msgid "Search the Demo Studio"
+#~ msgstr "Demo Studio 검색"
+
+#~ msgid "See %(display_name)s's profile"
+#~ msgstr "%(display_name)s의 프로필 보기"
+
+# 75%
+# 100%
+#~ msgid "Sort demos by most recent likes and views"
+#~ msgstr "최신 좋아요 순으로 데모 보기"
+
+# 75%
+#~ msgid "You are viewing demos by most recent likes and views"
+#~ msgstr "보고 계신 것은 최신 좋아요 및 조회수 순서의 데모입니다"
+
+#~ msgid "Up and Coming"
+#~ msgstr "최신 데모"
+
+#~ msgid "Sort demos by most views"
+#~ msgstr "조회 순으로 정렬"
+
+#~ msgid "You are viewing demos by most views"
+#~ msgstr "조회순으로 데모 보기"
+
+#~ msgid "Most Viewed"
+#~ msgstr "조회 순"
+
+#~ msgid "Sort demos by most likes"
+#~ msgstr "좋아요 순으로 정렬"
+
+#~ msgid "You are viewing demos by most likes"
+#~ msgstr "좋아요 순으로 데모 보기"
+
+#~ msgid "Most Liked"
+#~ msgstr "좋아요 순"
+
+#~ msgid "Sort demos by most recently submitted"
+#~ msgstr "제출 일자순으로 정렬"
+
+#~ msgid "You are viewing demos by most recently submitted"
+#~ msgstr "제출 일자 순으로 데모 보기"
+
+#~ msgid "Most Recent"
+#~ msgstr "제출일 순"
+
+#~ msgid "Go to the first page"
+#~ msgstr "첫페이지"
+
+#~ msgid "First"
+#~ msgstr "1등"
+
+#~ msgid "Go to the previous page"
+#~ msgstr "이전 페이지"
+
+#~ msgid "Go to the next page"
+#~ msgstr "다음의 페이지로 진행된다"
+
+#~ msgid "Go to the last page"
+#~ msgstr "다음 페이지"
+
+#~ msgid "Last"
+#~ msgstr "마지막"
+
+#~ msgid "Feed"
+#~ msgstr "피드"
+
+#, fuzzy
+#~ msgid "Launch %(title)s"
+#~ msgstr "{title} 실행"
+
+#~ msgid "Yes, I'm sure"
+#~ msgstr "예, 확신합니다"
+
+#~ msgid "First Place"
+#~ msgstr "1등"
+
+#~ msgid "Second Place"
+#~ msgstr "2등"
+
+#~ msgid "Third Place"
+#~ msgstr "3등"
+
+#~ msgid "Finalist"
+#~ msgstr "최종 참가자"
+
+#~ msgid "Featured"
+#~ msgstr "중요"
+
+#~ msgid "year"
+#~ msgid_plural "years"
+#~ msgstr[0] "년"
+
+#~ msgid "month"
+#~ msgid_plural "months"
+#~ msgstr[0] "개월"
+
+#~ msgid "week"
+#~ msgid_plural "weeks"
+#~ msgstr[0] "주간"
+
+#~ msgid "day"
+#~ msgid_plural "days"
+#~ msgstr[0] "일"
+
+#~ msgid "%(number)d %(type)s"
+#~ msgstr "%(number)d %(type)s"
+
+#, fuzzy
+#~ msgid "Subscribe to a feed of %(display_name)s's demos"
+#~ msgstr "{display_name} 데모 피드 구독"
+
+#~ msgid "No Demos"
+#~ msgstr "데모 없음"
+
+#~ msgid "You haven't submitted any web technology demos. Build something awesome and <a href=\"%(submit_url)s\">submit a demo</a>!"
+#~ msgstr "웹 기술 데모를 아직 추가하지 않았습니다. 멋진 것을 만드셨다면, <a href=\"%(submit_url)s\">데모 제출</a> 바랍니다."
+
+#~ msgid "Show Sidebar"
+#~ msgstr "사이드바 보기"
+
+#~ msgid "Hide Sidebar"
+#~ msgstr "사이드바 숨기기"
 
 #~ msgid "The form data has not yet been validated. Please try again."
 #~ msgstr "해당 폼 데이터는 아직 유효하지 않습니다. 다시 시도해주세요."

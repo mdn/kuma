@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-08 08:40-0800\n"
+"POT-Creation-Date: 2016-01-15 11:45-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,10 +75,6 @@ msgstr ""
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
-msgstr ""
-
-#: kuma/static/js/modal-control.js:15
-msgid "Demo Studio"
 msgstr ""
 
 #: kuma/static/js/moz-jquery-plugins.js:107
@@ -157,19 +153,19 @@ msgstr ""
 msgid "New tag..."
 msgstr ""
 
-#: kuma/static/js/wiki.js:230
+#: kuma/static/js/wiki.js:200
 msgid "How to read CSS syntax."
 msgstr ""
 
-#: kuma/static/js/wiki.js:571
+#: kuma/static/js/wiki.js:541
 msgid "Search Stack Overflow"
 msgstr ""
 
-#: kuma/static/js/wiki.js:685
+#: kuma/static/js/wiki.js:655
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 
-#: kuma/static/js/wiki.js:900
+#: kuma/static/js/wiki.js:870
 msgid "Details"
 msgstr ""
 

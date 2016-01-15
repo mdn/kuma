@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-08 08:40-0800\n"
+"POT-Creation-Date: 2016-01-15 11:45-0800\n"
 "PO-Revision-Date: 2015-12-24 17:42+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,10 +79,6 @@ msgstr "Hmmm. Çfarë do ta përmirësonte?"
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
 msgstr "Faleminderit! Do ta ndreqim."
-
-#: kuma/static/js/modal-control.js:15
-msgid "Demo Studio"
-msgstr "Studio Demosh"
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
@@ -160,19 +156,19 @@ msgstr "u ruajt"
 msgid "New tag..."
 msgstr "Etiketë e re..."
 
-#: kuma/static/js/wiki.js:230
+#: kuma/static/js/wiki.js:200
 msgid "How to read CSS syntax."
 msgstr "Si të lexohet sintaksa CSS."
 
-#: kuma/static/js/wiki.js:571
+#: kuma/static/js/wiki.js:541
 msgid "Search Stack Overflow"
 msgstr "Kërkoni te Stack Overflow"
 
-#: kuma/static/js/wiki.js:685
+#: kuma/static/js/wiki.js:655
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Shfletuesi juaj nuk mbulon MathML. Në vend të tij është përdorur CSS."
 
-#: kuma/static/js/wiki.js:900
+#: kuma/static/js/wiki.js:870
 msgid "Details"
 msgstr "Hollësi"
 
@@ -295,6 +291,9 @@ msgstr "URL-ja që dhatë s’duket se është e vlefshme"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Parazgjedhje"
+
+#~ msgid "Demo Studio"
+#~ msgstr "Studio Demosh"
 
 #~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
 #~ msgstr "Keni në përpunim një skicë. <a href=\"\" class=\"restoreLink\">Riktheni lëndën e skicës</a> ose <a href=\"\" class=\"discardLink\">hidheni skicën tej</a>."
