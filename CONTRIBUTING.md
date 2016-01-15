@@ -8,6 +8,7 @@ Things to know when contributing code
   * Discuss large changes on the [dev-mdn mailing list][dev-mdn]
     or on a [bugzilla bug][mdn-backlog] before coding.
   * Python code style should follow [PEP8 standards][pep8] whenever possible.
+  * We don't accept pull requests for translated strings (i.e. anything under locale/). Please use [Pontoon][https://pontoon.mozilla.org/projects/mdn/] instead.
 
 [MPL2]: http://www.mozilla.org/MPL/2.0/
 [dev-mdn]: https://lists.mozilla.org/listinfo/dev-mdn
