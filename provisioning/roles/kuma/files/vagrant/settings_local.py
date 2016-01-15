@@ -13,9 +13,6 @@ SERVE_MEDIA = DEBUG
 
 SESSION_COOKIE_SECURE = True
 
-DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
-DEMO_UPLOADS_URL = '/media/uploads/demos/'
-
 PROD_DETAILS_DIR = '/home/vagrant/product_details_json'
 
 GOOGLE_MAPS_API_KEY = "ABQIAAAANRj9BHQi5ireVluCwVy0yRSrufPN8BjQWjkoRva24PCQEXS2OhSXu2BEgUH5PmGOmW71r2-tEuOVuQ"

@@ -60,21 +60,21 @@
 
               <p>{% trans %}
               You can access everything on the MDN website even without an MDN
-              profile. However, by joining MDN, you'll be able to edit docs,
-              submit demos, and have your own profile page.
+              profile. However, by joining MDN, you'll be able to edit docs and
+              have your own profile page.
               {% endtrans %}</p>
 
               <p>{% if form.email.field.widget.input_type == 'hidden' %}
                   {% trans %}
                   To set up your MDN profile, please <strong>choose a username</strong>.
                   Your username will be displayed on MDN to identify any
-                  contributions (edits, demos, etc.) that you make.
+                  contributions that you make.
                   {% endtrans %}
               {% else %}
                   {% trans %}
                   To set up your MDN profile, please <strong>choose a username and email address</strong>.
                   Your username will be displayed on MDN to identify any
-                  contributions (edits, demos, etc.) that you make.
+                  contributions that you make.
                   {% endtrans %}
               {% endif %}
               </p>

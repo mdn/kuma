@@ -58,7 +58,14 @@ RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/css /$1Learn/CSS [R=301,L]
 RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/javascript /$1Learn/JavaScript [R=301,L]
 RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn /$1Learn [R=301,L]
 
-# Off-site redirects
+# BananaBread demo (bug 1238041)
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos/detail/bananabread$ https://github.com/kripken/BananaBread/ [R=301,L]
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos/detail/bananabread/launch$ https://kripken.github.io/BananaBread/cube2/index.html [R=301,L]
+
+# All other Demo Studio and Dev Derby paths (bug 1238037)
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?demos /$1docs/Web/Demos_of_open_web_technologies? [R=301,L]
+
+# Miscellaneous off-site redirects
 RewriteRule ^contests/$ http://labs.mozilla.com/contests/extendfirefox/ [R=302]
 RewriteRule ^contests/extendfirefox(/.*)? http://labs.mozilla.com/contests/extendfirefox$1 [R=302]
 RewriteRule ^es4(/.*)?$ http://wiki.ecmascript.org/ [R]
