@@ -2,6 +2,7 @@
 *.pyo
 *.sw?
 .vagrant
+.cache
 kuma.box
 /settings_local.py
 pip-log.txt

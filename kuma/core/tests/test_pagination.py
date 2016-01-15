@@ -1,7 +1,7 @@
 from django.test import RequestFactory
-from nose.tools import eq_
 import pyquery
 
+from kuma.core.tests import eq_
 from ..urlresolvers import reverse
 from ..utils import paginate, urlparams
 from ..templatetags.jinja_helpers import paginator

@@ -1,7 +1,6 @@
-from nose.tools import eq_
-from nose.plugins.skip import SkipTest
+import pytest
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_
 from ..urlresolvers import get_best_language
 
 
@@ -36,9 +35,9 @@ class BestLanguageTests(KumaTestCase):
         best = get_best_language('pt, fr;q=0.5')
         eq_('pt-PT', best)
 
+    @pytest.mark.xfail(reason='no clue what is up with norwegian locales')
     def test_nonprefix_alias(self):
         """We only have a single Norwegian locale."""
-        raise SkipTest("Figure out what's up with the Norwegian locales")
         best = get_best_language('nn-NO, nb-NO;q=0.7, fr;q=0.3')
         eq_('no', best)
 

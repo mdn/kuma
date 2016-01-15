@@ -1,4 +1,4 @@
-from nose.plugins.attrib import attr
+import pytest
 from pyquery import PyQuery as pq
 
 from constance.test import override_config
@@ -14,8 +14,8 @@ from kuma.users.models import User
 from kuma.wiki.models import RevisionAkismetSubmission
 
 
+@pytest.mark.spam
 @override_config(AKISMET_KEY='admin')
-@attr('spam')
 class AdminTestCase(UserTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 

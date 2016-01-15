@@ -1,5 +1,4 @@
-from nose.tools import eq_
-
+from kuma.core.tests import eq_
 from kuma.wiki.search import WikiDocumentType
 from kuma.wiki.tests import revision
 

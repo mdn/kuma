@@ -1,8 +1,6 @@
 from django.utils import translation
 
-from nose.tools import eq_
-
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_
 
 from ..form_fields import _format_decimal
 

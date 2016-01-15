@@ -8,12 +8,29 @@ from django.test import TestCase, TransactionTestCase
 from django.test.client import Client
 from django.utils.translation import trans_real
 
-from nose import SkipTest
-from nose.tools import eq_
-
 from ..cache import memcache
 from ..exceptions import FixtureMissingError
 from ..urlresolvers import split_path
+
+
+def eq_(first, second, msg=None):
+    """Rough reimplementation of nose.tools.eq_
+
+    Note: This should be removed as soon as we no longer use it.
+
+    """
+    msg = msg or '%r != %r' % (first, second)
+    assert first == second, msg
+
+
+def ok_(pred, msg=None):
+    """Rough reimplementation of nose.tools.ok_
+
+    Note: This should be removed as soon as we no longer use it.
+
+    """
+    msg = msg or '%r != True' % pred
+    assert pred, msg
 
 
 def attrs_eq(received, **expected):
@@ -108,8 +125,6 @@ class KumaTestMixin(object):
 
     @classmethod
     def setUpClass(cls):
-        if cls.skipme:
-            raise SkipTest
         if cls.localizing_client:
             cls.client_class = LocalizingClient
         super(KumaTestMixin, cls).setUpClass()
@@ -140,7 +155,3 @@ class KumaTestCase(KumaTestMixin, TestCase):
 
 class KumaTransactionTestCase(KumaTestMixin, TransactionTestCase):
     pass
-
-
-class SkippedTestCase(KumaTestCase):
-    skipme = True

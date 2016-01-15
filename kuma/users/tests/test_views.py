@@ -1,9 +1,8 @@
-import mock
 import json
 from urlparse import urlparse, parse_qs
 
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
+import mock
+import pytest
 from pyquery import PyQuery as pq
 
 from django.conf import settings
@@ -16,7 +15,7 @@ from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.tests import MockedResponse, mocked_response
 
-from kuma.core.tests import mock_lookup_user
+from kuma.core.tests import eq_, mock_lookup_user, ok_
 from kuma.core.urlresolvers import reverse
 
 from . import UserTestCase, user, email
@@ -35,10 +34,10 @@ class OldProfileTestCase(UserTestCase):
         eq_(404, response.status_code)
 
 
+@pytest.mark.bans
 class BanTestCase(UserTestCase):
     localizing_client = True
 
-    @attr('bans')
     def test_ban_permission(self):
         """The ban permission controls access to the ban view."""
         admin = self.user_model.objects.get(username='admin')
@@ -62,7 +61,6 @@ class BanTestCase(UserTestCase):
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
 
-    @attr('bans')
     def test_ban_view(self):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
@@ -85,7 +83,6 @@ class BanTestCase(UserTestCase):
                                       reason='Banned by unit test.')
         ok_(bans.count())
 
-    @attr('bans')
     def test_bug_811751_banned_user(self):
         """A banned user should not be viewable"""
         testuser = self.user_model.objects.get(username='testuser')
@@ -138,7 +135,6 @@ class UserViewsTest(UserTestCase):
         form[prefix + 'format'] = 'html'
         return form
 
-    @attr('docs_activity')
     def test_user_detail_view(self):
         """A user can be viewed"""
         testuser = self.user_model.objects.get(username='testuser')

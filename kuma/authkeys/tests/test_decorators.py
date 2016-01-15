@@ -1,12 +1,12 @@
 import base64
 
+import pytest
+
 from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
 from django.http import HttpRequest
 
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
-
+from kuma.core.tests import eq_, ok_
 from kuma.users.tests import user
 
 from ..models import Key
@@ -15,7 +15,7 @@ from ..decorators import accepts_auth_key
 
 class KeyDecoratorsTest(TestCase):
 
-    @attr('current')
+    @pytest.mark.current
     def test_key_auth_decorator(self):
 
         u = user(username="test23", email="test23@example.com", save=True)

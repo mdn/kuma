@@ -3,8 +3,7 @@ from hashlib import md5
 
 from django.conf import settings
 
-from nose.tools import eq_, ok_
-
+from kuma.core.tests import eq_, ok_
 from . import UserTestCase
 from ..templatetags.jinja_helpers import gravatar_url, public_email
 

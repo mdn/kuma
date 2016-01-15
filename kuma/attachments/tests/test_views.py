@@ -5,10 +5,10 @@ from django.conf import settings
 from django.core.files import temp as tempfile
 from django.core.files.base import ContentFile
 from django.utils.http import parse_http_date_safe
-from nose.tools import eq_, ok_
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
+from kuma.core.tests import eq_, ok_
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import Document, DocumentAttachment
 from kuma.wiki.tests import WikiTestCase, document, revision

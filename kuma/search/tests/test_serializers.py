@@ -1,10 +1,10 @@
 import mock
-from nose.tools import ok_, eq_
 
 from django.utils import translation
 from rest_framework import serializers
 from rest_framework.test import APIRequestFactory
 
+from kuma.core.tests import eq_, ok_
 from kuma.wiki.search import WikiDocumentType
 
 from . import ElasticTestCase

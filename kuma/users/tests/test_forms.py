@@ -1,8 +1,6 @@
 from django import forms
 
-from nose.tools import eq_, ok_
-
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_, ok_
 
 from . import user
 from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,

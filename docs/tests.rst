@@ -20,49 +20,67 @@ Running the Test Suite
 If you followed the steps in :doc:`the installation docs <installation>`,
 then all you should need to do to run the test suite is::
 
-    ./manage.py test
+    py.test
 
-However, that doesn't provide the most sensible defaults. Here is a good
-command to alias to something short::
 
-    ./manage.py test -s --noinput --logging-clear-handlers
+Default options for running the test are in ``pytest.ini``. This is a
+good set of defaults.
 
-The ``-s`` flag is important if you want to be able to drop into PDB from
-within tests.
+If you ever need to change the defaults, you can do so at the command
+line.
 
-Some tests will fail.  See `Running a Subset`_ below for running the subset
-that is expected to pass.
+Helpful command-line arguments:
 
-Some other helpful flags are:
-
-``-x``:
-  Fast fail. Exit immediately on failure. No need to run the whole test suite
-  if you already know something is broken.
 ``--pdb``:
-  Drop into PDB on an uncaught exception. (These show up as ``E`` or errors in
-  the test results, not ``F`` or failures.)
-``--pdb-fail``:
-  Drop into PDB on a test failure. This usually drops you right at the
-  assertion.
+  Drop into pdb on test failure.
+
+``--create-db``:
+  Create a new test database.
+
+``--showlocals``:
+  Shows local variables in tracebacks on errors.
+
+``--exitfirst``:
+  Exits on the first failure.
+
+See ``./py.test --help`` for more arguments.
 
 
-Running a Subset
-----------------
+Running subsets of tests and specific tests
+-------------------------------------------
 
-You can run part of the test suite by specifying the apps you want to run,
-like::
+There are a bunch of ways to specify a subset of tests to run:
 
-    ./manage.py test kuma
+* only tests marked with the 'spam' marker::
 
-You can also exclude tests that match a regular expression with ``-e``::
+    py.test -m spam
 
-    ./manage.py test -e "search"
+* all the tests but those marked with the 'spam' marker::
 
-To run the subset of tests that should pass::
+    py.test -m "not spam"
 
-    ./manage.py test kuma
+* all the tests but the ones in ``kuma/core``::
 
-See the output of ``./manage.py test --help`` for more arguments.
+    py.test --ignore kuma/core
+
+* all the tests that have "foobar" in their names::
+
+    py.test -k foobar
+
+* all the tests that don't have "foobar" in their names::
+
+    py.test -k "not foobar"
+
+* tests in a certain directory::
+
+    py.test kuma/wiki/
+
+* specific test::
+
+    py.test kuma/wiki/tests/test_views.py::RedirectTests::test_redirects_only_internal
+
+
+See http://pytest.org/latest/usage.html for more examples.
 
 
 The Test Database
@@ -71,6 +89,33 @@ The Test Database
 The test suite will create a new database named ``test_%s`` where ``%s`` is
 whatever value you have for ``settings.DATABASES['default']['NAME']``. Make
 sure the user has ``ALL`` on the test database as well.
+
+
+Markers
+=======
+
+See::
+
+    py.test --markers
+
+
+for the list of available markers.
+
+To add a marker, add it to the ``pytest.ini`` file.
+
+To use a marker, add a decorator to the class or function. Examples::
+
+    import pytest
+
+    @pytest.mark.spam
+    class SpamTests(TestCase):
+        ...
+
+    class OtherSpamTests(TestCase):
+        @pytest.mark.spam
+        def test_something(self):
+            ...
+
 
 Adding Tests
 ============

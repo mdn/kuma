@@ -5,9 +5,8 @@ import os
 from django.conf import settings
 from django.test import override_settings
 
-from nose.tools import ok_
-
 from kuma.core.cache import memcache
+from kuma.core.tests import ok_
 from kuma.users.tests import UserTestCase, user
 
 from . import document, revision

@@ -8,8 +8,6 @@ ES_URLS = ['localhost:9200']
 
 INSTALLED_APPS += (
     'kuma.core.tests.taggit_extras',
-    # testing.
-    'django_nose',
 )
 BANISH_ENABLED = False
 
@@ -25,9 +23,3 @@ LOGGING['loggers'].update({
         'level': 'CRITICAL',
     },
 })
-
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-NOSE_ARGS = [
-    '--traverse-namespace',  # make sure `./manage.py test kuma` works
-]

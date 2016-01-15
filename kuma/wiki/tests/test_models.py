@@ -5,10 +5,9 @@ from datetime import date, datetime, timedelta
 from xml.sax.saxutils import escape
 
 import mock
+import pytest
 from constance import config
 from constance.test import override_config
-from nose.plugins.attrib import attr
-from nose.tools import eq_, ok_
 from waffle.models import Switch
 
 from django.conf import settings
@@ -16,7 +15,7 @@ from django.core.exceptions import ValidationError
 from django.test.utils import override_settings
 
 from kuma.core.exceptions import ProgrammingError
-from kuma.core.tests import KumaTestCase, get_user
+from kuma.core.tests import KumaTestCase, eq_, get_user, ok_
 from kuma.users.tests import UserTestCase
 
 from . import (create_document_tree, create_template_test_users,
@@ -49,8 +48,8 @@ def redirect_rev(title, redirect_to):
 class DocumentTests(UserTestCase):
     """Tests for the Document model"""
 
-    @attr('bug875349')
     def test_json_data(self):
+        """bug 875349"""
         # Set up a doc with tags
         doc, rev = doc_rev('Sample document')
         doc.save()
@@ -220,7 +219,6 @@ class DocumentTests(UserTestCase):
         d.save()
         assert not d.is_localizable
 
-    @attr('doc_translations')
     def test_other_translations(self):
         """
         parent doc should list all docs for which it is parent
@@ -253,7 +251,7 @@ class DocumentTests(UserTestCase):
         d3.save()
         ok_(d3.parents == [d1, d2])
 
-    @attr('redirect')
+    @pytest.mark.redirect
     def test_redirect_url_allows_site_url(self):
         href = "%s/en-US/Mozilla" % settings.SITE_URL
         title = "Mozilla"
@@ -261,7 +259,7 @@ class DocumentTests(UserTestCase):
         d = document(is_redirect=True, html=html)
         eq_(href, d.get_redirect_url())
 
-    @attr('redirect')
+    @pytest.mark.redirect
     def test_redirect_url_allows_domain_relative_url(self):
         href = "/en-US/Mozilla"
         title = "Mozilla"
@@ -269,7 +267,7 @@ class DocumentTests(UserTestCase):
         d = document(is_redirect=True, html=html)
         eq_(href, d.get_redirect_url())
 
-    @attr('redirect')
+    @pytest.mark.redirect
     def test_redirect_url_rejects_protocol_relative_url(self):
         href = "//evilsite.com"
         title = "Mozilla"
@@ -277,9 +275,9 @@ class DocumentTests(UserTestCase):
         d = document(is_redirect=True, html=html)
         eq_(None, d.get_redirect_url())
 
-    @attr('bug1082034')
-    @attr('redirect')
+    @pytest.mark.redirect
     def test_redirect_url_works_for_home_path(self):
+        """bug 1082034"""
         href = "/"
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
@@ -505,7 +503,7 @@ class DocumentTestsWithFixture(UserTestCase):
 class TaggedDocumentTests(UserTestCase):
     """Tests for tags in Documents and Revisions"""
 
-    @attr('tags')
+    @pytest.mark.tags
     def test_revision_tags(self):
         """Change tags on Document by creating Revisions"""
         d, _ = doc_rev('Sample document')
@@ -613,7 +611,7 @@ class RevisionTests(UserTestCase):
         last_rev.save()
         eq_(next_rev, last_rev.previous)
 
-    @attr('toc')
+    @pytest.mark.toc
     def test_show_toc(self):
         """Setting toc_depth appropriately affects the Document's
         show_toc property."""
@@ -863,11 +861,12 @@ class DeferredRenderingTests(UserTestCase):
         ok_(not mock_kumascript_get.called)
         eq_(self.rendered_content, result_rendered)
 
-    @attr('bug875349')
     @mock.patch('kuma.wiki.models.render_done')
     def test_build_json_on_render(self, mock_render_done):
         """
         A document's json field is refreshed on render(), but not on save()
+
+        bug 875349
         """
         self.d1.save()
         ok_(not mock_render_done.send.called)
@@ -1127,7 +1126,7 @@ class RenderExpiresTests(UserTestCase):
 class PageMoveTests(UserTestCase):
     """Tests for page-moving and associated functionality."""
 
-    @attr('move')
+    @pytest.mark.move
     def test_children_simple(self):
         """A basic tree with two direct children and no sub-trees on
         either."""
@@ -1164,7 +1163,6 @@ class PageMoveTests(UserTestCase):
         eq_(len(child2.get_descendants(10)), 0)
         eq_(len(grandchild.get_descendants(4)), 1)
 
-    @attr('move')
     def test_children_complex(self):
         """A slightly more complex tree, with multiple children, some
         of which do/don't have their own children."""
@@ -1198,7 +1196,7 @@ class PageMoveTests(UserTestCase):
 
         ok_([c1, gc1, c2, gc2, gc3, ggc1] == top.get_descendants())
 
-    @attr('move')
+    @pytest.mark.move
     def test_circular_dependency(self):
         """Make sure we can detect potential circular dependencies in
         parent/child relationships."""
@@ -1219,7 +1217,7 @@ class PageMoveTests(UserTestCase):
 
         ok_(child.is_child_of(grandparent))
 
-    @attr('move')
+    @pytest.mark.move
     def test_move_tree(self):
         """Moving a tree of documents does the correct thing"""
 
@@ -1314,7 +1312,7 @@ class PageMoveTests(UserTestCase):
                 slug='first-level/second-level/third-level/grandchild'
             ).get_redirect_url())
 
-    @attr('move')
+    @pytest.mark.move
     def test_conflicts(self):
         top = revision(title='Test page-move conflict detection',
                        slug='test-move-conflict-detection',
@@ -1359,7 +1357,7 @@ class PageMoveTests(UserTestCase):
         eq_([child_conflict.document],
             top_doc._tree_conflicts('moved/test-move-conflict-detection'))
 
-    @attr('move')
+    @pytest.mark.move
     def test_additional_conflicts(self):
         top = revision(title='WebRTC',
                        slug='WebRTC',
@@ -1385,7 +1383,7 @@ class PageMoveTests(UserTestCase):
         eq_([],
             top_doc._tree_conflicts('NativeRTC'))
 
-    @attr('move')
+    @pytest.mark.move
     def test_preserve_tags(self):
             tags = "'moving', 'tests'"
             rev = revision(title='Test page-move tag preservation',
@@ -1410,7 +1408,7 @@ class PageMoveTests(UserTestCase):
             eq_(['technical'],
                 [str(tag) for tag in new_rev.review_tags.all()])
 
-    @attr('move')
+    @pytest.mark.move
     def test_move_tree_breadcrumbs(self):
         """Moving a tree of documents under an existing doc updates breadcrumbs"""
 
@@ -1460,7 +1458,7 @@ class PageMoveTests(UserTestCase):
                                          slug='grandpa/grandma/mom')
         ok_(mom_moved.parent_topic == grandma_moved)
 
-    @attr('move')
+    @pytest.mark.move
     def test_move_tree_no_new_parent(self):
         """Moving a tree to a slug that doesn't exist throws error."""
 
@@ -1474,8 +1472,7 @@ class PageMoveTests(UserTestCase):
         except Exception:
             pass
 
-    @attr('move')
-    @attr('top')
+    @pytest.mark.move
     def test_move_top_level_docs(self):
         """Moving a top document to a new slug location"""
         page_to_move_title = 'Page Move Root'
@@ -1521,7 +1518,7 @@ class PageMoveTests(UserTestCase):
         # TODO: Fix this assertion?
         # eq_('admin', page_moved_doc.current_revision.creator.username)
 
-    @attr('move')
+    @pytest.mark.move
     def test_mid_move(self):
         root_title = 'Root'
         root_slug = 'Root'
@@ -1567,7 +1564,7 @@ class PageMoveTests(UserTestCase):
         ok_('REDIRECT' in redirected_grandchild.html)
         ok_(moved_grandchild_slug in redirected_grandchild.html)
 
-    @attr('move')
+    @pytest.mark.move
     def test_move_special(self):
         root_slug = 'User:foo'
         child_slug = '%s/child' % root_slug

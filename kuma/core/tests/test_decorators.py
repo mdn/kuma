@@ -2,13 +2,12 @@ from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
 
 from django.test import RequestFactory
-from nose.tools import eq_, ok_
 
 from kuma.core.decorators import (block_user_agents, logout_required,
                                   login_required, never_cache,
                                   permission_required)
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_, ok_
 from kuma.users.tests import UserTestCase
 
 

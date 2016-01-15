@@ -2,9 +2,8 @@ from __future__ import absolute_import
 from django.contrib.sites.models import Site
 
 import mock
-from nose.tools import eq_
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_
 from kuma.core.urlresolvers import reverse
 
 

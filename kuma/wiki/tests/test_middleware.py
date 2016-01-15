@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from nose.plugins.attrib import attr
-from nose.tools import eq_
 
 from kuma.core.cache import memcache
+from kuma.core.tests import eq_
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import DocumentZone
 from kuma.wiki.tests import revision
@@ -114,9 +113,11 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         response = self.client.get(url, follow=False)
         eq_(200, response.status_code)
 
-    @attr('bug1189596')
     def test_zone_url_ends_with_slash(self):
-        """Ensure urls only rewrite with a '/' at the end of url_root"""
+        """Ensure urls only rewrite with a '/' at the end of url_root
+
+        bug 1189596
+        """
         zone_url_root = 'Firéfox'
         zone_root_content = 'This is the Firéfox zone'
 

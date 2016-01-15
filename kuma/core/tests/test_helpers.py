@@ -2,15 +2,15 @@
 from collections import namedtuple
 from datetime import datetime
 
+import pytest
 import pytz
 from babel.dates import format_date, format_datetime, format_time
 from django.conf import settings
 from django.test import RequestFactory
-from nose.tools import assert_raises, eq_, ok_
 from pyquery import PyQuery as pq
 from soapbox.models import Message
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
@@ -164,12 +164,13 @@ class TestDateTimeFormat(UserTestCase):
     def test_unknown_format(self):
         """Unknown format raises DateTimeFormatError."""
         date_today = datetime.today()
-        assert_raises(DateTimeFormatError, datetimeformat, self.context,
-                      date_today, format='unknown')
+        with pytest.raises(DateTimeFormatError):
+            datetimeformat(self.context, date_today, format='unknown')
 
     def test_invalid_value(self):
         """Passing invalid value raises ValueError."""
-        assert_raises(ValueError, datetimeformat, self.context, 'invalid')
+        with pytest.raises(ValueError):
+            datetimeformat(self.context, 'invalid')
 
     def test_json_helper(self):
         eq_('false', jsonencode(False))
