@@ -2,6 +2,7 @@
 from urlparse import urljoin
 
 import bleach
+import pytest
 from cssselect.parser import SelectorSyntaxError
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
@@ -409,6 +410,7 @@ class ContentSectionToolTests(UserTestCase):
         for original, slugified in headers:
             ok_(slugified == section_filter.slugify(original))
 
+    @pytest.mark.toc
     def test_generate_toc(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -458,6 +460,7 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(SectionTOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+    @pytest.mark.toc
     def test_generate_toc_h2(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -485,6 +488,7 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(H2TOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+    @pytest.mark.toc
     def test_generate_toc_h3(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>

@@ -6,6 +6,7 @@ import time
 from urlparse import urlparse
 
 import mock
+import pytest
 import requests_mock
 from constance.test import override_config
 from django.conf import settings
@@ -1135,6 +1136,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc = Document.objects.get(slug=slug, locale=loc)
         eq_(comment, doc.current_revision.comment)
 
+    @pytest.mark.toc
     def test_toc_initial(self):
         self.client.login(username='admin', password='testpass')
 
@@ -1153,6 +1155,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         if not found_selected:
             raise AssertionError("No ToC depth initially selected.")
 
+    @pytest.mark.retitle
     def test_retitling_solo_doc(self):
         """ Editing just title of non-parent doc:
             * Changes title
@@ -1181,6 +1184,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         except Document.DoesNotExist:
             pass
 
+    @pytest.mark.retitle
     def test_retitling_parent_doc(self):
         """ Editing just title of parent doc:
             * Changes title
@@ -1231,6 +1235,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            locale=d.locale).slug)
         assert "REDIRECT" not in Document.objects.get(slug=old_slug).html
 
+    @pytest.mark.clobber
     def test_slug_collision_errors(self):
         """When an attempt is made to retitle an article and another with that
         title already exists, there should be form errors"""
@@ -1263,6 +1268,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(p.find('.errorlist').length > 0)
         ok_(p.find('.errorlist a[href="#id_slug"]').length > 0)
 
+    @pytest.mark.clobber
     def test_redirect_can_be_clobbered(self):
         """When an attempt is made to retitle an article, and another article
         with that title exists but is a redirect, there should be no errors and
@@ -1982,6 +1988,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(content('li.metadata-choose-parent'))
         ok_(str(parent.id) in content.html())
 
+    @pytest.mark.tags
     @mock.patch.object(Site.objects, 'get_current')
     def test_document_tags(self, get_current):
         """Document tags can be edited through revisions"""
@@ -2042,6 +2049,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                  args=[path]), data)
         assert_tag_state(ts2, ts1)
 
+    @pytest.mark.review_tags
     @mock.patch.object(Site.objects, 'get_current')
     def test_review_tags(self, get_current):
         """Review tags can be managed on document revisions"""
@@ -2146,6 +2154,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            args=('atom', 'editorial', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
 
+    @pytest.mark.review_tags
     def test_quick_review(self):
         """Test the quick-review button."""
         self.client.login(username='admin', password='testpass')
@@ -2203,6 +2212,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 ok_(expected_str in rev.comment)
             eq_(data_dict['expected_tags'], review_tags)
 
+    @pytest.mark.midair
     def test_edit_midair_collision(self):
         self.client.login(username='admin', password='testpass')
 
@@ -2246,6 +2256,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(unicode(MIDAIR_COLLISION).encode('utf-8') in resp.content,
             "Midair collision message should appear")
 
+    @pytest.mark.toc
     def test_toc_toggle_off(self):
         """Toggling of table of contents in revisions"""
         self.client.login(username='admin', password='testpass')
@@ -2262,6 +2273,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc = Document.objects.get(slug=d.slug, locale=d.locale)
         eq_(0, doc.current_revision.toc_depth)
 
+    @pytest.mark.toc
     def test_toc_toggle_on(self):
         """Toggling of table of contents in revisions"""
         self.client.login(username='admin', password='testpass')
@@ -2488,6 +2500,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         eq_(rev_ip.user_agent, 'Mozilla Firefox')
         eq_(rev_ip.referrer, 'http://localhost/')
 
+    @pytest.mark.edit_emails
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_first_edits(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'
@@ -2582,6 +2595,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert rev.document.title in message.body
         assert 'sub-articles' not in message.body
 
+    @pytest.mark.edit_emails
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_child_edit_in_watched_tree(self, get_current):
         """
@@ -2608,6 +2622,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert testuser2.email in message.to
         assert 'sub-articles' in message.body
 
+    @pytest.mark.edit_emails
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_grandchild_edit_in_watched_tree(self, get_current):
         """
@@ -2634,6 +2649,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert testuser2.email in message.to
         assert 'sub-articles' in message.body
 
+    @pytest.mark.edit_emails
     @mock.patch.object(Site.objects, 'get_current')
     def test_single_email_when_watching_doc_and_tree(self, get_current):
         """
@@ -2833,6 +2849,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
+    @pytest.mark.midair
     def test_raw_section_edit(self):
         self.client.login(username='admin', password='testpass')
         d, r = doc_rev("""
@@ -2886,6 +2903,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
+    @pytest.mark.midair
     def test_midair_section_merge(self):
         """If a page was changed while someone was editing, but the changes
         didn't affect the specific section being edited, then ignore the midair
@@ -2988,6 +3006,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                     .current_revision.id),
             unicode(response['x-kuma-revision']))
 
+    @pytest.mark.midair
     def test_midair_section_collision(self):
         """If both a revision and the edited section has changed, then a
         section edit is a collision."""

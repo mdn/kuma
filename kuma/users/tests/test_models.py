@@ -1,3 +1,5 @@
+import pytest
+
 from kuma.core.tests import eq_, ok_
 from kuma.wiki.tests import revision
 
@@ -80,6 +82,7 @@ class TestUser(UserTestCase):
 
 class BanTestCase(UserTestCase):
 
+    @pytest.mark.bans
     def test_ban_user(self):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')

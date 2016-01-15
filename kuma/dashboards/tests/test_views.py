@@ -1,3 +1,4 @@
+import pytest
 from pyquery import PyQuery as pq
 
 from waffle.models import Flag, Switch
@@ -10,6 +11,7 @@ from kuma.users.tests import UserTestCase
 from kuma.users.models import User, UserBan
 
 
+@pytest.mark.dashboards
 class RevisionsDashTest(UserTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 

@@ -1,3 +1,5 @@
+import pytest
+
 from django.test import TestCase
 
 from kuma.core.tests import ok_
@@ -8,6 +10,7 @@ from ..models import Key
 
 class KeyViewsTest(TestCase):
 
+    @pytest.mark.current
     def test_secret_generation(self):
         """Generated secret should be saved as a hash and pass a check"""
         u = user(username="tester23",

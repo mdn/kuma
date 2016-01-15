@@ -1,3 +1,4 @@
+import pytest
 from constance import config
 from pyquery import PyQuery as pq
 
@@ -21,6 +22,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         super(AttachmentTests, self).tearDown()
         config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
 
+    @pytest.mark.security
     def test_xss_file_attachment_title(self):
         title = '"><img src=x onerror=prompt(navigator.userAgent);>'
         # use view to create new attachment

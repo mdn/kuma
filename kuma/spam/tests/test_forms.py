@@ -4,6 +4,7 @@ from django.utils import six
 from django.utils.encoding import force_unicode
 
 import requests_mock
+import pytest
 from constance.test.utils import override_config
 from waffle.models import Flag
 
@@ -32,6 +33,7 @@ class AkismetContentTestForm(AkismetCheckTestForm):
     content = forms.CharField()
 
 
+@pytest.mark.spam
 @requests_mock.mock()
 class AkismetFormTests(SimpleTestCase):
     rf = RequestFactory()

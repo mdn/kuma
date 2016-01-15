@@ -67,6 +67,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         ok_(config.KUMA_CUSTOM_CSS_PATH in response.content)
 
+    @pytest.mark.breadcrumbs
     def test_document_breadcrumbs(self):
         """Create docs with topical parent/child rel, verify breadcrumbs."""
         d1, d2 = create_topical_parents_docs()
@@ -198,6 +199,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         doc = pq(resp.content)
         assert 'Add a translation' not in doc('.page-buttons #translations li').text()
 
+    @pytest.mark.toc
     def test_toc_depth(self):
         """Toggling show_toc on/off through the toc_depth field should
         cause table of contents to appear/disappear."""
@@ -218,6 +220,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' not in response.content)
 
+    @pytest.mark.toc
     def test_show_toc_hidden_input_for_templates(self):
         """Toggling show_toc on/off through the toc_depth field should
         cause table of contents to appear/disappear."""
@@ -638,6 +641,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         eq_(Document.objects.filter(locale=self.locale).count(),
             len(doc('#document-list ul.document-list li')))
 
+    @pytest.mark.tags
     def test_tag_list(self):
         """Verify the tagged documents list view."""
         tag = DocumentTag(name='Test Tag', slug='test-tag')
@@ -649,6 +653,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(1, len(doc('#document-list ul.document-list li')))
 
+    @pytest.mark.tags
     def test_tag_list_duplicates(self):
         """
         Verify the tagged documents list view, even for duplicate tags

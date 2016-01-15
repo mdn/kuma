@@ -1,5 +1,7 @@
 import base64
 
+import pytest
+
 from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
 from django.http import HttpRequest
@@ -13,6 +15,7 @@ from ..decorators import accepts_auth_key
 
 class KeyDecoratorsTest(TestCase):
 
+    @pytest.mark.current
     def test_key_auth_decorator(self):
 
         u = user(username="test23", email="test23@example.com", save=True)

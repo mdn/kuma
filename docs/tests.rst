@@ -53,31 +53,32 @@ There are a bunch of ways to specify a subset of tests to run:
 
 * only tests marked with the 'spam' marker::
 
-    ./py.test -m spam
+    py.test -m spam
 
 * all the tests but those marked with the 'spam' marker::
 
-    ./py.test -m "not spam"
+    py.test -m "not spam"
 
 * all the tests but the ones in ``kuma/core``::
 
-    ./py.test --ignore kuma/core
+    py.test --ignore kuma/core
 
 * all the tests that have "foobar" in their names::
 
-    ./py.test -k foobar
+    py.test -k foobar
 
 * all the tests that don't have "foobar" in their names::
 
-    ./py.test -k "not foobar"
+    py.test -k "not foobar"
 
 * tests in a certain directory::
 
-    ./py.test kuma/wiki/
+    py.test kuma/wiki/
 
 * specific test::
 
-    ./py.test kuma/wiki/tests/test_views.py::RedirectTests::test_redirects_only_internal
+    py.test kuma/wiki/tests/test_views.py::RedirectTests::test_redirects_only_internal
+
 
 See http://pytest.org/latest/usage.html for more examples.
 
@@ -88,6 +89,33 @@ The Test Database
 The test suite will create a new database named ``test_%s`` where ``%s`` is
 whatever value you have for ``settings.DATABASES['default']['NAME']``. Make
 sure the user has ``ALL`` on the test database as well.
+
+
+Markers
+=======
+
+See::
+
+    py.test --markers
+
+
+for the list of available markers.
+
+To add a marker, add it to the ``pytest.ini`` file.
+
+To use a marker, add a decorator to the class or function. Examples::
+
+    import pytest
+
+    @pytest.mark.spam
+    class SpamTests(TestCase):
+        ...
+
+    class OtherSpamTests(TestCase):
+        @pytest.mark.spam
+        def test_something(self):
+            ...
+
 
 Adding Tests
 ============

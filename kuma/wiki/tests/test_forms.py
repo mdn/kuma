@@ -2,6 +2,7 @@ from django import forms
 from django.core import mail
 from django.test import RequestFactory
 
+import pytest
 import requests_mock
 from constance.test import override_config
 from waffle.models import Flag
@@ -172,6 +173,7 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertTrue(rev_form.is_valid())
         self.assertEqual(rev_form.cleaned_data['tags'], '"JavaScript"')
 
+    @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_enabled(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')
@@ -196,6 +198,7 @@ class RevisionFormTests(UserTransactionTestCase):
         # now disabled because the test user is exempted from the spam check
         self.assertFalse(rev_form.akismet_enabled())
 
+    @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_error(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')
@@ -233,6 +236,7 @@ class RevisionFormTests(UserTransactionTestCase):
         except forms.ValidationError as exc:
             self.assertHTMLEqual(exc.message, rev_form.akismet_error_message)
 
+    @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_parameters(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')

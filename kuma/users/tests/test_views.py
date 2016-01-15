@@ -1,7 +1,8 @@
-import mock
 import json
 from urlparse import urlparse, parse_qs
 
+import mock
+import pytest
 from pyquery import PyQuery as pq
 
 from django.conf import settings
@@ -33,6 +34,7 @@ class OldProfileTestCase(UserTestCase):
         eq_(404, response.status_code)
 
 
+@pytest.mark.bans
 class BanTestCase(UserTestCase):
     localizing_client = True
 
