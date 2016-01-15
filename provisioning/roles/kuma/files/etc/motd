@@ -6,10 +6,18 @@ To run developer-local.allizom.org, run:
     (Consult ~/src/Procfile to see what services are managed by Foreman.)
 
 To run Kuma tests:
-    ~/src/manage.py test kuma
+    make test
 
 To run KumaScript tests:
     cd ~/src/kumascript && ./node_modules/.bin/nodeunit tests
+
+To clean built assets and remove pyc files:
+
+    make clean
+
+To compile and collect static files:
+
+    make compilecss compilejsi18n collectstatic
 
 To update this dev environment run from the host machine:
     vagrant provision

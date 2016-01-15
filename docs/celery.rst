@@ -67,13 +67,14 @@ We set some reasonable defaults for Celery in ``settings.py``. These can be
 overridden either in your ``.env`` file or via the command line when running
 ``manage.py celeryd``.
 
-In your ``.env`` file you should set at least this, if you want to use Celery::
+In your ``.env`` file you should set at least this, if you want to run Celery
+tasks asynchronously::
 
     CELERY_ALWAYS_EAGER = false
 
-This defaults to ``True``, which causes all task processing to be done online.
-This lets you run Kuma even if you don't have Rabbit or want to deal with
-running workers all the time.
+It defaults to ``true``, which causes all task processing to be done
+synchronously instead of asynchronously. This lets you run Kuma even if you
+don't have Rabbit or want to deal with running workers all the time.
 
 You can also configure the log level or concurrency. Here are the defaults::
 

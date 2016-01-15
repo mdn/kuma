@@ -37,7 +37,7 @@ Django tests
 
 Running the kuma Django test suite is easy::
 
-    python manage.py test kuma
+    make test
 
 For more information, see the :doc:`test documentation <tests>`.
 
@@ -271,9 +271,7 @@ assets locally, follow these steps:
 
 #. In .env, set ``DEBUG = false``
 #. Run ``vagrant ssh`` to enter the virtual machine
-#. Run ``compile-stylesheets``
-#. Run ``./manage.py compilejsi18n``
-#. Run ``./manage.py collectstatic``
+#. Run ``make compilejsi18n collectstatic``
 #. Stop ``foreman`` if it's already running
 #. Run ``foreman start``
 
