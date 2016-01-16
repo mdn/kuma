@@ -6,13 +6,21 @@ Kuma is localized with `gettext <http://www.gnu.org/software/gettext/>`_.
 User-facing strings in the code or templates need to be marked for gettext
 localization.
 
-We use `Pontoon <https://pontoon.mozilla.org/>`_ to provide an easy interface
-to localizing these files. Localizers are also free to download the PO files
-and use whatever tool they are comfortable with.
+We use `Pontoon`_ to provide an easy interface to localizing these files.
+Pontoon allows translators to use the web UI as well as download the PO files,
+use whatever tool the translator feels comfortable with and upload it back to
+Pontoon.
+
+.. Note::
+
+   We do not accept pull requests for updating translated strings. Please
+   use `Pontoon`_ instead.
+
 
 See the `Django documentation on Translations`_ for how to make strings
 marked for translation in Python and templates.
 
+.. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
 .. _Django documentation on Translations: https://docs.djangoproject.com/en/dev/topics/i18n/translation/
 
 Getting the Localizations
