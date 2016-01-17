@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-16 14:03+0000\n"
+"PO-Revision-Date: 2016-01-17 11:33+0000\n"
 "Last-Translator: Yuriy Antonov <yuraantonov11@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -120,11 +120,11 @@ msgstr "Інструменти"
 
 #: jinja2/base.html:104
 msgid "Contribute to MDN"
-msgstr ""
+msgstr "Допомогти MDN"
 
 #: jinja2/base.html:106
 msgid "Get started"
-msgstr ""
+msgstr "Початок роботи"
 
 #: jinja2/base.html:107
 msgid "Review or localize docs"
@@ -132,7 +132,7 @@ msgstr ""
 
 #: jinja2/base.html:110
 msgid "Site Tools"
-msgstr ""
+msgstr "Інструменти сайту"
 
 #: jinja2/base.html:112
 msgid "Revision dashboard"
@@ -144,7 +144,7 @@ msgstr ""
 
 #: jinja2/base.html:122
 msgid "Web Platform"
-msgstr ""
+msgstr "Веб-платформа"
 
 #: jinja2/base.html:126
 msgid "Technologies"
@@ -170,7 +170,7 @@ msgstr "JavaScript"
 
 #: jinja2/base.html:131
 msgid "Graphics"
-msgstr ""
+msgstr "Графіка"
 
 #: jinja2/base.html:132
 msgid "APIs / DOM"
@@ -178,7 +178,7 @@ msgstr "API / DOM"
 
 #: jinja2/base.html:133 kuma/core/sections.py:20
 msgid "Apps"
-msgstr ""
+msgstr "Застосунки"
 
 #: jinja2/base.html:134 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
@@ -258,11 +258,11 @@ msgstr ""
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Приєднатися до спільноти MDN"
 
 #: jinja2/base.html:171
 msgid "Report a content problem"
-msgstr ""
+msgstr "Повідомити про проблему вмісту"
 
 #: jinja2/base.html:172
 msgid "Report a bug"
@@ -3133,7 +3133,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:281
 msgid "This translation is in progress."
-msgstr ""
+msgstr "Цей переклад в процесі."
 
 #: kuma/wiki/jinja2/wiki/document.html:288
 #, python-format
@@ -3141,6 +3141,8 @@ msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
 "yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
+"Наші волонтери ще не переклали цю статтю мовою: <bdi>%(locale)s</bdi>. <a "
+"href=\"%(help_link)s\">Приєднайтесь до нас і допоможіть зробити це!</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:299
 msgid "This article doesn't have any content yet."
