@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-10 23:12+0000\n"
+"PO-Revision-Date: 2016-01-11 13:00+0000\n"
 "Last-Translator: Yuriy Antonov <yuraantonov11@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -137,7 +137,7 @@ msgstr "невідома дата"
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "You have a draft from:"
-msgstr ""
+msgstr "У вас є чернетка від:"
 
 #: kuma/static/js/wiki-edit.js:402
 msgid "Restore the draft content"
@@ -164,8 +164,11 @@ msgid "Search Stack Overflow"
 msgstr "Пошук на Stack Overflow"
 
 #: kuma/static/js/wiki.js:655
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Ваш браузер не підтримує MathML. Замість цього використовується запасне вирішення на CSS."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Ваш браузер не підтримує MathML. Замість цього використовується запасне "
+"вирішення на CSS."
 
 #: kuma/static/js/wiki.js:870
 msgid "Details"
@@ -179,7 +182,8 @@ msgstr "Вибрати прикріплення"
 msgid "No attachments available"
 msgstr "Немає доступних прикріплень"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Прикріплення"
 
@@ -199,7 +203,8 @@ msgstr "Створити перенаправлення"
 msgid "MDN Redirect"
 msgstr "MDN перенаправлення"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Документ"
 
