@@ -733,8 +733,8 @@ PIPELINE_JS = {
     'users': {
         'source_filenames': (
             'js/libs/tag-it.js',
-            'js/users.js',
             'js/moz-jquery-plugins.js',
+            'js/users.js',
         ),
         'output_filename': 'build/js/users.js',
         'extra_context': {
