@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-17 11:33+0000\n"
+"PO-Revision-Date: 2016-01-17 22:43+0000\n"
 "Last-Translator: Yuriy Antonov <yuraantonov11@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -21,7 +21,7 @@ msgstr "Відмовлено у доступі"
 
 #: jinja2/403.html:22
 msgid "The wiki is in read-only mode."
-msgstr ""
+msgstr "Вікі відкрито у режимі лише для читання."
 
 #: jinja2/403.html:24
 msgid "Your profile has been banned from making edits."
@@ -29,7 +29,7 @@ msgstr ""
 
 #: jinja2/403.html:26
 msgid "This user's profile has been banned."
-msgstr ""
+msgstr "Цей профіль був заблокований."
 
 #: jinja2/403.html:28
 msgid "You must sign in to view all history"
@@ -38,21 +38,21 @@ msgstr "Ви мусите увійти, щоб переглянути всю і�
 #: jinja2/403.html:34 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<p>На жаль %(name)s, ми боїмося, що не зможемо це зробити.</p>"
 
 #: jinja2/403.html:38 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
-msgstr ""
+msgstr "<p>На жаль, ми боїмося, що не зможемо це зробити.</p>"
 
 #: jinja2/403.html:45
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(logout_url)s\">Вийдіть</a> та спробуйте знову.</li>"
 
 #: jinja2/403.html:49 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"%(login_url)s\">Увійдіть</a> щоб повторити спробу.</li>"
 
 #: jinja2/403.html:55
 msgid ""
@@ -68,7 +68,7 @@ msgstr "Не знайдено"
 
 #: jinja2/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
-msgstr ""
+msgstr "На жаль, ми не можемо знайти те, що ви шукаєте."
 
 #: jinja2/404.html:24
 #, python-format
@@ -128,7 +128,7 @@ msgstr "Початок роботи"
 
 #: jinja2/base.html:107
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Перевіряйте або перекладайте документацію"
 
 #: jinja2/base.html:110
 msgid "Site Tools"
@@ -136,11 +136,11 @@ msgstr "Інструменти сайту"
 
 #: jinja2/base.html:112
 msgid "Revision dashboard"
-msgstr ""
+msgstr "Панель аудиту"
 
 #: jinja2/base.html:113
 msgid "Documentation status"
-msgstr ""
+msgstr "Статус документації"
 
 #: jinja2/base.html:122
 msgid "Web Platform"
@@ -186,7 +186,7 @@ msgstr "MathML"
 
 #: jinja2/base.html:137
 msgid "References & Guides"
-msgstr ""
+msgstr "Довідники та посібники"
 
 #: jinja2/base.html:139
 msgid "Learn the Web"
@@ -194,11 +194,11 @@ msgstr ""
 
 #: jinja2/base.html:140
 msgid "Tutorials"
-msgstr ""
+msgstr "Посібники"
 
 #: jinja2/base.html:141
 msgid "References"
-msgstr ""
+msgstr "Довідники"
 
 #: jinja2/base.html:142
 msgid "Developer Guides"
@@ -210,7 +210,7 @@ msgstr "Доступність"
 
 #: jinja2/base.html:144
 msgid "...more docs"
-msgstr ""
+msgstr "...більше документації"
 
 #: jinja2/base.html:148
 msgid "Mozilla Docs"
@@ -254,7 +254,7 @@ msgstr ""
 
 #: jinja2/base.html:167
 msgid "Get web development help"
-msgstr ""
+msgstr "Довідка веб-розробки"
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
@@ -296,7 +296,7 @@ msgstr "Про MDN"
 
 #: jinja2/base.html:204
 msgid "Terms"
-msgstr ""
+msgstr "Умови"
 
 #: jinja2/base.html:205
 msgid "Privacy"
@@ -304,7 +304,7 @@ msgstr ""
 
 #: jinja2/base.html:206
 msgid "Cookies"
-msgstr ""
+msgstr "Куки"
 
 #: jinja2/base.html:207
 msgid "Contribute to the code"
@@ -461,7 +461,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:15
 msgid "Attachment Information"
-msgstr ""
+msgstr "Відомості про вкладення"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:19
 #: kuma/wiki/jinja2/wiki/revision.html:17
@@ -799,7 +799,7 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
-msgstr ""
+msgstr "Я вчуся"
 
 #: kuma/core/translations/search/filter/canvas/name.py:4
 msgid "Canvas"
@@ -807,7 +807,7 @@ msgstr "Canvas"
 
 #: kuma/core/translations/search/filter/code/name.py:4
 msgid "Code Samples"
-msgstr ""
+msgstr "Зразки коду"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
@@ -815,11 +815,11 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/firefox-mobile/name.py:4
 msgid "Firefox for Android"
-msgstr ""
+msgstr "Firefox для Android"
 
 #: kuma/core/translations/search/filter/games/name.py:4
 msgid "Games"
-msgstr ""
+msgstr "Ігри"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
@@ -847,7 +847,7 @@ msgstr "WebGL"
 
 #: kuma/core/translations/search/filter/xul/name.py:4
 msgid "XUL"
-msgstr ""
+msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 msgid "Document type"
@@ -855,19 +855,19 @@ msgstr "Тип документу"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
 msgid "Skill level"
-msgstr ""
+msgstr "Рівень майстерності"
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
-msgstr ""
+msgstr "Теми"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
-msgstr ""
+msgstr "Всі локалі"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
-msgstr ""
+msgstr "Немає"
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
@@ -893,22 +893,22 @@ msgstr "Мова:"
 #: kuma/dashboards/forms.py:28
 #: kuma/dashboards/jinja2/dashboards/revisions.html:19
 msgid "User:"
-msgstr ""
+msgstr "Користувач:"
 
 #: kuma/dashboards/forms.py:32
 #: kuma/dashboards/jinja2/dashboards/revisions.html:24
 msgid "Topic:"
-msgstr ""
+msgstr "Тема:"
 
 #: kuma/dashboards/forms.py:34
 #: kuma/dashboards/jinja2/dashboards/revisions.html:30
 msgid "Start Date:"
-msgstr ""
+msgstr "Дата початку:"
 
 #: kuma/dashboards/forms.py:38
 #: kuma/dashboards/jinja2/dashboards/revisions.html:35
 msgid "End Date:"
-msgstr ""
+msgstr "Дата завершення:"
 
 #: kuma/dashboards/forms.py:44
 #: kuma/dashboards/jinja2/dashboards/revisions.html:40
@@ -922,7 +922,7 @@ msgstr ""
 #: kuma/dashboards/jinja2/dashboards/revisions.html:44
 #: kuma/search/jinja2/search/results.html:210
 msgid "Filter"
-msgstr ""
+msgstr "Фільтр"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
@@ -931,11 +931,11 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:340
 msgid "View Page"
-msgstr ""
+msgstr "Переглянути сторінку"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:343
 msgid "Edit Page"
-msgstr ""
+msgstr "Редагувати сторінку"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:364
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:59
@@ -944,11 +944,11 @@ msgstr "Історія"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
-msgstr ""
+msgstr "Перемкнути IPs"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:34
 msgid "new"
-msgstr ""
+msgstr "новий"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35
 msgid "deleted"
@@ -956,7 +956,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:50
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
 msgid "Ban IP from Editing"
@@ -987,7 +987,7 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
 msgid "Resubmit"
-msgstr ""
+msgstr "Повторити надсилання"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 msgid "Submit as:"
@@ -995,11 +995,11 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:94
 msgid "spam"
-msgstr ""
+msgstr "спам"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:95
 msgid "ham"
-msgstr ""
+msgstr "не спам"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:107
 msgid "There are no revisions matching this filter set."
@@ -1074,7 +1074,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "HTML5"
-msgstr ""
+msgstr "HTML5"
 
 #: kuma/landing/jinja2/landing/homepage.html:73
 msgid "CSS3"
@@ -1228,11 +1228,11 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35
 msgid "Preview"
-msgstr ""
+msgstr "Перегляд"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
-msgstr ""
+msgstr "Виберіть стиль кнопки"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
@@ -1256,19 +1256,19 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr ""
+msgstr "Сірий"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr ""
+msgstr "Помаранчевий"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr ""
+msgstr "Червоний"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr ""
+msgstr "Замінити &lt;FOO&gt; на"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
@@ -1452,11 +1452,11 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
-msgstr ""
+msgstr "Пошук по сайту MDN"
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "Результати"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
@@ -1533,7 +1533,7 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
-msgstr ""
+msgstr "Фільтрувати по"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
@@ -1545,15 +1545,15 @@ msgstr ""
 
 #: kuma/spam/models.py:10
 msgid "created"
-msgstr ""
+msgstr "створено"
 
 #: kuma/spam/models.py:27
 msgid "Spam"
-msgstr ""
+msgstr "Спам"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
-msgstr ""
+msgstr "Не спам"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
@@ -1561,7 +1561,7 @@ msgstr ""
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "тип"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1625,23 +1625,23 @@ msgstr ""
 
 #: kuma/users/forms.py:47 kuma/users/signup.py:32
 msgid "I agree"
-msgstr ""
+msgstr "Я погоджуюся"
 
 #: kuma/users/forms.py:50
 msgid "Your country"
-msgstr ""
+msgstr "Ваша країна"
 
 #: kuma/users/forms.py:151 kuma/users/models.py:41
 msgid "Timezone"
-msgstr ""
+msgstr "Часовий пояс"
 
 #: kuma/users/forms.py:157
 msgid "Beta tester"
-msgstr ""
+msgstr "Бета-тестувальник"
 
 #: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:81
 msgid "Interests"
-msgstr ""
+msgstr "Зацікавлення"
 
 #: kuma/users/forms.py:167
 msgid "Expertise"
@@ -1649,18 +1649,18 @@ msgstr ""
 
 #: kuma/users/forms.py:173
 msgid "Username"
-msgstr ""
+msgstr "Ім'я користувача"
 
 #: kuma/users/forms.py:180 kuma/users/models.py:136
 #: kuma/users/jinja2/users/user_detail.html:111
 msgid "Website"
-msgstr ""
+msgstr "Веб-сайт"
 
 #: kuma/users/forms.py:189 kuma/users/models.py:151
 #: kuma/users/jinja2/users/user_detail.html:115
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: kuma/users/forms.py:207 kuma/users/models.py:166
 #: kuma/users/jinja2/users/user_detail.html:129
@@ -1675,7 +1675,7 @@ msgstr "LinkedIn"
 #: kuma/users/forms.py:225 kuma/users/models.py:141
 #: kuma/users/jinja2/users/user_detail.html:137
 msgid "Mozillians"
-msgstr ""
+msgstr "Мозилівці"
 
 #: kuma/users/forms.py:234 kuma/users/models.py:161
 #: kuma/users/jinja2/users/user_detail.html:141
@@ -1693,12 +1693,12 @@ msgstr ""
 
 #: kuma/users/forms.py:281
 msgid "Username already in use."
-msgstr ""
+msgstr "Ім'я користувача вже використовується."
 
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_user)s заблокований з боку %(banned_by)s"
 
 #: kuma/users/models.py:32
 #, python-format
@@ -1711,21 +1711,23 @@ msgstr "Мова"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
-msgstr ""
+msgstr "Домашня сторінка"
 
 #: kuma/users/models.py:60
 msgid ""
 "This URL has an invalid format. Valid URLs look like "
 "http://example.com/my_page."
 msgstr ""
+"Ця URL-адреса має неприпустимий формат. Припустимі URL-адреси мають вигляд "
+"http://example.com/my_page."
 
 #: kuma/users/models.py:70
 msgid "Name"
-msgstr ""
+msgstr "Ім’я"
 
 #: kuma/users/models.py:75
 msgid "Organization"
-msgstr ""
+msgstr "Установа"
 
 #: kuma/users/models.py:80
 msgid "Location"
@@ -3551,7 +3553,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
-msgstr ""
+msgstr "Мови"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:29
 msgid "No translations exist for this article."
@@ -3559,7 +3561,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "Add a translation"
-msgstr ""
+msgstr "Додати переклад"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:43
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:46
