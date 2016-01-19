@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-17 22:43+0000\n"
-"Last-Translator: Yuriy Antonov <yuraantonov11@gmail.com>\n"
+"PO-Revision-Date: 2016-01-19 13:58+0000\n"
+"Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "Вікі відкрито у режимі лише для читання
 
 #: jinja2/403.html:24
 msgid "Your profile has been banned from making edits."
-msgstr ""
+msgstr "Вашому профілю заборонено вносити зміни."
 
 #: jinja2/403.html:26
 msgid "This user's profile has been banned."
@@ -61,6 +61,10 @@ msgid ""
 "rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a "
 "href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
 msgstr ""
+"<p class=\"attrib\"><small><a "
+"href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
+"rel=\"nofollow\">Tumbeasts</a> від Matthew Inman з <a "
+"href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -76,6 +80,8 @@ msgid ""
 "You can try a search or start over on the <a href=\"%(homepage_url)s\">home "
 "page</a>."
 msgstr ""
+"Ви можете спробувати пошукати або почати спочатку на <a "
+"href=\"%(homepage_url)s\">домашній сторінці</a>."
 
 #: jinja2/404.html:28
 #, python-format
@@ -84,6 +90,9 @@ msgid ""
 "page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a"
 " bug</a>. Thanks!"
 msgstr ""
+"Якщо ви слідкували посиланню в документації, ви можете увійти і створити "
+"сторінку. В іншому випадку будь ласка, <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">створіть повідомлення про помилку</a>. Дякуємо!"
 
 #: jinja2/404.html:36
 #, python-format
@@ -91,6 +100,8 @@ msgid ""
 "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew "
 "Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 msgstr ""
+"<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> від Matthew "
+"Inman з <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
@@ -190,7 +201,7 @@ msgstr "Довідники та посібники"
 
 #: jinja2/base.html:139
 msgid "Learn the Web"
-msgstr ""
+msgstr "Вивчення Web"
 
 #: jinja2/base.html:140
 msgid "Tutorials"
@@ -250,7 +261,7 @@ msgstr "Зворотній зв'язок"
 
 #: jinja2/base.html:166
 msgid "Get Firefox help"
-msgstr ""
+msgstr "Отримати допомогу Firefox"
 
 #: jinja2/base.html:167
 msgid "Get web development help"
@@ -300,7 +311,7 @@ msgstr "Умови"
 
 #: jinja2/base.html:205
 msgid "Privacy"
-msgstr ""
+msgstr "Конфіденційність"
 
 #: jinja2/base.html:206
 msgid "Cookies"
