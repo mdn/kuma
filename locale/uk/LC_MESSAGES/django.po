@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-19 13:58+0000\n"
+"PO-Revision-Date: 2016-01-19 22:11+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -300,6 +300,9 @@ msgid ""
 "contributors.</p> <p>Content is available under <a "
 "href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
+"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network і окремі учасники.</p>"
+" <p>Вміст доступний на умовах <a href=\"%(copyright_url)s\">цих "
+"ліцензій</a>.</p>"
 
 #: jinja2/base.html:203
 msgid "About MDN"
@@ -319,15 +322,15 @@ msgstr "Куки"
 
 #: jinja2/base.html:207
 msgid "Contribute to the code"
-msgstr ""
+msgstr "Зробіть внесок у код"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"/logout\">Вийдіть</a> та спробуйте ще раз.</li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "Пошук в Firefox Help"
 
 #: jinja2/includes/common_macros.html:36
 #, python-format
@@ -348,7 +351,7 @@ msgstr "Вийти"
 #: jinja2/includes/common_macros.html:44
 #, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr ""
+msgstr "Хочете зробити внесок?<br /> <a href=\"%(login_url)s\">Увійдіть</a>"
 
 #: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:87
 msgid "Other languages:"
@@ -380,18 +383,20 @@ msgstr "GitHub"
 #: jinja2/includes/newsletter.html:4
 #: kuma/users/jinja2/users/apps_newsletter.html:7
 msgid "Firefox Apps & Hacks Newsletter"
-msgstr ""
+msgstr "Підписка на хаки та новини застосунків Firefox"
 
 #: jinja2/includes/newsletter.html:6
 msgid ""
 "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the "
 "Open Web apps ecosystem."
 msgstr ""
+"Підпишіться на періодичні новини про Firefox OS, Firefox Marketplace і "
+"екосистему відкритих веб-застосунків."
 
 #: jinja2/includes/newsletter.html:35
 #, python-format
 msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
-msgstr ""
+msgstr "з <a href=\"%(privacy_url)s\">політикою приватності</a>"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154
 #: kuma/wiki/jinja2/wiki/list/revisions.html:56
@@ -449,26 +454,27 @@ msgstr "Вас було відписано."
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr ""
+msgstr "Нещодавні зміни файлів MDN"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
-msgstr ""
+msgstr "Нещодавні ревізії прикріплених файлів MDN"
 
 #: kuma/attachments/forms.py:9
 msgid "Files of this type are not permitted."
-msgstr ""
+msgstr "Файли цього типу не дозволені."
 
 #: kuma/attachments/views.py:147
 #, python-format
 msgid "The file provided is not valid. File must be one of these types: %s."
 msgstr ""
+"Зазначений файл недійсний. Файл повинен мати одне з цих розширень: %s."
 
 #. 'id' is the revision number, 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:3
 #, python-format
 msgid "Attachment %(id)s | %(title)s"
-msgstr ""
+msgstr "Вкладення %(id)s | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:15
 msgid "Attachment Information"
@@ -477,17 +483,17 @@ msgstr "Відомості про вкладення"
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:19
 #: kuma/wiki/jinja2/wiki/revision.html:17
 msgid "Revision slug:"
-msgstr ""
+msgstr "Посилання ревізії:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:23
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
-msgstr ""
+msgstr "Заголовок ревізії:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:27
 #: kuma/wiki/jinja2/wiki/revision.html:25
 msgid "Revision id:"
-msgstr ""
+msgstr "ID ревізії:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:31
 #: kuma/wiki/jinja2/wiki/revision.html:29
@@ -502,7 +508,7 @@ msgstr "Автор:"
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:39
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:43
 msgid "MIME Type:"
-msgstr ""
+msgstr "Тип MIME:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:44
 #, python-format
@@ -520,11 +526,11 @@ msgstr "Це поточна редакція?"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:60
 msgid "Attachment Preview"
-msgstr ""
+msgstr "Попередній перегляд вкладеного файлу"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:65
 msgid "No preview is available."
-msgstr ""
+msgstr "Попередній перегляд недоступний."
 
 #: kuma/attachments/jinja2/attachments/list_files.html:2
 msgid "All Files"
@@ -532,20 +538,20 @@ msgstr "Всі файли"
 
 #: kuma/attachments/jinja2/attachments/list_files.html:23
 msgid "There are no files."
-msgstr ""
+msgstr "Немає жодного файлу."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:12
 msgid "Attachments"
-msgstr ""
+msgstr "Вкладені файли"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:12
 msgid "Learn how to use Attachments"
-msgstr ""
+msgstr "Дізнайтеся, як використовувати вкладення"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:23
 msgid "Attach Files"
-msgstr ""
+msgstr "Вкласти файли"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:21
 msgid ""
