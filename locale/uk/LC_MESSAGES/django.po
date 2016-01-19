@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-19 22:11+0000\n"
+"PO-Revision-Date: 2016-01-19 22:26+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -558,6 +558,8 @@ msgid ""
 "This document has no attachments. Images can be attached, and then embedded "
 "in the article."
 msgstr ""
+"Цей документ не має вкладень. Зображення можуть бути вкладені, а потім "
+"вбудовані в статтю."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:33
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:51
@@ -605,15 +607,15 @@ msgstr "%s байтів"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr ""
+msgstr "Пошук ключа"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
-msgstr ""
+msgstr "Хешований секрет"
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
-msgstr ""
+msgstr "Опис передбачуваного використання"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7
 #: kuma/authkeys/jinja2/authkeys/history.html:8
@@ -629,7 +631,7 @@ msgstr "Видалити"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
-msgstr ""
+msgstr "Цей ключ ще не використовувався."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:8
 msgid ""
@@ -645,16 +647,16 @@ msgstr "Створити новий ключ"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:16
 msgid "You have no API keys, yet."
-msgstr ""
+msgstr "У Вас поки немає API-ключів."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:25
 msgid "View key usage history"
-msgstr ""
+msgstr "Подивитися історію використання ключів"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:26
 #, python-format
 msgid "History (%(count)s)"
-msgstr ""
+msgstr "Історія (%(count)s)"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
@@ -691,7 +693,7 @@ msgstr "Ідентифікатор ключа"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:32
 msgid "Secret"
-msgstr ""
+msgstr "Секрет"
 
 #: kuma/core/apps.py:13
 msgid "Core"
@@ -718,7 +720,7 @@ msgstr "Mozilla"
 #: kuma/core/sections.py:27
 #: kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
-msgstr ""
+msgstr "Мобільна версія"
 
 #: kuma/core/sections.py:34
 #: kuma/landing/jinja2/landing/promote_buttons.html:117
@@ -727,7 +729,7 @@ msgstr "Веб"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Moz Hacks"
 
 #: kuma/core/templatetags/jinja_helpers.py:114
 #, python-format
@@ -749,41 +751,41 @@ msgstr[2] "%(number)d місяців тому"
 #, python-format
 msgid "%(number)d week ago"
 msgid_plural "%(number)d weeks ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d тиждень тому"
+msgstr[1] "%(number)d тижні тому"
+msgstr[2] "%(number)d тижнів тому"
 
 #: kuma/core/templatetags/jinja_helpers.py:120
 #, python-format
 msgid "%(number)d day ago"
 msgid_plural "%(number)d days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d день тому"
+msgstr[1] "%(number)d дні тому"
+msgstr[2] "%(number)d днів тому"
 
 #: kuma/core/templatetags/jinja_helpers.py:122
 #, python-format
 msgid "%(number)d hour ago"
 msgid_plural "%(number)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d годину тому"
+msgstr[1] "%(number)d години тому"
+msgstr[2] "%(number)d годин тому"
 
 #: kuma/core/templatetags/jinja_helpers.py:124
 #, python-format
 msgid "%(number)d minute ago"
 msgid_plural "%(number)d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d хвилину тому"
+msgstr[1] "%(number)d хвилини тому"
+msgstr[2] "%(number)d хвилин тому"
 
 #: kuma/core/templatetags/jinja_helpers.py:126
 #, python-format
 msgid "%(number)d second ago"
 msgid_plural "%(number)d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(number)d секунду тому"
+msgstr[1] "%(number)d секунди тому"
+msgstr[2] "%(number)d секунд тому"
 
 #: kuma/core/templatetags/jinja_helpers.py:149
 msgid "Yes"
@@ -796,23 +798,23 @@ msgstr "Ні"
 #: kuma/core/templatetags/jinja_helpers.py:299
 #, python-format
 msgid "Today at %s"
-msgstr ""
+msgstr "Сьогодні о %s"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
-msgstr ""
+msgstr "Додатки й розширення"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
-msgstr ""
+msgstr "Я — експерт"
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
-msgstr ""
+msgstr "API та DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
-msgstr ""
+msgstr "Створюйте веб-застосунки"
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
@@ -828,7 +830,7 @@ msgstr "Зразки коду"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
-msgstr ""
+msgstr "Firefox для робочого столу"
 
 #: kuma/core/translations/search/filter/firefox-mobile/name.py:4
 msgid "Firefox for Android"
