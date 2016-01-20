@@ -105,9 +105,6 @@ and duriing deployment to stage and prod.
 
 Here's what that folder contains:
 
-- ``compiled.txt`` - contains dependencies that require a compiler and may
-  need to be treated differently depending on environment
-
 - ``default.txt`` - contains the default dependencies that are used in all
   environments
 

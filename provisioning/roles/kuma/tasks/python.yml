@@ -9,7 +9,6 @@
     virtualenv: "/home/vagrant/env"
     virtualenv_site_packages: yes
   with_items:
-  - /home/vagrant/src/requirements/compiled.txt
   - /home/vagrant/src/requirements/docs.txt
   - /home/vagrant/src/requirements/default.txt
   - /home/vagrant/src/requirements/tests.txt
