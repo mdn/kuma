@@ -421,16 +421,14 @@ class PermissionTests(UserTestCase, WikiTestCase):
         # Revert POST should give permission denied to user without perm
         username = self.users['none'].username
         self.client.login(username=username, password='testpass')
-        url = reverse('wiki.revert_document',
-                      args=([doc.slug, rev.id]))
+        url = reverse('wiki.revert_document', args=([doc.slug, rev.id]))
         resp = self.client.post(url, {'comment': 'test'})
         eq_(403, resp.status_code)
 
         # Revert POST should give success to user with perm
         username = self.users['change'].username
         self.client.login(username=username, password='testpass')
-        url = reverse('wiki.revert_document',
-                      args=([doc.slug, rev.id]))
+        url = reverse('wiki.revert_document', args=([doc.slug, rev.id]))
         resp = self.client.post(url, {'comment': 'test'}, follow=True)
         eq_(200, resp.status_code)
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.exceptions import PermissionDenied
-from django.db import IntegrityError, transaction
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext
 
@@ -38,11 +38,11 @@ def revert_document(request, document_path, revision_id):
     else:
         comment = request.POST.get('comment')
         document = revision.document
+        old_revision_pk = revision.pk
         try:
-            with transaction.atomic():
-                new_revision = document.revert(revision, request.user, comment)
+            new_revision = document.revert(revision, request.user, comment)
             # schedule a rendering of the new revision if it really was saved
-            if new_revision.pk != revision.pk:
+            if new_revision.pk != old_revision_pk:
                 document.schedule_rendering('max-age=0')
         except IntegrityError:
             return render(
