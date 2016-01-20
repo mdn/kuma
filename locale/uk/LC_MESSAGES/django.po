@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-20 10:58+0000\n"
+"PO-Revision-Date: 2016-01-20 14:05+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -664,6 +664,8 @@ msgid ""
 "You need a special permission to use API keys. You may request permission by"
 " <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
+"Вам потрібен спеціальний дозвіл на використання ключів API. Ви можете "
+"запросити дозвіл на <a href=\"%(bugzilla_url)s\">подачу помилки</a>."
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
@@ -971,7 +973,7 @@ msgstr "новий"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35
 msgid "deleted"
-msgstr ""
+msgstr "вилучено"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:50
 msgid "IP:"
@@ -997,12 +999,12 @@ msgstr "заблокував %(user)s %(ban_date)s"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:78
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Представлено як %(submission_type)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:81
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
 msgid "Resubmit"
@@ -1010,7 +1012,7 @@ msgstr "Повторити надсилання"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 msgid "Submit as:"
-msgstr ""
+msgstr "Надіслати як:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:94
 msgid "spam"
@@ -1022,21 +1024,21 @@ msgstr "не спам"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:107
 msgid "There are no revisions matching this filter set."
-msgstr ""
+msgstr "Немає ревізій, що відповідають цьому фільтру."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "Припинити отримувати повідомлення, коли правлять англійську версію"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "Отримувати повідомлення, коли правлять англійську версію"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -1044,13 +1046,14 @@ msgstr ""
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
 msgstr ""
+"Припинити отримувати повідомлення, коли англійська версія чекає на перегляд"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr ""
+msgstr "Отримувати повідомлення, коли англійська версія чекає на перегляд"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid ""
@@ -1064,6 +1067,10 @@ msgid ""
 "technologies including HTML, CSS, and APIs for both Web sites and HTML5 "
 "Apps. It also documents Mozilla products, like Firefox OS."
 msgstr ""
+"Mozilla Developer Network (MDN) надає інформацію про відкриті веб-"
+"технології, включаючи HTML, CSS і API-інтерфейси для вебсайтів і HTML5 "
+"застосунків. Він також містить матеріали про продукти Mozilla, такі як "
+"Firefox OS."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
@@ -1077,19 +1084,19 @@ msgstr "Пошук у документації"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
-msgstr ""
+msgstr "Показати теми"
 
 #: kuma/landing/jinja2/landing/homepage.html:66
 msgid "Web Technologies"
-msgstr ""
+msgstr "Веб-технології"
 
 #: kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web<br />Platform"
-msgstr ""
+msgstr "Веб<br />Платформа"
 
 #: kuma/landing/jinja2/landing/homepage.html:71
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "Веб API і DOM"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "HTML5"
@@ -1102,7 +1109,7 @@ msgstr "CSS3"
 #: kuma/landing/jinja2/landing/homepage.html:75
 #: kuma/landing/jinja2/landing/homepage.html:95
 msgid "more..."
-msgstr ""
+msgstr "більше..."
 
 #: kuma/landing/jinja2/landing/homepage.html:79
 msgid "Mozilla<br> Docs"
@@ -1674,11 +1681,11 @@ msgstr "Звичайний текст"
 
 #: kuma/users/forms.py:40
 msgid "Send me the newsletter"
-msgstr ""
+msgstr "Надсилати мені новини"
 
 #: kuma/users/forms.py:42
 msgid "Preferred format"
-msgstr ""
+msgstr "Бажаний формат"
 
 #: kuma/users/forms.py:47 kuma/users/signup.py:32
 msgid "I agree"
@@ -1702,7 +1709,7 @@ msgstr "Зацікавлення"
 
 #: kuma/users/forms.py:167
 msgid "Expertise"
-msgstr ""
+msgstr "Експерт в"
 
 #: kuma/users/forms.py:173
 msgid "Username"
@@ -1742,11 +1749,11 @@ msgstr "Facebook"
 
 #: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "Ви повинні бути експертом в області, що входить в область інтересів"
 
 #: kuma/users/forms.py:275
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Це поле не може бути пустим."
 
 #: kuma/users/forms.py:281
 msgid "Username already in use."
@@ -1760,7 +1767,7 @@ msgstr "%(banned_user)s заблокований з боку %(banned_by)s"
 #: kuma/users/models.py:32
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s (більше не активний)"
 
 #: kuma/users/models.py:51
 msgid "Language"
@@ -1788,53 +1795,53 @@ msgstr "Установа"
 
 #: kuma/users/models.py:80
 msgid "Location"
-msgstr ""
+msgstr "Місцезнаходження"
 
 #: kuma/users/models.py:85
 msgid "About Me"
-msgstr ""
+msgstr "Про мене"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
-msgstr ""
+msgstr "Нік в IRC"
 
 #: kuma/users/models.py:94
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27
 #: kuma/wiki/jinja2/wiki/create.html:77 kuma/wiki/jinja2/wiki/edit.html:188
 msgid "Tags"
-msgstr ""
+msgstr "Мітки"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Введіть дійсний URL сайту."
 
 #: kuma/users/models.py:104
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "Введіть дійсний Twitter URL."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Введіть дійсний GitHub URL."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Введіть дійсний Stack Overflow URL."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Введіть дійсний LinkedIn URL."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Введіть дійсний URL Мозилівця."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "Введіть дійсний Facebook URL."
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
-msgstr ""
+msgstr "Ім'я користувача обов'язкове."
 
 #: kuma/users/signup.py:8
 #, python-format
@@ -1842,6 +1849,8 @@ msgid ""
 "Username is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
+"Ім'я користувача закоротке (%(show_value)s символів). Довжина повинна бути "
+"як мінімум %(limit_value)s символів."
 
 #: kuma/users/signup.py:10
 #, python-format
@@ -1849,98 +1858,102 @@ msgid ""
 "Username is too long (%(show_value)s characters). It must be %(limit_value)s"
 " characters or less."
 msgstr ""
+"Ім'я користувача задовге (%(show_value)s символів). Довжина повинна бути "
+"максимум %(limit_value)s символів."
 
 #: kuma/users/signup.py:13
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "Ви повинні погодитися з умовами використання."
 
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr ""
+msgstr "Зробіть наступний крок до участі в MDN!"
 
 #: kuma/users/views.py:214
 msgid "Email address"
-msgstr ""
+msgstr "Адреса ел. пошти"
 
 #: kuma/users/views.py:273
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>Підтверджений</b>"
 
 #: kuma/users/views.py:276
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s Не підтверджений"
 
 #: kuma/users/views.py:279 kuma/users/jinja2/socialaccount/signup.html:142
 msgid "Other:"
-msgstr ""
+msgstr "Інше:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3
 #: kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "Профіль неактивний"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
-msgstr ""
+msgstr "Цей профіль неактивний."
 
 #: kuma/users/jinja2/account/email.html:3
 #: kuma/users/jinja2/account/email.html:7
 #: kuma/users/jinja2/users/user_detail.html:57
 msgid "Email addresses"
-msgstr ""
+msgstr "Адреси ел. пошти"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr ""
+msgstr "%(email)s - ваша <em>основна</em> адреса ел. пошти"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr ""
+msgstr "Ви також додали наступні адреси електронної пошти:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "Зробити основною"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr ""
+msgstr "Надіслати підтвердження ще раз"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
-msgstr ""
+msgstr "Вилучити"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid ""
 "<strong>Warning:</strong>\"You have not added any email addresses to this "
 "profile. Without one you cannot receive notifications."
 msgstr ""
+"<strong>Попередження:</strong>\"Ви не додали жодної адреси електронної пошти"
+" в профіль. Без неї ви не можете отримувати сповіщення."
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr ""
+msgstr "Додайте адресу електронної пошти"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr ""
+msgstr "Додати електронну пошту"
 
 #: kuma/users/jinja2/account/email.html:60
 #: kuma/users/jinja2/socialaccount/connections.html:70
 msgid "Edit profile"
-msgstr ""
+msgstr "Редагувати профіль"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
-msgstr ""
+msgstr "Ви справді бажаєте вилучити позначену електронну пошту?"
 
 #: kuma/users/jinja2/account/email_confirm.html:3
 #: kuma/users/jinja2/account/email_confirm.html:9
 #: kuma/users/jinja2/account/email_confirmed.html:3
 #: kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
-msgstr ""
+msgstr "Підтвердити адресу електронної пошти"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
@@ -1948,10 +1961,12 @@ msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
 "address for user %(user_display)s."
 msgstr ""
+"Будь ласка, підтвердіть, що <a href=\"mailto:%(email)s\">%(email)s</a> - "
+"адреса електронної пошти користувача %(user_display)s."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
-msgstr ""
+msgstr "Підтвердити"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
@@ -1959,6 +1974,8 @@ msgid ""
 "This email confirmation link expired or is invalid. Please <a "
 "href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr ""
+"Посилання підтвердження електронної пошти прострочене або неправильне. Будь "
+"ласка, <a href=\"%(email_url)s\">створіть новий запит на підтвердження</a>."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
@@ -1966,14 +1983,16 @@ msgid ""
 "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
 "email address for user %(user_display)s."
 msgstr ""
+"Ви підтвердили, що <a href=\"mailto:%(email)s\">%(email)s</a> - адреса "
+"електронної пошти для користувача %(user_display)s."
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
-msgstr ""
+msgstr "Увійти"
 
 #: kuma/users/jinja2/account/login.html:11
 msgid "Please sign in"
-msgstr ""
+msgstr "Будь ласка, увійдіть"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid ""
@@ -1981,10 +2000,13 @@ msgid ""
 "any of the services below. A MDN profile will be created for you if you "
 "don't already have one."
 msgstr ""
+"Щоб зробити внесок, вам потрібно увійти в MDN. Ви можете увійти "
+"використовуючи один із сервісів нижче. Для вас буде створений профіль MDN, "
+"якщо у вас його немає."
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Ви впевнені, що бажаєте вийти?"
 
 #: kuma/users/jinja2/account/password_change.html:3
 #: kuma/users/jinja2/account/password_change.html:8
@@ -1994,38 +2016,44 @@ msgstr ""
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr ""
+msgstr "Змінити пароль"
 
 #: kuma/users/jinja2/account/password_reset.html:3
 #: kuma/users/jinja2/account/password_reset.html:8
 #: kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr ""
+msgstr "Скидання пароля"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid ""
 "Forgotten your password? Enter your email address below, and we'll send you "
 "an email allowing you to reset it."
 msgstr ""
+"Забули ваш пароль? Введіть свою адресу електронної пошти нижче, а ми "
+"відправимо вам лист, що дозволяє скинути пароль."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr ""
+msgstr "Скинути мій пароль"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
+"Будь ласка, зв'яжіться з нами, якщо у вас є які-небудь проблеми з "
+"відновленням пароля."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid ""
 "We have sent you an email. Please contact us if you do not receive it within"
 " a few minutes."
 msgstr ""
+"Ми надіслали вам листа. Будь ласка, зв'яжіться з нами, якщо не отримаєте "
+"його протягом декількох хвилин."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Некоректний токен"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
@@ -2034,52 +2062,56 @@ msgid ""
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
 msgstr ""
+"Посилання для відновлення паролю було недійсне, можливо тому, що ним вже "
+"скористались.  Будь ласка, створіть <a href=\"%(passwd_reset_url)s\">новий "
+"запит на відновлення пароля</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr ""
+msgstr "Змінити пароль"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Ваш пароль змінено."
 
 #: kuma/users/jinja2/account/password_set.html:3
 #: kuma/users/jinja2/account/password_set.html:7
 #: kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
-msgstr ""
+msgstr "Встановити пароль"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "Реєстрація"
 
 #: kuma/users/jinja2/account/signup.html:8
 #: kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
-msgstr ""
+msgstr "Зареєструватися"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
 msgid ""
 "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
+"Вже маєте профіль? Тоді, будь ласка, <a href=\"%(login_url)s\">увійдіть</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 #: kuma/users/jinja2/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "Створення профілю вимкнене"
 
 #: kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
-msgstr ""
+msgstr "Вибачте, але створення профілю зараз неможливе."
 
 #: kuma/users/jinja2/account/verification_sent.html:3
 #: kuma/users/jinja2/account/verification_sent.html:7
 #: kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr ""
+msgstr "Підтвердіть адресу своєї електронної пошти"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid ""
@@ -2111,55 +2143,55 @@ msgstr ""
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "Нотатка"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "ви вже зайшли як %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "Вхід з OpenID"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3
 #: kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Не вдалося увійти в обліковий запис"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
-msgstr ""
+msgstr "Під час входу до облікового запису сталася помилка."
 
 #: kuma/users/jinja2/socialaccount/connections.html:3
 msgid "Account Connections"
-msgstr ""
+msgstr "Поєднані облікові записи"
 
 #: kuma/users/jinja2/socialaccount/connections.html:6
 #: kuma/users/jinja2/users/user_detail.html:55
 msgid "Account connections"
-msgstr ""
+msgstr "Поєднані облікові записи"
 
 #: kuma/users/jinja2/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
-msgstr ""
+msgstr "Ви можете увійти в свій профіль будь-яким з наступних способів:"
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
-msgstr ""
+msgstr "Від'єднати"
 
 #: kuma/users/jinja2/socialaccount/connections.html:58
 msgid "You have no connected accounts."
-msgstr ""
+msgstr "У вас немає поєднаних облікових записів."
 
 #: kuma/users/jinja2/socialaccount/connections.html:61
 msgid "Connect a new account"
-msgstr ""
+msgstr "З’єднатися з новим обліковим записом"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Вхід скасовано"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -2172,7 +2204,7 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:4
 #: kuma/users/jinja2/socialaccount/signup.html:26
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "Створіть свій MDN профіль, щоб продовжити"
 
 #: kuma/users/jinja2/socialaccount/signup.html:30
 #, python-format
@@ -2273,31 +2305,31 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:179
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "Створити свій MDN профіль"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with Persona"
-msgstr ""
+msgstr "Увійшли з Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
-msgstr ""
+msgstr "Увійшли з GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with Persona"
-msgstr ""
+msgstr "З'єднатися з Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with Persona"
-msgstr ""
+msgstr "Увійти з Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "З'єднатися з GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
 msgid "Sign in with GitHub"
-msgstr ""
+msgstr "Увійти з GitHub"
 
 #: kuma/users/jinja2/users/apps_newsletter.html:14
 #, python-format
@@ -2305,43 +2337,47 @@ msgid ""
 "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the "
 "newsletter."
 msgstr ""
+"<a href=\"%(profile_edit_url)s\">Відредагуйте свій профіль</a>, щоб "
+"підписатися на оновлення."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
-msgstr ""
+msgstr "Ви заблоковані"
 
 #: kuma/users/jinja2/users/user_banned.html:20
 msgid "You have been banned for the following reasons:"
-msgstr ""
+msgstr "Ви заблоковані з наступних причин:"
 
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid ""
 "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click "
 "here</a> to appeal this ban.</p>"
 msgstr ""
+"<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Натисніть "
+"тут</a>, щоб оскаржити блокування.</p>"
 
 #: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:718
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
-msgstr ""
+msgstr "Редагувати"
 
 #: kuma/users/jinja2/users/user_detail.html:49
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:53
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:57
 msgid "Advanced"
-msgstr ""
+msgstr "Додатково"
 
 #: kuma/users/jinja2/users/user_detail.html:53
 msgid "Manage"
-msgstr ""
+msgstr "Керування"
 
 #: kuma/users/jinja2/users/user_detail.html:56
 msgid "API keys"
-msgstr ""
+msgstr "API ключі"
 
 #: kuma/users/jinja2/users/user_detail.html:94
 msgid "Areas of Expertise"
-msgstr ""
+msgstr "Експертні області"
 
 #: kuma/users/jinja2/users/user_detail.html:102
 #, python-format
@@ -2350,35 +2386,35 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:150
 msgid "Recent Docs Activity"
-msgstr ""
+msgstr "Недавня активність в документації"
 
 #: kuma/users/jinja2/users/user_detail.html:150
 msgid "View all activity"
-msgstr ""
+msgstr "Переглянути всю активність"
 
 #: kuma/users/jinja2/users/user_detail.html:155
 msgid "Page"
-msgstr ""
+msgstr "Сторінка"
 
 #: kuma/users/jinja2/users/user_detail.html:157
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
 #: kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
-msgstr ""
+msgstr "Коментар"
 
 #: kuma/users/jinja2/users/user_detail.html:165
 #: kuma/wiki/jinja2/wiki/document.html:377
 msgid "Edit page"
-msgstr ""
+msgstr "Редагувати сторінку"
 
 #: kuma/users/jinja2/users/user_detail.html:166
 msgid "View complete diff"
-msgstr ""
+msgstr "Переглянути повну різницю"
 
 #: kuma/users/jinja2/users/user_detail.html:167
 #: kuma/wiki/jinja2/wiki/document.html:378
 msgid "View page history"
-msgstr ""
+msgstr "Переглянути історію сторінки"
 
 #: kuma/users/jinja2/users/user_detail.html:179
 #, python-format
@@ -4150,7 +4186,7 @@ msgstr "Ви не можете перекладати цей документ."
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Сервер Elasticsearch: %(backend)s"
 
 #~ msgid "CSS3 Animations"
 #~ msgstr "CSS3 анімації"
