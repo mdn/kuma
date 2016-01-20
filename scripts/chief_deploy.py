@@ -10,11 +10,12 @@ import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from commander.deploy import task, hostgroups
+from commander.deploy import task, hostgroups  # noqa
 
-import commander_settings as settings
+import commander_settings as settings  # noqa
 
 VENV_BIN = os.path.join(settings.VENV_DIR, 'bin')
+PIP_VERSION = "8.0.1"
 
 # Setup local executable paths
 os.environ['PATH'] = os.pathsep.join([
@@ -106,26 +107,20 @@ def update_info(ctx):
 @task
 def setup_dependencies(ctx):
     with ctx.lcd(settings.SRC_DIR):
-        # Creating a virtualenv tries to open virtualenv/bin/python for
-        # writing, but because virtualenv is using it, it fails.
-        # So we delete it and let virtualenv create a new one.
-        python = os.path.join(VENV_BIN, 'python')
-        python27 = os.path.join(VENV_BIN, 'python2.7')
-        ctx.local('rm -f %s' % python)
-        ctx.local('rm -f %s' % python27)
+        # Dearly beloved. We gather here to destroy this virtualenv in the
+        # hopes that out of the ashes will rise another new and beautiful
+        # virtualenv with no mistakes in it.
+        ctx.local('rm -rf %s' % settings.VENV_DIR)
         ctx.local('virtualenv-2.7 --no-site-packages %s' % settings.VENV_DIR)
 
         # Activate virtualenv to append to the correct path to $PATH.
         activate_env = os.path.join(VENV_BIN, 'activate_this.py')
         execfile(activate_env, dict(__file__=activate_env))
 
-        ctx.local('pip install --upgrade "pip<9"')
+        pip = os.path.join(VENV_BIN, 'pip')
+        ctx.local('%s install --upgrade "pip==%s"' % (pip, PIP_VERSION))
         ctx.local('pip --version')
-        ctx.local('pip install '
-                  '--require-hashes '
-                  # until we install compiled dependencies here as well:
-                  '--no-deps '
-                  '-r requirements/default.txt')
+        ctx.local('%s install -r requirements/default.txt' % pip)
         # Make the virtualenv relocatable
         ctx.local('virtualenv-2.7 --relocatable %s' % settings.VENV_DIR)
 

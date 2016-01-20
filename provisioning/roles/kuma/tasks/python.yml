@@ -2,14 +2,6 @@
 - name: Install virtualenv
   pip: name=virtualenv
 
-- name: Make sure global Python packages aren't used in the virtualenv
-  file:
-    path: /home/vagrant/env/lib/python2.7/no-global-site-packages.txt
-    owner: vagrant
-    group: vagrant
-    mode: 0644
-    state: touch
-
 - name: Install pip
   pip:
     name: pip
@@ -18,11 +10,8 @@
 
 - name: Install local dependencies in virtualenv
   pip:
-    requirements: "{{ item }}"
+    requirements: /home/vagrant/src/requirements/local.txt
     virtualenv: /home/vagrant/env
-  with_items:
-  - /home/vagrant/src/requirements/compiled.txt
-  - /home/vagrant/src/requirements/local.txt
 
 - name: Install documentation dependencies in virtualenv
   pip:
