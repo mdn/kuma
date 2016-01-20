@@ -97,7 +97,7 @@ Tests
 Python dependencies
 -------------------
 
-Kuma tracks its Python dependencies with pip_ and peep_.
+Kuma tracks its Python dependencies with pip_.
 
 The ``requirements`` directory contains the plaintext requirements files
 that are used in the Vagrant VM, during automatic tests with Travis-CI
@@ -108,12 +108,12 @@ Here's what that folder contains:
 - ``compiled.txt`` - contains dependencies that require a compiler and may
   need to be treated differently depending on environment
 
-- ``default.txt`` - contains the default dependencies that are used in all
-  environments
+- ``default.txt`` - contains the default dependencies that are used in
+  production and local environments
 
 - ``docs.txt`` - contains dependencies that are required to build the docs
 
-- ``tests.txt`` - a file for tests dependencies, both local and automatic
+- ``local.txt`` - a file for local dependencies, including testing dependencies
 
 - ``travis.txt`` - a file used by the ``.travis.yml`` config file when
   running automatic testing
@@ -122,7 +122,7 @@ Adding a requirement
 ~~~~~~~~~~~~~~~~~~~~
 
 To add a dependency you have to add it to the appropriate requirement file
-in the ``requirements`` folder. To do that we'll use peep_ to get the hash
+in the ``requirements`` folder. To do that we'll use pip_ to get the hash
 of the distribution file you'd like to install.
 
 First SSH into the Vagrant VM::
@@ -138,34 +138,35 @@ file most appropriate to the use of the dependency, e.g.
 Then download a distribution file from PyPI_ or whatever source you deem
 safe of the dependency you added above, e.g.::
 
-    wget https://pypi.python.org/packages/source/d/django-pipeline/django-pipeline-1.6.0.tar.gz
 
-Check if the file you downloaded contains what you expect and then use peep
+    pip download django-pipeline==1.6.0
+
+Check if the file you downloaded contains what you expect and then use pip
 to calculate a hash of the file you downloaded::
 
-    scripts/peep.py hash django-pipeline-1.6.0.tar.gz
+    pip hash django_pipeline-1.6.4-py2.py3-none-any.whl
 
 This will print out a hash in the form of::
 
-    # sha256: paFCZIUSX_kQWjcNx9em6npTILXRgCcjA9QppD-BL-U
+    django_pipeline-1.6.4-py2.py3-none-any.whl:
+    --hash=sha256:c66745f4a5f71cea3a42d63172b20b73ec791aeeeb4ac5483d7931fefef25157
 
 Add this string above the line of the requirement string in the requirements
 file, e.g.::
 
-    # sha256: paFCZIUSX_kQWjcNx9em6npTILXRgCcjA9QppD-BL-U
-    django-pipeline==1.6.0
+    django-pipeline==1.6.0 --hash=sha256:c66745f4a5f71cea3a42d63172b20b73ec791aeeeb4ac5483d7931fefef25157
 
 Then verify if the hash still matches and install the new dependency in the VM::
 
-    scripts/peep.py install -r requirements/default.txt
+    pip install -r requirements/default.txt
 
 Updating a requirement
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Follow the same steps as when adding a requirement but replace the old peep
+Follow the same steps as when adding a requirement but replace the old pip
 hash in the requirements file. Don't forget to run afterwards::
 
-    scripts/peep.py install -r requirements/default.txt
+    pip install -r requirements/default.txt
 
 Front-end dependencies
 ----------------------
@@ -324,5 +325,4 @@ set your ``settings_local.py`` with the following::
     CSRF_COOKIE_SECURE = False
 
 .. _pip: https://pip.pypa.io/
-.. _peep: https://pypi.python.org/pypi/peep
 .. _PyPI: https://pypi.python.org/pypi/

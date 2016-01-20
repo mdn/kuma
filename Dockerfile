@@ -17,7 +17,7 @@ RUN apt-get update && \
 WORKDIR /app
 COPY . /app
 
-RUN python scripts/peep.py install --build ./build --cache-dir ./cache --no-deps \
+RUN pip install --build ./build --cache-dir ./cache --no-deps \
     -r requirements/compiled.txt -r requirements/default.txt && \
     rm -r build cache
 

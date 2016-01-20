@@ -119,9 +119,13 @@ def setup_dependencies(ctx):
         activate_env = os.path.join(VENV_BIN, 'activate_this.py')
         execfile(activate_env, dict(__file__=activate_env))
 
+        ctx.local('pip install --upgrade "pip<9"')
         ctx.local('pip --version')
-        ctx.local('%s scripts/peep.py install -r requirements/default.txt' %
-                  python)
+        ctx.local('pip install '
+                  '--require-hashes '
+                  # until we install compiled dependencies here as well:
+                  '--no-deps '
+                  '-r requirements/default.txt')
         # Make the virtualenv relocatable
         ctx.local('virtualenv-2.7 --relocatable %s' % settings.VENV_DIR)
 

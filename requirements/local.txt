@@ -1,0 +1,19 @@
+# This is a requirements used for development and includes testing utilities
+# and the default requirements file
+-r default.txt
+coverage==4.0.3 --hash=sha256:85b1275b6d7a61ccc8024a4e9a4c9e896394776edce1a5d075ec116f91925462
+Flask==0.10.1 --hash=sha256:4c83829ff83d408b5e1d4995472265411d2c414112298f2eb4b359d9e4563373
+gevent==1.0.2 --hash=sha256:3ae1ca0f533ddcb17aab16ce66b424b3f3b855ff3b9508526915d3c6b73fba31
+greenlet==0.4.9 --hash=sha256:79f9b8bbbb1c599c66aed5e643e8b53bae697cae46e0acfc4ee461df48a90012
+itsdangerous==0.24 --hash=sha256:cbb3fcf8d3e33df861709ecaf89d9e6629cff0a217bc2848f1b41cd30d360519
+locustio==0.7.3 --hash=sha256:220e1f97ece2def3454aeecc5070419518e4e16c5aa39d21eb509a38f47847ec
+msgpack-python==0.4.6 --hash=sha256:bfcc581c9dbbf07cc2f951baf30c3249a57e20dcbd60f7e6ffc43ab3cc614794
+pep8==1.6.2 --hash=sha256:4aa129df8d9007b192bf82013f415533994652d7caa930d002687eb42a6c2a41
+pluggy==0.3.1 --hash=sha256:48096d7015b8d87a83fc064e8b5cc61ea2e235f1b86dd67889d8d53257f350c6
+py==1.4.30 --hash=sha256:07e20ab90a550bd3c21891e0d887f0931b4098f148aec95e29b5188f161bb075
+pyflakes==1.0.0 --hash=sha256:071d121e9e7b33058aa1ba5de7bce9b97bfa3149cfe1acbb6587c21fc1c8eda1
+pytest==2.8.2 --hash=sha256:8699d2ae342f211d1cc67dd05111b91925609aef7d294831584f737f65a4f41d
+pytest-cov==2.2.0 --hash=sha256:eec35bb0ef2a7dbe958f50b667403ab4abad53a17cc4f1a585b2aabac6f68088
+pytest-django==2.9.1 --hash=sha256:743d0056e127ef424850ea76d93d45c92c313da0e56765806a59fc7680c25ab7
+tox==2.3.1 --hash=sha256:1823c93ca378092c10bbde428213d3f5066b30adb09e5c001087a83e3e0a402a
+virtualenv==14.0.0 --hash=sha256:cebf53bffb6e39d5c98054bf9d79258658078834e6759750a33924c9bf48cb28
