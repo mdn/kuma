@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-17 18:53+0000\n"
-"Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
+"PO-Revision-Date: 2016-01-20 13:09+0000\n"
+"Last-Translator: dskmori <ghoti.fish.dsk@gmail.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -3354,7 +3354,7 @@ msgstr "ドキュメントのタグと貢献者"
 
 #: kuma/wiki/jinja2/wiki/document.html:331
 msgid "Contributors to this page:"
-msgstr "このページに貢献する:"
+msgstr "このページの貢献者:"
 
 #: kuma/wiki/jinja2/wiki/document.html:337
 msgid "Last updated by:"
