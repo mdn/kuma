@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-19 22:26+0000\n"
+"PO-Revision-Date: 2016-01-20 10:58+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -846,11 +846,11 @@ msgstr ""
 
 #: kuma/core/translations/search/filter/intermediate/name.py:4
 msgid "Intermediate"
-msgstr ""
+msgstr "Середній"
 
 #: kuma/core/translations/search/filter/marketplace/name.py:4
 msgid "Marketplace"
-msgstr ""
+msgstr "Marketplace"
 
 #: kuma/core/translations/search/filter/svg/name.py:4
 msgid "SVG"
@@ -932,11 +932,11 @@ msgstr "Дата завершення:"
 #: kuma/dashboards/forms.py:44
 #: kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "Попередній період:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
-msgstr ""
+msgstr "Панель ревізій"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:44
 #: kuma/search/jinja2/search/results.html:210
@@ -946,7 +946,7 @@ msgstr "Фільтр"
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "Revert"
-msgstr ""
+msgstr "Повернути"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:340
 msgid "View Page"
@@ -979,20 +979,20 @@ msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Заблокувати IP від редагування"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "User agent:"
-msgstr ""
+msgstr "Браузер:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:57
 msgid "Referrer:"
-msgstr ""
+msgstr "Реферер:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:64
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
-msgstr ""
+msgstr "заблокував %(user)s %(ban_date)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:78
 #, python-format
@@ -1067,13 +1067,13 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr ""
+msgstr "Поділіться знаннями <span>з відкритим інтернетом</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42
 #: kuma/landing/jinja2/landing/homepage.html:59
 #: kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
-msgstr ""
+msgstr "Пошук у документації"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
@@ -1106,35 +1106,35 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:79
 msgid "Mozilla<br> Docs"
-msgstr ""
+msgstr "Mozilla<br> Документи"
 
 #: kuma/landing/jinja2/landing/homepage.html:84
 msgid "App Center"
-msgstr ""
+msgstr "Центр застосунків"
 
 #: kuma/landing/jinja2/landing/homepage.html:89
 msgid "Developer<br />Tools"
-msgstr ""
+msgstr "Інструменти<br />Розробника"
 
 #: kuma/landing/jinja2/landing/homepage.html:91
 msgid "Page Inspector"
-msgstr ""
+msgstr "Ревізор"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Web Console"
-msgstr ""
+msgstr "Веб-консоль"
 
 #: kuma/landing/jinja2/landing/homepage.html:93
 msgid "JavaScript Debugger"
-msgstr ""
+msgstr "Зневаджувач JavaScript"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Performance Tools"
-msgstr ""
+msgstr "Інструменти швидкодії"
 
 #: kuma/landing/jinja2/landing/homepage.html:99
 msgid "Connect"
-msgstr ""
+msgstr "З'єднатись"
 
 #: kuma/landing/jinja2/landing/homepage.html:100
 msgid ""
@@ -1144,37 +1144,39 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:101
 msgid "Learn more and sign up!"
-msgstr ""
+msgstr "Дізнайтеся більше та зареєструйтеся!"
 
 #: kuma/landing/jinja2/landing/homepage.html:110
 msgid "Open Web and Mobile"
-msgstr ""
+msgstr "Відкритий веб і мобільний інтернет"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Learn Web Development"
-msgstr ""
+msgstr "Вивчайте веб розробку"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "Отримайте браузер для розробників, як ви"
 
 #: kuma/landing/jinja2/landing/homepage.html:120
 msgid "Celebrate ten years of documenting your Web."
-msgstr ""
+msgstr "Відсвяткуйте 10 років документування вашого Інтернету."
 
 #: kuma/landing/jinja2/landing/homepage.html:124
 msgid "Build Open Web Apps"
-msgstr ""
+msgstr "Створюйте відкриті веб-застосунки"
 
 #: kuma/landing/jinja2/landing/homepage.html:133
 msgid ""
 "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-"
 "hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
+"<a href=\"http://hacks.mozilla.org\">детальніше на hacks.mozilla.org <i "
+"aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:138
 msgid "Get Involved"
-msgstr ""
+msgstr "Приєднатися"
 
 #: kuma/landing/jinja2/landing/homepage.html:140
 #, python-format
@@ -1184,6 +1186,10 @@ msgid ""
 "class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
+"<p class=\"numbers\"> <span class=\"row1\">Приєднуйтесь до <span "
+"class=\"number\">%(contributors)s</span> учасників</span> <span "
+"class=\"row2\">на <span class=\"number\">%(locales)s</span> мовах і "
+"регіонах</span> <span class=\"row3\">по всьому світу.</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:147
 #: kuma/landing/jinja2/landing/homepage.html:154
@@ -1195,44 +1201,47 @@ msgid ""
 "All parts of MDN (docs and the site itself) are created by an open community"
 " of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
+"Всі частини MDN (документація і сам сайт) створені відкритим співтовариством"
+" розробників. Будь ласка, приєднуйтесь до нас! Виберіть один з цих способів "
+"допомоги:"
 
 #: kuma/landing/jinja2/landing/homepage.html:164
 msgid "Getting started"
-msgstr ""
+msgstr "Починаємо"
 
 #: kuma/landing/jinja2/landing/homepage.html:165
 msgid "Editorial review"
-msgstr ""
+msgstr "Редакційний огляд"
 
 #: kuma/landing/jinja2/landing/homepage.html:166
 msgid "Technical review"
-msgstr ""
+msgstr "Технічний огляд"
 
 #: kuma/landing/jinja2/landing/homepage.html:171
 msgid "Translating"
-msgstr ""
+msgstr "Переклад"
 
 #: kuma/landing/jinja2/landing/homepage.html:172
 msgid "Promoting MDN"
-msgstr ""
+msgstr "Просування MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:173
 msgid "Contributing to the MDN codebase"
-msgstr ""
+msgstr "Вклад в кодову базу MDN"
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
-msgstr ""
+msgstr "Надіслано %(entrydate)s користувачем %(authorlink)s"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5
 #: kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
-msgstr ""
+msgstr "Просувайте MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
-msgstr ""
+msgstr "Розповсюдьте трохи любові до розробника."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
@@ -1255,23 +1264,23 @@ msgstr "Виберіть стиль кнопки"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr ""
+msgstr "Покращена документація"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:51
 msgid "Developer Powered"
-msgstr ""
+msgstr "Створена розробниками"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr ""
+msgstr "Від Розробників, для Розробників"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr ""
+msgstr "Інструменти веб-розробника"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
-msgstr ""
+msgstr "Виберіть колір"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
@@ -1291,87 +1300,88 @@ msgstr "Замінити &lt;FOO&gt; на"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
-msgstr ""
+msgstr "Додати персональну кнопку на свій сайт"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr ""
+msgstr "Ваш програмний код:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr ""
+msgstr "Ваша кнопка буде вести людей на:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162
 #: kuma/landing/jinja2/landing/promote_buttons.html:166
 #: kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr ""
+msgstr "Найкраща CSS документація для кращого веба на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:163
 #: kuma/landing/jinja2/landing/promote_buttons.html:167
 #: kuma/landing/jinja2/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr ""
+msgstr "Найкраща HTML документація для кращого веба на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:164
 #: kuma/landing/jinja2/landing/promote_buttons.html:168
 #: kuma/landing/jinja2/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr ""
+msgstr "Найкраща JavaScript документація для кращого веба на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:165
 #: kuma/landing/jinja2/landing/promote_buttons.html:169
 #: kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr ""
+msgstr "Найкраща веб документація для кращого веба на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174
 #: kuma/landing/jinja2/landing/promote_buttons.html:178
 #: kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
-msgstr ""
+msgstr "MDN створена розробниками для CSS документації та багато іншого."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175
 #: kuma/landing/jinja2/landing/promote_buttons.html:179
 #: kuma/landing/jinja2/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs and more."
-msgstr ""
+msgstr "MDN створена розробниками для HTML документації та багато іншого."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176
 #: kuma/landing/jinja2/landing/promote_buttons.html:180
 #: kuma/landing/jinja2/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs and more."
 msgstr ""
+"MDN створена розробниками для JavaScript документації та багато іншого."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177
 #: kuma/landing/jinja2/landing/promote_buttons.html:181
 #: kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr ""
+msgstr "MDN створена розробниками для веб документації та багато іншого."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186
 #: kuma/landing/jinja2/landing/promote_buttons.html:190
 #: kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
-msgstr ""
+msgstr "CSS документація від розробників для розробників на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:187
 #: kuma/landing/jinja2/landing/promote_buttons.html:191
 #: kuma/landing/jinja2/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
-msgstr ""
+msgstr "HTML документація від розробників для розробників на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:188
 #: kuma/landing/jinja2/landing/promote_buttons.html:192
 #: kuma/landing/jinja2/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
-msgstr ""
+msgstr "JavaScript документація від розробників для розробників на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:189
 #: kuma/landing/jinja2/landing/promote_buttons.html:193
 #: kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Веб документація від розробників для розробників на MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198
 #: kuma/landing/jinja2/landing/promote_buttons.html:199
@@ -1380,87 +1390,95 @@ msgid ""
 "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript"
 " and other Web standards and open technologies."
 msgstr ""
+"MDN - ваш набір інструментів розробника, що складається з документації, а "
+"також HTML, CSS, JavaScript, та інших веб-стандартів і відкритих технологій."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
-msgstr ""
+msgstr "Неможливо просунути більше одного індексу одночасно."
 
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr ""
+msgstr "Підвищений пошуковий індекс %s."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
-msgstr ""
+msgstr "Просунути обраний пошуковий індекс до поточного індексу"
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
-msgstr ""
+msgstr "Неможливо знизити більше одного індексу одночасно."
 
 #: kuma/search/admin.py:24
 msgid ""
 "Can't demote the index if there is only one. Create and populate a new one "
 "first."
 msgstr ""
+"Неможливо підвищити індекс, якщо він тільки один. Спочатку створіть і "
+"заповніть один новий."
 
 #: kuma/search/admin.py:29
 #, python-format
 msgid "Demoted search index %s."
-msgstr ""
+msgstr "Понижений пошуковий індекс %s."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
 msgstr ""
+"Знизити обраний пошуковий індекс (з автоматичним перемиканням до "
+"попереднього індексу)"
 
 #: kuma/search/admin.py:37
 msgid "Can't populate more than one index at once."
-msgstr ""
+msgstr "Неможливо заповнити більше одного індексу одночасно."
 
 #: kuma/search/admin.py:42
 msgid "Populate selected search index via Celery"
-msgstr ""
+msgstr "Заповнити обраний пошуковий індекс через Celery"
 
 #: kuma/search/admin.py:56
 msgid "Is current index?"
-msgstr ""
+msgstr "Це поточний індекс?"
 
 #: kuma/search/forms.py:17
 #, python-format
 msgid "There is already a successor to the current index %s"
-msgstr ""
+msgstr "Вже є приймач для поточного індексу %s"
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
-msgstr ""
+msgstr "Пошук тимчасово неможливий. Спробуйте через декілька хвилин."
 
 #: kuma/search/utils.py:17
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
 msgstr ""
+"Щось пішло не так з пошуковим запитом. Будь ласка, спробуйте знову за "
+"декілька хвилин."
 
 #: kuma/search/views.py:95
 msgid "name"
-msgstr ""
+msgstr "ім'я"
 
 #: kuma/search/views.py:96
 msgid "groupname"
-msgstr ""
+msgstr "назва групи"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "Пошук недоступний"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
 msgid "Search Mozilla Developer Network documentation"
-msgstr ""
+msgstr "Шукати у документації Mozilla Developer Network"
 
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr ""
+msgstr "Результати пошуку для \"%(query)s\""
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
@@ -1468,6 +1486,8 @@ msgid ""
 "translated from <a href=\"%(parent_url)s\" "
 "title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 msgstr ""
+"перекладено з <a href=\"%(parent_url)s\" "
+"title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
@@ -1482,8 +1502,11 @@ msgstr "Результати"
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
 msgstr[0] ""
+"за запитом \"%(query)s\" на %(locale_native)s знайдено %(count)s документ."
 msgstr[1] ""
+"за запитом \"%(query)s\" на %(locale_native)s знайдено %(count)s документа."
 msgstr[2] ""
+"за запитом \"%(query)s\" на %(locale_native)s знайдено %(count)s документів."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
@@ -1494,16 +1517,22 @@ msgid_plural ""
 "%(count)s documents found for \"%(query)s\" in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
+"за запитом \"%(query)s\" на %(locale_native)s і %(default_locale_native)s "
+"знайдено %(count)s документ."
 msgstr[1] ""
+"за запитом \"%(query)s\" на %(locale_native)s і %(default_locale_native)s "
+"знайдено %(count)s документа."
 msgstr[2] ""
+"за запитом \"%(query)s\" на %(locale_native)s і %(default_locale_native)s "
+"знайдено %(count)s документів."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "на %(locale_native)s знайдено %(count)s документ."
+msgstr[1] "на %(locale_native)s знайдено %(count)s документа."
+msgstr[2] "на %(locale_native)s знайдено %(count)s документів."
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
@@ -1513,42 +1542,48 @@ msgid_plural ""
 "%(count)s documents found in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
+"на %(locale_native)s і %(default_locale_native)s знайдено %(count)s "
+"документ."
 msgstr[1] ""
+"на %(locale_native)s і %(default_locale_native)s знайдено %(count)s "
+"документа."
 msgstr[2] ""
+"на %(locale_native)s і %(default_locale_native)s знайдено %(count)s "
+"документів."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "за запитом \"%(query)s\" знайдено %(count)s документ."
+msgstr[1] "за запитом \"%(query)s\" знайдено %(count)s документа."
+msgstr[2] "за запитом \"%(query)s\" знайдено %(count)s документів."
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "знайдено %(count)s документ."
+msgstr[1] "знайдено %(count)s документа."
+msgstr[2] "знайдено %(count)s документів."
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Показуються всі результати."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "Показуються результати з %(start)s по %(end)s."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "Пошукати знову тільки на %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr ""
+msgstr "Документи"
 
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
@@ -1556,11 +1591,13 @@ msgstr "Фільтрувати по"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
-msgstr ""
+msgstr "Відправлені дані містять невідповідний контент."
 
 #: kuma/spam/forms.py:87
 msgid "The submitted data contains invalid content. Please try again."
 msgstr ""
+"Відправлені дані містять невідповідний контент. Будь ласка, спробуйте ще "
+"раз."
 
 #: kuma/spam/models.py:10
 msgid "created"
@@ -1576,7 +1613,7 @@ msgstr "Не спам"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "надіслано"
 
 #: kuma/spam/models.py:36
 msgid "type"
@@ -1600,7 +1637,7 @@ msgstr ""
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "Користувач"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1611,28 +1648,29 @@ msgstr ""
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "алгоритм"
 
 #: kuma/users/backends.py:33
 msgid "salt"
-msgstr ""
+msgstr "сіль"
 
 #: kuma/users/backends.py:34
 msgid "hash"
-msgstr ""
+msgstr "хеш"
 
 #: kuma/users/constants.py:6
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr ""
+"Ім'я користувача може містити тільки літери, цифри та символи: . - _ +"
 
 #: kuma/users/forms.py:23
 msgid "You must agree to the privacy policy."
-msgstr ""
+msgstr "Ви повинні погодитися з політикою приватності."
 
 #: kuma/users/forms.py:38
 msgid "Plain text"
-msgstr ""
+msgstr "Звичайний текст"
 
 #: kuma/users/forms.py:40
 msgid "Send me the newsletter"
