@@ -37,9 +37,13 @@ def revert_document(request, document_path, revision_id):
                       {'revision': revision, 'document': revision.document})
     else:
         comment = request.POST.get('comment')
+        document = revision.document
         try:
             with transaction.atomic():
-                revision.document.revert(revision, request.user, comment)
+                new_revision = document.revert(revision, request.user, comment)
+            # schedule a rendering of the new revision if it really was saved
+            if new_revision.pk != revision.pk:
+                document.schedule_rendering('max-age=0')
         except IntegrityError:
             return render(
                 request,

@@ -791,7 +791,6 @@ class Document(NotificationsMixin, models.Model):
         if old_review_tags:
             revision.review_tags.set(*old_review_tags)
         revision.make_current()
-        self.schedule_rendering('max-age=0')
         return revision
 
     def revise(self, user, data, section_id=None):
