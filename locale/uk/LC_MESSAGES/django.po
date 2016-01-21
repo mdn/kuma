@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 12:14+0000\n"
+"PO-Revision-Date: 2016-01-21 12:38+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -3364,7 +3364,7 @@ msgstr "Пошук:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:162
 msgid "Thank you for taking the time to improve MDN!"
-msgstr ""
+msgstr "Спасибі вам за час, витрачений на поліпшення MDN!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:164
 #, python-format
@@ -3373,19 +3373,22 @@ msgid ""
 "to common editing questions within our <a target=\"_blank\" "
 "href=\"%(url)s\">Editor Guide</a>."
 msgstr ""
+"Схоже, що це ваш перший внесок у MDN. Ви можете знайти відповіді на загальні"
+" питання з редагування в нашому <a target=\"_blank\" "
+"href=\"%(url)s\">Керівництві редактора</a>."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid ""
 "Don't be afraid to break something, you can always revert your changes."
-msgstr ""
+msgstr "Не бійтеся що-небудь зламати, ви завжди можете скасувати ваші зміни."
 
 #: kuma/wiki/jinja2/wiki/edit.html:169
 msgid "Have fun and be proud of your contribution!"
-msgstr ""
+msgstr "Отримуйте задоволення і пишайтеся своїм внеском!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:188
 msgid "Learn how to tag an article"
-msgstr ""
+msgstr "Дізнайтеся, як додати мітки до статті"
 
 #: kuma/wiki/jinja2/wiki/edit.html:190
 #: kuma/wiki/jinja2/wiki/translate.html:112
@@ -3395,22 +3398,25 @@ msgid ""
 "filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the"
 " Tagging Guide</a>."
 msgstr ""
+"Класифікуйте статтю. Це зробить її доступною для пошуку через правильні "
+"фільтри в пошуковій системі. <a target=\"_blank\" "
+"href=\"%(url)s\">Прочитайте керівництво з міток</a>."
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
 msgid "View %(locale)s parent"
-msgstr ""
+msgstr "Подивитися батька %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
 msgid "last modified at %(modified)s"
-msgstr ""
+msgstr "востаннє змінено %(modified)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
 msgid "Edit %(locale)s translation"
-msgstr ""
+msgstr "Змінити переклад %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
