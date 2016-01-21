@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 09:10+0000\n"
+"PO-Revision-Date: 2016-01-21 10:07+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -2671,108 +2671,108 @@ msgstr "Блог: %(blog_link)s"
 #: kuma/users/templatetags/jinja_helpers.py:35
 #, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
-msgstr ""
+msgstr "Заблокував %(ban_admin)s %(ban_date)s."
 
 #: kuma/users/templatetags/jinja_helpers.py:42
 msgid "Banned"
-msgstr ""
+msgstr "Заблокований"
 
 #: kuma/users/templatetags/jinja_helpers.py:49
 msgid "Ban User"
-msgstr ""
+msgstr "Заблокувати користувача"
 
 #: kuma/users/templatetags/jinja_helpers.py:60
 msgid "Admin"
-msgstr ""
+msgstr "Адмін"
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Вікі"
 
 #: kuma/wiki/constants.py:206
 msgid "Technical - code samples, APIs, or technologies"
-msgstr ""
+msgstr "Технічна - приклади коду, API або технологій"
 
 #: kuma/wiki/constants.py:207
 msgid "Editorial - prose, grammar, or content"
-msgstr ""
+msgstr "Редакційна - текст, граматика або зміст"
 
 #: kuma/wiki/constants.py:212
 msgid "Localization in progress - not completely translated yet."
-msgstr ""
+msgstr "Локалізація триває - ще не перекладена повністю."
 
 #: kuma/wiki/content.py:699
 msgid "Edit section"
-msgstr ""
+msgstr "Змінити розділ"
 
 #: kuma/wiki/events.py:71
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr ""
+msgstr "[MDN] Сторінка \"%(document_title)s\" змінена %(creator)s"
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
-msgstr ""
+msgstr "Документи MDN"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
-msgstr ""
+msgstr "Документи, написані користувачами MDN"
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
-msgstr ""
+msgstr "Нещодавні зміни документів MDN"
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
-msgstr ""
+msgstr "Нещодавні зміни в документах MDN"
 
 #: kuma/wiki/feeds.py:155
 #, python-format
 msgid "MDN recent changes to documents tagged %s"
-msgstr ""
+msgstr "Нещодавні зміни в документах MDN, помічених %s"
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
-msgstr ""
+msgstr "Документи MDN для перевірки"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr ""
+msgstr "Нещодавні зміни в документах MDN, які потрібно перевірити"
 
 #: kuma/wiki/feeds.py:189
 #, python-format
 msgid "MDN documents for %s review"
-msgstr ""
+msgstr "Документи MDN для перевірки на %s"
 
 #: kuma/wiki/feeds.py:193
 msgid "MDN documents for review"
-msgstr ""
+msgstr "Документи MDN для перевірки"
 
 #: kuma/wiki/feeds.py:223
 #, python-format
 msgid "MDN '%s' translations in need of update"
-msgstr ""
+msgstr "Переклади \"%s\" на MDN потребують оновлення"
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
-msgstr ""
+msgstr "Останні ревізії MDN"
 
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
-msgstr ""
+msgstr "Останні зміни в документах MDN"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
-msgstr ""
+msgstr "Показати порівняння"
 
 #: kuma/wiki/forms.py:30
 msgid "Please provide a title."
-msgstr ""
+msgstr "Будь ласка, вкажіть назву."
 
 #: kuma/wiki/forms.py:31
 #, python-format
@@ -2780,6 +2780,8 @@ msgid ""
 "The title is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
+"Назва закоротка (%(show_value)s символів). Довжина повинна бути як мінімум "
+"%(limit_value)s символів."
 
 #: kuma/wiki/forms.py:33
 #, python-format
@@ -2787,18 +2789,20 @@ msgid ""
 "Please keep the length of the title to %(limit_value)s characters or less. "
 "It is currently %(show_value)s characters."
 msgstr ""
+"Будь-ласка, утримуйте довжину назви в межах %(limit_value)s символів. Зараз "
+"довжина складає %(show_value)s символів."
 
 #: kuma/wiki/forms.py:36
 msgid "Name Your Article"
-msgstr ""
+msgstr "Назвіть вашу статтю"
 
 #: kuma/wiki/forms.py:37
 msgid "Please provide a slug."
-msgstr ""
+msgstr "Будь ласка, вкажіть посилання."
 
 #: kuma/wiki/forms.py:38
 msgid "The slug provided is not valid."
-msgstr ""
+msgstr "Вказане посилання некоректне."
 
 #: kuma/wiki/forms.py:39
 #, python-format
@@ -2806,6 +2810,8 @@ msgid ""
 "The slug is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
+"Посилання закоротке (%(show_value)s символів). Воно має містити не менше "
+"%(limit_value)s символів."
 
 #: kuma/wiki/forms.py:41
 #, python-format
@@ -2879,123 +2885,123 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:66
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
-msgstr ""
+msgstr "Назва:"
 
 #: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613
 msgid "Title of article"
-msgstr ""
+msgstr "Назва статті"
 
 #: kuma/wiki/forms.py:89 kuma/wiki/forms.py:172
 #: kuma/wiki/jinja2/wiki/create.html:44
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
-msgstr ""
+msgstr "URL:"
 
 #: kuma/wiki/forms.py:90 kuma/wiki/forms.py:173
 msgid "Article URL"
-msgstr ""
+msgstr "Адреса статті"
 
 #: kuma/wiki/forms.py:97 kuma/wiki/jinja2/wiki/create.html:48
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
-msgstr ""
+msgstr "Батько:"
 
 #: kuma/wiki/forms.py:183 kuma/wiki/jinja2/wiki/edit.html:74
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:75
 #: kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
-msgstr ""
+msgstr "Мітки:"
 
 #: kuma/wiki/forms.py:188 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
-msgstr ""
+msgstr "Ключові слова:"
 
 #: kuma/wiki/forms.py:189
 msgid "Affects search results"
-msgstr ""
+msgstr "Впливає на результати пошуку"
 
 #: kuma/wiki/forms.py:197
 msgid "Search result summary:"
-msgstr ""
+msgstr "Результати пошуку:"
 
 #: kuma/wiki/forms.py:198
 msgid "Only displayed on search results page"
-msgstr ""
+msgstr "Показано тільки на сторінці пошукових результатів"
 
 #: kuma/wiki/forms.py:209 kuma/wiki/jinja2/wiki/edit.html:92
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
-msgstr ""
+msgstr "Зміст:"
 
 #: kuma/wiki/forms.py:218
 msgid "Comment:"
-msgstr ""
+msgstr "Коментар:"
 
 #: kuma/wiki/forms.py:221
 msgid "Tag this revision for review?"
-msgstr ""
+msgstr "Помітити дану ревізію для рецензії?"
 
 #: kuma/wiki/forms.py:228
 msgid "Tag this revision for localization?"
-msgstr ""
+msgstr "Помітити дану ревізію для локалізації?"
 
 #: kuma/wiki/forms.py:619
 msgid "New slug:"
-msgstr ""
+msgstr "Новий url:"
 
 #: kuma/wiki/forms.py:620
 msgid "New article URL"
-msgstr ""
+msgstr "Новий URL статті"
 
 #: kuma/wiki/models.py:115
 #, python-format
 msgid "Parent %s does not exist."
-msgstr ""
+msgstr "Батько %s не існує."
 
 #: kuma/wiki/models.py:123
 msgid "Document Tag"
-msgstr ""
+msgstr "Мітка документа"
 
 #: kuma/wiki/models.py:124
 msgid "Document Tags"
-msgstr ""
+msgstr "Мітки документа"
 
 #: kuma/wiki/models.py:1478
 msgid "Review Tag"
-msgstr ""
+msgstr "Подивитися мітку"
 
 #: kuma/wiki/models.py:1479
 msgid "Review Tags"
-msgstr ""
+msgstr "Подивитися мітки"
 
 #: kuma/wiki/models.py:1485
 msgid "Localization Tag"
-msgstr ""
+msgstr "Мітка локалізації"
 
 #: kuma/wiki/models.py:1486
 msgid "Localization Tags"
-msgstr ""
+msgstr "Мітки локалізації"
 
 #: kuma/wiki/models.py:1519
 msgid "No table of contents"
-msgstr ""
+msgstr "Немає змісту"
 
 #: kuma/wiki/models.py:1520
 msgid "All levels"
-msgstr ""
+msgstr "Всі рівні"
 
 #: kuma/wiki/models.py:1521
 msgid "H2 and higher"
-msgstr ""
+msgstr "H2 й вище"
 
 #: kuma/wiki/models.py:1522
 msgid "H3 and higher"
-msgstr ""
+msgstr "H3 й вище"
 
 #: kuma/wiki/models.py:1523
 msgid "H4 and higher"
-msgstr ""
+msgstr "H4 й вище"
 
 #: kuma/wiki/models.py:1627
 #, python-format
@@ -3003,38 +3009,40 @@ msgid ""
 "A revision must be based on a revision of the %(locale)s document. Revision "
 "ID %(id)s does not fit those criteria."
 msgstr ""
+"Ревізія повинна ґрунтуватися на ревізії документа з локаллю %(locale)s. ID "
+"ревізії %(id)s не підходить за цим критерієм."
 
 #: kuma/wiki/models.py:1754
 msgid "IP address"
-msgstr ""
+msgstr "IP-адреса"
 
 #: kuma/wiki/models.py:1762
 msgid "User-Agent"
-msgstr ""
+msgstr "Браузер"
 
 #: kuma/wiki/models.py:1767
 msgid "HTTP Referrer"
-msgstr ""
+msgstr "HTTP реферер"
 
 #: kuma/wiki/models.py:1788
 msgid "Revision"
-msgstr ""
+msgstr "Ревізія"
 
 #: kuma/wiki/models.py:1794
 msgid "Akismet submission"
-msgstr ""
+msgstr "Подання Akismet"
 
 #: kuma/wiki/models.py:1795
 msgid "Akismet submissions"
-msgstr ""
+msgstr "Подання Akismet"
 
 #: kuma/wiki/models.py:1838
 msgid "Slug"
-msgstr ""
+msgstr "URL"
 
 #: kuma/wiki/models.py:1846
 msgid "Document (optional)"
-msgstr ""
+msgstr "Документ (не обов'язково)"
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -3046,33 +3054,35 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr ""
+msgstr "Порівняти редакції | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
-msgstr ""
+msgstr "Порівняти редакції"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
-msgstr ""
+msgstr "Назад до історії"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
 #, python-format
 msgid "Delete Document | %(document)s"
-msgstr ""
+msgstr "Вилучити документ | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
 msgstr ""
+"Неможливо видалити сторінки разом з їх дочірніми сторінками через цю "
+"проблему:"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
-msgstr ""
+msgstr "Автор"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:20
 msgid "Creation Date"
-msgstr ""
+msgstr "Дата створення"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
 msgid "Last Change By"
