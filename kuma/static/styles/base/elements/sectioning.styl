@@ -55,6 +55,11 @@ footer {
 details {
     clear: both;
     display: block;
+    margin-bottom: $grid-spacing;
+}
+
+details + details {
+    margin-top: $grid-spacing * -1;
 }
 
 summary  {
