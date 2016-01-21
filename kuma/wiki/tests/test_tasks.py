@@ -3,7 +3,6 @@ from __future__ import with_statement
 import os
 
 from django.conf import settings
-from django.test import override_settings
 
 from kuma.core.cache import memcache
 from kuma.core.tests import ok_
@@ -50,7 +49,6 @@ class UpdateCommunityStatsTests(UserTestCase):
 class SitemapsTestCase(UserTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
-    @override_settings(CELERY_ALWAYS_EAGER=True)
     def test_sitemaps_files(self):
         build_sitemaps()
         locales = (Document.objects.filter_for_list()
