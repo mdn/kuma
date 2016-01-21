@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 21:53+0000\n"
+"PO-Revision-Date: 2016-01-21 23:08+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -2083,7 +2083,6 @@ msgstr ""
 "folyamatát."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
-#, fuzzy
 msgid "Change password"
 msgstr "Jelszó módosítása"
 
@@ -2095,40 +2094,41 @@ msgstr "A jelszava megváltozott."
 #: kuma/users/jinja2/account/password_set.html:3
 #: kuma/users/jinja2/account/password_set.html:7
 #: kuma/users/jinja2/account/password_set.html:12
-#, fuzzy
 msgid "Set Password"
-msgstr "Új jelszó"
+msgstr "Jelszó beállítása"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "Regisztráció"
 
 #: kuma/users/jinja2/account/signup.html:8
 #: kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
-msgstr ""
+msgstr "Regisztráció"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
 msgid ""
 "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
+"Már van profilja? Akkor kérjük <a href=\"%(login_url)s\">jelentkezzen "
+"be</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 #: kuma/users/jinja2/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "Profil létrehozás letiltva"
 
 #: kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
-msgstr ""
+msgstr "Sajnáljuk, de a profil létrehozás pillanatnyilag le van tiltva."
 
 #: kuma/users/jinja2/account/verification_sent.html:3
 #: kuma/users/jinja2/account/verification_sent.html:7
 #: kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr ""
+msgstr "Erősítse meg az e-mail címét"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid ""
@@ -2159,23 +2159,22 @@ msgid ""
 msgstr ""
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
-#, fuzzy
 msgid "Note"
-msgstr "Nincs"
+msgstr "Megjegyzés"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "már be van jelentkezve mint %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "OpenID bejelentkezés"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3
 #: kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Fiók bejelentkezési hiba"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
@@ -2200,16 +2199,16 @@ msgstr "Szétkapcsolás"
 
 #: kuma/users/jinja2/socialaccount/connections.html:58
 msgid "You have no connected accounts."
-msgstr ""
+msgstr "Nincsenek hozzákapcsolt fiókjai."
 
 #: kuma/users/jinja2/socialaccount/connections.html:61
 msgid "Connect a new account"
-msgstr ""
+msgstr "Új fiók hozzákapcsolása"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Bejelentkezés megszakítása"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -2222,7 +2221,7 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:4
 #: kuma/users/jinja2/socialaccount/signup.html:26
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "Hozza létre az MDN profilját a folytatáshoz"
 
 #: kuma/users/jinja2/socialaccount/signup.html:30
 #, python-format
@@ -2322,16 +2321,15 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:179
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "Az MDN profiljának létrehozása"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
-#, fuzzy
 msgid "Signed in with Persona"
-msgstr "Bejelentkezés Personával"
+msgstr "Personával bejelentkezve"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
-msgstr ""
+msgstr "GitHubbal bejelentkezve"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with Persona"
@@ -2358,11 +2356,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
-msgstr ""
+msgstr "Ki lett tiltva"
 
 #: kuma/users/jinja2/users/user_banned.html:20
 msgid "You have been banned for the following reasons:"
-msgstr ""
+msgstr "Ki lett tiltva a következő okok miatt:"
 
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid ""
@@ -2384,7 +2382,7 @@ msgstr "Haladó"
 
 #: kuma/users/jinja2/users/user_detail.html:53
 msgid "Manage"
-msgstr ""
+msgstr "Kezelés"
 
 #: kuma/users/jinja2/users/user_detail.html:56
 msgid "API keys"
@@ -2395,9 +2393,9 @@ msgid "Areas of Expertise"
 msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:102
-#, fuzzy, python-format
+#, python-format
 msgid "Member since %(date_joined)s"
-msgstr "Tagság kezdete"
+msgstr "Tag %(date_joined)s óta"
 
 #: kuma/users/jinja2/users/user_detail.html:150
 msgid "Recent Docs Activity"
@@ -2486,7 +2484,7 @@ msgstr "hátralévő szavak"
 
 #: kuma/users/jinja2/users/user_edit.html:83
 msgid "Interests (tags)"
-msgstr ""
+msgstr "Érdeklődési kör (címkék)"
 
 #: kuma/users/jinja2/users/user_edit.html:84
 msgid ""
@@ -2496,7 +2494,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:90
 msgid "Areas of expertise"
-msgstr ""
+msgstr "Szakterületek"
 
 #: kuma/users/jinja2/users/user_edit.html:91
 msgid ""
@@ -2511,7 +2509,7 @@ msgstr "Profiljaim"
 #: kuma/users/jinja2/users/user_edit.html:104
 #: kuma/users/jinja2/users/user_edit.html:122
 msgid "Change"
-msgstr ""
+msgstr "Módosítás"
 
 #: kuma/users/jinja2/users/user_edit.html:110
 msgid "Use your Persona account to sign in."
@@ -2529,9 +2527,9 @@ msgid "Save Changes"
 msgstr "Változtatások mentése"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s!"
-msgstr "{username}"
+msgstr "Üdvözöljük, %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
@@ -2603,9 +2601,9 @@ msgstr ""
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s"
-msgstr "{username}"
+msgstr "Üdvözöljük, %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
@@ -2687,7 +2685,7 @@ msgstr ""
 
 #: kuma/users/templatetags/jinja_helpers.py:42
 msgid "Banned"
-msgstr ""
+msgstr "Kitiltva"
 
 #: kuma/users/templatetags/jinja_helpers.py:49
 msgid "Ban User"
@@ -2695,28 +2693,28 @@ msgstr "Felhasználó kitiltása"
 
 #: kuma/users/templatetags/jinja_helpers.py:60
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:206
 msgid "Technical - code samples, APIs, or technologies"
-msgstr ""
+msgstr "Technikai – kódminták, API-k vagy technológiák"
 
 #: kuma/wiki/constants.py:207
 msgid "Editorial - prose, grammar, or content"
-msgstr ""
+msgstr "Szerkesztői – szöveg, nyelvtan vagy tartalom"
 
 #: kuma/wiki/constants.py:212
 msgid "Localization in progress - not completely translated yet."
-msgstr ""
+msgstr "Honosítás folyamatban – nincs teljesen lefordítva."
 
 #: kuma/wiki/content.py:699
 msgid "Edit section"
-msgstr ""
+msgstr "Fejezet szerkesztése"
 
 #: kuma/wiki/events.py:71
 #, python-format
@@ -2733,7 +2731,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
@@ -2780,7 +2778,7 @@ msgstr "Legutóbbi MDN dokumentum verziók"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
-msgstr ""
+msgstr "Összehasonlítás megjelenítése"
 
 #: kuma/wiki/forms.py:30
 msgid "Please provide a title."
@@ -2913,7 +2911,7 @@ msgstr "Cím:"
 
 #: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613
 msgid "Title of article"
-msgstr "Leírás címe"
+msgstr "A cikk címe"
 
 #: kuma/wiki/forms.py:89 kuma/wiki/forms.py:172
 #: kuma/wiki/jinja2/wiki/create.html:44
@@ -2924,7 +2922,7 @@ msgstr "SEO URL:"
 
 #: kuma/wiki/forms.py:90 kuma/wiki/forms.py:173
 msgid "Article URL"
-msgstr "Leírás URL"
+msgstr "A cikk URL-je"
 
 #: kuma/wiki/forms.py:97 kuma/wiki/jinja2/wiki/create.html:48
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:33
@@ -2978,36 +2976,36 @@ msgstr "Új SEO URL:"
 
 #: kuma/wiki/forms.py:620
 msgid "New article URL"
-msgstr "Új leírás URL"
+msgstr "Új cikk URL"
 
 #: kuma/wiki/models.py:115
 #, python-format
 msgid "Parent %s does not exist."
-msgstr ""
+msgstr "A(z) %s szülő nem létezik."
 
 #: kuma/wiki/models.py:123
 msgid "Document Tag"
-msgstr ""
+msgstr "Dokumentum címke"
 
 #: kuma/wiki/models.py:124
 msgid "Document Tags"
-msgstr ""
+msgstr "Dokumentum címkék"
 
 #: kuma/wiki/models.py:1478
 msgid "Review Tag"
-msgstr ""
+msgstr "Átnézés címke"
 
 #: kuma/wiki/models.py:1479
 msgid "Review Tags"
-msgstr ""
+msgstr "Átnézés címkék"
 
 #: kuma/wiki/models.py:1485
 msgid "Localization Tag"
-msgstr ""
+msgstr "Honosítás címke"
 
 #: kuma/wiki/models.py:1486
 msgid "Localization Tags"
-msgstr ""
+msgstr "Honosítás címkék"
 
 #: kuma/wiki/models.py:1519
 msgid "No table of contents"
@@ -3035,44 +3033,40 @@ msgid ""
 "A revision must be based on a revision of the %(locale)s document. Revision "
 "ID %(id)s does not fit those criteria."
 msgstr ""
+"Egy verziónak a %(locale)s dokumentum egy verzióján kell alapulnia. A %(id)s"
+" verzióazonosítóra nem teljesül ez a feltétel."
 
 #: kuma/wiki/models.py:1754
-#, fuzzy
 msgid "IP address"
-msgstr "E-mail cím"
+msgstr "IP-cím"
 
 #: kuma/wiki/models.py:1762
 msgid "User-Agent"
-msgstr ""
+msgstr "Böngészőazonosító"
 
 #: kuma/wiki/models.py:1767
 msgid "HTTP Referrer"
-msgstr ""
+msgstr "HTTP hivatkozó"
 
 #: kuma/wiki/models.py:1788
-#, fuzzy
 msgid "Revision"
-msgstr "%s verzió"
+msgstr "Verzió"
 
 #: kuma/wiki/models.py:1794
-#, fuzzy
 msgid "Akismet submission"
-msgstr "Beküldések"
+msgstr "Akismet beküldés"
 
 #: kuma/wiki/models.py:1795
-#, fuzzy
 msgid "Akismet submissions"
-msgstr "Beküldések"
+msgstr "Akismet beküldések"
 
 #: kuma/wiki/models.py:1838
-#, fuzzy
 msgid "Slug"
-msgstr "SEO URL:"
+msgstr "SEO URL"
 
 #: kuma/wiki/models.py:1846
-#, fuzzy
 msgid "Document (optional)"
-msgstr "MDN Dokumentáció"
+msgstr "Dokumentum (nem kötelező)"
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -3082,9 +3076,9 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr "Verziók összehasonlítása | {document}"
+msgstr "Verziók összehasonlítása | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
@@ -3095,9 +3089,9 @@ msgid "Back to History"
 msgstr "Vissza az előzményekhez"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Delete Document | %(document)s"
-msgstr "Dokumentum törlése | {document}"
+msgstr "Dokumentum törlése | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -3125,20 +3119,21 @@ msgid ""
 "You are about to delete this document and all of its revisions. Please let "
 "us know why this page should be deleted."
 msgstr ""
+"A dokumentum és minden verziójának törlésére készül. Kérjük tudassa velünk, "
+"hogy miért kellene ezt az oldalt törölni."
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
 msgstr "Biztos, hogy folytatni kívánja?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revert Revision | %(document)s"
-msgstr "Verzió törlése | {document}"
+msgstr "Verzió visszaállítása | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
-#, fuzzy
 msgid "Are you sure you want to revert to this revision?"
-msgstr "Biztos, hogy törölni kívánja ezt a verziót?"
+msgstr "Biztos, hogy visszaáll erre a verzióra?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
@@ -3151,26 +3146,25 @@ msgstr "Tartalom"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
-msgstr ""
+msgstr "Miért áll vissza erre a verzióra?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid ""
 "You are about to revert the document to this revision. Click \"revert\" to "
 "revert to the content&nbsp;above."
 msgstr ""
+"A dokumentum ezen verziójára visszatérésre készül. Kattintson a "
+"„visszaállításra” a fenti tartalomra visszaállításhoz."
 
 #: kuma/wiki/jinja2/wiki/create.html:6
-#, fuzzy
 msgid "Create a New Template"
-msgstr "Új profil létrehozása"
+msgstr "Új sablon létrehozása"
 
 #: kuma/wiki/jinja2/wiki/create.html:8
-#, fuzzy
 msgid "Create a New Article"
-msgstr "Új profil létrehozása"
+msgstr "Új cikk létrehozása"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
-#, fuzzy
 msgid "Create a"
 msgstr "Létrehozás"
 
@@ -3180,7 +3174,7 @@ msgstr "Új dokumentum"
 
 #: kuma/wiki/jinja2/wiki/create.html:34 kuma/wiki/jinja2/wiki/edit.html:108
 msgid "Draft"
-msgstr "Piszkozat"
+msgstr "Vázlat"
 
 #: kuma/wiki/jinja2/wiki/create.html:44
 msgid "URL segment that identifies the page"
@@ -3222,19 +3216,17 @@ msgid "Next Search Result"
 msgstr "Következő találat"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
-#, fuzzy
 msgid "see all contributors"
-msgstr "hozzájárulók"
+msgstr "összes közreműködő megjelenítése"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
-#, fuzzy
 msgid "hide contributors"
-msgstr "hozzájárulók"
+msgstr "közreműködők elrejtése"
 
 #: kuma/wiki/jinja2/wiki/document.html:185
 #, python-format
 msgid "View profile: %(username)s"
-msgstr ""
+msgstr "Profil megtekintése: %(username)s"
 
 #: kuma/wiki/jinja2/wiki/document.html:210
 msgid "In This Article"
@@ -3280,7 +3272,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:281
 msgid "This translation is in progress."
-msgstr "Fordítás folyamatban"
+msgstr "A fordítás folyamatban van."
 
 #: kuma/wiki/jinja2/wiki/document.html:288
 #, python-format
@@ -3290,9 +3282,8 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:299
-#, fuzzy
 msgid "This article doesn't have any content yet."
-msgstr "Ennek a leírásnak még nincs jóváhagyott tartalma."
+msgstr "Ennek a cikknek még nincs tartalma."
 
 #: kuma/wiki/jinja2/wiki/document.html:302
 #, python-format
@@ -3312,23 +3303,22 @@ msgstr ""
 
 # 100%
 #: kuma/wiki/jinja2/wiki/document.html:331
-#, fuzzy
 msgid "Contributors to this page:"
-msgstr "Ugrás az első oldalra"
+msgstr "Ezen oldal közreműködői:"
 
 #: kuma/wiki/jinja2/wiki/document.html:337
 msgid "Last updated by:"
-msgstr "Utoljára frissítette:"
+msgstr "Utoljára frissítve:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
 msgid "%(title)s | Edit Template"
-msgstr ""
+msgstr "%(title)s | Sablon szerkesztése"
 
 #: kuma/wiki/jinja2/wiki/edit.html:8
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Article"
-msgstr "Leírás szerkesztése:"
+msgstr "%(title)s | Cikk szerkesztése"
 
 #: kuma/wiki/jinja2/wiki/edit.html:31
 msgid ""
@@ -3344,10 +3334,12 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:42
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:58
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr "{id}. verzió, készítette: {user}, {date}"
+msgstr ""
+"%(id)s. verzió, készítette: <a href=\"%(user_profile_url)s\">%(user)s</a>, "
+"%(date)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
@@ -3429,14 +3421,14 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "last modified at %(modified)s"
-msgstr "utolsó módosítás dátuma"
+msgstr "utoljára módosítva: %(modified)s"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Edit %(locale)s translation"
-msgstr "{locale} fordítás:"
+msgstr "%(locale)s fordítás szerkesztése"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, fuzzy, python-format
@@ -3530,9 +3522,9 @@ msgid "This is a preview of an unsaved document."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(id)s | %(title)s"
-msgstr "{n}. verzió | {t} | {c}"
+msgstr "%(id)s. verzió | %(title)s"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
@@ -3540,16 +3532,16 @@ msgstr "Verzióinformációk"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
-msgstr "Változat tartalma"
+msgstr "Verzió tartalma"
 
 #: kuma/wiki/jinja2/wiki/revision.html:69
 msgid "Revision Source"
-msgstr "Változat forrása"
+msgstr "Verzió forrása"
 
 #: kuma/wiki/jinja2/wiki/revision.html:76
 #: kuma/wiki/jinja2/wiki/list/revisions.html:70
 msgid "Revert to this revision"
-msgstr ""
+msgstr "Visszaállítás erre a verzióra"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, fuzzy, python-format
@@ -3771,13 +3763,13 @@ msgstr "Lásd még"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
-msgstr ""
+msgstr "Verziók módosítása"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(num)s:"
-msgstr "{num}. verzió:"
+msgstr "%(num)s. verzió:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:82
 #: kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
@@ -3948,9 +3940,8 @@ msgid "Review needed?"
 msgstr "Ellenőrzés szükséges?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
-#, fuzzy
 msgid "Revision Comment"
-msgstr "Változat tartalma"
+msgstr "Verzió megjegyzése"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
@@ -4072,9 +4063,9 @@ msgid "Found %(count)s documents."
 msgstr "MDN dokumentumok"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revision History | %(document)s"
-msgstr "Előzmények | {document}"
+msgstr "Verziótörténet | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
@@ -4082,7 +4073,7 @@ msgstr "Előzmények:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
-msgstr "Előzmények:"
+msgstr "Verziótörténet ehhez:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
@@ -4187,7 +4178,7 @@ msgstr ""
 #: kuma/wiki/templatetags/jinja_helpers.py:117
 #, python-format
 msgid "Revision %s"
-msgstr "%s verzió"
+msgstr "%s. verzió"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:106
 msgid "There was an error generating the content."
