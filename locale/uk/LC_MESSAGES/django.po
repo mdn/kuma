@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-20 14:05+0000\n"
+"PO-Revision-Date: 2016-01-21 00:07+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -2429,15 +2429,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:12
 msgid "Edit Your Profile"
-msgstr ""
+msgstr "Змінити свій профіль"
 
 #: kuma/users/jinja2/users/user_edit.html:38
 msgid "Change your avatar at"
-msgstr ""
+msgstr "Змінити аватар на"
 
 #: kuma/users/jinja2/users/user_edit.html:42
 msgid "View profile"
-msgstr ""
+msgstr "Переглянути профіль"
 
 #: kuma/users/jinja2/users/user_edit.html:50
 msgid "You're editing a different profile than your own. Please take care!"
@@ -2452,19 +2452,19 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:64
 msgid "Primary Email"
-msgstr ""
+msgstr "Адреса електронної пошти"
 
 #: kuma/users/jinja2/users/user_edit.html:65
 msgid "Edit email"
-msgstr ""
+msgstr "Редагувати адресу ел. пошти"
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "About me"
-msgstr ""
+msgstr "Про мене"
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "words remaining"
-msgstr ""
+msgstr "залишилося слів"
 
 #: kuma/users/jinja2/users/user_edit.html:83
 msgid "Interests (tags)"
