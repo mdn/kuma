@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 12:38+0000\n"
+"PO-Revision-Date: 2016-01-21 14:03+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -3215,6 +3215,9 @@ msgid ""
 "This document is being rendered for the first time by the system. Please <a "
 "href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
+"Цей документ був оброблений системою вперше. Будь ласка, <a "
+"href=\"%(url)s\">оновіть цю сторінку</a> за декілька хвилин для перегляду "
+"повного вмісту."
 
 #: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
@@ -3335,7 +3338,7 @@ msgstr "Змінити властивості і заголовок статті
 
 #: kuma/wiki/jinja2/wiki/edit.html:127
 msgid "Rendering max age:"
-msgstr "Максимальний термін рендерингу:"
+msgstr "Максимальний термін обробки:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:129
 msgid "Days"
@@ -3421,7 +3424,7 @@ msgstr "Змінити переклад %(locale)s"
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
 msgid "Move Article | %(document)s"
-msgstr ""
+msgstr "Перемістити статтю | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid ""
@@ -3456,45 +3459,45 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
-msgstr ""
+msgstr "Поточний URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
-msgstr ""
+msgstr "URL попереднього перегляду:"
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 msgid "New Slug:"
-msgstr ""
+msgstr "Новий URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
-msgstr ""
+msgstr "Пошук по заголовку статті"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
-msgstr ""
+msgstr "Батьківський заголовок"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
 msgid "Move %(count)s Pages"
-msgstr ""
+msgstr "Перемістити %(count)s сторінок"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
-msgstr ""
+msgstr "Перемістити сторінку"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
 msgid "The following %(count)s subpages will be affected by this move:"
-msgstr ""
+msgstr "Перенесення торкнеться %(count)s підсторінок:"
 
 #: kuma/wiki/jinja2/wiki/move.html:104
 msgid "No other documents will be affected by this change."
-msgstr ""
+msgstr "Ці зміни не вплинуть на інші статті."
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:2
 msgid "Page move requested"
-msgstr ""
+msgstr "Запитано перенесення сторінки"
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:9
 #, python-format
@@ -3511,33 +3514,33 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
 msgid "Revision %(id)s | %(title)s"
-msgstr ""
+msgstr "Редакція %(id)s | %(title)s"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
-msgstr ""
+msgstr "Інформація про редакцію"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
-msgstr ""
+msgstr "Зміст редакції"
 
 #: kuma/wiki/jinja2/wiki/revision.html:69
 msgid "Revision Source"
-msgstr ""
+msgstr "Джерело редакції"
 
 #: kuma/wiki/jinja2/wiki/revision.html:76
 #: kuma/wiki/jinja2/wiki/list/revisions.html:70
 msgid "Revert to this revision"
-msgstr ""
+msgstr "Повернути цю редакцію"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
 msgid "Select language | %(document)s"
-msgstr ""
+msgstr "Вибір мови | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
-msgstr ""
+msgstr "Виберіть мову перекладу:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:32
 #, python-format
@@ -3547,6 +3550,10 @@ msgid ""
 "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"Вміст доступний під зазначеною в даному проекті ліцензією. &middot; <a "
+"href=\"%(about_url)s\">Про MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Зробіть внесок у код</a> &middot; <a "
+"href=\"//www.mozilla.org/uk/privacy\">Політика приватності</a>"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:43
 #, python-format
@@ -3561,25 +3568,25 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
 msgid "Translate Article | %(document)s"
-msgstr ""
+msgstr "Переклад статті | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:33
 #, python-format
 msgid "Translating article to %(locale)s"
-msgstr ""
+msgstr "Перекладання статті мовою: %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
-msgstr ""
+msgstr "Переклад вмісту"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
 msgid "Approved %(locale)s version"
-msgstr ""
+msgstr "Затверджена %(locale)s версія"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
-msgstr ""
+msgstr "Подивитися оброблене"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
@@ -3750,6 +3757,8 @@ msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
 msgstr ""
+"Сервер виконує порівняння вмісту. Будь ласка, оновіть цю сторінку протягом "
+"декількох хвилин."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:107
 msgid "Share:"
