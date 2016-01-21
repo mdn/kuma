@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 10:32+0000\n"
+"PO-Revision-Date: 2016-01-21 12:14+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -3335,30 +3335,32 @@ msgstr "Змінити властивості і заголовок статті
 
 #: kuma/wiki/jinja2/wiki/edit.html:127
 msgid "Rendering max age:"
-msgstr ""
+msgstr "Максимальний термін рендерингу:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:129
 msgid "Days"
-msgstr ""
+msgstr "Дні"
 
 #: kuma/wiki/jinja2/wiki/edit.html:133
 msgid "Hours"
-msgstr ""
+msgstr "Години"
 
 #: kuma/wiki/jinja2/wiki/edit.html:137
 msgid "Minutes"
-msgstr ""
+msgstr "Хвилини"
 
 #: kuma/wiki/jinja2/wiki/edit.html:146
 msgid ""
 "Find the translation source with the lookup below and then click \"Save "
 "Changes.\""
 msgstr ""
+"Знайдіть джерело для перекладу в пошуку вище, а потім натисніть \"Зберегти "
+"зміни\"."
 
 #: kuma/wiki/jinja2/wiki/edit.html:148
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
-msgstr ""
+msgstr "Пошук:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:162
 msgid "Thank you for taking the time to improve MDN!"
