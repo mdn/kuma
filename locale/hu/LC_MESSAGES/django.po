@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 20:43+0000\n"
+"PO-Revision-Date: 2016-01-21 21:53+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -142,26 +142,23 @@ msgstr "Eszközök"
 
 #: jinja2/base.html:104
 msgid "Contribute to MDN"
-msgstr "Hozzájárulás az MDN-hez"
+msgstr "Közreműködés az MDN-ben"
 
 #: jinja2/base.html:106
-#, fuzzy
 msgid "Get started"
 msgstr "Első lépések"
 
 #: jinja2/base.html:107
 msgid "Review or localize docs"
-msgstr ""
+msgstr "Dokumentáció átnézése vagy honosítása"
 
 #: jinja2/base.html:110
-#, fuzzy
 msgid "Site Tools"
 msgstr "Eszközök"
 
 #: jinja2/base.html:112
-#, fuzzy
 msgid "Revision dashboard"
-msgstr "Változat forrása:"
+msgstr "Verziók irányítópultja"
 
 #: jinja2/base.html:113
 msgid "Documentation status"
@@ -214,7 +211,7 @@ msgstr "MathML"
 
 #: jinja2/base.html:137
 msgid "References & Guides"
-msgstr ""
+msgstr "Referenciák és útmutatók"
 
 #: jinja2/base.html:139
 msgid "Learn the Web"
@@ -230,7 +227,7 @@ msgstr "Referenciák"
 
 #: jinja2/base.html:142
 msgid "Developer Guides"
-msgstr ""
+msgstr "Fejlesztői útmutatók"
 
 #: jinja2/base.html:143
 msgid "Accessibility"
@@ -274,15 +271,13 @@ msgid "Persona"
 msgstr "Persona"
 
 #: jinja2/base.html:161
-#, fuzzy
 msgid "Developer Tools"
-msgstr "Fejlesztő<br />eszközök"
+msgstr "Fejlesztői eszközök"
 
 # 100%
 #: jinja2/base.html:161
-#, fuzzy
 msgid "Feedback"
-msgstr "Hírfolyam"
+msgstr "Visszajelzés"
 
 # 100%
 #: jinja2/base.html:166
@@ -297,15 +292,13 @@ msgstr "Webfejlesztés"
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
-msgstr ""
+msgstr "Csatlakozás az MDN közösséghez"
 
 #: jinja2/base.html:171
-#, fuzzy
 msgid "Report a content problem"
-msgstr "Hiba jelentése"
+msgstr "Tartalmi hiba jelentése"
 
 #: jinja2/base.html:172
-#, fuzzy
 msgid "Report a bug"
 msgstr "Hiba jelentése"
 
@@ -333,38 +326,37 @@ msgid ""
 msgstr ""
 
 #: jinja2/base.html:203
-#, fuzzy
 msgid "About MDN"
-msgstr "Bemutatkozás"
+msgstr "Az MDN-ről"
 
 #: jinja2/base.html:204
 msgid "Terms"
-msgstr ""
+msgstr "Feltételek"
 
 #: jinja2/base.html:205
 msgid "Privacy"
-msgstr ""
+msgstr "Magánszféra"
 
 #: jinja2/base.html:206
 msgid "Cookies"
-msgstr ""
+msgstr "Sütik"
 
 #: jinja2/base.html:207
 msgid "Contribute to the code"
-msgstr "Hozzájárulás a kódhoz"
+msgstr "Közreműködés a kódban"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
-msgstr ""
+msgstr "<li><a href=\"/logout\">Jelentkezzen ki</a> az újrapróbálkozáshoz.</li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "Firefox súgó keresése"
 
 #: jinja2/includes/common_macros.html:36
 #, python-format
 msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr ""
+msgstr "Üdvözöljük, <span class=\"user\">%(user)s</span>."
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
@@ -399,11 +391,11 @@ msgstr "Kijelentkezés"
 
 #: jinja2/includes/login.html:17
 msgid "Sign in with"
-msgstr ""
+msgstr "Bejelentkezés ezzel"
 
 #: jinja2/includes/login.html:18
 msgid "Sign in"
-msgstr ""
+msgstr "Bejelentkezés"
 
 #: jinja2/includes/login.html:21 kuma/users/forms.py:198
 #: kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120
@@ -490,7 +482,7 @@ msgstr "MDN legutóbbi fájlváltoztatások"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
-msgstr ""
+msgstr "Legutóbbi verziók az MDN fájlmellékleteknél"
 
 #: kuma/attachments/forms.py:9
 msgid "Files of this type are not permitted."
@@ -520,7 +512,7 @@ msgstr "Változat forrása:"
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:23
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
-msgstr "Változat címe:"
+msgstr "Verzió címe:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:27
 #: kuma/wiki/jinja2/wiki/revision.html:25
@@ -996,9 +988,8 @@ msgid "Preceding Period:"
 msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
-#, fuzzy
 msgid "Revision Dashboard"
-msgstr "Változat forrása:"
+msgstr "Verziók irányítópultja"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:44
 #: kuma/search/jinja2/search/results.html:210
@@ -1091,21 +1082,21 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:107
 msgid "There are no revisions matching this filter set."
-msgstr ""
+msgstr "Nincsenek ezekre a szűrőkre illeszkedő verziók."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "Ne kapjon több e-mailt amikor a magyar verziókat elfogadják"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "Kapjon e-mail amikor a magyar verziókat elfogadják"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -2031,7 +2022,7 @@ msgid ""
 "don't already have one."
 msgstr ""
 "A közreműködéshez be kell jelentkeznie az MDN-be. Bejelentkezhet bármelyik "
-"lenti szolgáltatást használva. Egy MDN profil lesz készítve, ha még nincs "
+"lenti szolgáltatást használva. Egy MDN profil fog készülni, ha még nincs "
 "ilyenje."
 
 #: kuma/users/jinja2/account/logout.html:10
@@ -2447,8 +2438,8 @@ msgid ""
 "<p class=\"none\">You haven't contributed to any MDN docs. <a "
 "href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
-"<p class=\"none\">Még nem járult hozzá egyetlen MDN dokumentációhoz sem. <a "
-"href=\"%(docs_url)s\">Fogjon bele!</a></p>"
+"<p class=\"none\">Még nem működött közre egyetlen MDN dokumentációban sem. "
+"<a href=\"%(docs_url)s\">Fogjon bele!</a></p>"
 
 #: kuma/users/jinja2/users/user_detail.html:183
 msgid "This user has no activity."
@@ -2781,11 +2772,11 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
-msgstr ""
+msgstr "MDN legutóbbi verziók"
 
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
-msgstr ""
+msgstr "Legutóbbi MDN dokumentum verziók"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
@@ -2975,11 +2966,11 @@ msgstr "Megjegyzés:"
 
 #: kuma/wiki/forms.py:221
 msgid "Tag this revision for review?"
-msgstr ""
+msgstr "Megcímkézi ezt a verziót átnézésre?"
 
 #: kuma/wiki/forms.py:228
 msgid "Tag this revision for localization?"
-msgstr ""
+msgstr "Megcímkézi ezt a verziót honosításra?"
 
 #: kuma/wiki/forms.py:619
 msgid "New slug:"
@@ -3577,6 +3568,10 @@ msgid ""
 "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"A tartalom egy ehhez a projekthez készült egyedi licenc alatt érhető el. "
+"&middot; <a href=\"%(about_url)s\">Az MDN-ről</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Közreműködés a kódban</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Adatvédelmi nyilatkozat</a>"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:43
 #, python-format
@@ -3587,6 +3582,11 @@ msgid ""
 "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"&copy; 2005-2015 Mozilla Developer Network és egyéni közreműködők<br /> A "
+"tartalom egy ehhez a projekthez készült egyedi licenc alatt érhető el. "
+"&middot; <a href=\"%(about_url)s\">Az MDN-ről</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Közreműködés a kódban</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Adatvédelmi nyilatkozat</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, fuzzy, python-format
@@ -4101,9 +4101,8 @@ msgid "All Tags"
 msgstr "Összes címke"
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:18
-#, fuzzy
 msgid "There are no tags."
-msgstr "Nincsenek fájlok."
+msgstr "Nincsenek címkék."
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
@@ -4125,9 +4124,8 @@ msgstr[1] ""
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
-#, fuzzy
 msgid "Purge documents"
-msgstr "MDN dokumentumok"
+msgstr "Dokumentumok törlése"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
@@ -4136,9 +4134,8 @@ msgstr "Nyitólap"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
-#, fuzzy
 msgid "Documents"
-msgstr "Dokumentum"
+msgstr "Dokumentumok"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:39
 msgid ""
@@ -4205,7 +4202,7 @@ msgstr ""
 #: kuma/wiki/views/document.py:600
 #, python-format
 msgid "Redirected from %(url)s"
-msgstr ""
+msgstr "Átirányítva innen: %(url)s"
 
 #: kuma/wiki/views/document.py:648
 #, python-format
@@ -4257,7 +4254,7 @@ msgstr "Nem fordíthatja le ezt a dokumentumot."
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Elasticsearch kiszolgáló: %(backend)s"
 
 #~ msgid "object ID"
 #~ msgstr "objektumazonosító"
