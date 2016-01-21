@@ -1,5 +1,8 @@
 ---
-- include: install/main.yml
+- include: install-debian.yml
+  when: ansible_os_family == 'Debian'
+- include: install-redhat.yml
+  when: ansible_os_family == 'RedHat'
 - include: configuration.yml
 - include: plugins.yml
 - include: vhost.yml
