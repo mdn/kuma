@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 00:07+0000\n"
+"PO-Revision-Date: 2016-01-21 09:10+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -1640,7 +1640,7 @@ msgstr ""
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr ""
+msgstr "Таке ім'я користувача вже зайнято."
 
 #: kuma/users/apps.py:24
 msgid "User"
@@ -2425,7 +2425,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:183
 msgid "This user has no activity."
-msgstr ""
+msgstr "Цей користувач не має ніякої активності."
 
 #: kuma/users/jinja2/users/user_edit.html:12
 msgid "Edit Your Profile"
@@ -2441,7 +2441,7 @@ msgstr "Переглянути профіль"
 
 #: kuma/users/jinja2/users/user_edit.html:50
 msgid "You're editing a different profile than your own. Please take care!"
-msgstr ""
+msgstr "Ви змінюєте інший профіль, а не свій! Будь ласка, будьте уважні!"
 
 #: kuma/users/jinja2/users/user_edit.html:61
 msgid ""
@@ -2468,51 +2468,55 @@ msgstr "залишилося слів"
 
 #: kuma/users/jinja2/users/user_edit.html:83
 msgid "Interests (tags)"
-msgstr ""
+msgstr "Інтереси (теги)"
 
 #: kuma/users/jinja2/users/user_edit.html:84
 msgid ""
 "Separate tags with commas or spaces. Join multi-word tags with double "
 "quotes, like \"web standards\"."
 msgstr ""
+"Розділяйте теги комами або пропусками. Теги, що складаються з декількох слів"
+" укладайте в лапки, наприклад \"веб стандарти\"."
 
 #: kuma/users/jinja2/users/user_edit.html:90
 msgid "Areas of expertise"
-msgstr ""
+msgstr "Експертні області"
 
 #: kuma/users/jinja2/users/user_edit.html:91
 msgid ""
 "Add your interests first, then declare yourself an expert in selected "
 "topics."
 msgstr ""
+"Додайте спочатку свої інтереси, а вже потім оголошуйте себе експертом в "
+"обраних темах."
 
 #: kuma/users/jinja2/users/user_edit.html:99
 msgid "My Profiles"
-msgstr ""
+msgstr "Мої профілі"
 
 #: kuma/users/jinja2/users/user_edit.html:104
 #: kuma/users/jinja2/users/user_edit.html:122
 msgid "Change"
-msgstr ""
+msgstr "Змінити"
 
 #: kuma/users/jinja2/users/user_edit.html:110
 msgid "Use your Persona account to sign in."
-msgstr ""
+msgstr "Увійдіть за допомогою облікового запису Persona."
 
 #: kuma/users/jinja2/users/user_edit.html:130
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "Увійдіть за допомогою облікового запису GitHub."
 
 #: kuma/users/jinja2/users/user_edit.html:151
 #: kuma/users/jinja2/users/user_edit.html:159
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Save Changes"
-msgstr ""
+msgstr "Зберегти зміни"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
 msgid "Hi %(username)s!"
-msgstr ""
+msgstr "Привіт, %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
@@ -2541,7 +2545,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr ""
+msgstr "Поспілкуйтеся з нами!"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35
@@ -2586,7 +2590,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
 #, python-format
 msgid "Hi %(username)s"
-msgstr ""
+msgstr "Привіт, %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
@@ -2606,28 +2610,28 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr ""
+msgstr "Подобаються слова?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:18
 msgid "Like code?"
-msgstr ""
+msgstr "Подобається код?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:22
 msgid "Like both words and code?"
-msgstr ""
+msgstr "Подобається перекладати і кодити?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:26
 msgid "Want to translate MDN to your language?"
-msgstr ""
+msgstr "Хочете перекладати MDN вашою мовою?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
 #, python-format
 msgid "Mailing list: %(list_link)s"
-msgstr ""
+msgstr "Список розсилки: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
@@ -2635,17 +2639,20 @@ msgid ""
 "Subscribe to tell us about what you're interested in on MDN and ask "
 "questions about the site."
 msgstr ""
+"Підпишіться, щоб розповісти нам про те, що вам цікаво на MDN і поставити "
+"питання про сайт."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
 msgid "Real-time chat: #mdn channel on irc.mozilla.org"
-msgstr ""
+msgstr "Чат в режимі реального часу: канал #mdn на irc.mozilla.org"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
 msgstr ""
+"Зверніться до %(irc_link)s для отримання додаткової інформації по IRC."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:45
@@ -2659,7 +2666,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
 #, python-format
 msgid "Blog: %(blog_link)s"
-msgstr ""
+msgstr "Блог: %(blog_link)s"
 
 #: kuma/users/templatetags/jinja_helpers.py:35
 #, python-format
