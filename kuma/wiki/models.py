@@ -10,7 +10,7 @@ import waffle
 from constance import config
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.db import models, transaction
 from django.db.models import signals
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
@@ -776,22 +776,46 @@ class Document(NotificationsMixin, models.Model):
             return unique_attr()
 
     def revert(self, revision, user, comment=None):
+        """
+        Reverts the given revision by creating a new one.
+
+        - Sets its comment to the given value and points the new revision
+          to the old revision
+        - Keeps review tags
+        - Make new revision the current one of the document
+        """
+        # remember the current revision's primary key for later
+        old_revision_pk = revision.pk
+        # get a list of review tag names for later
         old_review_tags = list(revision.review_tags.names())
-        revision.id = None
-        revision.comment = ("Revert to revision of %s by %s" %
-                            (revision.created, revision.creator))
-        if comment:
-            revision.comment += ': "%s"' % comment
-        revision.created = datetime.now()
-        revision.creator = user
-        revision.save()
-        # TODO: change to primary key check instead of object comparison
-        if revision.document.original == self:
-            revision.save(update_fields=['based_on'])
-        if old_review_tags:
-            revision.review_tags.set(*old_review_tags)
+
+        with transaction.atomic():
+
+            # reset primary key
+            revision.pk = None
+
+            # add a sensible comment
+            revision.comment = ("Revert to revision of %s by %s" %
+                                (revision.created, revision.creator))
+            if comment:
+                revision.comment = u'%s: "%s"' % (revision.comment, comment)
+            revision.created = datetime.now()
+            revision.creator = user
+
+            if revision.document.original.pk == self.pk:
+                revision.based_on_id = old_revision_pk
+
+            revision.save()
+
+            # set review tags
+            if old_review_tags:
+                revision.review_tags.set(*old_review_tags)
+
+        # populate model instance with fresh data from database
+        revision.refresh_from_db()
+
+        # make this new revision the current one for the document
         revision.make_current()
-        self.schedule_rendering('max-age=0')
         return revision
 
     def revise(self, user, data, section_id=None):

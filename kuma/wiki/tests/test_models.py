@@ -12,7 +12,6 @@ from waffle.models import Switch
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.test.utils import override_settings
 
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import KumaTestCase, eq_, get_user, ok_
@@ -887,7 +886,6 @@ class DeferredRenderingTests(UserTestCase):
         ok_(not build_json_task.delay.called)
 
     @mock.patch('kuma.wiki.kumascript.get')
-    @override_settings(CELERY_ALWAYS_EAGER=True)
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     def test_get_summary(self, mock_kumascript_get):
         """

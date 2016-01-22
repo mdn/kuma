@@ -449,8 +449,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         self.assertHTMLEqual(doc('#id_content')[0].value.strip(),
                              r.content.strip())
 
-    @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False,
-                       CELERY_ALWAYS_EAGER=True)
+    @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False)
     @mock.patch.object(Site.objects, 'get_current')
     def test_new_revision_POST_document_with_current(self, get_current):
         """HTTP POST to new revision URL creates the revision on a document.

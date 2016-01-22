@@ -321,7 +321,6 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get('%s?raw&summary' % d.get_absolute_url())
         eq_(resp.content, 'Foo bar <a href="http://example.com">baz</a>')
 
-    @override_settings(CELERY_ALWAYS_EAGER=True)
     @mock.patch('waffle.flag_is_active', return_value=True)
     @mock.patch('kuma.wiki.jobs.DocumentContributorsJob.get', return_value=[
         {'id': 1, 'username': 'ringo', 'email': 'ringo@apple.co.uk'},
@@ -421,16 +420,14 @@ class PermissionTests(UserTestCase, WikiTestCase):
         # Revert POST should give permission denied to user without perm
         username = self.users['none'].username
         self.client.login(username=username, password='testpass')
-        url = reverse('wiki.revert_document',
-                      args=([doc.slug, rev.id]))
+        url = reverse('wiki.revert_document', args=([doc.slug, rev.id]))
         resp = self.client.post(url, {'comment': 'test'})
         eq_(403, resp.status_code)
 
         # Revert POST should give success to user with perm
         username = self.users['change'].username
         self.client.login(username=username, password='testpass')
-        url = reverse('wiki.revert_document',
-                      args=([doc.slug, rev.id]))
+        url = reverse('wiki.revert_document', args=([doc.slug, rev.id]))
         resp = self.client.post(url, {'comment': 'test'}, follow=True)
         eq_(200, resp.status_code)
 
@@ -717,7 +714,6 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
             "kumascript not should have been used")
 
     @override_config(KUMASCRIPT_TIMEOUT=0.0)
-    @override_settings(CELERY_ALWAYS_EAGER=True)
     @mock.patch('kuma.wiki.kumascript.get', return_value=(TEST_CONTENT, None))
     def test_disabled_rendering(self, mock_kumascript_get):
         """When disabled, the kumascript service should not be used
