@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 23:18+0000\n"
+"PO-Revision-Date: 2016-01-22 08:55+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -433,7 +433,7 @@ msgstr "Tovább"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr ""
+msgstr "Leiratkozás ezekről az e-mailekről:"
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12
 #: jinja2/tidings/unsubscribe_error.html:2
@@ -443,7 +443,7 @@ msgstr "Leiratkozás"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr ""
+msgstr "Biztosan le szeretne iratkozni?"
 
 # 100%
 #: jinja2/tidings/unsubscribe.html:13
@@ -457,7 +457,7 @@ msgstr "Mégsem"
 
 #: jinja2/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
-msgstr ""
+msgstr "Leiratkozási hiba"
 
 #: jinja2/tidings/unsubscribe_error.html:10
 msgid ""
@@ -467,6 +467,11 @@ msgid ""
 "wraps onto a second line in the email, try copying and pasting the link into"
 " the browser."
 msgstr ""
+"Nem található a feliratkozás. Vagy már törölve lett, vagy hibás volt a "
+"leiratkozási hivatkozás. Győződjön meg arról, hogy a teljes hivatkozás "
+"átkerült az e-mailből a böngészőbe. Ha a hivatkozás utolsó része egy második"
+" sorba törik az e-mailben, akkor próbálja másolni és beilleszteni a "
+"hivatkozást a böngészőbe."
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -474,7 +479,7 @@ msgstr "Leiratkozva"
 
 #: jinja2/tidings/unsubscribe_success.html:9
 msgid "You have been unsubscribed."
-msgstr ""
+msgstr "Leiratkozott."
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
@@ -495,9 +500,9 @@ msgstr "A megadott fájl nem érvényes. A következő típusokból választhat:
 
 #. 'id' is the revision number, 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachment %(id)s | %(title)s"
-msgstr "{n}. melléklet| {t}"
+msgstr "%(id)s. melléklet | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:15
 msgid "Attachment Information"
@@ -505,9 +510,8 @@ msgstr "Mellékletinformációk"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:19
 #: kuma/wiki/jinja2/wiki/revision.html:17
-#, fuzzy
 msgid "Revision slug:"
-msgstr "Változat forrása:"
+msgstr "Verzió SEO URL-je:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:23
 #: kuma/wiki/jinja2/wiki/revision.html:21
@@ -535,9 +539,9 @@ msgid "MIME Type:"
 msgstr "MIME-típus:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:44
-#, fuzzy, python-format
+#, python-format
 msgid "%(bytes)s bytes"
-msgstr "%s bájt"
+msgstr "%(bytes)s bájt"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:48
 msgid "Is approved?"
@@ -582,6 +586,8 @@ msgid ""
 "This document has no attachments. Images can be attached, and then embedded "
 "in the article."
 msgstr ""
+"A dokumentumnak nincsenek mellékletei. Képek csatolhatóak, és aztán "
+"beágyazhatóak a cikkbe."
 
 # 100%
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:33
@@ -684,9 +690,9 @@ msgid "View key usage history"
 msgstr "Kulcshasználat előzményének megtekintése"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:26
-#, fuzzy, python-format
+#, python-format
 msgid "History (%(count)s)"
-msgstr "Előzmények ({count})"
+msgstr "Előzmények (%(count)s)"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
@@ -694,6 +700,8 @@ msgid ""
 "You need a special permission to use API keys. You may request permission by"
 " <a href=\"%(bugzilla_url)s\">filing a bug</a>."
 msgstr ""
+"Különleges engedélyre van szüksége az API kulcsok használatához. Engedélyt "
+"<a href=\"%(bugzilla_url)s\">hiba bejelentésével</a> kérhet."
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
@@ -758,9 +766,8 @@ msgstr ""
 "%(limit_value)s karakternek kell lennie."
 
 #: kuma/core/sections.py:13
-#, fuzzy
 msgid "Mozilla"
-msgstr "Mozillások"
+msgstr "Mozilla"
 
 # 100%
 #: kuma/core/sections.py:27
@@ -776,7 +783,7 @@ msgstr "Web"
 
 #: kuma/core/sections.py:41
 msgid "Moz Hacks"
-msgstr ""
+msgstr "Moz Hacks"
 
 #: kuma/core/templatetags/jinja_helpers.py:114
 #, python-format
@@ -838,28 +845,27 @@ msgstr "Nem"
 #: kuma/core/templatetags/jinja_helpers.py:299
 #, python-format
 msgid "Today at %s"
-msgstr ""
+msgstr "Ma ekkor: %s"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
-#, fuzzy
 msgid "Add-ons & Extensions"
-msgstr "Kiterjesztések"
+msgstr "Bővítmények és kiterjesztések"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
-msgstr ""
+msgstr "Szakértő vagyok"
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
-msgstr ""
+msgstr "API-k és DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
-msgstr ""
+msgstr "Nyílt webes appok"
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
-msgstr ""
+msgstr "Tanulok"
 
 # 100%
 #: kuma/core/translations/search/filter/canvas/name.py:4
@@ -868,7 +874,7 @@ msgstr "Vászon"
 
 #: kuma/core/translations/search/filter/code/name.py:4
 msgid "Code Samples"
-msgstr ""
+msgstr "Kód példák"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
@@ -900,7 +906,6 @@ msgid "SVG"
 msgstr "SVG"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
-#, fuzzy
 msgid "Web Development"
 msgstr "Webfejlesztés"
 
@@ -911,25 +916,23 @@ msgstr "WebGL"
 
 #: kuma/core/translations/search/filter/xul/name.py:4
 msgid "XUL"
-msgstr ""
+msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 msgid "Document type"
 msgstr "Dokumentumtípus"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
-#, fuzzy
 msgid "Skill level"
-msgstr "Minden vázlatszintre"
+msgstr "Képességszint"
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
 msgstr "Témakörök"
 
 #: kuma/dashboards/forms.py:8
-#, fuzzy
 msgid "All Locales"
-msgstr "Összes fájl"
+msgstr "Összes terület"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
@@ -945,45 +948,41 @@ msgstr "Nap"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr ""
+msgstr "Hét"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
-msgstr ""
+msgstr "30 nap"
 
 #: kuma/dashboards/forms.py:24
 #: kuma/dashboards/jinja2/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr ""
+msgstr "Területi beállítás:"
 
 #: kuma/dashboards/forms.py:28
 #: kuma/dashboards/jinja2/dashboards/revisions.html:19
-#, fuzzy
 msgid "User:"
-msgstr "Felhasználó"
+msgstr "Felhasználó:"
 
 #: kuma/dashboards/forms.py:32
 #: kuma/dashboards/jinja2/dashboards/revisions.html:24
-#, fuzzy
 msgid "Topic:"
-msgstr "Témakörök"
+msgstr "Témakör:"
 
 #: kuma/dashboards/forms.py:34
 #: kuma/dashboards/jinja2/dashboards/revisions.html:30
-#, fuzzy
 msgid "Start Date:"
-msgstr "Kezdés dátuma"
+msgstr "Kezdés dátuma:"
 
 #: kuma/dashboards/forms.py:38
 #: kuma/dashboards/jinja2/dashboards/revisions.html:35
-#, fuzzy
 msgid "End Date:"
-msgstr "Befejezési dátum"
+msgstr "Befejezés dátuma:"
 
 #: kuma/dashboards/forms.py:44
 #: kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "Megelőző időszak:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -1000,13 +999,12 @@ msgid "Revert"
 msgstr "Visszavonás"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:340
-#, fuzzy
 msgid "View Page"
-msgstr "Új oldal"
+msgstr "Oldal megtekintése"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:343
 msgid "Edit Page"
-msgstr "Lap szerkesztése"
+msgstr "Oldal szerkesztése"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:364
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:59
@@ -1015,35 +1013,32 @@ msgstr "Előzmények"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
-msgstr ""
+msgstr "IP-k ki/be"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:34
 msgid "new"
-msgstr ""
+msgstr "új"
 
 # 100%
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35
-#, fuzzy
 msgid "deleted"
-msgstr "Törlés"
+msgstr "törölt"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:50
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "IP tiltása szerkesztésnél"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
-#, fuzzy
 msgid "User agent:"
-msgstr "Felhasználónév:"
+msgstr "Böngészőazonosító:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:57
-#, fuzzy
 msgid "Referrer:"
-msgstr "Hivatkozás"
+msgstr "Hivatkozó:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:64
 #, python-format
@@ -1687,11 +1682,11 @@ msgid "hash"
 msgstr "hash"
 
 #: kuma/users/constants.py:6
-#, fuzzy
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr ""
-"A felhasználónév csak betűket, számokat és ./-/_ karaktereket tartalmazhat."
+"A felhasználónév csak betűket, számokat és ezeket a karaktereket "
+"tartalmazhatja: . - _ +"
 
 #: kuma/users/forms.py:23
 msgid "You must agree to the privacy policy."
@@ -1699,7 +1694,7 @@ msgstr "El kell fogadnia az adatvédelmi irányelveket."
 
 #: kuma/users/forms.py:38
 msgid "Plain text"
-msgstr ""
+msgstr "Egyszerű szöveg"
 
 #: kuma/users/forms.py:40
 msgid "Send me the newsletter"
@@ -1731,7 +1726,7 @@ msgstr "Érdeklődés"
 
 #: kuma/users/forms.py:167
 msgid "Expertise"
-msgstr ""
+msgstr "Szakértelem"
 
 #: kuma/users/forms.py:173
 msgid "Username"
@@ -1772,11 +1767,11 @@ msgstr "Facebook"
 
 #: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "Szakterületeknek az érdeklődések részhalmazának kell lennie"
 
 #: kuma/users/forms.py:275
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Ez a mező nem hagyható üresen."
 
 #: kuma/users/forms.py:281
 msgid "Username already in use."
@@ -1785,12 +1780,12 @@ msgstr "A felhasználónév már foglalt."
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_user)s kitiltva %(banned_by)s által"
 
 #: kuma/users/models.py:32
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s (már nem aktív)"
 
 #: kuma/users/models.py:51
 msgid "Language"
