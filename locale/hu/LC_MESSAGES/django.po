@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-22 10:15+0000\n"
+"PO-Revision-Date: 2016-01-22 13:03+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -215,7 +215,7 @@ msgstr "Referenciák és útmutatók"
 
 #: jinja2/base.html:139
 msgid "Learn the Web"
-msgstr ""
+msgstr "Ismerje meg a webet"
 
 #: jinja2/base.html:140
 msgid "Tutorials"
@@ -281,14 +281,12 @@ msgstr "Visszajelzés"
 
 # 100%
 #: jinja2/base.html:166
-#, fuzzy
 msgid "Get Firefox help"
-msgstr "Firefox 4"
+msgstr "Segítség a Firefoxhoz"
 
 #: jinja2/base.html:167
-#, fuzzy
 msgid "Get web development help"
-msgstr "Webfejlesztés"
+msgstr "Segítség webfejlesztéshez"
 
 #: jinja2/base.html:170
 msgid "Join the MDN community"
@@ -324,6 +322,9 @@ msgid ""
 "contributors.</p> <p>Content is available under <a "
 "href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
+"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network és egyéni "
+"hozzájárulók.</p> <p>A tartalom <a href=\"%(copyright_url)s\">ezen "
+"licencek</a> alatt érhető el.</p>"
 
 #: jinja2/base.html:203
 msgid "About MDN"
@@ -406,18 +407,20 @@ msgstr "GitHub"
 #: jinja2/includes/newsletter.html:4
 #: kuma/users/jinja2/users/apps_newsletter.html:7
 msgid "Firefox Apps & Hacks Newsletter"
-msgstr ""
+msgstr "Firefox Apps & Hacks hírlevél"
 
 #: jinja2/includes/newsletter.html:6
 msgid ""
 "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the "
 "Open Web apps ecosystem."
 msgstr ""
+"Feliratkozás rendszeres hírekre a Firefox OS, Firefox Marketplace és a nyílt"
+" webapp ökoszisztéma kapcsán."
 
 #: jinja2/includes/newsletter.html:35
 #, python-format
 msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
-msgstr ""
+msgstr "az <a href=\"%(privacy_url)s\">Adatvédelmi nyilatkozathoz</a>"
 
 # 100%
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154
@@ -574,7 +577,7 @@ msgstr "Mellékletek"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:12
 msgid "Learn how to use Attachments"
-msgstr ""
+msgstr "Ismerje meg a mellékletek használatát"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:23
@@ -641,7 +644,7 @@ msgstr "Kulcs keresése"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
-msgstr ""
+msgstr "Hashelt titok"
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
@@ -745,25 +748,25 @@ msgstr "Titkos"
 
 #: kuma/core/apps.py:13
 msgid "Core"
-msgstr ""
+msgstr "Mag"
 
 #: kuma/core/form_fields.py:57
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Ensure this value has at least %(limit_value)s characters (it has "
 "%(show_value)s)."
 msgstr ""
-"A cím %(limit_value)s vagy annál kevesebb karaktert kell, hogy tartalmazzon."
-" Jelenleg ez %(show_value)s karakter hosszú."
+"Győződjön meg róla, hogy ez az érték legalább %(limit_value)s karakter "
+"hosszú (jelenlegi mérete: %(show_value)s)."
 
 #: kuma/core/form_fields.py:62
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Ensure this value has at most %(limit_value)s characters (it has "
 "%(show_value)s)."
 msgstr ""
-"A felhasználónév túl hosszú (%(show_value)s karakter). Legalább "
-"%(limit_value)s karakternek kell lennie."
+"Győződjön meg róla, hogy ez az érték legfeljebb %(limit_value)s karakter "
+"hosszú (jelenlegi mérete: %(show_value)s)."
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
@@ -1043,35 +1046,33 @@ msgstr "Hivatkozó:"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:64
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
-msgstr ""
+msgstr "%(user)s kitiltotta ekkor: %(ban_date)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:78
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Elküldve mint %(submission_type)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:81
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s, feladó: %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
-#, fuzzy
 msgid "Resubmit"
-msgstr "Elküldés"
+msgstr "Újraküldés"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
-#, fuzzy
 msgid "Submit as:"
-msgstr "Elküldés"
+msgstr "Elküldés mint:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:94
 msgid "spam"
-msgstr ""
+msgstr "levélszemét"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:95
 msgid "ham"
-msgstr ""
+msgstr "nem levélszemét"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:107
 msgid "There are no revisions matching this filter set."
@@ -1096,20 +1097,22 @@ msgstr "Kapjon e-mail amikor a magyar verziókat elfogadják"
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:7
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr ""
+msgstr "Ne kapjon több e-mailt amikor magyar véleményezések várakoznak"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr ""
+msgstr "Kapjon e-mailt amikor magyar véleményezések várakoznak"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid ""
 "The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
 "web developers to come change the world with Mozilla."
 msgstr ""
+"A Mozilla fejlesztő hálózat (MDN) Ösztöndíj programja világszínvonalú "
+"webfejlesztőket hív meg, hogy megváltoztassák a világot a Mozillával."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
@@ -1134,7 +1137,7 @@ msgstr "Keresés a dokumentációkban"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
-msgstr ""
+msgstr "Témák megjelenítése"
 
 #: kuma/landing/jinja2/landing/homepage.html:66
 msgid "Web Technologies"
@@ -1142,11 +1145,11 @@ msgstr "Webes technológiák"
 
 #: kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web<br />Platform"
-msgstr ""
+msgstr "Webes<br />platform"
 
 #: kuma/landing/jinja2/landing/homepage.html:71
 msgid "Web APIs &amp; DOM"
-msgstr ""
+msgstr "Webes API-k és DOM"
 
 # 100%
 #: kuma/landing/jinja2/landing/homepage.html:72
@@ -1164,9 +1167,8 @@ msgid "more..."
 msgstr "tovább…"
 
 #: kuma/landing/jinja2/landing/homepage.html:79
-#, fuzzy
 msgid "Mozilla<br> Docs"
-msgstr "Mozillások"
+msgstr "Mozilla<br> dokumentációk"
 
 #: kuma/landing/jinja2/landing/homepage.html:84
 msgid "App Center"
@@ -1182,7 +1184,7 @@ msgstr "Vizsgáló"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Web Console"
-msgstr ""
+msgstr "Webkonzol"
 
 #: kuma/landing/jinja2/landing/homepage.html:93
 msgid "JavaScript Debugger"
@@ -1190,7 +1192,7 @@ msgstr "JavaScript hibakereső"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Performance Tools"
-msgstr ""
+msgstr "Teljesítmény eszközök"
 
 #: kuma/landing/jinja2/landing/homepage.html:99
 msgid "Connect"
@@ -1201,6 +1203,8 @@ msgid ""
 "Get Web technology news from Mozilla, get help from other developers, and "
 "more!"
 msgstr ""
+"Webes technológiai hírek a Mozillától, segítség kérése más fejlesztőktől, és"
+" még több minden!"
 
 #: kuma/landing/jinja2/landing/homepage.html:101
 msgid "Learn more and sign up!"
@@ -1208,29 +1212,31 @@ msgstr "Tudjon meg többet, és iratkozzon fel!"
 
 #: kuma/landing/jinja2/landing/homepage.html:110
 msgid "Open Web and Mobile"
-msgstr ""
+msgstr "Nyílt web és mobil"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Learn Web Development"
-msgstr ""
+msgstr "Tanuljon a webfejlesztésről"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
-msgstr ""
+msgstr "Szerezze be az Önhöz hasonló fejlesztőknek készült böngészőt"
 
 #: kuma/landing/jinja2/landing/homepage.html:120
 msgid "Celebrate ten years of documenting your Web."
-msgstr ""
+msgstr "Ünnepelje a web 10 évnyi dokumentálását."
 
 #: kuma/landing/jinja2/landing/homepage.html:124
 msgid "Build Open Web Apps"
-msgstr ""
+msgstr "Nyílt webes appok készítése"
 
 #: kuma/landing/jinja2/landing/homepage.html:133
 msgid ""
 "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-"
 "hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
+"<a href=\"http://hacks.mozilla.org\">bővebben itt: hacks.mozilla.org<i aria-"
+"hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:138
 msgid "Get Involved"
@@ -1244,17 +1250,24 @@ msgid ""
 "class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
+"<p class=\"numbers\"> <span class=\"row1\">Csatlakozzon <span "
+"class=\"number\">%(contributors)s</span> közreműködőhöz</span> <span "
+"class=\"row2\"><span class=\"number\">%(locales)s</span> nyelven</span> "
+"<span class=\"row3\">a világ minden tájáról.</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:147
 #: kuma/landing/jinja2/landing/homepage.html:154
 msgid "Help improve MDN"
-msgstr ""
+msgstr "Segítsen az MDN tökéletesítésében"
 
 #: kuma/landing/jinja2/landing/homepage.html:158
 msgid ""
 "All parts of MDN (docs and the site itself) are created by an open community"
 " of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
+"Az MDN minden részét (a dokumentációkat és az oldat magát is) egy "
+"fejlesztőkből álló nyílt közösség hozza létre. Kérjük csatlakozzon hozzánk! "
+"Válasszon egyet ezek közül, hogy segítsen:"
 
 #: kuma/landing/jinja2/landing/homepage.html:164
 msgid "Getting started"
@@ -1262,11 +1275,11 @@ msgstr "Első lépések"
 
 #: kuma/landing/jinja2/landing/homepage.html:165
 msgid "Editorial review"
-msgstr ""
+msgstr "Szerkesztői felülvizsgálat"
 
 #: kuma/landing/jinja2/landing/homepage.html:166
 msgid "Technical review"
-msgstr ""
+msgstr "Műszaki felülvizsgálat"
 
 #: kuma/landing/jinja2/landing/homepage.html:171
 msgid "Translating"
@@ -2346,6 +2359,9 @@ msgid ""
 "next=\"%(persona_next_url)s\">Connect your %(provider_name)s account to "
 "it.</a>"
 msgstr ""
+"A kiválasztott e-mail címmel már létezik profil. <a "
+"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Kapcsolja hozzá %(provider_name)s fiókját.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:155
 #, python-format
@@ -2355,6 +2371,10 @@ msgid ""
 "and will be used according to our <a href=\"%(privacy_url)s\">privacy "
 "policy</a>."
 msgstr ""
+"Mely e-mail címet használjuk MDN-nel kapcsolatos üzenetek és értesítések "
+"küldésére? Ez a cím <strong>nem</strong> jelenik meg az MDN-en, és az <a "
+"href=\"%(privacy_url)s\">adatvédelem nyilatkozat</a> alapján lesz "
+"felhasználva."
 
 #: kuma/users/jinja2/socialaccount/signup.html:170
 #, python-format
@@ -2362,6 +2382,8 @@ msgid ""
 "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
 "href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
+"a Mozilla <a href=\"%(terms_url)s\">Feltételei</a> és <a "
+"href=\"%(privacy_url)s\">Adatvédelmi nyilatkozata</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:179
 msgid "Create my MDN profile"
@@ -2792,20 +2814,21 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
-msgstr ""
+msgstr "Felülvizsgálatra szoruló MDN dokumentumok"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
 msgstr ""
+"Legutóbbi módosítások MDN dokumentumokban, amelyeket felül kell vizsgálni"
 
 #: kuma/wiki/feeds.py:189
 #, python-format
 msgid "MDN documents for %s review"
-msgstr ""
+msgstr "MDN dokumentumok %s felülvizsgálatra"
 
 #: kuma/wiki/feeds.py:193
 msgid "MDN documents for review"
-msgstr ""
+msgstr "Felülvizsgálandó MDN dokumentumok"
 
 #: kuma/wiki/feeds.py:223
 #, python-format
@@ -3008,7 +3031,7 @@ msgstr "Megjegyzés:"
 
 #: kuma/wiki/forms.py:221
 msgid "Tag this revision for review?"
-msgstr "Megcímkézi ezt a verziót átnézésre?"
+msgstr "Megcímkézi ezt a verziót felülvizsgálatra?"
 
 #: kuma/wiki/forms.py:228
 msgid "Tag this revision for localization?"
@@ -3037,11 +3060,11 @@ msgstr "Dokumentum címkék"
 
 #: kuma/wiki/models.py:1478
 msgid "Review Tag"
-msgstr "Átnézés címke"
+msgstr "Felülvizsgálat címke"
 
 #: kuma/wiki/models.py:1479
 msgid "Review Tags"
-msgstr "Átnézés címkék"
+msgstr "Felülvizsgálat címkék"
 
 #: kuma/wiki/models.py:1485
 msgid "Localization Tag"
@@ -3301,11 +3324,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:265
 msgid "This article is in need of a technical review."
-msgstr ""
+msgstr "Ez a cikk műszaki felülvizsgálatra szorul."
 
 #: kuma/wiki/jinja2/wiki/document.html:270
 msgid "This article is in need of an editorial review."
-msgstr ""
+msgstr "Ez a cikk szerkesztői felülvizsgálatra szorul."
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
@@ -3370,6 +3393,10 @@ msgid ""
 "since you started editing. You may save again, but try to resolve any "
 "conflicts by hand so that the changes made since you started are not lost."
 msgstr ""
+"Kérjük, olvassa el a módosításai közti különbségeket, és az azóta mentett "
+"módosításokat, mióta hozzáfogott a szerkesztéshez. Újra lementheti, de "
+"próbálja feloldani kézzel a lehetséges ütközéseket úgy, hogy a kezdés óta "
+"végrehajtott módosítások nem vesznek el."
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
@@ -3447,7 +3474,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:188
 msgid "Learn how to tag an article"
-msgstr ""
+msgstr "Ismerje meg a cikkek címkézését"
 
 #: kuma/wiki/jinja2/wiki/edit.html:190
 #: kuma/wiki/jinja2/wiki/translate.html:112
@@ -3516,7 +3543,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
-msgstr ""
+msgstr "Előnézeti URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 #, fuzzy
@@ -3563,7 +3590,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
-msgstr ""
+msgstr "Ez egy mentetlen dokumentum előnézete."
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
@@ -3703,7 +3730,7 @@ msgstr "Felhasználó profiljának megtekintése:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
-msgstr ""
+msgstr "Összehasonlítás az MDN-en:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
@@ -3715,33 +3742,33 @@ msgstr "Leírás szerkesztése:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "Cikk előzményei:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
-msgstr ""
+msgstr "Feliratkozott ezek szerkesztéseire: %(title)s, és minden alcikkje."
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:44
 #, python-format
 msgid "You are subscribed to edits on: %(title)s."
-msgstr ""
+msgstr "Feliratkozott ennek a szerkesztéseire: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "The following reviews have been requested:"
-msgstr ""
+msgstr "A következő felülvizsgálatokat kérték:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical"
-msgstr ""
+msgstr "Műszaki"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial"
-msgstr ""
+msgstr "Szerkesztői"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Review completed"
-msgstr ""
+msgstr "Felülvizsgálat befejezve"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
@@ -3758,7 +3785,7 @@ msgstr "Fordítás hozzáadása"
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:43
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:46
 msgid "Watch"
-msgstr ""
+msgstr "Figyelés"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "New sub-article"
@@ -3976,7 +4003,7 @@ msgstr "Módosítások eldobása"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr "Ellenőrzés szükséges?"
+msgstr "Felülvizsgálat szükséges?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
@@ -3984,7 +4011,7 @@ msgstr "Verzió megjegyzése"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr ""
+msgstr "Ismerje meg a verzió megjegyzések használatát"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid ""
@@ -4080,25 +4107,25 @@ msgstr "Nincsenek cikkek."
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
 msgid "Documents for %(tag)s review"
-msgstr ""
+msgstr "Dokumentumok %(tag)s felülvizsgálatra"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr ""
+msgstr "Felülvizsgálandó dokumentumok"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr ""
+msgstr "Felülvizsgálandó cikkek címkéi: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
-msgstr ""
+msgstr "Összes felülvizsgálandó cikk"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:23
 #, python-format
 msgid "Found %(count)s documents."
-msgstr "%(count)s dokumentum találva"
+msgstr "%(count)s dokumentum találva."
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
@@ -4234,7 +4261,7 @@ msgstr "Átirányítva innen: %(url)s"
 #: kuma/wiki/views/document.py:648
 #, python-format
 msgid "I learned about %(title)s on MDN."
-msgstr ""
+msgstr "Megismertem ezt az MDN-en: %(title)s."
 
 #: kuma/wiki/views/document.py:718
 #, python-format
