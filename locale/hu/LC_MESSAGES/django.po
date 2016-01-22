@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-22 14:54+0000\n"
+"PO-Revision-Date: 2016-01-22 16:10+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -999,7 +999,7 @@ msgstr "Szűrés"
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "Revert"
-msgstr "Visszavonás"
+msgstr "Visszaállítás"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:340
 msgid "View Page"
@@ -1286,7 +1286,6 @@ msgid "Translating"
 msgstr "Fordítás"
 
 #: kuma/landing/jinja2/landing/homepage.html:172
-#, fuzzy
 msgid "Promoting MDN"
 msgstr "Az MDN népszerűsítése"
 
@@ -1509,11 +1508,11 @@ msgid "Search is temporarily unavailable. Please try again in a few minutes."
 msgstr "A keresés átmenetileg nem érhető el, próbálja meg pár perccel később."
 
 #: kuma/search/utils.py:17
-#, fuzzy
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
-msgstr "A keresés átmenetileg nem érhető el, próbálja meg pár perccel később."
+msgstr ""
+"Valami elromlott a keresés futtatásakor. Próbálja meg pár perccel később."
 
 #: kuma/search/views.py:95
 msgid "name"
@@ -1558,7 +1557,9 @@ msgstr "Eredmények"
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
 msgstr[0] ""
+"%(count)s dokumentum találva erre: „%(query)s” %(locale_native)s nyelven."
 msgstr[1] ""
+"%(count)s dokumentum találva erre: „%(query)s” %(locale_native)s nyelven."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
@@ -1569,14 +1570,18 @@ msgid_plural ""
 "%(count)s documents found for \"%(query)s\" in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
+"%(count)s dokumentum találva erre: „%(query)s” %(locale_native)s és "
+"%(default_locale_native)s nyelveken."
 msgstr[1] ""
+"%(count)s dokumentum találva erre: „%(query)s” %(locale_native)s és "
+"%(default_locale_native)s nyelveken."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s dokumentum találva %(locale_native)s nyelven."
+msgstr[1] "%(count)s dokumentum találva %(locale_native)s nyelven."
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
@@ -1586,21 +1591,25 @@ msgid_plural ""
 "%(count)s documents found in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
+"%(count)s dokumentum találva %(locale_native)s és %(default_locale_native)s "
+"nyelven."
 msgstr[1] ""
+"%(count)s dokumentum találva %(locale_native)s és %(default_locale_native)s "
+"nyelven."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s dokumentum találva erre: „%(query)s”"
+msgstr[1] "%(count)s dokumentum találva erre: „%(query)s”"
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s dokumentum találva."
+msgstr[1] "%(count)s dokumentum találva."
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
@@ -1609,30 +1618,30 @@ msgstr "Összes találat megjelenítése"
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "Találatok megjelenítése ettől: %(start)s, eddig: %(end)s."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "Keresés újra csak %(default_locale_native)s nyelven"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr ""
+msgstr "Dokumentumok"
 
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
 msgstr ""
 
 #: kuma/spam/forms.py:9
-#, fuzzy
 msgid "The submitted data contains invalid content."
-msgstr "Helytelen tartalom"
+msgstr "Az elküldött adatok érvénytelen tartalmat tartalmaznak."
 
 #: kuma/spam/forms.py:87
-#, fuzzy
 msgid "The submitted data contains invalid content. Please try again."
-msgstr "Helytelen tartalom"
+msgstr ""
+"Az elküldött adatok érvénytelen tartalmat tartalmaznak. Kérjük, próbálja meg"
+" újra."
 
 #: kuma/spam/models.py:10
 #, fuzzy
@@ -3245,7 +3254,7 @@ msgstr "Vázlat"
 
 #: kuma/wiki/jinja2/wiki/create.html:44
 msgid "URL segment that identifies the page"
-msgstr ""
+msgstr "URL részlet, amely azonosítja az oldalt"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:2
 #: kuma/wiki/jinja2/wiki/deletion_log.html:7
@@ -3255,7 +3264,7 @@ msgstr "Dokumentum törölve"
 #: kuma/wiki/jinja2/wiki/deletion_log.html:9
 #, python-format
 msgid "This document was deleted on %(when)s."
-msgstr ""
+msgstr "Ez a dokumentum törölték ekkor: %(when)s."
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
@@ -3305,6 +3314,9 @@ msgid ""
 "This document is being rendered for the first time by the system. Please <a "
 "href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
+"Ez az oldalt először rendereli le a rendszer. Kérjük <a "
+"href=\"%(url)s\">töltse újra az oldalt</a> egy pár perc múlva a teljes "
+"tartalom megtekintéséhez."
 
 #: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
@@ -3313,6 +3325,9 @@ msgid ""
 "progress</abbr>. If the content below seems stale or if something is "
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
+"A dokumentum frissítése <abbr title=\"%(started_at)s\">épp folyamatban "
+"van</abbr>. Ha a tartalom elavultnak tűnik, vagy valami hiányzik, akkor "
+"kérjük <a href=\"%(url)s\">töltse újra az oldalt</a> egy pár percen múlva."
 
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
@@ -3321,6 +3336,9 @@ msgid ""
 "scheduled</abbr>. If the content below seems stale or if something is "
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
+"A dokumentum frissítése <abbr title=\"%(scheduled_at)s\">be lett "
+"ütemezve</abbr>. Ha úgy tűnik hogy a tartalom elavult, vagy valami hiányzik,"
+" kérjük <a href=\"%(url)s\">töltse újra az oldalt</a> néhány perc múlva."
 
 #: kuma/wiki/jinja2/wiki/document.html:265
 msgid "This article is in need of a technical review."
@@ -3336,6 +3354,8 @@ msgid ""
 "This translation is incomplete. Please help <a "
 "href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
+"Ez a fordítás nem teljes. Kérjük segítsen <a href=\"%(translate_url)s\">ezt "
+"a cikket lefordítani</a> angolról."
 
 #: kuma/wiki/jinja2/wiki/document.html:281
 msgid "This translation is in progress."
@@ -3347,6 +3367,9 @@ msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
 "yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
+"Önkénteseink még nem fordították le ezt a cikket <bdi>%(locale)s</bdi> "
+"nyelvre. <a href=\"%(help_link)s\">Csatlakozzon, és segítsen a munka "
+"befejezésében!</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:299
 msgid "This article doesn't have any content yet."
@@ -3366,7 +3389,7 @@ msgstr "Ennek a leírásnak még nincs jóváhagyott tartalma."
 
 #: kuma/wiki/jinja2/wiki/document.html:325
 msgid "Document Tags and Contributors"
-msgstr ""
+msgstr "Dokumentum címkék és a közreműködők"
 
 # 100%
 #: kuma/wiki/jinja2/wiki/document.html:331
@@ -3400,7 +3423,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
-msgstr ""
+msgstr "A változtatásai"
 
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:42
@@ -3426,7 +3449,7 @@ msgstr "Oldalcím és -tulajdonságok szerkesztése"
 
 #: kuma/wiki/jinja2/wiki/edit.html:127
 msgid "Rendering max age:"
-msgstr ""
+msgstr "Renderelés max. kora:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:129
 msgid "Days"
@@ -3445,6 +3468,8 @@ msgid ""
 "Find the translation source with the lookup below and then click \"Save "
 "Changes.\""
 msgstr ""
+"Keresse meg a fordítás forrását a lenti keresővel és kattintson a "
+"„Változások mentésére”."
 
 #: kuma/wiki/jinja2/wiki/edit.html:148
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:62
@@ -3453,7 +3478,7 @@ msgstr "Keresés:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:162
 msgid "Thank you for taking the time to improve MDN!"
-msgstr ""
+msgstr "Köszönjük hogy részt vesz az MDN tökéletesítésében!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:164
 #, python-format
@@ -3462,15 +3487,20 @@ msgid ""
 "to common editing questions within our <a target=\"_blank\" "
 "href=\"%(url)s\">Editor Guide</a>."
 msgstr ""
+"Úgy látszik ez az első közreműködése az MDN-ben. A gyakori szerkesztési "
+"kérdésekre válaszokat találhat a <a target=\"_blank\" "
+"href=\"%(url)s\">Szerkesztői útmutatónkban</a>."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid ""
 "Don't be afraid to break something, you can always revert your changes."
 msgstr ""
+"Ne féljen attól hogy valami eltörik, mindig visszaállíthatja a "
+"változtatásokat."
 
 #: kuma/wiki/jinja2/wiki/edit.html:169
 msgid "Have fun and be proud of your contribution!"
-msgstr ""
+msgstr "Jó szórakozást, és legyen büszke a közreműködésére!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:188
 msgid "Learn how to tag an article"
@@ -3484,11 +3514,14 @@ msgid ""
 "filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the"
 " Tagging Guide</a>."
 msgstr ""
+"Kategorizálja a cikket. Ez kereshetővé teszi a cikket a megfelelő szűrő "
+"alatt a keresőmotorban. <a target=\"_blank\" href=\"%(url)s\">Olvassa el a "
+"címkézési útmutatót</a>."
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
 msgid "View %(locale)s parent"
-msgstr ""
+msgstr "%(locale)s szülő megtekintése"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
@@ -3504,7 +3537,7 @@ msgstr "%(locale)s fordítás szerkesztése"
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
 msgid "Move Article | %(document)s"
-msgstr "Cikk mozgatása | %(document)s"
+msgstr "Cikk áthelyezése | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid ""
@@ -3520,57 +3553,59 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
-msgstr ""
+msgstr "Ne tartalmazza az URL-sémát („a https://”)."
 
 #: kuma/wiki/jinja2/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "Csak az URL „/docs/” után következő részét adja meg."
 
 #: kuma/wiki/jinja2/wiki/move.html:25
 msgid ""
 "Don't include a trailing slash (this will be removed for you if you include "
 "it, but you should leave it out)."
 msgstr ""
+"Ne tartalmazza a kezdő ferde vonalat (ez eltávolításra kerül ha megadja, de "
+"célszerű kihagynia)."
 
 #: kuma/wiki/jinja2/wiki/move.html:31
 msgid ""
 "Your requested move cannot be completed due to the following slug conflicts:"
 msgstr ""
+"A kért áthelyezés nem fejezhető be a következő SEO URL ütközések miatt:"
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
-msgstr ""
+msgstr "Jelenlegi SEO URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
 msgstr "Előnézeti URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:74
-#, fuzzy
 msgid "New Slug:"
 msgstr "Új SEO URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
-msgstr ""
+msgstr "Keresés dokumentum cím alapján"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
-msgstr ""
+msgstr "Szülő címe"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
 msgid "Move %(count)s Pages"
-msgstr ""
+msgstr "%(count)s oldal áthelyezése"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
-msgstr ""
+msgstr "Oldal áthelyezése"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
 msgid "The following %(count)s subpages will be affected by this move:"
-msgstr ""
+msgstr "A következő %(count)s aloldalt érinti ez az áthelyezés:"
 
 #: kuma/wiki/jinja2/wiki/move.html:104
 msgid "No other documents will be affected by this change."
@@ -3578,7 +3613,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:2
 msgid "Page move requested"
-msgstr ""
+msgstr "Oldal mozgatás kérve"
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:9
 #, python-format
@@ -3587,6 +3622,9 @@ msgid ""
 "href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when "
 "it finishes, or if any errors occur during the move.</p>"
 msgstr ""
+"<h1>Oldal áthelyezés beütemezve</h1> <p>%(old_slug)s SEO URL áthelyezése "
+"ide: <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p>Egy e-mailt fog kapni, "
+"amint befejeződik, vagy bármilyen hiba történik az áthelyezés során."
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
@@ -3797,7 +3835,7 @@ msgstr "Cikk klónozása"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
-msgstr "Cikk mozgatása"
+msgstr "Cikk áthelyezése"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "View in admin"
@@ -4039,6 +4077,11 @@ msgid ""
 "deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
 "belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"A beküldése olyan tartalmat tartalmaz, amely nem biztos hogy megfelelő az "
+"MDN számára. A nem megfelelő tartalmak ismételt beküldése a fiókja "
+"letiltásával végződhet. Tekintse meg a „<a "
+"href=\"%(does_this_belong_url)s\">Van-e helye az MDN-en?</a>” útmutatónkat a"
+" részletekről, hogy mi tekinthető megfelelő tartalomnak."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -4046,6 +4089,9 @@ msgid ""
 "If you believe you’ve received this message by mistake, please <a "
 "href=\"%(admin_email)s\">contact the site administrators</a>."
 msgstr ""
+"Ha úgy gondolja, hibásan kapta ezt az üzenetet, kérjük <a "
+"href=\"%(admin_email)s\">lépjen kapcsolatba a webhely "
+"adminisztrátoraival</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -4066,18 +4112,20 @@ msgid ""
 "Find the translation source with the lookup above and then click \"Save "
 "Changes."
 msgstr ""
+"Keresse meg a fordítás forrását a fenti keresővel és kattintson a "
+"„Változások mentésére”."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s dokumentum találva."
+msgstr[1] "%(num)s dokumentum találva."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
 #, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr ""
+msgstr "Ezzel megcímkézett cikkek: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
@@ -4087,8 +4135,8 @@ msgstr "Összes sablon"
 #, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s sablon található."
+msgstr[1] "%(num)s sablon található."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
@@ -4096,11 +4144,11 @@ msgstr "Hibás dokumentumok"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
-msgstr ""
+msgstr "Felső szintű dokumentumok"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
-msgstr ""
+msgstr "Szülő nélküli dokumentumok"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
@@ -4108,7 +4156,7 @@ msgstr "Összes dokumentum"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
-msgstr ""
+msgstr "Fordítás frissítése szükséges"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:33
@@ -4175,18 +4223,18 @@ msgstr "Nincsenek címkék."
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr ""
+msgstr "Honosított cikkek ezzel címkézve: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr ""
+msgstr "Honosítási címkével jelölt cikkek"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:15
 #, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s dokumentum találva."
+msgstr[1] "%(count)s dokumentum találva."
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
@@ -4211,6 +4259,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          A következő dokumentumok véglegesen törlésre fognak kerülni az adatbázisból. Ez a művelet nem fordítható vissza. A megszakításhoz nyomja meg a böngésző „Vissza” gombját.\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
@@ -4219,7 +4270,7 @@ msgstr "„Dokumentumok betöltése”"
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
 msgid "Add %(name)s"
-msgstr ""
+msgstr "%(name)s hozzáadása"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
@@ -4229,23 +4280,23 @@ msgstr "Dokumentumok betöltése"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
-msgstr ""
+msgstr "Kérjük javítsa az alábbi hibát."
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "Betöltés"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
-msgstr ""
+msgstr "Akismet beküldés részletei"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
-msgstr ""
+msgstr "Az Akismet beküldéshez kérjük mentse el a lenti űrlapot."
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_list.html:4
 msgid "Select an Akismet submission for more details"
-msgstr ""
+msgstr "Válasszon egy Akismet beküldést további részletekért"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:100
 #: kuma/wiki/templatetags/jinja_helpers.py:101
@@ -4257,13 +4308,15 @@ msgstr "%s. verzió"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:106
 msgid "There was an error generating the content."
-msgstr ""
+msgstr "Hiba történt a tartalom előállításakor."
 
 #: kuma/wiki/views/delete.py:50
 msgid ""
 "Document already exists. Note: You cannot revert a document that has been "
 "moved until you delete its redirect."
 msgstr ""
+"A dokumentum már létezik. Megjegyzés: Addig nem állíthat vissza egy "
+"dokumentumot amelyet áthelyeztek, amíg nem törli az átirányítását."
 
 #: kuma/wiki/views/document.py:600
 #, python-format
@@ -4283,15 +4336,15 @@ msgstr "Nem támogatott tartalomtípus: %s"
 #: kuma/wiki/views/document.py:725
 #, python-format
 msgid "Request parsing error: %s"
-msgstr ""
+msgstr "Kérelem-feldolgozási hiba: %s"
 
 #: kuma/wiki/views/document.py:745
 msgid "ETag precondition failed"
-msgstr ""
+msgstr "ETag hibás előfeltétel"
 
 #: kuma/wiki/views/edit.py:114
 msgid "Sections may only be edited inline."
-msgstr ""
+msgstr "A szakaszokat csak helyben lehet szerkeszteni."
 
 #: kuma/wiki/views/misc.py:53
 msgid ""
@@ -4302,16 +4355,16 @@ msgstr ""
 #: kuma/wiki/views/misc.py:106
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
-msgstr ""
+msgstr "%(obj_count)d objektum betöltve."
 
 #: kuma/wiki/views/misc.py:110
 #, python-format
 msgid "Failed to import data: %(error)s"
-msgstr ""
+msgstr "Adatok importálása nem sikerült: %(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
-msgstr ""
+msgstr "A dokumentumot szerkesztették; kérjük vizsgálja felül."
 
 #: kuma/wiki/views/translate.py:72
 msgid "You cannot translate this document."
