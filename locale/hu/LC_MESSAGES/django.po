@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-22 13:03+0000\n"
+"PO-Revision-Date: 2016-01-22 14:54+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -3068,11 +3068,11 @@ msgstr "Felülvizsgálat címkék"
 
 #: kuma/wiki/models.py:1485
 msgid "Localization Tag"
-msgstr "Honosítás címke"
+msgstr "Honosítási címke"
 
 #: kuma/wiki/models.py:1486
 msgid "Localization Tags"
-msgstr "Honosítás címkék"
+msgstr "Honosítási címkék"
 
 #: kuma/wiki/models.py:1519
 msgid "No table of contents"
@@ -3716,12 +3716,12 @@ msgstr "Megjegyzések a verzióhoz"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Localization flags"
-msgstr ""
+msgstr "Honosítási címkék"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
 msgid "%(creator)s changed %(document_title)s."
-msgstr ""
+msgstr "%(creator)s módosította ezt: %(document_title)s."
 
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
@@ -3734,11 +3734,11 @@ msgstr "Összehasonlítás az MDN-en:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
-msgstr "Leírás megtekintése:"
+msgstr "Cikk megtekintése:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr "Leírás szerkesztése:"
+msgstr "Cikk szerkesztése:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
@@ -3801,7 +3801,7 @@ msgstr "Cikk mozgatása"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "View in admin"
-msgstr ""
+msgstr "Megtekintés az adminban"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:78
 msgid "Delete this article"
@@ -3809,11 +3809,11 @@ msgstr "Cikk törlése"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
-msgstr ""
+msgstr "Tartalom zóna kezelése"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:86
 msgid "Convert to content zone"
-msgstr ""
+msgstr "Tartalom zónára átalakítás"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
 msgid "Print this article"
@@ -3843,6 +3843,8 @@ msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
 msgstr ""
+"A kiszolgáló a tartalom összehasonlítását rendereli. Kérjük, frissítse ezt "
+"az oldalt néhány perc múlva."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:107
 msgid "Share:"
@@ -3855,24 +3857,24 @@ msgstr "Google+"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Feliratkozás ezekre: %(title)s és minden alcikke"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:129
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Leiratkozás ezekről: %(title)s és minden alcikke"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr ""
+msgstr "Feliratkozott erre a cikkre és minden alcikkére."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr ""
+msgstr "Leiratkozott erről a cikkről és minden alcikkéről."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 msgid "Updating subscription status"
-msgstr ""
+msgstr "Feliratkozási állapot frissítése"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:144
 #, python-format
@@ -3902,23 +3904,23 @@ msgstr "Feliratkozás a <bdi>%(language)s</bdi> verzióra"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:160
 #, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Leiratkozás a <bdi>%(language)s</bdi> verzióról"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
-msgstr ""
+msgstr "Feliratkozott a cikk %(language)s verziójára."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
 #, python-format
 msgid ""
 "You have been unsubscribed from the %(language)s version of this article."
-msgstr ""
+msgstr "Leiratkozott a cikk %(language)s verziójáról."
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
-msgstr ""
+msgstr "Tartalomjegyzék létrehozása"
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:50
@@ -3933,17 +3935,21 @@ msgid_plural ""
 "There were scripting errors on this page. While those are being addressed by"
 " site editors, you can view partial content below."
 msgstr[0] ""
+"Parancsfájl futtatási hiba történt az oldalon. Amíg az oldal szerkesztői "
+"javítják, addig lent megtekintheti a részleges tartalmat."
 msgstr[1] ""
+"Parancsfájl futtatási hibák történtek az oldalon. Amíg az oldal szerkesztői "
+"javítják őket, addig lent megtekintheti a részleges tartalmat."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
-msgstr ""
+msgstr "Hibainformációk elrejtése"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "További tudnivalók a hibáról"
+msgstr[1] "További tudnivalók a hibákról"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid ""
@@ -3951,34 +3957,38 @@ msgid ""
 "href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
 "troubleshooting guide</a> as a starting point."
 msgstr ""
+"Bárki, akinek van MDN profilja, szerkesztheti a dokumentumok a hiba "
+"javításához. Használja a <a "
+"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">hibaelhárítási "
+"útmutatót</a> kiindulási pontként."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
-msgstr ""
+msgstr "Hiba típusa:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
-msgstr ""
+msgstr "Ebben a makróban:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
-msgstr ""
+msgstr "Sablon létrehozása"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
-msgstr ""
+msgstr "Sablon szerkesztése"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
-msgstr ""
+msgstr "Makró feldolgozása:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
-msgstr ""
+msgstr "Dokumentum szerkesztése"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
-msgstr ""
+msgstr "A hiba teljes szövege:"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
@@ -3986,11 +3996,11 @@ msgstr "Új oldal"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr ""
+msgstr "Módosítások eldobása és új dokumentum létrehozása?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
 msgid "Save and Keep Editing"
-msgstr ""
+msgstr "Mentés, és a szerkesztés folytatása"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview Changes"
@@ -4018,6 +4028,8 @@ msgid ""
 "Tell us why you made additions and changes. It is optional, but will make "
 "page history easier to understand."
 msgstr ""
+"Mondja el nekünk hogy miért bővített vagy változtatta meg. Ez nem kötelező, "
+"de könnyebben érthetővé teszi a lap előzményeit."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
