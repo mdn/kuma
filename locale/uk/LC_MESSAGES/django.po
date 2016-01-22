@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 14:03+0000\n"
+"PO-Revision-Date: 2016-01-22 23:09+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -3590,99 +3590,99 @@ msgstr "Подивитися оброблене"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
-msgstr ""
+msgstr "Перегляд джерела"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Show %(locale)s"
-msgstr ""
+msgstr "Показати %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Hide %(locale)s"
-msgstr ""
+msgstr "Сховати %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:99
 #, python-format
 msgid "%(locale)s translation:"
-msgstr ""
+msgstr "Переклад %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:109
 msgid "Translate Tags"
-msgstr ""
+msgstr "Переклад міток"
 
 #: kuma/wiki/jinja2/wiki/translate.html:118
 msgid "English tags"
-msgstr ""
+msgstr "Англійські мітки"
 
 #: kuma/wiki/jinja2/wiki/translate.html:130
 msgid "This document has no tags."
-msgstr ""
+msgstr "Цей документ немає міток."
 
 #: kuma/wiki/jinja2/wiki/translate.html:137
 #, python-format
 msgid "%(locale)s tags"
-msgstr ""
+msgstr "мітки %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:144
 msgid "Version Notes"
-msgstr ""
+msgstr "Нотатки до версії"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Localization flags"
-msgstr ""
+msgstr "Прапорці локалізації"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
 msgid "%(creator)s changed %(document_title)s."
-msgstr ""
+msgstr "%(creator)s змінив %(document_title)s."
 
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
 msgid "View User Profile:"
-msgstr ""
+msgstr "Переглянути профіль користувача:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
-msgstr ""
+msgstr "Порівняти на MDN:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
-msgstr ""
+msgstr "Переглянути статтю:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr ""
+msgstr "Редагувати статтю:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "Історія статті:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
-msgstr ""
+msgstr "Ви підписані на зміни у: %(title)s і всіх її підстаттях."
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:44
 #, python-format
 msgid "You are subscribed to edits on: %(title)s."
-msgstr ""
+msgstr "Ви підписані на зміни у: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "The following reviews have been requested:"
-msgstr ""
+msgstr "Були запрошені наступні перевірки:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical"
-msgstr ""
+msgstr "Технічна"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial"
-msgstr ""
+msgstr "Редакційна"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Review completed"
-msgstr ""
+msgstr "Перевірку закінчено"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
@@ -3690,7 +3690,7 @@ msgstr "Мови"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:29
 msgid "No translations exist for this article."
-msgstr ""
+msgstr "Не існує перекладів цієї статті."
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "Add a translation"
@@ -3699,7 +3699,7 @@ msgstr "Додати переклад"
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:43
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:46
 msgid "Watch"
-msgstr ""
+msgstr "Слідкування"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "New sub-article"
