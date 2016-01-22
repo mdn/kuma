@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-22 08:55+0000\n"
+"PO-Revision-Date: 2016-01-22 10:12+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -1831,33 +1831,31 @@ msgstr "Címkék"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Adjon meg egy érvényes honlap URL-t."
 
 #: kuma/users/models.py:104
-#, fuzzy
 msgid "Enter a valid Twitter URL."
-msgstr "Adjon meg egy twitter.com URL-címet."
+msgstr "Adjon meg egy érvényes Twitter URL-t."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Adjon meg egy érvényes GitHub URL-t."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Adjon meg egy érvényes Stack Overflow URL-t."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Adjon meg egy érvényes LinkedIn URL-t."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Adjon meg egy érvényes Mozillások URL-t."
 
 #: kuma/users/models.py:129
-#, fuzzy
 msgid "Enter a valid Facebook URL."
-msgstr "Adjon meg egy facebook.com URL-címet."
+msgstr "Adjon meg egy érvényes Facebook URL-t."
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
@@ -1883,11 +1881,11 @@ msgstr ""
 
 #: kuma/users/signup.py:13
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "El kell fogadnia a felhasználási feltételeket."
 
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr ""
+msgstr "Tegye meg a következő lépést, hogy közreműködjön a MDN-ben!"
 
 #: kuma/users/views.py:214
 msgid "Email address"
@@ -1896,12 +1894,12 @@ msgstr "E-mail cím"
 #: kuma/users/views.py:273
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>Megerősítve</b>"
 
 #: kuma/users/views.py:276
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s Nincs megerősítve"
 
 #: kuma/users/views.py:279 kuma/users/jinja2/socialaccount/signup.html:142
 msgid "Other:"
@@ -1919,22 +1917,21 @@ msgstr "Ez a profil inaktív."
 #: kuma/users/jinja2/account/email.html:3
 #: kuma/users/jinja2/account/email.html:7
 #: kuma/users/jinja2/users/user_detail.html:57
-#, fuzzy
 msgid "Email addresses"
-msgstr "E-mail cím"
+msgstr "E-mail címek"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr ""
+msgstr "%(email)s az <em>elsődleges</em> e-mail címe"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr ""
+msgstr "A következő e-mail címeket is hozzáadta:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "Elsődlegessé tétel"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
@@ -1949,6 +1946,8 @@ msgid ""
 "<strong>Warning:</strong>\"You have not added any email addresses to this "
 "profile. Without one you cannot receive notifications."
 msgstr ""
+"<strong>Figyelmeztetés:</strong> Nem adott hozzá egyetlen e-mail címet sem "
+"ehhez a profilhoz. Enélkül nem kaphat értesítéseket."
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
@@ -1980,6 +1979,8 @@ msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
 "address for user %(user_display)s."
 msgstr ""
+"Kérem erősítse meg, hogy a(z) <a href=\"mailto:%(email)s\">%(email)s</a> "
+"ennek a felhasználónak az e-mail címe: %(user_display)s."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
@@ -1991,6 +1992,8 @@ msgid ""
 "This email confirmation link expired or is invalid. Please <a "
 "href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr ""
+"Ez az e-mail megerősítési hivatkozás lejárt vagy érvénytelen. Kérjük <a "
+"href=\"%(email_url)s\">adjon be egy új e-mail megerősítési kérést</a>."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
@@ -1998,6 +2001,8 @@ msgid ""
 "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
 "email address for user %(user_display)s."
 msgstr ""
+"Megerősítette hogy a(z) <a href=\"mailto:%(email)s\">%(email)s</a> ennek a "
+"felhasználónak az e-mail címe: %(user_display)s."
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
@@ -2018,9 +2023,8 @@ msgstr ""
 "ilyenje."
 
 #: kuma/users/jinja2/account/logout.html:10
-#, fuzzy
 msgid "Are you sure you want to sign out?"
-msgstr "Biztos, hogy folytatni kívánja?"
+msgstr "Biztosan ki szeretne jelentkezni?"
 
 #: kuma/users/jinja2/account/password_change.html:3
 #: kuma/users/jinja2/account/password_change.html:8
@@ -2037,42 +2041,48 @@ msgstr "Jelszó módosítása"
 #: kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr "Jelszó visszaállítása"
+msgstr "Jelszó helyreállítása"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid ""
 "Forgotten your password? Enter your email address below, and we'll send you "
 "an email allowing you to reset it."
 msgstr ""
+"Elfelejtette a jelszavát? Adja meg e-mail címét, és mi küldünk egy e-mailt, "
+"amellyel helyreállíthatja azt."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr ""
+msgstr "Jelszó helyreállítása"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
+"Kérjük, lépjen velünk kapcsolatba, ha bármilyen gondja van a jelszó "
+"helyreállításával."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid ""
 "We have sent you an email. Please contact us if you do not receive it within"
 " a few minutes."
 msgstr ""
+"Küldtünk Önnek egy e-mailt. Kérjük, lépjen kapcsolatba velünk, ha nem kapja "
+"meg pár percen belül."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Rossz token"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
 msgstr ""
-"A jelszó létrehozására mutató hivatkozás nem megfelelő. Lehet, hogy már "
-"korábban felhasználásra került. Indítsa újra a jelszó létrehozásának "
-"folyamatát."
+"A jelszó helyreállító hivatkozás érvénytelen, lehet hogy már felhasználásra "
+"került. Kérjen egy <a href=\"%(passwd_reset_url)s\">új jelszó "
+"helyreállítást</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -2128,6 +2138,9 @@ msgid ""
 "finalize the signup process. Please contact us if you do not receive it "
 "within a few minutes."
 msgstr ""
+"Küldtünk egy e-mailt a megerősítéshez. Kövesse a megadott hivatkozás, hogy "
+"véglegesítse a regisztrációs folyamatot. Kérjük, lépjen kapcsolatba velünk, "
+"ha nem kapja meg pár percen belül."
 
 #: kuma/users/jinja2/account/verified_email_required.html:9
 msgid ""
@@ -2135,6 +2148,9 @@ msgid ""
 "be. For this purpose, we require that you confirm ownership of your email "
 "address."
 msgstr ""
+"Ez a része az oldala megköveteli tőlünk, hogy erősítse meg hogy Ön az, "
+"akinek állítja magát, hogy. Ezért elvárjuk, hogy erősítse meg e-mail címe "
+"tulajdonjogát."
 
 #: kuma/users/jinja2/account/verified_email_required.html:13
 msgid ""
@@ -2142,6 +2158,9 @@ msgid ""
 "inside this email. Please contact us if you do not receive it within a few "
 "minutes."
 msgstr ""
+"Küldtünk egy e-mailt a megerősítéshez. Kérem kattintson a e-mailben lévő "
+"hivatkozásra. Kérjük, lépjen kapcsolatba velünk, ha nem kapja meg pár percen"
+" belül."
 
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
@@ -2149,6 +2168,8 @@ msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
 "email address</a>."
 msgstr ""
+"<strong>Megjegyzés:</strong> továbbra is <a "
+"href=\"%(email_url)s\">módosíthatja az e-mail címét</a>."
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
@@ -2183,7 +2204,7 @@ msgstr "Fiókkapcsolatok"
 
 #: kuma/users/jinja2/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
-msgstr ""
+msgstr "Bejelentkezhet a profiljába a következők bármelyikével:"
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
@@ -2209,6 +2230,9 @@ msgid ""
 "accounts. If this was a mistake, please proceed to <a "
 "href=\"%(login_url)s\">sign in</a>."
 msgstr ""
+"Úgy döntött, hogy megszünteti a bejelentkezést a honlapra a meglévő fiókok "
+"egyikével. Ha ez hiba volt, kérem, folytassa <a "
+"href=\"%(login_url)s\">bejelentkezéssel</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:4
 #: kuma/users/jinja2/socialaccount/signup.html:26
@@ -2222,6 +2246,9 @@ msgid ""
 " MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
 "your social account connections.</a>"
 msgstr ""
+"Ezzel az e-mail címmel már létezik profil. A Persona hozzákapcsolásához az "
+"MDN profiljához, <a href=\"%(connections_url)s\">be kell jelentkeznie, és "
+"meg kell látogatnia a közösségi fiók kapcsolatait.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2236,7 +2263,13 @@ msgid_plural ""
 "=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, connect "
 "with my MDN profile</a>"
 msgstr[0] ""
+"Az alábbi e-mail címmel már létezik profil. Van már MDN profilja? <a "
+"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Igen, kapcsolja össze az MDN profiljával</a>"
 msgstr[1] ""
+"Az alábbi e-mail címek egyikével már létezik profil. Van már MDN profilja? "
+"<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Igen, kapcsolja össze az MDN profiljával</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:55
 #, python-format
@@ -2244,6 +2277,9 @@ msgid ""
 "Thanks for signing in to MDN with %(provider_name)s. You have one more step "
 "to join MDN: <strong>create your MDN profile</strong>."
 msgstr ""
+"Köszönjük, hogy regisztrált az MDN-re ezzel: %(provider_name)s. Már csak egy"
+" lépés az MDN-hez csatlakozáshoz: <strong>hozza létre MDN "
+"profilját</strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid ""
@@ -2251,6 +2287,9 @@ msgid ""
 "However, by joining MDN, you'll be able to edit docs and have your own "
 "profile page."
 msgstr ""
+"Mindenhez hozzáférhet az MDN honlapján, még MDN profil nélkül is. Azonban ha"
+" csatlakozik az MDN-hez, akkor képes lesz a dokumentációk szerkesztésére és "
+"saját profil oldalt is kap."
 
 #: kuma/users/jinja2/socialaccount/signup.html:68
 msgid ""
@@ -2258,6 +2297,9 @@ msgid ""
 "username will be displayed on MDN to identify any contributions that you "
 "make."
 msgstr ""
+"Az MDN profil beállításához, kérjük <strong>válasszon "
+"felhasználónevet</strong>. A felhasználóneve meg fog jelenni az MDN-en, hogy"
+" azonosítsa közreműködéseit."
 
 #: kuma/users/jinja2/socialaccount/signup.html:74
 msgid ""
@@ -2265,6 +2307,9 @@ msgid ""
 "address</strong>. Your username will be displayed on MDN to identify any "
 "contributions that you make."
 msgstr ""
+"Az MDN profil beállításához, kérjük <strong>válasszon felhasználónevet és "
+"e-mail címet</strong>. A felhasználóneve meg fog jelenni az MDN-en, hogy "
+"azonosítsa közreműködéseit."
 
 #: kuma/users/jinja2/socialaccount/signup.html:82
 #, python-format
