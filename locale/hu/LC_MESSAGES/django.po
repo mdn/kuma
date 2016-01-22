@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-21 23:08+0000\n"
+"PO-Revision-Date: 2016-01-21 23:18+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -936,12 +936,10 @@ msgid "None"
 msgstr "Nincs"
 
 #: kuma/dashboards/forms.py:11
-#, fuzzy
 msgid "Hour"
 msgstr "Óra"
 
 #: kuma/dashboards/forms.py:12
-#, fuzzy
 msgid "Day"
 msgstr "Nap"
 
@@ -1528,9 +1526,9 @@ msgstr ""
 
 # 100%
 #: kuma/search/jinja2/search/results.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr "Eredmények a következőre: „{query}”"
+msgstr "Eredmények a következőre: „%(query)s”"
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
@@ -1967,7 +1965,6 @@ msgstr "E-mail hozzáadása"
 
 #: kuma/users/jinja2/account/email.html:60
 #: kuma/users/jinja2/socialaccount/connections.html:70
-#, fuzzy
 msgid "Edit profile"
 msgstr "Profil szerkesztése"
 
@@ -3431,9 +3428,9 @@ msgid "Edit %(locale)s translation"
 msgstr "%(locale)s fordítás szerkesztése"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Move Article | %(document)s"
-msgstr "Leírás fordítása | {document}"
+msgstr "Cikk mozgatása | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid ""
@@ -3544,9 +3541,9 @@ msgid "Revert to this revision"
 msgstr "Visszaállítás erre a verzióra"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Select language | %(document)s"
-msgstr "Nyelvválasztás | {document}"
+msgstr "Nyelv kiválasztása | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
@@ -3581,67 +3578,67 @@ msgstr ""
 "href=\"//www.mozilla.org/en-US/privacy\">Adatvédelmi nyilatkozat</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
-#, fuzzy, python-format
+#, python-format
 msgid "Translate Article | %(document)s"
-msgstr "Leírás fordítása | {document}"
+msgstr "Cikk fordítása | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:33
-#, fuzzy, python-format
+#, python-format
 msgid "Translating article to %(locale)s"
-msgstr "Leírás fordítása {locale} nyelvre"
+msgstr "Cikk fordítása %(locale)s nyelvre"
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
 msgstr "Tartalom fordítása"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
-#, fuzzy, python-format
+#, python-format
 msgid "Approved %(locale)s version"
-msgstr "Jóváhagyott {default_locale} verzió:"
+msgstr "Jóváhagyott %(locale)s verzió"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
-msgstr ""
+msgstr "Eredmény megtekintése"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
 msgstr "Forrás megtekintése"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Show %(locale)s"
-msgstr "Összes mutatása"
+msgstr "%(locale)s megjelenítése"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Hide %(locale)s"
-msgstr ""
+msgstr "%(locale)s elrejtése"
 
 #: kuma/wiki/jinja2/wiki/translate.html:99
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s translation:"
-msgstr "{locale} fordítás:"
+msgstr "%(locale)s fordítás:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:109
 msgid "Translate Tags"
-msgstr ""
+msgstr "Címkék fordítása"
 
 #: kuma/wiki/jinja2/wiki/translate.html:118
 msgid "English tags"
-msgstr ""
+msgstr "Angol címkék"
 
 #: kuma/wiki/jinja2/wiki/translate.html:130
 msgid "This document has no tags."
-msgstr ""
+msgstr "Ennek a dokumentumnak nincsenek címkéi."
 
 #: kuma/wiki/jinja2/wiki/translate.html:137
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s tags"
-msgstr "{locale} fordítás:"
+msgstr "%(locale)s címkék"
 
 #: kuma/wiki/jinja2/wiki/translate.html:144
 msgid "Version Notes"
-msgstr ""
+msgstr "Megjegyzések a verzióhoz"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Localization flags"
@@ -3717,28 +3714,24 @@ msgid "Watch"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "New sub-article"
-msgstr "Új leírás URL"
+msgstr "Új alcikk"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
-#, fuzzy
 msgid "Clone this article"
-msgstr "Ebben a leírásban"
+msgstr "Cikk klónozása"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
-#, fuzzy
 msgid "Move this article"
-msgstr "Ebben a leírásban"
+msgstr "Cikk mozgatása"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:78
-#, fuzzy
 msgid "Delete this article"
-msgstr "Oldal törlése"
+msgstr "Cikk törlése"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -3749,9 +3742,8 @@ msgid "Convert to content zone"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
-#, fuzzy
 msgid "Print this article"
-msgstr "Ezen oldal nyomtatása"
+msgstr "Cikk nyomtatása"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -3784,7 +3776,7 @@ msgstr "Megosztás:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:111
 msgid "Google+"
-msgstr ""
+msgstr "Google+"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
@@ -3809,29 +3801,29 @@ msgid "Updating subscription status"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:144
-#, fuzzy, python-format
+#, python-format
 msgid "Subscribe to %(title)s"
-msgstr "Feliratkozás"
+msgstr "Feliratkozás erre: %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:145
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "Leiratkozás"
+msgstr "Leiratkozás erről: %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr "Feliratkozás"
+msgstr "Most már feliratkozott erre: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr "Leiratkozás"
+msgstr "Leiratkozott erről: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:159
 #, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Feliratkozás a <bdi>%(language)s</bdi> verzióra"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:160
 #, python-format
@@ -3857,7 +3849,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
-msgstr "Tartalom:"
+msgstr "Tartalomjegyzék:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid ""
@@ -3974,14 +3966,14 @@ msgid "Translate Description"
 msgstr "Leírás fordítása"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
-#, fuzzy, python-format
+#, python-format
 msgid "Title in %(locale)s:"
-msgstr "Cím {locale} nyelven:"
+msgstr "Cím %(locale)s nyelven:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
-#, fuzzy, python-format
+#, python-format
 msgid "Slug in %(locale)s:"
-msgstr "SEO URL {locale} nyelven:"
+msgstr "SEO URL %(locale)s nyelven:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid ""
@@ -4002,7 +3994,6 @@ msgid "Articles tagged: %(tag)s"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
-#, fuzzy
 msgid "All templates"
 msgstr "Összes sablon"
 
@@ -4037,7 +4028,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:33
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
-msgstr "Nincsenek leírások."
+msgstr "Nincsenek cikkek."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
@@ -4058,9 +4049,9 @@ msgid "All Articles in Need of Review"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:23
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(count)s documents."
-msgstr "MDN dokumentumok"
+msgstr "%(count)s dokumentum találva"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
@@ -4136,9 +4127,8 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
-#, fuzzy
 msgid "\"Load documents\""
-msgstr "MDN dokumentumok"
+msgstr "„Dokumentumok betöltése”"
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
@@ -4148,9 +4138,8 @@ msgstr ""
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
-#, fuzzy
 msgid "Load documents"
-msgstr "MDN dokumentumok"
+msgstr "Dokumentumok betöltése"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
