@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-22 10:12+0000\n"
+"PO-Revision-Date: 2016-01-22 10:15+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -2318,18 +2318,25 @@ msgid ""
 "profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
 "know</a></strong>."
 msgstr ""
+"Ha <strong>problémája van</strong> a bejelentkezés vagy az MDN profil "
+"létrehozása során, <strong><a href=\"%(bug_href)s\" rel=\"external\">tudassa"
+" velünk</a></strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:107
 #, python-format
 msgid ""
 "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr ""
+"A GitHub felhasználóneve, %(username)s, már foglalt. Kérem válasszon "
+"másikat."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
 msgid ""
 "Please enter the name you'd like to display to other users to identify your "
 "contributions."
 msgstr ""
+"Kérem adja meg a nevet amelyet meg szeretne jeleníteni másoknak a "
+"közreműködései azonosítására."
 
 #: kuma/users/jinja2/socialaccount/signup.html:125
 #, python-format
