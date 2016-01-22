@@ -5,7 +5,7 @@
 - name: Install pip
   pip:
     name: pip
-    version: 8.0.1
+    version: 8.0.2
     virtualenv: /home/vagrant/env
 
 - name: Install local dependencies in virtualenv

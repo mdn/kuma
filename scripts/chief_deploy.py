@@ -15,7 +15,7 @@ from commander.deploy import task, hostgroups  # noqa
 import commander_settings as settings  # noqa
 
 VENV_BIN = os.path.join(settings.VENV_DIR, 'bin')
-PIP_VERSION = "8.0.1"
+PIP_VERSION = "8.0.2"
 
 # Setup local executable paths
 os.environ['PATH'] = os.pathsep.join([
