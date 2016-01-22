@@ -2,6 +2,7 @@
 - hosts: all
   gather_facts: yes
   sudo: true
+  user: vagrant
   pre_tasks:
     - name: Check if packages need to be autoremoved
       command: apt-get --dry-run autoremove

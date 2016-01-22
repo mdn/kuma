@@ -13,7 +13,7 @@ performance-tests: in_vagrant
 	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
 
 install:
-	python scripts/peep.py install -r requirements/default.txt
+	pip install -r requirements/default.txt --require-hashes --no-deps
 
 # Note: this target should be run from the host machine with selenium running
 browser-tests: on_host

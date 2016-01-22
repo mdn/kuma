@@ -1,11 +1,6 @@
-# sha256: wl70c4sI_fswlCR8AS8_0bKZcqy9N_mIBwsqhfX77gA
+# this is a standalone requirements file used in .travis.yml to install
+# Travis CI specific requirements
 ansible==1.9.2
-
-# sha256: X3mpXRNV7Rt-6SRB_Nl4lPeckhj062LvVDO7hA0BhG4
 codecov==1.6.3
-
-# sha256: GCPJPKN4CSwQu95CghPT9QZrMK2wnlwAEIeoPj4KQCo
 tox==2.3.1
-
-# sha256: hbEnW216YczIAkpOmkyeiWOUd27c4aXQdewRb5GSVGI
 coverage==4.0.3
