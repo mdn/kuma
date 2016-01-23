@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-22 23:09+0000\n"
+"PO-Revision-Date: 2016-01-22 23:19+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -3703,35 +3703,35 @@ msgstr "Слідкування"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "New sub-article"
-msgstr ""
+msgstr "Нова підстатття"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
 msgid "Clone this article"
-msgstr ""
+msgstr "Клонувати цю статтю"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
-msgstr ""
+msgstr "Перемістити цю статтю"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "View in admin"
-msgstr ""
+msgstr "Подивитися як адміністратор"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:78
 msgid "Delete this article"
-msgstr ""
+msgstr "Вилучити цю статтю"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
-msgstr ""
+msgstr "Керування зоною вмісту"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:86
 msgid "Convert to content zone"
-msgstr ""
+msgstr "Конвертувати в зону вмісту"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
 msgid "Print this article"
-msgstr ""
+msgstr "Роздрукувати цю статтю"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -3739,17 +3739,17 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
-msgstr ""
+msgstr "Див. також"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
-msgstr ""
+msgstr "Змінити редакції"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, python-format
 msgid "Revision %(num)s:"
-msgstr ""
+msgstr "Редакція %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:82
 #: kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
@@ -3762,7 +3762,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:107
 msgid "Share:"
-msgstr ""
+msgstr "Поширити:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:111
 msgid "Google+"
@@ -3839,7 +3839,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
-msgstr ""
+msgstr "Зміст:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid ""
@@ -3854,14 +3854,14 @@ msgstr[2] ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
-msgstr ""
+msgstr "Приховати відомості про помилку"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Додаткові відомості про цю помилку"
+msgstr[1] "Додаткові відомості про ці помилки"
+msgstr[2] "Додаткові відомості про ці помилки"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid ""
@@ -3872,19 +3872,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
-msgstr ""
+msgstr "Тип помилки:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
-msgstr ""
+msgstr "В макросі:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
-msgstr ""
+msgstr "Створити шаблон"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
-msgstr ""
+msgstr "Змінити шаблон"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
@@ -3892,15 +3892,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
-msgstr ""
+msgstr "Редагувати документ"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
-msgstr ""
+msgstr "Повний текст помилки:"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
-msgstr ""
+msgstr "Нова сторінка"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
@@ -3912,19 +3912,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview Changes"
-msgstr ""
+msgstr "Переглянути зміни"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
 msgid "Discard Changes"
-msgstr ""
+msgstr "Відхилити зміни"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr ""
+msgstr "Потрібна перевірка?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr ""
+msgstr "Коментар до ревізії"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
@@ -3959,7 +3959,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
 msgid "Title in %(locale)s:"
-msgstr ""
+msgstr "Заголовок на %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
@@ -3987,7 +3987,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
-msgstr ""
+msgstr "Усі шаблони"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:7
 #, python-format
@@ -4011,7 +4011,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
-msgstr ""
+msgstr "Усі документи"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
@@ -4021,7 +4021,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:33
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
-msgstr ""
+msgstr "Немає статей."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
