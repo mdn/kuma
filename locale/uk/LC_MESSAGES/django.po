@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-23 15:03+0000\n"
+"PO-Revision-Date: 2016-01-23 16:08+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -868,7 +868,7 @@ msgstr "Ігри"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
-msgstr ""
+msgstr "Інструкція & посібник"
 
 #: kuma/core/translations/search/filter/intermediate/name.py:4
 msgid "Intermediate"
@@ -1084,6 +1084,8 @@ msgid ""
 "The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
 "web developers to come change the world with Mozilla."
 msgstr ""
+"Братство Mozilla Developer Network (MDN) запрошує веб-розробників світового "
+"класу змінити світ з Mozilla."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
@@ -1172,6 +1174,8 @@ msgid ""
 "Get Web technology news from Mozilla, get help from other developers, and "
 "more!"
 msgstr ""
+"Отримуйте новини про інтернет технології від Mozilla, отримуйте допомогу "
+"інших розробників і навіть більше!"
 
 #: kuma/landing/jinja2/landing/homepage.html:101
 msgid "Learn more and sign up!"
@@ -1284,6 +1288,13 @@ msgid ""
 "developers lives just a little bit better by sharing MDN with the "
 "world.</li> </ol>"
 msgstr ""
+"<ol> <li><strong>Отримайте кнопки:</strong> Використовуйте нашу просту форму"
+" нижче для створення користувальницької кнопки і отримання програмного коду "
+"для підтримки MDN на вашому сайті чи блозі.</li> <li><strong>Розмістити "
+"кнопки:</strong> Скопіюйте програмний код і вставте його на ваш сайт або "
+"блог, щоб допомогти людям дізнатися про MDN.</li> <li><strong>Почувайте себе"
+" добре:</strong> пишайтеся, знаючи, що ви робите життя розробників трішки "
+"краще, поширюючи MDN зі світом.</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35
 msgid "Preview"
@@ -1657,10 +1668,14 @@ msgid ""
 "disconnect this account connect a different one first. To delete your MDN "
 "profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
 msgstr ""
+"На жаль, ви повинні мати принаймні один підключений обліковий запис, щоб ви "
+"могли увійти. Щоб розірвати зв'язок з цим обліковим записом підключіть "
+"спочатку інший. Щоб видалити ваш обліковий запис MDN, будь ласка, <a "
+"href=\"%(bug_form_url)s\" rel=\"nofollow\">повідомте про помилку</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr ""
+msgstr "Електронну адресу не можна використовувати як ім'я користувача."
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
@@ -1675,7 +1690,7 @@ msgstr "Користувач"
 msgid ""
 "You have completed the first step of <a href=\"%s\">getting started with "
 "MDN</a>"
-msgstr ""
+msgstr "Ви завершили перший крок <a href=\"%s\">початку роботи з MDN</a>"
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
@@ -2143,6 +2158,9 @@ msgid ""
 "finalize the signup process. Please contact us if you do not receive it "
 "within a few minutes."
 msgstr ""
+"Ми відправили підтвердження на вашу електронну пошту. Відкрийте посилання в "
+"листі, щоб завершити процес реєстрації. Будь ласка, зв'яжіться з нами, якщо "
+"ви не отримаєте листа протягом декількох хвилин."
 
 #: kuma/users/jinja2/account/verified_email_required.html:9
 msgid ""
@@ -2150,6 +2168,9 @@ msgid ""
 "be. For this purpose, we require that you confirm ownership of your email "
 "address."
 msgstr ""
+"Ця частина сайту вимагає підтвердження, що ви той, за кого себе видаєте. Для"
+" цього, ви обов'язково маєте підтвердити володіння вашою адресою електронною"
+" поштою."
 
 #: kuma/users/jinja2/account/verified_email_required.html:13
 msgid ""
@@ -2157,6 +2178,9 @@ msgid ""
 "inside this email. Please contact us if you do not receive it within a few "
 "minutes."
 msgstr ""
+"Ми відправили підтвердження на вашу електронну пошту. Будь ласка, відкрийте "
+"посилання в листі. Зв'яжіться з нами, якщо ви не отримаєте листа протягом "
+"декількох хвилин."
 
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
@@ -2164,6 +2188,8 @@ msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
 "email address</a>."
 msgstr ""
+"<strong>Примітка:</strong> ви все ще можете <a "
+"href=\"%(email_url)s\">змінити адресу електронної пошти</a>."
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
@@ -2224,6 +2250,9 @@ msgid ""
 "accounts. If this was a mistake, please proceed to <a "
 "href=\"%(login_url)s\">sign in</a>."
 msgstr ""
+"Ви вирішили скасувати вхід на наш сайт, використовуючи один з ваших існуючих"
+" облікових записів. Якщо це була помилка, будь ласка, <a "
+"href=\"%(login_url)s\">увійдіть</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:4
 #: kuma/users/jinja2/socialaccount/signup.html:26
@@ -2237,6 +2266,9 @@ msgid ""
 " MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
 "your social account connections.</a>"
 msgstr ""
+"Обліковий запис з такою адресою електронної пошти вже існує. Щоб приєднати "
+"Persona до вашого профілю MDN, <a href=\"%(connections_url)s\">ви маєте "
+"увійти і відкрити поєднані облікові записи.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format

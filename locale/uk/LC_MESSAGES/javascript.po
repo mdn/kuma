@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-11 13:00+0000\n"
-"Last-Translator: Yuriy Antonov <yuraantonov11@gmail.com>\n"
+"PO-Revision-Date: 2016-01-23 15:50+0000\n"
+"Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -141,11 +141,11 @@ msgstr "У вас є чернетка від:"
 
 #: kuma/static/js/wiki-edit.js:402
 msgid "Restore the draft content"
-msgstr ""
+msgstr "Відновити вміст чернетки"
 
 #: kuma/static/js/wiki-edit.js:403
 msgid "Discard the draft"
-msgstr ""
+msgstr "Видалити чернетку"
 
 #: kuma/static/js/wiki-edit.js:555
 msgid "saved"
