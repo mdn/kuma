@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-23 13:07+0000\n"
+"PO-Revision-Date: 2016-01-23 13:50+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -458,7 +458,7 @@ msgstr "Нещодавні зміни файлів MDN"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
-msgstr "Нещодавні ревізії прикріплених файлів MDN"
+msgstr "Нещодавні редакції прикріплених файлів MDN"
 
 #: kuma/attachments/forms.py:9
 msgid "Files of this type are not permitted."
@@ -483,17 +483,17 @@ msgstr "Відомості про вкладення"
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:19
 #: kuma/wiki/jinja2/wiki/revision.html:17
 msgid "Revision slug:"
-msgstr "Посилання ревізії:"
+msgstr "Посилання редакції:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:23
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
-msgstr "Заголовок ревізії:"
+msgstr "Заголовок редакції:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:27
 #: kuma/wiki/jinja2/wiki/revision.html:25
 msgid "Revision id:"
-msgstr "ID ревізії:"
+msgstr "ID редакції:"
 
 #: kuma/attachments/jinja2/attachments/attachment_detail.html:31
 #: kuma/wiki/jinja2/wiki/revision.html:29
@@ -707,6 +707,8 @@ msgid ""
 "Ensure this value has at least %(limit_value)s characters (it has "
 "%(show_value)s)."
 msgstr ""
+"Переконайтеся, що це значення має не менше ніж %(limit_value)s символів "
+"(зараз %(show_value)s)."
 
 #: kuma/core/form_fields.py:62
 #, python-format
@@ -714,6 +716,8 @@ msgid ""
 "Ensure this value has at most %(limit_value)s characters (it has "
 "%(show_value)s)."
 msgstr ""
+"Переконайтеся, що це значення має не більше ніж %(limit_value)s символів "
+"(зараз %(show_value)s)."
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
@@ -938,7 +942,7 @@ msgstr "Попередній період:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
-msgstr "Панель ревізій"
+msgstr "Панель редакцій"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:44
 #: kuma/search/jinja2/search/results.html:210
@@ -1024,7 +1028,7 @@ msgstr "не спам"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:107
 msgid "There are no revisions matching this filter set."
-msgstr "Немає ревізій, що відповідають цьому фільтру."
+msgstr "Немає редакцій, що відповідають цьому фільтру."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -2760,7 +2764,7 @@ msgstr "Переклади \"%s\" на MDN потребують оновленн
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
-msgstr "Останні ревізії MDN"
+msgstr "Останні редакції MDN"
 
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
@@ -2946,11 +2950,11 @@ msgstr "Коментар:"
 
 #: kuma/wiki/forms.py:221
 msgid "Tag this revision for review?"
-msgstr "Помітити дану ревізію для рецензії?"
+msgstr "Помітити дану редакцію для перевірки?"
 
 #: kuma/wiki/forms.py:228
 msgid "Tag this revision for localization?"
-msgstr "Помітити дану ревізію для локалізації?"
+msgstr "Помітити дану редакцію для локалізації?"
 
 #: kuma/wiki/forms.py:619
 msgid "New slug:"
@@ -3015,8 +3019,8 @@ msgid ""
 "A revision must be based on a revision of the %(locale)s document. Revision "
 "ID %(id)s does not fit those criteria."
 msgstr ""
-"Ревізія повинна ґрунтуватися на ревізії документа з локаллю %(locale)s. ID "
-"ревізії %(id)s не підходить за цим критерієм."
+"Редакція повинна ґрунтуватися на редакції документа з локаллю %(locale)s. ID"
+" редакції %(id)s не підходить за цим критерієм."
 
 #: kuma/wiki/models.py:1754
 msgid "IP address"
@@ -3032,7 +3036,7 @@ msgstr "HTTP реферер"
 
 #: kuma/wiki/models.py:1788
 msgid "Revision"
-msgstr "Ревізія"
+msgstr "Редакція"
 
 #: kuma/wiki/models.py:1794
 msgid "Akismet submission"
@@ -3113,11 +3117,11 @@ msgstr "Ви впевнені, що хочете продовжити?"
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
 #, python-format
 msgid "Revert Revision | %(document)s"
-msgstr "Відкотити ревізію | %(document)s"
+msgstr "Відкотити редакцію | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
-msgstr "Ви впевнені, що хочете відкотити цю ревізію?"
+msgstr "Ви впевнені, що хочете відкотити цю редакцію?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:18
 msgid "Document"
@@ -3363,7 +3367,7 @@ msgid ""
 "Find the translation source with the lookup below and then click \"Save "
 "Changes.\""
 msgstr ""
-"Знайдіть джерело для перекладу в пошуку вище, а потім натисніть \"Зберегти "
+"Знайдіть джерело для перекладу в пошуку нижче, а потім натисніть \"Зберегти "
 "зміни\"."
 
 #: kuma/wiki/jinja2/wiki/edit.html:148
@@ -3794,7 +3798,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 msgid "Updating subscription status"
-msgstr ""
+msgstr "Оновлення статусу підписки"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:144
 #, python-format
@@ -3804,43 +3808,43 @@ msgstr "Підписатись на %(title)s"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:145
 #, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr ""
+msgstr "Відписатись від %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
 #, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr ""
+msgstr "Ви зараз підписані на %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr ""
+msgstr "Ви відписались від %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:159
 #, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Підписатись на <bdi>%(language)s</bdi> версію"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:160
 #, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr ""
+msgstr "Відписатись від <bdi>%(language)s</bdi> версії"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
-msgstr ""
+msgstr "Ви зараз підписані на %(language)s версію цієї статті."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
 #, python-format
 msgid ""
 "You have been unsubscribed from the %(language)s version of this article."
-msgstr ""
+msgstr "Ви відписалися від %(language)s версії цієї статті."
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
-msgstr ""
+msgstr "Створити зміст"
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:50
@@ -3855,8 +3859,14 @@ msgid_plural ""
 "There were scripting errors on this page. While those are being addressed by"
 " site editors, you can view partial content below."
 msgstr[0] ""
+"На цій сторінці виникла помилка зі скриптом. Поки вона адресується "
+"редакторам сайту, ви можете переглянути частину вмісту нижче."
 msgstr[1] ""
+"На цій сторінці виникли помилки зі скриптом. Поки вони адресується "
+"редакторам сайту, ви можете переглянути частину вмісту нижче."
 msgstr[2] ""
+"На цій сторінці виникли помилки зі скриптом. Поки вони адресується "
+"редакторам сайту, ви можете переглянути частину вмісту нижче."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -3894,7 +3904,7 @@ msgstr "Змінити шаблон"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
-msgstr ""
+msgstr "Обробка макросу:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
@@ -3910,11 +3920,11 @@ msgstr "Нова сторінка"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr ""
+msgstr "Скасувати зміни та створити новий документ?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
 msgid "Save and Keep Editing"
-msgstr ""
+msgstr "Зберегти та продовжити редагування"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview Changes"
@@ -3930,17 +3940,19 @@ msgstr "Потрібна перевірка?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr "Коментар до ревізії"
+msgstr "Коментар до редакції"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr ""
+msgstr "Дізнайтеся, як використовувати коментарі до редакції"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid ""
 "Tell us why you made additions and changes. It is optional, but will make "
 "page history easier to understand."
 msgstr ""
+"Розкажіть, чому ви зробили доповнення та зміни. Це необов'язково, але "
+"зробить історію сторінки простішою для розуміння."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
@@ -3960,7 +3972,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
-msgstr ""
+msgstr "Переклад опису"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
@@ -3970,26 +3982,28 @@ msgstr "Заголовок на %(locale)s:"
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
 msgid "Slug in %(locale)s:"
-msgstr ""
+msgstr "Заголовок на %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid ""
 "Find the translation source with the lookup above and then click \"Save "
 "Changes."
 msgstr ""
+"Знайдіть джерело для перекладу в пошуку вище, а потім натисніть \"Зберегти "
+"зміни\"."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Знайдено %(num)s документ."
+msgstr[1] "Знайдено %(num)s документа"
+msgstr[2] "Знайдено %(num)s документів"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
 #, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr ""
+msgstr "Статті з мітками: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
@@ -3999,21 +4013,21 @@ msgstr "Усі шаблони"
 #, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Знайдено %(num)s шаблон."
+msgstr[1] "Знайдено %(num)s шаблони"
+msgstr[2] "Знайдено %(num)s шаблонів"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
-msgstr ""
+msgstr "Документи з помилками"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
-msgstr ""
+msgstr "Документи верхнього рівня"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
-msgstr ""
+msgstr "Документи без батька"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
@@ -4021,7 +4035,7 @@ msgstr "Усі документи"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
-msgstr ""
+msgstr "Необхідне оновлення перекладу"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:33
@@ -4032,92 +4046,92 @@ msgstr "Немає статей."
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
 msgid "Documents for %(tag)s review"
-msgstr ""
+msgstr "Документи для перевірки %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr ""
+msgstr "Документи для перевірки"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr ""
+msgstr "Статті, помічені для перевірки: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
-msgstr ""
+msgstr "Всі статті, помічені для перевірки"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:23
 #, python-format
 msgid "Found %(count)s documents."
-msgstr ""
+msgstr "Знайдено %(count)s документів."
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
 msgid "Revision History | %(document)s"
-msgstr ""
+msgstr "Історія редакції | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
-msgstr ""
+msgstr "Історія"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
-msgstr ""
+msgstr "Історія редакцій для:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
-msgstr ""
+msgstr "Порівняти обрані переклади"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Revisions"
-msgstr ""
+msgstr "Порівняти обрані редакції"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "This document has no revisions."
-msgstr ""
+msgstr "У цього документа немає редакцій."
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
-msgstr ""
+msgstr "Всі мітки"
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:18
 msgid "There are no tags."
-msgstr ""
+msgstr "Немає жодної мітки."
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr ""
+msgstr "Локалізовані статті, помічені: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr ""
+msgstr "Статті з будь-якими мітками локалізації"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:15
 #, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Знайдено %(count)s документ."
+msgstr[1] "Знайдено %(count)s документа."
+msgstr[2] "Знайдено %(count)s документів."
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:25
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
 msgid "Purge documents"
-msgstr ""
+msgstr "Очистити документи"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
-msgstr ""
+msgstr "Домівка"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
 msgid "Documents"
-msgstr ""
+msgstr "Документи"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:39
 msgid ""
@@ -4128,38 +4142,39 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
-msgstr ""
+msgstr "\"Завантажити документи\""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
 msgid "Add %(name)s"
-msgstr ""
+msgstr "Додати %(name)s"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 msgid "Load documents"
-msgstr ""
+msgstr "Завантажити документи"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
-msgstr ""
+msgstr "Будь ласка, виправте помилку, зазначену нижче."
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "Завантажити"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
-msgstr ""
+msgstr "Деталі подання Akismet"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
 msgstr ""
+"Для відправлення подання до Akismet, будь ласка, збережіть форму нижче."
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_list.html:4
 msgid "Select an Akismet submission for more details"
-msgstr ""
+msgstr "Виберіть Akismet подання для більш докладної інформації"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:100
 #: kuma/wiki/templatetags/jinja_helpers.py:101
@@ -4167,65 +4182,69 @@ msgstr ""
 #: kuma/wiki/templatetags/jinja_helpers.py:117
 #, python-format
 msgid "Revision %s"
-msgstr ""
+msgstr "Редакція %s"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:106
 msgid "There was an error generating the content."
-msgstr ""
+msgstr "Під час генерування вмісту сталася помилка."
 
 #: kuma/wiki/views/delete.py:50
 msgid ""
 "Document already exists. Note: You cannot revert a document that has been "
 "moved until you delete its redirect."
 msgstr ""
+"Документ вже існує. Зауваження: Ви не можете скасувати зміни в документі, "
+"якій був переміщений, поки не видалите його перенаправлення."
 
 #: kuma/wiki/views/document.py:600
 #, python-format
 msgid "Redirected from %(url)s"
-msgstr ""
+msgstr "Перенаправлено з %(url)s"
 
 #: kuma/wiki/views/document.py:648
 #, python-format
 msgid "I learned about %(title)s on MDN."
-msgstr ""
+msgstr "Я дізнався(лася) про %(title)s на MDN."
 
 #: kuma/wiki/views/document.py:718
 #, python-format
 msgid "Unsupported content-type: %s"
-msgstr ""
+msgstr "Тип вмісту не підтримується: %s"
 
 #: kuma/wiki/views/document.py:725
 #, python-format
 msgid "Request parsing error: %s"
-msgstr ""
+msgstr "Помилка обробки запиту: %s"
 
 #: kuma/wiki/views/document.py:745
 msgid "ETag precondition failed"
-msgstr ""
+msgstr "Помилка обробки попередньої умови ETag"
 
 #: kuma/wiki/views/edit.py:114
 msgid "Sections may only be edited inline."
-msgstr ""
+msgstr "Розділи можна редагувати лише на місці."
 
 #: kuma/wiki/views/misc.py:53
 msgid ""
 "Autosuggest requires a partial title. For a full document index, see the "
 "main page."
 msgstr ""
+"Автозаповнення вимагає часткового вказання заголовку. Повний індекс "
+"документа дивіться на головній сторінці."
 
 #: kuma/wiki/views/misc.py:106
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
-msgstr ""
+msgstr "%(obj_count)d об'єкт(ів) завантажено."
 
 #: kuma/wiki/views/misc.py:110
 #, python-format
 msgid "Failed to import data: %(error)s"
-msgstr ""
+msgstr "Не вдалося імпортувати дані: %(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
-msgstr ""
+msgstr "Документ було змінено; будь ласка, зробіть повторну перевірку."
 
 #: kuma/wiki/views/translate.py:72
 msgid "You cannot translate this document."
