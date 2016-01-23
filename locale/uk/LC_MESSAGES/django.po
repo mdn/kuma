@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-23 16:08+0000\n"
+"PO-Revision-Date: 2016-01-23 17:53+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -1084,8 +1084,8 @@ msgid ""
 "The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
 "web developers to come change the world with Mozilla."
 msgstr ""
-"Братство Mozilla Developer Network (MDN) запрошує веб-розробників світового "
-"класу змінити світ з Mozilla."
+"Співтовариство Mozilla Developer Network (MDN) запрошує веб-розробників "
+"світового класу змінити світ з Mozilla."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
@@ -2283,8 +2283,20 @@ msgid_plural ""
 "=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, connect "
 "with my MDN profile</a>"
 msgstr[0] ""
+"Вже існує обліковий запис з зазначеною нижче адресою електронної пошти. Вже "
+"маєте обліковий запис MDN? <a href=\"%(persona_login_url)s\" class=\"launch-"
+"persona-login\" data-next=\"%(persona_next_url)s\">Так, з'єднатися з моїм "
+"обліковим записом MDN</a>"
 msgstr[1] ""
+"Вже існує обліковий запис з однією з зазначених нижче адрес електронної "
+"пошти. Вже маєте обліковий запис MDN? <a href=\"%(persona_login_url)s\" "
+"class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Так, "
+"з'єднатися з моїм обліковим записом MDN</a>"
 msgstr[2] ""
+"Вже існує обліковий запис з однією з зазначених нижче адрес електронної "
+"пошти. Вже маєте обліковий запис MDN? <a href=\"%(persona_login_url)s\" "
+"class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Так, "
+"з'єднатися з моїм обліковим записом MDN</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:55
 #, python-format
@@ -2292,6 +2304,9 @@ msgid ""
 "Thanks for signing in to MDN with %(provider_name)s. You have one more step "
 "to join MDN: <strong>create your MDN profile</strong>."
 msgstr ""
+"Дякуємо за вхід на MDN за допомогою %(provider_name)s. Залишився ще один "
+"крок до приєднання до MDN: <strong>створіть свій обліковий запис "
+"MDN</strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid ""
@@ -2299,6 +2314,9 @@ msgid ""
 "However, by joining MDN, you'll be able to edit docs and have your own "
 "profile page."
 msgstr ""
+"Ви можете отримати доступ до всього на MDN, навіть без облікового запису "
+"MDN. Однак, приєднуючись до MDN, ви зможете редагувати документацію і мати "
+"свою сторінку."
 
 #: kuma/users/jinja2/socialaccount/signup.html:68
 msgid ""
@@ -2306,6 +2324,9 @@ msgid ""
 "username will be displayed on MDN to identify any contributions that you "
 "make."
 msgstr ""
+"Для створення вашого облікового запису MDN, будь ласка, <strong>оберіть ім'я"
+" користувача</strong>. Ваше ім'я користувача буде відображатися на MDN, для "
+"позначення будь-якого внеску, який ви зробите."
 
 #: kuma/users/jinja2/socialaccount/signup.html:74
 msgid ""
@@ -2313,6 +2334,10 @@ msgid ""
 "address</strong>. Your username will be displayed on MDN to identify any "
 "contributions that you make."
 msgstr ""
+"Для створення вашого облікового запису MDN, будь ласка, <strong>оберіть ім'я"
+" користувача та адресу електронної пошти</strong>. Ваше ім'я користувача "
+"буде відображатися на MDN, для позначення будь-якого внеску, який ви "
+"зробите."
 
 #: kuma/users/jinja2/socialaccount/signup.html:82
 #, python-format
@@ -2321,18 +2346,25 @@ msgid ""
 "profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
 "know</a></strong>."
 msgstr ""
+"Якщо у вас <strong>виникли проблеми</strong> з входом або створенням "
+"облікового запису MDN, <strong><a href=\"%(bug_href)s\" "
+"rel=\"external\">дайте нам знати</a></strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:107
 #, python-format
 msgid ""
 "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr ""
+"Ваше ім'я користувача GitHub %(username)s вже зайнято. Будь ласка, виберіть "
+"інше."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
 msgid ""
 "Please enter the name you'd like to display to other users to identify your "
 "contributions."
 msgstr ""
+"Будь ласка, введіть ім'я, яке б ви хотіли відображати іншим користувачам, "
+"щоб вони побачили ваш вклад."
 
 #: kuma/users/jinja2/socialaccount/signup.html:125
 #, python-format
@@ -2342,6 +2374,10 @@ msgid ""
 "next=\"%(persona_next_url)s\">Connect your %(provider_name)s account to "
 "it.</a>"
 msgstr ""
+"Обліковий запис з обраною адресою електронної пошти вже існує. <a "
+"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Підключити до нього ваш %(provider_name)s "
+"аккаунт.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:155
 #, python-format
@@ -2351,6 +2387,10 @@ msgid ""
 "and will be used according to our <a href=\"%(privacy_url)s\">privacy "
 "policy</a>."
 msgstr ""
+"На яку адресу електронної пошти нам слід надсилати повідомлення та "
+"сповіщення MDN? Ця адреса <strong>не буде</strong> відображена на MDN і буде"
+" використовуватися відповідно до нашої <a href=\"%(privacy_url)s\">політики "
+"приватності</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:170
 #, python-format
@@ -2358,6 +2398,8 @@ msgid ""
 "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
 "href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
+"з <a href=\"%(terms_url)s\">Умовами користування</a> й <a "
+"href=\"%(privacy_url)s\">Політикою приватності</a> Mozilla."
 
 #: kuma/users/jinja2/socialaccount/signup.html:179
 msgid "Create my MDN profile"
@@ -2438,7 +2480,7 @@ msgstr "Експертні області"
 #: kuma/users/jinja2/users/user_detail.html:102
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr ""
+msgstr "Учасник з %(date_joined)s"
 
 #: kuma/users/jinja2/users/user_detail.html:150
 msgid "Recent Docs Activity"
@@ -2478,6 +2520,8 @@ msgid ""
 "<p class=\"none\">You haven't contributed to any MDN docs. <a "
 "href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
+"<p class=\"none\">Ви не зробили внеску в жоден документ на MDN. <a "
+"href=\"%(docs_url)s\">Вперед!</a></p>"
 
 #: kuma/users/jinja2/users/user_detail.html:183
 msgid "This user has no activity."
