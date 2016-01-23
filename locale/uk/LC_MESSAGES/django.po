@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-23 17:53+0000\n"
+"PO-Revision-Date: 2016-01-23 21:04+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -2549,6 +2549,9 @@ msgid ""
 "new features first and we send the occasional email asking for help testing "
 "specific things."
 msgstr ""
+"Ми були б раді, якби ви залишили відгук про зміни на сайті. Бета тестери "
+"отримують доступ до нових фішок першими, а ми іноді відправляємо лист, "
+"запитуючи допомогу в тестуванні специфічних штук."
 
 #: kuma/users/jinja2/users/user_edit.html:64
 msgid "Primary Email"
@@ -2625,6 +2628,9 @@ msgid ""
 "Network (MDN)</a> - a community making great resources for developers like "
 "you."
 msgstr ""
+"Дякуємо за створення облікового запису на <a href=\"%(mdn_link)s\">Mozilla "
+"Developer Network (MDN)</a> - спільноті, що робить чудові ресурси для таких "
+"розробників, як ви."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
@@ -2652,7 +2658,7 @@ msgstr "Поспілкуйтеся з нами!"
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:30
 msgid ""
 "Want to talk to someone about MDN? There are a few ways you can do that:"
-msgstr ""
+msgstr "Хочете розповісти кому-небудь про MDN? Є кілька способів:"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:38
 #, python-format
@@ -2660,6 +2666,8 @@ msgid ""
 "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what "
 "you're interested in on MDN and ask questions about the site."
 msgstr ""
+"Список розсилки: <a href=\"%(list_link)s\">підпишіться</a>, щоб розповісти "
+"нам про те, що вам цікаво на MDN і поставити питання про сайт."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:43
 #, python-format
@@ -2685,6 +2693,8 @@ msgid ""
 "Don't be shy, if you have any doubt, problems, questions: contact us! We are"
 " here to help."
 msgstr ""
+"Не соромтеся, якщо у вас є якісь сумніви, проблеми, питання: зв'яжіться з "
+"нами! Ми тут, щоб допомогти."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
@@ -2698,6 +2708,8 @@ msgid ""
 "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a "
 "community making great resources for developers like you."
 msgstr ""
+"Дякуємо за створення облікового запису на Mozilla Developer Network (MDN) - "
+"спільноті, що робить чудові ресурси для таких розробників, як ви."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:10
@@ -2706,6 +2718,9 @@ msgid ""
 "profile. Now, keep going by picking a task on MDN, and doing it! We have a "
 "bunch of intro tasks you can choose based on your interests."
 msgstr ""
+"Створенням облікового запису ви завершили перший крок \"Початку роботи з "
+"MDN\". Зараз можна продовжити, вибравши задачу на MDN і виконавши її! У нас "
+"є купа вступних завдань, які ви можете вибрати спираючись на ваші інтереси."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
@@ -2761,6 +2776,9 @@ msgid ""
 "Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
+"Там ви можете знайти адміністраторів MDN: Eric Shepherd (sheppy), Jean-Yves "
+"Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris "
+"Mills (chrismills) і мене (jms), менеджера спільноти MDN."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -2919,10 +2937,12 @@ msgid ""
 "Please keep the length of the slug to %(limit_value)s characters or less. It"
 " is currently %(show_value)s characters."
 msgstr ""
+"Будь ласка, зменшіть довжину URL до %(limit_value)s символів або менше. "
+"Зараз вона становить %(show_value)s символів."
 
 #: kuma/wiki/forms.py:44
 msgid "Please provide a summary."
-msgstr ""
+msgstr "Будь ласка, вкажіть зведення."
 
 #: kuma/wiki/forms.py:45
 #, python-format
@@ -3546,11 +3566,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
-msgstr ""
+msgstr "Не включайте протокол URL (\"https://\")."
 
 #: kuma/wiki/jinja2/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "Введіть лише частину URL наступну після \"/docs/\"."
 
 #: kuma/wiki/jinja2/wiki/move.html:25
 msgid ""
@@ -3561,7 +3581,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/move.html:31
 msgid ""
 "Your requested move cannot be completed due to the following slug conflicts:"
-msgstr ""
+msgstr "Ваш запит не може бути виконаний через конфлікт URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
@@ -3615,7 +3635,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
-msgstr ""
+msgstr "Це попередній перегляд незбереженого документа."
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
@@ -3877,20 +3897,20 @@ msgstr "Google +"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Підписатися на %(title)s і всі її підстатті"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:129
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Відписатися від %(title)s і всі її підстатті"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr ""
+msgstr "Ви зараз підписані на цю статтю і всі її підстатті."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr ""
+msgstr "Ви відписалися від цієї статті і всі її підстатті."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 msgid "Updating subscription status"
@@ -3981,6 +4001,10 @@ msgid ""
 "href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
 "troubleshooting guide</a> as a starting point."
 msgstr ""
+"Хто завгодно з профілем MDN може відредагувати документ, щоб виправити "
+"помилку. Використовуйте <a "
+"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">інструкцію з "
+"виправлення помилок KumaScript</a> як відправну точку."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -4058,6 +4082,11 @@ msgid ""
 "deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
 "belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"Ваше подання включає вміст, який може бути не придатним для MDN. Повторні "
+"спроби представити невідповідні матеріали можуть призвести до відключення "
+"вашого облікового запису. Зверніться до нашого посібника “<a "
+"href=\"%(does_this_belong_url)s\">Чи можна це розміщувати на MDN?</a>” для "
+"отримання відомостей про те, що є відповідним матеріалом."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -4065,6 +4094,8 @@ msgid ""
 "If you believe you’ve received this message by mistake, please <a "
 "href=\"%(admin_email)s\">contact the site administrators</a>."
 msgstr ""
+"Якщо ви думаєте, що отримали це повідомлення помилково, будь ласка, <a "
+"href=\"%(admin_email)s\">зв'яжіться з адміністраторами сайту</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -4235,6 +4266,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          Наступні документи будуть назавжди видалені з бази даних. Цю дію не можна буде скасувати. Для скасування зараз, натисніть кнопку \"Назад\" у вашому браузері.\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
