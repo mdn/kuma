@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-22 17:27+0000\n"
+"PO-Revision-Date: 2016-01-24 14:58+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -2688,6 +2688,12 @@ msgid ""
 "Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
+"Valósidejű csevegés: <a href=\"%(channel_link)s\">#mdn channel az "
+"irc.mozilla.org oldalon</a>. (További információk az <a href=\"%(irc_link)s"
+"\">IRC-ről</a>.) Itt megtalálhatja az MDN írói stábjának adminisztrátorait: "
+"Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), "
+"Florian Scholz (fscholz), Chris Mills (chrismills), és én (jms), az MDN "
+"közösségi menedzsere."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
@@ -2695,6 +2701,9 @@ msgid ""
 "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for "
 "the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 msgstr ""
+"Blog: Az <a href=\"%(blog_link)s\">about:community</a> blogon, keresse a <a "
+"href=\"%(tagged_link)s\">Developer Engagement</a> címkével címkézett "
+"oldalakat."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:60
@@ -2703,6 +2712,8 @@ msgid ""
 "Don't be shy, if you have any doubt, problems, questions: contact us! We are"
 " here to help."
 msgstr ""
+"Ne legyen félénk, ha bármilyen kétsége, problémája vagy kérdése van: lépjen "
+"velünk kapcsolatba! Azért vagyunk itt, hogy segítsünk."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
@@ -2716,6 +2727,9 @@ msgid ""
 "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a "
 "community making great resources for developers like you."
 msgstr ""
+"Köszönjük hogy létrehozta profilját a Mozilla fejlesztői hálózatán (MDN) - "
+"ez egy közösség amely nagyszerű eszközöket készít, Önhöz hasonló "
+"fejlesztőkhöz."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:10
@@ -2780,6 +2794,10 @@ msgid ""
 "Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
+"Itt találhatja az MDN írói stábjának adminisztrátorait: Eric Shepherd "
+"(sheppy), Jean-Yves Perrier (teoli), majd Bamberg (wbamberg), Florian Scholz"
+" (fscholz), Chris Mills (chrismills), és én (jms), az MDN közösségi "
+"menedzsere."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -3010,6 +3028,8 @@ msgstr "Ezt a dokumentumot módosították, amíg szerkesztette."
 #: kuma/wiki/forms.py:64
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
+"A dokumentum SEO URL-jének módosításához az összes gyermekét át kell "
+"helyezni."
 
 #: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:612
 #: kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68
@@ -3184,6 +3204,8 @@ msgid ""
 "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d "
 "into index %(index)s.total"
 msgstr ""
+"%(total)d dokumentum indexelése %(total_chunks)d, %(size)d méretű darabra a "
+"következő indexbe: %(index)s.total"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3206,6 +3228,8 @@ msgstr "Dokumentum törlése | %(document)s"
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
 msgstr ""
+"A gyermekeket tartalmazó oldalak nem törölhetőek addig, amíg nem javítjuk "
+"ezt a hibát:"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
@@ -3416,6 +3440,9 @@ msgid ""
 "use %(title)s</a> to see example use cases and how many pages use this "
 "macro."
 msgstr ""
+"Keresés azokra az oldalakra, <a href=\"%(search_link)s\" rel=\"nofollow, "
+"noindex\">amelyek használják a(z) %(title)s</a> makrót, hogy példa "
+"használati eseteteket lásson és kiderüljön hány oldal használja."
 
 #: kuma/wiki/jinja2/wiki/document.html:315
 msgid "This article doesn't have approved content yet."
@@ -3578,12 +3605,16 @@ msgid ""
 "Please specify the new location for this page by filling out the fields "
 "below. Be sure your new destination follows these rules:"
 msgstr ""
+"Kérem adja meg az oldal új helyét a következő mezők kitöltésével. Győződjön "
+"meg róla hogy a cél követi ezeket a szabályokat."
 
 #: kuma/wiki/jinja2/wiki/move.html:22
 msgid ""
 "Make sure the location you specify is located immediately under an existing "
 "page."
 msgstr ""
+"Győződjön meg róla, hogy a megadott hely közvetlenül egy létező oldal alatt "
+"legyen."
 
 #: kuma/wiki/jinja2/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
