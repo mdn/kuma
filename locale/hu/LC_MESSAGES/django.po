@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-24 14:58+0000\n"
+"PO-Revision-Date: 2016-01-24 15:35+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -2660,17 +2660,23 @@ msgid ""
 "href=\"%(both_link)s\">like both words and code</a>, or you want to <a "
 "href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
+"És most, folytassa egy MDN feladat kiválasztásával és elvégzésével! Jónéhány"
+" bevezető feladatunk van, legyen Ön <a href=\"%(words_link)s\">a szavak "
+"embere</a>, <a href=\"%(code_link)s\">a kódok embere</a>, <a "
+"href=\"%(both_link)s\">a szavak emberes és a kódok embere is</a>, vagy ha le"
+" szeretné <a href=\"%(translate_link)s\">fordítani az MDN-t az Ön "
+"nyelvére</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr ""
+msgstr "Beszéljen velünk!"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:30
 msgid ""
 "Want to talk to someone about MDN? There are a few ways you can do that:"
-msgstr ""
+msgstr "Szeretne valakivel az MDN-ről beszélni? Többféleképpen is megteheti:"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:38
 #, python-format
@@ -2678,6 +2684,8 @@ msgid ""
 "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what "
 "you're interested in on MDN and ask questions about the site."
 msgstr ""
+"Levelezőlista: <a href=\"%(list_link)s\">Iratkozzon fel</a> hogy elmondhassa"
+" mi érdekli az MDN-ben és tegyen fel kérdéseket."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:43
 #, python-format
@@ -2746,28 +2754,28 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr ""
+msgstr "A szavak embere?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:18
 msgid "Like code?"
-msgstr ""
+msgstr "A kód embere?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:22
 msgid "Like both words and code?"
-msgstr ""
+msgstr "A szavak és a kód embere is?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:26
 msgid "Want to translate MDN to your language?"
-msgstr ""
+msgstr "Szeretné az MDN-t a saját nyelvére fordítani?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
 #, python-format
 msgid "Mailing list: %(list_link)s"
-msgstr ""
+msgstr "Levelezőlista: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
@@ -2775,17 +2783,19 @@ msgid ""
 "Subscribe to tell us about what you're interested in on MDN and ask "
 "questions about the site."
 msgstr ""
+"Iratkozzon fel és mondja el mi érdekli az MDN-ben és tegyen fel kérdéseket "
+"az oldallal kapcsolatban."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
 msgid "Real-time chat: #mdn channel on irc.mozilla.org"
-msgstr ""
+msgstr "Valósidejű csevegés: #mdn csatorna az irc.mozilla.org oldalon"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr ""
+msgstr "További információért az IRC-ről lásd: %(irc_link)s."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:45
@@ -3514,15 +3524,15 @@ msgstr "Renderelés max. kora:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:129
 msgid "Days"
-msgstr "Nap"
+msgstr "nap"
 
 #: kuma/wiki/jinja2/wiki/edit.html:133
 msgid "Hours"
-msgstr "Óra"
+msgstr "óra"
 
 #: kuma/wiki/jinja2/wiki/edit.html:137
 msgid "Minutes"
-msgstr "Perc"
+msgstr "perc"
 
 #: kuma/wiki/jinja2/wiki/edit.html:146
 msgid ""
@@ -4416,6 +4426,8 @@ msgid ""
 "Autosuggest requires a partial title. For a full document index, see the "
 "main page."
 msgstr ""
+"Az automatikus javaslathoz egy részleges cím szükséges. A teljes "
+"dokumentumjegyzékhez lásd a nyitólapot."
 
 #: kuma/wiki/views/misc.py:106
 #, python-format
