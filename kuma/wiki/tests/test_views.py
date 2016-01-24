@@ -2184,22 +2184,23 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         test_data = [
             {
-                'params': {'approve_technical': 1},
-                'expected_tags': ['editorial'],
-                'name': 'technical',
-                'message_contains': ['Technical review completed.']
-            },
-            {
-                'params': {'approve_editorial': 1},
+                'params': {'request_technical': 1},
                 'expected_tags': ['technical'],
-                'name': 'editorial',
-                'message_contains': ['Editorial review completed.']
+                'name': 'technical',
+                'message_contains': [
+                    'Editorial review completed.',
+                ]
             },
             {
-                'params': {
-                    'approve_technical': 1,
-                    'approve_editorial': 1
-                },
+                'params': {'request_editorial': 1},
+                'expected_tags': ['editorial'],
+                'name': 'editorial',
+                'message_contains': [
+                    'Technical review completed.',
+                ]
+            },
+            {
+                'params': {},
                 'expected_tags': [],
                 'name': 'editorial-technical',
                 'message_contains': [
@@ -2212,8 +2213,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         for data_dict in test_data:
             slug = 'test-quick-review-%s' % data_dict['name']
             data = new_document_data()
-            data.update({'review_tags': ['editorial', 'technical'],
-                         'slug': slug})
+            data.update({'review_tags': ['editorial', 'technical'], 'slug': slug})
             resp = self.client.post(reverse('wiki.create'), data)
 
             doc = Document.objects.get(slug=slug)

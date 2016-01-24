@@ -2,26 +2,26 @@
   {% if user.is_authenticated() and document.current_revision and document.allows_revision_by(user) %}
     {% if document.current_revision.needs_technical_review or document.current_revision.needs_editorial_review %}
     <section class="page-meta reviews">
-      <p>{{ _('The following reviews have been requested:') }}</p>
+      <p>{{ _('This article needs these reviews:') }}</p>
 
       <form method="post" action="{{ url('wiki.quick_review', document.slug) }}">
         {% csrf_token %}
         <ul>
         {% if document.current_revision.needs_technical_review %}
           <li>
-            <input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
-            <label for="id_approve_technical">{{ _('Technical') }}</label>
+            <input type="checkbox" value="request_technical" id="id_request_technical" name="request_technical" checked="checked">
+            <label for="id_request_technical">{{ _('Technical - code samples, APIs, or technologies') }}</label>
           </li>
         {% endif %}
         {% if document.current_revision.needs_editorial_review %}
           <li>
-            <input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
-            <label for="id_approve_editorial">{{ _('Editorial') }}</label>
+            <input type="checkbox" value="request_editorial" id="id_request_editorial" name="request_editorial" checked="checked">
+            <label for="id_request_editorial">{{ _('Editorial - prose, grammar, or content') }}</label>
           </li>
         {% endif %}
         </ul>
         <input type="hidden" value="{{ document.current_revision.id }}" name="revision_id" />
-        <button type="submit">{{ _('Review completed') }}</button>
+        <button type="submit">{{ _('Save') }}</button>
       </form>
     </section>
     {% endif %}
