@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-25 12:15+0000\n"
+"PO-Revision-Date: 2016-01-25 13:44+0000\n"
 "Last-Translator: Timothy Aditya Sutantyo <timisutantyo@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2305,7 +2305,7 @@ msgstr "Tingkat Lanjut"
 
 #: kuma/users/jinja2/users/user_detail.html:53
 msgid "Manage"
-msgstr ""
+msgstr "Kelola"
 
 #: kuma/users/jinja2/users/user_detail.html:56
 msgid "API keys"
@@ -2318,15 +2318,15 @@ msgstr ""
 #: kuma/users/jinja2/users/user_detail.html:102
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr ""
+msgstr "Anggota sejak %(date_joined)s"
 
 #: kuma/users/jinja2/users/user_detail.html:150
 msgid "Recent Docs Activity"
-msgstr ""
+msgstr "Aktivitas Dokumentasi Terkini"
 
 #: kuma/users/jinja2/users/user_detail.html:150
 msgid "View all activity"
-msgstr ""
+msgstr "Lihat semua aktivitas"
 
 #: kuma/users/jinja2/users/user_detail.html:155
 msgid "Page"
