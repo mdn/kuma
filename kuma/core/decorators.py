@@ -1,14 +1,11 @@
 from functools import wraps
-import inspect
 import re
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
-from django.db.models import Model, get_model
 from django.http import HttpResponseForbidden, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.utils.decorators import available_attrs
 from django.utils.http import urlquote
 
@@ -90,26 +87,6 @@ def permission_required(perm, login_url=None, redirect=REDIRECT_FIELD_NAME,
     return user_access_decorator(redirect_func, redirect_field=redirect,
                                  redirect_url_func=redirect_url_func,
                                  deny_func=deny_func)
-
-
-def _resolve_lookup((model, lookup, arg_name), view_kwargs):
-    """Return the object indicated by the lookup triple and the kwargs passed
-    to the view.
-
-    """
-    value = view_kwargs.get(arg_name)
-    if value is None:
-        raise ValueError("Expected kwarg '%s' not found." % arg_name)
-    if isinstance(model, basestring):
-        model_class = get_model(*model.split('.'))
-    else:
-        model_class = model
-    if model_class is None:
-        raise ValueError("The given argument '%s' is not a valid model." %
-                         model)
-    if inspect.isclass(model_class) and not issubclass(model_class, Model):
-        raise ValueError("The argument '%s' needs to be a model." % model)
-    return get_object_or_404(model_class, **{lookup: value})
 
 
 # django never_cache isn't as thorough as we might like
