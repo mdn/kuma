@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-25 11:39+0000\n"
+"PO-Revision-Date: 2016-01-25 12:15+0000\n"
 "Last-Translator: Timothy Aditya Sutantyo <timisutantyo@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1159,9 +1159,8 @@ msgid "Open Web and Mobile"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:113
-#, fuzzy
 msgid "Learn Web Development"
-msgstr "Semua alat pengembangan web"
+msgstr "Belajar Pengembangan Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
@@ -2245,7 +2244,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:179
 msgid "Create my MDN profile"
-msgstr ""
+msgstr "Buat profil MDN saya"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with Persona"
