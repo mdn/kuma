@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-25 10:27+0000\n"
+"PO-Revision-Date: 2016-01-25 11:39+0000\n"
 "Last-Translator: Timothy Aditya Sutantyo <timisutantyo@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -736,9 +736,8 @@ msgid ""
 msgstr ""
 
 #: kuma/core/sections.py:13
-#, fuzzy
 msgid "Mozilla"
-msgstr "Bugzilla"
+msgstr "Mozilla"
 
 #: kuma/core/sections.py:27
 #: kuma/core/translations/search/filter/mobile/name.py:4
@@ -976,19 +975,19 @@ msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:34
 msgid "new"
-msgstr ""
+msgstr "baru"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35
 msgid "deleted"
-msgstr ""
+msgstr "dihapus"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:50
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
 msgid "Ban IP from Editing"
-msgstr ""
+msgstr "Larang IP untuk Menyunting"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
 msgid "User agent:"
@@ -1001,7 +1000,7 @@ msgstr ""
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:64
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
-msgstr ""
+msgstr "dilarang %(ban_date)s oleh %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:78
 #, python-format
