@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-25 04:06+0000\n"
+"PO-Revision-Date: 2016-01-25 10:27+0000\n"
 "Last-Translator: Timothy Aditya Sutantyo <timisutantyo@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1534,12 +1534,12 @@ msgstr[0] ""
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Memperlihatkan semua hasil."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr ""
+msgstr "Memperlihatkan hasil dari %(start)s hingga %(end)s."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
@@ -1552,7 +1552,7 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
-msgstr ""
+msgstr "Filter dengan"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
@@ -1568,7 +1568,7 @@ msgstr "dibuat"
 
 #: kuma/spam/models.py:27
 msgid "Spam"
-msgstr ""
+msgstr "Spam"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
@@ -1632,7 +1632,7 @@ msgstr ""
 
 #: kuma/users/forms.py:38
 msgid "Plain text"
-msgstr ""
+msgstr "Teks biasa"
 
 #: kuma/users/forms.py:40
 msgid "Send me the newsletter"
@@ -1644,19 +1644,19 @@ msgstr ""
 
 #: kuma/users/forms.py:47 kuma/users/signup.py:32
 msgid "I agree"
-msgstr ""
+msgstr "Saya setuju"
 
 #: kuma/users/forms.py:50
 msgid "Your country"
-msgstr ""
+msgstr "Negara anda"
 
 #: kuma/users/forms.py:151 kuma/users/models.py:41
 msgid "Timezone"
-msgstr ""
+msgstr "Zona waktu"
 
 #: kuma/users/forms.py:157
 msgid "Beta tester"
-msgstr ""
+msgstr "Penguji beta"
 
 #: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:81
 msgid "Interests"
@@ -1673,23 +1673,23 @@ msgstr ""
 #: kuma/users/forms.py:180 kuma/users/models.py:136
 #: kuma/users/jinja2/users/user_detail.html:111
 msgid "Website"
-msgstr ""
+msgstr "Website"
 
 #: kuma/users/forms.py:189 kuma/users/models.py:151
 #: kuma/users/jinja2/users/user_detail.html:115
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: kuma/users/forms.py:207 kuma/users/models.py:166
 #: kuma/users/jinja2/users/user_detail.html:129
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Stack Overflow"
 
 #: kuma/users/forms.py:216 kuma/users/models.py:156
 #: kuma/users/jinja2/users/user_detail.html:133
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: kuma/users/forms.py:225 kuma/users/models.py:141
 #: kuma/users/jinja2/users/user_detail.html:137
@@ -1700,7 +1700,7 @@ msgstr ""
 #: kuma/users/jinja2/users/user_detail.html:141
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:110
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
@@ -1726,7 +1726,7 @@ msgstr ""
 
 #: kuma/users/models.py:51
 msgid "Language"
-msgstr ""
+msgstr "Bahasa"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
@@ -1737,14 +1737,16 @@ msgid ""
 "This URL has an invalid format. Valid URLs look like "
 "http://example.com/my_page."
 msgstr ""
+"URL ini memiliki format tidak sah. Contoh URL sah adalah "
+"http://example.com/my_page."
 
 #: kuma/users/models.py:70
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #: kuma/users/models.py:75
 msgid "Organization"
-msgstr ""
+msgstr "Organisasi"
 
 #: kuma/users/models.py:80
 msgid "Location"
@@ -1752,7 +1754,7 @@ msgstr ""
 
 #: kuma/users/models.py:85
 msgid "About Me"
-msgstr ""
+msgstr "Tentang Saya"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
@@ -1802,6 +1804,8 @@ msgid ""
 "Username is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
+"Nama pengguna terlalu pendek (%(show_value)s karakter). Paling pendek "
+"%(limit_value)s karakter."
 
 #: kuma/users/signup.py:10
 #, python-format
@@ -1809,6 +1813,8 @@ msgid ""
 "Username is too long (%(show_value)s characters). It must be %(limit_value)s"
 " characters or less."
 msgstr ""
+"Nama pengguna terlalu panjang (%(show_value)s karakter). Harus "
+"%(limit_value)s karakter atau lebih pendek."
 
 #: kuma/users/signup.py:13
 msgid "You must agree to the terms of use."
@@ -1820,26 +1826,26 @@ msgstr ""
 
 #: kuma/users/views.py:214
 msgid "Email address"
-msgstr ""
+msgstr "Alamat email"
 
 #: kuma/users/views.py:273
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr ""
+msgstr "%(email)s <b>Terbukti</b>"
 
 #: kuma/users/views.py:276
 #, python-format
 msgid "%(email)s Unverified"
-msgstr ""
+msgstr "%(email)s Belum Terbukti"
 
 #: kuma/users/views.py:279 kuma/users/jinja2/socialaccount/signup.html:142
 msgid "Other:"
-msgstr ""
+msgstr "Lainnya:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3
 #: kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr ""
+msgstr "Profil Tidak Aktif"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
@@ -1854,11 +1860,11 @@ msgstr ""
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr ""
+msgstr "%(email)s adalah alamat email <em>utama</em> anda"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr ""
+msgstr "Anda juga menambahkan alamat email berikut ini:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
@@ -1870,37 +1876,39 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
-msgstr ""
+msgstr "Hapus"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid ""
 "<strong>Warning:</strong>\"You have not added any email addresses to this "
 "profile. Without one you cannot receive notifications."
 msgstr ""
+"<strong>Peringatan:</strong>\"Anda belum menambahkan satupun alamat email "
+"untuk profil ini. Tanpanya anda tidak dapat menerima notifikasi."
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr ""
+msgstr "Tambahkan alamat email"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr ""
+msgstr "Tambahkan Email"
 
 #: kuma/users/jinja2/account/email.html:60
 #: kuma/users/jinja2/socialaccount/connections.html:70
 msgid "Edit profile"
-msgstr ""
+msgstr "Sunting profil"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
-msgstr ""
+msgstr "Apakah anda benar-benar ingin menghapus alamat email yang dipilih?"
 
 #: kuma/users/jinja2/account/email_confirm.html:3
 #: kuma/users/jinja2/account/email_confirm.html:9
 #: kuma/users/jinja2/account/email_confirmed.html:3
 #: kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
-msgstr ""
+msgstr "Konfirmasi Alamat Email"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
@@ -1929,7 +1937,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
-msgstr ""
+msgstr "Masuk"
 
 #: kuma/users/jinja2/account/login.html:11
 msgid "Please sign in"
@@ -1954,7 +1962,7 @@ msgstr ""
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr ""
+msgstr "Ganti Kata Sandi"
 
 #: kuma/users/jinja2/account/password_reset.html:3
 #: kuma/users/jinja2/account/password_reset.html:8
@@ -1968,10 +1976,12 @@ msgid ""
 "Forgotten your password? Enter your email address below, and we'll send you "
 "an email allowing you to reset it."
 msgstr ""
+"Lupa kata sandi? Ketiklah alamat email di bawah, dan kita akan mengirimkan "
+"email yang memungkinkan anda untuk menyetelnya ulang."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr ""
+msgstr "Setel Ulang Kata Sandi"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
@@ -2119,7 +2129,7 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr ""
+msgstr "Batal Masuk"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -2132,7 +2142,7 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:4
 #: kuma/users/jinja2/socialaccount/signup.html:26
 msgid "Create your MDN profile to continue"
-msgstr ""
+msgstr "Buatlah profil MDN anda untuk lanjut"
 
 #: kuma/users/jinja2/socialaccount/signup.html:30
 #, python-format
@@ -2191,18 +2201,23 @@ msgid ""
 "profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
 "know</a></strong>."
 msgstr ""
+"Jika anda <strong>memiliki masalah</strong> masuk atau membuat profil MDN, "
+"<strong><a href=\"%(bug_href)s\" rel=\"external\">beritahu "
+"kami</a></strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:107
 #, python-format
 msgid ""
 "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr ""
+msgstr "Nama Pengguna GitHub %(username)s telah diambil. Pilihlah yang lain."
 
 #: kuma/users/jinja2/socialaccount/signup.html:111
 msgid ""
 "Please enter the name you'd like to display to other users to identify your "
 "contributions."
 msgstr ""
+"Ketiklah nama yang ingin anda perlihatkan ke pengguna lain untuk mengetahui "
+"kontribusi anda."
 
 #: kuma/users/jinja2/socialaccount/signup.html:125
 #, python-format
@@ -2235,11 +2250,11 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with Persona"
-msgstr ""
+msgstr "Telah masuk dengan Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
-msgstr ""
+msgstr "Telah masuk dengan GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with Persona"
@@ -2247,7 +2262,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with Persona"
-msgstr ""
+msgstr "Masuk dengan Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
@@ -2281,7 +2296,7 @@ msgstr ""
 #: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:718
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
-msgstr ""
+msgstr "Sunting"
 
 #: kuma/users/jinja2/users/user_detail.html:49
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:53
@@ -2317,7 +2332,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:155
 msgid "Page"
-msgstr ""
+msgstr "Laman"
 
 #: kuma/users/jinja2/users/user_detail.html:157
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
@@ -2328,7 +2343,7 @@ msgstr "Komentar"
 #: kuma/users/jinja2/users/user_detail.html:165
 #: kuma/wiki/jinja2/wiki/document.html:377
 msgid "Edit page"
-msgstr ""
+msgstr "Sunting halaman"
 
 #: kuma/users/jinja2/users/user_detail.html:166
 msgid "View complete diff"
@@ -2337,7 +2352,7 @@ msgstr ""
 #: kuma/users/jinja2/users/user_detail.html:167
 #: kuma/wiki/jinja2/wiki/document.html:378
 msgid "View page history"
-msgstr ""
+msgstr "Tampilkan riwayat laman"
 
 #: kuma/users/jinja2/users/user_detail.html:179
 #, python-format
@@ -2348,19 +2363,19 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:183
 msgid "This user has no activity."
-msgstr ""
+msgstr "Pengguna ini tidak ada aktifitas."
 
 #: kuma/users/jinja2/users/user_edit.html:12
 msgid "Edit Your Profile"
-msgstr ""
+msgstr "Sunting Profil Anda"
 
 #: kuma/users/jinja2/users/user_edit.html:38
 msgid "Change your avatar at"
-msgstr ""
+msgstr "Ubah avatar anda di"
 
 #: kuma/users/jinja2/users/user_edit.html:42
 msgid "View profile"
-msgstr ""
+msgstr "Tampilkan profil"
 
 #: kuma/users/jinja2/users/user_edit.html:50
 msgid "You're editing a different profile than your own. Please take care!"
@@ -2375,16 +2390,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:64
 msgid "Primary Email"
-msgstr ""
+msgstr "Email Utama"
 
 #: kuma/users/jinja2/users/user_edit.html:65
 msgid "Edit email"
-msgstr ""
+msgstr "Sunting email"
 
 #: kuma/users/jinja2/users/user_edit.html:77
-#, fuzzy
 msgid "About me"
-msgstr "Tentang MDN"
+msgstr "Tentang saya"
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "words remaining"
