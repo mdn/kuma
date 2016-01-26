@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-26 02:03+0000\n"
+"PO-Revision-Date: 2016-01-26 02:14+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
@@ -1377,12 +1377,11 @@ msgstr "由開發者所撰寫的網頁文件，為了 MDN 上的開發者"
 #: kuma/landing/jinja2/landing/promote_buttons.html:198
 #: kuma/landing/jinja2/landing/promote_buttons.html:199
 #: kuma/landing/jinja2/landing/promote_buttons.html:200
-#, fuzzy
 msgid ""
 "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript"
 " and other Web standards and open technologies."
 msgstr ""
-"MDN 就是您的網頁開發工具箱，裡面有文件、demo，以及更多關於 HTML、CSS、JavaScript 以及其他網路標準與開放技術的資訊。"
+"MDN 就是您的網頁開發工具箱，其內除了多樣的說明文件之外，更有其他關於 HTML、CSS、JavaScript 等 Web 標準及開放技術的資訊。"
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
@@ -2178,32 +2177,26 @@ msgstr ""
 "感謝您使用 %(provider_name)s 登入 MDN。只要再一個步驟即可加入MDN: <strong>建立您的 MDN 帳號</strong>。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
-#, fuzzy
 msgid ""
 "You can access everything on the MDN website even without an MDN profile. "
 "However, by joining MDN, you'll be able to edit docs and have your own "
 "profile page."
-msgstr "您不需登入即可存取MDN網站。加入MDN，您可以編輯文件、發佈demo，並可擁有您專屬的頁面。"
+msgstr "您不需註冊帳號即可存取 MDN 網站的所有內容。加入 MDN 後，您還可以編輯文件並擁有自己專屬的頁面。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:68
-#, fuzzy
 msgid ""
 "To set up your MDN profile, please <strong>choose a username</strong>. Your "
 "username will be displayed on MDN to identify any contributions that you "
 "make."
-msgstr ""
-"為了建立您的 MDN 帳號，請 <strong>設定使用者名稱</strong>。您的使用者名稱將會顯示於 MDN 以識別您的貢獻（編輯、demo "
-"等等）"
+msgstr "若要建立您的 MDN 帳號，請 <strong>設定使用者名稱</strong>。您的使用者名稱將會顯示於 MDN 以識別您的貢獻。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:74
-#, fuzzy
 msgid ""
 "To set up your MDN profile, please <strong>choose a username and email "
 "address</strong>. Your username will be displayed on MDN to identify any "
 "contributions that you make."
 msgstr ""
-"為了建立您的 MDN 帳號，請 <strong>設定使用者名稱及電子郵件信箱</strong>。您的使用者名稱將會顯示於 MDN "
-"以識別您的貢獻（編輯、demo 等等）"
+"若要建立您的 MDN 帳號，請 <strong>設定使用者名稱及電子郵件信箱</strong>。您的使用者名稱將會顯示於 MDN 以識別您的貢獻。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:82
 #, python-format
@@ -2562,7 +2555,7 @@ msgstr "嗨 %(username)s"
 msgid ""
 "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a "
 "community making great resources for developers like you."
-msgstr ""
+msgstr "謝謝您建立了 Mozilla Developer Network (MDN) 帳號 -- MDN 社群一直為像您一樣的開發者提供絕佳資源。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:10
@@ -2571,6 +2564,8 @@ msgid ""
 "profile. Now, keep going by picking a task on MDN, and doing it! We have a "
 "bunch of intro tasks you can choose based on your interests."
 msgstr ""
+"建立個人帳號之後，您就完成了 MDN 新手上路的第一步。現在就繼續為自己在 MDN "
+"上找個任務並完成吧！我們提供許多入門小任務，讓您能根據自己的興趣選擇。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
@@ -2603,7 +2598,7 @@ msgstr "郵件群組: %(list_link)s"
 msgid ""
 "Subscribe to tell us about what you're interested in on MDN and ask "
 "questions about the site."
-msgstr ""
+msgstr "訂閱不同的主題可讓我們知道您對 MDN 上的那些主題感興趣，並可詢問網站的相關問題。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
@@ -2623,6 +2618,9 @@ msgid ""
 "Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
+"您可在此找到 MDN 作者管理群：Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will "
+"Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)，還有我這現任的"
+" MDN 社群經理 (jms)。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -3087,7 +3085,7 @@ msgstr "您為什麼要回退到這筆修改？"
 msgid ""
 "You are about to revert the document to this revision. Click \"revert\" to "
 "revert to the content&nbsp;above."
-msgstr ""
+msgstr "您正要將文件還原回此一版本。點擊「還原 (Revert)」即可還原為&nbsp;上述內容。"
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
@@ -3170,7 +3168,7 @@ msgstr "在這篇文章"
 msgid ""
 "This document is being rendered for the first time by the system. Please <a "
 "href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
-msgstr ""
+msgstr "系統正首次繪製此文件。請在數分鐘之後 <a href=\"%(url)s\">重新載入此頁面</a> 以觀看完整內容。"
 
 #: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
@@ -3179,6 +3177,8 @@ msgid ""
 "progress</abbr>. If the content below seems stale or if something is "
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
+"<abbr title=\"%(started_at)s\">目前正在更新</abbr> 此文件。若下方內容看來已久未更新或缺漏某些部分，請於數分鐘之後"
+" <a href=\"%(url)s\">重新載入此頁面</a>。"
 
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
@@ -3187,6 +3187,9 @@ msgid ""
 "scheduled</abbr>. If the content below seems stale or if something is "
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
+"此文件的更新作業 <abbr "
+"title=\"%(scheduled_at)s\">已經排程完畢</abbr>。若下方內容看來已久未更新或缺漏某些部分，請在數分鐘之後 <a "
+"href=\"%(url)s\">重新載入此頁面</a>。"
 
 #: kuma/wiki/jinja2/wiki/document.html:265
 msgid "This article is in need of a technical review."
@@ -3201,7 +3204,7 @@ msgstr "此文件需要編輯審查。"
 msgid ""
 "This translation is incomplete. Please help <a "
 "href=\"%(translate_url)s\">translate this article</a> from English."
-msgstr ""
+msgstr "翻譯不完整。請協助 <a href=\"%(translate_url)s\">翻譯此英文文件</a>。"
 
 #: kuma/wiki/jinja2/wiki/document.html:281
 msgid "This translation is in progress."
@@ -3213,6 +3216,8 @@ msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
 "yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
+"我們的志工尚未將此文章翻譯為 <bdi>%(locale)s</bdi> 版本。<a "
+"href=\"%(help_link)s\">加入我們，幫忙翻譯！</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:299
 msgid "This article doesn't have any content yet."
@@ -3225,6 +3230,8 @@ msgid ""
 "use %(title)s</a> to see example use cases and how many pages use this "
 "macro."
 msgstr ""
+"搜尋 <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">標題為 %(title)s "
+"的頁面</a>，了解用法以及使用此巨集的頁面數量。"
 
 #: kuma/wiki/jinja2/wiki/document.html:315
 msgid "This article doesn't have approved content yet."
@@ -3257,7 +3264,7 @@ msgid ""
 "Please review the differences between your changes and the changes saved "
 "since you started editing. You may save again, but try to resolve any "
 "conflicts by hand so that the changes made since you started are not lost."
-msgstr ""
+msgstr "在您開始編輯之後，請確認您的修改與已儲存修改之間的差異。您可以再次儲存，但請解決發生的任何衝突情形，如此您所修改的內容才不致遺失。"
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
@@ -3285,7 +3292,7 @@ msgstr "編輯頁面標題及屬性"
 
 #: kuma/wiki/jinja2/wiki/edit.html:127
 msgid "Rendering max age:"
-msgstr ""
+msgstr "最長描繪時間："
 
 #: kuma/wiki/jinja2/wiki/edit.html:129
 msgid "Days"
@@ -3303,7 +3310,7 @@ msgstr "分鐘"
 msgid ""
 "Find the translation source with the lookup below and then click \"Save "
 "Changes.\""
-msgstr ""
+msgstr "以下方查找表尋找翻譯來源，再點擊「儲存變更」。"
 
 #: kuma/wiki/jinja2/wiki/edit.html:148
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:62
@@ -3321,6 +3328,8 @@ msgid ""
 "to common editing questions within our <a target=\"_blank\" "
 "href=\"%(url)s\">Editor Guide</a>."
 msgstr ""
+"看來這是您對 MDN 的第一次貢獻成果。如果編輯上有任何問題，可參考<a target=\"_blank\" "
+"href=\"%(url)s\">編輯者指南</a>當中的常見問題與解答。"
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid ""
@@ -3343,6 +3352,8 @@ msgid ""
 "filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the"
 " Tagging Guide</a>."
 msgstr ""
+"請為此篇文章分類，以利搜尋引擎能透過正確篩選條件找出文章。<a target=\"_blank\" "
+"href=\"%(url)s\">參閱標記指南</a>。"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -3369,7 +3380,7 @@ msgstr "移動文件 | %(document)s"
 msgid ""
 "Please specify the new location for this page by filling out the fields "
 "below. Be sure your new destination follows these rules:"
-msgstr ""
+msgstr "請填寫下列欄位，為此頁面指定新的位置。另請您確認新目的地均依照下列規則："
 
 #: kuma/wiki/jinja2/wiki/move.html:22
 msgid ""
@@ -4081,15 +4092,15 @@ msgstr "載入"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
-msgstr ""
+msgstr "Akismet 傳輸項細節"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
-msgstr ""
+msgstr "請儲存下列表單以傳送至 Akismet。"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_list.html:4
 msgid "Select an Akismet submission for more details"
-msgstr ""
+msgstr "選擇 Akismet 輸出項以取得更多詳細資訊"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:100
 #: kuma/wiki/templatetags/jinja_helpers.py:101
