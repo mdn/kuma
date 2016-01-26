@@ -40,8 +40,8 @@
             <span>{{ revision.mime_type }}</span>
           </li>
           <li>
-            <mark>{{ _('MIME Type:') }}</mark>
-            <span>{{ _('%(bytes)s bytes', bytes=attachment.size) }}</span>
+            <mark>{{ _('Size:') }}</mark>
+            <span>{{ _('%(bytes)s bytes', bytes=revision.file.size) }}</span>
           </li>
 
           <li class="revision-is-current">
