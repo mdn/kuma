@@ -3,6 +3,10 @@ from datetime import datetime
 from django.conf import settings
 from django.db import models
 from django.template.loader import select_template
+from django.utils.translation import ugettext_lazy as _
+
+
+from kuma.core.urlresolvers import reverse
 
 from .utils import attachment_upload_to, full_attachment_url
 
@@ -15,11 +19,6 @@ class Attachment(models.Model):
     and documents; insertion of an attachment is handled through
     markup in the document.
     """
-    class Meta(object):
-        permissions = (
-            ("disallow_add_attachment", "Cannot upload attachment"),
-        )
-
     current_revision = models.ForeignKey('AttachmentRevision', null=True,
                                          related_name='current_rev')
 
@@ -33,12 +32,20 @@ class Attachment(models.Model):
     # new kuma file URLs.
     mindtouch_attachment_id = models.IntegerField(
         help_text="ID for migrated MindTouch resource",
-        null=True, db_index=True)
+        null=True, blank=True, db_index=True)
     modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
-    @models.permalink
+    class Meta(object):
+        permissions = (
+            ("disallow_add_attachment", "Cannot upload attachment"),
+        )
+
+    def __unicode__(self):
+        return self.title
+
     def get_absolute_url(self):
-        return ('attachments.attachment_detail', (), {'attachment_id': self.id})
+        return reverse('attachments.attachment_detail',
+                       kwargs={'attachment_id': self.id})
 
     def get_file_url(self):
         return full_attachment_url(self.id, self.current_revision.filename())
@@ -110,11 +117,17 @@ class AttachmentRevision(models.Model):
     # MindTouch?
     mindtouch_old_id = models.IntegerField(
         help_text="ID for migrated MindTouch resource revision",
-        null=True, db_index=True, unique=True)
+        null=True, blank=True, db_index=True, unique=True)
     is_mindtouch_migration = models.BooleanField(
         default=False, db_index=True,
         help_text="Did this revision come from MindTouch?")
 
+    class Meta:
+        verbose_name = _('attachment revision')
+        verbose_name_plural = _('attachment revisions')
+
+    def __unicode__(self):
+        return u'%s ("%s")' % (self.title, self.filename)
     def filename(self):
         return self.file.path.split('/')[-1]
 

@@ -10,7 +10,7 @@ from django.http import (Http404, HttpResponsePermanentRedirect,
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_POST
 
 from kuma.core.decorators import login_required
 from kuma.core.utils import paginate
@@ -32,15 +32,6 @@ OVERRIDE_MIMETYPES = {
 
 def guess_extension(_type):
     return OVERRIDE_MIMETYPES.get(_type, mimetypes.guess_extension(_type))
-
-
-@require_GET
-def list_files(request):
-    """Returns listing of all files"""
-    files = paginate(request,
-                     Attachment.objects.order_by('title'),
-                     per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'attachments/list_files.html', {'files': files})
 
 
 def raw_file(request, attachment_id, filename):

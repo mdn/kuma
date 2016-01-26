@@ -355,10 +355,3 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         eq_('Files dict test file 2', file2['description'])
         eq_('text/plain', file2['mime_type'])
         ok_(test_file_2.name.split('/')[-1] in file2['url'])
-
-    def test_list_files(self):
-        list_files_url = reverse('attachments.list_files',
-                                 locale=settings.WIKI_DEFAULT_LANGUAGE)
-        resp = self.client.get(list_files_url)
-        eq_(200, resp.status_code)
-        ok_('All Files' in resp.content)
