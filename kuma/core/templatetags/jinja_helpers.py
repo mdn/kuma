@@ -278,10 +278,10 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
         'tzinfo': value.tzinfo,
     }
 
-    # If within a day, 24 * 60 * 60 = 86400s
     if format == 'shortdatetime':
-        # Check if the date is today
-        if value.toordinal() == timezone.now().toordinal():
+        # Check if the date is today.
+        if (value.toordinal() ==
+                timezone.now().astimezone(value.tzinfo).toordinal()):
             formatted_time = format_time(value, format='short', **format_params)
             formatted = _(u'Today at %s') % formatted_time
         else:
