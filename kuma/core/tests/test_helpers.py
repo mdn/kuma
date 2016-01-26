@@ -98,12 +98,13 @@ class TestDateTimeFormat(UserTestCase):
     def setUp(self):
         super(TestDateTimeFormat, self).setUp()
         self.default_timezone = timezone.get_default_timezone()
-        self.old_times = (datetime.fromordinal(733900)
-                                  .replace(tzinfo=self.default_timezone))
+        self.old_times = datetime(2010, 5, 8).replace(
+            tzinfo=self.default_timezone)
         url_ = reverse('home')
         self.context = {'request': RequestFactory().get(url_)}
         self.context['request'].LANGUAGE_CODE = u'en-US'
-        self.context['request'].user = self.user_model.objects.get(username='testuser01')
+        self.context['request'].user = self.user_model.objects.get(
+            username='testuser01')
 
     def test_today(self):
         """Expects shortdatetime, format: Today at {time}."""
