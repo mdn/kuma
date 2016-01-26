@@ -2648,7 +2648,7 @@ msgid ""
 "You've completed the first step of <a href=\"%(started_link)s\">Getting "
 "Started on MDN</a> by creating a profile."
 msgstr ""
-"Teljesítette az első lépését az <a href=\"%s\">MDN megismerésének</a> "
+"Teljesítette az első lépését az <a href=\"%(started_link)s\">MDN megismerésének</a> "
 "profilja létrehozásával."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:21
