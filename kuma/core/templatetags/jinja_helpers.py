@@ -5,6 +5,7 @@ import urllib
 
 import bleach
 import jinja2
+import pytz
 from babel import localedata
 from babel.dates import format_date, format_datetime, format_time
 from babel.numbers import format_decimal
@@ -265,7 +266,7 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     user = context['request'].user
     try:
         if user.is_authenticated() and user.timezone:
-            user_tz = user.timezone
+            user_tz = pytz.timezone(user.timezone)
             value = user_tz.normalize(value.astimezone(user_tz))
     except AttributeError:
         pass

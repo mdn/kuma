@@ -3,6 +3,7 @@ from collections import namedtuple
 from datetime import datetime
 
 import pytest
+import pytz
 from babel.dates import format_date, format_datetime, format_time
 from django.test import RequestFactory
 from django.utils import timezone
@@ -191,7 +192,7 @@ class TestDateTimeFormat(UserTestCase):
         self.context['request'].user = user
 
         # Convert tzvalue to user timezone
-        user_tz = user.timezone
+        user_tz = pytz.timezone(user.timezone)
         tzvalue = self.old_times.astimezone(user_tz)
 
         value_expected = format_datetime(tzvalue, format='long',
