@@ -87,11 +87,9 @@
 
     <div class="clear header-clear"></div>
 
-    {% if waffle.flag('mdn10_logo') %}
-        <a href="{{ url('home') }}" class="logo logo-mdn10">{{ _('Mozilla Developer Network') }}</a>
-    {% else %}
-        <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
-    {% endif %}
+
+    <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
+
 
     <div id="nav-sec">
         {% if not is_sphinx %}
