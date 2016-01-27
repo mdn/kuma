@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -16,9 +16,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('shortname', models.SlugField(help_text=b'Short name to find this bundle by.', unique=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Entry',
@@ -35,7 +32,6 @@ class Migration(migrations.Migration):
                 'ordering': ['-last_published'],
                 'verbose_name_plural': 'Entries',
             },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Feed',
@@ -52,24 +48,19 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name=b'Created On')),
                 ('updated', models.DateTimeField(auto_now=True, verbose_name=b'Last Modified')),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.AddField(
             model_name='entry',
             name='feed',
             field=models.ForeignKey(related_name='entries', to='feeder.Feed'),
-            preserve_default=True,
-        ),
-        migrations.AlterUniqueTogether(
-            name='entry',
-            unique_together=set([('feed', 'guid')]),
         ),
         migrations.AddField(
             model_name='bundle',
             name='feeds',
             field=models.ManyToManyField(related_name='bundles', to='feeder.Feed', blank=True),
-            preserve_default=True,
+        ),
+        migrations.AlterUniqueTogether(
+            name='entry',
+            unique_together=set([('feed', 'guid')]),
         ),
     ]

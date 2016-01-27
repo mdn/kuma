@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
 import django.utils.timezone
 
 
@@ -19,8 +19,5 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(default=django.utils.timezone.now, db_index=True)),
                 ('deleted', models.DateTimeField(null=True, blank=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
     ]

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
 import django.utils.timezone
 import taggit.managers
 
@@ -9,8 +9,8 @@ import taggit.managers
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('taggit', '0001_initial'),
-        ('contenttypes', '0001_initial'),
+        ('taggit', '0002_auto_20150616_2121'),
+        ('contenttypes', '0002_remove_content_type_name'),
     ]
 
     operations = [
@@ -25,9 +25,6 @@ class Migration(migrations.Migration):
                 ('enabled', models.BooleanField(default=True, help_text=b'Whether this filter is shown to users or not.')),
                 ('visible', models.BooleanField(default=True, help_text=b'Whether this filter is shown at public places, e.g. the command and query UI')),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='FilterGroup',
@@ -40,7 +37,6 @@ class Migration(migrations.Migration):
             options={
                 'ordering': ('-order', 'name'),
             },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Index',
@@ -56,7 +52,6 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Index',
                 'verbose_name_plural': 'Indexes',
             },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='OutdatedObject',
@@ -67,9 +62,6 @@ class Migration(migrations.Migration):
                 ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
                 ('index', models.ForeignKey(related_name='outdated_objects', to='search.Index')),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.AlterUniqueTogether(
             name='filtergroup',
@@ -79,13 +71,11 @@ class Migration(migrations.Migration):
             model_name='filter',
             name='group',
             field=models.ForeignKey(related_name='filters', to='search.FilterGroup', help_text=b'E.g. "Topic", "Skill level" etc'),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='filter',
             name='tags',
             field=taggit.managers.TaggableManager(to='taggit.Tag', through='taggit.TaggedItem', help_text=b'A comma-separated list of tags. If more than one tag given a OR query is executed', verbose_name='Tags'),
-            preserve_default=True,
         ),
         migrations.AlterUniqueTogether(
             name='filter',
