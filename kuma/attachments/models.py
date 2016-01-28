@@ -2,7 +2,6 @@ from datetime import datetime
 
 from django.conf import settings
 from django.db import models
-from django.template.loader import select_template
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -58,29 +57,6 @@ class Attachment(models.Model):
                                               attached_by=user,
                                               name=name)
             intermediate.save()
-
-    def get_embed_html(self):
-        """
-        Return suitable initial HTML for embedding this file in an
-        article, generated from a template.
-
-        The template searching is from most specific to least
-        specific, based on mime-type. For example, an attachment with
-        mime-type 'image/png' will try to load the following
-        templates, in order, and use the first one found:
-
-        * attachments/attachments/image_png.html
-
-        * attachments/attachments/image.html
-
-        * attachments/attachments/generic.html
-        """
-        rev = self.current_revision
-        t = select_template([
-            'attachments/attachments/%s.html' % rev.mime_type.replace('/', '_'),
-            'attachments/attachments/%s.html' % rev.mime_type.split('/')[0],
-            'attachments/attachments/generic.html'])
-        return t.render({'attachment': rev})
 
 
 class AttachmentRevision(models.Model):
