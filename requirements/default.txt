@@ -1,8 +1,8 @@
 # This is the default requirements list to be used in production and development
 # environments
 amqp==1.4.8 --hash=sha256:94d2a68227e7984bd40f5f71c6839730622aff8a4633f29ede1ffdd0d240795e
-argparse==1.4.0 --hash=sha256:c31647edb69fd3d465a847ea3157d37bed1f95f19760b11a47aa91c04b666314
 anyjson==0.3.3 --hash=sha256:37812d863c9ad3e35c0734c42e0bf0320ce8c3bed82cd20ad54cb34d158157ba
+argparse==1.4.0 --hash=sha256:c31647edb69fd3d465a847ea3157d37bed1f95f19760b11a47aa91c04b666314
 Babel==2.2.0 --hash=sha256:fed07cbcdcb3de79b53a8220eebed21c93f8dbb3dbce1d9c6b1c4b09e8aecf2b
 basket-client==0.3.11 --hash=sha256:48f9f69f970988b3df2c8a5684da88b52f115e195eca5b896172db0f8c0260e3
 BeautifulSoup==3.2.1 --hash=sha256:6a8cb4401111e011b579c8c52a51cdab970041cc543814bbd9577a4529fe1cdb
@@ -31,6 +31,7 @@ django-mozilla-product-details==0.7.1 --hash=sha256:c50bffb9828a9139156904a11c50
 django-picklefield==0.3.2 --hash=sha256:5489fef164de43725242d56e65e016137d3df0d1a00672bda72d807f5b2b0d99
 django-pipeline==1.5.4 --hash=sha256:a5a909f403d0ea56f211618949ff4e378f16e5a996bde819bd2b5b0e7a9bb8fe
 django-ratelimit==0.6.0 --hash=sha256:f73b53b2c4fd342cbd4b983ffc33fdcf8f8a6f595d548865ea63c839ef38293c
+djangorestframework==3.3.2 --hash=sha256:5634b1ff56581bf0fe4075e86227fc9693c1ca031c7213c9ae942c445c24817b
 django-smuggler==0.6.1 --hash=sha256:b3719c999a3c121006f5eb1d737be0c90d68a11a243a95f93341b366f049da10
 django-soapbox==1.2 --hash=sha256:e60083c7a0a9d02b5dd20a077be13f42fc5fec6a0eb7df9da2e4dd033064cde4
 django-statici18n==1.1.5 --hash=sha256:f8d7b523da8fa635de8c359f6dbde9821e2e8e1a092d915786455ffd2533808b
@@ -39,7 +40,6 @@ django-taggit==0.17.6 --hash=sha256:3a546495bf03ee99c09c2a050bcd6b5b19e2cf9b141f
 django-tidings==1.1 --hash=sha256:8bf9f1684568095cc0719c2eadd652bd3030f45e98ac0720f70c5a38a459125e
 django-timezones==0.2 --hash=sha256:5dd07ab1bec0eb8859f3d30ec1b293f7181dc01e60410f5740b9bb9d360473ec
 django-waffle==0.11 --hash=sha256:914b4b874fa6250a0897bc30b67e02034d92a7235ab72a91bf6da49b71751de4
-djangorestframework==3.3.2 --hash=sha256:5634b1ff56581bf0fe4075e86227fc9693c1ca031c7213c9ae942c445c24817b
 elasticsearch==1.9.0 --hash=sha256:cbee23c29f9947b1b78be5c0f741c1f8b504d3c53163b1355ea08f69cbd0fc0c
 elasticsearch-dsl==0.0.9 --hash=sha256:9b5404180d2747fa2e43c2e5cd78d39241cb80d041f492cccdd2a2e6272b0bda
 feedparser==5.2.1 --hash=sha256:ce875495c90ebd74b179855449040003a1beb40cd13d5f037a0654251e260b02
