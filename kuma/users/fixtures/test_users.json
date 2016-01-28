@@ -3,7 +3,6 @@
         "fields": {
             "name": "Beta Testers",
             "permissions": [
-                165
             ]
         },
         "model": "auth.group",
@@ -13,8 +12,6 @@
         "fields": {
             "name": "template-editors",
             "permissions": [
-                118,
-                119
             ]
         },
         "model": "auth.group",
