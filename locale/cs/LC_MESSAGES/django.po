@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-11 21:07+0000\n"
-"Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
+"PO-Revision-Date: 2016-01-28 08:59+0000\n"
+"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -21,19 +21,19 @@ msgstr "Přístup odepřen"
 
 #: jinja2/403.html:22
 msgid "The wiki is in read-only mode."
-msgstr ""
+msgstr "Tato wiki je v režimu pouze pro čtení."
 
 #: jinja2/403.html:24
 msgid "Your profile has been banned from making edits."
-msgstr ""
+msgstr "Váš profil byl zablokován pro provádění úprav."
 
 #: jinja2/403.html:26
 msgid "This user's profile has been banned."
-msgstr ""
+msgstr "Profil tohoto uživatele byl zablokován."
 
 #: jinja2/403.html:28
 msgid "You must sign in to view all history"
-msgstr ""
+msgstr "K zobrazení historie se musíte přihlásit"
 
 #: jinja2/403.html:34 jinja2/handlers/400.html:21
 #, python-format
@@ -100,7 +100,7 @@ msgstr "Vnitřní chyba serveru"
 #: jinja2/base.html:91 jinja2/base.html:93
 #: kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
-msgstr ""
+msgstr "Mozilla Developer Network"
 
 #: jinja2/base.html:74
 msgid "Skip to main content"
@@ -112,7 +112,7 @@ msgstr "Zvolte jazyk"
 
 #: jinja2/base.html:77
 msgid "Skip to search"
-msgstr ""
+msgstr "Přejít k vyhledávání"
 
 #: jinja2/base.html:100 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -228,7 +228,7 @@ msgstr "Firefox"
 
 #: jinja2/base.html:155 kuma/landing/jinja2/landing/homepage.html:83
 msgid "Firefox Marketplace"
-msgstr ""
+msgstr "Firefox Marketplace"
 
 #: jinja2/base.html:156
 #: kuma/core/translations/search/filter/firefox-os/name.py:4
@@ -280,7 +280,7 @@ msgstr "Nahlásit chybu"
 #: kuma/search/jinja2/search/results.html:55
 #: kuma/search/jinja2/search/results.html:60
 msgid "Search"
-msgstr ""
+msgstr "Hledat"
 
 #: jinja2/base.html:198
 #, python-format
@@ -316,7 +316,7 @@ msgstr ""
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr ""
+msgstr "Hledat v nápovědě Firefox"
 
 #: jinja2/includes/common_macros.html:36
 #, python-format
@@ -346,7 +346,7 @@ msgstr ""
 #: jinja2/includes/lang_switcher.html:15
 #: kuma/wiki/jinja2/wiki/document.html:98
 msgid "Go"
-msgstr ""
+msgstr "Přejít"
 
 #: jinja2/includes/login.html:6
 msgid "Sign out"
@@ -369,7 +369,7 @@ msgstr ""
 #: jinja2/includes/newsletter.html:4
 #: kuma/users/jinja2/users/apps_newsletter.html:7
 msgid "Firefox Apps & Hacks Newsletter"
-msgstr ""
+msgstr "Firefox Apps & Hacks Newsletter"
 
 #: jinja2/includes/newsletter.html:6
 msgid ""
@@ -385,12 +385,12 @@ msgstr ""
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154
 #: kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
-msgstr ""
+msgstr "Předchozí"
 
 #: jinja2/includes/paginator.html:30
 #: kuma/search/jinja2/search/results.html:159
 msgid "Next"
-msgstr ""
+msgstr "Další"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"

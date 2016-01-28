@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2015-12-05 23:41+0000\n"
-"Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
+"PO-Revision-Date: 2016-01-28 08:55+0000\n"
+"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "Přeložte stránku do mého jazyka"
 
 #: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
-msgstr ""
+msgstr "Udělat vysvětlení jasnější"
 
 #: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
@@ -140,11 +140,11 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:402
 msgid "Restore the draft content"
-msgstr ""
+msgstr "Obnovit obsah konceptu"
 
 #: kuma/static/js/wiki-edit.js:403
 msgid "Discard the draft"
-msgstr ""
+msgstr "Zahodit koncept"
 
 #: kuma/static/js/wiki-edit.js:555
 msgid "saved"
@@ -163,8 +163,10 @@ msgid "Search Stack Overflow"
 msgstr "Prohledat Stack Overflow"
 
 #: kuma/static/js/wiki.js:655
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Váš prohlížeč nepodporuje MathML, proto byl namísto něj použit CSS fallback."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Váš prohlížeč nepodporuje MathML, proto byl namísto něj použit CSS fallback."
 
 #: kuma/static/js/wiki.js:870
 msgid "Details"
@@ -178,7 +180,8 @@ msgstr "Vybrat přílohu"
 msgid "No attachments available"
 msgstr "Žádné přílohy nejsou dostupné"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Přilohy"
 
@@ -198,7 +201,8 @@ msgstr "Vytvořit přesměrování"
 msgid "MDN Redirect"
 msgstr "MDN přesměrování"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
@@ -208,7 +212,7 @@ msgstr "URL"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/plugin.js:17
 msgid "Insert Code Sample iFrame"
-msgstr ""
+msgstr "Vložit iFrame s ukázkou kódu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:5
 msgid "Sample Finder"
@@ -224,7 +228,7 @@ msgstr "Části dokumentu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
-msgstr ""
+msgstr "Jaký má být ukázkový nadpis?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML Content"
@@ -252,7 +256,7 @@ msgstr "Ukázkový JavaScriptový obsah"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:52
 msgid "Insert Code Sample Template"
-msgstr ""
+msgstr "Vložit šablonu ukázkového kódu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:24
 msgid "Syntax Highlighter"
@@ -293,5 +297,10 @@ msgstr "Výchozí"
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "Máte rozepsaný koncept. Můžete <a href=\"\" class=\"restoreLink\">obnovit obsah konceptu</a> nebo jej <a href=\"\" class=\"discardLink\">zahodit</a>."
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "Máte rozepsaný koncept. Můžete <a href=\"\" class=\"restoreLink\">obnovit "
+#~ "obsah konceptu</a> nebo jej <a href=\"\" class=\"discardLink\">zahodit</a>."
