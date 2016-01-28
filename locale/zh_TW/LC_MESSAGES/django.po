@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-25 03:32+0000\n"
-"Last-Translator: sgao <sgao@mozilla.com>\n"
+"PO-Revision-Date: 2016-01-28 12:09+0000\n"
+"Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -3386,7 +3386,7 @@ msgstr "請填寫下列欄位，為此頁面指定新的位置。另請您確認
 msgid ""
 "Make sure the location you specify is located immediately under an existing "
 "page."
-msgstr ""
+msgstr "請確認您所指定的位置就在現有頁面之下。"
 
 #: kuma/wiki/jinja2/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
@@ -3400,7 +3400,7 @@ msgstr "僅輸入網址中，「/docs/」後面的部分。"
 msgid ""
 "Don't include a trailing slash (this will be removed for you if you include "
 "it, but you should leave it out)."
-msgstr ""
+msgstr "請勿加入行尾斜線（若您已加入，系統將逕自移除）。"
 
 #: kuma/wiki/jinja2/wiki/move.html:31
 msgid ""
@@ -3802,7 +3802,7 @@ msgid ""
 msgid_plural ""
 "There were scripting errors on this page. While those are being addressed by"
 " site editors, you can view partial content below."
-msgstr[0] ""
+msgstr[0] "此頁面發生指令碼錯誤。網站編輯修正完成前，您可繼續檢視下方的其他內容。"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -3897,6 +3897,9 @@ msgid ""
 "deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
 "belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"您送出的某些內容可能不適合 MDN。若重複送出不適當的內容，可能導致自己帳號遭到停權。請參閱 “<a "
+"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” "
+"指南，以進一步了解「適當內容」之定義。"
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -3923,7 +3926,7 @@ msgstr "%(locale)s 版 Slug:"
 msgid ""
 "Find the translation source with the lookup above and then click \"Save "
 "Changes."
-msgstr ""
+msgstr "以上方查找表尋找翻譯來源，再點擊「儲存變更」。"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
@@ -4066,6 +4069,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          將從資料庫中永久刪除下列文件。此一動作無法回復。若要取消，請按下瀏覽器的「上一頁」鍵。\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
