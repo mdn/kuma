@@ -1475,7 +1475,7 @@ Full traceback:
         results = []
 
         if (limit is None or levels < limit) and self.children.exists():
-            for child in self.children.all().filter(locale=self.locale):
+            for child in self.children.order_by('id').filter(locale=self.locale):
                 results.append(child)
                 [results.append(grandchild)
                  for grandchild in child.get_descendants(limit, levels + 1)]
