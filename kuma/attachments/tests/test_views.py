@@ -104,7 +104,8 @@ class AttachmentTests(UserTestCase, WikiTestCase):
             'file': file_for_upload,
         }
 
-        resp = self.client.post(reverse('attachments.new_attachment'), data=post_data)
+        resp = self.client.post(reverse('attachments.new_attachment'),
+                                data=post_data)
 
         tdir = tempfile.gettempdir()
         edited_file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt",
@@ -145,7 +146,8 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         url = attachment.get_file_url()
         resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
         eq_('text/plain', rev.mime_type)
-        ok_('I am a new version of the test file for editing.' in resp.content)
+        ok_('I am a new version of the test file for editing.'
+            in resp.streaming_content)
 
     def test_attachment_raw_requires_attachment_host(self):
         resp = self._post_new_attachment()
@@ -158,6 +160,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
 
         url = attachment.get_file_url()
         resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
+        ok_(resp.streaming)
         eq_('ALLOW-FROM: %s' % settings.DOMAIN, resp['x-frame-options'])
         eq_(200, resp.status_code)
         ok_('Last-Modified' in resp)
