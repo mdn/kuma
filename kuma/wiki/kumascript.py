@@ -65,18 +65,18 @@ def post(request, content, locale=settings.LANGUAGE_CODE,
 
 
 def _get_attachment_metadata_dict(attachment):
-    filesize = 0
+    current_revision = attachment.current_revision
     try:
-        filesize = attachment.current_revision.file.size
+        filesize = current_revision.file.size
     except OSError:
-        pass
+        filesize = 0
     return {
         'title': attachment.title,
-        'description': attachment.current_revision.description,
-        'filename': attachment.current_revision.filename(),
+        'description': current_revision.description,
+        'filename': current_revision.filename,
         'size': filesize,
-        'author': attachment.current_revision.creator.username,
-        'mime': attachment.current_revision.mime_type,
+        'author': current_revision.creator.username,
+        'mime': current_revision.mime_type,
         'url': attachment.get_file_url(),
     }
 

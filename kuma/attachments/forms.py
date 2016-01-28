@@ -16,6 +16,7 @@ class AttachmentRevisionForm(forms.ModelForm):
     # of a new file.
     #
     # As a result of this, calling save(commit=True) is off-limits.
+
     class Meta:
         model = AttachmentRevision
         fields = ('file', 'title', 'description', 'comment')
@@ -26,8 +27,7 @@ class AttachmentRevisionForm(forms.ModelForm):
         mime_type = m_mime.from_buffer(uploaded_file.read(1024)).split(';')[0]
         uploaded_file.seek(0)
 
-        if mime_type not in \
-                config.WIKI_ATTACHMENT_ALLOWED_TYPES.split():
+        if mime_type not in config.WIKI_ATTACHMENT_ALLOWED_TYPES.split():
             raise forms.ValidationError(MIME_TYPE_INVALID)
         return self.cleaned_data['file']
 

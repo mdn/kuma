@@ -47,7 +47,7 @@ class Attachment(models.Model):
                        kwargs={'attachment_id': self.id})
 
     def get_file_url(self):
-        return full_attachment_url(self.id, self.current_revision.filename())
+        return full_attachment_url(self.id, self.current_revision.filename)
 
     def attach(self, document, user, name):
         if self.id not in document.attachments.values_list('id', flat=True):
@@ -104,8 +104,10 @@ class AttachmentRevision(models.Model):
 
     def __unicode__(self):
         return u'%s ("%s")' % (self.title, self.filename)
+
+    @property
     def filename(self):
-        return self.file.path.split('/')[-1]
+        return os.path.split(self.file.path)[-1]
 
     def save(self, *args, **kwargs):
         super(AttachmentRevision, self).save(*args, **kwargs)

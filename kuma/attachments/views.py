@@ -121,7 +121,7 @@ def new_attachment(request):
 
         if document is not None:
             attachment.attach(document, request.user,
-                              rev.filename())
+                              rev.filename)
 
         if request.POST.get('is_ajax', ''):
             response = render(

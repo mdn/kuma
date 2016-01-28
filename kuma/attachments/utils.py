@@ -59,14 +59,12 @@ def convert_to_http_date(dt):
 
 
 def attachment_upload_to(instance, filename):
-    """Generate a path to store a file attachment."""
-    # TODO: We could probably just get away with strftime formatting
-    # in the 'upload_to' argument here, but this does a bit more to be
-    # extra-safe with potential duplicate filenames.
-    #
+    """
+    Generate a path to store a file attachment.
+    """
     # For now, the filesystem storage path will look like this:
     #
-    # attachments/year/month/day/attachment_id/md5/filename
+    # attachments/<year>/<month>/<day>/<attachment_id>/<md5>/<filename>
     #
     # The md5 hash here is of the full timestamp, down to the
     # microsecond, of when the path is generated.

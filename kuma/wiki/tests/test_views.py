@@ -3506,7 +3506,7 @@ class CodeSampleViewFileServingTests(UserTestCase, WikiTestCase):
 
         # then build the document and revision we need to test
         attachment = Attachment.objects.get(title='An uploaded file')
-        filename = attachment.current_revision.filename()
+        filename = attachment.current_revision.filename
         url_css = 'url("files/%(attachment_id)s/%(filename)s")' % {
             'attachment_id': attachment.id,
             'filename': filename,
