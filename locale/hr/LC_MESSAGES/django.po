@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
+"POT-Creation-Date: 2016-01-29 10:30-0800\n"
 "PO-Revision-Date: 2013-03-09 15:44+0000\n"
 "Last-Translator: niko.visnjic <nvisnjic.fer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Internal Server Error"
 msgstr "Interna pogreška poslužitelja"
 
-#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:91 jinja2/base.html:93 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:91 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
@@ -105,190 +105,190 @@ msgstr ""
 msgid "Skip to search"
 msgstr ""
 
-#: jinja2/base.html:100 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:98 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr ""
 
-#: jinja2/base.html:104
+#: jinja2/base.html:102
 msgid "Contribute to MDN"
 msgstr ""
 
-#: jinja2/base.html:106
+#: jinja2/base.html:104
 #, fuzzy
 msgid "Get started"
 msgstr "Započnite još danas!"
 
-#: jinja2/base.html:107
+#: jinja2/base.html:105
 msgid "Review or localize docs"
 msgstr ""
 
-#: jinja2/base.html:110
+#: jinja2/base.html:108
 #, fuzzy
 msgid "Site Tools"
 msgstr "/en/Tools"
 
-#: jinja2/base.html:112
+#: jinja2/base.html:110
 msgid "Revision dashboard"
 msgstr ""
 
-#: jinja2/base.html:113
+#: jinja2/base.html:111
 #, fuzzy
 msgid "Documentation status"
 msgstr "MDN Dokumentacija"
 
-#: jinja2/base.html:122
+#: jinja2/base.html:120
 msgid "Web Platform"
 msgstr ""
 
-#: jinja2/base.html:126
+#: jinja2/base.html:124
 msgid "Technologies"
 msgstr ""
 
-#: jinja2/base.html:128 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:72 kuma/landing/jinja2/landing/promote_buttons.html:105 kuma/users/forms.py:37
+#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:72 kuma/landing/jinja2/landing/promote_buttons.html:105 kuma/users/forms.py:37
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:129 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:73 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:127 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:73 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:130 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:74 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:128 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:74 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: jinja2/base.html:131
+#: jinja2/base.html:129
 msgid "Graphics"
 msgstr ""
 
-#: jinja2/base.html:132
+#: jinja2/base.html:130
 msgid "APIs / DOM"
 msgstr ""
 
-#: jinja2/base.html:133 kuma/core/sections.py:20
+#: jinja2/base.html:131 kuma/core/sections.py:20
 msgid "Apps"
 msgstr ""
 
-#: jinja2/base.html:134 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:132 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr ""
 
-#: jinja2/base.html:137
+#: jinja2/base.html:135
 msgid "References & Guides"
 msgstr ""
 
 # 100%
-#: jinja2/base.html:139
+#: jinja2/base.html:137
 #, fuzzy
 msgid "Learn the Web"
 msgstr "Naučite kako raditi Web stranice"
 
-#: jinja2/base.html:140
+#: jinja2/base.html:138
 msgid "Tutorials"
 msgstr ""
 
-#: jinja2/base.html:141
+#: jinja2/base.html:139
 msgid "References"
 msgstr ""
 
-#: jinja2/base.html:142
+#: jinja2/base.html:140
 msgid "Developer Guides"
 msgstr ""
 
-#: jinja2/base.html:143
+#: jinja2/base.html:141
 msgid "Accessibility"
 msgstr ""
 
-#: jinja2/base.html:144
+#: jinja2/base.html:142
 msgid "...more docs"
 msgstr ""
 
-#: jinja2/base.html:148
+#: jinja2/base.html:146
 #, fuzzy
 msgid "Mozilla Docs"
 msgstr "Mozilla"
 
-#: jinja2/base.html:153 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:85
+#: jinja2/base.html:151 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:85
 msgid "Add-ons"
 msgstr "Dodaci"
 
-#: jinja2/base.html:154 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:81
+#: jinja2/base.html:152 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:81
 #, fuzzy
 msgid "Firefox"
 msgstr "Firefox 4 Beta"
 
-#: jinja2/base.html:155 kuma/landing/jinja2/landing/homepage.html:83
+#: jinja2/base.html:153 kuma/landing/jinja2/landing/homepage.html:83
 msgid "Firefox Marketplace"
 msgstr ""
 
-#: jinja2/base.html:156 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:82
+#: jinja2/base.html:154 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:82
 msgid "Firefox OS"
 msgstr ""
 
-#: jinja2/base.html:157 jinja2/includes/login.html:20
+#: jinja2/base.html:155 jinja2/includes/login.html:20
 msgid "Persona"
 msgstr ""
 
-#: jinja2/base.html:161
+#: jinja2/base.html:159
 msgid "Developer Tools"
 msgstr ""
 
-#: jinja2/base.html:161
+#: jinja2/base.html:159
 #, fuzzy
 msgid "Feedback"
 msgstr "Kanal"
 
-#: jinja2/base.html:166
+#: jinja2/base.html:164
 #, fuzzy
 msgid "Get Firefox help"
 msgstr "Firefox 4 Beta"
 
-#: jinja2/base.html:167
+#: jinja2/base.html:165
 #, fuzzy
 msgid "Get web development help"
 msgstr "Svi alati za web razvoj"
 
-#: jinja2/base.html:170
+#: jinja2/base.html:168
 msgid "Join the MDN community"
 msgstr ""
 
-#: jinja2/base.html:171
+#: jinja2/base.html:169
 #, fuzzy
 msgid "Report a content problem"
 msgstr "Prijavite ovaj komentar"
 
-#: jinja2/base.html:172
+#: jinja2/base.html:170
 #, fuzzy
 msgid "Report a bug"
 msgstr "Prijavi"
 
-#: jinja2/base.html:179 jinja2/base.html:180 jinja2/base.html:182 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: jinja2/base.html:177 jinja2/base.html:178 jinja2/base.html:180 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Traži"
 
-#: jinja2/base.html:198
+#: jinja2/base.html:196
 #, fuzzy, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr "Sadržaj je dostupan pod <a href=\"%(copyright_url)s\">ovim licencama</a>"
 
-#: jinja2/base.html:203
+#: jinja2/base.html:201
 msgid "About MDN"
 msgstr "O MDNu"
 
-#: jinja2/base.html:204
+#: jinja2/base.html:202
 msgid "Terms"
 msgstr ""
 
-#: jinja2/base.html:205
+#: jinja2/base.html:203
 msgid "Privacy"
 msgstr ""
 
-#: jinja2/base.html:206
+#: jinja2/base.html:204
 msgid "Cookies"
 msgstr ""
 
-#: jinja2/base.html:207
+#: jinja2/base.html:205
 msgid "Contribute to the code"
 msgstr ""
 
@@ -412,7 +412,7 @@ msgstr ""
 msgid "Files of this type are not permitted."
 msgstr ""
 
-#: kuma/attachments/views.py:147
+#: kuma/attachments/views.py:148
 #, python-format
 msgid "The file provided is not valid. File must be one of these types: %s."
 msgstr ""
@@ -514,7 +514,7 @@ msgstr ""
 msgid "Attached by"
 msgstr ""
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:52 kuma/users/models.py:65 kuma/wiki/models.py:1834
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:52 kuma/users/models.py:65 kuma/wiki/models.py:1858
 msgid "Title"
 msgstr ""
 
@@ -1069,61 +1069,57 @@ msgstr "/en/Web_Development"
 msgid "Get The Browser For Developers Like You"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:120
-msgid "Celebrate ten years of documenting your Web."
-msgstr ""
-
-#: kuma/landing/jinja2/landing/homepage.html:124
+#: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Build Open Web Apps"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:133
+#: kuma/landing/jinja2/landing/homepage.html:127
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:138
+#: kuma/landing/jinja2/landing/homepage.html:132
 msgid "Get Involved"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:140
+#: kuma/landing/jinja2/landing/homepage.html:134
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:147 kuma/landing/jinja2/landing/homepage.html:154
+#: kuma/landing/jinja2/landing/homepage.html:141 kuma/landing/jinja2/landing/homepage.html:148
 msgid "Help improve MDN"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:158
+#: kuma/landing/jinja2/landing/homepage.html:152
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
 
 # 100%
-#: kuma/landing/jinja2/landing/homepage.html:164
+#: kuma/landing/jinja2/landing/homepage.html:158
 #, fuzzy
 msgid "Getting started"
 msgstr "Početak rada s CSS-om"
 
-#: kuma/landing/jinja2/landing/homepage.html:165
+#: kuma/landing/jinja2/landing/homepage.html:159
 msgid "Editorial review"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:166
+#: kuma/landing/jinja2/landing/homepage.html:160
 msgid "Technical review"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:171
+#: kuma/landing/jinja2/landing/homepage.html:165
 #, fuzzy
 msgid "Translating"
 msgstr "CSS transforme"
 
-#: kuma/landing/jinja2/landing/homepage.html:172
+#: kuma/landing/jinja2/landing/homepage.html:166
 msgid "Promoting MDN"
 msgstr ""
 
-#: kuma/landing/jinja2/landing/homepage.html:173
+#: kuma/landing/jinja2/landing/homepage.html:167
 msgid "Contributing to the MDN codebase"
 msgstr ""
 
@@ -2570,76 +2566,76 @@ msgstr ""
 msgid "Document Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1478
+#: kuma/wiki/models.py:1502
 msgid "Review Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1479
+#: kuma/wiki/models.py:1503
 msgid "Review Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1485
+#: kuma/wiki/models.py:1509
 msgid "Localization Tag"
 msgstr ""
 
-#: kuma/wiki/models.py:1486
+#: kuma/wiki/models.py:1510
 msgid "Localization Tags"
 msgstr ""
 
-#: kuma/wiki/models.py:1519
+#: kuma/wiki/models.py:1543
 msgid "No table of contents"
 msgstr ""
 
-#: kuma/wiki/models.py:1520
+#: kuma/wiki/models.py:1544
 msgid "All levels"
 msgstr ""
 
-#: kuma/wiki/models.py:1521
+#: kuma/wiki/models.py:1545
 msgid "H2 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1522
+#: kuma/wiki/models.py:1546
 msgid "H3 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1523
+#: kuma/wiki/models.py:1547
 msgid "H4 and higher"
 msgstr ""
 
-#: kuma/wiki/models.py:1627
+#: kuma/wiki/models.py:1651
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr ""
 
-#: kuma/wiki/models.py:1754
+#: kuma/wiki/models.py:1778
 msgid "IP address"
 msgstr ""
 
-#: kuma/wiki/models.py:1762
+#: kuma/wiki/models.py:1786
 msgid "User-Agent"
 msgstr ""
 
-#: kuma/wiki/models.py:1767
+#: kuma/wiki/models.py:1791
 msgid "HTTP Referrer"
 msgstr ""
 
-#: kuma/wiki/models.py:1788
+#: kuma/wiki/models.py:1812
 msgid "Revision"
 msgstr ""
 
-#: kuma/wiki/models.py:1794
+#: kuma/wiki/models.py:1818
 msgid "Akismet submission"
 msgstr ""
 
-#: kuma/wiki/models.py:1795
+#: kuma/wiki/models.py:1819
 msgid "Akismet submissions"
 msgstr ""
 
-#: kuma/wiki/models.py:1838
+#: kuma/wiki/models.py:1862
 msgid "Slug"
 msgstr ""
 
-#: kuma/wiki/models.py:1846
+#: kuma/wiki/models.py:1870
 #, fuzzy
 msgid "Document (optional)"
 msgstr "MDN Dokumentacija"
@@ -3689,7 +3685,7 @@ msgstr ""
 msgid "There was an error generating the content."
 msgstr ""
 
-#: kuma/wiki/views/delete.py:50
+#: kuma/wiki/views/delete.py:54
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr ""
 
