@@ -16,5 +16,7 @@ urlpatterns = [
         name='dashboards.topic_lookup'),
     url(r'^dashboards/localization$',
         RedirectView.as_view(
-            url='/docs/MDN/Doc_status/Overview')),
+            url='/docs/MDN/Doc_status/Overview',
+            permanent=True,
+        )),
 ]
