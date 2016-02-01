@@ -66,7 +66,7 @@ Configuring and Running
 -----------------------
 
 We set some reasonable defaults for Celery in ``settings.py``. These can be
-overriden either in ``settings_local.py`` or via the command line when running
+overridden either in ``settings_local.py`` or via the command line when running
 ``manage.py celeryd``.
 
 In ``settings_local.py`` you should set at least this, if you want to use
