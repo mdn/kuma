@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-28 08:55+0000\n"
+"PO-Revision-Date: 2016-02-03 20:16+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: cs\n"
@@ -132,11 +132,11 @@ msgstr "Zobrazit starou tabulku."
 
 #: kuma/static/js/wiki-edit.js:400
 msgid "an unknown date"
-msgstr ""
+msgstr "neznámý datum"
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "You have a draft from:"
-msgstr ""
+msgstr "Máte koncept od:"
 
 #: kuma/static/js/wiki-edit.js:402
 msgid "Restore the draft content"
