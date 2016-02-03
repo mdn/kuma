@@ -13,10 +13,8 @@
     requirements: "{{ item }}"
     virtualenv: /home/vagrant/env
     with_items:
-      - /home/vagrant/src/requirements/compiled.txt
+      - /home/vagrant/src/requirements/local.txt
       - /home/vagrant/src/requirements/docs.txt
-      - /home/vagrant/src/requirements/default.txt
-      - /home/vagrant/src/requirements/testing.txt
 
 - name: Update ownership of virtualenv to vagrant
   file:
