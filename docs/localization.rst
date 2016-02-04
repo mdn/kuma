@@ -75,15 +75,13 @@ Adding a new Locale
     Restart the django server and re-visit the new locale to verify it shows
     "translated" strings in the locale.
 
-#.  Update the `locale.tar.gz` and `product_details_json.tar.gz` files used by
+#.  Update the `product_details_json.tar.gz` files used by
     `our Travis install script`_::
 
         $ python manage.py update_product_details
         $ tar -czf etc/data/product_details_json.tar.gz ../product_details_json/
-        $ tar -czf etc/data/locale.tar.gz locale/
 
-#.  Commit the changes to `settings.py`, `locale.tar.gz`, and
-    `product_details_json.tar.gz`
+#.  Commit the changes to `settings.py` and `product_details_json.tar.gz`
 
 
 .. _our Travis install script: https://github.com/mozilla/kuma/blob/master/scripts/travis-install
