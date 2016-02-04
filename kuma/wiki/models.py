@@ -1227,21 +1227,6 @@ Full traceback:
             return None
         return self.current_revision.content_parsed
 
-    def files_dict(self):
-        intermediates = DocumentAttachment.objects.filter(document__pk=self.id)
-        files = {}
-        for intermediate in intermediates:
-            attachment = intermediate.file
-            revision = attachment.current_revision
-            files[intermediate.name] = {
-                'attached_by': intermediate.attached_by.username,
-                'creator': revision.creator.username,
-                'description': revision.description,
-                'mime_type': revision.mime_type,
-                'html': attachment.get_embed_html(),
-                'url': attachment.get_file_url(),
-            }
-        return files
 
     @cached_property
     def attachments(self):

@@ -156,41 +156,6 @@ class DocumentTests(UserTestCase):
         d.delete()
         eq_(0, TaggedDocument.objects.count())
 
-    def _test_m2m_inheritance(self, enum_class, attr, direct_attr):
-        """Test a descriptor's handling of parent delegation."""
-        parent = document()
-        child = document(parent=parent, title='Some Other Title')
-        e1 = enum_class(item_id=1)
-        parent.save()
-
-        # Make sure child sees stuff set on parent:
-        getattr(parent, attr).add(e1)
-        _objects_eq(getattr(child, attr), [e1])
-
-        # Make sure parent sees stuff set on child:
-        child.save()
-        e2 = enum_class(item_id=2)
-        getattr(child, attr).add(e2)
-        _objects_eq(getattr(parent, attr), [e1, e2])
-
-        # Assert the data are attached to the parent, not the child:
-        _objects_eq(getattr(parent, direct_attr), [e1, e2])
-        _objects_eq(getattr(child, direct_attr), [])
-
-    def _test_int_sets_and_descriptors(self, enum_class, attr):
-        """Test our lightweight int sets & descriptors' getting and setting."""
-        d = document()
-        d.save()
-        _objects_eq(getattr(d, attr), [])
-
-        i1 = enum_class(item_id=1)
-        getattr(d, attr).add(i1)
-        _objects_eq(getattr(d, attr), [i1])
-
-        i2 = enum_class(item_id=2)
-        getattr(d, attr).add(i2)
-        _objects_eq(getattr(d, attr), [i1, i2])
-
     def test_only_localizable_allowed_children(self):
         """You can't have children for a non-localizable document."""
         # Make English rev:
