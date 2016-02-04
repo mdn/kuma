@@ -168,27 +168,6 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         ok_('GMT' in resp['Last-Modified'])
         ok_(parse_http_date_safe(resp['Last-Modified']) is not None)
 
-    def test_attachment_detail(self):
-        file_for_upload = make_test_file(
-            content='I am a test file for attachment detail view.')
-
-        post_data = {
-            'title': 'Test file for viewing',
-            'description': 'A test file for viewing.',
-            'comment': 'Initial upload',
-            'file': file_for_upload,
-        }
-
-        resp = self.client.post(reverse('attachments.new_attachment'), data=post_data)
-
-        attachment = Attachment.objects.get(title='Test file for viewing')
-
-        resp = self.client.get(reverse('attachments.attachment_detail',
-                                       kwargs={
-                                           'attachment_id': attachment.id,
-                                       }))
-        eq_(200, resp.status_code)
-
     def test_get_previous(self):
         """
         AttachmentRevision.get_previous() should return this revisions's
