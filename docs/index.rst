@@ -14,7 +14,6 @@ Contents:
    troubleshooting
 
    celery
-   email
    elasticsearch
    localization
    ckeditor

@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.shortcuts import redirect
 from django.views.static import serve
 
@@ -56,9 +55,6 @@ urlpatterns = [
         handler500,
         name='users.honeypot'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += staticfiles_urlpatterns()
 
 if settings.SERVE_MEDIA:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')

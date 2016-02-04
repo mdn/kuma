@@ -17,6 +17,14 @@ import commander_settings as settings  # noqa
 VENV_BIN = os.path.join(settings.VENV_DIR, 'bin')
 PIP_VERSION = "8.0.2"
 
+
+# Set local settings to legacy name until we can safely use environment
+# specifc one.
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings_local'
+
+# Use commander's remote hostname to differ between stage and prod in setting.py
+os.environ['CHIEF_REMOTE_HOSTNAME'] = settings.REMOTE_HOSTNAME
+
 # Setup local executable paths
 os.environ['PATH'] = os.pathsep.join([
     VENV_BIN,  # python virtualenv executables

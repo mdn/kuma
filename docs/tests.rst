@@ -6,13 +6,12 @@ Kuma has a fairly comprehensive Python test suite. Changes should not break
 tests--only change a test if there is a good reason to change the expected
 behavior--and new code should come with tests.
 
-
 Setup
 =====
 
-Before you run the tests, you have to run the ``collectstatic`` command::
+Before you run the tests, you have to run the::
 
-    ./manage.py collectstatic
+    make compilejsi18n collectstatic
 
 Running the Test Suite
 ======================
@@ -20,16 +19,17 @@ Running the Test Suite
 If you followed the steps in :doc:`the installation docs <installation>`,
 then all you should need to do to run the test suite is::
 
-    py.test
+    make test
 
-
-Default options for running the test are in ``pytest.ini``. This is a
+The default options for running the test are in ``pytest.ini``. This is a
 good set of defaults.
 
 If you ever need to change the defaults, you can do so at the command
-line.
+line by running what the Make task does behind the scenes::
 
-Helpful command-line arguments:
+    py.test kuma
+
+Some helpful command line arguments to py.test (won't work on ``make test``):
 
 ``--pdb``:
   Drop into pdb on test failure.
@@ -43,8 +43,7 @@ Helpful command-line arguments:
 ``--exitfirst``:
   Exits on the first failure.
 
-See ``./py.test --help`` for more arguments.
-
+See ``py.test --help`` for more arguments.
 
 Running subsets of tests and specific tests
 -------------------------------------------
@@ -79,9 +78,15 @@ There are a bunch of ways to specify a subset of tests to run:
 
     py.test kuma/wiki/tests/test_views.py::RedirectTests::test_redirects_only_internal
 
-
 See http://pytest.org/latest/usage.html for more examples.
 
+Showing test coverage
+---------------------
+
+While running the tests you can record which part of the code base is covered
+by test cases. To show the results at the end of the test run use this command::
+
+    make coveragetest
 
 The Test Database
 -----------------

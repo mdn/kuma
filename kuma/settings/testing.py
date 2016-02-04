@@ -1,15 +1,17 @@
-from settings import *
+from .local import *  # noqa
 
 DEBUG = False
-TEMPLATE_DEBUG = True
 CELERY_ALWAYS_EAGER = True
+CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 ES_LIVE_INDEX = False
-ES_URLS = ['localhost:9200']
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+)
 
 INSTALLED_APPS += (
     'kuma.core.tests.taggit_extras',
 )
-BANISH_ENABLED = False
 
 LOGGING['loggers'].update({
     'django.db.backends': {

@@ -4,7 +4,6 @@
 .vagrant
 .cache
 kuma.box
-/settings_local.py
 pip-log.txt
 .coverage
 coverage.xml
@@ -32,6 +31,7 @@ james.ini
 celeryev.pid
 kuma/static/js/libs/ckeditor/source/ckbuilder
 .tox
+uploads/
 .env
 *devmo*.sql*
 htmlcov/
