@@ -42,6 +42,13 @@ def update_code(ctx, tag):
 
 
 @task
+def update_product_details(ctx):
+    """Update mozilla product details files"""
+    with ctx.lcd(settings.SRC_DIR):
+        ctx.local("python2.7 manage.py update_product_details -f")
+
+
+@task
 def update_locales(ctx):
     with ctx.lcd(os.path.join(settings.SRC_DIR, 'locale')):
         ctx.local("./compile-mo.sh .")
@@ -151,6 +158,7 @@ def pre_update(ctx, ref=settings.UPDATE_REF):
 @task
 def update(ctx):
     update_assets()
+    update_product_details()
     update_locales()
     database()
 
