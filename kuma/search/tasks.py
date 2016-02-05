@@ -77,7 +77,6 @@ def finalize_index(index_pk):
     index.populated = True
     index.save()
 
-    subject = ('[%s] Index %s completely populated' %
-               (settings.PLATFORM_NAME, index.prefixed_name))
+    subject = 'Index %s completely populated' % index.prefixed_name
     message = 'You may want to promote it now via the admin interface.'
     mail_admins(subject=subject, message=message)

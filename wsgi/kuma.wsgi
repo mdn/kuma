@@ -1,7 +1,12 @@
+"""
+This is a legacy WSGI file to be removed when moving away from the SCL3
+stage/prod stack. See kuma/wsgi.py instead.
+"""
 import os
 from datetime import datetime
 
 # setting which Django settings module we want
+# pointing to the legacy settings by default
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings_local')
 
 # Remember when mod_wsgi loaded this file so we can track it in nagios.

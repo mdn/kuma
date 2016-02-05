@@ -23,7 +23,7 @@ as part of the :doc:`Vagrant provisioning <installation>`.
 
 Then run the Kuma search tests::
 
-    $ ./manage.py test -s --noinput kuma.search
+    $ py.test kuma/search/
 
 If the tests pass, everything is set up correctly!
 

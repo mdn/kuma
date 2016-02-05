@@ -15,7 +15,7 @@ Running Tests
 1. Start locust from the development VM::
 
     vagrant ssh
-    make performance-tests
+    make locust
 
 2. Go to `http://developer-local.allizom.org:8089/ <http://developer-local.allizom.org:8089/>`_ UI for controlling:
 
