@@ -49,11 +49,6 @@ Updating the Localizations
 Adding a new Locale
 ===================
 
-#. Update `languages.json` file via product details::
-
-       $ ./manage.py update_product_details
-       $ cp ../product_details_json/languages.json kuma/languages.json
-
 #. Add the locale to `MDN_LANGUAGES` in `settings.py`
 
 #. Add the locale to the `locale/` folder by following the instructions in
