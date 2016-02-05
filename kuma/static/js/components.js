@@ -134,6 +134,12 @@
                     // Setting z-index here so that current menu is always on top
                     $submenu.css('z-index', 99999).addClass('open').attr('aria-hidden', 'false').fadeIn($submenu.settings.fadeInSpeed);
 
+                    // track opening
+                    mdn.analytics.trackEvent({
+                        category: 'MozMenu',
+                        action: $submenu.attr('id')
+                    });
+
                     // Find the first link for improved usability
                     if($submenu.settings.focusOnOpen) {
                         var firstLink = $submenu.find('a').get(0);
