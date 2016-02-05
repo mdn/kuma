@@ -1,26 +1,19 @@
-import json
 import mimetypes
 
-import jinja2
-from constance import config
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import (Http404, HttpResponsePermanentRedirect,
-                         HttpResponseRedirect, StreamingHttpResponse)
-from django.shortcuts import get_object_or_404, render
-from django.utils.translation import ugettext
+from django.http import Http404, StreamingHttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_POST
 
 from kuma.core.decorators import login_required
-from kuma.core.utils import paginate
-from kuma.wiki.constants import DOCUMENTS_PER_PAGE
 from kuma.wiki.models import Document
+from kuma.wiki.decorators import process_document_path
 
 from .forms import AttachmentRevisionForm
 from .models import Attachment
-from .utils import (allow_add_attachment_by, attachments_payload,
-                    convert_to_http_date)
+from .utils import allow_add_attachment_by, convert_to_http_date
 
 
 # Mime types used on MDN
@@ -28,6 +21,8 @@ OVERRIDE_MIMETYPES = {
     'image/jpeg': '.jpeg, .jpg, .jpe',
     'image/vnd.adobe.photoshop': '.psd',
 }
+
+IMAGE_MIMETYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']
 
 
 def guess_extension(_type):
@@ -51,107 +46,48 @@ def raw_file(request, attachment_id, filename):
         response['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
         return response
     else:
-        return HttpResponsePermanentRedirect(attachment.get_file_url())
+        return redirect(attachment.get_file_url(), permanent=True)
 
 
 def mindtouch_file_redirect(request, file_id, filename):
     """Redirect an old MindTouch file URL to a new kuma file URL."""
     attachment = get_object_or_404(Attachment, mindtouch_attachment_id=file_id)
-    return HttpResponsePermanentRedirect(attachment.get_file_url())
-
-
-def attachment_history(request, attachment_id):
-    """Detail view of an attachment."""
-    # For now this is just attachment_detail with a different
-    # template. At some point in the near future, it'd be nice to add
-    # a few extra bits, like the ability to set an arbitrary revision
-    # to be current.
-    attachment = get_object_or_404(Attachment, pk=attachment_id)
-    return render(
-        request,
-        'attachments/attachment_history.html',
-        {'attachment': attachment,
-         'revision': attachment.current_revision})
+    return redirect(attachment.get_file_url(), permanent=True)
 
 
 @require_POST
 @xframe_options_sameorigin
 @login_required
-def new_attachment(request):
-    """Create a new Attachment object and populate its initial
-    revision."""
+@process_document_path
+def edit_attachment(request, document_slug, document_locale):
+    """
+    Create a new Attachment object and populate its initial
+    revision or show a separate form view that allows to fix form submission
+    errors.
 
+    Redirects back to the document's editing URL on success.
+    """
+    document = get_object_or_404(
+        Document,
+        locale=document_locale,
+        slug=document_slug,
+    )
     # No access if no permissions to upload
     if not allow_add_attachment_by(request.user):
         raise PermissionDenied
 
-    document = None
-    document_id = request.GET.get('document_id', None)
-    if document_id:
-        try:
-            document = Document.objects.get(id=int(document_id))
-        except (Document.DoesNotExist, ValueError):
-            pass
-
     form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
     if form.is_valid():
-        rev = form.save(commit=False)
-        rev.creator = request.user
-        attachment = Attachment.objects.create(title=rev.title,
-                                               slug=rev.slug)
-        rev.attachment = attachment
-        rev.save()
-
-        if document is not None:
-            attachment.attach(document, request.user,
-                              rev.filename)
-
-        if request.POST.get('is_ajax', ''):
-            response = render(
-                request,
-                'attachments/includes/attachment_upload_results.html',
-                {'result': json.dumps(attachments_payload([attachment]))})
-        else:
-            return HttpResponseRedirect(attachment.get_absolute_url())
+        revision = form.save(commit=False)
+        revision.creator = request.user
+        attachment = Attachment.objects.create(title=revision.title)
+        revision.attachment = attachment
+        revision.save()
+        attachment.attach(document, request.user, revision)
+        return redirect(document.get_edit_url())
     else:
-        if request.POST.get('is_ajax', ''):
-            allowed_list = config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
-            allowed_types = ', '.join(map(guess_extension, allowed_list))
-            error_obj = {
-                'title': request.POST.get('is_ajax', ''),
-                'error': ugettext(
-                    u'The file provided is not valid. '
-                    u'File must be one of these types: %s.') % allowed_types
-            }
-            response = render(
-                request,
-                'attachments/includes/attachment_upload_results.html',
-                {'result': json.dumps([error_obj])})
-        else:
-            response = render(
-                request,
-                'attachments/edit_attachment.html',
-                {'form': form})
-    return response
-
-
-@login_required
-def edit_attachment(request, attachment_id):
-
-    # No access if no permissions to upload
-    if not request.user.has_perm('attachments.change_attachment'):
-        raise PermissionDenied
-
-    attachment = get_object_or_404(Attachment,
-                                   pk=attachment_id)
-    if request.method == 'POST':
-        form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            rev = form.save(commit=False)
-            rev.creator = request.user
-            rev.attachment = attachment
-            rev.save()
-            return HttpResponseRedirect(attachment.get_absolute_url())
-    else:
-        form = AttachmentRevisionForm()
-    return render(request, 'attachments/edit_attachment.html', {'form': form})
+        context = {
+            'form': form,
+            'document': document,
+        }
+        return render(request, 'attachments/edit_attachment.html', context)

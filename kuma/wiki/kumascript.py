@@ -71,7 +71,7 @@ def _get_attachment_metadata_dict(attachment):
     except OSError:
         filesize = 0
     return {
-        'title': attachment.title,
+        'title': current_revision.title,
         'description': current_revision.description,
         'filename': current_revision.filename,
         'size': filesize,
@@ -132,7 +132,7 @@ def get(document, cache_control, base_url, timeout=None):
 
         # Create the file interface
         files = []
-        for attachment in document.attachments.all():
+        for attachment in document.files.select_related('current_revision'):
             files.append(_get_attachment_metadata_dict(attachment))
 
         # Assemble some KumaScript env vars

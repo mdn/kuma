@@ -1,35 +1,32 @@
 import datetime
 
-from constance import config
+from constance.test import override_config
 from django.conf import settings
-from django.core.files import temp as tempfile
 from django.core.files.base import ContentFile
 from django.utils.http import parse_http_date_safe
 
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import urlparams
 from kuma.core.tests import eq_, ok_
 from kuma.users.tests import UserTestCase
-from kuma.wiki.models import Document, DocumentAttachment
+from kuma.wiki.models import DocumentAttachment
 from kuma.wiki.tests import WikiTestCase, document, revision
 
 from ..models import Attachment, AttachmentRevision
-from ..utils import make_test_file
+from . import make_test_file
 
 
+@override_config(WIKI_ATTACHMENT_ALLOWED_TYPES='text/plain')
 class AttachmentTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
-        self.old_allowed_types = config.WIKI_ATTACHMENT_ALLOWED_TYPES
-        config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
         super(AttachmentTests, self).setUp()
         self.client.login(username='admin', password='testpass')
+        self.document = document(save=True)
+        self.files_url = reverse('attachments.edit_attachment',
+                                 kwargs={'document_path': self.document.slug},
+                                 locale='en-US')
 
-    def tearDown(self):
-        super(AttachmentTests, self).tearDown()
-        config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
-
-    def _post_new_attachment(self):
+    def _post_attachment(self):
         file_for_upload = make_test_file(
             content='A test file uploaded into kuma.')
         post_data = {
@@ -38,8 +35,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
             'comment': 'Initial upload',
             'file': file_for_upload,
         }
-
-        resp = self.client.post(reverse('attachments.new_attachment'), data=post_data)
+        resp = self.client.post(self.files_url, data=post_data)
         return resp
 
     def test_legacy_redirect(self):
@@ -47,16 +43,16 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         test_file_content = 'Meh meh I am a test file.'
         test_files = (
             {'file_id': 97, 'filename': 'Canvas_rect.png',
-             'title': 'Canvas rect', 'slug': 'canvas-rect'},
+             'title': 'Canvas rect'},
             {'file_id': 107, 'filename': 'Canvas_smiley.png',
-             'title': 'Canvas smiley', 'slug': 'canvas-smiley'},
+             'title': 'Canvas smiley'},
             {'file_id': 86, 'filename': 'Canvas_lineTo.png',
-             'title': 'Canvas lineTo', 'slug': 'canvas-lineto'},
+             'title': 'Canvas lineTo'},
             {'file_id': 55, 'filename': 'Canvas_arc.png',
-             'title': 'Canvas arc', 'slug': 'canvas-arc'},
+             'title': 'Canvas arc'},
         )
         for f in test_files:
-            a = Attachment(title=f['title'], slug=f['slug'],
+            a = Attachment(title=f['title'],
                            mindtouch_attachment_id=f['file_id'])
             a.save()
             now = datetime.datetime.now()
@@ -64,7 +60,6 @@ class AttachmentTests(UserTestCase, WikiTestCase):
                 attachment=a,
                 mime_type='text/plain',
                 title=f['title'],
-                slug=f['slug'],
                 description='',
                 created=now,
                 is_approved=True)
@@ -79,13 +74,13 @@ class AttachmentTests(UserTestCase, WikiTestCase):
             eq_(301, resp.status_code)
             ok_(a.get_file_url() in resp['Location'])
 
-    def test_new_attachment(self):
-        resp = self._post_new_attachment()
+    def test_edit_attachment(self):
+        resp = self._post_attachment()
         eq_(302, resp.status_code)
 
         attachment = Attachment.objects.get(title='Test uploaded file')
         eq_(resp['Location'],
-            'http://testserver%s' % attachment.get_absolute_url())
+            'http://testserver%s' % self.document.get_edit_url())
 
         rev = attachment.current_revision
         eq_('admin', rev.creator.username)
@@ -93,64 +88,8 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         eq_('Initial upload', rev.comment)
         ok_(rev.is_approved)
 
-    def test_edit_attachment(self):
-        file_for_upload = make_test_file(
-            content='I am a test file for editing.')
-
-        post_data = {
-            'title': 'Test editing file',
-            'description': 'A test file for editing.',
-            'comment': 'Initial upload',
-            'file': file_for_upload,
-        }
-
-        resp = self.client.post(reverse('attachments.new_attachment'),
-                                data=post_data)
-
-        tdir = tempfile.gettempdir()
-        edited_file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt",
-                                                             dir=tdir)
-        edited_file_for_upload.write(
-            'I am a new version of the test file for editing.')
-        edited_file_for_upload.seek(0)
-
-        post_data = {
-            'title': 'Test editing file',
-            'description': 'A test file for editing.',
-            'comment': 'Second revision.',
-            'file': edited_file_for_upload,
-        }
-
-        attachment = Attachment.objects.get(title='Test editing file')
-
-        resp = self.client.post(reverse('attachments.edit_attachment',
-                                        kwargs={
-                                            'attachment_id': attachment.id,
-                                        }),
-                                data=post_data)
-
-        eq_(302, resp.status_code)
-
-        # Re-fetch because it's been updated.
-        attachment = Attachment.objects.get(title='Test editing file')
-        eq_(resp['Location'],
-            'http://testserver%s' % attachment.get_absolute_url())
-
-        eq_(2, attachment.revisions.count())
-
-        rev = attachment.current_revision
-        eq_('admin', rev.creator.username)
-        eq_('Second revision.', rev.comment)
-        ok_(rev.is_approved)
-
-        url = attachment.get_file_url()
-        resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
-        eq_('text/plain', rev.mime_type)
-        ok_('I am a new version of the test file for editing.'
-            in resp.streaming_content)
-
     def test_attachment_raw_requires_attachment_host(self):
-        resp = self._post_new_attachment()
+        resp = self._post_attachment()
         attachment = Attachment.objects.get(title='Test uploaded file')
 
         url = attachment.get_file_url()
@@ -173,14 +112,12 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         AttachmentRevision.get_previous() should return this revisions's
         files's most recent approved revision."""
         test_user = self.user_model.objects.get(username='testuser2')
-        a = Attachment(title='Test attachment for get_previous',
-                       slug='test-attachment-for-get-previous')
+        a = Attachment(title='Test attachment for get_previous')
         a.save()
         r = AttachmentRevision(
             attachment=a,
             mime_type='text/plain',
             title=a.title,
-            slug=a.slug,
             description='',
             comment='Initial revision.',
             created=datetime.datetime.now() - datetime.timedelta(seconds=30),
@@ -195,7 +132,6 @@ class AttachmentTests(UserTestCase, WikiTestCase):
             attachment=a,
             mime_type='text/plain',
             title=a.title,
-            slug=a.slug,
             description='',
             comment='First edit..',
             created=datetime.datetime.now(),
@@ -208,49 +144,23 @@ class AttachmentTests(UserTestCase, WikiTestCase):
 
         eq_(r, r2.get_previous())
 
+    @override_config(WIKI_ATTACHMENT_ALLOWED_TYPES='application/x-super-weird')
     def test_mime_type_filtering(self):
-        """Don't allow uploads outside of the explicitly-permitted
-        mime-types."""
-        # SLIGHT HACK: this requires the default set of allowed
-        # mime-types specified in settings.py. Specifically, adding
-        # 'text/html' to that set will make this test fail.
-        test_user = self.user_model.objects.get(username='testuser2')
-        a = Attachment(title='Test attachment for file type filter',
-                       slug='test-attachment-for-file-type-filter')
-        a.save()
-        r = AttachmentRevision(
-            attachment=a,
-            mime_type='text/plain',
-            title=a.title,
-            slug=a.slug,
-            description='',
-            comment='Initial revision.',
-            created=datetime.datetime.now() - datetime.timedelta(seconds=30),
-            creator=test_user,
-            is_approved=True)
-        r.file.save('mime_type_filter_test_file.txt',
-                    ContentFile('I am a test file for mime-type filtering'))
-
-        # Shamelessly stolen from Django's own file-upload tests.
-        tdir = tempfile.gettempdir()
-        file_for_upload = tempfile.NamedTemporaryFile(suffix=".html",
-                                                      dir=tdir)
-        file_for_upload.write('<html>I am a file that tests'
-                              'mime-type filtering.</html>.')
-        file_for_upload.seek(0)
-
+        """
+        Don't allow uploads outside of the explicitly-permitted
+        mime-types.
+        """
+        _file = make_test_file(content='plain and text', suffix='.txt')
         post_data = {
             'title': 'Test disallowed file type',
             'description': 'A file kuma should disallow on type.',
             'comment': 'Initial upload',
-            'file': file_for_upload,
+            'file': _file,
         }
-
-        resp = self.client.post(reverse('attachments.edit_attachment',
-                                        kwargs={'attachment_id': a.id}),
-                                data=post_data)
+        resp = self.client.post(self.files_url, data=post_data)
         eq_(200, resp.status_code)
         ok_('Files of this type are not permitted.' in resp.content)
+        _file.close()
 
     def test_intermediate(self):
         """
@@ -258,10 +168,10 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         correctly when adding an Attachment with a document_id.
 
         """
-        doc = document(locale='en', slug='attachment-test-intermediate')
-        doc.save()
-        rev = revision(document=doc, is_approved=True)
-        rev.save()
+        doc = document(locale='en-US',
+                       slug='attachment-test-intermediate',
+                       save=True)
+        revision(document=doc, is_approved=True, save=True)
 
         file_for_upload = make_test_file(
             content='A file for testing intermediate attachment model.')
@@ -272,14 +182,13 @@ class AttachmentTests(UserTestCase, WikiTestCase):
             'comment': 'Initial upload',
             'file': file_for_upload,
         }
-
-        add_url = urlparams(reverse('attachments.new_attachment'),
-                            document_id=doc.id)
-        resp = self.client.post(add_url, data=post_data)
+        files_url = reverse('attachments.edit_attachment',
+                            kwargs={'document_path': doc.slug},
+                            locale='en-US')
+        resp = self.client.post(files_url, data=post_data)
         eq_(302, resp.status_code)
 
         eq_(1, doc.files.count())
-
         intermediates = DocumentAttachment.objects.filter(document__pk=doc.id)
         eq_(1, intermediates.count())
 

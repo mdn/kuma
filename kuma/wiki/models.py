@@ -8,6 +8,7 @@ from functools import wraps
 import newrelic.agent
 import waffle
 from constance import config
+from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
@@ -22,7 +23,6 @@ from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
 from tidings.models import NotificationsMixin
 
-from kuma.attachments.models import Attachment
 from kuma.core.cache import memcache
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.i18n import get_language_mapping
@@ -160,14 +160,34 @@ class DocumentAttachment(models.Model):
     user who attached a file to a document, and a (unique for that
     document) name for referring to the file from the document.
     """
-    file = models.ForeignKey(Attachment)
-    # This has to be a string ref to avoid circular import.
-    document = models.ForeignKey('wiki.Document')
+    file = models.ForeignKey(
+        'attachments.Attachment',
+        related_name='document_attachments',
+    )
+    document = models.ForeignKey(
+        'wiki.Document',
+        related_name='attached_files',
+    )
     attached_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
     name = models.TextField()
 
+    # whether or not this attachment was uploaded for the document
+    is_original = models.BooleanField(
+        verbose_name=_('uploaded to the document'),
+        default=False,
+    )
+
+    # whether or not this attachment is linked in the document's content
+    is_linked = models.BooleanField(
+        verbose_name=_('linked in the document content'),
+        default=False,
+    )
+
     class Meta:
         db_table = 'attachments_documentattachment'
+
+    def __unicode__(self):
+        return u'"%s" for document "%s"' % (self.file, self.document)
 
 
 @register_live_index
@@ -208,22 +228,36 @@ class Document(NotificationsMixin, models.Model):
     )
 
     # Latest approved revision. L10n dashboard depends on this being so (rather
-    # than being able to set it to earlier approved revisions). (Remove "+" to
-    # enable reverse link.)
-    current_revision = models.ForeignKey('Revision', null=True,
-                                         related_name='current_for+')
+    # than being able to set it to earlier approved revisions).
+    current_revision = models.ForeignKey(
+        'Revision',
+        null=True,
+        related_name='current_for+',
+    )
 
     # The Document I was translated from. NULL if this doc is in the default
     # locale or it is nonlocalizable. TODO: validate against
     # settings.WIKI_DEFAULT_LANGUAGE.
-    parent = models.ForeignKey('self', related_name='translations',
-                               null=True, blank=True)
+    parent = models.ForeignKey(
+        'self',
+        related_name='translations',
+        null=True,
+        blank=True,
+    )
 
-    parent_topic = models.ForeignKey('self', related_name='children',
-                                     null=True, blank=True)
+    parent_topic = models.ForeignKey(
+        'self',
+        related_name='children',
+        null=True,
+        blank=True,
+    )
 
-    files = models.ManyToManyField(Attachment,
-                                   through=DocumentAttachment)
+    # The files attached to the document, represented by a custom intermediate
+    # model so we can store some metadata about the relation
+    files = models.ManyToManyField(
+        'attachments.Attachment',
+        through=DocumentAttachment,
+    )
 
     # JSON representation of Document for API results, built on save
     json = models.TextField(editable=False, blank=True, null=True)
@@ -275,6 +309,8 @@ class Document(NotificationsMixin, models.Model):
     summary_html = models.TextField(editable=False, blank=True, null=True)
 
     summary_text = models.TextField(editable=False, blank=True, null=True)
+
+    attachments_populated = models.BooleanField(default=False)
 
     class Meta(object):
         unique_together = (
@@ -1227,16 +1263,14 @@ Full traceback:
             return None
         return self.current_revision.content_parsed
 
+    def populate_attachments(self, update_populated_field=False):
+        """
+        File attachments are stored at the DB level and synced here
+        with the document's HTML content.
 
-    @cached_property
-    def attachments(self):
-        # Is there a more elegant way to do this?
-        #
-        # File attachments aren't really stored at the DB level;
-        # instead, the page just gets appropriate HTML to embed
-        # whatever type of file it is. So we find them by
-        # regex-searching over the HTML for URLs that match the
-        # file URL patterns.
+        We find them by regex-searching over the HTML for URLs that match the
+        file URL patterns.
+        """
         mt_files = DEKI_FILE_URL.findall(self.html)
         kuma_files = KUMA_FILE_URL.findall(self.html)
         params = None
@@ -1250,11 +1284,51 @@ Full traceback:
         if kuma_files and not params:
             # We have only kuma files.
             params = models.Q(id__in=kuma_files)
+
+        Attachment = apps.get_model('attachments', 'Attachment')
         if params:
-            return Attachment.objects.filter(params)
+            found_attachments = Attachment.objects.filter(params)
         else:
             # If no files found, return an empty Attachment queryset.
-            return Attachment.objects.none()
+            found_attachments = Attachment.objects.none()
+
+        # Delete all document-attachments-relations for attachments that
+        # weren't originally uploaded for the document to populate the list
+        # again below
+        self.attached_files.filter(is_original=False).delete()
+
+        # Reset the linked status for all attachments that are left
+        self.attached_files.all().update(is_linked=False)
+
+        # Go through the attachments discovered in the HTML and
+        # create linked attachments
+        """
+        three options of state:
+
+        - linked in the document, but not originally uploaded
+        - linked in the document, but originally uploaded
+        - not linked in the document, but originally uploaded
+        """
+        populated = []
+        for attachment in (found_attachments.only('pk', 'current_revision')
+                                            .iterator()):
+            revision = attachment.current_revision
+            relation, created = self.files.through.objects.update_or_create(
+                file_id=attachment.pk,
+                document_id=self.pk,
+                defaults={
+                    'attached_by': revision.creator,
+                    'name': revision.filename,
+                    'is_linked': True,
+                },
+            )
+            populated.append((relation, created))
+
+        # used by the populate_attachments management commmand
+        # to keep track of those documents that haven't been populated
+        # yet. TODO remove once all documents are populated
+        Document.objects.filter(pk=self.pk).update(attachments_populated=True)
+        return populated
 
     @property
     def show_toc(self):
@@ -1674,6 +1748,10 @@ class Revision(models.Model):
         self.document.tags.set(*parse_tags(self.tags))
 
         self.document.save()
+
+        # Re-create all document-attachment relations since they are based
+        # on the actual HTML content
+        self.document.populate_attachments()
 
     def __unicode__(self):
         return u'[%s] %s #%s' % (self.document.locale,

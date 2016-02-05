@@ -3,11 +3,8 @@ from datetime import datetime
 import hashlib
 
 from django.conf import settings
-from django.core.files import temp as tempfile
-from django.template import loader
 from django.utils import timezone
 from django.utils.http import http_date
-from django.utils.safestring import mark_safe
 
 from kuma.core.urlresolvers import reverse
 
@@ -77,46 +74,14 @@ def attachment_upload_to(instance, filename):
     }
 
 
-def attachments_payload(attachments):
+def attachments_payload(document_attachments):
     """
-    Given a list of Attachments (e.g., from a Document), make some
-    nice JSON out of them for easy display.
+    Given a list of document attachments make some output that can be used
+    by the CKeditor plugins.
     """
-    attachments_list = []
-    for attachment in attachments:
-        current_revision = attachment.current_revision
-        obj = {
-            'title': attachment.title,
-            'date': str(current_revision.created),
-            'description': current_revision.description,
-            'url': attachment.get_file_url(),
-            'creator': current_revision.creator.username,
-            'creator_url': current_revision.creator.get_absolute_url(),
-            'revision': current_revision.id,
-            'id': attachment.id,
-            'mime': current_revision.mime_type
-        }
-        # Adding this to prevent "UnicodeEncodeError" for certain media
-        try:
-            obj['size'] = current_revision.file.size
-        except UnicodeEncodeError:
-            obj['size'] = 0
-
-        obj['html'] = mark_safe(
-            loader.render_to_string('attachments/includes/attachment_row.html',
-                                    {'attachment': obj})
-        )
-        attachments_list.append(obj)
-    return attachments_list
-
-
-def make_test_file(content=None):
-    """Create a fake file for testing purposes."""
-    if content is None:
-        content = 'I am a test file for upload.'
-    # Shamelessly stolen from Django's own file-upload tests.
-    tdir = tempfile.gettempdir()
-    file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
-    file_for_upload.write(content)
-    file_for_upload.seek(0)
-    return file_for_upload
+    return [{
+        'title': attachment.file.title,
+        'description': attachment.file.current_revision.description,
+        'mime': attachment.file.current_revision.mime_type,
+        'url': attachment.file.get_file_url()
+    } for attachment in document_attachments]

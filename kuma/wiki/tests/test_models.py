@@ -15,6 +15,7 @@ from django.core.exceptions import ValidationError
 
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import KumaTestCase, eq_, get_user, ok_
+from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.users.tests import UserTestCase
 
 from . import (create_document_tree, create_template_test_users,
@@ -197,11 +198,14 @@ class DocumentTests(UserTestCase):
         bambino = document(locale='es', title='el test', parent=parent,
                            save=True)
 
-        children = Document.objects.filter(parent=parent).order_by('locale').values_list('pk', flat=True)
+        children = (Document.objects.filter(parent=parent)
+                                    .order_by('locale')
+                                    .values_list('pk', flat=True))
         eq_(list(children),
             list(parent.other_translations.values_list('pk', flat=True)))
 
-        enfant_translation_pks = enfant.other_translations.values_list('pk', flat=True)
+        enfant_translation_pks = (enfant.other_translations
+                                        .values_list('pk', flat=True))
         ok_(parent.pk in enfant_translation_pks)
         ok_(bambino.pk in enfant_translation_pks)
         eq_(False, enfant.pk in enfant_translation_pks)
@@ -303,7 +307,7 @@ class PermissionTests(KumaTestCase):
                                 trial_user, msg[expected], slug))
 
 
-class DocumentTestsWithFixture(UserTestCase):
+class UserDocumentTests(UserTestCase):
     """Document tests which need the users fixture"""
 
     def test_default_topic_parents_for_translation(self):
@@ -1801,3 +1805,59 @@ class RevisionIPTests(UserTestCase):
         eq_(3, RevisionIP.objects.all().count())
         RevisionIP.objects.delete_old()
         eq_(2, RevisionIP.objects.all().count())
+
+
+class AttachmentTests(UserTestCase):
+
+    def new_attachment(self, mindtouch_attachment_id=666):
+        attachment = Attachment(
+            title='test attachment',
+            mindtouch_attachment_id=mindtouch_attachment_id,
+        )
+        attachment.save()
+        attachment_revision = AttachmentRevision(
+            attachment=attachment,
+            file='some/path.ext',
+            mime_type='application/kuma',
+            creator=get_user(username='admin'),
+            title='test attachment',
+        )
+        attachment_revision.save()
+        return attachment, attachment_revision
+
+    def test_popuplate_deki_file_url(self):
+        attachment, attachment_revision = self.new_attachment()
+        html = ("""%s%s/@api/deki/files/%s/=""" %
+                (settings.PROTOCOL, settings.ATTACHMENT_HOST,
+                 attachment.mindtouch_attachment_id))
+        doc = document(html=html, save=True)
+        doc.populate_attachments()
+
+        ok_(doc.attached_files.all().exists())
+        eq_(doc.attached_files.all().count(), 1)
+        eq_(doc.attached_files.first().file, attachment)
+
+    def test_popuplate_kuma_file_url(self):
+        attachment, attachment_revision = self.new_attachment()
+        doc = document(html=attachment.get_file_url(), save=True)
+        ok_(not doc.attached_files.all().exists())
+
+        populated = doc.populate_attachments()
+        eq_(len(populated), 1)
+        ok_(doc.attached_files.all().exists())
+        eq_(doc.attached_files.all().count(), 1)
+        eq_(doc.attached_files.first().file, attachment)
+
+    def test_popuplate_multiple_attachments(self):
+        attachment, attachment_revision = self.new_attachment()
+        attachment2, attachment_revision2 = self.new_attachment()
+        html = ("%s %s" %
+                (attachment.get_file_url(), attachment2.get_file_url()))
+        doc = document(html=html, save=True)
+        populated = doc.populate_attachments()
+        attachments = doc.attached_files.all()
+        eq_(len(populated), 2)
+        ok_(attachments.exists())
+        eq_(attachments.count(), 2)
+        eq_(attachments[0].file, attachment)
+        eq_(attachments[1].file, attachment2)

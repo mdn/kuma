@@ -1,11 +1,6 @@
 {% set show_attach_button = allow_add_attachment_by(request.user) %}
-{% if document and document.attachments %}
-    {% set attachment_data = attachments_payload(document.attachments) %}
-{% else %}
-    {% set attachment_data = [] %}
-{% endif %}
-{% set attachments_given = attachment_data|length > 0 %}
-{% set attachment_data_json = attachment_data|jsonencode %}
+{% set document_attachments = document.attached_files.all() %}
+{% set attachments_given = document_attachments.count() > 0 %}
 
 <section id="page-attachments" class="wiki-block">
 
@@ -13,38 +8,27 @@
 
   {% if show_attach_button and attachment_form and attachments_given %}
   <p class="add">
-      <button type="button" id="page-attachments-button" class="neutral">{{ _('Attach Files') }}<i aria-hidden="true" class="icon-paperclip"></i></button>
+      <button type="button" id="page-attachments-button" class="neutral">{{ _('Upload Files') }}<i aria-hidden="true" class="icon-paperclip"></i></button>
   </p>
   {% endif %}
 
-  <p id="page-attachments-no-message" class="{% if attachments_given %}hidden{% endif %}">
-    {{ _('This document has no attachments. Images can be attached, and then embedded in the article.') }}
-    {% if show_attach_button and attachment_form and not attachments_given %}
-      <button id="page-attachments-button" class="neutral">{{ _('Attach Files') }}<i aria-hidden="true" class="icon-paperclip"></i></button>
+  <p class="{% if attachments_given %}hidden{% endif %}">
+    {{ _('This document has no attachments.') }}
+    {% if show_attach_button and attachment_form %}
+      {{ _('Images can be attached, and then linked in the article.') }}
+      {% if not attachments_given %}
+      <button id="page-attachments-button" class="neutral">{{ _('Upload Files') }}<i aria-hidden="true" class="icon-paperclip"></i></button>
+      {% endif %}
     {% endif %}
   </p>
 
   <script>
-    mdn.wiki.attachments = {{ attachment_data_json }};
+    mdn.wiki.attachments = {{ attachments_payload(document_attachments)|jsonencode }};
+    mdn.wiki.attachments_enabled = {{ show_attach_button|jsonencode }};
   </script>
 
-    <table cellpadding="0" cellspacing="0" id="page-attachments-table" class="{% if not attachments_given %}hidden{% endif %}">
-      <thead>
-        <th>{{ _('File') }}</th>
-        <th>{{ _('Size') }}</th>
-        <th>{{ _('Date') }}</th>
-        <th>{{ _('Attached by') }}</th>
-      </thead>
-      <tbody>
-        {% for attachment in attachment_data %}
-          {{ attachment.html }}
-        {% endfor %}
-      </tbody>
-    </table>
-
-
   {% if show_attach_button and attachment_form %}
-  <form method="post" action="{{ url('attachments.new_attachment') }}" id="page-attachments-form" enctype="multipart/form-data">
+  <form method="post" action="{{ url('attachments.edit_attachment', document_path=document.slug, locale=document.locale) }}" id="page-attachments-form" enctype="multipart/form-data">
     {% csrf_token %}
     <table cellpadding="0" cellspacing="0" id="page-attachments-new-table" class="hidden">
       <thead>
@@ -55,20 +39,73 @@
       </thead>
       <tbody>
         <tr>
-          <td class="page-attachment-actions-file-cell">{{ attachment_form.file | safe }}</td>
-          <td>{{ attachment_form.title | safe }}</td>
-          <td>{{ attachment_form.description | safe }}</td>
-          <td>{{ attachment_form.comment | safe }}</td>
+          <td class="page-attachment-actions-file-cell">{{ attachment_form.file }}</td>
+          <td>{{ attachment_form.title }}</td>
+          <td>{{ attachment_form.description }}</td>
+          <td>{{ attachment_form.comment }}</td>
         </tr>
         <tr>
           <td colspan="4">
             <input type="submit" name="submit" value="Upload" />
-            <img src="{{ static('img/upload-spinner.gif') }}" id="page-attachments-spinner" alt="{{ _('Uploading') }}" />
           </td>
         </tr>
       </tbody>
     </table>
-    <iframe id="page-attachments-upload-target" name="page-attachments-upload-target"></iframe>
   </form>
   {% endif %}
+
+  {% for is_original, attachments in document_attachments|groupby('is_original')|reverse %}
+    <table cellpadding="0" cellspacing="0" class="page-attachments-table {% if not attachments_given %}hidden{% endif %}">
+    <caption>
+      {% if is_original %}
+        {{ _('Attached to this article') }}
+      {% else %}
+        {{ _('Attached to another article') }}
+      {% endif %}
+      </caption>
+      <thead>
+        <th>{{ _('File') }}</th>
+        <th>{{ _('Size') }}</th>
+        <th>{{ _('Last modified') }}</th>
+        <th>{{ _('Uploaded by') }}</th>
+        <th>
+        {% if is_original %}
+          {{ _('Linked in article') }}
+        {% else %}
+          {{ _('Article attached to') }}
+        {% endif %}
+        </th>
+      </thead>
+      <tbody>
+      {% for attachment in attachments %}
+        <tr data-revision-id="{{ attachment.file.current_revision.pk }}">
+          <td class="attachment-name-cell">
+            <a href="{{ attachment.file.get_file_url() }}" target="_blank">{{ attachment.file.title }}</a>
+            <div class="attachment-description">{{ attachment.file.current_revision.description }}</div>
+          </td>
+          <td>{{ attachment.file.current_revision.file.size|filesizeformat }} ({{ _('%(bytes)s bytes', bytes=attachment.file.current_revision.file.size) }})</td>
+          <td>{{ datetimeformat(attachment.file.modified, format='datetime') }}</td>
+          <td>
+            <a href="{{ attachment.file.current_revision.creator.get_absolute_url() }}">
+              {{ user_display(attachment.file.current_revision.creator) }}
+            </a>
+          </td>
+          <td>
+          {% if is_original %}
+            {{ attachment.is_linked|yesno }}
+          {% else %}
+            {% set other_document_attachments = attachment.file.document_attachments.exclude(document=attachment.document).distinct() %}
+            {% for document_attachment in other_document_attachments %}
+              <a href="{{ document_attachment.document.get_absolute_url() }}">
+                {{ document_attachment.document.title }} ({{ document_attachment.document.locale}})
+              </a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% endfor %}
+
 </section>

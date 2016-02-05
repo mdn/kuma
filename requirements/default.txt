@@ -29,6 +29,7 @@ django-honeypot==0.5.0 --hash=sha256:962304f21055f05c73c41f2506f5a94f5b941e831a2
 django-jinja==1.4.1 --hash=sha256:6f4c2e8c5ada17039ff1c1e38bc51bea9317af3676e28466148c8df5fc78f132
 django-memcached-hashring==0.1.2 --hash=sha256:14c2dc29bc693feaf114dea8c871f4d25daca72bba8f37b159d552fed4ab6337
 django-mozilla-product-details==0.7.1 --hash=sha256:c50bffb9828a9139156904a11c508732d13dbf57ac25625ebc5edaa3ed312840
+django-mysql==1.0.4 --hash=sha256:0ced44721f0b36b618c7eb4c3813f57a5a7df71b959dc97ddf94e2281813a971
 django-picklefield==0.3.2 --hash=sha256:5489fef164de43725242d56e65e016137d3df0d1a00672bda72d807f5b2b0d99
 django-pipeline==1.5.4 --hash=sha256:a5a909f403d0ea56f211618949ff4e378f16e5a996bde819bd2b5b0e7a9bb8fe
 django-ratelimit==0.6.0 --hash=sha256:f73b53b2c4fd342cbd4b983ffc33fdcf8f8a6f595d548865ea63c839ef38293c

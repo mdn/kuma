@@ -8,10 +8,12 @@ from ..utils import allow_add_attachment_by
 
 class AttachmentTests(KumaTestCase):
     def test_permissions(self):
-        """Ensure that the negative and positive permissions for adding
+        """
+        Ensure that the negative and positive permissions for adding
         attachments work."""
         # Get the negative and positive permissions
-        ct = ContentType.objects.get(app_label='attachments', model='attachment')
+        ct = ContentType.objects.get(app_label='attachments',
+                                     model='attachment')
         p1 = Permission.objects.get(codename='disallow_add_attachment',
                                     content_type=ct)
         p2 = Permission.objects.get(codename='add_attachment',

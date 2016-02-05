@@ -22,7 +22,7 @@ from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 
 from kuma.attachments.models import Attachment
-from kuma.attachments.utils import make_test_file
+from kuma.attachments.tests import make_test_file
 from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.models import IPBan
@@ -3491,6 +3491,7 @@ class CodeSampleViewFileServingTests(UserTestCase, WikiTestCase):
         WIKI_ATTACHMENT_ALLOWED_TYPES='text/plain')
     @override_settings(ATTACHMENT_HOST='testserver')
     def test_code_sample_file_serving(self):
+        doc = document(locale='en-US', save=True)
         self.client.login(username='admin', password='testpass')
         # first let's upload a file
         file_for_upload = make_test_file(content='Something something unique')
@@ -3500,7 +3501,9 @@ class CodeSampleViewFileServingTests(UserTestCase, WikiTestCase):
             'comment': 'Yadda yadda yadda',
             'file': file_for_upload,
         }
-        response = self.client.post(reverse('attachments.new_attachment'),
+        response = self.client.post(reverse('attachments.edit_attachment',
+                                            kwargs={'document_path': doc.slug},
+                                            locale='en-US'),
                                     data=post_data)
         eq_(response.status_code, 302)
 

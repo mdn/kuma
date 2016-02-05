@@ -31,12 +31,9 @@ urlpatterns = [
 
     url(r'^search', include('kuma.search.urls')),
     url(r'^docs', include('kuma.wiki.urls')),
-    url(r'^files/', include('kuma.attachments.urls')),
-    url(r'^', include('kuma.dashboards.urls')),
-
-    # Users
+    url('', include('kuma.attachments.urls')),
+    url('', include('kuma.dashboards.urls')),
     url('', include('kuma.users.urls')),
-
 
     # Services and sundry.
     url(r'^', include('tidings.urls')),
