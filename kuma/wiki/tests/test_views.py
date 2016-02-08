@@ -331,7 +331,7 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(d.get_absolute_url())
         page = pq(resp.content)
         contributors = (page.find(":contains('Contributors to this page')")
-                            .parent())
+                            .parents('.contributors-sub'))
         # just checking if the contributor link is rendered
         eq_(len(contributors.find('a')), 2)
 
