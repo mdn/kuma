@@ -6,9 +6,9 @@ docutils==0.12
 Jinja2==2.8
 MarkupSafe==0.23
 mdn-sphinx-theme==2015.2
-Pygments==2.0.2
+Pygments==2.1
 pytz==2015.7
 six==1.10.0
 snowballstemmer==1.2.1
-Sphinx==1.3.3
+Sphinx==1.3.5
 sphinx-rtd-theme==0.1.9
