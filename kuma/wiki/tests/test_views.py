@@ -31,9 +31,9 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase, user
 
-from . import (WikiTestCase, create_document_tree, create_template_test_users,
-               doc_rev, document, make_translation, new_document_data,
-               normalize_html, revision)
+from . import (WikiTestCase, create_document_editor_user, create_document_tree,
+               create_template_test_users, doc_rev, document, make_translation,
+               new_document_data, normalize_html, revision)
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
@@ -564,6 +564,23 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
                                            user=rev.creator, reason="test")
         response = self.client.get(doc.get_absolute_url(), follow=False)
         eq_(404, response.status_code)
+        assert 'Reason for Deletion' not in response.content
+
+    def test_deleted_doc_returns_404_and_content(self):
+        """Requesting deleted doc as superuser returns 404 with restore button
+
+        """
+        # Create a user in a group with the wiki.delete_document permission.
+        user = create_document_editor_user()
+        self.client.login(username=user.username, password='testpass')
+
+        doc, rev = doc_rev()
+        doc.delete()
+        DocumentDeletionLog.objects.create(locale=doc.locale, slug=doc.slug,
+                                           user=rev.creator, reason="test")
+        response = self.client.get(doc.get_absolute_url(), follow=False)
+        eq_(404, response.status_code)
+        assert 'Reason for Deletion' in response.content
 
 
 class ReadOnlyTests(UserTestCase, WikiTestCase):
