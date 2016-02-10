@@ -149,6 +149,30 @@ def normalize_html(input):
             .serialize(alphabetical_attributes=True))
 
 
+def create_document_editor_user():
+    """Creates a user empowered with document editing"""
+    perms = []
+    for action in ('add', 'change', 'delete', 'view', 'restore'):
+        perms.append(Permission.objects.get(codename='%s_document' % action))
+
+    group, group_created = Group.objects.get_or_create(name='editor')
+    if group_created:
+        group.permissions = perms
+        group.save()
+
+    User = get_user_model()
+    user, user_created = User.objects.get_or_create(
+        username='conantheeditor',
+        defaults=dict(email='user_%s@example.com',
+                      is_active=True, is_staff=False, is_superuser=False))
+    if user_created:
+        user.set_password('testpass')
+        user.groups = [group]
+        user.save()
+
+    return user
+
+
 def create_template_test_users():
     perms = dict(
         (x, [Permission.objects.get(codename='%s_template_document' % x)])

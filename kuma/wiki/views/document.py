@@ -486,12 +486,18 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
 @allow_CORS_GET
 @prevent_indexing
 def _document_deleted(request, deletion_logs):
+    """When a Document has been deleted return a 404.
+
+    If the user can restore documents, then return a 404 but also include the
+    template with the form to restore the document.
+
     """
-    When a Document has been deleted, display a notice.
-    """
-    deletion_log = deletion_logs.order_by('-pk')[0]
-    context = {'deletion_log': deletion_log}
-    return render(request, 'wiki/deletion_log.html', context, status=404)
+    if request.user and request.user.has_perm('wiki.restore_document'):
+        deletion_log = deletion_logs.order_by('-pk')[0]
+        context = {'deletion_log': deletion_log}
+        return render(request, 'wiki/deletion_log.html', context, status=404)
+
+    raise Http404
 
 
 @newrelic.agent.function_trace()
