@@ -4,6 +4,7 @@ from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned
 from django.db import models
+from django_mysql.models import Model as MySQLModel
 from django.utils.translation import ugettext_lazy as _
 
 from .utils import attachment_upload_to, full_attachment_url
@@ -142,6 +143,33 @@ class AttachmentRevision(models.Model):
                 self.attachment.current_revision.id < self.id):
             self.make_current()
 
+    def delete(self, username=None, *args, **kwargs):
+        if username is None:
+            trash_item = None
+        else:
+            trash_item = self.trash(username=username)
+        super(AttachmentRevision, self).delete(*args, **kwargs)
+        return trash_item
+
+    def trash(self, username=None):
+        """
+        Given an attachment revision instance and a request create a
+        TrashedAttachment instance to record it being deleted.
+
+        Then return the new trash item.
+        """
+        trashed_attachment = TrashedAttachment(
+            file=self.file,
+            trashed_by=username or 'unknown',
+            was_current=(
+                self.attachment and
+                self.attachment.current_revision and
+                self.attachment.current_revision.pk == self.pk
+            )
+        )
+        trashed_attachment.save()
+        return trashed_attachment
+
     def make_current(self):
         """Make this revision the current one for the attachment."""
         self.attachment.title = self.title
@@ -153,3 +181,39 @@ class AttachmentRevision(models.Model):
             is_approved=True,
             created__lt=self.created,
         ).order_by('-created').first()
+
+
+class TrashedAttachment(MySQLModel):
+
+    file = models.FileField(
+        upload_to=attachment_upload_to,
+        max_length=500,
+        help_text=_('The attachment file that was trashed'),
+    )
+
+    trashed_at = models.DateTimeField(
+        default=datetime.now,
+        help_text=_('The date and time the attachment was trashed'),
+    )
+    trashed_by = models.CharField(
+        max_length=30,
+        blank=True,
+        help_text=_('The username of the user who trashed the attachment'),
+    )
+
+    was_current = models.BooleanField(
+        default=False,
+        help_text=_('Whether or not this attachment was the current '
+                    'attachment revision at the time of trashing.'),
+    )
+
+    class Meta:
+        verbose_name = _('Trashed attachment')
+        verbose_name_plural = _('Trashed attachments')
+
+    def __unicode__(self):
+        return self.filename
+
+    @property
+    def filename(self):
+        return os.path.split(self.file.path)[-1]

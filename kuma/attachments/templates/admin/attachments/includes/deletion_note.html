@@ -1,0 +1,17 @@
+{% load i18n %}
+
+<p class="errornote">
+Read the following list before you confirm the deletion!
+</p>
+Note:
+<ul>
+  <li>
+    Before actually deleting the attachments all attachment revision files are <strong>moved to a trash first</strong>.
+  </li>
+  <li>
+    Confirming the delete below means <strong>losing the attachment metadata</strong> and references to wiki articles.
+  </i>
+  <li>
+    The trashed files <strong>can be reviewed for {{ config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS }} days</strong> before automatically being purged from the file system.
+  </li>
+</ul>

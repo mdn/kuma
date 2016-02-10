@@ -1184,6 +1184,11 @@ CONSTANCE_CONFIG = dict(
         'image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop',
         'Allowed file types for wiki file attachments',
     ),
+    WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS=(
+        14,
+        "Number of days to keep the trashed attachments files before they "
+        "are removed from the file storage"
+    ),
     KUMA_WIKI_HREF_BLOCKED_PROTOCOLS=(
         '(?i)^(data\:?)',
         'Regex for protocols that are blocked for A HREFs'

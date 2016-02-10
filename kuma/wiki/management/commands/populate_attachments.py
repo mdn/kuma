@@ -9,8 +9,9 @@ class Command(NoArgsCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('-n', '--dry-run',
-            action='store_true', dest='dry_run', default=False,
-            help="Do everything except actually populating the attachments.")
+                            action='store_true', dest='dry_run', default=False,
+                            help="Do everything except actually populating "
+                                 "the attachments.")
 
     def handle(self, *args, **options):
         dry_run = options['dry_run']
