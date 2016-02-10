@@ -5,7 +5,6 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.clickjacking import xframe_options_sameorigin
-from django.views.decorators.http import require_POST
 
 from kuma.core.decorators import login_required
 from kuma.wiki.models import Document
@@ -55,7 +54,6 @@ def mindtouch_file_redirect(request, file_id, filename):
     return redirect(attachment.get_file_url(), permanent=True)
 
 
-@require_POST
 @xframe_options_sameorigin
 @login_required
 @process_document_path
@@ -72,6 +70,8 @@ def edit_attachment(request, document_slug, document_locale):
         locale=document_locale,
         slug=document_slug,
     )
+    if request.method != 'POST':
+        return redirect(document.get_edit_url())
     # No access if no permissions to upload
     if not allow_add_attachment_by(request.user):
         raise PermissionDenied
