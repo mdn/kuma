@@ -114,6 +114,10 @@ PLATFORM_NAME = platform.node()
 # system time zone.
 TIME_ZONE = 'US/Pacific'
 
+# Directory for product-details files.
+PROD_DETAILS_DIR = config('PROD_DETAILS_DIR',
+                          default=path('..', 'product_details_json'))
+
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-US'
@@ -235,7 +239,7 @@ for requested_lang, delivered_lang in LOCALE_ALIASES.items():
 
 def get_locales():
     locales = {}
-    file = os.path.join(ROOT, 'kuma', 'languages.json')
+    file = os.path.join(PROD_DETAILS_DIR, 'languages.json')
     json_locales = json.load(open(file, 'r'))
     for locale, meta in json_locales.items():
         locales[locale] = _Language(meta['English'],
@@ -312,8 +316,6 @@ MT_TO_KUMA_LOCALE_MAP = {
 
 SITE_ID = 1
 
-PROD_DETAILS_DIR = config('PROD_DETAILS_DIR',
-                          default=path('..', 'product_details_json'))
 MDC_PAGES_DIR = path('..', 'mdc_pages')
 
 # If you set this to False, Django will make some optimizations so as not
