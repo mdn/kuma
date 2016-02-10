@@ -17,6 +17,7 @@ RUN apt-get update && \
 WORKDIR /app
 COPY . /app
 
+RUN pip install -U pip supervisor
 RUN pip install --build ./build --cache-dir ./cache --no-deps \
     -r requirements/default.txt && rm -r build cache
 
