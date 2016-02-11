@@ -101,7 +101,7 @@ Kuma tracks its Python dependencies with pip_.
 
 The ``requirements`` directory contains the plaintext requirements files
 that are used in the Vagrant VM, during automatic tests with Travis-CI
-and duriing deployment to stage and prod.
+and during deployment to stage and prod.
 
 Here's what that folder contains:
 

@@ -256,7 +256,7 @@ installed and also note that you can't export anything via NFS inside an
 encrypted volume or home dir. On Windows NFS won't be used ever by the way.
 
 If that doesn't help you can disable NFS by setting the ``VAGRANT_NFS``
-configration value in a ``.env`` file. See the :ref:`Vagrant configuration
+configuration value in a ``.env`` file. See the :ref:`Vagrant configuration
 <vagrant-config>` options for more info.
 
 If you have other problems during ``vagrant up``, please check
