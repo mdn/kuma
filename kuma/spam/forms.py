@@ -78,9 +78,12 @@ class AkismetCheckFormMixin(AkismetFormMixin):
 
     def akismet_call(self, parameters):
         try:
-            self.akismet_client.check_comment(**parameters)
+            is_spam = self.akismet_client.check_comment(**parameters)
         except akismet.AkismetError:
             self.akismet_error()
+        else:
+            if is_spam:
+                self.akismet_error()
 
 
 class AkismetSubmissionFormMixin(AkismetFormMixin):
@@ -111,7 +114,7 @@ class AkismetSubmissionFormMixin(AkismetFormMixin):
 
     def akismet_call(self, parameters):
         """"
-        Get the submission funciton and call it with the parameters.
+        Get the submission function and call it with the parameters.
         """
         submission_function = 'submit_%s' % self.akismet_submission_type()
         try:
