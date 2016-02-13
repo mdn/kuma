@@ -64,7 +64,7 @@ class AkismetFormTests(SimpleTestCase):
     @override_config(AKISMET_KEY='parameters')
     def test_akismet_parameters(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content='true')
+        mock_requests.post(CHECK_URL, content='false')
 
         form = AkismetContentTestForm(
             self.request,
@@ -99,6 +99,30 @@ class AkismetFormTests(SimpleTestCase):
         form = AkismetCheckTestForm(self.request, data={})
         self.assertFalse(form.akismet_enabled())
 
+    @override_config(AKISMET_KEY='success')
+    def test_akismet_ham(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
+
+        form = AkismetCheckTestForm(self.request, data={})
+        self.assertTrue(form.is_valid())
+
+    @override_config(AKISMET_KEY='spam')
+    def test_akismet_spam(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='true')
+
+        form = AkismetCheckTestForm(self.request, data={})
+        # not valid because we found a wrong response from akismet
+        self.assertFalse(form.is_valid())
+        self.assertIn(form.akismet_error_message, form.errors['__all__'])
+        six.assertRaisesRegex(
+            self,
+            forms.ValidationError,
+            force_unicode(form.akismet_error_message),
+            form.akismet_error,
+        )
+
     @override_config(AKISMET_KEY='error')
     def test_akismet_error(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')
@@ -118,7 +142,7 @@ class AkismetFormTests(SimpleTestCase):
     @override_config(AKISMET_KEY='clean')
     def test_form_clean(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content='true')
+        mock_requests.post(CHECK_URL, content='false')
 
         form = AkismetCheckTestForm(self.request, data={})
         self.assertTrue(form.is_valid())
