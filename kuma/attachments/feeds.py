@@ -25,8 +25,7 @@ class AttachmentsFeed(DocumentsFeed):
                                             item.comment)
 
     def item_link(self, item):
-        return self.request.build_absolute_uri(
-            item.attachment.get_absolute_url())
+        return item.attachment.get_file_url()
 
     def item_pubdate(self, item):
         return item.created

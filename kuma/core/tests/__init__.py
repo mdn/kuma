@@ -1,3 +1,4 @@
+import os
 from importlib import import_module
 
 from django.conf import settings
@@ -147,6 +148,12 @@ class KumaTestMixin(object):
         messages = FallbackStorage(request)
         request._messages = messages
         return messages
+
+    def assertFileExists(self, path):
+        self.assertTrue(os.path.exists(path), u'Path %r does not exist' % path)
+
+    def assertFileNotExists(self, path):
+        self.assertFalse(os.path.exists(path), u'Path %r does exist' % path)
 
 
 class KumaTestCase(KumaTestMixin, TestCase):

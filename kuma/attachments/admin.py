@@ -38,57 +38,33 @@ class AttachmentAdmin(admin.ModelAdmin):
         return format_html('<a href="{}" target="_blank">{}</a>', url, url)
     full_url.short_description = 'Full URL'
 
-    def on_attachment_delete(self, **kwargs):
-        """
-        Signal handle to be called when an attachment is deleted
-        """
-        instance = kwargs.get('instance', None)
-        if instance is not None:
-            for revision in instance.revisions.all():
-                revision.trash()
-
-    def delete_model(self, request, obj):
+    def delete_revisions(self, request, revisions):
         # go through all revisions and trash them,
         # they'll actually be deleted by the deletion of the attachment
-        trash = []
-        for revision in obj.revisions.all():
-            trash_item = revision.trash(username=request.user.username)
-            trash.append(trash_item)
-        if trash:
+        trashed_attachments = []
+        for revision in revisions:
+            trashed_attachment = revision.delete(username=request.user.username)
+            trashed_attachments.append(trashed_attachment)
+        if trashed_attachments:
             self.message_user(
                 request,
                 _('The following attachment files were moved to the trash: '
                   '%(filenames)s. You may want to review them before their '
                   'automatic purge after %(days)s days from the file '
                   'storage.') %
-                {'filenames': get_text_list(trash, _('and')),
+                {'filenames': get_text_list(trashed_attachments, _('and')),
                  'days': config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS},
                 messages.SUCCESS)
+        return trashed_attachments
+
+    def delete_model(self, request, obj):
+        self.delete_revisions(request, obj.revisions.all().iterator())
         # call the actual deletion of the attachment object
         super(AttachmentAdmin, self).delete_model(request, obj)
 
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
-
-        # go through all files and see if there
-        trash = []
-        for obj in formset.deleted_objects:
-            if isinstance(obj, AttachmentRevision):
-                trash_item = obj.delete(username=request.user.username)
-                trash.append(trash_item)
-            else:
-                obj.delete()
-        if trash:
-            self.message_user(
-                request,
-                _('The following attachment files were moved to the trash: '
-                  '%(filenames)s. You may want to review them before their '
-                  'automatic purge after %(days)s days from the file '
-                  'storage.') %
-                {'filenames': get_text_list(trash, _('and')),
-                 'days': config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS},
-                messages.SUCCESS)
-
+        self.delete_revisions(request, formset.deleted_objects)
         for instance in instances:
             instance.creator = request.user
             instance.save()

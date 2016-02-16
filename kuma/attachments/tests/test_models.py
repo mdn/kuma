@@ -1,16 +1,72 @@
+import datetime
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from django.core.files.base import ContentFile
 
-from kuma.core.tests import KumaTestCase, ok_
-from kuma.users.tests import user
+from kuma.users.tests import user, UserTestCase
+from ..models import Attachment, AttachmentRevision, TrashedAttachment
 from ..utils import allow_add_attachment_by
 
 
-class AttachmentTests(KumaTestCase):
+class AttachmentModelTests(UserTestCase):
+
+    def setUp(self):
+        super(AttachmentModelTests, self).setUp()
+        self.test_user = self.user_model.objects.get(username='testuser2')
+        self.attachment = Attachment(title='some title')
+        self.attachment.save()
+        self.revision = AttachmentRevision(
+            attachment=self.attachment,
+            mime_type='text/plain',
+            title=self.attachment.title,
+            description='some description',
+            created=datetime.datetime.now(),
+            is_approved=True)
+        self.revision.creator = self.test_user
+        self.revision.file.save('filename.txt',
+                                ContentFile('Meh meh I am a test file.'))
+        self.revision.make_current()
+
+    def test_trash_revision(self):
+        self.assertEqual(TrashedAttachment.objects.count(), 0)
+        trashed_attachment = self.revision.trash()
+        self.assertEqual(TrashedAttachment.objects.count(), 1)
+        self.assertEqual(trashed_attachment.file,
+                         self.attachment.current_revision.file)
+        self.assertEqual(trashed_attachment.trashed_by, 'unknown')
+        self.assertTrue(trashed_attachment.was_current)
+        # the attachment revision wasn't really deleted, only a trash item created
+        self.assertTrue(AttachmentRevision.objects.filter(pk=self.revision.pk)
+                                                  .exists())
+
+    def test_trash_revision_with_username(self):
+        self.assertFileExists(self.revision.file.path)
+        trashed_attachment = self.revision.trash(username='trasher')
+        self.assertEqual(TrashedAttachment.objects.count(), 1)
+        self.assertEqual(trashed_attachment.trashed_by, 'trasher')
+        self.assertFileExists(self.revision.file.path)
+
+    def test_delete_revision_directly(self):
+        # deleting a revision without providing information
+        # still creates a trashedattachment item and leaves file in place
+        pk = self.revision.pk
+        self.assertFileExists(self.revision.file.path)
+        trashed_attachment = self.revision.delete()
+        self.assertTrue(trashed_attachment)
+        self.assertFalse(AttachmentRevision.objects.filter(pk=pk).exists())
+        self.assertFileExists(self.revision.file.path)
+
+    def test_first_trash_then_delete_revision(self):
+        pk = self.revision.pk
+        trashed_attachment = self.revision.delete(username='trasher')
+        self.assertTrue(trashed_attachment)
+        self.assertFalse(AttachmentRevision.objects.filter(pk=pk).exists())
+
     def test_permissions(self):
         """
         Ensure that the negative and positive permissions for adding
-        attachments work."""
+        attachments work.
+        """
         # Get the negative and positive permissions
         ct = ContentType.objects.get(app_label='attachments',
                                      model='attachment')
@@ -31,42 +87,42 @@ class AttachmentTests(KumaTestCase):
 
         # User with no explicit permission is allowed
         u2 = user(username='test_user2', save=True)
-        ok_(allow_add_attachment_by(u2))
+        self.assertTrue(allow_add_attachment_by(u2))
 
         # User in group with negative permission is disallowed
         u3 = user(username='test_user3', save=True)
         u3.groups = [g1]
         u3.save()
-        ok_(not allow_add_attachment_by(u3))
+        self.assertTrue(not allow_add_attachment_by(u3))
 
         # Superusers can do anything, despite group perms
         u1 = user(username='test_super', is_superuser=True, save=True)
         u1.groups = [g1]
         u1.save()
-        ok_(allow_add_attachment_by(u1))
+        self.assertTrue(allow_add_attachment_by(u1))
 
         # User with negative permission is disallowed
         u4 = user(username='test_user4', save=True)
         u4.user_permissions.add(p1)
         u4.save()
-        ok_(not allow_add_attachment_by(u4))
+        self.assertTrue(not allow_add_attachment_by(u4))
 
         # User with positive permission overrides group
         u5 = user(username='test_user5', save=True)
         u5.groups = [g1]
         u5.user_permissions.add(p2)
         u5.save()
-        ok_(allow_add_attachment_by(u5))
+        self.assertTrue(allow_add_attachment_by(u5))
 
         # Group with positive permission takes priority
         u6 = user(username='test_user6', save=True)
         u6.groups = [g1, g2]
         u6.save()
-        ok_(allow_add_attachment_by(u6))
+        self.assertTrue(allow_add_attachment_by(u6))
 
         # positive permission takes priority, period.
         u7 = user(username='test_user7', save=True)
         u7.user_permissions.add(p1)
         u7.user_permissions.add(p2)
         u7.save()
-        ok_(allow_add_attachment_by(u7))
+        self.assertTrue(allow_add_attachment_by(u7))

@@ -144,10 +144,7 @@ class AttachmentRevision(models.Model):
             self.make_current()
 
     def delete(self, username=None, *args, **kwargs):
-        if username is None:
-            trash_item = None
-        else:
-            trash_item = self.trash(username=username)
+        trash_item = self.trash(username=username)
         super(AttachmentRevision, self).delete(*args, **kwargs)
         return trash_item
 
