@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-17 11:03+0000\n"
+"PO-Revision-Date: 2016-02-17 11:24+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2111,14 +2111,14 @@ msgstr "Pembuatan Profil Dimatikan"
 
 #: kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
-msgstr ""
+msgstr "Mohon maaf, tetapi pembuatan profil saat ini sedang dimatikan."
 
 #: kuma/users/jinja2/account/verification_sent.html:3
 #: kuma/users/jinja2/account/verification_sent.html:7
 #: kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr ""
+msgstr "Mohon Konfirmasi Alamat Surel Anda"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid ""
@@ -2126,6 +2126,9 @@ msgid ""
 "finalize the signup process. Please contact us if you do not receive it "
 "within a few minutes."
 msgstr ""
+"Kami telah mengirim email pada anda untuk melakukan konfirmasi. Ikuti tautan"
+" yang tersedia untuk menyelesaikan proses pendaftaran. Silahkan hubungi kami"
+" jika anda tidak menerimanya dalam beberapa menit."
 
 #: kuma/users/jinja2/account/verified_email_required.html:9
 msgid ""
@@ -2133,6 +2136,9 @@ msgid ""
 "be. For this purpose, we require that you confirm ownership of your email "
 "address."
 msgstr ""
+"Pada bagian situs ini diperlukan konfirmasi bahwa anda adalah siapa yang "
+"anda sebutkan. Untuk tujuan ini, kami meminta anda mengkonfirmasi alamat "
+"surel anda."
 
 #: kuma/users/jinja2/account/verified_email_required.html:13
 msgid ""
@@ -2140,6 +2146,9 @@ msgid ""
 "inside this email. Please contact us if you do not receive it within a few "
 "minutes."
 msgstr ""
+"Kami telah mengirim email pada anda untuk mengkonfirmasi. Silakan mengklik "
+"pada tautan di dalam surel ini. Mohon hubungi kami jika anda tidak "
+"menerimanya dalam beberapa menit."
 
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
@@ -2147,53 +2156,55 @@ msgid ""
 "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
 "email address</a>."
 msgstr ""
+"<strong>Catatan:</strong> anda masih dapat <a "
+"href=\"%(email_url)s\">mengubah alamat surel</a>."
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "Catatan"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr ""
+msgstr "anda telah masuk sebagai %(user_display)."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "OpenID Masuk"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3
 #: kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr ""
+msgstr "Akun Masuk Gagal"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
-msgstr ""
+msgstr "Kesalahan terjadi saat berusaha masuk dengan akun anda."
 
 #: kuma/users/jinja2/socialaccount/connections.html:3
 msgid "Account Connections"
-msgstr ""
+msgstr "Hubungan Akun"
 
 #: kuma/users/jinja2/socialaccount/connections.html:6
 #: kuma/users/jinja2/users/user_detail.html:55
 msgid "Account connections"
-msgstr ""
+msgstr "Hubungan akun"
 
 #: kuma/users/jinja2/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
-msgstr ""
+msgstr "Anda dapat masuk ke profil anda menggunakan salah satu dari:"
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
-msgstr ""
+msgstr "Terputus"
 
 #: kuma/users/jinja2/socialaccount/connections.html:58
 msgid "You have no connected accounts."
-msgstr ""
+msgstr "Anda tidak memiliki akun yang tersambung."
 
 #: kuma/users/jinja2/socialaccount/connections.html:61
 msgid "Connect a new account"
-msgstr ""
+msgstr "Hubungkan akun baru"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:7
@@ -2207,6 +2218,9 @@ msgid ""
 "accounts. If this was a mistake, please proceed to <a "
 "href=\"%(login_url)s\">sign in</a>."
 msgstr ""
+"Anda memutuskan untuk membatalkan masuk ke situs kami menggunakan salah satu"
+" akun yang ada. Jika ini adalah sebuah kesalahan, harap lanjutkan untuk <a "
+"href=\"%(login_url)s\">masuk</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:4
 #: kuma/users/jinja2/socialaccount/signup.html:26
