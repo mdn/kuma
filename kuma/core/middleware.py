@@ -55,7 +55,10 @@ class LocaleURLMiddleware(object):
 
         request.path_info = '/' + prefixer.shortened_path
         request.LANGUAGE_CODE = prefixer.locale or settings.LANGUAGE_CODE
-        translation.activate(prefixer.locale)
+        # prefixer.locale can be '', but we need a real locale code to activate
+        # otherwise the request uses the previously handled request's
+        # translations.
+        translation.activate(prefixer.locale or settings.LANGUAGE_CODE)
 
     def process_response(self, request, response):
         """Unset the thread-local var we set during `process_request`."""
