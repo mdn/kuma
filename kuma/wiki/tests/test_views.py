@@ -312,6 +312,14 @@ class ViewTests(UserTestCase, WikiTestCase):
         result = json.loads(resp.content)
         eq_(result, {'error': 'Document does not exist.'})
 
+        # Test error json if document is a redirect
+        _make_doc('Old Name', 'Old Name', is_redir=True)
+        redirect_doc_url = reverse('wiki.children', args=['Old Name'],
+                                   locale=settings.WIKI_DEFAULT_LANGUAGE)
+        resp = self.client.get(redirect_doc_url)
+        result = json.loads(resp.content)
+        eq_(result, {'error': 'Document has moved.'})
+
     def test_summary_view(self):
         """The ?summary option should restrict document view to summary"""
         d, r = doc_rev("""
