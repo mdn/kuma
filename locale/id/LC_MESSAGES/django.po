@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-17 03:03+0000\n"
+"PO-Revision-Date: 2016-02-17 03:15+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1076,6 +1076,8 @@ msgid ""
 "The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
 "web developers to come change the world with Mozilla."
 msgstr ""
+"Program Fellowship Mozilla Developer Network (MDN) mengundang pengembang "
+"berkelas dunia untuk mengubah dunia bersama Mozilla."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
@@ -1083,16 +1085,19 @@ msgid ""
 "technologies including HTML, CSS, and APIs for both Web sites and HTML5 "
 "Apps. It also documents Mozilla products, like Firefox OS."
 msgstr ""
+"Mozilla Developer Network (MDN) menyediakan informasi mengenai teknologi Web"
+" Terbuka termasuk HTML, CSS, dan APIs untuk situs Web dan Aplikasi HTML5. "
+"Juga untuk mendokumentasikan produk-produk Mozilla seperti Firefox OS."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr ""
+msgstr "Berbagi pengetahuan <span>untuk Web yang Terbuka</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42
 #: kuma/landing/jinja2/landing/homepage.html:59
 #: kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
-msgstr ""
+msgstr "Mencari dokumen"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
