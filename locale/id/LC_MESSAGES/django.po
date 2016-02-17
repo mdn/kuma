@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-17 10:05+0000\n"
+"PO-Revision-Date: 2016-02-17 11:03+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1306,7 +1306,7 @@ msgstr "Untuk Pengembang, Oleh Pengembang"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr ""
+msgstr "Kotak Kerja Pengembang Web"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
@@ -1326,15 +1326,15 @@ msgstr "Merah"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr ""
+msgstr "Ganti &lt;FOO&gt; dengan"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
-msgstr ""
+msgstr "Tambahkan tombol khusus pada situs anda"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr ""
+msgstr "Kode sumber anda:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
@@ -1344,73 +1344,74 @@ msgstr "Tombol anda akan membawa orang menuju:"
 #: kuma/landing/jinja2/landing/promote_buttons.html:166
 #: kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr ""
+msgstr "Dokumen CSS yang lebih baik untuk Web yang lebih baik di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:163
 #: kuma/landing/jinja2/landing/promote_buttons.html:167
 #: kuma/landing/jinja2/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr ""
+msgstr "Dokumen HTML yang lebih baik untuk Web yang lebih baik di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:164
 #: kuma/landing/jinja2/landing/promote_buttons.html:168
 #: kuma/landing/jinja2/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr ""
+msgstr "Dokumen JavaScript yang lebih baik untuk Web yang lebih baik di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:165
 #: kuma/landing/jinja2/landing/promote_buttons.html:169
 #: kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr ""
+msgstr "Dokumen Web yang lebih baik untuk Web yang lebih baik di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174
 #: kuma/landing/jinja2/landing/promote_buttons.html:178
 #: kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
-msgstr ""
+msgstr "MDN Bertenaga Pengembang untuk dokumen CSS dan lain sebagainya."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175
 #: kuma/landing/jinja2/landing/promote_buttons.html:179
 #: kuma/landing/jinja2/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs and more."
-msgstr ""
+msgstr "MDN Bertenaga Pengembang untuk dokumen HTML dan lain sebagainya."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176
 #: kuma/landing/jinja2/landing/promote_buttons.html:180
 #: kuma/landing/jinja2/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs and more."
 msgstr ""
+"MDN Bertenaga Pengembang untuk dokumen JavaScript dan lain sebagainya."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177
 #: kuma/landing/jinja2/landing/promote_buttons.html:181
 #: kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr ""
+msgstr "MDN Bertenaga Pengembang untuk dokumen Web dan lain sebagainya."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186
 #: kuma/landing/jinja2/landing/promote_buttons.html:190
 #: kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Dokumen CSS oleh pengembang, untuk pengembang di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:187
 #: kuma/landing/jinja2/landing/promote_buttons.html:191
 #: kuma/landing/jinja2/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Dokumen HTML oleh pengembang, untuk pengembang di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:188
 #: kuma/landing/jinja2/landing/promote_buttons.html:192
 #: kuma/landing/jinja2/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Dokumen JavaScript oleh pengembang, untuk pengembang di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:189
 #: kuma/landing/jinja2/landing/promote_buttons.html:193
 #: kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Dokumen Web oleh pengembang, untuk pengembang di MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198
 #: kuma/landing/jinja2/landing/promote_buttons.html:199
@@ -1419,77 +1420,87 @@ msgid ""
 "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript"
 " and other Web standards and open technologies."
 msgstr ""
+"MDN adalah Kotak Peralatan Pengembang Web untuk dokumen dan lain sebagainya "
+"dalam bentuk HTML, CSS, JavaScript dan standar Web dan teknologi terbuka "
+"lainnya."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
-msgstr ""
+msgstr "Tidak dapat mempromosikan lebih dari satu indeks pada saat yang sama."
 
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr ""
+msgstr "Mempromosikan indeks pencarian %."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
-msgstr ""
+msgstr "Mempromosikan indeks pencarian terpilih ke indeks terkini"
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
-msgstr ""
+msgstr "Tidak dapat menurunkan lebih dari satu indeks pada saat yang sama."
 
 #: kuma/search/admin.py:24
 msgid ""
 "Can't demote the index if there is only one. Create and populate a new one "
 "first."
 msgstr ""
+"Tidak dapat menurunkan indeks jika hanya ada satu. Buat dan isilah indeks "
+"terbaru dulu."
 
 #: kuma/search/admin.py:29
 #, python-format
 msgid "Demoted search index %s."
-msgstr ""
+msgstr "Menurunkan indeks pencarian %."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
 msgstr ""
+"Menurunkan indeks pencarian terpilih (otomatis jatuh pada indeks sebelumnya)"
 
 #: kuma/search/admin.py:37
 msgid "Can't populate more than one index at once."
-msgstr ""
+msgstr "Tidak dapat mengisi lebih dari satu indeks pada saat yang sama."
 
 #: kuma/search/admin.py:42
 msgid "Populate selected search index via Celery"
-msgstr ""
+msgstr "Mengisi indeks pencarian terpilih melalui Celery"
 
 #: kuma/search/admin.py:56
 msgid "Is current index?"
-msgstr ""
+msgstr "Apakah ini indeks terkini?"
 
 #: kuma/search/forms.py:17
 #, python-format
 msgid "There is already a successor to the current index %s"
-msgstr ""
+msgstr "Sudah ada pengganti dari indeks terkini %s"
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
 msgstr ""
+"Pencarian saat ini tidak bisa dilakukan. Silakan mencoba lagi dalam beberapa"
+" menit."
 
 #: kuma/search/utils.py:17
 msgid ""
 "Something went wrong with the search query. Please try again in a few "
 "minutes."
 msgstr ""
+"Ada masalah dengan permintaan pencarian. Harap coba lagi dalam beberapa "
+"menit."
 
 #: kuma/search/views.py:95
 msgid "name"
-msgstr ""
+msgstr "nama"
 
 #: kuma/search/views.py:96
 msgid "groupname"
-msgstr ""
+msgstr "kelompok nama"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "Pencarian Tidak Tersedia"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
@@ -1500,7 +1511,7 @@ msgstr "Semua dokumentasi pengembangan seluler"
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr ""
+msgstr "Hasil Pencarian untuk \"%(permintaan)\""
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
@@ -1508,20 +1519,22 @@ msgid ""
 "translated from <a href=\"%(parent_url)s\" "
 "title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 msgstr ""
+"diterjemahkan dari <a href=\"%(parent_url)s\" "
+"title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
-msgstr ""
+msgstr "Pencarian Situs MDN"
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "Hasil"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] ""
+msgstr[0] "%(angka) dokumen ditemukan untuk \"%(query)s\" dalam %(logat_lokal)."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
@@ -1532,12 +1545,14 @@ msgid_plural ""
 "%(count)s documents found for \"%(query)s\" in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
+"%(angka) dokumen ditemukan untuk \"%(pencarian)\" dalam %(logat_lokal) dan "
+"%(logat_lokal_tetap)."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] ""
+msgstr[0] "%(angka) dokumen ditemukan dalam %(logat_lokal)."
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
@@ -1547,18 +1562,19 @@ msgid_plural ""
 "%(count)s documents found in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
+"%(angka) dokumen ditemukan dalam %(logat_lokal) dan %(logat_lokal_tetap)."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] ""
+msgstr[0] "%(angka) dokumen ditemukan untuk \"%(permintaan)\"."
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] ""
+msgstr[0] "%(angka) dokumen ditemukan."
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
@@ -1572,11 +1588,11 @@ msgstr "Memperlihatkan hasil dari %(start)s hingga %(end)s."
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr ""
+msgstr "Cari ulang di %(logat_lokal_tetap) saja"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr ""
+msgstr "Dokumen"
 
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
@@ -1584,11 +1600,12 @@ msgstr "Filter dengan"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
-msgstr ""
+msgstr "Data yang dimasukkan mengandung konten yang cacat."
 
 #: kuma/spam/forms.py:87
 msgid "The submitted data contains invalid content. Please try again."
 msgstr ""
+"Data yang dimasukkan mengandung konten yang cacat. Silakan mencoba kembali."
 
 #: kuma/spam/models.py:10
 msgid "created"
@@ -1600,15 +1617,15 @@ msgstr "Spam"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
-msgstr ""
+msgstr "Ham"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "dikirimkan pada"
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "tipe"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1617,18 +1634,22 @@ msgid ""
 "disconnect this account connect a different one first. To delete your MDN "
 "profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
 msgstr ""
+"Maaf, Anda harus memiliki setidaknya satu account tersambung agar anda dapat"
+" masuk. Untuk memutuskan sambungan akun ini hubungkan akun lain terlebih "
+"dahulu. Untuk menghapus profil MDN anda silakan <a href=\"%(bug_form_url)s\""
+" rel=\"nofollow\">mengajukan bug</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr ""
+msgstr "Sebuah alamat surel tidak dapat digunakan sebagai nama pengguna."
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr ""
+msgstr "Nama pengguna yang anda masukkan sudah ada yang memakai."
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "Pengguna"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1636,27 +1657,30 @@ msgid ""
 "You have completed the first step of <a href=\"%s\">getting started with "
 "MDN</a>"
 msgstr ""
+"Anda telah menyelesaikan langkah pertama untuk <a href=\"%s\">memulai dengan"
+" MDN</a>"
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "algoritma"
 
 #: kuma/users/backends.py:33
 msgid "salt"
-msgstr ""
+msgstr "salt"
 
 #: kuma/users/backends.py:34
 msgid "hash"
-msgstr ""
+msgstr "hash"
 
 #: kuma/users/constants.py:6
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr ""
+"Username hanya dapat mengandung huruf, angka, dan karakter ini: . - _ +"
 
 #: kuma/users/forms.py:23
 msgid "You must agree to the privacy policy."
-msgstr ""
+msgstr "Anda harus menyetujui kebijakan privasi."
 
 #: kuma/users/forms.py:38
 msgid "Plain text"
@@ -1664,11 +1688,11 @@ msgstr "Teks biasa"
 
 #: kuma/users/forms.py:40
 msgid "Send me the newsletter"
-msgstr ""
+msgstr "Kirimi saya newsletter"
 
 #: kuma/users/forms.py:42
 msgid "Preferred format"
-msgstr ""
+msgstr "Format yang disukai"
 
 #: kuma/users/forms.py:47 kuma/users/signup.py:32
 msgid "I agree"
@@ -1688,15 +1712,15 @@ msgstr "Penguji beta"
 
 #: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:81
 msgid "Interests"
-msgstr ""
+msgstr "Minat"
 
 #: kuma/users/forms.py:167
 msgid "Expertise"
-msgstr ""
+msgstr "Keahlian"
 
 #: kuma/users/forms.py:173
 msgid "Username"
-msgstr ""
+msgstr "Nama pengguna"
 
 #: kuma/users/forms.py:180 kuma/users/models.py:136
 #: kuma/users/jinja2/users/user_detail.html:111
@@ -1722,7 +1746,7 @@ msgstr "LinkedIn"
 #: kuma/users/forms.py:225 kuma/users/models.py:141
 #: kuma/users/jinja2/users/user_detail.html:137
 msgid "Mozillians"
-msgstr ""
+msgstr "Mozillians"
 
 #: kuma/users/forms.py:234 kuma/users/models.py:161
 #: kuma/users/jinja2/users/user_detail.html:141
@@ -1732,25 +1756,25 @@ msgstr "Facebook"
 
 #: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
-msgstr ""
+msgstr "Bidang keahlian harus merupakan subset dari minat"
 
 #: kuma/users/forms.py:275
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Bidang ini tidak boleh kosong."
 
 #: kuma/users/forms.py:281
 msgid "Username already in use."
-msgstr ""
+msgstr "Nama ini sudah digunakan."
 
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr ""
+msgstr "%(banned_user) yang dilarang oleh %(banned_by)"
 
 #: kuma/users/models.py:32
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "% (tidak lagi aktif)"
 
 #: kuma/users/models.py:51
 msgid "Language"
@@ -1758,7 +1782,7 @@ msgstr "Bahasa"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
-msgstr ""
+msgstr "Situs Web"
 
 #: kuma/users/models.py:60
 msgid ""
@@ -1778,7 +1802,7 @@ msgstr "Organisasi"
 
 #: kuma/users/models.py:80
 msgid "Location"
-msgstr ""
+msgstr "Lokasi"
 
 #: kuma/users/models.py:85
 msgid "About Me"
@@ -1786,45 +1810,45 @@ msgstr "Tentang Saya"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
-msgstr ""
+msgstr "Nama alias IRC"
 
 #: kuma/users/models.py:94
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27
 #: kuma/wiki/jinja2/wiki/create.html:77 kuma/wiki/jinja2/wiki/edit.html:188
 msgid "Tags"
-msgstr ""
+msgstr "Tag"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
-msgstr ""
+msgstr "Masukkan URL situs web yang sah."
 
 #: kuma/users/models.py:104
 msgid "Enter a valid Twitter URL."
-msgstr ""
+msgstr "Masukkan URL Twitter yang sah."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid GitHub URL."
-msgstr ""
+msgstr "Masukkan URL GitHub yang sah."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid Stack Overflow URL."
-msgstr ""
+msgstr "Masukkan URL Stack Overflow yang valid."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid LinkedIn URL."
-msgstr ""
+msgstr "Masukkan URL LinkedIn yang valid."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid Mozillians URL."
-msgstr ""
+msgstr "Masukkan URL Mozillians yang sah."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Facebook URL."
-msgstr ""
+msgstr "Masukkan URL Facebook yang sah."
 
 #: kuma/users/signup.py:7
 msgid "Username is required."
-msgstr ""
+msgstr "Nama pengguna wajib diisi."
 
 #: kuma/users/signup.py:8
 #, python-format
@@ -1846,11 +1870,11 @@ msgstr ""
 
 #: kuma/users/signup.py:13
 msgid "You must agree to the terms of use."
-msgstr ""
+msgstr "Anda harus menyetujui persyaratan penggunaan."
 
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr ""
+msgstr "Mengambil langkah berikutnya untuk terlibat dalam MDN!"
 
 #: kuma/users/views.py:214
 msgid "Email address"
@@ -1877,13 +1901,13 @@ msgstr "Profil Tidak Aktif"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
-msgstr ""
+msgstr "Profil ini tidak aktif."
 
 #: kuma/users/jinja2/account/email.html:3
 #: kuma/users/jinja2/account/email.html:7
 #: kuma/users/jinja2/users/user_detail.html:57
 msgid "Email addresses"
-msgstr ""
+msgstr "Alamat surel"
 
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
@@ -1896,11 +1920,11 @@ msgstr "Anda juga menambahkan alamat email berikut ini:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "Jadikan yang Utama"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr ""
+msgstr "Kembali Mengirimkan Konfirmasi"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
@@ -1944,10 +1968,12 @@ msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
 "address for user %(user_display)s."
 msgstr ""
+"Harap mengkonfirmasi bahwa <a href=\"mailto:%(email)s\">s % (email)</a> "
+"adalah sebuah alamat email untuk % (user_display) pengguna."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
-msgstr ""
+msgstr "Konfirmasi"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
@@ -1955,6 +1981,9 @@ msgid ""
 "This email confirmation link expired or is invalid. Please <a "
 "href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr ""
+"Tautan konfirmasi surel ini sudah kadaluarsa atau tidak sah. Mohon <a "
+"href=\"%(email_url)s\">mengeluarkan surel permintaan konfirmasi yang "
+"baru</a>."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
@@ -1962,6 +1991,8 @@ msgid ""
 "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
 "email address for user %(user_display)s."
 msgstr ""
+"Harap mengkonfirmasi bahwa <a href=\"mailto:%(email)s\">s % (email)</a> "
+"adalah sebuah alamat email untuk % (user_display) pengguna."
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
@@ -1969,7 +2000,7 @@ msgstr "Masuk"
 
 #: kuma/users/jinja2/account/login.html:11
 msgid "Please sign in"
-msgstr ""
+msgstr "Silakan masuk"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid ""
@@ -1977,10 +2008,13 @@ msgid ""
 "any of the services below. A MDN profile will be created for you if you "
 "don't already have one."
 msgstr ""
+"Untuk berkontribusi, anda harus masuk ke MDN. Anda dapat masuk menggunakan "
+"salah satu layanan di bawah ini. Profil MDN akan dibuat untuk anda jika "
+"belum memilikinya."
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Anda yakin ingin keluar?"
 
 #: kuma/users/jinja2/account/password_change.html:3
 #: kuma/users/jinja2/account/password_change.html:8
@@ -1997,7 +2031,7 @@ msgstr "Ganti Kata Sandi"
 #: kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr ""
+msgstr "Setel Ulang Kata Kunci"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid ""
@@ -2014,16 +2048,20 @@ msgstr "Setel Ulang Kata Sandi"
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
+"Silahkan hubungi kami jika Anda memiliki kesulitan menyetel ulang kata "
+"kunci."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid ""
 "We have sent you an email. Please contact us if you do not receive it within"
 " a few minutes."
 msgstr ""
+"Kami telah mengirimi anda surel. Silakan hubungi kami jika anda tidak "
+"menerimanya dalam beberapa menit."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Token Buruk"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
@@ -2032,41 +2070,44 @@ msgid ""
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
 msgstr ""
+"Tautan untuk menyetel ulang kata kunci tidak sah, barangkali karena telah "
+"digunakan.  Harap meminta <a href=\"%(passwd_reset_url)s\">penyetelan kata "
+"kunci baru</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr ""
+msgstr "Ubah kata kunci"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Kata kunci anda telah diganti."
 
 #: kuma/users/jinja2/account/password_set.html:3
 #: kuma/users/jinja2/account/password_set.html:7
 #: kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
-msgstr ""
+msgstr "Setel Kata Kunci"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr ""
+msgstr "Daftar"
 
 #: kuma/users/jinja2/account/signup.html:8
 #: kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
-msgstr ""
+msgstr "Daftar"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
 msgid ""
 "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
+msgstr "Sudah punya profil? Maka silakan <a href=\"%(login_url)s\">masuk</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 #: kuma/users/jinja2/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
-msgstr ""
+msgstr "Pembuatan Profil Dimatikan"
 
 #: kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
@@ -4018,7 +4059,7 @@ msgstr ""
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
-msgstr ""
+msgstr "Beranda"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
@@ -4046,15 +4087,15 @@ msgstr ""
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 msgid "Load documents"
-msgstr ""
+msgstr "Memuat dokumen"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
-msgstr ""
+msgstr "Harap perbaiki kesalahan di bawah ini."
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "Memuat"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
