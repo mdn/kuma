@@ -262,6 +262,8 @@ def children(request, document_slug, document_locale):
         doc = Document.objects.get(locale=document_locale,
                                    slug=document_slug)
         result = _make_doc_structure(doc, 0, expand, depth)
+        if result is None:
+            result = {'error': 'Document has moved.'}
     except Document.DoesNotExist:
         result = {'error': 'Document does not exist.'}
 
