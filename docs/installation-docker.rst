@@ -28,7 +28,6 @@ Docker setup
 #. Configure the environment variables::
 
         eval "$(docker-machine env kuma)"
-        export COMPOSE_FILE=`pwd`/docker/docker-compose.yml
         export COMPOSE_PROJECT_NAME=kuma  # String prepended to every container.
 
 #. Add the Docker VM to your hosts::
