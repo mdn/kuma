@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-17 11:24+0000\n"
+"PO-Revision-Date: 2016-02-18 02:44+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1504,9 +1504,8 @@ msgstr "Pencarian Tidak Tersedia"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
-#, fuzzy
 msgid "Search Mozilla Developer Network documentation"
-msgstr "Semua dokumentasi pengembangan seluler"
+msgstr "Mencari dokumentasi Mozilla Developer Network"
 
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
@@ -2384,9 +2383,8 @@ msgstr "Sunting"
 #: kuma/users/jinja2/users/user_detail.html:49
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:53
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:57
-#, fuzzy
 msgid "Advanced"
-msgstr "Tingkat Lanjut"
+msgstr "Tingkat lanjut"
 
 #: kuma/users/jinja2/users/user_detail.html:53
 msgid "Manage"
