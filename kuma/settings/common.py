@@ -113,6 +113,7 @@ PLATFORM_NAME = platform.node()
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
 TIME_ZONE = 'US/Pacific'
+USE_TZ = True
 
 # Directory for product-details files.
 PROD_DETAILS_DIR = config('PROD_DETAILS_DIR',
