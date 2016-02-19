@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-19 04:11+0000\n"
+"PO-Revision-Date: 2016-02-19 06:40+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2233,6 +2233,9 @@ msgid ""
 " MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
 "your social account connections.</a>"
 msgstr ""
+"Sudah ada profil dengan alamat surel ini. Untuk menghubungkan Persona dengan"
+" profil MDN anda, <a href=\"%(connections_url)s\">anda perlu masuk dan "
+"mengunjungi koneksi akun sosial anda.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:43
 #, python-format
@@ -2247,6 +2250,10 @@ msgid_plural ""
 "=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, connect "
 "with my MDN profile</a>"
 msgstr[0] ""
+"Sudah ada profil dengan salah satu alamat email ini di bawah ini. Apakah "
+"anda sudah mempunyai profil MDN? <a href=\"%(persona_login_url)s\" class"
+"=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ya, hubungkan "
+"dengan profil MDN saya</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:55
 #, python-format
@@ -2254,6 +2261,9 @@ msgid ""
 "Thanks for signing in to MDN with %(provider_name)s. You have one more step "
 "to join MDN: <strong>create your MDN profile</strong>."
 msgstr ""
+"Terima kasih karena telah mendaftar ke MDN dengan sekian %(provider_name)s. "
+"Anda perlu satu langkah lagi untuk bergabung dengan MDN: <strong>buat profil"
+" MDN anda</strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid ""
@@ -2261,6 +2271,9 @@ msgid ""
 "However, by joining MDN, you'll be able to edit docs and have your own "
 "profile page."
 msgstr ""
+"Anda dapat mengakses segala sesuatu di situs MDN bahkan tanpa profil MDN. "
+"Namun, dengan bergabung di MDN, Anda akan dapat mengedit dokumen dan "
+"memiliki halaman profil Anda sendiri."
 
 #: kuma/users/jinja2/socialaccount/signup.html:68
 msgid ""
@@ -2268,6 +2281,9 @@ msgid ""
 "username will be displayed on MDN to identify any contributions that you "
 "make."
 msgstr ""
+"Untuk mengatur profil MDN, silahkan <strong>pilih nama pengguna</strong>. "
+"Nama pengguna akan ditampilkan di MDN untuk mengidentifikasi setiap "
+"kontribusi yang Anda buat."
 
 #: kuma/users/jinja2/socialaccount/signup.html:74
 msgid ""
@@ -2275,6 +2291,9 @@ msgid ""
 "address</strong>. Your username will be displayed on MDN to identify any "
 "contributions that you make."
 msgstr ""
+"Untuk mengatur profil MDN anda, silakan <strong>pilih nama pengguna dan "
+"alamat surel</strong>. Nama pengguna anda akan ditampilkan di MDN untuk "
+"mengidentifikasi setiap kontribusi yang Anda buat."
 
 #: kuma/users/jinja2/socialaccount/signup.html:82
 #, python-format
@@ -2309,6 +2328,10 @@ msgid ""
 "next=\"%(persona_next_url)s\">Connect your %(provider_name)s account to "
 "it.</a>"
 msgstr ""
+"Sudah ada sebuah profil dengan alamat surel yang dipilih. <a "
+"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Hubungkan akun anda %(provider_name)s dengan "
+"itu.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:155
 #, python-format
@@ -2318,6 +2341,10 @@ msgid ""
 "and will be used according to our <a href=\"%(privacy_url)s\">privacy "
 "policy</a>."
 msgstr ""
+"Alamat surel apa yang harus kami gunakan untuk mengirim pesan terkait MDN "
+"dan notifikasi? Alamat ini tidak <strong>akan</strong> ditampilkan di MDN "
+"dan akan digunakan sesuai <a href=\"%(privacy_url)s\">kebijakan "
+"privasi</a>kami."
 
 #: kuma/users/jinja2/socialaccount/signup.html:170
 #, python-format
