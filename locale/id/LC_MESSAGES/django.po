@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-19 01:24+0000\n"
+"PO-Revision-Date: 2016-02-19 01:51+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3465,11 +3465,11 @@ msgstr "Slug Baru:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
-msgstr ""
+msgstr "Pencarian berdasarkan Judul Dokumen"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
-msgstr ""
+msgstr "Judul Induk"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
@@ -3478,7 +3478,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
-msgstr ""
+msgstr "Pindahkan Laman"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
@@ -3491,7 +3491,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:2
 msgid "Page move requested"
-msgstr ""
+msgstr "Pemindahan laman dimintakan"
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:9
 #, python-format
@@ -3512,20 +3512,20 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
-msgstr ""
+msgstr "Informasi Perubahan"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
-msgstr ""
+msgstr "Perubahan Konten"
 
 #: kuma/wiki/jinja2/wiki/revision.html:69
 msgid "Revision Source"
-msgstr ""
+msgstr "Sumber Perubahan"
 
 #: kuma/wiki/jinja2/wiki/revision.html:76
 #: kuma/wiki/jinja2/wiki/list/revisions.html:70
 msgid "Revert to this revision"
-msgstr ""
+msgstr "Kembalikan ke perubahan ini"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
@@ -3534,7 +3534,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
-msgstr ""
+msgstr "Pilih bahasa tujuan penerjemahan:"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:32
 #, python-format
@@ -3567,7 +3567,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
-msgstr ""
+msgstr "Penerjemahan Konten"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
@@ -3576,11 +3576,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
-msgstr ""
+msgstr "Tampilkan Yang Diberikan"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
-msgstr ""
+msgstr "Lihat Sumber"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
@@ -3599,11 +3599,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:109
 msgid "Translate Tags"
-msgstr ""
+msgstr "Terjemahkan Tag"
 
 #: kuma/wiki/jinja2/wiki/translate.html:118
 msgid "English tags"
-msgstr ""
+msgstr "Tag Bahasa Inggris"
 
 #: kuma/wiki/jinja2/wiki/translate.html:130
 msgid "This document has no tags."
@@ -3616,7 +3616,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:144
 msgid "Version Notes"
-msgstr ""
+msgstr "Versi Catatan"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Localization flags"
@@ -3638,11 +3638,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
-msgstr ""
+msgstr "Tampilkan Artikel:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr ""
+msgstr "Sunting Artikel:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
@@ -3664,40 +3664,40 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical"
-msgstr ""
+msgstr "Teknis"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial"
-msgstr ""
+msgstr "Penyuntingan"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Review completed"
-msgstr ""
+msgstr "Ulasan diselesaikan"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
-msgstr ""
+msgstr "Bahasa"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:29
 msgid "No translations exist for this article."
-msgstr ""
+msgstr "Tidak ada terjemahan yang tersedia untuk artikel ini."
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:33
 msgid "Add a translation"
-msgstr ""
+msgstr "Tambahkan terjemahan"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:43
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:46
 msgid "Watch"
-msgstr ""
+msgstr "Pantau"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "New sub-article"
-msgstr ""
+msgstr "Sub-artikel baru"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
 msgid "Clone this article"
-msgstr ""
+msgstr "Klon artikel ini"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
@@ -3856,7 +3856,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
-msgstr ""
+msgstr "Jenis kesalahan:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
@@ -3864,11 +3864,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
-msgstr ""
+msgstr "Membuat Template"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
-msgstr ""
+msgstr "Menyunting Template"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
@@ -3876,15 +3876,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
-msgstr ""
+msgstr "Sunting Dokumen"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
-msgstr ""
+msgstr "Teks sepenuhnya dengan kesalahan:"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
-msgstr ""
+msgstr "Laman Baru"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
@@ -3979,29 +3979,29 @@ msgstr[0] ""
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
-msgstr ""
+msgstr "Dokumen dengan kesalahan"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
-msgstr ""
+msgstr "Dokumen tingkat atas"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
-msgstr ""
+msgstr "Dokumen tanpa induk"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
-msgstr ""
+msgstr "Seluruh dokumen"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
-msgstr ""
+msgstr "Pembaruan terjemahan diperlukan"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:33
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
-msgstr ""
+msgstr "Tidak ada artikel."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
@@ -4010,7 +4010,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr ""
+msgstr "Dokumen untuk diulas"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
@@ -4053,11 +4053,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
-msgstr ""
+msgstr "Seluruh Tag"
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:18
 msgid "There are no tags."
-msgstr ""
+msgstr "Tidak ada tag."
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
@@ -4124,7 +4124,7 @@ msgstr "Memuat"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
-msgstr ""
+msgstr "Rincian pendaftaran Akismet"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
@@ -4144,7 +4144,7 @@ msgstr ""
 
 #: kuma/wiki/templatetags/jinja_helpers.py:106
 msgid "There was an error generating the content."
-msgstr ""
+msgstr "Terjadi kesalahan dalam memunculkan konten."
 
 #: kuma/wiki/views/delete.py:54
 msgid ""
@@ -4178,13 +4178,15 @@ msgstr ""
 
 #: kuma/wiki/views/edit.py:114
 msgid "Sections may only be edited inline."
-msgstr ""
+msgstr "Seksi ini hanya dapat disunting dalam baris."
 
 #: kuma/wiki/views/misc.py:53
 msgid ""
 "Autosuggest requires a partial title. For a full document index, see the "
 "main page."
 msgstr ""
+"Autosuggest memerlukan sebagian judul. Untuk indeks dokumen sepenuhnya, "
+"lihat laman utama."
 
 #: kuma/wiki/views/misc.py:106
 #, python-format
@@ -4198,11 +4200,11 @@ msgstr ""
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
-msgstr ""
+msgstr "Dokumen telah disunting; silakan mengulasnya."
 
 #: kuma/wiki/views/translate.py:72
 msgid "You cannot translate this document."
-msgstr ""
+msgstr "Anda tidak dapat menerjemahkan dokumen ini."
 
 #: templates/admin/search/index/change_list.html:8
 #, python-format
