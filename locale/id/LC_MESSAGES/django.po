@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-19 01:51+0000\n"
+"PO-Revision-Date: 2016-02-19 02:54+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -4033,23 +4033,23 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
-msgstr ""
+msgstr "Riwayat dari"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
-msgstr ""
+msgstr "Riwayat perubahan untuk:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
-msgstr ""
+msgstr "Bandingkan Terjemahan Terpilih"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Revisions"
-msgstr ""
+msgstr "Bandingkan Perubahan Terpilih"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "This document has no revisions."
-msgstr ""
+msgstr "Dokumen ini tidak memiliki perubahan."
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
