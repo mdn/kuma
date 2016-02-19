@@ -1019,7 +1019,7 @@ msgstr "Didaftarkan sebagai %(submission_type)s"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:81
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr "%(tanggal_kirim) oleh %(pengguna)"
+msgstr "%(sent_date)s oleh %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
 msgid "Resubmit"
@@ -1254,7 +1254,7 @@ msgstr "Berkontribusi pada kode dasar MDN"
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
-msgstr "Memuat %(tanggal) oleh %(pengarang)"
+msgstr "Memuat %(entrydate)s oleh %(authorlink)s"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5
 #: kuma/landing/jinja2/landing/promote_buttons.html:17
@@ -1430,7 +1430,7 @@ msgstr "Tidak dapat mempromosikan lebih dari satu indeks pada saat yang sama."
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr "Mempromosikan indeks pencarian %."
+msgstr "Mempromosikan indeks pencarian %s."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
@@ -1451,7 +1451,7 @@ msgstr ""
 #: kuma/search/admin.py:29
 #, python-format
 msgid "Demoted search index %s."
-msgstr "Menurunkan indeks pencarian %."
+msgstr "Menurunkan indeks pencarian %s."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
@@ -1509,7 +1509,7 @@ msgstr "Mencari dokumentasi Mozilla Developer Network"
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr "Hasil Pencarian untuk \"%(permintaan)\""
+msgstr "Hasil Pencarian untuk \"%(query)s\""
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
@@ -1532,7 +1532,7 @@ msgstr "Hasil"
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] "%(angka) dokumen ditemukan untuk \"%(query)s\" dalam %(logat_lokal)."
+msgstr[0] "%(count)s dokumen ditemukan untuk \"%(query)s\" dalam %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
@@ -1543,14 +1543,14 @@ msgid_plural ""
 "%(count)s documents found for \"%(query)s\" in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
-"%(angka) dokumen ditemukan untuk \"%(pencarian)\" dalam %(logat_lokal) dan "
-"%(logat_lokal_tetap)."
+"%(count)s dokumen ditemukan untuk \"%(query)s\" dalam %(locale_native)s dan "
+"%(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] "%(angka) dokumen ditemukan dalam %(logat_lokal)."
+msgstr[0] "%(count)s dokumen ditemukan dalam %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
@@ -1560,19 +1560,19 @@ msgid_plural ""
 "%(count)s documents found in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
-"%(angka) dokumen ditemukan dalam %(logat_lokal) dan %(logat_lokal_tetap)."
+"%(count)s dokumen ditemukan dalam %(locale_native)s dan %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] "%(angka) dokumen ditemukan untuk \"%(permintaan)\"."
+msgstr[0] "%(count)s dokumen ditemukan untuk \"%(query)s\"."
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] "%(angka) dokumen ditemukan."
+msgstr[0] "%(count)s dokumen ditemukan."
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
@@ -1586,7 +1586,7 @@ msgstr "Memperlihatkan hasil dari %(start)s hingga %(end)s."
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr "Cari ulang di %(logat_lokal_tetap) saja"
+msgstr "Cari ulang di %(default_locale_native)s saja"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
@@ -1767,12 +1767,12 @@ msgstr "Nama ini sudah digunakan."
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr "%(banned_user) yang dilarang oleh %(banned_by)"
+msgstr "%(banned_user)s yang dilarang oleh %(banned_by)s"
 
 #: kuma/users/models.py:32
 #, python-format
 msgid "%s (no longer active)"
-msgstr "% (tidak lagi aktif)"
+msgstr "%s (tidak lagi aktif)"
 
 #: kuma/users/models.py:51
 msgid "Language"
@@ -2164,7 +2164,7 @@ msgstr "Catatan"
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr "anda telah masuk sebagai %(user_display)."
+msgstr "anda telah masuk sebagai %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
