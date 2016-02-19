@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-18 02:44+0000\n"
+"PO-Revision-Date: 2016-02-19 01:24+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2340,7 +2340,7 @@ msgstr "Telah masuk dengan GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with Persona"
-msgstr ""
+msgstr "Terhubung dengan Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with Persona"
@@ -2348,11 +2348,11 @@ msgstr "Masuk dengan Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
-msgstr ""
+msgstr "Terhubung dengan GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
 msgid "Sign in with GitHub"
-msgstr ""
+msgstr "Masuk dengan GitHub"
 
 #: kuma/users/jinja2/users/apps_newsletter.html:14
 #, python-format
@@ -2363,11 +2363,11 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
-msgstr ""
+msgstr "Anda Telah Dicekal"
 
 #: kuma/users/jinja2/users/user_banned.html:20
 msgid "You have been banned for the following reasons:"
-msgstr ""
+msgstr "Anda telah dicekal karena alasan berikut:"
 
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid ""
@@ -2392,11 +2392,11 @@ msgstr "Kelola"
 
 #: kuma/users/jinja2/users/user_detail.html:56
 msgid "API keys"
-msgstr ""
+msgstr "Kunci API"
 
 #: kuma/users/jinja2/users/user_detail.html:94
 msgid "Areas of Expertise"
-msgstr ""
+msgstr "Bidang Keahlian"
 
 #: kuma/users/jinja2/users/user_detail.html:102
 #, python-format
@@ -2428,7 +2428,7 @@ msgstr "Sunting halaman"
 
 #: kuma/users/jinja2/users/user_detail.html:166
 msgid "View complete diff"
-msgstr ""
+msgstr "Tampilkan diff lengkap"
 
 #: kuma/users/jinja2/users/user_detail.html:167
 #: kuma/wiki/jinja2/wiki/document.html:378
@@ -2483,55 +2483,59 @@ msgstr "Tentang saya"
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "words remaining"
-msgstr ""
+msgstr "kata yang tersisa"
 
 #: kuma/users/jinja2/users/user_edit.html:83
 msgid "Interests (tags)"
-msgstr ""
+msgstr "Minat (tag)"
 
 #: kuma/users/jinja2/users/user_edit.html:84
 msgid ""
 "Separate tags with commas or spaces. Join multi-word tags with double "
 "quotes, like \"web standards\"."
 msgstr ""
+"Pisahkan tag dengan koma atau spasi. Gabungkan tag yang terdiri dari "
+"beberapa kata dengan tanda kutip ganda, misalnya \"standar web\"."
 
 #: kuma/users/jinja2/users/user_edit.html:90
 msgid "Areas of expertise"
-msgstr ""
+msgstr "Bidang keahlian"
 
 #: kuma/users/jinja2/users/user_edit.html:91
 msgid ""
 "Add your interests first, then declare yourself an expert in selected "
 "topics."
 msgstr ""
+"Tambahkan minat anda terlebih dahulu, lalu nyatakan diri anda sebagai ahli "
+"dalam topik terpilih."
 
 #: kuma/users/jinja2/users/user_edit.html:99
 msgid "My Profiles"
-msgstr ""
+msgstr "Profil Saya"
 
 #: kuma/users/jinja2/users/user_edit.html:104
 #: kuma/users/jinja2/users/user_edit.html:122
 msgid "Change"
-msgstr ""
+msgstr "Ubah"
 
 #: kuma/users/jinja2/users/user_edit.html:110
 msgid "Use your Persona account to sign in."
-msgstr ""
+msgstr "Gunakan akun Persona anda untuk masuk."
 
 #: kuma/users/jinja2/users/user_edit.html:130
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "Gunakan akun Github anda untuk masuk."
 
 #: kuma/users/jinja2/users/user_edit.html:151
 #: kuma/users/jinja2/users/user_edit.html:159
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Save Changes"
-msgstr ""
+msgstr "Simpan Perubahan"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
 msgid "Hi %(username)s!"
-msgstr ""
+msgstr "Hai %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
@@ -2560,7 +2564,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr ""
+msgstr "Bicaralah pada kami!"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35
@@ -2568,6 +2572,8 @@ msgstr ""
 msgid ""
 "Want to talk to someone about MDN? There are a few ways you can do that:"
 msgstr ""
+"Ingin bicara pada seseorang tentang MDN? Ada sejumlah cara untuk "
+"melakukannya:"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:38
 #, python-format
@@ -2625,22 +2631,22 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr ""
+msgstr "Senang kata-kata?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:18
 msgid "Like code?"
-msgstr ""
+msgstr "Senang menulis kode?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:22
 msgid "Like both words and code?"
-msgstr ""
+msgstr "Senang kata-kata dan menulis kode?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:26
 msgid "Want to translate MDN to your language?"
-msgstr ""
+msgstr "Ingin menerjemahkan MDN ke dalam bahasa anda?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
@@ -2687,28 +2693,28 @@ msgstr ""
 
 #: kuma/users/templatetags/jinja_helpers.py:42
 msgid "Banned"
-msgstr ""
+msgstr "Dicekal"
 
 #: kuma/users/templatetags/jinja_helpers.py:49
 msgid "Ban User"
-msgstr ""
+msgstr "Mencekal Pengguna"
 
 #: kuma/users/templatetags/jinja_helpers.py:60
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: kuma/wiki/constants.py:206
 msgid "Technical - code samples, APIs, or technologies"
-msgstr ""
+msgstr "Teknis - contoh kode, API, atau teknologi"
 
 #: kuma/wiki/constants.py:207
 msgid "Editorial - prose, grammar, or content"
-msgstr ""
+msgstr "Editorial - prosa, tata bahasa, atau konten"
 
 #: kuma/wiki/constants.py:212
 msgid "Localization in progress - not completely translated yet."
@@ -2716,7 +2722,7 @@ msgstr ""
 
 #: kuma/wiki/content.py:699
 msgid "Edit section"
-msgstr ""
+msgstr "Sunting seksi"
 
 #: kuma/wiki/events.py:71
 #, python-format
@@ -2733,7 +2739,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
@@ -2780,11 +2786,11 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
-msgstr ""
+msgstr "Tampilkan perbandingan"
 
 #: kuma/wiki/forms.py:30
 msgid "Please provide a title."
-msgstr ""
+msgstr "Tuliskan judul."
 
 #: kuma/wiki/forms.py:31
 #, python-format
@@ -2802,11 +2808,11 @@ msgstr ""
 
 #: kuma/wiki/forms.py:36
 msgid "Name Your Article"
-msgstr ""
+msgstr "Judul Artikel Anda"
 
 #: kuma/wiki/forms.py:37
 msgid "Please provide a slug."
-msgstr ""
+msgstr "Tentukan slug."
 
 #: kuma/wiki/forms.py:38
 msgid "The slug provided is not valid."
@@ -2828,7 +2834,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:44
 msgid "Please provide a summary."
-msgstr ""
+msgstr "Buatlah ringkasan."
 
 #: kuma/wiki/forms.py:45
 #, python-format
@@ -2846,7 +2852,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:50
 msgid "Please provide content."
-msgstr ""
+msgstr "Sediakan konten."
 
 #: kuma/wiki/forms.py:51
 #, python-format
@@ -2871,19 +2877,19 @@ msgstr ""
 
 #: kuma/wiki/forms.py:59
 msgid "Another document with this slug already exists."
-msgstr ""
+msgstr "Dokumen lain dengan slug ini sudah ada."
 
 #: kuma/wiki/forms.py:60
 msgid "Another document with this metadata already exists."
-msgstr ""
+msgstr "Dokumen lain dengan metadata ini sudah ada."
 
 #: kuma/wiki/forms.py:62
 msgid "This document was modified while you were editing it."
-msgstr ""
+msgstr "Dokumen ini dimodifikasi saat anda menyuntingnya."
 
 #: kuma/wiki/forms.py:64
 msgid "Changing this document's slug requires moving it and its children."
-msgstr ""
+msgstr "Mengubah slug dokumen ini memerlukan pemindahannya dan anak-anaknya."
 
 #: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:612
 #: kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68
@@ -2891,45 +2897,45 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:66
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
-msgstr ""
+msgstr "Judul:"
 
 #: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613
 msgid "Title of article"
-msgstr ""
+msgstr "Judul artikel"
 
 #: kuma/wiki/forms.py:89 kuma/wiki/forms.py:172
 #: kuma/wiki/jinja2/wiki/create.html:44
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
-msgstr ""
+msgstr "Slug:"
 
 #: kuma/wiki/forms.py:90 kuma/wiki/forms.py:173
 msgid "Article URL"
-msgstr ""
+msgstr "URL Artikel"
 
 #: kuma/wiki/forms.py:97 kuma/wiki/jinja2/wiki/create.html:48
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
-msgstr ""
+msgstr "Induk:"
 
 #: kuma/wiki/forms.py:183 kuma/wiki/jinja2/wiki/edit.html:74
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:75
 #: kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
-msgstr ""
+msgstr "Tag:"
 
 #: kuma/wiki/forms.py:188 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
-msgstr ""
+msgstr "Kata kunci:"
 
 #: kuma/wiki/forms.py:189
 msgid "Affects search results"
-msgstr ""
+msgstr "Mempengaruhi hasil pencarian"
 
 #: kuma/wiki/forms.py:197
 msgid "Search result summary:"
-msgstr ""
+msgstr "Ringkasan hasil pencarian:"
 
 #: kuma/wiki/forms.py:198
 msgid "Only displayed on search results page"
@@ -2938,23 +2944,23 @@ msgstr ""
 #: kuma/wiki/forms.py:209 kuma/wiki/jinja2/wiki/edit.html:92
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
-msgstr ""
+msgstr "Konten:"
 
 #: kuma/wiki/forms.py:218
 msgid "Comment:"
-msgstr ""
+msgstr "Komentar:"
 
 #: kuma/wiki/forms.py:221
 msgid "Tag this revision for review?"
-msgstr ""
+msgstr "Tandai perubahan ini untuk ulasan?"
 
 #: kuma/wiki/forms.py:228
 msgid "Tag this revision for localization?"
-msgstr ""
+msgstr "Tandai perubahan ini untuk pelokalan?"
 
 #: kuma/wiki/forms.py:619
 msgid "New slug:"
-msgstr ""
+msgstr "Slug baru:"
 
 #: kuma/wiki/forms.py:620
 msgid "New article URL"
@@ -2967,47 +2973,47 @@ msgstr ""
 
 #: kuma/wiki/models.py:123
 msgid "Document Tag"
-msgstr ""
+msgstr "Tag Dokumen"
 
 #: kuma/wiki/models.py:124
 msgid "Document Tags"
-msgstr ""
+msgstr "Tag Dokumen"
 
 #: kuma/wiki/models.py:1502
 msgid "Review Tag"
-msgstr ""
+msgstr "Tag Ulasan"
 
 #: kuma/wiki/models.py:1503
 msgid "Review Tags"
-msgstr ""
+msgstr "Tag Ulasan"
 
 #: kuma/wiki/models.py:1509
 msgid "Localization Tag"
-msgstr ""
+msgstr "Tag Pelokalan"
 
 #: kuma/wiki/models.py:1510
 msgid "Localization Tags"
-msgstr ""
+msgstr "Tag Pelokalan"
 
 #: kuma/wiki/models.py:1543
 msgid "No table of contents"
-msgstr ""
+msgstr "Tidak ada tabel konten"
 
 #: kuma/wiki/models.py:1544
 msgid "All levels"
-msgstr ""
+msgstr "Semua tingkatan"
 
 #: kuma/wiki/models.py:1545
 msgid "H2 and higher"
-msgstr ""
+msgstr "H2 dan lebih tinggi"
 
 #: kuma/wiki/models.py:1546
 msgid "H3 and higher"
-msgstr ""
+msgstr "H3 dan lebih tinggi"
 
 #: kuma/wiki/models.py:1547
 msgid "H4 and higher"
-msgstr ""
+msgstr "H4 dan lebih tinggi"
 
 #: kuma/wiki/models.py:1651
 #, python-format
@@ -3018,23 +3024,23 @@ msgstr ""
 
 #: kuma/wiki/models.py:1778
 msgid "IP address"
-msgstr ""
+msgstr "Alamat IP"
 
 #: kuma/wiki/models.py:1786
 msgid "User-Agent"
-msgstr ""
+msgstr "Agen-Pengguna"
 
 #: kuma/wiki/models.py:1791
 msgid "HTTP Referrer"
-msgstr ""
+msgstr "Perujuk HTTP"
 
 #: kuma/wiki/models.py:1812
 msgid "Revision"
-msgstr ""
+msgstr "Perubahan"
 
 #: kuma/wiki/models.py:1818
 msgid "Akismet submission"
-msgstr ""
+msgstr "Pendaftaran Akismet"
 
 #: kuma/wiki/models.py:1819
 msgid "Akismet submissions"
@@ -3042,11 +3048,11 @@ msgstr ""
 
 #: kuma/wiki/models.py:1862
 msgid "Slug"
-msgstr ""
+msgstr "Slug"
 
 #: kuma/wiki/models.py:1870
 msgid "Document (optional)"
-msgstr ""
+msgstr "Dokumen (opsional)"
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -3062,11 +3068,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
-msgstr ""
+msgstr "Membandingkan Perubahan"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
-msgstr ""
+msgstr "Kembali ke Riwayat"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
 #, python-format
@@ -3076,33 +3082,36 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
 msgstr ""
+"Tidak dapat menghapus laman yang beranak sampai kami memperbaiki bug ini:"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
-msgstr ""
+msgstr "Pencipta"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:20
 msgid "Creation Date"
-msgstr ""
+msgstr "Tanggal Pembuatan"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
 msgid "Last Change By"
-msgstr ""
+msgstr "Terakhir Diubah Oleh"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
 msgid "Last Change Date"
-msgstr ""
+msgstr "Tanggal Perubahan Terakhir"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid ""
 "You are about to delete this document and all of its revisions. Please let "
 "us know why this page should be deleted."
 msgstr ""
+"Anda akan menghapus dokumen ini dan semua perubahannya. Beritahu kami "
+"mengapa laman ini harus dihapus."
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "Yakin ingin melanjutkan?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
 #, python-format
@@ -3119,11 +3128,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:25
 msgid "Content"
-msgstr ""
+msgstr "Konten"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:33
 msgid "Why are you reverting to this revision?"
-msgstr ""
+msgstr "Mengapa anda kembali pada perubahan ini?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
 msgid ""
@@ -3133,23 +3142,23 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
-msgstr ""
+msgstr "Membuat satu Template Baru"
 
 #: kuma/wiki/jinja2/wiki/create.html:8
 msgid "Create a New Article"
-msgstr ""
+msgstr "Membuat sebuah Artikel Baru"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "Create a"
-msgstr ""
+msgstr "Membuat sebuah"
 
 #: kuma/wiki/jinja2/wiki/create.html:32
 msgid "New Document"
-msgstr ""
+msgstr "Dokumen Baru"
 
 #: kuma/wiki/jinja2/wiki/create.html:34 kuma/wiki/jinja2/wiki/edit.html:108
 msgid "Draft"
-msgstr ""
+msgstr "Rancangan"
 
 #: kuma/wiki/jinja2/wiki/create.html:44
 msgid "URL segment that identifies the page"
@@ -3158,7 +3167,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/deletion_log.html:2
 #: kuma/wiki/jinja2/wiki/deletion_log.html:7
 msgid "Document Deleted"
-msgstr ""
+msgstr "Dokumen Dihapus"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:9
 #, python-format
@@ -3167,36 +3176,36 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
-msgstr ""
+msgstr "Sebab Penghapusan"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:18
 msgid "Restore this document"
-msgstr ""
+msgstr "Mengembalikan dokumen ini"
 
 #: kuma/wiki/jinja2/wiki/document.html:167
 msgid "Previous Search Result"
-msgstr ""
+msgstr "Hasil Pencarian Sebelumnya"
 
 #: kuma/wiki/jinja2/wiki/document.html:167
 #: kuma/wiki/jinja2/wiki/document.html:177
 msgid "No Previous Search Result"
-msgstr ""
+msgstr "Tidak Ada Hasil Pencarian Sebelumnya"
 
 #: kuma/wiki/jinja2/wiki/document.html:173
 msgid "Your Search Results"
-msgstr ""
+msgstr "Hasil Pencarian Anda"
 
 #: kuma/wiki/jinja2/wiki/document.html:177
 msgid "Next Search Result"
-msgstr ""
+msgstr "Hasil Pencarian Selanjutnya"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
 msgid "see all contributors"
-msgstr ""
+msgstr "lihat semua kontributor"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
 msgid "hide contributors"
-msgstr ""
+msgstr "menyembunyikan kontributor"
 
 #: kuma/wiki/jinja2/wiki/document.html:185
 #, python-format
@@ -3205,7 +3214,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:210
 msgid "In This Article"
-msgstr ""
+msgstr "Dalam Artikel Ini"
 
 #: kuma/wiki/jinja2/wiki/document.html:232
 #, python-format
@@ -3232,11 +3241,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:265
 msgid "This article is in need of a technical review."
-msgstr ""
+msgstr "Artikel ini memerlukan ulasan teknis."
 
 #: kuma/wiki/jinja2/wiki/document.html:270
 msgid "This article is in need of an editorial review."
-msgstr ""
+msgstr "Artikel ini membutuhkan peninjauan editorial."
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
@@ -3247,7 +3256,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:281
 msgid "This translation is in progress."
-msgstr ""
+msgstr "Penerjemahan ini sedang berlangsung."
 
 #: kuma/wiki/jinja2/wiki/document.html:288
 #, python-format
@@ -3258,7 +3267,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:299
 msgid "This article doesn't have any content yet."
-msgstr ""
+msgstr "Artikel ini belum memiliki konten."
 
 #: kuma/wiki/jinja2/wiki/document.html:302
 #, python-format
@@ -3270,19 +3279,19 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:315
 msgid "This article doesn't have approved content yet."
-msgstr ""
+msgstr "Artikel ini belum memiliki konten yang disetujui."
 
 #: kuma/wiki/jinja2/wiki/document.html:325
 msgid "Document Tags and Contributors"
-msgstr ""
+msgstr "Tag Dokumen dan Kontributor"
 
 #: kuma/wiki/jinja2/wiki/document.html:331
 msgid "Contributors to this page:"
-msgstr ""
+msgstr "Kontributor untuk laman ini:"
 
 #: kuma/wiki/jinja2/wiki/document.html:337
 msgid "Last updated by:"
-msgstr ""
+msgstr "Terakhir diperbarui oleh:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
@@ -3303,7 +3312,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
-msgstr ""
+msgstr "Perubahan Anda"
 
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:42
@@ -3315,15 +3324,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
-msgstr ""
+msgstr "Perubahan Terkini:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:86
 msgid "Search results summary:"
-msgstr ""
+msgstr "Ringkasan hasil pencarian:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:106
 msgid "Edit Page Title and Properties"
-msgstr ""
+msgstr "Menyunting Judul Laman dan Properti"
 
 #: kuma/wiki/jinja2/wiki/edit.html:127
 msgid "Rendering max age:"
@@ -3331,30 +3340,32 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:129
 msgid "Days"
-msgstr ""
+msgstr "Hari"
 
 #: kuma/wiki/jinja2/wiki/edit.html:133
 msgid "Hours"
-msgstr ""
+msgstr "Jam"
 
 #: kuma/wiki/jinja2/wiki/edit.html:137
 msgid "Minutes"
-msgstr ""
+msgstr "Menit"
 
 #: kuma/wiki/jinja2/wiki/edit.html:146
 msgid ""
 "Find the translation source with the lookup below and then click \"Save "
 "Changes.\""
 msgstr ""
+"Menemukan sumber penerjemahan dengan pencarian di bawah ini dan kemudian "
+"klik \"Simpan Perubahan.\""
 
 #: kuma/wiki/jinja2/wiki/edit.html:148
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
-msgstr ""
+msgstr "Pencarian:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:162
 msgid "Thank you for taking the time to improve MDN!"
-msgstr ""
+msgstr "Terima kasih telah meluangkan waktu untuk menyempurnakan MDN!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:164
 #, python-format
@@ -3368,10 +3379,12 @@ msgstr ""
 msgid ""
 "Don't be afraid to break something, you can always revert your changes."
 msgstr ""
+"Jangan khawatir akan merusak sesuatu, anda selalu dapat memulihkan perubahan"
+" yang anda buat."
 
 #: kuma/wiki/jinja2/wiki/edit.html:169
 msgid "Have fun and be proud of your contribution!"
-msgstr ""
+msgstr "Bersenang-senang dan berbanggalah atas kontribusi anda!"
 
 #: kuma/wiki/jinja2/wiki/edit.html:188
 msgid "Learn how to tag an article"
@@ -3440,15 +3453,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
-msgstr ""
+msgstr "Slug Terkini:"
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
-msgstr ""
+msgstr "URL Pratinjau:"
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 msgid "New Slug:"
-msgstr ""
+msgstr "Slug Baru:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
