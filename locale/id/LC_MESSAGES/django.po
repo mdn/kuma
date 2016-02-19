@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-19 07:30+0000\n"
+"PO-Revision-Date: 2016-02-19 09:03+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2352,6 +2352,8 @@ msgid ""
 "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
 "href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr ""
+"untuk <a href=\"%(terms_url)s\">Syarat</a> dan <a "
+"href=\"%(privacy_url)s\">Ketentuan Mozilla</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:179
 msgid "Create my MDN profile"
@@ -2387,6 +2389,8 @@ msgid ""
 "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the "
 "newsletter."
 msgstr ""
+"<a href=\"%(profile_edit_url)s\">Sunting profil anda</a> untuk bergabung "
+"dengan newsletter."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2401,6 +2405,8 @@ msgid ""
 "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click "
 "here</a> to appeal this ban.</p>"
 msgstr ""
+"<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik di "
+"sini</a> untuk mengangkat pencekalan ini.</p>"
 
 #: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:718
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:40
@@ -2468,6 +2474,8 @@ msgid ""
 "<p class=\"none\">You haven't contributed to any MDN docs. <a "
 "href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
+"<p class=\"none\">Anda belum berkontribusi pada dokumen MDN apapun. <a "
+"href=\"%(docs_url)s\">Bergabunglah!</a></p>"
 
 #: kuma/users/jinja2/users/user_detail.html:183
 msgid "This user has no activity."
@@ -2488,6 +2496,7 @@ msgstr "Tampilkan profil"
 #: kuma/users/jinja2/users/user_edit.html:50
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr ""
+"Anda menyunting profil yang berbeda dengan milik anda. Berhati-hatilah!"
 
 #: kuma/users/jinja2/users/user_edit.html:61
 msgid ""
@@ -2495,6 +2504,9 @@ msgid ""
 "new features first and we send the occasional email asking for help testing "
 "specific things."
 msgstr ""
+"Kami ingin mendapatkan masukan anda atas perubahan dalam situs! Pengetes "
+"beta akan mendapatkan akses terhadap fitur baru terlebih dahulu dan kami "
+"mengirimkan surel secara berkala meminta anda mengetes hal-hal tertentu."
 
 #: kuma/users/jinja2/users/user_edit.html:64
 msgid "Primary Email"
@@ -2571,6 +2583,9 @@ msgid ""
 "Network (MDN)</a> - a community making great resources for developers like "
 "you."
 msgstr ""
+"Terima karena telah membuat profil di <a href=\"%(mdn_link)s\">Mozilla "
+"Developer Network (MDN)</a> - sebuah komunitas memberikan sumber yang besar "
+"bagi pengembang seperti anda."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
@@ -2578,6 +2593,8 @@ msgid ""
 "You've completed the first step of <a href=\"%(started_link)s\">Getting "
 "Started on MDN</a> by creating a profile."
 msgstr ""
+"Anda telah menyelesaikan langkah pertama untuk <a "
+"href=\"%(started_link)s\">Memulai di MDN</a> dengan membuat profil."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:21
 #, python-format
@@ -2588,6 +2605,12 @@ msgid ""
 "href=\"%(both_link)s\">like both words and code</a>, or you want to <a "
 "href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
+"Sekarang, lanjutkan dengan memilih tugas di MDN, dan mengerjakannya! Kami "
+"memiliki sejumlah tugas pembuka yang dapat anda pilih, jika anda <a "
+"href=\"%(words_link)s\">senang kata-kata</a>, <a "
+"href=\"%(code_link)s\">senang emnulis kode</a>, <a "
+"href=\"%(both_link)s\">senang keduanya</a>, atau anda ingin <a "
+"href=\"%(translate_link)s\">menerjemahkan MDN ke dalam bahasa anda</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
