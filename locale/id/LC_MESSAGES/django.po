@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-20 04:41+0000\n"
+"PO-Revision-Date: 2016-02-20 05:18+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3747,7 +3747,7 @@ msgstr "Sembunyikan %(locale)s"
 #: kuma/wiki/jinja2/wiki/translate.html:99
 #, python-format
 msgid "%(locale)s translation:"
-msgstr ""
+msgstr "terjemahan %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:109
 msgid "Translate Tags"
@@ -3759,12 +3759,12 @@ msgstr "Tag Bahasa Inggris"
 
 #: kuma/wiki/jinja2/wiki/translate.html:130
 msgid "This document has no tags."
-msgstr ""
+msgstr "Dokumen ini tidak memiliki penanda."
 
 #: kuma/wiki/jinja2/wiki/translate.html:137
 #, python-format
 msgid "%(locale)s tags"
-msgstr ""
+msgstr "tag %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:144
 msgid "Version Notes"
@@ -3772,21 +3772,21 @@ msgstr "Versi Catatan"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Localization flags"
-msgstr ""
+msgstr "Tanda pelokalan"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:4
 #, python-format
 msgid "%(creator)s changed %(document_title)s."
-msgstr ""
+msgstr "%(creator)s mengubah %(document_title)s."
 
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
 msgid "View User Profile:"
-msgstr ""
+msgstr "Tampilkan Profil Pengguna:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
-msgstr ""
+msgstr "Bandingkan dengan MDN:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:23
 msgid "View Article:"
@@ -3798,21 +3798,22 @@ msgstr "Sunting Artikel:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr ""
+msgstr "Riwayat Artikel:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
 msgstr ""
+"Anda mendaftarkan penyuntingan pada: %(title)s dan seluruh sub-artikelnya."
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:44
 #, python-format
 msgid "You are subscribed to edits on: %(title)s."
-msgstr ""
+msgstr "Anda mendaftar untuk penyuntingan pada: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "The following reviews have been requested:"
-msgstr ""
+msgstr "Ulasan berikut ini telah diminta:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical"
@@ -3853,45 +3854,45 @@ msgstr "Klon artikel ini"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
-msgstr ""
+msgstr "Pindahkan artikel ini"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "View in admin"
-msgstr ""
+msgstr "Lihat dalam admin"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:78
 msgid "Delete this article"
-msgstr ""
+msgstr "Hapus artikel ini"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
-msgstr ""
+msgstr "Zona mengelola konten"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:86
 msgid "Convert to content zone"
-msgstr ""
+msgstr "Zona untuk mengkonversi jadi konten"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
 msgid "Print this article"
-msgstr ""
+msgstr "Cetak artikel ini"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
-msgstr ""
+msgstr "reremah"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
-msgstr ""
+msgstr "Lihat juga"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
-msgstr ""
+msgstr "Ubah Revisi"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, python-format
 msgid "Revision %(num)s:"
-msgstr ""
+msgstr "Perubahan %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:82
 #: kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
@@ -3899,19 +3900,21 @@ msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
 msgstr ""
+"Server ini merender isi pembanding. Silakan perbarui laman ini dalam "
+"beberapa menit."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:107
 msgid "Share:"
-msgstr ""
+msgstr "Bagikan:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:111
 msgid "Google+"
-msgstr ""
+msgstr "Google+"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr ""
+msgstr "Berlangganan %(title)s dan seluruh sub-artikelnya"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:129
 #, python-format
