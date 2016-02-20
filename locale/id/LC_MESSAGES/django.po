@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-20 01:44+0000\n"
+"PO-Revision-Date: 2016-02-20 04:41+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3673,7 +3673,7 @@ msgstr "Kembalikan ke perubahan ini"
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
 #, python-format
 msgid "Select language | %(document)s"
-msgstr ""
+msgstr "Pilih bahasa | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
@@ -3687,6 +3687,10 @@ msgid ""
 "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"Konten tersedia di bawah lisensi khusus untuk proyek ini. &middot; <a "
+"href=\"%(about_url)s\">Tentang MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Kontribusi pada kode</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Kebijakan privasi</a>"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:43
 #, python-format
@@ -3697,16 +3701,21 @@ msgid ""
 "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"&copy; 2005-2015 Mozilla Developer Network dan kontributor individual<br /> "
+"Konten tersedia di bawah lisensi khusus untuk proyek ini. &middot; <a "
+"href=\"%(about_url)s\">About MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Berkontribusi untuk kode</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Kebijakan privasi</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
 msgid "Translate Article | %(document)s"
-msgstr ""
+msgstr "Menerjemahkan Artikel | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:33
 #, python-format
 msgid "Translating article to %(locale)s"
-msgstr ""
+msgstr "Menerjemahkan artikel menjadi %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
@@ -3715,7 +3724,7 @@ msgstr "Penerjemahan Konten"
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
 msgid "Approved %(locale)s version"
-msgstr ""
+msgstr "Versi yang %(locale)s disetujui"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
@@ -3728,12 +3737,12 @@ msgstr "Lihat Sumber"
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Show %(locale)s"
-msgstr ""
+msgstr "Tampilkan %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Hide %(locale)s"
-msgstr ""
+msgstr "Sembunyikan %(locale)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:99
 #, python-format
