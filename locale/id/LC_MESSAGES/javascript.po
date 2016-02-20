@@ -1,100 +1,102 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-02-20 00:32+0000\n"
+"Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.6.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pontoon\n"
 
 #: kuma/static/js/components.js:75
 msgid "Close submenu"
-msgstr ""
+msgstr "Tutup submenu"
 
 #: kuma/static/js/components.js:536
 msgid "Close notification"
-msgstr ""
+msgstr "Tutup notifikasi"
 
 #: kuma/static/js/helpfulness.js:32
 msgid "Did this page help you?"
-msgstr ""
+msgstr "Apakah halaman ini membantu anda?"
 
 #: kuma/static/js/helpfulness.js:34
 msgid "Yes"
-msgstr ""
+msgstr "Ya"
 
 #: kuma/static/js/helpfulness.js:36
 msgid "No"
-msgstr ""
+msgstr "Tidak"
 
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
-msgstr ""
+msgstr "Jangan pernah bertanya pada saya lagi"
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
-msgstr ""
+msgstr "Menerjemahkannya ke dalam bahasa saya"
 
 #: kuma/static/js/helpfulness.js:60
 msgid "Make explanations clearer"
-msgstr ""
+msgstr "Membuat penjelasan lebih jelas"
 
 #: kuma/static/js/helpfulness.js:61
 msgid "Add more details"
-msgstr ""
+msgstr "Tambahkan lebih banyak detail"
 
 #: kuma/static/js/helpfulness.js:62
 msgid "Fix incorrect information"
-msgstr ""
+msgstr "Memperbaiki kesalahan informasi"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
-msgstr ""
+msgstr "Tambah atau tingkatkan contoh"
 
 #: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
-msgstr ""
+msgstr "Pencarian saya harus mengarahkan kepada artikel yang berbeda"
 
 #: kuma/static/js/helpfulness.js:65
 msgid "Something else"
-msgstr ""
+msgstr "Lainnya"
 
 #: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."
-msgstr ""
+msgstr "Pilih satu..."
 
 #: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
-msgstr ""
+msgstr "Uh oh. Bagaimana membuat ini lebih baik?"
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
-msgstr ""
+msgstr "Terima kasih! Kami akan memperbaiki ini."
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "Tidak ada pilihan"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "Terpilih: "
 
 #: kuma/static/js/users.js:96
 msgid "New interest..."
-msgstr ""
+msgstr "Minat baru..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "Catatan implementasi terbuka"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "Buka"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
@@ -161,7 +163,8 @@ msgid "Search Stack Overflow"
 msgstr ""
 
 #: kuma/static/js/wiki.js:655
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 
 #: kuma/static/js/wiki.js:870
@@ -176,7 +179,8 @@ msgstr ""
 msgid "No attachments available"
 msgstr ""
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr ""
 
@@ -196,7 +200,8 @@ msgstr ""
 msgid "MDN Redirect"
 msgstr ""
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr ""
 

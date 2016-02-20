@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-19 10:03+0000\n"
+"PO-Revision-Date: 2016-02-20 00:58+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1532,7 +1532,8 @@ msgstr "Hasil"
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] "%(count)s dokumen ditemukan untuk \"%(query)s\" dalam %(locale_native)s."
+msgstr[0] ""
+"%(count)s dokumen ditemukan untuk \"%(query)s\" dalam %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
@@ -1560,7 +1561,8 @@ msgid_plural ""
 "%(count)s documents found in %(locale_native)s and "
 "%(default_locale_native)s."
 msgstr[0] ""
-"%(count)s dokumen ditemukan dalam %(locale_native)s dan %(default_locale_native)s."
+"%(count)s dokumen ditemukan dalam %(locale_native)s dan "
+"%(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
@@ -3154,11 +3156,13 @@ msgid ""
 "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d "
 "into index %(index)s.total"
 msgstr ""
+"Membuat indeks %(total)d dokumen ke dalam %(total_chunks)d potongan "
+"berukuran %(size)d ke dalam indeks %(index)s.total"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr ""
+msgstr "Membandingkan Perubahan | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
@@ -3210,7 +3214,7 @@ msgstr "Yakin ingin melanjutkan?"
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
 #, python-format
 msgid "Revert Revision | %(document)s"
-msgstr ""
+msgstr "Mengembalikan Perubahan | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
@@ -3233,6 +3237,8 @@ msgid ""
 "You are about to revert the document to this revision. Click \"revert\" to "
 "revert to the content&nbsp;above."
 msgstr ""
+"Anda akan mengembalikan perubahan dokumen ini. Klik \"kembali\" untuk "
+"kembali ke konten&nbsp;di atas."
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
@@ -3256,7 +3262,7 @@ msgstr "Rancangan"
 
 #: kuma/wiki/jinja2/wiki/create.html:44
 msgid "URL segment that identifies the page"
-msgstr ""
+msgstr "Segmen URL yang mengidentifikasi laman"
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:2
 #: kuma/wiki/jinja2/wiki/deletion_log.html:7
@@ -3266,7 +3272,7 @@ msgstr "Dokumen Dihapus"
 #: kuma/wiki/jinja2/wiki/deletion_log.html:9
 #, python-format
 msgid "This document was deleted on %(when)s."
-msgstr ""
+msgstr "Dokumen ini dihapus pada %(when)s."
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
@@ -3304,7 +3310,7 @@ msgstr "menyembunyikan kontributor"
 #: kuma/wiki/jinja2/wiki/document.html:185
 #, python-format
 msgid "View profile: %(username)s"
-msgstr ""
+msgstr "Lihat profil: %(username)s"
 
 #: kuma/wiki/jinja2/wiki/document.html:210
 msgid "In This Article"
@@ -3316,6 +3322,9 @@ msgid ""
 "This document is being rendered for the first time by the system. Please <a "
 "href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
+"Dokumen ini sedang dirender untuk pertama kalinya oleh sistem. Silakan <a "
+"href=\"%(url)s\">memuat laman ini</a> kembali dalam beberapa menit untuk "
+"melihat konten sepenuhnya."
 
 #: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
@@ -3324,6 +3333,10 @@ msgid ""
 "progress</abbr>. If the content below seems stale or if something is "
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
+"Pembaruan pada dokumen ini <abbr title=\"%(started_at)s\">tengah "
+"berlangsung</abbr>. Jika konten di bawah ini tampak basi atau sesuatu "
+"menghilang, silakan <a href=\"%(url)s\">memuat laman ini</a> dalam beberapa "
+"menit."
 
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
@@ -3332,6 +3345,10 @@ msgid ""
 "scheduled</abbr>. If the content below seems stale or if something is "
 "missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
 msgstr ""
+"Pembaruan pada dokumen ini <abbr title=\"%(scheduled_at)s\">telah "
+"dijadwalkan</abbr>. Jika konten di bawah ini tampak basi atau ada yang "
+"hilang, silakan <a href=\"%(url)s\">muat kembali laman ini</a> dalam "
+"beberapa menit."
 
 #: kuma/wiki/jinja2/wiki/document.html:265
 msgid "This article is in need of a technical review."
@@ -3347,6 +3364,9 @@ msgid ""
 "This translation is incomplete. Please help <a "
 "href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
+"Terjemahan ini belum lengkap. Mohon bantu <a "
+"href=\"%(translate_url)s\">menerjemahkan artikel ini</a> dari Bahasa "
+"Inggris."
 
 #: kuma/wiki/jinja2/wiki/document.html:281
 msgid "This translation is in progress."
@@ -3358,6 +3378,9 @@ msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
 "yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
+"Relawan kami belum menerjemahkan artikel ini ke dalam <bdi>%(locale)s</bdi> "
+". <a href=\"%(help_link)s\">Bergabunglah dan bantu kami menyelesaikan "
+"pekerjaan ini!</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:299
 msgid "This article doesn't have any content yet."
@@ -3370,6 +3393,9 @@ msgid ""
 "use %(title)s</a> to see example use cases and how many pages use this "
 "macro."
 msgstr ""
+"Mencari <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">laman yang "
+"menggunakan %(title)s</a> untuk melihat contoh kasus dan berapa banyak laman"
+" menggunakan makro ini."
 
 #: kuma/wiki/jinja2/wiki/document.html:315
 msgid "This article doesn't have approved content yet."
@@ -3390,12 +3416,12 @@ msgstr "Terakhir diperbarui oleh:"
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
 msgid "%(title)s | Edit Template"
-msgstr ""
+msgstr "%(title)s | Sunting Template"
 
 #: kuma/wiki/jinja2/wiki/edit.html:8
 #, python-format
 msgid "%(title)s | Edit Article"
-msgstr ""
+msgstr "%(title)s | Sunting Artikel"
 
 #: kuma/wiki/jinja2/wiki/edit.html:31
 msgid ""
@@ -3403,6 +3429,10 @@ msgid ""
 "since you started editing. You may save again, but try to resolve any "
 "conflicts by hand so that the changes made since you started are not lost."
 msgstr ""
+"Harap meninjau perbedaan antara perubahan yang anda buat dan perubahan yang "
+"tersimpan sejak anda mulai menyunting. Anda dapat menyimpan lagi, namun "
+"cobalah untuk memecahkan perbedaan yang ada sehingga perubahan yang anda "
+"buat sejak memulai tidak hilang."
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
@@ -3415,6 +3445,8 @@ msgstr "Perubahan Anda"
 msgid ""
 "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
 msgstr ""
+"Perbaikan %(id)s oleh <a href=\"%(user_profile_url)s\">%(user)s</a> pada "
+"%(date)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
@@ -3430,7 +3462,7 @@ msgstr "Menyunting Judul Laman dan Properti"
 
 #: kuma/wiki/jinja2/wiki/edit.html:127
 msgid "Rendering max age:"
-msgstr ""
+msgstr "Usia render maksimal:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:129
 msgid "Days"
@@ -3468,6 +3500,9 @@ msgid ""
 "to common editing questions within our <a target=\"_blank\" "
 "href=\"%(url)s\">Editor Guide</a>."
 msgstr ""
+"Sepertinya ini kontribusi pertama anda di MDN. Anda dapat menemukan jawaban "
+"untuk pertanyaan penyuntingan pada umumnya <a target=\"_blank\" "
+"href=\"%(url)s\">Panduan Penyunting</a>."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid ""
@@ -3954,7 +3989,7 @@ msgstr "Jenis kesalahan:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
-msgstr ""
+msgstr "Dalam makro:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
@@ -3966,7 +4001,7 @@ msgstr "Menyunting Template"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
-msgstr ""
+msgstr "Mengurai makro:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
@@ -4162,7 +4197,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr ""
+msgstr "Artikel yang ditandai dengan tag pelokalan apapun"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:15
 #, python-format
@@ -4175,7 +4210,7 @@ msgstr[0] ""
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
 msgid "Purge documents"
-msgstr ""
+msgstr "Membersihkan dokumen"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
@@ -4197,12 +4232,12 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
-msgstr ""
+msgstr "\"Memuat dokumen\""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
 msgid "Add %(name)s"
-msgstr ""
+msgstr "Tambahkan %(nama)s"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
@@ -4249,6 +4284,8 @@ msgid ""
 "Document already exists. Note: You cannot revert a document that has been "
 "moved until you delete its redirect."
 msgstr ""
+"Dokumen sudah ada. Catatan: anda tidak bisa mengembalikan dokumen yang telah"
+" dipindahkan sampai anda menghapus pengalihannya."
 
 #: kuma/wiki/views/document.py:600
 #, python-format
