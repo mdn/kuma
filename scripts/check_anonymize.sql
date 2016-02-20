@@ -1,9 +1,7 @@
 use developer_mozilla_org;
-SELECT COUNT(*) AS actioncounters_actioncounterunique_should_be_zero FROM actioncounters_actioncounterunique;
 SELECT COUNT(*) AS auth_message_should_be_zero FROM auth_message;
 SELECT COUNT(*) AS authkeys_key_should_be_zero FROM authkeys_key;
 SELECT COUNT(*) AS authkeys_keyaction_should_be_zero FROM authkeys_keyaction;
-SELECT COUNT(*) AS contentflagging_contentflag_should_be_zero FROM contentflagging_contentflag;
 SELECT COUNT(*) AS django_admin_log_should_be_zero FROM django_admin_log;
 SELECT COUNT(*) AS django_session_should_be_zero FROM django_session;
 SELECT COUNT(*) AS djcelery_crontabschedule_should_be_zero FROM djcelery_crontabschedule;
