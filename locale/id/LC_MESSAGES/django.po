@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-21 01:05+0000\n"
+"PO-Revision-Date: 2016-02-21 01:35+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3993,15 +3993,18 @@ msgid_plural ""
 "There were scripting errors on this page. While those are being addressed by"
 " site editors, you can view partial content below."
 msgstr[0] ""
+"Terjadi kesalahan penulisan di laman ini. Saat ini sedang ditangani oleh "
+"para penyunting situs, untuk sementara anda dapat melihat sebagian isi di "
+"bawah ini."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
-msgstr ""
+msgstr "Menyembunyikan kesalahan informasi"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] ""
+msgstr[0] "Informasi lebih lanjut mengenai kesalahan ini"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid ""
@@ -4009,6 +4012,10 @@ msgid ""
 "href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
 "troubleshooting guide</a> as a starting point."
 msgstr ""
+"Siapapun yang memiliki profil MDN dapat menyunting dokumen atau memperbaiki "
+"kesalahan. Gunakan <a "
+"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript panduan"
+" mengatasi masalah</a> sebagai titik awal."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -4086,6 +4093,11 @@ msgid ""
 "deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
 "belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
+"Pengajuan anda menyertakan konten yang mungkin tidak akan cocok untuk MDN. "
+"Percobaan berulang kali untuk mengirimkan bahan yang tidak cocok dapat "
+"mengakibatkan akun anda dinonaktifkan. Lihat panduan kami “<a "
+"href=\"%(does_this_belong_url)s\">Apakah ini cocok untuk MDN?</a>” untuk "
+"rincian mengenai apa yang merupakan bahan yang tepat."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -4093,47 +4105,51 @@ msgid ""
 "If you believe you’ve received this message by mistake, please <a "
 "href=\"%(admin_email)s\">contact the site administrators</a>."
 msgstr ""
+"Jika anda yakin menerima pesan ini karena sebuah kesalahan, silakan <a "
+"href=\"%(admin_email)s\">menghubungi administrator situs</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
-msgstr ""
+msgstr "Deskripsi Terjemahan"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
 msgid "Title in %(locale)s:"
-msgstr ""
+msgstr "Judul dalam %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
 msgid "Slug in %(locale)s:"
-msgstr ""
+msgstr "Slug dalam %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid ""
 "Find the translation source with the lookup above and then click \"Save "
 "Changes."
 msgstr ""
+"Temukan sumber terjemahan dengan pencarian di bawah ini dan kemudian klik "
+"\"Simpan Perubahan."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
-msgstr[0] ""
+msgstr[0] "Menemukan %(num)s dokumen"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
 #, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr ""
+msgstr "Artikel ditandai: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
-msgstr ""
+msgstr "Seluruh template"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:7
 #, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] ""
+msgstr[0] "Menemukan %(num)s template"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
@@ -4164,7 +4180,7 @@ msgstr "Tidak ada artikel."
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
 msgid "Documents for %(tag)s review"
-msgstr ""
+msgstr "Dokumen untuk %(tag)s ulasan"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
@@ -4173,11 +4189,11 @@ msgstr "Dokumen untuk diulas"
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr ""
+msgstr "Artikel yang Perlu Diulas Ditandai: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
-msgstr ""
+msgstr "Seluruh Artikel yang Perlu Diulas"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:23
 #, python-format
@@ -4334,11 +4350,11 @@ msgstr "Tipe konten yang tidak didukung: %s"
 #: kuma/wiki/views/document.py:725
 #, python-format
 msgid "Request parsing error: %s"
-msgstr ""
+msgstr "Permintaan penguraian salah: %s"
 
 #: kuma/wiki/views/document.py:745
 msgid "ETag precondition failed"
-msgstr ""
+msgstr "Prekondisi ETag gagal"
 
 #: kuma/wiki/views/edit.py:114
 msgid "Sections may only be edited inline."
@@ -4355,12 +4371,12 @@ msgstr ""
 #: kuma/wiki/views/misc.py:106
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
-msgstr ""
+msgstr "%(obj_count)d obyek(s) dimuat."
 
 #: kuma/wiki/views/misc.py:110
 #, python-format
 msgid "Failed to import data: %(error)s"
-msgstr ""
+msgstr "Gagal mengimpor data: %(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
@@ -4373,7 +4389,7 @@ msgstr "Anda tidak dapat menerjemahkan dokumen ini."
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Server elasticsearch: %(backend)s"
 
 #~ msgid ""
 #~ "<li><a href=\"/demos\">View demos</a> or <a href=\"/docs\">browse "
