@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-22 05:04+0000\n"
+"PO-Revision-Date: 2016-02-22 08:09+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1888,7 +1888,7 @@ msgstr "%(email)s <b>Terbukti</b>"
 #: kuma/users/views.py:276
 #, python-format
 msgid "%(email)s Unverified"
-msgstr "%(email)s Belum Terbukti"
+msgstr "%(email)s Belum Terverifikasi"
 
 #: kuma/users/views.py:279 kuma/users/jinja2/socialaccount/signup.html:142
 msgid "Other:"
@@ -1912,11 +1912,11 @@ msgstr "Alamat surel"
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr "%(email)s adalah alamat email <em>utama</em> anda"
+msgstr "%(email)s adalah alamat surel <em>utama</em> anda"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr "Anda juga menambahkan alamat email berikut ini:"
+msgstr "Anda juga menambahkan alamat surel berikut ini:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
@@ -1935,16 +1935,16 @@ msgid ""
 "<strong>Warning:</strong>\"You have not added any email addresses to this "
 "profile. Without one you cannot receive notifications."
 msgstr ""
-"<strong>Peringatan:</strong>\"Anda belum menambahkan satupun alamat email "
+"<strong>Peringatan:</strong>\"Anda belum menambahkan satupun alamat surel "
 "untuk profil ini. Tanpanya anda tidak dapat menerima notifikasi."
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
-msgstr "Tambahkan alamat email"
+msgstr "Tambahkan alamat surel"
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr "Tambahkan Email"
+msgstr "Tambahkan Surel"
 
 #: kuma/users/jinja2/account/email.html:60
 #: kuma/users/jinja2/socialaccount/connections.html:70
@@ -1953,14 +1953,14 @@ msgstr "Sunting profil"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
-msgstr "Apakah anda benar-benar ingin menghapus alamat email yang dipilih?"
+msgstr "Apakah anda benar-benar ingin menghapus alamat surel yang dipilih?"
 
 #: kuma/users/jinja2/account/email_confirm.html:3
 #: kuma/users/jinja2/account/email_confirm.html:9
 #: kuma/users/jinja2/account/email_confirmed.html:3
 #: kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
-msgstr "Konfirmasi Alamat Email"
+msgstr "Konfirmasi Alamat Surel"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
@@ -1968,8 +1968,8 @@ msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
 "address for user %(user_display)s."
 msgstr ""
-"Harap mengkonfirmasi bahwa <a href=\"mailto:%(email)s\">s % (email)</a> "
-"adalah sebuah alamat email untuk % (user_display) pengguna."
+"Harap mengkonfirmasi bahwa <a href=\"mailto:%(email)s\">%(email)s</a> adalah"
+" alamat email untuk %(user_display)s pengguna."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
@@ -1991,8 +1991,8 @@ msgid ""
 "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
 "email address for user %(user_display)s."
 msgstr ""
-"Harap mengkonfirmasi bahwa <a href=\"mailto:%(email)s\">s % (email)</a> "
-"adalah sebuah alamat email untuk % (user_display) pengguna."
+"Anda telah mengkonfirmasi bahwa <a href=\"mailto:%(email)s\">%(email)s</a> "
+"adalah alamat surel untuk %(user_display)s pengguna."
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
@@ -2031,7 +2031,7 @@ msgstr "Ganti Kata Sandi"
 #: kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr "Setel Ulang Kata Kunci"
+msgstr "Setel Ulang Kata Sandi"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid ""
@@ -2070,24 +2070,24 @@ msgid ""
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
 msgstr ""
-"Tautan untuk menyetel ulang kata kunci tidak sah, barangkali karena telah "
+"Tautan untuk menyetel ulang kata sandi tidak sah, barangkali karena telah "
 "digunakan.  Harap meminta <a href=\"%(passwd_reset_url)s\">penyetelan kata "
-"kunci baru</a>."
+"sandi baru</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr "Ubah kata kunci"
+msgstr "Ubah kata sandi"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr "Kata kunci anda telah diganti."
+msgstr "Kata sandi anda telah diganti."
 
 #: kuma/users/jinja2/account/password_set.html:3
 #: kuma/users/jinja2/account/password_set.html:7
 #: kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
-msgstr "Setel Kata Kunci"
+msgstr "Setel Kata Sandi"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
@@ -2166,7 +2166,7 @@ msgstr "Catatan"
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr "anda telag masuk sebagai %(user_display)s."
+msgstr "anda telah masuk sebagai %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
@@ -2294,7 +2294,7 @@ msgid ""
 msgstr ""
 "Untuk mengatur profil MDN anda, silakan <strong>pilih nama pengguna dan "
 "alamat surel</strong>. Nama pengguna anda akan ditampilkan di MDN untuk "
-"mengidentifikasi setiap kontribusi yang Anda buat."
+"mengidentifikasi setiap kontribusi yang anda buat."
 
 #: kuma/users/jinja2/socialaccount/signup.html:82
 #, python-format
@@ -2480,7 +2480,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:183
 msgid "This user has no activity."
-msgstr "Pengguna ini tidak ada aktifitas."
+msgstr "Pengguna ini tidak memiliki aktivitas."
 
 #: kuma/users/jinja2/users/user_edit.html:12
 msgid "Edit Your Profile"
@@ -2584,9 +2584,9 @@ msgid ""
 "Network (MDN)</a> - a community making great resources for developers like "
 "you."
 msgstr ""
-"Terima karena telah membuat profil di <a href=\"%(mdn_link)s\">Mozilla "
-"Developer Network (MDN)</a> - sebuah komunitas memberikan sumber yang besar "
-"bagi pengembang seperti anda."
+"Terima kasih karena telah membuat profil di <a href=\"%(mdn_link)s\">Mozilla"
+" Developer Network (MDN)</a> - sebuah komunitas yang memberikan sumber yang "
+"besar bagi pengembang seperti anda."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
@@ -2609,7 +2609,7 @@ msgstr ""
 "Sekarang, lanjutkan dengan memilih tugas di MDN, dan mengerjakannya! Kami "
 "memiliki sejumlah tugas pembuka yang dapat anda pilih, jika anda <a "
 "href=\"%(words_link)s\">senang kata-kata</a>, <a "
-"href=\"%(code_link)s\">senang emnulis kode</a>, <a "
+"href=\"%(code_link)s\">senang menulis kode</a>, <a "
 "href=\"%(both_link)s\">senang keduanya</a>, atau anda ingin <a "
 "href=\"%(translate_link)s\">menerjemahkan MDN ke dalam bahasa anda</a>."
 
@@ -2632,8 +2632,8 @@ msgid ""
 "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what "
 "you're interested in on MDN and ask questions about the site."
 msgstr ""
-"Milist: <a href=\"%(list_link)s\">subscribe</a> untuk menyampaikan mengapa "
-"anda tertarik pada MDN dan menanyakan pertanyaan mengenai situs ini."
+"Milist: <a href=\"%(list_link)s\">mendaftarlah</a> untuk menyampaikan "
+"mengapa anda tertarik pada MDN dan menanyakan pertanyaan mengenai situs ini."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:43
 #, python-format
@@ -2644,8 +2644,8 @@ msgid ""
 "Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
 "(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"Percakapan di saat yang sama: <a href=\"%(channel_link)s\">saluran #mdn "
-"channel di irc.mozilla.org</a>. (Dapatkan info lebih lanjut <a "
+"Percakapan di saat yang sama: <a href=\"%(channel_link)s\">saluran #mdn di "
+"irc.mozilla.org</a>. (Dapatkan info lebih lanjut tentang <a "
 "href=\"%(irc_link)s\">IRC</a>.) Anda dapat menemukan para admin staff "
 "penulis MDN: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg"
 " (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), dan saya "
@@ -2874,8 +2874,8 @@ msgid ""
 "The title is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
-"Judul Anda terlalu pendek (%(show_value)s karakter). Panjangnya paling tidak"
-" harus %(limit_value)s karakter."
+"Judul Anda kurang dari (%(show_value)s karakter). Panjangnya paling tidak "
+"harus %(limit_value)s karakter."
 
 #: kuma/wiki/forms.py:33
 #, python-format
@@ -2904,7 +2904,7 @@ msgid ""
 "The slug is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
-"Slug ini terlalu pendek (%(show_value)s karakter). Panjangnya paling tidak "
+"Slug ini kurang dari (%(show_value)s karakter). Panjangnya paling tidak "
 "harus %(limit_value)s karakter."
 
 #: kuma/wiki/forms.py:41
@@ -2926,8 +2926,8 @@ msgid ""
 "The summary is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
-"Ringkasan ini terlalu pendek (%(show_value)s karakter). Panjangnya paling "
-"tidak harus %(limit_value)s karakter."
+"Ringkasan ini kurang dari (%(show_value)s karakter). Panjangnya paling tidak"
+" harus %(limit_value)s karakter."
 
 #: kuma/wiki/forms.py:47
 #, python-format
@@ -2948,8 +2948,8 @@ msgid ""
 "The content is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
-"Konten ini terlalu pendek (%(show_value)s karakter). Panjangnya paling tidak"
-" harus %(limit_value)s karakter."
+"Konten ini kurang dari (%(show_value)s karakter). Panjangnya paling tidak "
+"harus %(limit_value)s karakter."
 
 #: kuma/wiki/forms.py:53
 #, python-format
