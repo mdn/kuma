@@ -7,6 +7,8 @@ the entire MDN stack. (Django, KumaScript, Search, Celery, etc.)
 If you're on Mac OS X or Linux and looking for a quick way to get started, you
 should try these instructions.
 
+If you are more familiar with Docker view the :doc:`Docker setup instructions <installation-docker>`.
+
 .. note:: **If you have problems getting vagrant up**, check Errors_ below.
 
 .. _vagrant: http://vagrantup.com/

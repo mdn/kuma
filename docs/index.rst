@@ -6,6 +6,7 @@ Contents:
    :maxdepth: 2
 
    installation
+   installation-docker
    development
    feature-toggles
    tests
