@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-22 08:09+0000\n"
+"PO-Revision-Date: 2016-02-22 10:36+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2303,8 +2303,8 @@ msgid ""
 "profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
 "know</a></strong>."
 msgstr ""
-"Jika anda <strong>memiliki masalah</strong> masuk atau membuat profil MDN, "
-"<strong><a href=\"%(bug_href)s\" rel=\"external\">beritahu "
+"Jika anda <strong>memiliki masalah</strong> saat masuk atau membuat profil "
+"MDN, <strong><a href=\"%(bug_href)s\" rel=\"external\">beritahu "
 "kami</a></strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:107
@@ -3627,7 +3627,7 @@ msgstr "Sublaman berikut %(count)s akan terpengaruh oleh pemindahan ini:"
 
 #: kuma/wiki/jinja2/wiki/move.html:104
 msgid "No other documents will be affected by this change."
-msgstr "Tidak ada dokumen lain yang akan dipengaruhi pleh perubahan ini."
+msgstr "Tidak ada dokumen lain yang akan dipengaruhi oleh perubahan ini."
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:2
 msgid "Page move requested"
@@ -4282,7 +4282,7 @@ msgstr "\"Memuat dokumen\""
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
 msgid "Add %(name)s"
-msgstr "Tambahkan %(nama)s"
+msgstr "Tambahkan %(name)s"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
@@ -4371,7 +4371,7 @@ msgstr ""
 #: kuma/wiki/views/misc.py:106
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
-msgstr "%(obj_count)d obyek(s) dimuat."
+msgstr "%(obj_count)d obyek dimuat."
 
 #: kuma/wiki/views/misc.py:110
 #, python-format
