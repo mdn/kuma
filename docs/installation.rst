@@ -105,13 +105,9 @@ Install and run everything
 
 #. Visit the homepage at `https://developer-local.allizom.org <https://developer-local.allizom.org/>`_
 
-#. You've installed Kuma! If you want `the badge`_ please `email a screenshot of your browser <mailto:mdn-dev@mozilla.com?subject=Local%20MDN%20Screenshot>`_ to receive the badge.
-
-   .. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
+#. You've installed Kuma!
 
    Continue reading to create an admin user and enable the wiki.
-
-.. _the badge: https://badges.mozilla.org/badges/badge/Installed-and-ran-Kuma
 
 .. _create a user:
 
