@@ -570,38 +570,40 @@ class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
         for a model instance in the ``RevisionForm.akismet_parameters``
         method!
         """
-        revision = self.cleaned_data['revision']
+        return revision_akismet_parameters(self.cleaned_data['revision'])
 
-        language = revision.document.locale or settings.WIKI_DEFAULT_LANGUAGE
 
-        content = u'\n'.join([getattr(revision, field, None) or ''
-                              for field in SPAM_SUBMISSION_REVISION_FIELDS])
+def revision_akismet_parameters(revision):
+    language = revision.document.locale or settings.WIKI_DEFAULT_LANGUAGE
 
-        parameters = {
-            # 'en-US' -> 'en_us'
-            'blog_lang': translation.to_locale(language).lower(),
-            'blog_charset': 'UTF-8',
-            'comment_author': author_from_user(revision.creator),
-            'comment_author_email': author_email_from_user(revision.creator),
-            'comment_content': content,
-            'comment_type': 'wiki-revision',
-        }
+    content = u'\n'.join([getattr(revision, field, None) or ''
+                          for field in SPAM_SUBMISSION_REVISION_FIELDS])
 
-        # get the stored revision IP if there is still one logged away
-        revision_ip = revision.revisionip_set.first()
-        if revision_ip is None:
-            parameters.update({
-                'user_ip': '0.0.0.0',
-                'user_agent': '',
-                'referrer': '',
-            })
-        else:
-            parameters.update({
-                'user_ip': revision_ip.ip,
-                'user_agent': revision_ip.user_agent,
-                'referrer': revision_ip.referrer,
-            })
-        return parameters
+    parameters = {
+        # 'en-US' -> 'en_us'
+        'blog_lang': translation.to_locale(language).lower(),
+        'blog_charset': 'UTF-8',
+        'comment_author': author_from_user(revision.creator),
+        'comment_author_email': author_email_from_user(revision.creator),
+        'comment_content': content,
+        'comment_type': 'wiki-revision',
+    }
+
+    # get the stored revision IP if there is still one logged away
+    revision_ip = revision.revisionip_set.first()
+    if revision_ip is None:
+        parameters.update({
+            'user_ip': '0.0.0.0',
+            'user_agent': '',
+            'referrer': '',
+        })
+    else:
+        parameters.update({
+            'user_ip': revision_ip.ip,
+            'user_agent': revision_ip.user_agent,
+            'referrer': revision_ip.referrer,
+        })
+    return parameters
 
 
 class TreeMoveForm(forms.Form):
