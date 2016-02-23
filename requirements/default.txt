@@ -34,7 +34,7 @@ django-pipeline==1.5.4 --hash=sha256:a5a909f403d0ea56f211618949ff4e378f16e5a996b
 django-ratelimit==0.6.0 --hash=sha256:f73b53b2c4fd342cbd4b983ffc33fdcf8f8a6f595d548865ea63c839ef38293c
 djangorestframework==3.3.2 --hash=sha256:5634b1ff56581bf0fe4075e86227fc9693c1ca031c7213c9ae942c445c24817b
 django-smuggler==0.6.1 --hash=sha256:b3719c999a3c121006f5eb1d737be0c90d68a11a243a95f93341b366f049da10
-django-soapbox==1.2 --hash=sha256:e60083c7a0a9d02b5dd20a077be13f42fc5fec6a0eb7df9da2e4dd033064cde4
+django-soapbox==1.3 --hash=sha256:69ccf5eb9200f294f400864c9f11990a8bdcd75ed8965cd984b7d6d3d243cf49
 django-statici18n==1.1.5 --hash=sha256:f8d7b523da8fa635de8c359f6dbde9821e2e8e1a092d915786455ffd2533808b
 django-sundial==1.0.2 --hash=sha256:3745891337d726041b37aed95005b9c70377116d232157726e48b46aefef1961
 django-taggit==0.18.0 --hash=sha256:4ddd61928a4fc6ba7ccb1145d8d3a6d5c2829de8d8738eea49924ade8969f0ce
