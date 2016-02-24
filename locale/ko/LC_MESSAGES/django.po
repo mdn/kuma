@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-23 10:10+0000\n"
-"Last-Translator: Yang Myoung-Gwon <diginalog@gmail.com>\n"
+"PO-Revision-Date: 2016-02-24 01:59+0000\n"
+"Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -144,7 +144,7 @@ msgstr "시작하기"
 
 #: jinja2/base.html:105
 msgid "Review or localize docs"
-msgstr ""
+msgstr "검토 또는 문서 번역"
 
 #: jinja2/base.html:108
 msgid "Site Tools"
@@ -265,29 +265,24 @@ msgid "Developer Tools"
 msgstr "개발자 도구"
 
 #: jinja2/base.html:159
-#, fuzzy
 msgid "Feedback"
-msgstr "피드"
+msgstr "사용자 의견"
 
 #: jinja2/base.html:164
-#, fuzzy
 msgid "Get Firefox help"
-msgstr "Firefox 도움말 검색"
+msgstr "Firefox 도움 받기"
 
 #: jinja2/base.html:165
-#, fuzzy
 msgid "Get web development help"
-msgstr "모든 웹 개발 도구"
+msgstr "웹 개발 도움 받기"
 
 #: jinja2/base.html:168
-#, fuzzy
 msgid "Join the MDN community"
-msgstr "커뮤니티 참여하기"
+msgstr "MDN 커뮤니티 참여"
 
 #: jinja2/base.html:169
-#, fuzzy
 msgid "Report a content problem"
-msgstr "오류 보고"
+msgstr "내용 문제 보고"
 
 # 100%
 #: jinja2/base.html:170
@@ -310,17 +305,14 @@ msgid "Search"
 msgstr "검색"
 
 #: jinja2/base.html:196
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual "
 "contributors.</p> <p>Content is available under <a "
 "href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
-"<bdi>&copy; 2005-%(thisyear)s Mozilla 개발자 네트워크 및 개별 공헌자<br /> 콘텐츠 라이센스 고지<a "
-"href=\"%(copyright_url)s\">these licenses</a> &middot; <a "
-"href=\"%(about_url)s\">MDN 소개</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">코드 공헌</a> &middot; <a "
-"href=\"//www.mozilla.org/privacy/websites/\">개인 정보 보호 정책</a></bdi>"
+"<p>&copy; 2005-%(thisyear)s Mozilla 개발자 네트워크 및 개별 공헌자에게 있습니다.</p> <p> 콘텐츠는 "
+"<a href=\"%(copyright_url)s\">이 라이센스</a> 아래 이용할 수 있습니다.</p>"
 
 #: jinja2/base.html:201
 msgid "About MDN"
@@ -328,21 +320,19 @@ msgstr "MDN 소개"
 
 #: jinja2/base.html:202
 msgid "Terms"
-msgstr ""
+msgstr "이용약관"
 
 #: jinja2/base.html:203
-#, fuzzy
 msgid "Privacy"
-msgstr "개인 정보 보호 정책"
+msgstr "개인 정보 보호"
 
 #: jinja2/base.html:204
 msgid "Cookies"
 msgstr "쿠키"
 
 #: jinja2/base.html:205
-#, fuzzy
 msgid "Contribute to the code"
-msgstr "MDN 웹 사이트 개발 참여"
+msgstr "코드 공헌"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
@@ -353,9 +343,9 @@ msgid "Search Firefox Help"
 msgstr "Firefox 도움말 검색"
 
 #: jinja2/includes/common_macros.html:36
-#, fuzzy, python-format
+#, python-format
 msgid "Welcome, <span class=\"user\">%(user)s</span>."
-msgstr "반갑습니다, <span class=\"user\">{user}</span>."
+msgstr "<span class=\"user\">%(user)s</span>님, 반갑습니다."
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
@@ -1013,16 +1003,15 @@ msgstr "삭제됨"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:50
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
 msgid "Ban IP from Editing"
 msgstr "편집이 금지된 IP"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:53
-#, fuzzy
 msgid "User agent:"
-msgstr "아이디:"
+msgstr "사용자 도구:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:57
 #, fuzzy
@@ -1056,7 +1045,7 @@ msgstr "제출"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:94
 msgid "spam"
-msgstr ""
+msgstr "스팸"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:95
 msgid "ham"
@@ -1622,7 +1611,7 @@ msgstr "생성됨"
 
 #: kuma/spam/models.py:27
 msgid "Spam"
-msgstr ""
+msgstr "스팸"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
@@ -2549,9 +2538,9 @@ msgid "Save Changes"
 msgstr "변경 사항 저장"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s!"
-msgstr "안녕하세요! {username}님"
+msgstr "%(username)s님 안녕하세요!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
@@ -2639,9 +2628,9 @@ msgstr "문제점이나 질문이나 의견 있으시면 언제든지 알려주�
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
-#, fuzzy, python-format
+#, python-format
 msgid "Hi %(username)s"
-msgstr "안녕하세요! {username}님"
+msgstr "%(username)s님 안녕하세요"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
@@ -2686,7 +2675,7 @@ msgstr "MDN 문서를 한국어로 제공하시고 싶으신가요?"
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
 #, python-format
 msgid "Mailing list: %(list_link)s"
-msgstr ""
+msgstr "메일링 리스트: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
@@ -2702,13 +2691,13 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
 msgid "Real-time chat: #mdn channel on irc.mozilla.org"
-msgstr ""
+msgstr "실시간 채팅: irc.mozilla.org 상의 #mdn 채널"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr ""
+msgstr "IRC에 관한 더 많은 정보는 %(irc_link)s를 보세요."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:45
@@ -2728,7 +2717,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
 #, python-format
 msgid "Blog: %(blog_link)s"
-msgstr ""
+msgstr "블로그: %(blog_link)s"
 
 #: kuma/users/templatetags/jinja_helpers.py:35
 #, python-format
@@ -2750,7 +2739,7 @@ msgstr "관리자"
 #: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
-msgstr ""
+msgstr "위키"
 
 #: kuma/wiki/constants.py:206
 msgid "Technical - code samples, APIs, or technologies"
@@ -3084,13 +3073,12 @@ msgid ""
 msgstr "리비전은 %(locale)s 문서의 리비전을 기초로 해야한다. 리비전 ID %(id)s는 기준에 적합하지 않다."
 
 #: kuma/wiki/models.py:1778
-#, fuzzy
 msgid "IP address"
-msgstr "이메일 주소"
+msgstr "IP 주소"
 
 #: kuma/wiki/models.py:1786
 msgid "User-Agent"
-msgstr ""
+msgstr "사용자 도구"
 
 #: kuma/wiki/models.py:1791
 msgid "HTTP Referrer"
@@ -3113,9 +3101,8 @@ msgid "Akismet submissions"
 msgstr "신청하기"
 
 #: kuma/wiki/models.py:1862
-#, fuzzy
 msgid "Slug"
-msgstr "슬러그:"
+msgstr "슬러그"
 
 #: kuma/wiki/models.py:1870
 #, fuzzy
@@ -3274,14 +3261,12 @@ msgid "Next Search Result"
 msgstr "다음 검색 결과"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
-#, fuzzy
 msgid "see all contributors"
-msgstr "공헌자"
+msgstr "모든 공헌자 보기"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
-#, fuzzy
 msgid "hide contributors"
-msgstr "공헌자"
+msgstr "공헌자 감추기"
 
 #: kuma/wiki/jinja2/wiki/document.html:185
 #, python-format
@@ -3341,13 +3326,13 @@ msgid "This translation is in progress."
 msgstr "번역 작업 진행중입니다."
 
 #: kuma/wiki/jinja2/wiki/document.html:288
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
 "yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
-"아직 자원 봉사자들이 %(locale)s로 현재 문서를 번역하지 않았습니다. <a href=\"%(help_link)s\">가입해서 이 "
-"문서가 번역되는 일에 함께 해 주세요!</a>"
+"이 문서는 아직 자원 봉사자들이 <bdi>%(locale)s</bdi>로 번역하지 않았습니다. <a "
+"href=\"%(help_link)s\">함께 해서 번역을 마치도록 도와 주세요!</a>"
 
 # 85%
 #: kuma/wiki/jinja2/wiki/document.html:299
@@ -3373,9 +3358,8 @@ msgid "Document Tags and Contributors"
 msgstr "문서 태그 및 공헌자"
 
 #: kuma/wiki/jinja2/wiki/document.html:331
-#, fuzzy
 msgid "Contributors to this page:"
-msgstr "이 페이지의 공헌자: %(contributors)s"
+msgstr "이 페이지의 공헌자:"
 
 # 100%
 #: kuma/wiki/jinja2/wiki/document.html:337
@@ -3383,14 +3367,14 @@ msgid "Last updated by:"
 msgstr "최종 변경:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Template"
-msgstr "템플릿 목록"
+msgstr "%(title)s | 템플릿 편집"
 
 #: kuma/wiki/jinja2/wiki/edit.html:8
-#, fuzzy, python-format
+#, python-format
 msgid "%(title)s | Edit Article"
-msgstr "기사 편집"
+msgstr "%(title)s | 문서 편집"
 
 #: kuma/wiki/jinja2/wiki/edit.html:31
 msgid ""
@@ -3502,14 +3486,14 @@ msgid "last modified at %(modified)s"
 msgstr "최종 변경일"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Edit %(locale)s translation"
-msgstr "{locale} 번역:"
+msgstr "%(locale)s 번역 편집:"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Move Article | %(document)s"
-msgstr "기사 편집 | {document}"
+msgstr "문서 이동 | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid ""
@@ -3565,18 +3549,18 @@ msgid "Parent Title"
 msgstr "상위 문서 제목"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
-#, fuzzy, python-format
+#, python-format
 msgid "Move %(count)s Pages"
-msgstr "{d} 페이지 이동"
+msgstr "%(count)s 페이지 이동"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
 msgstr "페이지 이동"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
-#, fuzzy, python-format
+#, python-format
 msgid "The following %(count)s subpages will be affected by this move:"
-msgstr "아래 {d} 하위 페이지가 모두 이동됩니다:"
+msgstr "다음 %(count)s개의 하위 페이지가 이 이동의 영향을 받습니다:"
 
 #: kuma/wiki/jinja2/wiki/move.html:104
 msgid "No other documents will be affected by this change."

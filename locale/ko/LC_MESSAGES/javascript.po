@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-28 14:07+0000\n"
+"PO-Revision-Date: 2016-02-24 01:52+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ko\n"
@@ -145,7 +145,7 @@ msgstr "초안 콘텐츠를 복원"
 
 #: kuma/static/js/wiki-edit.js:403
 msgid "Discard the draft"
-msgstr ""
+msgstr "초안 삭제"
 
 #: kuma/static/js/wiki-edit.js:555
 msgid "saved"
@@ -166,7 +166,7 @@ msgstr "스택 오버플로우 검색"
 #: kuma/static/js/wiki.js:655
 msgid ""
 "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
+msgstr "브라우저가 MathML을 지원하지 않습니다. CSS 폴백이 대신 사용되었습니다."
 
 #: kuma/static/js/wiki.js:870
 msgid "Details"
@@ -174,11 +174,11 @@ msgstr "상세 정보"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:38
 msgid "Select an attachment"
-msgstr ""
+msgstr "첨부 파일 선택"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:49
 msgid "No attachments available"
-msgstr ""
+msgstr "사용 가능한 첨부 파일이 없음"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
@@ -224,7 +224,7 @@ msgstr "섹션 선택"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:91
 msgid "Sections in Document"
-msgstr ""
+msgstr "문서 내 섹션"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
@@ -268,7 +268,7 @@ msgstr "강조 없음"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:27
 msgid "Embed YouTube Video"
-msgstr ""
+msgstr "YouTube 비디오 삽입"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:28
 msgid "Locate a YouTube Video"
@@ -276,7 +276,7 @@ msgstr ""
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:29
 msgid "Paste YouTube Video URL"
-msgstr ""
+msgstr "YouTube 비디오 URL 붙여넣기"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
@@ -284,11 +284,11 @@ msgstr "가로 세로 비율"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:31
 msgid "You must input a valid YouTube video URL."
-msgstr ""
+msgstr "유효한 YouTube 비디오 URL을 입력해야 합니다."
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:32
 msgid "The URL you've entered doesn't appear to be valid"
-msgstr ""
+msgstr "입력한 URL이 유효하게 보이지 않습니다"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
