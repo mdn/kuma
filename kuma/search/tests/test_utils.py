@@ -52,4 +52,3 @@ class URLTests(KumaTestCase):
                     'http://example.com/?spam']:
             url_object = QueryURLObject(url)
             eq_(url_object.clean_params(url_object.query_dict), {})
-
