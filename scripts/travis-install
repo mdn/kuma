@@ -6,7 +6,7 @@ export LC_CTYPE=en_US.UTF-8
 if [ "$TOXENV" == "py27" ]
 then
     sudo apt-get update -qq
-    sudo apt-get -y install build-essential libxml2-dev libxslt-dev libjpeg8 libjpeg8-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 tidy libtidy-dev libtidy-0.99-0
+    sudo apt-get -y install build-essential libxml2-dev libxslt-dev libjpeg8 libjpeg8-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 tidy libtidy-dev libtidy-0.99-0 python-dev libffi-dev libssl-dev
     sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
     sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
 

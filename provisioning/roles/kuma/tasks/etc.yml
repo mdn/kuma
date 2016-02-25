@@ -36,6 +36,8 @@
     - libtidy-dev
     - make
     - libmemcached-dev
+    - libffi-dev
+    - libssl-dev
 
 - name: Build | generate the missing locale and reconfigure locales
   command: locale-gen --purge en_US.UTF-8
