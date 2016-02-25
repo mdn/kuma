@@ -2,7 +2,6 @@ from datetime import date, timedelta
 
 from constance import config
 from django.core.management.base import NoArgsCommand
-from django.utils.text import get_text_list
 
 from ...models import TrashedAttachment
 
@@ -11,6 +10,9 @@ class Command(NoArgsCommand):
     help = "Empty the attachments trash"
 
     def add_arguments(self, parser):
+        parser.add_argument('-f', '--force',
+                            action='store_true', dest='force', default=False,
+                            help="Force deleting all trashed attachments.")
         parser.add_argument('-n', '--dry-run',
                             action='store_true', dest='dry_run', default=False,
                             help="Do everything except actually emptying the "
@@ -19,10 +21,15 @@ class Command(NoArgsCommand):
     def handle(self, *args, **options):
         dry_run = options['dry_run']
 
-        timeframe = timedelta(days=config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS)
-        trashed_attachments = TrashedAttachment.objects.filter(
-            trashed_at__lte=date.today() - timeframe
-        )
+        if options['force']:
+            trashed_attachments = TrashedAttachment.objects.all()
+        else:
+            timeframe = timedelta(
+                days=config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS
+            )
+            trashed_attachments = TrashedAttachment.objects.filter(
+                trashed_at__lte=date.today() - timeframe
+            )
         self.stdout.write('Emptying attachments trash '
                           'for %s attachments...\n\n' %
                           trashed_attachments.approx_count())
@@ -36,12 +43,11 @@ class Command(NoArgsCommand):
                 attachment.delete()
 
         if deleted:
-            deleted_list = get_text_list(deleted, 'and')
             if dry_run:
-                self.stdout.write('Dry deleted the following files: %s' %
-                                  deleted_list)
+                self.stdout.write('Dry deleted the following files:')
             else:
-                self.stdout.write('Deleted the following files: %s' %
-                                  deleted_list)
+                self.stdout.write('Deleted the following files:')
+            for deleted_item in deleted:
+                self.stdout.write(u'- %s' % deleted_item)
         else:
             self.stdout.write('Nothing to delete!')
