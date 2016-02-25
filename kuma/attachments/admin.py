@@ -7,6 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from constance import config
 
+from kuma.core.urlresolvers import reverse
+
 from .forms import AdminAttachmentRevisionForm
 from .models import Attachment, AttachmentRevision, TrashedAttachment
 
@@ -23,15 +25,19 @@ class AttachmentRevisionInline(admin.StackedInline):
 class AttachmentAdmin(admin.ModelAdmin):
     actions = None
     fields = ['current_revision', 'mindtouch_attachment_id']
-    list_display = ['title', 'modified', 'full_url', 'mindtouch_attachment_id']
-    list_filter = ['modified']
+    list_display = ['id', 'title', 'modified', 'full_url']
+    list_display_links = ['id', 'title']
+    list_filter = [
+        'modified',
+        'current_revision__is_approved',
+        'current_revision__mime_type',
+    ]
+    list_select_related = ['current_revision']
     ordering = ['-modified']
     search_fields = ['title']
     raw_id_fields = ['current_revision']
     date_hierarchy = 'modified'
-    inlines = [
-        AttachmentRevisionInline,
-    ]
+    inlines = [AttachmentRevisionInline]
 
     def full_url(self, obj):
         url = obj.get_file_url()
@@ -43,7 +49,9 @@ class AttachmentAdmin(admin.ModelAdmin):
         # they'll actually be deleted by the deletion of the attachment
         trashed_attachments = []
         for revision in revisions:
-            trashed_attachment = revision.delete(username=request.user.username)
+            trashed_attachment = revision.delete(
+                username=request.user.username
+            )
             trashed_attachments.append(trashed_attachment)
         if trashed_attachments:
             self.message_user(
@@ -75,15 +83,24 @@ class AttachmentAdmin(admin.ModelAdmin):
 class AttachmentRevisionAdmin(admin.ModelAdmin):
     fields = ['attachment', 'file', 'title', 'mime_type', 'description',
               'is_approved']
-    list_display = ['title', 'created', 'mime_type', 'is_approved']
+    list_display = ['id', 'title', 'created', 'mime_type', 'is_approved',
+                    'attachment_url']
+    list_display_links = ['id', 'title']
     list_editable = ['is_approved']
     list_filter = ['created', 'is_approved', 'mime_type']
-    ordering = ['-created', 'title']
+    ordering = ['-created']
     search_fields = ['title', 'description', 'creator__username']
     raw_id_fields = ['attachment']
     date_hierarchy = 'created'
     list_select_related = ['creator']
     form = AdminAttachmentRevisionForm
+
+    def attachment_url(self, obj):
+        attachment = obj.attachment
+        url = reverse('admin:attachments_attachment_change',
+                      args=(attachment.pk,))
+        return format_html(u'<a href="{}">{}</a>', url, attachment.pk)
+    attachment_url.short_description = 'Attachment'
 
     def save_model(self, request, obj, form, change):
         obj.creator = request.user
