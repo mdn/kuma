@@ -1,6 +1,9 @@
 import logging
 from .common import *  # noqa
 
+DEFAULT_FILE_STORAGE = 'kuma.core.storage.KumaHttpStorage'
+LOCALDEVSTORAGE_HTTP_FALLBACK_DOMAIN = PRODUCTION_URL + '/media/'
+
 ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
 
 INTERNAL_IPS = ('127.0.0.1', '192.168.10.1')

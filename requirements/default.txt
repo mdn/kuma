@@ -27,6 +27,7 @@ django-extensions==1.6.1 --hash=sha256:f98f991d2b039033ac5faa638c0d1afb2720abf4d
 django-flat-theme==1.1.3 --hash=sha256:323011c7eda4fb57604fd9feee568c5a789bff4c0c0892128f05246936e8013a
 django-honeypot==0.5.0 --hash=sha256:962304f21055f05c73c41f2506f5a94f5b941e831a203b68e54cb5016bdb8d5e
 django-jinja==1.4.1 --hash=sha256:6f4c2e8c5ada17039ff1c1e38bc51bea9317af3676e28466148c8df5fc78f132
+django-localdevstorage==0.5 --hash=sha256:181939624a9dca244b0a72837a84baa1c4045ba47f3cd56632c21eb87298498d
 django-memcached-hashring==0.1.2 --hash=sha256:14c2dc29bc693feaf114dea8c871f4d25daca72bba8f37b159d552fed4ab6337
 django-mozilla-product-details==0.7.1 --hash=sha256:c50bffb9828a9139156904a11c508732d13dbf57ac25625ebc5edaa3ed312840
 django-mysql==1.0.4 --hash=sha256:0ced44721f0b36b618c7eb4c3813f57a5a7df71b959dc97ddf94e2281813a971
