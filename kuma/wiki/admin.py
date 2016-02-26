@@ -256,6 +256,7 @@ rendering_info.short_description = 'Rendering'
 rendering_info.admin_order_field = 'last_rendered_at'
 
 
+@admin.register(Document)
 class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
 
     class Media:
@@ -319,16 +320,20 @@ class DocumentDeletionLogAdmin(DisabledDeletionMixin, admin.ModelAdmin):
     ordering = ['-timestamp']
     readonly_fields = ['locale', 'slug', 'user', 'timestamp']
 
+
+@admin.register(DocumentTag)
 class DocumentTagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     search_fields = ('name',)
     ordering = ('name',)
 
 
+@admin.register(DocumentZone)
 class DocumentZoneAdmin(admin.ModelAdmin):
     raw_id_fields = ('document',)
 
 
+@admin.register(DocumentSpamAttempt)
 class DocumentSpamAttemptAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'slug', 'document', 'created', 'user']
     list_display_links = ['id', 'title', 'slug']
@@ -338,6 +343,7 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
     raw_id_fields = ['user', 'document']
 
 
+@admin.register(Revision)
 class RevisionAdmin(admin.ModelAdmin):
     fields = ('title', 'summary', 'content', 'keywords', 'tags',
               'comment', 'is_approved')
@@ -349,11 +355,13 @@ class RevisionAdmin(admin.ModelAdmin):
     search_fields = ('title', 'slug', 'summary', 'content', 'tags')
 
 
+@admin.register(RevisionIP)
 class RevisionIPAdmin(admin.ModelAdmin):
     readonly_fields = ('revision', 'ip',)
     list_display = ('revision', 'ip',)
 
 
+@admin.register(RevisionAkismetSubmission)
 class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
     form = RevisionAkismetSubmissionAdminForm
     radio_fields = {'type': admin.VERTICAL}
@@ -407,11 +415,9 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
 
         return AdminFormWithRequest
 
-admin.site.register(Document, DocumentAdmin)
-admin.site.register(DocumentSpamAttempt, DocumentSpamAttemptAdmin)
-admin.site.register(DocumentTag, DocumentTagAdmin)
-admin.site.register(DocumentZone, DocumentZoneAdmin)
-admin.site.register(Revision, RevisionAdmin)
-admin.site.register(RevisionIP, RevisionIPAdmin)
-admin.site.register(RevisionAkismetSubmission, RevisionAkismetSubmissionAdmin)
-admin.site.register(EditorToolbar, admin.ModelAdmin)
+
+@admin.register(EditorToolbar)
+class EditorToolbarAdmin(admin.ModelAdmin):
+    list_display = ['name', 'creator', 'default']
+    list_filters = ['default']
+    raw_id_fields = ['creator']
