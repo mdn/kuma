@@ -19,7 +19,8 @@ def context_dict(revision):
     Return a dict that fills in the blanks in notification templates.
     """
     document = revision.document
-    from_revision = revision.previous
+    # Don't use `previous` since it is cached. (see bug 1239141)
+    from_revision = revision.get_previous()
     to_revision = revision
     diff = revisions_unified_diff(from_revision, to_revision)
 

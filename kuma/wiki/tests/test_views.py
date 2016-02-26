@@ -26,6 +26,7 @@ from kuma.attachments.utils import make_test_file
 from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.models import IPBan
+from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import eq_, get_user, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
@@ -39,6 +40,7 @@ from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
 from ..models import (Document, DocumentDeletionLog, DocumentTag, DocumentZone,
                       Revision, RevisionIP)
+from ..templatetags.jinja_helpers import get_compare_url
 from ..views.document import _get_seo_parent_title
 
 
@@ -2575,6 +2577,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()
         rev = revision(save=True)
+        previous_rev = rev.previous
 
         testuser2 = get_user(username='testuser2')
         EditDocumentEvent.notify(testuser2, rev.document)
@@ -2584,14 +2587,19 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'title': rev.document.title,
                      'content': 'This edit should send an email',
                      'comment': 'This edit should send an email'})
-        self.client.post(reverse('wiki.edit',
-                                 args=[rev.document.slug]),
-                         data)
+        self.client.post(reverse('wiki.edit', args=[rev.document.slug]), data)
+
         self.assertEquals(1, len(mail.outbox))
         message = mail.outbox[0]
         assert testuser2.email in message.to
         assert rev.document.title in message.body
         assert 'sub-articles' not in message.body
+        # Test that the compare URL points to the right revisions
+        rev = Document.objects.get(pk=rev.document_id).current_revision
+        assert rev.id != previous_rev
+        assert (add_utm(get_compare_url(rev.document, rev.previous.id, rev.id),
+                        'Wiki Doc Edits')
+                in message.body)
 
         # Subscribe another user and assert 2 emails sent this time
         mail.outbox = []

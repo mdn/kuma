@@ -1739,6 +1739,9 @@ class Revision(models.Model):
 
     @cached_property
     def previous(self):
+        return self.get_previous()
+
+    def get_previous(self):
         """
         Returns the previous approved revision or None.
         """
