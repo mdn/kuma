@@ -2,7 +2,6 @@
 import difflib
 import json
 import re
-import urllib
 import urlparse
 
 import jinja2
@@ -16,6 +15,7 @@ from django_jinja import library
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 
 from ..constants import DIFF_WRAP_COLUMN
 from ..jobs import DocumentZoneStackJob
@@ -23,9 +23,10 @@ from ..utils import tidy_content
 
 
 def get_compare_url(doc, from_id, to_id):
-    params = urllib.urlencode({'from': from_id, 'to': to_id})
-    return (reverse('wiki.compare_revisions', args=[doc.slug],
-                    locale=doc.locale) + '?' + params)
+    return urlparams(
+        reverse('wiki.compare_revisions', args=[doc.slug], locale=doc.locale),
+        **{'from': from_id, 'to': to_id}
+    )
 
 
 @library.filter
