@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from constance import config
 
+from kuma.core.admin import DisabledDeleteActionMixin
 from kuma.core.urlresolvers import reverse
 
 from .forms import AdminAttachmentRevisionForm
@@ -22,8 +23,7 @@ class AttachmentRevisionInline(admin.StackedInline):
 
 
 @admin.register(Attachment)
-class AttachmentAdmin(admin.ModelAdmin):
-    actions = None
+class AttachmentAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
     fields = ['current_revision', 'mindtouch_attachment_id']
     list_display = ['id', 'title', 'modified', 'full_url']
     list_display_links = ['id', 'title']
@@ -80,7 +80,7 @@ class AttachmentAdmin(admin.ModelAdmin):
 
 
 @admin.register(AttachmentRevision)
-class AttachmentRevisionAdmin(admin.ModelAdmin):
+class AttachmentRevisionAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
     fields = ['attachment', 'file', 'title', 'mime_type', 'description',
               'is_approved']
     list_display = ['id', 'title', 'created', 'mime_type', 'is_approved',
@@ -106,6 +106,17 @@ class AttachmentRevisionAdmin(admin.ModelAdmin):
         obj.creator = request.user
         obj.save()
 
+    def has_delete_permission(self, request, obj=None):
+        """
+        Disable deletion of individual Documents, by always returning
+        False for the permission check.
+        """
+        if obj is None:
+            return super(AttachmentRevisionAdmin,
+                         self).has_delete_permission(request, obj)
+        else:
+            return obj.siblings().count() != 0
+
     def delete_model(self, request, obj):
         # call the actual deletion of the attachment revision object
         # that also creates a trash item
@@ -121,7 +132,7 @@ class AttachmentRevisionAdmin(admin.ModelAdmin):
 
 
 @admin.register(TrashedAttachment)
-class TrashedAttachmentAdmin(admin.ModelAdmin):
+class TrashedAttachmentAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
     list_display = ['file', 'trashed_at', 'trashed_by', 'was_current']
     list_filter = ['trashed_at', 'was_current']
     search_fields = ['file']

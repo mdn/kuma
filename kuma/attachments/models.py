@@ -4,6 +4,7 @@ from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned
 from django.db import models
+from django.db.utils import IntegrityError
 from django_mysql.models import Model as MySQLModel
 from django.utils.translation import ugettext_lazy as _
 
@@ -23,6 +24,7 @@ class Attachment(models.Model):
         null=True,
         blank=True,
         related_name='current_for+',
+        on_delete=models.SET_NULL,
     )
     # These get filled from the current revision.
     title = models.CharField(max_length=255, db_index=True)
@@ -144,6 +146,9 @@ class AttachmentRevision(models.Model):
             self.make_current()
 
     def delete(self, username=None, *args, **kwargs):
+        if self.siblings().count() == 0:
+            raise IntegrityError(u'You cannot delete the last revision of '
+                                 u'attachment %s' % self.attachment)
         trash_item = self.trash(username=username)
         super(AttachmentRevision, self).delete(*args, **kwargs)
         return trash_item
@@ -178,6 +183,9 @@ class AttachmentRevision(models.Model):
             is_approved=True,
             created__lt=self.created,
         ).order_by('-created').first()
+
+    def siblings(self):
+        return self.attachment.revisions.exclude(pk=self.pk)
 
 
 class TrashedAttachment(MySQLModel):

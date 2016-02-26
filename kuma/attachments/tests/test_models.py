@@ -2,6 +2,7 @@ import datetime
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
+from django.db.utils import IntegrityError
 
 from kuma.users.tests import user, UserTestCase
 from ..models import Attachment, AttachmentRevision, TrashedAttachment
@@ -25,17 +26,28 @@ class AttachmentModelTests(UserTestCase):
         self.revision.creator = self.test_user
         self.revision.file.save('filename.txt',
                                 ContentFile('Meh meh I am a test file.'))
-        self.revision.make_current()
+
+        self.revision2 = AttachmentRevision(
+            attachment=self.attachment,
+            mime_type='text/plain',
+            title=self.attachment.title,
+            description='some description',
+            created=datetime.datetime.now(),
+            is_approved=True)
+        self.revision2.creator = self.test_user
+        self.revision2.file.save('filename2.txt',
+                            ContentFile('Meh meh I am a test file.'))
 
     def test_trash_revision(self):
         self.assertEqual(TrashedAttachment.objects.count(), 0)
-        trashed_attachment = self.revision.trash()
+        trashed_attachment = self.revision2.trash()
         self.assertEqual(TrashedAttachment.objects.count(), 1)
         self.assertEqual(trashed_attachment.file,
                          self.attachment.current_revision.file)
         self.assertEqual(trashed_attachment.trashed_by, 'unknown')
         self.assertTrue(trashed_attachment.was_current)
-        # the attachment revision wasn't really deleted, only a trash item created
+        # the attachment revision wasn't really deleted,
+        # only a trash item created
         self.assertTrue(AttachmentRevision.objects.filter(pk=self.revision.pk)
                                                   .exists())
 
@@ -49,9 +61,9 @@ class AttachmentModelTests(UserTestCase):
     def test_delete_revision_directly(self):
         # deleting a revision without providing information
         # still creates a trashedattachment item and leaves file in place
-        pk = self.revision.pk
+        pk = self.revision2.pk
         self.assertFileExists(self.revision.file.path)
-        trashed_attachment = self.revision.delete()
+        trashed_attachment = self.revision2.delete()
         self.assertTrue(trashed_attachment)
         self.assertFalse(AttachmentRevision.objects.filter(pk=pk).exists())
         self.assertFileExists(self.revision.file.path)
@@ -61,6 +73,27 @@ class AttachmentModelTests(UserTestCase):
         trashed_attachment = self.revision.delete(username='trasher')
         self.assertTrue(trashed_attachment)
         self.assertFalse(AttachmentRevision.objects.filter(pk=pk).exists())
+
+    def test_deleting_trashed_item(self):
+        pk = self.revision2.pk
+        path = self.revision2.file.path
+        trashed_attachment = self.revision2.delete(username='trasher')
+        self.assertTrue(trashed_attachment)
+        self.assertFalse(AttachmentRevision.objects.filter(pk=pk).exists())
+        self.assertFileExists(path)
+        trashed_attachment.delete()
+        self.assertFileNotExists(path)
+
+    def test_delete_revision(self):
+        # adding a new revision sets the current revision automatically
+        self.assertTrue(self.attachment.current_revision, self.revision2)
+
+        # deleting it again resets the current revision to the previous
+        self.revision2.delete()
+        self.assertTrue(self.attachment.current_revision, self.revision)
+
+        # deleting the only revision deletes the attachment
+        self.assertRaises(IntegrityError, self.revision.delete)
 
     def test_permissions(self):
         """
