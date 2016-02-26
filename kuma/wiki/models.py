@@ -15,8 +15,7 @@ from django.db import models, transaction
 from django.db.models import signals
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext, ugettext_lazy as _
 from pyquery import PyQuery
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase

@@ -83,7 +83,13 @@
             <a href="{{ attachment.file.get_file_url() }}" target="_blank">{{ attachment.file.title }}</a>
             <div class="attachment-description">{{ attachment.file.current_revision.description }}</div>
           </td>
-          <td>{{ attachment.file.current_revision.file.size|filesizeformat }} ({{ _('%(bytes)s bytes', bytes=attachment.file.current_revision.file.size) }})</td>
+          <td>
+          {% if attachment.file.current_file_size %}
+            {{ attachment.file.current_file_size|filesizeformat }} ({{ _('%(bytes)s bytes', bytes=attachment.file.current_file_size) }})
+          {% else %}
+            {{ _('n/a') }}
+          {% endif %}
+          </td>
           <td>{{ datetimeformat(attachment.file.modified, format='datetime') }}</td>
           <td>
             <a href="{{ attachment.file.current_revision.creator.get_absolute_url() }}">

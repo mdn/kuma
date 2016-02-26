@@ -4,8 +4,10 @@ from datetime import datetime
 from django.conf import settings
 from django.db import models
 from django.db.utils import IntegrityError
-from django_mysql.models import Model as MySQLModel
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
+
+from django_mysql.models import Model as MySQLModel
 
 from .utils import attachment_upload_to, full_attachment_url
 
@@ -47,6 +49,17 @@ class Attachment(models.Model):
 
     def get_file_url(self):
         return full_attachment_url(self.id, self.current_revision.filename)
+
+    @cached_property
+    def current_file_size(self):
+        """
+        Return the current revisions file size or None in case there is no
+        current revision.
+        """
+        try:
+            return self.current_revision.file.size
+        except (OSError, AttributeError):
+            return None
 
     def attach(self, document, user, revision):
         """
