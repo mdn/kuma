@@ -189,6 +189,15 @@ class DocumentAttachment(models.Model):
     def __unicode__(self):
         return u'"%s" for document "%s"' % (self.file, self.document)
 
+    def clean(self):
+        if self.pk and (self.document.files.through.objects.exclude(pk=self.pk)
+                                                           .exists()):
+            raise ValidationError(
+                _("Attachment %(attachment_id)s can't be attached "
+                  "multiple times to document %(document_id)s") %
+                {'attachment_id': self.pk, 'document_id': self.document.pk}
+            )
+
 
 @register_live_index
 class Document(NotificationsMixin, models.Model):

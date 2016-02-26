@@ -60,13 +60,6 @@ class Attachment(models.Model):
         try:
             document_attachment = (document.files.through.objects
                                                          .get(pk=self.pk))
-        except MultipleObjectsReturned:
-            # There may be multiple uploaded files referenced in the document
-            # content which could have created multiple of the intermediates
-            # TODO: what to do with the others?
-            document_attachment = (document.files.through.objects
-                                                         .filter(pk=self.pk)
-                                                         .first())
         except document.files.through.DoesNotExist:
             # no previous uploads found, create a new document-attachment
             document.files.through.objects.create(file=self,
