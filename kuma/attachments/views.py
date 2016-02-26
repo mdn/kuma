@@ -90,6 +90,7 @@ def edit_attachment(request, document_slug, document_locale):
         attachment = Attachment.objects.create(title=revision.title)
         revision.attachment = attachment
         revision.save()
+        # adding the attachment to the document's files (M2M)
         attachment.attach(document, request.user, revision)
         return redirect(document.get_edit_url())
     else:

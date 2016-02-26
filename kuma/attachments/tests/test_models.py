@@ -36,7 +36,7 @@ class AttachmentModelTests(UserTestCase):
             is_approved=True)
         self.revision2.creator = self.test_user
         self.revision2.file.save('filename2.txt',
-                            ContentFile('Meh meh I am a test file.'))
+                                 ContentFile('Meh meh I am a test file.'))
 
     def test_trash_revision(self):
         self.assertEqual(TrashedAttachment.objects.count(), 0)
@@ -92,7 +92,7 @@ class AttachmentModelTests(UserTestCase):
         self.revision2.delete()
         self.assertTrue(self.attachment.current_revision, self.revision)
 
-        # deleting the only revision deletes the attachment
+        # deleting the only revision left raises an IntegrityError exception
         self.assertRaises(IntegrityError, self.revision.delete)
 
     def test_permissions(self):

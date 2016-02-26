@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 
 from django.conf import settings
-from django.core.exceptions import MultipleObjectsReturned
 from django.db import models
 from django.db.utils import IntegrityError
 from django_mysql.models import Model as MySQLModel
@@ -52,7 +51,7 @@ class Attachment(models.Model):
     def attach(self, document, user, revision):
         """
         When an attachment revision form is saved, this is used to attach
-        the new attachment revision to the given document via an intermediate
+        the new attachment to the given document via an intermediate M2M
         model that stores some extra data like the user and the revision's
         filename.
         """

@@ -21,8 +21,8 @@ class AttachmentsConfig(AppConfig):
 
         AttachmentRevision = self.get_model('AttachmentRevision')
         signals.post_delete.connect(self.after_revision_delete,
-                                   sender=AttachmentRevision,
-                                   dispatch_uid='attachments.revision.delete')
+                                    sender=AttachmentRevision,
+                                    dispatch_uid='attachments.revision.delete')
 
     def after_revision_delete(self, **kwargs):
         """
