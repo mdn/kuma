@@ -14,9 +14,9 @@ from kuma.core.urlresolvers import reverse
 
 from .decorators import check_readonly
 from .forms import RevisionAkismetSubmissionAdminForm
-from .models import (Document, DocumentSpamAttempt, DocumentTag, DocumentZone,
-                     EditorToolbar, Revision, RevisionAkismetSubmission,
-                     RevisionIP)
+from .models import (Document, DocumentDeletionLog, DocumentSpamAttempt,
+                     DocumentTag, DocumentZone, EditorToolbar,
+                     Revision, RevisionAkismetSubmission, RevisionIP)
 
 
 def dump_selected_documents(self, request, queryset):
@@ -310,6 +310,14 @@ class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
         """
         return Document.admin_objects.all()
 
+
+@admin.register(DocumentDeletionLog)
+class DocumentDeletionLogAdmin(DisabledDeletionMixin, admin.ModelAdmin):
+    list_display = ['slug', 'locale', 'user', 'timestamp']
+    list_filter = ['timestamp', 'locale']
+    search_fields = ['slug', 'reason']
+    ordering = ['-timestamp']
+    readonly_fields = ['locale', 'slug', 'user', 'timestamp']
 
 class DocumentTagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
