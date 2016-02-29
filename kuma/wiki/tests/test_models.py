@@ -111,21 +111,6 @@ class DocumentTests(UserTestCase):
         assert de_data['title'] == de_doc.title
         assert de_data['uuid'] == str(de_doc.uuid)
 
-    def test_json_data_null_uuid(self):
-        """Test json data during the UUID transition period."""
-        rev = revision(is_approved=True, save=True, content='Sample document')
-        doc = rev.document
-        doc.uuid = None
-        doc.save()
-        de_doc = document(parent=doc, locale='de', uuid=None, save=True)
-        revision(document=de_doc, save=True)
-
-        data = doc.get_json_data()
-        assert data['uuid'] is None
-        assert 'translations' in data
-        assert len(data['translations']) == 1
-        assert data['translations'][0]['uuid'] is None
-
     def test_document_is_template(self):
         """is_template stays in sync with the title"""
         d = document(title='test')
