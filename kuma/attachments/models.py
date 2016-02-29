@@ -150,8 +150,16 @@ class AttachmentRevision(models.Model):
                 self.attachment.current_revision.id < self.id):
             self.make_current()
 
-    def delete(self, username=None, *args, **kwargs):
-        if self.siblings().count() == 0:
+    def delete(self, username=None, individual=True, *args, **kwargs):
+        """
+        Adds a check if the deletion was originally intended to be done
+        individually or from a nested deletion when an attachment and all
+        of its revisions was supposed to be deleted.
+
+        individual == True means only the revision should be deleted and
+        therefor the check if there are other sibling revisions is moot.
+        """
+        if individual and self.siblings().count() == 0:
             raise IntegrityError(u'You cannot delete the last revision of '
                                  u'attachment %s' % self.attachment)
         trash_item = self.trash(username=username)

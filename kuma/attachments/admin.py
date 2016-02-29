@@ -50,7 +50,8 @@ class AttachmentAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
         trashed_attachments = []
         for revision in revisions:
             trashed_attachment = revision.delete(
-                username=request.user.username
+                username=request.user.username,
+                individual=False,
             )
             trashed_attachments.append(trashed_attachment)
         if trashed_attachments:
