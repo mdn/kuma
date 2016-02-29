@@ -67,46 +67,47 @@ class DocumentTests(UserTestCase):
         de_doc.current_revision.review_tags.set(*expected_review_tags)
 
         # Ensure the doc's json field is empty at first
-        eq_(None, doc.json)
+        assert doc.json is None
 
         # Get JSON data for the doc, and ensure the doc's json field is now
         # properly populated.
         data = doc.get_json_data()
-        eq_(json.dumps(data), doc.json)
+        assert doc.json == json.dumps(data)
 
         # Load up another copy of the doc from the DB, and check json
         saved_doc = Document.objects.get(pk=doc.pk)
-        eq_(json.dumps(data), saved_doc.json)
+        assert saved_doc.json == json.dumps(data)
 
         # Check the fields stored in JSON of the English doc
         # (the fields are created in build_json_data in models.py)
-        eq_(doc.title, data['title'])
-        eq_(doc.title, data['label'])
-        eq_(doc.get_absolute_url(), data['url'])
-        eq_(doc.id, data['id'])
-        eq_(doc.slug, data['slug'])
+        assert data['title'] == doc.title
+        assert data['label'] == doc.title
+        assert data['url'] == doc.get_absolute_url()
+        assert data['id'] == doc.id
+        assert data['slug'] == doc.slug
         result_tags = sorted([str(x) for x in data['tags']])
-        eq_(expected_tags, result_tags)
+        assert result_tags == expected_tags
         result_review_tags = sorted([str(x) for x in data['review_tags']])
-        eq_(expected_review_tags, result_review_tags)
-        eq_(doc.locale, data['locale'])
-        eq_(doc.current_revision.summary, data['summary'])
-        eq_(doc.modified.isoformat(), data['modified'])
-        eq_(doc.current_revision.created.isoformat(), data['last_edit'])
+        assert result_review_tags == expected_review_tags
+        assert data['locale'] == doc.locale
+        assert data['summary'] == doc.current_revision.summary
+        assert data['modified'] == doc.modified.isoformat()
+        assert data['last_edit'] == doc.current_revision.created.isoformat()
 
         # Check fields of translated doc
-        ok_('translations' in data)
-        eq_(de_doc.locale, data['translations'][0]['locale'])
+        assert 'translations' in data
+        assert len(data['translations']) == 1
+        de_data = data['translations'][0]
+        assert de_data['locale'] == de_doc.locale
         result_l10n_tags = sorted([str(x) for x
-                                   in data['translations'][0]['localization_tags']])
-        eq_(expected_l10n_tags, result_l10n_tags)
-        result_tags = sorted([str(x) for x in data['translations'][0]['tags']])
-        eq_(expected_tags, result_tags)
-        result_review_tags = sorted([str(x) for x
-                                     in data['translations'][0]['review_tags']])
-        eq_(expected_review_tags, result_review_tags)
-        eq_(de_doc.current_revision.summary, data['translations'][0]['summary'])
-        eq_(de_doc.title, data['translations'][0]['title'])
+                                   in de_data['localization_tags']])
+        assert result_l10n_tags == expected_l10n_tags
+        result_tags = sorted([str(x) for x in de_data['tags']])
+        assert result_tags == expected_tags
+        result_review_tags = sorted([str(x) for x in de_data['review_tags']])
+        assert result_review_tags == expected_review_tags
+        assert de_data['summary'] == de_doc.current_revision.summary
+        assert de_data['title'] == de_doc.title
 
     def test_document_is_template(self):
         """is_template stays in sync with the title"""
