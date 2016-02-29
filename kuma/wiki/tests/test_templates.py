@@ -11,6 +11,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.test.utils import override_settings
+from django.utils import timezone
 from django.utils.http import urlquote
 from pyquery import PyQuery as pq
 from waffle.models import Flag
@@ -245,7 +246,7 @@ class RevisionTests(UserTestCase, WikiTestCase):
         """Load the revision view page and verify the title and content."""
         d = _create_document()
         r = d.current_revision
-        r.created = datetime(2011, 1, 1)
+        r.created = datetime(2011, 1, 1, tzinfo=timezone.utc)
         r.save()
         url = reverse('wiki.revision', args=[d.slug, r.id])
         response = self.client.get(url)

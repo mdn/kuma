@@ -11,7 +11,7 @@ import jsonpickle
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.db import IntegrityError
-from django.utils import encoding
+from django.utils import encoding, timezone
 
 from kuma.core.utils import memcache_lock
 from kuma.feeder.models import Feed, Entry
@@ -232,7 +232,7 @@ class Command(NoArgsCommand):
                 last_publication = datetime.datetime(yr, mon, d, hr, min, sec)
             else:
                 log.warn("Entry has no updated field, faking it")
-                last_publication = datetime.datetime.now()
+                last_publication = timezone.now()
 
             new_entry = Entry(feed=feed, guid=entry_guid, raw=json_entry,
                               visible=True, last_published=last_publication)

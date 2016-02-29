@@ -1,11 +1,9 @@
-from datetime import datetime
-
-from django.contrib import admin
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import admin, messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.utils import timezone
 from django.utils.html import escape
 
 from kuma.core.admin import DisabledDeletionMixin
@@ -20,7 +18,7 @@ from .models import (Document, DocumentSpamAttempt, DocumentTag, DocumentZone,
 
 
 def dump_selected_documents(self, request, queryset):
-    filename = "documents_%s.json" % (datetime.now().isoformat(),)
+    filename = "documents_%s.json" % timezone.now().isoformat()
     response = HttpResponse(content_type="text/plain")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     Document.objects.dump_json(queryset, response)
@@ -398,6 +396,7 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
                 return AdminForm(request, *args, **kwargs)
 
         return AdminFormWithRequest
+
 
 admin.site.register(Document, DocumentAdmin)
 admin.site.register(DocumentSpamAttempt, DocumentSpamAttemptAdmin)

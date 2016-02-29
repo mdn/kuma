@@ -14,13 +14,12 @@ from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
 from django.template.loader import get_template
+from django.utils import timezone
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
-from django.utils.timezone import get_default_timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
 from django_jinja import library
-from pytz import timezone
 from soapbox.models import Message
 from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
@@ -94,7 +93,8 @@ class Paginator(object):
 
 @library.filter
 def timesince(d, now=None):
-    """Take two datetime objects and return the time between d and now as a
+    """
+    Take two datetime objects and return the time between d and now as a
     nicely formatted string, e.g. "10 minutes".  If d is None or occurs after
     now, return ''.
 
@@ -106,7 +106,6 @@ def timesince(d, now=None):
     Adapted from django.utils.timesince to have better i18n (not assuming
     commas as list separators and including "ago" so order of words isn't
     assumed), show only one time unit, and include seconds.
-
     """
     if d is None:
         return u''
@@ -126,10 +125,7 @@ def timesince(d, now=None):
         (1, lambda n: ungettext('%(number)d second ago',
                                 '%(number)d seconds ago', n))]
     if not now:
-        if d.tzinfo:
-            now = datetime.datetime.now(get_default_timezone())
-        else:
-            now = datetime.datetime.now()
+        now = timezone.now()
 
     # Ignore microsecond part of 'd' since we removed it from 'now'
     delta = now - (d - datetime.timedelta(0, 0, d.microsecond))
@@ -164,19 +160,6 @@ def page_title(title):
 def level_tag(message):
     return jinja2.Markup(force_text(LEVEL_TAGS.get(message.level, ''),
                                     strings_only=True))
-
-
-@library.filter
-def isotime(t):
-    """Date/Time format according to ISO 8601"""
-    if not hasattr(t, 'tzinfo'):
-        return
-    return _append_tz(t).astimezone(pytz.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-def _append_tz(t):
-    tz = pytz.timezone(settings.TIME_ZONE)
-    return tz.localize(t)
 
 
 @library.global_function
@@ -273,41 +256,44 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     if not isinstance(value, datetime.datetime):
         if isinstance(value, datetime.date):
             # Turn a date into a datetime
-            value = datetime.datetime.combine(value,
+            today = datetime.datetime.combine(value,
                                               datetime.datetime.min.time())
+            value = timezone.make_aware(today, timezone.get_default_timezone())
         else:
             # Expecting datetime value
             raise ValueError
 
-    default_tz = timezone(settings.TIME_ZONE)
-    tzvalue = default_tz.localize(value)
-
     user = context['request'].user
     try:
         if user.is_authenticated() and user.timezone:
-            user_tz = timezone(user.timezone)
-            tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
+            user_tz = pytz.timezone(user.timezone)
+            value = user_tz.normalize(value.astimezone(user_tz))
     except AttributeError:
         pass
 
     locale = _babel_locale(_contextual_locale(context))
 
-    # If within a day, 24 * 60 * 60 = 86400s
+    format_params = {
+        'locale': locale,
+        'tzinfo': value.tzinfo,
+    }
+
     if format == 'shortdatetime':
-        # Check if the date is today
-        if value.toordinal() == datetime.date.today().toordinal():
-            formatted = _(u'Today at %s') % format_time(
-                tzvalue, format='short', locale=locale)
+        # Check if the date is today.
+        if (value.toordinal() ==
+                timezone.now().astimezone(value.tzinfo).toordinal()):
+            formatted_time = format_time(value, format='short', **format_params)
+            formatted = _(u'Today at %s') % formatted_time
         else:
-            formatted = format_datetime(tzvalue, format='short', locale=locale)
+            formatted = format_datetime(value, format='short', **format_params)
     elif format == 'longdatetime':
-        formatted = format_datetime(tzvalue, format='long', locale=locale)
+        formatted = format_datetime(value, format='long', **format_params)
     elif format == 'date':
-        formatted = format_date(tzvalue, locale=locale)
+        formatted = format_date(value, locale=locale)
     elif format == 'time':
-        formatted = format_time(tzvalue, locale=locale)
+        formatted = format_time(value, **format_params)
     elif format == 'datetime':
-        formatted = format_datetime(tzvalue, locale=locale)
+        formatted = format_datetime(value, **format_params)
     else:
         # Unknown format
         raise DateTimeFormatError
@@ -315,7 +301,7 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     if output == 'json':
         return formatted
     return jinja2.Markup('<time datetime="%s">%s</time>' %
-                         (tzvalue.isoformat(), formatted))
+                         (value.isoformat(), formatted))
 
 
 @library.global_function
