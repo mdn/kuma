@@ -318,6 +318,9 @@ class Document(NotificationsMixin, models.Model):
 
     summary_text = models.TextField(editable=False, blank=True, null=True)
 
+    # TODO bug 1246967: Enable field once migration is run in production
+    # uuid = models.UUIDField(default=uuid4, editable=False, null=True)
+
     class Meta(object):
         unique_together = (
             ('parent', 'locale'),
