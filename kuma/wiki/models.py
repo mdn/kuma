@@ -613,6 +613,10 @@ class Document(NotificationsMixin, models.Model):
                     summary = revision.summary
                 else:
                     summary = translation.get_summary(strip_markup=False)
+                if translation.uuid:
+                    translation_uuid = str(translation.uuid)
+                else:
+                    translation_uuid = None
                 translations.append({
                     'last_edit': revision.created.isoformat(),
                     'locale': translation.locale,
@@ -623,6 +627,7 @@ class Document(NotificationsMixin, models.Model):
                     'tags': list(translation.tags.names()),
                     'title': translation.title,
                     'url': translation.get_absolute_url(),
+                    'uuid': translation_uuid
                 })
 
         if self.current_revision:
@@ -653,11 +658,17 @@ class Document(NotificationsMixin, models.Model):
         else:
             modified = now_iso
 
+        if self.uuid:
+            uuid = str(self.uuid)
+        else:
+            uuid = None
+
         return {
             'title': self.title,
             'label': self.title,
             'url': self.get_absolute_url(),
             'id': self.id,
+            'uuid': uuid,
             'slug': self.slug,
             'tags': tags,
             'review_tags': review_tags,
