@@ -84,6 +84,7 @@ class DocumentTests(UserTestCase):
         assert data['label'] == doc.title
         assert data['url'] == doc.get_absolute_url()
         assert data['id'] == doc.id
+        assert data['uuid'] == str(doc.uuid)
         assert data['slug'] == doc.slug
         result_tags = sorted([str(x) for x in data['tags']])
         assert result_tags == expected_tags
@@ -108,6 +109,21 @@ class DocumentTests(UserTestCase):
         assert result_review_tags == expected_review_tags
         assert de_data['summary'] == de_doc.current_revision.summary
         assert de_data['title'] == de_doc.title
+        assert de_data['uuid'] == str(de_doc.uuid)
+
+    def test_json_data_null_uuid(self):
+        """Test json data during the UUID transition period."""
+        doc, rev = doc_rev('Sample document')
+        doc.uuid = None
+        doc.save()
+        de_doc = document(parent=doc, locale='de', uuid=None, save=True)
+        revision(document=de_doc, save=True)
+
+        data = doc.get_json_data()
+        assert data['uuid'] is None
+        assert 'translations' in data
+        assert len(data['translations']) == 1
+        assert data['translations'][0]['uuid'] is None
 
     def test_document_is_template(self):
         """is_template stays in sync with the title"""
