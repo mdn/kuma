@@ -507,6 +507,7 @@ INSTALLED_APPS = (
     'honeypot',
     'cacheback',
     'django_extensions',
+    'captcha',
 
     'kuma.dashboards',
     'statici18n',
@@ -1247,6 +1248,14 @@ CONSTANCE_CONFIG = dict(
     AKISMET_KEY=(
         '',
         'API key for Akismet spam checks, leave empty to disable'
+    ),
+    RECAPTCHA_PUBLIC_KEY=(
+        '',
+        'ReCAPTCHA public key, leave empty to disable'
+    ),
+    RECAPTCHA_PRIVATE_KEY=(
+        '',
+        'ReCAPTCHA private key, leave empty to disable'
     )
 )
 
@@ -1401,3 +1410,7 @@ if SENTRY_DSN:
     INSTALLED_APPS = INSTALLED_APPS + (
         'raven.contrib.django.raven_compat',
     )
+
+# Tell django-recaptcha we want to use "No CAPTCHA".
+# Note: The API keys are located in Django constance.
+NOCAPTCHA = True  # Note: Using No Captcha implies SSL.
