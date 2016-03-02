@@ -115,52 +115,64 @@
                 {{ form.email }}
               {% else %}
 
-              <li class="{{ 'error' if form.email.errors or form.other_email.errors }}">
-                <label for="{{ form.email.id_for_label }}" class="outer"><b>{{ form.email.label }}</b></label>
-                <ul class="errorlist">
-                  {% for error in form.email.errors %}
-                    <li>
-                    {# we have to handle this error message here to have access to the request #}
-                    {% if error == form.duplicate_email_error_label %}
-                      {% trans persona_login_url=persona_login_url, provider_name=provider.name %}
-                      A profile already exists with the selected email address.
-                      <a href="{{ persona_login_url }}" class="launch-persona-login" data-next="{{ persona_next_url }}">Connect your {{ provider_name }} account to it.</a>
-                      {% endtrans %}
-                    {% else %}
-                      {{ error }}
-                    {% endif %}
+                <li class="{{ 'error' if form.email.errors or form.other_email.errors }}">
+                  <label for="{{ form.email.id_for_label }}" class="outer"><b>{{ form.email.label }}</b></label>
+                  <ul class="errorlist">
+                    {% for error in form.email.errors %}
+                      <li>
+                      {# we have to handle this error message here to have access to the request #}
+                      {% if error == form.duplicate_email_error_label %}
+                        {% trans persona_login_url=persona_login_url, provider_name=provider.name %}
+                        A profile already exists with the selected email address.
+                        <a href="{{ persona_login_url }}" class="launch-persona-login" data-next="{{ persona_next_url }}">Connect your {{ provider_name }} account to it.</a>
+                        {% endtrans %}
+                      {% else %}
+                        {{ error }}
+                      {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  <ul class="choices">
+                  {% set matching_uids = matching_accounts.values_list('uid', flat=True) %}
+                  {% for email_choice in form.email %}
+                    {% set id_for_label="%s_%s" % (email_choice.name, loop.index0) %}
+                    <li class="{{ 'exists' if email_choice.choice_value in matching_uids }}">
+                      {% if email_choice.choice_value == form.other_email_value %}
+                        {{ email_choice.tag() }}
+                        <label for="{{ id_for_label }}" class="inner other-label">{{ _('Other:') }}</label>
+                        {{ form.other_email }}
+                        {{ form.other_email.error }}
+                      {% else %}
+                      <label for="{{ id_for_label }}">
+                        {{ email_choice.tag() }}
+                        {{ email_choice.choice_label|safe }}
+                      </label>
+                      {% endif %}
                     </li>
                   {% endfor %}
-                </ul>
-                <ul class="choices">
-                {% set matching_uids = matching_accounts.values_list('uid', flat=True) %}
-                {% for email_choice in form.email %}
-                  {% set id_for_label="%s_%s" % (email_choice.name, loop.index0) %}
-                  <li class="{{ 'exists' if email_choice.choice_value in matching_uids }}">
-                    {% if email_choice.choice_value == form.other_email_value %}
-                      {{ email_choice.tag() }}
-                      <label for="{{ id_for_label }}" class="inner other-label">{{ _('Other:') }}</label>
-                      {{ form.other_email }}
-                      {{ form.other_email.error }}
-                    {% else %}
-                    <label for="{{ id_for_label }}">
-                      {{ email_choice.tag() }}
-                      {{ email_choice.choice_label|safe }}
-                    </label>
-                    {% endif %}
-                  </li>
-                {% endfor %}
-                </ul>
-                <p class="field-explanation"><small>
-                    {{ _('What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="%(privacy_url)s">privacy policy</a>.', privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
-                </small></p>
-              </li>
+                  </ul>
+                  <p class="field-explanation"><small>
+                      {{ _('What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="%(privacy_url)s">privacy policy</a>.', privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
+                  </small></p>
+                </li>
+              {% endif %}
+
+              {% if form.captcha %}
+                <li class="{{ 'error' if form.captcha.errors }}">
+                  {% if form.captcha.errors %}
+                    {{ form.captcha.errors }}
+                  {% endif %}
+                  {{ form.captcha }}
+                </li>
               {% endif %}
 
               <li>{{ newsletter_widget(form) }}</li>
 
               <li>
+                <fieldset class="section">
+                  <legend><b>{{ _('Terms and Privacy') }}</b></legend>
                   <ol>
+
                       <li id="terms-agree>">
                           <ul class="errorlist">
                           {{ form.terms.errors }}
@@ -173,6 +185,7 @@
                       </label>
                       </li>
                   </ol>
+                </fieldset>
               </li>
 
               <li class="submit">

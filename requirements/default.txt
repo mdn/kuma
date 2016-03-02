@@ -32,6 +32,7 @@ django-mozilla-product-details==0.7.1 --hash=sha256:c50bffb9828a9139156904a11c50
 django-picklefield==0.3.2 --hash=sha256:5489fef164de43725242d56e65e016137d3df0d1a00672bda72d807f5b2b0d99
 django-pipeline==1.5.4 --hash=sha256:a5a909f403d0ea56f211618949ff4e378f16e5a996bde819bd2b5b0e7a9bb8fe
 django-ratelimit==0.6.0 --hash=sha256:f73b53b2c4fd342cbd4b983ffc33fdcf8f8a6f595d548865ea63c839ef38293c
+django-recaptcha==1.0.5 --hash=sha256:dc370fa0f7bd77378f8be5f03e88906bf0b62b8478b35af05846f7d640f1ec32
 djangorestframework==3.3.2 --hash=sha256:5634b1ff56581bf0fe4075e86227fc9693c1ca031c7213c9ae942c445c24817b
 django-smuggler==0.6.1 --hash=sha256:b3719c999a3c121006f5eb1d737be0c90d68a11a243a95f93341b366f049da10
 django-soapbox==1.3 --hash=sha256:69ccf5eb9200f294f400864c9f11990a8bdcd75ed8965cd984b7d6d3d243cf49
