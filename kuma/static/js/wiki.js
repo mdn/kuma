@@ -605,6 +605,7 @@
         function toggleImages() {
             var $hiddenContributors;
             $hiddenContributors = $contributors.find('li.' + hiddenClass);
+            $contributors.toggleClass('contributor-avatars-open');
             if($hiddenContributors.length) {
                 mdn.analytics.trackEvent({
                     category: 'Top Contributors',

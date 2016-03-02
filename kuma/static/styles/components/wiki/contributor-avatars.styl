@@ -13,11 +13,19 @@ $avatar-limit = 6;
     margin-bottom: $grid-spacing;
     color: #777;
     set-smaller-font-size();
+    bidi-value(text-align, right, left);
 
     .from-search &,
     .no-js & {
         display: none;
     }
+
+    &.contributor-avatars-open {
+        max-width: none;
+        width: 100%;
+        bidi-style(margin-left, 0, margin-right, 0);
+    }
+
 
     ul {
         display: inline-block;
@@ -43,6 +51,7 @@ $avatar-limit = 6;
         a {
             display: inline-block;
             vendorize(transition, all .2s);
+            background-color: $grey;
 
             &:hover,
             &:focus {
