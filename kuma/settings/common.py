@@ -843,7 +843,6 @@ PIPELINE_JS = {
             'js/wiki.js',
             'js/wiki-samples.js',
             'js/social.js',
-            'js/helpfulness.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
@@ -873,6 +872,15 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/wiki-compat-tables.js',
         'template_name': 'pipeline/javascript-array.jinja',
+    },
+    'helpfulness': {
+        'source_filenames': (
+            'js/helpfulness.js',
+        ),
+        'output_filename': 'build/js/helpfulness.js',
+        'extra_context': {
+            'async': True,
+        },
     },
     'newsletter': {
         'source_filenames': (

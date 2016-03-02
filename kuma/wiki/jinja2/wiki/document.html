@@ -381,6 +381,8 @@
 
 {% block js %}
 
+  {% javascript 'helpfulness' %}
+
   {% if waffle.flag('section_edit') %}
     <script type="text/javascript">
         (function($) {
