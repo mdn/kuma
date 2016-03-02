@@ -50,20 +50,6 @@ def get_user(username='testuser'):
             ' users fixture.' % username)
 
 
-def mock_lookup_user():
-    return {u'confirmed': True,
-            u'country': u'us',
-            u'created-date': u'12/8/2013 8:05:55 AM',
-            u'email': u'testuser@test.com',
-            u'format': u'H',
-            u'lang': u'en-US',
-            u'master': True,
-            u'newsletters': [],
-            u'pending': False,
-            u'status': u'ok',
-            u'token': u'cdaa9e5d-2023-5f59-974d-83f6a29514ec'}
-
-
 class SessionAwareClient(Client):
     """
     Just a small override to patch the session property to be able to

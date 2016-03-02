@@ -1,5 +1,4 @@
 {% extends "socialaccount/base.html" %}
-{% from 'includes/newsletter.html' import newsletter_widget with context %}
 
 {% set title = _('Create your MDN profile to continue') %}
 
@@ -7,13 +6,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {% stylesheet 'newsletter' %}
     {% stylesheet 'submission' %}
-{% endblock %}
-
-{% block site_js %}
-    {{ super() }}
-    {% javascript 'newsletter' %}
 {% endblock %}
 
 {% set provider = account.get_provider() %}
@@ -165,8 +158,6 @@
                   {{ form.captcha }}
                 </li>
               {% endif %}
-
-              <li>{{ newsletter_widget(form) }}</li>
 
               <li>
                 <fieldset class="section">

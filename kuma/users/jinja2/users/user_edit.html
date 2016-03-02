@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% from 'includes/newsletter.html' import newsletter_widget with context %}
 {% from 'includes/common_macros.html' import li_field %}
 
 {% set accounts = social_accounts(edit_user) %}
@@ -15,14 +14,12 @@
   {{ super() }}
   {% stylesheet 'jquery-ui' %}
   {% stylesheet 'users' %}
-  {% stylesheet 'newsletter' %}
   {% stylesheet 'submission' %}
 {% endblock %}
 
 {% block site_js %}
   {{ super() }}
   {% javascript 'users' %}
-  {% javascript 'newsletter' %}
 {% endblock %}
 
 {% block content %}
@@ -145,11 +142,6 @@
               </fieldset>
 
       </div>
-
-      <div class="column-4"><div class="user-newsletter-container">
-        {{ newsletter_widget(newsletter_form) }}
-        <button type="submit" class="positive">{{ _('Save Changes') }}<i aria-hidden="true" class="icon-save"></i></button>
-      </div></div>
 
     </div>
 

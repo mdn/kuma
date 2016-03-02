@@ -15,13 +15,14 @@ from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import eq_, mock_lookup_user, ok_
+from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 
-from . import UserTestCase, user, email
+from . import UserTestCase, email, user
 from ..models import UserBan
-from ..signup import SignupForm
 from ..providers.github.provider import KumaGitHubProvider
+from ..signup import SignupForm
+
 
 TESTUSER_PASSWORD = 'testpass'
 
@@ -177,13 +178,7 @@ class UserViewsTest(UserTestCase):
         except PageNotAnInteger:
             self.fail("Non-numeric page number should not cause an error")
 
-    @mock.patch('basket.lookup_user')
-    @mock.patch('basket.subscribe')
-    @mock.patch('basket.unsubscribe')
-    def test_user_edit(self, unsubscribe, subscribe, lookup_user):
-        lookup_user.return_value = mock_lookup_user()
-        subscribe.return_value = True
-        unsubscribe.return_value = True
+    def test_user_edit(self):
         testuser = self.user_model.objects.get(username='testuser')
         url = reverse('users.user_detail', args=(testuser.username,))
         response = self.client.get(url, follow=True)
@@ -221,8 +216,6 @@ class UserViewsTest(UserTestCase):
             'user-fullname': "Another Name",
             'user-title': "Another title",
             'user-organization': "Another org",
-            'user-country': "us",
-            'user-format': "html"
         }
 
         response = self.client.post(url, new_attrs, follow=True)
@@ -249,13 +242,7 @@ class UserViewsTest(UserTestCase):
         ok_(reverse('users.user_edit', args=(u.username,)) in
             resp['Location'])
 
-    @mock.patch('basket.lookup_user')
-    @mock.patch('basket.subscribe')
-    @mock.patch('basket.unsubscribe')
-    def test_user_edit_beta(self, unsubscribe, subscribe, lookup_user):
-        lookup_user.return_value = mock_lookup_user()
-        subscribe.return_value = True
-        unsubscribe.return_value = True
+    def test_user_edit_beta(self):
         testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
@@ -275,14 +262,7 @@ class UserViewsTest(UserTestCase):
         doc = pq(response.content)
         eq_('checked', doc.find('input#id_user-beta').attr('checked'))
 
-    @mock.patch('basket.lookup_user')
-    @mock.patch('basket.subscribe')
-    @mock.patch('basket.unsubscribe')
-    def test_user_edit_websites(self, unsubscribe, subscribe, lookup_user):
-        lookup_user.return_value = mock_lookup_user()
-        subscribe.return_value = True
-        unsubscribe.return_value = True
-
+    def test_user_edit_websites(self):
         testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
@@ -343,14 +323,7 @@ class UserViewsTest(UserTestCase):
         for n in ('website', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
-    @mock.patch('basket.lookup_user')
-    @mock.patch('basket.subscribe')
-    @mock.patch('basket.unsubscribe')
-    def test_user_edit_interests(self, unsubscribe, subscribe, lookup_user):
-        lookup_user.return_value = mock_lookup_user()
-        subscribe.return_value = True
-        unsubscribe.return_value = True
-
+    def test_user_edit_interests(self):
         testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
@@ -396,13 +369,7 @@ class UserViewsTest(UserTestCase):
 
         eq_(1, doc.find('.error #id_user-expertise').length)
 
-    @mock.patch('basket.lookup_user')
-    @mock.patch('basket.subscribe')
-    @mock.patch('basket.unsubscribe')
-    def test_bug_709938_interests(self, unsubscribe, subscribe, lookup_user):
-        lookup_user.return_value = mock_lookup_user()
-        subscribe.return_value = True
-        unsubscribe.return_value = True
+    def test_bug_709938_interests(self):
         testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
@@ -429,14 +396,8 @@ class UserViewsTest(UserTestCase):
         assert ('Ensure this value has at most 255 characters'
                 in doc.find('ul.errorlist li').text())
 
-    @mock.patch('basket.lookup_user')
-    @mock.patch('basket.subscribe')
-    @mock.patch('basket.unsubscribe')
-    def test_bug_698126_l10n(self, unsubscribe, subscribe, lookup_user):
+    def test_bug_698126_l10n(self):
         """Test that the form field names are localized"""
-        lookup_user.return_value = mock_lookup_user()
-        subscribe.return_value = True
-        unsubscribe.return_value = True
         testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
@@ -448,17 +409,6 @@ class UserViewsTest(UserTestCase):
             ok_(not isinstance(
                 response.context['user_form'].fields[field].label, basestring),
                 'Field %s is a string!' % field)
-
-    def test_bug_1174804(self):
-        """Test that the newsletter form field are safely rendered"""
-        testuser = self.user_model.objects.get(username='testuser')
-        self.client.login(username=testuser.username,
-                          password=TESTUSER_PASSWORD)
-
-        url = reverse('users.user_edit', args=(testuser.username,))
-        response = self.client.get(url, follow=True)
-        doc = pq(response.content)
-        eq_(len(doc.find('input[name=newsletter-format]')), 2)
 
 
 class Test404Case(UserTestCase):
@@ -594,9 +544,7 @@ class AllauthPersonaTestCase(UserTestCase):
             data = {'website': '',
                     'username': persona_signup_username,
                     'email': persona_signup_email,
-                    'newsletter': True,
                     'terms': True,
-                    'agree': True,
                     'g-recaptcha-response': 'FAILED'}
             signup_url = reverse('socialaccount_signup',
                                  locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -623,20 +571,10 @@ class AllauthPersonaTestCase(UserTestCase):
             data = {'website': '',
                     'username': persona_signup_username,
                     'email': persona_signup_email,
-                    'newsletter': True,
                     'terms': True,
                     'g-recaptcha-response': 'PASSED'}
             signup_url = reverse('socialaccount_signup',
                                  locale=settings.WIKI_DEFAULT_LANGUAGE)
-            response = self.client.post(signup_url, data=data, follow=True)
-            eq_(response.status_code, 200)
-            eq_(response.context['form'].errors,
-                {'__all__': ['You must agree to the privacy policy.']})
-
-            # We didn't create a new user.
-            eq_(old_count, self.user_model.objects.count())
-
-            data.update({'agree': True})
             response = self.client.post(signup_url, data=data, follow=True)
             eq_(response.status_code, 200)
             # not on the signup page anymore

@@ -722,12 +722,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/dashboards.css',
     },
-    'newsletter': {
-        'source_filenames': (
-            'css/newsletter.css',
-        ),
-        'output_filename': 'build/styles/newsletter.css',
-    },
     'submission': {
         'source_filenames': (
             'css/submission.css',
@@ -878,15 +872,6 @@ PIPELINE_JS = {
             'js/helpfulness.js',
         ),
         'output_filename': 'build/js/helpfulness.js',
-        'extra_context': {
-            'async': True,
-        },
-    },
-    'newsletter': {
-        'source_filenames': (
-            'js/newsletter.js',
-        ),
-        'output_filename': 'build/js/newsletter.js',
         'extra_context': {
             'async': True,
         },
@@ -1109,20 +1094,6 @@ CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
-    BASKET_RETRIES=(
-        5,
-        'Number of time to retry basket post before giving up.'
-    ),
-    BASKET_RETRY_WAIT=(
-        .5,
-        'How long to wait between basket api request retries. '
-        'We typically multiply this value by the retry number so, e.g., '
-        'the 4th retry waits 4*.5 = 2 seconds.'
-    ),
-    BASKET_API_KEY=(
-        '',
-        'API Key to use for basket requests'
-    ),
     BETA_GROUP_NAME=(
         'Beta Testers',
         'Name of the django.contrib.auth.models.Group to use as beta testers'
@@ -1267,9 +1238,6 @@ CONSTANCE_CONFIG = dict(
     )
 )
 
-BASKET_URL = 'https://basket.mozilla.com'
-BASKET_APPS_NEWSLETTER = 'app-dev'
-
 KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
 
 # Elasticsearch related settings.
@@ -1372,7 +1340,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 ACCOUNT_ADAPTER = 'kuma.users.adapters.KumaAccountAdapter'
-ACCOUNT_SIGNUP_FORM_CLASS = 'kuma.users.forms.NewsletterForm'  # weird but needed
+ACCOUNT_SIGNUP_FORM_CLASS = None
 ACCOUNT_UNIQUE_EMAIL = False
 
 SOCIALACCOUNT_ADAPTER = 'kuma.users.adapters.KumaSocialAccountAdapter'
