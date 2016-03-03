@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-01-30 16:03+0000\n"
-"Last-Translator: Marco Aurélio <ouesten@me.com>\n"
+"PO-Revision-Date: 2016-03-03 15:11+0000\n"
+"Last-Translator: Wolfgang Marcos <wolfgang@alcateia.eti.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -233,7 +233,7 @@ msgstr "...mais documentos"
 
 #: jinja2/base.html:146
 msgid "Mozilla Docs"
-msgstr "Documentos Mozilla"
+msgstr "Documentação da Mozilla"
 
 #: jinja2/base.html:151 kuma/core/sections.py:6
 #: kuma/landing/jinja2/landing/homepage.html:85
@@ -1105,7 +1105,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr "conhecimento compartilhado <span>para a web aberta</span>"
+msgstr "Conhecimento compartilhado <span>para a Web Aberta</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42
 #: kuma/landing/jinja2/landing/homepage.html:59
@@ -1148,7 +1148,7 @@ msgstr "Documentos<br> Mozilla"
 
 #: kuma/landing/jinja2/landing/homepage.html:84
 msgid "App Center"
-msgstr "Centro de Aplicativos"
+msgstr "Central de Aplicativos"
 
 #: kuma/landing/jinja2/landing/homepage.html:89
 msgid "Developer<br />Tools"
@@ -1192,15 +1192,15 @@ msgstr "Web aberta e movel"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Learn Web Development"
-msgstr "Saiba mais sobre desenvolvimento web"
+msgstr "Saiba Mais Sobre Desenvolvimento Web"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Get The Browser For Developers Like You"
-msgstr "Instale o navegador para desenvolvedores como você"
+msgstr "Instale o Navegador Feito para Desenvolvedores Como Você"
 
 #: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Build Open Web Apps"
-msgstr "Crie aplicativos para a web aberta"
+msgstr "Crie Aplicativos Para a Web Aberta"
 
 #: kuma/landing/jinja2/landing/homepage.html:127
 msgid ""
