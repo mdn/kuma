@@ -34,7 +34,7 @@ web:
     - "8000:8000"
 
 nginx:
-  build: ./images/nginx
+  build: ./docker/images/nginx
   volumes:
     - ../static:/app/static
   ports:
@@ -46,12 +46,12 @@ memcached:
   image: memcached
 
 mysql-data:
-  build: ./images/mysql-data
+  build: ./docker/images/mysql-data
   volumes:
     - /var/lib/mysql
 
 mysql:
-  build: ./images/mysql
+  build: ./docker/images/mysql
   environment:
     - MYSQL_ROOT_PASSWORD=docker
     - MYSQL_USER=kuma
