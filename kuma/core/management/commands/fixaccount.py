@@ -32,7 +32,16 @@ class Command(BaseCommand):
             user.save()
 
         # Fix the django-allauth EmailAddress record
-        emailaddress = EmailAddress.objects.get(user=user)
+        try:
+            emailaddress = EmailAddress.objects.get(user=user)
+        except EmailAddress.DoesNotExist:
+            raise CommandError(
+                'There is no account_emailaddress record for this account '
+                'which suggests it was created with createsuperuser. Please '
+                'log into the account with Persona and go through the signup '
+                'process.'
+            )
+
         if emailaddress.email != email:
             self.stdout.write('Fixing email address in account_emailaddress '
                               'record.')
@@ -41,10 +50,9 @@ class Command(BaseCommand):
             emailaddress.save()
 
         try:
-            sa = SocialAccount.objects.get(user=user)
+            SocialAccount.objects.get(user=user)
         except SocialAccount.DoesNotExist:
             self.stdout.write('Creating a socialaccount_socialaccount record.')
-            sa = SocialAccount.objects.create(user=user, provider='Persona', uid=email)
-            sa.save()
+            SocialAccount.objects.create(user=user, provider='Persona', uid=email)
 
         self.stdout.write('Done!')
