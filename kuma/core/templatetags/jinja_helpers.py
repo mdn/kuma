@@ -6,9 +6,7 @@ import urllib
 import bleach
 import jinja2
 import pytz
-from babel import localedata
-from babel.dates import format_date, format_datetime, format_time
-from babel.numbers import format_decimal
+from babel import dates, localedata, numbers
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -263,6 +261,29 @@ def _contextual_locale(context):
     return locale
 
 
+def format_date_value(value, tzvalue, locale, format):
+    if format == 'shortdatetime':
+        # Check if the date is today
+        if value.toordinal() == datetime.date.today().toordinal():
+            formatted = dates.format_time(tzvalue, format='short',
+                                          locale=locale)
+            return _(u'Today at %s') % formatted
+        else:
+            return dates.format_datetime(tzvalue, format='short',
+                                         locale=locale)
+    elif format == 'longdatetime':
+        return dates.format_datetime(tzvalue, format='long', locale=locale)
+    elif format == 'date':
+        return dates.format_date(tzvalue, locale=locale)
+    elif format == 'time':
+        return dates.format_time(tzvalue, locale=locale)
+    elif format == 'datetime':
+        return dates.format_datetime(tzvalue, locale=locale)
+    else:
+        # Unknown format
+        raise DateTimeFormatError
+
+
 @library.global_function
 @jinja2.contextfunction
 def datetimeformat(context, value, format='shortdatetime', output='html'):
@@ -292,25 +313,15 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
 
     locale = _babel_locale(_contextual_locale(context))
 
-    # If within a day, 24 * 60 * 60 = 86400s
-    if format == 'shortdatetime':
-        # Check if the date is today
-        if value.toordinal() == datetime.date.today().toordinal():
-            formatted = _(u'Today at %s') % format_time(
-                tzvalue, format='short', locale=locale)
-        else:
-            formatted = format_datetime(tzvalue, format='short', locale=locale)
-    elif format == 'longdatetime':
-        formatted = format_datetime(tzvalue, format='long', locale=locale)
-    elif format == 'date':
-        formatted = format_date(tzvalue, locale=locale)
-    elif format == 'time':
-        formatted = format_time(tzvalue, locale=locale)
-    elif format == 'datetime':
-        formatted = format_datetime(tzvalue, locale=locale)
-    else:
-        # Unknown format
-        raise DateTimeFormatError
+    try:
+        formatted = format_date_value(value, tzvalue, locale, format)
+    except KeyError:
+        # Babel sometimes stumbles over missing formatters in some locales
+        # e.g. bug #1247086
+        # we fall back formatting the value with the default language code
+        formatted = format_date_value(value, tzvalue,
+                                      _babel_locale(settings.LANGUAGE_CODE),
+                                      format)
 
     if output == 'json':
         return formatted
@@ -320,15 +331,16 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
 
 @library.global_function
 @jinja2.contextfunction
-def number(context, n):
-    """Return the localized representation of an integer or decimal.
+def number(context, number):
+    """
+    Return the localized representation of an integer or decimal.
 
     For None, print nothing.
-
     """
-    if n is None:
+    if number is None:
         return ''
-    return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
+    locale = _babel_locale(_contextual_locale(context))
+    return numbers.format_decimal(number, locale=locale)
 
 
 @library.global_function
