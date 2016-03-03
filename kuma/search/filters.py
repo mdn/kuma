@@ -200,3 +200,23 @@ class HighlightFilterBackend(BaseFilterBackend):
                                                   post_tags=['</mark>'])
 
         return queryset
+
+
+class FunctionScoreFilterBackend(BaseFilterBackend):
+    """
+    Django-rest-framework filter backend for adding function score things.
+    """
+    def filter_queryset(self, request, queryset, view):
+        # Add score-boosting functions as necessary.
+        functions = []
+
+        # Boost scores for documents of web technologies.
+        # FIXME: We should move the tags list to a constant or the db or
+        # something.
+        web_tech_tags = ['JavaScript', 'HTML', 'CSS']
+        functions.append({
+            'filter': {'term': {'tags': web_tech_tags}},
+            'weight': 4.0,
+        })
+
+        return queryset.query('function_score', functions=functions)

@@ -13,8 +13,9 @@ from rest_framework.renderers import JSONRenderer
 from kuma.wiki.search import WikiDocumentType
 
 from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                      get_filters, HighlightFilterBackend,
-                      LanguageFilterBackend, SearchQueryBackend)
+                      FunctionScoreFilterBackend, get_filters,
+                      HighlightFilterBackend, LanguageFilterBackend,
+                      SearchQueryBackend)
 from .jobs import AvailableFiltersJob
 from .queries import Filter, FilterGroup
 from .pagination import SearchPagination
@@ -39,6 +40,7 @@ class SearchView(ListAPIView):
         DatabaseFilterBackend,
         LanguageFilterBackend,
         HighlightFilterBackend,
+        FunctionScoreFilterBackend,
     )
     pagination_class = SearchPagination
 
