@@ -2,6 +2,7 @@ from django.conf.urls import include, url
 from django.views.generic import TemplateView
 
 from kuma.attachments.feeds import AttachmentsFeed
+from kuma.attachments.views import edit_attachment
 
 from . import feeds, views
 from .constants import DOCUMENT_PATH_RE
@@ -21,6 +22,9 @@ document_patterns = [
     url(r'^\$edit$',
         views.edit.edit,
         name='wiki.edit'),
+    url(r'^\$files$',
+        edit_attachment,
+        name='attachments.edit_attachment'),
     url(r'^\$edit/(?P<revision_id>\d+)$',
         views.edit.edit,
         name='wiki.new_revision_based_on'),

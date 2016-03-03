@@ -5,6 +5,7 @@ from django.db import models
 
 import bleach
 from constance import config
+from django_mysql.models import QuerySet
 
 from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
                         TEMPLATE_TITLE_PREFIX)
@@ -20,6 +21,9 @@ class TransformManager(models.Manager):
 
 class BaseDocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
+    def get_queryset(self):
+        return QuerySet(self.model)
+
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
         allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
         blocked_protocols = config.KUMA_WIKI_HREF_BLOCKED_PROTOCOLS
@@ -37,9 +41,8 @@ class BaseDocumentManager(models.Manager):
             attributes = ALLOWED_ATTRIBUTES
             styles = ALLOWED_STYLES
 
-        out = bleach.clean(out, attributes=attributes, tags=tags,
-                           styles=styles)
-        return out
+        return bleach.clean(out, attributes=attributes, tags=tags,
+                            styles=styles)
 
     def get_by_natural_key(self, locale, slug):
         return self.get(locale=locale, slug=slug)

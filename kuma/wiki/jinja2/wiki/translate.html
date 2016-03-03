@@ -161,7 +161,9 @@
       </div>
     </form>
 
-  {% include 'attachments/includes/attachment_list.html' %}
+  {% if document %}
+    {% include 'attachments/includes/attachment_list.html' %}
+  {% endif %}
 
 {% endblock %}
 

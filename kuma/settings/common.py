@@ -58,6 +58,7 @@ if 'mysql' in DEFAULT_DATABASE['ENGINE']:
             'charset': 'utf8',
             'use_unicode': True,
             'init_command': 'SET '
+                            'innodb_strict_mode=1,'
                             'storage_engine=INNODB,'
                             'character_set_connection=utf8,'
                             'collation_connection=utf8_general_ci',
@@ -72,6 +73,11 @@ if 'mysql' in DEFAULT_DATABASE['ENGINE']:
 DATABASES = {
     'default': DEFAULT_DATABASE,
 }
+
+
+SILENCED_SYSTEM_CHECKS = [
+    'django_mysql.W003',
+]
 
 # Cache Settings
 CACHE_PREFIX = 'kuma'
@@ -512,6 +518,7 @@ INSTALLED_APPS = (
     'kuma.dashboards',
     'statici18n',
     'rest_framework',
+    'django_mysql',
 
     # other
     'kuma.humans',
@@ -1176,6 +1183,11 @@ CONSTANCE_CONFIG = dict(
     WIKI_ATTACHMENT_ALLOWED_TYPES=(
         'image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop',
         'Allowed file types for wiki file attachments',
+    ),
+    WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS=(
+        14,
+        "Number of days to keep the trashed attachments files before they "
+        "are removed from the file storage"
     ),
     KUMA_WIKI_HREF_BLOCKED_PROTOCOLS=(
         '(?i)^(data\:?)',
