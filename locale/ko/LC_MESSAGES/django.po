@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-02-24 01:59+0000\n"
+"PO-Revision-Date: 2016-03-05 16:16+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -359,9 +359,9 @@ msgid "Sign Out"
 msgstr "로그 아웃"
 
 #: jinja2/includes/common_macros.html:44
-#, fuzzy, python-format
+#, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr "공헌하시겠습니까?<br><a href=\"%(login_url)s\">로그인</a>해 주십시오."
+msgstr "공헌하고 싶나요?<br /> <a href=\"%(login_url)s\">로그인</a>"
 
 #: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:87
 msgid "Other languages:"
@@ -958,7 +958,7 @@ msgstr "종료일:"
 #: kuma/dashboards/forms.py:44
 #: kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr ""
+msgstr "이전 기간:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
@@ -991,7 +991,7 @@ msgstr "이력"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
-msgstr ""
+msgstr "IP 토글"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:34
 msgid "new"
@@ -1019,14 +1019,14 @@ msgid "Referrer:"
 msgstr "참조"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:64
-#, fuzzy, python-format
+#, python-format
 msgid "banned %(ban_date)s by %(user)s"
-msgstr "제출일: %(entrydate)s  개발자: %(authorlink)s"
+msgstr "%(ban_date)s에 %(user)s에 의해 계정이 정지됨"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:78
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "%(submission_type)s 형식으로 제출됨"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:81
 #, fuzzy, python-format
@@ -1034,9 +1034,8 @@ msgid "%(sent_date)s by %(user)s"
 msgstr "제출일: %(entrydate)s  개발자: %(authorlink)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
-#, fuzzy
 msgid "Resubmit"
-msgstr "제출"
+msgstr "다시 제출"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 #, fuzzy
@@ -1601,9 +1600,8 @@ msgid "The submitted data contains invalid content."
 msgstr "유효하지 않은 콘텐츠가 포함되어 있습니다."
 
 #: kuma/spam/forms.py:87
-#, fuzzy
 msgid "The submitted data contains invalid content. Please try again."
-msgstr "유효하지 않은 콘텐츠가 포함되어 있습니다."
+msgstr "유효하지 않은 콘텐츠가 포함되어 있습니다. 다시 작성해 주세요."
 
 #: kuma/spam/models.py:10
 msgid "created"
@@ -3090,15 +3088,13 @@ msgstr "리비전"
 
 # DevDerby 부메뉴
 #: kuma/wiki/models.py:1818
-#, fuzzy
 msgid "Akismet submission"
-msgstr "신청하기"
+msgstr "Akismet 제출"
 
 # DevDerby 부메뉴
 #: kuma/wiki/models.py:1819
-#, fuzzy
 msgid "Akismet submissions"
-msgstr "신청하기"
+msgstr "Akismet 제출"
 
 #: kuma/wiki/models.py:1862
 msgid "Slug"
@@ -3117,9 +3113,9 @@ msgid ""
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
-#, fuzzy, python-format
+#, python-format
 msgid "Compare Revisions | %(document)s"
-msgstr "리비전 비교 | {document}"
+msgstr "개정판 비교 | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:13
 msgid "Compare Revisions"
@@ -3130,9 +3126,9 @@ msgid "Back to History"
 msgstr "이력으로 돌아가기"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Delete Document | %(document)s"
-msgstr "문서 삭제 | {document}"
+msgstr "문서 삭제 | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
@@ -3149,14 +3145,12 @@ msgstr "생성일"
 
 # 100%
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:23
-#, fuzzy
 msgid "Last Change By"
-msgstr "마지막으로 업데이트 : "
+msgstr "최종변경자"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:26
-#, fuzzy
 msgid "Last Change Date"
-msgstr "아바타 변경"
+msgstr "최종변경일"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
 msgid ""
@@ -3169,9 +3163,9 @@ msgid "Are you sure you want to continue?"
 msgstr "계속 하시겠습니까?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revert Revision | %(document)s"
-msgstr "리비전 복원 | {document}"
+msgstr "개정판 복원 | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:10
 msgid "Are you sure you want to revert to this revision?"
