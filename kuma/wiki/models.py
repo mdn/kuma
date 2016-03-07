@@ -318,8 +318,6 @@ class Document(NotificationsMixin, models.Model):
 
     summary_text = models.TextField(editable=False, blank=True, null=True)
 
-    attachments_populated = models.BooleanField(default=False)
-
     class Meta(object):
         unique_together = (
             ('parent', 'locale'),
@@ -1271,7 +1269,7 @@ Full traceback:
             return None
         return self.current_revision.content_parsed
 
-    def populate_attachments(self, update_populated_field=False):
+    def populate_attachments(self):
         """
         File attachments are stored at the DB level and synced here
         with the document's HTML content.
@@ -1314,7 +1312,7 @@ Full traceback:
         three options of state:
 
         - linked in the document, but not originally uploaded
-        - linked in the document, but originally uploaded
+        - linked in the document and originally uploaded
         - not linked in the document, but originally uploaded
         """
         populated = []
@@ -1331,11 +1329,6 @@ Full traceback:
                 },
             )
             populated.append((relation, created))
-
-        # used by the populate_attachments management commmand
-        # to keep track of those documents that haven't been populated
-        # yet. TODO remove once all documents are populated
-        Document.objects.filter(pk=self.pk).update(attachments_populated=True)
         return populated
 
     @property

@@ -105,6 +105,8 @@
               <a href="{{ document_attachment.document.get_absolute_url() }}">
                 {{ document_attachment.document.title }} ({{ document_attachment.document.locale}})
               </a>{% if not loop.last %}, {% endif %}
+            {% else %}
+              {{ _('n/a') }}
             {% endfor %}
           {% endif %}
           </td>
