@@ -19,7 +19,7 @@ for opt in "$@"; do
 done
 
 if [ ! -d "$CSSDIR" ]; then
-  mkdir $CSSDIR
+  mkdir -p $CSSDIR
 fi
 
 STYLESHEETS=($STYLUSDIR/*.styl)

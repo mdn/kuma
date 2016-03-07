@@ -29,7 +29,7 @@ from kuma.core.decorators import (block_user_agents, login_required,
                                   permission_required, superuser_required)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
-from kuma.search.store import referrer_url
+from kuma.search.store import get_search_url_from_referer
 
 from .. import kumascript
 from ..constants import SLUG_CLEANSING_RE
@@ -262,6 +262,8 @@ def children(request, document_slug, document_locale):
         doc = Document.objects.get(locale=document_locale,
                                    slug=document_slug)
         result = _make_doc_structure(doc, 0, expand, depth)
+        if result is None:
+            result = {'error': 'Document has moved.'}
     except Document.DoesNotExist:
         result = {'error': 'Document does not exist.'}
 
@@ -676,7 +678,7 @@ def document(request, document_slug, document_locale):
         'seo_summary': seo_summary,
         'seo_parent_title': seo_parent_title,
         'share_text': share_text,
-        'search_url': referrer_url(request) or '',
+        'search_url': get_search_url_from_referer(request) or '',
     }
     response = render(request, 'wiki/document.html', context)
     return _set_common_headers(doc, rendering_params['section'], response)

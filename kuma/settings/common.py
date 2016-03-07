@@ -58,6 +58,7 @@ if 'mysql' in DEFAULT_DATABASE['ENGINE']:
             'charset': 'utf8',
             'use_unicode': True,
             'init_command': 'SET '
+                            'innodb_strict_mode=1,'
                             'storage_engine=INNODB,'
                             'character_set_connection=utf8,'
                             'collation_connection=utf8_general_ci',
@@ -72,6 +73,11 @@ if 'mysql' in DEFAULT_DATABASE['ENGINE']:
 DATABASES = {
     'default': DEFAULT_DATABASE,
 }
+
+
+SILENCED_SYSTEM_CHECKS = [
+    'django_mysql.W003',
+]
 
 # Cache Settings
 CACHE_PREFIX = 'kuma'
@@ -507,10 +513,12 @@ INSTALLED_APPS = (
     'honeypot',
     'cacheback',
     'django_extensions',
+    'captcha',
 
     'kuma.dashboards',
     'statici18n',
     'rest_framework',
+    'django_mysql',
 
     # other
     'kuma.humans',
@@ -842,7 +850,6 @@ PIPELINE_JS = {
             'js/wiki.js',
             'js/wiki-samples.js',
             'js/social.js',
-            'js/helpfulness.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
@@ -872,6 +879,15 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/wiki-compat-tables.js',
         'template_name': 'pipeline/javascript-array.jinja',
+    },
+    'helpfulness': {
+        'source_filenames': (
+            'js/helpfulness.js',
+        ),
+        'output_filename': 'build/js/helpfulness.js',
+        'extra_context': {
+            'async': True,
+        },
     },
     'newsletter': {
         'source_filenames': (
@@ -1168,6 +1184,11 @@ CONSTANCE_CONFIG = dict(
         'image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop',
         'Allowed file types for wiki file attachments',
     ),
+    WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS=(
+        14,
+        "Number of days to keep the trashed attachments files before they "
+        "are removed from the file storage"
+    ),
     KUMA_WIKI_HREF_BLOCKED_PROTOCOLS=(
         '(?i)^(data\:?)',
         'Regex for protocols that are blocked for A HREFs'
@@ -1247,6 +1268,14 @@ CONSTANCE_CONFIG = dict(
     AKISMET_KEY=(
         '',
         'API key for Akismet spam checks, leave empty to disable'
+    ),
+    RECAPTCHA_PUBLIC_KEY=(
+        '',
+        'ReCAPTCHA public key, leave empty to disable'
+    ),
+    RECAPTCHA_PRIVATE_KEY=(
+        '',
+        'ReCAPTCHA private key, leave empty to disable'
     )
 )
 
@@ -1401,3 +1430,7 @@ if SENTRY_DSN:
     INSTALLED_APPS = INSTALLED_APPS + (
         'raven.contrib.django.raven_compat',
     )
+
+# Tell django-recaptcha we want to use "No CAPTCHA".
+# Note: The API keys are located in Django constance.
+NOCAPTCHA = True  # Note: Using No Captcha implies SSL.

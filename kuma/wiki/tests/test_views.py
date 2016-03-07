@@ -22,10 +22,11 @@ from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 
 from kuma.attachments.models import Attachment
-from kuma.attachments.utils import make_test_file
+from kuma.attachments.tests import make_test_file
 from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.models import IPBan
+from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import eq_, get_user, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
@@ -39,6 +40,7 @@ from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
 from ..models import (Document, DocumentDeletionLog, DocumentTag, DocumentZone,
                       Revision, RevisionIP)
+from ..templatetags.jinja_helpers import get_compare_url
 from ..views.document import _get_seo_parent_title
 
 
@@ -311,6 +313,14 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(no_doc_url)
         result = json.loads(resp.content)
         eq_(result, {'error': 'Document does not exist.'})
+
+        # Test error json if document is a redirect
+        _make_doc('Old Name', 'Old Name', is_redir=True)
+        redirect_doc_url = reverse('wiki.children', args=['Old Name'],
+                                   locale=settings.WIKI_DEFAULT_LANGUAGE)
+        resp = self.client.get(redirect_doc_url)
+        result = json.loads(resp.content)
+        eq_(result, {'error': 'Document has moved.'})
 
     def test_summary_view(self):
         """The ?summary option should restrict document view to summary"""
@@ -2567,6 +2577,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()
         rev = revision(save=True)
+        previous_rev = rev.previous
 
         testuser2 = get_user(username='testuser2')
         EditDocumentEvent.notify(testuser2, rev.document)
@@ -2576,14 +2587,19 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'title': rev.document.title,
                      'content': 'This edit should send an email',
                      'comment': 'This edit should send an email'})
-        self.client.post(reverse('wiki.edit',
-                                 args=[rev.document.slug]),
-                         data)
+        self.client.post(reverse('wiki.edit', args=[rev.document.slug]), data)
+
         self.assertEquals(1, len(mail.outbox))
         message = mail.outbox[0]
         assert testuser2.email in message.to
         assert rev.document.title in message.body
         assert 'sub-articles' not in message.body
+        # Test that the compare URL points to the right revisions
+        rev = Document.objects.get(pk=rev.document_id).current_revision
+        assert rev.id != previous_rev
+        assert (add_utm(get_compare_url(rev.document, rev.previous.id, rev.id),
+                        'Wiki Doc Edits')
+                in message.body)
 
         # Subscribe another user and assert 2 emails sent this time
         mail.outbox = []
@@ -3475,6 +3491,7 @@ class CodeSampleViewFileServingTests(UserTestCase, WikiTestCase):
         WIKI_ATTACHMENT_ALLOWED_TYPES='text/plain')
     @override_settings(ATTACHMENT_HOST='testserver')
     def test_code_sample_file_serving(self):
+        doc = document(locale='en-US', save=True)
         self.client.login(username='admin', password='testpass')
         # first let's upload a file
         file_for_upload = make_test_file(content='Something something unique')
@@ -3484,13 +3501,15 @@ class CodeSampleViewFileServingTests(UserTestCase, WikiTestCase):
             'comment': 'Yadda yadda yadda',
             'file': file_for_upload,
         }
-        response = self.client.post(reverse('attachments.new_attachment'),
+        response = self.client.post(reverse('attachments.edit_attachment',
+                                            kwargs={'document_path': doc.slug},
+                                            locale='en-US'),
                                     data=post_data)
         eq_(response.status_code, 302)
 
         # then build the document and revision we need to test
         attachment = Attachment.objects.get(title='An uploaded file')
-        filename = attachment.current_revision.filename()
+        filename = attachment.current_revision.filename
         url_css = 'url("files/%(attachment_id)s/%(filename)s")' % {
             'attachment_id': attachment.id,
             'filename': filename,

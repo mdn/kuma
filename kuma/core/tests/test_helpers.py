@@ -2,12 +2,12 @@
 from collections import namedtuple
 from datetime import datetime
 
+import mock
 import pytest
 import pytz
 from babel.dates import format_date, format_datetime, format_time
 from django.conf import settings
 from django.test import RequestFactory
-from pyquery import PyQuery as pq
 from soapbox.models import Message
 
 from kuma.core.tests import KumaTestCase, eq_, ok_
@@ -104,11 +104,12 @@ class TestDateTimeFormat(UserTestCase):
     def test_today(self):
         """Expects shortdatetime, format: Today at {time}."""
         date_today = datetime.today()
-        value_returned = unicode(datetimeformat(self.context, date_today))
         value_expected = 'Today at %s' % format_time(date_today,
                                                      format='short',
                                                      locale=u'en_US')
-        eq_(pq(value_returned)('time').text(), value_expected)
+        value_returned = datetimeformat(self.context, date_today,
+                                        output='json')
+        eq_(value_returned, value_expected)
 
     def test_locale(self):
         """Expects shortdatetime in French."""
@@ -116,16 +117,18 @@ class TestDateTimeFormat(UserTestCase):
         value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, format='short',
                                          locale=u'fr')
-        value_returned = datetimeformat(self.context, value_test)
-        eq_(pq(value_returned)('time').text(), value_expected)
+        value_returned = datetimeformat(self.context, value_test,
+                                        output='json')
+        eq_(value_returned, value_expected)
 
     def test_default(self):
         """Expects shortdatetime."""
         value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, format='short',
                                          locale=u'en_US')
-        value_returned = datetimeformat(self.context, value_test)
-        eq_(pq(value_returned)('time').text(), value_expected)
+        value_returned = datetimeformat(self.context, value_test,
+                                        output='json')
+        eq_(value_returned, value_expected)
 
     def test_longdatetime(self):
         """Expects long format."""
@@ -134,38 +137,58 @@ class TestDateTimeFormat(UserTestCase):
         value_expected = format_datetime(tzvalue, format='long',
                                          locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
-                                        format='longdatetime')
-        eq_(pq(value_returned)('time').text(), value_expected)
+                                        format='longdatetime',
+                                        output='json')
+        eq_(value_returned, value_expected)
 
     def test_date(self):
         """Expects date format."""
         value_test = datetime.fromordinal(733900)
         value_expected = format_date(value_test, locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
-                                        format='date')
-        eq_(pq(value_returned)('time').text(), value_expected)
+                                        format='date',
+                                        output='json')
+        eq_(value_returned, value_expected)
 
     def test_time(self):
         """Expects time format."""
         value_test = datetime.fromordinal(733900)
         value_expected = format_time(value_test, locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
-                                        format='time')
-        eq_(pq(value_returned)('time').text(), value_expected)
+                                        format='time',
+                                        output='json')
+        eq_(value_returned, value_expected)
 
     def test_datetime(self):
         """Expects datetime format."""
         value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
-                                        format='datetime')
-        eq_(pq(value_returned)('time').text(), value_expected)
+                                        format='datetime',
+                                        output='json')
+        eq_(value_returned, value_expected)
 
     def test_unknown_format(self):
         """Unknown format raises DateTimeFormatError."""
         date_today = datetime.today()
         with pytest.raises(DateTimeFormatError):
             datetimeformat(self.context, date_today, format='unknown')
+
+    @mock.patch('babel.dates.format_datetime')
+    def test_broken_format(self, mocked_format_datetime):
+        value_test = datetime.fromordinal(733900)
+        value_english = format_datetime(value_test, locale=u'en_US')
+        self.context['request'].LANGUAGE_CODE = u'fr'
+        mocked_format_datetime.side_effect = [
+            # first call is returning a KeyError as if the format is broken
+            KeyError,
+            # second call returns the English fallback version as expected
+            value_english,
+        ]
+        value_returned = datetimeformat(self.context, value_test,
+                                        format='datetime',
+                                        output='json')
+        eq_(value_returned, value_english)
 
     def test_invalid_value(self):
         """Passing invalid value raises ValueError."""
@@ -192,5 +215,6 @@ class TestDateTimeFormat(UserTestCase):
         value_expected = format_datetime(tzvalue, format='long',
                                          locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
-                                        format='longdatetime')
-        eq_(pq(value_returned)('time').text(), value_expected)
+                                        format='longdatetime',
+                                        output='json')
+        eq_(value_returned, value_expected)

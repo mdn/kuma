@@ -30,20 +30,10 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^search', include('kuma.search.urls')),
-
-    # Special-case here because this used to live in the wiki app and
-    # needs to keep its historical URL.
-    url(r'^docs/files$',
-        attachment_views.list_files,
-        name='attachments.list_files'),
     url(r'^docs', include('kuma.wiki.urls')),
-
-    url(r'^files/', include('kuma.attachments.urls')),
-    url(r'^', include('kuma.dashboards.urls')),
-
-    # Users
+    url('', include('kuma.attachments.urls')),
+    url('', include('kuma.dashboards.urls')),
     url('', include('kuma.users.urls')),
-
 
     # Services and sundry.
     url(r'^', include('tidings.urls')),

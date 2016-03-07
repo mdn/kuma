@@ -16,6 +16,7 @@ history_link.allow_tags = True
 history_link.short_description = 'Usage history'
 
 
+@admin.register(Key)
 class KeyAdmin(admin.ModelAdmin):
     fields = ('description',)
     list_display = ('id', 'user', 'created', history_link, 'key',
@@ -45,6 +46,7 @@ content_object_link.allow_tags = True
 content_object_link.short_description = 'Object'
 
 
+@admin.register(KeyAction)
 class KeyActionAdmin(admin.ModelAdmin):
     fields = ('notes',)
     list_display = ('id', 'created', key_link, 'action',
@@ -52,7 +54,3 @@ class KeyActionAdmin(admin.ModelAdmin):
     list_filter = ('action', 'content_type')
     ordering = ('-id',)
     search_fields = ('action', 'key__key', 'key__user__username', 'notes')
-
-
-admin.site.register(Key, KeyAdmin)
-admin.site.register(KeyAction, KeyActionAdmin)
