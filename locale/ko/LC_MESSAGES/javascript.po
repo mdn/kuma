@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-02-28 10:34+0000\n"
-"Last-Translator: netaras <netaras@gmail.com>\n"
+"PO-Revision-Date: 2016-03-07 16:34+0000\n"
+"Last-Translator: Channy Yun <channy@mozilla.or.kr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -57,11 +57,11 @@ msgstr "잘못된 정보 수정"
 
 #: kuma/static/js/helpfulness.js:63
 msgid "Add or improve examples"
-msgstr "예제를 추가 또는 향상"
+msgstr "예제 추가 또는 향상"
 
 #: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
-msgstr ""
+msgstr "검색 내용과 다른 문서임"
 
 #: kuma/static/js/helpfulness.js:65
 msgid "Something else"
@@ -73,7 +73,7 @@ msgstr "하나를 선택하세요..."
 
 #: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
-msgstr ""
+msgstr "우와. 더 나은 방법이 무엇인가요?"
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."

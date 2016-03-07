@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-29 10:30-0800\n"
-"PO-Revision-Date: 2016-03-05 16:16+0000\n"
-"Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
+"PO-Revision-Date: 2016-03-07 16:42+0000\n"
+"Last-Translator: Channy Yun <channy@mozilla.or.kr>\n"
 "Language-Team: none\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -396,12 +396,10 @@ msgid "Firefox Apps & Hacks Newsletter"
 msgstr "Firefox Apps & Hacks 뉴스레터"
 
 #: jinja2/includes/newsletter.html:6
-#, fuzzy
 msgid ""
 "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the "
 "Open Web apps ecosystem."
-msgstr ""
-"Firefox OS, 마켓플레이스, 오픈웹 앱 생태계에 대한 뉴스를 들으시려면 <strong>지금 등록하세요!</strong>"
+msgstr "Firefox OS, 마켓플레이스, 오픈웹 앱 생태계에 대한 뉴스를 들으시려면 지금 등록하세요."
 
 #: jinja2/includes/newsletter.html:35
 #, python-format
@@ -1014,9 +1012,8 @@ msgid "User agent:"
 msgstr "사용자 도구:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:57
-#, fuzzy
 msgid "Referrer:"
-msgstr "참조"
+msgstr "참조:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:64
 #, python-format
@@ -1029,18 +1026,17 @@ msgid "Submitted as %(submission_type)s"
 msgstr "%(submission_type)s 형식으로 제출됨"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:81
-#, fuzzy, python-format
+#, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr "제출일: %(entrydate)s  개발자: %(authorlink)s"
+msgstr "제출일: %(sent_date)s  제출자: %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
 msgid "Resubmit"
 msgstr "다시 제출"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
-#, fuzzy
 msgid "Submit as:"
-msgstr "제출"
+msgstr "제출:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:94
 msgid "spam"
@@ -1048,7 +1044,7 @@ msgstr "스팸"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:95
 msgid "ham"
-msgstr ""
+msgstr "스팸아님"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:107
 msgid "There are no revisions matching this filter set."
@@ -1226,11 +1222,10 @@ msgid "Help improve MDN"
 msgstr "MDN 참여하기"
 
 #: kuma/landing/jinja2/landing/homepage.html:152
-#, fuzzy
 msgid ""
 "All parts of MDN (docs and the site itself) are created by an open community"
 " of developers. Please join us! Pick one of these ways to help:"
-msgstr "MDN의 모든 영역(문서, 데모, 웹 사이트)는 개발자 커뮤니티에 의해 만들어집니다. 지금 참여하셔서 함께 만들어 주십시오."
+msgstr "MDN의 모든 영역(문서, 데모, 웹 사이트)는 개발자 커뮤니티에 의해 만들어집니다! 지금 참여하셔서 함께 만들어 주십시오:"
 
 #: kuma/landing/jinja2/landing/homepage.html:158
 msgid "Getting started"
@@ -1369,30 +1364,26 @@ msgstr "MDN의 더 나은 웹을 위한 개선된 웹 문서"
 #: kuma/landing/jinja2/landing/promote_buttons.html:174
 #: kuma/landing/jinja2/landing/promote_buttons.html:178
 #: kuma/landing/jinja2/landing/promote_buttons.html:182
-#, fuzzy
 msgid "MDN is Developer Powered for CSS docs and more."
-msgstr "MDN은 CSS 문서, 데모 등은 개발자에 의해 제공됩니다."
+msgstr "MDN은 CSS 문서, 데모 등을 개발자가 직접 만듭니다."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175
 #: kuma/landing/jinja2/landing/promote_buttons.html:179
 #: kuma/landing/jinja2/landing/promote_buttons.html:183
-#, fuzzy
 msgid "MDN is Developer Powered for HTML docs and more."
-msgstr "MDN은 HTML 문서, 데모 등은 개발자에 의해 제공됩니다."
+msgstr "MDN은 HTML 문서, 데모 등을 개발자가 직접 만듭니다."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176
 #: kuma/landing/jinja2/landing/promote_buttons.html:180
 #: kuma/landing/jinja2/landing/promote_buttons.html:184
-#, fuzzy
 msgid "MDN is Developer Powered for JavaScript docs and more."
-msgstr "MDN은 Javascript 문서, 데모 등은 개발자에 의해 제공됩니다."
+msgstr "MDN은 Javascript 문서, 데모 등을 개발자가 직접 만듭니다."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177
 #: kuma/landing/jinja2/landing/promote_buttons.html:181
 #: kuma/landing/jinja2/landing/promote_buttons.html:185
-#, fuzzy
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr "MDN은 Web 문서, 데모 등은 개발자에 의해 제공됩니다."
+msgstr "MDN은 웹 문서, 데모 등을 개발자가 직접 만듭니다."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186
 #: kuma/landing/jinja2/landing/promote_buttons.html:190
@@ -1421,13 +1412,11 @@ msgstr "개발자에 의한 웹 문서, MDN의 개발자를 위한"
 #: kuma/landing/jinja2/landing/promote_buttons.html:198
 #: kuma/landing/jinja2/landing/promote_buttons.html:199
 #: kuma/landing/jinja2/landing/promote_buttons.html:200
-#, fuzzy
 msgid ""
 "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript"
 " and other Web standards and open technologies."
 msgstr ""
-"MDN은 HTML, CSS, Javascript와 다른 웹 표준 그리고 공개 기술들에 관한 문서와 데모 등을 여러분에게 제공해주기 위한 "
-"웹 개발자 도구상자입니다."
+"MDN은 HTML, CSS, Javascript와 다른 웹 표준 그리고 공개 기술들에 관한 문서를 위한 웹 개발자 도구 상자입니다."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
@@ -1506,9 +1495,9 @@ msgid "Search Mozilla Developer Network documentation"
 msgstr "Mozilla 개발자 네트워크 문서 검색"
 
 #: kuma/search/jinja2/search/results.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr "검색 결과: \"{query}\""
+msgstr "검색 결과: \"%(query)s\""
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
@@ -1613,15 +1602,15 @@ msgstr "스팸"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
-msgstr ""
+msgstr "스팸아님"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr ""
+msgstr "보낸일"
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "형식"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1756,7 +1745,7 @@ msgstr "전문가 영역은 관심의 부분집합이어야 합니다"
 
 #: kuma/users/forms.py:275
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "항목을 채워야 합니다."
 
 #: kuma/users/forms.py:281
 msgid "Username already in use."
@@ -1924,32 +1913,27 @@ msgid "Remove"
 msgstr "제거"
 
 #: kuma/users/jinja2/account/email.html:45
-#, fuzzy
 msgid ""
 "<strong>Warning:</strong>\"You have not added any email addresses to this "
 "profile. Without one you cannot receive notifications."
 msgstr ""
-"<strong>경고:</strong>이메일 주소가 계정에 연결되어 있습니다. 따라서 알림 받기나 암호 분실 시 재설정을 할 수 없습니다."
+"<strong>경고:</strong> 이메일 주소가 계정에 연결되어 있지 않습니다. 알림 받기나 암호 분실 시 재설정을 할 수 없습니다."
 " "
 
 #: kuma/users/jinja2/account/email.html:49
-#, fuzzy
 msgid "Add email address"
 msgstr "이메일 주소 추가하기"
 
 #: kuma/users/jinja2/account/email.html:55
-#, fuzzy
 msgid "Add Email"
 msgstr "이메일 추가"
 
 #: kuma/users/jinja2/account/email.html:60
 #: kuma/users/jinja2/socialaccount/connections.html:70
-#, fuzzy
 msgid "Edit profile"
 msgstr "프로필 편집"
 
 #: kuma/users/jinja2/account/email.html:71
-#, fuzzy
 msgid "Do you really want to remove the selected email address?"
 msgstr "선택한 이메일 주소를 제거하시겠습니까?"
 
@@ -1957,34 +1941,32 @@ msgstr "선택한 이메일 주소를 제거하시겠습니까?"
 #: kuma/users/jinja2/account/email_confirm.html:9
 #: kuma/users/jinja2/account/email_confirmed.html:3
 #: kuma/users/jinja2/account/email_confirmed.html:8
-#, fuzzy
 msgid "Confirm Email Address"
 msgstr "이메일 주소 확인하기"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
 "address for user %(user_display)s."
 msgstr ""
-"<a href=\"mailto:%(email)s\">%(email)s</a>이 %(user_display)s의 것인지 확인해 주시기 "
-"바랍니다."
+"<a href=\"mailto:%(email)s\">%(email)s</a>이 %(user_display)s의 것인지 확인해 주세요."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
 msgstr "확인"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This email confirmation link expired or is invalid. Please <a "
 "href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr ""
-"이메일 확인 링크가 만료되었거나 유효하지 않습니다. <a href=\"%(email_url)s\">이메일 확인 요청</a>을 다시 하시기"
-" 바랍니다."
+"이메일 확인 링크가 만료되었거나 유효하지 않습니다. <a href=\"%(email_url)s\">다시 이메일 확인 요청</a>해 "
+"주세요."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
 "email address for user %(user_display)s."
@@ -1997,9 +1979,8 @@ msgid "Sign In"
 msgstr "로그인"
 
 #: kuma/users/jinja2/account/login.html:11
-#, fuzzy
 msgid "Please sign in"
-msgstr "대기"
+msgstr "로그인 하기"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid ""
@@ -2007,6 +1988,8 @@ msgid ""
 "any of the services below. A MDN profile will be created for you if you "
 "don't already have one."
 msgstr ""
+"공헌하기 위해서는, MDN에 로그인이 필요합니다. 아래 서비스 중 하나를 사용하여 로그인할 수 있습니다. MDN 계정이 아직 없다면 "
+"생성됩니다."
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -4319,7 +4302,7 @@ msgstr "이 문서를 번역할 수 없습니다."
 #: templates/admin/search/index/change_list.html:8
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
-msgstr ""
+msgstr "Elasticsearch 서버: %(backend)s"
 
 #~ msgid "Celebrate ten years of documenting your Web."
 #~ msgstr "웹 문서화 10주년을 축하해주세요."
