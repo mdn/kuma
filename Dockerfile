@@ -19,7 +19,7 @@ COPY . /app
 
 RUN pip install -U pip supervisor
 RUN pip install --build ./build --cache-dir ./cache --no-deps \
-    -r requirements/default.txt && rm -r build cache
+    -r requirements/local.txt && rm -r build cache
 
 RUN npm install -g \
     fibers@1.0.1 \

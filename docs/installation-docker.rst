@@ -23,7 +23,7 @@ Docker setup
 
 #. Create the virtual machine that Docker will run within::
 
-        docker-machine create --driver virtualbox --virtualbox-memory 4096 kuma
+        docker-machine create --driver virtualbox --virtualbox-memory 4096 --virtualbox-disk-size 50000 kuma
 
 #. Configure the environment variables::
 
