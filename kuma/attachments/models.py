@@ -70,21 +70,26 @@ class Attachment(models.Model):
         """
         # First let's see if there is already an intermediate object available
         # for the current attachment, a.k.a. this was a previous uploaded file
+        DocumentAttachment = document.files.through
         try:
-            document_attachment = (document.files.through.objects
-                                                         .get(pk=self.pk))
+            document_attachment = DocumentAttachment.objects.get(
+                file_id=self.pk
+            )
         except document.files.through.DoesNotExist:
             # no previous uploads found, create a new document-attachment
-            document.files.through.objects.create(file=self,
-                                                  document=document,
-                                                  attached_by=user,
-                                                  name=revision.filename,
-                                                  is_original=True)
+            document_attachment = DocumentAttachment.objects.create(
+                file=self,
+                document=document,
+                attached_by=user,
+                name=revision.filename,
+                is_original=True,
+            )
         else:
             document_attachment.is_original = True
             document_attachment.attached_by = user
             document_attachment.name = revision.filename
             document_attachment.save()
+        return document_attachment
 
 
 class AttachmentRevision(models.Model):

@@ -4,6 +4,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.db.utils import IntegrityError
 
+from kuma.wiki.models import DocumentAttachment
+from kuma.wiki.tests import document
 from kuma.users.tests import user, UserTestCase
 from ..models import Attachment, AttachmentRevision, TrashedAttachment
 from ..utils import allow_add_attachment_by
@@ -37,6 +39,27 @@ class AttachmentModelTests(UserTestCase):
         self.revision2.creator = self.test_user
         self.revision2.file.save('filename2.txt',
                                  ContentFile('Meh meh I am a test file.'))
+
+    def test_document_attachment(self):
+        doc = document(save=True)
+        self.assertEqual(DocumentAttachment.objects.count(), 0)
+
+        document_attachment1 = self.attachment.attach(
+            doc, self.test_user, self.revision)
+        self.assertEqual(DocumentAttachment.objects.count(), 1)
+        self.assertEqual(document_attachment1.file, self.attachment)
+        self.assertTrue(document_attachment1.is_original)
+        self.assertEqual(document_attachment1.name, self.revision.filename)
+        self.assertEqual(document_attachment1.attached_by, self.test_user)
+
+        document_attachment2 = self.attachment.attach(
+            doc, self.test_user, self.revision2)
+        self.assertEqual(DocumentAttachment.objects.count(), 1)
+        self.assertEqual(document_attachment2.file, self.attachment)
+        self.assertTrue(document_attachment2.is_original)
+        self.assertEqual(document_attachment2.name, self.revision2.filename)
+        self.assertEqual(document_attachment2.attached_by, self.test_user)
+        self.assertEqual(document_attachment1.pk, document_attachment2.pk)
 
     def test_trash_revision(self):
         self.assertEqual(TrashedAttachment.objects.count(), 0)
