@@ -314,18 +314,20 @@
     function initMetadataEditButton () {
 
         if ($('#article-head .metadata').length) {
-            var show_meta = function (ev) {
+            var show_meta = function () {
                 // Disable and hide the save-and-edit button when editing
                 // metadata, since that can change the URL of the page and
                 // tangle up where the iframe posts.
-                ev.preventDefault();
                 $('#article-head .doc-title').hide();
                 $('#article-head .metadata').show();
                 $('#article-head .metadata #id_title').focus();
             }
 
             // Properties button reveals the metadata fields
-            $('#btn-properties').on('click', show_meta);
+            $('#btn-properties').on('click', function (ev) {
+                ev.preventDefault();
+                show_meta();
+            });
             // Form errors reveal the metadata fields, since they're the most
             // likely culprits
             $('#edit-document .errorlist').each(show_meta);
