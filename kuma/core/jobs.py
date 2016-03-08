@@ -1,6 +1,5 @@
 from cacheback.base import Job
 from django.utils import crypto
-from django.utils.functional import cached_property
 
 
 class KumaJob(Job):
@@ -18,43 +17,57 @@ class KumaJob(Job):
 
 
 class GenerationJob(KumaJob):
+    """
+    A cacheback value job that is part of a generation group.
+
+    The purpose is to refresh several cached values when a generation changes.
+    """
     generation_age = 60 * 60 * 24 * 365
 
-    def __init__(self, *args, **kwargs):
-        self.generation_args = kwargs.pop('generation_args', [])
-        super(KumaJob, self).__init__(*args, **kwargs)
+    def __init__(self, generation_args=None, *args, **kwargs):
+        """
+        Initialize the job and prepare the generation.
 
-    @cached_property
-    def generation_key(self):
-        generation_args = ':'.join([str(key) for key in self.generation_args])
-        return '%s:%s:generation' % (self.class_path, generation_args)
+        All jobs initialized with the same generation_args list will share the
+        same generation, and all cached values will be invalidated when the
+        generation is invalidated.
+        """
+        self.generation_args = generation_args or []
+        super(KumaJob, self).__init__(*args, **kwargs)
+        self.generation_key = GenerationKeyJob(
+            age=self.generation_age, for_class=self.class_path,
+            generation_args=self.generation_args)
 
     def key(self, *args, **kwargs):
-        key = super(GenerationJob, self).key(*args, **kwargs)
-        return '%s@%s' % (key, self.generation())
+        """Create a key that is derived from the generation."""
+        base_key = super(GenerationJob, self).key(*args, **kwargs)
+        gen_key = self.generation_key.key()
+        gen_key_value = self.generation_key.get()
+        return '%s@%s:%s' % (base_key, gen_key, gen_key_value)
 
-    def generation(self):
-        """
-        A random key to be used in cache calls that allows
-        invalidating all values created with it. Use it with
-        the version parameter of cache.get/set.
-        """
-        generation = self.cache.get(self.generation_key)
-        if generation is None:
-            generation = self.renew()
-        return generation
+    def invalidate_generation(self):
+        """Invalidate the shared generation."""
+        self.generation_key.delete()
 
-    def renew(self):
-        """
-        Delete the current generation cache key and by that invalidate all
-        generation based cached values. Also create a new generation right
-        away.
-        """
-        generation = crypto.get_random_string(length=12)
-        self.cache.set(self.generation_key,
-                       generation,
-                       self.generation_age)
-        return generation
+
+class GenerationKeyJob(Job):
+    """A generation that is shared by several GenerationJobs."""
+
+    def __init__(self, age, for_class, generation_args, *args, **kwargs):
+        """Initialize but do not create the generation."""
+        super(GenerationKeyJob, self).__init__(*args, **kwargs)
+        self.age = age
+        self.for_class = for_class
+        self.generation_args = generation_args
+
+    def key(self, *args, **kwargs):
+        """Return a key that is derived only from the initial args."""
+        generation_args = ':'.join([str(key) for key in self.generation_args])
+        return '%s:%s:generation' % (self.for_class, generation_args)
+
+    def fetch(self, *args, **kwargs):
+        """Create a unique generation identifier."""
+        return crypto.get_random_string(length=12)
 
 
 class IPBanJob(KumaJob):

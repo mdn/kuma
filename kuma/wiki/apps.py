@@ -109,7 +109,8 @@ class WikiConfig(AppConfig):
 
         DocumentContributorsJob().invalidate(instance.pk)
 
-        DocumentCodeSampleJob(generation_args=[instance.pk]).renew()
+        code_sample_job = DocumentCodeSampleJob(generation_args=[instance.pk])
+        code_sample_job.invalidate_generation()
 
     def on_zone_save(self, sender, instance, **kwargs):
         """
