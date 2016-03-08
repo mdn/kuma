@@ -26,7 +26,8 @@ class DocumentZoneMiddleware(object):
     def process_request(self, request):
         # https://bugzil.la/1189222
         # Don't redirect POST $subscribe requests to GET zone url
-        if request.method == 'POST' and '$subscribe' in request.path:
+        if (request.method == 'POST' and
+                ('$subscribe' in request.path or '$files' in request.path)):
             return None
 
         remaps = DocumentZoneURLRemapsJob().get(request.LANGUAGE_CODE)
