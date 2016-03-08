@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+from django.test import RequestFactory
 
 from kuma.core.cache import memcache
 from kuma.core.tests import eq_
 from kuma.users.tests import UserTestCase
-from kuma.wiki.models import DocumentZone
-from kuma.wiki.tests import revision
+
+from . import revision
+from ..middleware import DocumentZoneMiddleware
+from ..models import DocumentZone
 
 from . import WikiTestCase
 
@@ -13,7 +16,7 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
     def setUp(self):
         super(DocumentZoneMiddlewareTestCase, self).setUp()
-
+        self.rf = RequestFactory()
         memcache.clear()
 
         self.zone_root = 'ExtraWiki'
@@ -112,6 +115,13 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         url = '/en-US/docs/%s?raw=1' % self.other_doc.slug
         response = self.client.get(url, follow=False)
         eq_(200, response.status_code)
+
+    def test_no_redirect(self):
+        middleware = DocumentZoneMiddleware()
+        for endpoint in ['$subscribe', '$files']:
+            request = self.rf.post('/en-US/docs/%s%s?raw' %
+                                   (self.other_doc.slug, endpoint))
+            self.assertIsNone(middleware.process_request(request))
 
     def test_zone_url_ends_with_slash(self):
         """Ensure urls only rewrite with a '/' at the end of url_root
