@@ -7,6 +7,8 @@ the entire MDN stack. (Django, KumaScript, Search, Celery, etc.)
 If you're on Mac OS X or Linux and looking for a quick way to get started, you
 should try these instructions.
 
+We are moving to a Docker-based deployment, in both development and production.
+This work is still in progress.
 If you are more familiar with Docker view the :doc:`Docker setup instructions <installation-docker>`.
 
 .. note:: **If you have problems getting vagrant up**, check Errors_ below.
@@ -17,14 +19,14 @@ If you are more familiar with Docker view the :doc:`Docker setup instructions <i
 Install and run everything
 ==========================
 
-#. Install VirtualBox >= 4.2.x from http://www.virtualbox.org/
+#. Install VirtualBox >= 5.0.x from http://www.virtualbox.org/
 
    .. note:: (Windows) After installing VirtualBox you need to set
               ``PATH=C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe;``
 
 #. Install Vagrant >= 1.7 using the installer from `vagrantup.com <http://vagrantup.com/>`_
 
-#. Install `Ansible <http://docs.ansible.com/>`_ 1.9.x on your machine so that
+#. Install `Ansible <http://docs.ansible.com/>`_ >= 1.9.x on your machine so that
    Vagrant is able to set up the VM the way we need it.
 
    See the `Ansible Installation docs <http://docs.ansible.com/intro_installation.html>`_
@@ -79,9 +81,12 @@ Install and run everything
     approx. 2GB. If it won't fit on your system drive, you will need
     to `change that directory to another drive <http://emptysquare.net/blog/moving-virtualbox-and-vagrant-to-an-external-drive/>`_.
 
-   At the end, you should see::
+   At the end, you should see something like::
 
-      Finished catalog run in .... seconds
+      PLAY RECAP ********************************************************************
+      developer-local            : ok=147  changed=90   unreachable=0    failed=0
+
+      ==> developer-local: Configuring cache buckets...
 
    If the above process fails with an error, check `Errors`_.
 
@@ -101,9 +106,9 @@ Install and run everything
        20:32:59 stylus.1     | started with pid 2247
        ...
 
-#. Visit `https://mdn-local.mozillademos.org/ <https://mdn-local.mozillademos.org/>`_ and add an exception for the security certificate if prompted.
+#. Visit https://mdn-local.mozillademos.org/ and add an exception for the security certificate if prompted.
 
-#. Visit the homepage at `https://developer-local.allizom.org <https://developer-local.allizom.org/>`_
+#. Visit the homepage at https://developer-local.allizom.org
 
 #. You've installed Kuma!
 
@@ -137,7 +142,7 @@ So, you need to create an admin user, sign in, and then use
 `the Django admin site`_ to enable the wiki so you can create pages.
 
 #. As the admin user you just created, visit the `waffle section`_ of the admin
-site.
+   site.
 
 #. Click "`Add flag`_".
 
