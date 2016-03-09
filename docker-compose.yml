@@ -21,8 +21,6 @@ worker: &worker
     - BROKER_URL=redis://redis:6379/0
     - CELERY_ALWAYS_EAGER=false
     - ES_URLS=elasticsearch:9200
-    # Only needed here to not load settings/local.py.
-    - DJANGO_SETTINGS_MODULE=kuma.settings.docker
     # Other environment variables:
     - PYTHONDONTWRITEBYTECODE=1
 
