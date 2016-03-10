@@ -10,7 +10,7 @@ Slug: {{ spam_attempt.slug }}
 {% else %}
 Slug: n/a
 {% endif %}
-Detected at: {{ spam_attempt.created }}
+Detected at: {{ spam_attempt.created|in_utc }}
 
 Admin link: {{ url('admin:wiki_documentspamattempt_change', spam_attempt.pk)|absolutify }}
 
@@ -18,7 +18,7 @@ Admin link: {{ url('admin:wiki_documentspamattempt_change', spam_attempt.pk)|abs
 
 Name: {{ user_display(spam_attempt.user) }}
 ID: {{ spam_attempt.user.pk }}
-Joined at: {{ spam_attempt.user.date_joined }}
+Joined at: {{ spam_attempt.user.date_joined|in_utc }}
 
 Profile link: {{ spam_attempt.user.get_absolute_url()|absolutify }}
 Admin link: {{ url('admin:users_user_change', spam_attempt.user.pk)|absolutify }}
@@ -29,7 +29,7 @@ Admin link: {{ url('admin:users_user_change', spam_attempt.user.pk)|absolutify }
 Title: {{ spam_attempt.document.title }}
 Slug: {{ spam_attempt.document.slug }}
 Language: {{ spam_attempt.document.language }}
-Last modified: {{ spam_attempt.document.modified }}
+Last modified: {{ spam_attempt.document.modified|in_utc }}
 
 Site link: {{ spam_attempt.document.get_absolute_url()|absolutify }}
 Admin link: {{ url('admin:wiki_document_change', spam_attempt.document.pk)|absolutify }}

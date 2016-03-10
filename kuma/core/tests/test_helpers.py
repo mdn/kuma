@@ -6,7 +6,7 @@ import pytest
 import pytz
 from babel.dates import format_date, format_datetime, format_time
 from django.conf import settings
-from django.test import RequestFactory
+from django.test import RequestFactory, override_settings
 from soapbox.models import Message
 
 from kuma.core.tests import KumaTestCase, eq_, ok_
@@ -15,7 +15,8 @@ from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
 from ..templatetags.jinja_helpers import (datetimeformat, get_soapbox_messages,
-                                          jsonencode, soapbox_messages, yesno)
+                                          in_utc, jsonencode, soapbox_messages,
+                                          yesno)
 
 
 class TestYesNo(KumaTestCase):
@@ -179,3 +180,28 @@ class TestDateTimeFormat(UserTestCase):
                                         format='longdatetime',
                                         output='json')
         eq_(value_returned, value_expected)
+
+
+class TestInUtc(KumaTestCase):
+    """Test the in_utc datetime filter."""
+    def test_utc(self):
+        """Assert a time in UTC remains in UTC."""
+        dt = datetime(2016, 3, 10, 16, 12, tzinfo=pytz.utc)
+        out = in_utc(dt)
+        assert out == dt
+
+    def test_aware(self):
+        """Assert a time in a different time zone is converted to UTC."""
+        hour = 10
+        dt = datetime(2016, 3, 10, hour, 14)
+        dt = pytz.timezone('US/Central').localize(dt)
+        out = in_utc(dt)
+        assert out == datetime(2016, 3, 10, hour + 6, 14, tzinfo=pytz.utc)
+
+    @override_settings(TIME_ZONE='US/Pacific')
+    def test_naive(self):
+        """Assert that naïve datetimes are first converted to system time."""
+        hour = 8
+        dt = datetime(2016, 3, 10, hour, 8)
+        out = in_utc(dt)
+        assert out == datetime(2016, 3, 10, hour + 8, 8, tzinfo=pytz.utc)

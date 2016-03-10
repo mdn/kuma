@@ -13,7 +13,7 @@ from django.utils.encoding import force_text
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 from django_jinja import library
-from pytz import timezone
+from pytz import timezone, utc
 from soapbox.models import Message
 from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
@@ -249,3 +249,16 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
 @library.global_function
 def static(path):
     return staticfiles_storage.url(path)
+
+
+@library.filter
+def in_utc(dt):
+    """
+    Convert a datetime to the UTC timezone.
+
+    Assume that naive datetimes (without timezone info) are in system time.
+    """
+    if dt.utcoffset() is None:
+        tz = timezone(settings.TIME_ZONE)
+        dt = tz.localize(dt)
+    return dt.astimezone(utc)
