@@ -1,12 +1,9 @@
 import datetime
 import HTMLParser
 import json
-import urllib
 
-import bleach
 import jinja2
-import pytz
-from babel import dates, localedata, numbers
+from babel import dates, localedata
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -14,11 +11,9 @@ from django.template import defaultfilters
 from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
-from django.utils.timezone import get_default_timezone
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ungettext
 from django_jinja import library
-from pytz import timezone
+from pytz import timezone, utc
 from soapbox.models import Message
 from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
@@ -34,7 +29,6 @@ htmlparser = HTMLParser.HTMLParser()
 # Yanking filters from Django.
 library.filter(defaultfilters.linebreaksbr)
 library.filter(strip_tags)
-library.filter(defaultfilters.timesince)
 library.filter(defaultfilters.truncatewords)
 library.global_function(statici18n)
 
@@ -91,58 +85,6 @@ class Paginator(object):
 
 
 @library.filter
-def timesince(d, now=None):
-    """Take two datetime objects and return the time between d and now as a
-    nicely formatted string, e.g. "10 minutes".  If d is None or occurs after
-    now, return ''.
-
-    Units used are years, months, weeks, days, hours, and minutes. Seconds and
-    microseconds are ignored.  Just one unit is displayed.  For example,
-    "2 weeks" and "1 year" are possible outputs, but "2 weeks, 3 days" and "1
-    year, 5 months" are not.
-
-    Adapted from django.utils.timesince to have better i18n (not assuming
-    commas as list separators and including "ago" so order of words isn't
-    assumed), show only one time unit, and include seconds.
-
-    """
-    if d is None:
-        return u''
-    chunks = [
-        (60 * 60 * 24 * 365, lambda n: ungettext('%(number)d year ago',
-                                                 '%(number)d years ago', n)),
-        (60 * 60 * 24 * 30, lambda n: ungettext('%(number)d month ago',
-                                                '%(number)d months ago', n)),
-        (60 * 60 * 24 * 7, lambda n: ungettext('%(number)d week ago',
-                                               '%(number)d weeks ago', n)),
-        (60 * 60 * 24, lambda n: ungettext('%(number)d day ago',
-                                           '%(number)d days ago', n)),
-        (60 * 60, lambda n: ungettext('%(number)d hour ago',
-                                      '%(number)d hours ago', n)),
-        (60, lambda n: ungettext('%(number)d minute ago',
-                                 '%(number)d minutes ago', n)),
-        (1, lambda n: ungettext('%(number)d second ago',
-                                '%(number)d seconds ago', n))]
-    if not now:
-        if d.tzinfo:
-            now = datetime.datetime.now(get_default_timezone())
-        else:
-            now = datetime.datetime.now()
-
-    # Ignore microsecond part of 'd' since we removed it from 'now'
-    delta = now - (d - datetime.timedelta(0, 0, d.microsecond))
-    since = delta.days * 24 * 60 * 60 + delta.seconds
-    if since <= 0:
-        # d is in the future compared to now, stop processing.
-        return u''
-    for i, (seconds, name) in enumerate(chunks):
-        count = since // seconds
-        if count != 0:
-            break
-    return name(count) % {'number': count}
-
-
-@library.filter
 def yesno(boolean_value):
     return jinja2.Markup(_(u'Yes') if boolean_value else _(u'No'))
 
@@ -164,35 +106,10 @@ def level_tag(message):
                                     strings_only=True))
 
 
-@library.filter
-def isotime(t):
-    """Date/Time format according to ISO 8601"""
-    if not hasattr(t, 'tzinfo'):
-        return
-    return _append_tz(t).astimezone(pytz.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-def _append_tz(t):
-    tz = pytz.timezone(settings.TIME_ZONE)
-    return tz.localize(t)
-
-
 @library.global_function
 def thisyear():
     """The current year."""
     return jinja2.Markup(datetime.date.today().year)
-
-
-@library.filter
-def cleank(txt):
-    """Clean and link some user-supplied text."""
-    return jinja2.Markup(bleach.linkify(bleach.clean(txt)))
-
-
-@library.filter
-def urlencode(txt):
-    """Url encode a path."""
-    return urllib.quote_plus(txt.encode('utf8'))
 
 
 @library.filter
@@ -330,19 +247,18 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
 
 
 @library.global_function
-@jinja2.contextfunction
-def number(context, number):
-    """
-    Return the localized representation of an integer or decimal.
-
-    For None, print nothing.
-    """
-    if number is None:
-        return ''
-    locale = _babel_locale(_contextual_locale(context))
-    return numbers.format_decimal(number, locale=locale)
-
-
-@library.global_function
 def static(path):
     return staticfiles_storage.url(path)
+
+
+@library.filter
+def in_utc(dt):
+    """
+    Convert a datetime to the UTC timezone.
+
+    Assume that naive datetimes (without timezone info) are in system time.
+    """
+    if dt.utcoffset() is None:
+        tz = timezone(settings.TIME_ZONE)
+        dt = tz.localize(dt)
+    return dt.astimezone(utc)

@@ -1,16 +1,16 @@
 * SPAM ATTEMPT *
 
-{% if spam_attempt.title %}
+{% if spam_attempt.title -%}
 Title: {{ spam_attempt.title }}{% if not spam_attempt.document %} [NEW]{% endif %}
-{% else %}
+{% else -%}
 Title: n/a
-{% endif %}
-{% if spam_attempt.slug %}
+{% endif -%}
+{% if spam_attempt.slug -%}
 Slug: {{ spam_attempt.slug }}
-{% else %}
+{% else -%}
 Slug: n/a
-{% endif %}
-Detected at: {{ spam_attempt.created }}
+{% endif -%}
+Detected at: {{ spam_attempt.created|in_utc }}
 
 Admin link: {{ url('admin:wiki_documentspamattempt_change', spam_attempt.pk)|absolutify }}
 
@@ -18,21 +18,21 @@ Admin link: {{ url('admin:wiki_documentspamattempt_change', spam_attempt.pk)|abs
 
 Name: {{ user_display(spam_attempt.user) }}
 ID: {{ spam_attempt.user.pk }}
-Joined at: {{ spam_attempt.user.date_joined }}
+Joined at: {{ spam_attempt.user.date_joined|in_utc }}
 
 Profile link: {{ spam_attempt.user.get_absolute_url()|absolutify }}
 Admin link: {{ url('admin:users_user_change', spam_attempt.user.pk)|absolutify }}
 
 * DOCUMENT *
 
-{% if spam_attempt.document %}
+{% if spam_attempt.document -%}
 Title: {{ spam_attempt.document.title }}
 Slug: {{ spam_attempt.document.slug }}
 Language: {{ spam_attempt.document.language }}
-Last modified: {{ spam_attempt.document.modified }}
+Last modified: {{ spam_attempt.document.modified|in_utc }}
 
 Site link: {{ spam_attempt.document.get_absolute_url()|absolutify }}
 Admin link: {{ url('admin:wiki_document_change', spam_attempt.document.pk)|absolutify }}
-{% else %}
+{% else -%}
 The spam attempt doesn't have a document attached
-{% endif %}
+{% endif -%}
