@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collections import namedtuple
 from datetime import datetime
 
 import mock
@@ -16,54 +15,16 @@ from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
 from ..templatetags.jinja_helpers import (datetimeformat, get_soapbox_messages,
-                                          jsonencode, number, soapbox_messages,
-                                          timesince, urlencode, yesno)
+                                          jsonencode, soapbox_messages, yesno)
 
 
-class TestHelpers(KumaTestCase):
-
-    def test_number(self):
-        context = {'request': namedtuple('R', 'LANGUAGE_CODE')('en-US')}
-        eq_('5,000', number(context, 5000))
-        eq_('', number(context, None))
+class TestYesNo(KumaTestCase):
 
     def test_yesno(self):
         eq_('Yes', yesno(True))
         eq_('No', yesno(False))
         eq_('Yes', yesno(1))
         eq_('No', yesno(0))
-
-
-class TimesinceTests(KumaTestCase):
-    """Tests for the timesince filter"""
-
-    def test_none(self):
-        """If None is passed in, timesince returns ''."""
-        eq_('', timesince(None))
-
-    def test_trunc(self):
-        """Assert it returns only the most significant time division."""
-        eq_('1 year ago',
-            timesince(datetime(2000, 1, 2), now=datetime(2001, 2, 3)))
-
-    def test_future(self):
-        """
-        Test behavior when date is in the future and also when omitting the
-        now kwarg.
-        """
-        eq_('', timesince(datetime(9999, 1, 2)))
-
-
-class TestUrlEncode(KumaTestCase):
-
-    def test_utf8_urlencode(self):
-        """Bug 689056: Unicode strings with non-ASCII characters should not
-        throw a KeyError when filtered through URL encoding"""
-        try:
-            s = u"Someguy Dude\xc3\xaas Lastname"
-            urlencode(s)
-        except KeyError:
-            self.fail("There should be no KeyError")
 
 
 class TestSoapbox(KumaTestCase):
