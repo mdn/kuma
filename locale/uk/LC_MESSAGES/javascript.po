@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
+"POT-Creation-Date: 2016-03-11 15:58-0800\n"
 "PO-Revision-Date: 2016-01-23 15:50+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Закрити підменю"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "Закрити сповіщення"
 
@@ -131,23 +131,23 @@ msgstr "Повідомлено. Дякую!"
 msgid "Show old table."
 msgstr "Показати стару таблицю."
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:402
 msgid "an unknown date"
 msgstr "невідома дата"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:403
 msgid "You have a draft from:"
 msgstr "У вас є чернетка від:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:404
 msgid "Restore the draft content"
 msgstr "Відновити вміст чернетки"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:405
 msgid "Discard the draft"
 msgstr "Видалити чернетку"
 
-#: kuma/static/js/wiki-edit.js:555
+#: kuma/static/js/wiki-edit.js:557
 msgid "saved"
 msgstr "збережено"
 
@@ -159,18 +159,15 @@ msgstr "Нова мітка..."
 msgid "How to read CSS syntax."
 msgstr "Як читати CSS синтаксис."
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "Пошук на Stack Overflow"
 
-#: kuma/static/js/wiki.js:655
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
-"Ваш браузер не підтримує MathML. Замість цього використовується запасне "
-"вирішення на CSS."
+#: kuma/static/js/wiki.js:677
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr "Ваш браузер не підтримує MathML. Замість цього використовується запасне вирішення на CSS."
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "Докладно"
 
@@ -182,8 +179,7 @@ msgstr "Вибрати прикріплення"
 msgid "No attachments available"
 msgstr "Немає доступних прикріплень"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Прикріплення"
 
@@ -203,8 +199,7 @@ msgstr "Створити перенаправлення"
 msgid "MDN Redirect"
 msgstr "MDN перенаправлення"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Документ"
 

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-29 10:30-0800\n"
+"POT-Creation-Date: 2016-03-11 15:58-0800\n"
 "PO-Revision-Date: 2016-01-23 21:33+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
@@ -390,6 +390,25 @@ msgstr "Відписано"
 msgid "You have been unsubscribed."
 msgstr "Вас було відписано."
 
+#: kuma/attachments/admin.py:60
+#, python-format
+msgid "The following attachment files were moved to the trash: %(filenames)s. You may want to review them before their automatic purge after %(days)s days from the file storage."
+msgstr ""
+
+#: kuma/attachments/admin.py:64
+#, fuzzy
+msgid "and"
+msgstr "Заблокований"
+
+#: kuma/attachments/admin.py:127
+#, python-format
+msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
+msgstr ""
+
+#: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
+msgid "Attachments"
+msgstr "Вкладені файли"
+
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
 msgstr "Нещодавні зміни файлів MDN"
@@ -398,131 +417,143 @@ msgstr "Нещодавні зміни файлів MDN"
 msgid "Recent revisions to MDN file attachments"
 msgstr "Нещодавні редакції прикріплених файлів MDN"
 
-#: kuma/attachments/forms.py:9
+#: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
 msgstr "Файли цього типу не дозволені."
 
-#: kuma/attachments/views.py:148
-#, python-format
-msgid "The file provided is not valid. File must be one of these types: %s."
-msgstr "Зазначений файл недійсний. Файл повинен мати одне з цих розширень: %s."
+#: kuma/attachments/models.py:112
+msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
+msgstr ""
 
-#. 'id' is the revision number, 'title' is the title of the document.
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:3
-#, python-format
-msgid "Attachment %(id)s | %(title)s"
-msgstr "Вкладення %(id)s | %(title)s"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:15
-msgid "Attachment Information"
-msgstr "Відомості про вкладення"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:19 kuma/wiki/jinja2/wiki/revision.html:17
-msgid "Revision slug:"
-msgstr "Посилання редакції:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:23 kuma/wiki/jinja2/wiki/revision.html:21
-msgid "Revision title:"
-msgstr "Заголовок редакції:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:27 kuma/wiki/jinja2/wiki/revision.html:25
-msgid "Revision id:"
-msgstr "ID редакції:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:31 kuma/wiki/jinja2/wiki/revision.html:29
-msgid "Created:"
-msgstr "Створено:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:35 kuma/wiki/jinja2/wiki/revision.html:33
-msgid "Creator:"
-msgstr "Автор:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:39 kuma/attachments/jinja2/attachments/attachment_detail.html:43
-msgid "MIME Type:"
-msgstr "Тип MIME:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:44
-#, python-format
-msgid "%(bytes)s bytes"
-msgstr "%(bytes)s байтів"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:48
-msgid "Is approved?"
-msgstr "Затверджено?"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:52 kuma/wiki/jinja2/wiki/revision.html:38
-msgid "Is current revision?"
-msgstr "Це поточна редакція?"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:60
-msgid "Attachment Preview"
+#: kuma/attachments/models.py:140
+#, fuzzy
+msgid "attachment revision"
 msgstr "Попередній перегляд вкладеного файлу"
 
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:65
-msgid "No preview is available."
-msgstr "Попередній перегляд недоступний."
+#: kuma/attachments/models.py:141
+#, fuzzy
+msgid "attachment revisions"
+msgstr "Попередній перегляд вкладеного файлу"
 
-#: kuma/attachments/jinja2/attachments/list_files.html:2
-msgid "All Files"
-msgstr "Всі файли"
+#: kuma/attachments/models.py:214
+msgid "The attachment file that was trashed"
+msgstr ""
 
-#: kuma/attachments/jinja2/attachments/list_files.html:23
-msgid "There are no files."
-msgstr "Немає жодного файлу."
+#: kuma/attachments/models.py:219
+msgid "The date and time the attachment was trashed"
+msgstr ""
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:12
-msgid "Attachments"
+#: kuma/attachments/models.py:224
+msgid "The username of the user who trashed the attachment"
+msgstr ""
+
+#: kuma/attachments/models.py:229
+msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
+msgstr ""
+
+#: kuma/attachments/models.py:234
+#, fuzzy
+msgid "Trashed attachment"
 msgstr "Вкладені файли"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:12
+#: kuma/attachments/models.py:235
+#, fuzzy
+msgid "Trashed attachments"
+msgstr "Вкладені файли"
+
+#. 'title' is the title of the document.
+#: kuma/attachments/jinja2/attachments/edit_attachment.html:3
+#, fuzzy, python-format
+msgid "Attachments | %(title)s"
+msgstr "Вкладення %(id)s | %(title)s"
+
+#: kuma/attachments/jinja2/attachments/edit_attachment.html:21
+#, python-format
+msgid "Upload file to article %(title)s"
+msgstr ""
+
+#: kuma/attachments/jinja2/attachments/edit_attachment.html:30
+#, fuzzy
+msgid "Upload files"
+msgstr "Вивантаження"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
 msgstr "Дізнайтеся, як використовувати вкладення"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16 kuma/attachments/jinja2/attachments/includes/attachment_list.html:23
-msgid "Attach Files"
-msgstr "Вкласти файли"
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
+#, fuzzy
+msgid "Upload Files"
+msgstr "Всі файли"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:21
-msgid "This document has no attachments. Images can be attached, and then embedded in the article."
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
+#, fuzzy
+msgid "This document has no attachments."
+msgstr "Цей документ немає міток."
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
+#, fuzzy
+msgid "Images can be attached, and then linked in the article."
 msgstr "Цей документ не має вкладень. Зображення можуть бути вкладені, а потім вбудовані в статтю."
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:33 kuma/attachments/jinja2/attachments/includes/attachment_list.html:51
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/attachments/jinja2/attachments/includes/attachment_list.html:67
 msgid "File"
 msgstr "Файл"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:34
-msgid "Size"
-msgstr "Розмір"
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/users/jinja2/users/user_detail.html:156 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
-msgid "Date"
-msgstr "Дата"
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36
-msgid "Attached by"
-msgstr "Приєднаний"
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:52 kuma/users/models.py:65 kuma/wiki/models.py:1858
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1925
 msgid "Title"
 msgstr "Заголовок"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:53 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:37 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
 msgstr "Опис"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:54
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:38
 msgid "Comments"
 msgstr "Коментарі"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:66
-msgid "Uploading"
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:61
+#, fuzzy
+msgid "Attached to this article"
+msgstr "Вилучити цю статтю"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:63
+#, fuzzy
+msgid "Attached to another article"
+msgstr "Відомості про вкладення"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:68
+msgid "Size"
+msgstr "Розмір"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:69
+msgid "Last modified"
+msgstr ""
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
+#, fuzzy
+msgid "Uploaded by"
 msgstr "Вивантаження"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_row.html:6
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:73
+#, fuzzy
+msgid "Linked in article"
+msgstr "Клонувати цю статтю"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
+#, fuzzy
+msgid "Article attached to"
+msgstr "Статті з мітками: %(tag)s"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
-msgid "%s bytes"
-msgstr "%s байтів"
+msgid "%(bytes)s bytes"
+msgstr "%(bytes)s байтів"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:90 kuma/attachments/jinja2/attachments/includes/attachment_list.html:109
+msgid "n/a"
+msgstr ""
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -638,71 +669,15 @@ msgstr "Веб"
 msgid "Moz Hacks"
 msgstr "Moz Hacks"
 
-#: kuma/core/templatetags/jinja_helpers.py:114
-#, python-format
-msgid "%(number)d year ago"
-msgid_plural "%(number)d years ago"
-msgstr[0] "%(number)d рік тому"
-msgstr[1] "%(number)d роки тому"
-msgstr[2] "%(number)d років тому"
-
-#: kuma/core/templatetags/jinja_helpers.py:116
-#, python-format
-msgid "%(number)d month ago"
-msgid_plural "%(number)d months ago"
-msgstr[0] "%(number)d місяць тому"
-msgstr[1] "%(number)d місяці тому"
-msgstr[2] "%(number)d місяців тому"
-
-#: kuma/core/templatetags/jinja_helpers.py:118
-#, python-format
-msgid "%(number)d week ago"
-msgid_plural "%(number)d weeks ago"
-msgstr[0] "%(number)d тиждень тому"
-msgstr[1] "%(number)d тижні тому"
-msgstr[2] "%(number)d тижнів тому"
-
-#: kuma/core/templatetags/jinja_helpers.py:120
-#, python-format
-msgid "%(number)d day ago"
-msgid_plural "%(number)d days ago"
-msgstr[0] "%(number)d день тому"
-msgstr[1] "%(number)d дні тому"
-msgstr[2] "%(number)d днів тому"
-
-#: kuma/core/templatetags/jinja_helpers.py:122
-#, python-format
-msgid "%(number)d hour ago"
-msgid_plural "%(number)d hours ago"
-msgstr[0] "%(number)d годину тому"
-msgstr[1] "%(number)d години тому"
-msgstr[2] "%(number)d годин тому"
-
-#: kuma/core/templatetags/jinja_helpers.py:124
-#, python-format
-msgid "%(number)d minute ago"
-msgid_plural "%(number)d minutes ago"
-msgstr[0] "%(number)d хвилину тому"
-msgstr[1] "%(number)d хвилини тому"
-msgstr[2] "%(number)d хвилин тому"
-
-#: kuma/core/templatetags/jinja_helpers.py:126
-#, python-format
-msgid "%(number)d second ago"
-msgid_plural "%(number)d seconds ago"
-msgstr[0] "%(number)d секунду тому"
-msgstr[1] "%(number)d секунди тому"
-msgstr[2] "%(number)d секунд тому"
-
-#: kuma/core/templatetags/jinja_helpers.py:149
+#: kuma/core/templatetags/jinja_helpers.py:89
 msgid "Yes"
 msgstr "Так"
 
-#: kuma/core/templatetags/jinja_helpers.py:149
+#: kuma/core/templatetags/jinja_helpers.py:89
 msgid "No"
 msgstr "Ні"
 
-#: kuma/core/templatetags/jinja_helpers.py:299
+#: kuma/core/templatetags/jinja_helpers.py:187
 #, python-format
 msgid "Today at %s"
 msgstr "Сьогодні о %s"
@@ -1268,7 +1243,7 @@ msgstr "Неможливо заповнити більше одного інде
 msgid "Populate selected search index via Celery"
 msgstr "Заповнити обраний пошуковий індекс через Celery"
 
-#: kuma/search/admin.py:56
+#: kuma/search/admin.py:57
 msgid "Is current index?"
 msgstr "Це поточний індекс?"
 
@@ -1394,7 +1369,7 @@ msgstr "Фільтрувати по"
 msgid "The submitted data contains invalid content."
 msgstr "Відправлені дані містять невідповідний контент."
 
-#: kuma/spam/forms.py:87
+#: kuma/spam/forms.py:90
 msgid "The submitted data contains invalid content. Please try again."
 msgstr "Відправлені дані містять невідповідний контент. Будь ласка, спробуйте ще раз."
 
@@ -1476,7 +1451,7 @@ msgstr "Надсилати мені новини"
 msgid "Preferred format"
 msgstr "Бажаний формат"
 
-#: kuma/users/forms.py:47 kuma/users/signup.py:32
+#: kuma/users/forms.py:47 kuma/users/signup.py:34
 msgid "I agree"
 msgstr "Я погоджуюся"
 
@@ -1614,21 +1589,21 @@ msgstr "Введіть дійсний URL Мозилівця."
 msgid "Enter a valid Facebook URL."
 msgstr "Введіть дійсний Facebook URL."
 
-#: kuma/users/signup.py:7
+#: kuma/users/signup.py:9
 msgid "Username is required."
 msgstr "Ім'я користувача обов'язкове."
 
-#: kuma/users/signup.py:8
+#: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Ім'я користувача закоротке (%(show_value)s символів). Довжина повинна бути як мінімум %(limit_value)s символів."
 
-#: kuma/users/signup.py:10
+#: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
 msgstr "Ім'я користувача задовге (%(show_value)s символів). Довжина повинна бути максимум %(limit_value)s символів."
 
-#: kuma/users/signup.py:13
+#: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
 msgstr "Ви повинні погодитися з умовами використання."
 
@@ -1973,12 +1948,16 @@ msgstr ""
 "На яку адресу електронної пошти нам слід надсилати повідомлення та сповіщення MDN? Ця адреса <strong>не буде</strong> відображена на MDN і буде використовуватися відповідно до нашої <a href="
 "\"%(privacy_url)s\">політики приватності</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:170
+#: kuma/users/jinja2/socialaccount/signup.html:173
+msgid "Terms and Privacy"
+msgstr ""
+
+#: kuma/users/jinja2/socialaccount/signup.html:182
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "з <a href=\"%(terms_url)s\">Умовами користування</a> й <a href=\"%(privacy_url)s\">Політикою приватності</a> Mozilla."
 
-#: kuma/users/jinja2/socialaccount/signup.html:179
+#: kuma/users/jinja2/socialaccount/signup.html:192
 msgid "Create my MDN profile"
 msgstr "Створити свій MDN профіль"
 
@@ -2059,6 +2038,10 @@ msgstr "Переглянути всю активність"
 #: kuma/users/jinja2/users/user_detail.html:155
 msgid "Page"
 msgstr "Сторінка"
+
+#: kuma/users/jinja2/users/user_detail.html:156 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+msgid "Date"
+msgstr "Дата"
 
 #: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
@@ -2313,15 +2296,15 @@ msgstr "Адмін"
 msgid "Wiki"
 msgstr "Вікі"
 
-#: kuma/wiki/constants.py:206
+#: kuma/wiki/constants.py:207
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "Технічна - приклади коду, API або технологій"
 
-#: kuma/wiki/constants.py:207
+#: kuma/wiki/constants.py:208
 msgid "Editorial - prose, grammar, or content"
 msgstr "Редакційна - текст, граматика або зміст"
 
-#: kuma/wiki/constants.py:212
+#: kuma/wiki/constants.py:213
 msgid "Localization in progress - not completely translated yet."
 msgstr "Локалізація триває - ще не перекладена повністю."
 
@@ -2329,7 +2312,7 @@ msgstr "Локалізація триває - ще не перекладена �
 msgid "Edit section"
 msgstr "Змінити розділ"
 
-#: kuma/wiki/events.py:71
+#: kuma/wiki/events.py:72
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] Сторінка \"%(document_title)s\" змінена %(creator)s"
@@ -2478,12 +2461,12 @@ msgstr "Поки ви редагували цей документ, він бу�
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "Зміна URL документа вимагає переміщення його та його підсторінок."
 
-#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:612 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
+#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:614 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Назва:"
 
-#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613
+#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:615
 msgid "Title of article"
 msgstr "Назва статті"
 
@@ -2536,97 +2519,112 @@ msgstr "Помітити дану редакцію для перевірки?"
 msgid "Tag this revision for localization?"
 msgstr "Помітити дану редакцію для локалізації?"
 
-#: kuma/wiki/forms.py:619
+#: kuma/wiki/forms.py:621
 msgid "New slug:"
 msgstr "Новий url:"
 
-#: kuma/wiki/forms.py:620
+#: kuma/wiki/forms.py:622
 msgid "New article URL"
 msgstr "Новий URL статті"
 
-#: kuma/wiki/models.py:115
+#: kuma/wiki/models.py:114
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "Батько %s не існує."
 
-#: kuma/wiki/models.py:123
+#: kuma/wiki/models.py:122
 msgid "Document Tag"
 msgstr "Мітка документа"
 
-#: kuma/wiki/models.py:124
+#: kuma/wiki/models.py:123
 msgid "Document Tags"
 msgstr "Мітки документа"
 
-#: kuma/wiki/models.py:1502
+#: kuma/wiki/models.py:175
+#, fuzzy
+msgid "uploaded to the document"
+msgstr "Відновити цей документ"
+
+#: kuma/wiki/models.py:181
+#, fuzzy
+msgid "linked in the document content"
+msgstr "Перейти до основного вмісту"
+
+#: kuma/wiki/models.py:195
+#, python-format
+msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
+msgstr ""
+
+#: kuma/wiki/models.py:1562
 msgid "Review Tag"
 msgstr "Подивитися мітку"
 
-#: kuma/wiki/models.py:1503
+#: kuma/wiki/models.py:1563
 msgid "Review Tags"
 msgstr "Подивитися мітки"
 
-#: kuma/wiki/models.py:1509
+#: kuma/wiki/models.py:1569
 msgid "Localization Tag"
 msgstr "Мітка локалізації"
 
-#: kuma/wiki/models.py:1510
+#: kuma/wiki/models.py:1570
 msgid "Localization Tags"
 msgstr "Мітки локалізації"
 
-#: kuma/wiki/models.py:1543
+#: kuma/wiki/models.py:1603
 msgid "No table of contents"
 msgstr "Немає змісту"
 
-#: kuma/wiki/models.py:1544
+#: kuma/wiki/models.py:1604
 msgid "All levels"
 msgstr "Всі рівні"
 
-#: kuma/wiki/models.py:1545
+#: kuma/wiki/models.py:1605
 msgid "H2 and higher"
 msgstr "H2 й вище"
 
-#: kuma/wiki/models.py:1546
+#: kuma/wiki/models.py:1606
 msgid "H3 and higher"
 msgstr "H3 й вище"
 
-#: kuma/wiki/models.py:1547
+#: kuma/wiki/models.py:1607
 msgid "H4 and higher"
 msgstr "H4 й вище"
 
-#: kuma/wiki/models.py:1651
+#: kuma/wiki/models.py:1711
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "Редакція повинна ґрунтуватися на редакції документа з локаллю %(locale)s. ID редакції %(id)s не підходить за цим критерієм."
 
-#: kuma/wiki/models.py:1778
+#: kuma/wiki/models.py:1845
 msgid "IP address"
 msgstr "IP-адреса"
 
-#: kuma/wiki/models.py:1786
+#: kuma/wiki/models.py:1853
 msgid "User-Agent"
 msgstr "Браузер"
 
-#: kuma/wiki/models.py:1791
+#: kuma/wiki/models.py:1858
 msgid "HTTP Referrer"
 msgstr "HTTP реферер"
 
-#: kuma/wiki/models.py:1812
+#: kuma/wiki/models.py:1879
 msgid "Revision"
 msgstr "Редакція"
 
-#: kuma/wiki/models.py:1818
+#: kuma/wiki/models.py:1885
 msgid "Akismet submission"
 msgstr "Подання Akismet"
 
-#: kuma/wiki/models.py:1819
+#: kuma/wiki/models.py:1886
 msgid "Akismet submissions"
 msgstr "Подання Akismet"
 
-#: kuma/wiki/models.py:1862
+#: kuma/wiki/models.py:1929
 msgid "Slug"
 msgstr "URL"
 
-#: kuma/wiki/models.py:1870
+#: kuma/wiki/models.py:1937
 msgid "Document (optional)"
 msgstr "Документ (не обов'язково)"
 
@@ -3046,6 +3044,30 @@ msgstr "Редакція %(id)s | %(title)s"
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
 msgstr "Інформація про редакцію"
+
+#: kuma/wiki/jinja2/wiki/revision.html:17
+msgid "Revision slug:"
+msgstr "Посилання редакції:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:21
+msgid "Revision title:"
+msgstr "Заголовок редакції:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:25
+msgid "Revision id:"
+msgstr "ID редакції:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:29
+msgid "Created:"
+msgstr "Створено:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:33
+msgid "Creator:"
+msgstr "Автор:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:38
+msgid "Is current revision?"
+msgstr "Це поточна редакція?"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
@@ -3650,12 +3672,12 @@ msgstr "Для відправлення подання до Akismet, будь л
 msgid "Select an Akismet submission for more details"
 msgstr "Виберіть Akismet подання для більш докладної інформації"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:100 kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:116 kuma/wiki/templatetags/jinja_helpers.py:117
+#: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
 msgstr "Редакція %s"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:106
+#: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
 msgstr "Під час генерування вмісту сталася помилка."
 
@@ -3663,27 +3685,27 @@ msgstr "Під час генерування вмісту сталася пом�
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "Документ вже існує. Зауваження: Ви не можете скасувати зміни в документі, якій був переміщений, поки не видалите його перенаправлення."
 
-#: kuma/wiki/views/document.py:600
+#: kuma/wiki/views/document.py:608
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "Перенаправлено з %(url)s"
 
-#: kuma/wiki/views/document.py:648
+#: kuma/wiki/views/document.py:656
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "Я дізнався(лася) про %(title)s на MDN."
 
-#: kuma/wiki/views/document.py:718
+#: kuma/wiki/views/document.py:726
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "Тип вмісту не підтримується: %s"
 
-#: kuma/wiki/views/document.py:725
+#: kuma/wiki/views/document.py:733
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "Помилка обробки запиту: %s"
 
-#: kuma/wiki/views/document.py:745
+#: kuma/wiki/views/document.py:753
 msgid "ETag precondition failed"
 msgstr "Помилка обробки попередньої умови ETag"
 
@@ -3717,6 +3739,72 @@ msgstr "Ви не можете перекладати цей документ."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Сервер Elasticsearch: %(backend)s"
+
+#~ msgid "The file provided is not valid. File must be one of these types: %s."
+#~ msgstr "Зазначений файл недійсний. Файл повинен мати одне з цих розширень: %s."
+
+#~ msgid "MIME Type:"
+#~ msgstr "Тип MIME:"
+
+#~ msgid "Is approved?"
+#~ msgstr "Затверджено?"
+
+#~ msgid "No preview is available."
+#~ msgstr "Попередній перегляд недоступний."
+
+#~ msgid "There are no files."
+#~ msgstr "Немає жодного файлу."
+
+#~ msgid "Attach Files"
+#~ msgstr "Вкласти файли"
+
+#~ msgid "Attached by"
+#~ msgstr "Приєднаний"
+
+#~ msgid "%s bytes"
+#~ msgstr "%s байтів"
+
+#~ msgid "%(number)d year ago"
+#~ msgid_plural "%(number)d years ago"
+#~ msgstr[0] "%(number)d рік тому"
+#~ msgstr[1] "%(number)d роки тому"
+#~ msgstr[2] "%(number)d років тому"
+
+#~ msgid "%(number)d month ago"
+#~ msgid_plural "%(number)d months ago"
+#~ msgstr[0] "%(number)d місяць тому"
+#~ msgstr[1] "%(number)d місяці тому"
+#~ msgstr[2] "%(number)d місяців тому"
+
+#~ msgid "%(number)d week ago"
+#~ msgid_plural "%(number)d weeks ago"
+#~ msgstr[0] "%(number)d тиждень тому"
+#~ msgstr[1] "%(number)d тижні тому"
+#~ msgstr[2] "%(number)d тижнів тому"
+
+#~ msgid "%(number)d day ago"
+#~ msgid_plural "%(number)d days ago"
+#~ msgstr[0] "%(number)d день тому"
+#~ msgstr[1] "%(number)d дні тому"
+#~ msgstr[2] "%(number)d днів тому"
+
+#~ msgid "%(number)d hour ago"
+#~ msgid_plural "%(number)d hours ago"
+#~ msgstr[0] "%(number)d годину тому"
+#~ msgstr[1] "%(number)d години тому"
+#~ msgstr[2] "%(number)d годин тому"
+
+#~ msgid "%(number)d minute ago"
+#~ msgid_plural "%(number)d minutes ago"
+#~ msgstr[0] "%(number)d хвилину тому"
+#~ msgstr[1] "%(number)d хвилини тому"
+#~ msgstr[2] "%(number)d хвилин тому"
+
+#~ msgid "%(number)d second ago"
+#~ msgid_plural "%(number)d seconds ago"
+#~ msgstr[0] "%(number)d секунду тому"
+#~ msgstr[1] "%(number)d секунди тому"
+#~ msgstr[2] "%(number)d секунд тому"
 
 #~ msgid "Celebrate ten years of documenting your Web."
 #~ msgstr "Відсвяткуйте 10 років документування вашого Інтернету."

@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0N\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
+"POT-Creation-Date: 2016-03-11 15:58-0800\n"
 "PO-Revision-Date: 2016-02-26 21:42+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Zamknij podmenu"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "Zamknij powiadomienie"
 
@@ -131,23 +131,23 @@ msgstr "Zgłoszono. Dziękujemy!"
 msgid "Show old table."
 msgstr "Pokaż starą tabelę."
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:402
 msgid "an unknown date"
 msgstr "nieznana data"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:403
 msgid "You have a draft from:"
 msgstr "Masz szkic od:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:404
 msgid "Restore the draft content"
 msgstr "Przywróć zawartość szkicu"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:405
 msgid "Discard the draft"
 msgstr "Odrzuć szkic"
 
-#: kuma/static/js/wiki-edit.js:555
+#: kuma/static/js/wiki-edit.js:557
 msgid "saved"
 msgstr "zapisano"
 
@@ -159,18 +159,15 @@ msgstr "Nowa etykieta..."
 msgid "How to read CSS syntax."
 msgstr "Jak czytać CSS."
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "Przeszukaj Stack Overflow"
 
-#: kuma/static/js/wiki.js:655
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
-"Twoja przeglądarka nie obsługuje MathML. Zamiast tego korzystasz z "
-"alternatywnej wersji CSS."
+#: kuma/static/js/wiki.js:677
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr "Twoja przeglądarka nie obsługuje MathML. Zamiast tego korzystasz z alternatywnej wersji CSS."
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "Szczegóły"
 
@@ -182,8 +179,7 @@ msgstr "Wybierz załącznik"
 msgid "No attachments available"
 msgstr "Brak załączników"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Załączniki"
 
@@ -203,8 +199,7 @@ msgstr "Stwórz przekierowanie"
 msgid "MDN Redirect"
 msgstr "Przekierowanie MDN"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
@@ -299,11 +294,5 @@ msgstr "Domyślny"
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-#~ msgid ""
-#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
-#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
-#~ "draft</a>."
-#~ msgstr ""
-#~ "Masz niedokończoną wersję roboczą. <a href=\"\" "
-#~ "class=\"restoreLink\">Przywróć wersję roboczą</a> or <a href=\"\" "
-#~ "class=\"discardLink\">odrzuć wersję roboczą</a>."
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "Masz niedokończoną wersję roboczą. <a href=\"\" class=\"restoreLink\">Przywróć wersję roboczą</a> or <a href=\"\" class=\"discardLink\">odrzuć wersję roboczą</a>."

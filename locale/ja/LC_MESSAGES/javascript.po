@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
+"POT-Creation-Date: 2016-03-11 15:58-0800\n"
 "PO-Revision-Date: 2016-01-09 00:49+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "サブメニューを閉じる"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "通知を閉じる"
 
@@ -131,23 +131,23 @@ msgstr "報告が送信されました。ありがとうございます！"
 msgid "Show old table."
 msgstr "古い表を表示"
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:402
 msgid "an unknown date"
 msgstr "不明な日時"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:403
 msgid "You have a draft from:"
 msgstr "この日時に保存された草稿があります:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:404
 msgid "Restore the draft content"
 msgstr "草稿の内容を復元"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:405
 msgid "Discard the draft"
 msgstr "草稿を削除"
 
-#: kuma/static/js/wiki-edit.js:555
+#: kuma/static/js/wiki-edit.js:557
 msgid "saved"
 msgstr "保存済み"
 
@@ -159,15 +159,15 @@ msgstr "新しいタグ..."
 msgid "How to read CSS syntax."
 msgstr "CSS 構文の読み方"
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "Stack Overflow を検索"
 
-#: kuma/static/js/wiki.js:655
+#: kuma/static/js/wiki.js:677
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "お使いのブラウザは MathML に対応していません。代わりに CSS フォールバックを表示します。"
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "詳細"
 

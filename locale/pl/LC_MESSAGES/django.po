@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-29 10:30-0800\n"
+"POT-Creation-Date: 2016-03-11 15:58-0800\n"
 "PO-Revision-Date: 2016-01-19 11:30+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
@@ -389,6 +389,25 @@ msgstr "Anulowano subskrypcję"
 msgid "You have been unsubscribed."
 msgstr "Subskrypcja została anulowana."
 
+#: kuma/attachments/admin.py:60
+#, python-format
+msgid "The following attachment files were moved to the trash: %(filenames)s. You may want to review them before their automatic purge after %(days)s days from the file storage."
+msgstr ""
+
+#: kuma/attachments/admin.py:64
+#, fuzzy
+msgid "and"
+msgstr "Zablokowany"
+
+#: kuma/attachments/admin.py:127
+#, python-format
+msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
+msgstr ""
+
+#: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
+msgid "Attachments"
+msgstr "Załączniki"
+
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
 msgstr "MDN – ostatnio zmienione pliki"
@@ -397,131 +416,144 @@ msgstr "MDN – ostatnio zmienione pliki"
 msgid "Recent revisions to MDN file attachments"
 msgstr "MDN – ostatnie sprawdzenia"
 
-#: kuma/attachments/forms.py:9
+#: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
 msgstr "Pliki tego typu nie są dozwolone."
 
-#: kuma/attachments/views.py:148
-#, python-format
-msgid "The file provided is not valid. File must be one of these types: %s."
-msgstr "Podany plik ma niewłaściwy format. Plik musi mieć jeden z formatów: %s."
+#: kuma/attachments/models.py:112
+msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
+msgstr ""
 
-#. 'id' is the revision number, 'title' is the title of the document.
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:3
-#, python-format
-msgid "Attachment %(id)s | %(title)s"
-msgstr "Załącznik %(id)s | %(title)s"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:15
-msgid "Attachment Information"
-msgstr "Informacja o załączniku"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:19 kuma/wiki/jinja2/wiki/revision.html:17
-msgid "Revision slug:"
-msgstr "Ciąg znaków tej wersji:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:23 kuma/wiki/jinja2/wiki/revision.html:21
-msgid "Revision title:"
-msgstr "Tytuł wersji:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:27 kuma/wiki/jinja2/wiki/revision.html:25
-msgid "Revision id:"
-msgstr "Identyfikator wersji:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:31 kuma/wiki/jinja2/wiki/revision.html:29
-msgid "Created:"
-msgstr "Utworzono:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:35 kuma/wiki/jinja2/wiki/revision.html:33
-msgid "Creator:"
-msgstr "Autor:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:39 kuma/attachments/jinja2/attachments/attachment_detail.html:43
-msgid "MIME Type:"
-msgstr "Typ MIME:"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:44
-#, python-format
-msgid "%(bytes)s bytes"
-msgstr "%(bytes)s bajtów"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:48
-msgid "Is approved?"
-msgstr "Czy została zaakceptowana?"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:52 kuma/wiki/jinja2/wiki/revision.html:38
-msgid "Is current revision?"
-msgstr "Czy jest aktualna?"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:60
-msgid "Attachment Preview"
+#: kuma/attachments/models.py:140
+#, fuzzy
+msgid "attachment revision"
 msgstr "Podgląd załącznika"
 
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:65
-msgid "No preview is available."
-msgstr "Podgląd jest niedostępny."
+#: kuma/attachments/models.py:141
+#, fuzzy
+msgid "attachment revisions"
+msgstr "Podgląd załącznika"
 
-#: kuma/attachments/jinja2/attachments/list_files.html:2
-msgid "All Files"
-msgstr "Wszystkie pliki"
+#: kuma/attachments/models.py:214
+msgid "The attachment file that was trashed"
+msgstr ""
 
-#: kuma/attachments/jinja2/attachments/list_files.html:23
-msgid "There are no files."
-msgstr "Nie ma plików."
+#: kuma/attachments/models.py:219
+msgid "The date and time the attachment was trashed"
+msgstr ""
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:12
-msgid "Attachments"
+#: kuma/attachments/models.py:224
+msgid "The username of the user who trashed the attachment"
+msgstr ""
+
+#: kuma/attachments/models.py:229
+msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
+msgstr ""
+
+#: kuma/attachments/models.py:234
+#, fuzzy
+msgid "Trashed attachment"
 msgstr "Załączniki"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:12
+#: kuma/attachments/models.py:235
+#, fuzzy
+msgid "Trashed attachments"
+msgstr "Załączniki"
+
+#. 'title' is the title of the document.
+#: kuma/attachments/jinja2/attachments/edit_attachment.html:3
+#, fuzzy, python-format
+msgid "Attachments | %(title)s"
+msgstr "Załącznik %(id)s | %(title)s"
+
+#: kuma/attachments/jinja2/attachments/edit_attachment.html:21
+#, python-format
+msgid "Upload file to article %(title)s"
+msgstr ""
+
+#: kuma/attachments/jinja2/attachments/edit_attachment.html:30
+#, fuzzy
+msgid "Upload files"
+msgstr "Przesyłanie"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
 msgstr "Dowiedz się, jak używać załączników"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16 kuma/attachments/jinja2/attachments/includes/attachment_list.html:23
-msgid "Attach Files"
-msgstr "Dodaj załączniki"
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
+#, fuzzy
+msgid "Upload Files"
+msgstr "Wszystkie pliki"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:21
-msgid "This document has no attachments. Images can be attached, and then embedded in the article."
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
+#, fuzzy
+msgid "This document has no attachments."
+msgstr "Ten dokument nie ma etykiet"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
+#, fuzzy
+msgid "Images can be attached, and then linked in the article."
 msgstr "Dokument nie zawiera załączników. Obrazki mogą być złączone i następnie osadzone w artykule."
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:33 kuma/attachments/jinja2/attachments/includes/attachment_list.html:51
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/attachments/jinja2/attachments/includes/attachment_list.html:67
 msgid "File"
 msgstr "Plik"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:34
-msgid "Size"
-msgstr "Wielkość"
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/users/jinja2/users/user_detail.html:156 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
-msgid "Date"
-msgstr "Data"
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36
-msgid "Attached by"
-msgstr "Załączony przez"
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:52 kuma/users/models.py:65 kuma/wiki/models.py:1858
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1925
 msgid "Title"
 msgstr "Tytuł"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:53 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:37 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
 msgstr "Opis"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:54
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:38
 msgid "Comments"
 msgstr "Komentarze"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:66
-msgid "Uploading"
-msgstr "Przesyłanie"
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:61
+#, fuzzy
+msgid "Attached to this article"
+msgstr "Usuń ten artykuł"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_row.html:6
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:63
+#, fuzzy
+msgid "Attached to another article"
+msgstr "Informacja o załączniku"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:68
+msgid "Size"
+msgstr "Wielkość"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:69
+#, fuzzy
+msgid "Last modified"
+msgstr "data ostatniej modyfikacji"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
+#, fuzzy
+msgid "Uploaded by"
+msgstr "Zdobywca nagrody"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:73
+#, fuzzy
+msgid "Linked in article"
+msgstr "Artykuł na Wikipedii"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
+#, fuzzy
+msgid "Article attached to"
+msgstr "Artykuły oznaczone: %(tag)s"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
-msgid "%s bytes"
-msgstr "%s bajtów"
+msgid "%(bytes)s bytes"
+msgstr "%(bytes)s bajtów"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:90 kuma/attachments/jinja2/attachments/includes/attachment_list.html:109
+msgid "n/a"
+msgstr ""
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -637,71 +669,15 @@ msgstr "Web"
 msgid "Moz Hacks"
 msgstr "Moz Hacks"
 
-#: kuma/core/templatetags/jinja_helpers.py:114
-#, python-format
-msgid "%(number)d year ago"
-msgid_plural "%(number)d years ago"
-msgstr[0] "%(number)d rok temu"
-msgstr[1] "%(number)d lata temu"
-msgstr[2] "%(number)d lat temu"
-
-#: kuma/core/templatetags/jinja_helpers.py:116
-#, python-format
-msgid "%(number)d month ago"
-msgid_plural "%(number)d months ago"
-msgstr[0] "%(number)d miesiąc temu"
-msgstr[1] "%(number)d miesiące temu"
-msgstr[2] "%(number)d miesięcy temu"
-
-#: kuma/core/templatetags/jinja_helpers.py:118
-#, python-format
-msgid "%(number)d week ago"
-msgid_plural "%(number)d weeks ago"
-msgstr[0] "%(number)d tydzień temu"
-msgstr[1] "%(number)d tygodnie temu"
-msgstr[2] "%(number)d tygodni temu"
-
-#: kuma/core/templatetags/jinja_helpers.py:120
-#, python-format
-msgid "%(number)d day ago"
-msgid_plural "%(number)d days ago"
-msgstr[0] "%(number)d dzień temu"
-msgstr[1] "%(number)d dni temu"
-msgstr[2] "%(number)d dni temu"
-
-#: kuma/core/templatetags/jinja_helpers.py:122
-#, python-format
-msgid "%(number)d hour ago"
-msgid_plural "%(number)d hours ago"
-msgstr[0] "%(number)d godzinę temu"
-msgstr[1] "%(number)d godziny temu"
-msgstr[2] "%(number)d godzin temu"
-
-#: kuma/core/templatetags/jinja_helpers.py:124
-#, python-format
-msgid "%(number)d minute ago"
-msgid_plural "%(number)d minutes ago"
-msgstr[0] "%(number)d minutę temu"
-msgstr[1] "%(number)d minuty temu"
-msgstr[2] "%(number)d minut temu"
-
-#: kuma/core/templatetags/jinja_helpers.py:126
-#, python-format
-msgid "%(number)d second ago"
-msgid_plural "%(number)d seconds ago"
-msgstr[0] "%(number)d sekundę temu"
-msgstr[1] "%(number)d sekundy temu"
-msgstr[2] "%(number)d sekund temu"
-
-#: kuma/core/templatetags/jinja_helpers.py:149
+#: kuma/core/templatetags/jinja_helpers.py:89
 msgid "Yes"
 msgstr "Tak"
 
-#: kuma/core/templatetags/jinja_helpers.py:149
+#: kuma/core/templatetags/jinja_helpers.py:89
 msgid "No"
 msgstr "Nie"
 
-#: kuma/core/templatetags/jinja_helpers.py:299
+#: kuma/core/templatetags/jinja_helpers.py:187
 #, python-format
 msgid "Today at %s"
 msgstr "Dzisiaj o %s"
@@ -1267,7 +1243,7 @@ msgstr "Jednorazowo można upowszechnić tylko jeden indeks."
 msgid "Populate selected search index via Celery"
 msgstr "Upowszechnij wybrany indeks za pomocą Celery"
 
-#: kuma/search/admin.py:56
+#: kuma/search/admin.py:57
 msgid "Is current index?"
 msgstr "To jest aktualny indeks?"
 
@@ -1393,7 +1369,7 @@ msgstr "Filtruj wg"
 msgid "The submitted data contains invalid content."
 msgstr "To zawiera niewłaściwą treść."
 
-#: kuma/spam/forms.py:87
+#: kuma/spam/forms.py:90
 msgid "The submitted data contains invalid content. Please try again."
 msgstr "Przesłane dane zawierają nieprawidłową treść. Spróbuj ponownie."
 
@@ -1475,7 +1451,7 @@ msgstr "Wyślij mi biuletyn"
 msgid "Preferred format"
 msgstr "Preferowany format"
 
-#: kuma/users/forms.py:47 kuma/users/signup.py:32
+#: kuma/users/forms.py:47 kuma/users/signup.py:34
 msgid "I agree"
 msgstr "Zgadzam się"
 
@@ -1613,21 +1589,21 @@ msgstr "Wprowadź prawidłowy adres URL Mozillian."
 msgid "Enter a valid Facebook URL."
 msgstr "Wprowadź prawidłowy adres URL Facebooka."
 
-#: kuma/users/signup.py:7
+#: kuma/users/signup.py:9
 msgid "Username is required."
 msgstr "Nazwa użytkownika jest wymagana."
 
-#: kuma/users/signup.py:8
+#: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Nazwa użytkownika jest za krótka (liczba znaków: %(show_value)s) – musi mieć co najmniej %(limit_value)s znaków."
 
-#: kuma/users/signup.py:10
+#: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
 msgstr "Nazwa użytkownika jest za długa (liczba znaków: %(show_value)s) – musi mieć co najmniej %(limit_value)s znaków."
 
-#: kuma/users/signup.py:13
+#: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
 msgstr "Musisz zaakceptować regulamin."
 
@@ -1968,12 +1944,16 @@ msgstr ""
 "Jakiego adresu e-mail mamy używać, by wysyłać ci związane z MDN wiadomości i powiadomienia? Ten adres <strong>nie będzie</strong> wyświetlany na stronach MDN i będzie używany zgodnie z naszymi <a "
 "href=\"%(privacy_url)s\">zasadami ochrony prywatności</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:170
+#: kuma/users/jinja2/socialaccount/signup.html:173
+msgid "Terms and Privacy"
+msgstr ""
+
+#: kuma/users/jinja2/socialaccount/signup.html:182
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "do <a href=\"%(terms_url)s\">Regulaminów</a> i <a href=\"%(privacy_url)s\">Zasad ochrony prywatności</a> Mozilli."
 
-#: kuma/users/jinja2/socialaccount/signup.html:179
+#: kuma/users/jinja2/socialaccount/signup.html:192
 msgid "Create my MDN profile"
 msgstr "Utwórz mój profil MDN"
 
@@ -2054,6 +2034,10 @@ msgstr "Zobacz całą aktywność"
 #: kuma/users/jinja2/users/user_detail.html:155
 msgid "Page"
 msgstr "Strona"
+
+#: kuma/users/jinja2/users/user_detail.html:156 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+msgid "Date"
+msgstr "Data"
 
 #: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
@@ -2307,15 +2291,15 @@ msgstr "Administrator"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:206
+#: kuma/wiki/constants.py:207
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "Technicznego – przykłady kodu, API lub technologii"
 
-#: kuma/wiki/constants.py:207
+#: kuma/wiki/constants.py:208
 msgid "Editorial - prose, grammar, or content"
 msgstr "Redakcyjnego – tekst​​, gramatyka lub treść"
 
-#: kuma/wiki/constants.py:212
+#: kuma/wiki/constants.py:213
 msgid "Localization in progress - not completely translated yet."
 msgstr "Trwa tłumaczenie – jeszcze nie w pełni przetłumaczono."
 
@@ -2323,7 +2307,7 @@ msgstr "Trwa tłumaczenie – jeszcze nie w pełni przetłumaczono."
 msgid "Edit section"
 msgstr "Edytuj sekcję"
 
-#: kuma/wiki/events.py:71
+#: kuma/wiki/events.py:72
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] Strona „%(document_title)s” została zmieniona przez %(creator)s"
@@ -2472,12 +2456,12 @@ msgstr "Ten artykuł został zmodyfikowany w trakcie twojej edycji."
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "Zmiana ciągu słów tego dokumentu pociąga za sobą przeniesienie jego i powiązanych z nim dokumentów."
 
-#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:612 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
+#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:614 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Tytuł:"
 
-#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613
+#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:615
 msgid "Title of article"
 msgstr "Tytuł artykułu"
 
@@ -2530,97 +2514,112 @@ msgstr "Oznaczyć tę wersję do sprawdzenia?"
 msgid "Tag this revision for localization?"
 msgstr "Oznaczyć tę wersje do lokalizacji?"
 
-#: kuma/wiki/forms.py:619
+#: kuma/wiki/forms.py:621
 msgid "New slug:"
 msgstr "Nowy ciąg słów:"
 
-#: kuma/wiki/forms.py:620
+#: kuma/wiki/forms.py:622
 msgid "New article URL"
 msgstr "Adres URL artykułu"
 
-#: kuma/wiki/models.py:115
+#: kuma/wiki/models.py:114
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "Nie ma artykułu głównego %s."
 
-#: kuma/wiki/models.py:123
+#: kuma/wiki/models.py:122
 msgid "Document Tag"
 msgstr "Etykieta artykułu"
 
-#: kuma/wiki/models.py:124
+#: kuma/wiki/models.py:123
 msgid "Document Tags"
 msgstr "Etykiety artykułu"
 
-#: kuma/wiki/models.py:1502
+#: kuma/wiki/models.py:175
+#, fuzzy
+msgid "uploaded to the document"
+msgstr "Przywróć ten dokument"
+
+#: kuma/wiki/models.py:181
+#, fuzzy
+msgid "linked in the document content"
+msgstr "Przejdź do głównej zawartości"
+
+#: kuma/wiki/models.py:195
+#, python-format
+msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
+msgstr ""
+
+#: kuma/wiki/models.py:1562
 msgid "Review Tag"
 msgstr "Etykieta sprawdzenia"
 
-#: kuma/wiki/models.py:1503
+#: kuma/wiki/models.py:1563
 msgid "Review Tags"
 msgstr "Etykiety sprawdzenia"
 
-#: kuma/wiki/models.py:1509
+#: kuma/wiki/models.py:1569
 msgid "Localization Tag"
 msgstr "Etykieta lokalizacji"
 
-#: kuma/wiki/models.py:1510
+#: kuma/wiki/models.py:1570
 msgid "Localization Tags"
 msgstr "Etykiety lokalizacji"
 
-#: kuma/wiki/models.py:1543
+#: kuma/wiki/models.py:1603
 msgid "No table of contents"
 msgstr "Bez spisu treści"
 
-#: kuma/wiki/models.py:1544
+#: kuma/wiki/models.py:1604
 msgid "All levels"
 msgstr "Wszystkie poziomy"
 
-#: kuma/wiki/models.py:1545
+#: kuma/wiki/models.py:1605
 msgid "H2 and higher"
 msgstr "H2 i wyższe"
 
-#: kuma/wiki/models.py:1546
+#: kuma/wiki/models.py:1606
 msgid "H3 and higher"
 msgstr "H3 i wyższe"
 
-#: kuma/wiki/models.py:1547
+#: kuma/wiki/models.py:1607
 msgid "H4 and higher"
 msgstr "H4 i wyższe"
 
-#: kuma/wiki/models.py:1651
+#: kuma/wiki/models.py:1711
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "Korekta musi być oparte na wersji artykułu %(locale)s. ID %(id)s korekty nie spełnia tych kryteriów."
 
-#: kuma/wiki/models.py:1778
+#: kuma/wiki/models.py:1845
 msgid "IP address"
 msgstr "Adres IP"
 
-#: kuma/wiki/models.py:1786
+#: kuma/wiki/models.py:1853
 msgid "User-Agent"
 msgstr "User-Agent"
 
-#: kuma/wiki/models.py:1791
+#: kuma/wiki/models.py:1858
 msgid "HTTP Referrer"
 msgstr "HTTP Referrer"
 
-#: kuma/wiki/models.py:1812
+#: kuma/wiki/models.py:1879
 msgid "Revision"
 msgstr "Wersja"
 
-#: kuma/wiki/models.py:1818
+#: kuma/wiki/models.py:1885
 msgid "Akismet submission"
 msgstr "Przesyłanie Akismet"
 
-#: kuma/wiki/models.py:1819
+#: kuma/wiki/models.py:1886
 msgid "Akismet submissions"
 msgstr "Przesyłania Akismet"
 
-#: kuma/wiki/models.py:1862
+#: kuma/wiki/models.py:1929
 msgid "Slug"
 msgstr "Ciąg słów"
 
-#: kuma/wiki/models.py:1870
+#: kuma/wiki/models.py:1937
 msgid "Document (optional)"
 msgstr "Dokument (opcjonalne)"
 
@@ -3037,6 +3036,30 @@ msgstr "Wersja %(id)s | %(title)s"
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
 msgstr "Informacje o wersji"
+
+#: kuma/wiki/jinja2/wiki/revision.html:17
+msgid "Revision slug:"
+msgstr "Ciąg znaków tej wersji:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:21
+msgid "Revision title:"
+msgstr "Tytuł wersji:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:25
+msgid "Revision id:"
+msgstr "Identyfikator wersji:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:29
+msgid "Created:"
+msgstr "Utworzono:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:33
+msgid "Creator:"
+msgstr "Autor:"
+
+#: kuma/wiki/jinja2/wiki/revision.html:38
+msgid "Is current revision?"
+msgstr "Czy jest aktualna?"
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
 msgid "Revision Content"
@@ -3641,12 +3664,12 @@ msgstr "Aby wysłać do Akismeta, należy zapisać poniższy formularz."
 msgid "Select an Akismet submission for more details"
 msgstr "Aby zobaczyć więcej szczegółów wybierz zgłoszenie do Akismeta"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:100 kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:116 kuma/wiki/templatetags/jinja_helpers.py:117
+#: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
 msgstr "Wersja %s"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:106
+#: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
 msgstr "Wystąpił błąd podczas generowania treści."
 
@@ -3654,27 +3677,27 @@ msgstr "Wystąpił błąd podczas generowania treści."
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr "Dokument już istnieje. Nie można przywrócić przeniesionego dokumentu do czasu usunięcia jego przekierowania."
 
-#: kuma/wiki/views/document.py:600
+#: kuma/wiki/views/document.py:608
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "Przekierowano z %(url)s"
 
-#: kuma/wiki/views/document.py:648
+#: kuma/wiki/views/document.py:656
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr "Dowiedziałem się o %(title)s na MDN."
 
-#: kuma/wiki/views/document.py:718
+#: kuma/wiki/views/document.py:726
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "Nieobsługiwany typ treści: %s"
 
-#: kuma/wiki/views/document.py:725
+#: kuma/wiki/views/document.py:733
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "Błąd przetwarzania: %s"
 
-#: kuma/wiki/views/document.py:745
+#: kuma/wiki/views/document.py:753
 msgid "ETag precondition failed"
 msgstr "Nie powiodło się użycie warunku eTag"
 
@@ -3709,6 +3732,72 @@ msgstr "Nie możesz tłumaczyć tego artykułu."
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Server Elasticsearch: %(backend)s"
 
+#~ msgid "The file provided is not valid. File must be one of these types: %s."
+#~ msgstr "Podany plik ma niewłaściwy format. Plik musi mieć jeden z formatów: %s."
+
+#~ msgid "MIME Type:"
+#~ msgstr "Typ MIME:"
+
+#~ msgid "Is approved?"
+#~ msgstr "Czy została zaakceptowana?"
+
+#~ msgid "No preview is available."
+#~ msgstr "Podgląd jest niedostępny."
+
+#~ msgid "There are no files."
+#~ msgstr "Nie ma plików."
+
+#~ msgid "Attach Files"
+#~ msgstr "Dodaj załączniki"
+
+#~ msgid "Attached by"
+#~ msgstr "Załączony przez"
+
+#~ msgid "%s bytes"
+#~ msgstr "%s bajtów"
+
+#~ msgid "%(number)d year ago"
+#~ msgid_plural "%(number)d years ago"
+#~ msgstr[0] "%(number)d rok temu"
+#~ msgstr[1] "%(number)d lata temu"
+#~ msgstr[2] "%(number)d lat temu"
+
+#~ msgid "%(number)d month ago"
+#~ msgid_plural "%(number)d months ago"
+#~ msgstr[0] "%(number)d miesiąc temu"
+#~ msgstr[1] "%(number)d miesiące temu"
+#~ msgstr[2] "%(number)d miesięcy temu"
+
+#~ msgid "%(number)d week ago"
+#~ msgid_plural "%(number)d weeks ago"
+#~ msgstr[0] "%(number)d tydzień temu"
+#~ msgstr[1] "%(number)d tygodnie temu"
+#~ msgstr[2] "%(number)d tygodni temu"
+
+#~ msgid "%(number)d day ago"
+#~ msgid_plural "%(number)d days ago"
+#~ msgstr[0] "%(number)d dzień temu"
+#~ msgstr[1] "%(number)d dni temu"
+#~ msgstr[2] "%(number)d dni temu"
+
+#~ msgid "%(number)d hour ago"
+#~ msgid_plural "%(number)d hours ago"
+#~ msgstr[0] "%(number)d godzinę temu"
+#~ msgstr[1] "%(number)d godziny temu"
+#~ msgstr[2] "%(number)d godzin temu"
+
+#~ msgid "%(number)d minute ago"
+#~ msgid_plural "%(number)d minutes ago"
+#~ msgstr[0] "%(number)d minutę temu"
+#~ msgstr[1] "%(number)d minuty temu"
+#~ msgstr[2] "%(number)d minut temu"
+
+#~ msgid "%(number)d second ago"
+#~ msgid_plural "%(number)d seconds ago"
+#~ msgstr[0] "%(number)d sekundę temu"
+#~ msgstr[1] "%(number)d sekundy temu"
+#~ msgstr[2] "%(number)d sekund temu"
+
 #~ msgid "Celebrate ten years of documenting your Web."
 #~ msgstr "Świętuj dziesięć lat dokumentowania sieci Web."
 
@@ -3726,9 +3815,6 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "name of the action"
 #~ msgstr "nazwa czynności"
-
-#~ msgid "date last modified"
-#~ msgstr "data ostatniej modyfikacji"
 
 #~ msgid "This is not working for me"
 #~ msgstr "Według mnie to nie działa"
@@ -4148,9 +4234,6 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 #~ msgstr "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
-
-#~ msgid "Wikipedia Article"
-#~ msgstr "Artykuł na Wikipedii"
 
 #~ msgid "http://en.wikipedia.org/wiki/HTML5_audio"
 #~ msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
@@ -6027,9 +6110,6 @@ msgstr "Server Elasticsearch: %(backend)s"
 
 #~ msgid "(That's you!)"
 #~ msgstr "(To ty!)"
-
-#~ msgid "Awarded by"
-#~ msgstr "Zdobywca nagrody"
 
 #~ msgid "<span class=\"badge_title\">%(title)s</span> <span class=\"relation\">awarded to</span> <span class=\"user\">%(user)s</span>"
 #~ msgstr "<span class=\"badge_title\">%(title)s</span> <span class=\"relation\">przyznany dla</span> <span class=\"user\">%(user)s</span>"

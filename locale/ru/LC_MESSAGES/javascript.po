@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
+"POT-Creation-Date: 2016-03-11 15:58-0800\n"
 "PO-Revision-Date: 2016-01-09 07:36+0000\n"
 "Last-Translator: bychek.ru <a@bychek.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Закрыть подменю"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "Закрыть оповещение"
 
@@ -131,23 +131,23 @@ msgstr "Отправлено. Спасибо!"
 msgid "Show old table."
 msgstr "Показать старую таблицу."
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:402
 msgid "an unknown date"
 msgstr "неизвестная дата"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:403
 msgid "You have a draft from:"
 msgstr "У вас есть черновик от:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:404
 msgid "Restore the draft content"
 msgstr "Восстановить контент черновика"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:405
 msgid "Discard the draft"
 msgstr "Удалить черновик"
 
-#: kuma/static/js/wiki-edit.js:555
+#: kuma/static/js/wiki-edit.js:557
 msgid "saved"
 msgstr "сохранено"
 
@@ -159,15 +159,15 @@ msgstr "Новый тег..."
 msgid "How to read CSS syntax."
 msgstr "Как читать CSS синтаксис."
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "Поиск по Stack Overflow"
 
-#: kuma/static/js/wiki.js:655
+#: kuma/static/js/wiki.js:677
 msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Ваш браузер не поддерживает MathML. Вместо него используется аварийное решение на CSS."
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "Детали"
 

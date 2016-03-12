@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
+"POT-Creation-Date: 2016-03-11 15:58-0800\n"
 "PO-Revision-Date: 2016-03-07 16:34+0000\n"
 "Last-Translator: Channy Yun <channy@mozilla.or.kr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "하위 메뉴 닫기"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "알림 닫기"
 
@@ -131,23 +131,23 @@ msgstr "보고되었습니다. 감사합니다!"
 msgid "Show old table."
 msgstr "이전 표를 표시합니다."
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:402
 msgid "an unknown date"
 msgstr "알 수 없는 날짜"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:403
 msgid "You have a draft from:"
 msgstr "보존된 초안이 있습니다:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:404
 msgid "Restore the draft content"
 msgstr "초안 콘텐츠를 복원"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:405
 msgid "Discard the draft"
 msgstr "초안 삭제"
 
-#: kuma/static/js/wiki-edit.js:555
+#: kuma/static/js/wiki-edit.js:557
 msgid "saved"
 msgstr "저장됨"
 
@@ -159,16 +159,15 @@ msgstr "새 태그..."
 msgid "How to read CSS syntax."
 msgstr "CSS 구문을 읽는 방법"
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "스택 오버플로우 검색"
 
-#: kuma/static/js/wiki.js:655
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
+#: kuma/static/js/wiki.js:677
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "브라우저가 MathML을 지원하지 않습니다. CSS 폴백이 대신 사용되었습니다."
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "상세 정보"
 
@@ -180,8 +179,7 @@ msgstr "첨부 파일 선택"
 msgid "No attachments available"
 msgstr "사용 가능한 첨부 파일이 없음"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "첨부 파일"
 
@@ -201,8 +199,7 @@ msgstr "자동 이동 만들기"
 msgid "MDN Redirect"
 msgstr "MDN 자동 이동"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "문서"
 

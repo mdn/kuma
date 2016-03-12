@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
+"POT-Creation-Date: 2016-03-11 15:58-0800\n"
 "PO-Revision-Date: 2016-01-23 11:34+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Mbylle nënmenunë"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "Mbylle njoftimin"
 
@@ -132,23 +132,23 @@ msgstr "U njoftua. Faleminderit!"
 msgid "Show old table."
 msgstr "Shfaq tabelën e vjetër."
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:402
 msgid "an unknown date"
 msgstr "një datë e panjohur"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:403
 msgid "You have a draft from:"
 msgstr "Keni një skicë nga:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:404
 msgid "Restore the draft content"
 msgstr "Rikthe lëndën e skicës"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:405
 msgid "Discard the draft"
 msgstr "Hidhe tej skicën"
 
-#: kuma/static/js/wiki-edit.js:555
+#: kuma/static/js/wiki-edit.js:557
 msgid "saved"
 msgstr "u ruajt"
 
@@ -160,16 +160,15 @@ msgstr "Etiketë e re..."
 msgid "How to read CSS syntax."
 msgstr "Si të lexohet sintaksa CSS."
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "Kërkoni te Stack Overflow"
 
-#: kuma/static/js/wiki.js:655
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
+#: kuma/static/js/wiki.js:677
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Shfletuesi juaj nuk mbulon MathML. Në vend të tij është përdorur CSS."
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "Hollësi"
 
@@ -181,8 +180,7 @@ msgstr "Përzgjidhni një bashkëngjitje"
 msgid "No attachments available"
 msgstr "S’ka bashkëngjitje"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Bashkangjitje"
 
@@ -202,8 +200,7 @@ msgstr "Krijoni një Ridrejtim"
 msgid "MDN Redirect"
 msgstr "Ridrejtim MDN-je"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
@@ -298,11 +295,5 @@ msgstr "Parazgjedhje"
 #~ msgid "Demo Studio"
 #~ msgstr "Studio Demosh"
 
-#~ msgid ""
-#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
-#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
-#~ "draft</a>."
-#~ msgstr ""
-#~ "Keni në përpunim një skicë. <a href=\"\" class=\"restoreLink\">Riktheni "
-#~ "lëndën e skicës</a> ose <a href=\"\" class=\"discardLink\">hidheni skicën "
-#~ "tej</a>."
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "Keni në përpunim një skicë. <a href=\"\" class=\"restoreLink\">Riktheni lëndën e skicës</a> ose <a href=\"\" class=\"discardLink\">hidheni skicën tej</a>."

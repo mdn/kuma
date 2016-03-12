@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-29 10:30-0800\n"
+"POT-Creation-Date: 2016-03-11 15:58-0800\n"
 "PO-Revision-Date: 2014-06-22 19:25+0000\n"
 "Last-Translator: Zobayer Ahmed <zobayer_mc@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -402,6 +402,24 @@ msgstr "আনসাবস্ক্রাইব করা হয়েছে"
 msgid "You have been unsubscribed."
 msgstr "আপনাকে এখানকার নটিফিকেশন থেকে আনসাবস্ক্রাইব করা হয়েছে।"
 
+#: kuma/attachments/admin.py:60
+#, python-format
+msgid "The following attachment files were moved to the trash: %(filenames)s. You may want to review them before their automatic purge after %(days)s days from the file storage."
+msgstr ""
+
+#: kuma/attachments/admin.py:64
+msgid "and"
+msgstr ""
+
+#: kuma/attachments/admin.py:127
+#, python-format
+msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
+msgstr ""
+
+#: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
+msgid "Attachments"
+msgstr ""
+
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
 msgstr "সাম্প্রতিক এমডিএন পরিবর্তিত ফাইলসমূহ"
@@ -410,131 +428,140 @@ msgstr "সাম্প্রতিক এমডিএন পরিবর্ত�
 msgid "Recent revisions to MDN file attachments"
 msgstr "MDN ফাইল এট্যাচমেন্টের সাম্প্রতিক পর্যালোচনাগুলো"
 
-#: kuma/attachments/forms.py:9
+#: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
 msgstr "এই ধরনের ফাইল অনুমোদিত নয়।"
 
-#: kuma/attachments/views.py:148
+#: kuma/attachments/models.py:112
+msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
+msgstr ""
+
+#: kuma/attachments/models.py:140
+#, fuzzy
+msgid "attachment revision"
+msgstr "এমডিএনে সাম্প্রতিক সংশোধনসমূহ"
+
+#: kuma/attachments/models.py:141
+#, fuzzy
+msgid "attachment revisions"
+msgstr "এমডিএনে সাম্প্রতিক সংশোধনসমূহ"
+
+#: kuma/attachments/models.py:214
+msgid "The attachment file that was trashed"
+msgstr ""
+
+#: kuma/attachments/models.py:219
+msgid "The date and time the attachment was trashed"
+msgstr ""
+
+#: kuma/attachments/models.py:224
+msgid "The username of the user who trashed the attachment"
+msgstr ""
+
+#: kuma/attachments/models.py:229
+msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
+msgstr ""
+
+#: kuma/attachments/models.py:234
+msgid "Trashed attachment"
+msgstr ""
+
+#: kuma/attachments/models.py:235
+msgid "Trashed attachments"
+msgstr ""
+
+#. 'title' is the title of the document.
+#: kuma/attachments/jinja2/attachments/edit_attachment.html:3
+#, fuzzy, python-format
+msgid "Attachments | %(title)s"
+msgstr "আরম্ভ {title}"
+
+#: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
-msgid "The file provided is not valid. File must be one of these types: %s."
+msgid "Upload file to article %(title)s"
 msgstr ""
 
-#. 'id' is the revision number, 'title' is the title of the document.
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:3
-#, python-format
-msgid "Attachment %(id)s | %(title)s"
-msgstr ""
+#: kuma/attachments/jinja2/attachments/edit_attachment.html:30
+#, fuzzy
+msgid "Upload files"
+msgstr "আপলোড"
 
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:15
-msgid "Attachment Information"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:19 kuma/wiki/jinja2/wiki/revision.html:17
-msgid "Revision slug:"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:23 kuma/wiki/jinja2/wiki/revision.html:21
-msgid "Revision title:"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:27 kuma/wiki/jinja2/wiki/revision.html:25
-msgid "Revision id:"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:31 kuma/wiki/jinja2/wiki/revision.html:29
-msgid "Created:"
-msgstr "তৈরি হয়েছেঃ"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:35 kuma/wiki/jinja2/wiki/revision.html:33
-msgid "Creator:"
-msgstr "তৈরিকারীঃ"
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:39 kuma/attachments/jinja2/attachments/attachment_detail.html:43
-msgid "MIME Type:"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:44
-#, python-format
-msgid "%(bytes)s bytes"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:48
-msgid "Is approved?"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:52 kuma/wiki/jinja2/wiki/revision.html:38
-msgid "Is current revision?"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:60
-msgid "Attachment Preview"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/attachment_detail.html:65
-msgid "No preview is available."
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/list_files.html:2
-msgid "All Files"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/list_files.html:23
-msgid "There are no files."
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:12
-msgid "Attachments"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:12
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
 msgstr ""
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16 kuma/attachments/jinja2/attachments/includes/attachment_list.html:23
-msgid "Attach Files"
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
+#, fuzzy
+msgid "Upload Files"
+msgstr "আপলোড"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
+#, fuzzy
+msgid "This document has no attachments."
+msgstr "এই নথির কোন রিভিসন করা হয়নি।"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
+msgid "Images can be attached, and then linked in the article."
 msgstr ""
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:21
-msgid "This document has no attachments. Images can be attached, and then embedded in the article."
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:33 kuma/attachments/jinja2/attachments/includes/attachment_list.html:51
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/attachments/jinja2/attachments/includes/attachment_list.html:67
 msgid "File"
 msgstr "ফাইল"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:34
-msgid "Size"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/users/jinja2/users/user_detail.html:156 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
-msgid "Date"
-msgstr "তারিখ"
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36
-msgid "Attached by"
-msgstr ""
-
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:52 kuma/users/models.py:65 kuma/wiki/models.py:1858
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1925
 msgid "Title"
 msgstr "শিরোনাম"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:53 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:37 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
 msgstr "বিবরণ"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:54
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:38
 #, fuzzy
 msgid "Comments"
 msgstr "মন্তব্য"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:66
-msgid "Uploading"
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:61
+#, fuzzy
+msgid "Attached to this article"
+msgstr "এই মন্তব্যটি মুছে দিন"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:63
+msgid "Attached to another article"
 msgstr ""
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_row.html:6
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:68
+msgid "Size"
+msgstr ""
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:69
+#, fuzzy
+msgid "Last modified"
+msgstr "সর্বশেষ হালনাগাদের তারিখ"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
+#, fuzzy
+msgid "Uploaded by"
+msgstr "আপলোড"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:73
+#, fuzzy
+msgid "Linked in article"
+msgstr "উইকিপিডিয়া নিবন্ধ"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
+#, fuzzy
+msgid "Article attached to"
+msgstr "ট্যাগকৃত ডেমো {tag}"
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
-msgid "%s bytes"
+msgid "%(bytes)s bytes"
+msgstr ""
+
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:90 kuma/attachments/jinja2/attachments/includes/attachment_list.html:109
+msgid "n/a"
 msgstr ""
 
 #: kuma/authkeys/models.py:31
@@ -652,65 +679,16 @@ msgstr "ওয়েব"
 msgid "Moz Hacks"
 msgstr "মজ হ্যাক"
 
-#: kuma/core/templatetags/jinja_helpers.py:114
-#, python-format
-msgid "%(number)d year ago"
-msgid_plural "%(number)d years ago"
-msgstr[0] "%(number)d বছর আগে"
-msgstr[1] "%(number)d বছর আগে"
-
-#: kuma/core/templatetags/jinja_helpers.py:116
-#, python-format
-msgid "%(number)d month ago"
-msgid_plural "%(number)d months ago"
-msgstr[0] "%(number)d মাস আগে"
-msgstr[1] "%(number)d মাস আগে"
-
-#: kuma/core/templatetags/jinja_helpers.py:118
-#, python-format
-msgid "%(number)d week ago"
-msgid_plural "%(number)d weeks ago"
-msgstr[0] "%(number)d সপ্তাহ আগে"
-msgstr[1] "%(number)d সপ্তাহ আগে"
-
-#: kuma/core/templatetags/jinja_helpers.py:120
-#, python-format
-msgid "%(number)d day ago"
-msgid_plural "%(number)d days ago"
-msgstr[0] "%(number)d দিন আগে"
-msgstr[1] "%(number)d দিন আগে"
-
-#: kuma/core/templatetags/jinja_helpers.py:122
-#, python-format
-msgid "%(number)d hour ago"
-msgid_plural "%(number)d hours ago"
-msgstr[0] "%(number)d ঘণ্টা আগে"
-msgstr[1] "%(number)d ঘণ্টা আগে"
-
-#: kuma/core/templatetags/jinja_helpers.py:124
-#, python-format
-msgid "%(number)d minute ago"
-msgid_plural "%(number)d minutes ago"
-msgstr[0] "%(number)d মিনিট আগে"
-msgstr[1] "%(number)d মিনিট আগে"
-
-#: kuma/core/templatetags/jinja_helpers.py:126
-#, python-format
-msgid "%(number)d second ago"
-msgid_plural "%(number)d seconds ago"
-msgstr[0] "%(number)d সেকেন্ড আগে"
-msgstr[1] "%(number)d সেকেন্ড আগে"
-
-#: kuma/core/templatetags/jinja_helpers.py:149
+#: kuma/core/templatetags/jinja_helpers.py:89
 msgid "Yes"
 msgstr ""
 
-#: kuma/core/templatetags/jinja_helpers.py:149
+#: kuma/core/templatetags/jinja_helpers.py:89
 #, fuzzy
 msgid "No"
 msgstr "কোনটিই নয়"
 
-#: kuma/core/templatetags/jinja_helpers.py:299
+#: kuma/core/templatetags/jinja_helpers.py:187
 #, python-format
 msgid "Today at %s"
 msgstr ""
@@ -1297,7 +1275,7 @@ msgstr "একবার একের অধিক সূচিপত্রকে
 msgid "Populate selected search index via Celery"
 msgstr "সেলেরির মাধ্যমে বাছাইকৃত অনুসন্ধানীয় সূচিপত্র জড়ো করুন"
 
-#: kuma/search/admin.py:56
+#: kuma/search/admin.py:57
 msgid "Is current index?"
 msgstr "চলমান সূচীপত্র?"
 
@@ -1420,7 +1398,7 @@ msgstr "যার দ্বারা ফিল্টার"
 msgid "The submitted data contains invalid content."
 msgstr "এতে অনুপযুক্ত কন্টেন্ট রয়েছে"
 
-#: kuma/spam/forms.py:87
+#: kuma/spam/forms.py:90
 #, fuzzy
 msgid "The submitted data contains invalid content. Please try again."
 msgstr "এতে অনুপযুক্ত কন্টেন্ট রয়েছে"
@@ -1503,7 +1481,7 @@ msgstr "আমাকে নিউজলেটার পাঠান"
 msgid "Preferred format"
 msgstr "পছন্দের ফরম্যাট"
 
-#: kuma/users/forms.py:47 kuma/users/signup.py:32
+#: kuma/users/forms.py:47 kuma/users/signup.py:34
 msgid "I agree"
 msgstr "আমি একমত"
 
@@ -1645,21 +1623,21 @@ msgstr ""
 msgid "Enter a valid Facebook URL."
 msgstr "দয়া করে facebook.com ইউআরএলে প্রবেশ করুন।"
 
-#: kuma/users/signup.py:7
+#: kuma/users/signup.py:9
 msgid "Username is required."
 msgstr "ইউজারনেম আবশ্যক।"
 
-#: kuma/users/signup.py:8
+#: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "ইউজারনেম খুবই সংক্ষিপ্ত (%(show_value)s টি ক্যারেক্টার)। এটাতে কমপক্ষে %(limit_value)s টি ক্যারেক্টার থাকা আবশ্যক।"
 
-#: kuma/users/signup.py:10
+#: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
 msgstr "ইউজারনেম খুবই বড় হয়েছে (%(show_value)s টি ক্যারেক্টার)। এটাতে অবশ্যই %(limit_value)s টি ক্যারেক্টার বা এর কম থাকতে হবে।"
 
-#: kuma/users/signup.py:13
+#: kuma/users/signup.py:15
 #, fuzzy
 msgid "You must agree to the terms of use."
 msgstr "আপনাকে গোপনীয়তা নীতির সাথে একমত হতে হবে।"
@@ -2008,12 +1986,16 @@ msgid ""
 "\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:170
+#: kuma/users/jinja2/socialaccount/signup.html:173
+msgid "Terms and Privacy"
+msgstr ""
+
+#: kuma/users/jinja2/socialaccount/signup.html:182
 #, fuzzy, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "আমি <a href=\"%(terms_url)s#tfc\">অবদানকারীদের জন্যে নিয়ম</a> এবং <a href=\"%(terms_url)s#rrd\"> প্রতিনিধির অধিকারের বিস্তারিত</a> সমর্থন করলাম।"
 
-#: kuma/users/jinja2/socialaccount/signup.html:179
+#: kuma/users/jinja2/socialaccount/signup.html:192
 #, fuzzy
 msgid "Create my MDN profile"
 msgstr "একটি নতুন প্রোফাইল তৈরি করুন"
@@ -2101,6 +2083,10 @@ msgstr "সমস্ত কার্যকলাপ দেখুন"
 #: kuma/users/jinja2/users/user_detail.html:155
 msgid "Page"
 msgstr "পৃষ্ঠা"
+
+#: kuma/users/jinja2/users/user_detail.html:156 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+msgid "Date"
+msgstr "তারিখ"
 
 #: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
@@ -2348,15 +2334,15 @@ msgstr ""
 msgid "Wiki"
 msgstr ""
 
-#: kuma/wiki/constants.py:206
+#: kuma/wiki/constants.py:207
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "প্রযুক্তি সংক্রান্ত - কোড উদাহরণসমূহ, এপিআই, অথবা প্রযুক্তি"
 
-#: kuma/wiki/constants.py:207
+#: kuma/wiki/constants.py:208
 msgid "Editorial - prose, grammar, or content"
 msgstr "সম্পাদকীয় - গদ্য, ব্যাকরণ, অথবা বিষয়বস্তু"
 
-#: kuma/wiki/constants.py:212
+#: kuma/wiki/constants.py:213
 msgid "Localization in progress - not completely translated yet."
 msgstr "অগ্রগতি স্থানীয়করণ - সম্পূর্ণ এখনো অনুবাদ না."
 
@@ -2364,7 +2350,7 @@ msgstr "অগ্রগতি স্থানীয়করণ - সম্প�
 msgid "Edit section"
 msgstr "সম্পাদনা বিভাগ"
 
-#: kuma/wiki/events.py:71
+#: kuma/wiki/events.py:72
 #, fuzzy, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
 msgstr "[MDN] \"{document_title}\" পেজটি {creator} দ্বারা পরিবর্তিত হয়েছে"
@@ -2515,12 +2501,12 @@ msgstr "আপনি যখন সম্পদনা করছিলেন ত�
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:612 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
+#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:614 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "শিরোনামঃ"
 
-#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:613
+#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:615
 msgid "Title of article"
 msgstr "নিবন্ধের শিরোনাম"
 
@@ -2574,102 +2560,116 @@ msgstr "এই সংস্করণটি পর্যালোচনার জ
 msgid "Tag this revision for localization?"
 msgstr "স্থানীয়করণ জন্য এই সংস্করণটি ট্যাগ করবেন?"
 
-#: kuma/wiki/forms.py:619
+#: kuma/wiki/forms.py:621
 msgid "New slug:"
 msgstr "নতুন স্লাগঃ"
 
-#: kuma/wiki/forms.py:620
+#: kuma/wiki/forms.py:622
 msgid "New article URL"
 msgstr "নতুন প্রবন্ধের ইউআরএল"
 
-#: kuma/wiki/models.py:115
+#: kuma/wiki/models.py:114
 #, fuzzy, python-format
 msgid "Parent %s does not exist."
 msgstr "মূল %s/%s বিদ্যমান নেই।"
 
-#: kuma/wiki/models.py:123
+#: kuma/wiki/models.py:122
 msgid "Document Tag"
 msgstr "ডকুমেন্ট ট্যাগ"
 
-#: kuma/wiki/models.py:124
+#: kuma/wiki/models.py:123
 msgid "Document Tags"
 msgstr "ডকুমেন্ট টাগসমূহ"
 
-#: kuma/wiki/models.py:1502
+#: kuma/wiki/models.py:175
+#, fuzzy
+msgid "uploaded to the document"
+msgstr "এই ডকুমেন্টটি পুনরূদ্ধার করুন"
+
+#: kuma/wiki/models.py:181
+msgid "linked in the document content"
+msgstr ""
+
+#: kuma/wiki/models.py:195
+#, python-format
+msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
+msgstr ""
+
+#: kuma/wiki/models.py:1562
 msgid "Review Tag"
 msgstr "পর্যালোচনা ট্যাগ"
 
-#: kuma/wiki/models.py:1503
+#: kuma/wiki/models.py:1563
 msgid "Review Tags"
 msgstr "পর্যালোচনা ট্যাগগুলো"
 
-#: kuma/wiki/models.py:1509
+#: kuma/wiki/models.py:1569
 msgid "Localization Tag"
 msgstr "স্থানীয়করণ ট্যাগ"
 
-#: kuma/wiki/models.py:1510
+#: kuma/wiki/models.py:1570
 msgid "Localization Tags"
 msgstr "স্থানীয়করণ ট্যাগগুলো"
 
-#: kuma/wiki/models.py:1543
+#: kuma/wiki/models.py:1603
 msgid "No table of contents"
 msgstr "বিষয়বস্তুর সুচী নেই"
 
-#: kuma/wiki/models.py:1544
+#: kuma/wiki/models.py:1604
 msgid "All levels"
 msgstr "সকল পর্যায়"
 
-#: kuma/wiki/models.py:1545
+#: kuma/wiki/models.py:1605
 msgid "H2 and higher"
 msgstr "H2 এবং আরো বেশি"
 
-#: kuma/wiki/models.py:1546
+#: kuma/wiki/models.py:1606
 msgid "H3 and higher"
 msgstr "H3 এবং আরো বেশি"
 
-#: kuma/wiki/models.py:1547
+#: kuma/wiki/models.py:1607
 msgid "H4 and higher"
 msgstr "H4 এবং আরো বেশি"
 
-#: kuma/wiki/models.py:1651
+#: kuma/wiki/models.py:1711
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "একটি সংস্করণ অবশ্যই %(locale)s ডকুমেন্টের একটি সংস্করণের উপর হতে হবে।Revision ID %(id)s ঐসব মানদন্ডে পড়বে না।"
 
-#: kuma/wiki/models.py:1778
+#: kuma/wiki/models.py:1845
 #, fuzzy
 msgid "IP address"
 msgstr "ই-মেইল ঠিকানা"
 
-#: kuma/wiki/models.py:1786
+#: kuma/wiki/models.py:1853
 msgid "User-Agent"
 msgstr ""
 
-#: kuma/wiki/models.py:1791
+#: kuma/wiki/models.py:1858
 msgid "HTTP Referrer"
 msgstr ""
 
-#: kuma/wiki/models.py:1812
+#: kuma/wiki/models.py:1879
 #, fuzzy
 msgid "Revision"
 msgstr "সংস্করণ %s"
 
-#: kuma/wiki/models.py:1818
+#: kuma/wiki/models.py:1885
 #, fuzzy
 msgid "Akismet submission"
 msgstr "সাবমিশন"
 
-#: kuma/wiki/models.py:1819
+#: kuma/wiki/models.py:1886
 #, fuzzy
 msgid "Akismet submissions"
 msgstr "সাবমিশন"
 
-#: kuma/wiki/models.py:1862
+#: kuma/wiki/models.py:1929
 #, fuzzy
 msgid "Slug"
 msgstr "স্লাগঃ"
 
-#: kuma/wiki/models.py:1870
+#: kuma/wiki/models.py:1937
 #, fuzzy
 msgid "Document (optional)"
 msgstr "MDN ডকুমেন্টেশন"
@@ -3090,6 +3090,30 @@ msgstr "রিভিসন ইতিহাস | {document}"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/revision.html:17
+msgid "Revision slug:"
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/revision.html:21
+msgid "Revision title:"
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/revision.html:25
+msgid "Revision id:"
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/revision.html:29
+msgid "Created:"
+msgstr "তৈরি হয়েছেঃ"
+
+#: kuma/wiki/jinja2/wiki/revision.html:33
+msgid "Creator:"
+msgstr "তৈরিকারীঃ"
+
+#: kuma/wiki/jinja2/wiki/revision.html:38
+msgid "Is current revision?"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/revision.html:61
@@ -3704,12 +3728,12 @@ msgstr ""
 msgid "Select an Akismet submission for more details"
 msgstr ""
 
-#: kuma/wiki/templatetags/jinja_helpers.py:100 kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:116 kuma/wiki/templatetags/jinja_helpers.py:117
+#: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
 msgstr "সংস্করণ %s"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:106
+#: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
 msgstr "বিষয়বস্তু তৈরীতে একটি সমস্যা হয়েছে।"
 
@@ -3717,27 +3741,27 @@ msgstr "বিষয়বস্তু তৈরীতে একটি সমস্
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr ""
 
-#: kuma/wiki/views/document.py:600
+#: kuma/wiki/views/document.py:608
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr "%(url)s থেকে পুনঃনির্দেশিত"
 
-#: kuma/wiki/views/document.py:648
+#: kuma/wiki/views/document.py:656
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr ""
 
-#: kuma/wiki/views/document.py:718
+#: kuma/wiki/views/document.py:726
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "অসমর্থিত বিষয়বস্তু-ধরন: %s"
 
-#: kuma/wiki/views/document.py:725
+#: kuma/wiki/views/document.py:733
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "অনুরোধ পার্সিং ত্রুটি: %s"
 
-#: kuma/wiki/views/document.py:745
+#: kuma/wiki/views/document.py:753
 msgid "ETag precondition failed"
 msgstr "Etag পূর্বশর্ত ব্যর্থ"
 
@@ -3772,6 +3796,41 @@ msgstr "আপনি এই ডকুমেন্ট অনুবাদ কর�
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
 
+#~ msgid "%(number)d year ago"
+#~ msgid_plural "%(number)d years ago"
+#~ msgstr[0] "%(number)d বছর আগে"
+#~ msgstr[1] "%(number)d বছর আগে"
+
+#~ msgid "%(number)d month ago"
+#~ msgid_plural "%(number)d months ago"
+#~ msgstr[0] "%(number)d মাস আগে"
+#~ msgstr[1] "%(number)d মাস আগে"
+
+#~ msgid "%(number)d week ago"
+#~ msgid_plural "%(number)d weeks ago"
+#~ msgstr[0] "%(number)d সপ্তাহ আগে"
+#~ msgstr[1] "%(number)d সপ্তাহ আগে"
+
+#~ msgid "%(number)d day ago"
+#~ msgid_plural "%(number)d days ago"
+#~ msgstr[0] "%(number)d দিন আগে"
+#~ msgstr[1] "%(number)d দিন আগে"
+
+#~ msgid "%(number)d hour ago"
+#~ msgid_plural "%(number)d hours ago"
+#~ msgstr[0] "%(number)d ঘণ্টা আগে"
+#~ msgstr[1] "%(number)d ঘণ্টা আগে"
+
+#~ msgid "%(number)d minute ago"
+#~ msgid_plural "%(number)d minutes ago"
+#~ msgstr[0] "%(number)d মিনিট আগে"
+#~ msgstr[1] "%(number)d মিনিট আগে"
+
+#~ msgid "%(number)d second ago"
+#~ msgid_plural "%(number)d seconds ago"
+#~ msgstr[0] "%(number)d সেকেন্ড আগে"
+#~ msgstr[1] "%(number)d সেকেন্ড আগে"
+
 #~ msgid "Demos"
 #~ msgstr "ডেমো"
 
@@ -3780,9 +3839,6 @@ msgstr ""
 
 #~ msgid "name of the action"
 #~ msgstr "অ্যাকশনের নাম"
-
-#~ msgid "date last modified"
-#~ msgstr "সর্বশেষ হালনাগাদের তারিখ"
 
 #~ msgid "This is not working for me"
 #~ msgstr "এটি আমার ক্ষেত্রে কাজ করছে না"
@@ -4188,9 +4244,6 @@ msgstr ""
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
 #~ msgstr "https://developer.mozilla.org/bn-BD/docs/Introducing_the_Audio_API_Extension"
-
-#~ msgid "Wikipedia Article"
-#~ msgstr "উইকিপিডিয়া নিবন্ধ"
 
 #~ msgid "http://en.wikipedia.org/wiki/HTML5_audio"
 #~ msgstr "http://en.wikipedia.org/wiki/HTML5_audio"
@@ -5102,10 +5155,6 @@ msgstr ""
 
 #~ msgid "Feed"
 #~ msgstr "ফিড"
-
-#, fuzzy
-#~ msgid "Launch %(title)s"
-#~ msgstr "আরম্ভ {title}"
 
 #~ msgid "First Place"
 #~ msgstr "প্রথম অবস্থান"
@@ -6082,10 +6131,6 @@ msgstr ""
 
 #~ msgid "Delete avatar"
 #~ msgstr "অ্যাভাটার মুছে ফেলুন"
-
-#~ msgctxt "avatar"
-#~ msgid "Upload"
-#~ msgstr "আপলোড"
 
 #~ msgctxt "avatar"
 #~ msgid "Change"
