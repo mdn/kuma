@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-12 02:23+0000\n"
+"PO-Revision-Date: 2016-03-12 02:29+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -481,6 +481,8 @@ msgid ""
 " review the file before its automatic purge after %(days)s days from the "
 "file storage system."
 msgstr ""
+"添付ファイル「%(filename)s」がゴミ箱へ移動されました。%(days)s "
+"日後にファイルストレージから自動的に削除される前に、再度確認した方が良いかもしれません。"
 
 #: kuma/attachments/apps.py:12
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
@@ -504,6 +506,8 @@ msgid ""
 "The MIME type is used when serving the attachment. Automatically populated "
 "by inspecting the file on upload. Please only override if needed."
 msgstr ""
+"添付ファイルを配信する際には MIME "
+"タイプが使用されます。アップロード時にファイルを調査することで自動的に設定されています。必要な場合のみ上書きしてください。"
 
 #: kuma/attachments/models.py:140
 msgid "attachment revision"
@@ -515,21 +519,21 @@ msgstr "添付ファイルのリビジョン"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr ""
+msgstr "ゴミ箱へ移動された添付ファイル"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
-msgstr ""
+msgstr "添付ファイルがゴミ箱へ移動された日時"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr ""
+msgstr "添付ファイルをゴミ箱へ移動したユーザの名前"
 
 #: kuma/attachments/models.py:229
 msgid ""
 "Whether or not this attachment was the current attachment revision at the "
 "time of trashing."
-msgstr ""
+msgstr "この添付ファイルがゴミ箱への移動時に最新の添付リビジョンだったかどうか。"
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
@@ -3003,7 +3007,7 @@ msgstr "ドキュメント本文でリンクされています"
 msgid ""
 "Attachment %(attachment_id)s can't be attached multiple times to document "
 "%(document_id)s"
-msgstr ""
+msgstr "添付ファイル %(attachment_id)s をドキュメント %(document_id)s へ複数回添付することはできません"
 
 #: kuma/wiki/models.py:1562
 msgid "Review Tag"
