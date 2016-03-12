@@ -12,6 +12,7 @@ RUN apt-get update && \
     npm \
     libtidy-0.99-0 \
     libtidy-dev \
+    gettext \
     mysql-client  # Only for local dev.
 
 WORKDIR /app
