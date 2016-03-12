@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-12 22:03+0000\n"
+"PO-Revision-Date: 2016-03-12 22:12+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
@@ -487,9 +487,8 @@ msgstr ""
 "%(days)s dagen uit de bestandsopslag nog controleren."
 
 #: kuma/attachments/admin.py:64
-#, fuzzy
 msgid "and"
-msgstr "Geblokkeerd"
+msgstr "en"
 
 #: kuma/attachments/admin.py:127
 #, python-format
@@ -529,14 +528,12 @@ msgstr ""
 "Overschrijf dit alleen als het nodig is."
 
 #: kuma/attachments/models.py:140
-#, fuzzy
 msgid "attachment revision"
-msgstr "Bijlagevoorbeeld"
+msgstr "revisie van bijlage"
 
 #: kuma/attachments/models.py:141
-#, fuzzy
 msgid "attachment revisions"
-msgstr "Bijlagevoorbeeld"
+msgstr "revisies van bijlage"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
@@ -559,20 +556,18 @@ msgstr ""
 "verwijderen"
 
 #: kuma/attachments/models.py:234
-#, fuzzy
 msgid "Trashed attachment"
-msgstr "Bijlagen"
+msgstr "Verwijderde bijlage"
 
 #: kuma/attachments/models.py:235
-#, fuzzy
 msgid "Trashed attachments"
-msgstr "Bijlagen"
+msgstr "Verwijderde bijlagen"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachments | %(title)s"
-msgstr "Bijlage %(id)s | %(title)s"
+msgstr "Bijlagen | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
@@ -580,9 +575,8 @@ msgid "Upload file to article %(title)s"
 msgstr "Bestand naar artikel %(title)s uploaden"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
-#, fuzzy
 msgid "Upload files"
-msgstr "Uploaden"
+msgstr "Bestanden uploaden"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
@@ -590,20 +584,18 @@ msgstr "Lees hoe u bijlagen gebruikt"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
-#, fuzzy
 msgid "Upload Files"
-msgstr "Alle bestanden"
+msgstr "Bestanden uploaden"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
 msgstr "Dit document heeft geen bijlagen."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
-#, fuzzy
 msgid "Images can be attached, and then linked in the article."
 msgstr ""
-"Dit document bevat geen bijlagen. Afbeeldingen kunnen worden bijgevoegd en "
-"daarna in het artikel worden opgenomen."
+"Afbeeldingen kunnen worden bijgevoegd, en daarna in het artikel worden "
+"gekoppeld."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:67
@@ -627,38 +619,32 @@ msgid "Comments"
 msgstr "Reacties"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:61
-#, fuzzy
 msgid "Attached to this article"
-msgstr "Dit artikel verwijderen"
+msgstr "Gekoppeld aan dit artikel"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:63
-#, fuzzy
 msgid "Attached to another article"
-msgstr "Informatie over de bijlage"
+msgstr "Gekoppeld aan een ander artikel"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:68
 msgid "Size"
 msgstr "Grootte"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:69
-#, fuzzy
 msgid "Last modified"
-msgstr "datum laatste wijziging"
+msgstr "Laatst gewijzigd"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
-#, fuzzy
 msgid "Uploaded by"
-msgstr "Uploaden"
+msgstr "Geüpload door"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:73
-#, fuzzy
 msgid "Linked in article"
-msgstr "Wikipedia-artikel"
+msgstr "Gekoppeld in artikel"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
-#, fuzzy
 msgid "Article attached to"
-msgstr "Artikelen met het label %(tag)s"
+msgstr "Artikel waaraan gekoppeld"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
@@ -668,7 +654,7 @@ msgstr "%(bytes)s bytes"
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:90
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:109
 msgid "n/a"
-msgstr ""
+msgstr "n.v.t."
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -2384,7 +2370,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:173
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "Voorwaarden en privacy"
 
 #: kuma/users/jinja2/socialaccount/signup.html:182
 #, python-format
@@ -3128,14 +3114,12 @@ msgid "Document Tags"
 msgstr "Documentlabels"
 
 #: kuma/wiki/models.py:175
-#, fuzzy
 msgid "uploaded to the document"
-msgstr "Dit document terugzetten"
+msgstr "geüpload naar het document"
 
 #: kuma/wiki/models.py:181
-#, fuzzy
 msgid "linked in the document content"
-msgstr "Naar hoofdinhoud"
+msgstr "gekoppeld in de documentinhoud"
 
 #: kuma/wiki/models.py:195
 #, python-format
@@ -3143,6 +3127,8 @@ msgid ""
 "Attachment %(attachment_id)s can't be attached multiple times to document "
 "%(document_id)s"
 msgstr ""
+"Bijlage %(attachment_id)s kan niet meerdere malen aan document "
+"%(document_id)s worden gekoppeld"
 
 #: kuma/wiki/models.py:1562
 msgid "Review Tag"
