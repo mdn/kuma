@@ -21,7 +21,7 @@ from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required
 
-from .forms import NewsletterForm, UserBanForm, UserEditForm
+from .forms import UserBanForm, UserEditForm
 from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
@@ -116,8 +116,6 @@ def user_edit(request, username):
         ('expertise', 'profile:expertise:')
     )
 
-    already_subscribed = NewsletterForm.is_subscribed(edit_user.email)
-
     if request.method != 'POST':
         initial = {
             'beta': edit_user.is_beta_tester,
@@ -129,30 +127,17 @@ def user_edit(request, username):
             initial[field] = ', '.join(tag.name.replace(ns, '')
                                        for tag in edit_user.tags.all_ns(ns))
 
-        subscription_initial = {}
-        if already_subscribed:
-            subscription_initial['newsletter'] = True
-            subscription_initial['agree'] = True
-
         # Finally, set up the forms.
         user_form = UserEditForm(instance=edit_user,
                                  initial=initial,
                                  prefix='user')
-        newsletter_form = NewsletterForm(locale=request.LANGUAGE_CODE,
-                                         already_subscribed=already_subscribed,
-                                         prefix='newsletter',
-                                         initial=subscription_initial)
     else:
         user_form = UserEditForm(data=request.POST,
                                  files=request.FILES,
                                  instance=edit_user,
                                  prefix='user')
-        newsletter_form = NewsletterForm(locale=request.LANGUAGE_CODE,
-                                         already_subscribed=already_subscribed,
-                                         data=request.POST,
-                                         prefix='newsletter')
 
-        if user_form.is_valid() and newsletter_form.is_valid():
+        if user_form.is_valid():
             new_user = user_form.save()
 
             try:
@@ -172,33 +157,19 @@ def user_edit(request, username):
                 tags = [tag.lower() for tag in parse_tags(field_value)]
                 new_user.tags.set_ns(tag_ns, *tags)
 
-            newsletter_form.subscribe(request, new_user.email)
             return redirect(edit_user)
 
     context = {
         'edit_user': edit_user,
         'user_form': user_form,
-        'newsletter_form': newsletter_form,
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
     }
     return render(request, 'users/user_edit.html', context)
 
 
-def apps_newsletter(request):
-    """
-    Just a placeholder for an old view that we used to have to handle
-    newsletter subscriptions before they were moved into the user edit view.
-    """
-    return render(request, 'users/apps_newsletter.html', {})
-
-
 class SignupView(BaseSignupView):
     """
-    The default signup view from the allauth account app, only to
-    additionally pass in the locale to the SignupForm as defined in
-    the ACCOUNT_SIGNUP_FORM_CLASS setting. This is needed to correctly
-    populate the country form field's choices from the product_details
-    app.
+    The default signup view from the allauth account app.
 
     You can remove this class if there is no other modification compared
     to it's parent class.
@@ -283,14 +254,6 @@ class SignupView(BaseSignupView):
             if not email and len(verified_emails) == 1:
                 form.initial.update(email=verified_emails[0])
         return form
-
-    def get_form_kwargs(self):
-        kwargs = super(SignupView, self).get_form_kwargs()
-        kwargs.update({
-            'locale': self.request.LANGUAGE_CODE,
-            'already_subscribed': False,
-        })
-        return kwargs
 
     def form_valid(self, form):
         """
