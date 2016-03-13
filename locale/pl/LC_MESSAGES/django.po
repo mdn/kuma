@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-13 13:40+0000\n"
+"PO-Revision-Date: 2016-03-13 16:22+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -472,9 +472,8 @@ msgstr ""
 "usunięte, można je przeglądać."
 
 #: kuma/attachments/admin.py:64
-#, fuzzy
 msgid "and"
-msgstr "Zablokowany"
+msgstr "i"
 
 #: kuma/attachments/admin.py:127
 #, python-format
@@ -509,60 +508,58 @@ msgid ""
 "The MIME type is used when serving the attachment. Automatically populated "
 "by inspecting the file on upload. Please only override if needed."
 msgstr ""
+"Typ MIME jest używany podczas dołączania załącznika. Jest automatycznie "
+"dodawany podczas sprawdzania pliku w trakcie przesyłania na serwer. Proszę "
+"zastąpić tylko w razie potrzeby."
 
 #: kuma/attachments/models.py:140
-#, fuzzy
 msgid "attachment revision"
-msgstr "Podgląd załącznika"
+msgstr "wersja załącznika"
 
 #: kuma/attachments/models.py:141
-#, fuzzy
 msgid "attachment revisions"
-msgstr "Podgląd załącznika"
+msgstr "wersje załącznika"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr ""
+msgstr "Plik załącznik, który został przeniesiony do kosza"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
-msgstr ""
+msgstr "Data i czas załącznika zostały przeniesione do kosza"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr ""
+msgstr "Nazwa użytkownika, który przeniósł załącznik do kosza"
 
 #: kuma/attachments/models.py:229
 msgid ""
 "Whether or not this attachment was the current attachment revision at the "
 "time of trashing."
-msgstr ""
+msgstr "Czy w momencie przenoszenia do kosza załącznik miał aktualną wersję."
 
 #: kuma/attachments/models.py:234
-#, fuzzy
 msgid "Trashed attachment"
-msgstr "Załączniki"
+msgstr "Załącznik przeniesiony do kosza"
 
 #: kuma/attachments/models.py:235
-#, fuzzy
 msgid "Trashed attachments"
-msgstr "Załączniki"
+msgstr "Załączniki przeniesione do kosza"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachments | %(title)s"
-msgstr "Załącznik %(id)s | %(title)s"
+msgstr "Załączniki | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
 msgid "Upload file to article %(title)s"
-msgstr ""
+msgstr "Prześlij plik do artykułu %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
-#, fuzzy
 msgid "Upload files"
-msgstr "Przesyłanie"
+msgstr "Prześlij pliki"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
@@ -570,14 +567,12 @@ msgstr "Dowiedz się, jak używać załączników"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
-#, fuzzy
 msgid "Upload Files"
-msgstr "Wszystkie pliki"
+msgstr "Prześlij pliki"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
-#, fuzzy
 msgid "This document has no attachments."
-msgstr "Ten dokument nie ma etykiet"
+msgstr "Ten dokument nie ma załączników."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 #, fuzzy
@@ -649,7 +644,7 @@ msgstr "%(bytes)s bajtów"
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:90
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:109
 msgid "n/a"
-msgstr ""
+msgstr "niedostępny"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -2368,7 +2363,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:173
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "Zasady i prywatność"
 
 #: kuma/users/jinja2/socialaccount/signup.html:182
 #, python-format
@@ -3114,6 +3109,8 @@ msgid ""
 "Attachment %(attachment_id)s can't be attached multiple times to document "
 "%(document_id)s"
 msgstr ""
+"Załącznik %(attachment_id)s nie może być wiele razy dołączany do dokumentu "
+"%(document_id)s"
 
 #: kuma/wiki/models.py:1562
 msgid "Review Tag"
