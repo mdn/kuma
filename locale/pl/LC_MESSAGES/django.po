@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-13 16:22+0000\n"
+"PO-Revision-Date: 2016-03-13 16:30+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -575,11 +575,8 @@ msgid "This document has no attachments."
 msgstr "Ten dokument nie ma załączników."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
-#, fuzzy
 msgid "Images can be attached, and then linked in the article."
-msgstr ""
-"Dokument nie zawiera załączników. Obrazki mogą być złączone i następnie "
-"osadzone w artykule."
+msgstr "W artykule obrazki mogą być załączane i linkowane."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:67
@@ -603,38 +600,32 @@ msgid "Comments"
 msgstr "Komentarze"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:61
-#, fuzzy
 msgid "Attached to this article"
-msgstr "Usuń ten artykuł"
+msgstr "Dołączony do tego artykułu"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:63
-#, fuzzy
 msgid "Attached to another article"
-msgstr "Informacja o załączniku"
+msgstr "Dołączony do innego artykułu"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:68
 msgid "Size"
 msgstr "Wielkość"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:69
-#, fuzzy
 msgid "Last modified"
-msgstr "data ostatniej modyfikacji"
+msgstr "Ostatnio zmodyfikowany"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
-#, fuzzy
 msgid "Uploaded by"
-msgstr "Zdobywca nagrody"
+msgstr "Przesłany przez"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:73
-#, fuzzy
 msgid "Linked in article"
-msgstr "Artykuł na Wikipedii"
+msgstr "Podlinkowany w artykule"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
-#, fuzzy
 msgid "Article attached to"
-msgstr "Artykuły oznaczone: %(tag)s"
+msgstr "Artykuł dołączony do"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
@@ -3094,14 +3085,12 @@ msgid "Document Tags"
 msgstr "Etykiety artykułu"
 
 #: kuma/wiki/models.py:175
-#, fuzzy
 msgid "uploaded to the document"
-msgstr "Przywróć ten dokument"
+msgstr "przesłany do dokumentu"
 
 #: kuma/wiki/models.py:181
-#, fuzzy
 msgid "linked in the document content"
-msgstr "Przejdź do głównej zawartości"
+msgstr "podlinkowany w treści dokumentu"
 
 #: kuma/wiki/models.py:195
 #, python-format
