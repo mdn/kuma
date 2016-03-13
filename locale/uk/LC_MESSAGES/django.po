@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-13 18:14+0000\n"
+"PO-Revision-Date: 2016-03-13 19:10+0000\n"
 "Last-Translator: Andriy Kuryk <andrij.kuryk@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -463,6 +463,9 @@ msgid ""
 "may want to review them before their automatic purge after %(days)s days "
 "from the file storage."
 msgstr ""
+"Наступний файл вкладення був переміщений до кошику: %(filenames)s. Ви можете"
+" переглядати файл до автоматичного видалення з файлової системи через "
+"%(days)s днів."
 
 #: kuma/attachments/admin.py:64
 #, fuzzy
@@ -476,6 +479,9 @@ msgid ""
 " review the file before its automatic purge after %(days)s days from the "
 "file storage system."
 msgstr ""
+"Файл вкладення \"%(filename)s\" було перенесено до кошика. Ви можете "
+"переглядати файл до автоматичного видалення з файлової системи через "
+"%(days)s днів."
 
 #: kuma/attachments/apps.py:12
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
@@ -499,6 +505,9 @@ msgid ""
 "The MIME type is used when serving the attachment. Automatically populated "
 "by inspecting the file on upload. Please only override if needed."
 msgstr ""
+"MIME тип використовується при обслуговуванні вкладення. Автоматично доданий "
+"при перевірці під час вивантаження файлу. Будь ласка, змінюйте тільки у "
+"випадку необхідності."
 
 #: kuma/attachments/models.py:140
 #, fuzzy
@@ -512,11 +521,11 @@ msgstr "Попередній перегляд вкладеного файлу"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr ""
+msgstr "Вкладений файл, що був видалений"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
-msgstr ""
+msgstr "Час і дата видалення вкладення"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
@@ -526,7 +535,7 @@ msgstr "Ім’я користувача, що видалив вкладення
 msgid ""
 "Whether or not this attachment was the current attachment revision at the "
 "time of trashing."
-msgstr ""
+msgstr "Чи мало вкладення поточну версію в момент видалення."
 
 #: kuma/attachments/models.py:234
 #, fuzzy
