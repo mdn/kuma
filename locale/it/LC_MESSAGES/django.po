@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-13 17:42+0000\n"
+"PO-Revision-Date: 2016-03-14 07:48+0000\n"
 "Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
 "Language-Team: MozillaItalia <MozillaItalia>\n"
 "Language: it\n"
@@ -483,6 +483,9 @@ msgid ""
 " review the file before its automatic purge after %(days)s days from the "
 "file storage system."
 msgstr ""
+"Il file allegato \"%(filename)s\" è stato spostato nel cestino. Hai tempo "
+"%(days)s giorni per controllarlo prima che venga automaticamente eliminato "
+"dal server."
 
 #: kuma/attachments/apps.py:12
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
@@ -517,7 +520,7 @@ msgstr "Versioni allegato"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr ""
+msgstr "Nome del file spostato nel cestino"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
