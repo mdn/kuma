@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-12 01:18+0000\n"
+"PO-Revision-Date: 2016-03-14 20:45+0000\n"
 "Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
@@ -473,6 +473,9 @@ msgid ""
 "may want to review them before their automatic purge after %(days)s days "
 "from the file storage."
 msgstr ""
+"Os seguintes arquivos anexos foram enviados para o lixo :: %(filenames)s. "
+"Você pode querer revê-los antes de serem eliminados automática após %(days)s"
+" dias armazenados."
 
 #: kuma/attachments/admin.py:64
 msgid "and"
@@ -485,6 +488,8 @@ msgid ""
 " review the file before its automatic purge after %(days)s days from the "
 "file storage system."
 msgstr ""
+"O arquivos \"%(filename)s\" anexo foi enviado para o lixo . Você pode querer"
+" revê-lo antes da sua eliminação automática após %(days)s dias armazenado."
 
 #: kuma/attachments/apps.py:12
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
@@ -510,14 +515,12 @@ msgid ""
 msgstr ""
 
 #: kuma/attachments/models.py:140
-#, fuzzy
 msgid "attachment revision"
-msgstr "Visualizar anexo"
+msgstr "revisão do anexo"
 
 #: kuma/attachments/models.py:141
-#, fuzzy
 msgid "attachment revisions"
-msgstr "Visualizar anexo"
+msgstr "revisões do anexo"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
@@ -538,20 +541,18 @@ msgid ""
 msgstr ""
 
 #: kuma/attachments/models.py:234
-#, fuzzy
 msgid "Trashed attachment"
-msgstr "Anexos"
+msgstr "Anexo descartado"
 
 #: kuma/attachments/models.py:235
-#, fuzzy
 msgid "Trashed attachments"
-msgstr "Anexos"
+msgstr "Anexos descartados"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachments | %(title)s"
-msgstr "Anexo %(id)s | %(title)s"
+msgstr "Anexos | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
@@ -559,9 +560,8 @@ msgid "Upload file to article %(title)s"
 msgstr ""
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
-#, fuzzy
 msgid "Upload files"
-msgstr "Enviando"
+msgstr "Enviar arquivos"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
@@ -569,20 +569,17 @@ msgstr "Saiba como usar Anexos"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
-#, fuzzy
 msgid "Upload Files"
-msgstr "Todos os arquivos"
+msgstr "Enviar arquivos"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
 msgstr "Este documento não tem anexos."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
-#, fuzzy
 msgid "Images can be attached, and then linked in the article."
 msgstr ""
-"Este documento não tem anexos. Podem ser anexadas e inseridas imagens no "
-"artigo."
+"Podem ser anexadas imagens, que depois podem ser associadas no artigo."
 
 # 80%
 # 100%
@@ -610,38 +607,32 @@ msgid "Comments"
 msgstr "Comentários"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:61
-#, fuzzy
 msgid "Attached to this article"
-msgstr "Excluir este artigo"
+msgstr "Anexado a este artigo"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:63
-#, fuzzy
 msgid "Attached to another article"
-msgstr "Informação do anexo"
+msgstr "Anexado a outro artigo"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:68
 msgid "Size"
 msgstr "Tamanho"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:69
-#, fuzzy
 msgid "Last modified"
-msgstr "data da última modificação"
+msgstr "Última modificação"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
-#, fuzzy
 msgid "Uploaded by"
-msgstr "Enviar"
+msgstr "Enviado por"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:73
-#, fuzzy
 msgid "Linked in article"
-msgstr "Artigo da Wikipedia"
+msgstr "Associado ao artigo"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
-#, fuzzy
 msgid "Article attached to"
-msgstr "Artigos com a tag: %(tag)s"
+msgstr "Artigo anexado a"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
@@ -2369,7 +2360,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:173
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "Termos e privacidade"
 
 #: kuma/users/jinja2/socialaccount/signup.html:182
 #, python-format
@@ -3114,14 +3105,12 @@ msgid "Document Tags"
 msgstr "Etiqueta do documento"
 
 #: kuma/wiki/models.py:175
-#, fuzzy
 msgid "uploaded to the document"
-msgstr "Restaurar este documento"
+msgstr "enviado para o documento"
 
 #: kuma/wiki/models.py:181
-#, fuzzy
 msgid "linked in the document content"
-msgstr "Pular para o conteúdo principal"
+msgstr "associado no conteúdo do documento"
 
 #: kuma/wiki/models.py:195
 #, python-format
