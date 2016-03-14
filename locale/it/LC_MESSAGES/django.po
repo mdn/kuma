@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-14 07:48+0000\n"
-"Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
+"PO-Revision-Date: 2016-03-14 11:38+0000\n"
+"Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: MozillaItalia <MozillaItalia>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -509,6 +509,9 @@ msgid ""
 "The MIME type is used when serving the attachment. Automatically populated "
 "by inspecting the file on upload. Please only override if needed."
 msgstr ""
+"Il tipo MIME del file serve a trasmettere correttamente un allegato. Esso "
+"viene rilevato automaticamente in fase di caricamento. Modificare questo "
+"valore solo se strettamente necessario."
 
 #: kuma/attachments/models.py:140
 msgid "attachment revision"
@@ -535,6 +538,8 @@ msgid ""
 "Whether or not this attachment was the current attachment revision at the "
 "time of trashing."
 msgstr ""
+"Al momento in cui è stato spostato nel cestino, il file era la versione più "
+"recente dell’allegato?"
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
@@ -565,9 +570,8 @@ msgstr "Scopri come gestire gli allegati"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
-#, fuzzy
 msgid "Upload Files"
-msgstr "Tutti i file"
+msgstr "Carica file"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
@@ -625,9 +629,8 @@ msgid "Linked in article"
 msgstr "Link all'articolo"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
-#, fuzzy
 msgid "Article attached to"
-msgstr "Articoli con tag: %(tag)s"
+msgstr "Articolo allegato a"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
