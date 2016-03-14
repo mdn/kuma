@@ -482,7 +482,7 @@ msgid ""
 " review the file before its automatic purge after %(days)s days from the "
 "file storage system."
 msgstr ""
-"Następujący plik załącznika został przeniesiony do kosza:  „%(filenames)s”. "
+"Następujący plik załącznika został przeniesiony do kosza:  „%(filename)s”. "
 "Plik ten zostanie całkowicie usunięty po %(days)s dniach. Zanim zostanie "
 "usunięty, można go przeglądać."
 

@@ -466,7 +466,7 @@ msgid ""
 "The attachment file \"%(filename)s\" was moved to the trash. You may want to"
 " review the file before its automatic purge after %(days)s days from the "
 "file storage system."
-msgstr "已將附件檔案「%(filenames)s」移動至垃圾桶。您可能想要再確認一下，%(days)s 天後就會被自動清除。"
+msgstr "已將附件檔案「%(filename)s」移動至垃圾桶。您可能想要再確認一下，%(days)s 天後就會被自動清除。"
 
 #: kuma/attachments/apps.py:12
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
