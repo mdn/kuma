@@ -31,7 +31,6 @@ class TupleCsv(Csv):
 
 
 DEBUG = config('DEBUG', default=False, cast=bool)
-TEMPLATE_DEBUG = DEBUG
 
 ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
 
@@ -480,6 +479,8 @@ INSTALLED_APPS = (
 
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
+    # must be before kuma.wiki to prevent a RemovedInDjango19Warning to show up
+    'soapbox',
 
     # MDN
     'kuma.core',
@@ -504,7 +505,6 @@ INSTALLED_APPS = (
     'constance.backends.database',
     'constance',
     'waffle',
-    'soapbox',
     'kuma.authkeys',
     'tidings',
     'djcelery',
