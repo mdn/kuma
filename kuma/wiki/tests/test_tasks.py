@@ -1,16 +1,19 @@
 from __future__ import with_statement
 
+from datetime import datetime
 import os
 
 from django.conf import settings
 
 from kuma.core.cache import memcache
 from kuma.core.tests import ok_
+from kuma.users.models import User
 from kuma.users.tests import UserTestCase, user
 
 from . import document, revision
-from ..models import Document
-from ..tasks import build_sitemaps, update_community_stats
+from ..models import Document, DocumentSpamAttempt
+from ..tasks import (build_sitemaps, delete_old_documentspamattempt_data,
+                     update_community_stats)
 
 
 class UpdateCommunityStatsTests(UserTestCase):
@@ -76,3 +79,38 @@ class SitemapsTestCase(UserTestCase):
             index_xml = sitemap_file.read()
         for loc in expected_sitemap_locs:
             ok_(loc in index_xml)
+
+
+class DeleteOldDocumentSpamAttemptData(UserTestCase):
+    fixtures = UserTestCase.fixtures
+
+    def test_delete_old_data(self):
+        user = User.objects.get(username='testuser01')
+        admin = User.objects.get(username='admin')
+        new_dsa = DocumentSpamAttempt.objects.create(
+            user=user, title='new record', slug='users:me',
+            data='{"PII": "IP, email, etc."}')
+        old_reviewed_dsa = DocumentSpamAttempt.objects.create(
+            user=user, title='old ham', data='{"PII": "plenty"}',
+            review=DocumentSpamAttempt.HAM, reviewer=admin)
+        old_unreviewed_dsa = DocumentSpamAttempt.objects.create(
+            user=user, title='old unknown', data='{"PII": "yep"}')
+
+        # created is auto-set to current time, update bypasses model logic
+        old_date = datetime(2015, 1, 1)
+        ids = [old_reviewed_dsa.id, old_unreviewed_dsa.id]
+        DocumentSpamAttempt.objects.filter(id__in=ids).update(created=old_date)
+
+        delete_old_documentspamattempt_data()
+
+        new_dsa.refresh_from_db()
+        assert new_dsa.data is not None
+
+        old_reviewed_dsa.refresh_from_db()
+        assert old_reviewed_dsa.data is None
+        assert old_reviewed_dsa.review == DocumentSpamAttempt.HAM
+
+        old_unreviewed_dsa.refresh_from_db()
+        assert old_unreviewed_dsa.data is None
+        assert old_unreviewed_dsa.review == (
+            DocumentSpamAttempt.REVIEW_UNAVAILABLE)

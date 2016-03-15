@@ -1,3 +1,4 @@
+import json
 import logging
 
 import waffle
@@ -450,6 +451,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 slug=self.cleaned_data['slug'],
                 user=self.request.user,
                 document=document,
+                data=json.dumps(self.akismet_parameters()),
             )
         finally:
             super(RevisionForm, self).akismet_error()

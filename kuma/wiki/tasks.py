@@ -4,7 +4,7 @@ import json
 import logging
 import os
 import textwrap
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -25,7 +25,7 @@ from kuma.search.models import Index
 
 from .events import context_dict
 from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
-from .models import Document, Revision, RevisionIP
+from .models import Document, DocumentSpamAttempt, Revision, RevisionIP
 from .search import WikiDocumentType
 from .templatetags.jinja_helpers import absolutify
 from .utils import tidy_content
@@ -462,3 +462,19 @@ def tidy_revision_content(pk):
             )
         # return the errors so we can look them up in the Celery task result
         return errors
+
+
+@task
+def delete_old_documentspamattempt_data(days=30):
+    """Delete old DocumentSpamAttempt.data, which contains PII.
+
+    Also set review to REVIEW_UNAVAILABLE.
+    """
+    older = datetime.now() - timedelta(days=30)
+    dsas = DocumentSpamAttempt.objects.filter(
+        created__lt=older).exclude(data__isnull=True)
+    dsas_reviewed = dsas.exclude(review=DocumentSpamAttempt.NEEDS_REVIEW)
+    dsas_unreviewed = dsas.filter(review=DocumentSpamAttempt.NEEDS_REVIEW)
+    dsas_reviewed.update(data=None)
+    dsas_unreviewed.update(
+        data=None, review=DocumentSpamAttempt.REVIEW_UNAVAILABLE)

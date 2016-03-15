@@ -256,6 +256,7 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertEqual(attempt.title, 'Title')
         self.assertEqual(attempt.slug, 'Slug')
         self.assertEqual(attempt.user, self.testuser)
+        self.assertTrue(attempt.data)
 
         # Test that one message has been sent.
         self.assertEqual(len(mail.outbox), 1)

@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 
 from django.contrib import admin
 from django.contrib import messages
@@ -6,17 +7,22 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.template.defaultfilters import truncatechars
+from django.utils import timezone
 from django.utils.html import escape
+from waffle import flag_is_active
 
 from kuma.core.admin import DisabledDeletionMixin
 from kuma.core.decorators import login_required, permission_required
 from kuma.core.urlresolvers import reverse
+from kuma.spam import constants
+from kuma.spam.akismet import Akismet, AkismetError
 
 from .decorators import check_readonly
 from .forms import RevisionAkismetSubmissionAdminForm
 from .models import (Document, DocumentDeletionLog, DocumentSpamAttempt,
-                     DocumentTag, DocumentZone, EditorToolbar,
-                     Revision, RevisionAkismetSubmission, RevisionIP)
+                     DocumentTag, DocumentZone, EditorToolbar, Revision,
+                     RevisionAkismetSubmission, RevisionIP)
 
 
 def dump_selected_documents(self, request, queryset):
@@ -335,12 +341,81 @@ class DocumentZoneAdmin(admin.ModelAdmin):
 
 @admin.register(DocumentSpamAttempt)
 class DocumentSpamAttemptAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'slug', 'document', 'created', 'user']
-    list_display_links = ['id', 'title', 'slug']
-    list_filter = ['created', 'document__deleted', 'document__locale']
+    list_display = [
+        'id', 'user', 'title_short', 'slug_short', 'document', 'review']
+    list_display_links = ['id', 'title_short', 'slug_short']
+    list_filter = [
+        'created', 'review', 'document__deleted', 'document__locale']
+    list_editable = ('review',)
     ordering = ['-created']
     search_fields = ['title', 'slug', 'user__username']
     raw_id_fields = ['user', 'document']
+    fields = [
+        'created', 'user', 'title', 'slug', 'document', 'submitted_data',
+        'review', 'reviewed', 'reviewer']
+    readonly_fields = ['created', 'submitted_data', 'reviewer', 'reviewed']
+
+    def title_short(self, obj):
+        return truncatechars(obj.title, 25)
+    title_short.short_description = 'Title'
+
+    def slug_short(self, obj):
+        return truncatechars(obj.slug, 25)
+    slug_short.short_description = 'Slug'
+
+    class NotEnabled(Exception):
+        """Akismet is not enabled"""
+
+    def submit_ham(self, request, data):
+        """Submit new ham to Akismet.
+
+        This is done directly with the Akismet client rather than the form
+        classes, so that bulk edits can be made in the admin list view.
+
+        It will raise NotEnabled or AkismetError if something goes wrong.
+        """
+        client = Akismet()
+        if not client.ready:
+            raise self.NotEnabled('Akismet is not configured.')
+        spam_submission = flag_is_active(request,
+                                         constants.SPAM_SUBMISSIONS_FLAG)
+        if not spam_submission:
+            raise self.NotEnabled('Akismet spam submission is not enabled.')
+        user_ip = data.pop('user_ip', '')
+        user_agent = data.pop('user_agent', '')
+        client.submit_ham(user_ip=user_ip, user_agent=user_agent, **data)
+
+    def save_model(self, request, obj, form, change):
+        """If reviewed, set the reviewer, and submit ham as requested."""
+        send_ham = (obj.review == DocumentSpamAttempt.HAM and
+                    obj.reviewed is None and obj.data is not None)
+        if obj.review in (DocumentSpamAttempt.HAM, DocumentSpamAttempt.SPAM):
+            obj.reviewer = obj.reviewer or request.user
+            obj.reviewed = obj.reviewed or timezone.now()
+        if send_ham:
+            data = json.loads(obj.data)
+            try:
+                self.submit_ham(request, data)
+            except (self.NotEnabled, AkismetError) as error:
+                obj.reviewer = None
+                obj.reviewed = None
+                obj.review = DocumentSpamAttempt.NEEDS_REVIEW
+                message = (
+                    'Unable to submit ham for document spam attempt %s: %s' %
+                    (obj, error))
+                self.message_user(request, message, level=messages.ERROR)
+            else:
+                message = 'Submitted ham for document spam attempt %s' % obj
+                self.message_user(request, message, level=messages.INFO)
+        obj.save()
+
+    SUBMISSION_NOT_AVAILABLE = 'Akismet submission not available.'
+
+    def submitted_data(self, instance):
+        if instance.data:
+            return json.dumps(json.loads(instance.data), indent=4)
+        else:
+            return self.SUBMISSION_NOT_AVAILABLE
 
 
 @admin.register(Revision)
