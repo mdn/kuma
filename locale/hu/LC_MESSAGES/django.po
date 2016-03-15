@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-14 23:58+0000\n"
+"PO-Revision-Date: 2016-03-15 00:41+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -558,7 +558,7 @@ msgstr "A melléklet kukázását végző felhasználó neve"
 msgid ""
 "Whether or not this attachment was the current attachment revision at the "
 "time of trashing."
-msgstr ""
+msgstr "Ez volt-e a melléklet aktuális verziója a kukázása idején."
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
@@ -648,9 +648,8 @@ msgid "Linked in article"
 msgstr "Hivatkozott cikk"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
-#, fuzzy
 msgid "Article attached to"
-msgstr "Ezzel megcímkézett cikkek: %(tag)s"
+msgstr "Cikk, amelyhez mellékelt"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
@@ -3130,6 +3129,8 @@ msgid ""
 "Attachment %(attachment_id)s can't be attached multiple times to document "
 "%(document_id)s"
 msgstr ""
+"A(z) %(attachment_id)s melléklet nem adható hozzá többször a(z) "
+"%(document_id)s dokumentumhoz"
 
 #: kuma/wiki/models.py:1562
 msgid "Review Tag"
