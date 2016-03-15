@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-14 20:58+0000\n"
+"PO-Revision-Date: 2016-03-14 23:58+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -570,19 +570,18 @@ msgstr "Kukázott mellékletek"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
-#, fuzzy, python-format
+#, python-format
 msgid "Attachments | %(title)s"
-msgstr "%(id)s. melléklet | %(title)s"
+msgstr "Mellékletek | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
 msgid "Upload file to article %(title)s"
-msgstr ""
+msgstr "Fájl feltöltése a(z) %(title)s cikkhez"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
-#, fuzzy
 msgid "Upload files"
-msgstr "Feltöltés"
+msgstr "Fájlok feltöltése"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
@@ -590,21 +589,16 @@ msgstr "Ismerje meg a mellékletek használatát"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
-#, fuzzy
 msgid "Upload Files"
-msgstr "Összes fájl"
+msgstr "Fájlok feltöltése"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
-#, fuzzy
 msgid "This document has no attachments."
-msgstr "Ennek a dokumentumnak nincsenek címkéi."
+msgstr "Ennek a dokumentumnak nincsenek mellékletei."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
-#, fuzzy
 msgid "Images can be attached, and then linked in the article."
-msgstr ""
-"A dokumentumnak nincsenek mellékletei. Képek csatolhatóak, és aztán "
-"beágyazhatóak a cikkbe."
+msgstr "Képek mellékelhetőek, és aztán hivatkozhatóak a cikkben."
 
 # 100%
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35
@@ -630,33 +624,28 @@ msgid "Comments"
 msgstr "Megjegyzések"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:61
-#, fuzzy
 msgid "Attached to this article"
-msgstr "Cikk törlése"
+msgstr "Mellékelve ehhez a cikkhez"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:63
-#, fuzzy
 msgid "Attached to another article"
-msgstr "Mellékletinformációk"
+msgstr "Mellékelve egy másik cikkhez"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:68
 msgid "Size"
 msgstr "Méret"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:69
-#, fuzzy
 msgid "Last modified"
-msgstr "utolsó módosítás dátuma"
+msgstr "Utolsó módosítás"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
-#, fuzzy
 msgid "Uploaded by"
-msgstr "Feltöltés"
+msgstr "Feltöltötte:"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:73
-#, fuzzy
 msgid "Linked in article"
-msgstr "Wikipédia szócikk"
+msgstr "Hivatkozott cikk"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
 #, fuzzy
@@ -671,7 +660,7 @@ msgstr "%(bytes)s bájt"
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:90
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:109
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -2388,7 +2377,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:173
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "Feltételek és magánszféra"
 
 #: kuma/users/jinja2/socialaccount/signup.html:182
 #, python-format
@@ -3128,14 +3117,12 @@ msgid "Document Tags"
 msgstr "Dokumentum címkék"
 
 #: kuma/wiki/models.py:175
-#, fuzzy
 msgid "uploaded to the document"
-msgstr "Dokumentum visszaállítása"
+msgstr "feltöltve a dokumentumhoz"
 
 #: kuma/wiki/models.py:181
-#, fuzzy
 msgid "linked in the document content"
-msgstr "Ugrás a főtartalomra"
+msgstr "hivatkozva a dokumentum tartalmában"
 
 #: kuma/wiki/models.py:195
 #, python-format
