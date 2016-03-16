@@ -1881,6 +1881,8 @@ msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
 "address for user %(user_display)s."
 msgstr ""
+"Prosím potvrďte tento <a href=\"mailto:%(email)s\">%(email)s</a> jako "
+"e-mailovou adresu pro uživatele %(user_display)s."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
@@ -1934,7 +1936,7 @@ msgstr "Změnit heslo"
 #: kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr ""
+msgstr "Obnova hesla"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid ""
