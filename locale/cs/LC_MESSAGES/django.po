@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-16 15:44+0000\n"
+"PO-Revision-Date: 2016-03-16 17:04+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -340,7 +340,7 @@ msgstr ""
 
 #: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:87
 msgid "Other languages:"
-msgstr ""
+msgstr "Ostatní jazyky:"
 
 #: jinja2/includes/lang_switcher.html:15
 #: kuma/wiki/jinja2/wiki/document.html:98
@@ -1035,7 +1035,7 @@ msgstr "Prohledat dokumenty"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
-msgstr ""
+msgstr "Zobrazit témata"
 
 #: kuma/landing/jinja2/landing/homepage.html:66
 msgid "Web Technologies"
@@ -1092,7 +1092,7 @@ msgstr "Optimalizace výkonu"
 
 #: kuma/landing/jinja2/landing/homepage.html:99
 msgid "Connect"
-msgstr ""
+msgstr "Spojte se"
 
 #: kuma/landing/jinja2/landing/homepage.html:100
 msgid ""
@@ -1160,7 +1160,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:158
 msgid "Getting started"
-msgstr ""
+msgstr "Začínáme"
 
 #: kuma/landing/jinja2/landing/homepage.html:159
 msgid "Editorial review"
@@ -1213,7 +1213,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
-msgstr ""
+msgstr "Vyberte styl tlačítek"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
@@ -1225,7 +1225,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr ""
+msgstr "Pro vývojáře, od vývojářů"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
@@ -1233,19 +1233,19 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
-msgstr ""
+msgstr "Vyberte barvu"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr ""
+msgstr "Šedá"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr ""
+msgstr "Oranžová"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr ""
+msgstr "Červená"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
@@ -1257,7 +1257,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr ""
+msgstr "Váš zdrojový kód:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
@@ -1267,25 +1267,25 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:166
 #: kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr ""
+msgstr "Lepší CSS dokumentace pro lepší Web na MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:163
 #: kuma/landing/jinja2/landing/promote_buttons.html:167
 #: kuma/landing/jinja2/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr ""
+msgstr "Lepší HTML dokumentace pro lepší Web na MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:164
 #: kuma/landing/jinja2/landing/promote_buttons.html:168
 #: kuma/landing/jinja2/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr ""
+msgstr "Lepší JavaScript dokumentace pro lepší Web na MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:165
 #: kuma/landing/jinja2/landing/promote_buttons.html:169
 #: kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr ""
+msgstr "Lepší Webová dokumentace pro lepší Web na MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174
 #: kuma/landing/jinja2/landing/promote_buttons.html:178
@@ -1315,25 +1315,25 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:190
 #: kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
-msgstr ""
+msgstr "CSS dokumentace od vývojářů pro vývojáře na MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:187
 #: kuma/landing/jinja2/landing/promote_buttons.html:191
 #: kuma/landing/jinja2/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
-msgstr ""
+msgstr "HTML dokumentace od vývojářů pro vývojáře na MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:188
 #: kuma/landing/jinja2/landing/promote_buttons.html:192
 #: kuma/landing/jinja2/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
-msgstr ""
+msgstr "JavaScript dokumentace od vývojářů pro vývojáře na MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:189
 #: kuma/landing/jinja2/landing/promote_buttons.html:193
 #: kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr ""
+msgstr "Webová dokumentace od vývojářů pro vývojáře na MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198
 #: kuma/landing/jinja2/landing/promote_buttons.html:199
@@ -1395,6 +1395,7 @@ msgstr ""
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
 msgstr ""
+"Vyhledávání je dočasně nedostupné. Zkuste to prosím znovu za několik minut."
 
 #: kuma/search/utils.py:17
 msgid ""
@@ -1404,7 +1405,7 @@ msgstr ""
 
 #: kuma/search/views.py:95
 msgid "name"
-msgstr ""
+msgstr "jméno"
 
 #: kuma/search/views.py:96
 msgid "groupname"
@@ -1412,12 +1413,12 @@ msgstr ""
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr ""
+msgstr "Vyhledávání není dostupné"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
 msgid "Search Mozilla Developer Network documentation"
-msgstr ""
+msgstr "Hledat v dokumentaci Mozilla Developer Network"
 
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
@@ -1437,7 +1438,7 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "Výsledky"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
@@ -1496,7 +1497,7 @@ msgstr[2] ""
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
-msgstr ""
+msgstr "Zobrazeny všechny výsledky."
 
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
@@ -1510,11 +1511,11 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr ""
+msgstr "Dokumentace"
 
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
-msgstr ""
+msgstr "Filtrovat podle"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
@@ -1526,11 +1527,11 @@ msgstr ""
 
 #: kuma/spam/models.py:10
 msgid "created"
-msgstr ""
+msgstr "vytvořeno"
 
 #: kuma/spam/models.py:27
 msgid "Spam"
-msgstr ""
+msgstr "Spam"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
@@ -1562,7 +1563,7 @@ msgstr ""
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr ""
+msgstr "Uživatel"
 
 #: kuma/users/apps.py:69
 #, python-format
@@ -1573,28 +1574,30 @@ msgstr ""
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
-msgstr ""
+msgstr "algoritmus"
 
 #: kuma/users/backends.py:33
 msgid "salt"
-msgstr ""
+msgstr "sůl"
 
 #: kuma/users/backends.py:34
 msgid "hash"
-msgstr ""
+msgstr "hash"
 
 #: kuma/users/constants.py:6
 msgid ""
 "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr ""
+"Uživatelské jméno může obsahovat pouze písmena, čísla a tyto speciální "
+"znaky: . - _ +"
 
 #: kuma/users/forms.py:23
 msgid "You must agree to the privacy policy."
-msgstr ""
+msgstr "Musíte souhlasit se zásadami soukromí."
 
 #: kuma/users/forms.py:38
 msgid "Plain text"
-msgstr ""
+msgstr "Prostý text"
 
 #: kuma/users/forms.py:40
 msgid "Send me the newsletter"
@@ -1602,27 +1605,27 @@ msgstr ""
 
 #: kuma/users/forms.py:42
 msgid "Preferred format"
-msgstr ""
+msgstr "Preferovaný formát"
 
 #: kuma/users/forms.py:47 kuma/users/signup.py:34
 msgid "I agree"
-msgstr ""
+msgstr "Souhlasím"
 
 #: kuma/users/forms.py:50
 msgid "Your country"
-msgstr ""
+msgstr "Vaše země"
 
 #: kuma/users/forms.py:151 kuma/users/models.py:41
 msgid "Timezone"
-msgstr ""
+msgstr "Časové pásmo"
 
 #: kuma/users/forms.py:157
 msgid "Beta tester"
-msgstr ""
+msgstr "Beta tester"
 
 #: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:81
 msgid "Interests"
-msgstr ""
+msgstr "Zájmy"
 
 #: kuma/users/forms.py:167
 msgid "Expertise"
@@ -1630,39 +1633,39 @@ msgstr ""
 
 #: kuma/users/forms.py:173
 msgid "Username"
-msgstr ""
+msgstr "Uživatelské jméno"
 
 #: kuma/users/forms.py:180 kuma/users/models.py:136
 #: kuma/users/jinja2/users/user_detail.html:111
 msgid "Website"
-msgstr ""
+msgstr "Webová stránka"
 
 #: kuma/users/forms.py:189 kuma/users/models.py:151
 #: kuma/users/jinja2/users/user_detail.html:115
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: kuma/users/forms.py:207 kuma/users/models.py:166
 #: kuma/users/jinja2/users/user_detail.html:129
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Stack Overflow"
 
 #: kuma/users/forms.py:216 kuma/users/models.py:156
 #: kuma/users/jinja2/users/user_detail.html:133
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: kuma/users/forms.py:225 kuma/users/models.py:141
 #: kuma/users/jinja2/users/user_detail.html:137
 msgid "Mozillians"
-msgstr ""
+msgstr "Mozillians"
 
 #: kuma/users/forms.py:234 kuma/users/models.py:161
 #: kuma/users/jinja2/users/user_detail.html:141
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:110
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: kuma/users/forms.py:266
 msgid "Areas of expertise must be a subset of interests"
@@ -1670,11 +1673,11 @@ msgstr ""
 
 #: kuma/users/forms.py:275
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Toto pole nemůže být prázdné."
 
 #: kuma/users/forms.py:281
 msgid "Username already in use."
-msgstr ""
+msgstr "Toto uživatelské jméno je již používáno."
 
 #: kuma/users/models.py:29
 #, python-format
@@ -1688,37 +1691,39 @@ msgstr ""
 
 #: kuma/users/models.py:51
 msgid "Language"
-msgstr ""
+msgstr "Jazyk"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
-msgstr ""
+msgstr "Domovská stránka"
 
 #: kuma/users/models.py:60
 msgid ""
 "This URL has an invalid format. Valid URLs look like "
 "http://example.com/my_page."
 msgstr ""
+"Tato URL má nesprávný formát. Správná URL vypadá jako "
+"http://example.com/my_page."
 
 #: kuma/users/models.py:70
 msgid "Name"
-msgstr ""
+msgstr "Jméno"
 
 #: kuma/users/models.py:75
 msgid "Organization"
-msgstr ""
+msgstr "Organizace"
 
 #: kuma/users/models.py:80
 msgid "Location"
-msgstr ""
+msgstr "Umístění"
 
 #: kuma/users/models.py:85
 msgid "About Me"
-msgstr ""
+msgstr "O mně"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
-msgstr ""
+msgstr "Nick na IRC"
 
 #: kuma/users/models.py:94
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27
@@ -1828,7 +1833,7 @@ msgstr "Také jste přidali následující e-mailové adresy:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr ""
+msgstr "Nastavit jako primární"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
