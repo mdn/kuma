@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-03-16 17:04+0000\n"
+"PO-Revision-Date: 2016-03-17 07:38+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -447,7 +447,7 @@ msgstr ""
 
 #: kuma/attachments/admin.py:64
 msgid "and"
-msgstr ""
+msgstr "a"
 
 #: kuma/attachments/admin.py:127
 #, python-format
@@ -607,7 +607,7 @@ msgstr "%(bytes)s bytů"
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:90
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:109
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -933,7 +933,7 @@ msgstr "odstraněno"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:50
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:51
 msgid "Ban IP from Editing"
@@ -950,17 +950,17 @@ msgstr "Referrer:"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:64
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
-msgstr ""
+msgstr "zabanován %(ban_date)s uživatelem %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:78
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr ""
+msgstr "Odesláno jako %(submission_type)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:81
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr ""
+msgstr "%(sent_date)s uživatelem %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
 msgid "Resubmit"
@@ -968,11 +968,11 @@ msgstr "Znovu odeslat"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:90
 msgid "Submit as:"
-msgstr ""
+msgstr "Odeslat jako:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:94
 msgid "spam"
-msgstr ""
+msgstr "spam"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:95
 msgid "ham"
@@ -1068,7 +1068,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:84
 msgid "App Center"
-msgstr ""
+msgstr "App Center"
 
 #: kuma/landing/jinja2/landing/homepage.html:89
 msgid "Developer<br />Tools"
@@ -1076,7 +1076,7 @@ msgstr "Vývojářské<br />nástroje"
 
 #: kuma/landing/jinja2/landing/homepage.html:91
 msgid "Page Inspector"
-msgstr ""
+msgstr "Průzkumník stránky"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Web Console"
@@ -1084,7 +1084,7 @@ msgstr "Webová konzole"
 
 #: kuma/landing/jinja2/landing/homepage.html:93
 msgid "JavaScript Debugger"
-msgstr ""
+msgstr "Debugger JavaScriptu"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Performance Tools"
@@ -1118,7 +1118,7 @@ msgstr "Získejte prohlížeč pro vývojáře jako jste vy"
 
 #: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Build Open Web Apps"
-msgstr ""
+msgstr "Vytvářejte Open Web aplikace"
 
 #: kuma/landing/jinja2/landing/homepage.html:127
 msgid ""
@@ -1149,14 +1149,12 @@ msgid "Help improve MDN"
 msgstr "Pomozte vylepšit MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:152
-#, fuzzy
 msgid ""
 "All parts of MDN (docs and the site itself) are created by an open community"
 " of developers. Please join us! Pick one of these ways to help:"
 msgstr ""
-"Všechny části MDN (dokumenty, dema a samotná stránka) jsou tvořeny otevřenou"
-" komunitou vývojářů. Prosím, přidejte se! Vyberte si jednu z cest jak "
-"pomoci:"
+"Všechny části MDN (dokumenty i samotná stránka) jsou tvořeny otevřenou "
+"komunitou vývojářů. Prosím, přidejte se! Vyberte si jednu z cest jak pomoci:"
 
 #: kuma/landing/jinja2/landing/homepage.html:158
 msgid "Getting started"
@@ -1209,7 +1207,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35
 msgid "Preview"
-msgstr ""
+msgstr "Náhled"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
@@ -1249,7 +1247,7 @@ msgstr "Červená"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr ""
+msgstr "Nahraďte &lt;FOO&gt; za"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
@@ -1559,7 +1557,7 @@ msgstr "E-mailovou adresu nelze použít jako přihlašovací jméno."
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr ""
+msgstr "Zadané uživatelské jméno již existuje."
 
 #: kuma/users/apps.py:24
 msgid "User"
@@ -1601,7 +1599,7 @@ msgstr "Prostý text"
 
 #: kuma/users/forms.py:40
 msgid "Send me the newsletter"
-msgstr ""
+msgstr "Pošlete mi newsletter"
 
 #: kuma/users/forms.py:42
 msgid "Preferred format"
@@ -1629,7 +1627,7 @@ msgstr "Zájmy"
 
 #: kuma/users/forms.py:167
 msgid "Expertise"
-msgstr ""
+msgstr "Odborné znalosti"
 
 #: kuma/users/forms.py:173
 msgid "Username"
@@ -1943,10 +1941,12 @@ msgid ""
 "Forgotten your password? Enter your email address below, and we'll send you "
 "an email allowing you to reset it."
 msgstr ""
+"Zapomněli jste své heslo? Vložte svůj e-mail níže a my vám pošleme odkaz pro"
+" obnovení hesla."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr ""
+msgstr "Obnovit mé heslo"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
@@ -1969,21 +1969,24 @@ msgid ""
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
 msgstr ""
+"Odkaz na obnovu hesla je neplatný, možná proto, že již byl použit.  "
+"Požádejte prosím o <a href=\"%(passwd_reset_url)s\">o obnovu hesla "
+"znovu</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
-msgstr ""
+msgstr "Změnit heslo"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Vaše heslo bylo změněno."
 
 #: kuma/users/jinja2/account/password_set.html:3
 #: kuma/users/jinja2/account/password_set.html:7
 #: kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
-msgstr ""
+msgstr "Nastavit heslo"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
@@ -1999,6 +2002,7 @@ msgstr ""
 msgid ""
 "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr ""
+"Již máte profil? Potom se, prosím, <a href=\"%(login_url)s\">přihlaste</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3
 #: kuma/users/jinja2/account/signup_closed.html:7
@@ -2014,7 +2018,7 @@ msgstr ""
 #: kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr ""
+msgstr "Potvrďte svoji e-mailovou adresu"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid ""
@@ -2046,7 +2050,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "Poznámka"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
@@ -2055,7 +2059,7 @@ msgstr ""
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr ""
+msgstr "OpenID Přihlášení"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3
 #: kuma/users/jinja2/socialaccount/authentication_error.html:6
@@ -2081,7 +2085,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
-msgstr ""
+msgstr "Odpojit"
 
 #: kuma/users/jinja2/socialaccount/connections.html:58
 msgid "You have no connected accounts."
@@ -2201,7 +2205,7 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:173
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "Podmínky a ochrana soukromí"
 
 #: kuma/users/jinja2/socialaccount/signup.html:182
 #, python-format
@@ -2262,17 +2266,17 @@ msgstr ""
 #: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:718
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 #: kuma/users/jinja2/users/user_detail.html:49
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:53
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:57
 msgid "Advanced"
-msgstr ""
+msgstr "Pokročilé"
 
 #: kuma/users/jinja2/users/user_detail.html:53
 msgid "Manage"
-msgstr ""
+msgstr "Správa"
 
 #: kuma/users/jinja2/users/user_detail.html:56
 msgid "API keys"
@@ -2297,7 +2301,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:155
 msgid "Page"
-msgstr ""
+msgstr "Stránka"
 
 #: kuma/users/jinja2/users/user_detail.html:156
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
@@ -2308,12 +2312,12 @@ msgstr "Datum"
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
 #: kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
-msgstr ""
+msgstr "Komentář"
 
 #: kuma/users/jinja2/users/user_detail.html:165
 #: kuma/wiki/jinja2/wiki/document.html:377
 msgid "Edit page"
-msgstr ""
+msgstr "Upravit stránku"
 
 #: kuma/users/jinja2/users/user_detail.html:166
 msgid "View complete diff"
@@ -2337,7 +2341,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:12
 msgid "Edit Your Profile"
-msgstr ""
+msgstr "Upravit váš profil"
 
 #: kuma/users/jinja2/users/user_edit.html:38
 msgid "Change your avatar at"
@@ -2345,7 +2349,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:42
 msgid "View profile"
-msgstr ""
+msgstr "Zobrazit profil"
 
 #: kuma/users/jinja2/users/user_edit.html:50
 msgid "You're editing a different profile than your own. Please take care!"
@@ -2360,15 +2364,15 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:64
 msgid "Primary Email"
-msgstr ""
+msgstr "Primární e-mail"
 
 #: kuma/users/jinja2/users/user_edit.html:65
 msgid "Edit email"
-msgstr ""
+msgstr "Upravit e-mail"
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "About me"
-msgstr ""
+msgstr "O mně"
 
 #: kuma/users/jinja2/users/user_edit.html:77
 msgid "words remaining"
@@ -2398,12 +2402,12 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_edit.html:99
 msgid "My Profiles"
-msgstr ""
+msgstr "Mé profily"
 
 #: kuma/users/jinja2/users/user_edit.html:104
 #: kuma/users/jinja2/users/user_edit.html:122
 msgid "Change"
-msgstr ""
+msgstr "Změnit"
 
 #: kuma/users/jinja2/users/user_edit.html:110
 msgid "Use your Persona account to sign in."
@@ -2417,7 +2421,7 @@ msgstr ""
 #: kuma/users/jinja2/users/user_edit.html:159
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Save Changes"
-msgstr ""
+msgstr "Uložit změny"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
