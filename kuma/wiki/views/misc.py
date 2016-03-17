@@ -34,10 +34,10 @@ def ckeditor_config(request):
                   content_type='application/x-javascript')
 
 
+@newrelic.agent.function_trace()
 @block_user_agents
 @require_GET
 @allow_CORS_GET
-@newrelic.agent.function_trace()
 def autosuggest_documents(request):
     """
     Returns the closest title matches for front-end autosuggests

@@ -15,12 +15,12 @@ from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
 
 
+@newrelic.agent.function_trace()
 @block_user_agents
 @login_required
 @check_readonly
 @prevent_indexing
 @never_cache
-@newrelic.agent.function_trace()
 def create(request):
     """
     Create a new wiki page, which is a document and a revision.

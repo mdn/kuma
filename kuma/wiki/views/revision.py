@@ -17,10 +17,10 @@ from ..models import Document, Revision
 from ..templatetags.jinja_helpers import format_comment
 
 
+@newrelic.agent.function_trace()
 @block_user_agents
 @prevent_indexing
 @process_document_path
-@newrelic.agent.function_trace()
 def revision(request, document_slug, document_locale, revision_id):
     """
     View a wiki document revision.

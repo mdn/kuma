@@ -2,7 +2,7 @@ import collections
 
 from django.contrib.auth import get_user_model
 
-from kuma.core.jobs import KumaJob
+from kuma.core.jobs import KumaJob, GenerationJob
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 
 
@@ -100,3 +100,16 @@ class DocumentContributorsJob(KumaJob):
     def empty(self):
         # the empty result needs to be an empty list instead of None
         return []
+
+
+class DocumentCodeSampleJob(GenerationJob):
+    lifetime = 60 * 60 * 12
+    refresh_timeout = 60
+
+    def fetch(self, pk, sample_name):
+        from .models import Document
+        document = Document.objects.get(pk=pk)
+        return document.extract.code_sample(sample_name)
+
+    def empty(self):
+        return {}
