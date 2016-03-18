@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-11 15:58-0800\n"
+"POT-Creation-Date: 2016-03-18 08:50-0700\n"
 "PO-Revision-Date: 2016-03-08 08:38+0000\n"
 "Last-Translator: netaras <netaras@gmail.com>\n"
 "Language-Team: none\n"
@@ -150,7 +150,7 @@ msgstr "웹 플랫폼"
 msgid "Technologies"
 msgstr "기술 목록"
 
-#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:72 kuma/landing/jinja2/landing/promote_buttons.html:105 kuma/users/forms.py:37
+#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:72 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
@@ -341,22 +341,9 @@ msgstr "로그인:"
 msgid "Sign in"
 msgstr "로그인"
 
-#: jinja2/includes/login.html:21 kuma/users/forms.py:198 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
+#: jinja2/includes/login.html:21 kuma/users/forms.py:77 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
 msgid "GitHub"
 msgstr "GitHub"
-
-#: jinja2/includes/newsletter.html:4 kuma/users/jinja2/users/apps_newsletter.html:7
-msgid "Firefox Apps & Hacks Newsletter"
-msgstr "Firefox Apps & Hacks 뉴스레터"
-
-#: jinja2/includes/newsletter.html:6
-msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem."
-msgstr "Firefox OS, 마켓플레이스, 오픈웹 앱 생태계에 대한 뉴스를 들으시려면 지금 등록하세요."
-
-#: jinja2/includes/newsletter.html:35
-#, python-format
-msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
-msgstr "<a href=\"%(privacy_url)s\">개인정보 취급방침</a>"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -524,7 +511,7 @@ msgid "File"
 msgstr "파일"
 
 # https://github.com/mozilla/kuma/blob/master/apps/devmo/models.py
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1925
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1905
 msgid "Title"
 msgstr "직함"
 
@@ -1456,87 +1443,63 @@ msgstr "해시"
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr "사용자이름은 문자와 숫자, 그리고 . - _ + 만 입력 가능합니다"
 
-#: kuma/users/forms.py:23
-msgid "You must agree to the privacy policy."
-msgstr "개인정보 취급방침에 동의하셔야 합니다."
-
-#: kuma/users/forms.py:38
-msgid "Plain text"
-msgstr "평문"
-
-#: kuma/users/forms.py:40
-msgid "Send me the newsletter"
-msgstr "뉴스레터 수신"
-
-#: kuma/users/forms.py:42
-msgid "Preferred format"
-msgstr "선호 양식"
-
-#: kuma/users/forms.py:47 kuma/users/signup.py:34
-msgid "I agree"
-msgstr "동의"
-
-#: kuma/users/forms.py:50
-msgid "Your country"
-msgstr "국가명"
-
 # 100%
-#: kuma/users/forms.py:151 kuma/users/models.py:41
+#: kuma/users/forms.py:30 kuma/users/models.py:41
 msgid "Timezone"
 msgstr "표준시간대"
 
-#: kuma/users/forms.py:157
+#: kuma/users/forms.py:36
 msgid "Beta tester"
 msgstr "베타 테스터"
 
-#: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:81
+#: kuma/users/forms.py:40 kuma/users/jinja2/users/user_detail.html:81
 msgid "Interests"
 msgstr "관심사"
 
 # 100%
-#: kuma/users/forms.py:167
+#: kuma/users/forms.py:46
 msgid "Expertise"
 msgstr "전문 기술"
 
-#: kuma/users/forms.py:173
+#: kuma/users/forms.py:52
 msgid "Username"
 msgstr "사용자이름"
 
-#: kuma/users/forms.py:180 kuma/users/models.py:136 kuma/users/jinja2/users/user_detail.html:111
+#: kuma/users/forms.py:59 kuma/users/models.py:136 kuma/users/jinja2/users/user_detail.html:111
 msgid "Website"
 msgstr "웹 사이트"
 
 # 각 페이지 2단째 헤더 - Twitter 링크
-#: kuma/users/forms.py:189 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:115 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/users/forms.py:68 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:115 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:207 kuma/users/models.py:166 kuma/users/jinja2/users/user_detail.html:129
+#: kuma/users/forms.py:86 kuma/users/models.py:166 kuma/users/jinja2/users/user_detail.html:129
 msgid "Stack Overflow"
 msgstr "Stack Overflow"
 
-#: kuma/users/forms.py:216 kuma/users/models.py:156 kuma/users/jinja2/users/user_detail.html:133
+#: kuma/users/forms.py:95 kuma/users/models.py:156 kuma/users/jinja2/users/user_detail.html:133
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: kuma/users/forms.py:225 kuma/users/models.py:141 kuma/users/jinja2/users/user_detail.html:137
+#: kuma/users/forms.py:104 kuma/users/models.py:141 kuma/users/jinja2/users/user_detail.html:137
 msgid "Mozillians"
 msgstr "Mozilla 공헌자"
 
-#: kuma/users/forms.py:234 kuma/users/models.py:161 kuma/users/jinja2/users/user_detail.html:141 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
+#: kuma/users/forms.py:113 kuma/users/models.py:161 kuma/users/jinja2/users/user_detail.html:141 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
 msgid "Facebook"
 msgstr "페이스북"
 
 # 100%
-#: kuma/users/forms.py:266
+#: kuma/users/forms.py:145
 msgid "Areas of expertise must be a subset of interests"
 msgstr "전문가 영역은 관심의 부분집합이어야 합니다"
 
-#: kuma/users/forms.py:275
+#: kuma/users/forms.py:154
 msgid "This field cannot be blank."
 msgstr "항목을 채워야 합니다."
 
-#: kuma/users/forms.py:281
+#: kuma/users/forms.py:160
 msgid "Username already in use."
 msgstr "이미 사용 중인 사용자 이름입니다."
 
@@ -1635,25 +1598,29 @@ msgstr "사용자 이름이 너무 깁니다. (%(show_value)s자 입력됨). %(l
 msgid "You must agree to the terms of use."
 msgstr "이용 약관에 동의하셔야 합니다."
 
+#: kuma/users/signup.py:34
+msgid "I agree"
+msgstr "동의"
+
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
 msgstr "MDN 참여하기 위한 다음 단계"
 
-#: kuma/users/views.py:214
+#: kuma/users/views.py:185
 msgid "Email address"
 msgstr "이메일 주소"
 
-#: kuma/users/views.py:273
+#: kuma/users/views.py:244
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>인증됨</b>"
 
-#: kuma/users/views.py:276
+#: kuma/users/views.py:247
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s 미인증됨"
 
-#: kuma/users/views.py:279 kuma/users/jinja2/socialaccount/signup.html:142
+#: kuma/users/views.py:250 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr "또 다른 것들:"
 
@@ -1907,17 +1874,17 @@ msgstr "로그인 취소됨"
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr "현재 계정으로 사이트 로그인을 취소하였습니다. 재시도하시려면 <a href=\"%(login_url)s\">로그인</a>을 다시 진행하십시오."
 
-#: kuma/users/jinja2/socialaccount/signup.html:4 kuma/users/jinja2/socialaccount/signup.html:26
+#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
 #, fuzzy
 msgid "Create your MDN profile to continue"
 msgstr "계속 하시겠습니까?"
 
-#: kuma/users/jinja2/socialaccount/signup.html:30
+#: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:43
+#: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
 msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
@@ -1927,62 +1894,62 @@ msgid_plural ""
 "\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:55
+#: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:61
+#: kuma/users/jinja2/socialaccount/signup.html:54
 #, fuzzy
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
 msgstr "귀하는 계정 없이도 MDN 웹사이트의 모든 것에 접근할 수 있습니다만, 회원으로 가입을 하신다면 문서를 수정하고, 데모를 제출하고 귀하 자신의 프로필 페이지를 가질 수 있습니다."
 
-#: kuma/users/jinja2/socialaccount/signup.html:68
+#: kuma/users/jinja2/socialaccount/signup.html:61
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:74
+#: kuma/users/jinja2/socialaccount/signup.html:67
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:82
+#: kuma/users/jinja2/socialaccount/signup.html:75
 #, fuzzy, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
 msgstr "<strong>로그인에 문제가 있으십니까? <a href=\"%(bug_href)s\" rel=\"external\">피드백</a>을 통해 알려주십시오.</strong>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:107
+#: kuma/users/jinja2/socialaccount/signup.html:100
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:111
+#: kuma/users/jinja2/socialaccount/signup.html:104
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
 msgstr "다른 사람들이 알아보거나 문서에 표시할 이름을 입력하세요."
 
-#: kuma/users/jinja2/socialaccount/signup.html:125
+#: kuma/users/jinja2/socialaccount/signup.html:118
 #, python-format
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:155
+#: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
 "\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:173
+#: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:182
+#: kuma/users/jinja2/socialaccount/signup.html:173
 #, fuzzy, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "<a href=\"%(demo_url)s\">데모</a> 및 <a href=\"%(samples_url)s\">샘플 코드</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:192
+#: kuma/users/jinja2/socialaccount/signup.html:183
 #, fuzzy
 msgid "Create my MDN profile"
 msgstr "새로운 프로필 만들기"
@@ -2015,11 +1982,6 @@ msgstr "Github 로그인"
 msgid "Sign in with GitHub"
 msgstr "Github 로그인"
 
-#: kuma/users/jinja2/users/apps_newsletter.html:14
-#, python-format
-msgid "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the newsletter."
-msgstr "뉴스레터를 수신하기 위한 <a href=\"%(profile_edit_url)s\">프로필 편집</a>을 하십시오."
-
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
 msgstr "차단됨"
@@ -2032,7 +1994,7 @@ msgstr "아래 이유로 계정을 차단합니다."
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">차단 해제 요청</a> (영문 작성 필요)</p>"
 
-#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:718 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
 msgstr "편집"
 
@@ -2100,78 +2062,78 @@ msgstr "<p class=\"none\">보내주신 MDN문서가 아무것도 없습니다. <
 msgid "This user has no activity."
 msgstr "활동 사항이 없습니다."
 
-#: kuma/users/jinja2/users/user_edit.html:12
+#: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
 msgstr "프로필 편집"
 
-#: kuma/users/jinja2/users/user_edit.html:38
+#: kuma/users/jinja2/users/user_edit.html:35
 msgid "Change your avatar at"
 msgstr "아바타 변경"
 
-#: kuma/users/jinja2/users/user_edit.html:42
+#: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
 msgstr "프로필 보기"
 
-#: kuma/users/jinja2/users/user_edit.html:50
+#: kuma/users/jinja2/users/user_edit.html:47
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:61
+#: kuma/users/jinja2/users/user_edit.html:58
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:64
+#: kuma/users/jinja2/users/user_edit.html:61
 msgid "Primary Email"
 msgstr "기본 이메일"
 
-#: kuma/users/jinja2/users/user_edit.html:65
+#: kuma/users/jinja2/users/user_edit.html:62
 msgid "Edit email"
 msgstr "이메일 편집"
 
 # 사용자 프로파일의 편집 페이지
-#: kuma/users/jinja2/users/user_edit.html:77
+#: kuma/users/jinja2/users/user_edit.html:74
 msgid "About me"
 msgstr "자기 소개"
 
-#: kuma/users/jinja2/users/user_edit.html:77
+#: kuma/users/jinja2/users/user_edit.html:74
 msgid "words remaining"
 msgstr "남은 단어"
 
-#: kuma/users/jinja2/users/user_edit.html:83
+#: kuma/users/jinja2/users/user_edit.html:80
 msgid "Interests (tags)"
 msgstr "관심 (태그)"
 
-#: kuma/users/jinja2/users/user_edit.html:84
+#: kuma/users/jinja2/users/user_edit.html:81
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr "태그는 쉼표나 공백으로 분리하세요. 구(句)는 \"웹 표준\"처럼 인용부호로 감싸주세요."
 
-#: kuma/users/jinja2/users/user_edit.html:90
+#: kuma/users/jinja2/users/user_edit.html:87
 msgid "Areas of expertise"
 msgstr "전문 영역"
 
-#: kuma/users/jinja2/users/user_edit.html:91
+#: kuma/users/jinja2/users/user_edit.html:88
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr "관심사를 추가하고, 선택된 토픽의 전문가로 선언하세요."
 
-#: kuma/users/jinja2/users/user_edit.html:99
+#: kuma/users/jinja2/users/user_edit.html:96
 msgid "My Profiles"
 msgstr "내 프로필"
 
-#: kuma/users/jinja2/users/user_edit.html:104 kuma/users/jinja2/users/user_edit.html:122
+#: kuma/users/jinja2/users/user_edit.html:101 kuma/users/jinja2/users/user_edit.html:119
 msgid "Change"
 msgstr "변경"
 
-#: kuma/users/jinja2/users/user_edit.html:110
+#: kuma/users/jinja2/users/user_edit.html:107
 msgid "Use your Persona account to sign in."
 msgstr "로그인을 위해서 Persona 계정을 사용하세요."
 
-#: kuma/users/jinja2/users/user_edit.html:130
+#: kuma/users/jinja2/users/user_edit.html:127
 msgid "Use your GitHub account to sign in."
 msgstr "로그인 하려믄 GitHub 계정을 사용하세요."
 
 # 91%
 # 100%
-#: kuma/users/jinja2/users/user_edit.html:151 kuma/users/jinja2/users/user_edit.html:159 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
+#: kuma/users/jinja2/users/user_edit.html:151 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Save Changes"
 msgstr "변경 사항 저장"
 
@@ -2350,7 +2312,7 @@ msgstr "편집 - 산문, 문법, 내용"
 msgid "Localization in progress - not completely translated yet."
 msgstr "문서 지역화 중 - 모두 번역되지 않음을 양해바라며, 여러분의 도움이 필요합니다."
 
-#: kuma/wiki/content.py:699
+#: kuma/wiki/content.py:718
 msgid "Edit section"
 msgstr "섹션 편집"
 
@@ -2582,110 +2544,110 @@ msgstr "새 짧은 URL(영문):"
 msgid "New article URL"
 msgstr "새 문서 URL"
 
-#: kuma/wiki/models.py:114
+#: kuma/wiki/models.py:111
 #, fuzzy, python-format
 msgid "Parent %s does not exist."
 msgstr "상위 %s/%s 가 존재하지 않습니다."
 
-#: kuma/wiki/models.py:122
+#: kuma/wiki/models.py:119
 msgid "Document Tag"
 msgstr "문서 태그"
 
-#: kuma/wiki/models.py:123
+#: kuma/wiki/models.py:120
 msgid "Document Tags"
 msgstr "문서 태그"
 
-#: kuma/wiki/models.py:175
+#: kuma/wiki/models.py:172
 #, fuzzy
 msgid "uploaded to the document"
 msgstr "현재 문서 복원"
 
-#: kuma/wiki/models.py:181
+#: kuma/wiki/models.py:178
 #, fuzzy
 msgid "linked in the document content"
 msgstr "메인 콘텐트로 건너 뛰기"
 
-#: kuma/wiki/models.py:195
+#: kuma/wiki/models.py:192
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr ""
 
-#: kuma/wiki/models.py:1562
+#: kuma/wiki/models.py:1540
 msgid "Review Tag"
 msgstr "검토 태그"
 
-#: kuma/wiki/models.py:1563
+#: kuma/wiki/models.py:1541
 msgid "Review Tags"
 msgstr "검토 태그"
 
 # docs, Mozilla - 목록 항목,
 # mozilla, Popular Mozilla Documentation - 링크 텍스트
-#: kuma/wiki/models.py:1569
+#: kuma/wiki/models.py:1547
 msgid "Localization Tag"
 msgstr "지역화 태그"
 
 # docs, Mozilla - 목록 항목,
 # mozilla, Popular Mozilla Documentation - 링크 텍스트
-#: kuma/wiki/models.py:1570
+#: kuma/wiki/models.py:1548
 msgid "Localization Tags"
 msgstr "지역화 태그"
 
-#: kuma/wiki/models.py:1603
+#: kuma/wiki/models.py:1581
 msgid "No table of contents"
 msgstr "문서 목차 없음"
 
-#: kuma/wiki/models.py:1604
+#: kuma/wiki/models.py:1582
 msgid "All levels"
 msgstr "전체 등급"
 
-#: kuma/wiki/models.py:1605
+#: kuma/wiki/models.py:1583
 msgid "H2 and higher"
 msgstr "H2 이상"
 
-#: kuma/wiki/models.py:1606
+#: kuma/wiki/models.py:1584
 msgid "H3 and higher"
 msgstr "H3 이상"
 
-#: kuma/wiki/models.py:1607
+#: kuma/wiki/models.py:1585
 msgid "H4 and higher"
 msgstr "H4 이상"
 
-#: kuma/wiki/models.py:1711
+#: kuma/wiki/models.py:1689
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "리비전은 %(locale)s 문서의 리비전을 기초로 해야한다. 리비전 ID %(id)s는 기준에 적합하지 않다."
 
-#: kuma/wiki/models.py:1845
+#: kuma/wiki/models.py:1825
 msgid "IP address"
 msgstr "IP 주소"
 
-#: kuma/wiki/models.py:1853
+#: kuma/wiki/models.py:1833
 msgid "User-Agent"
 msgstr "사용자 도구"
 
-#: kuma/wiki/models.py:1858
+#: kuma/wiki/models.py:1838
 msgid "HTTP Referrer"
 msgstr ""
 
-#: kuma/wiki/models.py:1879
+#: kuma/wiki/models.py:1859
 msgid "Revision"
 msgstr "리비전"
 
 # DevDerby 부메뉴
-#: kuma/wiki/models.py:1885
+#: kuma/wiki/models.py:1865
 msgid "Akismet submission"
 msgstr "Akismet 제출"
 
 # DevDerby 부메뉴
-#: kuma/wiki/models.py:1886
+#: kuma/wiki/models.py:1866
 msgid "Akismet submissions"
 msgstr "Akismet 제출"
 
-#: kuma/wiki/models.py:1929
+#: kuma/wiki/models.py:1909
 msgid "Slug"
 msgstr "슬러그"
 
-#: kuma/wiki/models.py:1937
+#: kuma/wiki/models.py:1917
 #, fuzzy
 msgid "Document (optional)"
 msgstr "MDN 문서"
@@ -3816,6 +3778,33 @@ msgstr "이 문서를 번역할 수 없습니다."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch 서버: %(backend)s"
+
+#~ msgid "Firefox Apps & Hacks Newsletter"
+#~ msgstr "Firefox Apps & Hacks 뉴스레터"
+
+#~ msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem."
+#~ msgstr "Firefox OS, 마켓플레이스, 오픈웹 앱 생태계에 대한 뉴스를 들으시려면 지금 등록하세요."
+
+#~ msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
+#~ msgstr "<a href=\"%(privacy_url)s\">개인정보 취급방침</a>"
+
+#~ msgid "You must agree to the privacy policy."
+#~ msgstr "개인정보 취급방침에 동의하셔야 합니다."
+
+#~ msgid "Plain text"
+#~ msgstr "평문"
+
+#~ msgid "Send me the newsletter"
+#~ msgstr "뉴스레터 수신"
+
+#~ msgid "Preferred format"
+#~ msgstr "선호 양식"
+
+#~ msgid "Your country"
+#~ msgstr "국가명"
+
+#~ msgid "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the newsletter."
+#~ msgstr "뉴스레터를 수신하기 위한 <a href=\"%(profile_edit_url)s\">프로필 편집</a>을 하십시오."
 
 #~ msgid "The file provided is not valid. File must be one of these types: %s."
 #~ msgstr "제공된 파일이 유효하지 않습니다. 다음 타입 중 하나이어야 합니다: %s."

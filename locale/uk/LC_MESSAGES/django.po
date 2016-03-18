@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-11 15:58-0800\n"
+"POT-Creation-Date: 2016-03-18 08:50-0700\n"
 "PO-Revision-Date: 2016-03-13 19:10+0000\n"
 "Last-Translator: Andriy Kuryk <andrij.kuryk@gmail.com>\n"
 "Language-Team: none\n"
@@ -56,15 +56,11 @@ msgstr "<li><a href=\"%(login_url)s\">Увійдіть</a> щоб повтори
 
 #: jinja2/403.html:55
 msgid ""
-"<p class=\"attrib\"><small><a "
-"href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
-"rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a "
-"href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
+"Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a "
-"href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
-"rel=\"nofollow\">Tumbeasts</a> від Matthew Inman з <a "
-"href=\"http://theoatmeal.com\" rel=\"nofollow\">The Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> від Matthew Inman з <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
+"Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -76,39 +72,26 @@ msgstr "На жаль, ми не можемо знайти те, що ви шу�
 
 #: jinja2/404.html:24
 #, python-format
-msgid ""
-"You can try a search or start over on the <a href=\"%(homepage_url)s\">home "
-"page</a>."
-msgstr ""
-"Ви можете спробувати пошукати або почати спочатку на <a "
-"href=\"%(homepage_url)s\">домашній сторінці</a>."
+msgid "You can try a search or start over on the <a href=\"%(homepage_url)s\">home page</a>."
+msgstr "Ви можете спробувати пошукати або почати спочатку на <a href=\"%(homepage_url)s\">домашній сторінці</a>."
 
 #: jinja2/404.html:28
 #, python-format
-msgid ""
-"If you were following a documentation link, you can sign in and create the "
-"page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a"
-" bug</a>. Thanks!"
+msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
 msgstr ""
-"Якщо ви слідкували посиланню в документації, ви можете увійти і створити "
-"сторінку. В іншому випадку будь ласка, <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">створіть повідомлення про помилку</a>. Дякуємо!"
+"Якщо ви слідкували посиланню в документації, ви можете увійти і створити сторінку. В іншому випадку будь ласка, <a href=\"%(bug_form_url)s\" rel=\"nofollow\">створіть повідомлення про помилку</a>. "
+"Дякуємо!"
 
 #: jinja2/404.html:36
 #, python-format
-msgid ""
-"<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew "
-"Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
-msgstr ""
-"<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> від Matthew "
-"Inman з <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
+msgid "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
+msgstr "<a href=\"%(tumbeasts_url)s\" rel=\"nofollow\">Tumbeasts</a> від Matthew Inman з <a href=\"%(oatmeal_url)s\" rel=\"nofollow\">The Oatmeal</a>"
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
 msgstr "Внутрішня помилка сервера"
 
-#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37
-#: jinja2/base.html:91 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:91 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr "Mozilla Developer Network"
 
@@ -160,21 +143,15 @@ msgstr "Веб-платформа"
 msgid "Technologies"
 msgstr "Технології"
 
-#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4
-#: kuma/landing/jinja2/landing/homepage.html:72
-#: kuma/landing/jinja2/landing/promote_buttons.html:105 kuma/users/forms.py:37
+#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:72 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:127 kuma/core/translations/search/filter/css/name.py:4
-#: kuma/landing/jinja2/landing/homepage.html:73
-#: kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:127 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:73 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:128 kuma/core/translations/search/filter/js/name.py:4
-#: kuma/landing/jinja2/landing/homepage.html:74
-#: kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:128 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:74 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
@@ -226,13 +203,11 @@ msgstr "...більше документації"
 msgid "Mozilla Docs"
 msgstr "Mozilla Docs"
 
-#: jinja2/base.html:151 kuma/core/sections.py:6
-#: kuma/landing/jinja2/landing/homepage.html:85
+#: jinja2/base.html:151 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:85
 msgid "Add-ons"
 msgstr "Додатки"
 
-#: jinja2/base.html:152 kuma/core/translations/search/filter/firefox/name.py:4
-#: kuma/landing/jinja2/landing/homepage.html:81
+#: jinja2/base.html:152 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:81
 msgid "Firefox"
 msgstr "Firefox"
 
@@ -240,9 +215,7 @@ msgstr "Firefox"
 msgid "Firefox Marketplace"
 msgstr "Firefox Marketplace"
 
-#: jinja2/base.html:154
-#: kuma/core/translations/search/filter/firefox-os/name.py:4
-#: kuma/landing/jinja2/landing/homepage.html:82
+#: jinja2/base.html:154 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:82
 msgid "Firefox OS"
 msgstr "Firefox OS"
 
@@ -278,30 +251,16 @@ msgstr "Повідомити про проблему вмісту"
 msgid "Report a bug"
 msgstr "Повідомити про помилку"
 
-#: jinja2/base.html:177 jinja2/base.html:178 jinja2/base.html:180
-#: jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27
-#: kuma/landing/jinja2/landing/homepage.html:38
-#: kuma/landing/jinja2/landing/homepage.html:48
-#: kuma/landing/jinja2/landing/homepage.html:55
-#: kuma/landing/jinja2/landing/homepage.html:60
-#: kuma/search/jinja2/search/base.html:2
-#: kuma/search/jinja2/search/results.html:15
-#: kuma/search/jinja2/search/results.html:52
-#: kuma/search/jinja2/search/results.html:55
-#: kuma/search/jinja2/search/results.html:60
+#: jinja2/base.html:177 jinja2/base.html:178 jinja2/base.html:180 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
+#: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr "Пошук"
 
 #: jinja2/base.html:196
 #, python-format
-msgid ""
-"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual "
-"contributors.</p> <p>Content is available under <a "
-"href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr ""
-"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network і окремі учасники.</p>"
-" <p>Вміст доступний на умовах <a href=\"%(copyright_url)s\">цих "
-"ліцензій</a>.</p>"
+msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
+msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network і окремі учасники.</p> <p>Вміст доступний на умовах <a href=\"%(copyright_url)s\">цих ліцензій</a>.</p>"
 
 #: jinja2/base.html:201
 msgid "About MDN"
@@ -340,10 +299,7 @@ msgstr "Ласкаво просимо, <span class=\"user\">%(user)s</span>."
 msgid "Profile"
 msgstr "Профіль"
 
-#: jinja2/includes/common_macros.html:40
-#: kuma/users/jinja2/account/logout.html:3
-#: kuma/users/jinja2/account/logout.html:8
-#: kuma/users/jinja2/account/logout.html:17
+#: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
 msgid "Sign Out"
 msgstr "Вийти"
 
@@ -356,8 +312,7 @@ msgstr "Хочете зробити внесок?<br /> <a href=\"%(login_url)s\
 msgid "Other languages:"
 msgstr "Інші мови:"
 
-#: jinja2/includes/lang_switcher.html:15
-#: kuma/wiki/jinja2/wiki/document.html:98
+#: jinja2/includes/lang_switcher.html:15 kuma/wiki/jinja2/wiki/document.html:98
 msgid "Go"
 msgstr "Перейти"
 
@@ -373,37 +328,15 @@ msgstr "Увійти за допомогою"
 msgid "Sign in"
 msgstr "Увійти"
 
-#: jinja2/includes/login.html:21 kuma/users/forms.py:198
-#: kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120
-#: kuma/users/jinja2/users/user_detail.html:124
+#: jinja2/includes/login.html:21 kuma/users/forms.py:77 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
 msgid "GitHub"
 msgstr "GitHub"
 
-#: jinja2/includes/newsletter.html:4
-#: kuma/users/jinja2/users/apps_newsletter.html:7
-msgid "Firefox Apps & Hacks Newsletter"
-msgstr "Підписка на хаки та новини застосунків Firefox"
-
-#: jinja2/includes/newsletter.html:6
-msgid ""
-"Subscribe for periodic news about Firefox OS, Firefox Marketplace and the "
-"Open Web apps ecosystem."
-msgstr ""
-"Підпишіться на періодичні новини про Firefox OS, Firefox Marketplace і "
-"екосистему відкритих веб-застосунків."
-
-#: jinja2/includes/newsletter.html:35
-#, python-format
-msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
-msgstr "з <a href=\"%(privacy_url)s\">політикою приватності</a>"
-
-#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154
-#: kuma/wiki/jinja2/wiki/list/revisions.html:56
+#: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
 msgstr "Назад"
 
-#: jinja2/includes/paginator.html:30
-#: kuma/search/jinja2/search/results.html:159
+#: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
 msgstr "Далі"
 
@@ -411,9 +344,7 @@ msgstr "Далі"
 msgid "Unsubscribe from these emails:"
 msgstr "Відписатися від цих повідомлень:"
 
-#: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12
-#: jinja2/tidings/unsubscribe_error.html:2
-#: jinja2/tidings/unsubscribe_success.html:2
+#: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
 msgstr "Відписатися"
 
@@ -421,12 +352,8 @@ msgstr "Відписатися"
 msgid "Are you sure you want to unsubscribe?"
 msgstr "Ви дійсно бажаєте відписатись?"
 
-#: jinja2/tidings/unsubscribe.html:13
-#: kuma/authkeys/jinja2/authkeys/delete.html:16
-#: kuma/authkeys/jinja2/authkeys/new.html:17
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40
-#: kuma/wiki/jinja2/wiki/move.html:93
+#: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -436,17 +363,11 @@ msgstr "Помилка відписки"
 
 #: jinja2/tidings/unsubscribe_error.html:10
 msgid ""
-"We could not find your subscription. Either it has already been cancelled, "
-"or there was a mistake in the unsubscribe link. Please make sure the entire "
-"link from the email made it into the browser. If the last part of the link "
-"wraps onto a second line in the email, try copying and pasting the link into"
-" the browser."
+"We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
+"If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
 msgstr ""
-"Ми не змогли знайти вашу підписку. Або вона вже була скасована, або "
-"посилання для відмови від підписки некоректне. Будь ласка, переконайтеся, що"
-" посилання з листа цілком скопійоване в браузер. Якщо остання частина "
-"посилання в листі перенесена на другий рядок, спробуйте скопіювати і "
-"вставити посилання в браузер."
+"Ми не змогли знайти вашу підписку. Або вона вже була скасована, або посилання для відмови від підписки некоректне. Будь ласка, переконайтеся, що посилання з листа цілком скопійоване в браузер. Якщо "
+"остання частина посилання в листі перенесена на другий рядок, спробуйте скопіювати і вставити посилання в браузер."
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -458,14 +379,8 @@ msgstr "Вас було відписано."
 
 #: kuma/attachments/admin.py:60
 #, python-format
-msgid ""
-"The following attachment files were moved to the trash: %(filenames)s. You "
-"may want to review them before their automatic purge after %(days)s days "
-"from the file storage."
-msgstr ""
-"Наступний файл вкладення був переміщений до кошику: %(filenames)s. Ви можете"
-" переглядати файл до автоматичного видалення з файлової системи через "
-"%(days)s днів."
+msgid "The following attachment files were moved to the trash: %(filenames)s. You may want to review them before their automatic purge after %(days)s days from the file storage."
+msgstr "Наступний файл вкладення був переміщений до кошику: %(filenames)s. Ви можете переглядати файл до автоматичного видалення з файлової системи через %(days)s днів."
 
 #: kuma/attachments/admin.py:64
 #, fuzzy
@@ -474,17 +389,10 @@ msgstr "Заблокований"
 
 #: kuma/attachments/admin.py:127
 #, python-format
-msgid ""
-"The attachment file \"%(filename)s\" was moved to the trash. You may want to"
-" review the file before its automatic purge after %(days)s days from the "
-"file storage system."
-msgstr ""
-"Файл вкладення \"%(filename)s\" було перенесено до кошика. Ви можете "
-"переглядати файл до автоматичного видалення з файлової системи через "
-"%(days)s днів."
+msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
+msgstr "Файл вкладення \"%(filename)s\" було перенесено до кошика. Ви можете переглядати файл до автоматичного видалення з файлової системи через %(days)s днів."
 
-#: kuma/attachments/apps.py:12
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
+#: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
 msgstr "Вкладені файли"
 
@@ -501,13 +409,8 @@ msgid "Files of this type are not permitted."
 msgstr "Файли цього типу не дозволені."
 
 #: kuma/attachments/models.py:112
-msgid ""
-"The MIME type is used when serving the attachment. Automatically populated "
-"by inspecting the file on upload. Please only override if needed."
-msgstr ""
-"MIME тип використовується при обслуговуванні вкладення. Автоматично доданий "
-"при перевірці під час вивантаження файлу. Будь ласка, змінюйте тільки у "
-"випадку необхідності."
+msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
+msgstr "MIME тип використовується при обслуговуванні вкладення. Автоматично доданий при перевірці під час вивантаження файлу. Будь ласка, змінюйте тільки у випадку необхідності."
 
 #: kuma/attachments/models.py:140
 #, fuzzy
@@ -532,9 +435,7 @@ msgid "The username of the user who trashed the attachment"
 msgstr "Ім’я користувача, що видалив вкладення"
 
 #: kuma/attachments/models.py:229
-msgid ""
-"Whether or not this attachment was the current attachment revision at the "
-"time of trashing."
+msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
 msgstr "Чи мало вкладення поточну версію в момент видалення."
 
 #: kuma/attachments/models.py:234
@@ -567,8 +468,7 @@ msgstr "Вивантаження"
 msgid "Learn how to use Attachments"
 msgstr "Дізнайтеся, як використовувати вкладення"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
 #, fuzzy
 msgid "Upload Files"
 msgstr "Всі файли"
@@ -581,23 +481,17 @@ msgstr "Цей документ немає міток."
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 #, fuzzy
 msgid "Images can be attached, and then linked in the article."
-msgstr ""
-"Цей документ не має вкладень. Зображення можуть бути вкладені, а потім "
-"вбудовані в статтю."
+msgstr "Цей документ не має вкладень. Зображення можуть бути вкладені, а потім вбудовані в статтю."
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:67
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35 kuma/attachments/jinja2/attachments/includes/attachment_list.html:67
 msgid "File"
 msgstr "Файл"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36
-#: kuma/users/models.py:65 kuma/wiki/models.py:1925
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1905
 msgid "Title"
 msgstr "Заголовок"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:37
-#: kuma/authkeys/jinja2/authkeys/delete.html:9
-#: kuma/authkeys/jinja2/authkeys/history.html:10
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:37 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
 msgstr "Опис"
@@ -644,8 +538,7 @@ msgstr "Статті з мітками: %(tag)s"
 msgid "%(bytes)s bytes"
 msgstr "%(bytes)s байтів"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:90
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:109
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:90 kuma/attachments/jinja2/attachments/includes/attachment_list.html:109
 msgid "n/a"
 msgstr "не застосовується"
 
@@ -661,15 +554,11 @@ msgstr "Хешований секрет"
 msgid "Description of intended use"
 msgstr "Опис передбачуваного використання"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:7
-#: kuma/authkeys/jinja2/authkeys/history.html:8
-#: kuma/authkeys/jinja2/authkeys/new.html:34
+#: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
 msgstr "Створено"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
 msgstr "Видалити"
 
@@ -679,16 +568,11 @@ msgstr "Цей ключ ще не використовувався."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:8
 msgid ""
-"These are your API keys. They're useful for building applications that "
-"perform tasks on MDN on your behalf. If you have stopped using any of them, "
-"or suspect one has been exposed to parties you don't trust with your account"
-" delete the key. It's easy to create a replacement key at any time."
+"These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
+"don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"Це ваші ключі API. Вони корисні для побудови застосунків, що виконують "
-"завдання на MDN від вашого імені. Якщо ви припинили використовувати будь-"
-"який з них або підозрюєте, що один з них потрапив у руки особам, яким ви не "
-"довіряєте свій обліковий запис, натисніть кнопку видалити ключ. Ви в будь-"
-"який момент легко зможете створити йому заміну."
+"Це ваші ключі API. Вони корисні для побудови застосунків, що виконують завдання на MDN від вашого імені. Якщо ви припинили використовувати будь-який з них або підозрюєте, що один з них потрапив у "
+"руки особам, яким ви не довіряєте свій обліковий запис, натисніть кнопку видалити ключ. Ви в будь-який момент легко зможете створити йому заміну."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -709,22 +593,16 @@ msgstr "Історія (%(count)s)"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
-msgid ""
-"You need a special permission to use API keys. You may request permission by"
-" <a href=\"%(bugzilla_url)s\">filing a bug</a>."
-msgstr ""
-"Вам потрібен спеціальний дозвіл на використання ключів API. Ви можете "
-"запросити дозвіл на <a href=\"%(bugzilla_url)s\">подачу помилки</a>."
+msgid "You need a special permission to use API keys. You may request permission by <a href=\"%(bugzilla_url)s\">filing a bug</a>."
+msgstr "Вам потрібен спеціальний дозвіл на використання ключів API. Ви можете запросити дозвіл на <a href=\"%(bugzilla_url)s\">подачу помилки</a>."
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong>"
-" This will be your only means of identifying this key later, other than the "
-"date and time of its creation. So, be as clear as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
-"<p>Опишіть нижче передбачуване використання цього ключа. <p><strong>ЗВЕРНІТЬ"
-" УВАГУ:</strong> Воно буде єдиним способом ідентифікації цього ключа надалі,"
-" за виключенням дати і часу його створення. Тому будьте чіткими у описі.</p>"
+"<p>Опишіть нижче передбачуване використання цього ключа. <p><strong>ЗВЕРНІТЬ УВАГУ:</strong> Воно буде єдиним способом ідентифікації цього ключа надалі, за виключенням дати і часу його створення. "
+"Тому будьте чіткими у описі.</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
@@ -733,20 +611,12 @@ msgstr "Створити"
 #: kuma/authkeys/jinja2/authkeys/new.html:20
 #, python-format
 msgid ""
-"<p>Your new key has been created. Please make a note of the details below "
-"(e.g. by copying them into your application's settings). This information "
-"will never be displayed again, and cannot be recovered if lost.</p> "
-"<p><strong>NOTE:</strong> When you're done, <a class=\"button\" "
-"href=\"%(list_url)s\">return to the key list</a>. Reloading this page will "
-"create a new key.</p>"
+"<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
+"recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
-"<p>Ваш новий ключ щойно був створений. Будь ласка, занотуйте його атрибути, "
-"зазначені нижче (наприклад, скопіювавши їх у налаштування вашого "
-"застосунку). Ця інформація більше ніколи не буде знову відображена, і її "
-"неможливо буде відновити у випадку втрати.</p> <p><strong>ЗВЕРНІТЬ "
-"УВАГУ:</strong> Коли ви закінчите, <a class=\"button\" "
-"href=\"%(list_url)s\">поверніться до списку ключів</a>. Перезавантаження "
-"цієї сторінки створить новий ключ.</p>"
+"<p>Ваш новий ключ щойно був створений. Будь ласка, занотуйте його атрибути, зазначені нижче (наприклад, скопіювавши їх у налаштування вашого застосунку). Ця інформація більше ніколи не буде знову "
+"відображена, і її неможливо буде відновити у випадку втрати.</p> <p><strong>ЗВЕРНІТЬ УВАГУ:</strong> Коли ви закінчите, <a class=\"button\" href=\"%(list_url)s\">поверніться до списку ключів</a>. "
+"Перезавантаження цієї сторінки створить новий ключ.</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -762,33 +632,23 @@ msgstr "Ядро"
 
 #: kuma/core/form_fields.py:57
 #, python-format
-msgid ""
-"Ensure this value has at least %(limit_value)s characters (it has "
-"%(show_value)s)."
-msgstr ""
-"Переконайтеся, що це значення має не менше ніж %(limit_value)s символів "
-"(зараз %(show_value)s)."
+msgid "Ensure this value has at least %(limit_value)s characters (it has %(show_value)s)."
+msgstr "Переконайтеся, що це значення має не менше ніж %(limit_value)s символів (зараз %(show_value)s)."
 
 #: kuma/core/form_fields.py:62
 #, python-format
-msgid ""
-"Ensure this value has at most %(limit_value)s characters (it has "
-"%(show_value)s)."
-msgstr ""
-"Переконайтеся, що це значення має не більше ніж %(limit_value)s символів "
-"(зараз %(show_value)s)."
+msgid "Ensure this value has at most %(limit_value)s characters (it has %(show_value)s)."
+msgstr "Переконайтеся, що це значення має не більше ніж %(limit_value)s символів (зараз %(show_value)s)."
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
 msgstr "Mozilla"
 
-#: kuma/core/sections.py:27
-#: kuma/core/translations/search/filter/mobile/name.py:4
+#: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
 msgstr "Мобільна версія"
 
-#: kuma/core/sections.py:34
-#: kuma/landing/jinja2/landing/promote_buttons.html:117
+#: kuma/core/sections.py:34 kuma/landing/jinja2/landing/promote_buttons.html:117
 msgid "Web"
 msgstr "Веб"
 
@@ -913,33 +773,27 @@ msgstr "Тиждень"
 msgid "30 days"
 msgstr "30 днів"
 
-#: kuma/dashboards/forms.py:24
-#: kuma/dashboards/jinja2/dashboards/revisions.html:14
+#: kuma/dashboards/forms.py:24 kuma/dashboards/jinja2/dashboards/revisions.html:14
 msgid "Locale:"
 msgstr "Мова:"
 
-#: kuma/dashboards/forms.py:28
-#: kuma/dashboards/jinja2/dashboards/revisions.html:19
+#: kuma/dashboards/forms.py:28 kuma/dashboards/jinja2/dashboards/revisions.html:19
 msgid "User:"
 msgstr "Користувач:"
 
-#: kuma/dashboards/forms.py:32
-#: kuma/dashboards/jinja2/dashboards/revisions.html:24
+#: kuma/dashboards/forms.py:32 kuma/dashboards/jinja2/dashboards/revisions.html:24
 msgid "Topic:"
 msgstr "Тема:"
 
-#: kuma/dashboards/forms.py:34
-#: kuma/dashboards/jinja2/dashboards/revisions.html:30
+#: kuma/dashboards/forms.py:34 kuma/dashboards/jinja2/dashboards/revisions.html:30
 msgid "Start Date:"
 msgstr "Дата початку:"
 
-#: kuma/dashboards/forms.py:38
-#: kuma/dashboards/jinja2/dashboards/revisions.html:35
+#: kuma/dashboards/forms.py:38 kuma/dashboards/jinja2/dashboards/revisions.html:35
 msgid "End Date:"
 msgstr "Дата завершення:"
 
-#: kuma/dashboards/forms.py:44
-#: kuma/dashboards/jinja2/dashboards/revisions.html:40
+#: kuma/dashboards/forms.py:44 kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
 msgstr "Попередній період:"
 
@@ -947,13 +801,11 @@ msgstr "Попередній період:"
 msgid "Revision Dashboard"
 msgstr "Панель редакцій"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:44
-#: kuma/search/jinja2/search/results.html:210
+#: kuma/dashboards/jinja2/dashboards/revisions.html:44 kuma/search/jinja2/search/results.html:210
 msgid "Filter"
 msgstr "Фільтр"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:73
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
+#: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "Revert"
 msgstr "Повернути"
 
@@ -965,8 +817,7 @@ msgstr "Переглянути сторінку"
 msgid "Edit Page"
 msgstr "Редагувати сторінку"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:364
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/dashboards/jinja2/dashboards/revisions.html:73 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
 msgstr "Історія"
 
@@ -1035,59 +886,45 @@ msgstr "Немає редакцій, що відповідають цьому ф
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
-#: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8
-#: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
+#: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
 msgstr "Припинити отримувати повідомлення, коли правлять англійську версію"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
-#: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20
-#: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
+#: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
 msgstr "Отримувати повідомлення, коли правлять англійську версію"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
-#: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:7
-#: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
+#: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:7 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr ""
-"Припинити отримувати повідомлення, коли англійська версія чекає на перегляд"
+msgstr "Припинити отримувати повідомлення, коли англійська версія чекає на перегляд"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
-#: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18
-#: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
+#: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
 msgstr "Отримувати повідомлення, коли англійська версія чекає на перегляд"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
-msgid ""
-"The Mozilla Developer Network (MDN) Fellowship Program invites world-class "
-"web developers to come change the world with Mozilla."
-msgstr ""
-"Співтовариство Mozilla Developer Network (MDN) запрошує веб-розробників "
-"світового класу змінити світ з Mozilla."
+msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
+msgstr "Співтовариство Mozilla Developer Network (MDN) запрошує веб-розробників світового класу змінити світ з Mozilla."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web "
-"technologies including HTML, CSS, and APIs for both Web sites and HTML5 "
-"Apps. It also documents Mozilla products, like Firefox OS."
-msgstr ""
-"Mozilla Developer Network (MDN) надає інформацію про відкриті веб-"
-"технології, включаючи HTML, CSS і API-інтерфейси для вебсайтів і HTML5 "
-"застосунків. Він також містить матеріали про продукти Mozilla, такі як "
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
 "Firefox OS."
+msgstr ""
+"Mozilla Developer Network (MDN) надає інформацію про відкриті веб-технології, включаючи HTML, CSS і API-інтерфейси для вебсайтів і HTML5 застосунків. Він також містить матеріали про продукти "
+"Mozilla, такі як Firefox OS."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
 msgstr "Поділіться знаннями <span>з відкритим інтернетом</span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:42
-#: kuma/landing/jinja2/landing/homepage.html:59
-#: kuma/search/jinja2/search/results.html:59
+#: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
 msgstr "Пошук у документації"
 
@@ -1115,8 +952,7 @@ msgstr "HTML5"
 msgid "CSS3"
 msgstr "CSS3"
 
-#: kuma/landing/jinja2/landing/homepage.html:75
-#: kuma/landing/jinja2/landing/homepage.html:95
+#: kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/homepage.html:95
 msgid "more..."
 msgstr "більше..."
 
@@ -1153,12 +989,8 @@ msgid "Connect"
 msgstr "З'єднатись"
 
 #: kuma/landing/jinja2/landing/homepage.html:100
-msgid ""
-"Get Web technology news from Mozilla, get help from other developers, and "
-"more!"
-msgstr ""
-"Отримуйте новини про інтернет технології від Mozilla, отримуйте допомогу "
-"інших розробників і навіть більше!"
+msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
+msgstr "Отримуйте новини про інтернет технології від Mozilla, отримуйте допомогу інших розробників і навіть більше!"
 
 #: kuma/landing/jinja2/landing/homepage.html:101
 msgid "Learn more and sign up!"
@@ -1181,12 +1013,8 @@ msgid "Build Open Web Apps"
 msgstr "Створюйте відкриті веб-застосунки"
 
 #: kuma/landing/jinja2/landing/homepage.html:127
-msgid ""
-"<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-"
-"hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
-msgstr ""
-"<a href=\"http://hacks.mozilla.org\">детальніше на hacks.mozilla.org <i "
-"aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
+msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
+msgstr "<a href=\"http://hacks.mozilla.org\">детальніше на hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:132
 msgid "Get Involved"
@@ -1195,29 +1023,19 @@ msgstr "Приєднатися"
 #: kuma/landing/jinja2/landing/homepage.html:134
 #, python-format
 msgid ""
-"<p class=\"numbers\"> <span class=\"row1\">Join <span "
-"class=\"number\">%(contributors)s</span> contributors</span> <span "
-"class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
+"<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">Приєднуйтесь до <span "
-"class=\"number\">%(contributors)s</span> учасників</span> <span "
-"class=\"row2\">на <span class=\"number\">%(locales)s</span> мовах і "
+"<p class=\"numbers\"> <span class=\"row1\">Приєднуйтесь до <span class=\"number\">%(contributors)s</span> учасників</span> <span class=\"row2\">на <span class=\"number\">%(locales)s</span> мовах і "
 "регіонах</span> <span class=\"row3\">по всьому світу.</span> </p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:141
-#: kuma/landing/jinja2/landing/homepage.html:148
+#: kuma/landing/jinja2/landing/homepage.html:141 kuma/landing/jinja2/landing/homepage.html:148
 msgid "Help improve MDN"
 msgstr "Допоможіть нам покращити MDN"
 
 #: kuma/landing/jinja2/landing/homepage.html:152
-msgid ""
-"All parts of MDN (docs and the site itself) are created by an open community"
-" of developers. Please join us! Pick one of these ways to help:"
-msgstr ""
-"Всі частини MDN (документація і сам сайт) створені відкритим співтовариством"
-" розробників. Будь ласка, приєднуйтесь до нас! Виберіть один з цих способів "
-"допомоги:"
+msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
+msgstr "Всі частини MDN (документація і сам сайт) створені відкритим співтовариством розробників. Будь ласка, приєднуйтесь до нас! Виберіть один з цих способів допомоги:"
 
 #: kuma/landing/jinja2/landing/homepage.html:158
 msgid "Getting started"
@@ -1248,8 +1066,7 @@ msgstr "Вклад в кодову базу MDN"
 msgid "Posted %(entrydate)s by %(authorlink)s"
 msgstr "Надіслано %(entrydate)s користувачем %(authorlink)s"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:5
-#: kuma/landing/jinja2/landing/promote_buttons.html:17
+#: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
 msgstr "Просувайте MDN"
 
@@ -1259,21 +1076,13 @@ msgstr "Розповсюдьте трохи любові до розробник
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
-"<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a"
-" custom button and source code to promote MDN on your website or blog.</li> "
-"<li><strong>Post Buttons:</strong> Copy the source code and paste it "
-"anywhere on your website or blog to help people click through to MDN.</li> "
-"<li><strong>Feel Good:</strong> Take pride in knowing you're making "
-"developers lives just a little bit better by sharing MDN with the "
-"world.</li> </ol>"
+"<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol> <li><strong>Отримайте кнопки:</strong> Використовуйте нашу просту форму"
-" нижче для створення користувальницької кнопки і отримання програмного коду "
-"для підтримки MDN на вашому сайті чи блозі.</li> <li><strong>Розмістити "
-"кнопки:</strong> Скопіюйте програмний код і вставте його на ваш сайт або "
-"блог, щоб допомогти людям дізнатися про MDN.</li> <li><strong>Почувайте себе"
-" добре:</strong> пишайтеся, знаючи, що ви робите життя розробників трішки "
-"краще, поширюючи MDN зі світом.</li> </ol>"
+"<ol> <li><strong>Отримайте кнопки:</strong> Використовуйте нашу просту форму нижче для створення користувальницької кнопки і отримання програмного коду для підтримки MDN на вашому сайті чи блозі.</"
+"li> <li><strong>Розмістити кнопки:</strong> Скопіюйте програмний код і вставте його на ваш сайт або блог, щоб допомогти людям дізнатися про MDN.</li> <li><strong>Почувайте себе добре:</strong> "
+"пишайтеся, знаючи, що ви робите життя розробників трішки краще, поширюючи MDN зі світом.</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35
 msgid "Preview"
@@ -1331,88 +1140,57 @@ msgstr "Ваш програмний код:"
 msgid "Your button will take people to:"
 msgstr "Ваша кнопка буде вести людей на:"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:162
-#: kuma/landing/jinja2/landing/promote_buttons.html:166
-#: kuma/landing/jinja2/landing/promote_buttons.html:170
+#: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
 msgstr "Найкраща CSS документація для кращого веба на MDN"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:163
-#: kuma/landing/jinja2/landing/promote_buttons.html:167
-#: kuma/landing/jinja2/landing/promote_buttons.html:171
+#: kuma/landing/jinja2/landing/promote_buttons.html:163 kuma/landing/jinja2/landing/promote_buttons.html:167 kuma/landing/jinja2/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
 msgstr "Найкраща HTML документація для кращого веба на MDN"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:164
-#: kuma/landing/jinja2/landing/promote_buttons.html:168
-#: kuma/landing/jinja2/landing/promote_buttons.html:172
+#: kuma/landing/jinja2/landing/promote_buttons.html:164 kuma/landing/jinja2/landing/promote_buttons.html:168 kuma/landing/jinja2/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
 msgstr "Найкраща JavaScript документація для кращого веба на MDN"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:165
-#: kuma/landing/jinja2/landing/promote_buttons.html:169
-#: kuma/landing/jinja2/landing/promote_buttons.html:173
+#: kuma/landing/jinja2/landing/promote_buttons.html:165 kuma/landing/jinja2/landing/promote_buttons.html:169 kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
 msgstr "Найкраща веб документація для кращого веба на MDN"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:174
-#: kuma/landing/jinja2/landing/promote_buttons.html:178
-#: kuma/landing/jinja2/landing/promote_buttons.html:182
+#: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
 msgstr "MDN створена розробниками для CSS документації та багато іншого."
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:175
-#: kuma/landing/jinja2/landing/promote_buttons.html:179
-#: kuma/landing/jinja2/landing/promote_buttons.html:183
+#: kuma/landing/jinja2/landing/promote_buttons.html:175 kuma/landing/jinja2/landing/promote_buttons.html:179 kuma/landing/jinja2/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs and more."
 msgstr "MDN створена розробниками для HTML документації та багато іншого."
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:176
-#: kuma/landing/jinja2/landing/promote_buttons.html:180
-#: kuma/landing/jinja2/landing/promote_buttons.html:184
+#: kuma/landing/jinja2/landing/promote_buttons.html:176 kuma/landing/jinja2/landing/promote_buttons.html:180 kuma/landing/jinja2/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs and more."
-msgstr ""
-"MDN створена розробниками для JavaScript документації та багато іншого."
+msgstr "MDN створена розробниками для JavaScript документації та багато іншого."
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:177
-#: kuma/landing/jinja2/landing/promote_buttons.html:181
-#: kuma/landing/jinja2/landing/promote_buttons.html:185
+#: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
 msgstr "MDN створена розробниками для веб документації та багато іншого."
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:186
-#: kuma/landing/jinja2/landing/promote_buttons.html:190
-#: kuma/landing/jinja2/landing/promote_buttons.html:194
+#: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
 msgstr "CSS документація від розробників для розробників на MDN"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:187
-#: kuma/landing/jinja2/landing/promote_buttons.html:191
-#: kuma/landing/jinja2/landing/promote_buttons.html:195
+#: kuma/landing/jinja2/landing/promote_buttons.html:187 kuma/landing/jinja2/landing/promote_buttons.html:191 kuma/landing/jinja2/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
 msgstr "HTML документація від розробників для розробників на MDN"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:188
-#: kuma/landing/jinja2/landing/promote_buttons.html:192
-#: kuma/landing/jinja2/landing/promote_buttons.html:196
+#: kuma/landing/jinja2/landing/promote_buttons.html:188 kuma/landing/jinja2/landing/promote_buttons.html:192 kuma/landing/jinja2/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
 msgstr "JavaScript документація від розробників для розробників на MDN"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:189
-#: kuma/landing/jinja2/landing/promote_buttons.html:193
-#: kuma/landing/jinja2/landing/promote_buttons.html:197
+#: kuma/landing/jinja2/landing/promote_buttons.html:189 kuma/landing/jinja2/landing/promote_buttons.html:193 kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
 msgstr "Веб документація від розробників для розробників на MDN"
 
-#: kuma/landing/jinja2/landing/promote_buttons.html:198
-#: kuma/landing/jinja2/landing/promote_buttons.html:199
-#: kuma/landing/jinja2/landing/promote_buttons.html:200
-msgid ""
-"MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript"
-" and other Web standards and open technologies."
-msgstr ""
-"MDN - ваш набір інструментів розробника, що складається з документації, а "
-"також HTML, CSS, JavaScript, та інших веб-стандартів і відкритих технологій."
+#: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
+msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
+msgstr "MDN - ваш набір інструментів розробника, що складається з документації, а також HTML, CSS, JavaScript, та інших веб-стандартів і відкритих технологій."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
@@ -1432,12 +1210,8 @@ msgid "Can't demote more than one index at once."
 msgstr "Неможливо знизити більше одного індексу одночасно."
 
 #: kuma/search/admin.py:24
-msgid ""
-"Can't demote the index if there is only one. Create and populate a new one "
-"first."
-msgstr ""
-"Неможливо підвищити індекс, якщо він тільки один. Спочатку створіть і "
-"заповніть один новий."
+msgid "Can't demote the index if there is only one. Create and populate a new one first."
+msgstr "Неможливо підвищити індекс, якщо він тільки один. Спочатку створіть і заповніть один новий."
 
 #: kuma/search/admin.py:29
 #, python-format
@@ -1446,9 +1220,7 @@ msgstr "Понижений пошуковий індекс %s."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
-msgstr ""
-"Знизити обраний пошуковий індекс (з автоматичним перемиканням до "
-"попереднього індексу)"
+msgstr "Знизити обраний пошуковий індекс (з автоматичним перемиканням до попереднього індексу)"
 
 #: kuma/search/admin.py:37
 msgid "Can't populate more than one index at once."
@@ -1472,12 +1244,8 @@ msgid "Search is temporarily unavailable. Please try again in a few minutes."
 msgstr "Пошук тимчасово неможливий. Спробуйте через декілька хвилин."
 
 #: kuma/search/utils.py:17
-msgid ""
-"Something went wrong with the search query. Please try again in a few "
-"minutes."
-msgstr ""
-"Щось пішло не так з пошуковим запитом. Будь ласка, спробуйте знову за "
-"декілька хвилин."
+msgid "Something went wrong with the search query. Please try again in a few minutes."
+msgstr "Щось пішло не так з пошуковим запитом. Будь ласка, спробуйте знову за декілька хвилин."
 
 #: kuma/search/views.py:95
 msgid "name"
@@ -1503,12 +1271,8 @@ msgstr "Результати пошуку для \"%(query)s\""
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
-msgid ""
-"translated from <a href=\"%(parent_url)s\" "
-"title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
-msgstr ""
-"перекладено з <a href=\"%(parent_url)s\" "
-"title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
+msgid "translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
+msgstr "перекладено з <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
@@ -1522,30 +1286,17 @@ msgstr "Результати"
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] ""
-"за запитом \"%(query)s\" на %(locale_native)s знайдено %(count)s документ."
-msgstr[1] ""
-"за запитом \"%(query)s\" на %(locale_native)s знайдено %(count)s документа."
-msgstr[2] ""
-"за запитом \"%(query)s\" на %(locale_native)s знайдено %(count)s документів."
+msgstr[0] "за запитом \"%(query)s\" на %(locale_native)s знайдено %(count)s документ."
+msgstr[1] "за запитом \"%(query)s\" на %(locale_native)s знайдено %(count)s документа."
+msgstr[2] "за запитом \"%(query)s\" на %(locale_native)s знайдено %(count)s документів."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
-msgid ""
-"%(count)s document found for \"%(query)s\" in %(locale_native)s and "
-"%(default_locale_native)s."
-msgid_plural ""
-"%(count)s documents found for \"%(query)s\" in %(locale_native)s and "
-"%(default_locale_native)s."
-msgstr[0] ""
-"за запитом \"%(query)s\" на %(locale_native)s і %(default_locale_native)s "
-"знайдено %(count)s документ."
-msgstr[1] ""
-"за запитом \"%(query)s\" на %(locale_native)s і %(default_locale_native)s "
-"знайдено %(count)s документа."
-msgstr[2] ""
-"за запитом \"%(query)s\" на %(locale_native)s і %(default_locale_native)s "
-"знайдено %(count)s документів."
+msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
+msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
+msgstr[0] "за запитом \"%(query)s\" на %(locale_native)s і %(default_locale_native)s знайдено %(count)s документ."
+msgstr[1] "за запитом \"%(query)s\" на %(locale_native)s і %(default_locale_native)s знайдено %(count)s документа."
+msgstr[2] "за запитом \"%(query)s\" на %(locale_native)s і %(default_locale_native)s знайдено %(count)s документів."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
@@ -1557,20 +1308,11 @@ msgstr[2] "на %(locale_native)s знайдено %(count)s документі�
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
-msgid ""
-"%(count)s document found in %(locale_native)s and %(default_locale_native)s."
-msgid_plural ""
-"%(count)s documents found in %(locale_native)s and "
-"%(default_locale_native)s."
-msgstr[0] ""
-"на %(locale_native)s і %(default_locale_native)s знайдено %(count)s "
-"документ."
-msgstr[1] ""
-"на %(locale_native)s і %(default_locale_native)s знайдено %(count)s "
-"документа."
-msgstr[2] ""
-"на %(locale_native)s і %(default_locale_native)s знайдено %(count)s "
-"документів."
+msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
+msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
+msgstr[0] "на %(locale_native)s і %(default_locale_native)s знайдено %(count)s документ."
+msgstr[1] "на %(locale_native)s і %(default_locale_native)s знайдено %(count)s документа."
+msgstr[2] "на %(locale_native)s і %(default_locale_native)s знайдено %(count)s документів."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
@@ -1616,9 +1358,7 @@ msgstr "Відправлені дані містять невідповідни�
 
 #: kuma/spam/forms.py:90
 msgid "The submitted data contains invalid content. Please try again."
-msgstr ""
-"Відправлені дані містять невідповідний контент. Будь ласка, спробуйте ще "
-"раз."
+msgstr "Відправлені дані містять невідповідний контент. Будь ласка, спробуйте ще раз."
 
 #: kuma/spam/models.py:10
 msgid "created"
@@ -1643,14 +1383,11 @@ msgstr "тип"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To "
-"disconnect this account connect a different one first. To delete your MDN "
-"profile please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
-"На жаль, ви повинні мати принаймні один підключений обліковий запис, щоб ви "
-"могли увійти. Щоб розірвати зв'язок з цим обліковим записом підключіть "
-"спочатку інший. Щоб видалити ваш обліковий запис MDN, будь ласка, <a "
-"href=\"%(bug_form_url)s\" rel=\"nofollow\">повідомте про помилку</a>."
+"На жаль, ви повинні мати принаймні один підключений обліковий запис, щоб ви могли увійти. Щоб розірвати зв'язок з цим обліковим записом підключіть спочатку інший. Щоб видалити ваш обліковий запис "
+"MDN, будь ласка, <a href=\"%(bug_form_url)s\" rel=\"nofollow\">повідомте про помилку</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -1666,9 +1403,7 @@ msgstr "Користувач"
 
 #: kuma/users/apps.py:69
 #, python-format
-msgid ""
-"You have completed the first step of <a href=\"%s\">getting started with "
-"MDN</a>"
+msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
 msgstr "Ви завершили перший крок <a href=\"%s\">початку роботи з MDN</a>"
 
 #: kuma/users/backends.py:32
@@ -1684,96 +1419,62 @@ msgid "hash"
 msgstr "хеш"
 
 #: kuma/users/constants.py:6
-msgid ""
-"Username may contain only letters, numbers, and these characters: . - _ +"
-msgstr ""
-"Ім'я користувача може містити тільки літери, цифри та символи: . - _ +"
+msgid "Username may contain only letters, numbers, and these characters: . - _ +"
+msgstr "Ім'я користувача може містити тільки літери, цифри та символи: . - _ +"
 
-#: kuma/users/forms.py:23
-msgid "You must agree to the privacy policy."
-msgstr "Ви повинні погодитися з політикою приватності."
-
-#: kuma/users/forms.py:38
-msgid "Plain text"
-msgstr "Звичайний текст"
-
-#: kuma/users/forms.py:40
-msgid "Send me the newsletter"
-msgstr "Надсилати мені новини"
-
-#: kuma/users/forms.py:42
-msgid "Preferred format"
-msgstr "Бажаний формат"
-
-#: kuma/users/forms.py:47 kuma/users/signup.py:34
-msgid "I agree"
-msgstr "Я погоджуюся"
-
-#: kuma/users/forms.py:50
-msgid "Your country"
-msgstr "Ваша країна"
-
-#: kuma/users/forms.py:151 kuma/users/models.py:41
+#: kuma/users/forms.py:30 kuma/users/models.py:41
 msgid "Timezone"
 msgstr "Часовий пояс"
 
-#: kuma/users/forms.py:157
+#: kuma/users/forms.py:36
 msgid "Beta tester"
 msgstr "Бета-тестувальник"
 
-#: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:81
+#: kuma/users/forms.py:40 kuma/users/jinja2/users/user_detail.html:81
 msgid "Interests"
 msgstr "Зацікавлення"
 
-#: kuma/users/forms.py:167
+#: kuma/users/forms.py:46
 msgid "Expertise"
 msgstr "Експерт в"
 
-#: kuma/users/forms.py:173
+#: kuma/users/forms.py:52
 msgid "Username"
 msgstr "Ім'я користувача"
 
-#: kuma/users/forms.py:180 kuma/users/models.py:136
-#: kuma/users/jinja2/users/user_detail.html:111
+#: kuma/users/forms.py:59 kuma/users/models.py:136 kuma/users/jinja2/users/user_detail.html:111
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: kuma/users/forms.py:189 kuma/users/models.py:151
-#: kuma/users/jinja2/users/user_detail.html:115
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/users/forms.py:68 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:115 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:207 kuma/users/models.py:166
-#: kuma/users/jinja2/users/user_detail.html:129
+#: kuma/users/forms.py:86 kuma/users/models.py:166 kuma/users/jinja2/users/user_detail.html:129
 msgid "Stack Overflow"
 msgstr "Stack Overflow"
 
-#: kuma/users/forms.py:216 kuma/users/models.py:156
-#: kuma/users/jinja2/users/user_detail.html:133
+#: kuma/users/forms.py:95 kuma/users/models.py:156 kuma/users/jinja2/users/user_detail.html:133
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: kuma/users/forms.py:225 kuma/users/models.py:141
-#: kuma/users/jinja2/users/user_detail.html:137
+#: kuma/users/forms.py:104 kuma/users/models.py:141 kuma/users/jinja2/users/user_detail.html:137
 msgid "Mozillians"
 msgstr "Мозилівці"
 
-#: kuma/users/forms.py:234 kuma/users/models.py:161
-#: kuma/users/jinja2/users/user_detail.html:141
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:110
+#: kuma/users/forms.py:113 kuma/users/models.py:161 kuma/users/jinja2/users/user_detail.html:141 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
 msgid "Facebook"
 msgstr "Facebook"
 
-#: kuma/users/forms.py:266
+#: kuma/users/forms.py:145
 msgid "Areas of expertise must be a subset of interests"
 msgstr "Ви повинні бути експертом в області, що входить в область інтересів"
 
-#: kuma/users/forms.py:275
+#: kuma/users/forms.py:154
 msgid "This field cannot be blank."
 msgstr "Це поле не може бути пустим."
 
-#: kuma/users/forms.py:281
+#: kuma/users/forms.py:160
 msgid "Username already in use."
 msgstr "Ім'я користувача вже використовується."
 
@@ -1796,12 +1497,8 @@ msgid "Homepage"
 msgstr "Домашня сторінка"
 
 #: kuma/users/models.py:60
-msgid ""
-"This URL has an invalid format. Valid URLs look like "
-"http://example.com/my_page."
-msgstr ""
-"Ця URL-адреса має неприпустимий формат. Припустимі URL-адреси мають вигляд "
-"http://example.com/my_page."
+msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
+msgstr "Ця URL-адреса має неприпустимий формат. Припустимі URL-адреси мають вигляд http://example.com/my_page."
 
 #: kuma/users/models.py:70
 msgid "Name"
@@ -1823,9 +1520,7 @@ msgstr "Про мене"
 msgid "IRC nickname"
 msgstr "Нік в IRC"
 
-#: kuma/users/models.py:94
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27
-#: kuma/wiki/jinja2/wiki/create.html:77 kuma/wiki/jinja2/wiki/edit.html:188
+#: kuma/users/models.py:94 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:77 kuma/wiki/jinja2/wiki/edit.html:188
 msgid "Tags"
 msgstr "Мітки"
 
@@ -1863,50 +1558,45 @@ msgstr "Ім'я користувача обов'язкове."
 
 #: kuma/users/signup.py:10
 #, python-format
-msgid ""
-"Username is too short (%(show_value)s characters). It must be at least "
-"%(limit_value)s characters."
-msgstr ""
-"Ім'я користувача закоротке (%(show_value)s символів). Довжина повинна бути "
-"як мінімум %(limit_value)s символів."
+msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgstr "Ім'я користувача закоротке (%(show_value)s символів). Довжина повинна бути як мінімум %(limit_value)s символів."
 
 #: kuma/users/signup.py:12
 #, python-format
-msgid ""
-"Username is too long (%(show_value)s characters). It must be %(limit_value)s"
-" characters or less."
-msgstr ""
-"Ім'я користувача задовге (%(show_value)s символів). Довжина повинна бути "
-"максимум %(limit_value)s символів."
+msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
+msgstr "Ім'я користувача задовге (%(show_value)s символів). Довжина повинна бути максимум %(limit_value)s символів."
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
 msgstr "Ви повинні погодитися з умовами використання."
 
+#: kuma/users/signup.py:34
+msgid "I agree"
+msgstr "Я погоджуюся"
+
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
 msgstr "Зробіть наступний крок до участі в MDN!"
 
-#: kuma/users/views.py:214
+#: kuma/users/views.py:185
 msgid "Email address"
 msgstr "Адреса ел. пошти"
 
-#: kuma/users/views.py:273
+#: kuma/users/views.py:244
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>Підтверджений</b>"
 
-#: kuma/users/views.py:276
+#: kuma/users/views.py:247
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s Не підтверджений"
 
-#: kuma/users/views.py:279 kuma/users/jinja2/socialaccount/signup.html:142
+#: kuma/users/views.py:250 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr "Інше:"
 
-#: kuma/users/jinja2/account/account_inactive.html:3
-#: kuma/users/jinja2/account/account_inactive.html:7
+#: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
 msgstr "Профіль неактивний"
 
@@ -1914,9 +1604,7 @@ msgstr "Профіль неактивний"
 msgid "This profile is inactive."
 msgstr "Цей профіль неактивний."
 
-#: kuma/users/jinja2/account/email.html:3
-#: kuma/users/jinja2/account/email.html:7
-#: kuma/users/jinja2/users/user_detail.html:57
+#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/user_detail.html:57
 msgid "Email addresses"
 msgstr "Адреси ел. пошти"
 
@@ -1942,12 +1630,8 @@ msgid "Remove"
 msgstr "Вилучити"
 
 #: kuma/users/jinja2/account/email.html:45
-msgid ""
-"<strong>Warning:</strong>\"You have not added any email addresses to this "
-"profile. Without one you cannot receive notifications."
-msgstr ""
-"<strong>Попередження:</strong>\"Ви не додали жодної адреси електронної пошти"
-" в профіль. Без неї ви не можете отримувати сповіщення."
+msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
+msgstr "<strong>Попередження:</strong>\"Ви не додали жодної адреси електронної пошти в профіль. Без неї ви не можете отримувати сповіщення."
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
@@ -1957,8 +1641,7 @@ msgstr "Додайте адресу електронної пошти"
 msgid "Add Email"
 msgstr "Додати електронну пошту"
 
-#: kuma/users/jinja2/account/email.html:60
-#: kuma/users/jinja2/socialaccount/connections.html:70
+#: kuma/users/jinja2/account/email.html:60 kuma/users/jinja2/socialaccount/connections.html:70
 msgid "Edit profile"
 msgstr "Редагувати профіль"
 
@@ -1966,21 +1649,14 @@ msgstr "Редагувати профіль"
 msgid "Do you really want to remove the selected email address?"
 msgstr "Ви справді бажаєте вилучити позначену електронну пошту?"
 
-#: kuma/users/jinja2/account/email_confirm.html:3
-#: kuma/users/jinja2/account/email_confirm.html:9
-#: kuma/users/jinja2/account/email_confirmed.html:3
-#: kuma/users/jinja2/account/email_confirmed.html:8
+#: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
 msgstr "Підтвердити адресу електронної пошти"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
-msgid ""
-"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
-"address for user %(user_display)s."
-msgstr ""
-"Будь ласка, підтвердіть, що <a href=\"mailto:%(email)s\">%(email)s</a> - "
-"адреса електронної пошти користувача %(user_display)s."
+msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
+msgstr "Будь ласка, підтвердіть, що <a href=\"mailto:%(email)s\">%(email)s</a> - адреса електронної пошти користувача %(user_display)s."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
@@ -1988,21 +1664,13 @@ msgstr "Підтвердити"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
-msgid ""
-"This email confirmation link expired or is invalid. Please <a "
-"href=\"%(email_url)s\">issue a new email confirmation request</a>."
-msgstr ""
-"Посилання підтвердження електронної пошти прострочене або неправильне. Будь "
-"ласка, <a href=\"%(email_url)s\">створіть новий запит на підтвердження</a>."
+msgid "This email confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new email confirmation request</a>."
+msgstr "Посилання підтвердження електронної пошти прострочене або неправильне. Будь ласка, <a href=\"%(email_url)s\">створіть новий запит на підтвердження</a>."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
-msgid ""
-"You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
-"email address for user %(user_display)s."
-msgstr ""
-"Ви підтвердили, що <a href=\"mailto:%(email)s\">%(email)s</a> - адреса "
-"електронної пошти для користувача %(user_display)s."
+msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
+msgstr "Ви підтвердили, що <a href=\"mailto:%(email)s\">%(email)s</a> - адреса електронної пошти для користувача %(user_display)s."
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
@@ -2013,43 +1681,27 @@ msgid "Please sign in"
 msgstr "Будь ласка, увійдіть"
 
 #: kuma/users/jinja2/account/login.html:13
-msgid ""
-"In order to contribute, you need to sign in to MDN. You can sign in using "
-"any of the services below. A MDN profile will be created for you if you "
-"don't already have one."
-msgstr ""
-"Щоб зробити внесок, вам потрібно увійти в MDN. Ви можете увійти "
-"використовуючи один із сервісів нижче. Для вас буде створений профіль MDN, "
-"якщо у вас його немає."
+msgid "In order to contribute, you need to sign in to MDN. You can sign in using any of the services below. A MDN profile will be created for you if you don't already have one."
+msgstr "Щоб зробити внесок, вам потрібно увійти в MDN. Ви можете увійти використовуючи один із сервісів нижче. Для вас буде створений профіль MDN, якщо у вас його немає."
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
 msgstr "Ви впевнені, що бажаєте вийти?"
 
-#: kuma/users/jinja2/account/password_change.html:3
-#: kuma/users/jinja2/account/password_change.html:8
-#: kuma/users/jinja2/account/password_change.html:13
-#: kuma/users/jinja2/account/password_reset_from_key.html:3
-#: kuma/users/jinja2/account/password_reset_from_key.html:12
-#: kuma/users/jinja2/account/password_reset_from_key_done.html:3
+#: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
+#: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
 msgid "Change Password"
 msgstr "Змінити пароль"
 
-#: kuma/users/jinja2/account/password_reset.html:3
-#: kuma/users/jinja2/account/password_reset.html:8
-#: kuma/users/jinja2/account/password_reset_done.html:3
+#: kuma/users/jinja2/account/password_reset.html:3 kuma/users/jinja2/account/password_reset.html:8 kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
 msgstr "Скидання пароля"
 
 #: kuma/users/jinja2/account/password_reset.html:13
-msgid ""
-"Forgotten your password? Enter your email address below, and we'll send you "
-"an email allowing you to reset it."
-msgstr ""
-"Забули ваш пароль? Введіть свою адресу електронної пошти нижче, а ми "
-"відправимо вам лист, що дозволяє скинути пароль."
+msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
+msgstr "Забули ваш пароль? Введіть свою адресу електронної пошти нижче, а ми відправимо вам лист, що дозволяє скинути пароль."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
@@ -2057,17 +1709,11 @@ msgstr "Скинути мій пароль"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
-"Будь ласка, зв'яжіться з нами, якщо у вас є які-небудь проблеми з "
-"відновленням пароля."
+msgstr "Будь ласка, зв'яжіться з нами, якщо у вас є які-небудь проблеми з відновленням пароля."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
-msgid ""
-"We have sent you an email. Please contact us if you do not receive it within"
-" a few minutes."
-msgstr ""
-"Ми надіслали вам листа. Будь ласка, зв'яжіться з нами, якщо не отримаєте "
-"його протягом декількох хвилин."
+msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
+msgstr "Ми надіслали вам листа. Будь ласка, зв'яжіться з нами, якщо не отримаєте його протягом декількох хвилин."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
@@ -2075,27 +1721,18 @@ msgstr "Некоректний токен"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
-msgid ""
-"The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
-"reset</a>."
-msgstr ""
-"Посилання для відновлення паролю було недійсне, можливо тому, що ним вже "
-"скористались.  Будь ласка, створіть <a href=\"%(passwd_reset_url)s\">новий "
-"запит на відновлення пароля</a>."
+msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
+msgstr "Посилання для відновлення паролю було недійсне, можливо тому, що ним вже скористались.  Будь ласка, створіть <a href=\"%(passwd_reset_url)s\">новий запит на відновлення пароля</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
 msgstr "Змінити пароль"
 
-#: kuma/users/jinja2/account/password_reset_from_key.html:26
-#: kuma/users/jinja2/account/password_reset_from_key_done.html:8
+#: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
 msgstr "Ваш пароль змінено."
 
-#: kuma/users/jinja2/account/password_set.html:3
-#: kuma/users/jinja2/account/password_set.html:7
-#: kuma/users/jinja2/account/password_set.html:12
+#: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
 msgstr "Встановити пароль"
 
@@ -2103,20 +1740,16 @@ msgstr "Встановити пароль"
 msgid "Signup"
 msgstr "Реєстрація"
 
-#: kuma/users/jinja2/account/signup.html:8
-#: kuma/users/jinja2/account/signup.html:18
+#: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
 msgstr "Зареєструватися"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
-msgid ""
-"Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
-"Вже маєте профіль? Тоді, будь ласка, <a href=\"%(login_url)s\">увійдіть</a>."
+msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr "Вже маєте профіль? Тоді, будь ласка, <a href=\"%(login_url)s\">увійдіть</a>."
 
-#: kuma/users/jinja2/account/signup_closed.html:3
-#: kuma/users/jinja2/account/signup_closed.html:7
+#: kuma/users/jinja2/account/signup_closed.html:3 kuma/users/jinja2/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
 msgstr "Створення профілю вимкнене"
 
@@ -2124,51 +1757,29 @@ msgstr "Створення профілю вимкнене"
 msgid "We are sorry, but profile creation is currently disabled."
 msgstr "Вибачте, але створення профілю зараз неможливе."
 
-#: kuma/users/jinja2/account/verification_sent.html:3
-#: kuma/users/jinja2/account/verification_sent.html:7
-#: kuma/users/jinja2/account/verified_email_required.html:3
+#: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
 msgstr "Підтвердіть адресу своєї електронної пошти"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
-msgid ""
-"We have sent an email to you for confirmation. Follow the link provided to "
-"finalize the signup process. Please contact us if you do not receive it "
-"within a few minutes."
+msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
 msgstr ""
-"Ми відправили підтвердження на вашу електронну пошту. Відкрийте посилання в "
-"листі, щоб завершити процес реєстрації. Будь ласка, зв'яжіться з нами, якщо "
-"ви не отримаєте листа протягом декількох хвилин."
+"Ми відправили підтвердження на вашу електронну пошту. Відкрийте посилання в листі, щоб завершити процес реєстрації. Будь ласка, зв'яжіться з нами, якщо ви не отримаєте листа протягом декількох "
+"хвилин."
 
 #: kuma/users/jinja2/account/verified_email_required.html:9
-msgid ""
-"This part of the site requires us to confirm that you are who you claim to "
-"be. For this purpose, we require that you confirm ownership of your email "
-"address."
-msgstr ""
-"Ця частина сайту вимагає підтвердження, що ви той, за кого себе видаєте. Для"
-" цього, ви обов'язково маєте підтвердити володіння вашою адресою електронною"
-" поштою."
+msgid "This part of the site requires us to confirm that you are who you claim to be. For this purpose, we require that you confirm ownership of your email address."
+msgstr "Ця частина сайту вимагає підтвердження, що ви той, за кого себе видаєте. Для цього, ви обов'язково маєте підтвердити володіння вашою адресою електронною поштою."
 
 #: kuma/users/jinja2/account/verified_email_required.html:13
-msgid ""
-"We have sent an email to you for confirmation. Please click on the link "
-"inside this email. Please contact us if you do not receive it within a few "
-"minutes."
-msgstr ""
-"Ми відправили підтвердження на вашу електронну пошту. Будь ласка, відкрийте "
-"посилання в листі. Зв'яжіться з нами, якщо ви не отримаєте листа протягом "
-"декількох хвилин."
+msgid "We have sent an email to you for confirmation. Please click on the link inside this email. Please contact us if you do not receive it within a few minutes."
+msgstr "Ми відправили підтвердження на вашу електронну пошту. Будь ласка, відкрийте посилання в листі. Зв'яжіться з нами, якщо ви не отримаєте листа протягом декількох хвилин."
 
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
-msgid ""
-"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
-"email address</a>."
-msgstr ""
-"<strong>Примітка:</strong> ви все ще можете <a "
-"href=\"%(email_url)s\">змінити адресу електронної пошти</a>."
+msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your email address</a>."
+msgstr "<strong>Примітка:</strong> ви все ще можете <a href=\"%(email_url)s\">змінити адресу електронної пошти</a>."
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
@@ -2183,8 +1794,7 @@ msgstr "ви вже зайшли як %(user_display)s."
 msgid "OpenID Sign In"
 msgstr "Вхід з OpenID"
 
-#: kuma/users/jinja2/socialaccount/authentication_error.html:3
-#: kuma/users/jinja2/socialaccount/authentication_error.html:6
+#: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
 msgstr "Не вдалося увійти в обліковий запис"
 
@@ -2196,8 +1806,7 @@ msgstr "Під час входу до облікового запису стал
 msgid "Account Connections"
 msgstr "Поєднані облікові записи"
 
-#: kuma/users/jinja2/socialaccount/connections.html:6
-#: kuma/users/jinja2/users/user_detail.html:55
+#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/user_detail.html:55
 msgid "Account connections"
 msgstr "Поєднані облікові записи"
 
@@ -2217,174 +1826,105 @@ msgstr "У вас немає поєднаних облікових записі�
 msgid "Connect a new account"
 msgstr "З’єднатися з новим обліковим записом"
 
-#: kuma/users/jinja2/socialaccount/login_cancelled.html:3
-#: kuma/users/jinja2/socialaccount/login_cancelled.html:7
+#: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
 msgstr "Вхід скасовано"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
-msgid ""
-"You decided to cancel logging in to our site using one of your existing "
-"accounts. If this was a mistake, please proceed to <a "
-"href=\"%(login_url)s\">sign in</a>."
-msgstr ""
-"Ви вирішили скасувати вхід на наш сайт, використовуючи один з ваших існуючих"
-" облікових записів. Якщо це була помилка, будь ласка, <a "
-"href=\"%(login_url)s\">увійдіть</a>."
+msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
+msgstr "Ви вирішили скасувати вхід на наш сайт, використовуючи один з ваших існуючих облікових записів. Якщо це була помилка, будь ласка, <a href=\"%(login_url)s\">увійдіть</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:4
-#: kuma/users/jinja2/socialaccount/signup.html:26
+#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
 msgid "Create your MDN profile to continue"
 msgstr "Створіть свій MDN профіль, щоб продовжити"
 
-#: kuma/users/jinja2/socialaccount/signup.html:30
+#: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
-msgid ""
-"A profile already exists with this email address. To connect Persona to your"
-" MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
-"your social account connections.</a>"
+msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
 msgstr ""
-"Обліковий запис з такою адресою електронної пошти вже існує. Щоб приєднати "
-"Persona до вашого профілю MDN, <a href=\"%(connections_url)s\">ви маєте "
-"увійти і відкрити поєднані облікові записи.</a>"
+"Обліковий запис з такою адресою електронної пошти вже існує. Щоб приєднати Persona до вашого профілю MDN, <a href=\"%(connections_url)s\">ви маєте увійти і відкрити поєднані облікові записи.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:43
+#: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
 msgid ""
-"A profile already exists with an email address below. Do you already have an"
-" MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-"
-"login\" data-next=\"%(persona_next_url)s\">Yes, connect with my MDN "
-"profile</a>"
+"A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
+"connect with my MDN profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you "
-"already have an MDN profile? <a href=\"%(persona_login_url)s\" class"
-"=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, connect "
-"with my MDN profile</a>"
+"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
-"Вже існує обліковий запис з зазначеною нижче адресою електронної пошти. Вже "
-"маєте обліковий запис MDN? <a href=\"%(persona_login_url)s\" class=\"launch-"
-"persona-login\" data-next=\"%(persona_next_url)s\">Так, з'єднатися з моїм "
-"обліковим записом MDN</a>"
+"Вже існує обліковий запис з зазначеною нижче адресою електронної пошти. Вже маєте обліковий запис MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+"\"%(persona_next_url)s\">Так, з'єднатися з моїм обліковим записом MDN</a>"
 msgstr[1] ""
-"Вже існує обліковий запис з однією з зазначених нижче адрес електронної "
-"пошти. Вже маєте обліковий запис MDN? <a href=\"%(persona_login_url)s\" "
-"class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Так, "
-"з'єднатися з моїм обліковим записом MDN</a>"
+"Вже існує обліковий запис з однією з зазначених нижче адрес електронної пошти. Вже маєте обліковий запис MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+"\"%(persona_next_url)s\">Так, з'єднатися з моїм обліковим записом MDN</a>"
 msgstr[2] ""
-"Вже існує обліковий запис з однією з зазначених нижче адрес електронної "
-"пошти. Вже маєте обліковий запис MDN? <a href=\"%(persona_login_url)s\" "
-"class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Так, "
-"з'єднатися з моїм обліковим записом MDN</a>"
+"Вже існує обліковий запис з однією з зазначених нижче адрес електронної пошти. Вже маєте обліковий запис MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+"\"%(persona_next_url)s\">Так, з'єднатися з моїм обліковим записом MDN</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:55
+#: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
-msgid ""
-"Thanks for signing in to MDN with %(provider_name)s. You have one more step "
-"to join MDN: <strong>create your MDN profile</strong>."
-msgstr ""
-"Дякуємо за вхід на MDN за допомогою %(provider_name)s. Залишився ще один "
-"крок до приєднання до MDN: <strong>створіть свій обліковий запис "
-"MDN</strong>."
+msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
+msgstr "Дякуємо за вхід на MDN за допомогою %(provider_name)s. Залишився ще один крок до приєднання до MDN: <strong>створіть свій обліковий запис MDN</strong>."
+
+#: kuma/users/jinja2/socialaccount/signup.html:54
+msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
+msgstr "Ви можете отримати доступ до всього на MDN, навіть без облікового запису MDN. Однак, приєднуючись до MDN, ви зможете редагувати документацію і мати свою сторінку."
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
-msgid ""
-"You can access everything on the MDN website even without an MDN profile. "
-"However, by joining MDN, you'll be able to edit docs and have your own "
-"profile page."
+msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
-"Ви можете отримати доступ до всього на MDN, навіть без облікового запису "
-"MDN. Однак, приєднуючись до MDN, ви зможете редагувати документацію і мати "
-"свою сторінку."
+"Для створення вашого облікового запису MDN, будь ласка, <strong>оберіть ім'я користувача</strong>. Ваше ім'я користувача буде відображатися на MDN, для позначення будь-якого внеску, який ви зробите."
 
-#: kuma/users/jinja2/socialaccount/signup.html:68
-msgid ""
-"To set up your MDN profile, please <strong>choose a username</strong>. Your "
-"username will be displayed on MDN to identify any contributions that you "
-"make."
+#: kuma/users/jinja2/socialaccount/signup.html:67
+msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
-"Для створення вашого облікового запису MDN, будь ласка, <strong>оберіть ім'я"
-" користувача</strong>. Ваше ім'я користувача буде відображатися на MDN, для "
-"позначення будь-якого внеску, який ви зробите."
+"Для створення вашого облікового запису MDN, будь ласка, <strong>оберіть ім'я користувача та адресу електронної пошти</strong>. Ваше ім'я користувача буде відображатися на MDN, для позначення будь-"
+"якого внеску, який ви зробите."
 
-#: kuma/users/jinja2/socialaccount/signup.html:74
-msgid ""
-"To set up your MDN profile, please <strong>choose a username and email "
-"address</strong>. Your username will be displayed on MDN to identify any "
-"contributions that you make."
-msgstr ""
-"Для створення вашого облікового запису MDN, будь ласка, <strong>оберіть ім'я"
-" користувача та адресу електронної пошти</strong>. Ваше ім'я користувача "
-"буде відображатися на MDN, для позначення будь-якого внеску, який ви "
-"зробите."
+#: kuma/users/jinja2/socialaccount/signup.html:75
+#, python-format
+msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
+msgstr "Якщо у вас <strong>виникли проблеми</strong> з входом або створенням облікового запису MDN, <strong><a href=\"%(bug_href)s\" rel=\"external\">дайте нам знати</a></strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:82
+#: kuma/users/jinja2/socialaccount/signup.html:100
+#, python-format
+msgid "Your GitHub username %(username)s is already taken. Please choose another."
+msgstr "Ваше ім'я користувача GitHub %(username)s вже зайнято. Будь ласка, виберіть інше."
+
+#: kuma/users/jinja2/socialaccount/signup.html:104
+msgid "Please enter the name you'd like to display to other users to identify your contributions."
+msgstr "Будь ласка, введіть ім'я, яке б ви хотіли відображати іншим користувачам, щоб вони побачили ваш вклад."
+
+#: kuma/users/jinja2/socialaccount/signup.html:118
 #, python-format
 msgid ""
-"If you're <strong>having trouble</strong> signing in or creating an MDN "
-"profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
-"know</a></strong>."
+"A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
+"to it.</a>"
 msgstr ""
-"Якщо у вас <strong>виникли проблеми</strong> з входом або створенням "
-"облікового запису MDN, <strong><a href=\"%(bug_href)s\" "
-"rel=\"external\">дайте нам знати</a></strong>."
+"Обліковий запис з обраною адресою електронної пошти вже існує. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Підключити до нього ваш "
+"%(provider_name)s аккаунт.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:107
+#: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
-"Your GitHub username %(username)s is already taken. Please choose another."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Ваше ім'я користувача GitHub %(username)s вже зайнято. Будь ласка, виберіть "
-"інше."
+"На яку адресу електронної пошти нам слід надсилати повідомлення та сповіщення MDN? Ця адреса <strong>не буде</strong> відображена на MDN і буде використовуватися відповідно до нашої <a href="
+"\"%(privacy_url)s\">політики приватності</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:111
-msgid ""
-"Please enter the name you'd like to display to other users to identify your "
-"contributions."
-msgstr ""
-"Будь ласка, введіть ім'я, яке б ви хотіли відображати іншим користувачам, "
-"щоб вони побачили ваш вклад."
-
-#: kuma/users/jinja2/socialaccount/signup.html:125
-#, python-format
-msgid ""
-"A profile already exists with the selected email address. <a "
-"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-"next=\"%(persona_next_url)s\">Connect your %(provider_name)s account to "
-"it.</a>"
-msgstr ""
-"Обліковий запис з обраною адресою електронної пошти вже існує. <a "
-"href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-"next=\"%(persona_next_url)s\">Підключити до нього ваш %(provider_name)s "
-"аккаунт.</a>"
-
-#: kuma/users/jinja2/socialaccount/signup.html:155
-#, python-format
-msgid ""
-"What email address should we use to send you MDN-related messages and "
-"notifications? This address will <strong>not</strong> be displayed on MDN "
-"and will be used according to our <a href=\"%(privacy_url)s\">privacy "
-"policy</a>."
-msgstr ""
-"На яку адресу електронної пошти нам слід надсилати повідомлення та "
-"сповіщення MDN? Ця адреса <strong>не буде</strong> відображена на MDN і буде"
-" використовуватися відповідно до нашої <a href=\"%(privacy_url)s\">політики "
-"приватності</a>."
-
-#: kuma/users/jinja2/socialaccount/signup.html:173
+#: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
 msgstr "Умови та конфіденційність"
 
-#: kuma/users/jinja2/socialaccount/signup.html:182
+#: kuma/users/jinja2/socialaccount/signup.html:173
 #, python-format
-msgid ""
-"to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a "
-"href=\"%(privacy_url)s\">Privacy Notice</a>."
-msgstr ""
-"з <a href=\"%(terms_url)s\">Умовами користування</a> й <a "
-"href=\"%(privacy_url)s\">Політикою приватності</a> Mozilla."
+msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
+msgstr "з <a href=\"%(terms_url)s\">Умовами користування</a> й <a href=\"%(privacy_url)s\">Політикою приватності</a> Mozilla."
 
-#: kuma/users/jinja2/socialaccount/signup.html:192
+#: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
 msgstr "Створити свій MDN профіль"
 
@@ -2412,15 +1952,6 @@ msgstr "З'єднатися з GitHub"
 msgid "Sign in with GitHub"
 msgstr "Увійти з GitHub"
 
-#: kuma/users/jinja2/users/apps_newsletter.html:14
-#, python-format
-msgid ""
-"<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the "
-"newsletter."
-msgstr ""
-"<a href=\"%(profile_edit_url)s\">Відредагуйте свій профіль</a>, щоб "
-"підписатися на оновлення."
-
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
 msgstr "Ви заблоковані"
@@ -2430,21 +1961,14 @@ msgid "You have been banned for the following reasons:"
 msgstr "Ви заблоковані з наступних причин:"
 
 #: kuma/users/jinja2/users/user_banned.html:30
-msgid ""
-"<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click "
-"here</a> to appeal this ban.</p>"
-msgstr ""
-"<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Натисніть "
-"тут</a>, щоб оскаржити блокування.</p>"
+msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
+msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Натисніть тут</a>, щоб оскаржити блокування.</p>"
 
-#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:718
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:40
+#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
 msgstr "Редагувати"
 
-#: kuma/users/jinja2/users/user_detail.html:49
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:53
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:57
+#: kuma/users/jinja2/users/user_detail.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
 msgid "Advanced"
 msgstr "Додатково"
 
@@ -2477,19 +2001,15 @@ msgstr "Переглянути всю активність"
 msgid "Page"
 msgstr "Сторінка"
 
-#: kuma/users/jinja2/users/user_detail.html:156
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+#: kuma/users/jinja2/users/user_detail.html:156 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
 msgstr "Дата"
 
-#: kuma/users/jinja2/users/user_detail.html:157
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
-#: kuma/wiki/jinja2/wiki/revision.html:42
+#: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
 msgstr "Коментар"
 
-#: kuma/users/jinja2/users/user_detail.html:165
-#: kuma/wiki/jinja2/wiki/document.html:377
+#: kuma/users/jinja2/users/user_detail.html:165 kuma/wiki/jinja2/wiki/document.html:377
 msgid "Edit page"
 msgstr "Редагувати сторінку"
 
@@ -2497,110 +2017,89 @@ msgstr "Редагувати сторінку"
 msgid "View complete diff"
 msgstr "Переглянути повну різницю"
 
-#: kuma/users/jinja2/users/user_detail.html:167
-#: kuma/wiki/jinja2/wiki/document.html:378
+#: kuma/users/jinja2/users/user_detail.html:167 kuma/wiki/jinja2/wiki/document.html:378
 msgid "View page history"
 msgstr "Переглянути історію сторінки"
 
 #: kuma/users/jinja2/users/user_detail.html:179
 #, python-format
-msgid ""
-"<p class=\"none\">You haven't contributed to any MDN docs. <a "
-"href=\"%(docs_url)s\">Pitch in!</a></p>"
-msgstr ""
-"<p class=\"none\">Ви не зробили внеску в жоден документ на MDN. <a "
-"href=\"%(docs_url)s\">Вперед!</a></p>"
+msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
+msgstr "<p class=\"none\">Ви не зробили внеску в жоден документ на MDN. <a href=\"%(docs_url)s\">Вперед!</a></p>"
 
 #: kuma/users/jinja2/users/user_detail.html:183
 msgid "This user has no activity."
 msgstr "Цей користувач не має ніякої активності."
 
-#: kuma/users/jinja2/users/user_edit.html:12
+#: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
 msgstr "Змінити свій профіль"
 
-#: kuma/users/jinja2/users/user_edit.html:38
+#: kuma/users/jinja2/users/user_edit.html:35
 msgid "Change your avatar at"
 msgstr "Змінити аватар на"
 
-#: kuma/users/jinja2/users/user_edit.html:42
+#: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
 msgstr "Переглянути профіль"
 
-#: kuma/users/jinja2/users/user_edit.html:50
+#: kuma/users/jinja2/users/user_edit.html:47
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr "Ви змінюєте інший профіль, а не свій! Будь ласка, будьте уважні!"
 
-#: kuma/users/jinja2/users/user_edit.html:61
-msgid ""
-"We'd love to have your feedback on site changes! Beta testers get access to "
-"new features first and we send the occasional email asking for help testing "
-"specific things."
+#: kuma/users/jinja2/users/user_edit.html:58
+msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
-"Ми були б раді, якби ви залишили відгук про зміни на сайті. Бета тестери "
-"отримують доступ до нових фішок першими, а ми іноді відправляємо лист, "
-"запитуючи допомогу в тестуванні специфічних штук."
+"Ми були б раді, якби ви залишили відгук про зміни на сайті. Бета тестери отримують доступ до нових фішок першими, а ми іноді відправляємо лист, запитуючи допомогу в тестуванні специфічних штук."
 
-#: kuma/users/jinja2/users/user_edit.html:64
+#: kuma/users/jinja2/users/user_edit.html:61
 msgid "Primary Email"
 msgstr "Адреса електронної пошти"
 
-#: kuma/users/jinja2/users/user_edit.html:65
+#: kuma/users/jinja2/users/user_edit.html:62
 msgid "Edit email"
 msgstr "Редагувати адресу ел. пошти"
 
-#: kuma/users/jinja2/users/user_edit.html:77
+#: kuma/users/jinja2/users/user_edit.html:74
 msgid "About me"
 msgstr "Про мене"
 
-#: kuma/users/jinja2/users/user_edit.html:77
+#: kuma/users/jinja2/users/user_edit.html:74
 msgid "words remaining"
 msgstr "залишилося слів"
 
-#: kuma/users/jinja2/users/user_edit.html:83
+#: kuma/users/jinja2/users/user_edit.html:80
 msgid "Interests (tags)"
 msgstr "Інтереси (теги)"
 
-#: kuma/users/jinja2/users/user_edit.html:84
-msgid ""
-"Separate tags with commas or spaces. Join multi-word tags with double "
-"quotes, like \"web standards\"."
-msgstr ""
-"Розділяйте теги комами або пропусками. Теги, що складаються з декількох слів"
-" укладайте в лапки, наприклад \"веб стандарти\"."
+#: kuma/users/jinja2/users/user_edit.html:81
+msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
+msgstr "Розділяйте теги комами або пропусками. Теги, що складаються з декількох слів укладайте в лапки, наприклад \"веб стандарти\"."
 
-#: kuma/users/jinja2/users/user_edit.html:90
+#: kuma/users/jinja2/users/user_edit.html:87
 msgid "Areas of expertise"
 msgstr "Експертні області"
 
-#: kuma/users/jinja2/users/user_edit.html:91
-msgid ""
-"Add your interests first, then declare yourself an expert in selected "
-"topics."
-msgstr ""
-"Додайте спочатку свої інтереси, а вже потім оголошуйте себе експертом в "
-"обраних темах."
+#: kuma/users/jinja2/users/user_edit.html:88
+msgid "Add your interests first, then declare yourself an expert in selected topics."
+msgstr "Додайте спочатку свої інтереси, а вже потім оголошуйте себе експертом в обраних темах."
 
-#: kuma/users/jinja2/users/user_edit.html:99
+#: kuma/users/jinja2/users/user_edit.html:96
 msgid "My Profiles"
 msgstr "Мої профілі"
 
-#: kuma/users/jinja2/users/user_edit.html:104
-#: kuma/users/jinja2/users/user_edit.html:122
+#: kuma/users/jinja2/users/user_edit.html:101 kuma/users/jinja2/users/user_edit.html:119
 msgid "Change"
 msgstr "Змінити"
 
-#: kuma/users/jinja2/users/user_edit.html:110
+#: kuma/users/jinja2/users/user_edit.html:107
 msgid "Use your Persona account to sign in."
 msgstr "Увійдіть за допомогою облікового запису Persona."
 
-#: kuma/users/jinja2/users/user_edit.html:130
+#: kuma/users/jinja2/users/user_edit.html:127
 msgid "Use your GitHub account to sign in."
 msgstr "Увійдіть за допомогою облікового запису GitHub."
 
-#: kuma/users/jinja2/users/user_edit.html:151
-#: kuma/users/jinja2/users/user_edit.html:159
-#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
+#: kuma/users/jinja2/users/user_edit.html:151 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Save Changes"
 msgstr "Зберегти зміни"
 
@@ -2611,93 +2110,55 @@ msgstr "Привіт, %(username)s!"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
-msgid ""
-"Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer "
-"Network (MDN)</a> - a community making great resources for developers like "
-"you."
-msgstr ""
-"Дякуємо за створення облікового запису на <a href=\"%(mdn_link)s\">Mozilla "
-"Developer Network (MDN)</a> - спільноті, що робить чудові ресурси для таких "
-"розробників, як ви."
+msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
+msgstr "Дякуємо за створення облікового запису на <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - спільноті, що робить чудові ресурси для таких розробників, як ви."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
-msgid ""
-"You've completed the first step of <a href=\"%(started_link)s\">Getting "
-"Started on MDN</a> by creating a profile."
-msgstr ""
-"Ви зробили перший крок <a href=\"%(started_link)s\">Початку роботи з MDN</a>"
-" шляхом створення облікового запису."
+msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
+msgstr "Ви зробили перший крок <a href=\"%(started_link)s\">Початку роботи з MDN</a> шляхом створення облікового запису."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:21
 #, python-format
 msgid ""
-"Now, keep going by picking a task on MDN, and doing it! We have a bunch of "
-"intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like"
-" words</a>, <a href=\"%(code_link)s\">like code</a>, <a "
-"href=\"%(both_link)s\">like both words and code</a>, or you want to <a "
-"href=\"%(translate_link)s\">translate MDN to your language</a>."
+"Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
+"code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
-"Тепер продовжимо вибором завдання на MDN і виконаємо його! У нас є купа "
-"вступних завдань, які ви можете вибрати, якщо ви: <a "
-"href=\"%(words_link)s\">любите слова</a>, <a href=\"%(code_link)s\">любите "
-"код</a>, <a href=\"%(both_link)s\">любите слова і код</a> або ви хочете <a "
-"href=\"%(translate_link)s\">перекласти MDN вашою мовою</a>."
+"Тепер продовжимо вибором завдання на MDN і виконаємо його! У нас є купа вступних завдань, які ви можете вибрати, якщо ви: <a href=\"%(words_link)s\">любите слова</a>, <a href=\"%(code_link)s"
+"\">любите код</a>, <a href=\"%(both_link)s\">любите слова і код</a> або ви хочете <a href=\"%(translate_link)s\">перекласти MDN вашою мовою</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
 msgstr "Поспілкуйтеся з нами!"
 
 #. This is an email. Whitespace matters!
-#: kuma/users/jinja2/users/email/welcome/html.ltxt:35
-#: kuma/users/jinja2/users/email/welcome/plain.ltxt:30
-msgid ""
-"Want to talk to someone about MDN? There are a few ways you can do that:"
+#: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
+msgid "Want to talk to someone about MDN? There are a few ways you can do that:"
 msgstr "Хочете розповісти кому-небудь про MDN? Є кілька способів:"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:38
 #, python-format
-msgid ""
-"Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what "
-"you're interested in on MDN and ask questions about the site."
-msgstr ""
-"Список розсилки: <a href=\"%(list_link)s\">підпишіться</a>, щоб розповісти "
-"нам про те, що вам цікаво на MDN і поставити питання про сайт."
+msgid "Mailing list: <a href=\"%(list_link)s\">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site."
+msgstr "Список розсилки: <a href=\"%(list_link)s\">підпишіться</a>, щоб розповісти нам про те, що вам цікаво на MDN і поставити питання про сайт."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:43
 #, python-format
 msgid ""
-"Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on "
-"irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.)"
-" You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
-"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
-"(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
+"Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
+"Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"Чат в реальному часі: <a href=\"%(channel_link)s\">#mdn канал на "
-"irc.mozilla.org</a>. (Дізнатися більше про <a "
-"href=\"%(irc_link)s\">IRC</a>.) Там ви можете знайти адміністраторів MDN: "
-"Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), "
-"Florian Scholz (fscholz), Chris Mills (chrismills) і мене (jms) , менеджера "
-"спільноти MDN."
+"Чат в реальному часі: <a href=\"%(channel_link)s\">#mdn канал на irc.mozilla.org</a>. (Дізнатися більше про <a href=\"%(irc_link)s\">IRC</a>.) Там ви можете знайти адміністраторів MDN: Eric "
+"Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) і мене (jms) , менеджера спільноти MDN."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
-msgid ""
-"Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for "
-"the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
-msgstr ""
-"Блог: На блозі <a href=\"%(blog_link)s\">about:community</a> пошукайте "
-"публікації з міткою <a href=\"%(tagged_link)s\">Developer Engagement</a>."
+msgid "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
+msgstr "Блог: На блозі <a href=\"%(blog_link)s\">about:community</a> пошукайте публікації з міткою <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 
 #. This is an email. Whitespace matters!
-#: kuma/users/jinja2/users/email/welcome/html.ltxt:60
-#: kuma/users/jinja2/users/email/welcome/plain.ltxt:51
-msgid ""
-"Don't be shy, if you have any doubt, problems, questions: contact us! We are"
-" here to help."
-msgstr ""
-"Не соромтеся, якщо у вас є якісь сумніви, проблеми, питання: зв'яжіться з "
-"нами! Ми тут, щоб допомогти."
+#: kuma/users/jinja2/users/email/welcome/html.ltxt:60 kuma/users/jinja2/users/email/welcome/plain.ltxt:51
+msgid "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
+msgstr "Не соромтеся, якщо у вас є якісь сумніви, проблеми, питання: зв'яжіться з нами! Ми тут, щоб допомогти."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
@@ -2707,23 +2168,17 @@ msgstr "Привіт, %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
-msgid ""
-"Thanks for creating a profile on Mozilla Developer Network (MDN) -- a "
-"community making great resources for developers like you."
-msgstr ""
-"Дякуємо за створення облікового запису на Mozilla Developer Network (MDN) - "
-"спільноті, що робить чудові ресурси для таких розробників, як ви."
+msgid "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you."
+msgstr "Дякуємо за створення облікового запису на Mozilla Developer Network (MDN) - спільноті, що робить чудові ресурси для таких розробників, як ви."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:10
 msgid ""
-"You've completed the first step of Getting Started on MDN by creating a "
-"profile. Now, keep going by picking a task on MDN, and doing it! We have a "
-"bunch of intro tasks you can choose based on your interests."
+"You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
+"interests."
 msgstr ""
-"Створенням облікового запису ви завершили перший крок \"Початку роботи з "
-"MDN\". Зараз можна продовжити, вибравши задачу на MDN і виконавши її! У нас "
-"є купа вступних завдань, які ви можете вибрати спираючись на ваші інтереси."
+"Створенням облікового запису ви завершили перший крок \"Початку роботи з MDN\". Зараз можна продовжити, вибравши задачу на MDN і виконавши її! У нас є купа вступних завдань, які ви можете вибрати "
+"спираючись на ваші інтереси."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
@@ -2753,12 +2208,8 @@ msgstr "Список розсилки: %(list_link)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:36
-msgid ""
-"Subscribe to tell us about what you're interested in on MDN and ask "
-"questions about the site."
-msgstr ""
-"Підпишіться, щоб розповісти нам про те, що вам цікаво на MDN і поставити "
-"питання про сайт."
+msgid "Subscribe to tell us about what you're interested in on MDN and ask questions about the site."
+msgstr "Підпишіться, щоб розповісти нам про те, що вам цікаво на MDN і поставити питання про сайт."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:39
@@ -2769,19 +2220,16 @@ msgstr "Чат в режимі реального часу: канал #mdn на
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr ""
-"Зверніться до %(irc_link)s для отримання додаткової інформації по IRC."
+msgstr "Зверніться до %(irc_link)s для отримання додаткової інформації по IRC."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:45
 msgid ""
-"You can find the MDN writing staff admins there: Eric Shepherd (sheppy), "
-"Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz "
-"(fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
+"You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
+"community manager."
 msgstr ""
-"Там ви можете знайти адміністраторів MDN: Eric Shepherd (sheppy), Jean-Yves "
-"Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris "
-"Mills (chrismills) і мене (jms), менеджера спільноти MDN."
+"Там ви можете знайти адміністраторів MDN: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) і мене (jms), менеджера "
+"спільноти MDN."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -2806,8 +2254,7 @@ msgstr "Заблокувати користувача"
 msgid "Admin"
 msgstr "Адмін"
 
-#: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23
-#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "Вікі"
 
@@ -2823,7 +2270,7 @@ msgstr "Редакційна - текст, граматика або зміст"
 msgid "Localization in progress - not completely translated yet."
 msgstr "Локалізація триває - ще не перекладена повністю."
 
-#: kuma/wiki/content.py:699
+#: kuma/wiki/content.py:718
 msgid "Edit section"
 msgstr "Змінити розділ"
 
@@ -2897,21 +2344,13 @@ msgstr "Будь ласка, вкажіть назву."
 
 #: kuma/wiki/forms.py:31
 #, python-format
-msgid ""
-"The title is too short (%(show_value)s characters). It must be at least "
-"%(limit_value)s characters."
-msgstr ""
-"Назва закоротка (%(show_value)s символів). Довжина повинна бути як мінімум "
-"%(limit_value)s символів."
+msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgstr "Назва закоротка (%(show_value)s символів). Довжина повинна бути як мінімум %(limit_value)s символів."
 
 #: kuma/wiki/forms.py:33
 #, python-format
-msgid ""
-"Please keep the length of the title to %(limit_value)s characters or less. "
-"It is currently %(show_value)s characters."
-msgstr ""
-"Будь-ласка, утримуйте довжину назви в межах %(limit_value)s символів. Зараз "
-"довжина складає %(show_value)s символів."
+msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgstr "Будь-ласка, утримуйте довжину назви в межах %(limit_value)s символів. Зараз довжина складає %(show_value)s символів."
 
 #: kuma/wiki/forms.py:36
 msgid "Name Your Article"
@@ -2927,21 +2366,13 @@ msgstr "Вказане посилання некоректне."
 
 #: kuma/wiki/forms.py:39
 #, python-format
-msgid ""
-"The slug is too short (%(show_value)s characters). It must be at least "
-"%(limit_value)s characters."
-msgstr ""
-"Посилання закоротке (%(show_value)s символів). Воно має містити не менше "
-"%(limit_value)s символів."
+msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgstr "Посилання закоротке (%(show_value)s символів). Воно має містити не менше %(limit_value)s символів."
 
 #: kuma/wiki/forms.py:41
 #, python-format
-msgid ""
-"Please keep the length of the slug to %(limit_value)s characters or less. It"
-" is currently %(show_value)s characters."
-msgstr ""
-"Будь ласка, зменшіть довжину URL до %(limit_value)s символів або менше. "
-"Зараз вона становить %(show_value)s символів."
+msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgstr "Будь ласка, зменшіть довжину URL до %(limit_value)s символів або менше. Зараз вона становить %(show_value)s символів."
 
 #: kuma/wiki/forms.py:44
 msgid "Please provide a summary."
@@ -2949,21 +2380,13 @@ msgstr "Будь ласка, вкажіть зведення."
 
 #: kuma/wiki/forms.py:45
 #, python-format
-msgid ""
-"The summary is too short (%(show_value)s characters). It must be at least "
-"%(limit_value)s characters."
-msgstr ""
-"Зведення закоротке (%(show_value)s символів). Воно має містити не менше "
-"%(limit_value)s символів."
+msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgstr "Зведення закоротке (%(show_value)s символів). Воно має містити не менше %(limit_value)s символів."
 
 #: kuma/wiki/forms.py:47
 #, python-format
-msgid ""
-"Please keep the length of the summary to %(limit_value)s characters or less."
-" It is currently %(show_value)s characters."
-msgstr ""
-"Будь-ласка, утримуйте довжину зведення в межах %(limit_value)s символів чи "
-"менше. Зараз довжина складає %(show_value)s символів."
+msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgstr "Будь-ласка, утримуйте довжину зведення в межах %(limit_value)s символів чи менше. Зараз довжина складає %(show_value)s символів."
 
 #: kuma/wiki/forms.py:50
 msgid "Please provide content."
@@ -2971,30 +2394,18 @@ msgstr "Будь ласка, заповніть вміст."
 
 #: kuma/wiki/forms.py:51
 #, python-format
-msgid ""
-"The content is too short (%(show_value)s characters). It must be at least "
-"%(limit_value)s characters."
-msgstr ""
-"Вміст закороткий (%(show_value)s символів). Він повинен бути не менше "
-"%(limit_value)s символів."
+msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
+msgstr "Вміст закороткий (%(show_value)s символів). Він повинен бути не менше %(limit_value)s символів."
 
 #: kuma/wiki/forms.py:53
 #, python-format
-msgid ""
-"Please keep the length of the content to %(limit_value)s characters or less."
-" It is currently %(show_value)s characters."
-msgstr ""
-"Будь ласка, утримуйте довжину тексту в межах %(limit_value)s символів чи "
-"менше. Зараз довжина складає %(show_value)s символів."
+msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgstr "Будь ласка, утримуйте довжину тексту в межах %(limit_value)s символів чи менше. Зараз довжина складає %(show_value)s символів."
 
 #: kuma/wiki/forms.py:56
 #, python-format
-msgid ""
-"Please keep the length of the comment to %(limit_value)s characters or less."
-" It is currently %(show_value)s characters."
-msgstr ""
-"Будь ласка, утримуйте довжину коментаря в межах %(limit_value)s символів чи "
-"менше. Зараз довжина складає %(show_value)s символів."
+msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
+msgstr "Будь ласка, утримуйте довжину коментаря в межах %(limit_value)s символів чи менше. Зараз довжина складає %(show_value)s символів."
 
 #: kuma/wiki/forms.py:59
 msgid "Another document with this slug already exists."
@@ -3012,11 +2423,8 @@ msgstr "Поки ви редагували цей документ, він бу�
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "Зміна URL документа вимагає переміщення його та його підсторінок."
 
-#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:614
-#: kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68
-#: kuma/wiki/jinja2/wiki/edit.html:117 kuma/wiki/jinja2/wiki/move.html:60
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:66
-#: kuma/wiki/jinja2/wiki/includes/translate_description.html:11
+#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:614 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
+#: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Назва:"
 
@@ -3024,9 +2432,7 @@ msgstr "Назва:"
 msgid "Title of article"
 msgstr "Назва статті"
 
-#: kuma/wiki/forms.py:89 kuma/wiki/forms.py:172
-#: kuma/wiki/jinja2/wiki/create.html:44
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:89 kuma/wiki/forms.py:172 kuma/wiki/jinja2/wiki/create.html:44 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "URL:"
@@ -3035,14 +2441,11 @@ msgstr "URL:"
 msgid "Article URL"
 msgstr "Адреса статті"
 
-#: kuma/wiki/forms.py:97 kuma/wiki/jinja2/wiki/create.html:48
-#: kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:97 kuma/wiki/jinja2/wiki/create.html:48 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "Батько:"
 
-#: kuma/wiki/forms.py:183 kuma/wiki/jinja2/wiki/edit.html:74
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:75
-#: kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:183 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "Мітки:"
 
@@ -3062,8 +2465,7 @@ msgstr "Результати пошуку:"
 msgid "Only displayed on search results page"
 msgstr "Показано тільки на сторінці пошукових результатів"
 
-#: kuma/wiki/forms.py:209 kuma/wiki/jinja2/wiki/edit.html:92
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:80
+#: kuma/wiki/forms.py:209 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
 msgstr "Зміст:"
 
@@ -3087,123 +2489,111 @@ msgstr "Новий url:"
 msgid "New article URL"
 msgstr "Новий URL статті"
 
-#: kuma/wiki/models.py:114
+#: kuma/wiki/models.py:111
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "Батько %s не існує."
 
-#: kuma/wiki/models.py:122
+#: kuma/wiki/models.py:119
 msgid "Document Tag"
 msgstr "Мітка документа"
 
-#: kuma/wiki/models.py:123
+#: kuma/wiki/models.py:120
 msgid "Document Tags"
 msgstr "Мітки документа"
 
-#: kuma/wiki/models.py:175
+#: kuma/wiki/models.py:172
 #, fuzzy
 msgid "uploaded to the document"
 msgstr "Відновити цей документ"
 
-#: kuma/wiki/models.py:181
+#: kuma/wiki/models.py:178
 #, fuzzy
 msgid "linked in the document content"
 msgstr "Перейти до основного вмісту"
 
-#: kuma/wiki/models.py:195
+#: kuma/wiki/models.py:192
 #, python-format
-msgid ""
-"Attachment %(attachment_id)s can't be attached multiple times to document "
-"%(document_id)s"
-msgstr ""
-"Вкладення %(attachment_id)s не може бути приєднано кілька раз до документу "
-"%(document_id)s"
+msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
+msgstr "Вкладення %(attachment_id)s не може бути приєднано кілька раз до документу %(document_id)s"
 
-#: kuma/wiki/models.py:1562
+#: kuma/wiki/models.py:1540
 msgid "Review Tag"
 msgstr "Подивитися мітку"
 
-#: kuma/wiki/models.py:1563
+#: kuma/wiki/models.py:1541
 msgid "Review Tags"
 msgstr "Подивитися мітки"
 
-#: kuma/wiki/models.py:1569
+#: kuma/wiki/models.py:1547
 msgid "Localization Tag"
 msgstr "Мітка локалізації"
 
-#: kuma/wiki/models.py:1570
+#: kuma/wiki/models.py:1548
 msgid "Localization Tags"
 msgstr "Мітки локалізації"
 
-#: kuma/wiki/models.py:1603
+#: kuma/wiki/models.py:1581
 msgid "No table of contents"
 msgstr "Немає змісту"
 
-#: kuma/wiki/models.py:1604
+#: kuma/wiki/models.py:1582
 msgid "All levels"
 msgstr "Всі рівні"
 
-#: kuma/wiki/models.py:1605
+#: kuma/wiki/models.py:1583
 msgid "H2 and higher"
 msgstr "H2 й вище"
 
-#: kuma/wiki/models.py:1606
+#: kuma/wiki/models.py:1584
 msgid "H3 and higher"
 msgstr "H3 й вище"
 
-#: kuma/wiki/models.py:1607
+#: kuma/wiki/models.py:1585
 msgid "H4 and higher"
 msgstr "H4 й вище"
 
-#: kuma/wiki/models.py:1711
+#: kuma/wiki/models.py:1689
 #, python-format
-msgid ""
-"A revision must be based on a revision of the %(locale)s document. Revision "
-"ID %(id)s does not fit those criteria."
-msgstr ""
-"Редакція повинна ґрунтуватися на редакції документа з локаллю %(locale)s. ID"
-" редакції %(id)s не підходить за цим критерієм."
+msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
+msgstr "Редакція повинна ґрунтуватися на редакції документа з локаллю %(locale)s. ID редакції %(id)s не підходить за цим критерієм."
 
-#: kuma/wiki/models.py:1845
+#: kuma/wiki/models.py:1825
 msgid "IP address"
 msgstr "IP-адреса"
 
-#: kuma/wiki/models.py:1853
+#: kuma/wiki/models.py:1833
 msgid "User-Agent"
 msgstr "Браузер"
 
-#: kuma/wiki/models.py:1858
+#: kuma/wiki/models.py:1838
 msgid "HTTP Referrer"
 msgstr "HTTP реферер"
 
-#: kuma/wiki/models.py:1879
+#: kuma/wiki/models.py:1859
 msgid "Revision"
 msgstr "Редакція"
 
-#: kuma/wiki/models.py:1885
+#: kuma/wiki/models.py:1865
 msgid "Akismet submission"
 msgstr "Подання Akismet"
 
-#: kuma/wiki/models.py:1886
+#: kuma/wiki/models.py:1866
 msgid "Akismet submissions"
 msgstr "Подання Akismet"
 
-#: kuma/wiki/models.py:1929
+#: kuma/wiki/models.py:1909
 msgid "Slug"
 msgstr "URL"
 
-#: kuma/wiki/models.py:1937
+#: kuma/wiki/models.py:1917
 msgid "Document (optional)"
 msgstr "Документ (не обов'язково)"
 
 #: kuma/wiki/search.py:310
 #, python-format
-msgid ""
-"Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d "
-"into index %(index)s.total"
-msgstr ""
-"Індексування %(total)d документів на %(total_chunks)d частин розміром "
-"%(size)d в індекс %(index)s.total"
+msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
+msgstr "Індексування %(total)d документів на %(total_chunks)d частин розміром %(size)d в індекс %(index)s.total"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3225,12 +2615,9 @@ msgstr "Вилучити документ | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:9
 msgid "Cannot delete pages with children until we fix this bug:"
-msgstr ""
-"Неможливо видалити сторінки разом з їх дочірніми сторінками через цю "
-"проблему:"
+msgstr "Неможливо видалити сторінки разом з їх дочірніми сторінками через цю проблему:"
 
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:17 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:21
 msgid "Creator"
 msgstr "Автор"
 
@@ -3247,12 +2634,8 @@ msgid "Last Change Date"
 msgstr "Дата останньої зміни"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:29
-msgid ""
-"You are about to delete this document and all of its revisions. Please let "
-"us know why this page should be deleted."
-msgstr ""
-"Ви збираєтеся видалити цю статтю і всі її попередні редакції. Будь ласка, "
-"розкажіть нам чому ця стаття має бути вилучена."
+msgid "You are about to delete this document and all of its revisions. Please let us know why this page should be deleted."
+msgstr "Ви збираєтеся видалити цю статтю і всі її попередні редакції. Будь ласка, розкажіть нам чому ця стаття має бути вилучена."
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:36
 msgid "Are you sure you want to continue?"
@@ -3280,12 +2663,8 @@ msgid "Why are you reverting to this revision?"
 msgstr "Чому ви повертаєтеся до цієї редакції?"
 
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:36
-msgid ""
-"You are about to revert the document to this revision. Click \"revert\" to "
-"revert to the content&nbsp;above."
-msgstr ""
-"Ви збираєтеся відкотити документ до цієї редакції. Клацніть \"відкотити\", "
-"щоб відкотити до вмісту&nbsp;вище."
+msgid "You are about to revert the document to this revision. Click \"revert\" to revert to the content&nbsp;above."
+msgstr "Ви збираєтеся відкотити документ до цієї редакції. Клацніть \"відкотити\", щоб відкотити до вмісту&nbsp;вище."
 
 #: kuma/wiki/jinja2/wiki/create.html:6
 msgid "Create a New Template"
@@ -3311,8 +2690,7 @@ msgstr "Чернетка"
 msgid "URL segment that identifies the page"
 msgstr "Сегмент в URL, що ідентифікує сторінку"
 
-#: kuma/wiki/jinja2/wiki/deletion_log.html:2
-#: kuma/wiki/jinja2/wiki/deletion_log.html:7
+#: kuma/wiki/jinja2/wiki/deletion_log.html:2 kuma/wiki/jinja2/wiki/deletion_log.html:7
 msgid "Document Deleted"
 msgstr "Документ видалено"
 
@@ -3333,8 +2711,7 @@ msgstr "Відновити цей документ"
 msgid "Previous Search Result"
 msgstr "Попередній результат пошуку"
 
-#: kuma/wiki/jinja2/wiki/document.html:167
-#: kuma/wiki/jinja2/wiki/document.html:177
+#: kuma/wiki/jinja2/wiki/document.html:167 kuma/wiki/jinja2/wiki/document.html:177
 msgid "No Previous Search Result"
 msgstr "Немає попереднього результату пошуку"
 
@@ -3365,36 +2742,26 @@ msgstr "У цій статті"
 
 #: kuma/wiki/jinja2/wiki/document.html:232
 #, python-format
-msgid ""
-"This document is being rendered for the first time by the system. Please <a "
-"href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
-msgstr ""
-"Цей документ був оброблений системою вперше. Будь ласка, <a "
-"href=\"%(url)s\">оновіть цю сторінку</a> за декілька хвилин для перегляду "
-"повного вмісту."
+msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
+msgstr "Цей документ був оброблений системою вперше. Будь ласка, <a href=\"%(url)s\">оновіть цю сторінку</a> за декілька хвилин для перегляду повного вмісту."
 
 #: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in "
-"progress</abbr>. If the content below seems stale or if something is "
-"missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
-"<abbr title=\"%(started_at)s\">Зараз йде</abbr> оновлення даного документа. "
-"Якщо вміст нижче здається застарілим, або чогось не вистачає, будь ласка, <a"
-" href=\"%(url)s\">перезавантажте цю сторінку</a> за декілька хвилин."
+"<abbr title=\"%(started_at)s\">Зараз йде</abbr> оновлення даного документа. Якщо вміст нижче здається застарілим, або чогось не вистачає, будь ласка, <a href=\"%(url)s\">перезавантажте цю сторінку</"
+"a> за декілька хвилин."
 
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been "
-"scheduled</abbr>. If the content below seems stale or if something is "
-"missing, please <a href=\"%(url)s\">reload this page</a> in a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
-"<abbr title=\"%(scheduled_at)s\">Було заплановано</abbr> оновлення даного "
-"документа. Якщо вміст нижче здається застарілим, або чогось не вистачає, "
-"будь ласка, <a href=\"%(url)s\">перезавантажте цю сторінку</a> за декілька "
-"хвилин."
+"<abbr title=\"%(scheduled_at)s\">Було заплановано</abbr> оновлення даного документа. Якщо вміст нижче здається застарілим, або чогось не вистачає, будь ласка, <a href=\"%(url)s\">перезавантажте цю "
+"сторінку</a> за декілька хвилин."
 
 #: kuma/wiki/jinja2/wiki/document.html:265
 msgid "This article is in need of a technical review."
@@ -3406,12 +2773,8 @@ msgstr "Ця стаття потребує редакційного огляду
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
-msgid ""
-"This translation is incomplete. Please help <a "
-"href=\"%(translate_url)s\">translate this article</a> from English."
-msgstr ""
-"Переклад не закінчено. Будь ласка, допоможіть <a "
-"href=\"%(translate_url)s\">перекласти цю статтю</a> з англійської."
+msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
+msgstr "Переклад не закінчено. Будь ласка, допоможіть <a href=\"%(translate_url)s\">перекласти цю статтю</a> з англійської."
 
 #: kuma/wiki/jinja2/wiki/document.html:281
 msgid "This translation is in progress."
@@ -3419,12 +2782,8 @@ msgstr "Цей переклад в процесі."
 
 #: kuma/wiki/jinja2/wiki/document.html:288
 #, python-format
-msgid ""
-"Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
-"yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
-msgstr ""
-"Наші волонтери ще не переклали цю статтю мовою: <bdi>%(locale)s</bdi>. <a "
-"href=\"%(help_link)s\">Приєднайтесь до нас і допоможіть зробити це!</a>"
+msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
+msgstr "Наші волонтери ще не переклали цю статтю мовою: <bdi>%(locale)s</bdi>. <a href=\"%(help_link)s\">Приєднайтесь до нас і допоможіть зробити це!</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:299
 msgid "This article doesn't have any content yet."
@@ -3432,14 +2791,10 @@ msgstr "Ця стаття поки не має вмісту."
 
 #: kuma/wiki/jinja2/wiki/document.html:302
 #, python-format
-msgid ""
-"Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that "
-"use %(title)s</a> to see example use cases and how many pages use this "
-"macro."
+msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
-"Пошукайте <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">сторінки, що"
-" використовують %(title)s</a>, щоб побачити приклади використання даного "
-"макросу і кількість сторінок, на яких він використовується."
+"Пошукайте <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">сторінки, що використовують %(title)s</a>, щоб побачити приклади використання даного макросу і кількість сторінок, на яких він "
+"використовується."
 
 #: kuma/wiki/jinja2/wiki/document.html:315
 msgid "This article doesn't have approved content yet."
@@ -3469,28 +2824,20 @@ msgstr "%(title)s | Редагувати статтю"
 
 #: kuma/wiki/jinja2/wiki/edit.html:31
 msgid ""
-"Please review the differences between your changes and the changes saved "
-"since you started editing. You may save again, but try to resolve any "
-"conflicts by hand so that the changes made since you started are not lost."
+"Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
+"started are not lost."
 msgstr ""
-"Будь ласка, перегляньте різницю між вашими змінами та змінами, внесеними під"
-" час вашого редагування. Ви можете зберегти свої зміни, але спробуйте "
-"вирішити будь-які виникаючі конфлікти вручну, щоб зміни, зроблені під час "
-"вашого редагування, не загубилися."
+"Будь ласка, перегляньте різницю між вашими змінами та змінами, внесеними під час вашого редагування. Ви можете зберегти свої зміни, але спробуйте вирішити будь-які виникаючі конфлікти вручну, щоб "
+"зміни, зроблені під час вашого редагування, не загубилися."
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
 msgstr "Ваші зміни"
 
-#: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:42
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:58
+#: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
 #, python-format
-msgid ""
-"Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr ""
-"Редакція %(id)s від <a href=\"%(user_profile_url)s\">%(user)s</a>, зроблена "
-"%(date)s"
+msgid "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
+msgstr "Редакція %(id)s від <a href=\"%(user_profile_url)s\">%(user)s</a>, зроблена %(date)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
@@ -3521,15 +2868,10 @@ msgid "Minutes"
 msgstr "Хвилини"
 
 #: kuma/wiki/jinja2/wiki/edit.html:146
-msgid ""
-"Find the translation source with the lookup below and then click \"Save "
-"Changes.\""
-msgstr ""
-"Знайдіть джерело для перекладу в пошуку нижче, а потім натисніть \"Зберегти "
-"зміни\"."
+msgid "Find the translation source with the lookup below and then click \"Save Changes.\""
+msgstr "Знайдіть джерело для перекладу в пошуку нижче, а потім натисніть \"Зберегти зміни\"."
 
-#: kuma/wiki/jinja2/wiki/edit.html:148
-#: kuma/wiki/jinja2/wiki/includes/translate_description.html:62
+#: kuma/wiki/jinja2/wiki/edit.html:148 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
 msgstr "Пошук:"
 
@@ -3539,18 +2881,11 @@ msgstr "Спасибі вам за час, витрачений на поліп�
 
 #: kuma/wiki/jinja2/wiki/edit.html:164
 #, python-format
-msgid ""
-"It looks like this is your first contribution to MDN. You can find answers "
-"to common editing questions within our <a target=\"_blank\" "
-"href=\"%(url)s\">Editor Guide</a>."
-msgstr ""
-"Схоже, що це ваш перший внесок у MDN. Ви можете знайти відповіді на загальні"
-" питання з редагування в нашому <a target=\"_blank\" "
-"href=\"%(url)s\">Керівництві редактора</a>."
+msgid "It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">Editor Guide</a>."
+msgstr "Схоже, що це ваш перший внесок у MDN. Ви можете знайти відповіді на загальні питання з редагування в нашому <a target=\"_blank\" href=\"%(url)s\">Керівництві редактора</a>."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
-msgid ""
-"Don't be afraid to break something, you can always revert your changes."
+msgid "Don't be afraid to break something, you can always revert your changes."
 msgstr "Не бійтеся що-небудь зламати, ви завжди можете скасувати ваші зміни."
 
 #: kuma/wiki/jinja2/wiki/edit.html:169
@@ -3561,25 +2896,17 @@ msgstr "Отримуйте задоволення і пишайтеся свої
 msgid "Learn how to tag an article"
 msgstr "Дізнайтеся, як додати мітки до статті"
 
-#: kuma/wiki/jinja2/wiki/edit.html:190
-#: kuma/wiki/jinja2/wiki/translate.html:112
+#: kuma/wiki/jinja2/wiki/edit.html:190 kuma/wiki/jinja2/wiki/translate.html:112
 #, python-format
-msgid ""
-"Categorize the article. It will make the article findable under the right "
-"filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the"
-" Tagging Guide</a>."
-msgstr ""
-"Класифікуйте статтю. Це зробить її доступною для пошуку через правильні "
-"фільтри в пошуковій системі. <a target=\"_blank\" "
-"href=\"%(url)s\">Прочитайте керівництво з міток</a>."
+msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
+msgstr "Класифікуйте статтю. Це зробить її доступною для пошуку через правильні фільтри в пошуковій системі. <a target=\"_blank\" href=\"%(url)s\">Прочитайте керівництво з міток</a>."
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
 msgid "View %(locale)s parent"
 msgstr "Подивитися батька %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5
-#: kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
+#: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5 kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
 #, python-format
 msgid "last modified at %(modified)s"
 msgstr "востаннє змінено %(modified)s"
@@ -3595,21 +2922,12 @@ msgid "Move Article | %(document)s"
 msgstr "Перемістити статтю | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
-msgid ""
-"Please specify the new location for this page by filling out the fields "
-"below. Be sure your new destination follows these rules:"
-msgstr ""
-"Будь ласка, вкажіть нове місце розташування цієї сторінки, заповнивши поля "
-"нижче. Переконайтеся, що нове місце призначення відповідає наступним "
-"правилам:"
+msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
+msgstr "Будь ласка, вкажіть нове місце розташування цієї сторінки, заповнивши поля нижче. Переконайтеся, що нове місце призначення відповідає наступним правилам:"
 
 #: kuma/wiki/jinja2/wiki/move.html:22
-msgid ""
-"Make sure the location you specify is located immediately under an existing "
-"page."
-msgstr ""
-"Переконайтеся, що вказане вами місце розташування знаходиться безпосередньо "
-"під існуючою сторінкою."
+msgid "Make sure the location you specify is located immediately under an existing page."
+msgstr "Переконайтеся, що вказане вами місце розташування знаходиться безпосередньо під існуючою сторінкою."
 
 #: kuma/wiki/jinja2/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
@@ -3620,16 +2938,11 @@ msgid "Enter only the part of the URL following \"/docs/\"."
 msgstr "Введіть лише частину URL наступну після \"/docs/\"."
 
 #: kuma/wiki/jinja2/wiki/move.html:25
-msgid ""
-"Don't include a trailing slash (this will be removed for you if you include "
-"it, but you should leave it out)."
-msgstr ""
-"Не використовуйте завершальний слеш (він буде видалений, якщо ви додасте "
-"його, але краще пропустіть його)."
+msgid "Don't include a trailing slash (this will be removed for you if you include it, but you should leave it out)."
+msgstr "Не використовуйте завершальний слеш (він буде видалений, якщо ви додасте його, але краще пропустіть його)."
 
 #: kuma/wiki/jinja2/wiki/move.html:31
-msgid ""
-"Your requested move cannot be completed due to the following slug conflicts:"
+msgid "Your requested move cannot be completed due to the following slug conflicts:"
 msgstr "Ваш запит не може бути виконаний через конфлікт URL:"
 
 #: kuma/wiki/jinja2/wiki/move.html:54
@@ -3676,14 +2989,10 @@ msgstr "Запитано перенесення сторінки"
 
 #: kuma/wiki/jinja2/wiki/move_requested.html:9
 #, python-format
-msgid ""
-"<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a "
-"href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when "
-"it finishes, or if any errors occur during the move.</p>"
+msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
 msgstr ""
-"<h1>Заплановано перенесення сторінки</h1> <p>Перенесення %(old_slug)s до <a "
-"href=\"%(new_url)s\">%(new_slug)s</a></p> <p> Ви отримаєте лист після "
-"вдалого перенесення або якщо виникнуть які-небудь помилки.</p>"
+"<h1>Заплановано перенесення сторінки</h1> <p>Перенесення %(old_slug)s до <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> Ви отримаєте лист після вдалого перенесення або якщо виникнуть які-небудь "
+"помилки.</p>"
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
@@ -3730,8 +3039,7 @@ msgstr "Зміст редакції"
 msgid "Revision Source"
 msgstr "Джерело редакції"
 
-#: kuma/wiki/jinja2/wiki/revision.html:76
-#: kuma/wiki/jinja2/wiki/list/revisions.html:70
+#: kuma/wiki/jinja2/wiki/revision.html:76 kuma/wiki/jinja2/wiki/list/revisions.html:70
 msgid "Revert to this revision"
 msgstr "Повернути цю редакцію"
 
@@ -3747,30 +3055,20 @@ msgstr "Виберіть мову перекладу:"
 #: kuma/wiki/jinja2/wiki/sphinx.html:32
 #, python-format
 msgid ""
-"Content is available under a license specific to this project. &middot; <a "
-"href=\"%(about_url)s\">About MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
+"Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"Вміст доступний під зазначеною в даному проекті ліцензією. &middot; <a "
-"href=\"%(about_url)s\">Про MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Зробіть внесок у код</a> &middot; <a "
-"href=\"//www.mozilla.org/uk/privacy\">Політика приватності</a>"
+"Вміст доступний під зазначеною в даному проекті ліцензією. &middot; <a href=\"%(about_url)s\">Про MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Зробіть внесок у код</a> &middot; <a href="
+"\"//www.mozilla.org/uk/privacy\">Політика приватності</a>"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:43
 #, python-format
 msgid ""
-"&copy; 2005-2015 Mozilla Developer Network and individual contributors<br />"
-" Content is available under a license specific to this project. &middot; <a "
-"href=\"%(about_url)s\">About MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
-"href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
+"&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
+"<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Mozilla Developer Network і окремі учасники.<br /> Вміст "
-"доступний на умовах ліцензії, вказаної у цьому проекті. &middot; <a "
-"href=\"%(about_url)s\">Про MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Зробіть внесок у код</a> &middot; <a "
-"href=\"//www.mozilla.org/en-US/privacy\">Політика приватності</a>"
+"&copy; 2005-2015 Mozilla Developer Network і окремі учасники.<br /> Вміст доступний на умовах ліцензії, вказаної у цьому проекті. &middot; <a href=\"%(about_url)s\">Про MDN</a> &middot; <a href=\"//"
+"github.com/mozilla/kuma\">Зробіть внесок у код</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Політика приватності</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
@@ -3903,8 +3201,7 @@ msgstr "Не існує перекладів цієї статті."
 msgid "Add a translation"
 msgstr "Додати переклад"
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:43
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:46
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:43 kuma/wiki/jinja2/wiki/includes/buttons.html:46
 msgid "Watch"
 msgstr "Слідкування"
 
@@ -3952,20 +3249,14 @@ msgstr "Див. також"
 msgid "Change Revisions"
 msgstr "Змінити редакції"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:53
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, python-format
 msgid "Revision %(num)s:"
 msgstr "Редакція %(num)s:"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:82
-#: kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
-msgid ""
-"The server is rendering the content comparison. Please refresh this page in "
-"a few minutes."
-msgstr ""
-"Сервер виконує порівняння вмісту. Будь ласка, оновіть цю сторінку протягом "
-"декількох хвилин."
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:82 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
+msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
+msgstr "Сервер виконує порівняння вмісту. Будь ласка, оновіть цю сторінку протягом декількох хвилин."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:107
 msgid "Share:"
@@ -4034,36 +3325,23 @@ msgstr "Ви зараз підписані на %(language)s версію ціє
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
 #, python-format
-msgid ""
-"You have been unsubscribed from the %(language)s version of this article."
+msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr "Ви відписалися від %(language)s версії цієї статті."
 
-#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2
-#: kuma/wiki/jinja2/wiki/includes/translate_description.html:50
+#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
 msgstr "Створити зміст"
 
-#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2
-#: kuma/wiki/jinja2/wiki/includes/translate_description.html:50
+#: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
 msgstr "Зміст:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
-msgid ""
-"There was a scripting error on this page. While it is being addressed by "
-"site editors, you can view partial content below."
-msgid_plural ""
-"There were scripting errors on this page. While those are being addressed by"
-" site editors, you can view partial content below."
-msgstr[0] ""
-"На цій сторінці виникла помилка зі скриптом. Поки вона адресується "
-"редакторам сайту, ви можете переглянути частину вмісту нижче."
-msgstr[1] ""
-"На цій сторінці виникли помилки зі скриптом. Поки вони адресується "
-"редакторам сайту, ви можете переглянути частину вмісту нижче."
-msgstr[2] ""
-"На цій сторінці виникли помилки зі скриптом. Поки вони адресується "
-"редакторам сайту, ви можете переглянути частину вмісту нижче."
+msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
+msgid_plural "There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below."
+msgstr[0] "На цій сторінці виникла помилка зі скриптом. Поки вона адресується редакторам сайту, ви можете переглянути частину вмісту нижче."
+msgstr[1] "На цій сторінці виникли помилки зі скриптом. Поки вони адресується редакторам сайту, ви можете переглянути частину вмісту нижче."
+msgstr[2] "На цій сторінці виникли помилки зі скриптом. Поки вони адресується редакторам сайту, ви можете переглянути частину вмісту нижче."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -4077,15 +3355,10 @@ msgstr[1] "Додаткові відомості про ці помилки"
 msgstr[2] "Додаткові відомості про ці помилки"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
-msgid ""
-"Anyone with an MDN profile can edit a document to fix an error. Use the <a "
-"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
-"troubleshooting guide</a> as a starting point."
+msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
 msgstr ""
-"Хто завгодно з профілем MDN може відредагувати документ, щоб виправити "
-"помилку. Використовуйте <a "
-"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">інструкцію з "
-"виправлення помилок KumaScript</a> як відправну точку."
+"Хто завгодно з профілем MDN може відредагувати документ, щоб виправити помилку. Використовуйте <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">інструкцію з виправлення помилок "
+"KumaScript</a> як відправну точку."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -4148,35 +3421,22 @@ msgid "Learn how to use Revision Comments"
 msgstr "Дізнайтеся, як використовувати коментарі до редакції"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
-msgid ""
-"Tell us why you made additions and changes. It is optional, but will make "
-"page history easier to understand."
-msgstr ""
-"Розкажіть, чому ви зробили доповнення та зміни. Це необов'язково, але "
-"зробить історію сторінки простішою для розуміння."
+msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
+msgstr "Розкажіть, чому ви зробили доповнення та зміни. Це необов'язково, але зробить історію сторінки простішою для розуміння."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated "
-"attempts to submit unsuitable material may result in your account being "
-"deactivated. See our guide “<a href=\"%(does_this_belong_url)s\">Does this "
-"belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
-"Ваше подання включає вміст, який може бути не придатним для MDN. Повторні "
-"спроби представити невідповідні матеріали можуть призвести до відключення "
-"вашого облікового запису. Зверніться до нашого посібника “<a "
-"href=\"%(does_this_belong_url)s\">Чи можна це розміщувати на MDN?</a>” для "
-"отримання відомостей про те, що є відповідним матеріалом."
+"Ваше подання включає вміст, який може бути не придатним для MDN. Повторні спроби представити невідповідні матеріали можуть призвести до відключення вашого облікового запису. Зверніться до нашого "
+"посібника “<a href=\"%(does_this_belong_url)s\">Чи можна це розміщувати на MDN?</a>” для отримання відомостей про те, що є відповідним матеріалом."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
-msgid ""
-"If you believe you’ve received this message by mistake, please <a "
-"href=\"%(admin_email)s\">contact the site administrators</a>."
-msgstr ""
-"Якщо ви думаєте, що отримали це повідомлення помилково, будь ласка, <a "
-"href=\"%(admin_email)s\">зв'яжіться з адміністраторами сайту</a>."
+msgid "If you believe you’ve received this message by mistake, please <a href=\"%(admin_email)s\">contact the site administrators</a>."
+msgstr "Якщо ви думаєте, що отримали це повідомлення помилково, будь ласка, <a href=\"%(admin_email)s\">зв'яжіться з адміністраторами сайту</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -4193,12 +3453,8 @@ msgid "Slug in %(locale)s:"
 msgstr "Заголовок на %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
-msgid ""
-"Find the translation source with the lookup above and then click \"Save "
-"Changes."
-msgstr ""
-"Знайдіть джерело для перекладу в пошуку вище, а потім натисніть \"Зберегти "
-"зміни\"."
+msgid "Find the translation source with the lookup above and then click \"Save Changes."
+msgstr "Знайдіть джерело для перекладу в пошуку вище, а потім натисніть \"Зберегти зміни\"."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
@@ -4245,9 +3501,7 @@ msgstr "Усі документи"
 msgid "Translation updates needed"
 msgstr "Необхідне оновлення перекладу"
 
-#: kuma/wiki/jinja2/wiki/list/documents.html:55
-#: kuma/wiki/jinja2/wiki/list/needs_review.html:33
-#: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
+#: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:33 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
 msgstr "Немає статей."
 
@@ -4324,20 +3578,16 @@ msgstr[0] "Знайдено %(count)s документ."
 msgstr[1] "Знайдено %(count)s документа."
 msgstr[2] "Знайдено %(count)s документів."
 
-#: kuma/wiki/templates/admin/wiki/purge_documents.html:4
-#: kuma/wiki/templates/admin/wiki/purge_documents.html:25
-#: kuma/wiki/templates/admin/wiki/purge_documents.html:30
+#: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
 msgid "Purge documents"
 msgstr "Очистити документи"
 
-#: kuma/wiki/templates/admin/wiki/purge_documents.html:22
-#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
+#: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
 msgstr "Домівка"
 
-#: kuma/wiki/templates/admin/wiki/purge_documents.html:24
-#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
+#: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
 msgid "Documents"
 msgstr "Документи"
 
@@ -4360,9 +3610,7 @@ msgstr "\"Завантажити документи\""
 msgid "Add %(name)s"
 msgstr "Додати %(name)s"
 
-#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4
-#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:25
-#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
+#: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 msgid "Load documents"
 msgstr "Завантажити документи"
 
@@ -4380,17 +3628,13 @@ msgstr "Деталі подання Akismet"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
-msgstr ""
-"Для відправлення подання до Akismet, будь ласка, збережіть форму нижче."
+msgstr "Для відправлення подання до Akismet, будь ласка, збережіть форму нижче."
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_list.html:4
 msgid "Select an Akismet submission for more details"
 msgstr "Виберіть Akismet подання для більш докладної інформації"
 
-#: kuma/wiki/templatetags/jinja_helpers.py:101
-#: kuma/wiki/templatetags/jinja_helpers.py:102
-#: kuma/wiki/templatetags/jinja_helpers.py:117
-#: kuma/wiki/templatetags/jinja_helpers.py:118
+#: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
 msgstr "Редакція %s"
@@ -4400,12 +3644,8 @@ msgid "There was an error generating the content."
 msgstr "Під час генерування вмісту сталася помилка."
 
 #: kuma/wiki/views/delete.py:54
-msgid ""
-"Document already exists. Note: You cannot revert a document that has been "
-"moved until you delete its redirect."
-msgstr ""
-"Документ вже існує. Зауваження: Ви не можете скасувати зміни в документі, "
-"якій був переміщений, поки не видалите його перенаправлення."
+msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
+msgstr "Документ вже існує. Зауваження: Ви не можете скасувати зміни в документі, якій був переміщений, поки не видалите його перенаправлення."
 
 #: kuma/wiki/views/document.py:608
 #, python-format
@@ -4436,12 +3676,8 @@ msgid "Sections may only be edited inline."
 msgstr "Розділи можна редагувати лише на місці."
 
 #: kuma/wiki/views/misc.py:53
-msgid ""
-"Autosuggest requires a partial title. For a full document index, see the "
-"main page."
-msgstr ""
-"Автозаповнення вимагає часткового вказання заголовку. Повний індекс "
-"документа дивіться на головній сторінці."
+msgid "Autosuggest requires a partial title. For a full document index, see the main page."
+msgstr "Автозаповнення вимагає часткового вказання заголовку. Повний індекс документа дивіться на головній сторінці."
 
 #: kuma/wiki/views/misc.py:106
 #, python-format
@@ -4466,9 +3702,35 @@ msgstr "Ви не можете перекладати цей документ."
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Сервер Elasticsearch: %(backend)s"
 
+#~ msgid "Firefox Apps & Hacks Newsletter"
+#~ msgstr "Підписка на хаки та новини застосунків Firefox"
+
+#~ msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem."
+#~ msgstr "Підпишіться на періодичні новини про Firefox OS, Firefox Marketplace і екосистему відкритих веб-застосунків."
+
+#~ msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
+#~ msgstr "з <a href=\"%(privacy_url)s\">політикою приватності</a>"
+
+#~ msgid "You must agree to the privacy policy."
+#~ msgstr "Ви повинні погодитися з політикою приватності."
+
+#~ msgid "Plain text"
+#~ msgstr "Звичайний текст"
+
+#~ msgid "Send me the newsletter"
+#~ msgstr "Надсилати мені новини"
+
+#~ msgid "Preferred format"
+#~ msgstr "Бажаний формат"
+
+#~ msgid "Your country"
+#~ msgstr "Ваша країна"
+
+#~ msgid "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the newsletter."
+#~ msgstr "<a href=\"%(profile_edit_url)s\">Відредагуйте свій профіль</a>, щоб підписатися на оновлення."
+
 #~ msgid "The file provided is not valid. File must be one of these types: %s."
-#~ msgstr ""
-#~ "Зазначений файл недійсний. Файл повинен мати одне з цих розширень: %s."
+#~ msgstr "Зазначений файл недійсний. Файл повинен мати одне з цих розширень: %s."
 
 #~ msgid "MIME Type:"
 #~ msgstr "Тип MIME:"
@@ -4620,17 +3882,14 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgid "File API"
 #~ msgstr "API Файлів"
 
-#~ msgid ""
-#~ "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
-#~ msgstr ""
-#~ "https://developer.mozilla.org/uk/docs/Web/API/Geolocation/Using_geolocation"
+#~ msgid "https://developer.mozilla.org/en-US/docs/Introducing_the_Audio_API_Extension"
+#~ msgstr "https://developer.mozilla.org/uk/docs/Web/API/Geolocation/Using_geolocation"
 
 #~ msgid "http://www.w3.org/TR/FileAPI/"
 #~ msgstr "http://www.w3.org/TR/FileAPI/"
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation"
-#~ msgstr ""
-#~ "https://developer.mozilla.org/uk/docs/Web/API/Geolocation/Using_geolocation"
+#~ msgstr "https://developer.mozilla.org/uk/docs/Web/API/Geolocation/Using_geolocation"
 
 #~ msgid "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
 #~ msgstr "http://en.wikipedia.org/wiki/W3C_Geolocation_API"
@@ -4638,11 +3897,8 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 #~ msgid "http://dev.w3.org/geo/api/spec-source.html"
 #~ msgstr "http://dev.w3.org/geo/api/spec-source.html"
 
-#~ msgid ""
-#~ "https://developer.mozilla.org/en-"
-#~ "US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
-#~ msgstr ""
-#~ "https://developer.mozilla.org/uk/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
+#~ msgid "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
+#~ msgstr "https://developer.mozilla.org/uk/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest"
 
 #~ msgid "http://www.w3.org/TR/XMLHttpRequest/"
 #~ msgstr "http://www.w3.org/TR/XMLHttpRequest/"

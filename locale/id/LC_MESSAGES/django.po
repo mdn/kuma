@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-11 15:58-0800\n"
+"POT-Creation-Date: 2016-03-18 08:50-0700\n"
 "PO-Revision-Date: 2016-02-22 10:36+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: none\n"
@@ -141,7 +141,7 @@ msgstr "Platform Web"
 msgid "Technologies"
 msgstr "Teknologi"
 
-#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:72 kuma/landing/jinja2/landing/promote_buttons.html:105 kuma/users/forms.py:37
+#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:72 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
@@ -328,22 +328,9 @@ msgstr "Masuk dengan"
 msgid "Sign in"
 msgstr "Masuk"
 
-#: jinja2/includes/login.html:21 kuma/users/forms.py:198 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
+#: jinja2/includes/login.html:21 kuma/users/forms.py:77 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
 msgid "GitHub"
 msgstr "GitHub"
-
-#: jinja2/includes/newsletter.html:4 kuma/users/jinja2/users/apps_newsletter.html:7
-msgid "Firefox Apps & Hacks Newsletter"
-msgstr "Firefox App & Hacks Newsletter"
-
-#: jinja2/includes/newsletter.html:6
-msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem."
-msgstr "Berlangganan berita tentang FIrefox OS, Firefox Marketplace dan ekosistem aplikasi Web yang terbuka."
-
-#: jinja2/includes/newsletter.html:35
-#, python-format
-msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
-msgstr "untuk <a href=\"%(privacy_url)s\">Kebijakan Privasi</a>"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -500,7 +487,7 @@ msgstr "Dokumen ini tidak memiliki lampiran. Gambar bisa dilampirkan, dan ditana
 msgid "File"
 msgstr "Berkas"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1925
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1905
 msgid "Title"
 msgstr "Judul"
 
@@ -1423,83 +1410,59 @@ msgstr "hash"
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
 msgstr "Username hanya dapat mengandung huruf, angka, dan karakter ini: . - _ +"
 
-#: kuma/users/forms.py:23
-msgid "You must agree to the privacy policy."
-msgstr "Anda harus menyetujui kebijakan privasi."
-
-#: kuma/users/forms.py:38
-msgid "Plain text"
-msgstr "Teks biasa"
-
-#: kuma/users/forms.py:40
-msgid "Send me the newsletter"
-msgstr "Kirimi saya newsletter"
-
-#: kuma/users/forms.py:42
-msgid "Preferred format"
-msgstr "Format yang disukai"
-
-#: kuma/users/forms.py:47 kuma/users/signup.py:34
-msgid "I agree"
-msgstr "Saya setuju"
-
-#: kuma/users/forms.py:50
-msgid "Your country"
-msgstr "Negara anda"
-
-#: kuma/users/forms.py:151 kuma/users/models.py:41
+#: kuma/users/forms.py:30 kuma/users/models.py:41
 msgid "Timezone"
 msgstr "Zona waktu"
 
-#: kuma/users/forms.py:157
+#: kuma/users/forms.py:36
 msgid "Beta tester"
 msgstr "Penguji beta"
 
-#: kuma/users/forms.py:161 kuma/users/jinja2/users/user_detail.html:81
+#: kuma/users/forms.py:40 kuma/users/jinja2/users/user_detail.html:81
 msgid "Interests"
 msgstr "Minat"
 
-#: kuma/users/forms.py:167
+#: kuma/users/forms.py:46
 msgid "Expertise"
 msgstr "Keahlian"
 
-#: kuma/users/forms.py:173
+#: kuma/users/forms.py:52
 msgid "Username"
 msgstr "Nama pengguna"
 
-#: kuma/users/forms.py:180 kuma/users/models.py:136 kuma/users/jinja2/users/user_detail.html:111
+#: kuma/users/forms.py:59 kuma/users/models.py:136 kuma/users/jinja2/users/user_detail.html:111
 msgid "Website"
 msgstr "Website"
 
-#: kuma/users/forms.py:189 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:115 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/users/forms.py:68 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:115 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:207 kuma/users/models.py:166 kuma/users/jinja2/users/user_detail.html:129
+#: kuma/users/forms.py:86 kuma/users/models.py:166 kuma/users/jinja2/users/user_detail.html:129
 msgid "Stack Overflow"
 msgstr "Stack Overflow"
 
-#: kuma/users/forms.py:216 kuma/users/models.py:156 kuma/users/jinja2/users/user_detail.html:133
+#: kuma/users/forms.py:95 kuma/users/models.py:156 kuma/users/jinja2/users/user_detail.html:133
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: kuma/users/forms.py:225 kuma/users/models.py:141 kuma/users/jinja2/users/user_detail.html:137
+#: kuma/users/forms.py:104 kuma/users/models.py:141 kuma/users/jinja2/users/user_detail.html:137
 msgid "Mozillians"
 msgstr "Mozillians"
 
-#: kuma/users/forms.py:234 kuma/users/models.py:161 kuma/users/jinja2/users/user_detail.html:141 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
+#: kuma/users/forms.py:113 kuma/users/models.py:161 kuma/users/jinja2/users/user_detail.html:141 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
 msgid "Facebook"
 msgstr "Facebook"
 
-#: kuma/users/forms.py:266
+#: kuma/users/forms.py:145
 msgid "Areas of expertise must be a subset of interests"
 msgstr "Bidang keahlian harus merupakan subset dari minat"
 
-#: kuma/users/forms.py:275
+#: kuma/users/forms.py:154
 msgid "This field cannot be blank."
 msgstr "Bidang ini tidak boleh kosong."
 
-#: kuma/users/forms.py:281
+#: kuma/users/forms.py:160
 msgid "Username already in use."
 msgstr "Nama ini sudah digunakan."
 
@@ -1595,25 +1558,29 @@ msgstr "Nama pengguna terlalu panjang (%(show_value)s karakter). Harus %(limit_v
 msgid "You must agree to the terms of use."
 msgstr "Anda harus menyetujui persyaratan penggunaan."
 
+#: kuma/users/signup.py:34
+msgid "I agree"
+msgstr "Saya setuju"
+
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
 msgstr "Mengambil langkah berikutnya untuk terlibat dalam MDN!"
 
-#: kuma/users/views.py:214
+#: kuma/users/views.py:185
 msgid "Email address"
 msgstr "Alamat email"
 
-#: kuma/users/views.py:273
+#: kuma/users/views.py:244
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>Terbukti</b>"
 
-#: kuma/users/views.py:276
+#: kuma/users/views.py:247
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s Belum Terverifikasi"
 
-#: kuma/users/views.py:279 kuma/users/jinja2/socialaccount/signup.html:142
+#: kuma/users/views.py:250 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr "Lainnya:"
 
@@ -1856,16 +1823,16 @@ msgstr "Batal Masuk"
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
 msgstr "Anda memutuskan untuk membatalkan masuk ke situs kami menggunakan salah satu akun yang ada. Jika ini adalah sebuah kesalahan, harap lanjutkan untuk <a href=\"%(login_url)s\">masuk</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:4 kuma/users/jinja2/socialaccount/signup.html:26
+#: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
 msgid "Create your MDN profile to continue"
 msgstr "Buatlah profil MDN anda untuk lanjut"
 
-#: kuma/users/jinja2/socialaccount/signup.html:30
+#: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
 msgstr "Sudah ada profil dengan alamat surel ini. Untuk menghubungkan Persona dengan profil MDN anda, <a href=\"%(connections_url)s\">anda perlu masuk dan mengunjungi koneksi akun sosial anda.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:43
+#: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
 msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
@@ -1877,39 +1844,39 @@ msgstr[0] ""
 "Sudah ada profil dengan salah satu alamat email ini di bawah ini. Apakah anda sudah mempunyai profil MDN? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
 "\"%(persona_next_url)s\">Ya, hubungkan dengan profil MDN saya</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:55
+#: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
 msgstr "Terima kasih karena telah mendaftar ke MDN dengan sekian %(provider_name)s. Anda perlu satu langkah lagi untuk bergabung dengan MDN: <strong>buat profil MDN anda</strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:61
+#: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
 msgstr "Anda dapat mengakses segala sesuatu di situs MDN bahkan tanpa profil MDN. Namun, dengan bergabung di MDN, Anda akan dapat mengedit dokumen dan memiliki halaman profil Anda sendiri."
 
-#: kuma/users/jinja2/socialaccount/signup.html:68
+#: kuma/users/jinja2/socialaccount/signup.html:61
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr "Untuk mengatur profil MDN, silahkan <strong>pilih nama pengguna</strong>. Nama pengguna akan ditampilkan di MDN untuk mengidentifikasi setiap kontribusi yang Anda buat."
 
-#: kuma/users/jinja2/socialaccount/signup.html:74
+#: kuma/users/jinja2/socialaccount/signup.html:67
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
 msgstr ""
 "Untuk mengatur profil MDN anda, silakan <strong>pilih nama pengguna dan alamat surel</strong>. Nama pengguna anda akan ditampilkan di MDN untuk mengidentifikasi setiap kontribusi yang anda buat."
 
-#: kuma/users/jinja2/socialaccount/signup.html:82
+#: kuma/users/jinja2/socialaccount/signup.html:75
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
 msgstr "Jika anda <strong>memiliki masalah</strong> saat masuk atau membuat profil MDN, <strong><a href=\"%(bug_href)s\" rel=\"external\">beritahu kami</a></strong>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:107
+#: kuma/users/jinja2/socialaccount/signup.html:100
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
 msgstr "Nama Pengguna GitHub %(username)s telah diambil. Pilihlah yang lain."
 
-#: kuma/users/jinja2/socialaccount/signup.html:111
+#: kuma/users/jinja2/socialaccount/signup.html:104
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
 msgstr "Ketiklah nama yang ingin anda perlihatkan ke pengguna lain untuk mengetahui kontribusi anda."
 
-#: kuma/users/jinja2/socialaccount/signup.html:125
+#: kuma/users/jinja2/socialaccount/signup.html:118
 #, python-format
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
@@ -1918,7 +1885,7 @@ msgstr ""
 "Sudah ada sebuah profil dengan alamat surel yang dipilih. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Hubungkan akun anda %(provider_name)s "
 "dengan itu.</a>"
 
-#: kuma/users/jinja2/socialaccount/signup.html:155
+#: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
@@ -1927,16 +1894,16 @@ msgstr ""
 "Alamat surel apa yang harus kami gunakan untuk mengirim pesan terkait MDN dan notifikasi? Alamat ini tidak <strong>akan</strong> ditampilkan di MDN dan akan digunakan sesuai <a href="
 "\"%(privacy_url)s\">kebijakan privasi</a>kami."
 
-#: kuma/users/jinja2/socialaccount/signup.html:173
+#: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/signup.html:182
+#: kuma/users/jinja2/socialaccount/signup.html:173
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
 msgstr "untuk <a href=\"%(terms_url)s\">Syarat</a> dan <a href=\"%(privacy_url)s\">Ketentuan Mozilla</a>."
 
-#: kuma/users/jinja2/socialaccount/signup.html:192
+#: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
 msgstr "Buat profil MDN saya"
 
@@ -1964,11 +1931,6 @@ msgstr "Terhubung dengan GitHub"
 msgid "Sign in with GitHub"
 msgstr "Masuk dengan GitHub"
 
-#: kuma/users/jinja2/users/apps_newsletter.html:14
-#, python-format
-msgid "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the newsletter."
-msgstr "<a href=\"%(profile_edit_url)s\">Sunting profil anda</a> untuk bergabung dengan newsletter."
-
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
 msgstr "Anda Telah Dicekal"
@@ -1981,7 +1943,7 @@ msgstr "Anda telah dicekal karena alasan berikut:"
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
 msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik di sini</a> untuk mengangkat pencekalan ini.</p>"
 
-#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:718 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
 msgstr "Sunting"
 
@@ -2047,77 +2009,77 @@ msgstr "<p class=\"none\">Anda belum berkontribusi pada dokumen MDN apapun. <a h
 msgid "This user has no activity."
 msgstr "Pengguna ini tidak memiliki aktivitas."
 
-#: kuma/users/jinja2/users/user_edit.html:12
+#: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
 msgstr "Sunting Profil Anda"
 
-#: kuma/users/jinja2/users/user_edit.html:38
+#: kuma/users/jinja2/users/user_edit.html:35
 msgid "Change your avatar at"
 msgstr "Ubah avatar anda di"
 
-#: kuma/users/jinja2/users/user_edit.html:42
+#: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
 msgstr "Tampilkan profil"
 
-#: kuma/users/jinja2/users/user_edit.html:50
+#: kuma/users/jinja2/users/user_edit.html:47
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr "Anda menyunting profil yang berbeda dengan milik anda. Berhati-hatilah!"
 
-#: kuma/users/jinja2/users/user_edit.html:61
+#: kuma/users/jinja2/users/user_edit.html:58
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
 "Kami ingin mendapatkan masukan anda atas perubahan dalam situs! Pengetes beta akan mendapatkan akses terhadap fitur baru terlebih dahulu dan kami mengirimkan surel secara berkala meminta anda "
 "mengetes hal-hal tertentu."
 
-#: kuma/users/jinja2/users/user_edit.html:64
+#: kuma/users/jinja2/users/user_edit.html:61
 msgid "Primary Email"
 msgstr "Email Utama"
 
-#: kuma/users/jinja2/users/user_edit.html:65
+#: kuma/users/jinja2/users/user_edit.html:62
 msgid "Edit email"
 msgstr "Sunting email"
 
-#: kuma/users/jinja2/users/user_edit.html:77
+#: kuma/users/jinja2/users/user_edit.html:74
 msgid "About me"
 msgstr "Tentang saya"
 
-#: kuma/users/jinja2/users/user_edit.html:77
+#: kuma/users/jinja2/users/user_edit.html:74
 msgid "words remaining"
 msgstr "kata yang tersisa"
 
-#: kuma/users/jinja2/users/user_edit.html:83
+#: kuma/users/jinja2/users/user_edit.html:80
 msgid "Interests (tags)"
 msgstr "Minat (tag)"
 
-#: kuma/users/jinja2/users/user_edit.html:84
+#: kuma/users/jinja2/users/user_edit.html:81
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr "Pisahkan tag dengan koma atau spasi. Gabungkan tag yang terdiri dari beberapa kata dengan tanda kutip ganda, misalnya \"standar web\"."
 
-#: kuma/users/jinja2/users/user_edit.html:90
+#: kuma/users/jinja2/users/user_edit.html:87
 msgid "Areas of expertise"
 msgstr "Bidang keahlian"
 
-#: kuma/users/jinja2/users/user_edit.html:91
+#: kuma/users/jinja2/users/user_edit.html:88
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr "Tambahkan minat anda terlebih dahulu, lalu nyatakan diri anda sebagai ahli dalam topik terpilih."
 
-#: kuma/users/jinja2/users/user_edit.html:99
+#: kuma/users/jinja2/users/user_edit.html:96
 msgid "My Profiles"
 msgstr "Profil Saya"
 
-#: kuma/users/jinja2/users/user_edit.html:104 kuma/users/jinja2/users/user_edit.html:122
+#: kuma/users/jinja2/users/user_edit.html:101 kuma/users/jinja2/users/user_edit.html:119
 msgid "Change"
 msgstr "Ubah"
 
-#: kuma/users/jinja2/users/user_edit.html:110
+#: kuma/users/jinja2/users/user_edit.html:107
 msgid "Use your Persona account to sign in."
 msgstr "Gunakan akun Persona anda untuk masuk."
 
-#: kuma/users/jinja2/users/user_edit.html:130
+#: kuma/users/jinja2/users/user_edit.html:127
 msgid "Use your GitHub account to sign in."
 msgstr "Gunakan akun Github anda untuk masuk."
 
-#: kuma/users/jinja2/users/user_edit.html:151 kuma/users/jinja2/users/user_edit.html:159 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
+#: kuma/users/jinja2/users/user_edit.html:151 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Save Changes"
 msgstr "Simpan Perubahan"
 
@@ -2289,7 +2251,7 @@ msgstr "Editorial - prosa, tata bahasa, atau konten"
 msgid "Localization in progress - not completely translated yet."
 msgstr "Pelokalan sedang berlangsung - belum diterjemahkan sepenuhnya."
 
-#: kuma/wiki/content.py:699
+#: kuma/wiki/content.py:718
 msgid "Edit section"
 msgstr "Sunting seksi"
 
@@ -2508,104 +2470,104 @@ msgstr "Slug baru:"
 msgid "New article URL"
 msgstr "URL artikel baru"
 
-#: kuma/wiki/models.py:114
+#: kuma/wiki/models.py:111
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "Induk %s tidak ada."
 
-#: kuma/wiki/models.py:122
+#: kuma/wiki/models.py:119
 msgid "Document Tag"
 msgstr "Tag Dokumen"
 
-#: kuma/wiki/models.py:123
+#: kuma/wiki/models.py:120
 msgid "Document Tags"
 msgstr "Tag Dokumen"
 
-#: kuma/wiki/models.py:175
+#: kuma/wiki/models.py:172
 #, fuzzy
 msgid "uploaded to the document"
 msgstr "Mengembalikan dokumen ini"
 
-#: kuma/wiki/models.py:181
+#: kuma/wiki/models.py:178
 #, fuzzy
 msgid "linked in the document content"
 msgstr "Lewati ke konten utama"
 
-#: kuma/wiki/models.py:195
+#: kuma/wiki/models.py:192
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr ""
 
-#: kuma/wiki/models.py:1562
+#: kuma/wiki/models.py:1540
 msgid "Review Tag"
 msgstr "Tag Ulasan"
 
-#: kuma/wiki/models.py:1563
+#: kuma/wiki/models.py:1541
 msgid "Review Tags"
 msgstr "Tag Ulasan"
 
-#: kuma/wiki/models.py:1569
+#: kuma/wiki/models.py:1547
 msgid "Localization Tag"
 msgstr "Tag Pelokalan"
 
-#: kuma/wiki/models.py:1570
+#: kuma/wiki/models.py:1548
 msgid "Localization Tags"
 msgstr "Tag Pelokalan"
 
-#: kuma/wiki/models.py:1603
+#: kuma/wiki/models.py:1581
 msgid "No table of contents"
 msgstr "Tidak ada tabel konten"
 
-#: kuma/wiki/models.py:1604
+#: kuma/wiki/models.py:1582
 msgid "All levels"
 msgstr "Semua tingkatan"
 
-#: kuma/wiki/models.py:1605
+#: kuma/wiki/models.py:1583
 msgid "H2 and higher"
 msgstr "H2 dan lebih tinggi"
 
-#: kuma/wiki/models.py:1606
+#: kuma/wiki/models.py:1584
 msgid "H3 and higher"
 msgstr "H3 dan lebih tinggi"
 
-#: kuma/wiki/models.py:1607
+#: kuma/wiki/models.py:1585
 msgid "H4 and higher"
 msgstr "H4 dan lebih tinggi"
 
-#: kuma/wiki/models.py:1711
+#: kuma/wiki/models.py:1689
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "Revisi harus dibuat berdasarkan dokumen %(locale)s . Perubahan ID %(id)s tidak memenuhi kriteria tersebut."
 
-#: kuma/wiki/models.py:1845
+#: kuma/wiki/models.py:1825
 msgid "IP address"
 msgstr "Alamat IP"
 
-#: kuma/wiki/models.py:1853
+#: kuma/wiki/models.py:1833
 msgid "User-Agent"
 msgstr "Agen-Pengguna"
 
-#: kuma/wiki/models.py:1858
+#: kuma/wiki/models.py:1838
 msgid "HTTP Referrer"
 msgstr "Perujuk HTTP"
 
-#: kuma/wiki/models.py:1879
+#: kuma/wiki/models.py:1859
 msgid "Revision"
 msgstr "Perubahan"
 
-#: kuma/wiki/models.py:1885
+#: kuma/wiki/models.py:1865
 msgid "Akismet submission"
 msgstr "Pendaftaran Akismet"
 
-#: kuma/wiki/models.py:1886
+#: kuma/wiki/models.py:1866
 msgid "Akismet submissions"
 msgstr "Pendaftaran Akismet"
 
-#: kuma/wiki/models.py:1929
+#: kuma/wiki/models.py:1909
 msgid "Slug"
 msgstr "Slug"
 
-#: kuma/wiki/models.py:1937
+#: kuma/wiki/models.py:1917
 msgid "Document (optional)"
 msgstr "Dokumen (opsional)"
 
@@ -3708,6 +3670,33 @@ msgstr "Anda tidak dapat menerjemahkan dokumen ini."
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Server elasticsearch: %(backend)s"
+
+#~ msgid "Firefox Apps & Hacks Newsletter"
+#~ msgstr "Firefox App & Hacks Newsletter"
+
+#~ msgid "Subscribe for periodic news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem."
+#~ msgstr "Berlangganan berita tentang FIrefox OS, Firefox Marketplace dan ekosistem aplikasi Web yang terbuka."
+
+#~ msgid "to the <a href=\"%(privacy_url)s\">Privacy Policy</a>"
+#~ msgstr "untuk <a href=\"%(privacy_url)s\">Kebijakan Privasi</a>"
+
+#~ msgid "You must agree to the privacy policy."
+#~ msgstr "Anda harus menyetujui kebijakan privasi."
+
+#~ msgid "Plain text"
+#~ msgstr "Teks biasa"
+
+#~ msgid "Send me the newsletter"
+#~ msgstr "Kirimi saya newsletter"
+
+#~ msgid "Preferred format"
+#~ msgstr "Format yang disukai"
+
+#~ msgid "Your country"
+#~ msgstr "Negara anda"
+
+#~ msgid "<a href=\"%(profile_edit_url)s\">Edit your profile</a> to join the newsletter."
+#~ msgstr "<a href=\"%(profile_edit_url)s\">Sunting profil anda</a> untuk bergabung dengan newsletter."
 
 #~ msgid "The file provided is not valid. File must be one of these types: %s."
 #~ msgstr "Berkas yang disediakan tidak valid. Berkas harus berupa salah satu dari tipe ini: %s."
