@@ -1899,14 +1899,15 @@ class DocumentSpamAttempt(SpamAttempt):
     The wiki document specific spam attempt.
 
     Stores title, slug and locale of the documet revision to be able
-    to see where it happens.
+    to see where it happens. Stores data sent to Akismet so that staff can
+    review Akismet's spam detection for false positives.
     """
     title = models.CharField(
-        verbose_name=ugettext('Title'),
+        verbose_name=_('Title'),
         max_length=255,
     )
     slug = models.CharField(
-        verbose_name=ugettext('Slug'),
+        verbose_name=_('Slug'),
         max_length=255,
     )
     document = models.ForeignKey(
@@ -1914,8 +1915,42 @@ class DocumentSpamAttempt(SpamAttempt):
         related_name='spam_attempts',
         null=True,
         blank=True,
-        verbose_name=ugettext('Document (optional)'),
+        verbose_name=_('Document (optional)'),
         on_delete=models.SET_NULL,
+    )
+    data = models.TextField(
+        editable=False,
+        blank=True,
+        null=True,
+        verbose_name=_('Data submitted to Akismet')
+    )
+    reviewed = models.DateTimeField(
+        _('reviewed'),
+        blank=True,
+        null=True,
+    )
+
+    NEEDS_REVIEW = 0
+    HAM = 1
+    SPAM = 2
+    REVIEW_UNAVAILABLE = 3
+    REVIEW_CHOICES = (
+        (NEEDS_REVIEW, _('Needs Review')),
+        (HAM, _('Ham / False Positive')),
+        (SPAM, _('Confirmed as Spam')),
+        (REVIEW_UNAVAILABLE, _('Review Unavailable')),
+    )
+    review = models.IntegerField(
+        choices=REVIEW_CHOICES,
+        default=NEEDS_REVIEW,
+        verbose_name=_("Review of Akismet's classification as spam"),
+    )
+    reviewer = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='documentspam_reviewed',
+        blank=True,
+        null=True,
+        verbose_name=_('Staff reviewer'),
     )
 
     def __unicode__(self):
