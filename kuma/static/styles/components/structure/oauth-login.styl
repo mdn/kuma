@@ -6,7 +6,8 @@ Login links in secondary navigation
     border-radius: 8px;
     border: 1px solid transparent;
     display: inline-block;
-    min-width: 90px;
+    width: 200px;
+
 
     {$selector-icon} {
         margin-left: 0;
@@ -37,6 +38,7 @@ Login links in secondary navigation
     border-radius: 8px;
     cursor: default;
     position: relative;
+    line-height: 23px; /* matches height of sign in icons */
 
     &.active {
         border-color: rgba-fallback(rgba(255, 255, 255, 0.3));
@@ -49,10 +51,6 @@ Login links in secondary navigation
     }
 }
 
-.oauth-login-options-text-no-icons {
-    display: none;
-}
-
 .oauth-icon {
     border-radius: 4px;
     text-align: center;
@@ -63,6 +61,7 @@ Login links in secondary navigation
     display: inline-block;
     create-gradient(#43a6e2, #287cc2);
     cursor: pointer;
+    bidi-value(float, right, left);
 
     {$selector-icon} {
     	bidi-style(margin-left, 0, margin-right, 0);
@@ -81,6 +80,7 @@ Login links in secondary navigation
     border-bottom-right-radius: 8px;
     overflow: hidden;
     padding: 0;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5);
 
     a {
         display: block;
@@ -102,19 +102,6 @@ Login links in secondary navigation
 
 /* tablet updates */
 @media $media-query-tablet {
-
-    .oauth-login-options-text {
-        bidi-style(padding-right, 20px, padding-left, 0);
-    }
-
-    /* remove options to click icons to sign in on smaller screens where a corse pointer is more likely to be present */
-    .oauth-login-options-text-icons {
-        display: none;
-    }
-
-    .oauth-login-options-text-no-icons {
-        display: inline;
-    }
 
     .oauth-icon {
         display: none;

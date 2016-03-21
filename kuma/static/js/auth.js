@@ -57,27 +57,18 @@
         var activeClass = 'active';
         var fadeSpeed = 300;
 
-        // The options text is only hidden on tablets and lower, so only do the
-        // JavaScript piece of the CSS is controlling text visibility
-        var $noIconsElement = $container.find('.oauth-login-options-text-no-icons');
-        var doMoveCloseButton = function() {
-            return $noIconsElement.css('display') !== 'none';
-        };
-
         $options.mozMenu({
             submenu: $picker,
             fadeInSpeed: fadeSpeed,
             fadeOutSpeed: fadeSpeed,
             onOpen: function() {
                 $options.addClass(activeClass);
-                if(doMoveCloseButton()) {
-                    $container.find('.submenu-close').attr('tabIndex', -1).appendTo($options);
-                }
+                $container.find('.submenu-close').attr('tabIndex', -1).appendTo($options);
+
             },
             onClose: function() {
-                if(doMoveCloseButton()) {
-                    $container.find('.submenu-close').removeAttr('tabIndex').appendTo($container.find('.oauth-login-picker'));
-                }
+                $container.find('.submenu-close').removeAttr('tabIndex').appendTo($container.find('.oauth-login-picker'));
+
                 $options.removeClass(activeClass);
             }
         });
