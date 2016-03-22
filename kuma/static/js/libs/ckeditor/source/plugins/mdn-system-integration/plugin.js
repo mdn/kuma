@@ -33,6 +33,7 @@ CKEDITOR.plugins.add('mdn-system-integration', {
 
     // Define command and button for "Preview".
     editor.addCommand('mdn-preview', {
+      modes: { wysiwyg: 1, source: 1 },
       exec: function (editor, data) {
         editor.updateElement();
         buttonPreview.$.click();
