@@ -264,6 +264,22 @@ CKEDITOR.plugins.add('scayt', {
 			plugin.destroy(editor);
 		};
 
+		/**
+		 * Dirty fix for placeholder drag&drop
+		 * Should be fixed with next release
+		 */
+		/*
+		editor.on('drop', function(evt) {
+			var dropRange = evt.data.dropRange;
+			var b = dropRange.createBookmark(true);
+			editor.scayt.removeMarkupInSelectionNode({ selectionNode: evt.data.target.$, forceBookmark: false });
+			dropRange.moveToBookmark(b);
+
+			evt.data.dropRange = dropRange;
+			return evt;
+		}, this, null, 0); // We should be sure that we modify dropRange before CKEDITOR.plugins.clipboard calls
+		*/
+
 		var contentDomReady = function() {
 			// The event is fired when editable iframe node was reinited so we should restart our service
 			if (plugin.state.scayt[editor.name] && !editor.readOnly && !editor.scayt) {
@@ -304,7 +320,11 @@ CKEDITOR.plugins.add('scayt', {
 			if(inline_mode) {
 
 				if (!editor.config.scayt_inlineModeImmediateMarkup) {
-					editor.on('blur', scaytDestroy);
+					/**
+					 * Give an opportunity to CKEditor to perform all needed updates
+					 * and only after that call 'scaytDestroy' method (#72725)
+					 */
+					editor.on('blur', function () { setTimeout( scaytDestroy, 0 ); } );
 					editor.on('focus', contentDomReady);
 
 					// We need to check if editor has focus(created) right now.
@@ -322,6 +342,22 @@ CKEDITOR.plugins.add('scayt', {
 			}
 
 			addMarkupStateHandlers();
+
+			/**
+			 * 'mousedown' handler handle widget selection (click on widget). To
+			 * fix the issue when widget#wrapper referenced to element which can
+			 * be broken after markup.
+			 */
+			var editable = editor.editable();
+			editable.attachListener(editable, 'mousedown', function( evt ) {
+				var target = evt.data.getTarget();
+				var widget = editor.widgets && editor.widgets.getByElement( target );
+				if ( widget ) {
+					widget.wrapper = target.getAscendant( function( el ) {
+						return el.hasAttribute( 'data-cke-widget-wrapper' )
+					}, true );
+				}
+			}, this, null, -10); // '-10': we need to be shure that widget#wrapper updated before any other calls
 		};
 
 		editor.on('contentDom', contentDomHandler);
@@ -392,14 +428,20 @@ CKEDITOR.plugins.add('scayt', {
 		});
 
 		editor.on('afterCommandExec', function(ev) {
-			var scaytInstance = editor.scayt;
-
 			if(editor.mode == 'wysiwyg' && (ev.data.name == 'undo' || ev.data.name == 'redo')) {
-				if(scaytInstance) {
-					setTimeout(function() {
-						scaytInstance.fire('startSpellCheck, startGrammarCheck');
-					}, 250);
-				}
+				setTimeout(function() {
+					var scaytInstance = editor.scayt,
+						scaytLangList = scaytInstance && scaytInstance.getScaytLangList();
+
+					/**
+					 * Checks SCAYT initialization of LangList. To prevent immediate
+					 * markup which is triggered by 'startSpellCheck' event.
+					 * E.g.: Drop into inline CKEDITOR with scayt_autoStartup = true;
+					 */
+					if (!scaytLangList || !(scaytLangList.ltr && scaytLangList.rtl)) return;
+
+					scaytInstance.fire('startSpellCheck, startGrammarCheck');
+				}, 250);
 			}
 		});
 
@@ -439,21 +481,40 @@ CKEDITOR.plugins.add('scayt', {
 			}
 		}, this, null, 50);
 
+		/**
+		 * Main entry point to react on changes in document
+		 */
 		editor.on('reloadMarkupScayt', function(ev) {
-			var scaytInstance = editor.scayt,
-				removeOptions = ev.data && ev.data.removeOptions,
+			var removeOptions = ev.data && ev.data.removeOptions,
 				timeout = ev.data && ev.data.timeout;
 
-			if (scaytInstance) {
+			/**
+			 * Perform removeMarkupInSelectionNode and 'startSpellCheck' fire
+			 * asynchroniosly and keep CKEDITOR flow as expected
+			 */
+			setTimeout(function() {
+				var scaytInstance = editor.scayt,
+					scaytLangList = scaytInstance && scaytInstance.getScaytLangList();
+
+				/**
+				 * Checks SCAYT initialization of LangList. To prevent immediate
+				 * markup which is triggered by 'startSpellCheck' event.
+				 * E.g.: Drop into inline CKEDITOR with scayt_autoStartup = true;
+				 */
+				if (!scaytLangList || !(scaytLangList.ltr && scaytLangList.rtl)) return;
+
+				/**
+				 * CKEditor can keep \u200B character in document (with selection#selectRanges)
+				 * we need to take care about that. For this case we fire
+				 * 'keydown' [left arrow], what will trigger 'removeFillingChar' on Webkit
+				 * to cleanup the document
+				 */
+				editor.document.fire( 'keydown', new CKEDITOR.dom.event( { keyCode: 37 } ) );
+
+				/* trigger remove markup with 'startSpellCheck' */
 				scaytInstance.removeMarkupInSelectionNode(removeOptions);
-				if(typeof timeout === 'number') {
-					setTimeout(function() {
-						scaytInstance.fire('startSpellCheck, startGrammarCheck');
-					}, timeout);
-				} else {
-					scaytInstance.fire('startSpellCheck, startGrammarCheck');
-				}
-			}
+				scaytInstance.fire('startSpellCheck, startGrammarCheck');
+			}, timeout || 0 );
 		});
 
 		// Reload spell-checking for current word after insertion completed.
@@ -477,18 +538,9 @@ CKEDITOR.plugins.add('scayt', {
 
 			dialog.selectPage(scaytInstance.tabToOpen);
 		});
-
-		editor.on('paste', function(ev) {
-			var scaytInstance = editor.scayt;
-
-			if(scaytInstance) {
-				scaytInstance.removeMarkupInSelectionNode();
-			}
-		}, null, null, 0);
 	},
 	parseConfig: function(editor) {
-		var plugin = CKEDITOR.plugins.scayt,
-			inlineMode = (editor.elementMode == CKEDITOR.ELEMENT_MODE_INLINE);
+		var plugin = CKEDITOR.plugins.scayt;
 
 		// preprocess config for backward compatibility
 		plugin.replaceOldOptionsNames(editor.config);
@@ -499,7 +551,7 @@ CKEDITOR.plugins.add('scayt', {
 		}
 		plugin.state.scayt[editor.name] = editor.config.scayt_autoStartup;
 
-		if(typeof editor.config.grayt_autoStartup !== 'boolean' || inlineMode || editor.plugins.divarea) {
+		if(typeof editor.config.grayt_autoStartup !== 'boolean') {
 			editor.config.grayt_autoStartup = false;
 		}
 		if(typeof editor.config.scayt_inlineModeImmediateMarkup !== 'boolean') {
@@ -594,8 +646,11 @@ CKEDITOR.plugins.add('scayt', {
 		}
 
 		if(typeof CKEDITOR.config.scayt_handleUndoRedo !== 'boolean') {
+			/* set default as 'true' */
 			CKEDITOR.config.scayt_handleUndoRedo = true;
 		}
+		/* checking 'undo' plugin, if no disable SCAYT handler */
+		CKEDITOR.config.scayt_handleUndoRedo = CKEDITOR.plugins.undo ? CKEDITOR.config.scayt_handleUndoRedo : false;
 
 		if(typeof editor.config.scayt_multiLanguageMode !== 'boolean') {
 			editor.config.scayt_multiLanguageMode = false;
@@ -603,6 +658,22 @@ CKEDITOR.plugins.add('scayt', {
 
 		if(typeof editor.config.scayt_multiLanguageStyles !== 'object') {
 			editor.config.scayt_multiLanguageStyles = {};
+		}
+
+		if(editor.config.scayt_ignoreAllCapsWords && typeof editor.config.scayt_ignoreAllCapsWords !== 'boolean') {
+			editor.config.scayt_ignoreAllCapsWords = false;
+		}
+
+		if(editor.config.scayt_ignoreDomainNames && typeof editor.config.scayt_ignoreDomainNames !== 'boolean') {
+			editor.config.scayt_ignoreDomainNames = false;
+		}
+
+		if(editor.config.scayt_ignoreWordsWithMixedCases && typeof editor.config.scayt_ignoreWordsWithMixedCases !== 'boolean') {
+			editor.config.scayt_ignoreWordsWithMixedCases = false;
+		}
+
+		if(editor.config.scayt_ignoreWordsWithNumbers && typeof editor.config.scayt_ignoreWordsWithNumbers !== 'boolean') {
+			editor.config.scayt_ignoreWordsWithNumbers = false;
 		}
 
 		if( editor.config.scayt_disableOptionsStorage ) {
@@ -1078,28 +1149,34 @@ CKEDITOR.plugins.scayt = {
 			plugin = CKEDITOR.plugins.scayt;
 
 		this.loadScaytLibrary(editor, function(_editor) {
-			var container = _editor.editable().$.nodeName == 'BODY' ? _editor.document.getWindow().$.frameElement : _editor.editable().$,
-				scaytInstanceOptions = {
-					lang 				: _editor.config.scayt_sLang,
-					container 			: _editor.editable().$.nodeName == 'BODY' ? _editor.document.getWindow().$.frameElement : _editor.editable().$,
-					customDictionary 	: _editor.config.scayt_customDictionaryIds,
-					userDictionaryName 	: _editor.config.scayt_userDictionaryName,
-					localization 		: _editor.langCode,
-					customer_id 		: _editor.config.scayt_customerId,
-					debug 				: _editor.config.scayt_debug,
-					data_attribute_name : self.options.data_attribute_name,
-					misspelled_word_class: self.options.misspelled_word_class,
-					problem_grammar_data_attribute: self.options.problem_grammar_data_attribute,
-					problem_grammar_class: self.options.problem_grammar_class,
-					'options-to-restore':  _editor.config.scayt_disableOptionsStorage,
-					focused 			: _editor.editable().hasFocus, // #30260 we need to set focused=true if CKEditor is focused before SCAYT initialization
-					ignoreElementsRegex : _editor.config.scayt_elementsToIgnore,
-					minWordLength 		: _editor.config.scayt_minWordLength,
-					multiLanguageMode 	: _editor.config.scayt_multiLanguageMode,
-					multiLanguageStyles	: _editor.config.scayt_multiLanguageStyles,
-					graytAutoStartup	: plugin.state.grayt[_editor.name]
-				},
-				contcontainerID;
+			var textContainer = _editor.window && _editor.window.getFrame() || _editor.editable();
+
+			// Do not create SCAYT if there is no text container for usage
+			if(!textContainer) {
+				plugin.state.scayt[_editor.name] = false;
+				return;
+			}
+
+			var scaytInstanceOptions = {
+				lang 				: _editor.config.scayt_sLang,
+				container 			: textContainer.$,
+				customDictionary 	: _editor.config.scayt_customDictionaryIds,
+				userDictionaryName 	: _editor.config.scayt_userDictionaryName,
+				localization 		: _editor.langCode,
+				customer_id 		: _editor.config.scayt_customerId,
+				debug 				: _editor.config.scayt_debug,
+				data_attribute_name : self.options.data_attribute_name,
+				misspelled_word_class: self.options.misspelled_word_class,
+				problem_grammar_data_attribute: self.options.problem_grammar_data_attribute,
+				problem_grammar_class: self.options.problem_grammar_class,
+				'options-to-restore':  _editor.config.scayt_disableOptionsStorage,
+				focused 			: _editor.editable().hasFocus, // #30260 we need to set focused=true if CKEditor is focused before SCAYT initialization
+				ignoreElementsRegex : _editor.config.scayt_elementsToIgnore,
+				minWordLength 		: _editor.config.scayt_minWordLength,
+				multiLanguageMode 	: _editor.config.scayt_multiLanguageMode,
+				multiLanguageStyles	: _editor.config.scayt_multiLanguageStyles,
+				graytAutoStartup	: plugin.state.grayt[_editor.name]
+			};
 
 			if(_editor.config.scayt_serviceProtocol) {
 				scaytInstanceOptions['service_protocol'] = _editor.config.scayt_serviceProtocol;
@@ -1117,10 +1194,21 @@ CKEDITOR.plugins.scayt = {
 				scaytInstanceOptions['service_path'] = _editor.config.scayt_servicePath;
 			}
 
-			// Fix bug with getting wrong uid after re-creating SCAYT instance.
-			// And as result - restoring options for wrong instance
-			if(!container.id && _editor.element.getAttribute('id')) {
-				container.id = _editor.element.getAttribute('id');
+			//predefined options
+			if(typeof _editor.config.scayt_ignoreAllCapsWords === 'boolean') {
+				scaytInstanceOptions['ignore-all-caps-words'] = _editor.config.scayt_ignoreAllCapsWords;
+			}
+
+			if(typeof _editor.config.scayt_ignoreDomainNames === 'boolean') {
+				scaytInstanceOptions['ignore-domain-names'] = _editor.config.scayt_ignoreDomainNames;
+			}
+
+			if(typeof _editor.config.scayt_ignoreWordsWithMixedCases === 'boolean') {
+				scaytInstanceOptions['ignore-words-with-mixed-cases'] = _editor.config.scayt_ignoreWordsWithMixedCases;
+			}
+
+			if(typeof _editor.config.scayt_ignoreWordsWithNumbers === 'boolean') {
+				scaytInstanceOptions['ignore-words-with-numbers'] = _editor.config.scayt_ignoreWordsWithNumbers;
 			}
 
 			var scaytInstance = new SCAYT.CKSCAYT(scaytInstanceOptions, function() {
@@ -1204,18 +1292,20 @@ CKEDITOR.plugins.scayt = {
 				CKEDITOR.scriptLoader.load(scaytUrl, function(success) {
 					var editorName;
 
-					CKEDITOR.fireOnce('scaytReady');
+					if ( success ) {
+						CKEDITOR.fireOnce('scaytReady');
 
-					for(var i = 0; i < self.loadingHelper.loadOrder.length; i++) {
-						editorName = self.loadingHelper.loadOrder[i];
+						for(var i = 0; i < self.loadingHelper.loadOrder.length; i++) {
+							editorName = self.loadingHelper.loadOrder[i];
 
-						if(typeof self.loadingHelper[editorName] === 'function') {
-							self.loadingHelper[editorName](CKEDITOR.instances[editorName]);
+							if(typeof self.loadingHelper[editorName] === 'function') {
+								self.loadingHelper[editorName](CKEDITOR.instances[editorName]);
+							}
+
+							delete self.loadingHelper[editorName];
 						}
-
-						delete self.loadingHelper[editorName];
+						self.loadingHelper.loadOrder = [];
 					}
-					self.loadingHelper.loadOrder = [];
 				});
 				this.loadingHelper.ckscaytLoading = true;
 			}
@@ -1242,6 +1332,20 @@ CKEDITOR.on('dialogDefinition', function(dialogDefinitionEvent) {
 		dialog.on('cancel', function(cancelEvent) {
 			return false;
 		}, this, null, -1);
+	}
+
+	if ( dialogName === 'checkspell' ) {
+		dialog.on( 'cancel', function( cancelEvent ) {
+			var editor = cancelEvent.sender && cancelEvent.sender.getParentEditor(),
+				plugin = CKEDITOR.plugins.scayt,
+				scaytInstance = editor.scayt;
+
+			if ( scaytInstance && plugin.state.scayt[ editor.name ] && scaytInstance.setMarkupPaused ) {
+				scaytInstance.setMarkupPaused( false );
+			}
+
+			editor.unlockSelection();
+		}, this, null, -2 ); // we need to call cancel callback before WSC plugin
 	}
 
 	if (dialogName === 'link') {
@@ -1352,6 +1456,7 @@ CKEDITOR.on('scaytReady', function() {
  *
  *		config.grayt_autoStartup = true;
  *
+ * @since 4.5.6
  * @cfg {Boolean} [grayt_autoStartup=false]
  * @member CKEDITOR.config
  */
@@ -1362,6 +1467,7 @@ CKEDITOR.on('scaytReady', function() {
  *
  *		 config.scayt_inlineModeImmediateMarkup = true;
  *
+ * @since 4.5.6
  * @cfg {Boolean} [scayt_inlineModeImmediateMarkup=false]
  * @member CKEDITOR.config
  */
@@ -1588,6 +1694,50 @@ CKEDITOR.on('scaytReady', function() {
  *		config.scayt_handleUndoRedo = 'false';
  *
  * @cfg {String} [scayt_handleUndoRedo='true']
+ * @member CKEDITOR.config
+ */
+
+/**
+ * The parameter that turns off\on 'ignore-all-caps-words' option by default
+ * It may be needed to disableOptionStorage for this parameter, because optionStorage has higher priority.
+ *
+ *		config.scayt_ignoreAllCapsWords = false;
+ *
+ * @since 4.5.6
+ * @cfg {Boolean} [scayt_ignoreAllCapsWords=false]
+ * @member CKEDITOR.config
+ */
+
+/**
+ * The parameter that turns off\on 'ignore-domain-names' option by default
+ * It may be needed to disableOptionStorage for this parameter, because optionStorage has higher priority.
+ *
+ *		config.scayt_ignoreDomainNames = false;
+ *
+ * @since 4.5.6
+ * @cfg {Boolean} [scayt_ignoreDomainNames=false]
+ * @member CKEDITOR.config
+ */
+
+/**
+ * The parameter that turns off\on 'ignore-words-with-mixed-cases' option by default
+ * It may be needed to disableOptionStorage for this parameter, because optionStorage has higher priority.
+ *
+ *		config.scayt_ignoreWordsWithMixedCases = false;
+ *
+ * @since 4.5.6
+ * @cfg {Boolean} [scayt_ignoreWordsWithMixedCases=false]
+ * @member CKEDITOR.config
+ */
+
+/**
+ * The parameter that turns off\on 'ignore-words-with-numbers' option by default
+ * It may be needed to disableOptionStorage for this parameter, because optionStorage has higher priority.
+ *
+ *		config.scayt_ignoreWordsWithNumbers = false;
+ *
+ * @since 4.5.6
+ * @cfg {Boolean} [scayt_ignoreWordsWithNumbers=false]
  * @member CKEDITOR.config
  */
 

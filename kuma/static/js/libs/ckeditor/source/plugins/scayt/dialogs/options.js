@@ -110,7 +110,7 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 							var scayt_instance =  editor.scayt;
 							var lang = scayt_instance.getLang(),
 								prefix_id = "scaytLang_",
-								radio = doc.getById(prefix_id + lang);
+								radio = doc.getById(prefix_id + editor.name + '_' + lang);
 
 							radio.$.checked = true;
 						}
@@ -477,7 +477,7 @@ CKEDITOR.dialog.add( 'scaytDialog', function( editor ) {
 		buildRadioInputs: function(key, value, isSupportedByGrayt) {
 			var divContainer = new CKEDITOR.dom.element( 'div' ),
 				doc = CKEDITOR.document,
-				id = "scaytLang_" + value,
+				id = "scaytLang_" + editor.name + '_' + value,
 				radio = CKEDITOR.dom.element.createFromHtml( '<input id="' +
 					id + '" type="radio" ' +
 					' value="' + value + '" name="scayt_lang" />' ),
