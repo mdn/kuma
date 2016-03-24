@@ -113,7 +113,8 @@ class DocumentTests(UserTestCase):
 
     def test_json_data_null_uuid(self):
         """Test json data during the UUID transition period."""
-        doc, rev = doc_rev('Sample document')
+        rev = revision(is_approved=True, save=True, content='Sample document')
+        doc = rev.document
         doc.uuid = None
         doc.save()
         de_doc = document(parent=doc, locale='de', uuid=None, save=True)
