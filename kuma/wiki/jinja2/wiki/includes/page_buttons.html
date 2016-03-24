@@ -20,19 +20,19 @@
 <ul class="page-buttons">
   {% if document %}
   <li>
-    <button type="submit" class="button positive btn-save-and-edit" data-optimizely-hook="button-save-and-keep-editing button-save-and-keep-editing-{{ location }}"><span>{{ _('Save and Keep Editing') }}</span><i aria-hidden="true" class="icon-edit"></i></button>
+    <button type="submit" class="button positive btn-save-and-edit" data-optimizely-hook="button-save-and-keep-editing button-save-and-keep-editing-{{ location }}"><span>{{ _('Publish and Keep Editing') }}</span><i aria-hidden="true" class="icon-pencil"></i></button>
   </li>
   {% endif %}
   <li>
-    <button type="submit" class="button positive btn-save">{{ _('Save Changes') }}<i aria-hidden="true" class="icon-save"></i></button>
+    <button type="submit" class="button positive btn-save">{{ _('Publish') }}<i aria-hidden="true" class="icon-check"></i></button>
   </li>
   {% if (not document and not is_template) or (document and not document.is_template) %}
   <li>
-    <button type="button" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview Changes') }}<i aria-hidden="true" class="icon-play-circle"></i></button>
+    <button type="button" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview') }}<i aria-hidden="true" class="icon-play-circle"></i></button>
   </li>
   {% endif %}
   <li>
-    <a href="{{ discard_href }}" class="button negative btn-discard">{{ _('Discard Changes') }}<i aria-hidden="true" class="icon-undo"></i></a>
+    <a href="{{ discard_href }}" class="button negative btn-discard">{{ _('Discard') }}<i aria-hidden="true" class="icon-undo"></i></a>
   </li>
 </ul>
 
