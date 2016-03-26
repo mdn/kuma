@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-18 08:50-0700\n"
-"PO-Revision-Date: 2016-03-20 23:00+0000\n"
+"PO-Revision-Date: 2016-03-26 11:52+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -2094,14 +2094,12 @@ msgstr "OpenID 로그인"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3
 #: kuma/users/jinja2/socialaccount/authentication_error.html:6
-#, fuzzy
 msgid "Account Sign In Failure"
-msgstr "계정 비활성화"
+msgstr "계정 로그인 실패"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
-#, fuzzy
 msgid "An error occurred while attempting to sign in with your account."
-msgstr "소셜 계정으로 로그인 시도가 실패했습니다."
+msgstr "계정으로 로그인 시도 중 오류가 발생했습니다."
 
 #: kuma/users/jinja2/socialaccount/connections.html:3
 msgid "Account Connections"
@@ -2158,6 +2156,8 @@ msgid ""
 " MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit "
 "your social account connections.</a>"
 msgstr ""
+"이 이메일 주소로 이미 등록된 프로필이 존재합니다. Persona를 MDN 프로필에 연결하려면, <a "
+"href=\"%(connections_url)s\">로그인 후 소셜 계정 연결 페이지에 방문하세요.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
@@ -2196,6 +2196,8 @@ msgid ""
 "username will be displayed on MDN to identify any contributions that you "
 "make."
 msgstr ""
+"MDN 프로필을 설정하려면, <strong>사용자 이름을 선택</strong>해 주세요. 사용자 이름은 공헌을 식별하기 위해 MDN "
+"사이트 상에 표시됩니다."
 
 #: kuma/users/jinja2/socialaccount/signup.html:67
 msgid ""
@@ -2203,22 +2205,24 @@ msgid ""
 "address</strong>. Your username will be displayed on MDN to identify any "
 "contributions that you make."
 msgstr ""
+"MDN 프로필을 설정하려면, <strong>사용자 이름과 메일 주소를 선택</strong>해 주세요. 사용자 이름은 공헌을 식별하기 위해"
+" MDN 사이트 상에 표시됩니다."
 
 #: kuma/users/jinja2/socialaccount/signup.html:75
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "If you're <strong>having trouble</strong> signing in or creating an MDN "
 "profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us "
 "know</a></strong>."
 msgstr ""
-"<strong>로그인에 문제가 있으십니까? <a href=\"%(bug_href)s\" rel=\"external\">피드백</a>을 "
-"통해 알려주십시오.</strong>"
+"로그인이나 MDN 프로필 생성에 <strong>문제가 있다</strong>면, <strong><a href=\"%(bug_href)s\""
+" rel=\"external\">알려주세요</a></strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:100
 #, python-format
 msgid ""
 "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr ""
+msgstr "GitHub 사용자명 %(username)s이 이미 사용중입니다. 다른 이름을 골라 주세요."
 
 #: kuma/users/jinja2/socialaccount/signup.html:104
 msgid ""
@@ -2243,10 +2247,12 @@ msgid ""
 "and will be used according to our <a href=\"%(privacy_url)s\">privacy "
 "policy</a>."
 msgstr ""
+"MDN 관련 메시지와 알림을 보내는 데 어떤 이메일 주소를 사용해야 합니까? 이 주소는 MDN 상에 표시되지 "
+"<strong>않</strong>으며 <a href=\"%(privacy_url)s\">개인 정보 보호 정책</a>에 따라 사용됩니다."
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
-msgstr ""
+msgstr "약관 및 개인정보 보호"
 
 #: kuma/users/jinja2/socialaccount/signup.html:173
 #, fuzzy, python-format
@@ -2261,14 +2267,12 @@ msgid "Create my MDN profile"
 msgstr "새로운 프로필 만들기"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
-#, fuzzy
 msgid "Signed in with Persona"
-msgstr "Persona 로그인"
+msgstr "Persona로 로그인함"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:4
-#, fuzzy
 msgid "Signed in with GitHub"
-msgstr "Github 로그인"
+msgstr "GitHub로 로그인함"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 #, fuzzy
@@ -2316,23 +2320,21 @@ msgid "Advanced"
 msgstr "고급"
 
 #: kuma/users/jinja2/users/user_detail.html:53
-#, fuzzy
 msgid "Manage"
-msgstr "관리 업무"
+msgstr "관리"
 
 #: kuma/users/jinja2/users/user_detail.html:56
-#, fuzzy
 msgid "API keys"
-msgstr "API 키 관리"
+msgstr "API 키"
 
 #: kuma/users/jinja2/users/user_detail.html:94
 msgid "Areas of Expertise"
 msgstr "전문 영역"
 
 #: kuma/users/jinja2/users/user_detail.html:102
-#, fuzzy, python-format
+#, python-format
 msgid "Member since %(date_joined)s"
-msgstr "등록일: {date}"
+msgstr "%(date_joined)s 이후로 멤버"
 
 #: kuma/users/jinja2/users/user_detail.html:150
 msgid "Recent Docs Activity"
@@ -2406,6 +2408,8 @@ msgid ""
 "new features first and we send the occasional email asking for help testing "
 "specific things."
 msgstr ""
+"사이트 변화에대한 피드백을 받고 싶습니다! 베타 테스터는 먼저 신기능에 접근할 수 있고 가끔 특정 기능 테스팅에 도움을 구하는 이메일을 "
+"받습니다."
 
 #: kuma/users/jinja2/users/user_edit.html:61
 msgid "Primary Email"
@@ -2653,7 +2657,7 @@ msgstr "블로그: %(blog_link)s"
 #: kuma/users/templatetags/jinja_helpers.py:35
 #, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
-msgstr ""
+msgstr "%(ban_date)s에 %(ban_admin)s에 의해 차단되었습니다."
 
 #: kuma/users/templatetags/jinja_helpers.py:42
 msgid "Banned"
@@ -2689,9 +2693,9 @@ msgid "Edit section"
 msgstr "섹션 편집"
 
 #: kuma/wiki/events.py:72
-#, fuzzy, python-format
+#, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr "[MDN] 페이지 \"{document_title}\" 변경자 {creator}"
+msgstr "[MDN] 페이지 \"%(document_title)s\" 변경자 %(creator)s"
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
@@ -3638,19 +3642,19 @@ msgid "View Source"
 msgstr "소스 보기"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Show %(locale)s"
-msgstr "{locale} 보기"
+msgstr "%(locale)s 보기"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
-#, fuzzy, python-format
+#, python-format
 msgid "Hide %(locale)s"
-msgstr "{locale} 감추기"
+msgstr "%(locale)s 감추기"
 
 #: kuma/wiki/jinja2/wiki/translate.html:99
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s translation:"
-msgstr "{locale} 번역:"
+msgstr "%(locale)s 번역:"
 
 #: kuma/wiki/jinja2/wiki/translate.html:109
 msgid "Translate Tags"
@@ -3666,9 +3670,9 @@ msgid "This document has no tags."
 msgstr "이 문서는 태그가 없습니다."
 
 #: kuma/wiki/jinja2/wiki/translate.html:137
-#, fuzzy, python-format
+#, python-format
 msgid "%(locale)s tags"
-msgstr "{locale} 태그"
+msgstr "%(locale)s 태그"
 
 #: kuma/wiki/jinja2/wiki/translate.html:144
 msgid "Version Notes"
@@ -3729,9 +3733,8 @@ msgid "Editorial"
 msgstr "내용적 측면"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-#, fuzzy
 msgid "Review completed"
-msgstr "모든 차이점 보기"
+msgstr "검토 완료"
 
 # 100%
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
@@ -3753,9 +3756,8 @@ msgid "Watch"
 msgstr "보기"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
-#, fuzzy
 msgid "New sub-article"
-msgstr "새로운 기사"
+msgstr "새 하위 문서"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
 #, fuzzy
@@ -3763,18 +3765,16 @@ msgid "Clone this article"
 msgstr "현재 페이지 복사"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
-#, fuzzy
 msgid "Move this article"
-msgstr "현재 페이지 이동"
+msgstr "이 글 이동"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:70
 msgid "View in admin"
 msgstr "관리자로 보기"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:78
-#, fuzzy
 msgid "Delete this article"
-msgstr "현재 페이지 삭제"
+msgstr "이 글 삭제"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:83
 msgid "Manage content zone"
@@ -3785,9 +3785,8 @@ msgid "Convert to content zone"
 msgstr "콘텐츠 영역 변환"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
-#, fuzzy
 msgid "Print this article"
-msgstr "인쇄하기"
+msgstr "이 글 인쇄"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -3798,9 +3797,8 @@ msgid "See also"
 msgstr "더 보기"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
-#, fuzzy
 msgid "Change Revisions"
-msgstr "리비전 비교"
+msgstr "개정판 변경"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:53
@@ -3813,7 +3811,7 @@ msgstr "리비전 %(num)s:"
 msgid ""
 "The server is rendering the content comparison. Please refresh this page in "
 "a few minutes."
-msgstr ""
+msgstr "서버가 콘텐츠 비교를 렌더링 중입니다. 몇 분 뒤에 이 페이지를 새로 고침해 주세요."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:107
 msgid "Share:"
@@ -3901,7 +3899,6 @@ msgid "TOC:"
 msgstr "TOC:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
-#, fuzzy
 msgid ""
 "There was a scripting error on this page. While it is being addressed by "
 "site editors, you can view partial content below."
@@ -3909,7 +3906,7 @@ msgid_plural ""
 "There were scripting errors on this page. While those are being addressed by"
 " site editors, you can view partial content below."
 msgstr[0] ""
-"이 페이지에 스크립팅 에러가 있습니다. 사이트 편집기에 의해 보여지는 동안, 아래에 있는 콘텐트를 부분적으로 볼 수 있습니다."
+"이 페이지에 스크립팅 오류가 있습니다. 오류가 사이트 편집자에 의해 처리되는 동안, 아래에 있는 부분 콘텐츠만 볼 수 있습니다."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
@@ -3926,6 +3923,9 @@ msgid ""
 "href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript "
 "troubleshooting guide</a> as a starting point."
 msgstr ""
+"MDN 프로필이 있는 누구나 오류를 고치기 위해 문서를 편집할 수 있습니다. 시작점으로 <a "
+"href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript 문제 해결 "
+"가이드</a>를 사용하세요."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -4008,7 +4008,7 @@ msgstr ""
 msgid ""
 "If you believe you’ve received this message by mistake, please <a "
 "href=\"%(admin_email)s\">contact the site administrators</a>."
-msgstr ""
+msgstr "실수로 이 메시지를 받았다고 믿는다면, <a href=\"%(admin_email)s\">사이트 관리자에게 연락</a>해 주세요."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -4031,10 +4031,10 @@ msgid ""
 msgstr "번역 자원을 아래에서 찾아보고 \"변경 사항 저장\"을 선택하세요."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
-msgstr[0] "%(count)s개 문서를 찾았습니다."
+msgstr[0] "%(num)s개 문서를 찾았습니다"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
 #, fuzzy, python-format
@@ -4165,7 +4165,6 @@ msgstr "홈페이지"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
-#, fuzzy
 msgid "Documents"
 msgstr "문서"
 
@@ -4175,6 +4174,9 @@ msgid ""
 "          The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the \"Back\" button in your browser.\n"
 "        "
 msgstr ""
+"\n"
+"          다음 문서는 데이터베이스에서 영원히 삭제됩니다. 이 동작은 실행 취소될 수 없습니다. 취소하려면, 브라우저에서 \"뒤로\" 버튼을 누르세요.\n"
+"        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 #, fuzzy
@@ -4199,7 +4201,7 @@ msgstr "아래 오류를 수정해 주세요."
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "로드"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
