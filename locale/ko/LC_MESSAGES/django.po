@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-18 08:50-0700\n"
-"PO-Revision-Date: 2016-02-29 10:48+0000\n"
-"Last-Translator: netaras <netaras@gmail.com>\n"
+"PO-Revision-Date: 2016-03-27 22:57+0000\n"
+"Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -2961,9 +2961,8 @@ msgid "Document Tags"
 msgstr "문서 태그"
 
 #: kuma/wiki/models.py:172
-#, fuzzy
 msgid "uploaded to the document"
-msgstr "현재 문서 복원"
+msgstr "문서에 업로드됨"
 
 #: kuma/wiki/models.py:178
 #, fuzzy
@@ -2975,7 +2974,7 @@ msgstr "메인 콘텐트로 건너 뛰기"
 msgid ""
 "Attachment %(attachment_id)s can't be attached multiple times to document "
 "%(document_id)s"
-msgstr ""
+msgstr "첨부파일 %(attachment_id)s는 문서 %(document_id)s에 여러 번 첨부될 수 없습니다"
 
 #: kuma/wiki/models.py:1540
 msgid "Review Tag"
@@ -3034,7 +3033,7 @@ msgstr "사용자 도구"
 
 #: kuma/wiki/models.py:1838
 msgid "HTTP Referrer"
-msgstr ""
+msgstr "HTTP 레퍼러"
 
 #: kuma/wiki/models.py:1859
 msgid "Revision"
@@ -3340,10 +3339,10 @@ msgstr "변경 사항"
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:42
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:58
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Revision %(id)s by <a href=\"%(user_profile_url)s\">%(user)s</a> on %(date)s"
-msgstr "리비전 {id} {user} {date}"
+msgstr "개정판 %(id)s 작성자 <a href=\"%(user_profile_url)s\">%(user)s</a> 작성일 %(date)s"
 
 #: kuma/wiki/jinja2/wiki/edit.html:51
 msgid "Current Revision:"
@@ -3429,9 +3428,9 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:5
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "last modified at %(modified)s"
-msgstr "최종 변경일"
+msgstr "%(modified)s에 최종 변경"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
@@ -3534,9 +3533,9 @@ msgid "This is a preview of an unsaved document."
 msgstr "저장되지 않은 문서의 미리보기 입니다."
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(id)s | %(title)s"
-msgstr "리비전 {n} | {t} | {c}"
+msgstr "개정판 %(id)s | %(title)s"
 
 #: kuma/wiki/jinja2/wiki/revision.html:13
 msgid "Revision Information"
@@ -3580,9 +3579,9 @@ msgid "Revert to this revision"
 msgstr "현재 리비전 복원"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Select language | %(document)s"
-msgstr "언어 선택 | {document}"
+msgstr "언어 선택 | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/select_locale.html:9
 msgid "Select a language to translate to:"
@@ -3615,27 +3614,27 @@ msgstr ""
 "href=\"//www.mozilla.org/en-US/privacy\">개인 정보 보호 정책</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
-#, fuzzy, python-format
+#, python-format
 msgid "Translate Article | %(document)s"
-msgstr "문서 번역 | {document}"
+msgstr "문서 번역 | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/translate.html:33
-#, fuzzy, python-format
+#, python-format
 msgid "Translating article to %(locale)s"
-msgstr "{locale}로 문서 번역"
+msgstr "%(locale)s로 글 번역하기"
 
 #: kuma/wiki/jinja2/wiki/translate.html:43
 msgid "Translate Content"
 msgstr "내용 번역"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
-#, fuzzy, python-format
+#, python-format
 msgid "Approved %(locale)s version"
-msgstr "승인된 {locale} 버전"
+msgstr "승인된 %(locale)s 버전"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
-msgstr ""
+msgstr "렌더링 결과 보기"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
