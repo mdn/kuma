@@ -67,10 +67,10 @@ class FilterGroupAdmin(admin.ModelAdmin):
 
 @admin.register(Filter)
 class FilterAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'group', 'enabled')
+    list_display = ('name', 'slug', 'group', 'enabled', 'default')
     list_filter = ('group',)
     search_fields = ('name', 'slug')
-    list_editable = ('enabled',)
+    list_editable = ('enabled', 'default')
     list_select_related = True
     radio_fields = {
         'operator': admin.VERTICAL,

@@ -6,21 +6,20 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.utils.translation import ugettext
 from django.views.decorators.cache import cache_page
-
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 
 from kuma.wiki.search import WikiDocumentType
 
 from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                      get_filters, HighlightFilterBackend,
-                      LanguageFilterBackend, SearchQueryBackend)
+                      HighlightFilterBackend, LanguageFilterBackend,
+                      SearchQueryBackend, get_filters)
 from .jobs import AvailableFiltersJob
-from .queries import Filter, FilterGroup
 from .pagination import SearchPagination
+from .queries import Filter, FilterGroup
 from .renderers import ExtendedTemplateHTMLRenderer
-from .serializers import (DocumentSerializer, FilterWithGroupSerializer,
-                          SearchQuerySerializer, FacetedFilterSerializer)
+from .serializers import (DocumentSerializer, FacetedFilterSerializer,
+                          FilterWithGroupSerializer, SearchQuerySerializer)
 from .utils import QueryURLObject
 
 

@@ -1209,21 +1209,6 @@ CONSTANCE_CONFIG = dict(
         ]),
         "JSON array listing tag suggestions for documents"
     ),
-    SEARCH_FILTER_TAG_OPTIONS=(
-        json.dumps([
-            "Accessibility", "AJAX", "API", "Apps",
-            "Canvas", "CSS", "Device", "DOM", "Events",
-            "Extensions", "Firefox", "Firefox OS", "Games",
-            "Gecko", "Graphics", "Internationalization", "History", "HTML", "HTTP", "JavaScript", "Layout",
-            "Localization", "MDN", "Mobile", "Mozilla",
-            "Networking", "Persona", "Places", "Plugins", "Protocols",
-
-            "Reference", "Tutorial", "Landing",
-
-            "junk", "NeedsMarkupWork", "NeedsContent", "NeedsExample",
-        ]),
-        "JSON array of tags that are enabled for search faceting"
-    ),
     SESSION_CLEANUP_CHUNK_SIZE=(
         1000,
         'Number of expired sessions to cleanup up in one go.',
