@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 import json
 
@@ -10,6 +12,8 @@ from django.template.response import TemplateResponse
 from django.template.defaultfilters import truncatechars
 from django.utils import timezone
 from django.utils.html import escape
+from django.utils.safestring import mark_safe
+from django.utils.text import Truncator
 from waffle import flag_is_active
 
 from kuma.core.admin import DisabledDeletionMixin
@@ -342,7 +346,7 @@ class DocumentZoneAdmin(admin.ModelAdmin):
 @admin.register(DocumentSpamAttempt)
 class DocumentSpamAttemptAdmin(admin.ModelAdmin):
     list_display = [
-        'id', 'user', 'title_short', 'slug_short', 'document', 'review']
+        'id', 'user', 'title_short', 'slug_short', 'doc_short', 'review']
     list_display_links = ['id', 'title_short', 'slug_short']
     list_filter = [
         'created', 'review', 'document__deleted', 'document__locale']
@@ -355,13 +359,37 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
         'review', 'reviewed', 'reviewer']
     readonly_fields = ['created', 'submitted_data', 'reviewer', 'reviewed']
 
+    MAX_LENGTH = 25
+
     def title_short(self, obj):
-        return truncatechars(obj.title, 25)
+        return truncatechars(obj.title, self.MAX_LENGTH)
     title_short.short_description = 'Title'
 
     def slug_short(self, obj):
-        return truncatechars(obj.slug, 25)
+        return truncatechars(obj.slug, self.MAX_LENGTH)
     slug_short.short_description = 'Slug'
+
+    def doc_short(self, obj):
+        u"""
+        Shorten document 'path (name)' representation in list view.
+
+        The important part is having an HTML break character such as a space,
+        so truncating paths as well as long titles, to look like:
+
+        /en-US/docs/Start/Of/Slug… (The start of the title…)
+        """
+        doc = obj.document
+        if doc:
+            full_path = u'/%s/docs/%s' % (doc.locale, doc.slug)
+            if len(full_path) <= self.MAX_LENGTH:
+                path = full_path
+            else:
+                path = Truncator(full_path).chars(self.MAX_LENGTH, u'…')
+            title = Truncator(doc.title).chars(self.MAX_LENGTH, u'…')
+            return u'%s (%s)' % (path, title)
+        else:
+            return mark_safe('<em>new document</em>')
+    doc_short.short_description = 'Document (if edit)'
 
     class NotEnabled(Exception):
         """Akismet is not enabled"""
