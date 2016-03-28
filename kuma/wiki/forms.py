@@ -466,15 +466,30 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         for a model instance in
         ``RevisionAkismetSubmissionAdminForm.akismet_parameters`` method!
         """
-        language = self.cleaned_data.get('locale',
-                                         settings.WIKI_DEFAULT_LANGUAGE)
+        default_language = settings.WIKI_DEFAULT_LANGUAGE
+
+        # Try to get the language depending on source -- either the instance
+        # provided or the POST data. Fall back to the default defined in
+        # settings.
+        if self.instance and self.instance.pk and self.instance.document:
+            language = self.instance.document.locale or default_language
+        else:
+            language = self.data.get('locale', default_language)
+
+        # If language is not the default, include the default in case of
+        # partial translations. Also convert locale from 'en-US' to 'en_us'.
+        if language == default_language:
+            blog_lang = self.akismet_locale(language)
+        else:
+            blog_lang = '%s, %s' % (
+                self.akismet_locale(language),
+                self.akismet_locale(default_language))
 
         content = u'\n'.join([self.cleaned_data.get(field, '')
                               for field in SPAM_SUBMISSION_REVISION_FIELDS])
 
         return {
-            # 'en-US' -> 'en_us'
-            'blog_lang': translation.to_locale(language).lower(),
+            'blog_lang': blog_lang,
             'blog_charset': 'UTF-8',
             'comment_author': author_from_user(self.request.user),
             'comment_author_email': author_email_from_user(self.request.user),
@@ -578,12 +593,18 @@ class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
 def revision_akismet_parameters(revision):
     language = revision.document.locale or settings.WIKI_DEFAULT_LANGUAGE
 
+    if language == settings.WIKI_DEFAULT_LANGUAGE:
+        blog_lang = translation.to_locale(language).lower()
+    else:
+        blog_lang = '%s, %s' % (
+            translation.to_locale(language).lower(),
+            translation.to_locale(settings.WIKI_DEFAULT_LANGUAGE).lower())
+
     content = u'\n'.join([getattr(revision, field, None) or ''
                           for field in SPAM_SUBMISSION_REVISION_FIELDS])
 
     parameters = {
-        # 'en-US' -> 'en_us'
-        'blog_lang': translation.to_locale(language).lower(),
+        'blog_lang': blog_lang,
         'blog_charset': 'UTF-8',
         'comment_author': author_from_user(revision.creator),
         'comment_author_email': author_email_from_user(revision.creator),
