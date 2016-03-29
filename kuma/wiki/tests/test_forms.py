@@ -271,7 +271,7 @@ class RevisionFormTests(UserTransactionTestCase):
 
     @pytest.mark.spam
     @requests_mock.mock()
-    def test_akismet_parameters(self, mock_requests):
+    def test_akismet_parameters_edit(self, mock_requests):
         mock_requests.post(VERIFY_URL, content='valid')
         mock_requests.post(CHECK_URL, content='false')
         request = self.rf.get('/')
@@ -298,6 +298,49 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertEqual(parameters['comment_type'], 'wiki-revision')
         self.assertEqual(parameters['blog_lang'], 'en_us')
         self.assertEqual(parameters['blog_charset'], 'UTF-8')
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters_new_translation(self, mock_requests):
+        """
+        New translations pass locale via POST data.
+        """
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
+        request = self.rf.get('/')
+        request.user = self.testuser
+        data = {
+            'title': 'Title',
+            'slug': 'Slug',
+            'content': 'Content',
+            'toc_depth': str(Revision.TOC_DEPTH_ALL),
+            'locale': 'de',
+        }
+        rev_form = RevisionForm(data=data, request=request)
+        self.assertTrue(rev_form.is_valid(), rev_form.errors)
+        parameters = rev_form.akismet_parameters()
+        self.assertEqual(parameters['blog_lang'], 'de, en_us')
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters_translation_edit(self, mock_requests):
+        rev = revision(save=True)
+        rev.document.locale = 'fr'
+
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
+        request = self.rf.get('/')
+        request.user = self.testuser
+        data = {
+            'title': 'Title',
+            'slug': 'Slug',
+            'content': 'Content',
+            'toc_depth': str(Revision.TOC_DEPTH_ALL),
+        }
+        rev_form = RevisionForm(data=data, instance=rev, request=request)
+        self.assertTrue(rev_form.is_valid(), rev_form.errors)
+        parameters = rev_form.akismet_parameters()
+        self.assertEqual(parameters['blog_lang'], 'fr, en_us')
 
 
 class TreeMoveFormTests(UserTestCase):
