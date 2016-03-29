@@ -170,8 +170,8 @@ class Filter(models.Model):
     group = models.ForeignKey(FilterGroup, related_name='filters',
                               help_text='E.g. "Topic", "Skill level" etc')
     tags = TaggableManager(help_text='A comma-separated list of tags. '
-                                     'If more than one tag given a OR '
-                                     'query is executed')
+                                     'If more than one tag given the operator '
+                                     'specified is used')
     operator = models.CharField(max_length=3, choices=OPERATOR_CHOICES,
                                 default=OPERATOR_OR,
                                 help_text='The logical operator to use '
@@ -183,6 +183,10 @@ class Filter(models.Model):
                                   help_text='Whether this filter is shown '
                                             'at public places, e.g. the '
                                             'command and query UI')
+    default = models.BooleanField(default=False,
+                                  help_text='Whether this filter is applied in '
+                                            'the absence of a user-chosen '
+                                            'filter')
 
     objects = FilterManager()
 

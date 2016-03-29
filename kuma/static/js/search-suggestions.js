@@ -22,7 +22,7 @@
             // Mixin options
             var settings = $.extend({
                 sizeLimit: 25,
-                filters: false,
+                filters: null,
                 onAddFilter: noop,
                 onRemoveFilter: noop,
             }, options);
@@ -196,7 +196,7 @@
             fnSuggestions.prepareInput();
 
             // load previouly selected filters
-            if (settings.filters) {
+            if (settings.filters !== null) {
                 $.each(settings.filters, function(sidx, sfilter) {
                     // foreach filters to get the correct shortcut
                     $.each(filtersData, function(index, group) {
@@ -210,7 +210,13 @@
                         }
                     });
                 });
-                $searchInput.focus();
+            } else {
+                var filterDefaults = $searchFilters.data('default');
+                $.each(filterDefaults, function(i, tuple) {
+                    // The tuple is [<group slug>, <filter slug>, <shortcut>]
+                    fnSuggestions.addFilter(tuple[1], tuple[0], tuple[2]);
+                    fnSuggestions.removeFilterFromList(tuple[1]);
+                });
             }
 
             // events

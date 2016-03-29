@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-
 from elasticsearch.exceptions import RequestError
 
 from kuma.wiki.search import WikiDocumentType
@@ -11,6 +10,19 @@ class FilterManager(models.Manager):
 
     def visible_only(self):
         return self.filter(visible=True)
+
+    def default_filters(self):
+        """
+        Return default filters as a list of lists of the form::
+
+            [[<group_slug>, <filter_slug>], ...]
+
+        Converting to lists of lists so we can json encode it.
+
+        """
+        return [list(f) for f in
+                self.filter(default=True).values_list('group__slug', 'slug',
+                                                      'shortcut')]
 
 
 class IndexManager(models.Manager):

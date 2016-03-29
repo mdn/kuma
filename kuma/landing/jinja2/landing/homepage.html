@@ -40,7 +40,7 @@
                         <i class="icon-search" aria-hidden="true"></i>
                     </span>
                     <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
-                    <div class="filters"></div>
+                    <div class="filters" data-default="{{ default_filters|jsonencode|forceescape }}"></div>
                     <button class="show-topics only-icon" type="button">
                         <span>{{ _('Show topics') }}</span>
                         <i class="icon-caret-down" aria-hidden="true"></i>
@@ -58,6 +58,9 @@
                 </span>
                 <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
                 <button type="submit" class="offscreen">{{ _('Search') }}</button>
+                {% for group, tag, shortcut in default_filters %}
+                  <input type="hidden" name="{{ group }}" value="{{ shortcut|default(tag, true) }}">
+                {% endfor %}
             </div>
         </form>
     {% endif %}
