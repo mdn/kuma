@@ -22,7 +22,7 @@ from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
                         SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG,
-                        SPAM_SUBMISSION_REVISION_FIELDS)
+                        SPAM_SUBMISSION_REVISION_FIELDS, SPAM_TRAINING_FLAG)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
                      RevisionIP, RevisionAkismetSubmission, valid_slug_parent)
@@ -469,7 +469,8 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 review=review
             )
         finally:
-            super(RevisionForm, self).akismet_error(parameters, exception)
+            if not waffle.flag_is_active(self.request, SPAM_TRAINING_FLAG):
+                super(RevisionForm, self).akismet_error(parameters, exception)
 
     def akismet_parameters(self):
         """
@@ -503,7 +504,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         content = u'\n'.join([self.cleaned_data.get(field, '')
                               for field in SPAM_SUBMISSION_REVISION_FIELDS])
 
-        return {
+        parameters = {
             'blog_lang': blog_lang,
             'blog_charset': 'UTF-8',
             'comment_author': author_from_user(self.request.user),
@@ -514,6 +515,8 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),
             'referrer': self.request.META.get('HTTP_REFERER', ''),
         }
+        parameters.update(self.akismet_parameter_overrides())
+        return parameters
 
     def save(self, document, **kwargs):
         """

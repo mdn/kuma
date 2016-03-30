@@ -9,10 +9,12 @@ import requests_mock
 from constance.test import override_config
 from waffle.models import Flag
 
-from kuma.spam.constants import CHECK_URL, SPAM_CHECKS_FLAG, VERIFY_URL
+from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG,
+                                 SPAM_SPAMMER_FLAG, SPAM_TESTING_FLAG,
+                                 SPAM_CHECKS_FLAG, VERIFY_URL)
 from kuma.users.tests import UserTestCase, UserTransactionTestCase
 
-from ..constants import SPAM_EXEMPTED_FLAG
+from ..constants import SPAM_EXEMPTED_FLAG, SPAM_TRAINING_FLAG
 from ..forms import RevisionForm, TreeMoveForm
 from ..models import DocumentSpamAttempt, Revision
 from ..tests import normalize_html, revision
@@ -273,6 +275,32 @@ class RevisionFormTests(UserTransactionTestCase):
 
     @pytest.mark.spam
     @requests_mock.mock()
+    def test_akismet_spam_training(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_TRAINING_FLAG)
+        flag.users.add(self.testuser)
+        assert not DocumentSpamAttempt.objects.exists()
+        rev_form = self.setup_akismet_post(mock_requests, is_spam='true')
+        assert rev_form.is_valid()
+        assert DocumentSpamAttempt.objects.count() == 1
+        attempt = DocumentSpamAttempt.objects.get()
+        assert attempt.user == self.testuser
+        assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_error_training(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_TRAINING_FLAG)
+        flag.users.add(self.testuser)
+        assert not DocumentSpamAttempt.objects.exists()
+        rev_form = self.setup_akismet_post(mock_requests, is_spam='error')
+        assert rev_form.is_valid()
+        assert DocumentSpamAttempt.objects.count() == 1
+        attempt = DocumentSpamAttempt.objects.get()
+        assert attempt.user == self.testuser
+        assert attempt.review == DocumentSpamAttempt.AKISMET_ERROR
+
+    @pytest.mark.spam
+    @requests_mock.mock()
     def test_akismet_parameters_new(self, mock_requests):
         """Test that new English pages get the standard Akismet parameters."""
         data = {
@@ -297,6 +325,36 @@ class RevisionFormTests(UserTransactionTestCase):
         assert parameters['comment_type'] == 'wiki-revision'
         assert parameters['blog_lang'] == 'en_us'
         assert parameters['blog_charset'] == 'UTF-8'
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters_admin_flag(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_ADMIN_FLAG)
+        flag.users.add(self.testuser)
+        rev_form = self.setup_akismet_post(mock_requests)
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert parameters['user_role'] == 'administrator'
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters_spammer_flag(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_SPAMMER_FLAG)
+        flag.users.add(self.testuser)
+        rev_form = self.setup_akismet_post(mock_requests, is_spam='true')
+        assert not rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert parameters['comment_author'] == 'viagra-test-123'
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters_testing_flag(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_TESTING_FLAG)
+        flag.users.add(self.testuser)
+        rev_form = self.setup_akismet_post(mock_requests)
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert parameters['is_test']
 
     @pytest.mark.spam
     @requests_mock.mock()
