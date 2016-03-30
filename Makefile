@@ -10,6 +10,9 @@ test:
 coveragetest: clean
 	py.test --cov=$(target) $(target)
 
+coveragetesthtml: coveragetest
+	coverage html
+
 locust:
 	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
 
@@ -37,6 +40,8 @@ intern:
 clean:
 	rm -rf .coverage build/
 	find kuma -name '*.pyc' -exec rm {} \;
+	mkdir -p build/assets
+	mkdir -p build/locale
 
 locale:
 	@mkdir -p locale/$(LOCALE)/LC_MESSAGES && \

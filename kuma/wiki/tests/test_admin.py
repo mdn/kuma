@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 from pyquery import PyQuery as pq
 
@@ -15,6 +16,7 @@ from kuma.users.tests import UserTestCase
 from kuma.users.models import User
 from kuma.wiki.admin import DocumentSpamAttemptAdmin
 from kuma.wiki.models import DocumentSpamAttempt, RevisionAkismetSubmission
+from kuma.wiki.tests import document, revision
 
 
 @pytest.mark.spam
@@ -53,6 +55,41 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         assert self.admin.slug_short(dsa) == 'Web/CSS'
         dsa.slug = 'Web/A_long_slug_that_will_be_truncated'
         assert self.admin.slug_short(dsa) == 'Web/A_long_slug_that_w...'''
+
+    def test_doc_short_without_document(self):
+        dsa = DocumentSpamAttempt(slug='Slug')
+        assert self.admin.doc_short(dsa) == '<em>new document</em>'
+
+    def test_doc_short_short_slug_and_title(self):
+        slug = 'NotSpam'
+        html = '<p>This page is not spam.</p>'
+        doc = document(title='blah', slug=slug, html=html, save=True)
+        revision(document=doc, content=html, is_approved=True, save=True)
+        dsa = DocumentSpamAttempt(slug=slug, document=doc)
+        assert self.admin.doc_short(dsa) == u'/en-US/docs/NotSpam (blah)'
+        assert self.admin.doc_short(dsa) == str(doc)
+
+    def test_doc_short_long_slug_and_title(self):
+        slug = 'Web/Guide/HTML/Sections_and_Outlines_of_an_HTML5_document'
+        title = 'Sections and Outlines of an HTML5 Document'
+        html = '<p>This German page is not spam.</p>'
+        doc = document(title=title, slug=slug, html=html, save=True,
+                       locale='de')
+        revision(document=doc, content=html, is_approved=True, save=True)
+        dsa = DocumentSpamAttempt(slug=slug, document=doc)
+        expected = u'/de/docs/Web/Guide/HTML/… (Sections and Outlines of…)'
+        assert self.admin.doc_short(dsa) == expected
+
+    def test_doc_short_long_unicode(self):
+        slug = u'Web/Guide/HTML/HTML5_ডকুমেন্টের_সেকশন_এবং_আউটলাইন'
+        title = u'HTML5 ডকুমেন্টের সেকশন এবং আউটলাইন'
+        html = '<p>This Bengali page is not spam.</p>'
+        doc = document(title=title, slug=slug, html=html, save=True,
+                       locale='bn-BD')
+        revision(document=doc, content=html, is_approved=True, save=True)
+        dsa = DocumentSpamAttempt(slug=slug, document=doc)
+        expected = u'/bn-BD/docs/Web/Guide/HT… (HTML5 ডকুমেন্টের সেকশন এব…)'
+        assert self.admin.doc_short(dsa) == expected
 
     def test_submitted_data(self):
         dsa = DocumentSpamAttempt(data=None)

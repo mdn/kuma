@@ -1217,9 +1217,9 @@ CONSTANCE_CONFIG = dict(
         "Janet Swisher <no-reply@mozilla.org>",
         'Email address from which welcome emails will be sent',
     ),
-    EMAIL_LIST_FOR_FIRST_EDITS=(
+    EMAIL_LIST_SPAM_WATCH=(
         "mdn-spam-watch@mozilla.com",
-        "Email address to which emails will be sent for users' first edits",
+        "Email address to notify of possible spam (first edits, blocked edits)",
     ),
     AKISMET_KEY=(
         '',
