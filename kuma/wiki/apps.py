@@ -152,4 +152,4 @@ class WikiConfig(AppConfig):
         body = render_to_string('wiki/email/spam.ltxt',
                                 {'spam_attempt': instance})
         send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
-                  [config.EMAIL_LIST_FOR_FIRST_EDITS])
+                  [config.EMAIL_LIST_SPAM_WATCH])

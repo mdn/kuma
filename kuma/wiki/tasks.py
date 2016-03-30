@@ -293,7 +293,7 @@ def send_first_edit_email(revision_pk):
                                context_dict(revision))
     doc_url = absolutify(doc.get_absolute_url())
     email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
-                         to=[config.EMAIL_LIST_FOR_FIRST_EDITS],
+                         to=[config.EMAIL_LIST_SPAM_WATCH],
                          headers={'X-Kuma-Document-Url': doc_url,
                                   'X-Kuma-Editor-Username': user.username})
     email.send()
