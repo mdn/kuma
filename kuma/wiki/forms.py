@@ -15,6 +15,7 @@ from taggit.utils import parse_tags
 
 import kuma.wiki.content
 from kuma.core.form_fields import StrippedCharField
+from kuma.spam.akismet import AkismetError
 from kuma.spam.forms import AkismetCheckFormMixin, AkismetSubmissionFormMixin
 
 from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
@@ -432,7 +433,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     def akismet_error_message(self):
         return mark_safe(render_to_string('wiki/includes/spam_error.html', {}))
 
-    def akismet_error(self):
+    def akismet_error(self, parameters, exception=None):
         """
         Upon errors from the Akismet API records the user, document
         and date of the attempt for further analysis. Then call the
@@ -442,7 +443,20 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             document = self.instance.document
         except ObjectDoesNotExist:
             document = None
-        # wrapping this in a try/finally to make sure that even if
+
+        if exception and isinstance(exception, AkismetError):
+            # For Akismet errors, save the submission and exception details
+            dsa_params = parameters.copy()
+            dsa_params['akismet_status_code'] = exception.status_code
+            dsa_params['akismet_debug_help'] = exception.debug_help
+            dsa_params['akismet_response'] = exception.response.content
+            review = DocumentSpamAttempt.AKISMET_ERROR
+        else:
+            # For detected spam, save the details for review
+            dsa_params = parameters
+            review = DocumentSpamAttempt.NEEDS_REVIEW
+
+        # Wrapping this in a try/finally to make sure that even if
         # creating a spam attempt object fails we call the parent
         # method that raises a ValidationError
         try:
@@ -451,10 +465,11 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 slug=self.cleaned_data['slug'],
                 user=self.request.user,
                 document=document,
-                data=json.dumps(self.akismet_parameters()),
+                data=json.dumps(dsa_params),
+                review=review
             )
         finally:
-            super(RevisionForm, self).akismet_error()
+            super(RevisionForm, self).akismet_error(parameters, exception)
 
     def akismet_parameters(self):
         """

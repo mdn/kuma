@@ -1,4 +1,5 @@
-* SPAM ATTEMPT *
+{% set is_error = (spam_attempt.review == spam_attempt.AKISMET_ERROR) -%}
+* {% if is_error %}AKISMET ERROR{% else %}SPAM ATTEMPT{% endif %} *
 
 {% if spam_attempt.title -%}
 Title: {{ spam_attempt.title }}{% if not spam_attempt.document %} [NEW]{% endif %}
@@ -34,5 +35,5 @@ Last modified: {{ spam_attempt.document.modified|in_utc }}
 Site link: {{ spam_attempt.document.get_absolute_url()|absolutify }}
 Admin link: {{ url('admin:wiki_document_change', spam_attempt.document.pk)|absolutify }}
 {% else -%}
-The spam attempt doesn't have a document attached
+The {% if is_error %}Akismet error{% else %}spam attempt{% endif %} doesn't have a document attached
 {% endif -%}

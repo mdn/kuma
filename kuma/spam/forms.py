@@ -30,7 +30,7 @@ class AkismetFormMixin(object):
         """
         return self.akismet_client.ready
 
-    def akismet_error(self):
+    def akismet_error(self, parameters, exception=None):
         """
         Upon receiving an error from the API client raises an "invalid"
         form validation error with a predefined error message.
@@ -87,11 +87,11 @@ class AkismetCheckFormMixin(AkismetFormMixin):
     def akismet_call(self, parameters):
         try:
             is_spam = self.akismet_client.check_comment(**parameters)
-        except akismet.AkismetError:
-            self.akismet_error()
+        except akismet.AkismetError as exception:
+            self.akismet_error(parameters, exception)
         else:
             if is_spam:
-                self.akismet_error()
+                self.akismet_error(parameters)
 
 
 class AkismetSubmissionFormMixin(AkismetFormMixin):
@@ -127,5 +127,5 @@ class AkismetSubmissionFormMixin(AkismetFormMixin):
         submission_function = 'submit_%s' % self.akismet_submission_type()
         try:
             getattr(self.akismet_client, submission_function)(**parameters)
-        except akismet.AkismetError:
-            self.akismet_error()
+        except akismet.AkismetError as exception:
+            self.akismet_error(parameters, exception)
