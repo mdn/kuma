@@ -5,6 +5,7 @@ from pyquery import PyQuery as pq
 from constance.test import override_config
 from django.contrib.admin import AdminSite
 from django.test import RequestFactory
+from django.utils.six.moves.urllib.parse import parse_qsl
 import requests_mock
 from waffle.models import Flag
 
@@ -235,7 +236,6 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         mock_requests.post(VERIFY_URL, content='valid')
         mock_requests.post(SPAM_URL, content=Akismet.submission_success)
 
-        revision = admin.created_revisions.all()[0]
         data = {
             'revision': revision.id,
             'type': 'spam',
@@ -258,3 +258,22 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         self.assertIn('user_ip=0.0.0.0', request_body)
         self.assertIn('user_agent=', request_body)
         self.assertIn(revision.slug, request_body)
+        query_pairs = parse_qsl(request_body)
+        expected_content = (
+            'Seventh revision of the article.\n'
+            'article-with-revisions\n'
+            'Seventh revision of the article.\n'
+            'Seventh revision of the article.\n'
+            '\n'
+            '\n'
+        )
+        expected = [
+            ('blog', 'developer-local.allizom.org'),
+            ('blog_charset', 'UTF-8'),
+            ('blog_lang', 'en_us'),
+            ('comment_author', 'admin'),
+            ('comment_content', expected_content),
+            ('comment_type', 'wiki-revision'),
+            ('user_ip', '0.0.0.0')
+        ]
+        self.assertEqual(sorted(query_pairs), expected)

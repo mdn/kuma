@@ -1,6 +1,6 @@
+# -*- coding: utf-8 -*-
 import json
 
-from django import forms
 from django.core import mail
 from django.test import RequestFactory
 
@@ -17,28 +17,17 @@ from kuma.users.tests import UserTestCase, UserTransactionTestCase
 from ..constants import SPAM_EXEMPTED_FLAG, SPAM_TRAINING_FLAG
 from ..forms import RevisionForm, TreeMoveForm
 from ..models import DocumentSpamAttempt, Revision
-from ..tests import normalize_html, revision
+from ..tests import document, normalize_html, revision
 
 
-@override_config(AKISMET_KEY='forms')
 class RevisionFormTests(UserTransactionTestCase):
+    """
+    Generic tests for RevisionForm.
+
+    See RevisionFormEditTests, etc. for tests that simulate using the form
+    in a view.
+    """
     rf = RequestFactory()
-
-    def setUp(self):
-        super(RevisionFormTests, self).setUp()
-        self.testuser = self.user_model.objects.get(username='testuser')
-        Flag.objects.update_or_create(
-            name=SPAM_CHECKS_FLAG,
-            defaults={'everyone': True},
-        )
-
-    def tearDown(self):
-        super(RevisionFormTests, self).tearDown()
-        Flag.objects.filter(name=SPAM_EXEMPTED_FLAG).delete()
-        Flag.objects.update_or_create(
-            name=SPAM_CHECKS_FLAG,
-            defaults={'everyone': None},
-        )
 
     def test_form_onload_attr_filter(self):
         """
@@ -82,11 +71,7 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertEqual(normalize_html(expected),
                          normalize_html(rev_form.initial['content']))
 
-    @pytest.mark.spam
-    @requests_mock.mock()
-    def test_form_save_section(self, mock_requests):
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content='false')
+    def test_form_save_section(self):
         rev = revision(save=True, is_approved=True, content="""
             <h1 id="s1">s1</h1>
             <p>test</p>
@@ -137,17 +122,13 @@ class RevisionFormTests(UserTransactionTestCase):
             'content': 'Content',
         }
         request = self.rf.get('/')
-        request.user = self.testuser
+        request.user = self.user_model.objects.get(username='testuser')
         rev_form = RevisionForm(data=data,
                                 request=request,
                                 parent_slug='User:groovecoder')
         self.assertFalse(rev_form.is_valid())
 
-    @pytest.mark.spam
-    @requests_mock.mock()
-    def test_multiword_tags(self, mock_requests):
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content='false')
+    def test_multiword_tags(self):
         rev = revision(save=True)
         request = self.rf.get('/')
         request.user = rev.creator
@@ -160,15 +141,11 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertTrue(rev_form.is_valid())
         self.assertEqual(rev_form.cleaned_data['tags'], '"MDN Meta"')
 
-    @pytest.mark.spam
-    @requests_mock.mock()
-    def test_case_sensitive_tags(self, mock_requests):
+    def test_case_sensitive_tags(self):
         """
         RevisionForm should reject new tags that are the same as existing tags
         that only differ by case.
         """
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content='false')
         rev = revision(save=True, tags='"JavaScript"')
         request = self.rf.get('/')
         request.user = rev.creator
@@ -181,35 +158,221 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertTrue(rev_form.is_valid())
         self.assertEqual(rev_form.cleaned_data['tags'], '"JavaScript"')
 
-    def setup_akismet_post(
-            self, mock_requests, extra_data=None, revision=None, is_spam='false'):
-        """
-        Setup a RevisionForm for content checking with Akismet.
 
-        mock_requests - provided by @requests_mock.mock() decorator
-        extra_data - Additional data to add to the form post
-        revision - The current revision, if post is an edit
-        is_spam - Akismet's response to checking this for spam
+@override_config(AKISMET_KEY='forms')
+class RevisionFormViewTests(UserTransactionTestCase):
+    """Setup tests for RevisionForm as used in views."""
+    rf = RequestFactory()
+    akismet_keys = [
+        'blog_charset',
+        'blog_lang',
+        'comment_author',
+        'comment_author_email',
+        'comment_content',
+        'comment_type',
+        'referrer',
+        'user_agent',
+        'user_ip',
+    ]
+
+    def setUp(self):
+        super(RevisionFormViewTests, self).setUp()
+        self.testuser = self.user_model.objects.get(username='testuser')
+        Flag.objects.update_or_create(
+            name=SPAM_CHECKS_FLAG,
+            defaults={'everyone': True},
+        )
+
+    def tearDown(self):
+        super(RevisionFormViewTests, self).tearDown()
+        Flag.objects.filter(name=SPAM_EXEMPTED_FLAG).delete()
+        Flag.objects.update_or_create(
+            name=SPAM_CHECKS_FLAG,
+            defaults={'everyone': None},
+        )
+
+
+class RevisionFormEditTests(RevisionFormViewTests):
+    """Test RevisionForm as used in edit view.
+
+    Includes Akismet enabled, spam/ham, and training tests. These require a
+    RevisionForm setup for POST validation, but are not unique to editing.
+    """
+
+    original = {  # Default attributes of original revision
+        'content': (
+            '<h2 id="Summary">Summary</h2>\r\n'
+            '<p>The <strong><code>display</code></strong> CSS property'
+            ' specifies the type of rendering box used for an element.</p>\r\n'
+            '<p>{{cssinfo}}</p>\r\n'
+            '<h2 id="Syntax">Syntax</h2>\r\n'
+            '<pre class="brush:css">\r\n'
+            'display: none;\r\n'
+            '</pre>\r\n'
+        ),
+        'slug': 'Web/CSS/display',
+        'tags': '"CSS" "CSS Property" "Reference"',
+        'title': 'display',
+        'toc_depth': Revision.TOC_DEPTH_ALL,
+    }
+    view_data_extra = {  # Extra data from view, derived from POST
+        'form': 'rev',
+        'content': (
+            '<h2 id="Summary">Summary</h2>\r\n'
+            '<p>The <strong><code>display</code></strong> CSS property'
+            ' specifies the type of rendering box used for an element.</p>\r\n'
+            '<p>{{cssinfo}} and my changes.</p>\r\n'
+            '<h2 id="Syntax">Syntax</h2>\r\n'
+            '<p><a href="http://spam.example.com">Buy my product!</a></p>\r\n'
+            '<pre class="brush:css">display: none;</pre>\r\n'
+        ),
+        'comment': 'Comment',
+        'days': '0',
+        'hours': '0',
+        'minutes': '0',
+        'render_max_age': '0',
+        'parent_id': '',
+        'review_tags': [],
+    }
+
+    def setup_form(
+            self, mock_requests, override_original=None, override_data=None,
+            is_spam='false'):
         """
+        Setup a RevisionForm for a POST to edit a page.
+
+        Parameters:
+        * mock_requests - Mockable requests for Akismet checks
+        * override_original - Add or modify original revision
+        * override_data - Add or modify the view data
+        * is_spam - Response from the Akismet check-comment URL
+        """
+        revision(save=True, slug='Web')
+        revision(save=True, slug='Web/CSS')
+        original_params = self.original.copy()
+        original_params.update(override_original or {})
+        previous_revision = revision(save=True, **original_params)
+
+        data = self.original.copy()
+        data['current_rev'] = str(previous_revision.id)
+        del data['slug']  # Not included in edit POST
+        data.update(self.view_data_extra)
+        data.update(override_data or {})
+
+        request = self.rf.post('/en-US/docs/Web/CSS/display$edit')
+        request.user = self.testuser
+
         mock_requests.post(VERIFY_URL, content='valid')
         mock_requests.post(CHECK_URL, content=is_spam)
-        request = self.rf.post('/')
-        request.user = self.testuser
-        data = {
-            'title': 'Title',
-            'slug': 'Slug',
-            'content': 'Content',
-            'toc_depth': str(Revision.TOC_DEPTH_ALL),
-        }
-        if extra_data:
-            data.update(extra_data)
-        rev_form = RevisionForm(data=data, request=request, instance=revision)
+
+        section_id = None
+        is_iframe_target = False
+        rev_form = RevisionForm(request=request,
+                                data=data,
+                                is_iframe_target=is_iframe_target,
+                                section_id=section_id)
+        rev_form.instance.document = previous_revision.document
         return rev_form
 
     @pytest.mark.spam
     @requests_mock.mock()
+    def test_standard_edit(self, mock_requests):
+        """Test Akismet parameters for edited English pages."""
+        rev_form = self.setup_form(mock_requests)
+        assert rev_form.is_valid(), rev_form.errors
+        parameters = rev_form.akismet_parameters()
+        assert sorted(parameters.keys()) == self.akismet_keys
+        expected_content = (
+            'display\n'
+            'Web/CSS/display\n'
+            '\n'
+            '<h2 id="Summary">Summary</h2>\r\n'
+            '<p>The <strong><code>display</code></strong> CSS property'
+            ' specifies the type of rendering box used for an element.</p>\r\n'
+            '<p>{{cssinfo}} and my changes.</p>\r\n'
+            '<h2 id="Syntax">Syntax</h2>\r\n'
+            '<p><a href="http://spam.example.com">Buy my product!</a></p>\r\n'
+            '<pre class="brush:css">display: none;</pre>\n'
+            'Comment\n'
+            '"CSS" "CSS Property" "Reference"\n'
+        )
+        assert parameters['comment_content'] == expected_content
+        assert parameters['comment_type'] == 'wiki-revision'
+        assert parameters['blog_lang'] == 'en_us'
+        assert parameters['blog_charset'] == 'UTF-8'
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_change_tags_edit(self, mock_requests):
+        """
+        Test Akismet parameters for edited legacy pages.
+
+        Keywords and summary are included in the form if the legacy page
+        includes them.
+        """
+        new_tags = '"CSS" "CSS Property" "Reference" "CSS Positioning"'
+        rev_form = self.setup_form(mock_requests,
+                                   override_data={'tags': new_tags})
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert sorted(parameters.keys()) == self.akismet_keys
+        expected_content = (
+            'display\n'
+            'Web/CSS/display\n'
+            '\n'
+            '<h2 id="Summary">Summary</h2>\r\n'
+            '<p>The <strong><code>display</code></strong> CSS property'
+            ' specifies the type of rendering box used for an element.</p>\r\n'
+            '<p>{{cssinfo}} and my changes.</p>\r\n'
+            '<h2 id="Syntax">Syntax</h2>\r\n'
+            '<p><a href="http://spam.example.com">Buy my product!</a></p>\r\n'
+            '<pre class="brush:css">display: none;</pre>\n'
+            'Comment\n'
+            '"CSS" "CSS Positioning" "CSS Property" "Reference"\n'
+        )
+        assert parameters['comment_content'] == expected_content
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_legacy_edit(self, mock_requests):
+        """
+        Test Akismet parameters for edited legacy pages.
+
+        Keywords and summary are included in the form if the legacy page
+        includes them.
+        """
+        legacy_fields = {'keywords': 'CSS, display',
+                         'summary': 'CSS property display'}
+        extra_post_data = {'keywords': 'CSS display, hidden',
+                           'summary': 'The CSS property display',
+                           'comment': 'Updated'}
+        rev_form = self.setup_form(mock_requests,
+                                   override_original=legacy_fields,
+                                   override_data=extra_post_data)
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert sorted(parameters.keys()) == self.akismet_keys
+        expected_content = (
+            'display\n' +
+            'Web/CSS/display\n' +
+            'The CSS property display\n' +
+            '<h2 id="Summary">Summary</h2>\r\n'
+            '<p>The <strong><code>display</code></strong> CSS property'
+            ' specifies the type of rendering box used for an element.</p>\r\n'
+            '<p>{{cssinfo}} and my changes.</p>\r\n'
+            '<h2 id="Syntax">Syntax</h2>\r\n'
+            '<p><a href="http://spam.example.com">Buy my product!</a></p>\r\n'
+            '<pre class="brush:css">display: none;</pre>\n'
+            'Updated\n'
+            '"CSS" "CSS Property" "Reference"\n'
+            'CSS display, hidden'
+        )
+        assert parameters['comment_content'] == expected_content
+
+    @pytest.mark.spam
+    @requests_mock.mock()
     def test_akismet_enabled(self, mock_requests):
-        rev_form = self.setup_akismet_post(mock_requests)
+        rev_form = self.setup_form(mock_requests)
         assert rev_form.akismet_enabled()
 
         # create the waffle flag and add the test user to it
@@ -224,40 +387,28 @@ class RevisionFormTests(UserTransactionTestCase):
     def test_akismet_ham(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
-        rev_form = self.setup_akismet_post(mock_requests)
+        rev_form = self.setup_form(mock_requests)
         assert rev_form.is_valid()
         assert DocumentSpamAttempt.objects.count() == 0
 
     @requests_mock.mock()
     @pytest.mark.spam
     def test_akismet_spam(self, mock_requests):
-        attempt = self._test_akismet_error(mock_requests, 'true')
-        assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
-        data = json.loads(attempt.data)
-        assert '_akismet_status_code' not in data
-
-    @requests_mock.mock()
-    @pytest.mark.spam
-    def test_akismet_error(self, mock_requests):
-        attempt = self._test_akismet_error(mock_requests, 'terrible')
-        assert attempt.review == DocumentSpamAttempt.AKISMET_ERROR
-        data = json.loads(attempt.data)
-        assert data['akismet_status_code'] == 200
-        assert data['akismet_debug_help'] == 'Not provided'
-        assert data['akismet_response'] == 'terrible'
-
-    def _test_akismet_error(self, mock_requests, check_response):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
-        rev_form = self.setup_akismet_post(mock_requests,
-                                           is_spam=check_response)
+        rev_form = self.setup_form(mock_requests, is_spam='true')
         assert not rev_form.is_valid()
+        assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
+
         assert DocumentSpamAttempt.objects.count() > 0
         attempt = DocumentSpamAttempt.objects.latest()
-        assert attempt.title == 'Title'
-        assert attempt.slug == 'Slug'
+        assert attempt.title == 'display'
+        assert attempt.slug == 'Web/CSS/display'
         assert attempt.user == self.testuser
+        assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
         assert attempt.data
+        data = json.loads(attempt.data)
+        assert 'akismet_status_code' not in data
 
         # Test that one message has been sent.
         assert len(mail.outbox) == 1
@@ -266,12 +417,25 @@ class RevisionFormTests(UserTransactionTestCase):
         assert attempt.slug in body
         assert attempt.user.username in body
 
-        try:
-            rev_form.clean()
-        except forms.ValidationError as exc:
-            self.assertHTMLEqual(exc.message, rev_form.akismet_error_message)
+    @requests_mock.mock()
+    @pytest.mark.spam
+    def test_akismet_error(self, mock_requests):
+        assert DocumentSpamAttempt.objects.count() == 0
+        assert len(mail.outbox) == 0
+        rev_form = self.setup_form(mock_requests, is_spam='terrible')
+        assert not rev_form.is_valid()
+        assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
 
-        return attempt
+        assert DocumentSpamAttempt.objects.count() > 0
+        attempt = DocumentSpamAttempt.objects.latest()
+        assert attempt.review == DocumentSpamAttempt.AKISMET_ERROR
+        assert attempt.data
+        data = json.loads(attempt.data)
+        assert data['akismet_status_code'] == 200
+        assert data['akismet_debug_help'] == 'Not provided'
+        assert data['akismet_response'] == 'terrible'
+
+        assert len(mail.outbox) == 1
 
     @pytest.mark.spam
     @requests_mock.mock()
@@ -279,7 +443,7 @@ class RevisionFormTests(UserTransactionTestCase):
         flag, created = Flag.objects.get_or_create(name=SPAM_TRAINING_FLAG)
         flag.users.add(self.testuser)
         assert not DocumentSpamAttempt.objects.exists()
-        rev_form = self.setup_akismet_post(mock_requests, is_spam='true')
+        rev_form = self.setup_form(mock_requests, is_spam='true')
         assert rev_form.is_valid()
         assert DocumentSpamAttempt.objects.count() == 1
         attempt = DocumentSpamAttempt.objects.get()
@@ -292,7 +456,7 @@ class RevisionFormTests(UserTransactionTestCase):
         flag, created = Flag.objects.get_or_create(name=SPAM_TRAINING_FLAG)
         flag.users.add(self.testuser)
         assert not DocumentSpamAttempt.objects.exists()
-        rev_form = self.setup_akismet_post(mock_requests, is_spam='error')
+        rev_form = self.setup_form(mock_requests, is_spam='error')
         assert rev_form.is_valid()
         assert DocumentSpamAttempt.objects.count() == 1
         attempt = DocumentSpamAttempt.objects.get()
@@ -301,37 +465,10 @@ class RevisionFormTests(UserTransactionTestCase):
 
     @pytest.mark.spam
     @requests_mock.mock()
-    def test_akismet_parameters_new(self, mock_requests):
-        """Test that new English pages get the standard Akismet parameters."""
-        data = {
-            # Repeat default data to make content check easier
-            'title': 'Title',
-            'slug': 'Slug',
-            'summary': 'Summary',
-            'content': 'Content',
-            'toc_depth': str(Revision.TOC_DEPTH_ALL),
-            'comment': 'Comment',
-            'tags': '"Tag1" "Tag2"',
-            'keywords': 'HTML, CSS, JS',
-        }
-        rev_form = self.setup_akismet_post(mock_requests, data)
-        assert rev_form.is_valid()
-        parameters = rev_form.akismet_parameters()
-        assert parameters['comment_author'] == 'Test User'
-        assert parameters['comment_author_email'] == self.testuser.email
-        # The content is a combination of the data values
-        for value in data.values():
-            assert value in parameters['comment_content']
-        assert parameters['comment_type'] == 'wiki-revision'
-        assert parameters['blog_lang'] == 'en_us'
-        assert parameters['blog_charset'] == 'UTF-8'
-
-    @pytest.mark.spam
-    @requests_mock.mock()
     def test_akismet_parameters_admin_flag(self, mock_requests):
         flag, created = Flag.objects.get_or_create(name=SPAM_ADMIN_FLAG)
         flag.users.add(self.testuser)
-        rev_form = self.setup_akismet_post(mock_requests)
+        rev_form = self.setup_form(mock_requests)
         assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
         assert parameters['user_role'] == 'administrator'
@@ -341,7 +478,7 @@ class RevisionFormTests(UserTransactionTestCase):
     def test_akismet_parameters_spammer_flag(self, mock_requests):
         flag, created = Flag.objects.get_or_create(name=SPAM_SPAMMER_FLAG)
         flag.users.add(self.testuser)
-        rev_form = self.setup_akismet_post(mock_requests, is_spam='true')
+        rev_form = self.setup_form(mock_requests, is_spam='true')
         assert not rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
         assert parameters['comment_author'] == 'viagra-test-123'
@@ -351,30 +488,328 @@ class RevisionFormTests(UserTransactionTestCase):
     def test_akismet_parameters_testing_flag(self, mock_requests):
         flag, created = Flag.objects.get_or_create(name=SPAM_TESTING_FLAG)
         flag.users.add(self.testuser)
-        rev_form = self.setup_akismet_post(mock_requests)
+        rev_form = self.setup_form(mock_requests)
         assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
         assert parameters['is_test']
 
-    @pytest.mark.spam
-    @requests_mock.mock()
-    def test_akismet_parameters_new_translation(self, mock_requests):
-        """Test Akismet dual locale setting for new translations."""
-        extra_data = {'locale': 'de'}
-        rev_form = self.setup_akismet_post(mock_requests, extra_data)
-        assert rev_form.is_valid()
-        parameters = rev_form.akismet_parameters()
-        assert parameters['blog_lang'] == 'de, en_us'
+
+class RevisionFormCreateTests(RevisionFormViewTests):
+    """Test RevisionForm as used in create view."""
+
+    view_data = {  # Data passed by view, derived from POST
+        'comment': 'Initial version',
+        'content': (
+            '<h2 id="Summary">Summary</h2>\r\n'
+            '<p>Web accessibility is removing barriers that prevent'
+            ' interaction with or access to website.</p>\r\n'
+        ),
+        'locale': 'en-US',  # Added in view from request.LANGUAGE_CODE
+        'review_tags': ['technical', 'editorial'],
+        'slug': 'Accessibility',
+        'tags': '"Accessibility" "Web Development"',
+        'title': 'Accessibility',
+        'toc_depth': Revision.TOC_DEPTH_ALL,
+    }
+
+    def setup_form(self, mock_requests, is_spam='false'):
+        """
+        Setup a RevisionForm for a POST to create a new page.
+
+        Parameters:
+        * mock_requests - Mockable requests for Akismet checks
+        """
+        revision(save=True, slug='Web')
+        parent = revision(save=True, slug='Web/Guide')
+        data = self.view_data.copy()
+        data['parent_topic'] = str(parent.id)
+
+        request = self.rf.post('/en-US/docs/new')
+        request.user = self.testuser
+        # In the view, the form data's locale is set from the request
+        request.LANGUAGE_CODE = data['locale']
+
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content=is_spam)
+
+        parent_slug = 'Web/Guide'
+        rev_form = RevisionForm(request=request,
+                                data=data,
+                                parent_slug=parent_slug)
+        return rev_form
 
     @pytest.mark.spam
     @requests_mock.mock()
-    def test_akismet_parameters_translation_edit(self, mock_requests):
-        rev = revision(save=True)
-        rev.document.locale = 'fr'
-        rev_form = self.setup_akismet_post(mock_requests, revision=rev)
+    def test_standard_new(self, mock_requests):
+        """Test that new English pages get the standard Akismet parameters."""
+        rev_form = self.setup_form(mock_requests)
+        assert rev_form.is_valid(), rev_form.errors
+        parameters = rev_form.akismet_parameters()
+        assert sorted(parameters.keys()) == self.akismet_keys
+        assert parameters['blog_charset'] == 'UTF-8'
+        assert parameters['blog_lang'] == 'en_us'
+        assert parameters['comment_author'] == 'Test User'
+        assert parameters['comment_author_email'] == self.testuser.email
+        expected_content = (
+            'Accessibility\n'
+            'Web/Guide/Accessibility\n'
+            '\n'
+            '<h2 id="Summary">Summary</h2>\r\n'
+            '<p>Web accessibility is removing barriers that prevent'
+            ' interaction with or access to website.</p>\n'
+            'Initial version\n'
+            '"Accessibility" "Web Development"\n'
+        )
+        assert parameters['comment_content'] == expected_content
+        assert parameters['comment_type'] == 'wiki-revision'
+        assert parameters['referrer'] == ''
+        assert parameters['user_agent'] == ''
+        assert parameters['user_ip'] == '127.0.0.1'
+
+    @requests_mock.mock()
+    @pytest.mark.spam
+    def test_akismet_spam(self, mock_requests):
+        assert DocumentSpamAttempt.objects.count() == 0
+        assert len(mail.outbox) == 0
+        rev_form = self.setup_form(mock_requests, is_spam='true')
+        assert not rev_form.is_valid()
+        assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
+
+        assert DocumentSpamAttempt.objects.count() > 0
+        attempt = DocumentSpamAttempt.objects.latest()
+        assert attempt.title == 'Accessibility'
+        assert attempt.slug == 'Web/Guide/Accessibility'
+        assert attempt.user == self.testuser
+        assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
+        assert attempt.data
+        data = json.loads(attempt.data)
+        assert 'akismet_status_code' not in data
+
+        # Test that one message has been sent.
+        assert len(mail.outbox) == 1
+        body = mail.outbox[0].body
+        assert attempt.title in body
+        assert attempt.slug in body
+        assert attempt.user.username in body
+
+
+class RevisionFormNewTranslationTests(RevisionFormViewTests):
+    """Test RevisionForm as used to create a page in translate view."""
+
+    original = {  # Default attributes of original English page
+        'content': (
+            '<h2 id="Summary">Summary</h2>\r\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong> is the'
+            ' core language of nearly all Web content.</p>\r\n'
+        ),
+        'slug': 'Web/Guide/HTML',
+        'tags': '"HTML" "Landing" "Web"',
+        'title': 'HTML developer guide',
+        'toc_depth': Revision.TOC_DEPTH_ALL,
+    }
+
+    view_data = {  # Data passed by view, derived from POST
+        'comment': u'Traduction initiale',
+        'content': (
+            u'<h2 id="Summary">Summary</h2>\r\n'
+            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            u' de presque tout contenu Web.</p>\r\n'
+        ),
+        'current_rev': '',
+        'form': 'both',
+        'locale': 'fr',  # Added in view from request.GET to_locale
+        'localization_tags': ['inprogress'],
+        'slug': 'HTML',
+        'tags': '"HTML" "Landing" "Web"',
+        'title': u'Guide de développement HTML',
+        'toc_depth': Revision.TOC_DEPTH_ALL,
+    }
+
+    def setup_form(self, mock_requests):
+        """
+        Setup a RevisionForm for a POST to create a new translation.
+
+        Parameters:
+        * mock_requests - Mockable requests for Akismet checks
+        """
+        revision(save=True, slug='Web')
+        revision(save=True, slug='Web/Guide')
+        original_data = self.original.copy()
+        english_rev = revision(save=True, **original_data)
+
+        initial = {
+            'based_on': english_rev.id,
+            'comment': '',
+            'toc_depth': english_rev.toc_depth,
+            'localization_tags': ['inprogress'],
+            'content': english_rev.content,  # In view, includes cleaning
+        }
+
+        request = self.rf.post('/en-US/docs/Web/Guide/HTML$translate')
+        request.user = self.testuser
+
+        is_spam = 'false'
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content=is_spam)
+
+        parent_slug = 'Web/Guide'
+        rev_form1 = RevisionForm(request=request,
+                                 instance=None,
+                                 initial=initial,
+                                 parent_slug=parent_slug)
+        assert rev_form1
+
+        data = self.view_data.copy()
+        data['based_on'] = str(english_rev.id)
+        rev_form = RevisionForm(request=request,
+                                data=data,
+                                parent_slug=parent_slug)
+        return rev_form
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_new_translation(self, mock_requests):
+        """Test Akismet dual locale setting for new translations."""
+        rev_form = self.setup_form(mock_requests)
         assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
+        assert sorted(parameters.keys()) == self.akismet_keys
         assert parameters['blog_lang'] == 'fr, en_us'
+        expected_content = (
+            u'Guide de développement HTML\n'
+            u'Web/Guide/HTML\n'
+            u'\n'
+            u'<h2 id="Summary">Summary</h2>\r\n'
+            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            u' de presque tout contenu Web.</p>\n'
+            u'Traduction initiale\n'
+            u'"HTML" "Landing" "Web"\n'
+        )
+        assert parameters['comment_content'] == expected_content
+
+
+class RevisionFormEditTranslationTests(RevisionFormViewTests):
+    """Test RevisionForm as used to create a page in translate view."""
+
+    en_original = {  # Default attributes of original English page
+        'content': (
+            '<h2 id="Summary">Summary</h2>\r\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong> is the'
+            ' core language of nearly all Web content.</p>\r\n'
+        ),
+        'slug': 'Web/Guide/HTML',
+        'tags': '"HTML" "Landing" "Web"',
+        'title': 'HTML developer guide',
+        'toc_depth': Revision.TOC_DEPTH_ALL,
+    }
+
+    fr_original = {  # Default attributes of original French page
+        'content': (
+            u'<h2 id="Summary">Summary</h2>\r\n'
+            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            u' de presque tout contenu Web.</p>\r\n'
+        ),
+        'slug': 'Web/Guide/HTML',
+        'tags': '"HTML" "Landing"',
+        'title': u'Guide de développement HTML',
+        'toc_depth': Revision.TOC_DEPTH_ALL,
+    }
+
+    view_data = {  # Data passed by view, derived from POST
+        'comment': u'Traduction initiale terminée',
+        'content': (
+            u'<h2 id="Summary">Summary</h2>\r\n'
+            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            u' de presque tout contenu Web.</p>\r\n'
+            u'<p>La majorité de ce que vous voyez dans votre navigateur est'
+            u' décrit en utilisant HTML.<p>'
+        ),
+        'current_rev': '',
+        'form': 'both',
+        'locale': 'fr',  # Added in view from request.GET to_locale
+        'localization_tags': ['inprogress'],
+        'slug': 'HTML',
+        'tags': '"HTML" "Landing" "Web"',
+        'title': u'Guide de développement HTML',
+        'toc_depth': Revision.TOC_DEPTH_ALL,
+    }
+
+    def setup_forms(self, mock_requests):
+        """
+        Setup two RevisionForms for a POST to edit an existing translation.
+
+        RevisionForm is validated twice on POST (during Document validation,
+        and during Revision validation and save), so this returns two forms
+
+        Parameters:
+        * mock_requests - Mockable requests for Akismet checks
+        """
+        revision(save=True, slug='Web')
+        revision(save=True, slug='Web/Guide')
+        en_rev = revision(save=True, **self.en_original)
+
+        fr_web_doc = document(save=True, slug='Web', locale='fr')
+        revision(save=True, slug='Web', document=fr_web_doc)
+        fr_guide_doc = document(save=True, slug='Web/Guide', locale='fr')
+        revision(save=True, slug='Web/Guide', document=fr_guide_doc)
+        fr_html_doc = document(save=True, slug='Web/Guide/HTML', locale='fr',
+                               parent=en_rev.document)
+        revision(save=True, document=fr_html_doc, **self.fr_original)
+
+        request = self.rf.post('/fr/docs/Web/Guide/HTML')
+        request.user = self.testuser
+
+        is_spam = 'false'
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content=is_spam)
+
+        # Form #1 - Document validation
+        data = self.view_data.copy()
+        data['based_on'] = str(en_rev.id)
+        data['parent_id'] = str(en_rev.document.id)
+        parent_slug = 'Web/Guide'
+        rev_form1 = RevisionForm(request=request,
+                                 data=data,
+                                 parent_slug=parent_slug)
+
+        # Form #2 - Revision validation and saving
+        data = self.view_data.copy()
+        data['based_on'] = str(en_rev.id)
+        data['parent_id'] = str(en_rev.document.id)
+        rev_form2 = RevisionForm(request=request,
+                                 data=data,
+                                 parent_slug=parent_slug)
+        rev_form2.instance.document = fr_html_doc
+
+        return rev_form1, rev_form2
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_edit_translation(self, mock_requests):
+        rev_form1, rev_form2 = self.setup_forms(mock_requests)
+        assert rev_form1.is_valid(), rev_form1.errors
+        assert rev_form2.is_valid(), rev_form2.errors
+        parameters = rev_form2.akismet_parameters()
+        assert sorted(parameters.keys()) == self.akismet_keys
+        assert parameters['blog_lang'] == 'fr, en_us'
+        expected_content = (
+            u'Guide de développement HTML\n'
+            u'Web/Guide/HTML\n'
+            u'\n'
+            u'<h2 id="Summary">Summary</h2>\r\n'
+            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            u' de presque tout contenu Web.</p>\r\n'
+            u'<p>La majorité de ce que vous voyez dans votre navigateur est'
+            u' décrit en utilisant HTML.<p>\n'
+            u'Traduction initiale terminée\n'
+            u'"HTML" "Landing" "Web"\n'
+        )
+        assert parameters['comment_content'] == expected_content
 
 
 class TreeMoveFormTests(UserTestCase):
