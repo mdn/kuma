@@ -185,7 +185,7 @@ class RevisionFormTests(UserTransactionTestCase):
         mock_requests.post(VERIFY_URL, content='valid')
         request = self.rf.get('/')
         # using a non-admin user here to make sure we can test the
-        # exmption rule below
+        # exemption rule below
         request.user = self.testuser
         data = {
             'slug': 'Title',
@@ -194,14 +194,14 @@ class RevisionFormTests(UserTransactionTestCase):
         }
         rev_form = RevisionForm(data=data, request=request)
 
-        self.assertTrue(rev_form.akismet_enabled())
+        assert rev_form.akismet_enabled()
 
         # create the waffle flag and add the test user to it
         flag, created = Flag.objects.get_or_create(name=SPAM_EXEMPTED_FLAG)
         flag.users.add(self.testuser)
 
         # now disabled because the test user is exempted from the spam check
-        self.assertFalse(rev_form.akismet_enabled())
+        assert not rev_form.akismet_enabled()
 
     @requests_mock.mock()
     @pytest.mark.spam
@@ -209,8 +209,6 @@ class RevisionFormTests(UserTransactionTestCase):
         mock_requests.post(VERIFY_URL, content='valid')
         mock_requests.post(CHECK_URL, content='false')  # false means it's ham
         request = self.rf.get('/')
-        # using a non-admin user here to make sure we can test the
-        # exmption rule below
         request.user = self.testuser
         data = {
             'title': 'Title',
@@ -218,12 +216,12 @@ class RevisionFormTests(UserTransactionTestCase):
             'content': 'Content',
             'toc_depth': Revision.TOC_DEPTH_ALL,
         }
-        self.assertEqual(DocumentSpamAttempt.objects.count(), 0)
-        self.assertEqual(len(mail.outbox), 0)
+        assert DocumentSpamAttempt.objects.count() == 0
+        assert len(mail.outbox) == 0
 
         rev_form = RevisionForm(data=data, request=request)
-        self.assertTrue(rev_form.is_valid())
-        self.assertEqual(DocumentSpamAttempt.objects.count(), 0)
+        assert rev_form.is_valid()
+        assert DocumentSpamAttempt.objects.count() == 0
 
     @requests_mock.mock()
     @pytest.mark.spam
@@ -256,23 +254,24 @@ class RevisionFormTests(UserTransactionTestCase):
             'content': 'Content',
             'toc_depth': Revision.TOC_DEPTH_ALL,
         }
-        self.assertEqual(DocumentSpamAttempt.objects.count(), 0)
-        self.assertEqual(len(mail.outbox), 0)
+        assert DocumentSpamAttempt.objects.count() == 0
+        assert len(mail.outbox) == 0
 
         rev_form = RevisionForm(data=data, request=request)
-        self.assertFalse(rev_form.is_valid())
-        self.assertTrue(DocumentSpamAttempt.objects.count() > 0)
+        assert not rev_form.is_valid()
+        assert DocumentSpamAttempt.objects.count() > 0
         attempt = DocumentSpamAttempt.objects.latest()
-        self.assertEqual(attempt.title, 'Title')
-        self.assertEqual(attempt.slug, 'Slug')
-        self.assertEqual(attempt.user, self.testuser)
-        self.assertTrue(attempt.data)
+        assert attempt.title == 'Title'
+        assert attempt.slug == 'Slug'
+        assert attempt.user == self.testuser
+        assert attempt.data
 
         # Test that one message has been sent.
-        self.assertEqual(len(mail.outbox), 1)
-        self.assertIn(attempt.title, mail.outbox[0].body)
-        self.assertIn(attempt.slug, mail.outbox[0].body)
-        self.assertIn(attempt.user.username, mail.outbox[0].body)
+        assert len(mail.outbox) == 1
+        body = mail.outbox[0].body
+        assert attempt.title in body
+        assert attempt.slug in body
+        assert attempt.user.username in body
 
         try:
             rev_form.clean()
@@ -299,17 +298,16 @@ class RevisionFormTests(UserTransactionTestCase):
             'keywords': 'HTML, CSS, JS',
         }
         rev_form = RevisionForm(data=data, request=request)
-        self.assertTrue(rev_form.is_valid())
+        assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
-        self.assertEqual(parameters['comment_author'], 'Test User')
-        self.assertEqual(parameters['comment_author_email'],
-                         self.testuser.email)
-        # The content contains just
+        assert parameters['comment_author'] == 'Test User'
+        assert parameters['comment_author_email'] == self.testuser.email
+        # The content is a combination of the data values
         for value in data.values():
-            self.assertIn(value, parameters['comment_content'])
-        self.assertEqual(parameters['comment_type'], 'wiki-revision')
-        self.assertEqual(parameters['blog_lang'], 'en_us')
-        self.assertEqual(parameters['blog_charset'], 'UTF-8')
+            assert value in parameters['comment_content']
+        assert parameters['comment_type'] == 'wiki-revision'
+        assert parameters['blog_lang'] == 'en_us'
+        assert parameters['blog_charset'] == 'UTF-8'
 
     @pytest.mark.spam
     @requests_mock.mock()
@@ -329,9 +327,9 @@ class RevisionFormTests(UserTransactionTestCase):
             'locale': 'de',
         }
         rev_form = RevisionForm(data=data, request=request)
-        self.assertTrue(rev_form.is_valid(), rev_form.errors)
+        assert rev_form.is_valid(), rev_form.errors
         parameters = rev_form.akismet_parameters()
-        self.assertEqual(parameters['blog_lang'], 'de, en_us')
+        assert parameters['blog_lang'] == 'de, en_us'
 
     @pytest.mark.spam
     @requests_mock.mock()
@@ -350,9 +348,9 @@ class RevisionFormTests(UserTransactionTestCase):
             'toc_depth': str(Revision.TOC_DEPTH_ALL),
         }
         rev_form = RevisionForm(data=data, instance=rev, request=request)
-        self.assertTrue(rev_form.is_valid(), rev_form.errors)
+        assert rev_form.is_valid(), rev_form.errors
         parameters = rev_form.akismet_parameters()
-        self.assertEqual(parameters['blog_lang'], 'fr, en_us')
+        assert parameters['blog_lang'] == 'fr, en_us'
 
 
 class TreeMoveFormTests(UserTestCase):
