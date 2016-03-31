@@ -1936,11 +1936,13 @@ class DocumentSpamAttempt(SpamAttempt):
     HAM = 1
     SPAM = 2
     REVIEW_UNAVAILABLE = 3
+    AKISMET_ERROR = 4
     REVIEW_CHOICES = (
         (NEEDS_REVIEW, _('Needs Review')),
         (HAM, _('Ham / False Positive')),
         (SPAM, _('Confirmed as Spam')),
         (REVIEW_UNAVAILABLE, _('Review Unavailable')),
+        (AKISMET_ERROR, _('Akismet Error')),
     )
     review = models.IntegerField(
         choices=REVIEW_CHOICES,

@@ -1,3 +1,5 @@
+import json
+
 from django import forms
 from django.core import mail
 from django.test import RequestFactory
@@ -226,12 +228,20 @@ class RevisionFormTests(UserTransactionTestCase):
     @requests_mock.mock()
     @pytest.mark.spam
     def test_akismet_spam(self, mock_requests):
-        self._test_akismet_error(mock_requests, 'true')
+        attempt = self._test_akismet_error(mock_requests, 'true')
+        assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
+        data = json.loads(attempt.data)
+        assert '_akismet_status_code' not in data
 
     @requests_mock.mock()
     @pytest.mark.spam
     def test_akismet_error(self, mock_requests):
-        self._test_akismet_error(mock_requests, 'terrible')
+        attempt = self._test_akismet_error(mock_requests, 'terrible')
+        assert attempt.review == DocumentSpamAttempt.AKISMET_ERROR
+        data = json.loads(attempt.data)
+        assert data['akismet_status_code'] == 200
+        assert data['akismet_debug_help'] == 'Not provided'
+        assert data['akismet_response'] == 'terrible'
 
     def _test_akismet_error(self, mock_requests, check_response):
         mock_requests.post(VERIFY_URL, content='valid')
@@ -268,6 +278,8 @@ class RevisionFormTests(UserTransactionTestCase):
             rev_form.clean()
         except forms.ValidationError as exc:
             self.assertHTMLEqual(exc.message, rev_form.akismet_error_message)
+
+        return attempt
 
     @pytest.mark.spam
     @requests_mock.mock()
