@@ -244,7 +244,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.section_id = kwargs.pop('section_id', None)
-        self.is_iframe_target = kwargs.pop('is_iframe_target', None)
+        self.is_async_submit = kwargs.pop('is_async_submit', None)
 
         # when creating a new document with a parent, this will be set
         self.parent_slug = kwargs.pop('parent_slug', None)
@@ -284,7 +284,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     def clean_slug(self):
         # Since this form can change the URL of the page on which the editing
         # happens, changes to the slug are ignored for an iframe submissions
-        if self.is_iframe_target:
+        if self.is_async_submit:
             return self.instance.document.slug
 
         # Get the cleaned slug

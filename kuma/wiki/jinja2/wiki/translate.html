@@ -21,7 +21,7 @@
 {% block content %}
     <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="translate-document">
       {% csrf_token %}
-      <input type="hidden" name="form" value="both" />
+      <input type="hidden" name="form-type" value="both" />
 
       <div id="localize-document" class="editing">
         <header id="article-head">

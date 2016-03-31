@@ -180,7 +180,7 @@
               <div class="ckeditor-container editor-container">{{ revision_form.content | safe }}</div>
             {% endif %}
 
-            <input type="hidden" name="form" value="rev" />
+            <input type="hidden" name="form-type" value="rev" />
             {{ revision_form.hidden_fields()|join|safe }}
 
             {% set tags = document.tags.all().order_by('name') %}

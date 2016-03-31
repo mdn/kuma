@@ -446,88 +446,115 @@
     // Initialize logic for save and save-and-edit buttons.
     //
     function initSaveAndEditButtons () {
+        var $form = $('#wiki-page-edit');
+
         // Save button submits to top-level
-        $('.btn-save').on('click', function () {
+        $form.on('submit', function () {
+            // TODO: diable form
             if (supportsLocalStorage) {
                 // Clear any preserved content.
                 clearDraft();
+                clearTimeout(DRAFT_TIMEOUT_ID);
             }
-            clearTimeout(DRAFT_TIMEOUT_ID);
-            $form.attr('action', '').removeAttr('target');
             return true;
         });
 
-        // Save-and-edit submits to a hidden iframe, show loading message in notifier
-        var notifications = [];
-        $('.btn-save-and-edit').on('click', function () {
+        // save and edit attempts ajax submit
+        $('.btn-save-and-edit').on('click', function(event) {
+            // TODO: diable form
+            console.log('save and edit triggered');
 
-            notifications.push(mdn.Notifier.growl('Saving changes…', { duration: 0 }));
+            // give user feedback
+            var saveNotification = mdn.Notifier.growl('Saving changes…', { duration: 0 });
 
+            // record event
             mdn.analytics.trackEvent({
-                category: 'Wiki',
-                action: 'Button',
-                label: 'Save and Keep Editing'
-            });
+                    category: 'Wiki',
+                    action: 'Button',
+                    label: 'Save and Keep Editing'
+                });
 
+            // Preserve editor content incase something goes wrong
             var savedTa = $form.find('textarea[name=content]').val();
             if (supportsLocalStorage) {
-                // Preserve editor content, because saving to the iframe can
-                // yield things like 403 / login-required errors that bust out
-                // of the frame
                 saveDraft(savedTa);
+                clearTimeout(DRAFT_TIMEOUT_ID);
             }
-            clearTimeout(DRAFT_TIMEOUT_ID);
-            // Redirect the editor form to the iframe.
-            $form.attr('action', '?iframe=1').attr('target', 'save-and-edit-target');
-            return true;
-        });
-        $('.btn-save-and-edit').show();
 
-        $('#save-and-edit-target').on('load', function () {
-            if(notifications[0]) notifications[0].success(null, 2000);
-            notifications.shift();
+            // get form data
+            var formData = $form.serialize();
+            var formURL = window.location.href; // submits to self
+            //console.log(formData);
+            //console.log(formURL);
 
-            if (supportsLocalStorage) {
-                var if_doc = $(this).get(0).contentDocument;
-                if (typeof(if_doc) != 'undefined') {
-
-                    var ir = $('#iframe-response', if_doc);
-                    if ('OK' == ir.attr('data-status')) {
-
-                        // Dig into the iframe on load and look for "OK". If found,
-                        // then it should be safe to throw away the preserved content.
-                        localStorage.removeItem(DRAFT_NAME);
+            // ajax submit
+            $.ajax({
+                url : formURL + '?async',
+                type: "POST",
+                data : formData,
+                dataType : 'html',
+                success: function(data, textStatus, jqXHR) {
+                    // server came back 200
+                     console.log(data, data);
+                    // console.log(textStatus);
+                    // console.log(jqXHR);
+                    // was there an error?
+                    var $parsedData = $($.parseHTML(data));
+                    //console.log('parsedData:');
+                    //console.log($parsedData);
+                    var $responseErrors = $parsedData.filter('.errorlist');
+                    if($responseErrors.length) {
+                        console.log('error found');
+                        saveNotification.error('uh-oh');
+                        //$form.submit();
+                    }
+                    else {
+                        console.log('no errors - sucess!');
+                        // assume it went well
+                        saveNotification.success(gettext('Changes saved.'), 2000);
 
                         // We also need to update the form's current_rev to
                         // avoid triggering a conflict, since we just saved in
                         // the background.
-                        $form.find('input[name=current_rev]').val(
-                            ir.attr('data-current-revision'));
+                        var responseRevision = $parsedData.filter('#id_current_rev').val();
+                        console.log(responseRevision);
+                        $('#id_current_rev').val(responseRevision);
 
-                    } else if ($form.add(if_doc).hasClass('conflict')) {
-                        // HACK: If we detect a conflict in the iframe while
-                        // doing save-and-edit, force a full-on save in order
-                        // to surface the issue. There's no easy way to bust
-                        // the iframe otherwise, since this was a POST.
-                        $form.attr('action', '').attr('target', '');
-                        $('.btn-save').click();
+                        // Clear the review comment
+                        $('#id_comment').val('');
 
+                        // Trigger a `mdn:save-success` event so dirtiness can be reset throughout the page
+                        $form.trigger('mdn:save-success');
+
+                        // Re-enable the form; it gets disabled to prevent double-POSTs
+                        $form.data('disabled', false).removeClass('disabled');
                     }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    //if fails
+                    // console.log(jqXHR);
+                    // console.log(jqXHR.status);
+                    // console.log(textStatus);
+                    // console.log(errorThrown);
 
-                    // Anything else that happens (eg. 403 errors) should have
-                    // framebusting code to escape the hidden iframe.
+                    saveNotification.error('uh-oh', {closable: true, duration: 0});
+
+                    // save draft
                 }
-            }
-            // Stop loading state on button
-            $('.btn-save-and-edit').removeClass('loading');
-            // Clear the review comment
-            $('#id_comment').val('');
-            // Re-enable the form; it gets disabled to prevent double-POSTs
-            $form.data('disabled', false).removeClass('disabled');
-            // Trigger a `mdn:save-success` event so dirtiness can be reset throughout the page
-            $form.trigger('mdn:save-success');
-            return true;
+            });
+/*
+                //$form.find('input[name=current_rev]').val(
+
+                //ir.attr('data-current-revision'));
+
+                // Stop loading state on button
+                //$('.btn-save-and-edit').removeClass('loading');
+
+*/
+
         });
+        $('.btn-save-and-edit').show();
+
 
         // Track submissions of the edit page form
         $form.on('submit', function() {
