@@ -164,6 +164,7 @@ class RevisionFormViewTests(UserTransactionTestCase):
     """Setup tests for RevisionForm as used in views."""
     rf = RequestFactory()
     akismet_keys = [
+        'REMOTE_ADDR',
         'blog_charset',
         'blog_lang',
         'comment_author',
@@ -300,6 +301,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
         assert parameters['comment_type'] == 'wiki-revision'
         assert parameters['blog_lang'] == 'en_us'
         assert parameters['blog_charset'] == 'UTF-8'
+        assert parameters['REMOTE_ADDR'] == '127.0.0.1'
 
     @pytest.mark.spam
     @requests_mock.mock()

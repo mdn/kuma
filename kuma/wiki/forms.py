@@ -9,6 +9,7 @@ from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.safestring import mark_safe
+from django.utils.six import string_types
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from taggit.utils import parse_tags
@@ -22,7 +23,8 @@ from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
                         SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG,
-                        SPAM_SUBMISSION_REVISION_FIELDS, SPAM_TRAINING_FLAG)
+                        SPAM_OTHER_HEADERS, SPAM_SUBMISSION_REVISION_FIELDS,
+                        SPAM_TRAINING_FLAG)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
                      RevisionIP, RevisionAkismetSubmission, valid_slug_parent)
@@ -515,6 +517,18 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),
             'referrer': self.request.META.get('HTTP_REFERER', ''),
         }
+
+        # Add select HTTP headers
+        # Modeled after Akismet's Wordpress plugin
+        # https://plugins.trac.wordpress.org/browser/akismet/trunk/class.akismet.php
+        for key, value in self.request.META.items():
+            if not isinstance(value, string_types):
+                continue
+            if key.startswith('HTTP_COOKIE'):
+                continue
+            if key.startswith('HTTP_') or key in SPAM_OTHER_HEADERS:
+                parameters[key] = value
+
         parameters.update(self.akismet_parameter_overrides())
         return parameters
 
