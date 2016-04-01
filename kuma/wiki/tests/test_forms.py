@@ -163,8 +163,9 @@ class RevisionFormTests(UserTransactionTestCase):
 class RevisionFormViewTests(UserTransactionTestCase):
     """Setup tests for RevisionForm as used in views."""
     rf = RequestFactory()
-    akismet_keys = [
+    akismet_keys = [  # Keys for a new English page or new translation
         'REMOTE_ADDR',
+        'blog',
         'blog_charset',
         'blog_lang',
         'comment_author',
@@ -175,6 +176,8 @@ class RevisionFormViewTests(UserTransactionTestCase):
         'user_agent',
         'user_ip',
     ]
+    # Keys for a page edit (English or translation)
+    akismet_keys_edit = sorted(akismet_keys + ['permalink'])
 
     def setUp(self):
         super(RevisionFormViewTests, self).setUp()
@@ -282,7 +285,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
         rev_form = self.setup_form(mock_requests)
         assert rev_form.is_valid(), rev_form.errors
         parameters = rev_form.akismet_parameters()
-        assert sorted(parameters.keys()) == self.akismet_keys
+        assert sorted(parameters.keys()) == self.akismet_keys_edit
         expected_content = (
             'display\n'
             'Web/CSS/display\n'
@@ -299,9 +302,12 @@ class RevisionFormEditTests(RevisionFormViewTests):
         )
         assert parameters['comment_content'] == expected_content
         assert parameters['comment_type'] == 'wiki-revision'
+        assert parameters['blog'] == 'http://testserver/'
         assert parameters['blog_lang'] == 'en_us'
         assert parameters['blog_charset'] == 'UTF-8'
         assert parameters['REMOTE_ADDR'] == '127.0.0.1'
+        assert parameters['permalink'] == ('http://testserver/en-US/docs/'
+                                           'Web/CSS/display')
 
     @pytest.mark.spam
     @requests_mock.mock()
@@ -317,7 +323,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
                                    override_data={'tags': new_tags})
         assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
-        assert sorted(parameters.keys()) == self.akismet_keys
+        assert sorted(parameters.keys()) == self.akismet_keys_edit
         expected_content = (
             'display\n'
             'Web/CSS/display\n'
@@ -353,7 +359,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
                                    override_data=extra_post_data)
         assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
-        assert sorted(parameters.keys()) == self.akismet_keys
+        assert sorted(parameters.keys()) == self.akismet_keys_edit
         expected_content = (
             'display\n' +
             'Web/CSS/display\n' +
@@ -548,6 +554,7 @@ class RevisionFormCreateTests(RevisionFormViewTests):
         assert rev_form.is_valid(), rev_form.errors
         parameters = rev_form.akismet_parameters()
         assert sorted(parameters.keys()) == self.akismet_keys
+        assert parameters['blog'] == 'http://testserver/'
         assert parameters['blog_charset'] == 'UTF-8'
         assert parameters['blog_lang'] == 'en_us'
         assert parameters['comment_author'] == 'Test User'
@@ -796,7 +803,7 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
         assert rev_form1.is_valid(), rev_form1.errors
         assert rev_form2.is_valid(), rev_form2.errors
         parameters = rev_form2.akismet_parameters()
-        assert sorted(parameters.keys()) == self.akismet_keys
+        assert sorted(parameters.keys()) == self.akismet_keys_edit
         assert parameters['blog_lang'] == 'fr, en_us'
         expected_content = (
             u'Guide de développement HTML\n'
@@ -812,6 +819,8 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
             u'"HTML" "Landing" "Web"\n'
         )
         assert parameters['comment_content'] == expected_content
+        assert parameters['permalink'] == ('http://testserver/fr/docs/'
+                                           'Web/Guide/HTML')
 
 
 class TreeMoveFormTests(UserTestCase):

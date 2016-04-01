@@ -484,13 +484,17 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         for a model instance in
         ``RevisionAkismetSubmissionAdminForm.akismet_parameters`` method!
         """
-        default_language = settings.WIKI_DEFAULT_LANGUAGE
+        try:
+            document = self.instance.document
+        except ObjectDoesNotExist:
+            document = None
 
         # Try to get the language depending on source -- either the instance
         # provided or the POST data. Fall back to the default defined in
         # settings.
-        if self.instance and self.instance.pk and self.instance.document:
-            language = self.instance.document.locale or default_language
+        default_language = settings.WIKI_DEFAULT_LANGUAGE
+        if document:
+            language = document.locale or default_language
         else:
             language = self.data.get('locale', default_language)
 
@@ -507,16 +511,20 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                               for field in SPAM_SUBMISSION_REVISION_FIELDS])
 
         parameters = {
-            'blog_lang': blog_lang,
+            'blog': self.request.build_absolute_uri('/'),
             'blog_charset': 'UTF-8',
+            'blog_lang': blog_lang,
             'comment_author': author_from_user(self.request.user),
             'comment_author_email': author_email_from_user(self.request.user),
             'comment_content': content,
             'comment_type': 'wiki-revision',
-            'user_ip': self.request.META.get('REMOTE_ADDR', ''),
-            'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),
             'referrer': self.request.META.get('HTTP_REFERER', ''),
+            'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),
+            'user_ip': self.request.META.get('REMOTE_ADDR', ''),
         }
+        if document:
+            doc_url = document.get_absolute_url()
+            parameters['permalink'] = self.request.build_absolute_uri(doc_url)
 
         # Add select HTTP headers
         # Modeled after Akismet's Wordpress plugin
