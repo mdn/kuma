@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-18 08:50-0700\n"
+"POT-Creation-Date: 2016-04-01 10:55-0700\n"
 "PO-Revision-Date: 2016-03-12 18:45+0000\n"
 "Last-Translator: Alexander Slovesnik <unghost@mozilla-russia.org>\n"
 "Language-Team: none\n"
@@ -142,15 +142,15 @@ msgstr "Веб-платформа"
 msgid "Technologies"
 msgstr "Технологии"
 
-#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:72 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:127 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:73 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:127 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:128 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:74 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:128 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
@@ -202,19 +202,19 @@ msgstr "...больше документации"
 msgid "Mozilla Docs"
 msgstr "Документация Mozilla"
 
-#: jinja2/base.html:151 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:85
+#: jinja2/base.html:151 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
 msgid "Add-ons"
 msgstr "Дополнения"
 
-#: jinja2/base.html:152 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:81
+#: jinja2/base.html:152 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:153 kuma/landing/jinja2/landing/homepage.html:83
+#: jinja2/base.html:153 kuma/landing/jinja2/landing/homepage.html:86
 msgid "Firefox Marketplace"
 msgstr "Firefox Marketplace"
 
-#: jinja2/base.html:154 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:82
+#: jinja2/base.html:154 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:85
 msgid "Firefox OS"
 msgstr "Firefox OS"
 
@@ -320,16 +320,16 @@ msgid "Sign out"
 msgstr "Выйти"
 
 #: jinja2/includes/login.html:17
-msgid "Sign in with"
-msgstr "Войти через"
-
-#: jinja2/includes/login.html:18
 msgid "Sign in"
 msgstr "Войти"
 
-#: jinja2/includes/login.html:21 kuma/users/forms.py:77 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
+#: jinja2/includes/login.html:19 kuma/users/forms.py:77 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
 msgid "GitHub"
 msgstr "GitHub"
+
+#: jinja2/includes/login.html:28 kuma/users/jinja2/account/signup_closed.html:9
+msgid "We are sorry, but profile creation is currently disabled."
+msgstr "Извините, но создание профиля сейчас невозможно."
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -477,7 +477,7 @@ msgstr "Изображения могут быть прикреплены, а з
 msgid "File"
 msgstr "Файл"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1905
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1908
 msgid "Title"
 msgstr "Название"
 
@@ -917,95 +917,95 @@ msgstr "Поиск по документации"
 msgid "Show topics"
 msgstr "Показать темы"
 
-#: kuma/landing/jinja2/landing/homepage.html:66
+#: kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
 msgstr "Веб-технологии"
 
-#: kuma/landing/jinja2/landing/homepage.html:69
+#: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Platform"
 msgstr "Веб<br />Платформа"
 
-#: kuma/landing/jinja2/landing/homepage.html:71
+#: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
 msgstr "Веб-API и DOM"
 
-#: kuma/landing/jinja2/landing/homepage.html:72
+#: kuma/landing/jinja2/landing/homepage.html:75
 msgid "HTML5"
 msgstr "HTML5"
 
-#: kuma/landing/jinja2/landing/homepage.html:73
+#: kuma/landing/jinja2/landing/homepage.html:76
 msgid "CSS3"
 msgstr "CSS3"
 
-#: kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/homepage.html:95
+#: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
 msgstr "еще..."
 
-#: kuma/landing/jinja2/landing/homepage.html:79
+#: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Mozilla<br> Docs"
 msgstr "Mozilla<br> Документы"
 
-#: kuma/landing/jinja2/landing/homepage.html:84
+#: kuma/landing/jinja2/landing/homepage.html:87
 msgid "App Center"
 msgstr "Центр приложений"
 
-#: kuma/landing/jinja2/landing/homepage.html:89
+#: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
 msgstr "Инструменты<br />Разработчика"
 
-#: kuma/landing/jinja2/landing/homepage.html:91
+#: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
 msgstr "Инспектор страницы"
 
-#: kuma/landing/jinja2/landing/homepage.html:92
+#: kuma/landing/jinja2/landing/homepage.html:95
 msgid "Web Console"
 msgstr "Веб-консоль"
 
-#: kuma/landing/jinja2/landing/homepage.html:93
+#: kuma/landing/jinja2/landing/homepage.html:96
 msgid "JavaScript Debugger"
 msgstr "Отладчик JavaScript"
 
-#: kuma/landing/jinja2/landing/homepage.html:94
+#: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Performance Tools"
 msgstr "Инструменты производительности"
 
-#: kuma/landing/jinja2/landing/homepage.html:99
+#: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Connect"
 msgstr "Подключиться"
 
-#: kuma/landing/jinja2/landing/homepage.html:100
+#: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
 msgstr "Получайте новости об интернет технологиях от Mozilla, получайте помощь других разработчиков и даже больше!"
 
-#: kuma/landing/jinja2/landing/homepage.html:101
+#: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn more and sign up!"
 msgstr "Узнайте больше и зарегистрируйтесь!"
 
-#: kuma/landing/jinja2/landing/homepage.html:110
+#: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
 msgstr "Открытый веб и мобильный интернет"
 
-#: kuma/landing/jinja2/landing/homepage.html:113
+#: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
 msgstr "Изучите веб разработку"
 
-#: kuma/landing/jinja2/landing/homepage.html:116
+#: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
 msgstr "Получите браузер для разработчиков, таких как вы"
 
-#: kuma/landing/jinja2/landing/homepage.html:119
+#: kuma/landing/jinja2/landing/homepage.html:122
 msgid "Build Open Web Apps"
 msgstr "Создавайте открытые веб-приложения"
 
-#: kuma/landing/jinja2/landing/homepage.html:127
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">подробнее на hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:132
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
 msgstr "Присоединиться"
 
-#: kuma/landing/jinja2/landing/homepage.html:134
+#: kuma/landing/jinja2/landing/homepage.html:137
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1014,35 +1014,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">Присоединяйтесь к <span class=\"number\">%(contributors)s</span> участникам</span> <span class=\"row2\">на <span class=\"number\">%(locales)s</span> "
 "языках и регионах</span> <span class=\"row3\">по всему миру.</span> </p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:141 kuma/landing/jinja2/landing/homepage.html:148
+#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
 msgstr "Помогите нам улучшить MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:152
+#: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "Все части MDN (документация и сам сайт) созданы открытым сообществом разработчиков. Пожалуйста, присоединяйтесь к нам! Выберите один из этих способов помочь:"
 
-#: kuma/landing/jinja2/landing/homepage.html:158
+#: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
 msgstr "Начинаем"
 
-#: kuma/landing/jinja2/landing/homepage.html:159
+#: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
 msgstr "Редакционный обзор"
 
-#: kuma/landing/jinja2/landing/homepage.html:160
+#: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
 msgstr "Технический обзор"
 
-#: kuma/landing/jinja2/landing/homepage.html:165
+#: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
 msgstr "Перевод"
 
-#: kuma/landing/jinja2/landing/homepage.html:166
+#: kuma/landing/jinja2/landing/homepage.html:169
 msgid "Promoting MDN"
 msgstr "Продвижение MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:167
+#: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
 msgstr "Вклад в кодовую базу MDN"
 
@@ -1232,11 +1232,11 @@ msgstr "Поиск временно недоступен. Пожалуйста, 
 msgid "Something went wrong with the search query. Please try again in a few minutes."
 msgstr "Что-то пошло не так с поисковым запросом. Пожалуйста, попробуйте снова через несколько минут."
 
-#: kuma/search/views.py:95
+#: kuma/search/views.py:94
 msgid "name"
 msgstr "имя"
 
-#: kuma/search/views.py:96
+#: kuma/search/views.py:95
 msgid "groupname"
 msgstr "название группы"
 
@@ -1337,11 +1337,11 @@ msgstr "Документы"
 msgid "Filter by"
 msgstr "Фильтровать по"
 
-#: kuma/spam/forms.py:9
+#: kuma/spam/forms.py:10
 msgid "The submitted data contains invalid content."
 msgstr "Отправленные данные содержат неподходящий контент."
 
-#: kuma/spam/forms.py:90
+#: kuma/spam/forms.py:98
 msgid "The submitted data contains invalid content. Please try again."
 msgstr "Отправленные данные содержат неподходящий контент. Пожалуйста, попробуйте снова."
 
@@ -1737,10 +1737,6 @@ msgstr "Уже есть профиль? Тогда, пожалуйста, <a hre
 #: kuma/users/jinja2/account/signup_closed.html:3 kuma/users/jinja2/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
 msgstr "Создание профиля отключено"
-
-#: kuma/users/jinja2/account/signup_closed.html:9
-msgid "We are sorry, but profile creation is currently disabled."
-msgstr "Извините, но создание профиля сейчас невозможно."
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2237,7 +2233,7 @@ msgstr "Заблокировать пользователя"
 msgid "Admin"
 msgstr "Админ"
 
-#: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "Вики"
 
@@ -2321,255 +2317,295 @@ msgstr "Последние ревизии в документах MDN"
 msgid "Show comparison"
 msgstr "Показать сравнение"
 
-#: kuma/wiki/forms.py:30
+#: kuma/wiki/forms.py:32
 msgid "Please provide a title."
 msgstr "Пожалуйста, укажите название."
 
-#: kuma/wiki/forms.py:31
+#: kuma/wiki/forms.py:33
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Название слишком короткое (%(show_value)s символов). Оно должно содержать как минимум %(limit_value)s символов."
 
-#: kuma/wiki/forms.py:33
+#: kuma/wiki/forms.py:35
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "Пожалуйста, урежьте длину названия до %(limit_value)s символов или менее. На текущий момент оно содержит %(show_value)s символов."
 
-#: kuma/wiki/forms.py:36
+#: kuma/wiki/forms.py:38
 msgid "Name Your Article"
 msgstr "Название вашей статьи"
 
-#: kuma/wiki/forms.py:37
+#: kuma/wiki/forms.py:39
 msgid "Please provide a slug."
 msgstr "Пожалуйста, укажите url."
 
-#: kuma/wiki/forms.py:38
+#: kuma/wiki/forms.py:40
 msgid "The slug provided is not valid."
 msgstr "Указанный url не корректен."
 
-#: kuma/wiki/forms.py:39
+#: kuma/wiki/forms.py:41
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Длина url слишком мала (%(show_value)s символов). Она должна быть не менее %(limit_value)s символов."
 
-#: kuma/wiki/forms.py:41
+#: kuma/wiki/forms.py:43
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "Пожалуйста, уменьшите длину url до %(limit_value)s символов или менее. Сейчас она составляет %(show_value)s символов."
 
-#: kuma/wiki/forms.py:44
+#: kuma/wiki/forms.py:46
 msgid "Please provide a summary."
 msgstr "Пожалуйста, укажите сводку."
 
-#: kuma/wiki/forms.py:45
+#: kuma/wiki/forms.py:47
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Сводка слишком короткая (%(show_value)s символов). Она должна содержать как минимум %(limit_value)s символов."
 
-#: kuma/wiki/forms.py:47
+#: kuma/wiki/forms.py:49
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "Пожалуйста, уменьшите длину сводки до %(limit_value)s символов или менее. Сейчас она составляет %(show_value)s символов."
 
-#: kuma/wiki/forms.py:50
+#: kuma/wiki/forms.py:52
 msgid "Please provide content."
 msgstr "Пожалуйста, укажите контент."
 
-#: kuma/wiki/forms.py:51
+#: kuma/wiki/forms.py:53
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "Содержимое слишком короткое (%(show_value)s символов). Оно должно содержать как минимум %(limit_value)s символов."
 
-#: kuma/wiki/forms.py:53
+#: kuma/wiki/forms.py:55
 #, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "Пожалуйста, урежьте длину содержимого до %(limit_value)s символов или менее. На текущий момент оно содержит %(show_value)s символов."
 
-#: kuma/wiki/forms.py:56
+#: kuma/wiki/forms.py:58
 #, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "Пожалуйста, урежьте длину комментария до %(limit_value)s символов или менее. На текущий момент он содержит %(show_value)s символов."
 
-#: kuma/wiki/forms.py:59
+#: kuma/wiki/forms.py:61
 msgid "Another document with this slug already exists."
 msgstr "С таким url уже существует другой документ."
 
-#: kuma/wiki/forms.py:60
+#: kuma/wiki/forms.py:62
 msgid "Another document with this metadata already exists."
 msgstr "С такими метаданными уже существует другой документ."
 
-#: kuma/wiki/forms.py:62
+#: kuma/wiki/forms.py:64
 msgid "This document was modified while you were editing it."
 msgstr "Пока вы редактировали этот документ, он был изменён."
 
-#: kuma/wiki/forms.py:64
+#: kuma/wiki/forms.py:66
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "Изменение url документа требует перемещения его и его подстраниц."
 
-#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:614 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
+#: kuma/wiki/forms.py:82 kuma/wiki/forms.py:160 kuma/wiki/forms.py:652 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:615
+#: kuma/wiki/forms.py:83 kuma/wiki/forms.py:161 kuma/wiki/forms.py:653
 msgid "Title of article"
 msgstr "Заголовок статьи"
 
-#: kuma/wiki/forms.py:89 kuma/wiki/forms.py:172 kuma/wiki/jinja2/wiki/create.html:44 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:91 kuma/wiki/forms.py:174 kuma/wiki/jinja2/wiki/create.html:44 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "Url:"
 
-#: kuma/wiki/forms.py:90 kuma/wiki/forms.py:173
+#: kuma/wiki/forms.py:92 kuma/wiki/forms.py:175
 msgid "Article URL"
 msgstr "URL статьи"
 
-#: kuma/wiki/forms.py:97 kuma/wiki/jinja2/wiki/create.html:48 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:99 kuma/wiki/jinja2/wiki/create.html:48 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "Родитель:"
 
-#: kuma/wiki/forms.py:183 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:185 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "Метки:"
 
-#: kuma/wiki/forms.py:188 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:190 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
 msgstr "Ключевые слова:"
 
-#: kuma/wiki/forms.py:189
+#: kuma/wiki/forms.py:191
 msgid "Affects search results"
 msgstr "Влияет на результаты поиска"
 
-#: kuma/wiki/forms.py:197
+#: kuma/wiki/forms.py:199
 msgid "Search result summary:"
 msgstr "Сводка результатов поиска:"
 
-#: kuma/wiki/forms.py:198
+#: kuma/wiki/forms.py:200
 msgid "Only displayed on search results page"
 msgstr "Показывать только на странице с результатами поиска"
 
-#: kuma/wiki/forms.py:209 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
+#: kuma/wiki/forms.py:211 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
 msgstr "Содержимое:"
 
-#: kuma/wiki/forms.py:218
+#: kuma/wiki/forms.py:220
 msgid "Comment:"
 msgstr "Комментарий:"
 
-#: kuma/wiki/forms.py:221
+#: kuma/wiki/forms.py:223
 msgid "Tag this revision for review?"
 msgstr "Пометить данную ревизию, как требующую рецензии?"
 
-#: kuma/wiki/forms.py:228
+#: kuma/wiki/forms.py:230
 msgid "Tag this revision for localization?"
 msgstr "Пометить данную ревизию, как требующую локализации?"
 
-#: kuma/wiki/forms.py:621
+#: kuma/wiki/forms.py:659
 msgid "New slug:"
 msgstr "Новый url:"
 
-#: kuma/wiki/forms.py:622
+#: kuma/wiki/forms.py:660
 msgid "New article URL"
 msgstr "Новый URL статьи"
 
-#: kuma/wiki/models.py:111
+#: kuma/wiki/models.py:112
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "Родитель %s не существует."
 
-#: kuma/wiki/models.py:119
+#: kuma/wiki/models.py:120
 msgid "Document Tag"
 msgstr "Метка"
 
-#: kuma/wiki/models.py:120
+#: kuma/wiki/models.py:121
 msgid "Document Tags"
 msgstr "Метки"
 
-#: kuma/wiki/models.py:172
+#: kuma/wiki/models.py:173
 msgid "uploaded to the document"
 msgstr "выгружено в документ"
 
-#: kuma/wiki/models.py:178
+#: kuma/wiki/models.py:179
 msgid "linked in the document content"
 msgstr "прикреплено к содержимому документа"
 
-#: kuma/wiki/models.py:192
+#: kuma/wiki/models.py:193
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr "Вложение %(attachment_id)s не может быть присоединено несколько раз к документу %(document_id)s"
 
-#: kuma/wiki/models.py:1540
+#: kuma/wiki/models.py:1542
 msgid "Review Tag"
 msgstr "Просмотреть метку"
 
-#: kuma/wiki/models.py:1541
+#: kuma/wiki/models.py:1543
 msgid "Review Tags"
 msgstr "Просмотреть тэги"
 
-#: kuma/wiki/models.py:1547
+#: kuma/wiki/models.py:1549
 msgid "Localization Tag"
 msgstr "Тэг локализации"
 
-#: kuma/wiki/models.py:1548
+#: kuma/wiki/models.py:1550
 msgid "Localization Tags"
 msgstr "Тэги локализации"
 
-#: kuma/wiki/models.py:1581
+#: kuma/wiki/models.py:1583
 msgid "No table of contents"
 msgstr "Нет содержания"
 
-#: kuma/wiki/models.py:1582
+#: kuma/wiki/models.py:1584
 msgid "All levels"
 msgstr "Все уровни"
 
-#: kuma/wiki/models.py:1583
+#: kuma/wiki/models.py:1585
 msgid "H2 and higher"
 msgstr "H2 и выше"
 
-#: kuma/wiki/models.py:1584
+#: kuma/wiki/models.py:1586
 msgid "H3 and higher"
 msgstr "H3 и выше"
 
-#: kuma/wiki/models.py:1585
+#: kuma/wiki/models.py:1587
 msgid "H4 and higher"
 msgstr "H4 и выше"
 
-#: kuma/wiki/models.py:1689
+#: kuma/wiki/models.py:1691
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "Ревизия должна основываться на ревизии документа с локалью %(locale)s. ID ревизии %(id)s не подходит по этому критерию."
 
-#: kuma/wiki/models.py:1825
+#: kuma/wiki/models.py:1827
 msgid "IP address"
 msgstr "IP адрес"
 
-#: kuma/wiki/models.py:1833
+#: kuma/wiki/models.py:1835
 msgid "User-Agent"
 msgstr "Браузер"
 
-#: kuma/wiki/models.py:1838
+#: kuma/wiki/models.py:1840
 msgid "HTTP Referrer"
 msgstr "HTTP реферер"
 
-#: kuma/wiki/models.py:1859
+#: kuma/wiki/models.py:1861
 msgid "Revision"
 msgstr "Ревизия"
 
-#: kuma/wiki/models.py:1865
+#: kuma/wiki/models.py:1867
 msgid "Akismet submission"
 msgstr "Представление Akismet"
 
-#: kuma/wiki/models.py:1866
+#: kuma/wiki/models.py:1868
 msgid "Akismet submissions"
 msgstr "Представления Akismet"
 
-#: kuma/wiki/models.py:1909
+#: kuma/wiki/models.py:1912
 msgid "Slug"
 msgstr "Url"
 
-#: kuma/wiki/models.py:1917
+#: kuma/wiki/models.py:1920
 msgid "Document (optional)"
 msgstr "Документ (необязательно)"
+
+#: kuma/wiki/models.py:1927
+#, fuzzy
+msgid "Data submitted to Akismet"
+msgstr "дата отправки"
+
+#: kuma/wiki/models.py:1930
+#, fuzzy
+msgid "reviewed"
+msgstr "Проверено:"
+
+#: kuma/wiki/models.py:1941
+msgid "Needs Review"
+msgstr ""
+
+#: kuma/wiki/models.py:1942
+msgid "Ham / False Positive"
+msgstr ""
+
+#: kuma/wiki/models.py:1943
+msgid "Confirmed as Spam"
+msgstr ""
+
+#: kuma/wiki/models.py:1944
+#, fuzzy
+msgid "Review Unavailable"
+msgstr "Поиск недоступен"
+
+#: kuma/wiki/models.py:1945
+msgid "Akismet Error"
+msgstr ""
+
+#: kuma/wiki/models.py:1950
+msgid "Review of Akismet's classification as spam"
+msgstr ""
+
+#: kuma/wiki/models.py:1957
+#, fuzzy
+msgid "Staff reviewer"
+msgstr "Редакционный обзор"
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -3683,6 +3719,9 @@ msgstr "Вы не можете переводить эту статью."
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Сервер Elasticsearch: %(backend)s"
 
+#~ msgid "Sign in with"
+#~ msgstr "Войти через"
+
 #~ msgid "Firefox Apps & Hacks Newsletter"
 #~ msgstr "Новостная рассылка о приложениях и хаках Firefox"
 
@@ -3832,9 +3871,6 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 
 #~ msgid "please explain what content you feel is inappropriate"
 #~ msgstr "пожалуйста, объясните, какое содержание вы считаете неуместным"
-
-#~ msgid "date submitted"
-#~ msgstr "дата отправки"
 
 #~ msgid "%(object)s has been flagged %(flag_type)s"
 #~ msgstr "%(object)s был отмечен как %(flag_type)s"
@@ -5664,9 +5700,6 @@ msgstr "Сервер Elasticsearch: %(backend)s"
 
 #~ msgid "The URL you provided could not be reached."
 #~ msgstr "Указанный вами URL недоступен."
-
-#~ msgid "Reviewed:"
-#~ msgstr "Проверено:"
 
 #~ msgid "Reviewed by:"
 #~ msgstr "Проверил:"

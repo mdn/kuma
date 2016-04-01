@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-18 08:50-0700\n"
+"POT-Creation-Date: 2016-04-01 10:55-0700\n"
 "PO-Revision-Date: 2016-03-12 08:58+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,15 +141,15 @@ msgstr "網路平台"
 msgid "Technologies"
 msgstr "技術"
 
-#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:72 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr "HTML"
 
-#: jinja2/base.html:127 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:73 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:127 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr "CSS"
 
-#: jinja2/base.html:128 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:74 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:128 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr "JavaScript"
 
@@ -201,20 +201,20 @@ msgstr "…更多文件"
 msgid "Mozilla Docs"
 msgstr "Mozilla 文件"
 
-#: jinja2/base.html:151 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:85
+#: jinja2/base.html:151 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
 msgid "Add-ons"
 msgstr "Add-ons"
 
 # 77%
-#: jinja2/base.html:152 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:81
+#: jinja2/base.html:152 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Firefox"
 msgstr "Firefox"
 
-#: jinja2/base.html:153 kuma/landing/jinja2/landing/homepage.html:83
+#: jinja2/base.html:153 kuma/landing/jinja2/landing/homepage.html:86
 msgid "Firefox Marketplace"
 msgstr "Firefox Marketplace"
 
-#: jinja2/base.html:154 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:82
+#: jinja2/base.html:154 kuma/core/translations/search/filter/firefox-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:85
 msgid "Firefox OS"
 msgstr "Firefox OS"
 
@@ -321,16 +321,16 @@ msgid "Sign out"
 msgstr "登出"
 
 #: jinja2/includes/login.html:17
-msgid "Sign in with"
-msgstr "使用不同工具登入:"
-
-#: jinja2/includes/login.html:18
 msgid "Sign in"
 msgstr "登入"
 
-#: jinja2/includes/login.html:21 kuma/users/forms.py:77 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
+#: jinja2/includes/login.html:19 kuma/users/forms.py:77 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:120 kuma/users/jinja2/users/user_detail.html:124
 msgid "GitHub"
 msgstr "GitHub"
+
+#: jinja2/includes/login.html:28 kuma/users/jinja2/account/signup_closed.html:9
+msgid "We are sorry, but profile creation is currently disabled."
+msgstr "很抱歉，目前暫時停止接受帳號註冊。"
 
 #: jinja2/includes/paginator.html:6 kuma/search/jinja2/search/results.html:154 kuma/wiki/jinja2/wiki/list/revisions.html:56
 msgid "Previous"
@@ -477,7 +477,7 @@ msgstr "可以附加圖片，然後連結至文件中。"
 msgid "File"
 msgstr "檔案"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1905
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36 kuma/users/models.py:65 kuma/wiki/models.py:1908
 msgid "Title"
 msgstr "頭銜"
 
@@ -913,95 +913,95 @@ msgstr "搜尋文件"
 msgid "Show topics"
 msgstr "顯示主題"
 
-#: kuma/landing/jinja2/landing/homepage.html:66
+#: kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
 msgstr "網頁技術"
 
-#: kuma/landing/jinja2/landing/homepage.html:69
+#: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Platform"
 msgstr "Web <br />平台"
 
-#: kuma/landing/jinja2/landing/homepage.html:71
+#: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
 msgstr "Web API &amp; DOM"
 
-#: kuma/landing/jinja2/landing/homepage.html:72
+#: kuma/landing/jinja2/landing/homepage.html:75
 msgid "HTML5"
 msgstr "HTML5"
 
-#: kuma/landing/jinja2/landing/homepage.html:73
+#: kuma/landing/jinja2/landing/homepage.html:76
 msgid "CSS3"
 msgstr "CSS3"
 
-#: kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/homepage.html:95
+#: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
 msgstr "更多..."
 
-#: kuma/landing/jinja2/landing/homepage.html:79
+#: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Mozilla<br> Docs"
 msgstr "Mozilla <br> 文件"
 
-#: kuma/landing/jinja2/landing/homepage.html:84
+#: kuma/landing/jinja2/landing/homepage.html:87
 msgid "App Center"
 msgstr "應用程式中心"
 
-#: kuma/landing/jinja2/landing/homepage.html:89
+#: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
 msgstr "開發者<br />工具"
 
-#: kuma/landing/jinja2/landing/homepage.html:91
+#: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
 msgstr "頁面檢測器"
 
-#: kuma/landing/jinja2/landing/homepage.html:92
+#: kuma/landing/jinja2/landing/homepage.html:95
 msgid "Web Console"
 msgstr "網頁主控台"
 
-#: kuma/landing/jinja2/landing/homepage.html:93
+#: kuma/landing/jinja2/landing/homepage.html:96
 msgid "JavaScript Debugger"
 msgstr "JavaScript 除錯器"
 
-#: kuma/landing/jinja2/landing/homepage.html:94
+#: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Performance Tools"
 msgstr "效能工具"
 
-#: kuma/landing/jinja2/landing/homepage.html:99
+#: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Connect"
 msgstr "連結"
 
-#: kuma/landing/jinja2/landing/homepage.html:100
+#: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
 msgstr "自 Mozilla 取得網頁技術的最新消息，或是幫助其他開發者！"
 
-#: kuma/landing/jinja2/landing/homepage.html:101
+#: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn more and sign up!"
 msgstr "了解更多並註冊！"
 
-#: kuma/landing/jinja2/landing/homepage.html:110
+#: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
 msgstr "Open Web 與行動網路"
 
-#: kuma/landing/jinja2/landing/homepage.html:113
+#: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
 msgstr "學習網頁開發"
 
-#: kuma/landing/jinja2/landing/homepage.html:116
+#: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
 msgstr "取得為像您一樣的開發者所設計的瀏覽器"
 
-#: kuma/landing/jinja2/landing/homepage.html:119
+#: kuma/landing/jinja2/landing/homepage.html:122
 msgid "Build Open Web Apps"
 msgstr "打造 Open Web Apps"
 
-#: kuma/landing/jinja2/landing/homepage.html:127
+#: kuma/landing/jinja2/landing/homepage.html:130
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr "<a href=\"http://hacks.mozilla.org\">到 hacks.mozilla.org 閱讀更多 <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
-#: kuma/landing/jinja2/landing/homepage.html:132
+#: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
 msgstr "參與其中"
 
-#: kuma/landing/jinja2/landing/homepage.html:134
+#: kuma/landing/jinja2/landing/homepage.html:137
 #, python-format
 msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
@@ -1010,35 +1010,35 @@ msgstr ""
 "<p class=\"numbers\"> <span class=\"row1\">加入世界各地的</span> <span class=\"row2\"><span class=\"number\">%(locales)s</span> 語系</span> <span class=\"row3\"><span class=\"number\">"
 "%(contributors)s</span> 貢獻者。</span></p>"
 
-#: kuma/landing/jinja2/landing/homepage.html:141 kuma/landing/jinja2/landing/homepage.html:148
+#: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
 msgstr "協助改善 MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:152
+#: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
 msgstr "MDN 的所有部分（包含文件及網站本身）都是由開發者所組成的開放社群所提供。快來加入我們！你可透過下列方法之一提供協助："
 
-#: kuma/landing/jinja2/landing/homepage.html:158
+#: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
 msgstr "開始使用"
 
-#: kuma/landing/jinja2/landing/homepage.html:159
+#: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
 msgstr "編輯審核"
 
-#: kuma/landing/jinja2/landing/homepage.html:160
+#: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
 msgstr "技術審核"
 
-#: kuma/landing/jinja2/landing/homepage.html:165
+#: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
 msgstr "翻譯"
 
-#: kuma/landing/jinja2/landing/homepage.html:166
+#: kuma/landing/jinja2/landing/homepage.html:169
 msgid "Promoting MDN"
 msgstr "宣傳 MDN"
 
-#: kuma/landing/jinja2/landing/homepage.html:167
+#: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
 msgstr "貢獻至 MDN codebase"
 
@@ -1227,11 +1227,11 @@ msgstr "暫時無法搜尋，請等幾分鐘後再試一次。"
 msgid "Something went wrong with the search query. Please try again in a few minutes."
 msgstr "搜尋時發生問題，請稍後幾分鐘再試一次。"
 
-#: kuma/search/views.py:95
+#: kuma/search/views.py:94
 msgid "name"
 msgstr "名稱"
 
-#: kuma/search/views.py:96
+#: kuma/search/views.py:95
 msgid "groupname"
 msgstr "群組名稱"
 
@@ -1320,11 +1320,11 @@ msgstr "Docs"
 msgid "Filter by"
 msgstr "過濾依照"
 
-#: kuma/spam/forms.py:9
+#: kuma/spam/forms.py:10
 msgid "The submitted data contains invalid content."
 msgstr "送出的資料包含無效內容。"
 
-#: kuma/spam/forms.py:90
+#: kuma/spam/forms.py:98
 msgid "The submitted data contains invalid content. Please try again."
 msgstr "送出的資料包含無效內容，請再試一次。"
 
@@ -1722,10 +1722,6 @@ msgstr "已經有帳號了嗎？那麼請 <a href=\"%(login_url)s\">登入</a>�
 #: kuma/users/jinja2/account/signup_closed.html:3 kuma/users/jinja2/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
 msgstr "已禁用建立帳號"
-
-#: kuma/users/jinja2/account/signup_closed.html:9
-msgid "We are sorry, but profile creation is currently disabled."
-msgstr "很抱歉，目前暫時停止接受帳號註冊。"
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2206,7 +2202,7 @@ msgstr "封鎖使用者"
 msgid "Admin"
 msgstr "管理"
 
-#: kuma/wiki/apps.py:56 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
+#: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2290,260 +2286,301 @@ msgstr "MDN 文件最近的修改"
 msgid "Show comparison"
 msgstr "顯示差異"
 
-#: kuma/wiki/forms.py:30
+#: kuma/wiki/forms.py:32
 msgid "Please provide a title."
 msgstr "請提供標題。"
 
-#: kuma/wiki/forms.py:31
+#: kuma/wiki/forms.py:33
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "標題過短（%(show_value)s 字元），至少要 %(limit_value)s 字元。"
 
-#: kuma/wiki/forms.py:33
+#: kuma/wiki/forms.py:35
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "標題請不要超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:36
+#: kuma/wiki/forms.py:38
 msgid "Name Your Article"
 msgstr "為你的文章取個標題吧"
 
-#: kuma/wiki/forms.py:37
+#: kuma/wiki/forms.py:39
 msgid "Please provide a slug."
 msgstr "請提供URL代稱。"
 
-#: kuma/wiki/forms.py:38
+#: kuma/wiki/forms.py:40
 msgid "The slug provided is not valid."
 msgstr "輸入的 URL 代稱無效。"
 
-#: kuma/wiki/forms.py:39
+#: kuma/wiki/forms.py:41
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "此 URL 代稱太短（%(show_value)s 字元），至少需要 %(limit_value)s 字元。"
 
-#: kuma/wiki/forms.py:41
+#: kuma/wiki/forms.py:43
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "URL代稱請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:44
+#: kuma/wiki/forms.py:46
 msgid "Please provide a summary."
 msgstr "請輸入摘要。"
 
-#: kuma/wiki/forms.py:45
+#: kuma/wiki/forms.py:47
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "摘要過短（%(show_value)s 字元），至少要 %(limit_value)s 字元。"
 
-#: kuma/wiki/forms.py:47
+#: kuma/wiki/forms.py:49
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "摘要請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:50
+#: kuma/wiki/forms.py:52
 msgid "Please provide content."
 msgstr "請提供內容。"
 
-#: kuma/wiki/forms.py:51
+#: kuma/wiki/forms.py:53
 #, python-format
 msgid "The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
 msgstr "內容太少了（%(show_value)s 個字元），至少需要 %(limit_value)s 個字元。"
 
-#: kuma/wiki/forms.py:53
+#: kuma/wiki/forms.py:55
 #, python-format
 msgid "Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "內容請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:56
+#: kuma/wiki/forms.py:58
 #, python-format
 msgid "Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters."
 msgstr "評論請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:59
+#: kuma/wiki/forms.py:61
 msgid "Another document with this slug already exists."
 msgstr "其他文件已使用此 URL 代稱。"
 
-#: kuma/wiki/forms.py:60
+#: kuma/wiki/forms.py:62
 msgid "Another document with this metadata already exists."
 msgstr "其他文件已使用此後設資料。"
 
-#: kuma/wiki/forms.py:62
+#: kuma/wiki/forms.py:64
 msgid "This document was modified while you were editing it."
 msgstr "此文件在你編輯的時候已被修改過了。"
 
-#: kuma/wiki/forms.py:64
+#: kuma/wiki/forms.py:66
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "修改此文件的URL代稱必須連同子頁面一起移動。"
 
 # 83%
-#: kuma/wiki/forms.py:80 kuma/wiki/forms.py:158 kuma/wiki/forms.py:614 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
+#: kuma/wiki/forms.py:82 kuma/wiki/forms.py:160 kuma/wiki/forms.py:652 kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:117
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "標題:"
 
-#: kuma/wiki/forms.py:81 kuma/wiki/forms.py:159 kuma/wiki/forms.py:615
+#: kuma/wiki/forms.py:83 kuma/wiki/forms.py:161 kuma/wiki/forms.py:653
 msgid "Title of article"
 msgstr "文章標題"
 
-#: kuma/wiki/forms.py:89 kuma/wiki/forms.py:172 kuma/wiki/jinja2/wiki/create.html:44 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
+#: kuma/wiki/forms.py:91 kuma/wiki/forms.py:174 kuma/wiki/jinja2/wiki/create.html:44 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "URL代稱:"
 
-#: kuma/wiki/forms.py:90 kuma/wiki/forms.py:173
+#: kuma/wiki/forms.py:92 kuma/wiki/forms.py:175
 msgid "Article URL"
 msgstr "文章網址"
 
-#: kuma/wiki/forms.py:97 kuma/wiki/jinja2/wiki/create.html:48 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
+#: kuma/wiki/forms.py:99 kuma/wiki/jinja2/wiki/create.html:48 kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "上層:"
 
 # 80%
-#: kuma/wiki/forms.py:183 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
+#: kuma/wiki/forms.py:185 kuma/wiki/jinja2/wiki/edit.html:74 kuma/wiki/jinja2/wiki/includes/document_macros.html:75 kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "標籤:"
 
-#: kuma/wiki/forms.py:188 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:190 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
 msgstr "關鍵字:"
 
-#: kuma/wiki/forms.py:189
+#: kuma/wiki/forms.py:191
 msgid "Affects search results"
 msgstr "影響的搜尋結果"
 
-#: kuma/wiki/forms.py:197
+#: kuma/wiki/forms.py:199
 msgid "Search result summary:"
 msgstr "搜尋結果摘要:"
 
-#: kuma/wiki/forms.py:198
+#: kuma/wiki/forms.py:200
 msgid "Only displayed on search results page"
 msgstr "只顯示於搜尋結果頁面"
 
 # 87%
 # 75%
-#: kuma/wiki/forms.py:209 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
+#: kuma/wiki/forms.py:211 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
 msgstr "內容:"
 
 # 87%
-#: kuma/wiki/forms.py:218
+#: kuma/wiki/forms.py:220
 msgid "Comment:"
 msgstr "回應:"
 
-#: kuma/wiki/forms.py:221
+#: kuma/wiki/forms.py:223
 msgid "Tag this revision for review?"
 msgstr "是否要將此版本標記為「審核」？"
 
-#: kuma/wiki/forms.py:228
+#: kuma/wiki/forms.py:230
 msgid "Tag this revision for localization?"
 msgstr "是否標記此版本為「在地化」？"
 
-#: kuma/wiki/forms.py:621
+#: kuma/wiki/forms.py:659
 msgid "New slug:"
 msgstr "新的URL代稱:"
 
-#: kuma/wiki/forms.py:622
+#: kuma/wiki/forms.py:660
 msgid "New article URL"
 msgstr "新文件網址"
 
-#: kuma/wiki/models.py:111
+#: kuma/wiki/models.py:112
 #, python-format
 msgid "Parent %s does not exist."
 msgstr "父文件 %s 不存在。"
 
-#: kuma/wiki/models.py:119
+#: kuma/wiki/models.py:120
 msgid "Document Tag"
 msgstr "文件標籤"
 
-#: kuma/wiki/models.py:120
+#: kuma/wiki/models.py:121
 msgid "Document Tags"
 msgstr "文件標籤"
 
-#: kuma/wiki/models.py:172
+#: kuma/wiki/models.py:173
 msgid "uploaded to the document"
 msgstr "已上傳至文件"
 
-#: kuma/wiki/models.py:178
+#: kuma/wiki/models.py:179
 msgid "linked in the document content"
 msgstr "連結至文件內容"
 
-#: kuma/wiki/models.py:192
+#: kuma/wiki/models.py:193
 #, python-format
 msgid "Attachment %(attachment_id)s can't be attached multiple times to document %(document_id)s"
 msgstr "無法多次新增附件 %(attachment_id)s 至文件 %(document_id)s"
 
-#: kuma/wiki/models.py:1540
+#: kuma/wiki/models.py:1542
 msgid "Review Tag"
 msgstr "檢查標籤"
 
-#: kuma/wiki/models.py:1541
+#: kuma/wiki/models.py:1543
 msgid "Review Tags"
 msgstr "檢查標籤"
 
-#: kuma/wiki/models.py:1547
+#: kuma/wiki/models.py:1549
 msgid "Localization Tag"
 msgstr "在地化標籤"
 
-#: kuma/wiki/models.py:1548
+#: kuma/wiki/models.py:1550
 msgid "Localization Tags"
 msgstr "在地化標籤"
 
-#: kuma/wiki/models.py:1581
+#: kuma/wiki/models.py:1583
 msgid "No table of contents"
 msgstr "沒有目錄"
 
-#: kuma/wiki/models.py:1582
+#: kuma/wiki/models.py:1584
 msgid "All levels"
 msgstr "所有層級"
 
-#: kuma/wiki/models.py:1583
+#: kuma/wiki/models.py:1585
 msgid "H2 and higher"
 msgstr "H2 以上"
 
-#: kuma/wiki/models.py:1584
+#: kuma/wiki/models.py:1586
 msgid "H3 and higher"
 msgstr "H3 以上"
 
-#: kuma/wiki/models.py:1585
+#: kuma/wiki/models.py:1587
 msgid "H4 and higher"
 msgstr "H4 以上"
 
-#: kuma/wiki/models.py:1689
+#: kuma/wiki/models.py:1691
 #, python-format
 msgid "A revision must be based on a revision of the %(locale)s document. Revision ID %(id)s does not fit those criteria."
 msgstr "修改必須基於 %(locale)s 的修訂文件。 版本編號 %(id)s 不符合這些規範。"
 
-#: kuma/wiki/models.py:1825
+#: kuma/wiki/models.py:1827
 msgid "IP address"
 msgstr "IP 地址"
 
-#: kuma/wiki/models.py:1833
+#: kuma/wiki/models.py:1835
 msgid "User-Agent"
 msgstr "使用者代理字串"
 
-#: kuma/wiki/models.py:1838
+#: kuma/wiki/models.py:1840
 msgid "HTTP Referrer"
 msgstr "HTTP Referrer"
 
-#: kuma/wiki/models.py:1859
+#: kuma/wiki/models.py:1861
 msgid "Revision"
 msgstr "修改"
 
-#: kuma/wiki/models.py:1865
+#: kuma/wiki/models.py:1867
 msgid "Akismet submission"
 msgstr "送出 Akismet"
 
-#: kuma/wiki/models.py:1866
+#: kuma/wiki/models.py:1868
 msgid "Akismet submissions"
 msgstr "送出 Akismet"
 
-#: kuma/wiki/models.py:1909
+#: kuma/wiki/models.py:1912
 msgid "Slug"
 msgstr "Slug"
 
-#: kuma/wiki/models.py:1917
+#: kuma/wiki/models.py:1920
 msgid "Document (optional)"
 msgstr "文件（非必填）"
+
+#: kuma/wiki/models.py:1927
+#, fuzzy
+msgid "Data submitted to Akismet"
+msgstr "送出日期"
+
+#: kuma/wiki/models.py:1930
+#, fuzzy
+msgid "reviewed"
+msgstr "預覽"
+
+#: kuma/wiki/models.py:1941
+msgid "Needs Review"
+msgstr ""
+
+#: kuma/wiki/models.py:1942
+msgid "Ham / False Positive"
+msgstr ""
+
+#: kuma/wiki/models.py:1943
+#, fuzzy
+msgid "Confirmed as Spam"
+msgstr "確認密碼"
+
+#: kuma/wiki/models.py:1944
+#, fuzzy
+msgid "Review Unavailable"
+msgstr "無法搜尋"
+
+#: kuma/wiki/models.py:1945
+msgid "Akismet Error"
+msgstr ""
+
+#: kuma/wiki/models.py:1950
+msgid "Review of Akismet's classification as spam"
+msgstr ""
+
+#: kuma/wiki/models.py:1957
+#, fuzzy
+msgid "Staff reviewer"
+msgstr "編輯審核"
 
 #: kuma/wiki/search.py:310
 #, python-format
@@ -3637,6 +3674,9 @@ msgstr "您不能翻譯這份文件。"
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch 伺服器: %(backend)s"
 
+#~ msgid "Sign in with"
+#~ msgstr "使用不同工具登入:"
+
 #~ msgid "Firefox Apps & Hacks Newsletter"
 #~ msgstr "Firefox Apps & Hacks 電子報"
 
@@ -3772,9 +3812,6 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 
 #~ msgid "please explain what content you feel is inappropriate"
 #~ msgstr "請解釋您覺得什麼內容是不適當的"
-
-#~ msgid "date submitted"
-#~ msgstr "送出日期"
 
 #~ msgid "%(object)s has been flagged %(flag_type)s"
 #~ msgstr "%(object)s 已被標示 %(flag_type)s"
@@ -6252,9 +6289,6 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 
 #~ msgid "New password"
 #~ msgstr "新的密碼"
-
-#~ msgid "Confirm password"
-#~ msgstr "確認密碼"
 
 #~ msgid "Password reset unsuccessful"
 #~ msgstr "密碼重設失敗"
