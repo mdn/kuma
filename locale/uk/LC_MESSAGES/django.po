@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-01 10:55-0700\n"
-"PO-Revision-Date: 2016-04-02 17:05+0000\n"
+"PO-Revision-Date: 2016-04-02 18:02+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -3142,7 +3142,7 @@ msgstr "Документ (не обов'язково)"
 
 #: kuma/wiki/models.py:1927
 msgid "Data submitted to Akismet"
-msgstr ""
+msgstr "Дані надіслані в Akismet"
 
 #: kuma/wiki/models.py:1930
 #, fuzzy
@@ -3159,7 +3159,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1943
 msgid "Confirmed as Spam"
-msgstr ""
+msgstr "Підтверджено як спам"
 
 #: kuma/wiki/models.py:1944
 #, fuzzy
@@ -3168,7 +3168,7 @@ msgstr "Пошук недоступний"
 
 #: kuma/wiki/models.py:1945
 msgid "Akismet Error"
-msgstr ""
+msgstr "Помилка Akismet"
 
 #: kuma/wiki/models.py:1950
 msgid "Review of Akismet's classification as spam"
