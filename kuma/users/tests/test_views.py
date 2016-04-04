@@ -541,17 +541,21 @@ class AllauthPersonaTestCase(UserTestCase):
                 'email': persona_signup_email,
             }
             self.client.post(reverse('persona_login'), follow=True)
-            data = {'website': '',
-                    'username': persona_signup_username,
-                    'email': persona_signup_email,
-                    'terms': True,
-                    'g-recaptcha-response': 'FAILED'}
-            signup_url = reverse('socialaccount_signup',
-                                 locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+        data = {'website': '',
+                'username': persona_signup_username,
+                'email': persona_signup_email,
+                'terms': True,
+                'g-recaptcha-response': 'FAILED'}
+        signup_url = reverse('socialaccount_signup',
+                             locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+        with mock.patch('captcha.client.request') as request_mock:
+            request_mock.return_value.read.return_value = '{"success": null}'
             response = self.client.post(signup_url, data=data, follow=True)
-            eq_(response.status_code, 200)
-            eq_(response.context['form'].errors,
-                {'captcha': [u'Incorrect, please try again.']})
+        eq_(response.status_code, 200)
+        eq_(response.context['form'].errors,
+            {'captcha': [u'Incorrect, please try again.']})
 
     @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
     def test_persona_signup_create_django_user(self):
