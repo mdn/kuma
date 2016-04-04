@@ -1,5 +1,6 @@
 import json
 import logging
+from difflib import ndiff
 
 import waffle
 from django import forms
@@ -8,6 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
+from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from django.utils.six import string_types
 from django.utils.translation import ugettext_lazy as _
@@ -474,6 +476,58 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             if not waffle.flag_is_active(self.request, SPAM_TRAINING_FLAG):
                 super(RevisionForm, self).akismet_error(parameters, exception)
 
+    @cached_property
+    def akismet_content_parameter(self):
+        """
+        Return a summary of the new and changed content for Akismet.
+
+        This uses the differences between the existing instance and the form
+        submission, which means it is valid during the clean phase, but not
+        once is_valid() updates the instance with the new form data. Using
+        the cached_property helps retain the value after cleaning.
+        """
+        # Format the new content
+        new_content_parts = []
+        for field in SPAM_SUBMISSION_REVISION_FIELDS:
+            value = self.cleaned_data.get(field, u'')
+            if value and field == 'tags':
+                # Turn '"Tag 2" "Tag 1"' into 'Tag 1\nTag 2'
+                assert value[0] == u'"'
+                assert value[-1] == u'"'
+                value = u'\n'.join(sorted(value[1:-1].split(u'" "')))
+            new_content_parts.append(value)
+        new_content = u'\n'.join(new_content_parts)
+
+        # Format the existing content
+        try:
+            document = self.instance.document
+        except ObjectDoesNotExist:
+            existing_content = u''
+        else:
+            existing_content_parts = []
+            for field in SPAM_SUBMISSION_REVISION_FIELDS:
+                if field == 'comment':
+                    value = u''
+                elif field == 'content':
+                    value = document.current_revision.content
+                elif field == 'tags':
+                    value = u'\n'.join(sorted(document.tags.names()))
+                else:
+                    value = getattr(document, field, '')
+                existing_content_parts.append(value)
+            existing_content = u'\n'.join(existing_content_parts)
+
+        # Gather and changed non-empty lines
+        diff = ndiff(existing_content.splitlines(1), new_content.splitlines(1))
+        content_lines = []
+        for line in diff:
+            if line.startswith('+ '):
+                diff_content = line[2:].strip()
+                if diff_content:
+                    content_lines.append(diff_content)
+        content = u'\n'.join(content_lines)
+        return content
+
     def akismet_parameters(self):
         """
         Returns a dict of parameters to pass to Akismet's submission
@@ -507,16 +561,13 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 self.akismet_locale(language),
                 self.akismet_locale(default_language))
 
-        content = u'\n'.join([self.cleaned_data.get(field, '')
-                              for field in SPAM_SUBMISSION_REVISION_FIELDS])
-
         parameters = {
             'blog': self.request.build_absolute_uri('/'),
             'blog_charset': 'UTF-8',
             'blog_lang': blog_lang,
             'comment_author': author_from_user(self.request.user),
             'comment_author_email': author_email_from_user(self.request.user),
-            'comment_content': content,
+            'comment_content': self.akismet_content_parameter,
             'comment_type': 'wiki-revision',
             'referrer': self.request.META.get('HTTP_REFERER', ''),
             'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),

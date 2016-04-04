@@ -287,18 +287,10 @@ class RevisionFormEditTests(RevisionFormViewTests):
         parameters = rev_form.akismet_parameters()
         assert sorted(parameters.keys()) == self.akismet_keys_edit
         expected_content = (
-            'display\n'
-            'Web/CSS/display\n'
-            '\n'
-            '<h2 id="Summary">Summary</h2>\r\n'
-            '<p>The <strong><code>display</code></strong> CSS property'
-            ' specifies the type of rendering box used for an element.</p>\r\n'
-            '<p>{{cssinfo}} and my changes.</p>\r\n'
-            '<h2 id="Syntax">Syntax</h2>\r\n'
-            '<p><a href="http://spam.example.com">Buy my product!</a></p>\r\n'
+            '<p>{{cssinfo}} and my changes.</p>\n'
+            '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
             '<pre class="brush:css">display: none;</pre>\n'
-            'Comment\n'
-            '"CSS" "CSS Property" "Reference"\n'
+            'Comment'
         )
         assert parameters['comment_content'] == expected_content
         assert parameters['comment_type'] == 'wiki-revision'
@@ -325,18 +317,11 @@ class RevisionFormEditTests(RevisionFormViewTests):
         parameters = rev_form.akismet_parameters()
         assert sorted(parameters.keys()) == self.akismet_keys_edit
         expected_content = (
-            'display\n'
-            'Web/CSS/display\n'
-            '\n'
-            '<h2 id="Summary">Summary</h2>\r\n'
-            '<p>The <strong><code>display</code></strong> CSS property'
-            ' specifies the type of rendering box used for an element.</p>\r\n'
-            '<p>{{cssinfo}} and my changes.</p>\r\n'
-            '<h2 id="Syntax">Syntax</h2>\r\n'
-            '<p><a href="http://spam.example.com">Buy my product!</a></p>\r\n'
+            '<p>{{cssinfo}} and my changes.</p>\n'
+            '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
             '<pre class="brush:css">display: none;</pre>\n'
             'Comment\n'
-            '"CSS" "CSS Positioning" "CSS Property" "Reference"\n'
+            'CSS Positioning'
         )
         assert parameters['comment_content'] == expected_content
 
@@ -361,18 +346,11 @@ class RevisionFormEditTests(RevisionFormViewTests):
         parameters = rev_form.akismet_parameters()
         assert sorted(parameters.keys()) == self.akismet_keys_edit
         expected_content = (
-            'display\n' +
-            'Web/CSS/display\n' +
             'The CSS property display\n' +
-            '<h2 id="Summary">Summary</h2>\r\n'
-            '<p>The <strong><code>display</code></strong> CSS property'
-            ' specifies the type of rendering box used for an element.</p>\r\n'
-            '<p>{{cssinfo}} and my changes.</p>\r\n'
-            '<h2 id="Syntax">Syntax</h2>\r\n'
-            '<p><a href="http://spam.example.com">Buy my product!</a></p>\r\n'
+            '<p>{{cssinfo}} and my changes.</p>\n'
+            '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
             '<pre class="brush:css">display: none;</pre>\n'
             'Updated\n'
-            '"CSS" "CSS Property" "Reference"\n'
             'CSS display, hidden'
         )
         assert parameters['comment_content'] == expected_content
@@ -562,12 +540,12 @@ class RevisionFormCreateTests(RevisionFormViewTests):
         expected_content = (
             'Accessibility\n'
             'Web/Guide/Accessibility\n'
-            '\n'
-            '<h2 id="Summary">Summary</h2>\r\n'
+            '<h2 id="Summary">Summary</h2>\n'
             '<p>Web accessibility is removing barriers that prevent'
             ' interaction with or access to website.</p>\n'
             'Initial version\n'
-            '"Accessibility" "Web Development"\n'
+            'Accessibility\n'
+            'Web Development'
         )
         assert parameters['comment_content'] == expected_content
         assert parameters['comment_type'] == 'wiki-revision'
@@ -688,13 +666,14 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         expected_content = (
             u'Guide de développement HTML\n'
             u'Web/Guide/HTML\n'
-            u'\n'
-            u'<h2 id="Summary">Summary</h2>\r\n'
+            u'<h2 id="Summary">Summary</h2>\n'
             u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
             u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
             u' de presque tout contenu Web.</p>\n'
             u'Traduction initiale\n'
-            u'"HTML" "Landing" "Web"\n'
+            u'HTML\n'
+            u'Landing\n'
+            u'Web'
         )
         assert parameters['comment_content'] == expected_content
 
@@ -806,17 +785,10 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
         assert sorted(parameters.keys()) == self.akismet_keys_edit
         assert parameters['blog_lang'] == 'fr, en_us'
         expected_content = (
-            u'Guide de développement HTML\n'
-            u'Web/Guide/HTML\n'
-            u'\n'
-            u'<h2 id="Summary">Summary</h2>\r\n'
-            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
-            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\r\n'
             u'<p>La majorité de ce que vous voyez dans votre navigateur est'
             u' décrit en utilisant HTML.<p>\n'
             u'Traduction initiale terminée\n'
-            u'"HTML" "Landing" "Web"\n'
+            u'Web'
         )
         assert parameters['comment_content'] == expected_content
         assert parameters['permalink'] == ('http://testserver/fr/docs/'
