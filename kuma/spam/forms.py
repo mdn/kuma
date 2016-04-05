@@ -52,6 +52,19 @@ class AkismetFormMixin(object):
         """
         raise NotImplementedError
 
+    def akismet_parameter_overrides(self):
+        """
+        Get parameter overrides based on user's waffle flags.
+        """
+        parameters = {}
+        if flag_is_active(self.request, constants.SPAM_ADMIN_FLAG):
+            parameters['user_role'] = 'administrator'
+        if flag_is_active(self.request, constants.SPAM_SPAMMER_FLAG):
+            parameters['comment_author'] = 'viagra-test-123'
+        if flag_is_active(self.request, constants.SPAM_TESTING_FLAG):
+            parameters['is_test'] = True
+        return parameters
+
     def akismet_locale(self, language):
         """
         Convert a Django locale to a locale akismet expects.

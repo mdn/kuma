@@ -9,10 +9,12 @@ import requests_mock
 from constance.test import override_config
 from waffle.models import Flag
 
-from kuma.spam.constants import CHECK_URL, SPAM_CHECKS_FLAG, VERIFY_URL
+from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG,
+                                 SPAM_SPAMMER_FLAG, SPAM_TESTING_FLAG,
+                                 SPAM_CHECKS_FLAG, VERIFY_URL)
 from kuma.users.tests import UserTestCase, UserTransactionTestCase
 
-from ..constants import SPAM_EXEMPTED_FLAG
+from ..constants import SPAM_EXEMPTED_FLAG, SPAM_TRAINING_FLAG
 from ..forms import RevisionForm, TreeMoveForm
 from ..models import DocumentSpamAttempt, Revision
 from ..tests import normalize_html, revision
@@ -179,51 +181,52 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertTrue(rev_form.is_valid())
         self.assertEqual(rev_form.cleaned_data['tags'], '"JavaScript"')
 
+    def setup_akismet_post(
+            self, mock_requests, extra_data=None, revision=None, is_spam='false'):
+        """
+        Setup a RevisionForm for content checking with Akismet.
+
+        mock_requests - provided by @requests_mock.mock() decorator
+        extra_data - Additional data to add to the form post
+        revision - The current revision, if post is an edit
+        is_spam - Akismet's response to checking this for spam
+        """
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content=is_spam)
+        request = self.rf.post('/')
+        request.user = self.testuser
+        data = {
+            'title': 'Title',
+            'slug': 'Slug',
+            'content': 'Content',
+            'toc_depth': str(Revision.TOC_DEPTH_ALL),
+        }
+        if extra_data:
+            data.update(extra_data)
+        rev_form = RevisionForm(data=data, request=request, instance=revision)
+        return rev_form
+
     @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_enabled(self, mock_requests):
-        mock_requests.post(VERIFY_URL, content='valid')
-        request = self.rf.get('/')
-        # using a non-admin user here to make sure we can test the
-        # exmption rule below
-        request.user = self.testuser
-        data = {
-            'slug': 'Title',
-            'title': 'Title',
-            'content': 'Content',
-        }
-        rev_form = RevisionForm(data=data, request=request)
-
-        self.assertTrue(rev_form.akismet_enabled())
+        rev_form = self.setup_akismet_post(mock_requests)
+        assert rev_form.akismet_enabled()
 
         # create the waffle flag and add the test user to it
         flag, created = Flag.objects.get_or_create(name=SPAM_EXEMPTED_FLAG)
         flag.users.add(self.testuser)
 
         # now disabled because the test user is exempted from the spam check
-        self.assertFalse(rev_form.akismet_enabled())
+        assert not rev_form.akismet_enabled()
 
     @requests_mock.mock()
     @pytest.mark.spam
     def test_akismet_ham(self, mock_requests):
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content='false')  # false means it's ham
-        request = self.rf.get('/')
-        # using a non-admin user here to make sure we can test the
-        # exmption rule below
-        request.user = self.testuser
-        data = {
-            'title': 'Title',
-            'slug': 'Slug',
-            'content': 'Content',
-            'toc_depth': Revision.TOC_DEPTH_ALL,
-        }
-        self.assertEqual(DocumentSpamAttempt.objects.count(), 0)
-        self.assertEqual(len(mail.outbox), 0)
-
-        rev_form = RevisionForm(data=data, request=request)
-        self.assertTrue(rev_form.is_valid())
-        self.assertEqual(DocumentSpamAttempt.objects.count(), 0)
+        assert DocumentSpamAttempt.objects.count() == 0
+        assert len(mail.outbox) == 0
+        rev_form = self.setup_akismet_post(mock_requests)
+        assert rev_form.is_valid()
+        assert DocumentSpamAttempt.objects.count() == 0
 
     @requests_mock.mock()
     @pytest.mark.spam
@@ -244,35 +247,24 @@ class RevisionFormTests(UserTransactionTestCase):
         assert data['akismet_response'] == 'terrible'
 
     def _test_akismet_error(self, mock_requests, check_response):
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content=check_response)
-        request = self.rf.get('/')
-        # using a non-admin user here to make sure we can test the
-        # exmption rule below
-        request.user = self.testuser
-        data = {
-            'title': 'Title',
-            'slug': 'Slug',
-            'content': 'Content',
-            'toc_depth': Revision.TOC_DEPTH_ALL,
-        }
-        self.assertEqual(DocumentSpamAttempt.objects.count(), 0)
-        self.assertEqual(len(mail.outbox), 0)
-
-        rev_form = RevisionForm(data=data, request=request)
-        self.assertFalse(rev_form.is_valid())
-        self.assertTrue(DocumentSpamAttempt.objects.count() > 0)
+        assert DocumentSpamAttempt.objects.count() == 0
+        assert len(mail.outbox) == 0
+        rev_form = self.setup_akismet_post(mock_requests,
+                                           is_spam=check_response)
+        assert not rev_form.is_valid()
+        assert DocumentSpamAttempt.objects.count() > 0
         attempt = DocumentSpamAttempt.objects.latest()
-        self.assertEqual(attempt.title, 'Title')
-        self.assertEqual(attempt.slug, 'Slug')
-        self.assertEqual(attempt.user, self.testuser)
-        self.assertTrue(attempt.data)
+        assert attempt.title == 'Title'
+        assert attempt.slug == 'Slug'
+        assert attempt.user == self.testuser
+        assert attempt.data
 
         # Test that one message has been sent.
-        self.assertEqual(len(mail.outbox), 1)
-        self.assertIn(attempt.title, mail.outbox[0].body)
-        self.assertIn(attempt.slug, mail.outbox[0].body)
-        self.assertIn(attempt.user.username, mail.outbox[0].body)
+        assert len(mail.outbox) == 1
+        body = mail.outbox[0].body
+        assert attempt.title in body
+        assert attempt.slug in body
+        assert attempt.user.username in body
 
         try:
             rev_form.clean()
@@ -283,12 +275,36 @@ class RevisionFormTests(UserTransactionTestCase):
 
     @pytest.mark.spam
     @requests_mock.mock()
-    def test_akismet_parameters_edit(self, mock_requests):
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content='false')
-        request = self.rf.get('/')
-        request.user = self.testuser
+    def test_akismet_spam_training(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_TRAINING_FLAG)
+        flag.users.add(self.testuser)
+        assert not DocumentSpamAttempt.objects.exists()
+        rev_form = self.setup_akismet_post(mock_requests, is_spam='true')
+        assert rev_form.is_valid()
+        assert DocumentSpamAttempt.objects.count() == 1
+        attempt = DocumentSpamAttempt.objects.get()
+        assert attempt.user == self.testuser
+        assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_error_training(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_TRAINING_FLAG)
+        flag.users.add(self.testuser)
+        assert not DocumentSpamAttempt.objects.exists()
+        rev_form = self.setup_akismet_post(mock_requests, is_spam='error')
+        assert rev_form.is_valid()
+        assert DocumentSpamAttempt.objects.count() == 1
+        attempt = DocumentSpamAttempt.objects.get()
+        assert attempt.user == self.testuser
+        assert attempt.review == DocumentSpamAttempt.AKISMET_ERROR
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters_new(self, mock_requests):
+        """Test that new English pages get the standard Akismet parameters."""
         data = {
+            # Repeat default data to make content check easier
             'title': 'Title',
             'slug': 'Slug',
             'summary': 'Summary',
@@ -298,61 +314,67 @@ class RevisionFormTests(UserTransactionTestCase):
             'tags': '"Tag1" "Tag2"',
             'keywords': 'HTML, CSS, JS',
         }
-        rev_form = RevisionForm(data=data, request=request)
-        self.assertTrue(rev_form.is_valid())
+        rev_form = self.setup_akismet_post(mock_requests, data)
+        assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
-        self.assertEqual(parameters['comment_author'], 'Test User')
-        self.assertEqual(parameters['comment_author_email'],
-                         self.testuser.email)
-        # The content contains just
+        assert parameters['comment_author'] == 'Test User'
+        assert parameters['comment_author_email'] == self.testuser.email
+        # The content is a combination of the data values
         for value in data.values():
-            self.assertIn(value, parameters['comment_content'])
-        self.assertEqual(parameters['comment_type'], 'wiki-revision')
-        self.assertEqual(parameters['blog_lang'], 'en_us')
-        self.assertEqual(parameters['blog_charset'], 'UTF-8')
+            assert value in parameters['comment_content']
+        assert parameters['comment_type'] == 'wiki-revision'
+        assert parameters['blog_lang'] == 'en_us'
+        assert parameters['blog_charset'] == 'UTF-8'
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters_admin_flag(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_ADMIN_FLAG)
+        flag.users.add(self.testuser)
+        rev_form = self.setup_akismet_post(mock_requests)
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert parameters['user_role'] == 'administrator'
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters_spammer_flag(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_SPAMMER_FLAG)
+        flag.users.add(self.testuser)
+        rev_form = self.setup_akismet_post(mock_requests, is_spam='true')
+        assert not rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert parameters['comment_author'] == 'viagra-test-123'
+
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters_testing_flag(self, mock_requests):
+        flag, created = Flag.objects.get_or_create(name=SPAM_TESTING_FLAG)
+        flag.users.add(self.testuser)
+        rev_form = self.setup_akismet_post(mock_requests)
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert parameters['is_test']
 
     @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_parameters_new_translation(self, mock_requests):
-        """
-        New translations pass locale via POST data.
-        """
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content='false')
-        request = self.rf.get('/')
-        request.user = self.testuser
-        data = {
-            'title': 'Title',
-            'slug': 'Slug',
-            'content': 'Content',
-            'toc_depth': str(Revision.TOC_DEPTH_ALL),
-            'locale': 'de',
-        }
-        rev_form = RevisionForm(data=data, request=request)
-        self.assertTrue(rev_form.is_valid(), rev_form.errors)
+        """Test Akismet dual locale setting for new translations."""
+        extra_data = {'locale': 'de'}
+        rev_form = self.setup_akismet_post(mock_requests, extra_data)
+        assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
-        self.assertEqual(parameters['blog_lang'], 'de, en_us')
+        assert parameters['blog_lang'] == 'de, en_us'
 
     @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_parameters_translation_edit(self, mock_requests):
         rev = revision(save=True)
         rev.document.locale = 'fr'
-
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content='false')
-        request = self.rf.get('/')
-        request.user = self.testuser
-        data = {
-            'title': 'Title',
-            'slug': 'Slug',
-            'content': 'Content',
-            'toc_depth': str(Revision.TOC_DEPTH_ALL),
-        }
-        rev_form = RevisionForm(data=data, instance=rev, request=request)
-        self.assertTrue(rev_form.is_valid(), rev_form.errors)
+        rev_form = self.setup_akismet_post(mock_requests, revision=rev)
+        assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
-        self.assertEqual(parameters['blog_lang'], 'fr, en_us')
+        assert parameters['blog_lang'] == 'fr, en_us'
 
 
 class TreeMoveFormTests(UserTestCase):

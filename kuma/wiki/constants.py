@@ -252,6 +252,7 @@ KUMA_FILE_URL = re.compile(r'%s%s/files/(?P<file_id>\d+)/' %
                             re.escape(settings.ATTACHMENT_HOST)))
 
 SPAM_EXEMPTED_FLAG = 'wiki_spam_exempted'
+SPAM_TRAINING_FLAG = 'wiki_spam_training'
 SPAM_SUBMISSION_REVISION_FIELDS = [
     'title',
     'slug',
