@@ -106,11 +106,8 @@ class AkismetRevisionData(object):
         parts = []
         for field in SPAM_SUBMISSION_REVISION_FIELDS:
             value = cleaned_data.get(field, u'')
-            if value and field == 'tags':
-                # Turn '"Tag 2" "Tag 1"' into 'Tag 1\nTag 2'
-                assert value[0] == u'"'
-                assert value[-1] == u'"'
-                value = u'\n'.join(sorted(value[1:-1].split(u'" "')))
+            if field == 'tags':
+                value = self.split_tags(value)
             parts.append(value)
         return u'\n'.join(parts)
 
@@ -126,6 +123,16 @@ class AkismetRevisionData(object):
                 value = u'\n'.join(sorted(document.tags.names()))
             else:
                 value = getattr(document, field, '')
+            parts.append(value)
+        return u'\n'.join(parts)
+
+    def content_from_revision(self, revision):
+        """Create a combined content string from a Revision."""
+        parts = []
+        for field in SPAM_SUBMISSION_REVISION_FIELDS:
+            value = getattr(revision, field) or u''
+            if field == 'tags':
+                value = self.split_tags(value)
             parts.append(value)
         return u'\n'.join(parts)
 
@@ -202,6 +209,15 @@ class AkismetRevisionData(object):
         doc_url = document.get_absolute_url()
         self.parameters['permalink'] = request.build_absolute_uri(doc_url)
 
+    def split_tags(self, tag_string):
+        """Turn '"Tag 2" "Tag 1"' into 'Tag 1\nTag 2'."""
+        if not tag_string:
+            return ''
+        else:
+            assert tag_string[0] == u'"'
+            assert tag_string[-1] == u'"'
+            return u'\n'.join(sorted(tag_string[1:-1].split(u'" "')))
+
 
 class AkismetNewDocumentData(AkismetRevisionData):
     """Collect Akismet data for a user creating a new document."""
@@ -241,6 +257,47 @@ class AkismetEditDocumentData(AkismetRevisionData):
         new_content = self.content_from_form(cleaned_data)
         existing_content = self.content_from_document(document)
         self.set_content(new_content, existing_content)
+
+
+class AkismetHistoricalData(AkismetRevisionData):
+    """Collect Akismet data from a historical revision."""
+
+    def __init__(self, revision, request=None):
+        """Initialize from a historical revision.
+
+        Keyword Parameters:
+        revision - the historical Revision
+        request - an optional request object
+        """
+        assert revision.id, "Must be a saved Revision."
+        assert revision.document_id, "Must be a Revision with a Document."
+        super(AkismetHistoricalData, self).__init__()
+        revision_ip = revision.revisionip_set.first()
+        if revision_ip:
+            self.parameters.update({
+                'user_ip': revision_ip.ip,
+                'user_agent': revision_ip.user_agent,
+                'referrer': revision_ip.referrer,
+            })
+        else:
+            self.parameters.update({
+                'user_ip': '0.0.0.0',
+                'user_agent': '',
+                'referrer': '',
+            })
+        document = revision.document
+        self.set_blog_lang(document.locale)
+        if request:
+            self.set_blog(request)
+            self.set_permalink(document, request)
+        self.set_comment_author(revision.creator)
+        new_content = self.content_from_revision(revision)
+        old_revision = revision.get_previous()
+        if old_revision:
+            old_content = self.content_from_revision(old_revision)
+        else:
+            old_content = None
+        self.set_content(new_content, old_content)
 
 
 class DocumentForm(forms.ModelForm):
@@ -311,14 +368,6 @@ class DocumentForm(forms.ModelForm):
         # any m2m data since we instantiated the doc
         self.save_m2m()
         return doc
-
-
-def author_from_user(user):
-    return user.fullname or user.get_full_name() or user.username
-
-
-def author_email_from_user(user):
-    return user.email
 
 
 class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
@@ -747,53 +796,11 @@ class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
 
     def akismet_parameters(self):
         """
-        Returns a dict of parameters to pass to Akismet's submission
-        API endpoints.
-
-        Must follow the data used for retrieving a dict of this data
-        for a model instance in the ``RevisionForm.akismet_parameters``
-        method!
+        Returns parameter dict to pass to Akismet's submission API endpoints.
         """
-        return revision_akismet_parameters(self.cleaned_data['revision'])
-
-
-def revision_akismet_parameters(revision):
-    language = revision.document.locale or settings.WIKI_DEFAULT_LANGUAGE
-
-    if language == settings.WIKI_DEFAULT_LANGUAGE:
-        blog_lang = translation.to_locale(language).lower()
-    else:
-        blog_lang = '%s, %s' % (
-            translation.to_locale(language).lower(),
-            translation.to_locale(settings.WIKI_DEFAULT_LANGUAGE).lower())
-
-    content = u'\n'.join([getattr(revision, field, None) or ''
-                          for field in SPAM_SUBMISSION_REVISION_FIELDS])
-
-    parameters = {
-        'blog_lang': blog_lang,
-        'blog_charset': 'UTF-8',
-        'comment_author': author_from_user(revision.creator),
-        'comment_author_email': author_email_from_user(revision.creator),
-        'comment_content': content,
-        'comment_type': 'wiki-revision',
-    }
-
-    # get the stored revision IP if there is still one logged away
-    revision_ip = revision.revisionip_set.first()
-    if revision_ip is None:
-        parameters.update({
-            'user_ip': '0.0.0.0',
-            'user_agent': '',
-            'referrer': '',
-        })
-    else:
-        parameters.update({
-            'user_ip': revision_ip.ip,
-            'user_agent': revision_ip.user_agent,
-            'referrer': revision_ip.referrer,
-        })
-    return parameters
+        revision = self.cleaned_data['revision']
+        akismet_data = AkismetHistoricalData(revision, self.request)
+        return akismet_data.parameters
 
 
 class TreeMoveForm(forms.Form):

@@ -263,17 +263,52 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
             'Seventh revision of the article.\n'
             'article-with-revisions\n'
             'Seventh revision of the article.\n'
-            'Seventh revision of the article.\n'
-            '\n'
-            '\n'
+            'Seventh revision of the article.'
         )
         expected = [
-            ('blog', 'https://developer-local.allizom.org/'),
+            ('blog', 'http://testserver/'),
             ('blog_charset', 'UTF-8'),
             ('blog_lang', 'en_us'),
             ('comment_author', 'admin'),
             ('comment_content', expected_content),
             ('comment_type', 'wiki-revision'),
+            ('permalink',
+             'http://testserver/en-US/docs/article-with-revisions'),
             ('user_ip', '0.0.0.0')
         ]
         self.assertEqual(sorted(query_pairs), expected)
+
+    @requests_mock.mock()
+    def test_spam_submission_tags(self, mock_requests):
+        admin = User.objects.get(username='admin')
+        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
+        flag.users.add(admin)
+        revision = admin.created_revisions.all()[0]
+        revision.tags = '"Banana" "Orange" "Apple"'
+        revision.save()
+        url = reverse('admin:wiki_revisionakismetsubmission_add')
+
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
+
+        data = {
+            'revision': revision.id,
+            'type': 'spam',
+        }
+        self.client.login(username='admin', password='testpass')
+        url = reverse('admin:wiki_revisionakismetsubmission_add')
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+
+        request_body = mock_requests.request_history[1].body
+        submitted_data = dict(parse_qsl(request_body))
+        expected_content = (
+            'Seventh revision of the article.\n'
+            'article-with-revisions\n'
+            'Seventh revision of the article.\n'
+            'Seventh revision of the article.\n'
+            'Apple\n'
+            'Banana\n'
+            'Orange'
+        )
+        self.assertEqual(submitted_data['comment_content'], expected_content)
