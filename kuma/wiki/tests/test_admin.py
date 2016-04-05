@@ -268,7 +268,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
             '\n'
         )
         expected = [
-            ('blog', 'developer-local.allizom.org'),
+            ('blog', 'https://developer-local.allizom.org/'),
             ('blog_charset', 'UTF-8'),
             ('blog_lang', 'en_us'),
             ('comment_author', 'admin'),
