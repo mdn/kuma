@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-01 10:55-0700\n"
-"PO-Revision-Date: 2016-04-02 18:06+0000\n"
-"Last-Translator: André Marcelo Alvarenga <andrealvarenga@gmx.net>\n"
+"PO-Revision-Date: 2016-04-05 17:17+0000\n"
+"Last-Translator: ianramosc <ianramosc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -3164,7 +3164,7 @@ msgstr "Necessita Revisão"
 
 #: kuma/wiki/models.py:1942
 msgid "Ham / False Positive"
-msgstr ""
+msgstr "Não é spam / Falso Positivo"
 
 #: kuma/wiki/models.py:1943
 msgid "Confirmed as Spam"
@@ -3176,11 +3176,11 @@ msgstr "Revisão Indisponível"
 
 #: kuma/wiki/models.py:1945
 msgid "Akismet Error"
-msgstr ""
+msgstr "Erro no Akismet"
 
 #: kuma/wiki/models.py:1950
 msgid "Review of Akismet's classification as spam"
-msgstr ""
+msgstr "Revisão da classificação do Akismet como spam"
 
 #: kuma/wiki/models.py:1957
 msgid "Staff reviewer"
