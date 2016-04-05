@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-01 10:55-0700\n"
-"PO-Revision-Date: 2016-04-04 07:31+0000\n"
+"PO-Revision-Date: 2016-04-05 14:17+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -3178,7 +3178,7 @@ msgstr "Necesita revisión"
 
 #: kuma/wiki/models.py:1942
 msgid "Ham / False Positive"
-msgstr ""
+msgstr "Contenido aceptable / Falso positivo"
 
 #: kuma/wiki/models.py:1943
 msgid "Confirmed as Spam"
