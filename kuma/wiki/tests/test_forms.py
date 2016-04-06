@@ -15,9 +15,79 @@ from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG,
 from kuma.users.tests import UserTestCase, UserTransactionTestCase
 
 from ..constants import SPAM_EXEMPTED_FLAG, SPAM_TRAINING_FLAG
-from ..forms import RevisionForm, TreeMoveForm
-from ..models import DocumentSpamAttempt, Revision
+from ..forms import AkismetHistoricalData, RevisionForm, TreeMoveForm
+from ..models import DocumentSpamAttempt, Revision, RevisionIP
 from ..tests import document, normalize_html, revision
+
+
+class AkismetHistoricalDataTests(UserTestCase):
+    """Tests for AkismetHistoricalData."""
+    rf = RequestFactory()
+    base_akismet_payload = {
+        'blog_charset': 'UTF-8',
+        'blog_lang': u'en_us',
+        'comment_author': u'Test User',
+        'comment_author_email': u'testuser@test.com',
+        'comment_content': (
+            'Sample\n'
+            'SampleSlug\n'
+            'content\n'
+            'Comment'
+        ),
+        'comment_type': 'wiki-revision',
+        'referrer': '',
+        'user_agent': '',
+        'user_ip': '0.0.0.0'
+    }
+
+    def setUp(self):
+        super(AkismetHistoricalDataTests, self).setUp()
+        self.user = self.user_model.objects.get(username='testuser')
+        self.revision = revision(save=True, content='content', title='Sample',
+                                 slug='SampleSlug', comment='Comment',
+                                 summary='', tags='')
+
+    def test_no_revision_ip_no_request(self):
+        """
+        Test Akismet payload with no RevisionIP or request.
+
+        This is a possible payload from ./manage.py submit_deleted_documents.
+        """
+        params = AkismetHistoricalData(self.revision).parameters
+        assert params == self.base_akismet_payload
+
+    def test_revision_ip_no_data(self):
+        """
+        Test Akismet payload with a RevisionIP without data.
+
+        This is a possible payload from an April 2016 revision.
+        """
+        RevisionIP.objects.create(revision=self.revision, ip='127.0.0.1',
+                                  user_agent='Agent', referrer='Referrer')
+        request = self.rf.get('/en-US/dashboard/revisions')
+        params = AkismetHistoricalData(self.revision, request).parameters
+        expected = self.base_akismet_payload.copy()
+        expected.update({
+            'blog': 'http://testserver/',
+            'permalink': 'http://testserver/en-US/docs/SampleSlug',
+            'referrer': 'Referrer',
+            'user_agent': 'Agent',
+            'user_ip': '127.0.0.1',
+        })
+        assert params == expected
+
+    def test_revision_ip_with_data(self):
+        """
+        Test Akismet payload is the data from the RevisionIP.
+
+        This payload is from a revision after April 2016.
+        """
+        RevisionIP.objects.create(revision=self.revision, ip='127.0.0.1',
+                                  user_agent='Agent', referrer='Referrer',
+                                  data='{"content": "spammy"}')
+        request = self.rf.get('/en-US/dashboard/revisions')
+        params = AkismetHistoricalData(self.revision, request).parameters
+        assert params == {'content': 'spammy'}
 
 
 class RevisionFormTests(UserTransactionTestCase):

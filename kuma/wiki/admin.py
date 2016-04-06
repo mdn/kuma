@@ -9,8 +9,9 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
-from django.template.defaultfilters import truncatechars
+from django.template.defaultfilters import linebreaksbr, truncatechars
 from django.utils import timezone
+from django.utils.encoding import smart_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
@@ -342,6 +343,8 @@ class DocumentTagAdmin(admin.ModelAdmin):
 class DocumentZoneAdmin(admin.ModelAdmin):
     raw_id_fields = ('document',)
 
+SUBMISSION_NOT_AVAILABLE = 'Akismet submission not available.'
+
 
 @admin.register(DocumentSpamAttempt)
 class DocumentSpamAttemptAdmin(admin.ModelAdmin):
@@ -437,13 +440,8 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
                 self.message_user(request, message, level=messages.INFO)
         obj.save()
 
-    SUBMISSION_NOT_AVAILABLE = 'Akismet submission not available.'
-
     def submitted_data(self, instance):
-        if instance.data:
-            return json.dumps(json.loads(instance.data), indent=4)
-        else:
-            return self.SUBMISSION_NOT_AVAILABLE
+        return instance.data or SUBMISSION_NOT_AVAILABLE
 
 
 @admin.register(Revision)
@@ -460,8 +458,13 @@ class RevisionAdmin(admin.ModelAdmin):
 
 @admin.register(RevisionIP)
 class RevisionIPAdmin(admin.ModelAdmin):
-    readonly_fields = ('revision', 'ip')
+    readonly_fields = ('revision', 'ip', 'user_agent', 'referrer',
+                       'submitted_data')
     list_display = ('revision', 'ip')
+
+    def submitted_data(self, obj):
+        """Display Akismet data, if saved at edit time."""
+        return obj.data or SUBMISSION_NOT_AVAILABLE
 
 
 @admin.register(RevisionAkismetSubmission)
@@ -483,10 +486,13 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
 
     def revision_with_link(self, obj):
         """Admin link to the revision"""
-        admin_link = reverse('admin:wiki_revision_change',
-                             args=[obj.revision.id])
-        return ('<a target="_blank" href="%s">%s</a>' %
-                (admin_link, escape(obj.revision)))
+        if obj.revision_id:
+            admin_link = reverse('admin:wiki_revision_change',
+                                 args=[obj.revision.id])
+            return ('<a target="_blank" href="%s">%s</a>' %
+                    (admin_link, escape(obj.revision)))
+        else:
+            return 'None'
     revision_with_link.allow_tags = True
     revision_with_link.short_description = "Revision"
 
@@ -517,6 +523,40 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
                 return AdminForm(request, *args, **kwargs)
 
         return AdminFormWithRequest
+
+    def add_view(self, request, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['submitted_data'] = self.submitted_data(request)
+        return super(RevisionAkismetSubmissionAdmin, self).add_view(
+            request, form_url, extra_context=extra_context)
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['submitted_data'] = self.submitted_data(
+            request, object_id)
+        return super(RevisionAkismetSubmissionAdmin, self).change_view(
+            request, object_id, form_url, extra_context=extra_context)
+
+    def submitted_data(self, request, obj_id=None):
+        """Display Akismet data, if saved at edit time."""
+        if obj_id:
+            obj = RevisionAkismetSubmission.objects.get(id=obj_id)
+        else:
+            obj = None
+
+        if obj and obj.revision_id:
+            revision_ip = obj.revision.revisionip_set.first()
+        else:
+            revision_id = request.GET.get('revision')
+            if revision_id:
+                revision_ip = RevisionIP.objects.filter(
+                    revision_id=revision_id).first()
+            else:
+                revision_ip = None
+        if revision_ip and revision_ip.data:
+            return linebreaksbr(smart_text(revision_ip.data))
+        else:
+            return SUBMISSION_NOT_AVAILABLE
 
 
 @admin.register(EditorToolbar)

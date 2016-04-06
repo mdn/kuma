@@ -274,11 +274,16 @@ class AkismetHistoricalData(AkismetRevisionData):
         super(AkismetHistoricalData, self).__init__()
         revision_ip = revision.revisionip_set.first()
         if revision_ip:
-            self.parameters.update({
-                'user_ip': revision_ip.ip,
-                'user_agent': revision_ip.user_agent,
-                'referrer': revision_ip.referrer,
-            })
+            if revision_ip.data:
+                # Use captured Akismet submission
+                self.parameters = json.loads(revision_ip.data)
+                return
+            else:
+                self.parameters.update({
+                    'user_ip': revision_ip.ip,
+                    'user_agent': revision_ip.user_agent,
+                    'referrer': revision_ip.referrer,
+                })
         else:
             self.parameters.update({
                 'user_ip': '0.0.0.0',
@@ -687,7 +692,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 slug=self.cleaned_data['slug'],
                 user=self.request.user,
                 document=document,
-                data=json.dumps(dsa_params),
+                data=json.dumps(dsa_params, indent=2, sort_keys=True),
                 review=review
             )
         finally:
@@ -757,6 +762,8 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 RevisionIP.objects.log(
                     revision=new_rev,
                     headers=self.request.META,
+                    data=json.dumps(self.akismet_parameters(),
+                                    indent=2, sort_keys=True)
                 )
 
             # send first edit emails
