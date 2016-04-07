@@ -30,6 +30,9 @@
 
         <div class="doc-title">
             <h1><span class="title-prefix">{{ _('Create a') }} </span><em>{{ _('New Document') }}</em></h1>
+            <p class="save-state" id="draft-status">
+              {{ _('Draft') }} <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time>
+            </p>
         </div>
 
         <ul class="metadata">
@@ -56,17 +59,12 @@
 
       {% include 'wiki/includes/guide_links.html' %}
 
-
       {% if is_template %}
         {{ revision_form.content|safe }}
-        <div id="editor-wrapper" class="editor-wrapper">
-          <div id="ace_content" class="editor-container"></div>
-        </div>
+        <div id="ace_content" class="editor-container"></div>
       {% else %}
-        <div id="editor-wrapper" class="editor-wrapper">
-          <div class="ckeditor-container editor-container">
-            {{ revision_form.content|safe }}
-          </div>
+        <div class="ckeditor-container editor-container">
+          {{ revision_form.content|safe }}
         </div>
       {% endif %}
 

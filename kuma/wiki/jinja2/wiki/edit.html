@@ -101,10 +101,11 @@
 
           <div class="doc-title">
             <h1>{{ _('<span class="title-prefix">Editing</span> <em>%(title)s</em>'|safe, title=revision.title) }}</h1>
-            <p class="doc-title-properties">
+            <p class="save-state" id="draft-status">
               {% if not section_id %}
                 <a href="" id="btn-properties">{{ _('Edit Page Title and Properties') }}</a><br />
               {% endif %}
+              {{ _('Draft') }} <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time>
             </p>
           </div>
 
@@ -142,7 +143,7 @@
                   </div>
                 </li>
                 <li class="metadata-choose-parent clear">
-                    {{ _('Find the translation source with the lookup below and then click "Publish."') }}
+                    {{ _('Find the translation source with the lookup below and then click "Save Changes."') }}
                     <br />
                     <label for="parent_text">{{ _('Lookup:') }}</label> <input type="text" id="parent_text" />
                     <input type="hidden" name="parent_id" id="parent_id" value="{{ revision_form.instance.document.parent.id }}" />
@@ -174,13 +175,9 @@
 
             {% if document.is_template %}
               {{ revision_form.content | safe }}
-              <div id="editor-wrapper" class="editor-wrapper">
-                <div id="ace_content" class="editor-container"></div>
-              </div>
+              <div id="ace_content" class="editor-container"></div>
             {% else %}
-              <div id="editor-wrapper" class="editor-wrapper">
-                <div class="ckeditor-container editor-container">{{ revision_form.content | safe }}</div>
-              </div>
+              <div class="ckeditor-container editor-container">{{ revision_form.content | safe }}</div>
             {% endif %}
 
             <input type="hidden" name="form" value="rev" />
