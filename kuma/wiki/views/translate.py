@@ -147,7 +147,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                 parent_slug=slug_dict['parent'])
 
     if request.method == 'POST':
-        which_form = request.POST.get('form', 'both')
+        which_form = request.POST.get('form-type', 'both')
         doc_form_invalid = False
 
         # Grab the posted slug value in case it's invalid
