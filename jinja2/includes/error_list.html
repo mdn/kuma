@@ -1,14 +1,16 @@
 {% macro errorlist(form) -%}
   {% if form.errors %}
-    <ul class="errorlist">
-      {% for field in form %}
-        {% for error in field.errors %}
-          <li><a href="#{{ form.auto_id % field.name }}">{{ error }}</a></li>
-        {% endfor %}
-      {% endfor %}
-      {% for error in form.non_field_errors() %}
-        <li>{{ error }}</li>
-      {% endfor %}
-    </ul>
+    <div class="notification error" data-level="error">
+        <ul class="errorlist">
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li><a href="#{{ form.auto_id % field.name }}">{{ error }}</a></li>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors() %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+    </div>
   {% endif %}
 {%- endmacro %}
