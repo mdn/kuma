@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-01 10:55-0700\n"
-"PO-Revision-Date: 2016-04-02 18:02+0000\n"
+"PO-Revision-Date: 2016-04-07 12:57+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -492,14 +492,12 @@ msgstr ""
 "випадку необхідності."
 
 #: kuma/attachments/models.py:140
-#, fuzzy
 msgid "attachment revision"
-msgstr "Попередній перегляд вкладеного файлу"
+msgstr "ревізія вкладення"
 
 #: kuma/attachments/models.py:141
-#, fuzzy
 msgid "attachment revisions"
-msgstr "Попередній перегляд вкладеного файлу"
+msgstr "ревізії вкладень"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
@@ -520,14 +518,12 @@ msgid ""
 msgstr "Чи мало вкладення поточну версію в момент видалення."
 
 #: kuma/attachments/models.py:234
-#, fuzzy
 msgid "Trashed attachment"
-msgstr "Вкладені файли"
+msgstr "Видалене вкладення"
 
 #: kuma/attachments/models.py:235
-#, fuzzy
 msgid "Trashed attachments"
-msgstr "Вкладені файли"
+msgstr "Видалені вкладення"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
@@ -558,11 +554,8 @@ msgid "This document has no attachments."
 msgstr "Цей документ не має вкладень."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
-#, fuzzy
 msgid "Images can be attached, and then linked in the article."
-msgstr ""
-"Цей документ не має вкладень. Зображення можуть бути вкладені, а потім "
-"вбудовані в статтю."
+msgstr "Зображення можуть бути вкладені, а потім вбудовані в статтю."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:67
@@ -586,14 +579,12 @@ msgid "Comments"
 msgstr "Коментарі"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:61
-#, fuzzy
 msgid "Attached to this article"
-msgstr "Вилучити цю статтю"
+msgstr "Вкладено у цю статтю"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:63
-#, fuzzy
 msgid "Attached to another article"
-msgstr "Відомості про вкладення"
+msgstr "Вкладено у іншу статтю"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:68
 msgid "Size"
@@ -608,14 +599,12 @@ msgid "Uploaded by"
 msgstr "Завантажено"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:73
-#, fuzzy
 msgid "Linked in article"
-msgstr "Клонувати цю статтю"
+msgstr "Вбудовано у статтю"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
-#, fuzzy
 msgid "Article attached to"
-msgstr "Статті з мітками: %(tag)s"
+msgstr "Стаття, вкладена у"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
@@ -3045,14 +3034,12 @@ msgid "Document Tags"
 msgstr "Мітки документа"
 
 #: kuma/wiki/models.py:173
-#, fuzzy
 msgid "uploaded to the document"
-msgstr "Відновити цей документ"
+msgstr "вивантажено в документ"
 
 #: kuma/wiki/models.py:179
-#, fuzzy
 msgid "linked in the document content"
-msgstr "Перейти до основного вмісту"
+msgstr "вбудовано у вміст документа"
 
 #: kuma/wiki/models.py:193
 #, python-format
@@ -3145,9 +3132,8 @@ msgid "Data submitted to Akismet"
 msgstr "Дані надіслані в Akismet"
 
 #: kuma/wiki/models.py:1930
-#, fuzzy
 msgid "reviewed"
-msgstr "Перегляд"
+msgstr "перевірено"
 
 #: kuma/wiki/models.py:1941
 msgid "Needs Review"
@@ -3155,16 +3141,15 @@ msgstr "Потребує рецензування"
 
 #: kuma/wiki/models.py:1942
 msgid "Ham / False Positive"
-msgstr ""
+msgstr "Це не спам"
 
 #: kuma/wiki/models.py:1943
 msgid "Confirmed as Spam"
 msgstr "Підтверджено як спам"
 
 #: kuma/wiki/models.py:1944
-#, fuzzy
 msgid "Review Unavailable"
-msgstr "Пошук недоступний"
+msgstr "Перевірка недоступна"
 
 #: kuma/wiki/models.py:1945
 msgid "Akismet Error"
@@ -3172,12 +3157,11 @@ msgstr "Помилка Akismet"
 
 #: kuma/wiki/models.py:1950
 msgid "Review of Akismet's classification as spam"
-msgstr ""
+msgstr "Перевірка на спам за допомогою Akismet"
 
 #: kuma/wiki/models.py:1957
-#, fuzzy
 msgid "Staff reviewer"
-msgstr "Редакційний огляд"
+msgstr "Рецензент-адміністратор"
 
 #: kuma/wiki/search.py:310
 #, python-format
