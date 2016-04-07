@@ -29,6 +29,11 @@
     chdir: /home/vagrant/src
   when: feeder_table_empty|success
 
+- name: Compile locale .mo files
+  command: ./compile-mo.sh .
+  args:
+    chdir: /home/vagrant/src/locale
+
 - name: Compile jsi18n files
   command: /home/vagrant/env/bin/python manage.py compilejsi18n
   args:
