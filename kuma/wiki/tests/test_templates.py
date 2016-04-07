@@ -353,7 +353,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('article ul.errorlist')
+        ul = doc('article > ul.errorlist')
         ok_(len(ul) > 0)
         ok_('Please provide a title.' in ul('li').text())
 
@@ -365,7 +365,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('article ul.errorlist')
+        ul = doc('article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Please provide content.', ul('li').text())
 
@@ -379,7 +379,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.post(reverse('wiki.create'), data)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        ul = doc('article ul.errorlist')
+        ul = doc('article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Document with this Slug and Locale already exists.',
             ul('li').text())
