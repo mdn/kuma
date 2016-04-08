@@ -23,6 +23,7 @@ class GenerationJob(KumaJob):
     The purpose is to refresh several cached values when a generation changes.
     """
     generation_age = 60 * 60 * 24 * 365
+    lifetime = 60 * 60 * 12
 
     def __init__(self, generation_args=None, *args, **kwargs):
         """
