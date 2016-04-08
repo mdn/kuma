@@ -69,6 +69,16 @@ class GenerationKeyJob(Job):
         """Create a unique generation identifier."""
         return crypto.get_random_string(length=12)
 
+    def get_constructor_kwargs(self):
+        """
+        Get named arguments for re-initialization.
+
+        The async refresh task re-creates the GenerationKeyJob.
+        """
+        return {'age': self.age,
+                'for_class': self.for_class,
+                'generation_args': self.generation_args}
+
 
 class IPBanJob(KumaJob):
     lifetime = 60 * 60 * 3
