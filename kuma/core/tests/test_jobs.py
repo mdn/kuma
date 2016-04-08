@@ -1,7 +1,9 @@
 from django.utils import six
 from kuma.core.tests import KumaTestCase
+import mock
 
-from ..jobs import GenerationJob, KumaJob
+
+from ..jobs import GenerationJob, GenerationKeyJob, KumaJob
 
 
 class KumaJobTests(KumaTestCase):
@@ -34,6 +36,38 @@ class GenerationJobTest(KumaTestCase):
         key2_gen2 = job2.key('test')
         assert key1_gen1 != key1_gen2
         assert key1_gen2 == key2_gen2
+
+
+class GenerationKeyJobTest(KumaTestCase):
+    """Test the GenerationKeyJob."""
+
+    def setUp(self):
+        self.job = GenerationKeyJob(age=GenerationJob.generation_age,
+                                    for_class='kuma.core.GenerationJob',
+                                    generation_args=['foo'])
+
+    def test_key(self):
+        assert self.job.key() == 'kuma.core.GenerationJob:foo:generation'
+
+    @mock.patch('kuma.core.jobs.crypto.get_random_string')
+    def test_fetch(self, mock_rando):
+        mock_rando.return_value = 'abc123'
+        assert self.job.fetch() == 'abc123'
+
+    @mock.patch('cacheback.base.tasks.refresh_cache.apply_async')
+    def test_refresh(self, mock_async):
+        self.job.async_refresh()
+        refresh_kwargs = {
+            'call_args': (),
+            'call_kwargs': {},
+            'klass_str': 'kuma.core.jobs.GenerationKeyJob',
+            'obj_args': (),
+            'obj_kwargs': {
+                'age': self.job.age,
+                'for_class': self.job.for_class,
+                'generation_args': self.job.generation_args},
+        }
+        mock_async.assert_called_once_with(kwargs=refresh_kwargs)
 
 
 class EncodingJob(KumaJob):

@@ -441,7 +441,7 @@ def unindex_documents(ids, index_pk):
 
 
 @task(rate_limit='120/m')
-def tidy_revision_content(pk):
+def tidy_revision_content(pk, refresh=True):
     """
     Run tidy over the given revision's content and save it to the
     tidy_content field if the content is not equal to the current value.
@@ -453,8 +453,11 @@ def tidy_revision_content(pk):
     except Revision.DoesNotExist as exc:
         # Retry in 2 minutes
         log.error('Tidy was unable to get revision id: %d. Retrying.', pk)
-        tidy_revision_content.retry(countdown=60 * 2, max_retries=5, exc=exc)
+        tidy_revision_content.retry(countdown=60 * 2, max_retries=5, exc=exc,
+                                    kwargs={'pk': pk, 'refresh': refresh})
     else:
+        if revision.tidied_content and not refresh:
+            return
         tidied_content, errors = tidy_content(revision.content)
         if tidied_content != revision.tidied_content:
             Revision.objects.filter(pk=pk).update(

@@ -23,6 +23,7 @@ class GenerationJob(KumaJob):
     The purpose is to refresh several cached values when a generation changes.
     """
     generation_age = 60 * 60 * 24 * 365
+    lifetime = 60 * 60 * 12
 
     def __init__(self, generation_args=None, *args, **kwargs):
         """
@@ -68,6 +69,16 @@ class GenerationKeyJob(Job):
     def fetch(self, *args, **kwargs):
         """Create a unique generation identifier."""
         return crypto.get_random_string(length=12)
+
+    def get_constructor_kwargs(self):
+        """
+        Get named arguments for re-initialization.
+
+        The async refresh task re-creates the GenerationKeyJob.
+        """
+        return {'age': self.age,
+                'for_class': self.for_class,
+                'generation_args': self.generation_args}
 
 
 class IPBanJob(KumaJob):
