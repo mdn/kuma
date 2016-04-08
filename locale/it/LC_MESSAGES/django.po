@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-01 10:55-0700\n"
-"PO-Revision-Date: 2016-04-03 18:18+0000\n"
-"Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
+"PO-Revision-Date: 2016-04-03 14:12+0000\n"
+"Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
 "Language-Team: MozillaItalia <MozillaItalia>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -3182,9 +3182,8 @@ msgid "Ham / False Positive"
 msgstr "Non spam / Falso positivo"
 
 #: kuma/wiki/models.py:1943
-#, fuzzy
 msgid "Confirmed as Spam"
-msgstr "Conferma password"
+msgstr "Spam confermato"
 
 #: kuma/wiki/models.py:1944
 msgid "Review Unavailable"
