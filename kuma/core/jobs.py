@@ -22,7 +22,7 @@ class GenerationJob(KumaJob):
 
     The purpose is to refresh several cached values when a generation changes.
     """
-    generation_age = 60 * 60 * 24 * 365
+    generation_lifetime = 60 * 60 * 24 * 365
     lifetime = 60 * 60 * 12
 
     def __init__(self, generation_args=None, *args, **kwargs):
@@ -36,7 +36,7 @@ class GenerationJob(KumaJob):
         self.generation_args = generation_args or []
         super(KumaJob, self).__init__(*args, **kwargs)
         self.generation_key = GenerationKeyJob(
-            age=self.generation_age, for_class=self.class_path,
+            lifetime=self.generation_lifetime, for_class=self.class_path,
             generation_args=self.generation_args)
 
     def key(self, *args, **kwargs):
@@ -54,10 +54,10 @@ class GenerationJob(KumaJob):
 class GenerationKeyJob(Job):
     """A generation that is shared by several GenerationJobs."""
 
-    def __init__(self, age, for_class, generation_args, *args, **kwargs):
+    def __init__(self, lifetime, for_class, generation_args, *args, **kwargs):
         """Initialize but do not create the generation."""
         super(GenerationKeyJob, self).__init__(*args, **kwargs)
-        self.age = age
+        self.lifetime = lifetime
         self.for_class = for_class
         self.generation_args = generation_args
 
@@ -76,7 +76,7 @@ class GenerationKeyJob(Job):
 
         The async refresh task re-creates the GenerationKeyJob.
         """
-        return {'age': self.age,
+        return {'lifetime': self.lifetime,
                 'for_class': self.for_class,
                 'generation_args': self.generation_args}
 

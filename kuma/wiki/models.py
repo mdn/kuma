@@ -1770,7 +1770,7 @@ class Revision(models.Model):
                 if self.pk:
                     Revision.objects.filter(pk=self.pk).update(
                         tidied_content=tidied_content)
-        self.tidied_content = tidied_content
+        self.tidied_content = tidied_content or ''
         return tidied_content
 
     @property
