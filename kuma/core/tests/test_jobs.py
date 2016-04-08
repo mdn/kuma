@@ -42,7 +42,7 @@ class GenerationKeyJobTest(KumaTestCase):
     """Test the GenerationKeyJob."""
 
     def setUp(self):
-        self.job = GenerationKeyJob(age=GenerationJob.generation_age,
+        self.job = GenerationKeyJob(lifetime=GenerationJob.generation_lifetime,
                                     for_class='kuma.core.GenerationJob',
                                     generation_args=['foo'])
 
@@ -63,7 +63,7 @@ class GenerationKeyJobTest(KumaTestCase):
             'klass_str': 'kuma.core.jobs.GenerationKeyJob',
             'obj_args': (),
             'obj_kwargs': {
-                'age': self.job.age,
+                'lifetime': self.job.lifetime,
                 'for_class': self.job.for_class,
                 'generation_args': self.job.generation_args},
         }
