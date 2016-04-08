@@ -1760,20 +1760,17 @@ class Revision(models.Model):
         if self.tidied_content:
             tidied_content = self.tidied_content
         else:
-            from .tasks import tidy_revision_content
-            tidying_scheduled_cache_key = 'kuma:tidying_scheduled:%s' % self.pk
-            # if there isn't already a task scheduled for the revision
-            tidying_already_scheduled = memcache.get(tidying_scheduled_cache_key)
-            if not tidying_already_scheduled:
-                tidy_revision_content.delay(self.pk)
-                # we temporarily set a flag that we've scheduled a task
-                # already and don't need to schedule it the next time
-                # we use 3 days as a limit to try it again
-                memcache.set(tidying_scheduled_cache_key, 1, 60 * 60 * 24 * 3)
             if allow_none:
+                if self.pk:
+                    from .tasks import tidy_revision_content
+                    tidy_revision_content.delay(self.pk, refresh=False)
                 tidied_content = None
             else:
                 tidied_content, errors = tidy_content(self.content)
+                if self.pk:
+                    Revision.objects.filter(pk=self.pk).update(
+                        tidied_content=tidied_content)
+        self.tidied_content = tidied_content
         return tidied_content
 
     @property
