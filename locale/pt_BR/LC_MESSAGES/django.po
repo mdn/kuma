@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-01 10:55-0700\n"
-"PO-Revision-Date: 2016-04-05 17:17+0000\n"
-"Last-Translator: ianramosc <ianramosc@gmail.com>\n"
+"PO-Revision-Date: 2016-04-09 22:54+0000\n"
+"Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -3160,7 +3160,7 @@ msgstr "revisado"
 
 #: kuma/wiki/models.py:1941
 msgid "Needs Review"
-msgstr "Necessita Revisão"
+msgstr "Necessita revisão"
 
 #: kuma/wiki/models.py:1942
 msgid "Ham / False Positive"
