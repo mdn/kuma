@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-01 10:55-0700\n"
-"PO-Revision-Date: 2016-04-05 11:38+0000\n"
+"PO-Revision-Date: 2016-04-11 10:29+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -631,7 +631,7 @@ msgstr "Lien depuis l'article"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
 msgid "Article attached to"
-msgstr "Article joint à"
+msgstr "Fichier joint à"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:88
 #, python-format
