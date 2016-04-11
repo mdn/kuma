@@ -453,8 +453,7 @@ def tidy_revision_content(pk, refresh=True):
     except Revision.DoesNotExist as exc:
         # Retry in 2 minutes
         log.error('Tidy was unable to get revision id: %d. Retrying.', pk)
-        tidy_revision_content.retry(countdown=60 * 2, max_retries=5, exc=exc,
-                                    kwargs={'pk': pk, 'refresh': refresh})
+        tidy_revision_content.retry(countdown=60 * 2, max_retries=5, exc=exc)
     else:
         if revision.tidied_content and not refresh:
             return
