@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-03-11 15:58-0800\n"
-"PO-Revision-Date: 2016-04-07 19:03+0000\n"
+"PO-Revision-Date: 2016-04-15 09:30+0000\n"
 "Last-Translator: Belayet Hossain <bellayet@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: bn_BD\n"
@@ -61,79 +61,79 @@ msgstr "উদাহরণ যোগ অথবা উন্নত করুন"
 
 #: kuma/static/js/helpfulness.js:64
 msgid "My search should have led to a different article"
-msgstr ""
+msgstr "আমার অনুসন্ধান একটি ভিন্ন নিবন্ধে নিয়ে যাওয়া উচিত"
 
 #: kuma/static/js/helpfulness.js:65
 msgid "Something else"
-msgstr ""
+msgstr "অন্য কিছু"
 
 #: kuma/static/js/helpfulness.js:69
 msgid "Choose one..."
-msgstr ""
+msgstr "একটি পছন্দ করুন..."
 
 #: kuma/static/js/helpfulness.js:83
 msgid "Uh oh. What would make it better?"
-msgstr ""
+msgstr "আহ..হা। আরও ভালো করা যায় কিভাবে?"
 
 #: kuma/static/js/helpfulness.js:86
 msgid "Thanks! We'll fix it."
-msgstr ""
+msgstr "ধন্যবাদ! আমরা এর সমাধান করব।"
 
 #: kuma/static/js/moz-jquery-plugins.js:107
 msgid "No selection"
-msgstr ""
+msgstr "কোন নির্বাচন নেই"
 
 #: kuma/static/js/moz-jquery-plugins.js:209
 msgid "Selected: "
-msgstr ""
+msgstr "নির্বাচিত: "
 
 #: kuma/static/js/users.js:96
 msgid "New interest..."
-msgstr ""
+msgstr "নতুন আগ্রহ..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "ইমপ্লিমেন্টেশন নোট খুলুন"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
-msgstr ""
+msgstr "খুলুন"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Return to compatibility table."
-msgstr ""
+msgstr "কম্প্যাটিবিলিটি টেবিলে ফিরে যাও।"
 
 #: kuma/static/js/wiki-compat-tables.js:25
 msgid "Close"
-msgstr ""
+msgstr "বন্ধ"
 
 #: kuma/static/js/wiki-compat-tables.js:108
 msgid "New compatibility tables are in beta "
-msgstr ""
+msgstr "নতুন কম্প্যাটিবিলিটি টেবিলগুলো বেটা সংস্করণে আছে "
 
 #: kuma/static/js/wiki-compat-tables.js:112
 msgid "More about the beta."
-msgstr ""
+msgstr "বেটা সংস্করণ সম্পর্কে আরও জানুন।"
 
 #: kuma/static/js/wiki-compat-tables.js:115
 msgid "Take the survey"
-msgstr ""
+msgstr "জরিপে অংশ নিন"
 
 #: kuma/static/js/wiki-compat-tables.js:118
 msgid "Report an error."
-msgstr ""
+msgstr "ত্রুটি রিপোর্ট করুন।"
 
 #: kuma/static/js/wiki-compat-tables.js:124
 msgid "Reported. Thanks!"
-msgstr ""
+msgstr "রিপোর্ট সম্পন্ন। ধন্যবাদ!"
 
 #: kuma/static/js/wiki-compat-tables.js:128
 msgid "Show old table."
-msgstr ""
+msgstr "পুরনো টেবিল দেখুন।"
 
 #: kuma/static/js/wiki-edit.js:402
 msgid "an unknown date"
-msgstr ""
+msgstr "অজানা তারিখ"
 
 #: kuma/static/js/wiki-edit.js:403
 msgid "You have a draft from:"
@@ -141,23 +141,23 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:404
 msgid "Restore the draft content"
-msgstr ""
+msgstr "খসড়া কন্টেন্ট পুনরুদ্ধার করুন"
 
 #: kuma/static/js/wiki-edit.js:405
 msgid "Discard the draft"
-msgstr ""
+msgstr "খসড়াটি বাতিল কর"
 
 #: kuma/static/js/wiki-edit.js:557
 msgid "saved"
-msgstr ""
+msgstr "সংরক্ষিত"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
-msgstr ""
+msgstr "নতুন ট্যাগ..."
 
 #: kuma/static/js/wiki.js:200
 msgid "How to read CSS syntax."
-msgstr ""
+msgstr "কিভাবে CSS সিনট্যাক্স পড়তে হয়।"
 
 #: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
@@ -170,15 +170,15 @@ msgstr ""
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
-msgstr ""
+msgstr "বিস্তারিত"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:38
 msgid "Select an attachment"
-msgstr ""
+msgstr "একটি সংযুক্তি নির্বাচন করুন"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-attachment/plugin.js:49
 msgid "No attachments available"
-msgstr ""
+msgstr "কোনো সংযুক্তি পাওয়া যায়নি"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
