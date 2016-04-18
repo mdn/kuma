@@ -27,7 +27,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('username', 'fullname', 'email',
                     'bio', 'website', 'revisions',
                     'date_joined', 'is_staff', 'is_active')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'date_joined')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'date_joined', 'groups')
     ordering = ('-date_joined',)
     search_fields = ('username', 'homepage', 'title', 'fullname',
                      'organization', 'location', 'bio', 'email', 'tags__name')
