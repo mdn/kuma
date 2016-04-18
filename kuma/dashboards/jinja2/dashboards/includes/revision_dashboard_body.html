@@ -4,10 +4,10 @@
     <table class="dashboard-table" width="100%">
         <thead>
             <tr>
-                <th class="dashboard-revision">Revision</th>
-                <th class="dashboard-title">Title</th>
-                <th class="dashboard-comment">Comment</th>
-                <th class="dashboard-author">Author{% if show_ips %} <button id="show_ips_btn">{{ _('Toggle IPs') }}</button>{% endif %}</th>
+                <th class="dashboard-revision">{{ _('Revision') }}</th>
+                <th class="dashboard-title">{{ _('Title') }}</th>
+                <th class="dashboard-comment">{{ _('Comment') }}</th>
+                <th class="dashboard-author">{{ _('Author') }}{% if show_ips %} <button id="show_ips_btn">{{ _('Toggle IPs') }}</button>{% endif %}</th>
                 {% if show_spam_submission %}
                 <th class="dashboard-spam">Akismet</th>
                 {% endif %}
