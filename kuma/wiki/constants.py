@@ -262,6 +262,11 @@ SPAM_SUBMISSION_REVISION_FIELDS = [
     'tags',
     'keywords',
 ]
+SPAM_OTHER_HEADERS = (  # Header to send that don't start with HTTP
+    'REMOTE_ADDR',
+    'REQUEST_URI',
+    'DOCUMENT_URI',
+)
 
 CODE_SAMPLE_MACROS = [
     'LiveSampleURL',

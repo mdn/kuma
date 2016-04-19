@@ -1,5 +1,6 @@
 import json
 import logging
+from difflib import ndiff
 
 import waffle
 from django import forms
@@ -9,6 +10,7 @@ from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.safestring import mark_safe
+from django.utils.six import string_types
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from taggit.utils import parse_tags
@@ -22,7 +24,8 @@ from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
                         SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG,
-                        SPAM_SUBMISSION_REVISION_FIELDS, SPAM_TRAINING_FLAG)
+                        SPAM_OTHER_HEADERS, SPAM_SUBMISSION_REVISION_FIELDS,
+                        SPAM_TRAINING_FLAG)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
                      RevisionIP, RevisionAkismetSubmission, valid_slug_parent)
@@ -68,6 +71,233 @@ MOVE_REQUIRED = _(u"Changing this document's slug requires "
 
 
 log = logging.getLogger('kuma.wiki.forms')
+
+
+class AkismetRevisionData(object):
+    """
+    Collect Akismet data at creation time or later.
+
+    This can be used in three different scenarios:
+    - A user is creating a Document
+    - A user is editing a Document
+    - A user created or edited a document in the past
+
+    Derived classes customize __init__ to gather data from the relevant
+    instances, and then .parameters will have the Akismet submission.
+    """
+
+    def __init__(self):
+        """Initialize the parameters."""
+        self.default_language = settings.WIKI_DEFAULT_LANGUAGE
+        self.parameters = {
+            'blog_charset': 'UTF-8',
+            'comment_type': 'wiki-revision'
+        }
+
+    def akismet_lang(self, language):
+        """
+        Convert a Django language name to an Akismet blog_lang identifier.
+        E.g.: "en-US" to "en_us"
+        """
+        return translation.to_locale(language).lower()
+
+    def content_from_form(self, cleaned_data):
+        """Create a combined content string from form data."""
+        parts = []
+        for field in SPAM_SUBMISSION_REVISION_FIELDS:
+            value = cleaned_data.get(field, u'')
+            if field == 'tags':
+                value = self.split_tags(value)
+            parts.append(value)
+        return u'\n'.join(parts)
+
+    def content_from_document(self, document):
+        """Create a combined content string from a document."""
+        parts = []
+        for field in SPAM_SUBMISSION_REVISION_FIELDS:
+            if field == 'comment':
+                value = u''
+            elif field == 'content':
+                value = document.current_revision.content
+            elif field == 'tags':
+                value = u'\n'.join(sorted(document.tags.names()))
+            else:
+                value = getattr(document, field, '')
+            parts.append(value)
+        return u'\n'.join(parts)
+
+    def content_from_revision(self, revision):
+        """Create a combined content string from a Revision."""
+        parts = []
+        for field in SPAM_SUBMISSION_REVISION_FIELDS:
+            value = getattr(revision, field) or u''
+            if field == 'tags':
+                value = self.split_tags(value)
+            parts.append(value)
+        return u'\n'.join(parts)
+
+    def set_blog(self, request):
+        """Set the blog parameter from the request object."""
+        self.parameters['blog'] = request.build_absolute_uri('/')
+
+    def set_blog_lang(self, language=None):
+        """
+        Set the blog_lang from a Django language name.
+
+        If the language is not English, then report that the content may be a
+        combination of the target language and untranslated English.
+        """
+        language = language or self.default_language
+        if language == self.default_language:
+            blog_lang = self.akismet_lang(language)
+        else:
+            blog_lang = '%s, %s' % (
+                self.akismet_lang(language),
+                self.akismet_lang(self.default_language))
+        self.parameters['blog_lang'] = blog_lang
+
+    def set_by_edit_request(self, request):
+        """
+        Add data from the content creator's request object.
+
+        Includes:
+        - The base blog address
+        - The author information
+        - Named HTTP headers
+        - Other HTTP headers, as modeled by Akismet's Wordpress plugin:
+        https://plugins.trac.wordpress.org/browser/akismet/trunk/class.akismet.php
+        """
+        self.set_blog(request)
+        self.set_comment_author(request.user)
+        meta = request.META
+        self.parameters.update({
+            'referrer': meta.get('HTTP_REFERER', ''),
+            'user_agent': meta.get('HTTP_USER_AGENT', ''),
+            'user_ip': meta.get('REMOTE_ADDR', ''),
+        })
+
+        for key, value in meta.items():
+            if not isinstance(value, string_types):
+                continue
+            if key.startswith('HTTP_COOKIE'):
+                continue
+            if key.startswith('HTTP_') or key in SPAM_OTHER_HEADERS:
+                self.parameters[key] = value
+
+    def set_comment_author(self, user):
+        """Set the comment author from a User object."""
+        self.parameters.update({
+            'comment_author': (user.fullname or user.get_full_name() or
+                               user.username),
+            'comment_author_email': user.email,
+        })
+
+    def set_content(self, new_content, existing_content=None):
+        """Set comment_content to the new and changed non-empty lines."""
+        existing_content = existing_content or u''
+        diff = ndiff(existing_content.splitlines(1), new_content.splitlines(1))
+        lines = []
+        for line in diff:
+            if line.startswith('+ '):
+                diff_content = line[2:].strip()
+                if diff_content:
+                    lines.append(diff_content)
+        self.parameters['comment_content'] = u'\n'.join(lines)
+
+    def set_permalink(self, document, request):
+        """Set the permalink for the Document."""
+        doc_url = document.get_absolute_url()
+        self.parameters['permalink'] = request.build_absolute_uri(doc_url)
+
+    def split_tags(self, tag_string):
+        """Turn '"Tag 2" "Tag 1"' into 'Tag 1\nTag 2'."""
+        if not tag_string:
+            return ''
+        else:
+            assert tag_string[0] == u'"'
+            assert tag_string[-1] == u'"'
+            return u'\n'.join(sorted(tag_string[1:-1].split(u'" "')))
+
+
+class AkismetNewDocumentData(AkismetRevisionData):
+    """Collect Akismet data for a user creating a new document."""
+
+    def __init__(self, request, cleaned_data, language=None):
+        """
+        Initialize from a form submission by the author.
+
+        Keyword Parameters:
+        request - the Request for the author
+        cleaned_data - the validated form data
+        language - the language of the revision being created
+        """
+        super(AkismetNewDocumentData, self).__init__()
+        self.set_by_edit_request(request)
+        self.set_blog_lang(language)
+        new_content = self.content_from_form(cleaned_data)
+        self.set_content(new_content)
+
+
+class AkismetEditDocumentData(AkismetRevisionData):
+    """Collect Akismet data for a user editing an existing document."""
+
+    def __init__(self, request, cleaned_data, document):
+        """
+        Initialize from a form submission by the author.
+
+        Keyword Parameters:
+        request - the Request for the author
+        cleaned_data - the validated form data
+        instance - the form instance, including the base Document
+        """
+        super(AkismetEditDocumentData, self).__init__()
+        self.set_by_edit_request(request)
+        self.set_blog_lang(document.locale)
+        self.set_permalink(document, request)
+        new_content = self.content_from_form(cleaned_data)
+        existing_content = self.content_from_document(document)
+        self.set_content(new_content, existing_content)
+
+
+class AkismetHistoricalData(AkismetRevisionData):
+    """Collect Akismet data from a historical revision."""
+
+    def __init__(self, revision, request=None):
+        """Initialize from a historical revision.
+
+        Keyword Parameters:
+        revision - the historical Revision
+        request - an optional request object
+        """
+        assert revision.id, "Must be a saved Revision."
+        assert revision.document_id, "Must be a Revision with a Document."
+        super(AkismetHistoricalData, self).__init__()
+        revision_ip = revision.revisionip_set.first()
+        if revision_ip:
+            self.parameters.update({
+                'user_ip': revision_ip.ip,
+                'user_agent': revision_ip.user_agent,
+                'referrer': revision_ip.referrer,
+            })
+        else:
+            self.parameters.update({
+                'user_ip': '0.0.0.0',
+                'user_agent': '',
+                'referrer': '',
+            })
+        document = revision.document
+        self.set_blog_lang(document.locale)
+        if request:
+            self.set_blog(request)
+            self.set_permalink(document, request)
+        self.set_comment_author(revision.creator)
+        new_content = self.content_from_revision(revision)
+        old_revision = revision.get_previous()
+        if old_revision:
+            old_content = self.content_from_revision(old_revision)
+        else:
+            old_content = None
+        self.set_content(new_content, old_content)
 
 
 class DocumentForm(forms.ModelForm):
@@ -138,14 +368,6 @@ class DocumentForm(forms.ModelForm):
         # any m2m data since we instantiated the doc
         self.save_m2m()
         return doc
-
-
-def author_from_user(user):
-    return user.fullname or user.get_full_name() or user.username
-
-
-def author_email_from_user(user):
-    return user.email
 
 
 class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
@@ -474,47 +696,23 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     def akismet_parameters(self):
         """
-        Returns a dict of parameters to pass to Akismet's submission
-        API endpoints. Uses the given form and form parameters to
-        build the dict.
+        Returns the parameters for Akismet's check-comment API endpoint.
 
-        Must follow the data used for retrieving a dict of this data
-        for a model instance in
-        ``RevisionAkismetSubmissionAdminForm.akismet_parameters`` method!
+        The form cleaning also saves the data into the instance, which will
+        cause future calls to return different data. The results during the
+        initial form cleaning are cached in ._akismet_data, and returned for
+        future calls, such as the unit tests.
         """
-        default_language = settings.WIKI_DEFAULT_LANGUAGE
-
-        # Try to get the language depending on source -- either the instance
-        # provided or the POST data. Fall back to the default defined in
-        # settings.
-        if self.instance and self.instance.pk and self.instance.document:
-            language = self.instance.document.locale or default_language
-        else:
-            language = self.data.get('locale', default_language)
-
-        # If language is not the default, include the default in case of
-        # partial translations. Also convert locale from 'en-US' to 'en_us'.
-        if language == default_language:
-            blog_lang = self.akismet_locale(language)
-        else:
-            blog_lang = '%s, %s' % (
-                self.akismet_locale(language),
-                self.akismet_locale(default_language))
-
-        content = u'\n'.join([self.cleaned_data.get(field, '')
-                              for field in SPAM_SUBMISSION_REVISION_FIELDS])
-
-        parameters = {
-            'blog_lang': blog_lang,
-            'blog_charset': 'UTF-8',
-            'comment_author': author_from_user(self.request.user),
-            'comment_author_email': author_email_from_user(self.request.user),
-            'comment_content': content,
-            'comment_type': 'wiki-revision',
-            'user_ip': self.request.META.get('REMOTE_ADDR', ''),
-            'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),
-            'referrer': self.request.META.get('HTTP_REFERER', ''),
-        }
+        if not getattr(self, '_akismet_data', None):
+            try:
+                document = self.instance.document
+            except ObjectDoesNotExist:
+                self._akismet_data = AkismetNewDocumentData(
+                    self.request, self.cleaned_data, self.data.get('locale'))
+            else:
+                self._akismet_data = AkismetEditDocumentData(
+                    self.request, self.cleaned_data, document)
+        parameters = self._akismet_data.parameters.copy()
         parameters.update(self.akismet_parameter_overrides())
         return parameters
 
@@ -598,53 +796,11 @@ class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
 
     def akismet_parameters(self):
         """
-        Returns a dict of parameters to pass to Akismet's submission
-        API endpoints.
-
-        Must follow the data used for retrieving a dict of this data
-        for a model instance in the ``RevisionForm.akismet_parameters``
-        method!
+        Returns parameter dict to pass to Akismet's submission API endpoints.
         """
-        return revision_akismet_parameters(self.cleaned_data['revision'])
-
-
-def revision_akismet_parameters(revision):
-    language = revision.document.locale or settings.WIKI_DEFAULT_LANGUAGE
-
-    if language == settings.WIKI_DEFAULT_LANGUAGE:
-        blog_lang = translation.to_locale(language).lower()
-    else:
-        blog_lang = '%s, %s' % (
-            translation.to_locale(language).lower(),
-            translation.to_locale(settings.WIKI_DEFAULT_LANGUAGE).lower())
-
-    content = u'\n'.join([getattr(revision, field, None) or ''
-                          for field in SPAM_SUBMISSION_REVISION_FIELDS])
-
-    parameters = {
-        'blog_lang': blog_lang,
-        'blog_charset': 'UTF-8',
-        'comment_author': author_from_user(revision.creator),
-        'comment_author_email': author_email_from_user(revision.creator),
-        'comment_content': content,
-        'comment_type': 'wiki-revision',
-    }
-
-    # get the stored revision IP if there is still one logged away
-    revision_ip = revision.revisionip_set.first()
-    if revision_ip is None:
-        parameters.update({
-            'user_ip': '0.0.0.0',
-            'user_agent': '',
-            'referrer': '',
-        })
-    else:
-        parameters.update({
-            'user_ip': revision_ip.ip,
-            'user_agent': revision_ip.user_agent,
-            'referrer': revision_ip.referrer,
-        })
-    return parameters
+        revision = self.cleaned_data['revision']
+        akismet_data = AkismetHistoricalData(revision, self.request)
+        return akismet_data.parameters
 
 
 class TreeMoveForm(forms.Form):
