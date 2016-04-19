@@ -24,10 +24,9 @@ def create_page_creators_group(apps, schema_editor):
 
     # Add existing unbanned users to Page Creators
     User = apps.get_model('users', 'User')
-    unbanned = (User.objects.annotate(ban_count=Count('bans'))
-                            .exclude(ban_count__gt=0)
-                            .values_list('id', flat=True))
-    group.user_set.add(*unbanned)
+    for user in User.objects.only('id'):
+        if not user.bans.exists():
+            user.groups.add(group)
 
 
 def delete_page_creators_group(apps, schema_editor):
