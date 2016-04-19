@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wiki', '0029_add_dsa_review_type_error'),
+        ('wiki', '0030_add_page_creators_group'),
     ]
 
     operations = [
