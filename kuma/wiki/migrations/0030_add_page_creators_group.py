@@ -10,7 +10,10 @@ def create_page_creators_group(apps, schema_editor):
     # Ensure wiki.add_document permission is created in a fresh database
     # https://code.djangoproject.com/ticket/23422#comment:20
     db_alias = schema_editor.connection.alias
-    emit_post_migrate_signal(2, False, 'default', db_alias)
+    emit_post_migrate_signal(verbosity=1,
+                             interactive=False,
+                             db=db_alias,
+                             created_models=[])
 
     # Grab the wiki.add_document permission
     Permission = apps.get_model('auth', 'Permission')
