@@ -1168,7 +1168,7 @@ class PageMoveTests(UserTestCase):
         ggc1.parent_topic = gc3
         ggc1.save()
 
-        ok_([c1, gc1, c2, gc2, gc3, ggc1] == top.get_descendants())
+        eq_([c1, gc1, c2, gc2, gc3, ggc1], top.get_descendants())
 
     @pytest.mark.move
     def test_circular_dependency(self):

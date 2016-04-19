@@ -7,6 +7,7 @@ from urlparse import urlparse
 
 import html5lib
 import newrelic.agent
+from django.db.models.functions import Lower
 from django.utils.translation import ugettext
 from html5lib.filters._base import Filter as html5lib_Filter
 from lxml import etree
@@ -496,8 +497,10 @@ class LinkAnnotationFilter(html5lib_Filter):
         for locale, slug_hrefs in needs_existence_check.items():
 
             existing_slugs = (Document.objects
-                                      .filter(locale=locale,
-                                              slug__in=slug_hrefs.keys())
+                                      .annotate(slug_lower=Lower('slug'))
+                                      .annotate(locale_lower=Lower('locale'))
+                                      .filter(locale_lower=locale,
+                                              slug_lower__in=slug_hrefs.keys())
                                       .values_list('slug', flat=True))
 
             # Remove the slugs that pass existence check.

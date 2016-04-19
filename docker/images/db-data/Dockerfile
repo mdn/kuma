@@ -1,4 +1,4 @@
 FROM busybox
 
-VOLUME /var/lib/mysql
+VOLUME /var/lib/postgresql
 CMD ["true"]

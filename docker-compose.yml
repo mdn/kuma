@@ -5,7 +5,7 @@ worker: &worker
     - ./:/app
   links:
     - memcached
-    - mysql
+    - postgres
     - elasticsearch
     - redis
   environment:
@@ -14,7 +14,7 @@ worker: &worker
     - PROTOCOL=http://
     # - DOMAIN=developer-local.allizom.org
     - DOMAIN=kuma.dev  # FIXME
-    - DATABASE_URL=mysql://kuma:kuma@mysql:3306/kuma
+    - DATABASE_URL=postgres://kuma:kuma@postgres/kuma
     - MEMCACHE_SERVERS=memcached:11211
     # - ALLOWED_HOSTS=developer-local.allizom.org
     - ALLOWED_HOSTS=kuma.dev  # FIXME
@@ -43,20 +43,21 @@ nginx:
 memcached:
   image: memcached
 
-mysql-data:
-  build: ./docker/images/mysql-data
+db-data:
+  build: ./images/db-data
   volumes:
-    - /var/lib/mysql
+    - /var/lib/postgresql
 
-mysql:
-  build: ./docker/images/mysql
+postgres:
+  image: postgres:9.4
   environment:
-    - MYSQL_ROOT_PASSWORD=docker
-    - MYSQL_USER=kuma
-    - MYSQL_PASSWORD=kuma
-    - MYSQL_DATABASE=kuma
+    - POSTGRES_USER=kuma
+    - POSTGRES_PASSWORD=kuma
+    - POSTGRES_DB=kuma
   volumes_from:
-    - mysql-data
+    - db-data
+  ports:
+    - "5432:5432"
 
 elasticsearch:
   image: elasticsearch:1.7

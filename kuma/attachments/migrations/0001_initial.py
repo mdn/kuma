@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
 import datetime
 import kuma.attachments.utils
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -24,7 +26,6 @@ class Migration(migrations.Migration):
             options={
                 'permissions': (('disallow_add_attachment', 'Cannot upload attachment'),),
             },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='AttachmentRevision',
@@ -41,9 +42,12 @@ class Migration(migrations.Migration):
                 ('mindtouch_old_id', models.IntegerField(help_text=b'ID for migrated MindTouch resource revision', unique=True, null=True, db_index=True)),
                 ('is_mindtouch_migration', models.BooleanField(default=False, help_text=b'Did this revision come from MindTouch?', db_index=True)),
                 ('attachment', models.ForeignKey(related_name='revisions', to='attachments.Attachment')),
+                ('creator', models.ForeignKey(related_name='created_attachment_revisions', to=settings.AUTH_USER_MODEL)),
             ],
-            options={
-            },
-            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='attachment',
+            name='current_revision',
+            field=models.ForeignKey(related_name='current_rev', to='attachments.AttachmentRevision', null=True),
         ),
     ]

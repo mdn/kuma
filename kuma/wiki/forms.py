@@ -337,10 +337,9 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
         if tags:
             for tag in parse_tags(tags):
-                # Note: The exact match query doesn't work correctly with
-                # MySQL with regards to case-sensitivity. If we move to
-                # Postgresql in the future this code may need to change.
-                doc_tag = (DocumentTag.objects.filter(name__exact=tag)
+                # Use case-insensitive exact match to find other tags that may
+                # be considered the same.
+                doc_tag = (DocumentTag.objects.filter(name__iexact=tag)
                                               .values_list('name', flat=True))
 
                 # Write a log we can grep to help find pre-existing duplicate

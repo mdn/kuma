@@ -1,5 +1,3 @@
-import collections
-
 from django.contrib.auth import get_user_model
 
 from kuma.core.jobs import KumaJob, GenerationJob
@@ -80,16 +78,20 @@ class DocumentContributorsJob(KumaJob):
         if not recent_creator_ids:
             return self.empty()
 
-        # then return the ordered results given the ID list, MySQL only syntax
-        select = collections.OrderedDict([
-            ('ordered_ids',
-             'FIELD(id,%s)' % ','.join(map(str, recent_creator_ids))),
-        ])
-        contributors = list(User.objects.filter(id__in=list(recent_creator_ids),
-                                                is_active=True)
-                                        .extra(select=select,
-                                               order_by=['ordered_ids'])
-                                        .values('id', 'username', 'email'))
+        # then return the ordered results given the ID list.
+        # Note: This is postgresql only syntax.
+        clauses = ' '.join(
+            ['WHEN id=%(id)s THEN %(order)s' % {'id': id, 'order': i}
+             for i, id in enumerate(recent_creator_ids)]
+        )
+        ordering = 'CASE %s END' % clauses
+        contributors = list(
+            User.objects.filter(id__in=list(recent_creator_ids),
+                                is_active=True)
+                        .extra(select={'ordering': ordering},
+                               order_by=('ordering',))
+                        .values('id', 'username', 'email')
+        )
         result = []
         for contributor in contributors:
             contributor['gravatar_34'] = gravatar_url(contributor['email'],
