@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import newrelic.agent
 
+from constance import config
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 
@@ -8,7 +9,8 @@ from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.core.decorators import never_cache, login_required, block_user_agents
 from kuma.core.urlresolvers import reverse
 
-from ..constants import (TEMPLATE_TITLE_PREFIX,
+from ..constants import (DEV_DOC_REQUEST_FORM,
+                         TEMPLATE_TITLE_PREFIX,
                          REVIEW_FLAG_TAGS_DEFAULT)
 from ..decorators import check_readonly, prevent_indexing
 from ..forms import DocumentForm, RevisionForm
@@ -30,6 +32,15 @@ def create(request):
     # Try to head off disallowed Template:* creation, right off the bat
     if not Document.objects.allows_add_by(request.user, initial_slug):
         raise PermissionDenied
+    # TODO: Integrate this into a new exception-handling middleware
+    if not request.user.has_perm('wiki.add_document'):
+        context = {
+            'reason': 'create-page',
+            'request_page_url': DEV_DOC_REQUEST_FORM,
+            'email_address': config.EMAIL_LIST_MDN_ADMINS
+        }
+        return render(request, '403-create-page.html', context=context,
+                      status=403)
 
     # if the initial slug indicates the creation of a new template
     is_template = initial_slug.startswith(TEMPLATE_TITLE_PREFIX)

@@ -26,10 +26,13 @@ def user(save=False, **kwargs):
     if 'username' not in kwargs:
         kwargs['username'] = get_random_string(length=15)
     password = kwargs.pop('password', 'password')
+    groups = kwargs.pop('groups', [])
     user = get_user_model()(**kwargs)
     user.set_password(password)
     if save:
         user.save()
+    if groups:
+        user.groups = groups
     return user
 
 

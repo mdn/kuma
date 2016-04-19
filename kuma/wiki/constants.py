@@ -270,3 +270,5 @@ CODE_SAMPLE_MACROS = [
     'LiveSampleLink',
     'FXOSUXLiveSampleEmbed',
 ]
+
+DEV_DOC_REQUEST_FORM = 'https://bugzilla.mozilla.org/form.doc'

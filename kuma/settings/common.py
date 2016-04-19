@@ -1232,7 +1232,11 @@ CONSTANCE_CONFIG = dict(
     RECAPTCHA_PRIVATE_KEY=(
         '',
         'ReCAPTCHA private key, leave empty to disable'
-    )
+    ),
+    EMAIL_LIST_MDN_ADMINS=(
+        'mdn-admins@mozilla.org',
+        'Email address to request admin intervention'
+    ),
 )
 
 KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'

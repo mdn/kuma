@@ -56,12 +56,14 @@ class BaseDocumentManager(models.Manager):
         """
         Determine whether the user can create a document with the given
         slug. Mainly for enforcing Template: editing permissions
+
+        TODO: Convert to a method that raises exceptions that are handled
+        by an exception middleware.
         """
         if (slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.add_template_document')):
             return False
-        # NOTE: We could enforce wiki.add_document here, but it's implicitly
-        # assumed everyone is allowed.
+        # TODO: Add wiki.add_document check
         return True
 
     def filter_for_list(self, locale=None, tag=None, tag_name=None,

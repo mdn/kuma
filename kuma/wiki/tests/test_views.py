@@ -32,7 +32,8 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase, user
 
-from . import (WikiTestCase, create_document_editor_user, create_document_tree,
+from . import (WikiTestCase, create_document_editor_group,
+               create_document_editor_user, create_document_tree,
                create_template_test_users, document, make_translation,
                new_document_data, normalize_html, revision)
 from ..content import get_seo_description
@@ -508,6 +509,15 @@ class PermissionTests(UserTestCase, WikiTestCase):
                         eq_(403, resp.status_code,
                             "%s should not be able to %s %s" %
                             (user, msg[is_add], slug))
+
+    def test_add_document_permission(self):
+        newuser = user(save=True, username='newuser', password='password')
+        assert not newuser.has_perm('wiki.add_document')
+        url = reverse('wiki.create', locale='en-US')
+        assert self.client.login(username='newuser',
+                                 password='password'), 'Failed to login.'
+        response = self.client.get(url, slug='NewPage')
+        assert response.status_code == 403
 
 
 class ConditionalGetTests(UserTestCase, WikiTestCase):
@@ -3782,6 +3792,7 @@ class APITests(UserTestCase, WikiTestCase):
         self.user = user(username=self.username,
                          email=self.email,
                          password=self.password,
+                         groups=[create_document_editor_group()],
                          save=True)
 
         self.key = Key(user=self.user, description='Test Key 1')
