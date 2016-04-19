@@ -4,10 +4,13 @@
 
 {% block reason %}
 <p class="notice">
-  {% trans %}
+  {% trans email_link=(
+  'mailto:{email}?subject=Page Creation permission&'
+  'body=My username is {username}. I want the page creation permission on {host} because...'.format(email=email_address, username=request.user.username, host=request.get_host() )) %}
+
   Creating a new page is a restricted action.
   To request a new page, please <a href="{{ request_page_url }}">file a bug</a>.
-  If you need permission to create new pages, please <a href="{{ request_access_url }}">contact us</a>.
+  If you need permission to create new pages, please <a href="{{ email_link }}">contact us</a>.
   {% endtrans %}
 </p>
 

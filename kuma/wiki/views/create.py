@@ -34,18 +34,10 @@ def create(request):
         raise PermissionDenied
     # TODO: Integrate this into a new exception-handling middleware
     if not request.user.has_perm('wiki.add_document'):
-        email_url = (
-            'mailto:%s?'
-            'subject=Page Creation permission&'
-            'body=My username is %s.'
-            ' I want the page creation permission on %s because...'
-        ) % (config.EMAIL_LIST_MDN_ADMINS,
-             request.user.username,
-             request.get_host())
         context = {
             'reason': 'create-page',
             'request_page_url': DEV_DOC_REQUEST_FORM,
-            'request_access_url': email_url
+            'email_address': config.EMAIL_LIST_MDN_ADMINS
         }
         return render(request, '403-create-page.html', context=context,
                       status=403)
