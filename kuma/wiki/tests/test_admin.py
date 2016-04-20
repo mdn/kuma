@@ -15,8 +15,9 @@ from kuma.spam.akismet import Akismet
 from kuma.spam.constants import HAM_URL, SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.users.tests import UserTestCase
 from kuma.users.models import User
-from kuma.wiki.admin import DocumentSpamAttemptAdmin
-from kuma.wiki.models import DocumentSpamAttempt, RevisionAkismetSubmission
+from kuma.wiki.admin import DocumentSpamAttemptAdmin, SUBMISSION_NOT_AVAILABLE
+from kuma.wiki.models import (DocumentSpamAttempt, RevisionAkismetSubmission,
+                              RevisionIP)
 from kuma.wiki.tests import document, revision
 
 
@@ -94,13 +95,10 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
 
     def test_submitted_data(self):
         dsa = DocumentSpamAttempt(data=None)
-        expected = self.admin.SUBMISSION_NOT_AVAILABLE
-        assert self.admin.submitted_data(dsa) == expected
-        dsa.data = '{"foo": "bar"}'
-        assert self.admin.submitted_data(dsa) == (
-            '{\n'
-            '    "foo": "bar"\n'
-            '}')
+        assert self.admin.submitted_data(dsa) == SUBMISSION_NOT_AVAILABLE
+        data = '{"foo": "bar"}'
+        dsa.data = data
+        assert self.admin.submitted_data(dsa) == data
 
     def assert_needs_review(self):
         dsa = DocumentSpamAttempt.objects.get()
@@ -312,3 +310,66 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
             'Orange'
         )
         self.assertEqual(submitted_data['comment_content'], expected_content)
+
+    def test_create_no_revision(self):
+        url = urlparams(
+            reverse('admin:wiki_revisionakismetsubmission_add'),
+            type='ham',
+        )
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content)
+
+    def test_view_change_existing(self):
+        admin = User.objects.get(username='admin')
+        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
+        flag.users.add(admin)
+        revision = admin.created_revisions.all()[0]
+        submission = RevisionAkismetSubmission.objects.create(
+            sender=admin, revision=revision, type='ham')
+
+        self.client.login(username='admin', password='testpass')
+        url = reverse('admin:wiki_revisionakismetsubmission_change',
+                      args=(submission.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content)
+
+    def test_view_change_with_data(self):
+        admin = User.objects.get(username='admin')
+        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
+        flag.users.add(admin)
+        revision = admin.created_revisions.all()[0]
+        submission = RevisionAkismetSubmission.objects.create(
+            sender=admin, revision=revision, type='spam')
+        RevisionIP.objects.create(revision=revision,
+                                  data='{"content": "spam"}')
+
+        self.client.login(username='admin', password='testpass')
+        url = reverse('admin:wiki_revisionakismetsubmission_change',
+                      args=(submission.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('{&quot;content&quot;: &quot;spam&quot;}',
+                      response.content)
+
+    def test_view_changelist_existing(self):
+        admin = User.objects.get(username='admin')
+        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
+        flag.users.add(admin)
+        revision = admin.created_revisions.all()[0]
+        RevisionAkismetSubmission.objects.create(sender=admin,
+                                                 revision=revision,
+                                                 type='ham')
+        RevisionAkismetSubmission.objects.create(sender=admin,
+                                                 type='ham')
+
+        self.client.login(username='admin', password='testpass')
+        url = reverse('admin:wiki_revisionakismetsubmission_changelist')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        revision_url = reverse('admin:wiki_revision_change',
+                               args=[revision.id])
+        self.assertIn(revision_url, response.content)
+        self.assertIn('None', response.content)

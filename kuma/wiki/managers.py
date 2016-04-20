@@ -235,7 +235,7 @@ class RevisionIPManager(models.Manager):
         old_rev_ips = self.filter(revision__created__lte=cutoff_date)
         old_rev_ips.delete()
 
-    def log(self, revision, headers):
+    def log(self, revision, headers, data):
         """
         Records the IP and some more data for the given revision and the
         request headers.
@@ -245,4 +245,5 @@ class RevisionIPManager(models.Manager):
             ip=headers.get('REMOTE_ADDR'),
             user_agent=headers.get('HTTP_USER_AGENT', ''),
             referrer=headers.get('HTTP_REFERER', ''),
+            data=data
         )
