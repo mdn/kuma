@@ -17,6 +17,9 @@ import sys
 from textwrap import dedent
 from optparse import OptionParser
 
+opts = None
+args = None
+
 #
 # Whenever a new table is created, add appropriate steps to anonymize.sql and
 # then add the table here.  anonymize.sql may be run independantly, instead of
@@ -38,7 +41,7 @@ from optparse import OptionParser
 # Add to TABLES_TO_DUMP
 # Add a comment to anonymize.sql so future devs know you considered the table
 #
-TABLES_TO_DUMP=[x.strip() for x in """
+TABLES_TO_DUMP = [x.strip() for x in """
     account_emailaddress
     account_emailconfirmation
     attachments_attachment
@@ -107,15 +110,18 @@ TABLES_TO_DUMP=[x.strip() for x in """
 
 
 def print_info(s):
-    if not opts.quiet: print s
+    if opts and not opts.quiet:
+        print s
 
 
 def print_debug(s):
-    if not opts.quiet and opts.debug: print s
+    if opts and (not opts.quiet and opts.debug):
+        print s
 
 
 class NotFound(Exception):
     pass
+
 
 def sysprint(command):
     """ Helper to print all system commands in debug mode """
@@ -222,8 +228,8 @@ def main():
     if opts.socket:
         mysql_conn = '-u%(user)s %(password)s -S%(socket)s' % dict(
             user=opts.user,
-             password=opts.password and ('-p%s' % opts.password) or '',
-             socket=opts.socket,
+            password=opts.password and ('-p%s' % opts.password) or '',
+            socket=opts.socket,
         )
     else:
         mysql_conn = '-u%(user)s %(password)s -h%(host)s' % dict(
@@ -243,57 +249,63 @@ def main():
     # https://dev.mysql.com/doc/mysql-utilities/1.3/en/mysqldbcopy.html
     if not opts.skip_input_dump and not opts.input:
         print_info("Dumping input DB to %s" % input_dump_fn)
-        dump_cmd = ('mysqldump %(mysql_conn)s %(input_db)s %(tables)s | '
-                    'gzip > %(input_dump_fn)s' % dict(
-            mysql_conn=mysql_conn,
-            input_db=input_db, tables=' '.join(TABLES_TO_DUMP),
-            input_dump_fn=input_dump_fn
-        ))
-        print_debug('\t%s' % dump_cmd)
-        sysprint(dump_cmd)
+        cmd_fmt = ('mysqldump %(mysql_conn)s %(input_db)s %(tables)s | '
+                   'gzip > %(input_dump_fn)s')
+        cmd_params = {'mysql_conn': mysql_conn,
+                      'input_db': input_db,
+                      'tables': ' '.join(TABLES_TO_DUMP),
+                      'input_dump_fn': input_dump_fn}
+        cmd = cmd_fmt % cmd_params
+        print_debug('\t%s' % cmd)
+        sysprint(cmd)
 
     temp_db = '%s_anontmp_%s' % (input_db, now)
 
     if not opts.skip_temp_create:
         print_info('Creating temporary DB %s' % temp_db)
-        sysprint(('mysql %(mysql_conn)s -e'
-                  '"DROP DATABASE IF EXISTS %(temp_db)s;"') %
-                  dict(mysql_conn=mysql_conn, temp_db=temp_db))
-
-        sysprint('mysqladmin %(mysql_conn)s create %(temp_db)s' %
-                  dict(mysql_conn=mysql_conn, temp_db=temp_db))
+        cmd_fmt = ('mysql %(mysql_conn)s'
+                   ' -e "DROP DATABASE IF EXISTS %(temp_db)s;"')
+        cmd_params = {'mysql_conn': mysql_conn,
+                      'temp_db': temp_db}
+        sysprint(cmd_fmt % cmd_params)
+        cmd_fmt = 'mysqladmin %(mysql_conn)s create %(temp_db)s'
+        sysprint(cmd_fmt % cmd_params)
 
     if not opts.skip_temp_import:
         print_info('Importing the input dump into the temporary DB')
-        sysprint('cat %(input_dump_fn)s | gzip -dc | mysql %(mysql_conn)s '
-                  '%(temp_db)s' % dict(
-            input_dump_fn=input_dump_fn, mysql_conn=mysql_conn,
-            temp_db=temp_db
-        ))
+        cmd_fmt = ('cat %(input_dump_fn)s | gzip -dc | mysql %(mysql_conn)s '
+                   '%(temp_db)s')
+        cmd_params = {'input_dump_fn': input_dump_fn,
+                      'mysql_conn': mysql_conn,
+                      'temp_db': temp_db}
+        sysprint(cmd_fmt % cmd_params)
 
     if not opts.skip_anonymize:
         anon_sql_fn = os.path.join(base_dir, 'anonymize.sql')
         print_info('Applying %s to the temporary DB' % anon_sql_fn)
-        sysprint('cat %(anon_sql_fn)s | mysql %(mysql_conn)s '
-                  '%(temp_db)s' % dict(
-            anon_sql_fn=anon_sql_fn, mysql_conn=mysql_conn,
-            temp_db=temp_db
-        ))
+        cmd_fmt = 'cat %(anon_sql_fn)s | mysql %(mysql_conn)s %(temp_db)s'
+        cmd_params = {'anon_sql_fn': anon_sql_fn,
+                      'mysql_conn': mysql_conn,
+                      'temp_db': temp_db}
+        sysprint(cmd_fmt % cmd_params)
 
     if not opts.skip_output_dump:
         print_info("Dumping temporary DB to %s" % output_dump_fn)
-        dump_cmd = ('mysqldump %(mysql_conn)s %(temp_db)s | '
-                    'gzip > %(output_dump_fn)s' % dict(
-            mysql_conn=mysql_conn, temp_db=temp_db,
-            output_dump_fn=output_dump_fn
-        ))
-        print_debug('\t%s' % dump_cmd)
-        sysprint(dump_cmd)
+        cmd_fmt = ('mysqldump %(mysql_conn)s %(temp_db)s | '
+                   'gzip > %(output_dump_fn)s')
+        cmd_params = {'mysql_conn': mysql_conn,
+                      'temp_db': temp_db,
+                      'output_dump_fn': output_dump_fn}
+        cmd = cmd_fmt % cmd_params
+        print_debug('\t%s' % cmd)
+        sysprint(cmd)
 
     if not opts.skip_drop_temp_db:
         print_info("Dropping temporary db %s" % temp_db)
-        sysprint('mysqladmin %(mysql_conn)s -f drop %(temp_db)s' %
-                  dict(mysql_conn=mysql_conn, temp_db=temp_db))
+        cmd_fmt = 'mysqladmin %(mysql_conn)s -f drop %(temp_db)s'
+        cmd_params = {'mysql_conn': mysql_conn,
+                      'temp_db': temp_db}
+        sysprint(cmd_fmt % cmd_params)
 
     if not opts.skip_delete_input and not opts.input:
         print_info('Deleting input DB dump %s' % input_dump_fn)
