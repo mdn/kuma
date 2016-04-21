@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-04-21 19:15+0000\n"
+"PO-Revision-Date: 2016-04-21 19:24+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -1165,11 +1165,11 @@ msgstr "开始"
 
 #: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
-msgstr "文法复审"
+msgstr "文法复核"
 
 #: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
-msgstr "技术审核"
+msgstr "技术复核"
 
 #: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
@@ -2580,11 +2580,11 @@ msgstr "Wiki"
 
 #: kuma/wiki/constants.py:207 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
-msgstr "技术审核 - 代码范例、API 或技术"
+msgstr "技术复核 - 代码范例、API 或技术"
 
 #: kuma/wiki/constants.py:208 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
-msgstr "文法 - 措辞、语法和内容"
+msgstr "文法 - 措辞、语法或内容"
 
 #: kuma/wiki/constants.py:213
 msgid "Localization in progress - not completely translated yet."
@@ -2626,20 +2626,20 @@ msgstr "MDN 文档中标签为 %s 的文档的最近更新"
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
-msgstr "需要审核的 MDN 文档"
+msgstr "需要复核的 MDN 文档"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr "最近变更而需要审核的 MDN 文档"
+msgstr "最近变更而需要复核的 MDN 文档"
 
 #: kuma/wiki/feeds.py:189
 #, python-format
 msgid "MDN documents for %s review"
-msgstr "%s 审核的 MDN 文档"
+msgstr "需 %s 复核的 MDN 文档"
 
 #: kuma/wiki/feeds.py:193
 msgid "MDN documents for review"
-msgstr "供审核的 MDN 文档"
+msgstr "需复核的 MDN 文档"
 
 #: kuma/wiki/feeds.py:223
 #, python-format
@@ -2822,7 +2822,7 @@ msgstr "评论:"
 
 #: kuma/wiki/forms.py:450
 msgid "Tag this revision for review?"
-msgstr "是否标记这个版本供审核？"
+msgstr "标记此版本需要复核？"
 
 #: kuma/wiki/forms.py:457
 msgid "Tag this revision for localization?"
@@ -2866,11 +2866,11 @@ msgstr "附件 %(attachment_id)s 不能多次附加到文档 %(document_id)s"
 
 #: kuma/wiki/models.py:1542
 msgid "Review Tag"
-msgstr "审核标签"
+msgstr "复核标签"
 
 #: kuma/wiki/models.py:1543
 msgid "Review Tags"
-msgstr "审核标签"
+msgstr "复核标签"
 
 #: kuma/wiki/models.py:1549
 msgid "Localization Tag"
@@ -2941,11 +2941,11 @@ msgstr "文档（可选）"
 
 #: kuma/wiki/models.py:1933
 msgid "reviewed"
-msgstr "审核于"
+msgstr "复核于"
 
 #: kuma/wiki/models.py:1944
 msgid "Needs Review"
-msgstr "需要审核"
+msgstr "需要复核"
 
 #: kuma/wiki/models.py:1945
 msgid "Ham / False Positive"
@@ -2957,7 +2957,7 @@ msgstr "已确认为垃圾信息"
 
 #: kuma/wiki/models.py:1947
 msgid "Review Unavailable"
-msgstr "审核不可用"
+msgstr "复核不可用"
 
 #: kuma/wiki/models.py:1948
 msgid "Akismet Error"
@@ -2965,7 +2965,7 @@ msgstr "Akismet 错误"
 
 #: kuma/wiki/models.py:1953
 msgid "Review of Akismet's classification as spam"
-msgstr "Akismet 的审核分类为垃圾信息"
+msgstr "Akismet 的检查分类为垃圾信息"
 
 #: kuma/wiki/models.py:1960
 msgid "Staff reviewer"
@@ -3188,14 +3188,14 @@ msgstr ""
 msgid ""
 "This article needs a technical review. <a href=\"%(url)s\">How you can "
 "help.</a>"
-msgstr "这篇文章需要技术审查。<a href=\"%(url)s\">如何帮忙。</a>"
+msgstr "这篇文章需要技术复核。<a href=\"%(url)s\">如何帮忙。</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid ""
 "This article needs an editorial review. <a href=\"%(url)s\">How you can "
 "help.</a>"
-msgstr "这篇文章需要文法审查。<a href=\"%(url)s\">如何帮忙。</a>"
+msgstr "这篇文章需要文法复核。<a href=\"%(url)s\">如何帮忙。</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:284
 #, python-format
@@ -3233,7 +3233,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:323
 msgid "This article doesn't have approved content yet."
-msgstr "本文章目前没有任何审核通过的内容。"
+msgstr "这篇文章目前还没有已复核的内容。"
 
 #: kuma/wiki/jinja2/wiki/document.html:333
 msgid "Document Tags and Contributors"
@@ -3262,7 +3262,7 @@ msgid ""
 "Please review the differences between your changes and the changes saved "
 "since you started editing. You may save again, but try to resolve any "
 "conflicts by hand so that the changes made since you started are not lost."
-msgstr "请重新查看你的修改与你修改前的不同。你可以重新保存，但是请试着去手动解决所有的冲突以保证你所作的修改没有遗漏"
+msgstr "请仔细查看你的修改与在你的修改保存前的保存的修改。你可以重新保存，但请试着手动解决所有冲突，保证在你开始编辑后出现的修改没有被遗漏。"
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
@@ -3411,7 +3411,7 @@ msgstr "当前的网址缩略名："
 
 #: kuma/wiki/jinja2/wiki/move.html:66
 msgid "Preview URL:"
-msgstr "预览 URL:"
+msgstr "预览网址："
 
 #: kuma/wiki/jinja2/wiki/move.html:74
 msgid "New Slug:"
@@ -3459,7 +3459,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
-msgstr "这个是一个未保存文档的预览"
+msgstr "这个是一个未保存文档的预览。"
 
 #: kuma/wiki/jinja2/wiki/revision.html:2
 #, python-format
@@ -3648,7 +3648,7 @@ msgstr "您现在已经订阅了 %(title)s 的编辑。"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "This article needs these reviews:"
-msgstr "这篇文章需要如下审查："
+msgstr "这篇文章需要如下复核："
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
@@ -3895,7 +3895,7 @@ msgstr "放弃"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr "需要审核吗？"
+msgstr "需要复核吗？"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
@@ -3998,20 +3998,20 @@ msgstr "没有文章"
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
 msgid "Documents for %(tag)s review"
-msgstr "标记为 %(tag)s 审核的文档"
+msgstr "标记为 %(tag)s 复核的文档"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr "待审文档"
+msgstr "待复核文档"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr "需要审核的文章标记为：%(tag)s"
+msgstr "需要复核的文章：%(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
-msgstr "所有需要审核的文章"
+msgstr "所有需要复核的文章"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:23
 #, python-format
@@ -4192,7 +4192,7 @@ msgstr "导入数据失败：%(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
-msgstr "文档已经被编辑过；请重新审核。"
+msgstr "文档已经被编辑；请重新复核。"
 
 #: kuma/wiki/views/translate.py:72
 msgid "You cannot translate this document."
