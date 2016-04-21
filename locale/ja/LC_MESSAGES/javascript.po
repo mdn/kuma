@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-01-09 00:49+0000\n"
+"PO-Revision-Date: 2016-04-21 18:57+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ja\n"
@@ -133,11 +133,11 @@ msgstr "古い表を表示"
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "草稿を保存"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "自動保存を有効化"
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
@@ -157,28 +157,27 @@ msgstr "草稿を削除"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "復元された内容"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "草稿"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "公開済み"
 
 #: kuma/static/js/wiki-edit.js:622
-#, fuzzy
 msgid "discarded"
-msgstr "草稿を削除"
+msgstr "破棄されました"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "自動保存が有効化されました。"
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "自動保存が無効化されました。"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -193,7 +192,8 @@ msgid "Search Stack Overflow"
 msgstr "Stack Overflow を検索"
 
 #: kuma/static/js/wiki.js:677
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "お使いのブラウザは MathML に対応していません。代わりに CSS フォールバックを表示します。"
 
 #: kuma/static/js/wiki.js:892
@@ -208,7 +208,8 @@ msgstr "添付ファイルを選択"
 msgid "No attachments available"
 msgstr "表示可能な添付ファイルはありません"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "添付ファイル"
 
@@ -228,7 +229,8 @@ msgstr "リダイレクトを作成"
 msgid "MDN Redirect"
 msgstr "MDN リダイレクト"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "ドキュメント"
 
@@ -326,5 +328,10 @@ msgstr "既定値"
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "書きかけのドラフトがあります。<a href=\"\" class=\"restoreLink\">ドラフトの内容を復元する</a> か <a href=\"\" class=\"discardLink\">ドラフトを破棄</a> できます。"
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "書きかけのドラフトがあります。<a href=\"\" class=\"restoreLink\">ドラフトの内容を復元する</a> か <a "
+#~ "href=\"\" class=\"discardLink\">ドラフトを破棄</a> できます。"
