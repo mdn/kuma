@@ -92,6 +92,7 @@ TABLES_TO_DUMP=[x.strip() for x in """
     waffle_switch
     wiki_document
     wiki_documentdeletionlog
+    wiki_documentspamattempt
     wiki_documenttag
     wiki_documentzone
     wiki_editortoolbar
