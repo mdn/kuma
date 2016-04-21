@@ -306,12 +306,13 @@ if __name__ == '__main__':
     try:
         main()
     except subprocess.CalledProcessError as e:
-        if e.retcode < 0:
-            error = "Command was terminated by signal"
-            retcode = -e.retcode
+        retcode = e.returncode
+        if retcode < 0:
+            retcode = -retcode
+            headline = "Command was terminated by signal %s" % retcode
         else:
-            error = "Command errored with code %s" % e.retcode
-            retcode = e.retcode
+            headline = "Command errored with code %s" % retcode
+        error = '%s Output:\n%s' % (headline, e.output)
     except (NotFound, OSError) as e:
         error = "Command failed: %s" % e
         retcode = 127
