@@ -46,7 +46,6 @@ TABLES_TO_DUMP=[x.strip() for x in """
     attachments_documentattachment
     auth_group
     auth_group_permissions
-    auth_message
     auth_permission
     auth_user
     auth_user_groups
@@ -58,7 +57,6 @@ TABLES_TO_DUMP=[x.strip() for x in """
     constance_config
     core_ipban
     django_admin_log
-    django_cache
     django_content_type
     django_migrations
     django_session
@@ -82,8 +80,6 @@ TABLES_TO_DUMP=[x.strip() for x in """
     socialaccount_socialapp
     socialaccount_socialapp_sites
     socialaccount_socialtoken
-    tagging_tag
-    tagging_taggeditem
     taggit_tag
     taggit_taggeditem
     tidings_watch
