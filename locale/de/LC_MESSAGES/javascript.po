@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-01-08 20:31+0000\n"
+"PO-Revision-Date: 2016-04-21 20:34+0000\n"
 "Last-Translator: Michael Köhler <michael.koehler1@gmx.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: de\n"
@@ -133,11 +133,11 @@ msgstr "Alte Tabelle anzeigen."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "Entwurf speichern"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "Automatisches Speichern aktivieren."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
@@ -157,28 +157,27 @@ msgstr "Entwurf verwerfen"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "wiederhergestellt"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "Entwurf"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "veröffentlicht"
 
 #: kuma/static/js/wiki-edit.js:622
-#, fuzzy
 msgid "discarded"
-msgstr "Entwurf verwerfen"
+msgstr "verworfen"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "Automatisches Speichern aktiviert."
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "Automatisches Speichern deaktiviert."
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -193,8 +192,11 @@ msgid "Search Stack Overflow"
 msgstr "Stack Overflow durchsuchen"
 
 #: kuma/static/js/wiki.js:677
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Ihr Browser unterstützt kein MathML. Stattdessen wurde eine CSS-Alternative verwendet."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Ihr Browser unterstützt kein MathML. Stattdessen wurde eine CSS-Alternative "
+"verwendet."
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
@@ -208,7 +210,8 @@ msgstr "Wählen Sie einen Anhang aus"
 msgid "No attachments available"
 msgstr "Keine Anhänge verfügbar"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Anhänge"
 
@@ -228,7 +231,8 @@ msgstr "Eine Weiterleitung einrichten"
 msgid "MDN Redirect"
 msgstr "MDN-Weiterleitung"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
@@ -326,5 +330,11 @@ msgstr "Standard"
 #~ msgid "Demo Studio"
 #~ msgstr "Demo-Studio"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "Sie haben einen Entwurf in Arbeit. <a href=\"\" class=\"restoreLink\">Laden Sie den Inhalt des Entwurfs</a> oder <a href=\"\" class=\"discardLink\">verwerfen Sie den Entwurf</a>."
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "Sie haben einen Entwurf in Arbeit. <a href=\"\" class=\"restoreLink\">Laden "
+#~ "Sie den Inhalt des Entwurfs</a> oder <a href=\"\" "
+#~ "class=\"discardLink\">verwerfen Sie den Entwurf</a>."
