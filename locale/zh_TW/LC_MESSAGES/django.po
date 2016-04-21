@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-04-21 16:04+0000\n"
+"PO-Revision-Date: 2016-04-21 16:08+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
@@ -3024,6 +3024,8 @@ msgid ""
 "some good edits to existing pages.</li> <li>Have been contributing to the "
 "site for a while.</li> </ul>"
 msgstr ""
+"<p>做到下面這些事情比較有可能取得建立新頁面的權限:</p><ul><li>告訴我們您的 MDN "
+"帳號。</li><li>告訴我們您為什麼要建立新頁面（是要幫新功能寫文件嗎？什麼功能？您想要加入什麼詞彙嗎？什麼詞彙？）。</li><li>對現有頁面做了優良的修改。</li><li>已對這個網站貢獻過一陣子。</li></ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3211,11 +3213,11 @@ msgid ""
 msgstr "此文件需要技術審查。<a href=\"%(url)s\">看看您能幫什麼忙。</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:276
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This article needs an editorial review. <a href=\"%(url)s\">How you can "
 "help.</a>"
-msgstr "此文件需要編輯審查。"
+msgstr "此文件需要編輯審查。<a href=\"%(url)s\">看看您能幫什麼忙。</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:284
 #, python-format
@@ -3325,11 +3327,10 @@ msgid "Minutes"
 msgstr "分鐘"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
-#, fuzzy
 msgid ""
 "Find the translation source with the lookup below and then click "
 "\"Publish.\""
-msgstr "以下方查找表尋找翻譯來源，再點擊「儲存變更」。"
+msgstr "於下方尋找翻譯來源，再點擊「發布」。"
 
 #: kuma/wiki/jinja2/wiki/edit.html:147
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:62
@@ -3667,9 +3668,8 @@ msgid "You are subscribed to edits on: %(title)s."
 msgstr "您已訂閱: %(title)s 的編輯。"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
-#, fuzzy
 msgid "This article needs these reviews:"
-msgstr "此文件需要技術審查。"
+msgstr "此文件需要下列審查:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
@@ -3836,9 +3836,8 @@ msgid "Need Help?"
 msgstr "需要幫忙嗎？"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
-#, fuzzy
 msgid "Editor Guide"
-msgstr "編輯"
+msgstr "編輯指南"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
@@ -3909,14 +3908,12 @@ msgid "Discard changes and create a new document?"
 msgstr "是否忽略變更並建立新文件？"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
-#, fuzzy
 msgid "Publish and Keep Editing"
-msgstr "儲存並繼續編輯"
+msgstr "發布並繼續編輯"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
-#, fuzzy
 msgid "Discard"
-msgstr "放棄 Demo"
+msgstr "捨棄"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
@@ -3949,12 +3946,12 @@ msgstr ""
 "指南，以進一步了解「適當內容」之定義。"
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "If you believe you’ve received this message by mistake, please save a draft "
 "of your content and <a href=\"%(admin_email)s\"> contact the site "
 "administrators</a>."
-msgstr "若您認為自己不該收到此一訊息，請 <a href=\"%(admin_email)s\">聯絡網站管理員</a>。"
+msgstr "若您認為您不該收到此訊息，請儲存內容的草稿，並 <a href=\"%(admin_email)s\">聯絡網站管理員</a>。"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -3971,9 +3968,8 @@ msgid "Slug in %(locale)s:"
 msgstr "%(locale)s 版 Slug:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
-#, fuzzy
 msgid "Find the translation source with the lookup above and then click \"Save\"."
-msgstr "以上方查找表尋找翻譯來源，再點擊「儲存變更」。"
+msgstr "在上面尋找翻譯來源，然後點擊「儲存」。"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
