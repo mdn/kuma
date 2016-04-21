@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-11 15:58-0800\n"
+"POT-Creation-Date: 2016-04-21 07:33-0700\n"
 "PO-Revision-Date: 2016-01-08 20:31+0000\n"
 "Last-Translator: Michael Köhler <michael.koehler1@gmx.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,25 +131,54 @@ msgstr "Gemeldet. Danke!"
 msgid "Show old table."
 msgstr "Alte Tabelle anzeigen."
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:401
+msgid "Save Draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:406
+msgid "Enable autosave."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
 msgstr "[unbekanntes Datum]"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
 msgstr "Sie haben einen Entwurf vom:"
 
-#: kuma/static/js/wiki-edit.js:404
+#: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
 msgstr "Inhalt des Entwurfs wiederherstellen"
 
-#: kuma/static/js/wiki-edit.js:405
+#: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
 msgstr "Entwurf verwerfen"
 
-#: kuma/static/js/wiki-edit.js:557
-msgid "saved"
-msgstr "Gespeichert"
+#: kuma/static/js/wiki-edit.js:442
+msgid "restored"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:571
+msgid "Draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:618
+msgid "published"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:622
+#, fuzzy
+msgid "discarded"
+msgstr "Entwurf verwerfen"
+
+#: kuma/static/js/wiki-edit.js:660
+msgid "Autosave enabled."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:667
+msgid "Autosave disabled."
+msgstr ""
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -290,6 +319,9 @@ msgstr "Die eingegebene URL scheint ungültig zu sein"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Standard"
+
+#~ msgid "saved"
+#~ msgstr "Gespeichert"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Demo-Studio"

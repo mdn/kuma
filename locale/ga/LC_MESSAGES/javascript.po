@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mdn-javascript\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-11 15:58-0800\n"
+"POT-Creation-Date: 2016-04-21 07:33-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,24 +128,52 @@ msgstr ""
 msgid "Show old table."
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:401
+msgid "Save Draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:406
+msgid "Enable autosave."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:404
+#: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:405
+#: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:557
-msgid "saved"
+#: kuma/static/js/wiki-edit.js:442
+msgid "restored"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:571
+msgid "Draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:618
+msgid "published"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:622
+msgid "discarded"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:660
+msgid "Autosave enabled."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:667
+msgid "Autosave disabled."
 msgstr ""
 
 #: kuma/static/js/wiki-tags-edit.js:48

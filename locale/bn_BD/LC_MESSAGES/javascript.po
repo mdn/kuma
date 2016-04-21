@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-11 15:58-0800\n"
+"POT-Creation-Date: 2016-04-21 07:33-0700\n"
 "PO-Revision-Date: 2016-04-15 09:33+0000\n"
 "Last-Translator: Belayet Hossain <bellayet@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,25 +131,54 @@ msgstr "রিপোর্ট সম্পন্ন। ধন্যবাদ!"
 msgid "Show old table."
 msgstr "পুরনো টেবিল দেখুন।"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:401
+msgid "Save Draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:406
+msgid "Enable autosave."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
 msgstr "অজানা তারিখ"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
 msgstr ""
 
-#: kuma/static/js/wiki-edit.js:404
+#: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
 msgstr "খসড়া কন্টেন্ট পুনরুদ্ধার করুন"
 
-#: kuma/static/js/wiki-edit.js:405
+#: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
 msgstr "খসড়াটি বাতিল কর"
 
-#: kuma/static/js/wiki-edit.js:557
-msgid "saved"
-msgstr "সংরক্ষিত"
+#: kuma/static/js/wiki-edit.js:442
+msgid "restored"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:571
+msgid "Draft"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:618
+msgid "published"
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:622
+#, fuzzy
+msgid "discarded"
+msgstr "খসড়াটি বাতিল কর"
+
+#: kuma/static/js/wiki-edit.js:660
+msgid "Autosave enabled."
+msgstr ""
+
+#: kuma/static/js/wiki-edit.js:667
+msgid "Autosave disabled."
+msgstr ""
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -164,8 +193,7 @@ msgid "Search Stack Overflow"
 msgstr ""
 
 #: kuma/static/js/wiki.js:677
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 
 #: kuma/static/js/wiki.js:892
@@ -180,8 +208,7 @@ msgstr "একটি সংযুক্তি নির্বাচন করু
 msgid "No attachments available"
 msgstr "কোনো সংযুক্তি পাওয়া যায়নি"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "সংযুক্তি"
 
@@ -201,8 +228,7 @@ msgstr "একটি পুননির্দেশনা তৈরি করু
 msgid "MDN Redirect"
 msgstr ""
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr ""
 
@@ -293,3 +319,6 @@ msgstr ""
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr ""
+
+#~ msgid "saved"
+#~ msgstr "সংরক্ষিত"
