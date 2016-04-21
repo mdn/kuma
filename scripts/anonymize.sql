@@ -92,7 +92,6 @@ TRUNCATE socialaccount_socialapp_sites;
 TRUNCATE socialaccount_socialtoken;
 TRUNCATE tidings_watch;
 TRUNCATE tidings_watchfilter;
-TRUNCATE users_userban;
 
 -- To be dropped in bug 1184470, August 2015
 DROP TABLE IF EXISTS badger_award;
@@ -189,5 +188,8 @@ UPDATE wiki_revisionip SET
 
 UPDATE wiki_documentspamattempt SET data = null;
 
+UPDATE users_userban SET
+    reason = MD5(reason)
+    WHERE reason != "";
 
 SET FOREIGN_KEY_CHECKS=1;
