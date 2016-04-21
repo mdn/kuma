@@ -185,6 +185,7 @@ UPDATE wiki_revisionip SET
 UPDATE wiki_revisionip SET
     referrer = CONCAT("https://example.com/", MD5(CONCAT(referrer, @common_hash_secret)))
     WHERE referrer != "";
+UPDATE wiki_revisionip SET data = null;
 
 UPDATE wiki_documentspamattempt SET data = null;
 
