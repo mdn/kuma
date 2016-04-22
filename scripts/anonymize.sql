@@ -48,8 +48,6 @@ SET FOREIGN_KEY_CHECKS=0;
 -- search_index
 -- search_outdatedobject
 -- soapbox_message
--- tagging_tag
--- tagging_taggeditem
 -- taggit_tag
 -- taggit_taggeditem
 -- waffle_flag
@@ -70,7 +68,6 @@ SET FOREIGN_KEY_CHECKS=0;
 -- wiki_taggeddocument
 
 TRUNCATE account_emailconfirmation;
-TRUNCATE auth_message;
 TRUNCATE authkeys_key;
 TRUNCATE authkeys_keyaction;
 TRUNCATE celery_taskmeta;
@@ -78,7 +75,6 @@ TRUNCATE celery_tasksetmeta;
 TRUNCATE constance_config;
 TRUNCATE core_ipban;
 TRUNCATE django_admin_log;
-TRUNCATE django_cache;
 TRUNCATE django_session;
 TRUNCATE djcelery_crontabschedule;
 TRUNCATE djcelery_intervalschedule;
@@ -92,7 +88,12 @@ TRUNCATE socialaccount_socialapp_sites;
 TRUNCATE socialaccount_socialtoken;
 TRUNCATE tidings_watch;
 TRUNCATE tidings_watchfilter;
-TRUNCATE users_userban;
+
+-- Should be dropped
+DROP TABLE IF EXISTS auth_message; -- Removed in Django 1.4
+DROP TABLE IF EXISTS django_cache; -- Legacy, 0 records in prod
+DROP TABLE IF EXISTS tagging_tag;  -- Not in production
+DROP TABLE IF EXISTS tagging_taggeditem;  -- Not in production
 
 -- To be dropped in bug 1184470, August 2015
 DROP TABLE IF EXISTS badger_award;
@@ -186,8 +187,12 @@ UPDATE wiki_revisionip SET
 UPDATE wiki_revisionip SET
     referrer = CONCAT("https://example.com/", MD5(CONCAT(referrer, @common_hash_secret)))
     WHERE referrer != "";
+UPDATE wiki_revisionip SET data = null;
 
 UPDATE wiki_documentspamattempt SET data = null;
 
+UPDATE users_userban SET
+    reason = MD5(reason)
+    WHERE reason != "";
 
 SET FOREIGN_KEY_CHECKS=1;
