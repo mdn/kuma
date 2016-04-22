@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-01-10 13:42+0000\n"
+"PO-Revision-Date: 2016-04-22 09:01+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
@@ -134,11 +134,11 @@ msgstr "Oude tabel tonen"
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "Concept opslaan"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "Automatisch opslaan inschakelen."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
@@ -158,28 +158,27 @@ msgstr "Het concept verwijderen"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "hersteld"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "Concept"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "gepubliceerd"
 
 #: kuma/static/js/wiki-edit.js:622
-#, fuzzy
 msgid "discarded"
-msgstr "Het concept verwijderen"
+msgstr "verworpen"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "Automatisch opslaan ingeschakeld."
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "Automatisch opslaan uitgeschakeld."
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -194,8 +193,11 @@ msgid "Search Stack Overflow"
 msgstr "Zoeken bij Stack Overflow"
 
 #: kuma/static/js/wiki.js:677
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Uw browser ondersteunt geen MathML. Daarom is een CSS-terugvalversie gebruikt."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Uw browser ondersteunt geen MathML. Daarom is een CSS-terugvalversie "
+"gebruikt."
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
@@ -209,7 +211,8 @@ msgstr "Selecteer een bijlage"
 msgid "No attachments available"
 msgstr "Geen bijlagen beschikbaar"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Bijlagen"
 
@@ -229,7 +232,8 @@ msgstr "Een omleiding maken"
 msgid "MDN Redirect"
 msgstr "MDN-omleiding"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Document"
 
@@ -327,5 +331,11 @@ msgstr "Standaard"
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "U hebt een onverwerkt concept. <a href=\"\" class=\"restoreLink\">Zet de inhoud van het concept terug</a> of <a href=\"\" class=\"discardLink\">verwijder het concept</a>."
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "U hebt een onverwerkt concept. <a href=\"\" class=\"restoreLink\">Zet de "
+#~ "inhoud van het concept terug</a> of <a href=\"\" "
+#~ "class=\"discardLink\">verwijder het concept</a>."
