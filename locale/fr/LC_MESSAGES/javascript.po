@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-01-09 06:01+0000\n"
+"PO-Revision-Date: 2016-04-23 16:06+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
@@ -133,11 +133,11 @@ msgstr "Afficher l'ancien tableau."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "Enregistrer le brouillon"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "Activer l'enregistrement automatique."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
@@ -157,28 +157,27 @@ msgstr "Supprimer le brouillon"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "restauré"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "Brouillon"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "publié"
 
 #: kuma/static/js/wiki-edit.js:622
-#, fuzzy
 msgid "discarded"
-msgstr "Supprimer le brouillon"
+msgstr "supprimé"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "Sauvegarde automatique activée."
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "Sauvegarde automatique désactivée."
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -193,8 +192,11 @@ msgid "Search Stack Overflow"
 msgstr "Rechercher sur Stack Overflow"
 
 #: kuma/static/js/wiki.js:677
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Votre navigateur ne supporte pas MathML. Un contenu de remplacement avec CSS a été utilisé."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Votre navigateur ne supporte pas MathML. Un contenu de remplacement avec CSS"
+" a été utilisé."
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
@@ -208,7 +210,8 @@ msgstr "Sélectionner une pièce jointe"
 msgid "No attachments available"
 msgstr "Aucune pièce jointe disponible"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Pièces jointes"
 
@@ -228,7 +231,8 @@ msgstr "Créer une redirection"
 msgid "MDN Redirect"
 msgstr "Redirection MDN"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Document"
 
@@ -326,5 +330,11 @@ msgstr "Par défaut"
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "Un brouillon avait été enregistré. <a href=\"\" class=\"restoreLink\">Restaurer le contenu du brouillon enregistré</a> ou <a href=\"\" class=\"discardLink\">effacer le brouillon</a>."
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "Un brouillon avait été enregistré. <a href=\"\" "
+#~ "class=\"restoreLink\">Restaurer le contenu du brouillon enregistré</a> ou <a"
+#~ " href=\"\" class=\"discardLink\">effacer le brouillon</a>."
