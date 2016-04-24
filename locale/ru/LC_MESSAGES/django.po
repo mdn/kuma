@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-04-21 18:32+0000\n"
-"Last-Translator: bychek.ru <a@bychek.ru>\n"
+"PO-Revision-Date: 2016-04-24 12:15+0000\n"
+"Last-Translator: Alexander Slovesnik <unghost@mozilla-russia.org>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -3187,6 +3187,10 @@ msgid ""
 " href=\"%(request_page_url)s\">file a bug</a>. If you need permission to "
 "create new pages, please <a href=\"%(email_link)s\">contact us</a>."
 msgstr ""
+"Не у каждого есть право на создание новой страницы. Чтобы запросить создание"
+" новой страницы, пожалуйста, <a href=\"%(request_page_url)s\">сообщите об "
+"ошибке</a>. Если вам нужно разрешение создавать новые страницы, пожалуйста, "
+"<a href=\"%(email_link)s\">свяжитесь с нами</a>."
 
 #: kuma/wiki/jinja2/403-create-page.html:17
 msgid ""
@@ -3197,6 +3201,13 @@ msgid ""
 "some good edits to existing pages.</li> <li>Have been contributing to the "
 "site for a while.</li> </ul>"
 msgstr ""
+"<p>Вы с большей вероятностью получите права на создание новых страниц, "
+"если:</p> <ul> <li>Сообщите нам имя пользователя на MDN.</li> <li>Сообщите "
+"нам, почему вы хотите создавать новые страницы (Вы документируете новые "
+"возможности? Какие возможности? Если глоссарий терминов, который вы хотите "
+"добавить? Какие термины?). </li> <li>Сделаете несколько хороших правок в "
+"существующие страницы.</li> <li>Вносите вклад в сайт на протяжении "
+"некоторого времени.</li> </ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3523,13 +3534,12 @@ msgid "Minutes"
 msgstr "Минуты"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
-#, fuzzy
 msgid ""
 "Find the translation source with the lookup below and then click "
 "\"Publish.\""
 msgstr ""
-"Найдите источник для перевода в поиске выше, а затем нажмите на \"Сохранить "
-"изменения\"."
+"Найдите источник для перевода в поиске выше, а затем нажмите "
+"\"Опубликовать\"."
 
 #: kuma/wiki/jinja2/wiki/edit.html:147
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:62
@@ -4174,14 +4184,15 @@ msgstr ""
 "получения сведений о том, что является подходящим материалом."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "If you believe you’ve received this message by mistake, please save a draft "
 "of your content and <a href=\"%(admin_email)s\"> contact the site "
 "administrators</a>."
 msgstr ""
-"Если вы думаете, что получили это сообщение по ошибке, пожалуйста, <a "
-"href=\"%(admin_email)s\">свяжитесь с администраторами сайта</a>."
+"Если вы думаете, что получили это сообщение по ошибке, пожалуйста, сохраните"
+" черновик вашего содержания и <a href=\"%(admin_email)s\">свяжитесь с "
+"администраторами сайта</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -4198,11 +4209,9 @@ msgid "Slug in %(locale)s:"
 msgstr "Заголовок на %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
-#, fuzzy
 msgid "Find the translation source with the lookup above and then click \"Save\"."
 msgstr ""
-"Найдите источник для перевода в поиске выше, а затем нажмите на «Сохранить "
-"изменения»."
+"Найдите источник для перевода в поиске выше, а затем нажмите на «Сохранить»."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
