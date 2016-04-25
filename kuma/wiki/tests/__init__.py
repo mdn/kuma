@@ -142,17 +142,20 @@ def normalize_html(input):
             .serialize(alphabetical_attributes=True))
 
 
-def create_document_editor_user():
-    """Creates a user empowered with document editing"""
-    perms = []
-    for action in ('add', 'change', 'delete', 'view', 'restore'):
-        perms.append(Permission.objects.get(codename='%s_document' % action))
-
+def create_document_editor_group():
+    """Get or create a group that can edit documents."""
     group, group_created = Group.objects.get_or_create(name='editor')
     if group_created:
+        actions = ('add', 'change', 'delete', 'view', 'restore')
+        perms = [Permission.objects.get(codename='%s_document' % action)
+                 for action in actions]
         group.permissions = perms
         group.save()
+    return group
 
+
+def create_document_editor_user():
+    """Get or create a user empowered with document editing."""
     User = get_user_model()
     user, user_created = User.objects.get_or_create(
         username='conantheeditor',
@@ -160,13 +163,14 @@ def create_document_editor_user():
                       is_active=True, is_staff=False, is_superuser=False))
     if user_created:
         user.set_password('testpass')
-        user.groups = [group]
+        user.groups = [create_document_editor_group()]
         user.save()
 
     return user
 
 
 def create_template_test_users():
+    """Create users for template editing tests."""
     perms = dict(
         (x, [Permission.objects.get(codename='%s_template_document' % x)])
         for x in ('add', 'change',)
@@ -181,6 +185,7 @@ def create_template_test_users():
             group.permissions = perms[x]
             group.save()
         groups[x] = [group]
+    editor_group = create_document_editor_group()
 
     users = {}
     User = get_user_model()
@@ -191,7 +196,7 @@ def create_template_test_users():
                           is_active=True, is_staff=False, is_superuser=False))
         if created:
             user.set_password('testpass')
-            user.groups = groups.get(x, [])
+            user.groups = groups.get(x, []) + [editor_group]
             user.save()
         users[x] = user
 

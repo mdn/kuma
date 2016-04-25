@@ -56,12 +56,14 @@ class BaseDocumentManager(models.Manager):
         """
         Determine whether the user can create a document with the given
         slug. Mainly for enforcing Template: editing permissions
+
+        TODO: Convert to a method that raises exceptions that are handled
+        by an exception middleware.
         """
         if (slug.startswith(TEMPLATE_TITLE_PREFIX) and
                 not user.has_perm('wiki.add_template_document')):
             return False
-        # NOTE: We could enforce wiki.add_document here, but it's implicitly
-        # assumed everyone is allowed.
+        # TODO: Add wiki.add_document check
         return True
 
     def filter_for_list(self, locale=None, tag=None, tag_name=None,
@@ -233,7 +235,7 @@ class RevisionIPManager(models.Manager):
         old_rev_ips = self.filter(revision__created__lte=cutoff_date)
         old_rev_ips.delete()
 
-    def log(self, revision, headers):
+    def log(self, revision, headers, data):
         """
         Records the IP and some more data for the given revision and the
         request headers.
@@ -243,4 +245,5 @@ class RevisionIPManager(models.Manager):
             ip=headers.get('REMOTE_ADDR'),
             user_agent=headers.get('HTTP_USER_AGENT', ''),
             referrer=headers.get('HTTP_REFERER', ''),
+            data=data
         )

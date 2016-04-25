@@ -5,6 +5,7 @@ from pyquery import PyQuery as pq
 from constance.test import override_config
 from django.contrib.admin import AdminSite
 from django.test import RequestFactory
+from django.utils.six.moves.urllib.parse import parse_qsl
 import requests_mock
 from waffle.models import Flag
 
@@ -14,8 +15,9 @@ from kuma.spam.akismet import Akismet
 from kuma.spam.constants import HAM_URL, SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.users.tests import UserTestCase
 from kuma.users.models import User
-from kuma.wiki.admin import DocumentSpamAttemptAdmin
-from kuma.wiki.models import DocumentSpamAttempt, RevisionAkismetSubmission
+from kuma.wiki.admin import DocumentSpamAttemptAdmin, SUBMISSION_NOT_AVAILABLE
+from kuma.wiki.models import (DocumentSpamAttempt, RevisionAkismetSubmission,
+                              RevisionIP)
 from kuma.wiki.tests import document, revision
 
 
@@ -93,13 +95,10 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
 
     def test_submitted_data(self):
         dsa = DocumentSpamAttempt(data=None)
-        expected = self.admin.SUBMISSION_NOT_AVAILABLE
-        assert self.admin.submitted_data(dsa) == expected
-        dsa.data = '{"foo": "bar"}'
-        assert self.admin.submitted_data(dsa) == (
-            '{\n'
-            '    "foo": "bar"\n'
-            '}')
+        assert self.admin.submitted_data(dsa) == SUBMISSION_NOT_AVAILABLE
+        data = '{"foo": "bar"}'
+        dsa.data = data
+        assert self.admin.submitted_data(dsa) == data
 
     def assert_needs_review(self):
         dsa = DocumentSpamAttempt.objects.get()
@@ -235,7 +234,6 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         mock_requests.post(VERIFY_URL, content='valid')
         mock_requests.post(SPAM_URL, content=Akismet.submission_success)
 
-        revision = admin.created_revisions.all()[0]
         data = {
             'revision': revision.id,
             'type': 'spam',
@@ -258,3 +256,120 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         self.assertIn('user_ip=0.0.0.0', request_body)
         self.assertIn('user_agent=', request_body)
         self.assertIn(revision.slug, request_body)
+        query_pairs = parse_qsl(request_body)
+        expected_content = (
+            'Seventh revision of the article.\n'
+            'article-with-revisions\n'
+            'Seventh revision of the article.\n'
+            'Seventh revision of the article.'
+        )
+        expected = [
+            ('blog', 'http://testserver/'),
+            ('blog_charset', 'UTF-8'),
+            ('blog_lang', 'en_us'),
+            ('comment_author', 'admin'),
+            ('comment_content', expected_content),
+            ('comment_type', 'wiki-revision'),
+            ('permalink',
+             'http://testserver/en-US/docs/article-with-revisions'),
+            ('user_ip', '0.0.0.0')
+        ]
+        self.assertEqual(sorted(query_pairs), expected)
+
+    @requests_mock.mock()
+    def test_spam_submission_tags(self, mock_requests):
+        admin = User.objects.get(username='admin')
+        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
+        flag.users.add(admin)
+        revision = admin.created_revisions.all()[0]
+        revision.tags = '"Banana" "Orange" "Apple"'
+        revision.save()
+        url = reverse('admin:wiki_revisionakismetsubmission_add')
+
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
+
+        data = {
+            'revision': revision.id,
+            'type': 'spam',
+        }
+        self.client.login(username='admin', password='testpass')
+        url = reverse('admin:wiki_revisionakismetsubmission_add')
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+
+        request_body = mock_requests.request_history[1].body
+        submitted_data = dict(parse_qsl(request_body))
+        expected_content = (
+            'Seventh revision of the article.\n'
+            'article-with-revisions\n'
+            'Seventh revision of the article.\n'
+            'Seventh revision of the article.\n'
+            'Apple\n'
+            'Banana\n'
+            'Orange'
+        )
+        self.assertEqual(submitted_data['comment_content'], expected_content)
+
+    def test_create_no_revision(self):
+        url = urlparams(
+            reverse('admin:wiki_revisionakismetsubmission_add'),
+            type='ham',
+        )
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content)
+
+    def test_view_change_existing(self):
+        admin = User.objects.get(username='admin')
+        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
+        flag.users.add(admin)
+        revision = admin.created_revisions.all()[0]
+        submission = RevisionAkismetSubmission.objects.create(
+            sender=admin, revision=revision, type='ham')
+
+        self.client.login(username='admin', password='testpass')
+        url = reverse('admin:wiki_revisionakismetsubmission_change',
+                      args=(submission.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content)
+
+    def test_view_change_with_data(self):
+        admin = User.objects.get(username='admin')
+        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
+        flag.users.add(admin)
+        revision = admin.created_revisions.all()[0]
+        submission = RevisionAkismetSubmission.objects.create(
+            sender=admin, revision=revision, type='spam')
+        RevisionIP.objects.create(revision=revision,
+                                  data='{"content": "spam"}')
+
+        self.client.login(username='admin', password='testpass')
+        url = reverse('admin:wiki_revisionakismetsubmission_change',
+                      args=(submission.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('{&quot;content&quot;: &quot;spam&quot;}',
+                      response.content)
+
+    def test_view_changelist_existing(self):
+        admin = User.objects.get(username='admin')
+        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
+        flag.users.add(admin)
+        revision = admin.created_revisions.all()[0]
+        RevisionAkismetSubmission.objects.create(sender=admin,
+                                                 revision=revision,
+                                                 type='ham')
+        RevisionAkismetSubmission.objects.create(sender=admin,
+                                                 type='ham')
+
+        self.client.login(username='admin', password='testpass')
+        url = reverse('admin:wiki_revisionakismetsubmission_changelist')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        revision_url = reverse('admin:wiki_revision_change',
+                               args=[revision.id])
+        self.assertIn(revision_url, response.content)
+        self.assertIn('None', response.content)

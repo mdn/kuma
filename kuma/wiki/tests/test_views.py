@@ -32,7 +32,8 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase, user
 
-from . import (WikiTestCase, create_document_editor_user, create_document_tree,
+from . import (WikiTestCase, create_document_editor_group,
+               create_document_editor_user, create_document_tree,
                create_template_test_users, document, make_translation,
                new_document_data, normalize_html, revision)
 from ..content import get_seo_description
@@ -508,6 +509,15 @@ class PermissionTests(UserTestCase, WikiTestCase):
                         eq_(403, resp.status_code,
                             "%s should not be able to %s %s" %
                             (user, msg[is_add], slug))
+
+    def test_add_document_permission(self):
+        newuser = user(save=True, username='newuser', password='password')
+        assert not newuser.has_perm('wiki.add_document')
+        url = reverse('wiki.create', locale='en-US')
+        assert self.client.login(username='newuser',
+                                 password='password'), 'Failed to login.'
+        response = self.client.get(url, slug='NewPage')
+        assert response.status_code == 403
 
 
 class ConditionalGetTests(UserTestCase, WikiTestCase):
@@ -2216,22 +2226,23 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         test_data = [
             {
-                'params': {'approve_technical': 1},
-                'expected_tags': ['editorial'],
-                'name': 'technical',
-                'message_contains': ['Technical review completed.']
-            },
-            {
-                'params': {'approve_editorial': 1},
+                'params': {'request_technical': 1},
                 'expected_tags': ['technical'],
-                'name': 'editorial',
-                'message_contains': ['Editorial review completed.']
+                'name': 'technical',
+                'message_contains': [
+                    'Editorial review completed.',
+                ]
             },
             {
-                'params': {
-                    'approve_technical': 1,
-                    'approve_editorial': 1
-                },
+                'params': {'request_editorial': 1},
+                'expected_tags': ['editorial'],
+                'name': 'editorial',
+                'message_contains': [
+                    'Technical review completed.',
+                ]
+            },
+            {
+                'params': {},
                 'expected_tags': [],
                 'name': 'editorial-technical',
                 'message_contains': [
@@ -2244,8 +2255,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         for data_dict in test_data:
             slug = 'test-quick-review-%s' % data_dict['name']
             data = new_document_data()
-            data.update({'review_tags': ['editorial', 'technical'],
-                         'slug': slug})
+            data.update({'review_tags': ['editorial', 'technical'], 'slug': slug})
             resp = self.client.post(reverse('wiki.create'), data)
 
             doc = Document.objects.get(slug=slug)
@@ -3782,6 +3792,7 @@ class APITests(UserTestCase, WikiTestCase):
         self.user = user(username=self.username,
                          email=self.email,
                          password=self.password,
+                         groups=[create_document_editor_group()],
                          save=True)
 
         self.key = Key(user=self.user, description='Test Key 1')

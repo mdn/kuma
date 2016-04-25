@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 
 from kuma.spam.akismet import Akismet, AkismetError
-from kuma.wiki.forms import revision_akismet_parameters
+from kuma.wiki.forms import AkismetHistoricalData
 from kuma.wiki.models import (Document, DocumentDeletionLog,
                               RevisionAkismetSubmission)
 
@@ -89,7 +89,8 @@ class Command(BaseCommand):
                                   u'revision' % document.pk)
                 continue
 
-            params = revision_akismet_parameters(document.current_revision)
+            akismet_data = AkismetHistoricalData(document.current_revision)
+            params = akismet_data.parameters
             if dry_run:
                 # we're in dry-run, so let's continue okay?
                 self.stdout.write(u'Not submitting current revision %s of '

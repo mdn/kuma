@@ -1,5 +1,4 @@
 from django import forms
-from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 from waffle import flag_is_active
 
@@ -64,13 +63,6 @@ class AkismetFormMixin(object):
         if flag_is_active(self.request, constants.SPAM_TESTING_FLAG):
             parameters['is_test'] = True
         return parameters
-
-    def akismet_locale(self, language):
-        """
-        Convert a Django locale to a locale akismet expects.
-        E.g.: "en-US" to "en_us"
-        """
-        return translation.to_locale(language).lower()
 
     def clean(self):
         cleaned_data = super(AkismetFormMixin, self).clean()

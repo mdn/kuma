@@ -142,24 +142,22 @@ def quick_review(request, document_slug, document_locale):
     needs_technical = rev.needs_technical_review
     needs_editorial = rev.needs_editorial_review
 
-    if not any((needs_technical, needs_editorial)):
-        # No need to "approve" something that doesn't need it.
-        return redirect(doc)
+    request_technical = request.POST.get('request_technical', False)
+    request_editorial = request.POST.get('request_editorial', False)
 
-    approve_technical = request.POST.get('approve_technical', False)
-    approve_editorial = request.POST.get('approve_editorial', False)
-
-    new_tags = []
     messages = []
-
-    if needs_technical and not approve_technical:
+    new_tags = []
+    if needs_technical:
         new_tags.append('technical')
-    elif needs_technical:
+    if needs_editorial:
+        new_tags.append('editorial')
+
+    if needs_technical and not request_technical:
+        new_tags.remove('technical')
         messages.append('Technical review completed.')
 
-    if needs_editorial and not approve_editorial:
-        new_tags.append('editorial')
-    elif needs_editorial:
+    if needs_editorial and not request_editorial:
+        new_tags.remove('editorial')
         messages.append('Editorial review completed.')
 
     if messages:

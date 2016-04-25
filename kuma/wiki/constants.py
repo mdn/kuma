@@ -262,6 +262,11 @@ SPAM_SUBMISSION_REVISION_FIELDS = [
     'tags',
     'keywords',
 ]
+SPAM_OTHER_HEADERS = (  # Header to send that don't start with HTTP
+    'REMOTE_ADDR',
+    'REQUEST_URI',
+    'DOCUMENT_URI',
+)
 
 CODE_SAMPLE_MACROS = [
     'LiveSampleURL',
@@ -270,3 +275,5 @@ CODE_SAMPLE_MACROS = [
     'LiveSampleLink',
     'FXOSUXLiveSampleEmbed',
 ]
+
+DEV_DOC_REQUEST_FORM = 'https://bugzilla.mozilla.org/form.doc'

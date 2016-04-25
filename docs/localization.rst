@@ -54,8 +54,7 @@ Updating the Localizations
 
 #.  Commit the files::
 
-        $ cd locale
-        $ git add -A
+        $ git add --all locale
         $ git commit -m "MDN string update YYYY-MM-DD"
 
 Adding a new Locale

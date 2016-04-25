@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-04-01 10:55-0700\n"
-"PO-Revision-Date: 2016-04-02 16:47+0000\n"
+"POT-Creation-Date: 2016-04-21 07:33-0700\n"
+"PO-Revision-Date: 2016-04-21 16:08+0000\n"
 "Last-Translator: Pin-guang Chen <petercpg@mail.moztw.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh_TW\n"
@@ -19,42 +19,42 @@ msgstr ""
 msgid "Permission Denied"
 msgstr "存取被拒"
 
-#: jinja2/403.html:22
+#: jinja2/403.html:23
 msgid "The wiki is in read-only mode."
 msgstr "此維基目前為唯讀模式。"
 
-#: jinja2/403.html:24
+#: jinja2/403.html:25
 msgid "Your profile has been banned from making edits."
 msgstr "您的帳號已被封鎖，無法進行編修。"
 
-#: jinja2/403.html:26
+#: jinja2/403.html:27
 msgid "This user's profile has been banned."
 msgstr "此使用者帳號已被封鎖。"
 
-#: jinja2/403.html:28
+#: jinja2/403.html:29
 msgid "You must sign in to view all history"
 msgstr "您必須登入才能檢視所有歷史記錄"
 
-#: jinja2/403.html:34 jinja2/handlers/400.html:21
+#: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
 msgstr "<p>%(name)s 抱歉，我們˙恐怕不能這麼做。</p>"
 
-#: jinja2/403.html:38 jinja2/handlers/400.html:25
+#: jinja2/403.html:43 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr "<p>抱歉，我們恐怕不能這麼做。</p>"
 
-#: jinja2/403.html:45
+#: jinja2/403.html:50
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
 msgstr "<li><a href=\"%(logout_url)s\">登出</a> 以再試一次。</li>"
 
-#: jinja2/403.html:49 jinja2/handlers/400.html:36
+#: jinja2/403.html:54 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
 msgstr "<li><a href=\"%(login_url)s\">登入</a> 以再試一次。</li>"
 
-#: jinja2/403.html:55
+#: jinja2/403.html:62
 msgid ""
 "<p class=\"attrib\"><small><a "
 "href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" "
@@ -549,7 +549,8 @@ msgid "File"
 msgstr "檔案"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:36
-#: kuma/users/models.py:65 kuma/wiki/models.py:1908
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8
+#: kuma/users/models.py:65 kuma/wiki/models.py:1911
 msgid "Title"
 msgstr "頭銜"
 
@@ -909,6 +910,22 @@ msgstr "編輯頁面"
 msgid "History"
 msgstr "歷史紀錄"
 
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7
+#: kuma/wiki/models.py:1864
+msgid "Revision"
+msgstr "修改"
+
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9
+#: kuma/users/jinja2/users/user_detail.html:157
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
+#: kuma/wiki/jinja2/wiki/revision.html:42
+msgid "Comment"
+msgstr "回應"
+
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
+msgid "Author"
+msgstr "作者"
+
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
 msgstr "切換 IP"
@@ -1203,6 +1220,7 @@ msgstr ""
 "按鈕讓自己知道您正讓網頁開發者過得更好一點。</li></ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35
+#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
 msgstr "預覽"
 
@@ -1505,11 +1523,11 @@ msgstr "Docs"
 msgid "Filter by"
 msgstr "過濾依照"
 
-#: kuma/spam/forms.py:10
+#: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
 msgstr "送出的資料包含無效內容。"
 
-#: kuma/spam/forms.py:98
+#: kuma/spam/forms.py:103
 msgid "The submitted data contains invalid content. Please try again."
 msgstr "送出的資料包含無效內容，請再試一次。"
 
@@ -1691,7 +1709,7 @@ msgstr "IRC 暱稱"
 
 #: kuma/users/models.py:94
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27
-#: kuma/wiki/jinja2/wiki/create.html:77 kuma/wiki/jinja2/wiki/edit.html:188
+#: kuma/wiki/jinja2/wiki/create.html:79 kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
 msgstr "標籤"
 
@@ -2276,14 +2294,8 @@ msgstr "頁面"
 msgid "Date"
 msgstr "日期"
 
-#: kuma/users/jinja2/users/user_detail.html:157
-#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
-#: kuma/wiki/jinja2/wiki/revision.html:42
-msgid "Comment"
-msgstr "回應"
-
 #: kuma/users/jinja2/users/user_detail.html:165
-#: kuma/wiki/jinja2/wiki/document.html:377
+#: kuma/wiki/jinja2/wiki/document.html:385
 msgid "Edit page"
 msgstr "編輯頁面"
 
@@ -2292,7 +2304,7 @@ msgid "View complete diff"
 msgstr "檢視完整比對"
 
 #: kuma/users/jinja2/users/user_detail.html:167
-#: kuma/wiki/jinja2/wiki/document.html:378
+#: kuma/wiki/jinja2/wiki/document.html:386
 msgid "View page history"
 msgstr "檢視頁面歷史紀錄"
 
@@ -2387,8 +2399,8 @@ msgstr "使用您的 GitHub 帳號登入。"
 
 #: kuma/users/jinja2/users/user_edit.html:151
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
-msgid "Save Changes"
-msgstr "儲存修改"
+msgid "Publish"
+msgstr "發布"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:9
 #, python-format
@@ -2583,11 +2595,11 @@ msgstr "管理"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: kuma/wiki/constants.py:207
+#: kuma/wiki/constants.py:207 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "技術 - 程式碼範本、API 或技術內容"
 
-#: kuma/wiki/constants.py:208
+#: kuma/wiki/constants.py:208 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr "編輯 - 篇章結構、文法或內容"
 
@@ -2663,186 +2675,186 @@ msgstr "MDN 文件最近的修改"
 msgid "Show comparison"
 msgstr "顯示差異"
 
-#: kuma/wiki/forms.py:32
+#: kuma/wiki/forms.py:35
 msgid "Please provide a title."
 msgstr "請提供標題。"
 
-#: kuma/wiki/forms.py:33
+#: kuma/wiki/forms.py:36
 #, python-format
 msgid ""
 "The title is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr "標題過短（%(show_value)s 字元），至少要 %(limit_value)s 字元。"
 
-#: kuma/wiki/forms.py:35
+#: kuma/wiki/forms.py:38
 #, python-format
 msgid ""
 "Please keep the length of the title to %(limit_value)s characters or less. "
 "It is currently %(show_value)s characters."
 msgstr "標題請不要超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:38
+#: kuma/wiki/forms.py:41
 msgid "Name Your Article"
 msgstr "為你的文章取個標題吧"
 
-#: kuma/wiki/forms.py:39
+#: kuma/wiki/forms.py:42
 msgid "Please provide a slug."
 msgstr "請提供URL代稱。"
 
-#: kuma/wiki/forms.py:40
+#: kuma/wiki/forms.py:43
 msgid "The slug provided is not valid."
 msgstr "輸入的 URL 代稱無效。"
 
-#: kuma/wiki/forms.py:41
+#: kuma/wiki/forms.py:44
 #, python-format
 msgid ""
 "The slug is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr "此 URL 代稱太短（%(show_value)s 字元），至少需要 %(limit_value)s 字元。"
 
-#: kuma/wiki/forms.py:43
+#: kuma/wiki/forms.py:46
 #, python-format
 msgid ""
 "Please keep the length of the slug to %(limit_value)s characters or less. It"
 " is currently %(show_value)s characters."
 msgstr "URL代稱請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:46
+#: kuma/wiki/forms.py:49
 msgid "Please provide a summary."
 msgstr "請輸入摘要。"
 
-#: kuma/wiki/forms.py:47
+#: kuma/wiki/forms.py:50
 #, python-format
 msgid ""
 "The summary is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr "摘要過短（%(show_value)s 字元），至少要 %(limit_value)s 字元。"
 
-#: kuma/wiki/forms.py:49
+#: kuma/wiki/forms.py:52
 #, python-format
 msgid ""
 "Please keep the length of the summary to %(limit_value)s characters or less."
 " It is currently %(show_value)s characters."
 msgstr "摘要請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:52
+#: kuma/wiki/forms.py:55
 msgid "Please provide content."
 msgstr "請提供內容。"
 
-#: kuma/wiki/forms.py:53
+#: kuma/wiki/forms.py:56
 #, python-format
 msgid ""
 "The content is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr "內容太少了（%(show_value)s 個字元），至少需要 %(limit_value)s 個字元。"
 
-#: kuma/wiki/forms.py:55
+#: kuma/wiki/forms.py:58
 #, python-format
 msgid ""
 "Please keep the length of the content to %(limit_value)s characters or less."
 " It is currently %(show_value)s characters."
 msgstr "內容請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:58
+#: kuma/wiki/forms.py:61
 #, python-format
 msgid ""
 "Please keep the length of the comment to %(limit_value)s characters or less."
 " It is currently %(show_value)s characters."
 msgstr "評論請勿超過 %(limit_value)s 字元，目前 %(show_value)s 字元。"
 
-#: kuma/wiki/forms.py:61
+#: kuma/wiki/forms.py:64
 msgid "Another document with this slug already exists."
 msgstr "其他文件已使用此 URL 代稱。"
 
-#: kuma/wiki/forms.py:62
+#: kuma/wiki/forms.py:65
 msgid "Another document with this metadata already exists."
 msgstr "其他文件已使用此後設資料。"
 
-#: kuma/wiki/forms.py:64
+#: kuma/wiki/forms.py:67
 msgid "This document was modified while you were editing it."
 msgstr "此文件在你編輯的時候已被修改過了。"
 
-#: kuma/wiki/forms.py:66
+#: kuma/wiki/forms.py:69
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "修改此文件的URL代稱必須連同子頁面一起移動。"
 
 # 83%
-#: kuma/wiki/forms.py:82 kuma/wiki/forms.py:160 kuma/wiki/forms.py:652
-#: kuma/wiki/jinja2/wiki/create.html:40 kuma/wiki/jinja2/wiki/edit.html:68
-#: kuma/wiki/jinja2/wiki/edit.html:117 kuma/wiki/jinja2/wiki/move.html:60
+#: kuma/wiki/forms.py:317 kuma/wiki/forms.py:387 kuma/wiki/forms.py:818
+#: kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68
+#: kuma/wiki/jinja2/wiki/edit.html:116 kuma/wiki/jinja2/wiki/move.html:60
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:66
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "標題:"
 
-#: kuma/wiki/forms.py:83 kuma/wiki/forms.py:161 kuma/wiki/forms.py:653
+#: kuma/wiki/forms.py:318 kuma/wiki/forms.py:388 kuma/wiki/forms.py:819
 msgid "Title of article"
 msgstr "文章標題"
 
-#: kuma/wiki/forms.py:91 kuma/wiki/forms.py:174
-#: kuma/wiki/jinja2/wiki/create.html:44
+#: kuma/wiki/forms.py:326 kuma/wiki/forms.py:401
+#: kuma/wiki/jinja2/wiki/create.html:41
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
 msgid "Slug:"
 msgstr "URL代稱:"
 
-#: kuma/wiki/forms.py:92 kuma/wiki/forms.py:175
+#: kuma/wiki/forms.py:327 kuma/wiki/forms.py:402
 msgid "Article URL"
 msgstr "文章網址"
 
-#: kuma/wiki/forms.py:99 kuma/wiki/jinja2/wiki/create.html:48
+#: kuma/wiki/forms.py:334 kuma/wiki/jinja2/wiki/create.html:45
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:33
 msgid "Parent:"
 msgstr "上層:"
 
 # 80%
-#: kuma/wiki/forms.py:185 kuma/wiki/jinja2/wiki/edit.html:74
+#: kuma/wiki/forms.py:412 kuma/wiki/jinja2/wiki/edit.html:74
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:75
 #: kuma/wiki/jinja2/wiki/includes/document_tag.html:4
 msgid "Tags:"
 msgstr "標籤:"
 
-#: kuma/wiki/forms.py:190 kuma/wiki/jinja2/wiki/edit.html:80
+#: kuma/wiki/forms.py:417 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
 msgstr "關鍵字:"
 
-#: kuma/wiki/forms.py:191
+#: kuma/wiki/forms.py:418
 msgid "Affects search results"
 msgstr "影響的搜尋結果"
 
-#: kuma/wiki/forms.py:199
+#: kuma/wiki/forms.py:426
 msgid "Search result summary:"
 msgstr "搜尋結果摘要:"
 
-#: kuma/wiki/forms.py:200
+#: kuma/wiki/forms.py:427
 msgid "Only displayed on search results page"
 msgstr "只顯示於搜尋結果頁面"
 
 # 87%
 # 75%
-#: kuma/wiki/forms.py:211 kuma/wiki/jinja2/wiki/edit.html:92
+#: kuma/wiki/forms.py:438 kuma/wiki/jinja2/wiki/edit.html:92
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
 msgstr "內容:"
 
 # 87%
-#: kuma/wiki/forms.py:220
+#: kuma/wiki/forms.py:447
 msgid "Comment:"
 msgstr "回應:"
 
-#: kuma/wiki/forms.py:223
+#: kuma/wiki/forms.py:450
 msgid "Tag this revision for review?"
 msgstr "是否要將此版本標記為「審核」？"
 
-#: kuma/wiki/forms.py:230
+#: kuma/wiki/forms.py:457
 msgid "Tag this revision for localization?"
 msgstr "是否標記此版本為「在地化」？"
 
-#: kuma/wiki/forms.py:659
+#: kuma/wiki/forms.py:825
 msgid "New slug:"
 msgstr "新的URL代稱:"
 
-#: kuma/wiki/forms.py:660
+#: kuma/wiki/forms.py:826
 msgid "New article URL"
 msgstr "新文件網址"
 
@@ -2917,71 +2929,67 @@ msgid ""
 "ID %(id)s does not fit those criteria."
 msgstr "修改必須基於 %(locale)s 的修訂文件。 版本編號 %(id)s 不符合這些規範。"
 
-#: kuma/wiki/models.py:1827
+#: kuma/wiki/models.py:1824
 msgid "IP address"
 msgstr "IP 地址"
 
-#: kuma/wiki/models.py:1835
+#: kuma/wiki/models.py:1832
 msgid "User-Agent"
 msgstr "使用者代理字串"
 
-#: kuma/wiki/models.py:1840
+#: kuma/wiki/models.py:1837
 msgid "HTTP Referrer"
 msgstr "HTTP Referrer"
 
-#: kuma/wiki/models.py:1861
-msgid "Revision"
-msgstr "修改"
-
-#: kuma/wiki/models.py:1867
-msgid "Akismet submission"
-msgstr "送出 Akismet"
-
-#: kuma/wiki/models.py:1868
-msgid "Akismet submissions"
-msgstr "送出 Akismet"
-
-#: kuma/wiki/models.py:1912
-msgid "Slug"
-msgstr "Slug"
-
-#: kuma/wiki/models.py:1920
-msgid "Document (optional)"
-msgstr "文件（非必填）"
-
-#: kuma/wiki/models.py:1927
+#: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
 msgid "Data submitted to Akismet"
 msgstr "送出給 Akismet 的資料"
 
-#: kuma/wiki/models.py:1930
+#: kuma/wiki/models.py:1870
+msgid "Akismet submission"
+msgstr "送出 Akismet"
+
+#: kuma/wiki/models.py:1871
+msgid "Akismet submissions"
+msgstr "送出 Akismet"
+
+#: kuma/wiki/models.py:1915
+msgid "Slug"
+msgstr "Slug"
+
+#: kuma/wiki/models.py:1923
+msgid "Document (optional)"
+msgstr "文件（非必填）"
+
+#: kuma/wiki/models.py:1933
 msgid "reviewed"
 msgstr "已審查"
 
-#: kuma/wiki/models.py:1941
+#: kuma/wiki/models.py:1944
 msgid "Needs Review"
 msgstr "需要審查"
 
-#: kuma/wiki/models.py:1942
+#: kuma/wiki/models.py:1945
 msgid "Ham / False Positive"
 msgstr "Ham / 被誤分為垃圾信"
 
-#: kuma/wiki/models.py:1943
+#: kuma/wiki/models.py:1946
 msgid "Confirmed as Spam"
 msgstr "已確認為垃圾信"
 
-#: kuma/wiki/models.py:1944
+#: kuma/wiki/models.py:1947
 msgid "Review Unavailable"
 msgstr "無法審查"
 
-#: kuma/wiki/models.py:1945
+#: kuma/wiki/models.py:1948
 msgid "Akismet Error"
 msgstr "Akismet 錯誤"
 
-#: kuma/wiki/models.py:1950
+#: kuma/wiki/models.py:1953
 msgid "Review of Akismet's classification as spam"
 msgstr "Akismet 錯誤分類成垃圾信"
 
-#: kuma/wiki/models.py:1957
+#: kuma/wiki/models.py:1960
 msgid "Staff reviewer"
 msgstr "職員審核"
 
@@ -2992,6 +3000,32 @@ msgid ""
 "into index %(index)s.total"
 msgstr ""
 "正在將 %(total)d 份文件編入 %(total_chunks)d 塊大小為 %(size)d 的區塊，以及 %(index)s.total 索引"
+
+#: kuma/wiki/jinja2/403-create-page.html:3
+msgid "You're trying to create a new page."
+msgstr "您正在嘗試建立新頁面。"
+
+#: kuma/wiki/jinja2/403-create-page.html:7
+#, python-format
+msgid ""
+"Creating a new page is a restricted action. To request a new page, please <a"
+" href=\"%(request_page_url)s\">file a bug</a>. If you need permission to "
+"create new pages, please <a href=\"%(email_link)s\">contact us</a>."
+msgstr ""
+"建立新頁面是受限的行為。若要請求建立新頁面，請 <a href=\"%(request_page_url)s\">開 "
+"Bug</a>。若您需要可建立新頁面的權限，請 <a href=\"%(email_link)s\">聯絡我們</a>。"
+
+#: kuma/wiki/jinja2/403-create-page.html:17
+msgid ""
+"<p>You are more likely to be granted permission to create new pages if "
+"you:</p> <ul> <li>Tell us your MDN username.</li> <li>Tell us why you'd like"
+" to create new pages (Are you documenting a new feature? What feature? Is "
+"there a glossary term you’d like to add? What term?). </li> <li>Have made "
+"some good edits to existing pages.</li> <li>Have been contributing to the "
+"site for a while.</li> </ul>"
+msgstr ""
+"<p>做到下面這些事情比較有可能取得建立新頁面的權限:</p><ul><li>告訴我們您的 MDN "
+"帳號。</li><li>告訴我們您為什麼要建立新頁面（是要幫新功能寫文件嗎？什麼功能？您想要加入什麼詞彙嗎？什麼詞彙？）。</li><li>對現有頁面做了優良的修改。</li><li>已對這個網站貢獻過一陣子。</li></ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3087,11 +3121,7 @@ msgstr "建立"
 msgid "New Document"
 msgstr "新文件"
 
-#: kuma/wiki/jinja2/wiki/create.html:34 kuma/wiki/jinja2/wiki/edit.html:108
-msgid "Draft"
-msgstr "草稿"
-
-#: kuma/wiki/jinja2/wiki/create.html:44
+#: kuma/wiki/jinja2/wiki/create.html:41
 msgid "URL segment that identifies the page"
 msgstr "用來識別頁面的 URL 區段"
 
@@ -3175,26 +3205,32 @@ msgstr ""
 "title=\"%(scheduled_at)s\">已經排程完畢</abbr>。若下方內容看來已久未更新或缺漏某些部分，請在數分鐘之後 <a "
 "href=\"%(url)s\">重新載入此頁面</a>。"
 
-#: kuma/wiki/jinja2/wiki/document.html:265
-msgid "This article is in need of a technical review."
-msgstr "此文件需要技術審查。"
-
-#: kuma/wiki/jinja2/wiki/document.html:270
-msgid "This article is in need of an editorial review."
-msgstr "此文件需要編輯審查。"
+#: kuma/wiki/jinja2/wiki/document.html:267
+#, python-format
+msgid ""
+"This article needs a technical review. <a href=\"%(url)s\">How you can "
+"help.</a>"
+msgstr "此文件需要技術審查。<a href=\"%(url)s\">看看您能幫什麼忙。</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:276
+#, python-format
+msgid ""
+"This article needs an editorial review. <a href=\"%(url)s\">How you can "
+"help.</a>"
+msgstr "此文件需要編輯審查。<a href=\"%(url)s\">看看您能幫什麼忙。</a>"
+
+#: kuma/wiki/jinja2/wiki/document.html:284
 #, python-format
 msgid ""
 "This translation is incomplete. Please help <a "
 "href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr "翻譯不完整。請協助 <a href=\"%(translate_url)s\">翻譯此英文文件</a>。"
 
-#: kuma/wiki/jinja2/wiki/document.html:281
+#: kuma/wiki/jinja2/wiki/document.html:289
 msgid "This translation is in progress."
 msgstr "正在翻譯中。"
 
-#: kuma/wiki/jinja2/wiki/document.html:288
+#: kuma/wiki/jinja2/wiki/document.html:296
 #, python-format
 msgid ""
 "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> "
@@ -3203,11 +3239,11 @@ msgstr ""
 "我們的志工尚未將此文章翻譯為 <bdi>%(locale)s</bdi> 版本。<a "
 "href=\"%(help_link)s\">加入我們，幫忙翻譯！</a>"
 
-#: kuma/wiki/jinja2/wiki/document.html:299
+#: kuma/wiki/jinja2/wiki/document.html:307
 msgid "This article doesn't have any content yet."
 msgstr "這篇文章還沒有任何內容。"
 
-#: kuma/wiki/jinja2/wiki/document.html:302
+#: kuma/wiki/jinja2/wiki/document.html:310
 #, python-format
 msgid ""
 "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that "
@@ -3217,19 +3253,19 @@ msgstr ""
 "搜尋 <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">標題為 %(title)s "
 "的頁面</a>，了解用法以及使用此巨集的頁面數量。"
 
-#: kuma/wiki/jinja2/wiki/document.html:315
+#: kuma/wiki/jinja2/wiki/document.html:323
 msgid "This article doesn't have approved content yet."
 msgstr "這篇文章還沒有任何通過審核的內容。"
 
-#: kuma/wiki/jinja2/wiki/document.html:325
+#: kuma/wiki/jinja2/wiki/document.html:333
 msgid "Document Tags and Contributors"
 msgstr "文件標籤與貢獻者"
 
-#: kuma/wiki/jinja2/wiki/document.html:331
+#: kuma/wiki/jinja2/wiki/document.html:339
 msgid "Contributors to this page:"
 msgstr "此頁面的貢獻者:"
 
-#: kuma/wiki/jinja2/wiki/document.html:337
+#: kuma/wiki/jinja2/wiki/document.html:345
 msgid "Last updated by:"
 msgstr "最近更新:"
 
@@ -3274,38 +3310,38 @@ msgstr "搜尋結果摘要:"
 msgid "Edit Page Title and Properties"
 msgstr "編輯頁面標題及屬性"
 
-#: kuma/wiki/jinja2/wiki/edit.html:127
+#: kuma/wiki/jinja2/wiki/edit.html:126
 msgid "Rendering max age:"
 msgstr "最長描繪時間："
 
-#: kuma/wiki/jinja2/wiki/edit.html:129
+#: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
 msgstr "天"
 
-#: kuma/wiki/jinja2/wiki/edit.html:133
+#: kuma/wiki/jinja2/wiki/edit.html:132
 msgid "Hours"
 msgstr "小時"
 
-#: kuma/wiki/jinja2/wiki/edit.html:137
+#: kuma/wiki/jinja2/wiki/edit.html:136
 msgid "Minutes"
 msgstr "分鐘"
 
-#: kuma/wiki/jinja2/wiki/edit.html:146
+#: kuma/wiki/jinja2/wiki/edit.html:145
 msgid ""
-"Find the translation source with the lookup below and then click \"Save "
-"Changes.\""
-msgstr "以下方查找表尋找翻譯來源，再點擊「儲存變更」。"
+"Find the translation source with the lookup below and then click "
+"\"Publish.\""
+msgstr "於下方尋找翻譯來源，再點擊「發布」。"
 
-#: kuma/wiki/jinja2/wiki/edit.html:148
+#: kuma/wiki/jinja2/wiki/edit.html:147
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
 msgstr "尋找:"
 
-#: kuma/wiki/jinja2/wiki/edit.html:162
+#: kuma/wiki/jinja2/wiki/edit.html:161
 msgid "Thank you for taking the time to improve MDN!"
 msgstr "感謝您花時間改善 MDN！"
 
-#: kuma/wiki/jinja2/wiki/edit.html:164
+#: kuma/wiki/jinja2/wiki/edit.html:163
 #, python-format
 msgid ""
 "It looks like this is your first contribution to MDN. You can find answers "
@@ -3315,21 +3351,21 @@ msgstr ""
 "看來這是您對 MDN 的第一次貢獻成果。如果編輯上有任何問題，可參考<a target=\"_blank\" "
 "href=\"%(url)s\">編輯者指南</a>當中的常見問題與解答。"
 
-#: kuma/wiki/jinja2/wiki/edit.html:168
+#: kuma/wiki/jinja2/wiki/edit.html:167
 msgid ""
 "Don't be afraid to break something, you can always revert your changes."
 msgstr "別擔心會改壞什麼東西，您總是可以還原您的變更。"
 
-#: kuma/wiki/jinja2/wiki/edit.html:169
+#: kuma/wiki/jinja2/wiki/edit.html:168
 msgid "Have fun and be proud of your contribution!"
 msgstr "希望您能以您的貢獻為榮，祝您寫得愉快！"
 
-#: kuma/wiki/jinja2/wiki/edit.html:188
+#: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
 msgstr "了解如何用 tag 標示文件"
 
-#: kuma/wiki/jinja2/wiki/edit.html:190
-#: kuma/wiki/jinja2/wiki/translate.html:112
+#: kuma/wiki/jinja2/wiki/edit.html:193
+#: kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid ""
 "Categorize the article. It will make the article findable under the right "
@@ -3565,33 +3601,33 @@ msgstr "顯示 %(locale)s"
 msgid "Hide %(locale)s"
 msgstr "隱藏 %(locale)s"
 
-#: kuma/wiki/jinja2/wiki/translate.html:99
+#: kuma/wiki/jinja2/wiki/translate.html:98
 #, python-format
 msgid "%(locale)s translation:"
 msgstr "%(locale)s 翻譯:"
 
-#: kuma/wiki/jinja2/wiki/translate.html:109
+#: kuma/wiki/jinja2/wiki/translate.html:111
 msgid "Translate Tags"
 msgstr "翻譯標籤"
 
-#: kuma/wiki/jinja2/wiki/translate.html:118
+#: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
 msgstr "英文版標籤"
 
-#: kuma/wiki/jinja2/wiki/translate.html:130
+#: kuma/wiki/jinja2/wiki/translate.html:132
 msgid "This document has no tags."
 msgstr "這份文件沒有標籤。"
 
-#: kuma/wiki/jinja2/wiki/translate.html:137
+#: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
 msgstr "%(locale)s 版標籤"
 
-#: kuma/wiki/jinja2/wiki/translate.html:144
+#: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
 msgstr "版本記錄"
 
-#: kuma/wiki/jinja2/wiki/translate.html:146
+#: kuma/wiki/jinja2/wiki/translate.html:148
 msgid "Localization flags"
 msgstr "在地化標籤"
 
@@ -3632,20 +3668,12 @@ msgid "You are subscribed to edits on: %(title)s."
 msgstr "您已訂閱: %(title)s 的編輯。"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
-msgid "The following reviews have been requested:"
-msgstr "已請求進行下列審核:"
-
-#: kuma/wiki/jinja2/wiki/includes/approvals.html:13
-msgid "Technical"
-msgstr "技術"
-
-#: kuma/wiki/jinja2/wiki/includes/approvals.html:19
-msgid "Editorial"
-msgstr "編輯"
+msgid "This article needs these reviews:"
+msgstr "此文件需要下列審查:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
-msgid "Review completed"
-msgstr "審核完成"
+msgid "Save"
+msgstr "儲存"
 
 # 88%
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
@@ -3803,6 +3831,18 @@ msgstr "產生目錄"
 msgid "TOC:"
 msgstr "目錄:"
 
+#: kuma/wiki/jinja2/wiki/includes/guide_links.html:2
+msgid "Need Help?"
+msgstr "需要幫忙嗎？"
+
+#: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
+msgid "Editor Guide"
+msgstr "編輯指南"
+
+#: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
+msgid "Style Guide"
+msgstr "格式指南"
+
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid ""
 "There was a scripting error on this page. While it is being addressed by "
@@ -3868,16 +3908,12 @@ msgid "Discard changes and create a new document?"
 msgstr "是否忽略變更並建立新文件？"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
-msgid "Save and Keep Editing"
-msgstr "儲存並繼續編輯"
-
-#: kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
-msgid "Preview Changes"
-msgstr "預覽修改"
+msgid "Publish and Keep Editing"
+msgstr "發布並繼續編輯"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
-msgid "Discard Changes"
-msgstr "放棄修改"
+msgid "Discard"
+msgstr "捨棄"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
@@ -3912,9 +3948,10 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
 msgid ""
-"If you believe you’ve received this message by mistake, please <a "
-"href=\"%(admin_email)s\">contact the site administrators</a>."
-msgstr "若您認為自己不該收到此一訊息，請 <a href=\"%(admin_email)s\">聯絡網站管理員</a>。"
+"If you believe you’ve received this message by mistake, please save a draft "
+"of your content and <a href=\"%(admin_email)s\"> contact the site "
+"administrators</a>."
+msgstr "若您認為您不該收到此訊息，請儲存內容的草稿，並 <a href=\"%(admin_email)s\">聯絡網站管理員</a>。"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -3931,10 +3968,8 @@ msgid "Slug in %(locale)s:"
 msgstr "%(locale)s 版 Slug:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
-msgid ""
-"Find the translation source with the lookup above and then click \"Save "
-"Changes."
-msgstr "以上方查找表尋找翻譯來源，再點擊「儲存變更」。"
+msgid "Find the translation source with the lookup above and then click \"Save\"."
+msgstr "在上面尋找翻譯來源，然後點擊「儲存」。"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
@@ -4190,6 +4225,27 @@ msgstr "您不能翻譯這份文件。"
 #, python-format
 msgid "Elasticsearch server: %(backend)s"
 msgstr "Elasticsearch 伺服器: %(backend)s"
+
+#~ msgid "Save Changes"
+#~ msgstr "儲存修改"
+
+#~ msgid "Draft"
+#~ msgstr "草稿"
+
+#~ msgid "The following reviews have been requested:"
+#~ msgstr "已請求進行下列審核:"
+
+#~ msgid "Technical"
+#~ msgstr "技術"
+
+#~ msgid "Review completed"
+#~ msgstr "審核完成"
+
+#~ msgid "Preview Changes"
+#~ msgstr "預覽修改"
+
+#~ msgid "Discard Changes"
+#~ msgstr "放棄修改"
 
 #~ msgid "Sign in with"
 #~ msgstr "使用不同工具登入:"
@@ -5657,9 +5713,6 @@ msgstr "Elasticsearch 伺服器: %(backend)s"
 
 #~ msgid "or"
 #~ msgstr "或"
-
-#~ msgid "Discard Demo"
-#~ msgstr "放棄 Demo"
 
 #~ msgid "Save changes"
 #~ msgstr "儲存修改"

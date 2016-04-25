@@ -1838,6 +1838,12 @@ class RevisionIP(models.Model):
         editable=False,
         blank=True,
     )
+    data = models.TextField(
+        editable=False,
+        blank=True,
+        null=True,
+        verbose_name=_('Data submitted to Akismet')
+    )
     objects = RevisionIPManager()
 
     def __unicode__(self):
