@@ -46,6 +46,17 @@ amqp==1.4.9 \
 anyjson==0.3.3 \
     --hash=sha256:37812d863c9ad3e35c0734c42e0bf0320ce8c3bed82cd20ad54cb34d158157ba
 
+# flake8
+mccabe==0.4.0 \
+    --hash=sha256:cbc2938f6c01061bc6d21d0c838c2489664755cb18676f0734d7617f4577d09e \
+    --hash=sha256:9a2b12ebd876e77c72e41ebf401cc2e7c5b566649d50105ca49822688642207b
+pep8==1.7.0 \
+    --hash=sha256:4fc2e478addcf17016657dff30b2d8d611e8341fac19ccf2768802f6635d7b8a \
+    --hash=sha256:a113d5f5ad7a7abacef9df5ec3f2af23a20a28005921577b15dd584d099d5900
+pyflakes==1.0.0 \
+    --hash=sha256:071d121e9e7b33058aa1ba5de7bce9b97bfa3149cfe1acbb6587c21fc1c8eda1 \
+    --hash=sha256:f39e33a4c03beead8774f005bd3ecf0c3f2f264fa0201de965fce0aff1d34263
+
 # Jinja2
 MarkupSafe==0.23 \
     --hash=sha256:a4ec1aff59b95a14b45eb2e23761a0179e98319da5a7eb76b56ea8cdc7b871c3
