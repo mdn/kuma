@@ -1,0 +1,12 @@
+# Packages required by the required packages
+
+# tox
+py==1.4.31 \
+    --hash=sha256:4a3e4f3000c123835ac39cab5ccc510642153bc47bc1f13e2bbb53039540ae69 \
+    --hash=sha256:a6501963c725fc2554dabfece8ae9a8fb5e149c0ac0a42fd2b02c5c1c57fc114
+virtualenv==15.0.1 \
+    --hash=sha256:13ce1079910a6bc60e2ce1d79813a99f30b2fd1e571427fcde1fabb0ff4c436c \
+    --hash=sha256:1a74278b8adb383ce4c7619e33c753b1eb7b58dc1e449601c096ca4b76125f84
+pluggy==0.3.1 \
+    --hash=sha256:48096d7015b8d87a83fc064e8b5cc61ea2e235f1b86dd67889d8d53257f350c6 \
+    --hash=sha256:159cc783e056c07da6552aa5aef6b1e6c0064b4f18bd49c531fd2d40aafb0ea3
