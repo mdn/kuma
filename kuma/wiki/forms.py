@@ -715,8 +715,13 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 self._akismet_data = AkismetNewDocumentData(
                     self.request, self.cleaned_data, self.data.get('locale'))
             else:
-                self._akismet_data = AkismetEditDocumentData(
-                    self.request, self.cleaned_data, document)
+                if document.current_revision:
+                    self._akismet_data = AkismetEditDocumentData(
+                        self.request, self.cleaned_data, document)
+                else:
+                    self._akismet_data = AkismetNewDocumentData(
+                        self.request, self.cleaned_data, self.data.get('locale'))
+
         parameters = self._akismet_data.parameters.copy()
         parameters.update(self.akismet_parameter_overrides())
         return parameters

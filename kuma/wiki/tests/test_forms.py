@@ -695,6 +695,13 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         original_data = self.original.copy()
         english_rev = revision(save=True, **original_data)
 
+        fr_web_doc = document(save=True, slug='Web', locale='fr')
+        revision(save=True, slug='Web', document=fr_web_doc)
+        fr_guide_doc = document(save=True, slug='Web/Guide', locale='fr')
+        revision(save=True, slug='Web/Guide', document=fr_guide_doc)
+        fr_html_doc = document(save=True, slug='Web/Guide/HTML', locale='fr',
+                               parent=english_rev.document)
+
         initial = {
             'based_on': english_rev.id,
             'comment': '',
@@ -722,6 +729,7 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         rev_form = RevisionForm(request=request,
                                 data=data,
                                 parent_slug=parent_slug)
+        rev_form.instance.document = fr_html_doc
         return rev_form
 
     @pytest.mark.spam
