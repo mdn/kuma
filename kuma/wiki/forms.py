@@ -114,13 +114,15 @@ class AkismetRevisionData(object):
     def content_from_document(self, document):
         """Create a combined content string from a document."""
         parts = []
+        current_revision = document.current_revision
+        assert current_revision, "document must have a current revision."
         for field in SPAM_SUBMISSION_REVISION_FIELDS:
             if field == 'comment':
                 value = u''
             elif field == 'content':
-                value = document.current_revision.content
+                value = current_revision.content
             elif field == 'tags':
-                value = u'\n'.join(sorted(document.tags.names()))
+                value = self.split_tags(current_revision.tags)
             else:
                 value = getattr(document, field, '')
             parts.append(value)
