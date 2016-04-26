@@ -224,7 +224,7 @@ class AkismetNewDocumentData(AkismetRevisionData):
 
     def __init__(self, request, cleaned_data, language=None):
         """
-        Initialize from a form submission by the author.
+        Initialize from a new document form submission by the author.
 
         Keyword Parameters:
         request - the Request for the author
@@ -238,17 +238,38 @@ class AkismetNewDocumentData(AkismetRevisionData):
         self.set_content(new_content)
 
 
+class AkismetNewTranslationData(AkismetRevisionData):
+    """Collect Akismet data for a user creating a new translation."""
+
+    def __init__(self, request, cleaned_data, english_document, language):
+        """
+        Initialize from a new translation form submission by the author.
+
+        Keyword Parameters:
+        request - the Request for the author
+        cleaned_data - the validated form data
+        english_document - the original English document
+        language - the language of the revision being created
+        """
+        super(AkismetNewTranslationData, self).__init__()
+        self.set_by_edit_request(request)
+        self.set_blog_lang(language)
+        new_content = self.content_from_form(cleaned_data)
+        existing_content = self.content_from_document(english_document)
+        self.set_content(new_content, existing_content)
+
+
 class AkismetEditDocumentData(AkismetRevisionData):
     """Collect Akismet data for a user editing an existing document."""
 
     def __init__(self, request, cleaned_data, document):
         """
-        Initialize from a form submission by the author.
+        Initialize from an edit page form submission by the author.
 
         Keyword Parameters:
         request - the Request for the author
         cleaned_data - the validated form data
-        instance - the form instance, including the base Document
+        document - the document the user is editing
         """
         super(AkismetEditDocumentData, self).__init__()
         self.set_by_edit_request(request)
@@ -719,8 +740,13 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                     self._akismet_data = AkismetEditDocumentData(
                         self.request, self.cleaned_data, document)
                 else:
-                    self._akismet_data = AkismetNewDocumentData(
-                        self.request, self.cleaned_data, self.data.get('locale'))
+                    # New translation, compare to English document
+                    based_on = self.cleaned_data.get('based_on')
+                    assert based_on, 'Expected a new translation.'
+                    document = based_on.document
+                    self._akismet_data = AkismetNewTranslationData(
+                        self.request, self.cleaned_data, document,
+                        self.data.get('locale'))
 
         parameters = self._akismet_data.parameters.copy()
         parameters.update(self.akismet_parameter_overrides())

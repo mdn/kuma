@@ -743,15 +743,10 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         assert parameters['blog_lang'] == 'fr, en_us'
         expected_content = (
             u'Guide de développement HTML\n'
-            u'Web/Guide/HTML\n'
-            u'<h2 id="Summary">Summary</h2>\n'
             u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
             u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
             u' de presque tout contenu Web.</p>\n'
-            u'Traduction initiale\n'
-            u'HTML\n'
-            u'Landing\n'
-            u'Web'
+            u'Traduction initiale'
         )
         assert parameters['comment_content'] == expected_content
 
