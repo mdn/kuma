@@ -42,7 +42,6 @@ Vagrant.configure('2') do |config|
     config.cache.enable :gem
     config.cache.enable :generic, {
       "pip" => { cache_dir: "/root/.cache/pip" },
-      "npm" => { cache_dir: "/root/.npm" },
       "product_details" => { cache_dir: "/home/vagrant/product_details_json" },
     }
     if NFS

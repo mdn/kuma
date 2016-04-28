@@ -2,7 +2,7 @@
 - name: Install node dependencies
   npm: name={{ item.name }} version={{ item.version }} global=yes
   with_items:
-    - {name: 'fibers', version: '1.0.1'}
+    - {name: 'fibers', version: '1.0.10'}
     - {name: 'clean-css', version: '2.2.16'}
     - {name: 'csslint', version: '0.10.0'}
     - {name: 'jshint', version: '2.7.0'}
