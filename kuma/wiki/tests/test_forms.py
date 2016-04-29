@@ -427,6 +427,30 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
     @pytest.mark.spam
     @requests_mock.mock()
+    def test_quoteless_tags(self, mock_requests):
+        """
+        Test Akismet parameters when the tags are saved without quotes.
+
+        Tracked in bug 1268511.
+        """
+        tags = {'tags': 'CodingScripting, Glossary'}
+        rev_form = self.setup_form(mock_requests, override_original=tags)
+        assert rev_form.is_valid()
+        parameters = rev_form.akismet_parameters()
+        assert sorted(parameters.keys()) == self.akismet_keys_edit
+        expected_content = (
+            '<p>{{cssinfo}} and my changes.</p>\n'
+            '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
+            '<pre class="brush:css">display: none;</pre>\n'
+            'Comment\n'
+            'CSS\n'
+            'CSS Property\n'
+            'Reference'
+        )
+        assert parameters['comment_content'] == expected_content
+
+    @pytest.mark.spam
+    @requests_mock.mock()
     def test_akismet_enabled(self, mock_requests):
         rev_form = self.setup_form(mock_requests)
         assert rev_form.akismet_enabled()

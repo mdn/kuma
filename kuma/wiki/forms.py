@@ -213,12 +213,7 @@ class AkismetRevisionData(object):
 
     def split_tags(self, tag_string):
         """Turn '"Tag 2" "Tag 1"' into 'Tag 1\nTag 2'."""
-        if not tag_string:
-            return ''
-        else:
-            assert tag_string[0] == u'"'
-            assert tag_string[-1] == u'"'
-            return u'\n'.join(sorted(tag_string[1:-1].split(u'" "')))
+        return u'\n'.join(parse_tags(tag_string))
 
 
 class AkismetNewDocumentData(AkismetRevisionData):
