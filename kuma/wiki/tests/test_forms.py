@@ -573,6 +573,30 @@ class RevisionFormEditTests(RevisionFormViewTests):
         parameters = rev_form.akismet_parameters()
         assert parameters['is_test']
 
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_disabled_template(self, mock_requests):
+        template = {
+            'content': (
+                '<% /* This is a template */ %>\n'
+                '<p>Hello, World!</p>\n'
+            ),
+            'slug': 'Template:HelloWorld',
+            'tags': '',
+            'title': 'Template:HelloWorld'
+        }
+        template_edit = template.copy()
+        template_edit['content'] = (
+            '<% /* This is a template */ %>\n'
+            '<p><strong>Hello, World!</strong></p>\n'
+        )
+        rev_form = self.setup_form(mock_requests,
+                                   override_original=template,
+                                   override_data=template_edit,
+                                   is_spam='true')
+        assert rev_form.is_valid()
+        assert not rev_form.akismet_enabled()
+
 
 class RevisionFormCreateTests(RevisionFormViewTests):
     """Test RevisionForm as used in create view."""

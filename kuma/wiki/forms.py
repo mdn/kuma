@@ -25,7 +25,7 @@ from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
                         RESERVED_SLUGS_RES, REVIEW_FLAG_TAGS,
                         SLUG_CLEANSING_RE, SPAM_EXEMPTED_FLAG,
                         SPAM_OTHER_HEADERS, SPAM_SUBMISSION_REVISION_FIELDS,
-                        SPAM_TRAINING_FLAG)
+                        SPAM_TRAINING_FLAG, TEMPLATE_TITLE_PREFIX)
 from .events import EditDocumentEvent
 from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
                      RevisionIP, RevisionAkismetSubmission, valid_slug_parent)
@@ -527,6 +527,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
         if self.section_id:
             self.fields['toc_depth'].required = False
+        self.is_template = None
 
     def clean_slug(self):
         # Since this form can change the URL of the page on which the editing
@@ -571,6 +572,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             # No existing document for this value, so we're good here.
             pass
 
+        self.is_template = slug.startswith(TEMPLATE_TITLE_PREFIX)
         return slug
 
     def clean_tags(self):
@@ -667,12 +669,13 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     def akismet_enabled(self):
         """
-        Makes sure that users that have been granted the
-        'wiki_akismet_exempted' waffle flag are exempted from spam checks.
+        Adds two ways that Akismet checks could be disabled:
+        * Edit is to a KumaScript template
+        * User has the SPAM_EXEMPTED_FLAG
         """
         client_ready = super(RevisionForm, self).akismet_enabled()
         user_exempted = waffle.flag_is_active(self.request, SPAM_EXEMPTED_FLAG)
-        return client_ready and not user_exempted
+        return client_ready and not user_exempted and not self.is_template
 
     @property
     def akismet_error_message(self):
