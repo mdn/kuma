@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-04-30 16:04+0000\n"
+"PO-Revision-Date: 2016-04-30 16:16+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -1096,6 +1096,8 @@ msgid ""
 "Get Web technology news from Mozilla, get help from other developers, and "
 "more!"
 msgstr ""
+"Získejte novinky ze světa webových technologií od Mozilly, získejte pomoc od"
+" dalších vývojářů a mnoho dalšího!"
 
 #: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn more and sign up!"
@@ -1122,6 +1124,8 @@ msgid ""
 "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-"
 "hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
+"<a href=\"http://hacks.mozilla.org\">přečtěte si více na hacks.mozilla.org "
+"<i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
@@ -1225,7 +1229,7 @@ msgstr "Pro vývojáře, od vývojářů"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr ""
+msgstr "Nástroje pro webové vývojáře"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
@@ -1515,11 +1519,11 @@ msgstr "Filtrovat podle"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
-msgstr ""
+msgstr "Odeslaná data obsahují neplatný obsah."
 
 #: kuma/spam/forms.py:103
 msgid "The submitted data contains invalid content. Please try again."
-msgstr ""
+msgstr "Odeslaná data obsahují neplatný obsah. Zkuste to prosím znovu."
 
 #: kuma/spam/models.py:10
 msgid "created"
@@ -1531,7 +1535,7 @@ msgstr "Spam"
 
 #: kuma/spam/models.py:28
 msgid "Ham"
-msgstr ""
+msgstr "Není spam"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
@@ -1539,7 +1543,7 @@ msgstr ""
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "typ"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1659,7 +1663,7 @@ msgstr ""
 #: kuma/users/models.py:32
 #, python-format
 msgid "%s (no longer active)"
-msgstr ""
+msgstr "%s (již neaktivní)"
 
 #: kuma/users/models.py:51
 msgid "Language"
@@ -1763,7 +1767,7 @@ msgstr "Souhlasím"
 
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr ""
+msgstr "Učiňte další krok a zapojte se do MDN!"
 
 #: kuma/users/views.py:185
 msgid "Email address"
@@ -1813,7 +1817,7 @@ msgstr "Nastavit jako primární"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr ""
+msgstr "Znovu odeslat potvrzení"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
@@ -1870,6 +1874,8 @@ msgid ""
 "This email confirmation link expired or is invalid. Please <a "
 "href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr ""
+"Tento potvrzovací odkaz vypršel, nebo je neplatný. Prosím, <a "
+"href=\"%(email_url)s\">vyžádejte si nový potvrzovací e-mail</a>."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
@@ -1938,7 +1944,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "Neplatný token"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
