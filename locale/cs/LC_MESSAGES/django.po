@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-04-30 16:16+0000\n"
+"PO-Revision-Date: 2016-05-01 08:53+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -139,7 +139,7 @@ msgstr "Panel revizí"
 
 #: jinja2/base.html:111
 msgid "Documentation status"
-msgstr "Stav dokumentace"
+msgstr "Stav dokumentů"
 
 #: jinja2/base.html:120
 msgid "Web Platform"
@@ -1217,7 +1217,7 @@ msgstr "Vyberte styl tlačítek"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr "Lepší dokumentace"
+msgstr "Lepší dokumenty"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:51
 msgid "Developer Powered"
@@ -1511,7 +1511,7 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr "Dokumentace"
+msgstr "Dokumenty"
 
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
