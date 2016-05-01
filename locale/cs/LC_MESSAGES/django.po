@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-05-01 10:24+0000\n"
+"PO-Revision-Date: 2016-05-01 12:49+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -1002,14 +1002,14 @@ msgstr "Nastavenému filtru neodpovídají žádné revize."
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr ""
+msgstr "Nepřijímat e-maily, když je schválena česká verze"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr ""
+msgstr "Přijímat e-maily, když je schválena česká verze"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
@@ -1181,7 +1181,7 @@ msgstr "Začínáme"
 
 #: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
-msgstr ""
+msgstr "Redakční revize"
 
 #: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
@@ -1211,7 +1211,7 @@ msgstr "Podpořit MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
-msgstr ""
+msgstr "Rozšiřte trochu vývojářské lásky."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
@@ -1271,7 +1271,7 @@ msgstr "Nahraďte &lt;FOO&gt; za"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
-msgstr ""
+msgstr "Přidejte vaše přizpůsobené tlačítko na vaši webovou stránku"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
@@ -1279,7 +1279,7 @@ msgstr "Váš zdrojový kód:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr ""
+msgstr "Vaše tlačítko přesměruje lidi na:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162
 #: kuma/landing/jinja2/landing/promote_buttons.html:166
