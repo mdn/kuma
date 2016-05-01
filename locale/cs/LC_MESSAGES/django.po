@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-05-01 08:53+0000\n"
+"PO-Revision-Date: 2016-05-01 10:06+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: none\n"
 "Language: cs\n"
@@ -131,7 +131,7 @@ msgstr "Zkontrolovat nebo lokalizovat dokumenty"
 
 #: jinja2/base.html:108
 msgid "Site Tools"
-msgstr ""
+msgstr "Nástroje stránky"
 
 #: jinja2/base.html:110
 msgid "Revision dashboard"
@@ -288,6 +288,9 @@ msgid ""
 "contributors.</p> <p>Content is available under <a "
 "href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
+"<p>&copy; 2005-%(thisyear)s Mozilla Developer Network a jednotliví "
+"přispěvatelé.</p> <p>Obsah je k dispozici pod <a "
+"href=\"%(copyright_url)s\">těmito licencemi</a>.</p>"
 
 #: jinja2/base.html:201
 msgid "About MDN"
@@ -2266,7 +2269,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:150
 msgid "Recent Docs Activity"
-msgstr ""
+msgstr "Nedávná aktivita v dokumentech"
 
 #: kuma/users/jinja2/users/user_detail.html:150
 msgid "View all activity"
@@ -3503,6 +3506,11 @@ msgid ""
 "href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
+"&copy; 2005-2005 Mozilla Developer Network a jednotliví přispěvatelé<br /> "
+"Obsah je dostupný pod licencí specifickou pro tento projekt. &middot; <a "
+"href=\"%(about_url)s\">O MDN</a> &middot; <a "
+"href=\"//github.com/mozilla/kuma\">Přispějte do kódu</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Zásady ochrany soukromí</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format

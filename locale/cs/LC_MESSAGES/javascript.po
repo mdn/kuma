@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-02-03 20:16+0000\n"
+"PO-Revision-Date: 2016-05-01 09:54+0000\n"
 "Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: cs\n"
@@ -92,7 +92,7 @@ msgstr "Nový zájem..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "Otevřít implementační poznámky"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
@@ -132,11 +132,11 @@ msgstr "Zobrazit starou tabulku."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "Uložit koncept"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "Povolit automatické ukládání."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
@@ -156,28 +156,27 @@ msgstr "Zahodit koncept"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "obnoveno"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "Koncept"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "publikováno"
 
 #: kuma/static/js/wiki-edit.js:622
-#, fuzzy
 msgid "discarded"
-msgstr "Zahodit koncept"
+msgstr "zahozeno"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "Automatické ukládání povoleno."
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "Automatické ukládání zakázáno."
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -192,8 +191,10 @@ msgid "Search Stack Overflow"
 msgstr "Prohledat Stack Overflow"
 
 #: kuma/static/js/wiki.js:677
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Váš prohlížeč nepodporuje MathML, proto byl namísto něj použit CSS fallback."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Váš prohlížeč nepodporuje MathML, proto byl namísto něj použit CSS fallback."
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
@@ -207,13 +208,14 @@ msgstr "Vybrat přílohu"
 msgid "No attachments available"
 msgstr "Žádné přílohy nejsou dostupné"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Přilohy"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:87
 msgid "Article Title Lookup / Link Text"
-msgstr ""
+msgstr "Vyhledat nadpis článku / odkazu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-launch/plugin.js:12
 msgid "Launch"
@@ -227,7 +229,8 @@ msgstr "Vytvořit přesměrování"
 msgid "MDN Redirect"
 msgstr "MDN přesměrování"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
@@ -325,5 +328,10 @@ msgstr "Výchozí"
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "Máte rozepsaný koncept. Můžete <a href=\"\" class=\"restoreLink\">obnovit obsah konceptu</a> nebo jej <a href=\"\" class=\"discardLink\">zahodit</a>."
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "Máte rozepsaný koncept. Můžete <a href=\"\" class=\"restoreLink\">obnovit "
+#~ "obsah konceptu</a> nebo jej <a href=\"\" class=\"discardLink\">zahodit</a>."
