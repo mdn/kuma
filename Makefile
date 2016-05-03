@@ -49,5 +49,8 @@ locale:
 			msginit --no-translator -l $(LOCALE) -i $$pot -o locale/$(LOCALE)/LC_MESSAGES/`basename -s .pot $$pot`.po ; \
 		done
 
+qalocale:
+	dennis-cmd lint --errorsonly locale/
+
 # Those tasks don't have file targets
-.PHONY: test coveragetest intern locust clean locale install compilecss compilejsi18n collectstatic
+.PHONY: test coveragetest intern locust clean locale install compilecss compilejsi18n collectstatic qalocale
