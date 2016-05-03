@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-05-01 12:49+0000\n"
-"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
+"PO-Revision-Date: 2016-05-03 13:08+0000\n"
+"Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: none\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -590,9 +590,8 @@ msgid "Uploaded by"
 msgstr "Nahrál(a)"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:73
-#, fuzzy
 msgid "Linked in article"
-msgstr "Článek na Wikipedii"
+msgstr "Odkaz z článku"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:75
 msgid "Article attached to"
@@ -2857,9 +2856,8 @@ msgid "uploaded to the document"
 msgstr ""
 
 #: kuma/wiki/models.py:179
-#, fuzzy
 msgid "linked in the document content"
-msgstr "Přejít k hlavnímu obsahu"
+msgstr "odkaz z obsahu dokumentu"
 
 #: kuma/wiki/models.py:193
 #, python-format
@@ -2924,9 +2922,8 @@ msgid "HTTP Referrer"
 msgstr ""
 
 #: kuma/wiki/models.py:1845 kuma/wiki/models.py:1930
-#, fuzzy
 msgid "Data submitted to Akismet"
-msgstr "datum podání"
+msgstr "Data odeslána do Akismetu"
 
 #: kuma/wiki/models.py:1870
 msgid "Akismet submission"
@@ -2945,9 +2942,8 @@ msgid "Document (optional)"
 msgstr ""
 
 #: kuma/wiki/models.py:1933
-#, fuzzy
 msgid "reviewed"
-msgstr "Náhled"
+msgstr "zkontrolováno"
 
 #: kuma/wiki/models.py:1944
 msgid "Needs Review"
@@ -2962,9 +2958,8 @@ msgid "Confirmed as Spam"
 msgstr ""
 
 #: kuma/wiki/models.py:1947
-#, fuzzy
 msgid "Review Unavailable"
-msgstr "Vyhledávání není dostupné"
+msgstr "Kontrola není dostupná"
 
 #: kuma/wiki/models.py:1948
 msgid "Akismet Error"
@@ -3801,9 +3796,8 @@ msgid "Need Help?"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
-#, fuzzy
 msgid "Editor Guide"
-msgstr "Upravit váš profil"
+msgstr "Průvodce úpravou"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
