@@ -26,6 +26,7 @@ Vagrant.configure('2') do |config|
     IP = ENV['VAGRANT_IP'] || '192.168.10.55'
     GUI = (ENV['VAGRANT_GUI'] || 'false') == 'true'
     ANSIBLE_VERBOSE = (ENV['VAGRANT_ANSIBLE_VERBOSE'] || 'false') == 'true'
+    USE_CACHIER = (ENV['VAGRANT_CACHIER'] || 'false') == 'true'
 
     config.package.name = 'kuma-ubuntu.box'
     config.vm.box = 'ubuntu/trusty64'
@@ -35,16 +36,18 @@ Vagrant.configure('2') do |config|
     config.hostsupdater.aliases = ['mdn-local.mozillademos.org']
     config.ssh.forward_agent = true
 
-    config.cache.scope = :box
-    config.cache.auto_detect = false
-    config.cache.enable :apt
-    config.cache.enable :apt_lists
-    config.cache.enable :gem
-    config.cache.enable :generic, {
-      "pip" => { cache_dir: "/root/.cache/pip" },
-      "product_details" => { cache_dir: "/home/vagrant/product_details_json" },
-    }
-    if NFS
+    if USE_CACHIER
+        config.cache.scope = :box
+        config.cache.auto_detect = false
+        config.cache.enable :apt
+        config.cache.enable :apt_lists
+        config.cache.enable :gem
+        config.cache.enable :generic, {
+            "pip" => { cache_dir: "/root/.cache/pip" },
+            "product_details" => { cache_dir: "/home/vagrant/product_details_json" },
+        }
+    end
+    if NFS and USE_CACHIER
         config.cache.synced_folder_opts = {
             type: :nfs,
             # The nolock option can be useful for an NFSv3 client that wants to avoid the
