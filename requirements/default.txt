@@ -127,7 +127,11 @@ Pillow==3.2.0 \
     --hash=sha256:357e4032ab1be4c050473c08ad8ee24c00f144e46f213c9a683a48c38e7c5409 \
     --hash=sha256:cc44c54b432b27c59e3d0bc048a5a7581b13944c14c56c94634cfe8d5eabade5
 
-polib==1.0.7 --hash=sha256:d70a315cd5c6adfe7adcf9b541b023348c8b714587e5357886c7e990a91216f3
+# Compile .po files into .mo files, used in locale/compile-mo.sh
+polib==1.0.7 \
+    --hash=sha256:d70a315cd5c6adfe7adcf9b541b023348c8b714587e5357886c7e990a91216f3 \
+    --hash=sha256:43ce60d05ffa442ba9d3c5722193aadb93c38174b9fb471c8ea7ccbf8349bbca
+
 puente==0.4.1 --hash=sha256:bc5ee85521127577d23430832e2f827686efdb7ce95b232f54fbeb5b9166397c
 pyquery==1.2.11 --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612
 python-dateutil==2.4.2 --hash=sha256:2ae63cf475f0bd049b722fac20813d62aedc14957dd5a3bf00d120d2b5404460
