@@ -31,3 +31,9 @@
 {% block tumbeast %}{% endblock %}
 {% block tumbeast_attribution %}{% endblock %}
 {% block next_action %}{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    mdn.analytics.trackError('403', String(window.location), 'create-page');
+</script>
+{% endblock %}
