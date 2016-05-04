@@ -95,11 +95,13 @@
               </article>
               <article class="localized">
                 <header>
-                  {% include 'wiki/includes/guide_links.html' %}
                   <h3>{{ _('%(locale)s translation:', locale=language) }}</h3>
                 </header>
-                <div class="ckeditor-container editor-container">
-                  {{ content_editor(revision_form.content) }}
+                {% include 'wiki/includes/guide_links.html' %}
+                <div id="editor-wrapper" class="editor-wrapper">
+                    <div class="ckeditor-container editor-container">
+                      {{ content_editor(revision_form.content) }}
+                    </div>
                 </div>
               </article>
             </div>

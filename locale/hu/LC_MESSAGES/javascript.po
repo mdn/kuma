@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-24 13:38+0000\n"
+"POT-Creation-Date: 2016-04-21 07:33-0700\n"
+"PO-Revision-Date: 2016-04-28 12:08+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: hu\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Almenü bezárása"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "Értesítés bezárása"
 
@@ -131,25 +131,53 @@ msgstr "Bejelentve. Köszönjük!"
 msgid "Show old table."
 msgstr "Régi táblázat megjelenítése."
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:401
+msgid "Save Draft"
+msgstr "Piszkozat mentése"
+
+#: kuma/static/js/wiki-edit.js:406
+msgid "Enable autosave."
+msgstr "Automatikus mentés engedélyezése."
+
+#: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
 msgstr "ismeretlen dátum"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
 msgstr "Létezik egy piszkozata innen:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
 msgstr "Piszkozat tartalmának helyreállítása"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
 msgstr "Piszkozat elvetése"
 
-#: kuma/static/js/wiki-edit.js:555
-msgid "saved"
-msgstr "mentve"
+#: kuma/static/js/wiki-edit.js:442
+msgid "restored"
+msgstr "visszaállítva"
+
+#: kuma/static/js/wiki-edit.js:571
+msgid "Draft"
+msgstr "Piszkozat"
+
+#: kuma/static/js/wiki-edit.js:618
+msgid "published"
+msgstr "közzétéve"
+
+#: kuma/static/js/wiki-edit.js:622
+msgid "discarded"
+msgstr "elvetve"
+
+#: kuma/static/js/wiki-edit.js:660
+msgid "Autosave enabled."
+msgstr "Automatikus mentés engedélyezve."
+
+#: kuma/static/js/wiki-edit.js:667
+msgid "Autosave disabled."
+msgstr "Automatikus mentés letiltva."
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -159,18 +187,18 @@ msgstr "Új címke…"
 msgid "How to read CSS syntax."
 msgstr "Hogyan olvasandó a CSS szintaxis."
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "Keresés a Stack Overflow oldalon"
 
-#: kuma/static/js/wiki.js:655
+#: kuma/static/js/wiki.js:677
 msgid ""
 "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 "Böngészője nem támogatja a MathML-t. Egy CSS tartalékmegoldás lett használva"
 " helyette."
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "Részletek"
 
@@ -295,3 +323,6 @@ msgstr "A megadott URL valószínűleg érvénytelen"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Alapértelmezett"
+
+#~ msgid "saved"
+#~ msgstr "mentve"

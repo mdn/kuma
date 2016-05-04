@@ -11,3 +11,16 @@
     {% endif %}
     {{ block.super }}
 {% endblock %}
+
+{% block after_field_sets %}
+{# Add submitted data, styled almost like it was a real field #}
+<fieldset class="module aligned">
+  <div class="form-row field-submitted-data">
+    <div>
+        <label>Submitted Data:</label>
+        <p>{{ submitted_data }}</p>
+    </div>
+  </div>
+</fieldset>
+{{ block.super }}
+{% endblock %}

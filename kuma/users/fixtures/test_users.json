@@ -13,8 +13,8 @@
         "fields": {
             "name": "template-editors",
             "permissions": [
-                118,
-                119
+                ["add_template_document", "wiki", "document"],
+                ["change_template_document", "wiki", "document"]
             ]
         },
         "model": "auth.group",
@@ -22,10 +22,20 @@
     },
     {
         "fields": {
+            "name": "Page Creators",
+            "permissions": [
+                ["add_document", "wiki", "document"]
+            ]
+        },
+        "model": "auth.group",
+        "pk": 2
+    },
+    {
+        "fields": {
             "date_joined": "2011-06-03 16:12:08",
             "email": "testuser@test.com",
             "first_name": "Test",
-            "groups": [],
+            "groups": [2],
             "is_active": true,
             "is_staff": false,
             "is_superuser": false,
@@ -79,7 +89,7 @@
             "date_joined": "2011-06-03 16:12:08",
             "email": "testuser2@test.com",
             "first_name": "Test2",
-            "groups": [],
+            "groups": [2],
             "is_active": true,
             "is_staff": false,
             "is_superuser": false,
@@ -164,7 +174,7 @@
             "date_joined": "2011-06-03 16:12:08",
             "email": "testuser01@test.com",
             "first_name": "Test",
-            "groups": [],
+            "groups": [2],
             "is_active": true,
             "is_staff": false,
             "is_superuser": false,

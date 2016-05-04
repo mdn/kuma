@@ -4,6 +4,7 @@ import sys
 import traceback
 from datetime import datetime, timedelta
 from functools import wraps
+from uuid import uuid4
 
 import newrelic.agent
 import waffle
@@ -34,9 +35,7 @@ from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         KUMA_FILE_URL, REDIRECT_CONTENT, REDIRECT_HTML,
                         TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
-from .content import (H2TOCFilter, H3TOCFilter, SectionTOCFilter,
-                      extract_code_sample, extract_css_classnames,
-                      extract_html_attributes, extract_kumascript_macro_names,
+from .content import (Extractor, H2TOCFilter, H3TOCFilter, SectionTOCFilter,
                       get_content_sections, get_seo_description)
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
@@ -45,7 +44,6 @@ from .jobs import DocumentContributorsJob, DocumentZoneStackJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
-from .search import WikiDocumentType
 from .signals import render_done
 from .templatetags.jinja_helpers import absolutify
 from .utils import tidy_content
@@ -318,6 +316,8 @@ class Document(NotificationsMixin, models.Model):
 
     summary_text = models.TextField(editable=False, blank=True, null=True)
 
+    uuid = models.UUIDField(default=uuid4, editable=False)
+
     class Meta(object):
         unique_together = (
             ('parent', 'locale'),
@@ -403,12 +403,6 @@ class Document(NotificationsMixin, models.Model):
             if src:
                 return src
 
-    def extract_section(self, content, section_id, ignore_heading=False):
-        parsed_content = parse_content(content)
-        extracted = parsed_content.extractSection(section_id,
-                                                  ignore_heading=ignore_heading)
-        return extracted.serialize()
-
     def get_section_content(self, section_id, ignore_heading=True):
         """
         Convenience method to extract the rendered content for a single section
@@ -417,14 +411,14 @@ class Document(NotificationsMixin, models.Model):
             content = self.rendered_html
         else:
             content = self.html
-        return self.extract_section(content, section_id, ignore_heading)
+        return self.extract.section(content, section_id, ignore_heading)
 
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""
         if not section_id:
             content = self.html
         else:
-            content = self.extract_section(self.html, section_id)
+            content = self.extract.section(self.html, section_id)
         return '"%s"' % hashlib.sha1(content.encode('utf8')).hexdigest()
 
     def current_or_latest_revision(self):
@@ -629,6 +623,7 @@ class Document(NotificationsMixin, models.Model):
                     'tags': list(translation.tags.names()),
                     'title': translation.title,
                     'url': translation.get_absolute_url(),
+                    'uuid': str(translation.uuid)
                 })
 
         if self.current_revision:
@@ -664,6 +659,7 @@ class Document(NotificationsMixin, models.Model):
             'label': self.title,
             'url': self.get_absolute_url(),
             'id': self.id,
+            'uuid': str(self.uuid),
             'slug': self.slug,
             'tags': tags,
             'review_tags': review_tags,
@@ -710,25 +706,9 @@ class Document(NotificationsMixin, models.Model):
 
         return self._json_data
 
-    def extract_code_sample(self, id):
-        """Given the id of a code sample, attempt to extract it from rendered
-        HTML with a fallback to non-rendered in case of errors."""
-        try:
-            src, errors = self.get_rendered()
-            if errors:
-                src = self.html
-        except:
-            src = self.html
-        return extract_code_sample(id, src)
-
-    def extract_kumascript_macro_names(self):
-        return extract_kumascript_macro_names(self.html)
-
-    def extract_css_classnames(self):
-        return extract_css_classnames(self.rendered_html)
-
-    def extract_html_attributes(self):
-        return extract_html_attributes(self.rendered_html)
+    @cached_property
+    def extract(self):
+        return Extractor(self)
 
     def natural_key(self):
         return (self.locale, self.slug)
@@ -1371,11 +1351,6 @@ Full traceback:
                 elif len(url) == 1 and url[0] == '/':
                     return url
 
-    def filter_permissions(self, user, permissions):
-        """Filter permissions with custom logic"""
-        # No-op, for now.
-        return permissions
-
     def get_topic_parents(self):
         """Build a list of parent topics from self to root"""
         curr, parents = self, []
@@ -1427,12 +1402,16 @@ Full traceback:
 
     @property
     def original(self):
-        """Return the document I was translated from or, if none, myself."""
+        """
+        Return the document I was translated from or, if none, myself.
+        """
         return self.parent or self
 
     @cached_property
     def other_translations(self):
-        """Return a list of Documents - other translations of this Document"""
+        """
+        Return a list of Documents - other translations of this Document
+        """
         if self.parent is None:
             return self.translations.all().order_by('locale')
         else:
@@ -1444,8 +1423,10 @@ Full traceback:
 
     @property
     def parents(self):
-        """Return the list of topical parent documents above this one,
-        or an empty list if none exist."""
+        """
+        Return the list of topical parent documents above this one,
+        or an empty list if none exist.
+        """
         if self.parent_topic is None:
             return []
         current_parent = self.parent_topic
@@ -1482,7 +1463,9 @@ Full traceback:
         return results
 
     def is_watched_by(self, user):
-        """Return whether `user` is notified of edits to me."""
+        """
+        Return whether `user` is notified of edits to me.
+        """
         from .events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
 
@@ -1497,9 +1480,6 @@ Full traceback:
         given user.
         """
         return [doc for doc in self.parents if doc.tree_is_watched_by(user)]
-
-    def get_document_type(self):
-        return WikiDocumentType
 
     @cached_property
     def contributors(self):
@@ -1737,7 +1717,9 @@ class Revision(models.Model):
             self.make_current()
 
     def make_current(self):
-        """Make this revision the current one for the document"""
+        """
+        Make this revision the current one for the document
+        """
         self.document.title = self.title
         self.document.slug = self.slug
         self.document.html = self.content_cleaned
@@ -1761,7 +1743,7 @@ class Revision(models.Model):
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
-        return self.document.extract_section(self.content, section_id)
+        return self.document.extract.section(self.content, section_id)
 
     def get_tidied_content(self, allow_none=False):
         """
@@ -1778,20 +1760,17 @@ class Revision(models.Model):
         if self.tidied_content:
             tidied_content = self.tidied_content
         else:
-            from .tasks import tidy_revision_content
-            tidying_scheduled_cache_key = 'kuma:tidying_scheduled:%s' % self.pk
-            # if there isn't already a task scheduled for the revision
-            tidying_already_scheduled = memcache.get(tidying_scheduled_cache_key)
-            if not tidying_already_scheduled:
-                tidy_revision_content.delay(self.pk)
-                # we temporarily set a flag that we've scheduled a task
-                # already and don't need to schedule it the next time
-                # we use 3 days as a limit to try it again
-                memcache.set(tidying_scheduled_cache_key, 1, 60 * 60 * 24 * 3)
             if allow_none:
+                if self.pk:
+                    from .tasks import tidy_revision_content
+                    tidy_revision_content.delay(self.pk, refresh=False)
                 tidied_content = None
             else:
                 tidied_content, errors = tidy_content(self.content)
+                if self.pk:
+                    Revision.objects.filter(pk=self.pk).update(
+                        tidied_content=tidied_content)
+        self.tidied_content = tidied_content or ''
         return tidied_content
 
     @property
@@ -1859,6 +1838,12 @@ class RevisionIP(models.Model):
         editable=False,
         blank=True,
     )
+    data = models.TextField(
+        editable=False,
+        blank=True,
+        null=True,
+        verbose_name=_('Data submitted to Akismet')
+    )
     objects = RevisionIPManager()
 
     def __unicode__(self):
@@ -1919,14 +1904,15 @@ class DocumentSpamAttempt(SpamAttempt):
     The wiki document specific spam attempt.
 
     Stores title, slug and locale of the documet revision to be able
-    to see where it happens.
+    to see where it happens. Stores data sent to Akismet so that staff can
+    review Akismet's spam detection for false positives.
     """
     title = models.CharField(
-        verbose_name=ugettext('Title'),
+        verbose_name=_('Title'),
         max_length=255,
     )
     slug = models.CharField(
-        verbose_name=ugettext('Slug'),
+        verbose_name=_('Slug'),
         max_length=255,
     )
     document = models.ForeignKey(
@@ -1934,8 +1920,44 @@ class DocumentSpamAttempt(SpamAttempt):
         related_name='spam_attempts',
         null=True,
         blank=True,
-        verbose_name=ugettext('Document (optional)'),
+        verbose_name=_('Document (optional)'),
         on_delete=models.SET_NULL,
+    )
+    data = models.TextField(
+        editable=False,
+        blank=True,
+        null=True,
+        verbose_name=_('Data submitted to Akismet')
+    )
+    reviewed = models.DateTimeField(
+        _('reviewed'),
+        blank=True,
+        null=True,
+    )
+
+    NEEDS_REVIEW = 0
+    HAM = 1
+    SPAM = 2
+    REVIEW_UNAVAILABLE = 3
+    AKISMET_ERROR = 4
+    REVIEW_CHOICES = (
+        (NEEDS_REVIEW, _('Needs Review')),
+        (HAM, _('Ham / False Positive')),
+        (SPAM, _('Confirmed as Spam')),
+        (REVIEW_UNAVAILABLE, _('Review Unavailable')),
+        (AKISMET_ERROR, _('Akismet Error')),
+    )
+    review = models.IntegerField(
+        choices=REVIEW_CHOICES,
+        default=NEEDS_REVIEW,
+        verbose_name=_("Review of Akismet's classification as spam"),
+    )
+    reviewer = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='documentspam_reviewed',
+        blank=True,
+        null=True,
+        verbose_name=_('Staff reviewer'),
     )
 
     def __unicode__(self):

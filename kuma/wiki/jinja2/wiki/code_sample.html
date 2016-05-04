@@ -4,17 +4,17 @@
         <link rel="stylesheet" type="text/css" href="{{ '%s%s' % (settings.SITE_URL, config.KUMA_CUSTOM_SAMPLE_CSS_PATH) }}?raw=1" />
         {% if css %}
         <style type="text/css">
-            {{ css | safe }}
+            {{ css|safe }}
         </style>
         {% endif %}
     </head>
     <body>
         {% if html %}
-            {{ html | safe }}
+            {{ html|safe }}
         {% endif %}
         {% if js %}
             <script type="text/javascript">
-                {{ js | safe }}
+                {{ js|safe }}
             </script>
         {% endif %}
     </body>

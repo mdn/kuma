@@ -252,6 +252,7 @@ KUMA_FILE_URL = re.compile(r'%s%s/files/(?P<file_id>\d+)/' %
                             re.escape(settings.ATTACHMENT_HOST)))
 
 SPAM_EXEMPTED_FLAG = 'wiki_spam_exempted'
+SPAM_TRAINING_FLAG = 'wiki_spam_training'
 SPAM_SUBMISSION_REVISION_FIELDS = [
     'title',
     'slug',
@@ -261,3 +262,18 @@ SPAM_SUBMISSION_REVISION_FIELDS = [
     'tags',
     'keywords',
 ]
+SPAM_OTHER_HEADERS = (  # Header to send that don't start with HTTP
+    'REMOTE_ADDR',
+    'REQUEST_URI',
+    'DOCUMENT_URI',
+)
+
+CODE_SAMPLE_MACROS = [
+    'LiveSampleURL',
+    'EmbedDistLiveSample',
+    'EmbedLiveSample',
+    'LiveSampleLink',
+    'FXOSUXLiveSampleEmbed',
+]
+
+DEV_DOC_REQUEST_FORM = 'https://bugzilla.mozilla.org/form.doc'

@@ -353,7 +353,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('article > ul.errorlist')
+        ul = doc('article ul.errorlist')
         ok_(len(ul) > 0)
         ok_('Please provide a title.' in ul('li').text())
 
@@ -365,7 +365,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('article > ul.errorlist')
+        ul = doc('article ul.errorlist')
         eq_(1, len(ul))
         eq_('Please provide content.', ul('li').text())
 
@@ -379,7 +379,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.post(reverse('wiki.create'), data)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        ul = doc('article > ul.errorlist')
+        ul = doc('article ul.errorlist')
         eq_(1, len(ul))
         eq_('Document with this Slug and Locale already exists.',
             ul('li').text())
@@ -491,7 +491,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         time.sleep(1)
         eq_(2, len(mail.outbox))
         first_edit_email = mail.outbox[0]
-        expected_to = [config.EMAIL_LIST_FOR_FIRST_EDITS]
+        expected_to = [config.EMAIL_LIST_SPAM_WATCH]
         expected_subject = u'[MDN] %(username)s made their first edit, to: %(title)s' % ({'username': new_rev.creator.username, 'title': self.d.title})
         eq_(expected_subject, first_edit_email.subject)
         eq_(expected_to, first_edit_email.to)
@@ -1082,7 +1082,6 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
             len(doc('#select-locale ul.locales li')))
 
 
-# TODO: Merge with wiki.tests.doc_rev()?
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',

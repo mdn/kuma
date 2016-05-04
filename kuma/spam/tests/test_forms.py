@@ -121,6 +121,7 @@ class AkismetFormTests(SimpleTestCase):
             forms.ValidationError,
             force_unicode(form.akismet_error_message),
             form.akismet_error,
+            {}
         )
 
     @override_config(AKISMET_KEY='error')
@@ -137,6 +138,7 @@ class AkismetFormTests(SimpleTestCase):
             forms.ValidationError,
             force_unicode(form.akismet_error_message),
             form.akismet_error,
+            {}
         )
 
     @override_config(AKISMET_KEY='clean')

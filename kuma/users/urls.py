@@ -78,8 +78,5 @@ urlpatterns = [
     url(r'^profile/edit/?$',
         views.my_edit_page,
         name='users.my_edit_page'),
-    url(r'^newsletter/?$',
-        views.apps_newsletter,
-        name='users.apps_newsletter'),
     url(r'^users/', include(users_patterns)),
 ]

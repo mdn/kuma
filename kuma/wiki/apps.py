@@ -1,3 +1,5 @@
+from constance import config
+
 from django.apps import AppConfig
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -9,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from elasticsearch_dsl.connections import connections as es_connections
 
 from .jobs import (DocumentContributorsJob, DocumentZoneStackJob,
-                   DocumentZoneURLRemapsJob)
+                   DocumentZoneURLRemapsJob, DocumentCodeSampleJob)
 from .signals import render_done
 
 
@@ -100,12 +102,17 @@ class WikiConfig(AppConfig):
           cache for the given document
         - trigger the cache invalidation of the contributor bar for the given
           document
+        - trigger the renewal of the code sample job generation
         """
         async = kwargs.get('async', True)
 
         invalidate_zone_urls_cache(instance, async=async)
         invalidate_zone_stack_cache(instance, async=async)
+
         DocumentContributorsJob().invalidate(instance.pk)
+
+        code_sample_job = DocumentCodeSampleJob(generation_args=[instance.pk])
+        code_sample_job.invalidate_generation()
 
     def on_zone_save(self, sender, instance, **kwargs):
         """
@@ -132,7 +139,11 @@ class WikiConfig(AppConfig):
         from .tasks import tidy_revision_content
         tidy_revision_content.delay(instance.pk)
 
-    def on_document_spam_attempt_save(self, sender, instance, **kwargs):
+    def on_document_spam_attempt_save(
+            self, sender, instance, created, raw, **kwargs):
+        if raw or not created:
+            # Only send for new instances, not fixtures or edits
+            return
         subject = u'[MDN] Wiki spam attempt recorded'
         if instance.document:
             subject = u'%s for document %s' % (subject, instance.document)
@@ -141,4 +152,4 @@ class WikiConfig(AppConfig):
         body = render_to_string('wiki/email/spam.ltxt',
                                 {'spam_attempt': instance})
         send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
-                  ['mdn-spam-watch@mozilla.com'])
+                  [config.EMAIL_LIST_SPAM_WATCH])

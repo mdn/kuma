@@ -729,12 +729,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/dashboards.css',
     },
-    'newsletter': {
-        'source_filenames': (
-            'css/newsletter.css',
-        ),
-        'output_filename': 'build/styles/newsletter.css',
-    },
     'submission': {
         'source_filenames': (
             'css/submission.css',
@@ -885,15 +879,6 @@ PIPELINE_JS = {
             'js/helpfulness.js',
         ),
         'output_filename': 'build/js/helpfulness.js',
-        'extra_context': {
-            'async': True,
-        },
-    },
-    'newsletter': {
-        'source_filenames': (
-            'js/newsletter.js',
-        ),
-        'output_filename': 'build/js/newsletter.js',
         'extra_context': {
             'async': True,
         },
@@ -1116,20 +1101,6 @@ CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
-    BASKET_RETRIES=(
-        5,
-        'Number of time to retry basket post before giving up.'
-    ),
-    BASKET_RETRY_WAIT=(
-        .5,
-        'How long to wait between basket api request retries. '
-        'We typically multiply this value by the retry number so, e.g., '
-        'the 4th retry waits 4*.5 = 2 seconds.'
-    ),
-    BASKET_API_KEY=(
-        '',
-        'API Key to use for basket requests'
-    ),
     BETA_GROUP_NAME=(
         'Beta Testers',
         'Name of the django.contrib.auth.models.Group to use as beta testers'
@@ -1238,21 +1209,6 @@ CONSTANCE_CONFIG = dict(
         ]),
         "JSON array listing tag suggestions for documents"
     ),
-    SEARCH_FILTER_TAG_OPTIONS=(
-        json.dumps([
-            "Accessibility", "AJAX", "API", "Apps",
-            "Canvas", "CSS", "Device", "DOM", "Events",
-            "Extensions", "Firefox", "Firefox OS", "Games",
-            "Gecko", "Graphics", "Internationalization", "History", "HTML", "HTTP", "JavaScript", "Layout",
-            "Localization", "MDN", "Mobile", "Mozilla",
-            "Networking", "Persona", "Places", "Plugins", "Protocols",
-
-            "Reference", "Tutorial", "Landing",
-
-            "junk", "NeedsMarkupWork", "NeedsContent", "NeedsExample",
-        ]),
-        "JSON array of tags that are enabled for search faceting"
-    ),
     SESSION_CLEANUP_CHUNK_SIZE=(
         1000,
         'Number of expired sessions to cleanup up in one go.',
@@ -1261,9 +1217,9 @@ CONSTANCE_CONFIG = dict(
         "Janet Swisher <no-reply@mozilla.org>",
         'Email address from which welcome emails will be sent',
     ),
-    EMAIL_LIST_FOR_FIRST_EDITS=(
+    EMAIL_LIST_SPAM_WATCH=(
         "mdn-spam-watch@mozilla.com",
-        "Email address to which emails will be sent for users' first edits",
+        "Email address to notify of possible spam (first edits, blocked edits)",
     ),
     AKISMET_KEY=(
         '',
@@ -1276,11 +1232,12 @@ CONSTANCE_CONFIG = dict(
     RECAPTCHA_PRIVATE_KEY=(
         '',
         'ReCAPTCHA private key, leave empty to disable'
-    )
+    ),
+    EMAIL_LIST_MDN_ADMINS=(
+        'mdn-admins@mozilla.org',
+        'Email address to request admin intervention'
+    ),
 )
-
-BASKET_URL = 'https://basket.mozilla.com'
-BASKET_APPS_NEWSLETTER = 'app-dev'
 
 KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
 
@@ -1384,7 +1341,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 ACCOUNT_ADAPTER = 'kuma.users.adapters.KumaAccountAdapter'
-ACCOUNT_SIGNUP_FORM_CLASS = 'kuma.users.forms.NewsletterForm'  # weird but needed
+ACCOUNT_SIGNUP_FORM_CLASS = None
 ACCOUNT_UNIQUE_EMAIL = False
 
 SOCIALACCOUNT_ADAPTER = 'kuma.users.adapters.KumaSocialAccountAdapter'

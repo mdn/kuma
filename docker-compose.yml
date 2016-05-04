@@ -1,8 +1,8 @@
 worker: &worker
-  build: ../
+  build: ./
   command: supervisord -n -c /app/docker/supervisor-celery.conf
   volumes:
-    - ../:/app
+    - ./:/app
   links:
     - memcached
     - mysql
@@ -21,8 +21,6 @@ worker: &worker
     - BROKER_URL=redis://redis:6379/0
     - CELERY_ALWAYS_EAGER=false
     - ES_URLS=elasticsearch:9200
-    # Only needed here to not load settings/local.py.
-    - DJANGO_SETTINGS_MODULE=kuma.settings.docker
     # Other environment variables:
     - PYTHONDONTWRITEBYTECODE=1
 
@@ -34,9 +32,9 @@ web:
     - "8000:8000"
 
 nginx:
-  build: ./images/nginx
+  build: ./docker/images/nginx
   volumes:
-    - ../static:/app/static
+    - ./static:/app/static
   ports:
     - "80:80"
   links:
@@ -46,12 +44,12 @@ memcached:
   image: memcached
 
 mysql-data:
-  build: ./images/mysql-data
+  build: ./docker/images/mysql-data
   volumes:
     - /var/lib/mysql
 
 mysql:
-  build: ./images/mysql
+  build: ./docker/images/mysql
   environment:
     - MYSQL_ROOT_PASSWORD=docker
     - MYSQL_USER=kuma

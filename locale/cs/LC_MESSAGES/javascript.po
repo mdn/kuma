@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-02-03 20:16+0000\n"
-"Last-Translator: Michal Vašíček <michalvasicek@icloud.com>\n"
+"POT-Creation-Date: 2016-04-21 07:33-0700\n"
+"PO-Revision-Date: 2016-03-20 15:23+0000\n"
+"Last-Translator: Michal Stanke <mstanke@mozilla.cz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Zavřít podmenu"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "Zavřít oznámení"
 
@@ -92,7 +92,7 @@ msgstr "Nový zájem..."
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open implementation notes"
-msgstr ""
+msgstr "Otevřít implementační poznámky"
 
 #: kuma/static/js/wiki-compat-tables.js:23
 msgid "Open"
@@ -130,25 +130,53 @@ msgstr "Nahlášeno. Děkujeme!"
 msgid "Show old table."
 msgstr "Zobrazit starou tabulku."
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:401
+msgid "Save Draft"
+msgstr "Uložit koncept"
+
+#: kuma/static/js/wiki-edit.js:406
+msgid "Enable autosave."
+msgstr "Povolit automatické ukládání."
+
+#: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
 msgstr "neznámý datum"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
 msgstr "Máte koncept od:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
 msgstr "Obnovit obsah konceptu"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
 msgstr "Zahodit koncept"
 
-#: kuma/static/js/wiki-edit.js:555
-msgid "saved"
-msgstr "uloženo"
+#: kuma/static/js/wiki-edit.js:442
+msgid "restored"
+msgstr "obnoveno"
+
+#: kuma/static/js/wiki-edit.js:571
+msgid "Draft"
+msgstr "Koncept"
+
+#: kuma/static/js/wiki-edit.js:618
+msgid "published"
+msgstr "publikováno"
+
+#: kuma/static/js/wiki-edit.js:622
+msgid "discarded"
+msgstr "zahozeno"
+
+#: kuma/static/js/wiki-edit.js:660
+msgid "Autosave enabled."
+msgstr "Automatické ukládání povoleno."
+
+#: kuma/static/js/wiki-edit.js:667
+msgid "Autosave disabled."
+msgstr "Automatické ukládání zakázáno."
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -158,17 +186,17 @@ msgstr "Nový štítek..."
 msgid "How to read CSS syntax."
 msgstr "Jak číst CSS syntaxi."
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "Prohledat Stack Overflow"
 
-#: kuma/static/js/wiki.js:655
+#: kuma/static/js/wiki.js:677
 msgid ""
 "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 "Váš prohlížeč nepodporuje MathML, proto byl namísto něj použit CSS fallback."
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "Detaily"
 
@@ -187,7 +215,7 @@ msgstr "Přilohy"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:87
 msgid "Article Title Lookup / Link Text"
-msgstr ""
+msgstr "Vyhledat nadpis článku / odkazu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-launch/plugin.js:12
 msgid "Launch"
@@ -216,7 +244,7 @@ msgstr "Vložit iFrame s ukázkou kódu"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:5
 msgid "Sample Finder"
-msgstr ""
+msgstr "Ukázka"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:20
 msgid "Select a section"
@@ -293,6 +321,9 @@ msgstr "Zadaná URL není validní"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Výchozí"
+
+#~ msgid "saved"
+#~ msgstr "uloženo"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"

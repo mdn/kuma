@@ -5,7 +5,7 @@ from django.views import static
 from kuma.core.sections import SECTION_USAGE
 from kuma.core.cache import memcache
 from kuma.feeder.models import Bundle
-from kuma.search.models import FilterGroup
+from kuma.search.models import Filter, FilterGroup
 from kuma.search.serializers import GroupWithFiltersSerializer
 
 
@@ -22,11 +22,13 @@ def home(request):
 
     groups = FilterGroup.objects.all()
     serializer = GroupWithFiltersSerializer(groups, many=True)
+    default_filters = Filter.objects.default_filters()
 
     context = {
         'updates': updates,
         'stats': community_stats,
-        'command_search_filters': serializer.data
+        'command_search_filters': serializer.data,
+        'default_filters': default_filters,
     }
     return render(request, 'landing/homepage.html', context)
 

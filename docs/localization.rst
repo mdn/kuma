@@ -28,10 +28,22 @@ Getting the Localizations
 
 Localizations are found in this repository under the ``locale`` folder.
 
-Run the Django management command to update the static JavaScript
-translation catalogs::
+The gettext portable object (.po) files need to be compiled into the gettext
+machine object (.mo) files before translations will appear. This is performed
+during vagrant provisioning but if you need to update them at any time you can
+compile the files via the following commands within the vagrant environment::
+
+    pushd locale ; ./compile-mo.sh . ; popd
+
+To update the static JavaScript translation catalogs, run the following django
+management command::
 
     python manage.py compilejsi18n
+
+The above command will build the JavaScript l10n files in the build/locale/
+folder. To collect these files for serving you must run the collectstatic command::
+
+    python manage.py collectstatic
 
 Updating the Localizations
 ==========================
@@ -42,8 +54,7 @@ Updating the Localizations
 
 #.  Commit the files::
 
-        $ cd locale
-        $ git add -A
+        $ git add --all locale
         $ git commit -m "MDN string update YYYY-MM-DD"
 
 Adding a new Locale

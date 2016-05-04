@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-09 17:19+0000\n"
-"Last-Translator: Daniel Añez Scott <danielscott171@gmail.com>\n"
+"POT-Creation-Date: 2016-04-21 07:33-0700\n"
+"PO-Revision-Date: 2016-04-22 06:39+0000\n"
+"Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Cerrar submenú"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "Cerrar notificación"
 
@@ -131,25 +131,53 @@ msgstr "Enviado. ¡Gracias!"
 msgid "Show old table."
 msgstr "Mostrar la tabla antigua."
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:401
+msgid "Save Draft"
+msgstr "Guardar borrador"
+
+#: kuma/static/js/wiki-edit.js:406
+msgid "Enable autosave."
+msgstr "Activar autoguardado."
+
+#: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
 msgstr "una fecha desconocida"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
 msgstr "Tienes un borrador de:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
 msgstr "Restaurar el contenido del borrador"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
 msgstr "Descartar el borrador"
 
-#: kuma/static/js/wiki-edit.js:555
-msgid "saved"
-msgstr "guardado"
+#: kuma/static/js/wiki-edit.js:442
+msgid "restored"
+msgstr "recuperado"
+
+#: kuma/static/js/wiki-edit.js:571
+msgid "Draft"
+msgstr "Borrador"
+
+#: kuma/static/js/wiki-edit.js:618
+msgid "published"
+msgstr "publicado"
+
+#: kuma/static/js/wiki-edit.js:622
+msgid "discarded"
+msgstr "descartado"
+
+#: kuma/static/js/wiki-edit.js:660
+msgid "Autosave enabled."
+msgstr "Autoguardado activado."
+
+#: kuma/static/js/wiki-edit.js:667
+msgid "Autosave disabled."
+msgstr "Autoguardado desactivado."
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -159,15 +187,18 @@ msgstr "Nueva etiqueta..."
 msgid "How to read CSS syntax."
 msgstr "Cómo leer la sintaxis CSS."
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "Buscar en Stack Overflow"
 
-#: kuma/static/js/wiki.js:655
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Tu navegador no admite MathML. En su lugar, se ha utilizado otro recurso CSS."
+#: kuma/static/js/wiki.js:677
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Tu navegador no admite MathML. En su lugar, se ha utilizado otro recurso "
+"CSS."
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "Detalles"
 
@@ -179,7 +210,8 @@ msgstr "Selecciona un archivo adjunto"
 msgid "No attachments available"
 msgstr "No hay archivos adjuntos disponibles"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Archivos adjuntos"
 
@@ -199,7 +231,8 @@ msgstr "Crear una Redirección"
 msgid "MDN Redirect"
 msgstr "Redirección a MDN"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Documento"
 
@@ -291,8 +324,17 @@ msgstr "La URL que has introducido parece que no es válida"
 msgid "Default"
 msgstr "Predeterminada"
 
+#~ msgid "saved"
+#~ msgstr "guardado"
+
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "Ya tienes un borrador. <a href=\"\" class=\"restoreLink\">Recupera el contenido del borrador</a> o <a href=\"\" class=\"discardLink\">descártalo</a>."
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "Ya tienes un borrador. <a href=\"\" class=\"restoreLink\">Recupera el "
+#~ "contenido del borrador</a> o <a href=\"\" "
+#~ "class=\"discardLink\">descártalo</a>."

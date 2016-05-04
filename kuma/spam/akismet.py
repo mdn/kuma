@@ -36,6 +36,7 @@ class Akismet(object):
 
     def __init__(self):
         self.domain = settings.DOMAIN
+        self.ssl = bool(getattr(settings, 'SECURE_PROXY_SSL_HEADER', False))
         self.session = Session()
         self.adapter = HTTPAdapter(
             max_retries=Retry(
@@ -80,7 +81,9 @@ class Akismet(object):
 
     def send(self, method, **payload):
         # blog is the only parameter required by all API endpoints
-        payload['blog'] = self.domain
+        if 'blog' not in payload:
+            scheme = 'https' if self.ssl else 'http'
+            payload['blog'] = u'%s://%s/' % (scheme, self.domain)
         url = urlparse.urljoin(self.url, method)
         return self.session.post(url, data=payload)
 

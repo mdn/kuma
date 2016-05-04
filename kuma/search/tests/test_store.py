@@ -28,6 +28,14 @@ class RefererTests(KumaTestCase):
         request = self.generate_request('en-US', url)
         assert get_search_url_from_referer(request) == url
 
+    @mock.patch.object(Site.objects, 'get_current')
+    def test_basic_with_topics(self, get_current):
+        get_current.return_value.domain = 'testserver'
+
+        url = 'https://testserver/en-US/search?q=javascript&topic=js'
+        request = self.generate_request('en-US', url)
+        assert get_search_url_from_referer(request) == url
+
     # FIXME: These tests aren't great because we can't verify exactly why we
     # got a None so we can't distinguish between "right answer" and "right
     # answer, but for the wrong reasons".

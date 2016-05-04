@@ -168,7 +168,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 # Sending a new copy of post so the slug change above
                 # doesn't cause problems during validation
                 rev_form = RevisionForm(request=request,
-                                        data=request.POST,
+                                        data=post_data,
                                         parent_slug=slug_dict['parent'])
 
             # If we are submitting the whole form, we need to check that
@@ -191,6 +191,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
             # update the post data with the toc_depth of original
             post_data['toc_depth'] = based_on_rev.toc_depth
+
+            # Pass in the locale for the akistmet "blog_lang".
+            post_data['locale'] = document_locale
 
             rev_form = RevisionForm(request=request,
                                     data=post_data,

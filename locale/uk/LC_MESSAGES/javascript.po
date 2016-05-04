@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-15 11:45-0800\n"
-"PO-Revision-Date: 2016-01-23 15:50+0000\n"
+"POT-Creation-Date: 2016-04-21 07:33-0700\n"
+"PO-Revision-Date: 2016-04-22 09:34+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: none\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Close submenu"
 msgstr "Закрити підменю"
 
-#: kuma/static/js/components.js:536
+#: kuma/static/js/components.js:542
 msgid "Close notification"
 msgstr "Закрити сповіщення"
 
@@ -131,25 +131,53 @@ msgstr "Повідомлено. Дякую!"
 msgid "Show old table."
 msgstr "Показати стару таблицю."
 
-#: kuma/static/js/wiki-edit.js:400
+#: kuma/static/js/wiki-edit.js:401
+msgid "Save Draft"
+msgstr "Зберегти чернетку"
+
+#: kuma/static/js/wiki-edit.js:406
+msgid "Enable autosave."
+msgstr "Увімкнути автозбереження."
+
+#: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
 msgstr "невідома дата"
 
-#: kuma/static/js/wiki-edit.js:401
+#: kuma/static/js/wiki-edit.js:415
 msgid "You have a draft from:"
 msgstr "У вас є чернетка від:"
 
-#: kuma/static/js/wiki-edit.js:402
+#: kuma/static/js/wiki-edit.js:416
 msgid "Restore the draft content"
 msgstr "Відновити вміст чернетки"
 
-#: kuma/static/js/wiki-edit.js:403
+#: kuma/static/js/wiki-edit.js:417
 msgid "Discard the draft"
 msgstr "Видалити чернетку"
 
-#: kuma/static/js/wiki-edit.js:555
-msgid "saved"
-msgstr "збережено"
+#: kuma/static/js/wiki-edit.js:442
+msgid "restored"
+msgstr "відновлено"
+
+#: kuma/static/js/wiki-edit.js:571
+msgid "Draft"
+msgstr "Чернетка"
+
+#: kuma/static/js/wiki-edit.js:618
+msgid "published"
+msgstr "опубліковано"
+
+#: kuma/static/js/wiki-edit.js:622
+msgid "discarded"
+msgstr "скасовано"
+
+#: kuma/static/js/wiki-edit.js:660
+msgid "Autosave enabled."
+msgstr "Автозбереження увімкнено."
+
+#: kuma/static/js/wiki-edit.js:667
+msgid "Autosave disabled."
+msgstr "Автозбереження вимкнено."
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -159,18 +187,18 @@ msgstr "Нова мітка..."
 msgid "How to read CSS syntax."
 msgstr "Як читати CSS синтаксис."
 
-#: kuma/static/js/wiki.js:541
+#: kuma/static/js/wiki.js:570
 msgid "Search Stack Overflow"
 msgstr "Пошук на Stack Overflow"
 
-#: kuma/static/js/wiki.js:655
+#: kuma/static/js/wiki.js:677
 msgid ""
 "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr ""
 "Ваш браузер не підтримує MathML. Замість цього використовується запасне "
 "вирішення на CSS."
 
-#: kuma/static/js/wiki.js:870
+#: kuma/static/js/wiki.js:892
 msgid "Details"
 msgstr "Докладно"
 
@@ -295,6 +323,9 @@ msgstr "Схоже, ви ввели недійсну URL"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "Типово"
+
+#~ msgid "saved"
+#~ msgstr "збережено"
 
 #~ msgid "Demo Studio"
 #~ msgstr "Демо-студія"

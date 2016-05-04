@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
+import json
 
 from django.contrib import admin
 from django.contrib import messages
@@ -6,17 +9,25 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.template.defaultfilters import linebreaksbr, truncatechars
+from django.utils import timezone
+from django.utils.encoding import smart_text
 from django.utils.html import escape
+from django.utils.safestring import mark_safe
+from django.utils.text import Truncator
+from waffle import flag_is_active
 
 from kuma.core.admin import DisabledDeletionMixin
 from kuma.core.decorators import login_required, permission_required
 from kuma.core.urlresolvers import reverse
+from kuma.spam import constants
+from kuma.spam.akismet import Akismet, AkismetError
 
 from .decorators import check_readonly
 from .forms import RevisionAkismetSubmissionAdminForm
 from .models import (Document, DocumentDeletionLog, DocumentSpamAttempt,
-                     DocumentTag, DocumentZone, EditorToolbar,
-                     Revision, RevisionAkismetSubmission, RevisionIP)
+                     DocumentTag, DocumentZone, EditorToolbar, Revision,
+                     RevisionAkismetSubmission, RevisionIP)
 
 
 def dump_selected_documents(self, request, queryset):
@@ -332,15 +343,105 @@ class DocumentTagAdmin(admin.ModelAdmin):
 class DocumentZoneAdmin(admin.ModelAdmin):
     raw_id_fields = ('document',)
 
+SUBMISSION_NOT_AVAILABLE = 'Akismet submission not available.'
+
 
 @admin.register(DocumentSpamAttempt)
 class DocumentSpamAttemptAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'slug', 'document', 'created', 'user']
-    list_display_links = ['id', 'title', 'slug']
-    list_filter = ['created', 'document__deleted', 'document__locale']
+    list_display = [
+        'id', 'user', 'title_short', 'slug_short', 'doc_short', 'review']
+    list_display_links = ['id', 'title_short', 'slug_short']
+    list_filter = [
+        'created', 'review', 'document__deleted', 'document__locale']
+    list_editable = ('review',)
     ordering = ['-created']
     search_fields = ['title', 'slug', 'user__username']
     raw_id_fields = ['user', 'document']
+    fields = [
+        'created', 'user', 'title', 'slug', 'document', 'submitted_data',
+        'review', 'reviewed', 'reviewer']
+    readonly_fields = ['created', 'submitted_data', 'reviewer', 'reviewed']
+
+    MAX_LENGTH = 25
+
+    def title_short(self, obj):
+        return truncatechars(obj.title, self.MAX_LENGTH)
+    title_short.short_description = 'Title'
+
+    def slug_short(self, obj):
+        return truncatechars(obj.slug, self.MAX_LENGTH)
+    slug_short.short_description = 'Slug'
+
+    def doc_short(self, obj):
+        u"""
+        Shorten document 'path (name)' representation in list view.
+
+        The important part is having an HTML break character such as a space,
+        so truncating paths as well as long titles, to look like:
+
+        /en-US/docs/Start/Of/Slug… (The start of the title…)
+        """
+        doc = obj.document
+        if doc:
+            full_path = u'/%s/docs/%s' % (doc.locale, doc.slug)
+            if len(full_path) <= self.MAX_LENGTH:
+                path = full_path
+            else:
+                path = Truncator(full_path).chars(self.MAX_LENGTH, u'…')
+            title = Truncator(doc.title).chars(self.MAX_LENGTH, u'…')
+            return u'%s (%s)' % (path, title)
+        else:
+            return mark_safe('<em>new document</em>')
+    doc_short.short_description = 'Document (if edit)'
+
+    class NotEnabled(Exception):
+        """Akismet is not enabled"""
+
+    def submit_ham(self, request, data):
+        """Submit new ham to Akismet.
+
+        This is done directly with the Akismet client rather than the form
+        classes, so that bulk edits can be made in the admin list view.
+
+        It will raise NotEnabled or AkismetError if something goes wrong.
+        """
+        client = Akismet()
+        if not client.ready:
+            raise self.NotEnabled('Akismet is not configured.')
+        spam_submission = flag_is_active(request,
+                                         constants.SPAM_SUBMISSIONS_FLAG)
+        if not spam_submission:
+            raise self.NotEnabled('Akismet spam submission is not enabled.')
+        user_ip = data.pop('user_ip', '')
+        user_agent = data.pop('user_agent', '')
+        client.submit_ham(user_ip=user_ip, user_agent=user_agent, **data)
+
+    def save_model(self, request, obj, form, change):
+        """If reviewed, set the reviewer, and submit ham as requested."""
+        send_ham = (obj.review == DocumentSpamAttempt.HAM and
+                    obj.reviewed is None and obj.data is not None)
+        if obj.review in (DocumentSpamAttempt.HAM, DocumentSpamAttempt.SPAM):
+            obj.reviewer = obj.reviewer or request.user
+            obj.reviewed = obj.reviewed or timezone.now()
+        if send_ham:
+            data = json.loads(obj.data)
+            try:
+                self.submit_ham(request, data)
+            except (self.NotEnabled, AkismetError) as error:
+                obj.reviewer = None
+                obj.reviewed = None
+                obj.review = DocumentSpamAttempt.NEEDS_REVIEW
+                message = (
+                    'Unable to submit ham for document spam attempt %s: %s' %
+                    (obj, error))
+                self.message_user(request, message, level=messages.ERROR)
+            else:
+                message = 'Submitted ham for document spam attempt %s' % obj
+                self.message_user(request, message, level=messages.INFO)
+        obj.save()
+
+    def submitted_data(self, instance):
+        return instance.data or SUBMISSION_NOT_AVAILABLE
 
 
 @admin.register(Revision)
@@ -348,17 +449,22 @@ class RevisionAdmin(admin.ModelAdmin):
     fields = ('title', 'summary', 'content', 'keywords', 'tags',
               'comment', 'is_approved')
     list_display = ('id', 'slug', 'title', 'is_approved', 'created',
-                    'creator',)
+                    'creator')
     list_display_links = ('id', 'slug')
-    list_filter = ('is_approved', )
+    list_filter = ('is_approved',)
     ordering = ('-created',)
     search_fields = ('title', 'slug', 'summary', 'content', 'tags')
 
 
 @admin.register(RevisionIP)
 class RevisionIPAdmin(admin.ModelAdmin):
-    readonly_fields = ('revision', 'ip',)
-    list_display = ('revision', 'ip',)
+    readonly_fields = ('revision', 'ip', 'user_agent', 'referrer',
+                       'submitted_data')
+    list_display = ('revision', 'ip')
+
+    def submitted_data(self, obj):
+        """Display Akismet data, if saved at edit time."""
+        return obj.data or SUBMISSION_NOT_AVAILABLE
 
 
 @admin.register(RevisionAkismetSubmission)
@@ -380,10 +486,13 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
 
     def revision_with_link(self, obj):
         """Admin link to the revision"""
-        admin_link = reverse('admin:wiki_revision_change',
-                             args=[obj.revision.id])
-        return ('<a target="_blank" href="%s">%s</a>' %
-                (admin_link, escape(obj.revision)))
+        if obj.revision_id:
+            admin_link = reverse('admin:wiki_revision_change',
+                                 args=[obj.revision.id])
+            return ('<a target="_blank" href="%s">%s</a>' %
+                    (admin_link, escape(obj.revision)))
+        else:
+            return 'None'
     revision_with_link.allow_tags = True
     revision_with_link.short_description = "Revision"
 
@@ -414,6 +523,40 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
                 return AdminForm(request, *args, **kwargs)
 
         return AdminFormWithRequest
+
+    def add_view(self, request, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['submitted_data'] = self.submitted_data(request)
+        return super(RevisionAkismetSubmissionAdmin, self).add_view(
+            request, form_url, extra_context=extra_context)
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['submitted_data'] = self.submitted_data(
+            request, object_id)
+        return super(RevisionAkismetSubmissionAdmin, self).change_view(
+            request, object_id, form_url, extra_context=extra_context)
+
+    def submitted_data(self, request, obj_id=None):
+        """Display Akismet data, if saved at edit time."""
+        if obj_id:
+            obj = RevisionAkismetSubmission.objects.get(id=obj_id)
+        else:
+            obj = None
+
+        if obj and obj.revision_id:
+            revision_ip = obj.revision.revisionip_set.first()
+        else:
+            revision_id = request.GET.get('revision')
+            if revision_id:
+                revision_ip = RevisionIP.objects.filter(
+                    revision_id=revision_id).first()
+            else:
+                revision_ip = None
+        if revision_ip and revision_ip.data:
+            return linebreaksbr(smart_text(revision_ip.data))
+        else:
+            return SUBMISSION_NOT_AVAILABLE
 
 
 @admin.register(EditorToolbar)

@@ -1,4 +1,3 @@
-
 from constance.test import override_config
 from waffle.models import Flag
 import mock

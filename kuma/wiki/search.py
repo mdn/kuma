@@ -73,9 +73,9 @@ class WikiDocumentType(document.DocType):
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html or ''),
             'tags': list(obj.tags.names()),
-            'kumascript_macros': obj.extract_kumascript_macro_names(),
-            'css_classnames': obj.extract_css_classnames(),
-            'html_attributes': obj.extract_html_attributes(),
+            'kumascript_macros': obj.extract.macro_names(),
+            'css_classnames': obj.extract.css_classnames(),
+            'html_attributes': obj.extract.html_attributes(),
         }
 
         # Check if the document has a document zone attached

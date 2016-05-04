@@ -74,6 +74,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     return render(request, 'wiki/edit.html', context)
 
 
+@newrelic.agent.function_trace()
 @block_user_agents
 @require_http_methods(['GET', 'POST'])
 @login_required  # TODO: Stop repeating this knowledge here and in Document.allows_editing_by.
@@ -82,7 +83,6 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 @check_readonly
 @prevent_indexing
 @never_cache
-@newrelic.agent.function_trace()
 def edit(request, document_slug, document_locale, revision_id=None):
     """
     Create a new revision of a wiki document, or edit document metadata.

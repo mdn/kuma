@@ -13,8 +13,6 @@ TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = DEBUG
 DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 
-CELERY_ALWAYS_EAGER = True
-
 LOG_LEVEL = logging.ERROR
 
 PROTOCOL = 'https://'
@@ -26,6 +24,7 @@ SOCIALACCOUNT_PROVIDERS['persona']['AUDIENCE'] = SITE_URL
 # Elasticsearch related settings.
 ES_DEFAULT_NUM_REPLICAS = 0
 ES_DEFAULT_NUM_SHARDS = 1
+ES_LIVE_INDEX = True
 
 # Don't cache non-versioned static files in DEBUG mode
 if DEBUG:
