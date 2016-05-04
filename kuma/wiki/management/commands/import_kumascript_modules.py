@@ -35,8 +35,7 @@ class Command(BaseCommand):
 
         for slug in KS_AUTOLOAD_MODULES:
             template_response = requests.get(RAW_TEMPLATE_URL % slug)
-            doc = Document(title=slug, slug=slug,
-                           category=Document.CATEGORIES[0][0])
+            doc = Document(title=slug, slug=slug)
             try:
                 doc.save()
                 loaded_docs.append(slug)
