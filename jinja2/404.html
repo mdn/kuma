@@ -50,6 +50,6 @@
 
 {% block js %}
 <script type="text/javascript">
-mdn.analytics.trackError('404', window.location);
+    mdn.analytics.trackError('404', String(window.location));
 </script>
 {% endblock %}
