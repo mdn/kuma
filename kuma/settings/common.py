@@ -1196,7 +1196,7 @@ CONSTANCE_CONFIG = dict(
     ),
     WIKI_DOCUMENT_TAG_SUGGESTIONS=(
         json.dumps([
-            "Accessibility", "AJAX", "API", "Apps",
+            "Accessibility", "AJAX", "API", "Apps", "B2G OS",
             "Canvas", "CSS", "Device", "DOM", "Events",
             "Extensions", "Firefox", "Firefox OS", "Games",
             "Gecko", "Graphics", "Internationalization", "History", "HTML", "HTTP", "JavaScript", "Layout",
