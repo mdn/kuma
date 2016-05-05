@@ -216,7 +216,7 @@ Now you can sign in with GitHub at https://developer-local.allizom.org/
 
 .. _Errors:
 
-Errors during `vagrant up`
+Errors during Installation
 ==========================
 
 ``vagrant up`` starts the virtual machine. The first time you run
@@ -257,6 +257,16 @@ On Ubuntu, ``vagrant up`` might fail after being unable to mount NFS shared
 folders. First, make sure you have the nfs-common and nfs-server packages
 installed and also note that you can't export anything via NFS inside an
 encrypted volume or home dir. On Windows NFS won't be used ever by the way.
+
+If ``vagrant up`` works but you get the error ``IOError: [Errno 37] No locks
+available``, that indicates that the host machine isn't running rpc.statd or
+statd. This has been seen to affect Ubuntu >= 15.04 (running systemd). To enable
+it, run the following commands::
+
+       vagrant halt
+       sudo systemctl start rpc-statd.service
+       sudo systemctl enable rpc-statd.service
+       vagrant up
 
 If that doesn't help you can disable NFS by setting the ``VAGRANT_NFS``
 configuration value in a ``.env`` file. See the :ref:`Vagrant configuration
