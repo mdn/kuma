@@ -71,21 +71,6 @@ Errors after switching branches
       provisioning.
 
 
-Errors on Linux
----------------
-If you are running Linux and you see the message
-``IOError: [Errno 37] No locks available``, that indicates that the host
-machine isn't running rpc.statd or statd. This has been seen to affect
-Ubuntu >= 15.04 (running systemd).
-
-In order to address this issue, run the following commands::
-
-       vagrant halt
-       sudo systemctl start rpc-statd.service
-       sudo systemctl enable rpc-statd.service
-       vagrant up
-
-
 Errors with KumaScript
 ----------------------
 
