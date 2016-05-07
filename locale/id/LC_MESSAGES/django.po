@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-05-07 12:08+0000\n"
+"PO-Revision-Date: 2016-05-07 12:20+0000\n"
 "Last-Translator: kelimutu.rizki <kelimutu.rizki@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -3172,6 +3172,10 @@ msgid ""
 " href=\"%(request_page_url)s\">file a bug</a>. If you need permission to "
 "create new pages, please <a href=\"%(email_link)s\">contact us</a>."
 msgstr ""
+"Membuat halaman baru adalah tindakan terbatas. Untuk meminta halaman baru, "
+"sila <a href=\"%(request_page_url)s\">laporkan bug</a>. Jika Anda "
+"membutuhkan ijin untuk membuat halaman baru, sila <a "
+"href=\"%(email_link)s\">hubungi kami</a>."
 
 #: kuma/wiki/jinja2/403-create-page.html:17
 msgid ""
@@ -3182,6 +3186,13 @@ msgid ""
 "some good edits to existing pages.</li> <li>Have been contributing to the "
 "site for a while.</li> </ul>"
 msgstr ""
+"<p>Anda akan lebih dipertimbangkan untuk mendapatkan ijin membuat halaman "
+"baru jika Anda: </p><ul><li>Memberi tahu nama pengguna MDN "
+"Anda.</li><li>Memberi tahu mengapa Anda ingin membuat halaman baru (Apakah "
+"sedang mendokumentasikan fitur baru? Fitur apa? Adakah isilah glosarium yang"
+" ingin Anda tambahkan? Istilah apa?).</li><li>Telah melakukan beberapa "
+"penyuntingan yang baik pada halaman sebelumnya.</li><li>Telah berkontribusi "
+"dalam situs ini sebelumnya.</li></ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3376,13 +3387,17 @@ msgid ""
 "This article needs a technical review. <a href=\"%(url)s\">How you can "
 "help.</a>"
 msgstr ""
+"Artikel ini membutuhkan tinjauan teknikal. <a href=\"%(url)s\">Bagaimana "
+"Anda bisa membantu.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:276
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This article needs an editorial review. <a href=\"%(url)s\">How you can "
 "help.</a>"
-msgstr "Artikel ini membutuhkan peninjauan editorial."
+msgstr ""
+"Artikel ini membutuhkan tinjauan editorial. <a href=\"%(url)s\">Bagaimana "
+"Anda bisa membantu.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:284
 #, python-format
@@ -3503,13 +3518,12 @@ msgid "Minutes"
 msgstr "Menit"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
-#, fuzzy
 msgid ""
 "Find the translation source with the lookup below and then click "
 "\"Publish.\""
 msgstr ""
-"Menemukan sumber penerjemahan dengan pencarian di bawah ini dan kemudian "
-"klik \"Simpan Perubahan.\""
+"Temukan sumber penerjemahan dengan pencarian di bawah ini dan kemudian klik "
+"\"Terbitkan.\""
 
 #: kuma/wiki/jinja2/wiki/edit.html:147
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:62
@@ -3863,13 +3877,12 @@ msgid "You are subscribed to edits on: %(title)s."
 msgstr "Anda mendaftar untuk penyuntingan pada: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
-#, fuzzy
 msgid "This article needs these reviews:"
-msgstr "Artikel ini memerlukan ulasan teknis."
+msgstr "Artikel ini memerlukan tinjauan berikut:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
@@ -4031,16 +4044,15 @@ msgstr "Daftar Isi:"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:2
 msgid "Need Help?"
-msgstr ""
+msgstr "Perlu Bantuan?"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
-#, fuzzy
 msgid "Editor Guide"
-msgstr "Penyuntingan"
+msgstr "Panduan Editor"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
-msgstr ""
+msgstr "Panduan Gaya"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid ""
@@ -4111,12 +4123,10 @@ msgid "Discard changes and create a new document?"
 msgstr "Hapus perubahan dan buat dokumen baru?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
-#, fuzzy
 msgid "Publish and Keep Editing"
-msgstr "Simpan dan Gunakan Suntingan"
+msgstr "Simpan dan Simpan Suntingan"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
-#, fuzzy
 msgid "Discard"
 msgstr "Hapus Perubahan"
 
@@ -4155,13 +4165,13 @@ msgstr ""
 "rincian mengenai apa yang merupakan bahan yang tepat."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "If you believe you’ve received this message by mistake, please save a draft "
 "of your content and <a href=\"%(admin_email)s\"> contact the site "
 "administrators</a>."
 msgstr ""
-"Jika anda yakin menerima pesan ini karena sebuah kesalahan, silakan <a "
+"Jika Anda yakin menerima pesan ini karena sebuah kesalahan, silakan <a "
 "href=\"%(admin_email)s\">menghubungi administrator situs</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
@@ -4179,11 +4189,8 @@ msgid "Slug in %(locale)s:"
 msgstr "Slug dalam %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
-#, fuzzy
 msgid "Find the translation source with the lookup above and then click \"Save\"."
-msgstr ""
-"Temukan sumber terjemahan dengan pencarian di bawah ini dan kemudian klik "
-"\"Simpan Perubahan."
+msgstr "Temukan sumber terjemahan dengan pencarian di atas dan klik \"Simpan\"."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
