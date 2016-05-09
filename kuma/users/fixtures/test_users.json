@@ -32,7 +32,7 @@
     },
     {
         "fields": {
-            "name": "Trusted writers",
+            "name": "Known Authors",
             "permissions": []
         },
         "model": "auth.group",

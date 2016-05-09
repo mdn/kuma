@@ -76,13 +76,13 @@ def revisions(request):
         authors_filter = filter_form.cleaned_data['authors']
         if authors_filter not in ['', 'All Authors']:
             # If the filter is 'Known Authors', then query for the
-            # 'Trusted writers' group
+            # 'Known Authors' group
             if authors_filter == 'Known Authors':
-                query_kwargs['creator__groups__name'] = 'Trusted writers'
+                query_kwargs['creator__groups__name'] = 'Known Authors'
             # Else query must be 'Unknown Authors', so exclude the
-            # 'Trusted writers' group
+            # 'Known Authors' group
             else:
-                exclude_kwargs['creator__groups__name'] = 'Trusted writers'
+                exclude_kwargs['creator__groups__name'] = 'Known Authors'
 
     if query_kwargs or exclude_kwargs:
         revisions = revisions.filter(**query_kwargs).exclude(**exclude_kwargs)
