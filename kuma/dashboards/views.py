@@ -30,10 +30,12 @@ def revisions(request):
                                  .defer('content'))
 
     query_kwargs = False
+    exclude_kwargs = False
 
     # We can validate right away because no field is required
     if filter_form.is_valid():
         query_kwargs = {}
+        exclude_kwargs = {}
         query_kwargs_map = {
             'user': 'creator__username__istartswith',
             'locale': 'document__locale',
@@ -71,8 +73,19 @@ def revisions(request):
             start_date = end_date - datetime.timedelta(seconds=seconds)
             query_kwargs['created__range'] = [start_date, end_date]
 
-    if query_kwargs:
-        revisions = revisions.filter(**query_kwargs)
+        authors_filter = filter_form.cleaned_data['authors']
+        if authors_filter not in ['', 'All Authors']:
+            # If the filter is 'Known Authors', then query for the
+            # 'Trusted writers' group
+            if authors_filter == 'Known Authors':
+                query_kwargs['creator__groups__name'] = 'Trusted writers'
+            # Else query must be 'Unknown Authors', so exclude the
+            # 'Trusted writers' group
+            else:
+                exclude_kwargs['creator__groups__name'] = 'Trusted writers'
+
+    if query_kwargs or exclude_kwargs:
+        revisions = revisions.filter(**query_kwargs).exclude(**exclude_kwargs)
 
     revisions = paginate(request, revisions, per_page=PAGE_SIZE)
 
@@ -89,7 +102,7 @@ def revisions(request):
         ),
     }
 
-    # Serve the response HTML conditionally upon reques type
+    # Serve the response HTML conditionally upon request type
     if request.is_ajax():
         template = 'dashboards/includes/revision_dashboard_body.html'
     else:

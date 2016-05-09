@@ -41,6 +41,11 @@
                 {{ form.preceding_period }}
             </div>
 
+            <div class="revision-field">
+                <label for="id_authors">{{ _('Authors:') }}</label>
+                {{ form.authors }}
+            </div>
+
             <button type="submit">{{ _('Filter') }}</button>
             <input type="hidden" name="page" id="revision-page" value="{{ page }}" />
         </form>

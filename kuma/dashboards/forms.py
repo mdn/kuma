@@ -13,6 +13,11 @@ PERIOD_CHOICES = [
     ('week', _('Week')),
     ('month', _('30 days')),
 ]
+AUTHOR_CHOICES = [
+    ('All Authors', _('All Authors')),
+    ('Known Authors', _('Known Authors')),
+    ('Unknown Authors', _('Unknown Authors')),
+]
 
 
 class RevisionDashboardForm(forms.Form):
@@ -42,3 +47,7 @@ class RevisionDashboardForm(forms.Form):
         choices=PERIOD_CHOICES,
         required=False,
         label=_(u'Preceding Period:'))
+    authors = forms.ChoiceField(
+        choices=AUTHOR_CHOICES,
+        required=False,
+        label=_(u'Authors'))
