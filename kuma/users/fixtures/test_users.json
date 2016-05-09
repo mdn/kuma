@@ -32,6 +32,14 @@
     },
     {
         "fields": {
+            "name": "Trusted writers",
+            "permissions": []
+        },
+        "model": "auth.group",
+        "pk": 3
+    },
+    {
+        "fields": {
             "date_joined": "2011-06-03 16:12:08",
             "email": "testuser@test.com",
             "first_name": "Test",
@@ -174,7 +182,7 @@
             "date_joined": "2011-06-03 16:12:08",
             "email": "testuser01@test.com",
             "first_name": "Test",
-            "groups": [2],
+            "groups": [2, 3],
             "is_active": true,
             "is_staff": false,
             "is_superuser": false,
