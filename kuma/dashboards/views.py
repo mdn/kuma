@@ -2,6 +2,7 @@ import datetime
 import json
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -74,15 +75,19 @@ def revisions(request):
             query_kwargs['created__range'] = [start_date, end_date]
 
         authors_filter = filter_form.cleaned_data['authors']
-        if authors_filter not in ['', 'All Authors']:
+        if (not filter_form.cleaned_data['user'] != '' and
+            authors_filter not in ['', str(RevisionDashboardForm.ALL_AUTHORS)]):
+
+            # The 'Known Authors' group
+            group, created = Group.objects.get_or_create(name="Known Authors")
             # If the filter is 'Known Authors', then query for the
             # 'Known Authors' group
-            if authors_filter == 'Known Authors':
-                query_kwargs['creator__groups__name'] = 'Known Authors'
+            if authors_filter == str(RevisionDashboardForm.KNOWN_AUTHORS):
+                query_kwargs['creator__groups__pk'] = group.pk
             # Else query must be 'Unknown Authors', so exclude the
             # 'Known Authors' group
             else:
-                exclude_kwargs['creator__groups__name'] = 'Known Authors'
+                exclude_kwargs['creator__groups__pk'] = group.pk
 
     if query_kwargs or exclude_kwargs:
         revisions = revisions.filter(**query_kwargs).exclude(**exclude_kwargs)

@@ -13,10 +13,13 @@ PERIOD_CHOICES = [
     ('week', _('Week')),
     ('month', _('30 days')),
 ]
+ALL_AUTHORS = 0
+KNOWN_AUTHORS = 1
+UNKNOWN_AUTHORS = 2
 AUTHOR_CHOICES = [
-    ('All Authors', _('All Authors')),
-    ('Known Authors', _('Known Authors')),
-    ('Unknown Authors', _('Unknown Authors')),
+    (ALL_AUTHORS, _('All Authors')),
+    (KNOWN_AUTHORS, _('Known Authors')),
+    (UNKNOWN_AUTHORS, _('Unknown Authors')),
 ]
 
 
@@ -51,3 +54,12 @@ class RevisionDashboardForm(forms.Form):
         choices=AUTHOR_CHOICES,
         required=False,
         label=_(u'Authors'))
+
+    ALL_AUTHORS = 0
+    KNOWN_AUTHORS = 1
+    UNKNOWN_AUTHORS = 2
+    AUTHOR_CHOICES = [
+        (ALL_AUTHORS, _('All Authors')),
+        (KNOWN_AUTHORS, _('Known Authors')),
+        (UNKNOWN_AUTHORS, _('Unknown Authors')),
+    ]
