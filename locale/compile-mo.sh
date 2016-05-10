@@ -1,4 +1,7 @@
 #!/bin/bash
+# http://www.davidpashley.com/articles/writing-robust-shell-scripts/
+set -u # Exit with error on unset variables
+set -e # Exit with error if a command fails
 
 # syntax:
 # compile-mo.sh locale-dir/
