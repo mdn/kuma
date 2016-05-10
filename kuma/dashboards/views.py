@@ -76,7 +76,7 @@ def revisions(request):
 
         authors_filter = filter_form.cleaned_data['authors']
         if (not filter_form.cleaned_data['user'] != '' and
-            authors_filter not in ['', str(RevisionDashboardForm.ALL_AUTHORS)]):
+           authors_filter not in ['', str(RevisionDashboardForm.ALL_AUTHORS)]):
 
             # The 'Known Authors' group
             group, created = Group.objects.get_or_create(name="Known Authors")
