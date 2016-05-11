@@ -12,7 +12,6 @@ from django.views.decorators.http import require_GET, require_POST
 import waffle
 
 from kuma.core.utils import paginate
-from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
 from kuma.wiki.models import Document, Revision, RevisionAkismetSubmission
 
 from .forms import RevisionDashboardForm
@@ -104,8 +103,7 @@ def revisions(request):
             request.user.is_superuser
         ),
         'show_spam_submission': (
-            waffle.flag_is_active(request, SPAM_SUBMISSIONS_FLAG) and
-            request.user.is_superuser
+            request.user.has_akismet_submission_permission()
         ),
     }
 
@@ -158,9 +156,7 @@ def submit_akismet_spam(request):
     url = request.POST.get('next')
     if url is None or not is_safe_url(url, request.get_host()):
         url = reverse('dashboards.revisions')
-    if (request.user.groups.filter(permissions__codename=u'add_revisionakismetsubmission').count() or
-       request.user.user_permissions.filter(codename=u'add_revisionakismetsubmission').count()):
-        # Do the Akismet submission
+    if request.user.has_akismet_submission_permission():
         revision = request.POST.get('revision', 0)
         revision = Revision.objects.get(pk=revision)
         submission_type = request.POST.get('submit', 'spam')
