@@ -41,3 +41,8 @@ hashin==0.4.1 \
     --hash=sha256:b26ace086e24d84152a7e6d7d12b336383e835110d5e2e30dfbf22fa336a2e58 \
     --hash=sha256:e0266d240d589f2419ff669528934db5876d34a19f516fa8b39c42d8221c0591 \
     --hash=sha256:745623e60c649a6092cdbbb62b758e89654f4d69ec88ad76be8c20685f8ea1ab
+
+# Analyze Django performance during request
+django-debug-toolbar==1.4 \
+    --hash=sha256:0cbae8760f4851d480a70b72ace5b075f8191ecf899bc97427715e50fb0e90b9 \
+    --hash=sha256:852a37b80df9597048591ebc87d0ce85a4edceaef015dc5360ad89cc5960c27b
