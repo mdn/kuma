@@ -51,6 +51,7 @@ def update_product_details(ctx):
 @task
 def update_locales(ctx):
     with ctx.lcd(os.path.join(settings.SRC_DIR, 'locale')):
+        ctx.local("dennis-cmd lint --errorsonly .")
         ctx.local("./compile-mo.sh .")
 
 
