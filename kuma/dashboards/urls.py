@@ -19,4 +19,7 @@ urlpatterns = [
             url='/docs/MDN/Doc_status/Overview',
             permanent=True,
         )),
+    url(r'^dashboards/submit_akismet_spam$',
+        views.submit_akismet_spam,
+        name='dashboards.submit_akismet_spam'),
 ]

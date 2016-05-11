@@ -132,8 +132,8 @@
         var $thisParent = $this.parent();
         var $detail;
 
-        // Don't interrupt links and stop if a request is already running
-        if (e.target.tagName == 'A' || $this.attr('data-running')) return;
+        // Don't interrupt links or spam buttons, and stop if a request is already running
+        if (e.target.tagName == 'A' || e.target.name == 'submit' || $this.attr('data-running')) return;
 
         if ($this.attr('data-loaded')) {
             $this.next('.dashboard-detail').find('.dashboard-detail-details').slideToggle();

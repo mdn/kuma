@@ -1,6 +1,9 @@
 import pytest
 from pyquery import PyQuery as pq
 
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+
 from waffle.models import Flag, Switch
 
 from kuma.core.tests import eq_, ok_
@@ -10,6 +13,7 @@ from kuma.dashboards.forms import RevisionDashboardForm
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
 from kuma.users.tests import UserTestCase
 from kuma.users.models import User, UserBan
+from kuma.wiki.models import Revision, RevisionAkismetSubmission
 
 
 @pytest.mark.dashboards
@@ -91,6 +95,37 @@ class RevisionsDashTest(UserTestCase):
         page = pq(response.content)
         ip_button = page.find('td.dashboard-spam')
         ok_(len(ip_button) > 0)
+
+    def test_submit_akismet_spam_post_required(self):
+        url = reverse('dashboards.submit_akismet_spam', locale='en-US')
+        response = self.client.get(url)
+        eq_(response.status_code, 405, "GET should not be allowed.")
+
+    def test_submit_akismet_spam_valid_response(self):
+        url = reverse('dashboards.submit_akismet_spam', locale='en-US')
+        revision = Revision.objects.first()
+        data = {
+            'revision': revision.pk,
+            'submit': u'spam',
+        }
+        ct = ContentType.objects.get(app_label='attachments',
+                                     model='attachment')
+        p1 = Permission.objects.create(
+            name='Can add Akismet submission',
+            codename='add_revisionakismetsubmission',
+            content_type=ct)
+        admin = User.objects.get(username='admin')
+        admin.user_permissions.add(p1)
+        self.client.login(username='admin', password='testpass')
+
+        # Response should redirect back to the revisions dash
+        response = self.client.post(url, data=data)
+        eq_(response.status_code, 302)
+
+        # 1 RevisionAkismetSubmission record should exist for this revision
+        ras = RevisionAkismetSubmission.objects.filter(revision=revision)
+        eq_(ras.count(), 1)
+        eq_(ras[0].type, u'spam')
 
     def test_locale_filter(self):
         url = urlparams(reverse('dashboards.revisions', locale='fr'),

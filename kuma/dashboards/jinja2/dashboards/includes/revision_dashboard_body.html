@@ -88,11 +88,15 @@
                             <a class="button" href="{{ re_submission_url }}" target="_blank">{{ _('Resubmit') }}</a>
                         {% else %}
                             {{ _('Submit as:') }}<br>
-                            {% set spam_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id, type='spam') %}
-                            {% set ham_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id, type='ham') %}
 
-                            <a class="button" href="{{ spam_submission_url }}" target="_blank">{{ _('spam') }}</a>
-                            <a class="button" href="{{ ham_submission_url }}" target="_blank">{{ _('ham') }}</a>
+                            <form method="post" id="revision-filter" action="{{ url('dashboards.submit_akismet_spam') }}">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.get_full_path() }}" />
+                                <input type="hidden" name="revision" value="{{ revision.id }}" />
+                                <button type="submit" name="submit" value="spam">{{ _('spam') }}</button>
+                                <button type="submit" name="submit" value="ham">{{ _('ham') }}</button>
+                            </form>
+
 
                         {% endif %}
                     </td>
