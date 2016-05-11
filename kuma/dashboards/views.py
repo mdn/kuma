@@ -103,6 +103,7 @@ def revisions(request):
             request.user.is_superuser
         ),
         'show_spam_submission': (
+            request.user.is_authenticated() and
             request.user.has_akismet_submission_permission()
         ),
     }
@@ -156,7 +157,7 @@ def submit_akismet_spam(request):
     url = request.POST.get('next')
     if url is None or not is_safe_url(url, request.get_host()):
         url = reverse('dashboards.revisions')
-    if request.user.has_akismet_submission_permission():
+    if request.user.is_authenticated() and request.user.has_akismet_submission_permission():
         revision = request.POST.get('revision', 0)
         revision = Revision.objects.get(pk=revision)
         submission_type = request.POST.get('submit', 'spam')

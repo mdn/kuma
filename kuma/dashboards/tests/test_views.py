@@ -94,7 +94,8 @@ class RevisionsDashTest(UserTestCase):
 
         page = pq(response.content)
         ip_button = page.find('td.dashboard-spam')
-        ok_(len(ip_button) > 0)
+        # User must be logged for spam button column to be visible
+        eq_(len(ip_button), 0)
 
     def test_submit_akismet_spam_post_required(self):
         url = reverse('dashboards.submit_akismet_spam', locale='en-US')
