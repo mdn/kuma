@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-04-30 16:06+0000\n"
-"Last-Translator: Alexander Slovesnik <unghost@mozilla-russia.org>\n"
+"PO-Revision-Date: 2016-05-12 20:08+0000\n"
+"Last-Translator: bychek.ru <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -264,7 +264,7 @@ msgstr "Получить помощь Firefox"
 
 #: jinja2/base.html:165
 msgid "Get web development help"
-msgstr "Получить помощь веб-разработки"
+msgstr "Получить помощь по веб-разработке"
 
 #: jinja2/base.html:168
 msgid "Join the MDN community"
@@ -565,7 +565,7 @@ msgstr "Файл"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8
 #: kuma/users/models.py:65 kuma/wiki/models.py:1911
 msgid "Title"
-msgstr "Название"
+msgstr "Заголовок"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:37
 #: kuma/authkeys/jinja2/authkeys/delete.html:9
@@ -895,7 +895,7 @@ msgstr "Пользователь:"
 #: kuma/dashboards/forms.py:32
 #: kuma/dashboards/jinja2/dashboards/revisions.html:24
 msgid "Topic:"
-msgstr "Тема:"
+msgstr "Заголовок:"
 
 #: kuma/dashboards/forms.py:34
 #: kuma/dashboards/jinja2/dashboards/revisions.html:30
@@ -996,7 +996,7 @@ msgstr "Опубликовано как %(submission_type)s"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:81
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr "%(sent_date)s %(user)s"
+msgstr "%(sent_date)s пользователем %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:88
 msgid "Resubmit"
@@ -1067,7 +1067,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr "Поделитесь знаниями <span>с открытым интернетом</span>"
+msgstr "Поделитесь знаниями <span>с Открытым Интернетом</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42
 #: kuma/landing/jinja2/landing/homepage.html:59
@@ -1154,7 +1154,7 @@ msgstr "Открытый веб и мобильный интернет"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
-msgstr "Изучите веб разработку"
+msgstr "Изучите веб-разработку"
 
 #: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
@@ -1169,7 +1169,7 @@ msgid ""
 "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-"
 "hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 msgstr ""
-"<a href=\"http://hacks.mozilla.org\">подробнее на hacks.mozilla.org <i aria-"
+"<a href=\"http://hacks.mozilla.org\">почитать на hacks.mozilla.org <i aria-"
 "hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
@@ -1230,7 +1230,7 @@ msgstr "Вклад в кодовую базу MDN"
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
-msgstr "Отправлено %(entrydate)s пользователем %(authorlink)s"
+msgstr "Опубликовано %(entrydate)s пользователем %(authorlink)s"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5
 #: kuma/landing/jinja2/landing/promote_buttons.html:17
@@ -3807,7 +3807,7 @@ msgstr "Утверждённая %(locale)s версия"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Rendered"
-msgstr "Посмотреть обработанное"
+msgstr "Посмотреть отрендированное"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
 msgid "View Source"
