@@ -16,6 +16,15 @@ PERIOD_CHOICES = [
 
 
 class RevisionDashboardForm(forms.Form):
+    ALL_AUTHORS = 0
+    KNOWN_AUTHORS = 1
+    UNKNOWN_AUTHORS = 2
+    AUTHOR_CHOICES = [
+        (ALL_AUTHORS, _('All Authors')),
+        (KNOWN_AUTHORS, _('Known Authors')),
+        (UNKNOWN_AUTHORS, _('Unknown Authors')),
+    ]
+
     locale = forms.ChoiceField(
         choices=LANG_CHOICES,
         # Required for non-translations, which is
@@ -42,3 +51,7 @@ class RevisionDashboardForm(forms.Form):
         choices=PERIOD_CHOICES,
         required=False,
         label=_(u'Preceding Period:'))
+    authors = forms.ChoiceField(
+        choices=AUTHOR_CHOICES,
+        required=False,
+        label=_(u'Authors'))

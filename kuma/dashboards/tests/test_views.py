@@ -6,6 +6,7 @@ from waffle.models import Flag, Switch
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
+from kuma.dashboards.forms import RevisionDashboardForm
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
 from kuma.users.tests import UserTestCase
 from kuma.users.models import User, UserBan
@@ -161,3 +162,67 @@ class RevisionsDashTest(UserTestCase):
         eq_(revisions.length, 7)
         for revision in revisions:
             ok_('lorem' not in pq(revision).find('.dashboard-title').html())
+
+    def test_known_authors_lookup(self):
+        # Only testuser01 is in the Known Authors group
+        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                        authors=RevisionDashboardForm.KNOWN_AUTHORS)
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(200, response.status_code)
+
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
+
+        for revision in revisions:
+            author = pq(revision).find('.dashboard-author').html()
+            ok_('testuser01' in author)
+            ok_('testuser2' not in author)
+
+    def test_known_authors_filter(self):
+        # There are a total of 11 revisions
+        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                        authors=RevisionDashboardForm.ALL_AUTHORS)
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(response.status_code, 200)
+
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
+
+        eq_(11, revisions.length)
+
+        # Only testuser01 is in the Known Authors group, and has 2 revisions
+        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                        authors=RevisionDashboardForm.KNOWN_AUTHORS)
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(response.status_code, 200)
+
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
+
+        eq_(2, revisions.length)
+
+        # Of the 11 revisions, 9 are by users not in the Known Authors group
+        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                        authors=RevisionDashboardForm.UNKNOWN_AUTHORS)
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(response.status_code, 200)
+
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
+
+        eq_(9, revisions.length)
+
+    def test_known_authors_filter_ignored_with_username(self):
+        """When user filters by username, the Known Authors filter is ignored"""
+        # Only testuser01 is in the Known Authors group, and has 2 revisions
+        # Filtering by testuser2 should return testuser2's revisions (5 of them)
+        # and ignore the "Known Authors" filter
+        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                        user='testuser2', authors=RevisionDashboardForm.KNOWN_AUTHORS)
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(response.status_code, 200)
+
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
+
+        eq_(5, revisions.length)

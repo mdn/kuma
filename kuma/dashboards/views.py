@@ -2,6 +2,7 @@ import datetime
 import json
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -30,10 +31,12 @@ def revisions(request):
                                  .defer('content'))
 
     query_kwargs = False
+    exclude_kwargs = False
 
     # We can validate right away because no field is required
     if filter_form.is_valid():
         query_kwargs = {}
+        exclude_kwargs = {}
         query_kwargs_map = {
             'user': 'creator__username__istartswith',
             'locale': 'document__locale',
@@ -71,8 +74,23 @@ def revisions(request):
             start_date = end_date - datetime.timedelta(seconds=seconds)
             query_kwargs['created__range'] = [start_date, end_date]
 
-    if query_kwargs:
-        revisions = revisions.filter(**query_kwargs)
+        authors_filter = filter_form.cleaned_data['authors']
+        if (not filter_form.cleaned_data['user'] != '' and
+           authors_filter not in ['', str(RevisionDashboardForm.ALL_AUTHORS)]):
+
+            # The 'Known Authors' group
+            group, created = Group.objects.get_or_create(name="Known Authors")
+            # If the filter is 'Known Authors', then query for the
+            # 'Known Authors' group
+            if authors_filter == str(RevisionDashboardForm.KNOWN_AUTHORS):
+                query_kwargs['creator__groups__pk'] = group.pk
+            # Else query must be 'Unknown Authors', so exclude the
+            # 'Known Authors' group
+            else:
+                exclude_kwargs['creator__groups__pk'] = group.pk
+
+    if query_kwargs or exclude_kwargs:
+        revisions = revisions.filter(**query_kwargs).exclude(**exclude_kwargs)
 
     revisions = paginate(request, revisions, per_page=PAGE_SIZE)
 
@@ -89,7 +107,7 @@ def revisions(request):
         ),
     }
 
-    # Serve the response HTML conditionally upon reques type
+    # Serve the response HTML conditionally upon request type
     if request.is_ajax():
         template = 'dashboards/includes/revision_dashboard_body.html'
     else:
