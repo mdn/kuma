@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-05-12 20:08+0000\n"
+"PO-Revision-Date: 2016-05-12 21:29+0000\n"
 "Last-Translator: bychek.ru <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
@@ -248,7 +248,7 @@ msgstr "Firefox OS"
 
 #: jinja2/base.html:155 jinja2/includes/login.html:20
 msgid "Persona"
-msgstr "Персона"
+msgstr "Persona"
 
 #: jinja2/base.html:159
 msgid "Developer Tools"
@@ -554,7 +554,7 @@ msgstr "У этого документа нет вложений."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
-msgstr "Изображения могут быть прикреплены, а затем встроены в статье."
+msgstr "Можно прикрепить изображения, а затем встроить их в статье."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:35
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:67
@@ -919,7 +919,7 @@ msgstr "Панель ревизий"
 #: kuma/dashboards/jinja2/dashboards/revisions.html:44
 #: kuma/search/jinja2/search/results.html:210
 msgid "Filter"
-msgstr "Фильтр"
+msgstr "Отфильтровать"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:73
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
@@ -961,7 +961,7 @@ msgstr "Показать/скрыть IP"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:34
 msgid "new"
-msgstr "новый"
+msgstr "новая"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35
 msgid "deleted"
@@ -1789,7 +1789,7 @@ msgstr "Ник в IRC"
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27
 #: kuma/wiki/jinja2/wiki/create.html:79 kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr "Теги"
+msgstr "Метки"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
@@ -2502,15 +2502,15 @@ msgstr "осталось слов"
 
 #: kuma/users/jinja2/users/user_edit.html:80
 msgid "Interests (tags)"
-msgstr "Интересы (тэги)"
+msgstr "Интересы (метки)"
 
 #: kuma/users/jinja2/users/user_edit.html:81
 msgid ""
 "Separate tags with commas or spaces. Join multi-word tags with double "
 "quotes, like \"web standards\"."
 msgstr ""
-"Разделяйте теги запятыми или пробелами. Теги, состоящие из нескольких слов "
-"заключайте в кавычки, типа \"веб стандарты\"."
+"Разделяйте метки запятыми или пробелами. Метки, состоящие из нескольких слов"
+" заключайте в кавычки, например, \"веб стандарты\"."
 
 #: kuma/users/jinja2/users/user_edit.html:87
 msgid "Areas of expertise"
@@ -2628,7 +2628,7 @@ msgid ""
 "the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 msgstr ""
 "Блог: На блоге <a href=\"%(blog_link)s\">about:community</a> поищите посты с"
-" тегом <a href=\"%(tagged_link)s\">Developer Engagement</a>."
+" меткой <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:60
@@ -2834,7 +2834,7 @@ msgstr "Показать сравнение"
 
 #: kuma/wiki/forms.py:35
 msgid "Please provide a title."
-msgstr "Пожалуйста, укажите название."
+msgstr "Пожалуйста, укажите заголовок."
 
 #: kuma/wiki/forms.py:36
 #, python-format
@@ -2842,7 +2842,7 @@ msgid ""
 "The title is too short (%(show_value)s characters). It must be at least "
 "%(limit_value)s characters."
 msgstr ""
-"Название слишком короткое (%(show_value)s символов). Оно должно содержать "
+"Заголовок слишком короткий (%(show_value)s символов). Он должен содержать "
 "как минимум %(limit_value)s символов."
 
 #: kuma/wiki/forms.py:38
@@ -2856,7 +2856,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:41
 msgid "Name Your Article"
-msgstr "Название вашей статьи"
+msgstr "Заголовок вашей статьи"
 
 #: kuma/wiki/forms.py:42
 msgid "Please provide a slug."
@@ -3573,7 +3573,7 @@ msgstr "Получайте удовольствие и гордитесь сво
 
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
-msgstr "Узнайте, как добавить теги к статье"
+msgstr "Узнайте, как добавить метки к статье"
 
 #: kuma/wiki/jinja2/wiki/edit.html:193
 #: kuma/wiki/jinja2/wiki/translate.html:114
@@ -3585,7 +3585,7 @@ msgid ""
 msgstr ""
 "Категоризируйте статью. Это сделает статью находимой через правильные "
 "фильтры в поисковом движке. <a target=\"_blank\" href=\"%(url)s\">Прочитайте"
-" руководство по тегам</a>."
+" руководство по меткам</a>."
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -3834,7 +3834,7 @@ msgstr "Перевод ключевых слов"
 
 #: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
-msgstr "Английские теги"
+msgstr "Английские метки"
 
 #: kuma/wiki/jinja2/wiki/translate.html:132
 msgid "This document has no tags."
@@ -3843,7 +3843,7 @@ msgstr "Данный документ не имеет меток."
 #: kuma/wiki/jinja2/wiki/translate.html:139
 #, python-format
 msgid "%(locale)s tags"
-msgstr "%(locale)s теги"
+msgstr "%(locale)s метки"
 
 #: kuma/wiki/jinja2/wiki/translate.html:146
 msgid "Version Notes"
@@ -4323,11 +4323,11 @@ msgstr "Нет ни одного тэга."
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr "Локализованные статьи с тегом: %(tag)s"
+msgstr "Переведённые статьи с метками: %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr "Статьи с какими либо тегами локализации"
+msgstr "Статьи с какими-либо метками локализации"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:15
 #, python-format
