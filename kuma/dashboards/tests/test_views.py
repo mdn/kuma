@@ -2,7 +2,6 @@ import pytest
 from pyquery import PyQuery as pq
 
 from django.contrib.auth.models import Permission
-from django.contrib.contenttypes.models import ContentType
 
 from waffle.models import Flag, Switch
 
@@ -94,8 +93,8 @@ class RevisionsDashTest(UserTestCase):
 
         page = pq(response.content)
         ip_button = page.find('td.dashboard-spam')
-        # User must be logged for spam button column to be visible
-        eq_(len(ip_button), 0)
+        # Revisions available, admin has privileges to see this
+        ok_(len(ip_button) > 0)
 
     def test_submit_akismet_spam_post_required(self):
         url = reverse('dashboards.submit_akismet_spam', locale='en-US')
@@ -109,15 +108,10 @@ class RevisionsDashTest(UserTestCase):
             'revision': revision.pk,
             'submit': u'spam',
         }
-        ct = ContentType.objects.get(app_label='attachments',
-                                     model='attachment')
-        p1 = Permission.objects.create(
-            name='Can add Akismet submission',
-            codename='add_revisionakismetsubmission',
-            content_type=ct)
-        admin = User.objects.get(username='admin')
-        admin.user_permissions.add(p1)
-        self.client.login(username='admin', password='testpass')
+        p1 = Permission.objects.get(codename='add_revisionakismetsubmission')
+        testuser = User.objects.get(username='testuser')
+        testuser.user_permissions.add(p1)
+        self.client.login(username='testuser', password='testpass')
 
         # Response should redirect back to the revisions dash
         response = self.client.post(url, data=data)
@@ -127,6 +121,23 @@ class RevisionsDashTest(UserTestCase):
         ras = RevisionAkismetSubmission.objects.filter(revision=revision)
         eq_(ras.count(), 1)
         eq_(ras[0].type, u'spam')
+
+    def test_submit_akismet_spam_no_permission(self):
+        url = reverse('dashboards.submit_akismet_spam', locale='en-US')
+        revision = Revision.objects.first()
+        data = {
+            'revision': revision.pk,
+            'submit': u'spam',
+        }
+        self.client.login(username='testuser', password='testpass')
+
+        # Response should redirect back to the revisions dash
+        response = self.client.post(url, data=data)
+        eq_(response.status_code, 302)
+
+        # No RevisionAkismetSubmission record should exist, user does not have permission
+        ras = RevisionAkismetSubmission.objects.filter(revision=revision)
+        eq_(ras.count(), 0)
 
     def test_locale_filter(self):
         url = urlparams(reverse('dashboards.revisions', locale='fr'),

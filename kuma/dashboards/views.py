@@ -2,6 +2,7 @@ import datetime
 import json
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
@@ -104,7 +105,7 @@ def revisions(request):
         ),
         'show_spam_submission': (
             request.user.is_authenticated() and
-            request.user.has_akismet_submission_permission()
+            request.user.has_perm('wiki.add_revisionakismetsubmission')
         ),
     }
 
@@ -152,16 +153,16 @@ def topic_lookup(request):
 
 
 @require_POST
+@permission_required('wiki.add_revisionakismetsubmission')
 def submit_akismet_spam(request):
     """Creates SPAM or HAM Akismet record for revision"""
     url = request.POST.get('next')
     if url is None or not is_safe_url(url, request.get_host()):
         url = reverse('dashboards.revisions')
-    if request.user.is_authenticated() and request.user.has_akismet_submission_permission():
-        revision = request.POST.get('revision', 0)
-        revision = Revision.objects.get(pk=revision)
-        submission_type = request.POST.get('submit', 'spam')
-        RevisionAkismetSubmission.objects.create(
-            sender=request.user, revision=revision, type=submission_type)
+    revision = request.POST.get('revision', 0)
+    revision = Revision.objects.get(pk=revision)
+    submission_type = request.POST.get('submit', 'spam')
+    RevisionAkismetSubmission.objects.create(
+        sender=request.user, revision=revision, type=submission_type)
 
     return redirect(url)

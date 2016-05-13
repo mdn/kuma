@@ -194,7 +194,3 @@ class User(AbstractUser):
 
     def allows_editing_by(self, user):
         return user.is_staff or user.is_superuser or user.pk == self.pk
-
-    def has_akismet_submission_permission(self):
-        return (self.groups.filter(permissions__codename=u'add_revisionakismetsubmission').exists() or
-                 self.user_permissions.filter(codename=u'add_revisionakismetsubmission').exists())
