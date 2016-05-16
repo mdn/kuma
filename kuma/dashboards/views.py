@@ -2,16 +2,18 @@ import datetime
 import json
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.utils import timezone
-from django.views.decorators.http import require_GET
+from django.utils.http import is_safe_url
+from django.views.decorators.http import require_GET, require_POST
 import waffle
 
 from kuma.core.utils import paginate
-from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
-from kuma.wiki.models import Document, Revision
+from kuma.wiki.models import Document, Revision, RevisionAkismetSubmission
 
 from .forms import RevisionDashboardForm
 from . import PAGE_SIZE
@@ -102,8 +104,8 @@ def revisions(request):
             request.user.is_superuser
         ),
         'show_spam_submission': (
-            waffle.flag_is_active(request, SPAM_SUBMISSIONS_FLAG) and
-            request.user.is_superuser
+            request.user.is_authenticated() and
+            request.user.has_perm('wiki.add_revisionakismetsubmission')
         ),
     }
 
@@ -148,3 +150,23 @@ def topic_lookup(request):
     data = json.dumps(topiclist)
     return HttpResponse(data,
                         content_type='application/json; charset=utf-8')
+
+
+@require_POST
+@permission_required('wiki.add_revisionakismetsubmission')
+def submit_akismet_spam(request):
+    """Creates SPAM or HAM Akismet record for revision"""
+    url = request.POST.get('next')
+    if url is None or not is_safe_url(url, request.get_host()):
+        url = reverse('dashboards.revisions')
+    revision = request.POST.get('revision')
+    try:
+        revision = Revision.objects.get(pk=revision)
+    except Revision.DoesNotExist:
+        return redirect(url)
+
+    submission_type = request.POST.get('submit', 'spam')
+    RevisionAkismetSubmission.objects.create(
+        sender=request.user, revision=revision, type=submission_type)
+
+    return redirect(url)
