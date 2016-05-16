@@ -123,9 +123,8 @@ class RevisionsDashTest(UserTestCase):
         eq_(response.url, 'http://testserver' + urlnext)
 
         # 1 RevisionAkismetSubmission record should exist for this revision
-        ras = RevisionAkismetSubmission.objects.filter(revision=revision)
-        eq_(ras.count(), 1)
-        eq_(ras[0].type, u'spam')
+        ras = RevisionAkismetSubmission.objects.get(revision=revision)
+        eq_(ras.type, u'spam')
 
     def test_submit_akismet_spam_no_permission(self):
         urlnext = reverse('dashboards.revisions', locale='en-US')
@@ -145,6 +144,28 @@ class RevisionsDashTest(UserTestCase):
         # No RevisionAkismetSubmission record should exist, user does not have permission
         ras = RevisionAkismetSubmission.objects.filter(revision=revision)
         eq_(ras.count(), 0)
+
+    def test_submit_akismet_spam_no_url_in_next_variable(self):
+        urlnext = reverse('dashboards.revisions')
+        revision = Revision.objects.first()
+        data = {
+            'revision': revision.pk,
+            'submit': u'spam',
+        }
+        p1 = Permission.objects.get(codename='add_revisionakismetsubmission')
+        testuser = User.objects.get(username='testuser')
+        testuser.user_permissions.add(p1)
+        self.client.login(username='testuser', password='testpass')
+
+        # Response should redirect back to the revisions dash
+        urlpost = reverse('dashboards.submit_akismet_spam', locale='en-US')
+        response = self.client.post(urlpost, data=data)
+        eq_(response.status_code, 302)
+        eq_(response.url, 'http://testserver' + urlnext)
+
+        # 1 RevisionAkismetSubmission record should exist for this revision
+        ras = RevisionAkismetSubmission.objects.get(revision=revision)
+        eq_(ras.type, u'spam')
 
     def test_locale_filter(self):
         url = urlparams(reverse('dashboards.revisions', locale='fr'),
