@@ -159,8 +159,12 @@ def submit_akismet_spam(request):
     url = request.POST.get('next')
     if url is None or not is_safe_url(url, request.get_host()):
         url = reverse('dashboards.revisions')
-    revision = request.POST.get('revision', 0)
-    revision = Revision.objects.get(pk=revision)
+    revision = request.POST.get('revision')
+    try:
+        revision = Revision.objects.get(pk=revision)
+    except Revision.DoesNotExist:
+        return redirect(url)
+
     submission_type = request.POST.get('submit', 'spam')
     RevisionAkismetSubmission.objects.create(
         sender=request.user, revision=revision, type=submission_type)
