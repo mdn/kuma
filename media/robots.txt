@@ -39,6 +39,6 @@ Disallow: /*docs*$restore
 Disallow: /*docs*$purge
 Disallow: /*docs*$subscribe
 Disallow: /*docs*$vote
-Disallow: /*docs*.json
+Disallow: /*docs.json
 Disallow: /*preview-wiki-content
 Disallow: /*move-requested
