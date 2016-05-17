@@ -70,10 +70,6 @@
         </ul>
         {% endif %}
 
-        <div class="user-bio">
-          <p>{{ detail_user.bio|linebreaksbr }}</p>
-        </div>
-
         {% set tag_ns = 'profile:interest:' %}
         {% set tags = detail_user.tags.all_ns(tag_ns) %}
         {% if tags|length %}

@@ -70,12 +70,6 @@
                   {{ li_field(user_form, 'timezone') }}
                   {{ li_field(user_form, 'irc_nickname') }}
 
-                  <li class="wordcount{{ ' error' if user_form.bio.errors }}">
-                    <label for="{{ user_form.bio.id_for_label }}">{{ _('About me') }} <span class="field-note"><b id="bio_wordcount" class="counter">150</b> {{ _('words remaining') }}</span></label>
-                    {{ user_form.bio }}
-                    {{ user_form.bio.errors }}
-                  </li>
-
                   <li class="{{ ' error' if user_form.interests.errors }}">
                     <label for="{{ user_form.interests.id_for_label }}">{{ _('Interests (tags)') }}</label>
                     <p class="field-note">{{ _('Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".') }}</p>

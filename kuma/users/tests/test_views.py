@@ -155,8 +155,6 @@ class UserViewsTest(UserTestCase):
             doc.find('#user-head.vcard .loc').text())
         eq_('IRC: ' + testuser.irc_nickname,
             doc.find('#user-head.vcard .irc').text())
-        eq_(testuser.bio,
-            doc.find('#user-head.vcard .user-bio').text())
 
     def test_my_user_page(self):
         u = self.user_model.objects.get(username='testuser')
@@ -662,7 +660,6 @@ class KumaGitHubTests(UserTestCase):
             "location": "San Francisco",
             "email": %(public_email)s,
             "hireable": false,
-            "bio": "There once was...",
             "public_repos": 2,
             "public_gists": 1,
             "followers": 20,
