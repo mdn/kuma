@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-04-21 07:33-0700\n"
-"PO-Revision-Date: 2016-04-27 18:21+0000\n"
+"PO-Revision-Date: 2016-05-17 13:03+0000\n"
 "Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -3428,8 +3428,8 @@ msgid ""
 "This article needs a technical review. <a href=\"%(url)s\">How you can "
 "help.</a>"
 msgstr ""
-"Este artigo precisa de uma revisão técnica. <a href=\"%(url)s\">Como pode "
-"ajudar.</a>"
+"Este artigo necessita de uma revisão técnica. <a href=\"%(url)s\">Como posso"
+" ajudar.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
@@ -3438,7 +3438,7 @@ msgid ""
 "help.</a>"
 msgstr ""
 "Este artigo necessita de uma revisão editorial. <a href=\"%(url)s\">Como "
-"pode ajudar.</a>"
+"posso ajudar.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:284
 #, python-format
