@@ -102,11 +102,6 @@
           <img src="{{ gravatar_url(detail_user.email, size=200) }}" alt="{{ detail_user.username }}" width="200" height="200" class="user-photo avatar" />
         </figure>
 
-        <ul class="user-links">
-        {% if detail_user.website_url %}
-          <li class="website"><i class="icon-link" aria-hidden="true"></i><a href="{{ detail_user.website_url }}" rel="me external" class="url">{{ _("Website") }}</a></li>
-        {% endif %}
-
         {% if detail_user.twitter_url %}
           <li class="twitter"><i class="icon-twitter" aria-hidden="true"></i><a href="{{ detail_user.twitter_url }}" rel="me external" class="url">{{ _("Twitter") }}</a></li>
         {% endif %}

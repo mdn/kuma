@@ -270,7 +270,6 @@ class UserViewsTest(UserTestCase):
         doc = pq(response.content)
 
         test_sites = {
-            'website': 'http://example.com/',
             'twitter': 'http://twitter.com/lmorchard',
             'github': 'http://github.com/lmorchard',
             'stackoverflow': 'http://stackoverflow.com/users/lmorchard',
@@ -306,7 +305,7 @@ class UserViewsTest(UserTestCase):
 
         # Come up with some bad sites, either invalid URL or bad URL prefix
         bad_sites = {
-            'website': 'HAHAHA WHAT IS A WEBSITE',
+            'linkedin': 'HAHAHA WHAT IS A WEBSITE',
             'twitter': 'http://facebook.com/lmorchard',
             'stackoverflow': 'http://overqueueblah.com/users/lmorchard',
         }
@@ -318,7 +317,7 @@ class UserViewsTest(UserTestCase):
         doc = pq(response.content)
         eq_(1, doc.find('#user-edit').length)
         tmpl = '#user-edit #users .%s .errorlist'
-        for n in ('website', 'twitter', 'stackoverflow'):
+        for n in ('linkedin', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
     def test_user_edit_interests(self):

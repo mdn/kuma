@@ -55,15 +55,6 @@ class UserEditForm(forms.ModelForm):
         required=False,
         error_message=USERNAME_CHARACTERS,
     )
-    website_url = forms.CharField(
-        label=_('Website'),
-        required=False,
-        validators=[User.WEBSITE_VALIDATORS['website']],
-        widget=forms.TextInput(attrs={
-            'placeholder': 'http://',
-            'data-fa-icon': 'icon-link',
-        }),
-    )
     twitter_url = forms.CharField(
         label=_('Twitter'),
         required=False,
