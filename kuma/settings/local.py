@@ -9,6 +9,7 @@ ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
 INTERNAL_IPS = ('127.0.0.1', '192.168.10.1')
 
 DEBUG = True
+DEBUG_TOOLBAR = config('DEBUG_TOOLBAR', default=False, cast=bool)
 TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = DEBUG
 DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
@@ -29,3 +30,5 @@ ES_LIVE_INDEX = True
 # Don't cache non-versioned static files in DEBUG mode
 if DEBUG:
     WHITENOISE_MAX_AGE = 0
+    if DEBUG_TOOLBAR:
+        INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
