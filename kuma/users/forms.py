@@ -114,7 +114,7 @@ class UserEditForm(forms.ModelForm):
         model = User
         fields = ('fullname', 'title', 'organization', 'location',
                   'locale', 'timezone', 'irc_nickname', 'interests',
-                  'website_url', 'twitter_url', 'github_url',
+                  'twitter_url', 'github_url',
                   'stackoverflow_url', 'linkedin_url', 'mozillians_url',
                   'facebook_url', 'username')
 
