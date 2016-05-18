@@ -7,6 +7,8 @@ the entire MDN stack. (Django, KumaScript, Search, Celery, etc.)
 If you're on Mac OS X or Linux and looking for a quick way to get started, you
 should try these instructions.
 
+If you are more familiar with Docker view the :doc:`Docker setup instructions <installation-docker>`.
+
 .. note:: **If you have problems getting vagrant up**, check Errors_ below.
 
 .. _vagrant: http://vagrantup.com/
@@ -20,9 +22,9 @@ Install and run everything
    .. note:: (Windows) After installing VirtualBox you need to set
               ``PATH=C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe;``
 
-#. Install vagrant >= 1.7 using the installer from `vagrantup.com <http://vagrantup.com/>`_
+#. Install Vagrant >= 1.7 using the installer from `vagrantup.com <http://vagrantup.com/>`_
 
-#. Install `Ansible <http://docs.ansible.com/>`_ on your machine so that
+#. Install `Ansible <http://docs.ansible.com/>`_ 1.9.x on your machine so that
    Vagrant is able to set up the VM the way we need it.
 
    See the `Ansible Installation docs <http://docs.ansible.com/intro_installation.html>`_
@@ -103,13 +105,11 @@ Install and run everything
 
 #. Visit the homepage at `https://developer-local.allizom.org <https://developer-local.allizom.org/>`_
 
-#. You've installed Kuma! If you want `the badge`_ please `email a screenshot of your browser <mailto:mdn-dev@mozilla.com?subject=Local%20MDN%20Screenshot>`_ to receive the badge.
-
-   .. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
+#. You've installed Kuma!
 
    Continue reading to create an admin user and enable the wiki.
 
-.. _the badge: https://badges.mozilla.org/badges/badge/Installed-and-ran-Kuma
+.. _create a user:
 
 Create an admin user
 ====================
@@ -122,13 +122,12 @@ You will want to make yourself an admin user to enable important site features.
    ``<< YOUR_USERNAME >>`` with the username you used when signing up for
    Persona)::
 
-    vagrant ssh
-    mysql -ukuma -pkuma kuma -e "UPDATE auth_user set is_staff = 1, is_active=1, is_superuser = 1 WHERE username = '<< YOUR_USERNAME >>';"
+      vagrant ssh
+      python manage.py ihavepower "<< YOUR_USERNAME >>"
 
    You should see::
 
-      Query OK, 1 row affected (0.01 sec)
-      Rows matched: 1  Changed: 1  Warnings: 0
+      Done!
 
 Enable the wiki
 ===============
@@ -171,16 +170,16 @@ To enable KumaScript:
 #. Visit the `constance config admin panel`_
 #. Change ``KUMASCRIPT_TIMEOUT`` to 600
 #. Click "Save" at the bottom
+#. Import the `KumaScript auto-loaded modules`_::
 
-KumaScript is now enabled. You will also need to import the `KumaScript auto-loaded modules`_.
-You can simply copy & paste them from the production site to your local site at
-the same slugs. Or you can get a .json file to load in your local django admin
-interface as described in `this bugzilla comment`_.
+    vagrant ssh
+    python manage.py import_kumascript_modules
+
+.. note:: You must `create a user`_ to import kumascript modules.
 
 .. _KumaScript: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/KumaScript
 .. _constance config admin panel: https://developer-local.allizom.org/admin/constance/config/
 .. _KumaScript auto-loaded modules: https://developer.mozilla.org/en-US/docs/MDN/Kuma/Introduction_to_KumaScript#Auto-loaded_modules
-.. _this comment: https://github.com/mozilla/kuma/issues/2518#issuecomment-53665362
 
 .. _GitHub Auth:
 
@@ -213,7 +212,7 @@ Now you can sign in with GitHub at https://developer-local.allizom.org/
 .. _Errors:
 
 Errors during `vagrant up`
---------------------------
+==========================
 
 ``vagrant up`` starts the virtual machine. The first time you run
 ``vagrant up`` it also `provisions <https://docs.vagrantup.com/v2/cli/provision.html>`_
@@ -235,7 +234,7 @@ If you see the same error over and over, please ask for :ref:`more help <more-he
 .. _Ansible: http://docs.ansible.com/
 
 Django database migrations
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 If you see errors that have "Django database migrations" in their
 title try to manually run them in the VM to see more about them.
@@ -247,7 +246,7 @@ To do so::
 If you get an error, please ask for :ref:`more help <more-help>`.
 
 Ubuntu
-~~~~~~
+------
 
 On Ubuntu, ``vagrant up`` might fail after being unable to mount NFS shared
 folders. First, make sure you have the nfs-common and nfs-server packages
@@ -255,7 +254,7 @@ installed and also note that you can't export anything via NFS inside an
 encrypted volume or home dir. On Windows NFS won't be used ever by the way.
 
 If that doesn't help you can disable NFS by setting the ``VAGRANT_NFS``
-configration value in a ``.env`` file. See the :ref:`Vagrant configuration
+configuration value in a ``.env`` file. See the :ref:`Vagrant configuration
 <vagrant-config>` options for more info.
 
 If you have other problems during ``vagrant up``, please check

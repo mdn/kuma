@@ -22,8 +22,10 @@ class BaseDocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
         allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
+        blocked_protocols = config.KUMA_WIKI_HREF_BLOCKED_PROTOCOLS
         out = (parse_content(content_in)
                .filterIframeHosts(allowed_hosts)
+               .filterAHrefProtocols(blocked_protocols)
                .serialize())
 
         if use_constance_bleach_whitelists:
@@ -59,9 +61,8 @@ class BaseDocumentManager(models.Manager):
         # assumed everyone is allowed.
         return True
 
-    def filter_for_list(self, locale=None, category=None, tag=None,
-                        tag_name=None, errors=None, noparent=None,
-                        toplevel=None):
+    def filter_for_list(self, locale=None, tag=None, tag_name=None,
+                        errors=None, noparent=None, toplevel=None):
         docs = (self.filter(is_template=False, is_redirect=False)
                     .exclude(slug__startswith='User:')
                     .exclude(slug__startswith='Talk:')
@@ -71,11 +72,6 @@ class BaseDocumentManager(models.Manager):
                     .order_by('slug'))
         if locale:
             docs = docs.filter(locale=locale)
-        if category:
-            try:
-                docs = docs.filter(category=int(category))
-            except ValueError:
-                pass
         if tag:
             docs = docs.filter(tags__in=[tag])
         if tag_name:
@@ -150,9 +146,9 @@ class BaseDocumentManager(models.Manager):
             # fields from Document and Revision models and knocking out what we
             # don't want? Serializer doesn't support exclusion list directly.
             'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
-            'parent', 'parent_topic', 'category', 'document', 'is_redirect',
-            'summary', 'content', 'comment',
-            'keywords', 'tags', 'toc_depth', 'is_approved',
+            'parent', 'parent_topic', 'document', 'is_redirect', 'summary',
+            'content', 'comment', 'keywords', 'tags', 'toc_depth',
+            'is_approved',
             'creator',  # HACK: Replaced on import, but deserialize needs it
             'is_mindtouch_migration',
         )
@@ -228,7 +224,20 @@ class TaggedDocumentManager(models.Manager):
 
 
 class RevisionIPManager(models.Manager):
+
     def delete_old(self, days=30):
         cutoff_date = date.today() - timedelta(days=days)
         old_rev_ips = self.filter(revision__created__lte=cutoff_date)
         old_rev_ips.delete()
+
+    def log(self, revision, headers):
+        """
+        Records the IP and some more data for the given revision and the
+        request headers.
+        """
+        self.create(
+            revision=revision,
+            ip=headers.get('REMOTE_ADDR'),
+            user_agent=headers.get('HTTP_USER_AGENT', ''),
+            referrer=headers.get('HTTP_REFERER', ''),
+        )

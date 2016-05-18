@@ -10,7 +10,7 @@ import waffle
 from constance import config
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.db import models, transaction
 from django.db.models import signals
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
@@ -28,7 +28,7 @@ from kuma.core.exceptions import ProgrammingError
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
 from kuma.search.decorators import register_live_index
-from kuma.spam.models import SpamAttempt
+from kuma.spam.models import AkismetSubmission, SpamAttempt
 
 from . import kumascript
 from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
@@ -42,13 +42,13 @@ from .content import (H2TOCFilter, H3TOCFilter, SectionTOCFilter,
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
-from .helpers import absolutify
 from .jobs import DocumentContributorsJob, DocumentZoneStackJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
 from .search import WikiDocumentType
 from .signals import render_done
+from .templatetags.jinja_helpers import absolutify
 from .utils import tidy_content
 
 
@@ -173,10 +173,6 @@ class DocumentAttachment(models.Model):
 @register_live_index
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
-    CATEGORIES = (
-        (00, _(u'Uncategorized')),
-        (10, _(u'Reference')),
-    )
     TOC_FILTERS = {
         1: SectionTOCFilter,
         2: H2TOCFilter,
@@ -259,10 +255,6 @@ class Document(NotificationsMixin, models.Model):
 
     # Time after which this document needs re-rendering
     render_expires = models.DateTimeField(blank=True, null=True, db_index=True)
-
-    # A document's category much always be that of its parent. If it has no
-    # parent, it can do what it wants. This invariant is enforced in save().
-    category = models.IntegerField(choices=CATEGORIES, db_index=True)
 
     # Whether this page is deleted.
     deleted = models.BooleanField(default=False, db_index=True)
@@ -724,7 +716,6 @@ class Document(NotificationsMixin, models.Model):
     def clean(self):
         """Translations can't be localizable."""
         self._clean_is_localizable()
-        self._clean_category()
 
     def _clean_is_localizable(self):
         """is_localizable == allowed to have translations. Make sure that isn't
@@ -753,21 +744,6 @@ class Document(NotificationsMixin, models.Model):
             raise ValidationError('"%s": document has %s translations but is '
                                   'not localizable.' %
                                   (unicode(self), self.translations.count()))
-
-    def _clean_category(self):
-        """Make sure a doc's category is the same as its parent's."""
-        parent = self.parent
-        if parent:
-            self.category = parent.category
-        elif self.category not in (id for id, name in self.CATEGORIES):
-            # All we really need to do here is make sure category != '' (which
-            # is what it is when it's missing from the DocumentForm). The extra
-            # validation is just a nicety.
-            raise ValidationError(ugettext('Please choose a category.'))
-        else:  # An article cannot have both a parent and children.
-            # Make my children the same as me:
-            if self.id:
-                self.translations.all().update(category=self.category)
 
     def _attr_for_redirect(self, attr, template):
         """Return the slug or title for a new redirect.
@@ -800,21 +776,46 @@ class Document(NotificationsMixin, models.Model):
             return unique_attr()
 
     def revert(self, revision, user, comment=None):
+        """
+        Reverts the given revision by creating a new one.
+
+        - Sets its comment to the given value and points the new revision
+          to the old revision
+        - Keeps review tags
+        - Make new revision the current one of the document
+        """
+        # remember the current revision's primary key for later
+        old_revision_pk = revision.pk
+        # get a list of review tag names for later
         old_review_tags = list(revision.review_tags.names())
-        if revision.document.original == self:
-            revision.based_on = revision
-        revision.id = None
-        revision.comment = ("Revert to revision of %s by %s" %
-                            (revision.created, revision.creator))
-        if comment:
-            revision.comment += ': "%s"' % comment
-        revision.created = datetime.now()
-        revision.creator = user
-        revision.save()
-        if old_review_tags:
-            revision.review_tags.set(*old_review_tags)
+
+        with transaction.atomic():
+
+            # reset primary key
+            revision.pk = None
+
+            # add a sensible comment
+            revision.comment = ("Revert to revision of %s by %s" %
+                                (revision.created, revision.creator))
+            if comment:
+                revision.comment = u'%s: "%s"' % (revision.comment, comment)
+            revision.created = datetime.now()
+            revision.creator = user
+
+            if revision.document.original.pk == self.pk:
+                revision.based_on_id = old_revision_pk
+
+            revision.save()
+
+            # set review tags
+            if old_review_tags:
+                revision.review_tags.set(*old_review_tags)
+
+        # populate model instance with fresh data from database
+        revision.refresh_from_db()
+
+        # make this new revision the current one for the document
         revision.make_current()
-        self.schedule_rendering('max-age=0')
         return revision
 
     def revise(self, user, data, section_id=None):
@@ -822,7 +823,7 @@ class Document(NotificationsMixin, models.Model):
         revise this document"""
         curr_rev = self.current_revision
         new_rev = Revision(creator=user, document=self, content=self.html)
-        for n in ('title', 'slug', 'category', 'render_max_age'):
+        for n in ('title', 'slug', 'render_max_age'):
             setattr(new_rev, n, getattr(self, n))
         if curr_rev:
             new_rev.toc_depth = curr_rev.toc_depth
@@ -901,11 +902,6 @@ class Document(NotificationsMixin, models.Model):
         # These are too important to leave to a (possibly omitted) is_valid
         # call:
         self._clean_is_localizable()
-        # Everything is validated before save() is called, so the only thing
-        # that could cause save() to exit prematurely would be an exception,
-        # which would cause a rollback, which would negate any category changes
-        # we make here, so don't worry:
-        self._clean_category()
 
         if not self.parent_topic and self.parent:
             # If this is a translation without a topic parent, try to get one.
@@ -966,7 +962,6 @@ class Document(NotificationsMixin, models.Model):
         redirect_doc = Document(locale=self.locale,
                                 title=self.title,
                                 slug=self.slug,
-                                category=self.category,
                                 is_localizable=False)
         content = REDIRECT_CONTENT % {
             'href': reverse('wiki.document',
@@ -1076,18 +1071,13 @@ class Document(NotificationsMixin, models.Model):
         # preserve them.
         review_tags = list(self.current_revision.review_tags.names())
 
-        # Step 3: Create (but don't yet save) a copy of our current
-        # revision, but with the new slug and title (if title is
-        # changing too).
-        moved_rev = self._moved_revision(new_slug, user, title)
-
-        # Step 4: Create (but don't yet save) a Document and Revision
+        # Step 3: Create (but don't yet save) a Document and Revision
         # to leave behind as a redirect from old location to new.
         redirect_doc, redirect_rev = self._post_move_redirects(new_slug,
                                                                user,
                                                                title)
 
-        # Step 5: Update our breadcrumbs.
+        # Step 4: Update our breadcrumbs.
         new_parent = self._get_new_parent(new_slug)
 
         # If we found a Document at what will be our parent slug, set
@@ -1096,9 +1086,14 @@ class Document(NotificationsMixin, models.Model):
         # would already have moved if it were going to).
         self.parent_topic = new_parent
 
-        # Step 6: Save this Document.
+        # Step 5: Save this Document.
         self.slug = new_slug
         self.save()
+
+        # Step 6: Create (but don't yet save) a copy of our current
+        # revision, but with the new slug and title (if title is
+        # changing too).
+        moved_rev = self._moved_revision(new_slug, user, title)
 
         # Step 7: Save the Revision that actually moves us.
         moved_rev.save(force_insert=True)
@@ -1426,24 +1421,22 @@ Full traceback:
                  for grandchild in child.get_descendants(limit, levels + 1)]
         return results
 
-    def has_voted(self, request):
-        """Did the user already vote for this document?"""
-        if request.user.is_authenticated():
-            qs = HelpfulVote.objects.filter(document=self,
-                                            creator=request.user)
-        elif request.anonymous.has_id:
-            anon_id = request.anonymous.anonymous_id
-            qs = HelpfulVote.objects.filter(document=self,
-                                            anonymous_id=anon_id)
-        else:
-            return False
-
-        return qs.exists()
-
     def is_watched_by(self, user):
         """Return whether `user` is notified of edits to me."""
         from .events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
+
+    def tree_is_watched_by(self, user):
+        """Return whether `user` is notified of edits to me AND sub-pages."""
+        from .events import EditDocumentInTreeEvent
+        return EditDocumentInTreeEvent.is_notifying(user, self)
+
+    def parent_trees_watched_by(self, user):
+        """
+        Return any and all of this document's parents that are watched by the
+        given user.
+        """
+        return [doc for doc in self.parents if doc.tree_is_watched_by(user)]
 
     def get_document_type(self):
         return WikiDocumentType
@@ -1746,6 +1739,9 @@ class Revision(models.Model):
 
     @cached_property
     def previous(self):
+        return self.get_previous()
+
+    def get_previous(self):
         """
         Returns the previous approved revision or None.
         """
@@ -1775,23 +1771,72 @@ class Revision(models.Model):
 
 
 class RevisionIP(models.Model):
-    """IP Address for a Revision."""
-    revision = models.ForeignKey(Revision)
-    ip = models.CharField(max_length=40, editable=False, db_index=True,
-                          blank=True, null=True)
-
+    """
+    IP Address for a Revision including User-Agent string and Referrer URL.
+    """
+    revision = models.ForeignKey(
+        Revision
+    )
+    ip = models.CharField(
+        _('IP address'),
+        max_length=40,
+        editable=False,
+        db_index=True,
+        blank=True,
+        null=True,
+    )
+    user_agent = models.TextField(
+        _('User-Agent'),
+        editable=False,
+        blank=True,
+    )
+    referrer = models.TextField(
+        _('HTTP Referrer'),
+        editable=False,
+        blank=True,
+    )
     objects = RevisionIPManager()
 
+    def __unicode__(self):
+        return '%s (revision %d)' % (self.ip or 'No IP', self.revision.id)
 
-class HelpfulVote(models.Model):
-    """Helpful or Not Helpful vote on Document."""
-    document = models.ForeignKey(Document, related_name='poll_votes')
-    helpful = models.BooleanField(default=False)
-    created = models.DateTimeField(default=datetime.now, db_index=True)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                related_name='poll_votes', null=True)
-    anonymous_id = models.CharField(max_length=40, db_index=True)
-    user_agent = models.CharField(max_length=1000)
+
+class RevisionAkismetSubmission(AkismetSubmission):
+    """
+    The Akismet submission per wiki document revision.
+
+    Stores only a reference to the submitted revision.
+    """
+    revision = models.ForeignKey(
+        Revision,
+        related_name='akismet_submissions',
+        null=True,
+        blank=True,
+        verbose_name=_('Revision'),
+        # don't delete the akismet submission but set the revision to null
+        on_delete=models.SET_NULL,
+    )
+
+    class Meta:
+        verbose_name = _('Akismet submission')
+        verbose_name_plural = _('Akismet submissions')
+
+    def __unicode__(self):
+        if self.revision:
+            return (
+                u'%(type)s submission by %(sender)s (Revision %(revision_id)d)' % {
+                    'type': self.get_type_display(),
+                    'sender': self.sender,
+                    'revision_id': self.revision.id,
+                }
+            )
+        else:
+            return (
+                u'%(type)s submission by %(sender)s (no revision)' % {
+                    'type': self.get_type_display(),
+                    'sender': self.sender,
+                }
+            )
 
 
 class EditorToolbar(models.Model):
@@ -1825,7 +1870,8 @@ class DocumentSpamAttempt(SpamAttempt):
         related_name='spam_attempts',
         null=True,
         blank=True,
-        verbose_name=ugettext('Document (optional)')
+        verbose_name=ugettext('Document (optional)'),
+        on_delete=models.SET_NULL,
     )
 
     def __unicode__(self):

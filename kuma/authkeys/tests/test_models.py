@@ -1,8 +1,8 @@
+import pytest
+
 from django.test import TestCase
 
-from nose.tools import ok_
-from nose.plugins.attrib import attr
-
+from kuma.core.tests import ok_
 from kuma.users.tests import user
 
 from ..models import Key
@@ -10,7 +10,7 @@ from ..models import Key
 
 class KeyViewsTest(TestCase):
 
-    @attr('current')
+    @pytest.mark.current
     def test_secret_generation(self):
         """Generated secret should be saved as a hash and pass a check"""
         u = user(username="tester23",

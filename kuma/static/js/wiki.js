@@ -7,43 +7,13 @@
     $('.toggleable').mozTogglers();
 
     /*
-        Toggle for quick links show/hide
+        Toggle for quick links with nested lists
     */
     (function() {
-        // Set up the quick links for the toggler
+        // Set up the quick links with the toggler
         var $quickLinks = $('#quick-links');
         setupTogglers($quickLinks.find('> ul > li, > ol > li'));
         $quickLinks.find('.toggleable').mozTogglers();
-
-        var $columnContainer = $('#wiki-column-container');
-        var $quickLinksControl = $('#wiki-controls .quick-links');
-
-        var child = $('#wiki-left').get(0);
-        if(child) {
-            var parent = child.parentNode;
-        }
-
-        // Quick Link toggles
-        $('#quick-links-toggle, #show-quick-links').on('click', function(e) {
-            e.preventDefault();
-            $(child).toggleClass('column-closed');
-            $columnContainer.toggleClass('wiki-left-closed');
-            $quickLinksControl.toggleClass('hidden');
-
-            if($(child).hasClass('column-closed')) {
-                parent.removeChild(child);
-            }
-            else {
-                parent.appendChild(child);
-            }
-
-            mdn.analytics.trackEvent({
-                category: 'Wiki',
-                action: 'Sidebar',
-                label: (this.id === 'quick-links-toggle' ? 'Hide' : 'Show')
-            });
-
-        });
     })();
 
     /*
@@ -137,9 +107,14 @@
         var $link = $(this);
         if($link.hasClass('disabled')) return;
 
+        mdn.analytics.trackEvent({
+            category: 'Page Watch',
+            action: $link.text().trim()
+        });
+
         var $form = $link.closest('form');
 
-        var notification = mdn.Notifier.growl($link.data('subscribe-status'), { duration: 0 });
+        var notification = mdn.Notifier.growl($link.data('subscribe-status'), { duration: 0, type: 'text' });
 
         $link.addClass('disabled');
         $.ajax($form.attr('action'), {
@@ -149,7 +124,6 @@
         }).done(function(data) {
 
             var message;
-            data = JSON.parse(data);
             if(Number(data.status) === 1) {
                 $link.text($link.data('unsubscribe-text'));
                 message = $link.data('subscribe-message');
@@ -355,42 +329,67 @@
 
     })();
 
+    /*
+        Track clicks on access menu items
+    */
+    $('#nav-access').on('click contextmenu', 'a', function(event) {
+        var $thisLink = $(this);
+        var url = $thisLink.attr('href');
 
+        var data = {
+            category: 'Access Links',
+            action: $thisLink.text(),
+            label: $thisLink.attr('href')
+        };
+
+        mdn.analytics.trackLink(event, url, data);
+
+        // dimension11 is "skiplinks user"
+        if(win.ga) ga('set', 'dimension11', 'Yes');
+    });
 
     /*
         Track clicks on TOC links
     */
-    $('#toc').on('click', 'a', function() {
+    $('#toc').on('click contextmenu', 'a', function(event) {
         var $thisLink = $(this);
+        var url = $thisLink.attr('href');
 
-        mdn.analytics.trackEvent( {
+        var data = {
             category: 'TOC Links',
             action: $thisLink.text(),
             label: $thisLink.attr('href')
-        });
+        };
+
+        mdn.analytics.trackLink(event, url, data);
+    });
+
+    /*
+        Track clicks on main nav links
+    */
+    $('#main-nav').on('click contextmenu', 'a', function(event) {
+        var url = this.href;
+        var data = {
+            category: 'Wiki',
+            action: 'Main Nav',
+            label: url
+        };
+
+        mdn.analytics.trackLink(event, url, data);
     });
 
     /*
         Track clicks on Crumb links
     */
-    $('.crumbs').on('click', 'a', function(e) {
+    $('.crumbs').on('click contextmenu', 'a', function(event) {
         var url = this.href;
-        var newTab = (e.metaKey || e.ctrlKey);
         var data = {
             category: 'Wiki',
             action: 'Crumbs',
             label: url
         };
 
-        if(newTab) {
-            mdn.analytics.trackEvent(data);
-        }
-        else {
-            e.preventDefault();
-            mdn.analytics.trackEvent(data, function() {
-                window.location = url;
-            });
-        }
+        mdn.analytics.trackLink(event, url, data);
     });
 
 
@@ -535,14 +534,34 @@
     });
 
     /*
-        Toggle kumascript error detail pane
+        Kumascript error detected
     */
-    $('.kserrors-details-toggle').toggleMessage({
-        toggleCallback: function() {
-            $('.kserrors-details').toggleClass('hidden');
+    // is there an error?
+    var $kserrors = $('#kserrors');
+    if($kserrors.length){
+        // enable the details toggle
+        var $kserrorsToggle = $kserrors.find('.kserrors-details-toggle');
+        var $kserrorsDetails = $kserrors.find('.kserrors-details');
+        $kserrorsToggle.toggleMessage({
+            toggleCallback: function() {
+                $kserrorsDetails.toggleClass('hidden');
+            }
+        });
+        // loop through error list and log errors
+        var $kserrorsList = $('#kserrors-list');
+        if($kserrorsList.length){
+            $kserrorsList.each(function(){
+                var $thisError = $(this);
+                var errorType = $thisError.find('.kserror-type').text().trim();
+                var errorMacro = $thisError.find('.kserror-macro').text().trim();
+                var errorParse = $thisError.find('.kserror-parse').text().trim().replace(/\s\s+/g, ' ');
+                mdn.analytics.trackError('Kumascript Error', errorType, 'in: ' + errorMacro + '; parsing: ' + errorParse );
+            });
+        } else {
+            // generic error recorded - no details if user not logged in
+            mdn.analytics.trackError('Kumascript Error', 'generic error');
         }
-    });
-
+    }
 
     /*
         Stack overflow search form, used for dev program
@@ -563,61 +582,50 @@
     */
     (function (){
         var hiddenClass = 'hidden';
+        var shownClass = 'shown';
         var $contributors = $('.contributor-avatars');
-        var $hiddenContributors;
         var $showAllContributors;
 
         function loadImages(selector) {
             return $contributors.find(selector).mozLazyloadImage();
         }
 
-        // Don't bother with contributor bar if it starts hidden
-        if($contributors.css('display') === 'none') return;
+        function initToggle() {
+            $showAllContributors = $('<button id="contributors-toggle" type="button" class="transparent" data-alternate-message="' + $contributors.data('alternate-message') + '">' + $contributors.data('all-text') + '</button>');
 
-        // Start displaying first contributors in list
-        loadImages('li.shown noscript');
-
-        // Setup "Show all Contributors block"
-        if ($contributors.data('has-hidden')) {
-            $showAllContributors = $('<button type="button" class="transparent">' + $contributors.data('all-text') + '</button>');
-
-            $showAllContributors.on('keypress click', function(e) {
-                var isKeyPress = e.type === 'keypress';
-                var isEnterKey = isKeyPress && e.which === 13;
-
-                // Ignore keypresses that aren't the ENTER key
-                if(isKeyPress && !isEnterKey) return;
-
-                mdn.analytics.trackEvent({
-                    category: 'Top Contributors',
-                    action: 'Show all'
-                });
-
-                // Show all LI elements
-                $hiddenContributors = $contributors.find('li.' + hiddenClass);
-                $hiddenContributors.removeClass(hiddenClass);
-
-                // Start loading images which were hidden
-                loadImages('noscript');
-
-                // Focus on the first hidden element
-                if(isEnterKey) {
-                    $($hiddenContributors.get(0)).find('a').get(0).focus();
-                }
-
-                // Remove the "Show all" button
-                $(this).remove();
-
+            // toggle message and state of hidden
+            $showAllContributors.toggleMessage({
+                toggleCallback: toggleImages
             });
 
             // Inject the show all button
             $showAllContributors.appendTo($contributors);
         }
 
+        function toggleImages() {
+            var $hiddenContributors;
+            $hiddenContributors = $contributors.find('li.' + hiddenClass);
+            $contributors.toggleClass('contributor-avatars-open');
+            if($hiddenContributors.length) {
+                mdn.analytics.trackEvent({
+                    category: 'Top Contributors',
+                    action: 'Show all'
+                });
+
+                // Show all LI elements
+                $hiddenContributors.removeClass(hiddenClass);
+
+                // Start loading images which were hidden
+                loadImages('noscript');
+            } else {
+                $contributors.find('li:not(.' + shownClass + ')' ).addClass(hiddenClass);
+            }
+        }
+
+
         // Track clicks on avatars for the sake of Google Analytics tracking
-        $contributors.on('click', 'a', function(e) {
-            var newTab = (e.metaKey || e.ctrlKey);
-            var href = this.href;
+        $contributors.on('click', 'a', function(event) {
+            var url = this.href;
             var index = $(this).parent().index() + 1;
             var data = {
                 category: 'Top Contributors',
@@ -625,19 +633,24 @@
                 label: index
             };
 
-            if (newTab) {
-              mdn.analytics.trackEvent(data);
-            } else {
-              e.preventDefault();
-              mdn.analytics.trackEvent(data, function() {
-                win.location = href;
-              });
-            }
+            mdn.analytics.trackLink(event, url, data);
         });
 
-        // Allow focus into and out of the list itself
-        $contributors.find('ul').on('focusin focusout', function(e) {
-            $(this)[(e.type === 'focusin' ? 'add' : 'remove') + 'Class']('focused');
+        // Don't bother with contributor bar if it starts hidden
+        if($contributors.css('display') === 'none') return;
+
+        // Start displaying first contributors in list
+        loadImages('li.' + shownClass + ' noscript');
+
+
+        // Setup "Show all Contributors block"
+        if ($contributors.data('has-hidden')) {
+            initToggle();
+        }
+
+        // Trigger CSS on focus into and out of the list itself
+        $contributors.find('ul').on('focusin focusout', function(event) {
+            $(this)[(event.type === 'focusin' ? 'add' : 'remove') + 'Class']('focused');
         });
     })();
 

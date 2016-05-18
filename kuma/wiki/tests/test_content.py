@@ -2,24 +2,24 @@
 from urlparse import urljoin
 
 import bleach
+import pytest
 from cssselect.parser import SelectorSyntaxError
 from jinja2 import escape, Markup
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import KumaTestCase
-from kuma.users.tests import UserTestCase
 import kuma.wiki.content
-from ..constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
-from ..content import (CodeSyntaxFilter, SectionTOCFilter, SectionIDFilter,
-                       H2TOCFilter, H3TOCFilter, SECTION_TAGS,
-                       get_seo_description, get_content_sections,
+from kuma.core.tests import KumaTestCase, eq_, ok_
+from kuma.users.tests import UserTestCase
+
+from . import doc_rev, document, normalize_html
+from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_TAGS
+from ..content import (SECTION_TAGS, CodeSyntaxFilter, H2TOCFilter,
+                       H3TOCFilter, SectionIDFilter, SectionTOCFilter,
                        extract_css_classnames, extract_html_attributes,
-                       extract_kumascript_macro_names)
-from ..helpers import bugize_text
+                       extract_kumascript_macro_names, get_content_sections,
+                       get_seo_description)
 from ..models import Document
-from . import normalize_html, doc_rev, document
+from ..templatetags.jinja_helpers import bugize_text
 
 
 class ContentSectionToolTests(UserTestCase):
@@ -410,7 +410,7 @@ class ContentSectionToolTests(UserTestCase):
         for original, slugified in headers:
             ok_(slugified == section_filter.slugify(original))
 
-    @attr('toc')
+    @pytest.mark.toc
     def test_generate_toc(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -460,7 +460,7 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(SectionTOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    @attr('toc')
+    @pytest.mark.toc
     def test_generate_toc_h2(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -488,7 +488,7 @@ class ContentSectionToolTests(UserTestCase):
                   .filter(H2TOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    @attr('toc')
+    @pytest.mark.toc
     def test_generate_toc_h3(self):
         doc_src = """
             <h2 id="HTML">HTML</h2>
@@ -793,6 +793,19 @@ class ContentSectionToolTests(UserTestCase):
                       .serialize())
         eq_(normalize_html(expected_src), normalize_html(result_src))
 
+    def test_ahref_protocol_filter_invalid_protocol(self):
+        doc_src = """
+            <p><a id="xss" href="data:text/html;base64,PHNjcmlwdD5hbGVydCgiZG9jdW1lbnQuY29va2llOiIgKyBkb2N1bWVudC5jb29raWUpOzwvc2NyaXB0Pg==">click for xss</a></p>
+            <p><a id="ok" href="/docs/ok/test">OK link</a></p>
+        """
+        result_src = (kuma.wiki.content.parse(doc_src)
+                      .filterAHrefProtocols('^(data\:?)')
+                      .serialize())
+        page = pq(result_src)
+
+        eq_(page.find('#xss').attr('href'), '')
+        eq_(page.find('#ok').attr('href'), '/docs/ok/test')
+
     def test_link_annotation(self):
         d, r = doc_rev("This document exists")
         d.save()
@@ -883,7 +896,6 @@ class ContentSectionToolTests(UserTestCase):
                                             .serialize())
             self.assertHTMLEqual(normalize_html(expected_line), normalize_html(result_line))
 
-    @attr('bug821986')
     def test_editor_safety_filter(self):
         """Markup that's hazardous for editing should be stripped"""
         doc_src = """

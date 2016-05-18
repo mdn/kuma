@@ -93,6 +93,6 @@ class ElasticTestCase(UserTestCase):
 
     def get_request(self, *args, **kwargs):
         request = factory.get(*args, **kwargs)
-        # setting request.locale correctly
+        # setting request.LANGUAGE_CODE correctly
         LocaleURLMiddleware().process_request(request)
         return request

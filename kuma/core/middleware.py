@@ -1,13 +1,14 @@
 import contextlib
 import urllib
 
+from django.conf import settings
 from django.core import urlresolvers
 from django.http import HttpResponseForbidden, HttpResponsePermanentRedirect
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
-from jingo.helpers import urlparams
 
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
+from .utils import urlparams
 from .views import handler403
 
 
@@ -53,8 +54,11 @@ class LocaleURLMiddleware(object):
             return response
 
         request.path_info = '/' + prefixer.shortened_path
-        request.locale = prefixer.locale
-        translation.activate(prefixer.locale)
+        request.LANGUAGE_CODE = prefixer.locale or settings.LANGUAGE_CODE
+        # prefixer.locale can be '', but we need a real locale code to activate
+        # otherwise the request uses the previously handled request's
+        # translations.
+        translation.activate(prefixer.locale or settings.LANGUAGE_CODE)
 
     def process_response(self, request, response):
         """Unset the thread-local var we set during `process_request`."""

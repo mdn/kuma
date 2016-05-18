@@ -1,13 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import escape
-from jingo.helpers import urlparams
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 
 from .models import User, UserBan
 
 
+@admin.register(UserBan)
 class UserBanAdmin(admin.ModelAdmin):
     fields = ('user', 'by', 'reason', 'is_active')
     list_display = ('user', 'by', 'reason', 'is_active')
@@ -16,9 +17,8 @@ class UserBanAdmin(admin.ModelAdmin):
     raw_id_fields = ('user', 'by')
     search_fields = ('user__username', 'reason', 'by__username')
 
-admin.site.register(UserBan, UserBanAdmin)
 
-
+@admin.register(User)
 class UserAdmin(BaseUserAdmin):
     """
     Extends the admin view of users to show date_joined field
@@ -39,7 +39,6 @@ class UserAdmin(BaseUserAdmin):
         count = obj.created_revisions.count()
         return ('<a href="%(link)s"><strong>%(count)s</strong></a>' %
                 {'link': link, 'count': count})
-
     revisions.allow_tags = True
 
     def website(self, obj):
@@ -48,7 +47,4 @@ class UserAdmin(BaseUserAdmin):
             return ('<a href="%(url)s"><strong>%(url)s</strong></a>' %
                     {'url': escape(obj.website_url)})
         return ""
-
     website.allow_tags = True
-
-admin.site.register(User, UserAdmin)

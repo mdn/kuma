@@ -23,7 +23,7 @@ as part of the :doc:`Vagrant provisioning <installation>`.
 
 Then run the Kuma search tests::
 
-    $ ./manage.py test -s --noinput kuma.search
+    $ py.test kuma/search/
 
 If the tests pass, everything is set up correctly!
 
@@ -58,7 +58,7 @@ way:
 
 - To actually enable that newly created search index you have to promote it
   now. On the search index list view again, select the just created index (the top
-  most) and select "Promote search index" from the actions dropwdown below.
+  most) and select "Promote search index" from the actions dropdown below.
 
 - Once the search index is promoted the "promoted" and the "is current index"
   field will show up as a green checkbox image. The index is now live.
@@ -66,7 +66,7 @@ way:
 Similarly you can also demote a search index and it will automatically fall
 back to the previously created index (by created date). That helps to figure
 out issues in production and should allow for a smooth deployment of search
-index changes. It's recommmended to keep a few search indexes around just in
+index changes. It's recommended to keep a few search indexes around just in
 case.
 
 If no index is created in the admin UI the fallback "main_index" index will be

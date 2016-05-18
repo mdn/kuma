@@ -13,8 +13,8 @@ from kuma.core.utils import smart_int
 
 from .. import kumascript
 from ..decorators import prevent_indexing, process_document_path
-from ..helpers import format_comment
 from ..models import Document, Revision
+from ..templatetags.jinja_helpers import format_comment
 
 
 @block_user_agents
@@ -60,7 +60,7 @@ def preview(request):
     if render_preview:
         wiki_content, kumascript_errors = kumascript.post(request,
                                                           wiki_content,
-                                                          request.locale)
+                                                          request.LANGUAGE_CODE)
     # TODO: Get doc ID from JSON.
     context = {
         'content': wiki_content,

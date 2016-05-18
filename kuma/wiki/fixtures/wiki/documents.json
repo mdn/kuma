@@ -3,7 +3,6 @@
         "pk": 1,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "title": "an article title",
             "locale": "en-US",
             "current_revision": 21,
@@ -17,7 +16,6 @@
         "pk": 2,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "title": "an article title 2",
             "locale": "en-US",
             "current_revision": 23,
@@ -31,7 +29,6 @@
         "pk": 3,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "title": "an article title 3",
             "locale": "en-US",
             "is_template": false,
@@ -44,7 +41,6 @@
         "pk": 4,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "parent": 1,
             "title": "le title",
             "locale": "fr",
@@ -59,7 +55,6 @@
         "pk": 5,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "parent": null,
             "title": "lorem ipsum",
             "locale": "en-US",
@@ -74,7 +69,6 @@
         "pk": 6,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "title": "Article with revisions",
             "locale": "en-US",
             "is_template": false,
@@ -87,7 +81,6 @@
         "pk": 7,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "title": "User:jezdez",
             "locale": "en-US",
             "is_template": false,
@@ -100,7 +93,6 @@
         "pk": 8,
         "model": "wiki.document",
         "fields": {
-            "category": 10,
             "title": "getElementByID",
             "locale": "en-US",
             "current_revision": 21,
@@ -261,6 +253,20 @@
         }
     },
     {
+        "pk": 30,
+        "model": "wiki.revision",
+        "fields": {
+            "title": "Seventh revision of the article.",
+            "is_approved": true,
+            "created": "2013-08-15 09:30:00",
+            "summary": "Seventh revision of the article.",
+            "content": "Seventh revision of the article.",
+            "keywords": "",
+            "document": 6,
+            "creator": 10,
+            "slug": "article-with-revisions"
+        }
+    },    {
         "pk": 100,
         "model": "wiki.documenttag",
         "fields": {

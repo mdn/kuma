@@ -6,7 +6,6 @@ from django.contrib.auth.models import Group, Permission
 from django.utils.text import slugify
 
 from html5lib.filters._base import Filter as html5lib_Filter
-from nose.tools import nottest
 from waffle.models import Flag
 
 from kuma.core.tests import get_user, KumaTestCase
@@ -31,8 +30,7 @@ class WikiTestCase(KumaTestCase):
 def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
-    defaults = {'category': Document.CATEGORIES[0][0],
-                'title': unicode(datetime.now()),
+    defaults = {'title': unicode(datetime.now()),
                 'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
@@ -127,7 +125,6 @@ def new_document_data(tags=None):
         'tags': ', '.join(tags or []),
         'firefox_versions': [1, 2],
         'operating_systems': [1, 3],
-        'category': Document.CATEGORIES[0][0],
         'keywords': 'key1, key2',
         'summary': 'lipsum',
         'content': 'lorem ipsum dolor sit amet',
@@ -152,7 +149,30 @@ def normalize_html(input):
             .serialize(alphabetical_attributes=True))
 
 
-@nottest
+def create_document_editor_user():
+    """Creates a user empowered with document editing"""
+    perms = []
+    for action in ('add', 'change', 'delete', 'view', 'restore'):
+        perms.append(Permission.objects.get(codename='%s_document' % action))
+
+    group, group_created = Group.objects.get_or_create(name='editor')
+    if group_created:
+        group.permissions = perms
+        group.save()
+
+    User = get_user_model()
+    user, user_created = User.objects.get_or_create(
+        username='conantheeditor',
+        defaults=dict(email='user_%s@example.com',
+                      is_active=True, is_staff=False, is_superuser=False))
+    if user_created:
+        user.set_password('testpass')
+        user.groups = [group]
+        user.save()
+
+    return user
+
+
 def create_template_test_users():
     perms = dict(
         (x, [Permission.objects.get(codename='%s_template_document' % x)])
@@ -201,3 +221,20 @@ def create_topical_parents_docs():
     d2.parent_topic = d1
     d2.save()
     return d1, d2
+
+
+def create_document_tree():
+    root_doc = document(title="Root", slug="Root", save=True)
+    revision(document=root_doc, title="Root", slug="Root", save=True)
+    child_doc = document(title="Child", slug="Child", save=True)
+    child_doc.parent_topic = root_doc
+    child_doc.save()
+    revision(document=child_doc, title="Child", slug="Child", save=True)
+    grandchild_doc = document(title="Grandchild", slug="Grandchild",
+                              save=True)
+    grandchild_doc.parent_topic = child_doc
+    grandchild_doc.save()
+    revision(document=grandchild_doc, title="Grandchild",
+             slug="Grandchild", save=True)
+
+    return root_doc, child_doc, grandchild_doc

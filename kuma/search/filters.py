@@ -43,10 +43,10 @@ class LanguageFilterBackend(BaseFilterBackend):
 
         sq = queryset.to_dict().pop('query', query.MatchAll().to_dict())
 
-        if request.locale == settings.LANGUAGE_CODE:
-            locales = [request.locale]
+        if request.LANGUAGE_CODE == settings.LANGUAGE_CODE:
+            locales = [request.LANGUAGE_CODE]
         else:
-            locales = [request.locale, settings.LANGUAGE_CODE]
+            locales = [request.LANGUAGE_CODE, settings.LANGUAGE_CODE]
 
         positive_sq = {
             'filtered': {
@@ -57,7 +57,7 @@ class LanguageFilterBackend(BaseFilterBackend):
         negative_sq = {
             'bool': {
                 'must_not': [
-                    {'term': {'locale': request.locale}}
+                    {'term': {'locale': request.LANGUAGE_CODE}}
                 ]
             }
         }
@@ -167,7 +167,7 @@ class DatabaseFilterBackend(BaseFilterBackend):
                     active_filters.append(F('term', tags=filter_tags[0]))
 
             if len(filter_tags) > 1:
-                facet_params = F('terms', tags=filter_tags)
+                facet_params = F('terms', tags=list(filter_tags))
             else:
                 facet_params = F('term', tags=filter_tags[0])
             active_facets.append((serialized_filter['slug'], facet_params))
@@ -200,3 +200,23 @@ class HighlightFilterBackend(BaseFilterBackend):
                                                   post_tags=['</mark>'])
 
         return queryset
+
+
+class FunctionScoreFilterBackend(BaseFilterBackend):
+    """
+    Django-rest-framework filter backend for adding function score things.
+    """
+    def filter_queryset(self, request, queryset, view):
+        # Add score-boosting functions as necessary.
+        functions = []
+
+        # Boost scores for documents of web technologies.
+        # FIXME: We should move the tags list to a constant or the db or
+        # something.
+        web_tech_tags = ['JavaScript', 'HTML', 'CSS']
+        functions.append({
+            'filter': {'term': {'tags': web_tech_tags}},
+            'weight': 4.0,
+        })
+
+        return queryset.query('function_score', functions=functions)

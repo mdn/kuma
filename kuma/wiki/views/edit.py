@@ -10,14 +10,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_http_methods
-from jingo.helpers import urlparams
 from ratelimit.decorators import ratelimit
 
 import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.core.decorators import block_user_agents, login_required, never_cache
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import limit_banned_ip_to_0
+from kuma.core.utils import limit_banned_ip_to_0, urlparams
 
 from ..decorators import (check_readonly, prevent_indexing,
                           process_document_path)

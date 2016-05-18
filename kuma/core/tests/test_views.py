@@ -1,5 +1,4 @@
 import logging
-from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 from soapbox.models import Message
 
@@ -7,7 +6,7 @@ from django.core import mail
 from django.test import override_settings
 from django.utils.log import AdminEmailHandler
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_, ok_
 
 from ..urlresolvers import reverse
 
@@ -47,7 +46,7 @@ class LoggingTests(KumaTestCase):
 class SoapboxViewsTest(KumaTestCase):
 
     def test_global_home(self):
-        m = Message(message="Global", is_global=True, is_active=True, url="/")
+        m = Message(message='Global', is_global=True, is_active=True, url='/')
         m.save()
 
         url = reverse('home')
@@ -57,19 +56,12 @@ class SoapboxViewsTest(KumaTestCase):
         doc = pq(r.content)
         eq_(m.message, doc.find('div.global-notice').text())
 
-        url = reverse('demos')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
-        doc = pq(r.content)
-        eq_(m.message, doc.find('div.global-notice').text())
-
     def test_subsection(self):
-        m = Message(message="Demos", is_global=False, is_active=True,
-                    url="/demos/")
+        m = Message(message='Search', is_global=False, is_active=True,
+                    url='/search/')
         m.save()
 
-        url = reverse('demos')
+        url = reverse('search')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
@@ -84,11 +76,11 @@ class SoapboxViewsTest(KumaTestCase):
         eq_([], doc.find('div.global-notice'))
 
     def test_inactive(self):
-        m = Message(message="Demos", is_global=False, is_active=False,
-                    url="/demos/")
+        m = Message(message='Search', is_global=False, is_active=False,
+                    url='/search/')
         m.save()
 
-        url = reverse('demos')
+        url = reverse('search')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 

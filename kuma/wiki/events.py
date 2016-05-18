@@ -1,14 +1,14 @@
 import logging
 
 from django.utils.translation import ugettext
-from tidings.events import InstanceEvent
+from tidings.events import EventUnion, InstanceEvent
 
 from kuma.core.email_utils import emails_with_users_and_watches
-from kuma.core.helpers import add_utm
+from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.urlresolvers import reverse
 
-from .helpers import get_compare_url, revisions_unified_diff
 from .models import Document
+from .templatetags.jinja_helpers import get_compare_url, revisions_unified_diff
 
 
 log = logging.getLogger('kuma.wiki.events')
@@ -19,7 +19,8 @@ def context_dict(revision):
     Return a dict that fills in the blanks in notification templates.
     """
     document = revision.document
-    from_revision = revision.previous
+    # Don't use `previous` since it is cached. (see bug 1239141)
+    from_revision = revision.get_previous()
     to_revision = revision
     diff = revisions_unified_diff(from_revision, to_revision)
 
@@ -69,7 +70,7 @@ class EditDocumentEvent(InstanceEvent):
         log.debug('Sending edited notification email for document (id=%s)' %
                   document.id)
         subject = ugettext(
-            u'[MDN] Page "{document_title}" changed by {creator}')
+            u'[MDN] Page "%(document_title)s" changed by %(creator)s')
         context = context_dict(revision)
 
         return emails_with_users_and_watches(
@@ -79,3 +80,20 @@ class EditDocumentEvent(InstanceEvent):
             context_vars=context,
             users_and_watches=users_and_watches,
             default_locale=document.locale)
+
+    def fire(self, **kwargs):
+        parent_events = [EditDocumentInTreeEvent(doc) for doc in
+                         self.revision.document.get_topic_parents()]
+        return EventUnion(self,
+                          EditDocumentInTreeEvent(self.revision.document),
+                          *parent_events).fire(**kwargs)
+
+
+class EditDocumentInTreeEvent(InstanceEvent):
+    """
+    Event class for subscribing to all document edits to and under a document
+
+    Note: Do not call this class's .fire() method directly.
+    """
+    event_type = 'wiki edit document in tree'
+    content_type = Document

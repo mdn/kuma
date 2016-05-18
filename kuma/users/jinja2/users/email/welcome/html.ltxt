@@ -1,0 +1,65 @@
+{# This is an email. Whitespace matters! #}
+<!doctype html>
+<html lang="en-US" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>{{ _('Take the next step to get involved on MDN!') }}</title>
+    </head>
+    <body>
+        <p>{{ _('Hi %(username)s!', username=username) }}</p>
+        <p>
+          {% trans mdn_link=add_utm('https://developer.mozilla.org', 'welcome') %}
+            Thanks for creating a profile on <a href="{{ mdn_link }}">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you.
+          {% endtrans %}
+        </p>
+        <p>
+          {% trans started_link=add_utm('https://developer.mozilla.org/docs/MDN/Getting_started', 'welcome') %}
+            You've completed the first step of <a href="{{ started_link }}">Getting Started on MDN</a> by creating a profile.
+          {% endtrans %}
+        </p>
+        <p>
+          {% trans
+              words_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1.3A_I_like_words', 'welcome'),
+              code_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2.3A_I_like_code', 'welcome'),
+              both_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3.3A_I_like_both_words_and_code', 'welcome'),
+              translate_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4.3A_I_want_MDN_in_my_language', 'welcome')
+          %}
+            Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you
+            <a href="{{ words_link }}">like words</a>,
+            <a href="{{ code_link }}">like code</a>,
+            <a href="{{ both_link }}">like both words and code</a>,
+            or you want to <a href="{{ translate_link }}">translate MDN to your language</a>.
+          {% endtrans %}
+        </p>
+        <strong>{{ _('Talk to us!') }}</strong>
+        <p>{{ _('Want to talk to someone about MDN? There are a few ways you can do that:') }}</p>
+        <ul>
+            <li>
+              {% trans list_link=add_utm('https://lists.mozilla.org/listinfo/dev-mdc', 'welcome') %}
+                Mailing list: <a href="{{ list_link }}">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site.
+              {% endtrans %}
+            </li>
+            <li>
+              {% trans
+                channel_link='irc://irc.mozilla.org/mdn',
+                irc_link=add_utm('https://wiki.mozilla.org/IRC', 'welcome')
+              %}
+                Real-time chat: <a href="{{ channel_link }}">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href="{{ irc_link }}">IRC</a>.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager.
+              {% endtrans %}
+            </li>
+            <li>
+              {% trans
+                blog_link=add_utm('https://blog.mozilla.org/community', 'welcome'),
+                tagged_link=add_utm('https://blog.mozilla.org/community/category/developer-engagement/', 'welcome')
+              %}Blog: On the <a href="{{ blog_link }}">about:community</a> blog, look for the posts tagged with <a href="{{ tagged_link }}">Developer Engagement</a>.
+              {% endtrans %}
+            </li>
+        </ul>
+        <p>
+          {# Note: If you change this string also change ``WELCOME_EMAIL_STRINGS`` in kuma/users/tasks.py #}
+          {% trans %}
+            Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help.
+          {% endtrans %}
+        </p>
+    </body>
+</html>

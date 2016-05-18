@@ -11,7 +11,6 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
-from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Q
 from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
@@ -21,8 +20,6 @@ from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required
-from kuma.demos.models import Submission
-from kuma.demos.views import DEMOS_PAGE_SIZE
 
 from .forms import NewsletterForm, UserBanForm, UserEditForm
 from .models import User, UserBan
@@ -85,28 +82,9 @@ def user_detail(request, username):
         return render(request, '403.html',
                       {'reason': 'bannedprofile'}, status=403)
 
-    sort_order = request.GET.get('sort', 'created')
-    try:
-        page_number = int(request.GET.get('page', 1))
-    except ValueError:
-        page_number = 1
-
-    show_hidden = detail_user == request.user or detail_user.is_superuser
-
-    demos = (Submission.objects.all_sorted(sort_order)
-                               .filter(creator=detail_user))
-    if not show_hidden:
-        demos = demos.exclude(hidden=True)
-
-    demos_paginator = Paginator(demos, DEMOS_PAGE_SIZE, True)
-    demos_page = demos_paginator.page(page_number)
-
     docs_feed_items = None
 
     context = {
-        'demos': demos,
-        'demos_paginator': demos_paginator,
-        'demos_page': demos_page,
         'detail_user': detail_user,
         'docs_feed_items': docs_feed_items,
     }
@@ -160,7 +138,7 @@ def user_edit(request, username):
         user_form = UserEditForm(instance=edit_user,
                                  initial=initial,
                                  prefix='user')
-        newsletter_form = NewsletterForm(locale=request.locale,
+        newsletter_form = NewsletterForm(locale=request.LANGUAGE_CODE,
                                          already_subscribed=already_subscribed,
                                          prefix='newsletter',
                                          initial=subscription_initial)
@@ -169,7 +147,7 @@ def user_edit(request, username):
                                  files=request.FILES,
                                  instance=edit_user,
                                  prefix='user')
-        newsletter_form = NewsletterForm(locale=request.locale,
+        newsletter_form = NewsletterForm(locale=request.LANGUAGE_CODE,
                                          already_subscribed=already_subscribed,
                                          data=request.POST,
                                          prefix='newsletter')
@@ -309,7 +287,7 @@ class SignupView(BaseSignupView):
     def get_form_kwargs(self):
         kwargs = super(SignupView, self).get_form_kwargs()
         kwargs.update({
-            'locale': self.request.locale,
+            'locale': self.request.LANGUAGE_CODE,
             'already_subscribed': False,
         })
         return kwargs

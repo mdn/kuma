@@ -43,6 +43,17 @@
                 // Send event to GA
                 ga('send', data);
             }
+            else if(ga && !ga.create) {
+                // GA blocked or not yet initialized
+                // strip callback from data
+                data.hitCallback = null;
+                // add to queue without callback
+                ga('send', data);
+                // execute callback now
+                if(callback) {
+                    callback();
+                }
+            }
             else if(callback) {
                 // GA disabled or blocked or something, make sure we still
                 // call the caller's callback:
@@ -61,6 +72,13 @@
 
                 // If we explicitly say not to track something, don't
                 if($this.hasClass('no-track')) {
+                    return;
+                }
+
+                // bug 1222864 - prevent links to data: uris
+                if (this.href.toLowerCase().indexOf('data') === 0) {
+                    e.preventDefault();
+                    analytics.trackError('XSS Attempt', 'data href');
                     return;
                 }
 
@@ -85,6 +103,23 @@
                     }
                 }
             });
+        },
+
+        trackLink: function(event, url, data) {
+            // ctrl or cmd click or context menu
+            var newTab = (event.metaKey || event.ctrlKey || event.type == 'contextmenu');
+            // is a same page anchor
+            var isAnchor = (url.indexOf("#") == 0);
+
+            if(newTab || isAnchor) {
+                mdn.analytics.trackEvent(data);
+            }
+            else {
+                event.preventDefault();
+                mdn.analytics.trackEvent(data, function() {
+                    window.location = url;
+                });
+            }
         },
 
         /*

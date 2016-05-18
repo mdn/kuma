@@ -1,20 +1,21 @@
 /* The .no-details styles will get applied only if JavaScript is enabled and
-<details> is not natively supported. Add focus styles (for keyboard
-accessibility) */
+<details> is not natively supported. */
 .no-details {
     summary {
         cursor: pointer;
+        bidi-style(padding-right, -15px, padding-left, 0);
     }
-    summary:before {
-        set-font-size(1.25em);
-        bidi-value(float, left, right);
+    summary:after {
         content: '+';
+        bidi-value(float, right, left);
         margin-top: -.15em;
-        bidi-style(margin-left, -15px, margin-right, 0);
+        bidi-style(margin-right, -15px, margin-left, 0);
+        set-font-size(1.25em);
+        font-weight: bold;
     }
-    &.open summary:before {
+    &.open summary:after {
         content: '–';
         margin-top: -.2em;
-        bidi-style(margin-left, -13px, margin-right, 0);
+        bidi-style(margin-right, -13px, margin-left, 0);
     }
 }

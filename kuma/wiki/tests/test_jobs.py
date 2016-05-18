@@ -1,8 +1,6 @@
 from datetime import timedelta
 
-from django.test.utils import override_settings
-from nose.tools import eq_, ok_
-
+from kuma.core.tests import eq_, ok_
 from kuma.users.tests import UserTestCase, user
 
 from . import revision
@@ -75,7 +73,6 @@ class DocumentContributorsTests(UserTestCase):
         job.fetch_on_miss = True
         eq_(contrib.pk, job.get(rev.document.pk)[0]['id'])
 
-    @override_settings(CELERY_ALWAYS_EAGER=True)
     def test_contributors_ordering(self):
         contrib_1 = user(save=True)
         contrib_2 = user(save=True)
@@ -107,7 +104,6 @@ class DocumentContributorsTests(UserTestCase):
         # The new revision shows up
         eq_(job_user_pks, [contrib_3.pk] + recent_contributors_pks)
 
-    @override_settings(CELERY_ALWAYS_EAGER=True)
     def test_contributors_inactive_or_banned(self):
         contrib_1 = user(save=True)
         contrib_2 = user(is_active=False, save=True)

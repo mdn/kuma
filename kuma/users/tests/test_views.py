@@ -1,22 +1,21 @@
-import mock
 import json
-from urlparse import urlparse, parse_qs
+import os
+from urlparse import parse_qs, urlparse
 
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
-from pyquery import PyQuery as pq
-
-from django.conf import settings
-from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
-from django.contrib.sites.models import Site
-from django.core.paginator import PageNotAnInteger
-
+import mock
+import pytest
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.tests import MockedResponse, mocked_response
+from constance.test.utils import override_config
+from django.conf import settings
+from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
+from django.contrib.sites.models import Site
+from django.core.paginator import PageNotAnInteger
+from pyquery import PyQuery as pq
 
-from kuma.core.tests import mock_lookup_user
+from kuma.core.tests import eq_, mock_lookup_user, ok_
 from kuma.core.urlresolvers import reverse
 
 from . import UserTestCase, user, email
@@ -35,10 +34,10 @@ class OldProfileTestCase(UserTestCase):
         eq_(404, response.status_code)
 
 
+@pytest.mark.bans
 class BanTestCase(UserTestCase):
     localizing_client = True
 
-    @attr('bans')
     def test_ban_permission(self):
         """The ban permission controls access to the ban view."""
         admin = self.user_model.objects.get(username='admin')
@@ -62,7 +61,6 @@ class BanTestCase(UserTestCase):
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
 
-    @attr('bans')
     def test_ban_view(self):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
@@ -85,7 +83,6 @@ class BanTestCase(UserTestCase):
                                       reason='Banned by unit test.')
         ok_(bans.count())
 
-    @attr('bans')
     def test_bug_811751_banned_user(self):
         """A banned user should not be viewable"""
         testuser = self.user_model.objects.get(username='testuser')
@@ -138,7 +135,6 @@ class UserViewsTest(UserTestCase):
         form[prefix + 'format'] = 'html'
         return form
 
-    @attr('docs_activity')
     def test_user_detail_view(self):
         """A user can be viewed"""
         testuser = self.user_model.objects.get(username='testuser')
@@ -583,6 +579,33 @@ class AllauthPersonaTestCase(UserTestCase):
                                         follow=True)
             ok_(('http://testserver%s' % doc_url, 302) in response.redirect_chain)
 
+    @override_config(RECAPTCHA_PRIVATE_KEY='private_key',
+                     RECAPTCHA_PUBLIC_KEY='public_key')
+    def test_persona_signin_captcha(self):
+        persona_signup_email = 'views_persona_django_user@example.com'
+        persona_signup_username = 'views_persona_django_user'
+
+        with mock.patch('requests.post') as requests_mock:
+            requests_mock.return_value.json.return_value = {
+                'status': 'okay',
+                'email': persona_signup_email,
+            }
+            self.client.post(reverse('persona_login'), follow=True)
+            data = {'website': '',
+                    'username': persona_signup_username,
+                    'email': persona_signup_email,
+                    'newsletter': True,
+                    'terms': True,
+                    'agree': True,
+                    'g-recaptcha-response': 'FAILED'}
+            signup_url = reverse('socialaccount_signup',
+                                 locale=settings.WIKI_DEFAULT_LANGUAGE)
+            response = self.client.post(signup_url, data=data, follow=True)
+            eq_(response.status_code, 200)
+            eq_(response.context['form'].errors,
+                {'captcha': [u'Incorrect, please try again.']})
+
+    @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
     def test_persona_signup_create_django_user(self):
         """
         Signing up with Persona creates a new Django User instance.
@@ -601,7 +624,8 @@ class AllauthPersonaTestCase(UserTestCase):
                     'username': persona_signup_username,
                     'email': persona_signup_email,
                     'newsletter': True,
-                    'terms': True}
+                    'terms': True,
+                    'g-recaptcha-response': 'PASSED'}
             signup_url = reverse('socialaccount_signup',
                                  locale=settings.WIKI_DEFAULT_LANGUAGE)
             response = self.client.post(signup_url, data=data, follow=True)
@@ -633,6 +657,7 @@ class AllauthPersonaTestCase(UserTestCase):
             eq_(persona_signup_email, testuser.email)
             ok_(testuser.password.startswith(UNUSABLE_PASSWORD_PREFIX))
 
+    @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
     def test_persona_signup_create_socialaccount(self):
         """
         Signing up with Persona creates a new SocialAccount instance.
@@ -649,7 +674,8 @@ class AllauthPersonaTestCase(UserTestCase):
             data = {'website': '',
                     'username': persona_signup_username,
                     'email': persona_signup_email,
-                    'terms': True}
+                    'terms': True,
+                    'g-recaptcha-response': 'PASSED'}
             signup_url = reverse('socialaccount_signup',
                                  locale=settings.WIKI_DEFAULT_LANGUAGE)
             self.client.post(signup_url, data=data, follow=True)
@@ -744,6 +770,7 @@ class KumaGitHubTests(UserTestCase):
         response = self.client.get(self.signup_url)
         self.assertEqual(response.context['matching_user'], octocat)
 
+    @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
     def test_email_addresses(self):
         self.login(username='octocat2')
         response = self.client.get(self.signup_url)
@@ -762,8 +789,10 @@ class KumaGitHubTests(UserTestCase):
                          {'verified': True,
                           'email': 'octo.cat@github-inc.com',
                           'primary': True})
-        # then check if the radio button's default value is the public email address
-        self.assertEqual(response.context["form"].initial["email"], 'octocat@github.com')
+        # then check if the radio button's default value is the public email
+        # address
+        self.assertEqual(response.context['form'].initial['email'],
+                         'octocat@github.com')
 
         unverified_email = 'o.ctocat@gmail.com'
         data = {
@@ -771,12 +800,14 @@ class KumaGitHubTests(UserTestCase):
             'username': 'octocat',
             'email': SignupForm.other_email_value,  # = use other_email
             'other_email': unverified_email,
-            'terms': True
+            'terms': True,
+            'g-recaptcha-response': 'PASSED',
         }
         self.assertFalse((EmailAddress.objects.filter(email=unverified_email)
                                               .exists()))
         response = self.client.post(self.signup_url, data=data, follow=True)
-        unverified_email_addresses = EmailAddress.objects.filter(email=unverified_email)
+        unverified_email_addresses = EmailAddress.objects.filter(
+            email=unverified_email)
         self.assertTrue(unverified_email_addresses.exists())
         self.assertEquals(unverified_email_addresses.count(), 1)
         self.assertTrue(unverified_email_addresses[0].primary)

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import elasticsearch
-from nose.tools import eq_
+
+from kuma.core.tests import eq_
 from . import ElasticTestCase
+from ..pagination import SearchPagination
 from ..models import Index, Filter, FilterGroup
 from ..views import SearchView
 
@@ -12,7 +14,6 @@ class ViewTests(ElasticTestCase):
 
     def test_search_rendering(self):
         """The search view """
-        # self.refresh()
         response = self.client.get('/en-US/search?q=test')
         eq_(response.status_code, 200)
         self.assertContains(response, 'Results for')
@@ -34,14 +35,18 @@ class ViewTests(ElasticTestCase):
 
             def dispatch(self, *args, **kwargs):
                 super(Test1SearchView, self).dispatch(*args, **kwargs)
-                eq_(self.serialized_filters,
-                    [{'name': 'Tagged',
-                      'slug': 'tagged',
-                      'tags': ['tagged'],
-                      'operator': 'OR',
-                      'group': {'name': 'Group', 'slug': 'group', 'order': 1},
-                      'shortcut': None
-                      }])
+                eq_(len(self.serialized_filters), 1)
+                serialized_filter = self.serialized_filters[0]
+                eq_(serialized_filter['name'], 'Tagged')
+                eq_(serialized_filter['slug'], 'tagged')
+                eq_(serialized_filter['shortcut'], None)
+                eq_(list(serialized_filter['tags']), [u'tagged'])
+                eq_(serialized_filter['operator'], 'OR')
+                eq_(serialized_filter['group'], {
+                    'order': 1L,
+                    'name': 'Group',
+                    'slug': 'group',
+                })
 
         test_view1 = Test1SearchView.as_view()
         test_view1(self.get_request('/en-US/'))
@@ -55,20 +60,28 @@ class ViewTests(ElasticTestCase):
 
             def dispatch(self, *args, **kwargs):
                 super(Test2SearchView, self).dispatch(*args, **kwargs)
-                eq_(self.serialized_filters,
-                    [{'name': 'Tagged',
-                      'slug': 'tagged',
-                      'tags': ['tagged'],
-                      'operator': 'OR',
-                      'group': {'name': 'Group', 'slug': 'group', 'order': 1},
-                      'shortcut': None},
-                     {'name': 'Serializer',
-                      'slug': 'serializer',
-                      'tags': [],
-                      'operator': 'OR',
-                      'group': {'name': 'Group', 'slug': 'group', 'order': 1},
-                      'shortcut': None
-                      }])
+                eq_(len(self.serialized_filters), 2)
+                filter_1, filter_2 = self.serialized_filters
+                eq_(filter_1['name'], 'Tagged')
+                eq_(filter_1['slug'], 'tagged')
+                eq_(filter_1['shortcut'], None)
+                eq_(list(filter_1['tags']), [u'tagged'])
+                eq_(filter_1['operator'], 'OR')
+                eq_(filter_1['group'], {
+                    'order': 1L,
+                    'name': 'Group',
+                    'slug': 'group',
+                })
+                eq_(filter_2['name'], 'Serializer')
+                eq_(filter_2['slug'], 'serializer')
+                eq_(filter_2['shortcut'], None)
+                eq_(list(filter_2['tags']), [])
+                eq_(filter_2['operator'], 'OR')
+                eq_(filter_2['group'], {
+                    'order': 1L,
+                    'name': 'Group',
+                    'slug': 'group',
+                })
 
         test_view2 = Test2SearchView.as_view()
         test_view2(self.get_request('/en-US/'))
@@ -183,7 +196,15 @@ class ViewTests(ElasticTestCase):
 
     def test_paginate_by_param(self):
         request = self.get_request('/en-US/search')
-        view = SearchView.as_view(paginate_by=1)
+
+        class TestPageNumberPagination(SearchPagination):
+            page_size = 1
+            page_size_query_param = 'per_page'
+
+        class PaginationSearchView(SearchView):
+            pagination_class = TestPageNumberPagination
+
+        view = PaginationSearchView.as_view()
         response = view(request)
         eq_(response.data['pages'], 6)
 
@@ -204,3 +225,10 @@ class ViewTests(ElasticTestCase):
         self.assertContains(response,
                             ('Search index: %s' %
                              Index.objects.get_current().name))
+
+    def test_score(self):
+        response = self.client.get('/en-US/search.json')
+        self.assertEqual(response.status_code, 200)
+        self.assertGreater(response.data['documents'], 0)
+        for document in response.data['documents']:
+            self.assertIn('score', document)

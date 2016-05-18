@@ -1,0 +1,73 @@
+<div class="warning" id="kserrors">
+<p>
+{{ ngettext(
+  'There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below.',
+  'There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below.',
+  kumascript_errors|count)
+}}
+
+</p>
+{% if request.user.is_authenticated() %}
+  <button type="button" class="kserrors-details-toggle" data-alternate-message="{{ _('Hide error information') }}">
+    {{ ngettext(
+      'More information about this error',
+      'More information about these errors',
+      kumascript_errors|count)
+    }}
+  </button>
+  <div class="kserrors-details hidden">
+      <p>{% trans %}
+        Anyone with an MDN profile can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
+      {% endtrans %}</p>
+
+      <ul id="kserrors-list">
+      {% for error in kumascript_errors %}
+        <li>
+          <dl class="compact">
+            {% if error.args %}
+              {% set error_type = error.args[0] %}
+              <dt>{{ _('Error type:') }}</dt>
+              <dd class="kserror-type">
+                {{ error_type }}
+              </dd>
+              {% set error_meta = error.args[2] %}
+              {% if error_meta %}
+                {% set template_name = error_meta.name %}
+                {% if '$' not in template_name %}
+                  {% set template_slug = 'Template:%s' % template_name %}
+                  {% set edit_url = url('wiki.edit', template_slug) %}
+                  {% set new_url = url('wiki.create') + '?slug=Template:%s' % template_name %}
+                {% endif %}
+                <dt>{{ _('In macro:') }}</dt>
+                <dd>
+                  <code class="kserror-macro">{{ template_name }}</code>
+                  {% if 'status 404' in error.message %}
+                    {% if new_url %}
+                      (<a href="{{ new_url }}">{{ _('Create Template') }}</a>)
+                    {% endif %}
+                  {% elif edit_url  %}
+                    (<a href="{{ edit_url }}">{{ _('Edit Template') }}</a>)
+                  {% endif %}
+                </dd>
+                <dt>{{ _('Parsing macro:') }}</dt>
+                <dd>
+                  <code class="kserror-parse">{{ template_name }}
+                    {% if error_meta.token %}
+                      ({{ error_meta.token.args }})
+                    {% endif %}
+                  </code>
+                  {% if document %}
+                    (<a href="{{ document.get_edit_url() }}">{{ _('Edit Document') }}</a>)
+                  {% endif %}
+                </dd>
+              {% endif %}
+            {% endif %}
+            <dt>{{ _('Full text of error:') }}</dt>
+            <dd><pre class="message brush: text">{{ error.message }}</pre></dd>
+          </dl>
+        </li>
+      {% endfor %}
+      </ul>
+  </div>
+{% endif %}
+</div>

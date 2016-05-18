@@ -1,8 +1,6 @@
 from django.utils import translation
 
-from nose.tools import eq_
-
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_
 
 from ..form_fields import _format_decimal
 
@@ -24,7 +22,7 @@ class TestFormatDecimal(KumaTestCase):
         """Falls back to English for unknown Django locales"""
         translation.activate('xx-YY')
         # Note: this activation does not make Django attempt to use xx-YY
-        eq_('en-us', translation.get_language())
+        eq_('xx-yy', translation.get_language())
         num = _format_decimal(1234.567)
         eq_('1,234.567', num)
 

@@ -3,40 +3,46 @@ from django.test import SimpleTestCase, RequestFactory
 from django.utils import six
 from django.utils.encoding import force_unicode
 
+import requests_mock
+import pytest
 from constance.test.utils import override_config
-from nose.plugins.attrib import attr
 from waffle.models import Flag
-import responses
 
-from ..constants import CHECK_URL_RE, SPAM_CHECKS_FLAG, VERIFY_URL_RE
-from ..forms import AkismetFormMixin
-
-
-class AkismetTestForm(AkismetFormMixin, forms.Form):
-    pass
+from ..constants import CHECK_URL, SPAM_CHECKS_FLAG, VERIFY_URL
+from ..forms import AkismetCheckFormMixin
 
 
-class AkismetContentTestForm(AkismetTestForm):
-    content = forms.CharField()
+class AkismetCheckTestForm(AkismetCheckFormMixin, forms.Form):
 
     def akismet_parameters(self):
-        parameters = super(AkismetTestForm, self).akismet_parameters()
-        parameters.update(**self.cleaned_data)
+        parameters = {
+            'blog_lang': 'en_us',
+            'blog_charset': 'UTF-8',
+            'comment_author': 'testuser',
+            'comment_author_email': 'testuser@test.com',
+            'comment_type': 'wiki-revision',
+            'user_ip': '0.0.0.0',
+            'user_agent': 'Mozilla Firefox',
+            'referrer': 'https://www.netscape.com/',
+        }
+        parameters.update(self.cleaned_data)
         return parameters
 
 
-@attr('spam')
+class AkismetContentTestForm(AkismetCheckTestForm):
+    content = forms.CharField()
+
+
+@pytest.mark.spam
+@requests_mock.mock()
 class AkismetFormTests(SimpleTestCase):
     rf = RequestFactory()
-    remote_addr = '0.0.0.0',
-    http_user_agent = 'Mozilla Firefox',
-    http_referer = 'https://www.netscape.com/',
+    remote_addr = '0.0.0.0'
+    http_user_agent = 'Mozilla Firefox'
+    http_referer = 'https://www.netscape.com/'
 
     def setUp(self):
         super(AkismetFormTests, self).setUp()
-        responses.start()
-        # reset Akismet client verification for each test
-        AkismetTestForm.akismet_client._verified = None
         self.request = self.rf.get(
             '/',
             REMOTE_ADDR=self.remote_addr,
@@ -50,17 +56,15 @@ class AkismetFormTests(SimpleTestCase):
 
     def tearDown(self):
         super(AkismetFormTests, self).tearDown()
-        responses.stop()
-        responses.reset()
         Flag.objects.update_or_create(
             name=SPAM_CHECKS_FLAG,
             defaults={'everyone': None},
         )
 
     @override_config(AKISMET_KEY='parameters')
-    def test_akismet_parameters(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='true')
+    def test_akismet_parameters(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
 
         form = AkismetContentTestForm(
             self.request,
@@ -68,8 +72,8 @@ class AkismetFormTests(SimpleTestCase):
         )
         six.assertRaisesRegex(
             self,
-            forms.ValidationError,
-            'The form data has not yet been validated',
+            AttributeError,
+            "'AkismetContentTestForm' object has no attribute 'cleaned_data'",
             form.akismet_parameters,
         )
         self.assertTrue(form.is_valid())
@@ -82,25 +86,49 @@ class AkismetFormTests(SimpleTestCase):
         self.assertEqual(parameters['referrer'], self.http_referer)
 
     @override_config(AKISMET_KEY='enabled')
-    def test_akismet_enabled(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='true')
-        form = AkismetTestForm(self.request, data={})
+    def test_akismet_enabled(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='true')
+        form = AkismetCheckTestForm(self.request, data={})
         self.assertTrue(form.akismet_enabled())
 
     @override_config(AKISMET_KEY='')
-    def test_akismet_not_enabled(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='true')
-        form = AkismetTestForm(self.request, data={})
+    def test_akismet_not_enabled(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='true')
+        form = AkismetCheckTestForm(self.request, data={})
         self.assertFalse(form.akismet_enabled())
 
-    @override_config(AKISMET_KEY='error')
-    def test_akismet_error(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='yada yada')
+    @override_config(AKISMET_KEY='success')
+    def test_akismet_ham(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
 
-        form = AkismetTestForm(self.request, data={})
+        form = AkismetCheckTestForm(self.request, data={})
+        self.assertTrue(form.is_valid())
+
+    @override_config(AKISMET_KEY='spam')
+    def test_akismet_spam(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='true')
+
+        form = AkismetCheckTestForm(self.request, data={})
+        # not valid because we found a wrong response from akismet
+        self.assertFalse(form.is_valid())
+        self.assertIn(form.akismet_error_message, form.errors['__all__'])
+        six.assertRaisesRegex(
+            self,
+            forms.ValidationError,
+            force_unicode(form.akismet_error_message),
+            form.akismet_error,
+        )
+
+    @override_config(AKISMET_KEY='error')
+    def test_akismet_error(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='yada yada')
+
+        form = AkismetCheckTestForm(self.request, data={})
         # not valid because we found a wrong response from akismet
         self.assertFalse(form.is_valid())
         self.assertIn(form.akismet_error_message, form.errors['__all__'])
@@ -112,10 +140,10 @@ class AkismetFormTests(SimpleTestCase):
         )
 
     @override_config(AKISMET_KEY='clean')
-    def test_form_clean(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='true')
+    def test_form_clean(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
 
-        form = AkismetTestForm(self.request, data={})
+        form = AkismetCheckTestForm(self.request, data={})
         self.assertTrue(form.is_valid())
         self.assertEqual(form.errors, {})

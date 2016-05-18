@@ -3,10 +3,10 @@ from os import makedirs
 from os.path import dirname, exists, isdir
 
 import fileinput
-from nose.tools import assert_equal, ok_
 
 from django.test import TestCase
 
+from kuma.core.tests import ok_
 from .models import HumansTXT, Human
 
 APP_DIR = dirname(__file__)
@@ -18,7 +18,7 @@ class HumansTest(TestCase):
         ht = HumansTXT()
 
         name = 'buddyl@example.org'
-        assert_equal('buddyl', ht.split_name(name))
+        assert 'buddyl' == ht.split_name(name)
 
     def test_basic_get_github(self):
         """
@@ -27,7 +27,7 @@ class HumansTest(TestCase):
         data = json.load(open(CONTRIBUTORS_JSON, 'rb'))
         ht = HumansTXT()
         humans = ht.get_github(data)
-        assert_equal(len(humans), 19)
+        assert len(humans) == 19
 
     def test_for_login_name_when_no_name(self):
         """
@@ -41,7 +41,7 @@ class HumansTest(TestCase):
             if h.name == "chengwang":
                 human = h
 
-        assert_equal(human.name, "chengwang")
+        assert human.name == "chengwang"
 
     def test_write_to_file(self):
         if not isdir("%s/tmp/" % APP_DIR):

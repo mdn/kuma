@@ -30,9 +30,6 @@ document_patterns = [
     url(r'^\$children$',
         views.document.children,
         name='wiki.children'),
-    url(r'^\$flag',
-        views.misc.flag,
-        name='wiki.flag_document'),
     url(r'^\$translate$',
         views.translate.translate,
         name='wiki.translate'),
@@ -81,10 +78,11 @@ document_patterns = [
         views.document.subscribe,
         name='wiki.subscribe'),
 
-    # Vote helpful/not helpful
-    url(r'^\$vote',
-        views.misc.helpful_vote,
-        name="wiki.document_vote"),
+    # Un/Subscribe to document tree edit notifications.
+    url(r'^\$subscribe_to_tree$',
+        views.document.subscribe_to_tree,
+        name='wiki.subscribe_to_tree'),
+
 ]
 
 urlpatterns = [
@@ -146,9 +144,6 @@ urlpatterns = [
     url(r'^/localization-tag/?',
         views.list.with_localization_tag,
         name='wiki.list_with_localization_tags'),
-    url(r'^/category/(?P<category>\d+)$',
-        views.list.documents,
-        name='wiki.category'),
 
     # Feeds
     url(r'^/feeds/(?P<format>[^/]+)/all/?',
@@ -160,9 +155,6 @@ urlpatterns = [
     url(r'^/feeds/(?P<format>[^/]+)/tag/(?P<tag>[^/]+)',
         feeds.DocumentsRecentFeed(),
         name="wiki.feeds.recent_documents"),
-    url(r'^/feeds/(?P<format>[^/]+)/category/(?P<category>[^/]+)',
-        feeds.DocumentsRecentFeed(),
-        name="wiki.feeds.recent_documents_category"),
     url(r'^/feeds/(?P<format>[^/]+)/needs-review/(?P<tag>[^/]+)',
         feeds.DocumentsReviewFeed(),
         name="wiki.feeds.list_review_tag"),

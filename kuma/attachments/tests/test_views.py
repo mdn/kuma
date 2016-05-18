@@ -1,19 +1,17 @@
 import datetime
 
-from nose.tools import eq_, ok_
-
+from constance import config
 from django.conf import settings
-from django.core.files.base import ContentFile
 from django.core.files import temp as tempfile
+from django.core.files.base import ContentFile
 from django.utils.http import parse_http_date_safe
 
-from constance import config
-from jingo.helpers import urlparams
-
+from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
+from kuma.core.tests import eq_, ok_
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import Document, DocumentAttachment
-from kuma.wiki.tests import document, revision, WikiTestCase
-from kuma.core.urlresolvers import reverse
+from kuma.wiki.tests import WikiTestCase, document, revision
 
 from ..models import Attachment, AttachmentRevision
 from ..utils import make_test_file
@@ -106,7 +104,8 @@ class AttachmentTests(UserTestCase, WikiTestCase):
             'file': file_for_upload,
         }
 
-        resp = self.client.post(reverse('attachments.new_attachment'), data=post_data)
+        resp = self.client.post(reverse('attachments.new_attachment'),
+                                data=post_data)
 
         tdir = tempfile.gettempdir()
         edited_file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt",
@@ -147,7 +146,8 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         url = attachment.get_file_url()
         resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
         eq_('text/plain', rev.mime_type)
-        ok_('I am a new version of the test file for editing.' in resp.content)
+        ok_('I am a new version of the test file for editing.'
+            in resp.streaming_content)
 
     def test_attachment_raw_requires_attachment_host(self):
         resp = self._post_new_attachment()
@@ -160,6 +160,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
 
         url = attachment.get_file_url()
         resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
+        ok_(resp.streaming)
         eq_('ALLOW-FROM: %s' % settings.DOMAIN, resp['x-frame-options'])
         eq_(200, resp.status_code)
         ok_('Last-Modified' in resp)

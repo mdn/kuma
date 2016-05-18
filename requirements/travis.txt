@@ -1,5 +1,6 @@
+# this is a standalone requirements file used in .travis.yml to install
+# Travis CI specific requirements
 ansible==1.9.2
-codecov
-tox==2.1.1
-lxml==3.4.4
-python-magic==0.4.6
+codecov==1.6.3
+tox==2.3.1
+coverage==4.0.3

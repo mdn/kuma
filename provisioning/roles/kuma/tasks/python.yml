@@ -2,23 +2,21 @@
 - name: Install virtualenv
   pip: name=virtualenv
 
-- name: Install compiled Python packages in virtualenv
+- name: Install pip
   pip:
-    requirements: "/home/vagrant/src/requirements/compiled.txt"
-    virtualenv: "/home/vagrant/env"
-    virtualenv_site_packages: yes
+    name: pip
+    version: 8.0.2
+    virtualenv: /home/vagrant/env
 
-- name: Install docs Python packages in virtualenv
+- name: Install local dependencies in virtualenv
   pip:
-    requirements: "/home/vagrant/src/requirements/docs.txt"
-    virtualenv: "/home/vagrant/env"
-    virtualenv_site_packages: yes
+    requirements: /home/vagrant/src/requirements/local.txt
+    virtualenv: /home/vagrant/env
 
-- name: Install performance Python packages in virtualenv
+- name: Install documentation dependencies in virtualenv
   pip:
-    requirements: "/home/vagrant/src/requirements/performance.txt"
-    virtualenv: "/home/vagrant/env"
-    virtualenv_site_packages: yes
+    requirements: /home/vagrant/src/requirements/docs.txt
+    virtualenv: /home/vagrant/env
 
 - name: Update ownership of virtualenv to vagrant
   file:
@@ -26,4 +24,4 @@
     group: vagrant
     recurse: yes
     state: directory
-    path: "/home/vagrant/env"
+    path: /home/vagrant/env

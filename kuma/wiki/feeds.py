@@ -10,13 +10,14 @@ from django.utils.feedgenerator import (Atom1Feed, Rss201rev2Feed,
 from django.utils.html import escape
 from django.utils.translation import ugettext as _
 
-from kuma.core.helpers import add_utm
+from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.urlresolvers import reverse
 from kuma.core.validators import valid_jsonp_callback_value
-from kuma.users.helpers import gravatar_url
+from kuma.users.templatetags.jinja_helpers import gravatar_url
 
-from .helpers import colorize_diff, diff_table, get_compare_url, tag_diff_table
 from .models import Document, Revision
+from .templatetags.jinja_helpers import (colorize_diff, diff_table,
+                                         get_compare_url, tag_diff_table)
 
 
 MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 500)
@@ -33,7 +34,7 @@ class DocumentsFeed(Feed):
         if 'all_locales' in request.GET:
             self.locale = None
         else:
-            self.locale = request.locale
+            self.locale = request.LANGUAGE_CODE
         return super(DocumentsFeed, self).__call__(request, *args, **kwargs)
 
     def feed_extra_kwargs(self, obj):
@@ -147,9 +148,8 @@ class DocumentsRecentFeed(DocumentsFeed):
     title = _('MDN recent document changes')
     subtitle = _('Recent changes to MDN documents')
 
-    def get_object(self, request, format, tag=None, category=None):
+    def get_object(self, request, format, tag=None):
         super(DocumentsRecentFeed, self).get_object(request, format)
-        self.category = category
         self.tag = tag
         if tag:
             self.title = _('MDN recent changes to documents tagged %s' % tag)
@@ -164,7 +164,6 @@ class DocumentsRecentFeed(DocumentsFeed):
         # to speed up retrieval (max MAX_FEED_ITEMS size)
         item_pks = (Document.objects
                             .filter_for_list(tag_name=self.tag,
-                                             category=self.category,
                                              locale=self.locale)
                             .filter(current_revision__isnull=False)
                             .order_by('-current_revision__created')

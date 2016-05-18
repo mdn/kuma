@@ -21,7 +21,6 @@ from django.utils.translation import ugettext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import (condition, require_GET,
                                           require_http_methods, require_POST)
-from jingo.helpers import urlparams
 from pyquery import PyQuery as pq
 
 import kuma.wiki.content
@@ -29,13 +28,14 @@ from kuma.authkeys.decorators import accepts_auth_key
 from kuma.core.decorators import (block_user_agents, login_required,
                                   permission_required, superuser_required)
 from kuma.core.urlresolvers import reverse
-from kuma.search.store import referrer_url
+from kuma.core.utils import urlparams
+from kuma.search.store import get_search_url_from_referer
 
 from .. import kumascript
 from ..constants import SLUG_CLEANSING_RE
 from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
                           process_document_path)
-from ..events import EditDocumentEvent
+from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import TreeMoveForm
 from ..models import (Document, DocumentDeletionLog,
                       DocumentRenderedContentNotAvailable, DocumentZone)
@@ -59,7 +59,7 @@ def _get_html_and_errors(request, doc, rendering_params):
             # Temporary bleach_new query option to switch to Constance-based
             # Bleach whitelists, uses KumaScript POST for temporary rendering
             doc_html, ks_errors = kumascript.post(request, doc_html,
-                                                  request.locale, True)
+                                                  request.LANGUAGE_CODE, True)
 
         else:
             # A logged-in user can schedule a full re-render with Shift-Reload
@@ -262,6 +262,8 @@ def children(request, document_slug, document_locale):
         doc = Document.objects.get(locale=document_locale,
                                    slug=document_slug)
         result = _make_doc_structure(doc, 0, expand, depth)
+        if result is None:
+            result = {'error': 'Document has moved.'}
     except Document.DoesNotExist:
         result = {'error': 'Document does not exist.'}
 
@@ -339,7 +341,7 @@ def toc(request, document_slug=None, document_locale=None):
     Return a document's table of contents as HTML.
     """
     query = {
-        'locale': request.locale,
+        'locale': request.LANGUAGE_CODE,
         'current_revision__isnull': False,
     }
     if document_slug is not None:
@@ -370,7 +372,7 @@ def as_json(request, document_slug=None, document_locale=None):
     Return some basic document info in a JSON blob.
     """
     kwargs = {
-        'locale': request.locale,
+        'locale': request.LANGUAGE_CODE,
         'current_revision__isnull': False,
     }
     if document_slug is not None:
@@ -439,6 +441,30 @@ def subscribe(request, document_slug, document_locale):
         return redirect(document)
 
 
+@block_user_agents
+@require_POST
+@login_required
+@process_document_path
+def subscribe_to_tree(request, document_slug, document_locale):
+    """
+    Toggle watching a tree of documents for edits.
+    """
+    document = get_object_or_404(
+        Document, locale=document_locale, slug=document_slug)
+    status = 0
+
+    if EditDocumentInTreeEvent.is_notifying(request.user, document):
+        EditDocumentInTreeEvent.stop_notifying(request.user, document)
+    else:
+        EditDocumentInTreeEvent.notify(request.user, document)
+        status = 1
+
+    if request.is_ajax():
+        return JsonResponse({'status': status})
+    else:
+        return redirect(document)
+
+
 def _document_redirect_to_create(document_slug, document_locale, slug_dict):
     """
     When a Document doesn't exist but the user can create it, return
@@ -462,12 +488,18 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
 @allow_CORS_GET
 @prevent_indexing
 def _document_deleted(request, deletion_logs):
+    """When a Document has been deleted return a 404.
+
+    If the user can restore documents, then return a 404 but also include the
+    template with the form to restore the document.
+
     """
-    When a Document has been deleted, display a notice.
-    """
-    deletion_log = deletion_logs.order_by('-pk')[0]
-    context = {'deletion_log': deletion_log}
-    return render(request, 'wiki/deletion_log.html', context, status=404)
+    if request.user and request.user.has_perm('wiki.restore_document'):
+        deletion_log = deletion_logs.order_by('-pk')[0]
+        context = {'deletion_log': deletion_log}
+        return render(request, 'wiki/deletion_log.html', context, status=404)
+
+    raise Http404
 
 
 @newrelic.agent.function_trace()
@@ -638,7 +670,7 @@ def document(request, document_slug, document_locale):
         'body_html': body_html,
         'contributors': contributors,
         'contributors_count': contributors_count,
-        'contributors_limit': 13,
+        'contributors_limit': 6,
         'has_contributors': has_contributors,
         'fallback_reason': fallback_reason,
         'kumascript_errors': ks_errors,
@@ -646,7 +678,7 @@ def document(request, document_slug, document_locale):
         'seo_summary': seo_summary,
         'seo_parent_title': seo_parent_title,
         'share_text': share_text,
-        'search_url': referrer_url(request) or '',
+        'search_url': get_search_url_from_referer(request) or '',
     }
     response = render(request, 'wiki/document.html', context)
     return _set_common_headers(doc, rendering_params['section'], response)
@@ -741,8 +773,7 @@ def _document_PUT(request, document_slug, document_locale):
         # Create and save the new document; we'll revise it immediately.
         doc = Document(slug=document_slug, locale=document_locale,
                        title=data.get('title', document_slug),
-                       parent_topic=parent_doc,
-                       category=Document.CATEGORIES[0][0])
+                       parent_topic=parent_doc)
         doc.save()
         section_id = None  # No section editing for new document!
         is_new = True

@@ -6,6 +6,7 @@ Contents:
    :maxdepth: 2
 
    installation
+   installation-docker
    development
    feature-toggles
    tests
@@ -13,10 +14,7 @@ Contents:
    tests-performance
    troubleshooting
 
-   vendor
    celery
-   email
    elasticsearch
    localization
    ckeditor
-

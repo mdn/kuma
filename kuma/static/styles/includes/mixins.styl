@@ -221,12 +221,10 @@ set-message-base(remove-last-spacing = true) {
     padding: ($grid-spacing / 2);
     margin-bottom: $grid-spacing;
     set-smaller-font-size();
+    overflow: hidden;
 
     if(remove-last-spacing) {
-        & *:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
+        prevent-last-child-bottom-spacing();
     }
 }
 
@@ -310,9 +308,6 @@ set-placeholder-style(prop, value) {
 use-white-logo() {
     #main-header .logo {
         background-position: 0 -41px;
-    }
-    #main-header .logo.logo-mdn10 {
-        background-position: top left;
     }
 }
 
@@ -427,7 +422,7 @@ $checkbox-label-container {
     }
 
     > p {
-        clear: left;
+        bidi-value(clear, left, right);
     }
 }
 
@@ -534,3 +529,21 @@ box-theme($color) {
     background: theme-pale-light($color);
     border-color: theme-pale-medium($color);
 }
+
+/* pull aside
+   - assumes content has a bottom margin of its own
+   - floats to the right until there's not enough space for it
+-------------------------------------------------------------- */
+
+pull-aside() {
+    @extend $column-4;
+    min-width: 200px;
+    bidi-value(float, right, left);
+    bidi-value(margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0);
+
+    @media $media-query-small-mobile {
+        width: 100%;
+        bidi-value(margin, 0, 0);
+    }
+}
+

@@ -13,6 +13,9 @@ export NODE_PATH=/usr/local/lib/node_modules:/usr/lib/node_modules
 # HACK: We use a self-signed SSL cert in dev; force node.js to accept it.
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 
+# Stop Python from writing pyc files
+export PYTHONDONTWRITEBYTECODE=1
+
 # More useful to start in the project directory than in user home
 cd /home/vagrant/src
 

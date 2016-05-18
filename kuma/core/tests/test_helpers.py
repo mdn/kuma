@@ -2,37 +2,28 @@
 from collections import namedtuple
 from datetime import datetime
 
-import jingo
+import pytest
 import pytz
 from babel.dates import format_date, format_datetime, format_time
-from nose.tools import assert_raises, eq_, ok_
+from django.conf import settings
+from django.test import RequestFactory
 from pyquery import PyQuery as pq
 from soapbox.models import Message
 
-from django.conf import settings
-from django.test import RequestFactory
-
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
-from ..helpers import (datetimeformat, get_soapbox_messages, jsonencode,
-                       number, soapbox_messages, timesince, urlencode, yesno)
-
-
-def render(s, context={}):
-    t = jingo.env.from_string(s)
-    return t.render(**context)
+from ..templatetags.jinja_helpers import (datetimeformat, get_soapbox_messages,
+                                          jsonencode, number, soapbox_messages,
+                                          timesince, urlencode, yesno)
 
 
 class TestHelpers(KumaTestCase):
 
-    def setUp(self):
-        jingo.load_helpers()
-
     def test_number(self):
-        context = {'request': namedtuple('R', 'locale')('en-US')}
+        context = {'request': namedtuple('R', 'LANGUAGE_CODE')('en-US')}
         eq_('5,000', number(context, 5000))
         eq_('', number(context, None))
 
@@ -78,30 +69,28 @@ class TestUrlEncode(KumaTestCase):
 class TestSoapbox(KumaTestCase):
 
     def test_global_message(self):
-        m = Message(message="Global", is_global=True, is_active=True, url="/")
+        m = Message(message='Global', is_global=True, is_active=True, url='/')
         m.save()
-        eq_(m.message, get_soapbox_messages("/")[0].message)
-        eq_(m.message, get_soapbox_messages("/en-US/")[0].message)
-        eq_(m.message, get_soapbox_messages("/fr/demos/")[0].message)
+        eq_(m.message, get_soapbox_messages('/')[0].message)
+        eq_(m.message, get_soapbox_messages('/en-US/')[0].message)
 
     def test_subsection_message(self):
-        m = Message(message="Derby", is_global=False, is_active=True,
-                    url="/demos/devderby")
+        m = Message(message='Search down', is_global=False, is_active=True,
+                    url='/search')
         m.save()
-        eq_(0, len(get_soapbox_messages("/")))
-        eq_(0, len(get_soapbox_messages("/demos")))
-        eq_(0, len(get_soapbox_messages("/en-US/demos")))
-        eq_(m.message, get_soapbox_messages(
-            "/en-US/demos/devderby")[0].message)
-        eq_(m.message, get_soapbox_messages("/de/demos/devderby")[0].message)
+        eq_(0, len(get_soapbox_messages('/')))
+        eq_(0, len(get_soapbox_messages('/docs')))
+        eq_(0, len(get_soapbox_messages('/en-US/docs')))
+        eq_(m.message, get_soapbox_messages('/en-US/search')[0].message)
+        eq_(m.message, get_soapbox_messages('/de/search')[0].message)
 
     def test_message_with_url_is_link(self):
-        m = Message(message="Go to http://bit.ly/sample-demo", is_global=True,
-                    is_active=True, url="/")
+        m = Message(message='Go to http://bit.ly/sample-demo', is_global=True,
+                    is_active=True, url='/')
         m.save()
         ok_('Go to <a href="http://bit.ly/sample-demo">'
             'http://bit.ly/sample-demo</a>' in
-            soapbox_messages(get_soapbox_messages("/")))
+            soapbox_messages(get_soapbox_messages('/')))
 
 
 class TestDateTimeFormat(UserTestCase):
@@ -109,7 +98,7 @@ class TestDateTimeFormat(UserTestCase):
         super(TestDateTimeFormat, self).setUp()
         url_ = reverse('home')
         self.context = {'request': RequestFactory().get(url_)}
-        self.context['request'].locale = u'en-US'
+        self.context['request'].LANGUAGE_CODE = u'en-US'
         self.context['request'].user = self.user_model.objects.get(username='testuser01')
 
     def test_today(self):
@@ -123,7 +112,7 @@ class TestDateTimeFormat(UserTestCase):
 
     def test_locale(self):
         """Expects shortdatetime in French."""
-        self.context['request'].locale = u'fr'
+        self.context['request'].LANGUAGE_CODE = u'fr'
         value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, format='short',
                                          locale=u'fr')
@@ -175,12 +164,13 @@ class TestDateTimeFormat(UserTestCase):
     def test_unknown_format(self):
         """Unknown format raises DateTimeFormatError."""
         date_today = datetime.today()
-        assert_raises(DateTimeFormatError, datetimeformat, self.context,
-                      date_today, format='unknown')
+        with pytest.raises(DateTimeFormatError):
+            datetimeformat(self.context, date_today, format='unknown')
 
     def test_invalid_value(self):
         """Passing invalid value raises ValueError."""
-        assert_raises(ValueError, datetimeformat, self.context, 'invalid')
+        with pytest.raises(ValueError):
+            datetimeformat(self.context, 'invalid')
 
     def test_json_helper(self):
         eq_('false', jsonencode(False))

@@ -1,6 +1,13 @@
+"""
+This is a legacy WSGI file to be removed when moving away from the SCL3
+stage/prod stack. See kuma/wsgi.py instead.
+"""
 import os
-import site
 from datetime import datetime
+
+# setting which Django settings module we want
+# pointing to the legacy settings by default
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings_local')
 
 # Remember when mod_wsgi loaded this file so we can track it in nagios.
 wsgi_loaded = datetime.now()
@@ -18,16 +25,13 @@ if newrelic:
     else:
         newrelic = False
 
-# Add the Kuma root dir to the python path so we can import manage.
-wsgidir = os.path.dirname(__file__)
-site.addsitedir(os.path.abspath(os.path.join(wsgidir, '..')))
-
-# manage adds /lib, and /vendor to the Python path.
-import manage
-
 # This is what mod_wsgi runs.
 from django.core.wsgi import get_wsgi_application
 django_app = get_wsgi_application()
+
+# Enable WhiteNoise
+from whitenoise.django import DjangoWhiteNoise
+django_app = DjangoWhiteNoise(django_app)
 
 # Normally we could let WSGIHandler run directly, but while we're dark
 # launching, we want to force the script name to be empty so we don't create

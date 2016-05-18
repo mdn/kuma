@@ -5,8 +5,8 @@ import jinja2
 from constance import config
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import (Http404, HttpResponse, HttpResponsePermanentRedirect,
-                         HttpResponseRedirect)
+from django.http import (Http404, HttpResponsePermanentRedirect,
+                         HttpResponseRedirect, StreamingHttpResponse)
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
@@ -44,20 +44,21 @@ def list_files(request):
 
 
 def raw_file(request, attachment_id, filename):
-    """Serve up an attachment's file."""
-    # TODO: For now this just grabs and serves the file in the most
-    # naive way. This likely has performance and security implications.
+    """
+    Serve up an attachment's file.
+    """
     qs = Attachment.objects.select_related('current_revision')
     attachment = get_object_or_404(qs, pk=attachment_id)
     if attachment.current_revision is None:
         raise Http404
+
     if request.get_host() == settings.ATTACHMENT_HOST:
         rev = attachment.current_revision
-        resp = HttpResponse(rev.file.read(), content_type=rev.mime_type)
-        resp['Last-Modified'] = convert_to_http_date(rev.created)
-        resp['Content-Length'] = rev.file.size
-        resp['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
-        return resp
+        response = StreamingHttpResponse(rev.file, content_type=rev.mime_type)
+        response['Last-Modified'] = convert_to_http_date(rev.created)
+        response['Content-Length'] = rev.file.size
+        response['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
+        return response
     else:
         return HttpResponsePermanentRedirect(attachment.get_file_url())
 

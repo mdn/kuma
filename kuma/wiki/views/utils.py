@@ -75,7 +75,6 @@ def document_form_initial(document):
     return {
         'title': document.title,
         'slug': document.slug,
-        'category': document.category,
         'is_localizable': document.is_localizable,
         'tags': list(document.tags.names())
     }

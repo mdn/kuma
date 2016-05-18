@@ -15,18 +15,10 @@ from ..queries import MultiQuerySet
 
 @block_user_agents
 @require_GET
-def documents(request, category=None, tag=None):
+def documents(request, tag=None):
     """
-    List wiki documents depending on the optionally given category or tag.
+    List wiki documents depending on the optionally given tag.
     """
-    category_id = None
-    if category:
-        try:
-            category_id = int(category)
-            category = unicode(dict(Document.CATEGORIES)[category_id])
-        except (KeyError, ValueError):
-            raise Http404
-
     # Taggit offers a slug - but use name here, because the slugification
     # stinks and is hard to customize.
     tag_obj = None
@@ -36,14 +28,12 @@ def documents(request, category=None, tag=None):
             if matching_tag.name.lower() == tag.lower():
                 tag_obj = matching_tag
                 break
-    docs = Document.objects.filter_for_list(locale=request.locale,
-                                            category=category_id,
+    docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
                                             tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
         'count': docs.count(),
-        'category': category,
         'tag': tag,
     }
     return render(request, 'wiki/list/documents.html', context)
@@ -83,7 +73,7 @@ def needs_review(request, tag=None):
     Lists wiki documents with revisions flagged for review
     """
     tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
-    docs = Document.objects.filter_for_review(locale=request.locale,
+    docs = Document.objects.filter_for_review(locale=request.LANGUAGE_CODE,
                                               tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
@@ -102,8 +92,8 @@ def with_localization_tag(request, tag=None):
     Lists wiki documents with localization tag
     """
     tag_obj = tag and get_object_or_404(LocalizationTag, name=tag) or None
-    docs = Document.objects.filter_with_localization_tag(locale=request.locale,
-                                                         tag=tag_obj)
+    docs = Document.objects.filter_with_localization_tag(
+        locale=request.LANGUAGE_CODE, tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
@@ -120,7 +110,8 @@ def with_errors(request):
     """
     Lists wiki documents with (KumaScript) errors
     """
-    docs = Document.objects.filter_for_list(locale=request.locale, errors=True)
+    docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
+                                            errors=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
         'documents': paginated_docs,
@@ -134,7 +125,7 @@ def with_errors(request):
 @require_GET
 def without_parent(request):
     """Lists wiki documents without parent (no English source document)"""
-    docs = Document.objects.filter_for_list(locale=request.locale,
+    docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
                                             noparent=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {
@@ -149,7 +140,7 @@ def without_parent(request):
 @require_GET
 def top_level(request):
     """Lists documents directly under /docs/"""
-    docs = Document.objects.filter_for_list(locale=request.locale,
+    docs = Document.objects.filter_for_list(locale=request.LANGUAGE_CODE,
                                             toplevel=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     context = {

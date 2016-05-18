@@ -1,4 +1,4 @@
-# Copyright (C) 2012 
+# Copyright (C) 2012
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.5.0\n"
+"X-Generator: Pontoon\n"
 "X-POOTLE-MTIME: 1440125498.0\n"
 
 #: promote-mdn.php:190
@@ -39,8 +39,8 @@ msgstr "MDN は、Web 開発者による、Web 開発者のための、最高の
 
 #: promote-mdn.php:249
 msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
+"Promote MDN automatically links keywords and phrases in your posts and pages"
+" to MDN URLs."
 msgstr "このプラグインを使用すると、あなたのページやポストに含まれるキーワードやフレーズを自動的に MDN の URL へリンクする事ができます。"
 
 #: promote-mdn.php:256
@@ -123,8 +123,8 @@ msgstr ""
 
 #: promote-mdn.php:288
 msgid ""
-"Note: These keywords will take priority over those loaded at the URL. If you "
-"have too many custom keywords here, you may not link to MDN at all."
+"Note: These keywords will take priority over those loaded at the URL. If you"
+" have too many custom keywords here, you may not link to MDN at all."
 msgstr ""
 "注意: これらのキーワードは、URL で読み込まれたものよりも優先されます。ここであまりに多くのカスタムキーワードを設定すると、ほとんどのページが "
 "MDN にリンクしなくなってしまう可能性があります。"
@@ -141,11 +141,11 @@ msgstr "インストールありがとうございます。 <a href=\"%s\">設�
 
 #: promote-mdn.php:313
 msgid ""
-"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s"
-"\">setting</a> for a locale-specific URL for keywords."
+"fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a "
+"href=\"%s\">setting</a> for a locale-specific URL for keywords."
 msgstr ""
-"fr_FR の翻訳、新しいサイドバー <a href=\"%s\">ウィジェット</a>、キーワードのための"
-"ロケール固有 URL の <a href=\"%s\">設定</a>。"
+"fr_FR の翻訳、新しいサイドバー <a href=\"%s\">ウィジェット</a>、キーワードのためのロケール固有 URL の <a "
+"href=\"%s\">設定</a>。"
 
 #. #-#-#-#-#  promote-mdn.pot (Promote MDN 1.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme

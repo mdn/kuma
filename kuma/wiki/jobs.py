@@ -3,7 +3,7 @@ import collections
 from django.contrib.auth import get_user_model
 
 from kuma.core.jobs import KumaJob
-from kuma.users.helpers import gravatar_url
+from kuma.users.templatetags.jinja_helpers import gravatar_url
 
 
 class DocumentZoneStackJob(KumaJob):

@@ -2,12 +2,12 @@ from django import forms
 from django.core import mail
 from django.test import RequestFactory
 
+import pytest
+import requests_mock
 from constance.test import override_config
-from nose.plugins.attrib import attr
-import responses
 from waffle.models import Flag
 
-from kuma.spam.constants import CHECK_URL_RE, SPAM_CHECKS_FLAG, VERIFY_URL_RE
+from kuma.spam.constants import CHECK_URL, SPAM_CHECKS_FLAG, VERIFY_URL
 from kuma.users.tests import UserTestCase, UserTransactionTestCase
 
 from ..constants import SPAM_EXEMPTED_FLAG
@@ -22,6 +22,7 @@ class RevisionFormTests(UserTransactionTestCase):
 
     def setUp(self):
         super(RevisionFormTests, self).setUp()
+        self.testuser = self.user_model.objects.get(username='testuser')
         Flag.objects.update_or_create(
             name=SPAM_CHECKS_FLAG,
             defaults={'everyone': True},
@@ -35,11 +36,12 @@ class RevisionFormTests(UserTransactionTestCase):
             defaults={'everyone': None},
         )
 
-    @attr('bug821986')
     def test_form_onload_attr_filter(self):
         """
         RevisionForm should strip out any harmful onload attributes from
         input markup
+
+        bug 821986
         """
         rev = revision(save=True, is_approved=True, content="""
             <svg><circle onload=confirm(3)>
@@ -76,10 +78,11 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertEqual(normalize_html(expected),
                          normalize_html(rev_form.initial['content']))
 
-    @responses.activate
-    def test_form_save_section(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='true')
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_form_save_section(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
         rev = revision(save=True, is_approved=True, content="""
             <h1 id="s1">s1</h1>
             <p>test</p>
@@ -130,16 +133,17 @@ class RevisionFormTests(UserTransactionTestCase):
             'content': 'Content',
         }
         request = self.rf.get('/')
-        request.user = self.user_model.objects.get(username='testuser')
+        request.user = self.testuser
         rev_form = RevisionForm(data=data,
                                 request=request,
                                 parent_slug='User:groovecoder')
         self.assertFalse(rev_form.is_valid())
 
-    @responses.activate
-    def test_multiword_tags(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='true')
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_multiword_tags(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
         rev = revision(save=True)
         request = self.rf.get('/')
         request.user = rev.creator
@@ -152,14 +156,15 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertTrue(rev_form.is_valid())
         self.assertEqual(rev_form.cleaned_data['tags'], '"MDN Meta"')
 
-    @responses.activate
-    def test_case_sensitive_tags(self):
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_case_sensitive_tags(self, mock_requests):
         """
         RevisionForm should reject new tags that are the same as existing tags
         that only differ by case.
         """
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='true')
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
         rev = revision(save=True, tags='"JavaScript"')
         request = self.rf.get('/')
         request.user = rev.creator
@@ -172,15 +177,14 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertTrue(rev_form.is_valid())
         self.assertEqual(rev_form.cleaned_data['tags'], '"JavaScript"')
 
-    @attr('spam')
-    @responses.activate
-    def test_akismet_enabled(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_enabled(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
         request = self.rf.get('/')
         # using a non-admin user here to make sure we can test the
         # exmption rule below
-        test_user = self.user_model.objects.get(username='testuser')
-        request.user = test_user
+        request.user = self.testuser
         data = {
             'slug': 'Title',
             'title': 'Title',
@@ -192,21 +196,50 @@ class RevisionFormTests(UserTransactionTestCase):
 
         # create the waffle flag and add the test user to it
         flag, created = Flag.objects.get_or_create(name=SPAM_EXEMPTED_FLAG)
-        flag.users.add(test_user)
+        flag.users.add(self.testuser)
 
         # now disabled because the test user is exempted from the spam check
         self.assertFalse(rev_form.akismet_enabled())
 
-    @attr('spam')
-    @responses.activate
-    def test_akismet_error(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='terrible')
+    @requests_mock.mock()
+    @pytest.mark.spam
+    def test_akismet_ham(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')  # false means it's ham
         request = self.rf.get('/')
         # using a non-admin user here to make sure we can test the
         # exmption rule below
-        test_user = self.user_model.objects.get(username='testuser')
-        request.user = test_user
+        request.user = self.testuser
+        data = {
+            'title': 'Title',
+            'slug': 'Slug',
+            'content': 'Content',
+            'toc_depth': Revision.TOC_DEPTH_ALL,
+        }
+        self.assertEqual(DocumentSpamAttempt.objects.count(), 0)
+        self.assertEqual(len(mail.outbox), 0)
+
+        rev_form = RevisionForm(data=data, request=request)
+        self.assertTrue(rev_form.is_valid())
+        self.assertEqual(DocumentSpamAttempt.objects.count(), 0)
+
+    @requests_mock.mock()
+    @pytest.mark.spam
+    def test_akismet_spam(self, mock_requests):
+        self._test_akismet_error(mock_requests, 'true')
+
+    @requests_mock.mock()
+    @pytest.mark.spam
+    def test_akismet_error(self, mock_requests):
+        self._test_akismet_error(mock_requests, 'terrible')
+
+    def _test_akismet_error(self, mock_requests, check_response):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content=check_response)
+        request = self.rf.get('/')
+        # using a non-admin user here to make sure we can test the
+        # exmption rule below
+        request.user = self.testuser
         data = {
             'title': 'Title',
             'slug': 'Slug',
@@ -222,7 +255,7 @@ class RevisionFormTests(UserTransactionTestCase):
         attempt = DocumentSpamAttempt.objects.latest()
         self.assertEqual(attempt.title, 'Title')
         self.assertEqual(attempt.slug, 'Slug')
-        self.assertEqual(attempt.user, test_user)
+        self.assertEqual(attempt.user, self.testuser)
 
         # Test that one message has been sent.
         self.assertEqual(len(mail.outbox), 1)
@@ -235,14 +268,13 @@ class RevisionFormTests(UserTransactionTestCase):
         except forms.ValidationError as exc:
             self.assertHTMLEqual(exc.message, rev_form.akismet_error_message)
 
-    @attr('spam')
-    @responses.activate
-    def test_akismet_parameters(self):
-        responses.add(responses.POST, VERIFY_URL_RE, body='valid')
-        responses.add(responses.POST, CHECK_URL_RE, body='true')
+    @pytest.mark.spam
+    @requests_mock.mock()
+    def test_akismet_parameters(self, mock_requests):
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(CHECK_URL, content='false')
         request = self.rf.get('/')
-        test_user = self.user_model.objects.get(username='testuser')
-        request.user = test_user
+        request.user = self.testuser
         data = {
             'title': 'Title',
             'slug': 'Slug',
@@ -257,7 +289,8 @@ class RevisionFormTests(UserTransactionTestCase):
         self.assertTrue(rev_form.is_valid())
         parameters = rev_form.akismet_parameters()
         self.assertEqual(parameters['comment_author'], 'Test User')
-        self.assertEqual(parameters['comment_author_email'], test_user.email)
+        self.assertEqual(parameters['comment_author_email'],
+                         self.testuser.email)
         # The content contains just
         for value in data.values():
             self.assertIn(value, parameters['comment_content'])

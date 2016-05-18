@@ -1,7 +1,6 @@
-from nose.tools import ok_, eq_
-
 from elasticsearch_dsl import query
 
+from kuma.core.tests import eq_, ok_
 from kuma.wiki.models import Document
 from kuma.wiki.search import WikiDocumentType
 

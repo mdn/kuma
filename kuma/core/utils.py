@@ -1,23 +1,25 @@
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
 import functools
 import hashlib
 import logging
 import os
 import random
-import tempfile
 import time
 from itertools import islice
 
 import bitly_api
-import lockfile
 from celery import chain, chord
-from polib import pofile
-
 from django.conf import settings
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
+from django.http import QueryDict
 from django.shortcuts import _get_queryset
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_unicode, smart_str
 from django.utils.http import urlencode
-
+from polib import pofile
 from taggit.utils import split_strip
 
 from .cache import memcache
@@ -69,7 +71,7 @@ def smart_int(string, fallback=0):
 def strings_are_translated(strings, locale):
     # http://stackoverflow.com/a/24339946/571420
     pofile_path = os.path.join(settings.ROOT, 'locale', locale, 'LC_MESSAGES',
-                               'messages.po')
+                               'django.po')
     try:
         po = pofile(pofile_path)
     except IOError:  # in case the file doesn't exist or couldn't be parsed
@@ -81,33 +83,6 @@ def strings_are_translated(strings, locale):
                    not e.obsolete):
             all_strings_translated = False
     return all_strings_translated
-
-
-def file_lock(prefix):
-    """
-    Decorator that only allows one instance of the same command to run
-    at a time.
-    """
-    def decorator(f):
-        @functools.wraps(f)
-        def wrapper(self, *args, **kwargs):
-            name = '_'.join((prefix, f.__name__) + args)
-            file = os.path.join(tempfile.gettempdir(), name)
-            lock = lockfile.FileLock(file)
-            try:
-                # Try to acquire the lock without blocking.
-                lock.acquire(0)
-            except lockfile.LockError:
-                log.warning('Aborting %s; lock acquisition failed.' % name)
-                return 0
-            else:
-                # We have the lock, call the function.
-                try:
-                    return f(self, *args, **kwargs)
-                finally:
-                    lock.release()
-        return wrapper
-    return decorator
 
 
 def generate_filename_and_delete_previous(ffile, name, before_delete=None):
@@ -151,13 +126,16 @@ class MemcacheLock(object):
     def locked(self):
         return bool(self.cache.get(self.key))
 
+    def time(self, attempt):
+        return (((attempt + 1) * random.random()) + 2 ** attempt) / 2.5
+
     def acquire(self):
-        for i in xrange(0, self.attempts):
+        for attempt in xrange(0, self.attempts):
             stored = self.cache.add(self.key, 1, self.expires)
             if stored:
                 return True
-            if i != self.attempts - 1:
-                sleep_time = (((i + 1) * random.random()) + 2 ** i) / 2.5
+            if attempt != self.attempts - 1:
+                sleep_time = self.time(attempt)
                 logging.debug('Sleeping for %s while trying to acquire key %s',
                               sleep_time, self.key)
                 time.sleep(sleep_time)
@@ -165,6 +143,35 @@ class MemcacheLock(object):
 
     def release(self):
         self.cache.delete(self.key)
+
+
+def memcache_lock(prefix, expires=60 * 60):
+    """
+    Decorator that only allows one instance of the same command to run
+    at a time.
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(self, *args, **kwargs):
+            name = '_'.join((prefix, func.__name__) + args)
+            lock = MemcacheLock(name, expires=expires)
+            if lock.locked():
+                log.warning('Lock %s locked; ignoring call.' % name)
+                return
+            try:
+                # Try to acquire the lock without blocking.
+                lock.acquire()
+            except MemcacheLockException:
+                log.warning('Aborting %s; lock acquisition failed.' % name)
+                return
+            else:
+                # We have the lock, call the function.
+                try:
+                    return func(self, *args, **kwargs)
+                finally:
+                    lock.release()
+        return wrapper
+    return decorator
 
 
 def get_object_or_none(klass, *args, **kwargs):
@@ -326,3 +333,36 @@ def get_unique(content_type, object_pk, name=None, request=None,
     unique_hash = hashlib.md5(hash_text).hexdigest()
 
     return (user, ip, user_agent, unique_hash)
+
+
+def urlparams(url_, fragment=None, query_dict=None, **query):
+    """
+    Add a fragment and/or query parameters to a URL.
+
+    New query params will be appended to exising parameters, except duplicate
+    names, which will be replaced.
+    """
+    url_ = urlparse.urlparse(url_)
+    fragment = fragment if fragment is not None else url_.fragment
+
+    q = url_.query
+    new_query_dict = (QueryDict(smart_str(q), mutable=True) if
+                      q else QueryDict('', mutable=True))
+    if query_dict:
+        for k, l in query_dict.lists():
+            new_query_dict[k] = None  # Replace, don't append.
+            for v in l:
+                new_query_dict.appendlist(k, v)
+
+    for k, v in query.items():
+        # Replace, don't append.
+        if isinstance(v, list):
+            new_query_dict.setlist(k, v)
+        else:
+            new_query_dict[k] = v
+
+    query_string = urlencode([(k, v) for k, l in new_query_dict.lists() for
+                              v in l if v is not None])
+    new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
+                               url_.params, query_string, fragment)
+    return new.geturl()

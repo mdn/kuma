@@ -4,10 +4,16 @@ $see-also-outdent = 6px;
 
     margin-bottom: $grid-spacing;
     position: relative;
+    background-color: #fff;
 
     set-smaller-font-size();
     {$selector-heading-font-fallback} {
         letter-spacing: -0.002em;
+    }
+
+    /* need to give it a fake border when appearing on zones */
+    .zone-landing-header-preview-base & {
+        box-shadow: ($see-also-outdent * -1) 0 0 #fff;
     }
 
     a {
@@ -39,7 +45,11 @@ $see-also-outdent = 6px;
     }
 
     li li {
-        bidi-style(padding-left, $grid-spacing * 2, padding-right, 0);
+        bidi-style(padding-left, $grid-spacing * 1.5, padding-right, 0);
+    }
+
+    li li li {
+        bidi-style(padding-left, $grid-spacing, padding-right, 0);
     }
 
     /* don't allow empty paragraphs by CKEditor */
@@ -85,8 +95,6 @@ $see-also-outdent = 6px;
 }
 
 /* items which can be clicked on to toggle */
-#show-quick-links,
-#quick-links-toggle,
 .quick-links .toggleable > a {
     display: inline-block;
     bidi-style(padding-left, $grid-spacing, padding-right, 0);

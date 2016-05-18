@@ -3,7 +3,7 @@
     var waitBeforeAsking = 60000;
     var articleTracker = doc.location.pathname + '#answered-helpful';
     // this feature requires localStorage
-    if (('localStorage' in win)) {
+    if (win.mdn.features.localStorage) {
         var ignore = localStorage.getItem('helpful-ignore') === 'true'; // true if ever clicked ignore
         var articleAskedRecently = parseInt(localStorage.getItem(articleTracker), 10) > Date.now();
         var helpfulnessAskedRecently = parseInt(localStorage.getItem('helpfulnessTracker'), 10) > Date.now();
@@ -16,6 +16,12 @@
 
     // create a notification
     function inquire() {
+        // check we haven't asked on another page since we set timeout to trigger this
+        var helpfulnessAskedRecently = parseInt(localStorage.getItem('helpfulnessTracker'), 10) > Date.now();
+        if (helpfulnessAskedRecently) {
+            return;
+        }
+
         // dimension7 is "helpfulness"
         if(win.ga) ga('set', 'dimension7', 'Yes');
 
@@ -55,7 +61,7 @@
             {val: 'Needs-More-Info', text: gettext('Add more details')},
             {val: 'Needs-Correction', text: gettext('Fix incorrect information')},
             {val: 'Needs-Examples', text: gettext('Add or improve examples')},
-            {val: 'SEO', text: gettext('My search should have lead to a different article.')},
+            {val: 'SEO', text: gettext('My search should have led to a different article')},
             {val: 'Other', text: gettext('Something else')}
         ]
         var $select = $('<select />').attr({

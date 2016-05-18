@@ -1,18 +1,35 @@
 /* contributor avatars at top of articles */
+
+$avatar-max-width = 20px;
+$avatar-margin = 5px;
+$avatar-limit = 6;
+
 .contributor-avatars {
-    set-smaller-font-size();
+    bidi-value(float, right, left);
+    position: relative;
+    max-width: ($avatar-limit * ($avatar-max-width + $avatar-margin));
+    margin-top: 23px;
+    bidi-style(margin-left, $grid-spacing, margin-right, 0);
+    margin-bottom: $grid-spacing;
     color: #777;
-    padding: 10px 10px $content-vertical-spacing;
-    border-bottom: 1px solid rgb(241, 241, 241);
-    border-top: 1px solid rgb(241, 241, 241);
-    background: none repeat scroll 0 0 rgba-fallback(rgba(234, 239, 243, 0.4));
-    margin-top: -20px;
-    margin-bottom: 20px;
+    set-smaller-font-size();
+    bidi-value(text-align, right, left);
+
+    .from-search &,
+    .no-js & {
+        display: none;
+    }
+
+    &.contributor-avatars-open {
+        max-width: none;
+        width: 100%;
+        bidi-style(margin-left, 0, margin-right, 0);
+    }
+
 
     ul {
-        display: inline;
+        display: inline-block;
         opacity: 0.7;
-        margin-left: 2px;
         vendorize(transition, opacity .3s ease-in-out);
 
         &:hover,
@@ -21,11 +38,10 @@
         }
 
         li {
-            margin: 0 5px 4px 0;
+            bidi-value(float, left, right);
+            bidi-value(margin, 0 0 4px $avatar-margin, 0 $avatar-margin 4px 0);
+            display: inline-block;
 
-            &, .no-js  &.hidden {
-                display: inline-block;
-            }
 
             &.hidden {
                 display: none;
@@ -35,6 +51,7 @@
         a {
             display: inline-block;
             vendorize(transition, all .2s);
+            background-color: $grey;
 
             &:hover,
             &:focus {
@@ -47,7 +64,7 @@
     .avatar {
         vertical-align: text-bottom;
         border-radius: 2px;
-        max-width: 20px;
+        max-width: $avatar-max-width;
         opacity: 0;
 
         &.loaded {
@@ -56,16 +73,13 @@
     }
 
     button {
-        set-smaller-font-size();
-        margin-left: -2px;
-        color: #777;
+        position: absolute;
+        top: 100%;
+        bidi-style(right, 0, left, auto);
+        margin-top: -5px;
+        padding: 0;
+        color: $link-color;
         text-transform: none;
-        padding: 5px 0;
-
-        &:hover,
-        &:focus {
-            color: #4D4E53;
-        }
     }
 }
 

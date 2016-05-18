@@ -70,10 +70,10 @@ class QueryURLObject(URLObject):
         return clean_params
 
 
-def search_exception_handler(exc):
+def search_exception_handler(exc, context):
     # Call REST framework's default exception handler first,
     # to get the standard error response.
-    response = exception_handler(exc)
+    response = exception_handler(exc, context)
 
     if response is None:
         if isinstance(exc, elasticsearch.ElasticsearchException):

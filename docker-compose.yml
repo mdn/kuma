@@ -1,0 +1,67 @@
+worker: &worker
+  build: ../
+  command: supervisord -n -c /app/docker/supervisor-celery.conf
+  volumes:
+    - ../:/app
+  links:
+    - memcached
+    - mysql
+    - elasticsearch
+    - redis
+  environment:
+    # Django settings overrides:
+    - DEBUG=true
+    - PROTOCOL=http://
+    # - DOMAIN=developer-local.allizom.org
+    - DOMAIN=kuma.dev  # FIXME
+    - DATABASE_URL=mysql://kuma:kuma@mysql:3306/kuma
+    - MEMCACHE_SERVERS=memcached:11211
+    # - ALLOWED_HOSTS=developer-local.allizom.org
+    - ALLOWED_HOSTS=kuma.dev  # FIXME
+    - BROKER_URL=redis://redis:6379/0
+    - CELERY_ALWAYS_EAGER=false
+    - ES_URLS=elasticsearch:9200
+    # Only needed here to not load settings/local.py.
+    - DJANGO_SETTINGS_MODULE=kuma.settings.docker
+    # Other environment variables:
+    - PYTHONDONTWRITEBYTECODE=1
+
+# Web is based on worker b/c you cannot clear the "ports" with docker-compose.
+web:
+  <<: *worker
+  command: supervisord -n -c /app/docker/supervisor.conf
+  ports:
+    - "8000:8000"
+
+nginx:
+  build: ./images/nginx
+  volumes:
+    - ../static:/app/static
+  ports:
+    - "80:80"
+  links:
+    - web
+
+memcached:
+  image: memcached
+
+mysql-data:
+  build: ./images/mysql-data
+  volumes:
+    - /var/lib/mysql
+
+mysql:
+  build: ./images/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=docker
+    - MYSQL_USER=kuma
+    - MYSQL_PASSWORD=kuma
+    - MYSQL_DATABASE=kuma
+  volumes_from:
+    - mysql-data
+
+elasticsearch:
+  image: elasticsearch:1.7
+
+redis:
+  image: redis

@@ -4,9 +4,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.core.handlers.wsgi import WSGIRequest
 from django.test import RequestFactory
 
-from nose.tools import eq_
-
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase, eq_
 
 from ..context_processors import next_url
 

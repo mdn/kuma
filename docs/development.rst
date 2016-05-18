@@ -37,7 +37,7 @@ Django tests
 
 Running the kuma Django test suite is easy::
 
-    python manage.py test kuma
+    make test
 
 For more information, see the :doc:`test documentation <tests>`.
 
@@ -97,30 +97,74 @@ Tests
 Python dependencies
 -------------------
 
-Pure Packages
-~~~~~~~~~~~~~
+Kuma tracks its Python dependencies with pip_.
 
-All of the pure Python dependencies are included in the git repository,
-in the ``vendor`` subdirectory. This allows them to be available on the
-Python path without needing to be installed in the system, allowing multiple
-versions for multiple projects simultaneously.
+The ``requirements`` directory contains the plaintext requirements files
+that are used in the Vagrant VM, during automatic tests with Travis-CI
+and during deployment to stage and prod.
 
-Compiled Packages
-~~~~~~~~~~~~~~~~~
+Here's what that folder contains:
 
-There are a small number of compiled packages, including the MySQL Python
-client. You can install these using ``pip`` or via a package manager.
-To use ``pip``, you only need to do the following.
+- ``default.txt`` - contains the default dependencies that are used in
+  production and local environments
+
+- ``docs.txt`` - contains dependencies that are required to build the docs
+
+- ``local.txt`` - contains dependencies needed for local development and
+  testing
+
+- ``travis.txt`` - a file used by the ``.travis.yml`` config file when
+  running automatic testing
+
+Adding a requirement
+~~~~~~~~~~~~~~~~~~~~
+
+To add a dependency you have to add it to the appropriate requirement file
+in the ``requirements`` folder. To do that we'll use pip_ to get the hash
+of the distribution file you'd like to install.
 
 First SSH into the Vagrant VM::
 
     vagrant ssh
 
-Then disable the virtualenv that is auto-enabled and install the compiled
-dependencies::
+Add the requirement with the exact version specifier to the requirements
+file most appropriate to the use of the dependency, e.g.
+``requirements/default.txt``::
 
-    deactivate
-    sudo pip install -r requirements/compiled.txt
+    django-pipeline==1.6.0
+
+Then download a distribution file from PyPI_ or whatever source you deem
+safe of the dependency you added above, e.g.::
+
+
+    pip download django-pipeline==1.6.0
+
+Check if the file you downloaded contains what you expect and then use pip
+to calculate a hash of the file you downloaded::
+
+    pip hash django_pipeline-1.6.4-py2.py3-none-any.whl
+
+This will print out a hash in the form of::
+
+    django_pipeline-1.6.4-py2.py3-none-any.whl:
+    --hash=sha256:c66745f4a5f71cea3a42d63172b20b73ec791aeeeb4ac5483d7931fefef25157
+
+Add this string above the line of the requirement string in the requirements
+file, e.g.::
+
+    django-pipeline==1.6.0 --hash=sha256:c66745f4a5f71cea3a42d63172b20b73ec791aeeeb4ac5483d7931fefef25157
+
+Then verify if the hash still matches and install the new dependency in the VM::
+
+    pip install -r requirements/default.txt
+
+Updating a requirement
+~~~~~~~~~~~~~~~~~~~~~~
+
+Follow the same steps as when adding a requirement but replace the old pip
+hash in the requirements file. Don't forget to run afterwards::
+
+    pip install -r requirements/default.txt
 
 Front-end dependencies
 ----------------------
@@ -151,8 +195,10 @@ configuration values that may be worthwhile to look at. In case something
 doesn't suffice for your machine, please let us know!
 
 To change the config values, simply create a dotenv_ file (``.env``) in the
-directory (``/home/vagrant/src/.env`` in the Vagrant VM) and write
-``<KEY>=<VALUE>`` for each configuration variable you'd like to set.
+repository root directory--this is also ``/home/vagrant/src/.env`` in the
+Vagrant VM.
+
+Write ``<KEY>=<VALUE>`` for each configuration variable you'd like to set.
 
 Here's the configuration variables that are available for Vagrant:
 
@@ -192,36 +238,14 @@ A possible ``/home/vagrant/src/.env`` file could look like this for example::
 Database
 ~~~~~~~~
 
-At a minimum, you will need to define a database connection. An example
-configuration is::
+At a minimum, you will need to define a database connection. The default
+database configuration is::
 
-    DATABASES = {
-        'default': {
-            'NAME': 'kuma',
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': 'localhost',
-            'PORT': '3306',
-            'USER': 'kuma',
-            'PASSWORD': 'kuma',
-            'OPTIONS': {
-                'sql_mode': 'TRADITIONAL',
-                'charset': 'utf8',
-                'init_command': 'SET '
-                    'storage_engine=INNODB,'
-                    'character_set_connection=utf8,'
-                    'collation_connection=utf8_general_ci',
-            },
-            'ATOMIC_REQUESTS': True,
-            'TEST': {
-                'CHARSET': 'utf8',
-                'COLLATION': 'utf8_general_ci',
-            },
-        },
-    }
+    DATABASE_URL = 'mysql://kuma:kuma@localhost:3306/kuma'
 
-Note the two values ``CHARSET`` and ``COLLATION`` of the ``TEST`` setting.
-Without these, the test suite will use MySQL's (moronic) defaults when
-creating the test database (see below) and lots of tests will fail. Hundreds.
+In other words, it uses MySQL default, the username and password of 'kuma'
+when trying to access the database 'kuma'. We automatically use MySQL's InnoDB
+storage engine if configured.
 
 Once you've set up the database, you can generate the schema with Django's
 ``migrate`` command::
@@ -233,12 +257,12 @@ This will generate an empty database, which will get you started!
 Assets
 ~~~~~~
 
-If you want to see images and have the pages formatted with CSS you need to
-set your ``settings_local.py`` with the following::
+Kuma will automatically run in debug mode, with the ``DEBUG`` setting
+turned to ``True``. That will make it serve images and have the pages
+formatted with CSS automatically.
 
-    DEBUG = True
-    TEMPLATE_DEBUG = DEBUG
-    SERVE_MEDIA = True
+Setting ``DEBUG = false`` in your ``.env`` file will put the installation
+in production mode and ask for minified assets.
 
 Production assets
 *****************
@@ -246,15 +270,11 @@ Production assets
 Assets are compressed on production. To emulate production and test compressed
 assets locally, follow these steps:
 
-#. In settings_local.py, set ``DEBUG = False``
-#. In settings_local.py, set ``DEV = False``
+#. In .env, set ``DEBUG = false``
 #. Run ``vagrant ssh`` to enter the virtual machine
-#. Run ``compile-stylesheets``
-#. Run ``./manage.py collectstatic``
-#. Edit the file /etc/apache2/sites-enabled/kuma.conf and uncomment any lines
-   pertaining to hosting static files
-#. Run ``sudo service apache2 restart``
-
+#. Run ``make compilejsi18n collectstatic``
+#. Stop ``foreman`` if it's already running
+#. Run ``foreman start``
 
 Mozilla Product Details
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -267,12 +287,13 @@ to disk. To set this up, just run::
 
 ...to do the initial fetch or run it again to update it.
 
-
 Secure Cookies
 ~~~~~~~~~~~~~~
 
 To prevent error messages like ``Forbidden (CSRF cookie not set.):``, you need to
-set your ``settings_local.py`` with the following::
+set your ``.env`` with the following::
 
-    CSRF_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = false
 
+.. _pip: https://pip.pypa.io/
+.. _PyPI: https://pypi.python.org/pypi/

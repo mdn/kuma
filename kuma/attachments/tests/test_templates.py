@@ -1,11 +1,11 @@
+import pytest
 from constance import config
-from nose.plugins.attrib import attr
-from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
+from kuma.core.tests import eq_, ok_
+from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 from kuma.wiki.tests import revision, WikiTestCase
-from kuma.core.urlresolvers import reverse
 
 from ..models import Attachment
 from ..utils import make_test_file
@@ -22,7 +22,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         super(AttachmentTests, self).tearDown()
         config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
 
-    @attr('security')
+    @pytest.mark.security
     def test_xss_file_attachment_title(self):
         title = '"><img src=x onerror=prompt(navigator.userAgent);>'
         # use view to create new attachment

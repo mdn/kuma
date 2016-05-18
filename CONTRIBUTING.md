@@ -1,10 +1,23 @@
 Contributing Code
 =================
 
+Things to know when contributing code
+=====================================
+
   * You agree to license your contributions under [MPL 2][MPL2]
   * Discuss large changes on the [dev-mdn mailing list][dev-mdn]
     or on a [bugzilla bug][mdn-backlog] before coding.
   * Python code style should follow [PEP8 standards][pep8] whenever possible.
+  * We don't accept pull requests for translated strings (i.e. anything under locale/). Please use [Pontoon][https://pontoon.mozilla.org/projects/mdn/] instead.
+
+[MPL2]: http://www.mozilla.org/MPL/2.0/
+[dev-mdn]: https://lists.mozilla.org/listinfo/dev-mdn
+[mdn-backlog]: http://mzl.la/mdn_backlog
+[pep8]: http://www.python.org/dev/peps/pep-0008/
+
+Conventions
+===========
+
   * All commit messages must start with "bug NNNNNNN" or "fix bug NNNNNNN"
     * Reason: Make it easy for someone to consume the commit log and reach originating requests for all changes
     * Exceptions: "Merge" and "Revert" commits
@@ -27,10 +40,14 @@ Contributing Code
     * Reason: Automated tests reduce human error involved in reviews
     * Notes: The Django site has [good testing docs][django-testing]
 
-[MPL2]: http://www.mozilla.org/MPL/2.0/
-[dev-mdn]: https://lists.mozilla.org/listinfo/dev-mdn
-[mdn-backlog]: http://mzl.la/mdn_backlog
-[pep8]: http://www.python.org/dev/peps/pep-0008/
+  * We use the following labels for pull requests:
+    * needs rebase: This pull request needs to be rebased against the master branch.
+    * needs tests: The changes in this pull request need additional tests.
+    * not ready: This pull request isn't ready to merge. If it requires feedback or answers from someone, please tag that person in the PR comments.
+    * webops: This pull request is blocked on additional work by webops that must be done before it lands.
+
+  * When a Pull request is ready to merge, one of the reviewers will merge it.
+
 [django-testing]: https://docs.djangoproject.com/en/dev/topics/testing/
 [peers]: https://wiki.mozilla.org/Modules/All#MDN
 

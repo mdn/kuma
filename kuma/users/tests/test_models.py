@@ -1,11 +1,11 @@
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
+import pytest
 
+from kuma.core.tests import eq_, ok_
 from kuma.wiki.tests import revision
 
-from ..helpers import gravatar_url
-from ..models import UserBan
 from . import UserTestCase
+from ..models import UserBan
+from ..templatetags.jinja_helpers import gravatar_url
 
 
 class TestUser(UserTestCase):
@@ -82,7 +82,7 @@ class TestUser(UserTestCase):
 
 class BanTestCase(UserTestCase):
 
-    @attr('bans')
+    @pytest.mark.bans
     def test_ban_user(self):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')

@@ -1,8 +1,10 @@
 import mock
-from nose.tools import ok_, eq_
 
 from django.utils import translation
+from rest_framework import serializers
+from rest_framework.test import APIRequestFactory
 
+from kuma.core.tests import eq_, ok_
 from kuma.wiki.search import WikiDocumentType
 
 from . import ElasticTestCase
@@ -22,13 +24,18 @@ class SerializerTests(ElasticTestCase):
                                         group=group)
         filter_.tags.add('tag')
         filter_serializer = FilterWithGroupSerializer(filter_)
-        eq_(filter_serializer.data, {
-            'name': 'Serializer',
-            'slug': 'serializer',
-            'tags': ['tag'],
-            'operator': 'OR',
-            'group': {'name': 'Group', 'slug': 'group', 'order': 1},
-            'shortcut': None})
+        data = filter_serializer.data
+        eq_(data['group'], {
+            'order': 1L,
+            'name': u'Group',
+            'slug': u'group',
+        })
+        eq_(data['name'], u'Serializer')
+        eq_(data['operator'], 'OR')
+        eq_(data['shortcut'], None)
+        eq_(data['slug'], 'serializer')
+        eq_(len(data['tags']), 1)
+        eq_(data['tags'][0], u'tag')
 
     @mock.patch('kuma.search.serializers.ugettext')
     def test_filter_serializer_with_translations(self, _mock):
@@ -60,22 +67,28 @@ class SerializerTests(ElasticTestCase):
         search = search.query('match', summary='CSS')
         search = search.highlight(*WikiDocumentType.excerpt_fields)
         result = search.execute()
-        data = DocumentSerializer(result, many=True).data
-        eq_(data[0]['excerpt'], u'A <em>CSS</em> article')
+        serializer = DocumentSerializer(result, many=True)
+        eq_(serializer.data[0]['excerpt'], u'A <em>CSS</em> article')
+
+
+class SearchQueryFieldSerializer(serializers.Serializer):
+    q = SearchQueryField()
 
 
 class FieldTests(ElasticTestCase):
 
     def test_SearchQueryField(self):
-        request = self.get_request('/?q=test')
+        request = APIRequestFactory().get('/?q=test')
         # APIRequestFactory doesn't actually return APIRequest objects
         # but standard HttpRequest objects due to the way it initializes
         # the request when APIViews are called
-        request.QUERY_PARAMS = request.GET
-
-        field = SearchQueryField()
-        field.context = {'request': request}
-        eq_(field.to_native(None), 'test')
+        request.query_params = request.GET
+        serializer = SearchQueryFieldSerializer(
+            data={},
+            context={'request': request},
+        )
+        serializer.is_valid()
+        eq_(serializer.data, {'q': 'test'})
 
     def test_SiteURLField(self):
         class FakeValue(object):
@@ -83,5 +96,5 @@ class FieldTests(ElasticTestCase):
             locale = 'de'
 
         field = SiteURLField('wiki.document', args=['slug'])
-        value = field.to_native(FakeValue())
+        value = field.to_representation(FakeValue())
         ok_('/de/docs/Firefox' in value)

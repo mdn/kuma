@@ -26,9 +26,10 @@ class UserBan(models.Model):
     is_active = models.BooleanField(default=True, help_text="(Is ban active)")
 
     def __unicode__(self):
-        message = _(u'%s banned by %s') % (self.user, self.by)
+        message = _(u'%(banned_user)s banned by %(banned_by)s') % {
+            'banned_user': self.user, 'banned_by': self.by}
         if not self.is_active:
-            message = _(u"%s (no longer active)") % message
+            message = _(u'%s (no longer active)') % message
         return message
 
 
@@ -91,9 +92,6 @@ class User(AbstractUser):
     )
 
     tags = NamespacedTaggableManager(verbose_name=_(u'Tags'), blank=True)
-
-    # should this user receive contentflagging emails?
-    content_flagging_email = models.BooleanField(default=False)
 
     WEBSITE_VALIDATORS = {
         'website': validators.RegexValidator(

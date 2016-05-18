@@ -1,33 +1,30 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 import time
 import urllib
+from datetime import datetime
 
-from BeautifulSoup import BeautifulSoup
 import mock
-from nose import SkipTest
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
-from pyquery import PyQuery as pq
-
+import pytest
+from BeautifulSoup import BeautifulSoup
+from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
-from django.utils.http import urlquote
 from django.test.utils import override_settings
-
-from constance import config
-from jingo.helpers import urlparams
+from django.utils.http import urlquote
+from pyquery import PyQuery as pq
 from waffle.models import Flag
 
-from kuma.core.tests import SkippedTestCase
+from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import urlparams
 from kuma.users.tests import UserTestCase
-from ..events import EditDocumentEvent
+
+from . import (WikiTestCase, create_topical_parents_docs, document,
+               new_document_data, revision)
 from ..constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
-from ..models import Document, Revision, HelpfulVote, DocumentTag
-from . import (WikiTestCase, document, revision, new_document_data,
-               create_topical_parents_docs)
+from ..events import EditDocumentEvent
+from ..models import Document, DocumentTag, Revision
 
 
 DOCUMENT_EDITED_EMAIL_CONTENT = """
@@ -70,7 +67,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         ok_(config.KUMA_CUSTOM_CSS_PATH in response.content)
 
-    @attr("breadcrumbs")
+    @pytest.mark.breadcrumbs
     def test_document_breadcrumbs(self):
         """Create docs with topical parent/child rel, verify breadcrumbs."""
         d1, d2 = create_topical_parents_docs()
@@ -202,7 +199,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         doc = pq(resp.content)
         assert 'Add a translation' not in doc('.page-buttons #translations li').text()
 
-    @attr('toc')
+    @pytest.mark.toc
     def test_toc_depth(self):
         """Toggling show_toc on/off through the toc_depth field should
         cause table of contents to appear/disappear."""
@@ -223,7 +220,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' not in response.content)
 
-    @attr('toc')
+    @pytest.mark.toc
     def test_show_toc_hidden_input_for_templates(self):
         """Toggling show_toc on/off through the toc_depth field should
         cause table of contents to appear/disappear."""
@@ -275,7 +272,6 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(1, len(doc('form#wiki-page-edit input[name="title"]')))
 
-    @attr('bug1052047')
     def test_new_document_includes_review_block(self):
         """
         New document page includes 'Review Needed?' section.
@@ -312,7 +308,6 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.create'))
         doc = pq(response.content)
         eq_("Name Your Article", doc('input#id_title').attr('placeholder'))
-        eq_("10", doc('input#id_category').attr('value'))
 
     @mock.patch.object(Site.objects, 'get_current')
     def test_new_document_POST(self, get_current):
@@ -328,7 +323,6 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         eq_([('http://testserver/en-US/docs/%s' % d.slug, 302)],
             response.redirect_chain)
         eq_(settings.WIKI_DEFAULT_LANGUAGE, d.locale)
-        eq_(data['category'], d.category)
         eq_(tags, sorted(t.name for t in d.tags.all()))
         r = d.revisions.all()[0]
         eq_(data['keywords'], r.keywords)
@@ -374,34 +368,6 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         ul = doc('article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Please provide content.', ul('li').text())
-
-    def test_new_document_POST_invalid_category(self):
-        """Try to create a new document with an invalid category value."""
-        self.client.login(username='admin', password='testpass')
-        data = new_document_data(['tag1', 'tag2'])
-        data['category'] = 963
-        response = self.client.post(reverse('wiki.create'), data,
-                                    follow=True)
-        doc = pq(response.content)
-        ul = doc('article > ul.errorlist')
-        eq_(1, len(ul))
-        assert ('Select a valid choice. 963 is not one of the available '
-                'choices.' in ul('li').text())
-
-    def test_new_document_missing_category(self):
-        """Test the DocumentForm's category validation.
-
-        Submit the form without a category set, and it should complain, even
-        though it's not a strictly required field (because it cannot be set for
-        translations).
-
-        """
-        self.client.login(username='admin', password='testpass')
-        data = new_document_data()
-        del data['category']
-        response = self.client.post(reverse('wiki.create'), data,
-                                    follow=True)
-        self.assertContains(response, 'Please choose a category.')
 
     def test_slug_collision_validation(self):
         """Trying to create document with existing locale/slug should
@@ -483,8 +449,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         self.assertHTMLEqual(doc('#id_content')[0].value.strip(),
                              r.content.strip())
 
-    @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False,
-                       CELERY_ALWAYS_EAGER=True)
+    @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False)
     @mock.patch.object(Site.objects, 'get_current')
     def test_new_revision_POST_document_with_current(self, get_current):
         """HTTP POST to new revision URL creates the revision on a document.
@@ -568,7 +533,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         new_rev = self.d.revisions.order_by('-id')[0]
         # There are no approved revisions, so it's based_on nothing:
         eq_(None, new_rev.based_on)
-        edited_fire.assert_called()
+        ok_(edited_fire.called)
 
     def test_new_revision_POST_removes_old_tags(self):
         """Changing the tags on a document removes the old tags from
@@ -657,7 +622,6 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
 
 
 class DocumentListTests(UserTestCase, WikiTestCase):
-    """Tests for the All and Category template"""
     localizing_client = True
 
     def setUp(self):
@@ -669,15 +633,6 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         # Create a document in different locale to make sure it doesn't show
         _create_document(parent=self.doc, locale='es')
 
-    def test_category_list(self):
-        """Verify the category documents list view."""
-        response = self.client.get(reverse('wiki.category',
-                                   args=[self.doc.category]))
-        doc = pq(response.content)
-        cat = self.doc.category
-        eq_(Document.objects.filter(category=cat, locale=self.locale).count(),
-            len(doc('#document-list ul.document-list li')))
-
     def test_all_list(self):
         """Verify the all documents list view."""
         response = self.client.get(reverse('wiki.all_documents'))
@@ -685,7 +640,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         eq_(Document.objects.filter(locale=self.locale).count(),
             len(doc('#document-list ul.document-list li')))
 
-    @attr('tags')
+    @pytest.mark.tags
     def test_tag_list(self):
         """Verify the tagged documents list view."""
         tag = DocumentTag(name='Test Tag', slug='test-tag')
@@ -697,11 +652,12 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(1, len(doc('#document-list ul.document-list li')))
 
-    # http://bugzil.la/871638
-    @attr('tags')
+    @pytest.mark.tags
     def test_tag_list_duplicates(self):
         """
         Verify the tagged documents list view, even for duplicate tags
+
+        http://bugzil.la/871638
         """
         en_tag = DocumentTag(name='CSS Reference', slug='css-reference')
         en_tag.save()
@@ -892,7 +848,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(data['keywords'], rev.keywords)
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
-        edited_fire.assert_called()
+        ok_(edited_fire.called)
 
     def _create_and_approve_first_translation(self):
         """Returns the revision."""
@@ -938,7 +894,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(data['keywords'], rev.keywords)
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
-        edited_fire.assert_called()
+        ok_(edited_fire.called)
 
         # subsequent translations should NOT include slug input
         self.client.logout()
@@ -947,13 +903,13 @@ class TranslateTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(0, len(doc('form input[name="slug"]')))
 
+    @pytest.mark.xfail(reason='Figure out wtf is going on with this test')
     def test_translate_form_maintains_based_on_rev(self):
         """
         Revision.based_on should be the rev that was current when the
         Translate button was clicked, even if other revisions happen while the
         user is editing.
         """
-        raise SkipTest("Figure out WTF is going on with this one.")
         _test_form_maintains_based_on_rev(self.client,
                                           self.d,
                                           'wiki.translate',
@@ -1015,8 +971,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         existing_rev = document.revisions.all()[0]
         eq_(existing_rev.content, doc('#id_content').text())
 
+    @pytest.mark.xfail(reason='Figure out wtf is going on with this test.')
     def test_translate_based_on(self):
-        raise SkipTest("Figure out WTF is going on with this one.")
         """Test translating based on a non-current revision."""
         # Create the base revision
         base_rev = self._create_and_approve_first_translation()
@@ -1090,8 +1046,8 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_('Test Content', doc('article#wikiArticle h1').text())
 
+    @pytest.mark.xfail(reason='broken test')
     def test_preview_locale(self):
-        raise SkipTest
         """Preview the wiki syntax content."""
         # Create a test document and translation.
         d = _create_document()
@@ -1104,64 +1060,6 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         link = doc('#doc-content a')
         eq_('Prueba', link.text())
         eq_('/es/docs/prueba', link[0].attrib['href'])
-
-
-class HelpfulVoteTests(UserTestCase, SkippedTestCase):
-
-    def setUp(self):
-        super(HelpfulVoteTests, self).setUp()
-        self.document = _create_document()
-
-    def test_vote_yes(self):
-        """Test voting helpful."""
-        d = self.document
-        user = self.user_model.objects.get(username='testuser')
-        self.client.login(username='testuser', password='testpass')
-        response = self.client.post(reverse('wiki.document_vote',
-                                            args=[self.document.slug]),
-                                    {'helpful': 'Yes'}, follow=True)
-
-        eq_(200, response.status_code)
-        votes = HelpfulVote.objects.filter(document=d, creator=user)
-        eq_(1, votes.count())
-        assert votes[0].helpful
-
-    def test_vote_no(self):
-        """Test voting not helpful."""
-        d = self.document
-        user = self.user_model.objects.get(username='testuser')
-        self.client.login(username='testuser', password='testpass')
-        response = self.client.post(reverse('wiki.document_vote', args=[d.slug]),
-                                    {'not-helpful': 'No'}, follow=True)
-        eq_(200, response.status_code)
-        votes = HelpfulVote.objects.filter(document=d, creator=user)
-        eq_(1, votes.count())
-        assert not votes[0].helpful
-
-    def test_vote_anonymous(self):
-        """Test that voting works for anonymous user."""
-        d = self.document
-        response = self.client.post(reverse('wiki.document_vote', args=[d.slug]),
-                                    {'helpful': 'Yes'}, follow=True)
-        eq_(200, response.status_code)
-        votes = HelpfulVote.objects.filter(document=d, creator=None)
-        votes = votes.exclude(anonymous_id=None)
-        eq_(1, votes.count())
-        assert votes[0].helpful
-
-    def test_vote_ajax(self):
-        """Test voting via ajax."""
-        d = self.document
-        url = reverse('wiki.document_vote', args=[d.slug])
-        response = self.client.post(url, data={'helpful': 'Yes'},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
-        eq_('{"message": "Glad to hear it &mdash; thanks for the feedback!"}',
-            response.content)
-        votes = HelpfulVote.objects.filter(document=d, creator=None)
-        votes = votes.exclude(anonymous_id=None)
-        eq_(1, votes.count())
-        assert votes[0].helpful
 
 
 class SelectLocaleTests(UserTestCase, WikiTestCase):
@@ -1188,8 +1086,7 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',
-                 category=10, locale=locale, parent=parent,
-                 is_localizable=True)
+                 locale=locale, parent=parent, is_localizable=True)
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
                  content='<div>Lorem Ipsum</div>', creator_id=8,

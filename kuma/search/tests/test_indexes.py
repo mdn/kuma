@@ -1,10 +1,9 @@
-from nose.tools import eq_, ok_
-
 from django.conf import settings
 
 from elasticsearch_dsl.connections import connections
 from elasticsearch.exceptions import RequestError
 
+from kuma.core.tests import eq_, ok_
 from kuma.wiki.models import Document
 from kuma.wiki.search import WikiDocumentType
 

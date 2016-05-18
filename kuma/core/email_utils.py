@@ -1,9 +1,9 @@
 import logging
 from functools import wraps
 
-import jingo
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.test import RequestFactory
 from django.utils import translation
 
@@ -57,9 +57,9 @@ def render_email(template, context):
         """
         req = RequestFactory()
         req.META = {}
-        req.locale = locale
+        req.LANGUAGE_CODE = locale
 
-        return jingo.render_to_string(req, template, context)
+        return render_to_string(template, context, request=req)
 
     return _render(translation.get_language())
 
@@ -76,8 +76,7 @@ def emails_with_users_and_watches(subject,
 
     A convenience function for generating emails by repeatedly
     rendering a Django template with the given ``context_vars`` plus a
-    ``user`` and ``watches`` key for each pair in
-    ``users_and_watches``
+    ``user`` and ``watches`` key for each pair in ``users_and_watches``
 
     .. Note::
 
@@ -103,7 +102,7 @@ def emails_with_users_and_watches(subject,
         context_vars['watches'] = watch
 
         msg = EmailMultiAlternatives(
-            subject.format(**context_vars),
+            subject % context_vars,
             render_email(text_template, context_vars),
             from_email,
             [user.email],

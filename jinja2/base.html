@@ -1,0 +1,240 @@
+{% from "includes/common_macros.html" import optimizely_script with context %}
+
+<!DOCTYPE html>
+<html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js" {{ get_webfont_attributes(request) }} >
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
+  {% if not is_sphinx %}
+    {{ optimizely_script() }}
+  {% endif %}
+  <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="{% block robots_value%}index, follow{% endblock %}">
+  <link rel="home" href="{{ url('home') }}">
+  <link rel="copyright" href="#copyright">
+
+  {% block site_css %}
+    {% stylesheet 'mdn' %}
+
+    {% for style in styles %}
+      {% stylesheet style %}
+    {% endfor %}
+  {% endblock %}
+
+  <!-- common social tags -->
+  {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ social_logo }}">
+  <meta property="og:site_name" content="{{ _('Mozilla Developer Network') }}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="{{ social_logo }}">
+  <meta name="twitter:site" content="@MozDevNet">
+  <meta name="twitter:creator" content="@MozDevNet">
+
+  <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('Mozilla Developer Network') }}">
+
+  <!-- third-generation iPad with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static('img/favicon144.png') }}">
+  <!-- iPhone with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ static('img/favicon114.png') }}">
+  <!-- first- and second-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ static('img/favicon72.png') }}">
+  <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="{{ static('img/favicon57.png') }}">
+  <!-- basic favicon -->
+  {% if request.META.SERVER_NAME in settings.PRODUCTION_URL %}
+    {% set favicon_suffix = '' %}
+  {% elif request.META.SERVER_NAME in settings.STAGING_URL %}
+    {% set favicon_suffix = '-staging' %}
+  {% else %}
+    {% set favicon_suffix = '-local' %}
+  {% endif %}
+  <link rel="shortcut icon" href="{{ static('img/favicon32' + favicon_suffix + '.png') }}">
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  {% javascript 'html5shiv' %}
+  <![endif]-->
+
+  {% block extrahead %}{% endblock %}
+
+  {% if not is_sphinx %}
+    {% include "includes/google_analytics.html" %}
+  {% endif %}
+</head>
+<body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}"{% if request.user and request.user.is_authenticated() %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
+
+  {% include "includes/config.html" %}
+
+  {{ soapbox_messages(get_soapbox_messages(request.path)) }}
+
+  <ul id="nav-access">
+    <li><a href="#{% block main_content_id %}content{% endblock %}" id="skip-main">{{ _('Skip to main content') }}</a></li>
+    <li><a id="skip-language" href="#language">{{ _('Select language') }}</a></li>
+    {% if not is_sphinx %}
+      <li><a href="#q" id="skip-search">{{ _('Skip to search') }}</a></li>
+    {% endif %}
+  </ul>
+
+  <!-- Header -->
+  <header id="main-header"><div class="center">
+
+    <div id="tabzilla">
+        <a href="//www.mozilla.org/" class="no-track">mozilla</a>
+    </div>
+
+    <div class="clear header-clear"></div>
+
+
+    <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
+
+
+    <div id="nav-sec">
+        {% if not is_sphinx %}
+                  <ul>
+                  {% if user.is_authenticated() %}
+                      <li class="nav-tools"><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Tools') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+                      <div class="submenu submenu-cols-2 js-submenu" id="nav-tools-submenu">
+                        <div class="submenu-column">
+                          <div class="title">{{ _('Contribute to MDN') }}</div>
+                          <ul>
+                            <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Get started') }}</a></li>
+                            <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Review or localize docs') }}</a></li>
+                          </ul>
+                        </div><div class="submenu-column last">
+                          <div class="title">{{ _('Site Tools') }}</div>
+                          <ul>
+                            <li><a href="{{ url('dashboards.revisions') }}">{{ _('Revision dashboard') }}</a></li>
+                            <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Documentation status') }}</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                   </li>{% endif %}<li>{% include "includes/login.html" %}</li>
+                </ul>
+        {% endif %}
+    </div>
+
+    <nav id="main-nav" role="navigation"><ul><li><a href="{{ wiki_url('Web') }}">{{ _('Web Platform') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+        <div class="submenu submenu-cols-2 js-submenu" id="nav-platform-submenu">
+          <div class="submenu-column">
+            <div class="title">{{ _('Technologies') }}</div>
+            <ul>
+              <li><a href="{{ wiki_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
+              <li><a href="{{ wiki_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
+              <li><a href="{{ wiki_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
+              <li><a href="{{ wiki_url('Web/Guide/Graphics') }}">{{ _('Graphics') }}</a></li>
+              <li><a href="{{ wiki_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
+              <li><a href="{{ wiki_url('Web/Apps') }}">{{ _('Apps') }}</a></li>
+              <li><a href="{{ wiki_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
+            </ul>
+          </div><div class="submenu-column last">
+            <div class="title">{{ _('References & Guides') }}</div>
+            <ul>
+              <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn the Web') }}</a></li>
+              <li><a href="{{ wiki_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
+              <li><a href="{{ wiki_url('Web/Reference') }}">{{ _('References') }}</a></li>
+              <li><a href="{{ wiki_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
+              <li><a href="{{ wiki_url('Web/Accessibility') }}">{{ _('Accessibility') }}</a></li>
+              <li><a href="{{ wiki_url('Web') }}">{{ _('...more docs') }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </li><li><a href="{{ wiki_url('Zones') }}">{{ _('Mozilla Docs') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+        <div class="submenu js-submenu" id="nav-zones-submenu">
+          <div class="submenu-column">
+            <ul>
+              <li><a href="{{ wiki_url('Mozilla/Add-ons') }}">{{ _('Add-ons') }}</a></li>
+              <li><a href="{{ wiki_url('Firefox') }}">{{ _('Firefox') }}</a></li>
+              <li><a href="{{ wiki_url('Mozilla/Marketplace') }}">{{ _('Firefox Marketplace') }}</a></li>
+              <li><a href="{{ wiki_url('Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
+              <li><a href="{{ wiki_url('Persona') }}">{{ _('Persona') }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </li><li><a href="{{ wiki_url('Tools') }}">{{ _('Developer Tools') }}</a></li><li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+        <div class="submenu js-submenu" id="nav-contact-submenu">
+          <div class="submenu-column">
+            <ul>
+                <li><a href="https://support.mozilla.org/">{{ _('Get Firefox help') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
+                <li><a href="http://stackoverflow.com/">{{ _('Get web development help') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
+            </ul>
+            <ul>
+              <li><a href="{{ wiki_url('MDN/Community') }}">{{ _('Join the MDN community') }}</a></li>
+              <li><a href="https://bugzilla.mozilla.org/form.doc">{{ _('Report a content problem') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
+              <li><a href="https://bugzilla.mozilla.org/form.mdn">{{ _('Report a bug') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+      </li><li class="nav-search-link"><a href="{{ url('search') }}" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
+        <div class="search-wrap">
+          <label for="main-q" class="offscreen">{{ _('Search') }}</label>
+          <input type="search" id="main-q" name="q" placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" />
+          <span class="search-trigger"><i aria-hidden="true" class="icon-search"></i></span>&nbsp;
+          <button type="submit" class="offscreen">{{ _('Search') }}</button>
+        </div>
+      </form></li>{% endif %}</ul></nav>
+  </div></header>
+
+  <!-- Content will go here -->
+  <main id="content"><div class="center clear">
+  {% block content %}{% endblock %}
+  </div></main>
+
+  <!-- Footer -->
+  <footer><div class="center">
+    <div class="column-container">
+      <div class="column-main">
+        {% block footer_copyright_redesign %}
+        <div class="contentinfo">
+          {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
+            <p>&copy; 2005-{{ thisyear }} Mozilla Developer Network and individual contributors.</p>
+            <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
+          {% endtrans %}
+          <ul>
+            <li><a href="/docs/MDN/About">{{ _('About MDN') }}</a></li>
+            <li><a href="//www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
+            <li><a href="//www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
+            <li><a href="//www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
+            <li><a href="//github.com/mozilla/kuma">{{ _('Contribute to the code') }}</a></li>
+          </ul>
+        </p>
+        {% endblock %}
+        </div>
+      </div>
+      <div class="column-strip">
+        {% if not is_sphinx %}
+          {% block lang_switcher %}
+              {% include "includes/lang_switcher.html" %}
+          {% endblock %}
+        {% endif %}
+      </div>
+    </div>
+  </div></footer>
+
+  <!-- site js -->
+  {% block site_js %}
+    <!--[if lte IE 8]>{% javascript 'selectivizr' %}<![endif]-->
+
+    {{ providers_media_js() }}
+    {% javascript 'main' %}
+
+      <script>
+        if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+      </script>
+
+    {% for script in scripts %}
+      {% javascript script %}
+    {% endfor %}
+    <script type="text/javascript" src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
+  {% endblock %}
+
+  {% block js %}{% endblock %}
+</body>
+</html>

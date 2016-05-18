@@ -41,8 +41,6 @@ from optparse import OptionParser
 TABLES_TO_DUMP=[x.strip() for x in """
     account_emailaddress
     account_emailconfirmation
-    actioncounters_actioncounterunique
-    actioncounters_testmodel
     attachments_attachment
     attachments_attachmentrevision
     attachments_documentattachment
@@ -58,9 +56,7 @@ TABLES_TO_DUMP=[x.strip() for x in """
     celery_taskmeta
     celery_tasksetmeta
     constance_config
-    contentflagging_contentflag
     core_ipban
-    demos_submission
     django_admin_log
     django_cache
     django_content_type
@@ -103,7 +99,6 @@ TABLES_TO_DUMP=[x.strip() for x in """
     wiki_documenttag
     wiki_documentzone
     wiki_editortoolbar
-    wiki_helpfulvote
     wiki_localizationtag
     wiki_localizationtaggedrevision
     wiki_reviewtag

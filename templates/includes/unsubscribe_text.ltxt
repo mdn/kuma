@@ -1,5 +1,0 @@
-{% macro unsubscribe_text(watch) %}
---
-{{ _('Unsubscribe from these emails:') }}
-{{ watch.unsubscribe_url() }}
-{% endmacro %}

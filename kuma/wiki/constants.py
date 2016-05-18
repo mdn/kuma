@@ -106,7 +106,7 @@ ALLOWED_ATTRIBUTES['mfenced'] += ['close', 'open', 'separators']
 ALLOWED_ATTRIBUTES['mfrac'] += ['bevelled', 'denomalign', 'linethickness',
                                 'numalign']
 ALLOWED_ATTRIBUTES['mi'] += ['dir', 'mathsize', 'mathvariant']
-ALLOWED_ATTRIBUTES['mi'] += ['mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mn'] += ['dir', 'mathsize', 'mathvariant']
 ALLOWED_ATTRIBUTES['mmultiscripts'] += ['subscriptshift', 'superscriptshift']
 ALLOWED_ATTRIBUTES['mo'] += ['largeop', 'lspace', 'maxsize', 'minsize',
                              'movablelimits', 'rspace', 'separator',
@@ -249,3 +249,12 @@ DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
 KUMA_FILE_URL = re.compile(r'/files/(?P<file_id>\d+)/.+\..+')
 
 SPAM_EXEMPTED_FLAG = 'wiki_spam_exempted'
+SPAM_SUBMISSION_REVISION_FIELDS = [
+    'title',
+    'slug',
+    'summary',
+    'content',
+    'comment',
+    'tags',
+    'keywords',
+]

@@ -59,7 +59,7 @@ def mindtouch_namespace_redirect(request, namespace, slug):
         new_locale = 'en-US'
         new_slug = '%s:%s' % (namespace, slug)
     if new_locale:
-        new_url = '/%s/docs/%s' % (request.locale, new_slug)
+        new_url = '/%s/docs/%s' % (request.LANGUAGE_CODE, new_slug)
     return redirect(new_url, permanent=True)
 
 
@@ -113,7 +113,7 @@ def mindtouch_to_kuma_redirect(request, path):
     # Last attempt: we try the request locale as the document locale,
     # and see if that matches something.
     try:
-        doc = Document.objects.get(slug=path, locale=request.locale)
+        doc = Document.objects.get(slug=path, locale=request.LANGUAGE_CODE)
     except Document.DoesNotExist:
         raise Http404
 

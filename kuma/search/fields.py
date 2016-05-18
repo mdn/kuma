@@ -5,32 +5,23 @@ from rest_framework import serializers
 from kuma.core.urlresolvers import reverse
 
 
-class QueryParameterField(serializers.Field):
-    param_name = None
-    method = 'get'
-    empty_value = None
-
-    def to_native(self, value):
-        request = self.context.get('request')
-        getter = getattr(request.QUERY_PARAMS, self.method)
-        return getter(self.param_name, self.empty_value)
-
-
-class SearchQueryField(QueryParameterField):
+class SearchQueryField(serializers.ReadOnlyField):
     """
     Field that returns the search query of the current request.
     """
-    param_name = 'q'
+    def __init__(self, *args, **kwargs):
+        kwargs['source'] = '*'
+        super(SearchQueryField, self).__init__(*args, **kwargs)
 
-
-class LocaleField(serializers.Field):
-
-    def to_native(self, value):
+    def to_representation(self, value):
         request = self.context.get('request')
-        return request.locale
+        if request is None:
+            return ''
+        else:
+            return request.query_params.get('q', None)
 
 
-class SiteURLField(serializers.Field):
+class SiteURLField(serializers.ReadOnlyField):
     """
     A serializer field for creating URL for the given objects with the
     given ``args``/``kwargs`` and a required ``locale`` attribute.
@@ -38,15 +29,15 @@ class SiteURLField(serializers.Field):
     def __init__(self, url_name, args=None, kwargs=None):
         self.url_name = url_name
         self.args = args or []
-        self.kwargs = kwargs or {}
+        self.kwargs = kwargs or []
         super(SiteURLField, self).__init__(source='*')
 
-    def to_native(self, value):
+    def to_representation(self, value):
         if not value:
             return None
-        args = [serializers.get_component(value, arg) for arg in self.args]
-        kwargs = dict((arg, serializers.get_component(value, arg))
-                      for arg in self.kwargs)
+        args = [serializers.get_attribute(value, [arg]) for arg in self.args]
+        kwargs = {arg: serializers.get_attribute(value, [arg])
+                  for arg in self.kwargs}
         locale = getattr(value, 'locale', settings.LANGUAGE_CODE)
         path = reverse(self.url_name, locale=locale, args=args, kwargs=kwargs)
         return '%s%s' % (settings.SITE_URL, path)

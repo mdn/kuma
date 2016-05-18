@@ -42,6 +42,11 @@ $table-blue = #d4dde4;
                     font-family: $heading-font-family-fallback;
                 }
             }
+
+            /* make this table full width */
+            &.fullwidth {
+                width: 100%;
+            }
         }
 
         &.fullwidth-table {
@@ -149,24 +154,46 @@ $table-blue = #d4dde4;
 }
 
 ul.directory-tree {
-    padding-left: 0;
+    bidi-style(padding-left, 0, padding-right, 0);
 
-    &, ul {
-        list-style-type: none;
-        padding-top: 0;
-    }
+    &,
     ul {
-        padding-left: 0;
-        background: url($path-to-images + 'tree-vline.png') repeat-y;
+        bidi-style(margin-left, 0, margin-right, 0);
+        list-style: none;
+    }
+
+    ul {
+        bidi-style(padding-left, ($grid-spacing + $content-horizontal-spacing), padding-right, 0);
 
         li {
-            padding-left: 16px;
-            background: url($path-to-images + 'tree-node.png') no-repeat;
-        }
-    }
+            position: relative;
 
-    li {
-        padding-bottom: 0;
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                bidi-style(left, -15px, right, auto);
+                display: block;
+            }
+
+            &:before {
+                top: 0px;
+                height: 0.75em;
+                width: 10px;
+                border-bottom: 1px solid $grey;
+                bidi-style(border-left, 1px solid $grey, border-right, none);
+            }
+
+            &:after {
+                bottom: -7px;
+                height: 100%;
+                bidi-style(border-left, 1px solid $grey, border-right, none);
+            }
+
+           &:last-child:after {
+                display: none;
+            }
+        }
     }
 }
 
@@ -215,6 +242,7 @@ ul.directory-tree {
 div.bug {
     font-style: italic;
     prevent-last-child-bottom-spacing();
+    overflow: hidden;
 
     pre {
         color: $text-color;
@@ -222,21 +250,20 @@ div.bug {
 }
 
 .callout-box {
+    pull-aside();
+    bidi-value(margin-bottom, $grid-spacing, $grid-spacing); /* override behaviour of pull-aside */
+    box-sizing: border-box;
     background: $light-background-color;
     border: 1px solid #f1f1f1;
-    bidi-value(float, right, left);
-    bidi-value(margin, 0 0 ($grid-spacing / 2) $grid-spacing, 0 $grid-spacing ($grid-spacing / 2) 0);
     padding: $grid-spacing;
     position: relative;
     text-align: center;
-    @extend $column-3;
     min-width: 200px;
     z-index: 2;
 
+    /* override behaviour of pull-aside */
     @media $media-query-small-mobile {
-        width: 100%;
-        box-sizing: border-box;
-        bidi-value(margin, 0 0 ($grid-spacing / 2) 0, 0 0 ($grid-spacing / 2) 0);
+        bidi-value(margin-bottom, $grid-spacing, $grid-spacing);
     }
 }
 
@@ -244,12 +271,6 @@ p.footnote {
     font-size: $smaller-font-size;
     font-style: italic;
     color: #716d65;
-}
-
-div.tip {
-    border: 1px solid #e1f5f0;
-    padding: 10px 15px;
-    color: #6d675f;
 }
 
 /* Classes created by the WYSIWYG */
@@ -271,4 +292,3 @@ div.tip {
 .readable-line-length {
     max-width: 60em;
 }
-
