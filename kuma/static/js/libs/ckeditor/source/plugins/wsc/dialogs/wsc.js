@@ -716,6 +716,7 @@
 			appTools.postMessage.send({
 			 	'message': {
 			 		'changeLang': NS.selectingLang,
+			 		'interfaceLang' : NS.interfaceLang,
 			 		'text': NS.dataTemp,
 			 		'cmd': cmd
 			 	},
@@ -1072,7 +1073,6 @@
 		cmd = cmd || CKEDITOR.config.wsc_cmd;
 		reset_suggest = reset_suggest || false;
 		sendText = sendText || NS.dataTemp;
-
 		appTools.postMessage.send({
 			'message': {
 				'customerId': NS.wsc_customerId,
@@ -1082,6 +1082,7 @@
 				'cust_dic_ids': NS.cust_dic_ids,
 				'udn': NS.userDictionaryName,
 				'slang': NS.selectingLang,
+				'interfaceLang' : NS.interfaceLang,
 				'reset_suggest': reset_suggest,
 				'sessionid': NS.sessionid
 			},
@@ -1799,7 +1800,6 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 			}
 
 			initView(this);
-
 			CKEDITOR.scriptLoader.load(wscCoreUrl, function(success) {
 				if(CKEDITOR.config && CKEDITOR.config.wsc && CKEDITOR.config.wsc.DefaultParams){
 					NS.serverLocationHash = CKEDITOR.config.wsc.DefaultParams.serviceHost;
@@ -1820,6 +1820,7 @@ CKEDITOR.dialog.add('checkspell', function(editor) {
 				NS.templatePath = NS.pluginPath + 'dialogs/tmp.html';
 				NS.LangComparer.setDefaulLangCode( NS.defaultLanguage );
 				NS.currentLang = editor.config.wsc_lang || NS.LangComparer.getSPLangCode( editor.langCode ) || 'en_US';
+				NS.interfaceLang = editor.config.wsc_interfaceLang; //option to customize the interface language 12/28/2015
 				NS.selectingLang = NS.currentLang;
 				NS.div_overlay = new overlayBlock({
 					opacity: "1",
