@@ -125,7 +125,7 @@ class UserViewsTest(UserTestCase):
     def _get_current_form_field_values(self, doc):
         # Scrape out the existing significant form field values.
         fields = ('username', 'email', 'fullname', 'title', 'organization',
-                  'location', 'irc_nickname', 'bio', 'interests')
+                  'location', 'irc_nickname', 'interests')
         form = dict()
         lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
         prefix = 'user-'

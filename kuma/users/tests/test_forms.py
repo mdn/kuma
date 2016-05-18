@@ -71,7 +71,6 @@ class TestUserEditForm(KumaTestCase):
             ('https://', True),
         )
         sites = (
-            ('website', 'mozilla.org'),
             ('twitter', 'twitter.com/lmorchard'),
             ('github', 'github.com/lmorchard'),
             ('stackoverflow', 'stackoverflow.com/users/testuser'),
