@@ -93,8 +93,7 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ request.get_full_path() }}" />
                                 <input type="hidden" name="revision" value="{{ revision.id }}" />
-                                <button type="submit" name="submit" value="spam">{{ _('spam') }}</button>
-                                <button type="submit" name="submit" value="ham">{{ _('ham') }}</button>
+                                <button type="submit" name="submit">{{ _('spam') }}</button>
                             </form>
 
 

@@ -108,7 +108,6 @@ class RevisionsDashTest(UserTestCase):
         revision = Revision.objects.first()
         data = {
             'revision': revision.pk,
-            'submit': u'spam',
             'next': urlnext
         }
         p1 = Permission.objects.get(codename='add_revisionakismetsubmission')
@@ -131,7 +130,6 @@ class RevisionsDashTest(UserTestCase):
         revision = Revision.objects.first()
         data = {
             'revision': revision.pk,
-            'submit': u'spam',
             'next': urlnext
         }
         self.client.login(username='testuser', password='testpass')
@@ -150,7 +148,6 @@ class RevisionsDashTest(UserTestCase):
         revision = Revision.objects.first()
         data = {
             'revision': revision.pk,
-            'submit': u'spam',
         }
         self.client.login(username='admin', password='testpass')
 
@@ -169,7 +166,6 @@ class RevisionsDashTest(UserTestCase):
         revision_dne = '9999999'
         data = {
             'revision': revision_dne,
-            'submit': u'spam',
         }
         self.client.login(username='admin', password='testpass')
 
