@@ -1,10 +1,5 @@
-import urllib
 import pytest
 from pyquery import PyQuery as pq
-
-from constance.test import override_config
-from django.contrib.auth.models import Permission
-import requests_mock
 
 from waffle.models import Flag, Switch
 
@@ -16,7 +11,6 @@ from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.users.tests import UserTestCase
 from kuma.users.models import User, UserBan
-from kuma.wiki.models import Revision, RevisionAkismetSubmission
 
 
 @pytest.mark.dashboards
