@@ -35,12 +35,12 @@
   <section id="content-main" class="full">
     <section id="user-head" class="column-container column-container-reverse vcard user-head">
       <div class="column-10">
-        {% include "users/includes/user_title_info.html" %}
+        {% with accounts=social_accounts(detail_user) %}
+          {% include "users/includes/user_title_info.html" %}
+        {% endwith %}
       </div>
       <div class="column-2 ">
-        {% with accounts=social_accounts(detail_user) %}
-          {% include "users/includes/user_avatar_and_links.html" %}
-        {% endwith %}
+        {% include "users/includes/user_avatar.html" %}
       </div>
     </section><!-- /#user-head -->
 
