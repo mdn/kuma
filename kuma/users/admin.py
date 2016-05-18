@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.utils.html import escape
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
@@ -25,12 +24,11 @@ class UserAdmin(BaseUserAdmin):
     add a filter on the field too
     """
     list_display = ('username', 'fullname', 'email',
-                    'bio', 'website', 'revisions',
-                    'date_joined', 'is_staff', 'is_active')
+                    'revisions', 'date_joined', 'is_staff', 'is_active')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'date_joined', 'groups')
     ordering = ('-date_joined',)
-    search_fields = ('username', 'homepage', 'title', 'fullname',
-                     'organization', 'location', 'bio', 'email', 'tags__name')
+    search_fields = ('username', 'title', 'fullname',
+                     'organization', 'location', 'email', 'tags__name')
 
     def revisions(self, obj):
         """HTML link to user's revisions with count"""
@@ -40,11 +38,3 @@ class UserAdmin(BaseUserAdmin):
         return ('<a href="%(link)s"><strong>%(count)s</strong></a>' %
                 {'link': link, 'count': count})
     revisions.allow_tags = True
-
-    def website(self, obj):
-        """HTML link to user's website"""
-        if obj.website_url:
-            return ('<a href="%(url)s"><strong>%(url)s</strong></a>' %
-                    {'url': escape(obj.website_url)})
-        return ""
-    website.allow_tags = True

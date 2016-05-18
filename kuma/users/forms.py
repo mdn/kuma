@@ -55,15 +55,6 @@ class UserEditForm(forms.ModelForm):
         required=False,
         error_message=USERNAME_CHARACTERS,
     )
-    website_url = forms.CharField(
-        label=_('Website'),
-        required=False,
-        validators=[User.WEBSITE_VALIDATORS['website']],
-        widget=forms.TextInput(attrs={
-            'placeholder': 'http://',
-            'data-fa-icon': 'icon-link',
-        }),
-    )
     twitter_url = forms.CharField(
         label=_('Twitter'),
         required=False,
@@ -122,8 +113,8 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('fullname', 'title', 'organization', 'location',
-                  'locale', 'timezone', 'bio', 'irc_nickname', 'interests',
-                  'website_url', 'twitter_url', 'github_url',
+                  'locale', 'timezone', 'irc_nickname', 'interests',
+                  'twitter_url', 'github_url',
                   'stackoverflow_url', 'linkedin_url', 'mozillians_url',
                   'facebook_url', 'username')
 

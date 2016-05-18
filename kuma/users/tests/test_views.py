@@ -125,7 +125,7 @@ class UserViewsTest(UserTestCase):
     def _get_current_form_field_values(self, doc):
         # Scrape out the existing significant form field values.
         fields = ('username', 'email', 'fullname', 'title', 'organization',
-                  'location', 'irc_nickname', 'bio', 'interests')
+                  'location', 'irc_nickname', 'interests')
         form = dict()
         lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
         prefix = 'user-'
@@ -155,8 +155,6 @@ class UserViewsTest(UserTestCase):
             doc.find('#user-head.vcard .loc').text())
         eq_('IRC: ' + testuser.irc_nickname,
             doc.find('#user-head.vcard .irc').text())
-        eq_(testuser.bio,
-            doc.find('#user-head.vcard .user-bio').text())
 
     def test_my_user_page(self):
         u = self.user_model.objects.get(username='testuser')
@@ -272,7 +270,6 @@ class UserViewsTest(UserTestCase):
         doc = pq(response.content)
 
         test_sites = {
-            'website': 'http://example.com/',
             'twitter': 'http://twitter.com/lmorchard',
             'github': 'http://github.com/lmorchard',
             'stackoverflow': 'http://stackoverflow.com/users/lmorchard',
@@ -308,7 +305,7 @@ class UserViewsTest(UserTestCase):
 
         # Come up with some bad sites, either invalid URL or bad URL prefix
         bad_sites = {
-            'website': 'HAHAHA WHAT IS A WEBSITE',
+            'linkedin': 'HAHAHA WHAT IS A WEBSITE',
             'twitter': 'http://facebook.com/lmorchard',
             'stackoverflow': 'http://overqueueblah.com/users/lmorchard',
         }
@@ -320,7 +317,7 @@ class UserViewsTest(UserTestCase):
         doc = pq(response.content)
         eq_(1, doc.find('#user-edit').length)
         tmpl = '#user-edit #users .%s .errorlist'
-        for n in ('website', 'twitter', 'stackoverflow'):
+        for n in ('linkedin', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
     def test_user_edit_interests(self):
@@ -662,7 +659,6 @@ class KumaGitHubTests(UserTestCase):
             "location": "San Francisco",
             "email": %(public_email)s,
             "hireable": false,
-            "bio": "There once was...",
             "public_repos": 2,
             "public_gists": 1,
             "followers": 20,
