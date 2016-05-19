@@ -59,3 +59,6 @@ class AttachmentTemplatesTests(UserTestCase, WikiTestCase):
             '&gt;&lt;img src=x onerror=prompt(navigator.userAgent);&gt;',
             doc('.page-attachments-table .attachment-name-cell').html()
         )
+        # security bug 1272791
+        for script in doc('script'):
+            self.assertNotIn(title, script.text_content())

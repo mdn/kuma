@@ -72,16 +72,3 @@ def attachment_upload_to(instance, filename):
         'md5': hashlib.md5(str(now)).hexdigest(),
         'filename': filename
     }
-
-
-def attachments_payload(document_attachments):
-    """
-    Given a list of document attachments make some output that can be used
-    by the CKeditor plugins.
-    """
-    return [{
-        'title': attachment.file.title,
-        'description': attachment.file.current_revision.description,
-        'mime': attachment.file.current_revision.mime_type,
-        'url': attachment.file.get_file_url()
-    } for attachment in document_attachments]

@@ -23,7 +23,16 @@
   </p>
 
   <script>
-    mdn.wiki.attachments = {{ attachments_payload(document_attachments)|jsonencode }};
+    mdn.wiki.attachments = [
+        {% for attachment in document_attachments -%}
+        {
+          "title": "{{ attachment.file.title | escapejs }}",
+          "description": "{{ attachment.file.current_revision.description | escapejs }}",
+          "mime": "{{ attachment.file.current_revision.mime_type | escapejs }}",
+          "url": "{{ attachment.file.get_file_url() | escapejs }}"
+        }{% if not loop.last %},{% endif %}
+        {%- endfor %}
+    ];
     mdn.wiki.attachments_enabled = {{ show_attach_button|jsonencode }};
   </script>
 

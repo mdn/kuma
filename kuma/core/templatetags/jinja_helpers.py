@@ -27,6 +27,7 @@ htmlparser = HTMLParser.HTMLParser()
 
 
 # Yanking filters from Django.
+library.filter(defaultfilters.escapejs)
 library.filter(defaultfilters.linebreaksbr)
 library.filter(strip_tags)
 library.filter(defaultfilters.truncatewords)
