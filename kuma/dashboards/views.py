@@ -13,6 +13,7 @@ from django.views.decorators.http import require_GET, require_POST
 import waffle
 
 from kuma.core.utils import paginate
+from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import Document, Revision, RevisionAkismetSubmission
 
 from .forms import RevisionDashboardForm
@@ -155,17 +156,22 @@ def topic_lookup(request):
 @require_POST
 @permission_required('wiki.add_revisionakismetsubmission')
 def submit_akismet_spam(request):
-    """Creates SPAM or HAM Akismet record for revision"""
+    """
+    Submit a published revision as spam.
+
+    If successful, the revision dashboard is loaded again, and displays that
+    the revision was marked as spam. On failure, no errors are returned, just
+    reloads the dashboard.
+    """
     url = request.POST.get('next')
     if url is None or not is_safe_url(url, request.get_host()):
         url = reverse('dashboards.revisions')
-    revision = request.POST.get('revision')
-    try:
-        revision = Revision.objects.get(pk=revision)
-    except Revision.DoesNotExist:
-        return redirect(url)
 
-    RevisionAkismetSubmission.objects.create(
-        sender=request.user, revision=revision, type='spam')
+    submission = RevisionAkismetSubmission(sender=request.user, type='spam')
+    form = RevisionAkismetSubmissionSpamForm(data=request.POST,
+                                             instance=submission,
+                                             request=request)
+    if form.is_valid():
+        form.save()
 
     return redirect(url)
