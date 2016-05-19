@@ -165,8 +165,7 @@ def submit_akismet_spam(request):
     except Revision.DoesNotExist:
         return redirect(url)
 
-    submission_type = request.POST.get('submit', 'spam')
     RevisionAkismetSubmission.objects.create(
-        sender=request.user, revision=revision, type=submission_type)
+        sender=request.user, revision=revision, type='spam')
 
     return redirect(url)
