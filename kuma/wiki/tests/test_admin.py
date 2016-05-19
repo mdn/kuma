@@ -160,6 +160,8 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         assert dsa.review == DocumentSpamAttempt.HAM
         assert dsa.reviewer == self.admin_user
         assert dsa.reviewed is not None
+        assert mock_requests.called
+        assert mock_requests.call_count == 2
 
     @override_config(AKISMET_KEY='')
     @requests_mock.mock()
@@ -275,6 +277,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
             ('user_ip', '0.0.0.0')
         ]
         self.assertEqual(sorted(query_pairs), expected)
+
+        assert mock_requests.called
+        assert mock_requests.call_count == 2
 
     @requests_mock.mock()
     def test_spam_submission_tags(self, mock_requests):

@@ -2,7 +2,9 @@ import urllib
 import pytest
 from pyquery import PyQuery as pq
 
+from constance.test import override_config
 from django.contrib.auth.models import Permission
+import requests_mock
 
 from waffle.models import Flag, Switch
 
@@ -10,7 +12,8 @@ from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
-from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
+from kuma.spam.akismet import Akismet
+from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.users.tests import UserTestCase
 from kuma.users.models import User, UserBan
 from kuma.wiki.models import Revision, RevisionAkismetSubmission
@@ -242,7 +245,9 @@ class SubmitAkismetSpamViewTest(UserTestCase):
         response = self.client.get(url)
         eq_(response.status_code, 405, "GET should not be allowed.")
 
-    def test_valid_response(self):
+    @override_config(AKISMET_KEY='dashboard')
+    @requests_mock.mock()
+    def test_valid_response(self, mock_requests):
         urlquery = '?' + urllib.urlencode({'page': 3})
         urlnext = reverse('dashboards.revisions', locale='en-US') + urlquery
         revision = Revision.objects.first()
@@ -250,10 +255,13 @@ class SubmitAkismetSpamViewTest(UserTestCase):
             'revision': revision.pk,
             'next': urlnext
         }
+        Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG, everyone=True)
         p1 = Permission.objects.get(codename='add_revisionakismetsubmission')
         testuser = User.objects.get(username='testuser')
         testuser.user_permissions.add(p1)
         self.client.login(username='testuser', password='testpass')
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
 
         # Response should redirect back to the revisions dash
         urlpost = reverse('dashboards.submit_akismet_spam', locale='en-US')
@@ -264,6 +272,10 @@ class SubmitAkismetSpamViewTest(UserTestCase):
         # 1 RevisionAkismetSubmission record should exist for this revision
         ras = RevisionAkismetSubmission.objects.get(revision=revision)
         eq_(ras.type, u'spam')
+
+        # Akismet endpoints were called
+        ok_(mock_requests.called)
+        eq_(mock_requests.call_count, 2)
 
     def test_no_permission(self):
         urlnext = reverse('dashboards.revisions', locale='en-US')
