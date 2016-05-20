@@ -109,6 +109,26 @@ class BanTestCase(UserTestCase):
         response = self.client.get(url, follow=True)
         self.assertNotEqual(response.status_code, 403)
 
+    def test_get_ban_user_view(self):
+        # For an unbanned user get the ban_user view
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.get(ban_url)
+        eq_(200, resp.status_code)
+
+        # For a banned user redirect to user detail page
+        UserBan.objects.create(user=testuser, by=admin,
+                               reason='Banned by unit test.',
+                               is_active=True)
+        resp = self.client.get(ban_url)
+        eq_(302, resp.status_code)
+        ok_(testuser.get_absolute_url() in resp['Location'])
+
 
 class UserViewsTest(UserTestCase):
     localizing_client = True
