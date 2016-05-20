@@ -813,23 +813,22 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
                                          forms.ModelForm):
     """
-    A model form used for rendering the ``AkismetSubmission`` admin UI
-    that is linked from the revision dashboard. It utilizes the same
-    base form class to do the data validation and sending it to Akismet
-    using the Akismet client.
+    A model form used in the admin UI to submit missed spam or ham.
+
+    In the Django admin, an admin can both mark a revision as missed spam,
+    and correct an incorrectly marked spam.
+
+    The ``AkismetSubmissionFormMixin`` class submits the data to Akismet in
+    the ``clean`` method, using the override methods in this and derived
+    classes.  Users of the form must set the ``sender`` to the request user
+    before calling ``is_valid()``.
     """
     class Meta(object):
         model = RevisionAkismetSubmission
         exclude = ['sender', 'sent']
 
-    def clean_sender(self):
-        return self.request.user
-
     def akismet_submission_type(self):
-        """
-        Looking at the ``type`` attribute of the ``RevisionAkismetSubmission``
-        instance.
-        """
+        """The submission type is determined from the submitted form data."""
         return self.cleaned_data['type']
 
     def akismet_parameters(self):
@@ -839,6 +838,22 @@ class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
         revision = self.cleaned_data['revision']
         akismet_data = AkismetHistoricalData(revision, self.request)
         return akismet_data.parameters
+
+
+class RevisionAkismetSubmissionSpamForm(RevisionAkismetSubmissionAdminForm):
+    """
+    A model form for submitting missed spam.
+
+    For public dashboards, the only valid submission type is spam, so the
+    type is omitted from the form and hard-coded as "spam".
+    """
+
+    class Meta(RevisionAkismetSubmissionAdminForm.Meta):
+        exclude = ['sender', 'sent', 'type']
+
+    def akismet_submission_type(self):
+        """Force the submission type to spam."""
+        return "spam"
 
 
 class TreeMoveForm(forms.Form):
