@@ -64,11 +64,17 @@ def ban_user(request, user_id):
                           is_active=True)
             ban.save()
             return redirect(user)
+    if user.active_ban:
+        return redirect(user)
     form = UserBanForm()
+    # A list of common reasons for banning a user
+    common_reasons = ['Spam', 'Profile Spam ', 'Sandboxing',
+                      'Incorrect Translation', 'Penetration Testing']
     return render(request,
                   'users/ban_user.html',
                   {'form': form,
-                   'user': user})
+                   'user_to_ban': user,
+                   'common_reasons': common_reasons})
 
 
 def user_detail(request, username):

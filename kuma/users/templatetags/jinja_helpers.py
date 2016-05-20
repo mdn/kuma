@@ -41,9 +41,7 @@ def ban_link(context, ban_user, banner_user):
                     '<i aria-hidden="true" class="icon-ban"></i></a>'
                     % (url, title, ugettext('Banned')))
         else:
-            url = '%s?user=%s&by=%s' % (
-                reverse('admin:users_userban_add'), ban_user.id,
-                banner_user.id)
+            url = reverse('users.ban_user', kwargs={'user_id': ban_user.id})
             link = ('<a href="%s" class="button negative ban-link">%s'
                     '<i aria-hidden="true" class="icon-ban"></i></a>'
                     % (url, ugettext('Ban User')))
