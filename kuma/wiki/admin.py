@@ -485,10 +485,9 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
                          self).get_fields(request, obj)
 
     def revision_with_link(self, obj):
-        """Admin link to the revision"""
+        """Link to the revision public page"""
         if obj.revision_id:
-            admin_link = reverse('admin:wiki_revision_change',
-                                 args=[obj.revision.id])
+            admin_link = obj.revision.get_absolute_url()
             return ('<a target="_blank" href="%s">%s</a>' %
                     (admin_link, escape(obj.revision)))
         else:
