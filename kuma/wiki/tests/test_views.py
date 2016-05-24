@@ -2,7 +2,6 @@
 import base64
 import datetime
 import json
-import random
 import time
 from urlparse import urlparse
 
@@ -32,6 +31,8 @@ from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import eq_, get_user, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
+from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
+from kuma.spam.akismet import Akismet
 from kuma.users.tests import UserTestCase, user
 
 from . import (WikiTestCase, create_document_editor_group,
@@ -4273,6 +4274,7 @@ class ListDocumentTests(UserTestCase, WikiTestCase):
         ok_(doc.slug in response.content.decode('utf-8'))
 
 
+@pytest.mark.spam
 class AkismetRevisionTests(UserTestCase, WikiTestCase):
     """ Test the Akismet Submission view"""
 
@@ -4286,18 +4288,22 @@ class AkismetRevisionTests(UserTestCase, WikiTestCase):
         response = self.client.get(url)
         eq_(response.status_code, 405, "GET should not be allowed.")
 
-    def test_submit_akismet_spam_valid_response(self):
+    @override_config(AKISMET_KEY='dashboard')
+    @requests_mock.mock()
+    def test_submit_akismet_spam_valid_response(self, mock_requests):
         r = self.revision
         data = {
             'revision': r.id,
-            'type': u'spam',
         }
 
+        Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG, everyone=True)
         p1 = Permission.objects.get(codename='add_revisionakismetsubmission')
         testuser = self.user
         testuser.user_permissions.add(p1)
 
         self.client.login(username=testuser.username, password='password')
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
 
         # Response should be a json object with status code http 201
         urlpost = reverse('wiki.submit_akismet_spam', locale='en-US')
@@ -4307,6 +4313,10 @@ class AkismetRevisionTests(UserTestCase, WikiTestCase):
         # 1 RevisionAkismetSubmission record should exist for this revision
         ras = RevisionAkismetSubmission.objects.get(revision=r)
         eq_(ras.type, u'spam')
+
+        # Akismet endpoints were called
+        ok_(mock_requests.called)
+        eq_(mock_requests.call_count, 2)
 
         # Check response json object
         res_data = json.loads(response.content)
@@ -4323,8 +4333,7 @@ class AkismetRevisionTests(UserTestCase, WikiTestCase):
         # Create 10 Akismet Revisions
         for i in range(10):
             testuser = user(save=True)
-            type = random.sample(["spam", "ham"], 1)[0]
-            r = RevisionAkismetSubmission(sender=testuser, type=type, revision=rev)
+            r = RevisionAkismetSubmission(sender=testuser, type="spam", revision=rev)
             bulk_obj.append(r)
         RevisionAkismetSubmission.objects.bulk_create(bulk_obj)
 
@@ -4335,10 +4344,8 @@ class AkismetRevisionTests(UserTestCase, WikiTestCase):
         testuser = self.user
         testuser.user_permissions.add(p1)
         self.client.login(username=testuser.username, password='password')
-        type = random.sample(["spam", "ham"], 1)[0]
         data = {
             'revision': rev.id,
-            'type': type,
         }
         # Create another Akismet revision from the views
         urlpost = reverse('wiki.submit_akismet_spam', locale='en-US')
@@ -4347,7 +4354,7 @@ class AkismetRevisionTests(UserTestCase, WikiTestCase):
 
         # Make a list of dictionaries containg the akismet revision data
         dict_list = [{"sender": obj.sender.username, "type": obj.type} for obj in bulk_obj]
-        dict_list.append({"sender": testuser.username, "type": type})
+        dict_list.append({"sender": testuser.username, "type": "spam"})
 
         response_dict = json.loads(response.content)
         # There should be 11 dictionaries present in the response object.
@@ -4365,7 +4372,6 @@ class AkismetRevisionTests(UserTestCase, WikiTestCase):
         r = self.revision
         data = {
             'revision': r.id,
-            'type': u'spam',
         }
 
         testuser = self.user
@@ -4383,11 +4389,10 @@ class AkismetRevisionTests(UserTestCase, WikiTestCase):
     def test_submit_akismet_spam_revision_dne(self):
         r = self.revision
         revision_dne = r.id
-        # Delete the revision so it does not exists anymore
+        # Delete the revision so it does not exist anymore
         r.delete()
         data = {
             'revision': revision_dne,
-            'type': u'spam',
         }
 
         p1 = Permission.objects.get(codename='add_revisionakismetsubmission')

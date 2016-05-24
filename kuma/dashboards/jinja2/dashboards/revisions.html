@@ -193,14 +193,14 @@
         });
     });
 
-    // Send revision to Akismat for Spam or Ham
+    // Send revision to Akismet for Spam or Ham
     $(document).on('click', '#spam-ham-button', function() {
         var $this = $(this),
-          $tdObject = $(this).parent(),
-          $trObject = $tdObject.parent(),
-          revisionId = $trObject.data("revisionId"),
-          type = this.value,
-          url = $trObject.data("spamUrl");
+            $tdObject = $(this).parent(),
+            $trObject = $tdObject.parent(),
+            revisionId = $trObject.data("revisionId"),
+            type = this.value,
+            url = $trObject.data("spamUrl");
 
         $this.prop('disabled', true);
         $tdObject.find('.error , .submit').remove()
@@ -208,9 +208,7 @@
 
         $.post(url, {"revision": revisionId, "type": type})
           .done( function(data) {
-            var $dl = $("<dl></dl>"),
-              button = '<button id="spam-ham-button" value="spam">' + gettext('Resubmit as Spam') + '</button>' + 
-                         '<button id="spam-ham-button" value="ham">' + gettext('Resubmit as Ham') + '</button>';
+            var $dl = $("<dl></dl>");
 
             $.each(data, function(index, value) {
                 var subMessage = '<dt class="submission-' + value.type + '">' +
@@ -220,7 +218,7 @@
                 $dl.append(subMessage);
             })
 
-            $tdObject.html($dl).append(button);
+            $tdObject.html($dl);
             
           })
           .fail( function() {

@@ -163,12 +163,6 @@ def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
     return str(url_obj)
 
 
-def _babel_locale(locale):
-    """Return the Babel locale code, given a normal one."""
-    # Babel uses underscore as separator.
-    return locale.replace('-', '_')
-
-
 @library.global_function
 @jinja2.contextfunction
 def datetimeformat(context, value, format='shortdatetime', output='html'):

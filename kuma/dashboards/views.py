@@ -10,13 +10,7 @@ from django.views.decorators.http import require_GET
 import waffle
 
 from kuma.core.utils import paginate
-<<<<<<< HEAD
-from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
-from kuma.wiki.models import Document, Revision, RevisionAkismetSubmission
-=======
 from kuma.wiki.models import Document, Revision
-
->>>>>>> Create API and move the dashboard to wiki views
 
 from .forms import RevisionDashboardForm
 from . import PAGE_SIZE

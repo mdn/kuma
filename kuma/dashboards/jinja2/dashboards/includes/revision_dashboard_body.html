@@ -85,13 +85,10 @@
                                 </dd>
                                 {% endfor %}
                             </dl>
-                            <button id="spam-ham-button" value="spam">{{ _('Resubmit as Spam') }}</button>
-                            <button id="spam-ham-button" value="ham">{{ _('Resubmit as Ham') }}</button>
                         {% else %}
                             {{ _('Submit as:') }}<br>
 
                             <button id="spam-ham-button" value="spam">{{ _('spam') }}</button>
-                            <button id="spam-ham-button" value="ham">{{ _('ham') }}</button>
 
                         {% endif %}
                     </td>

@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from kuma.core.utils import format_date_time
-from kuma.wiki.forms import RevisionAkismetForm
+from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import RevisionAkismetSubmission
 
 
@@ -15,16 +15,17 @@ from kuma.wiki.models import RevisionAkismetSubmission
 @permission_required('wiki.add_revisionakismetsubmission')
 def submit_akismet_spam(request):
     """
-    Creates SPAM or HAM Akismet record for revision.
-    Return json object with Akismet Record data
+    Creates SPAM Akismet record for revision.
+    Return json object with Akismet Record data.
+
+    TODO: Create Submitting as HAM record for revision
     """
 
-    data = RevisionAkismetForm(request.POST)
+    submission = RevisionAkismetSubmission(sender=request.user, type="spam")
+    data = RevisionAkismetSubmissionSpamForm(data=request.POST, instance=submission, request=request)
 
     if data.is_valid():
-        submission = data.save(commit=False)
-        submission.sender = request.user
-        submission.save()
+        data.save()
 
         revision = data.cleaned_data['revision']
         akismet_revisions = (RevisionAkismetSubmission.objects.filter(revision=revision)
