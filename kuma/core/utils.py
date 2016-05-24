@@ -1,3 +1,4 @@
+import datetime
 try:
     import urlparse
 except ImportError:
@@ -11,6 +12,7 @@ import random
 import time
 from itertools import islice
 
+from babel import dates, localedata
 import bitly_api
 from celery import chain, chord
 from django.conf import settings
@@ -19,10 +21,13 @@ from django.http import QueryDict
 from django.shortcuts import _get_queryset
 from django.utils.encoding import force_unicode, smart_str
 from django.utils.http import urlencode
+from django.utils.translation import ugettext_lazy as _
 from polib import pofile
+from pytz import timezone
 from taggit.utils import split_strip
 
 from .cache import memcache
+from .exceptions import DateTimeFormatError
 from .jobs import IPBanJob
 
 
@@ -366,3 +371,80 @@ def urlparams(url_, fragment=None, query_dict=None, **query):
     new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
                                url_.params, query_string, fragment)
     return new.geturl()
+
+
+def format_date_time(request, value, format='shortdatetime'):
+    """
+    Returns date/time formatted using babel's locale settings. Uses the
+    timezone from settings.py
+    """
+    if not isinstance(value, datetime.datetime):
+        if isinstance(value, datetime.date):
+            # Turn a date into a datetime
+            value = datetime.datetime.combine(value,
+                                              datetime.datetime.min.time())
+        else:
+            # Expecting datetime value
+            raise ValueError
+
+    default_tz = timezone(settings.TIME_ZONE)
+    tzvalue = default_tz.localize(value)
+
+    user = request.user
+    try:
+        if user.is_authenticated() and user.timezone:
+            user_tz = timezone(user.timezone)
+            tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
+    except AttributeError:
+        pass
+
+    locale = _babel_locale(_get_request_locale(request))
+
+    try:
+        formatted = format_date_value(value, tzvalue, locale, format)
+    except KeyError:
+        # Babel sometimes stumbles over missing formatters in some locales
+        # e.g. bug #1247086
+        # we fall back formatting the value with the default language code
+        formatted = format_date_value(value, tzvalue,
+                                      _babel_locale(settings.LANGUAGE_CODE),
+                                      format)
+
+    return formatted, tzvalue
+
+
+def _get_request_locale(request):
+    """Return locale from the request, falling back to a default if invalid."""
+    locale = request.LANGUAGE_CODE
+    if not localedata.exists(locale):
+        locale = settings.LANGUAGE_CODE
+    return locale
+
+
+def format_date_value(value, tzvalue, locale, format):
+    if format == 'shortdatetime':
+        # Check if the date is today
+        if value.toordinal() == datetime.date.today().toordinal():
+            formatted = dates.format_time(tzvalue, format='short',
+                                          locale=locale)
+            return _(u'Today at %s') % formatted
+        else:
+            return dates.format_datetime(tzvalue, format='short',
+                                         locale=locale)
+    elif format == 'longdatetime':
+        return dates.format_datetime(tzvalue, format='long', locale=locale)
+    elif format == 'date':
+        return dates.format_date(tzvalue, locale=locale)
+    elif format == 'time':
+        return dates.format_time(tzvalue, locale=locale)
+    elif format == 'datetime':
+        return dates.format_datetime(tzvalue, locale=locale)
+    else:
+        # Unknown format
+        raise DateTimeFormatError
+
+
+def _babel_locale(locale):
+    """Return the Babel locale code, given a normal one."""
+    # Babel uses underscore as separator.
+    return locale.replace('-', '_')

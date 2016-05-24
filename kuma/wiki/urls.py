@@ -149,6 +149,11 @@ urlpatterns = [
         views.list.with_localization_tag,
         name='wiki.list_with_localization_tags'),
 
+    # Akismet Revision
+    url(r'^/submit_akismet_spam$',
+        views.akismet_revision.submit_akismet_spam,
+        name='wiki.submit_akismet_spam'),
+
     # Feeds
     url(r'^/feeds/(?P<format>[^/]+)/all/?',
         feeds.DocumentsRecentFeed(),

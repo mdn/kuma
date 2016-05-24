@@ -26,7 +26,8 @@
                     data-edit-url="{{ revision.document.get_edit_url() }}"
                     data-compare-url="{{ url('wiki.compare_revisions', revision.document.slug, locale=revision.document.locale) }}?from={{ previous_id if previous_id else revision.id }}&amp;to={{ revision.id }}&amp;raw=1"
                     data-revert-url="{{ url('wiki.revert_document', revision.document.slug, revision.id, locale=revision.document.locale) }}"
-                    data-history-url="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}">
+                    data-history-url="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}"
+                    data-spam-url="{{ url('wiki.submit_akismet_spam') }}">
                     <td class="dashboard-revision">
                         <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
                         <br />
@@ -84,18 +85,10 @@
                                 </dd>
                                 {% endfor %}
                             </dl>
-                            {% set re_submission_url = url('admin:wiki_revisionakismetsubmission_add')|urlparams(revision=revision.id) %}
-                            <a class="button" href="{{ re_submission_url }}" target="_blank">{{ _('Resubmit') }}</a>
                         {% else %}
                             {{ _('Submit as:') }}<br>
 
-                            <form method="post" id="revision-filter" action="{{ url('dashboards.submit_akismet_spam') }}">
-                                {% csrf_token %}
-                                <input type="hidden" name="next" value="{{ request.get_full_path() }}" />
-                                <input type="hidden" name="revision" value="{{ revision.id }}" />
-                                <button type="submit" name="submit">{{ _('spam') }}</button>
-                            </form>
-
+                            <button id="spam-ham-button" value="spam">{{ _('spam') }}</button>
 
                         {% endif %}
                     </td>

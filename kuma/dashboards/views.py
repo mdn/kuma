@@ -2,19 +2,15 @@ import datetime
 import json
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.utils import timezone
-from django.utils.http import is_safe_url
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET
 import waffle
 
 from kuma.core.utils import paginate
-from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
-from kuma.wiki.models import Document, Revision, RevisionAkismetSubmission
+from kuma.wiki.models import Document, Revision
 
 from .forms import RevisionDashboardForm
 from . import PAGE_SIZE
@@ -151,27 +147,3 @@ def topic_lookup(request):
     data = json.dumps(topiclist)
     return HttpResponse(data,
                         content_type='application/json; charset=utf-8')
-
-
-@require_POST
-@permission_required('wiki.add_revisionakismetsubmission')
-def submit_akismet_spam(request):
-    """
-    Submit a published revision as spam.
-
-    If successful, the revision dashboard is loaded again, and displays that
-    the revision was marked as spam. On failure, no errors are returned, just
-    reloads the dashboard.
-    """
-    url = request.POST.get('next')
-    if url is None or not is_safe_url(url, request.get_host()):
-        url = reverse('dashboards.revisions')
-
-    submission = RevisionAkismetSubmission(sender=request.user, type='spam')
-    form = RevisionAkismetSubmissionSpamForm(data=request.POST,
-                                             instance=submission,
-                                             request=request)
-    if form.is_valid():
-        form.save()
-
-    return redirect(url)
