@@ -1209,6 +1209,12 @@ CONSTANCE_CONFIG = dict(
         ]),
         "JSON array listing tag suggestions for documents"
     ),
+    COMMON_REASONS_TO_BAN_USERS=(
+        json.dumps([
+            'Spam', 'Profile Spam ', 'Sandboxing', 'Incorrect Translation', 'Penetration Testing',
+        ]),
+        "JSON array listing some common reasons to ban users",
+    ),
     SESSION_CLEANUP_CHUNK_SIZE=(
         1000,
         'Number of expired sessions to cleanup up in one go.',
