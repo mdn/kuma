@@ -92,7 +92,7 @@
                     action: 'Clicked',
                     label: label
                 });
-                notification[type](gettext(msg), 2000);
+                notification[type](msg, 2000);
             }
         }
     }
