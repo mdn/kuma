@@ -18,7 +18,7 @@
     <section id="user-head" class="column-container column-container-reverse vcard user-head">
       <div class="column-10">
         <h1 class="user-title">
-          {{ _('Why are you banning') }} {{user_to_ban }}?
+          {{ _('Why are you banning %(user)s', user=user_to_ban) }}?
         </h1>
         <div class="column-4">
           <h5>{{ _('Choose a reason') }}:</h5>
@@ -30,6 +30,7 @@
         <h5>{{ _('or enter a reason in the text box below') }}:</h5>
         <form method="post" id="ban-user-form" action="{{ url('users.ban_user',user_to_ban.id) }}">
           {% csrf_token %}
+          {{ form.reason.errors }}
           <div>{{ form.reason }}</div>
           <input type="hidden" name="previous-url" value={{ previous_url }}></input>
           <button type="submit">{{ _('Ban user') }}</button>
