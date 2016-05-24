@@ -65,9 +65,12 @@ def ban_user(request, user_id):
                           is_active=True)
             ban.save()
             return redirect(user)
-    if user.active_ban:
-        return redirect(user)
-    form = UserBanForm()
+        else:
+            form = UserBanForm(request.POST)
+    else:
+        if user.active_ban:
+            return redirect(user)
+        form = UserBanForm()
     # A list of common reasons for banning a user, loaded from constance
     try:
         common_reasons = json.loads(config.COMMON_REASONS_TO_BAN_USERS)
