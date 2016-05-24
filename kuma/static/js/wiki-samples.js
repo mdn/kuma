@@ -94,7 +94,7 @@
                     // create icon
                     var $icon = $('<i />', { 'class': 'icon-' + sampleCodeHost, 'aria-hidden': 'true' });
                     // create text
-                    var $text = gettext('Open in ') + this + ' ';
+                    var $text = ngettext('Open in %(site)s ', this);
 
                     // add button icon and text to DOM
                     $button.append($text).append($icon).appendTo($buttonContainer);
