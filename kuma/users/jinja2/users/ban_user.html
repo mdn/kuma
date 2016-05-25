@@ -9,6 +9,7 @@
 {% block site_css %}
   {{ super() }}
   {% stylesheet 'users' %}
+  {% stylesheet 'user-banned' %}
 {% endblock %}
 
 {% block content %}
@@ -23,7 +24,7 @@
         <div class="column-4">
           <h5>{{ _('Choose a reason') }}:</h5>
           {% for reason in common_reasons %}
-            <div><a class="ban-common-reason">{{ _(reason) }}</a></div>
+            <div><button class="ban-common-reason">{{ _(reason) }}</button></div>
           {% endfor %}
         </div>
 
