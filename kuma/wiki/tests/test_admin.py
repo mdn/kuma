@@ -160,6 +160,8 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         assert dsa.review == DocumentSpamAttempt.HAM
         assert dsa.reviewer == self.admin_user
         assert dsa.reviewed is not None
+        assert mock_requests.called
+        assert mock_requests.call_count == 2
 
     @override_config(AKISMET_KEY='')
     @requests_mock.mock()
@@ -276,6 +278,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         ]
         self.assertEqual(sorted(query_pairs), expected)
 
+        assert mock_requests.called
+        assert mock_requests.call_count == 2
+
     @requests_mock.mock()
     def test_spam_submission_tags(self, mock_requests):
         admin = User.objects.get(username='admin')
@@ -369,7 +374,6 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         url = reverse('admin:wiki_revisionakismetsubmission_changelist')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        revision_url = reverse('admin:wiki_revision_change',
-                               args=[revision.id])
+        revision_url = revision.get_absolute_url()
         self.assertIn(revision_url, response.content)
         self.assertIn('None', response.content)

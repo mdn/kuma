@@ -3,7 +3,6 @@ import HTMLParser
 import json
 
 import jinja2
-from babel import dates, localedata
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -18,15 +17,15 @@ from soapbox.models import Message
 from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
-from ..exceptions import DateTimeFormatError
 from ..urlresolvers import reverse, split_path
-from ..utils import urlparams
+from ..utils import urlparams, format_date_time
 
 
 htmlparser = HTMLParser.HTMLParser()
 
 
 # Yanking filters from Django.
+library.filter(defaultfilters.escapejs)
 library.filter(defaultfilters.linebreaksbr)
 library.filter(strip_tags)
 library.filter(defaultfilters.truncatewords)
@@ -164,43 +163,6 @@ def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
     return str(url_obj)
 
 
-def _babel_locale(locale):
-    """Return the Babel locale code, given a normal one."""
-    # Babel uses underscore as separator.
-    return locale.replace('-', '_')
-
-
-def _contextual_locale(context):
-    """Return locale from the context, falling back to a default if invalid."""
-    locale = context['request'].LANGUAGE_CODE
-    if not localedata.exists(locale):
-        locale = settings.LANGUAGE_CODE
-    return locale
-
-
-def format_date_value(value, tzvalue, locale, format):
-    if format == 'shortdatetime':
-        # Check if the date is today
-        if value.toordinal() == datetime.date.today().toordinal():
-            formatted = dates.format_time(tzvalue, format='short',
-                                          locale=locale)
-            return _(u'Today at %s') % formatted
-        else:
-            return dates.format_datetime(tzvalue, format='short',
-                                         locale=locale)
-    elif format == 'longdatetime':
-        return dates.format_datetime(tzvalue, format='long', locale=locale)
-    elif format == 'date':
-        return dates.format_date(tzvalue, locale=locale)
-    elif format == 'time':
-        return dates.format_time(tzvalue, locale=locale)
-    elif format == 'datetime':
-        return dates.format_datetime(tzvalue, locale=locale)
-    else:
-        # Unknown format
-        raise DateTimeFormatError
-
-
 @library.global_function
 @jinja2.contextfunction
 def datetimeformat(context, value, format='shortdatetime', output='html'):
@@ -208,38 +170,9 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     Returns date/time formatted using babel's locale settings. Uses the
     timezone from settings.py
     """
-    if not isinstance(value, datetime.datetime):
-        if isinstance(value, datetime.date):
-            # Turn a date into a datetime
-            value = datetime.datetime.combine(value,
-                                              datetime.datetime.min.time())
-        else:
-            # Expecting datetime value
-            raise ValueError
 
-    default_tz = timezone(settings.TIME_ZONE)
-    tzvalue = default_tz.localize(value)
-
-    user = context['request'].user
-    try:
-        if user.is_authenticated() and user.timezone:
-            user_tz = timezone(user.timezone)
-            tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
-    except AttributeError:
-        pass
-
-    locale = _babel_locale(_contextual_locale(context))
-
-    try:
-        formatted = format_date_value(value, tzvalue, locale, format)
-    except KeyError:
-        # Babel sometimes stumbles over missing formatters in some locales
-        # e.g. bug #1247086
-        # we fall back formatting the value with the default language code
-        formatted = format_date_value(value, tzvalue,
-                                      _babel_locale(settings.LANGUAGE_CODE),
-                                      format)
-
+    request = context['request']
+    formatted, tzvalue = format_date_time(request, value, format)
     if output == 'json':
         return formatted
     return jinja2.Markup('<time datetime="%s">%s</time>' %

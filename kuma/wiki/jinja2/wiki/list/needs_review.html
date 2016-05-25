@@ -20,6 +20,19 @@
 
       <div id="document-list" class="boxed">
         <h1>{{ title }}</h1>
+        {% if tag|string=='editorial' %}
+          <p>
+            {% trans url=wiki_url('MDN/Contribute/Howto/Do_an_editorial_review') + '#core-steps' %}
+            Please review these articles for spelling, grammar, formatting, layout, etc., and then clear the Editorial review flag. <a href="{{ url }}">See more detailed instructions</a>.
+            {% endtrans %}
+          </p>
+        {% elif tag|string == 'technical' %}
+          <p>
+            {% trans url=wiki_url('MDN/Contribute/Howto/Do_a_technical_review') + '#core-steps' %}
+            Please review these articles for technical accuracy and completeness, and then clear the Technical review flag. <a href="{{ url }}">See more detailed instructions</a>.
+            {% endtrans %}
+          </p>
+        {% endif %}
         <p>{{ _('Found %(count)s documents.', count=count) }}</p>
         {% if documents.object_list %}
           {{ documents|paginator }}
