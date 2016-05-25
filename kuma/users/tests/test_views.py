@@ -142,7 +142,7 @@ class BanTestCase(UserTestCase):
         eq_(200, resp.status_code)
         page = pq(resp.content)
 
-        reasons_to_ban_found = page.find('a.ban-common-reason')
+        reasons_to_ban_found = page.find('.ban-common-reason')
         reasons_to_ban_expected = json.loads(
             constance_config.COMMON_REASONS_TO_BAN_USERS
         )
@@ -151,6 +151,8 @@ class BanTestCase(UserTestCase):
         for reason in reasons_to_ban_found:
             ok_(reason.text in reasons_to_ban_expected)
 
+    @override_config(COMMON_REASONS_TO_BAN_USERS='Not valid JSON')
+    def test_common_reasons_error(self):
         # If there is an error in getting the common reasons from constance,
         # then 'Spam' should still show up in the template as the default
         testuser = self.user_model.objects.get(username='testuser')
@@ -159,19 +161,19 @@ class BanTestCase(UserTestCase):
         ban_url = reverse('users.ban_user',
                           kwargs={'user_id': testuser.id})
 
-        constance_config.COMMON_REASONS_TO_BAN_USERS = 'not valid JSON'
-
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
         page = pq(resp.content)
 
-        reasons_to_ban_found = page.find('a.ban-common-reason')
+        reasons_to_ban_found = page.find('.ban-common-reason')
         reasons_to_ban_expected = ['Spam']
 
         eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))
         for reason in reasons_to_ban_found:
             ok_(reason.text in reasons_to_ban_expected)
 
+    @override_config(COMMON_REASONS_TO_BAN_USERS='[]')
+    def test_common_reasons_empty(self):
         # If the list of common reasons to ban users in constance is empty,
         # then 'Spam' should still show up in the template as the default
         testuser = self.user_model.objects.get(username='testuser')
@@ -180,13 +182,11 @@ class BanTestCase(UserTestCase):
         ban_url = reverse('users.ban_user',
                           kwargs={'user_id': testuser.id})
 
-        constance_config.COMMON_REASONS_TO_BAN_USERS = '[]'
-
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
         page = pq(resp.content)
 
-        reasons_to_ban_found = page.find('a.ban-common-reason')
+        reasons_to_ban_found = page.find('.ban-common-reason')
         reasons_to_ban_expected = ['Spam']
 
         eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))

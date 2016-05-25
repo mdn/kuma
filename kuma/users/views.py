@@ -65,8 +65,6 @@ def ban_user(request, user_id):
                           is_active=True)
             ban.save()
             return redirect(user)
-        else:
-            form = UserBanForm(request.POST)
     else:
         if user.active_ban:
             return redirect(user)
