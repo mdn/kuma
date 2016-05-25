@@ -1,4 +1,8 @@
+import json
+import pytest
 import requests_mock
+from constance import config as constance_config
+from constance.test.utils import override_config
 from django.conf import settings
 from pyquery import PyQuery as pq
 from waffle.models import Flag
@@ -338,3 +342,70 @@ class AllauthPersonaTestCase(UserTestCase):
         ok_('href' in signout_link.attrib)
         eq_(signout_url.replace('%2F', '/'),  # urlparams() encodes slashes
             signout_link.attrib['href'])
+
+
+@pytest.mark.bans
+class BanTestCase(UserTestCase):
+
+    def test_common_reasons_in_template(self):
+        # The common reasons to ban users (from constance) should be in template
+        testuser = self.user_model.objects.get(username='testuser')
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        reasons_to_ban_found = page.find('.ban-common-reason')
+        reasons_to_ban_expected = json.loads(
+            constance_config.COMMON_REASONS_TO_BAN_USERS
+        )
+
+        eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))
+        for reason in reasons_to_ban_found:
+            ok_(reason.text in reasons_to_ban_expected)
+
+    @override_config(COMMON_REASONS_TO_BAN_USERS='Not valid JSON')
+    def test_common_reasons_error(self):
+        # If there is an error in getting the common reasons from constance,
+        # then 'Spam' should still show up in the template as the default
+        testuser = self.user_model.objects.get(username='testuser')
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        reasons_to_ban_found = page.find('.ban-common-reason')
+        reasons_to_ban_expected = ['Spam']
+
+        eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))
+        for reason in reasons_to_ban_found:
+            ok_(reason.text in reasons_to_ban_expected)
+
+    @override_config(COMMON_REASONS_TO_BAN_USERS='[]')
+    def test_common_reasons_empty(self):
+        # If the list of common reasons to ban users in constance is empty,
+        # then 'Spam' should still show up in the template as the default
+        testuser = self.user_model.objects.get(username='testuser')
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        reasons_to_ban_found = page.find('.ban-common-reason')
+        reasons_to_ban_expected = ['Spam']
+
+        eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))
+        for reason in reasons_to_ban_found:
+            ok_(reason.text in reasons_to_ban_expected)
