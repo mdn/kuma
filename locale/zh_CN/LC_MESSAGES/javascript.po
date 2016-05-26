@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-04-21 07:33-0700\n"
+"POT-Creation-Date: 2016-05-26 09:18-0700\n"
 "PO-Revision-Date: 2016-04-21 19:10+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
@@ -38,6 +38,14 @@ msgstr "没有"
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
 msgstr "不再询问"
+
+#: kuma/static/js/helpfulness.js:45
+msgid "Thanks for your feedback!"
+msgstr ""
+
+#: kuma/static/js/helpfulness.js:54
+msgid "We won't bug you again."
+msgstr ""
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
@@ -163,6 +171,15 @@ msgstr "已恢复"
 msgid "Draft"
 msgstr "草稿"
 
+#: kuma/static/js/wiki-edit.js:590
+msgid "saved"
+msgstr "已保存"
+
+#: kuma/static/js/wiki-edit.js:609
+#, fuzzy
+msgid "autosaved"
+msgstr "已保存"
+
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
 msgstr "已发布"
@@ -179,6 +196,11 @@ msgstr "自动保存已启用。"
 msgid "Autosave disabled."
 msgstr "自动保存已禁用。"
 
+#: kuma/static/js/wiki-samples.js:97
+#, python-format
+msgid "Open in %(site)s "
+msgstr ""
+
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
 msgstr "新建标签..."
@@ -192,8 +214,7 @@ msgid "Search Stack Overflow"
 msgstr "搜索 Stack Overflow"
 
 #: kuma/static/js/wiki.js:677
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "您的浏览器不支持 MathML。已使用后备的 CSS 代替。"
 
 #: kuma/static/js/wiki.js:892
@@ -208,8 +229,7 @@ msgstr "选择一个附件"
 msgid "No attachments available"
 msgstr "没有可用的附件"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "附件"
 
@@ -229,8 +249,7 @@ msgstr "创建一个重定向"
 msgid "MDN Redirect"
 msgstr "MDN 重定向"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "文档"
 
@@ -322,16 +341,8 @@ msgstr "您输入的网址看上去无效"
 msgid "Default"
 msgstr "默认"
 
-#~ msgid "saved"
-#~ msgstr "已保存"
-
 #~ msgid "Demo Studio"
 #~ msgstr "演示工坊"
 
-#~ msgid ""
-#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
-#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
-#~ "draft</a>."
-#~ msgstr ""
-#~ "您有一篇之前的草稿。您可以<a href=\"\" class=\"restoreLink\">恢复草稿内容</a>或者<a href=\"\" "
-#~ "class=\"discardLink\">丢弃草稿</a>。"
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "您有一篇之前的草稿。您可以<a href=\"\" class=\"restoreLink\">恢复草稿内容</a>或者<a href=\"\" class=\"discardLink\">丢弃草稿</a>。"

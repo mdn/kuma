@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-04-21 07:33-0700\n"
+"POT-Creation-Date: 2016-05-26 09:18-0700\n"
 "PO-Revision-Date: 2016-04-15 09:33+0000\n"
 "Last-Translator: Belayet Hossain <bellayet@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
@@ -38,6 +38,14 @@ msgstr "না"
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
 msgstr "এ বিষয়ে আর কখনও জিজ্ঞাসা করবে না"
+
+#: kuma/static/js/helpfulness.js:45
+msgid "Thanks for your feedback!"
+msgstr ""
+
+#: kuma/static/js/helpfulness.js:54
+msgid "We won't bug you again."
+msgstr ""
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
@@ -163,6 +171,15 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
+#: kuma/static/js/wiki-edit.js:590
+msgid "saved"
+msgstr "সংরক্ষিত"
+
+#: kuma/static/js/wiki-edit.js:609
+#, fuzzy
+msgid "autosaved"
+msgstr "সংরক্ষিত"
+
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
 msgstr ""
@@ -178,6 +195,11 @@ msgstr ""
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
+msgstr ""
+
+#: kuma/static/js/wiki-samples.js:97
+#, python-format
+msgid "Open in %(site)s "
 msgstr ""
 
 #: kuma/static/js/wiki-tags-edit.js:48
@@ -319,6 +341,3 @@ msgstr ""
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr ""
-
-#~ msgid "saved"
-#~ msgstr "সংরক্ষিত"

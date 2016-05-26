@@ -594,6 +594,9 @@ PUENTE = {
              'javascript'),
         ],
     },
+    'PROJECT': 'MDN',
+    'VERSION': '2016.0',
+    'MSGID_BUGS_ADDRESS': 'dev-mdn@lists.mozilla.org',
 }
 
 STATICI18N_ROOT = 'build/locale'

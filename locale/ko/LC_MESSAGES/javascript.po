@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-04-21 07:33-0700\n"
+"POT-Creation-Date: 2016-05-26 09:18-0700\n"
 "PO-Revision-Date: 2016-03-07 16:34+0000\n"
 "Last-Translator: Channy Yun <channy@mozilla.or.kr>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -38,6 +38,14 @@ msgstr "아니오"
 #: kuma/static/js/helpfulness.js:38
 msgid "Never ask me again"
 msgstr "다시 묻지 않음"
+
+#: kuma/static/js/helpfulness.js:45
+msgid "Thanks for your feedback!"
+msgstr ""
+
+#: kuma/static/js/helpfulness.js:54
+msgid "We won't bug you again."
+msgstr ""
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
@@ -163,6 +171,15 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
+#: kuma/static/js/wiki-edit.js:590
+msgid "saved"
+msgstr "저장됨"
+
+#: kuma/static/js/wiki-edit.js:609
+#, fuzzy
+msgid "autosaved"
+msgstr "저장됨"
+
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
 msgstr ""
@@ -180,6 +197,11 @@ msgstr ""
 msgid "Autosave disabled."
 msgstr ""
 
+#: kuma/static/js/wiki-samples.js:97
+#, python-format
+msgid "Open in %(site)s "
+msgstr ""
+
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
 msgstr "새 태그..."
@@ -193,8 +215,7 @@ msgid "Search Stack Overflow"
 msgstr "스택 오버플로우 검색"
 
 #: kuma/static/js/wiki.js:677
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "브라우저가 MathML을 지원하지 않습니다. CSS 폴백이 대신 사용되었습니다."
 
 #: kuma/static/js/wiki.js:892
@@ -209,8 +230,7 @@ msgstr "첨부 파일 선택"
 msgid "No attachments available"
 msgstr "사용 가능한 첨부 파일이 없음"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "첨부 파일"
 
@@ -230,8 +250,7 @@ msgstr "자동 이동 만들기"
 msgid "MDN Redirect"
 msgstr "MDN 자동 이동"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "문서"
 
@@ -322,6 +341,3 @@ msgstr "입력한 URL이 유효하게 보이지 않습니다"
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
 msgstr "기본 설정"
-
-#~ msgid "saved"
-#~ msgstr "저장됨"
