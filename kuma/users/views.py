@@ -1,4 +1,5 @@
 import collections
+import json
 import operator
 
 from allauth.account.adapter import get_adapter
@@ -64,11 +65,23 @@ def ban_user(request, user_id):
                           is_active=True)
             ban.save()
             return redirect(user)
-    form = UserBanForm()
+    else:
+        if user.active_ban:
+            return redirect(user)
+        form = UserBanForm()
+    # A list of common reasons for banning a user, loaded from constance
+    try:
+        common_reasons = json.loads(config.COMMON_REASONS_TO_BAN_USERS)
+    except (TypeError, ValueError):
+        common_reasons = ['Spam']
+    else:
+        if not common_reasons:
+            common_reasons = ['Spam']
     return render(request,
                   'users/ban_user.html',
                   {'form': form,
-                   'user': user})
+                   'user_to_ban': user,
+                   'common_reasons': common_reasons})
 
 
 def user_detail(request, username):

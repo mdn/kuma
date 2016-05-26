@@ -84,6 +84,56 @@ class BanTestCase(UserTestCase):
                                       reason='Banned by unit test.')
         ok_(bans.count())
 
+    def test_ban_nonexistent_user(self):
+        # Attempting to ban a non-existent user should 404
+        admin = self.user_model.objects.get(username='admin')
+
+        self.client.login(username='admin', password='testpass')
+
+        nonexistent_user_id = self.user_model.objects.last().id + 1
+        data = {'reason': 'Banned by unit test.'}
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': nonexistent_user_id})
+
+        resp = self.client.post(ban_url, data)
+        eq_(404, resp.status_code)
+
+        bans = UserBan.objects.filter(user__id=nonexistent_user_id,
+                                      by=admin,
+                                      reason='Banned by unit test.')
+        eq_(bans.count(), 0)
+
+    def test_ban_without_reason(self):
+        # Attempting to ban without a reason should return the form
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        self.client.login(username='admin', password='testpass')
+
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': testuser.id})
+
+        # POST without data kwargs
+        resp = self.client.post(ban_url)
+
+        eq_(200, resp.status_code)
+
+        bans = UserBan.objects.filter(user=testuser,
+                                      by=admin,
+                                      reason='Banned by unit test.')
+        eq_(bans.count(), 0)
+
+        # POST with a blank reason
+        data = {'reason': ''}
+        resp = self.client.post(ban_url, data)
+
+        eq_(200, resp.status_code)
+
+        bans = UserBan.objects.filter(user=testuser,
+                                      by=admin,
+                                      reason='Banned by unit test.')
+        eq_(bans.count(), 0)
+
     def test_bug_811751_banned_user(self):
         """A banned user should not be viewable"""
         testuser = self.user_model.objects.get(username='testuser')
@@ -108,6 +158,26 @@ class BanTestCase(UserTestCase):
         self.client.login(username='admin', password='testpass')
         response = self.client.get(url, follow=True)
         self.assertNotEqual(response.status_code, 403)
+
+    def test_get_ban_user_view(self):
+        # For an unbanned user get the ban_user view
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.get(ban_url)
+        eq_(200, resp.status_code)
+
+        # For a banned user redirect to user detail page
+        UserBan.objects.create(user=testuser, by=admin,
+                               reason='Banned by unit test.',
+                               is_active=True)
+        resp = self.client.get(ban_url)
+        eq_(302, resp.status_code)
+        ok_(testuser.get_absolute_url() in resp['Location'])
 
 
 class UserViewsTest(UserTestCase):
