@@ -580,14 +580,14 @@
         var nowString = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
         localStorage.setItem(DRAFT_NAME + '#save-time', nowString);
         // update UI
-        updateDraftState(gettext(draftState));
+        updateDraftState(draftState);
         $draftButton.attr('disabled', 'disabled');
     }
 
     function manualSaveDraft(val) {
         var currentContent = $form.find('textarea[name=content]').val();
         // save draft
-        saveDraft(currentContent, 'saved');
+        saveDraft(currentContent, gettext('saved'));
         // disable autosave when saving manually
         enableAutoSave(false);
     }
@@ -606,7 +606,7 @@
             var currentMatchesStart = contentMatches(currentContent, startingContent);
 
             if(!draftMatchesDraft && !currentMatchesStart) {
-                saveDraft(currentContent, 'autosaved');
+                saveDraft(currentContent, gettext('autosaved'));
             }
         }
     }

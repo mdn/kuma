@@ -42,7 +42,7 @@
         // answers to the simple question include...
         $('#helpful-yes').on('click', function(e) {
             e.preventDefault();
-            confirm('Thanks for your feedback!', 'success', 'Yes');
+            confirm(gettext('Thanks for your feedback!'), 'success', 'Yes');
         });
         $('#helpful-no').on('click', function(e) {
             e.preventDefault();
@@ -51,7 +51,7 @@
         $('#helpful-ignore').on('click', function(e) {
             e.preventDefault();
             localStorage.setItem('helpful-ignore', 'true');
-            confirm("We won't bug you again.", 'info', 'Ignore');
+            confirm(gettext("We won't bug you again."), 'info', 'Ignore');
         });
 
         // create a dropdown in case the page is unhelpful
@@ -92,7 +92,7 @@
                     action: 'Clicked',
                     label: label
                 });
-                notification[type](gettext(msg), 2000);
+                notification[type](msg, 2000);
             }
         }
     }
