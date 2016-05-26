@@ -94,7 +94,8 @@
                     // create icon
                     var $icon = $('<i />', { 'class': 'icon-' + sampleCodeHost, 'aria-hidden': 'true' });
                     // create text
-                    var $text = interpolate(gettext('Open in %(site)s '), {site: this});
+                    var $text = gettext('Open in ')+this;
+					
 
                     // add button icon and text to DOM
                     $button.append($text).append($icon).appendTo($buttonContainer);
