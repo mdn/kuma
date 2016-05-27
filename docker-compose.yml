@@ -1,5 +1,5 @@
 worker: &worker
-  build: ./
+  image: quay.io/mozmar/kuma_base
   command: supervisord -n -c /app/docker/supervisor-celery.conf
   volumes:
     - ./:/app

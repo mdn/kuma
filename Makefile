@@ -1,3 +1,9 @@
+VERSION ?= $(shell git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
+BASE_IMAGE_NAME ?= kuma_base
+REGISTRY ?= quay.io/
+IMAGE_PREFIX ?= mozmar
+BASE_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
+
 target = kuma
 requirements = -r requirements/local.txt
 # set Django settings module if not already set as env var
@@ -63,6 +69,9 @@ localerefresh: localeextract localetest localecompile compilejsi18n collectstati
 	@echo
 	@echo Commit the new files with:
 	@echo git add --all locale\; git commit -m \"MDN string update $(shell date +%Y-%m-%d)\"
+
+build-base:
+	docker build -f Dockerfile-base -t ${BASE_IMAGE} .
 
 # Those tasks don't have file targets
 .PHONY: test coveragetest intern locust clean locale install compilecss compilejsi18n collectstatic localetest localeextract localecompile localerefresh

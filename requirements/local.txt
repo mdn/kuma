@@ -7,13 +7,13 @@ certifi==2015.11.20.1 \
     --hash=sha256:ad86683448f7483d4147a64d96856e551734e594c4563747e9fbe2368df13d3f \
     --hash=sha256:30b0a7354a1b32caa8b4705d3f5fb2dadefac7ba4bf8af8a2176869f93e38f16
 
-# Load testing
-locustio==0.7.3 \
-    --hash=sha256:220e1f97ece2def3454aeecc5070419518e4e16c5aa39d21eb509a38f47847ec
+## Load testing
+#locustio==0.7.3 \
+#    --hash=sha256:220e1f97ece2def3454aeecc5070419518e4e16c5aa39d21eb509a38f47847ec
 
 # Enhanced HTTPS support for httplib and urllib2
-ndg-httpsclient==0.4.0 \
-    --hash=sha256:e8c155fdebd9c4bcb0810b4ed01ae1987554b1ee034dd7532d7b8fdae38a6274
+#ndg-httpsclient==0.4.0 \
+#    --hash=sha256:e8c155fdebd9c4bcb0810b4ed01ae1987554b1ee034dd7532d7b8fdae38a6274
 
 # Code quality checker
 flake8==2.5.4 \
@@ -36,11 +36,10 @@ tox==2.3.1 \
     --hash=sha256:1823c93ca378092c10bbde428213d3f5066b30adb09e5c001087a83e3e0a402a \
     --hash=sha256:bf7fcc140863820700d3ccd65b33820ba747b61c5fe4e2b91bb8c64cb21a47ee
 
-# Calculate hashes for pip 8.x+
-hashin==0.4.1 \
-    --hash=sha256:b26ace086e24d84152a7e6d7d12b336383e835110d5e2e30dfbf22fa336a2e58 \
-    --hash=sha256:e0266d240d589f2419ff669528934db5876d34a19f516fa8b39c42d8221c0591 \
-    --hash=sha256:745623e60c649a6092cdbbb62b758e89654f4d69ec88ad76be8c20685f8ea1ab
+# Calculate hashes for pip 8.x+ -- using fork compatible with pip 8.1.2+
+# see https://github.com/peterbe/hashin/pull/23
+https://github.com/jgmize/hashin/archive/432e5b4643129ba235c1eb13d58afd3442790c68.tar.gz#egg=hashin \
+    --hash=sha256:f89c828fd278134630707c87c6bd09027f93ba8a273aa3bdb25b9380623f7989
 
 # Analyze Django performance during request
 django-debug-toolbar==1.4 \
