@@ -931,13 +931,18 @@ PIPELINE_JS = {
         'output_filename': 'build/js/ace.js',
     },
 }
-
 PIPELINE = {
     'STYLESHEETS': PIPELINE_CSS,
     'JAVASCRIPT': PIPELINE_JS,
     'DISABLE_WRAPPER': True,
-    'CSS_COMPRESSOR': 'kuma.core.pipeline.cleancss.CleanCSSCompressor',
     'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
+    'UGLIFYJS_BINARY': config('PIPELINE_UGLIFYJS_BINARY',
+                              default=path('node_modules', 'uglify-js', 'bin', 'uglifyjs')),
+    'CSS_COMPRESSOR': 'pipeline.compressors.cssmin.CSSMinCompressor',
+    'CSSMIN_BINARY': config('PIPELINE_CSSMIN_BINARY',
+                            default=path('node_modules', 'cssmin', 'bin', 'cssmin')),
+    'PIPELINE_ENABLED': config('PIPELINE_ENABLED', not DEBUG, cast=bool),
+    'PIPELINE_COLLECTOR_ENABLED': config('PIPELINE_COLLECTOR_ENABLED', not DEBUG, cast=bool),
 }
 
 #
