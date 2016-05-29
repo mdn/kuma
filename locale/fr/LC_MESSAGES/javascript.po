@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-04-23 16:06+0000\n"
+"PO-Revision-Date: 2016-05-29 16:19+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
@@ -41,11 +41,11 @@ msgstr "Ne plus me demander"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "Merci de votre retour !"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
-msgstr ""
+msgstr "Nous ne vous ennuierons plus avec ça."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
@@ -176,9 +176,8 @@ msgid "saved"
 msgstr "enregistré"
 
 #: kuma/static/js/wiki-edit.js:609
-#, fuzzy
 msgid "autosaved"
-msgstr "enregistré"
+msgstr "enregistré automatiquement"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
@@ -199,7 +198,7 @@ msgstr "Sauvegarde automatique désactivée."
 #: kuma/static/js/wiki-samples.js:97
 #, python-format
 msgid "Open in %(site)s "
-msgstr ""
+msgstr "Ouvrir avec %(site)s "
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -214,8 +213,11 @@ msgid "Search Stack Overflow"
 msgstr "Rechercher sur Stack Overflow"
 
 #: kuma/static/js/wiki.js:677
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Votre navigateur ne supporte pas MathML. Un contenu de remplacement avec CSS a été utilisé."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Votre navigateur ne supporte pas MathML. Un contenu de remplacement avec CSS"
+" a été utilisé."
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
@@ -229,7 +231,8 @@ msgstr "Sélectionner une pièce jointe"
 msgid "No attachments available"
 msgstr "Aucune pièce jointe disponible"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Pièces jointes"
 
@@ -249,7 +252,8 @@ msgstr "Créer une redirection"
 msgid "MDN Redirect"
 msgstr "Redirection MDN"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Document"
 
@@ -344,5 +348,11 @@ msgstr "Par défaut"
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
-#~ msgstr "Un brouillon avait été enregistré. <a href=\"\" class=\"restoreLink\">Restaurer le contenu du brouillon enregistré</a> ou <a href=\"\" class=\"discardLink\">effacer le brouillon</a>."
+#~ msgid ""
+#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
+#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
+#~ "draft</a>."
+#~ msgstr ""
+#~ "Un brouillon avait été enregistré. <a href=\"\" "
+#~ "class=\"restoreLink\">Restaurer le contenu du brouillon enregistré</a> ou <a"
+#~ " href=\"\" class=\"discardLink\">effacer le brouillon</a>."
