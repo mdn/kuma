@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-02-25 23:56+0000\n"
+"PO-Revision-Date: 2016-05-31 01:49+0000\n"
 "Last-Translator: alamanda <dian.ina@gmail.com>\n"
 "Language-Team: Indonesian https://pontoon.mozilla.org/id/\n"
 "Language: id\n"
@@ -40,11 +40,11 @@ msgstr "Jangan pernah bertanya pada saya lagi"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "Terima kasih atas masukan Anda!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
-msgstr ""
+msgstr "Kami tidak akan mengganggu Anda lagi."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
@@ -140,11 +140,11 @@ msgstr "Tampilkan tabel lama."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "Menyimpan Rancangan"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "Mengaktifkan simpan-otomatis."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
@@ -164,42 +164,40 @@ msgstr "Membuang rancangan"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "dikembalikan"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "Rancangan"
 
 #: kuma/static/js/wiki-edit.js:590
 msgid "saved"
 msgstr "disimpan"
 
 #: kuma/static/js/wiki-edit.js:609
-#, fuzzy
 msgid "autosaved"
-msgstr "disimpan"
+msgstr "disimpan otomatis"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "diterbitkan"
 
 #: kuma/static/js/wiki-edit.js:622
-#, fuzzy
 msgid "discarded"
-msgstr "Membuang rancangan"
+msgstr "dibuang"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "Simpan-otomatis diaktifkan."
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "Simpan-otomatis dimatikan."
 
 #: kuma/static/js/wiki-samples.js:97
 #, python-format
 msgid "Open in %(site)s "
-msgstr ""
+msgstr "Buka di %(site)s "
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
@@ -214,8 +212,11 @@ msgid "Search Stack Overflow"
 msgstr "Cari Stack Overflow"
 
 #: kuma/static/js/wiki.js:677
-msgid "Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr "Peramban anda tidak mendukung MathML. Sebuah sandaran CSS telah digunakan sebagai gantinya."
+msgid ""
+"Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr ""
+"Peramban anda tidak mendukung MathML. Sebuah sandaran CSS telah digunakan "
+"sebagai gantinya."
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
@@ -229,7 +230,8 @@ msgstr "Pilih lampiran"
 msgid "No attachments available"
 msgstr "Lampiran tidak tersedia"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Lampiran"
 
@@ -249,7 +251,8 @@ msgstr "Membuat Pengalihan"
 msgid "MDN Redirect"
 msgstr "Pengalihan MDN"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokumen"
 
