@@ -3,6 +3,7 @@ BASE_IMAGE_NAME ?= kuma_base
 REGISTRY ?= quay.io/
 IMAGE_PREFIX ?= mozmar
 BASE_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
+BASE_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:latest
 
 target = kuma
 requirements = -r requirements/local.txt
@@ -72,6 +73,15 @@ localerefresh: localeextract localetest localecompile compilejsi18n collectstati
 
 build-base:
 	docker build -f Dockerfile-base -t ${BASE_IMAGE} .
+
+push-base:
+	docker push ${BASE_IMAGE}
+
+tag-latest:
+	docker tag ${BASE_IMAGE} ${BASE_IMAGE_LATEST}
+
+push-latest: push-base tag-latest
+	docker push ${BASE_IMAGE_LATEST}
 
 # Those tasks don't have file targets
 .PHONY: test coveragetest intern locust clean locale install compilecss compilejsi18n collectstatic localetest localeextract localecompile localerefresh
