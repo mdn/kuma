@@ -6,15 +6,15 @@ worker: &worker
   links:
     - memcached
     - mysql
-    - elasticsearch
+    #- elasticsearch
     - redis
   environment:
     # Django settings overrides:
-    - DEBUG=true
+    - DEBUG=True
     - PROTOCOL=http://
     # - DOMAIN=developer-local.allizom.org
     - DOMAIN=kuma.dev  # FIXME
-    - DATABASE_URL=mysql://kuma:kuma@mysql:3306/kuma
+    - DATABASE_URL=mysql://root:docker@mysql:3306/developer_mozilla_org
     - MEMCACHE_SERVERS=memcached:11211
     # - ALLOWED_HOSTS=developer-local.allizom.org
     - ALLOWED_HOSTS=kuma.dev  # FIXME
@@ -23,11 +23,13 @@ worker: &worker
     - ES_URLS=elasticsearch:9200
     # Other environment variables:
     - PYTHONDONTWRITEBYTECODE=1
+    - PROD_DETAILS_DIR=/app/product_details_json
 
 # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
 web:
   <<: *worker
   command: supervisord -n -c /app/docker/supervisor.conf
+  #command: ./manage.py runserver 0.0.0.0:8000
   ports:
     - "8000:8000"
 
@@ -54,12 +56,20 @@ mysql:
     - MYSQL_ROOT_PASSWORD=docker
     - MYSQL_USER=kuma
     - MYSQL_PASSWORD=kuma
-    - MYSQL_DATABASE=kuma
+    - MYSQL_DATABASE=developer_mozilla_org
   volumes_from:
     - mysql-data
 
-elasticsearch:
-  image: elasticsearch:1.7
+#elasticsearch:
+#  image: elasticsearch:1.7
 
 redis:
   image: redis
+
+kumascript:
+  image: quay.io/mozmar/kumascript
+  command: node run.js
+  links:
+    - web
+  ports:
+    - "9080:9080"
