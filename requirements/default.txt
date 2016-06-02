@@ -9,9 +9,9 @@ bleach==1.4.3 \
     --hash=sha256:1293061adb5a9eebb7b260516e691785ac08cc1646c8976aeda7db9dbb1c6f4b
 
 # Process tasks in the background
-celery==3.1.20 \
-    --hash=sha256:3071b71ef8c43178ace8435002b11f2ff06db7690f07d960540eab7f4183ddf7 \
-    --hash=sha256:d02f191c3d92a851c9d2028e91baf2a0f2734cd3b659743d3624011d1ef7a6d5
+celery==3.1.23 \
+    --hash=sha256:eaf5dee3becbc35c7754a2d4482d53bdf72ea3f85dd258525259983262081474 \
+    --hash=sha256:1a359c815837f9dbf193a7dbc6addafa34612c077ff70c66e3b16e14eebd2418
 
 # Provides middleware for preventing Vary: Cookie
 commonware==0.4.3 \
