@@ -314,13 +314,6 @@ pluggy==0.3.1 \
     --hash=sha256:48096d7015b8d87a83fc064e8b5cc61ea2e235f1b86dd67889d8d53257f350c6 \
     --hash=sha256:159cc783e056c07da6552aa5aef6b1e6c0064b4f18bd49c531fd2d40aafb0ea3
 
-# translate-toolkit
-argparse==1.4.0 \
-    --hash=sha256:c31647edb69fd3d465a847ea3157d37bed1f95f19760b11a47aa91c04b666314 \
-    --hash=sha256:62b089a55be1d8949cd2bc7e0df0bddb9e028faefc8c32038cc84862aefdd6e4
-diff-match-patch==20121119 \
-    --hash=sha256:9dba5611fbf27893347349fd51cc1911cb403682a7163373adacc565d11e2e4c
-
 # google-api-python-client
 httplib2==0.9.2 \
     --hash=sha256:c3aba1c9539711551f4d83e857b316b5134a1c4ddce98a875b7027be7dd6d988 \

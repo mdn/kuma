@@ -89,15 +89,8 @@ code of the language you are adding.
    ``etc/data/product_details_json.tar.gz``. Verify that the other locales are
    just timestamp updates before reverting them.
 
-#. BONUS: Use ``podebug`` to test a fake translation of the locale::
-
-        cd locale
-        podebug --rewrite=bracket templates/LC_MESSAGES/django.pot bg/LC_MESSAGES/django.po
-        ./compile-mo.sh bg  # Edit and repeat until any errors are fixed
-        cd ..
-        make localerefresh
-
-   Dennis also has a `debug translation feature`_ you could use instead::
+#. BONUS: Use the  `debug translation feature`_ of ``dennis-cmd`` to test a
+   fake translation of the locale::
 
         cd locale
         dennis-cmd locale/bg/LC_MESSAGES/django.po
