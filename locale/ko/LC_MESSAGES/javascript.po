@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-03-07 16:34+0000\n"
-"Last-Translator: Channy Yun <channy@mozilla.or.kr>\n"
+"PO-Revision-Date: 2016-06-02 01:09+0000\n"
+"Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -41,11 +41,11 @@ msgstr "다시 묻지 않음"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "피드백 주셔서 감사합니다!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
-msgstr ""
+msgstr "당신을 다시 괴롭히지 않겠습니다."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
@@ -141,11 +141,11 @@ msgstr "이전 표를 표시합니다."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "초안 저장"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "자동 저장을 활성화합니다."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
@@ -165,42 +165,40 @@ msgstr "초안 삭제"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "복원됨"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "초안"
 
 #: kuma/static/js/wiki-edit.js:590
 msgid "saved"
 msgstr "저장됨"
 
 #: kuma/static/js/wiki-edit.js:609
-#, fuzzy
 msgid "autosaved"
-msgstr "저장됨"
+msgstr "자동 저장됨"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "공개됨"
 
 #: kuma/static/js/wiki-edit.js:622
-#, fuzzy
 msgid "discarded"
-msgstr "초안 삭제"
+msgstr "삭제됨"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "자동 저장이 활성화되었습니다."
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "자동 저장이 비활성화 되었습니다."
 
 #: kuma/static/js/wiki-samples.js:97
 #, python-format
 msgid "Open in %(site)s "
-msgstr ""
+msgstr "%(site)s에서 열기 "
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
