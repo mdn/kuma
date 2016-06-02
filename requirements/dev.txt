@@ -2,9 +2,9 @@
 -r default.txt
 
 # Extract messages from Django templates
-django-babel==0.4.0 \
---hash=sha256:0cf070be3fc0d8628b008da697aa5c0f89bd62c8dd9238283d5bcdbce70bbec6 \
---hash=sha256:b328dae0e594031d7b0ffded51fd6df60677d4509aee3677013a3a2f76da4e70
+django-babel==0.6.0 \
+    --hash=sha256:d345389039bb2c691824009658276c470c74dae40d0f6ffcdb0411eaddce0bb7 \
+    --hash=sha256:ea7e024c15a3cb2d256e00697d894c4d8ba8a4622c1a24324e871271895118e0
 
 # Analyze Django performance during request
 django-debug-toolbar==1.8 \
