@@ -8,9 +8,9 @@ certifi==2016.8.8 \
     --hash=sha256:99864ed602d8a9d212e339b15ffa438895002eda7b7db20dca5309dac9605ae9
 
 # Extract messages from Django templates
-django-babel==0.4.0 \
-    --hash=sha256:0cf070be3fc0d8628b008da697aa5c0f89bd62c8dd9238283d5bcdbce70bbec6 \
-    --hash=sha256:b328dae0e594031d7b0ffded51fd6df60677d4509aee3677013a3a2f76da4e70
+django-babel==0.5.1 \
+    --hash=sha256:a0e342a549d1269cd0c02a1b4b483d6c7c7341db4c87b6b149a2b5bc059cee57 \
+    --hash=sha256:c444af7f9dd2ed18868facbf45e1494d5ad0d968401b617d29007dc10027fa60
 
 # Analyze Django performance during request
 django-debug-toolbar==1.5 \
