@@ -57,8 +57,8 @@ pyasn1==0.1.9 \
     --hash=sha256:853cacd96d1f701ddd67aa03ecc05f51890135b7262e922710112f12a2ed2a7f
 
 # bleach
-html5lib==0.999999 \
-    --hash=sha256:e372b66f4997f8e1de970ea755d0a528d7222d2aa9bd55aac078c7ef39b8f6c3
+html5lib==1.0b8 \
+    --hash=sha256:18f4d63fa56836e3d62e96a44d06fcfe01a9be397a222368ee21403b64c176d2
 
 # celery
 kombu==3.0.33 \
