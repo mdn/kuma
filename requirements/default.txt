@@ -32,9 +32,8 @@ django-allauth==0.25.2 \
     --hash=sha256:382632fc4e85d577bcb4a747dcd0fff0b4893fffe275922e8489855608f50252
 
 # Refresh stale cache items asynchronously
-django-cacheback==1.0 \
-    --hash=sha256:8feaa8df6cbe23e1fca5d858f518a235442a8ddc4aefb5be0846692c69d65a8e \
-    --hash=sha256:2fc21e0ed78ee8e4cc07ac2c5936b27f956c99c81fc4f965e96fb27171180819
+django-cacheback==1.1 \
+    --hash=sha256:ba7dc1525de6b6f44d13f6e5b6b93ca7a9ef0ca560315872fe40f044b7b59e95
 
 # Integrate celery async tasks with Django (deprecated)
 django-celery==3.1.17 \
