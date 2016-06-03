@@ -207,10 +207,9 @@ puente==0.4.1 \
     --hash=sha256:84f769c0ea607829c77bd8b3d6d6fbc16589cd7a5d4e5023f717cd3d5de54473
 
 # Parse HTML with CSS selectors like jquery, in prod and in tests
-# TODO: Sync version with test.txt
-pyquery==1.2.11 \
-    --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612 \
-    --hash=sha256:4a832ba73bfba03486f5445c75993a26bf62d38d26ff5fcfbde06a7bd0087fc6
+pyquery==1.2.17 \
+    --hash=sha256:554335a65570b4871051320a30919836f7548dbb2f2616d6e1f7c3f887096ef3 \
+    --hash=sha256:6aa0133b30d9a0229ad65d3a7708c4e853bf46808fb359d06ca56f5039102af6
 
 # Translate environment variables into native Python types
 python-decouple==3.0 \
