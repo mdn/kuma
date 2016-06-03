@@ -81,9 +81,9 @@ sqlparse==0.2.0 \
     --hash=sha256:7fac8d39ac543499b191be19e811ff275f2df0d45c4ba5fc24850aa883ac2060
 
 # django-statici18n
-django-appconf==1.0.1 \
-    --hash=sha256:ba1375fb1024e8e91547504d4392321795c989fde500b96ebc7c93884f786e60 \
-    --hash=sha256:3d9bc963d8008ae151d6c664f9fd55442705ea9b9e6d7ce77cdd40bf92d91f3a
+django-appconf==1.0.2 \
+    --hash=sha256:6a4d9aea683b4c224d97ab8ee11ad2d29a37072c0c6c509896dd9857466fb261 \
+    --hash=sha256:ddab987d14b26731352c01ee69c090a4ebfc9141ed223bef039d79587f22acd9
 
 # django-memcached-hashring
 hash-ring==1.3.1 \
