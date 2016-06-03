@@ -115,10 +115,11 @@ class TestWelcomeEmails(UserTestCase):
 
         # emulate the phase in which the request for email confirmation is
         # sent as the user's email address is not verified
-        email_address.send_confirmation(request)
+        confirmation = email_address.send_confirmation(request)
 
-        # only one email, the confirmation email is sent
-        self.assertEqual(1, email_address.emailconfirmation_set.count())
+        # New in 0.26.0 - HMAC is used, not a database record
+        self.assertEqual(0, email_address.emailconfirmation_set.count())
+
         self.assertEqual(len(mail.outbox), 1)
         confirm_email = mail.outbox[0]
         expected_to = [email_address.email]
@@ -127,8 +128,7 @@ class TestWelcomeEmails(UserTestCase):
 
         # then get the email confirmation and confirm it by emulating
         # clicking on the confirm link
-        email_confirmation = email_address.emailconfirmation_set.all()[0]
-        email_confirmation.confirm(request)
+        confirmation.confirm(request)
 
         # a second email, the welcome email, is sent
         self.assertEqual(len(mail.outbox), 2)
@@ -142,8 +142,8 @@ class TestWelcomeEmails(UserTestCase):
         email_address2 = EmailAddress.objects.create(user=testuser,
                                                      email='welcome3@tester.com',
                                                      verified=False)
-        email_address2.send_confirmation(request)
-        self.assertEqual(1, email_address2.emailconfirmation_set.count())
+        confirmation2 = email_address2.send_confirmation(request)
+        self.assertEqual(0, email_address2.emailconfirmation_set.count())
         self.assertEqual(len(mail.outbox), 3)
         confirm_email2 = mail.outbox[2]
         expected_to = [email_address2.email]
@@ -152,8 +152,7 @@ class TestWelcomeEmails(UserTestCase):
 
         # but this time there should no welcome email be sent as there
         # is already a verified email address
-        email_confirmation2 = email_address2.emailconfirmation_set.all()[0]
-        email_confirmation2.confirm(request)
+        confirmation2.confirm(request)
         # no increase in number of emails
         self.assertEqual(len(mail.outbox), 3)
         self.assertTrue('Confirm' in mail.outbox[2].subject)

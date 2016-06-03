@@ -29,7 +29,7 @@ account_patterns = [
     url(r'^email/confirm/?$',
         account_views.email_verification_sent,
         name='account_email_verification_sent'),
-    url(r'^email/confirm/(?P<key>\w+)/?$',
+    url(r'^email/confirm/(?P<key>[-:\w]+)/?$',
         redirect_in_maintenance_mode(account_views.confirm_email),
         name='account_confirm_email'),
     # Auth keys
