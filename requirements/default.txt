@@ -270,9 +270,9 @@ pytidylib==0.2.4 \
     --hash=sha256:0af07bd8ebd256af70ca925ada9337faf16d85b3072624f975136a5134150ab6
 
 # Send tracebacks to Sentry instead of emailing admins
-raven==5.10.2 \
-    --hash=sha256:f17269486e9f64ccd5a38a859e8191a8d8f5609e8f0efee6f1881e8a0fb20ed8 \
-    --hash=sha256:58d52e16c834f70046f07d53795cafbf2709aef87afa9ca2a9d21be28a6ed92c
+raven==5.19.0 \
+    --hash=sha256:e45d249385fe5ff4090978b82fd0a2744a2c57947241af416e20d9c85d3a2ead \
+    --hash=sha256:cd952238e5a5ffcf0a626f4c2a1326a587b84e24e0e6bca36deef9c9b1c01933
 
 # Modern caching server, to replace memcached in AWS
 redis==2.10.5 \
