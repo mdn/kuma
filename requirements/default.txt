@@ -117,8 +117,9 @@ django-soapbox==1.3 \
     --hash=sha256:69ccf5eb9200f294f400864c9f11990a8bdcd75ed8965cd984b7d6d3d243cf49
 
 # Generate localization catalogs for JavaScript
-django-statici18n==1.1.5 \
-    --hash=sha256:f8d7b523da8fa635de8c359f6dbde9821e2e8e1a092d915786455ffd2533808b
+django-statici18n==1.3.0 \
+    --hash=sha256:f37cff511dd7d6f0c0b465c685026b660aea2ae178cc82a1b4c96c1b1e718c2a \
+    --hash=sha256:cc9f239ba42a09139fba45263ddf4dcd933c64403e74a537e61b75a4ed608b8c
 
 # Better timezone picker for user profiles
 django-sundial==1.0.2 \
