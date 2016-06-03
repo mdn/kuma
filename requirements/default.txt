@@ -28,8 +28,8 @@ Django==1.8.14 \
     --hash=sha256:5282c48b90fbb29507299f592215378e849a2808f485e4144626e66715d5464d
 
 # 3rd party logins like Github
-django-allauth==0.24.1 \
-    --hash=sha256:229a6a5a63ff55f9eb46d4dae3863ba775735bf60bfc16bf4e2042f214f18e1d
+django-allauth==0.25.2 \
+    --hash=sha256:382632fc4e85d577bcb4a747dcd0fff0b4893fffe275922e8489855608f50252
 
 # Refresh stale cache items asynchronously
 django-cacheback==1.0 \
