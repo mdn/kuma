@@ -378,8 +378,9 @@ coverage==4.2 \
     --hash=sha256:a5dda361f947dd67891f73a373ef63059cf3e551ac248dd3e91f76ea1b39cdda
 
 # raven
-contextlib2==0.5.1 \
-    --hash=sha256:227c79e126e8a8904a81d162750581ed3d49af2395a3100be7067b7296d33d45
+contextlib2==0.5.3 \
+    --hash=sha256:888a280f24dcff2cc55ac0e51fc764484b284f91ff711a219e459a6d5f76de2b \
+    --hash=sha256:30e500f13921c73c96f49a6dd2adfbdd92bc3fae12183e91b06b2e4583486206
 
 # tox
 virtualenv==15.0.1 \
