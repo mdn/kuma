@@ -44,9 +44,9 @@ django-celery-transactions==0.3.6 \
     --hash=sha256:cdf966ec461e9ec736a7bedcf47cb219fc79ea86f2b39191cb258082dd4f4b33
 
 # Store dynamic settings in the database
-django-constance==1.1.2 \
-    --hash=sha256:7b7efca7776132728e91ed017fb4081136926c800331b6028f6d7079ae6b0872 \
-    --hash=sha256:8edba68cf47befa2d2e6d9eba98ff74dc9881e086bfcac0337fe8198d5edffbf
+django-constance==1.2 \
+    --hash=sha256:8dbd58f51d46de9215c4edd3dbcf054e0161b3bed9cdfb0b8602b97e3ab7de78 \
+    --hash=sha256:71f77d78475b02ac8e06d00c59df3fe22c1b631a7098e0c65a728ec1673b00a2
 
 # Translate database content, used in filters
 django-dbgettext==0.1.2 \
