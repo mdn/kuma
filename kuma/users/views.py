@@ -83,6 +83,20 @@ def ban_user(request, user_id):
                    'user_to_ban': user,
                    'common_reasons': common_reasons})
 
+def ban_user_and_cleanup(request, user_id):
+    """
+    A page to ban a user for the reason of "Spam" and mark the user's revisions
+    and page creations as spam, reverting as many of them as possible.
+    """
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        raise Http404
+
+    return render(request,
+                  'users/ban_user_and_cleanup.html',
+                  {'detail_user': user})
+
 
 def user_detail(request, username):
     """
