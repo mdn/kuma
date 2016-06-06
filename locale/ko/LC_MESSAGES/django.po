@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-02 01:18+0000\n"
+"PO-Revision-Date: 2016-06-06 08:43+0000\n"
 "Last-Translator: Hyeonseok Shin <hyeonseok@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
 "Language: ko\n"
@@ -2653,9 +2653,8 @@ msgid "Confirmed as Spam"
 msgstr "스팸으로 확인"
 
 #: kuma/wiki/models.py:1947
-#, fuzzy
 msgid "Review Unavailable"
-msgstr "검색이 안됨"
+msgstr "검토 이용 불가"
 
 #: kuma/wiki/models.py:1948
 msgid "Akismet Error"
@@ -2666,14 +2665,13 @@ msgid "Review of Akismet's classification as spam"
 msgstr "Akismet 스팸 분류 검토"
 
 #: kuma/wiki/models.py:1960
-#, fuzzy
 msgid "Staff reviewer"
-msgstr "검토했나요?"
+msgstr "검토 담당 스태프"
 
 #: kuma/wiki/search.py:310
 #, python-format
 msgid "Indexing %(total)d documents into %(total_chunks)d chunks of size %(size)d into index %(index)s.total"
-msgstr ""
+msgstr "%(total)d 개 문서를 %(size)d 크기인 %(total_chunks)d 개 청크로 인덱스 %(index)s 를 작성 중"
 
 #: kuma/wiki/jinja2/403-create-page.html:3
 msgid "You're trying to create a new page."
@@ -2692,6 +2690,8 @@ msgid ""
 "feature? What feature? Is there a glossary term you’d like to add? What term?). </li> <li>Have made some good edits to existing pages.</li> <li>Have been contributing to the site for a while.</li> "
 "</ul>"
 msgstr ""
+"<p>다음을 만족하면 새 페이지 작성 권한이 부여될 가능성이 더 높습니다:</p> <ul> <li>MDN 사용자 이름을 알려 주세요.</li> <li>페이지를 새로 만들고 싶은 이유를 알려 주세요(새 기능을 문서화하고 있나요? 어떤 기능인가요? 추가하고 싶은 용어집 용어인가요? 어떤 용어인가요?). </li> <li>기존 페이지에 좋은 편집 작업 내역이"
+" 있습니다.</li> <li>일정기간 사이트에 공헌하고 있습니다.</li> </ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -2796,9 +2796,9 @@ msgstr "문서 삭제"
 
 # 100%
 #: kuma/wiki/jinja2/wiki/deletion_log.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "This document was deleted on %(when)s."
-msgstr "이 문서에 첨부 자료가 없습니다."
+msgstr "이 문서는 %(when)s에 삭제됐습니다."
 
 #: kuma/wiki/jinja2/wiki/deletion_log.html:14
 msgid "Reason for Deletion"
@@ -2890,9 +2890,9 @@ msgid "This article doesn't have any content yet."
 msgstr "이 글에는 아직 내용이 없습니다."
 
 #: kuma/wiki/jinja2/wiki/document.html:310
-#, fuzzy, python-format
+#, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
-msgstr "여러 매크로를 사용하고 예제 케이스를 보기 위해 <a href=\"%(search_link)s\">%(title)s 사용 문서</a>를 검색합니다."
+msgstr "본보기 사용 사례 및 얼마나 많은 페이지가 이 매크로를 사용하는 지 보기 위해 <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">%(title)s 사용 페이지</a>를 검색하세요."
 
 #: kuma/wiki/jinja2/wiki/document.html:323
 msgid "This article doesn't have approved content yet."
@@ -3039,9 +3039,8 @@ msgid "Don't include a trailing slash (this will be removed for you if you inclu
 msgstr "후행 슬래시를 포함하지 마세요(이를 포함하면 제거되지만, 빼야 합니다)."
 
 #: kuma/wiki/jinja2/wiki/move.html:31
-#, fuzzy
 msgid "Your requested move cannot be completed due to the following slug conflicts:"
-msgstr "짧은 URL이 충돌 되기 때문에 요청 사항을 바꿀 수 없습니다."
+msgstr "다음 슬러그 충돌로 인해 요청된 이동을 완료할 수 없습니다:"
 
 #: kuma/wiki/jinja2/wiki/move.html:54
 msgid "Current Slug:"
@@ -3158,13 +3157,13 @@ msgid ""
 msgstr "본 웹사이트 콘텐츠 라이센스 고지. &middot; <a href=\"%(about_url)s\">MDN 소개</a> &middot; <a href=\"//github.com/mozilla/kuma\">코드 공헌</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">개인 정보 보호 정책</a>"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:43
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
 "<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2013 Mozilla 개발자 네트워크 및 개별 공헌자에게 있음<br /> 웹  사이트내의 모든 콘텐츠에 대한 라이센스 고지. &middot; <a href=\"%(about_url)s\">MDN 소개</a> &middot; <a href=\"//github.com/mozilla/kuma\">코드 공헌</a> &middot; <a "
-"href=\"//www.mozilla.org/en-US/privacy\">개인 정보 보호 정책</a>"
+"&copy; 2005-2015 Mozilla 개발자 네트워크 및 개별 공헌자에게 있음<br /> 이 프로젝트에 명시된 라이센스로 콘텐츠를 사용할 수 있습니다. &middot; <a href=\"%(about_url)s\">MDN 소개</a> &middot; <a href=\"//github.com/mozilla/kuma\">코드 공헌</a> "
+"&middot; <a href=\"//www.mozilla.org/en-US/privacy\">개인 정보 보호 정책</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
@@ -3263,14 +3262,14 @@ msgid "Article History:"
 msgstr "문서 기록:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
-#, fuzzy, python-format
+#, python-format
 msgid "You are subscribed to edits on: %(title)s and all its sub-articles."
-msgstr "현재 문서에 이미 투표하셨습니다."
+msgstr "다음에 대한 수정내용을 구독하였습니다: %(title)s 및 그 하위 글 모두."
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:44
-#, fuzzy, python-format
+#, python-format
 msgid "You are subscribed to edits on: %(title)s."
-msgstr "현재 문서에 이미 투표하셨습니다."
+msgstr "다음에 대한 수정내용을 구독하였습니다: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
 msgid "This article needs these reviews:"
@@ -3303,9 +3302,8 @@ msgid "New sub-article"
 msgstr "새 하위 문서"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
-#, fuzzy
 msgid "Clone this article"
-msgstr "현재 페이지 복사"
+msgstr "이 글 복제"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
@@ -3344,9 +3342,9 @@ msgid "Change Revisions"
 msgstr "개정판 변경"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
-#, fuzzy, python-format
+#, python-format
 msgid "Revision %(num)s:"
-msgstr "리비전 %(num)s:"
+msgstr "개정판 %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:82 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
@@ -3366,19 +3364,17 @@ msgid "Subscribe to %(title)s and all its sub-articles"
 msgstr "%(title)s과(와) 그 하위 글 모두 구독"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:129
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr "이 알림을 구독해지 했습니다."
+msgstr "%(title)s 및 그 하위 글 모두 구독 취소"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
-#, fuzzy
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr "현재 문서에 이미 투표하셨습니다."
+msgstr "이제 이 글과 하위 글 모두 구독했습니다."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
-#, fuzzy
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr "이 알림을 구독해지 했습니다."
+msgstr "이 글과 하위 글 모두 구독 취소했습니다."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 msgid "Updating subscription status"
@@ -3390,19 +3386,19 @@ msgid "Subscribe to %(title)s"
 msgstr "%(title)s 구독"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:145
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "현재 메일 구독 취소:"
+msgstr "%(title)s 구독 취소"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr "현재 문서에 이미 투표하셨습니다."
+msgstr "이제 %(title)s 구독했습니다."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
-#, fuzzy, python-format
+#, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr "이 알림을 구독해지 했습니다."
+msgstr "%(title)s 구독 취소했습니다."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:159
 #, python-format
@@ -3410,19 +3406,19 @@ msgid "Subscribe to <bdi>%(language)s</bdi> version"
 msgstr "<bdi>%(language)s</bdi> 판 구독"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:160
-#, fuzzy, python-format
+#, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr "현재 메일 구독 취소:"
+msgstr "<bdi>%(language)s</bdi> 판 구독 취소"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
-#, fuzzy, python-format
+#, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
-msgstr "이 알림을 구독해지 했습니다."
+msgstr "이제 이 글의 %(language)s 판을 구독했습니다."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
-#, fuzzy, python-format
+#, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
-msgstr "이 알림을 구독해지 했습니다."
+msgstr "이 글의 %(language)s 판을 구독 취소했습니다."
 
 # 100%
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
@@ -3439,9 +3435,8 @@ msgid "Need Help?"
 msgstr "도움이 필요하세요?"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
-#, fuzzy
 msgid "Editor Guide"
-msgstr "내용적 측면"
+msgstr "편집자 가이드"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
@@ -3474,9 +3469,8 @@ msgid "In macro:"
 msgstr "매크로:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
-#, fuzzy
 msgid "Create Template"
-msgstr "새 템플릿 작성"
+msgstr "템플릿 작성"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
@@ -3532,7 +3526,7 @@ msgstr "추가 및 변경 사유를 알려주세요. 이는 선택 사항이며 
 msgid ""
 "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
 "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
-msgstr ""
+msgstr "당신 게시글이 MDN에 맞지 않을 수도 있는 내용을 포함합니다. 부적절한 소재를 여러 번 게시하는 경우 계정이 비활성화될 수 있습니다. 적절한 소재 구성에 대한 자세한 내용은 “<a href=\"%(does_this_belong_url)s\">이게 MDN과 맞나요?</a>” 안내서를 참조하세요."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, fuzzy, python-format
@@ -3554,9 +3548,8 @@ msgid "Slug in %(locale)s:"
 msgstr "%(locale)s 슬러그:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
-#, fuzzy
 msgid "Find the translation source with the lookup above and then click \"Save\"."
-msgstr "번역 자원을 아래에서 찾아보고 \"변경 사항 저장\"을 선택하세요."
+msgstr "위 검색으로 번역 원본을 찾은 뒤 \"저장\"을 누르세요."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
@@ -3625,12 +3618,12 @@ msgstr "검토 필요한 모든 문서"
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
 msgid "Please review these articles for spelling, grammar, formatting, layout, etc., and then clear the Editorial review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
-msgstr ""
+msgstr "이 글의 철자, 문법, 서식, 레이아웃 등을 검토하고 나서 편집 검토 표시를 지워 주세요. <a href=\"%(url)s\">더 자세한 지침을 참조하세요</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:31
 #, python-format
 msgid "Please review these articles for technical accuracy and completeness, and then clear the Technical review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
-msgstr ""
+msgstr "이 글의 기술상 정확성 및 완전성을 검토하고 나서 기술 검토 표시를 지워 주세요. <a href=\"%(url)s\">더 자세한 지침을 참조하세요</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
 #, fuzzy, python-format
@@ -3638,9 +3631,9 @@ msgid "Found %(count)s documents."
 msgstr "%(count)s개 문서를 찾았습니다."
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Revision History | %(document)s"
-msgstr "리비전 이력 | %(document)s"
+msgstr "개정판 이력 | %(document)s"
 
 # 100%
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
@@ -3688,9 +3681,8 @@ msgstr[0] "%(count)s개 문서를 찾았습니다."
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
-#, fuzzy
 msgid "Purge documents"
-msgstr "MDN 문서"
+msgstr "문서 삭제"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
@@ -3711,9 +3703,8 @@ msgstr ""
 "        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
-#, fuzzy
 msgid "\"Load documents\""
-msgstr "MDN 문서"
+msgstr "\"문서 불러오기\""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
@@ -3721,9 +3712,8 @@ msgid "Add %(name)s"
 msgstr "%(name)s 추가"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
-#, fuzzy
 msgid "Load documents"
-msgstr "MDN 문서"
+msgstr "문서 불러오기"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
