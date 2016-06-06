@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block body_attributes %}{% endblock %}
+
+{% block bodyclass %}user ban-user{% endblock %}
+
+{% block title %}Ban {{ detail_user }}{% endblock %}
+
+{% block site_css %}
+  {{ super() }}
+  {% stylesheet 'users' %}
+  {% stylesheet 'user-banned' %}
+{% endblock %}
+
+{% block content %}
+<section id="content">
+Ban {{ detail_user }}
+<div class="wrap">
+
+  <section id="content-main" class="full">
+    <section id="user-head" class="column-container column-container-reverse vcard user-head">
+      <div class="column-10">
+        <h1 class="user-title">
+            <span class="nickname">{{ detail_user.username }}</span>
+            {% if detail_user.fullname %}
+                <b class="user-title-fullname">(<span class="fn">{{ detail_user.fullname }}</span>)</b>
+            {% endif %}
+            {% if user.is_authenticated() and is_me %}
+                {% include 'socialaccount/snippets/login_service_icon.html' %}
+            {% endif %}
+        </h1>
+
+        {% with accounts=social_accounts(detail_user) %}
+          {% include "users/includes/user_profile_data.html" %}
+        {% endwith %}
+
+      <div>Go to regular user ban page</div>
+
+      </div>
+    </section>
+  </section>
+
+
+
+</section>
+{% endblock %}
+

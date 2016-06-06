@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% set display_name = user_display(detail_user) %}
-{% set accounts = social_accounts(detail_user) %}
 {% set is_me = user.pk == detail_user.pk %}
 
 {% block body_attributes %}{% endblock %}
@@ -61,79 +60,11 @@
               {% endif %}
           {% endif %}
         </div>
-        {% if detail_user.title or detail_user.organization or detail_user.location or detail_user.irc_nickname %}
-        <ul class="user-info">
-          {% if detail_user.title %}<li class="title">{{ detail_user.title }}</li>{% endif %}
-          {% if detail_user.organization %}<li class="org">{{ detail_user.organization }}</li>{% endif %}
-          {% if detail_user.location %}<li class="loc">{{ detail_user.location }}</li>{% endif %}
-          {% if detail_user.irc_nickname %}<li class="irc">IRC: {{ detail_user.irc_nickname }}</li>{% endif %}
-        </ul>
-        {% endif %}
 
-        {% set tag_ns = 'profile:interest:' %}
-        {% set tags = detail_user.tags.all_ns(tag_ns) %}
-        {% if tags|length %}
-        <div class="user-tags">
-          <h2>{{ _("Interests") }}</h2>
-          <ul>
-            {% for tag in tags %}
-              <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
+     {% with accounts=social_accounts(detail_user) %}
+       {% include "users/includes/user_profile_data.html" %}
+     {% endwith %}
 
-        {% set tag_ns = 'profile:expertise:' %}
-        {% set tags = detail_user.tags.all_ns(tag_ns) %}
-        {% if tags|length %}
-        <div class="user-tags">
-          <h2>{{ _("Areas of Expertise") }}</h2>
-          <ul>
-            {% for tag in tags %}
-              <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-        <div class="user-since">{% trans date_joined=datetimeformat(detail_user.date_joined, format='date') %}Member since {{ date_joined }}{% endtrans %}</div>
-      </div>
-      <div class="column-2 ">
-        <figure>
-          <img src="{{ gravatar_url(detail_user.email, size=200) }}" alt="{{ detail_user.username }}" width="200" height="200" class="user-photo avatar" />
-        </figure>
-
-        <ul class="user-links">
-        {% if detail_user.twitter_url %}
-          <li class="twitter"><i class="icon-twitter" aria-hidden="true"></i><a href="{{ detail_user.twitter_url }}" rel="me external" class="url">{{ _("Twitter") }}</a></li>
-        {% endif %}
-
-        {% if accounts.github %}
-          {% for github_account in accounts.github %}{% if github_account.extra_data %}
-          <li class="github"><i class="icon-github" aria-hidden="true"></i><a href="{{ github_account.get_profile_url() }}" rel="me external" class="url">{{ _("GitHub") }}</a></li>
-          {% endif %}{% endfor %}
-        {% else %}
-          {% if detail_user.github_url %}
-            <li class="github"><i class="icon-github" aria-hidden="true"></i><a href="{{ detail_user.github_url }}" rel="me external" class="url">{{ _("GitHub") }}</a></li>
-          {% endif %}
-        {% endif %}
-
-        {% if detail_user.stackoverflow_url %}
-          <li class="stackoverflow"><i class="icon-stackexchange" aria-hidden="true"></i><a href="{{ detail_user.stackoverflow_url }}" rel="me external" class="url">{{ _("Stack Overflow") }}</a></li>
-        {% endif %}
-
-        {% if detail_user.linkedin_url %}
-          <li class="linkedin"><i class="icon-linkedin" aria-hidden="true"></i><a href="{{ detail_user.linkedin_url }}" rel="me external" class="url">{{ _("LinkedIn") }}</a></li>
-        {% endif %}
-
-        {% if detail_user.mozillians_url %}
-          <li class="mozillians"><i class="icon-group" aria-hidden="true"></i><a href="{{ detail_user.mozillians_url }}" rel="me external" class="url">{{ _("Mozillians") }}</a></li>
-        {% endif %}
-
-        {% if detail_user.facebook_url %}
-          <li class="facebook"><i class="icon-facebook" aria-hidden="true"></i><a href="{{ detail_user.facebook_url }}" rel="me external" class="url">{{ _("Facebook") }}</a></li>
-        {% endif %}
-
-        </ul>
       </div>
     </section>
 
