@@ -4,14 +4,9 @@ Sitemap: https://developer.mozilla.org/sitemap.xml
 Request-rate: 1/5
 
 Disallow: /*admin*
-Disallow: /*feed*
-Disallow: /*type=feed
-Disallow: /skins
-Disallow: /*files*
 Disallow: /*docs/feeds
 Disallow: /*docs/templates
 Disallow: /*docs*Template:
-Disallow: /media
 Disallow: /*dashboards*
 Disallow: /*docs/all
 Disallow: /*docs/tag*
@@ -48,8 +43,13 @@ Disallow: /*docs*$subscribe_to_tree
 Disallow: /*docs*$vote
 Disallow: /*docs.json
 Disallow: /*docs/ckeditor_config.js
-Disallow: /*profiles*edit
-Disallow: /*preview-wiki-content
+Disallow: /*feed*
+Disallow: /*files*
+Disallow: /media
 Disallow: /*move-requested
+Disallow: /*preview-wiki-content
+Disallow: /*profiles*edit
 Disallow: /*search*
+Disallow: /skins
+Disallow: /*type=feed
 Disallow: /*users*signin
