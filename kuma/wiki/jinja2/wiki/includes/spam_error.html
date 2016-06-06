@@ -14,3 +14,10 @@
     contact the site administrators</a>.
     {% endtrans %}
 </p>
+{% if perms.wiki.add_revisionakismetsubmission %}
+    <p>
+    {% trans akismet_submission_url = url('admin:wiki_revisionakismetsubmission') %}
+    As a spam moderator you can <a href="{{ akismet_submission_url }}" target="_blank">mark this submission as ham</a> and try submitting it again.
+    {% endtrans %}
+    </p>
+{% endif %}
