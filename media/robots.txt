@@ -3,13 +3,16 @@ Crawl-delay: 5
 Sitemap: https://developer.mozilla.org/sitemap.xml
 Request-rate: 1/5
 
-Disallow: /*feed=rss
+Disallow: /*admin*
+Disallow: /*feed*
 Disallow: /*type=feed
 Disallow: /skins
+Disallow: /*files*
 Disallow: /*docs/feeds
 Disallow: /*docs/templates
 Disallow: /*docs*Template:
 Disallow: /media
+Disallow: /*dashboards*
 Disallow: /*docs/all
 Disallow: /*docs/tag*
 Disallow: /*docs/needs-review*
@@ -17,7 +20,9 @@ Disallow: /*docs/localization-tag*
 Disallow: /*docs/with-errors
 Disallow: /*docs/without-parent
 Disallow: /*docs/top-level
+Disallow: /*docs/new
 Disallow: /*docs/get-documents
+Disallow: /*docs/submit_akismet_spam
 Disallow: /*docs/load*
 Disallow: /*docs*$compare
 Disallow: /*docs*$revision
@@ -32,13 +37,19 @@ Disallow: /*docs*$styles
 Disallow: /*docs*$toc
 Disallow: /*docs*$move
 Disallow: /*docs*$quick-review
+Disallow: /*docs*$samples
 Disallow: /*docs*$revert
 Disallow: /*docs*$repair_breadcrumbs
 Disallow: /*docs*$delete
 Disallow: /*docs*$restore
 Disallow: /*docs*$purge
 Disallow: /*docs*$subscribe
+Disallow: /*docs*$subscribe_to_tree
 Disallow: /*docs*$vote
 Disallow: /*docs.json
+Disallow: /*docs/ckeditor_config.js
+Disallow: /*profiles*edit
 Disallow: /*preview-wiki-content
 Disallow: /*move-requested
+Disallow: /*search*
+Disallow: /*users*signin
