@@ -4,7 +4,7 @@
 
 {% block bodyclass %}user ban-user{% endblock %}
 
-{% block title %}Ban {{ user_to_ban }}{% endblock %}
+{% block title %}Ban {{ detail_user }}{% endblock %}
 
 {% block site_css %}
   {{ super() }}
@@ -19,7 +19,7 @@
     <section id="user-head" class="column-container column-container-reverse vcard user-head">
       <div class="column-10">
         <h1 class="user-title">
-          {{ _('Why are you banning %(user)s', user=user_to_ban) }}?
+          {{ _('Why are you banning %(user)s', user=detail_user) }}?
         </h1>
         <div class="column-4">
           <h5>{{ _('Choose a reason') }}:</h5>
@@ -29,7 +29,7 @@
         </div>
 
         <h5>{{ _('or enter a reason in the text box below') }}:</h5>
-        <form method="post" id="ban-user-form" action="{{ url('users.ban_user',user_to_ban.id) }}">
+        <form method="post" id="ban-user-form" action="{{ url('users.ban_user',detail_user.id) }}">
           {% csrf_token %}
           {{ form.reason.errors }}
           <div>{{ form.reason }}</div>

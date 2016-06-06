@@ -80,8 +80,9 @@ def ban_user(request, user_id):
     return render(request,
                   'users/ban_user.html',
                   {'form': form,
-                   'user_to_ban': user,
+                   'detail_user': user,
                    'common_reasons': common_reasons})
+
 
 def ban_user_and_cleanup(request, user_id):
     """
