@@ -555,7 +555,7 @@ TEMPLATES = [
                 'django_jinja.builtins.extensions.UrlsExtension',
                 'django_jinja.builtins.extensions.StaticFilesExtension',
                 'django_jinja.builtins.extensions.DjangoFiltersExtension',
-                'pipeline.templatetags.ext.PipelineExtension',
+                'pipeline.jinja2.PipelineExtension',
                 'waffle.jinja.WaffleExtension',
             ],
         }
@@ -604,11 +604,6 @@ STATICI18N_DOMAIN = 'javascript'
 
 # Cache non-versioned static files for one week
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
-
-PIPELINE_DISABLE_WRAPPER = True
-
-PIPELINE_CSS_COMPRESSOR = 'kuma.core.pipeline.cleancss.CleanCSSCompressor'
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
 
 PIPELINE_CSS = {
     'mdn': {
@@ -931,7 +926,19 @@ PIPELINE_JS = {
         'output_filename': 'build/js/ace.js',
     },
 }
-
+PIPELINE = {
+    'STYLESHEETS': PIPELINE_CSS,
+    'JAVASCRIPT': PIPELINE_JS,
+    'DISABLE_WRAPPER': True,
+    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
+    'UGLIFYJS_BINARY': config('PIPELINE_UGLIFYJS_BINARY',
+                              default=path('node_modules', 'uglify-js', 'bin', 'uglifyjs')),
+    'CSS_COMPRESSOR': 'pipeline.compressors.cssmin.CSSMinCompressor',
+    'CSSMIN_BINARY': config('PIPELINE_CSSMIN_BINARY',
+                            default=path('node_modules', 'cssmin', 'bin', 'cssmin')),
+    'PIPELINE_ENABLED': config('PIPELINE_ENABLED', not DEBUG, cast=bool),
+    'PIPELINE_COLLECTOR_ENABLED': config('PIPELINE_COLLECTOR_ENABLED', not DEBUG, cast=bool),
+}
 #
 # Session cookies
 SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE',

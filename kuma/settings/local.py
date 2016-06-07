@@ -8,7 +8,7 @@ ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
 
 INTERNAL_IPS = ('127.0.0.1', '192.168.10.1')
 
-DEBUG = True
+#DEBUG = True
 DEBUG_TOOLBAR = config('DEBUG_TOOLBAR', default=False, cast=bool)
 TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = DEBUG

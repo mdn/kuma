@@ -1,6 +1,7 @@
 worker: &worker
   image: quay.io/mozmar/kuma_base
-  command: supervisord -n -c /app/docker/supervisor-celery.conf
+  #command: supervisord -n -c /app/docker/supervisor-celery.conf
+  command: ./manage.py celery worker --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
   volumes:
     - ./:/app
   links:
@@ -10,14 +11,14 @@ worker: &worker
     - redis
   environment:
     # Django settings overrides:
-    - DEBUG=True
+    #- DEBUG=True
     - PROTOCOL=http://
     # - DOMAIN=developer-local.allizom.org
     - DOMAIN=kuma.dev  # FIXME
     - DATABASE_URL=mysql://root:docker@mysql:3306/developer_mozilla_org
     - MEMCACHE_SERVERS=memcached:11211
     # - ALLOWED_HOSTS=developer-local.allizom.org
-    - ALLOWED_HOSTS=kuma.dev  # FIXME
+    - ALLOWED_HOSTS=localhost,localhost:8000
     - BROKER_URL=redis://redis:6379/0
     - CELERY_ALWAYS_EAGER=false
     - ES_URLS=elasticsearch:9200
@@ -28,8 +29,8 @@ worker: &worker
 # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
 web:
   <<: *worker
-  command: supervisord -n -c /app/docker/supervisor.conf
-  #command: ./manage.py runserver 0.0.0.0:8000
+  #command: supervisord -n -c /app/docker/supervisor.conf
+  command: gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application
   ports:
     - "8000:8000"
 

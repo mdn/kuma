@@ -42,7 +42,9 @@ django-memcached-hashring==0.1.2 --hash=sha256:14c2dc29bc693feaf114dea8c871f4d25
 django-mozilla-product-details==0.7.1 --hash=sha256:c50bffb9828a9139156904a11c508732d13dbf57ac25625ebc5edaa3ed312840
 django-mysql==1.0.4 --hash=sha256:0ced44721f0b36b618c7eb4c3813f57a5a7df71b959dc97ddf94e2281813a971
 django-picklefield==0.3.2 --hash=sha256:5489fef164de43725242d56e65e016137d3df0d1a00672bda72d807f5b2b0d99
-django-pipeline==1.5.4 --hash=sha256:a5a909f403d0ea56f211618949ff4e378f16e5a996bde819bd2b5b0e7a9bb8fe
+django-pipeline==1.6.8 \
+    --hash=sha256:a6a9ce2003ae10e729768b6d79a4b3db330d876b86225eb7743b6f5696bafa59 \
+    --hash=sha256:b7cdc2efe27e478ddd38e878dd7b5e5ac121c2898fd85accf3187e19137fe6b7
 django-ratelimit==0.6.0 --hash=sha256:f73b53b2c4fd342cbd4b983ffc33fdcf8f8a6f595d548865ea63c839ef38293c
 django-recaptcha==1.0.5 --hash=sha256:dc370fa0f7bd77378f8be5f03e88906bf0b62b8478b35af05846f7d640f1ec32
 djangorestframework==3.3.2 --hash=sha256:5634b1ff56581bf0fe4075e86227fc9693c1ca031c7213c9ae942c445c24817b
