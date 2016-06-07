@@ -43,8 +43,7 @@ Disallow: /*docs*$subscribe_to_tree
 Disallow: /*docs*$vote
 Disallow: /*docs.json
 Disallow: /*docs/ckeditor_config.js
-Disallow: /*feed*
-Disallow: /*files*
+Disallow: /*files/
 Disallow: /media
 Disallow: /*move-requested
 Disallow: /*preview-wiki-content
