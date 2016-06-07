@@ -51,4 +51,4 @@ Disallow: /*profiles*edit
 Disallow: /*search*
 Disallow: /skins
 Disallow: /*type=feed
-Disallow: /*users*signin
+Disallow: /*users/
