@@ -5,6 +5,8 @@
 {% block bodyclass %}user ban-user{% endblock %}
 
 {% block title %}Ban {{ detail_user }}{% endblock %}
+{% set styles = ('dashboards', 'jquery-ui') %}
+{% set classes = 'compare' %}
 
 {% block site_css %}
   {{ super() }}
@@ -25,23 +27,23 @@ Ban {{ detail_user }}
             {% if detail_user.fullname %}
                 <b class="user-title-fullname">(<span class="fn">{{ detail_user.fullname }}</span>)</b>
             {% endif %}
-            {% if user.is_authenticated() and is_me %}
-                {% include 'socialaccount/snippets/login_service_icon.html' %}
-            {% endif %}
         </h1>
 
-        {% with accounts=social_accounts(detail_user) %}
-          {% include "users/includes/user_profile_data.html" %}
-        {% endwith %}
+        <div class="user-buttons">
+          {{ ban_link(detail_user, user) }} Go to regular user ban page
 
-      <div>Go to regular user ban page</div>
+          {% with accounts=social_accounts(detail_user) %}
+            {% include "users/includes/user_profile_data.html" %}
+          {% endwith %}
+        </div>
+    </section><!-- /#user-head -->
 
-      </div>
-    </section>
-  </section>
+    <section id="docs-activity" class="user-section">
+        {# TODO: Do we really want to paginate here? Probably need to paginate only for revisions page. #}
+        {% include "dashboards/includes/revision_dashboard_body.html" %}
+    </section><!-- /#docs-activity -->
 
+</section><!-- /#content-main -->
 
-
-</section>
 {% endblock %}
 

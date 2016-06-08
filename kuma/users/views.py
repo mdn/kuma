@@ -21,6 +21,7 @@ from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required
+from kuma.core.utils import paginate
 
 from .forms import UserBanForm, UserEditForm
 from .models import User, UserBan
@@ -94,9 +95,13 @@ def ban_user_and_cleanup(request, user_id):
     except User.DoesNotExist:
         raise Http404
 
+    revisions = user.created_revisions.prefetch_related('document').defer('content', 'summary').order_by('-created')
+    revisions = paginate(request, revisions, per_page=10)
+
     return render(request,
                   'users/ban_user_and_cleanup.html',
-                  {'detail_user': user})
+                  {'detail_user': user,
+                   'revisions': revisions})
 
 
 def user_detail(request, username):
