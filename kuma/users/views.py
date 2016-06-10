@@ -101,7 +101,9 @@ def ban_user_and_cleanup(request, user_id):
     return render(request,
                   'users/ban_user_and_cleanup.html',
                   {'detail_user': user,
-                   'revisions': revisions})
+                   'revisions': revisions,
+                   'show_spam_submission': False,
+                   'show_author': False})
 
 
 def user_detail(request, username):

@@ -7,7 +7,9 @@
                 <th class="dashboard-revision">{{ _('Revision') }}</th>
                 <th class="dashboard-title">{{ _('Title') }}</th>
                 <th class="dashboard-comment">{{ _('Comment') }}</th>
+                {% if show_author %}
                 <th class="dashboard-author">{{ _('Author') }}{% if show_ips %} <button id="show_ips_btn">{{ _('Toggle IPs') }}</button>{% endif %}</th>
+                {% endif %}
                 {% if show_spam_submission %}
                 <th class="dashboard-spam">Akismet</th>
                 {% endif %}
@@ -42,6 +44,7 @@
                     <td class="dashboard-comment">
                         {{ format_comment(revision) }}
                     </td>
+                    {% if show_author %}
                     <td class="dashboard-author">
                         <a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a><br>
                         {% set revision_ip = revision.revisionip_set.first() %}
@@ -68,6 +71,7 @@
                             </div>
                         {% endif %}
                     </td>
+                    {% endif %}
                     {% if show_spam_submission %}
                     <td class="dashboard-spam">
                         {% set submissions = revision.akismet_submissions.all() %}

@@ -30,8 +30,6 @@ Ban {{ detail_user }}
         </h1>
 
         <div class="user-buttons">
-          {{ ban_link(detail_user, user) }} Go to regular user ban page
-
           {% with accounts=social_accounts(detail_user) %}
             {% include "users/includes/user_profile_data.html" %}
           {% endwith %}
@@ -43,6 +41,8 @@ Ban {{ detail_user }}
         {% include "dashboards/includes/revision_dashboard_body.html" %}
     </section><!-- /#docs-activity -->
 
+    <button class="button neutral">{{ _("Ban") }}</button>
+    <a href="#"> Go to regular user ban page</a>
 </section><!-- /#content-main -->
 
 {% endblock %}
