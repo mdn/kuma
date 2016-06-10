@@ -103,7 +103,8 @@ def ban_user_and_cleanup(request, user_id):
                   {'detail_user': user,
                    'revisions': revisions,
                    'show_spam_submission': False,
-                   'show_author': False})
+                   'show_author': False,
+                   'spam_ban_page': True})
 
 
 def user_detail(request, username):

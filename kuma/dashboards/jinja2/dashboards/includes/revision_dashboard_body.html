@@ -1,3 +1,7 @@
+{% if spam_ban_page %}
+   {% from "wiki/includes/document_macros.html" import revision_diff with context %}
+{% endif %}
+
 {{ revisions|paginator }}
 
 {% if revisions.count %}
@@ -98,6 +102,16 @@
                     </td>
                     {% endif %}
                 </tr>
+                {% if spam_ban_page %}
+                <tr>
+                    <td colspan=5>
+                        {% with revision_from=revision.previous, revision_to=revision %}
+                            {% include "wiki/includes/revision_diff_table.html" %}
+                        {% endwith %}
+                    </td>
+                </tr>
+                {% endif %}
+
             {% endfor %}
         </tbody>
     </table>
