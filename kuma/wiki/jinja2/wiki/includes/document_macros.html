@@ -90,32 +90,6 @@
 
 {%- endmacro %}
 
-
-
-{% macro build_share_links(document) -%}
-    {% set full_url = document.get_full_url() %}
-
-    {% set share_url_twitter = full_url|urlparams(utm_campaign='share', utm_source='twitter.com', utm_medium='doc share link') %}
-    {% set share_url_facebook = full_url|urlparams(utm_campaign='share', utm_source='facebook.com', utm_medium='doc share link')%}
-    {% set share_url_gplus = full_url|urlparams(utm_campaign='share', utm_source='plus.google.com', utm_medium='doc share link')%}
-
-    {% set twitter_url = 'http://twitter.com/share'|urlparams(url=share_url_twitter, text=share_text) %}
-    {% set facebook_url = 'http://facebook.com/sharer.php?s=100&p[url]=' + share_url_facebook %}
-    {% set gplus_url = 'https://plus.google.com/share'|urlparams(url=share_url_gplus) %}
-
-    <div class="share">
-        <strong>{{ _('Share:') }}</strong>
-        <ul>
-            <li><a href="{{ twitter_url }}" target="_blank" data-url="{{ share_url_twitter }}" data-title="{{ share_text }}" class="share-link twitter"><i aria-hidden="true" class="icon-twitter"></i>{{ _('Twitter') }}</a></li>
-            <li><a href="{{ facebook_url }}" target="_blank" data-url="{{ share_url_facebook }}" data-title="{{ share_text }}" class="share-link facebook"><i aria-hidden="true" class="icon-facebook"></i>{{ _('Facebook') }}</a></li>
-            <li><a href="{{ gplus_url }}" target="_blank" data-url="{{ share_url_gplus }}" data-title="{{ share_text }}" class="share-link gplus"><i aria-hidden="true" class="icon-google-plus"></i>{{ _('Google+') }}</a></li>
-        </ul>
-    </div>
-
-{%- endmacro %}
-
-
-
 {% macro contributor_links(contributors) -%}
     {% for contributor in contributors %}
         <a href="{{ url('users.user_detail', username=contributor.username) }}">{{ contributor.username }}</a>{% if not loop.last %}, {% endif %}
