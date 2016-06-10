@@ -846,7 +846,6 @@ PIPELINE_JS = {
             'js/search-navigator.js',
             'js/wiki.js',
             'js/wiki-samples.js',
-            'js/social.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
