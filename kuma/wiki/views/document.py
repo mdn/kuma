@@ -513,8 +513,7 @@ def _document_raw(request, doc, doc_html, rendering_params):
     response['X-Robots-Tag'] = 'noindex'
     absolute_url = urlunquote_plus(doc.get_absolute_url())
 
-    if absolute_url in (config.KUMA_CUSTOM_CSS_PATH,
-                        config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
+    if absolute_url in (config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
         response['Content-Type'] = 'text/css; charset=utf-8'
     elif doc.is_template:
         # Treat raw, un-bleached template source as plain text, not HTML.

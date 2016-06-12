@@ -38,8 +38,6 @@ Flags
 other advanced criteria.
 
 * ``compat_api`` - View the new API-backed compatibility tables
-* ``enable_customcss`` - enable/disable Template:CustomCSS styles in wiki
-  pages.
 * ``kumabanned`` - (deprecated) added to users to mark them as banned
 * ``kumaediting`` - enable/disable wiki editing
 * ``page_move`` - (deprecated) enable/disable page move feature
