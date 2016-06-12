@@ -1,7 +1,6 @@
 import pytest
 
 from kuma.core.tests import eq_, ok_
-from kuma.wiki.tests import revision
 
 from . import UserTestCase
 from ..models import UserBan
@@ -73,11 +72,6 @@ class TestUser(UserTestCase):
         ok_(user.locale == 'en-US')
         ok_(hasattr(user, 'timezone'))
         eq_(user.timezone, 'US/Pacific')
-
-    def test_wiki_revisions(self):
-        user = self.user_model.objects.get(username='testuser')
-        rev = revision(save=True, is_approved=True)
-        ok_(rev.pk in user.wiki_revisions().values_list('pk', flat=True))
 
 
 class BanTestCase(UserTestCase):
