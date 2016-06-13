@@ -98,10 +98,10 @@ def ban_user_and_cleanup(request, user_id):
 
     if request.method == 'POST':
         # ban = UserBan(user=user,
-        # by=request.user,
-        # reason='Spam',
-        # is_active=True)
-        # ban.save()
+        #     by=request.user,
+        #     reason='Spam',
+        #     is_active=True)
+        #     ban.save()
 
         # TODO: In the future this will take the revisions out of request.POST
         # and either revert them or not. For now list all of the revisions

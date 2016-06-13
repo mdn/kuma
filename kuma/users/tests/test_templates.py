@@ -501,7 +501,7 @@ class BanAndCleanupTestCase(UserTestCase):
         for revision in revisions_expected:
             ok_(revision.title in revisions_reverted_text)
         # The title for the original revision is not in the template
-        ok_(original_revision.title in revisions_reverted_text)
+        ok_(original_revision.title not in revisions_reverted_text)
 
 #    TODO: Phase III:
 #    def test_unreverted_changes_in_summary_page_template(self):
