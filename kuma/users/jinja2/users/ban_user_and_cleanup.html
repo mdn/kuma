@@ -38,7 +38,7 @@ Ban {{ detail_user }}
 
     <section id="docs-activity" class="user-section">
         {# TODO: Do we really want to paginate here? Probably need to paginate only for revisions page. #}
-        {% include "dashboards/includes/revision_dashboard_body.html" %}
+        {% include "users/includes/user_revision_history_form.html" %}
     </section><!-- /#docs-activity -->
 
     <button class="button neutral">{{ _("Ban") }}</button>
