@@ -210,12 +210,9 @@ class BanAndCleanupTestCase(UserTestCase):
     def test_post_returns_summary_page(self):
         """POSTing to the ban and cleanup url returns the summary page."""
         testuser = self.user_model.objects.get(username='testuser')
-        admin = self.user_model.objects.get(username='admin')
 
         self.client.login(username='admin', password='testpass')
 
-        summary_url = reverse('users.ban_and_cleanup',
-                              kwargs={'user_id': testuser.id})
         ban_url = reverse('users.ban_and_cleanup',
                           kwargs={'user_id': testuser.id})
 

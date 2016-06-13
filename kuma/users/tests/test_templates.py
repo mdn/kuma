@@ -458,7 +458,6 @@ class BanAndCleanupTestCase(UserTestCase):
         # The original revision created by the admin user is not in the template
         ok_(original_revision.title not in revisions_found_text)
 
-
     def test_user_revisions_in_summary_page_template(self):
         """The user's revisions show up in ban and cleanup summary template."""
         testuser = self.user_model.objects.get(username='testuser')
@@ -501,6 +500,8 @@ class BanAndCleanupTestCase(UserTestCase):
         # The title for each of the created revisions shows up in the template
         for revision in revisions_expected:
             ok_(revision.title in revisions_reverted_text)
+        # The title for the original revision is not in the template
+        ok_(original_revision.title in revisions_reverted_text)
 
 #    TODO: Phase III:
 #    def test_unreverted_changes_in_summary_page_template(self):
