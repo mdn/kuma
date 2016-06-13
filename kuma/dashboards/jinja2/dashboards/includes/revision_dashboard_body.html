@@ -1,3 +1,7 @@
+{% if spam_ban_page %}
+   {% from "wiki/includes/document_macros.html" import revision_diff with context %}
+{% endif %}
+
 {{ revisions|paginator }}
 
 {% if revisions.count %}
@@ -7,7 +11,9 @@
                 <th class="dashboard-revision">{{ _('Revision') }}</th>
                 <th class="dashboard-title">{{ _('Title') }}</th>
                 <th class="dashboard-comment">{{ _('Comment') }}</th>
+                {% if show_author %}
                 <th class="dashboard-author">{{ _('Author') }}{% if show_ips %} <button id="show_ips_btn">{{ _('Toggle IPs') }}</button>{% endif %}</th>
+                {% endif %}
                 {% if show_spam_submission %}
                 <th class="dashboard-spam">Akismet</th>
                 {% endif %}
@@ -42,6 +48,7 @@
                     <td class="dashboard-comment">
                         {{ format_comment(revision) }}
                     </td>
+                    {% if show_author %}
                     <td class="dashboard-author">
                         <a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a><br>
                         {% set revision_ip = revision.revisionip_set.first() %}
@@ -68,6 +75,7 @@
                             </div>
                         {% endif %}
                     </td>
+                    {% endif %}
                     {% if show_spam_submission %}
                     <td class="dashboard-spam">
                         {% set submissions = revision.akismet_submissions.all() %}
@@ -94,6 +102,16 @@
                     </td>
                     {% endif %}
                 </tr>
+                {% if spam_ban_page %}
+                <tr>
+                    <td colspan=5>
+                        {% with revision_from=revision.previous, revision_to=revision %}
+                            {% include "wiki/includes/revision_diff_table.html" %}
+                        {% endwith %}
+                    </td>
+                </tr>
+                {% endif %}
+
             {% endfor %}
         </tbody>
     </table>

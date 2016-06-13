@@ -118,14 +118,15 @@ def ban_user_and_cleanup(request, user_id):
                       'users/ban_user_and_cleanup_summary.html',
                       context)
 
-    else:
-        revisions = user.created_revisions.prefetch_related('document').defer('content', 'summary').order_by('-created')
-        revisions = paginate(request, revisions, per_page=10)
-
-        return render(request,
-                      'users/ban_user_and_cleanup.html',
-                      {'detail_user': user,
-                       'revisions': revisions})
+    revisions = user.created_revisions.prefetch_related('document').defer('content', 'summary').order_by('-created')
+    revisions = paginate(request, revisions, per_page=10)
+    return render(request,
+                  'users/ban_user_and_cleanup.html',
+                  {'detail_user': user,
+                   'revisions': revisions,
+                   'show_spam_submission': False,
+                   'show_author': False,
+                   'spam_ban_page': True})
 
 
 def user_detail(request, username):
