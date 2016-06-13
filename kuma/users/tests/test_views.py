@@ -180,6 +180,78 @@ class BanTestCase(UserTestCase):
         ok_(testuser.get_absolute_url() in resp['Location'])
 
 
+@pytest.mark.bans
+class BanAndCleanupTestCase(UserTestCase):
+    localizing_client = True
+
+    def test_ban_permission(self):
+        """The ban permission controls access to the ban and cleanup view."""
+        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username='testuser')
+
+        # testuser doesn't have ban permission, can't ban.
+        self.client.login(username='testuser',
+                          password='testpass')
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': admin.id})
+        resp = self.client.get(ban_url)
+        eq_(302, resp.status_code)
+        ok_(str(settings.LOGIN_URL) in resp['Location'])
+        self.client.logout()
+
+        # admin has ban permission, can ban.
+        self.client.login(username='admin',
+                          password='testpass')
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+        resp = self.client.get(ban_url)
+        eq_(200, resp.status_code)
+
+    def test_post_returns_summary_page(self):
+        """POSTing to the ban and cleanup url returns the summary page."""
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        self.client.login(username='admin', password='testpass')
+
+        summary_url = reverse('users.ban_and_cleanup',
+                              kwargs={'user_id': testuser.id})
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.post(ban_url)
+        eq_(200, resp.status_code)
+
+#     TODO: Phase II
+#    def test_post_bans_user(self):
+#        """POSTing to the ban and cleanup url bans user for "spam" reason."""
+#        testuser = self.user_model.objects.get(username='testuser')
+#        admin = self.user_model.objects.get(username='admin')
+#
+#        self.client.login(username='admin', password='testpass')
+#
+#        ban_url = reverse('users.ban_and_cleanup',
+#                          kwargs={'user_id': testuser.id})
+#
+#        resp = self.client.post(ban_url)
+#        eq_(200, resp.status_code)
+#
+#        testuser_banned = self.user_model.objects.get(username='testuser')
+#        ok_(not testuser_banned.is_active)
+#
+#        bans = UserBan.objects.filter(user=testuser,
+#                                      by=admin,
+#                                      reason='Spam')
+#        ok_(bans.count())
+#
+#    TODO: Phase III:
+#    def test_post_reverts_revisions(self):
+#    def test_post_deletes_new_pages(self):
+#
+#    TODO: Phase IV:
+#    def test_post_sends_email(self):
+
+
 class UserViewsTest(UserTestCase):
     localizing_client = True
 

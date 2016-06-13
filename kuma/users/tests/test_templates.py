@@ -10,6 +10,7 @@ from waffle.models import Flag
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
+from kuma.wiki.tests import revision as create_revision
 
 from . import UserTestCase
 from .test_views import TESTUSER_PASSWORD
@@ -409,3 +410,69 @@ class BanTestCase(UserTestCase):
         eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))
         for reason in reasons_to_ban_found:
             ok_(reason.text in reasons_to_ban_expected)
+
+
+@pytest.mark.bans
+class BanAndCleanupTestCase(UserTestCase):
+    def test_user_revisions_in_one_click_page_template(self):
+        """The user's revisions show up in the ban and cleanup template."""
+        testuser = self.user_model.objects.get(username='testuser')
+
+        # Create 3 revisions for testuser, titled 'Revision 1', 'Revision 2'...
+        revisions_expected = []
+        num_revisions = 3
+        for i in range(0, num_revisions):
+            new_revision = create_revision(title='Revision {}'.format(i), save=True)
+            revisions_expected.append(new_revision)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        revisions_found_text = ''
+        for rev in revisions_found:
+            revisions_found_text += rev.text_content()
+
+        eq_(len(revisions_found), len(revisions_expected))
+        # The title for each of the created revisions shows up in the template
+        for revision in revisions_expected:
+            ok_(revision.title in revisions_found_text)
+
+
+    def test_user_revisions_in_summary_page_template(self):
+        """The user's revisions show up in ban and cleanup summary template."""
+        testuser = self.user_model.objects.get(username='testuser')
+
+        # Create 3 revisions for testuser, titled 'Revision 1', 'Revision 2'...
+        revisions_expected = []
+        num_revisions = 3
+        for i in range(0, num_revisions):
+            new_revision = create_revision(title='Revision {}'.format(i), save=True)
+            revisions_expected.append(new_revision)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        resp = self.client.post(full_ban_url)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_reverted_text = ''
+        for rev in revisions_reverted:
+            revisions_reverted_text += rev.text_content()
+
+        eq_(len(revisions_reverted), len(revisions_expected))
+        # The title for each of the created revisions shows up in the template
+        for revision in revisions_expected:
+            ok_(revision.title in revisions_reverted_text)
+
+#    TODO: Phase III:
+#    def test_unreverted_changes_in_summary_page_template(self):
