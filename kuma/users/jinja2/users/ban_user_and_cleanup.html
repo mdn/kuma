@@ -42,14 +42,11 @@ Ban {{ detail_user }}
 
         <form action="{{ url('users.ban_and_cleanup',detail_user.id) }}" method="POST">
           {% csrf_token %}
-          <button type="submit">{{ _('Ban User') }}</button>
+          <button type="submit" class="negative">{{ _('Ban User') }}<i aria-hidden="true" class="icon-ban"></i></button>
+          <a href="{{ url('users.ban_user', detail_user.id) }}">Go to regular user ban page</a>
         </form>
-          {{ ban_link(detail_user, user) }} Go to regular user ban page
 
     </section><!-- /#docs-activity -->
-
-    <button class="button neutral">{{ _("Ban") }}</button>
-    <a href="#"> Go to regular user ban page</a>
 </section><!-- /#content-main -->
 
 {% endblock %}
