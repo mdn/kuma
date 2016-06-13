@@ -10,7 +10,7 @@ from waffle.models import Flag
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
-from kuma.wiki.tests import revision as create_revision
+from kuma.wiki.tests import revision as create_revision, document as create_document
 
 from . import UserTestCase
 from .test_views import TESTUSER_PASSWORD
@@ -417,12 +417,25 @@ class BanAndCleanupTestCase(UserTestCase):
     def test_user_revisions_in_one_click_page_template(self):
         """The user's revisions show up in the ban and cleanup template."""
         testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        # Create an oiginal revision on a document by the admin user
+        document = create_document(save=True)
+        original_revision = create_revision(
+            title='Revision 0',
+            document=document,
+            creator=admin,
+            save=True)
 
         # Create 3 revisions for testuser, titled 'Revision 1', 'Revision 2'...
         revisions_expected = []
         num_revisions = 3
-        for i in range(0, num_revisions):
-            new_revision = create_revision(title='Revision {}'.format(i), save=True)
+        for i in range(1, 1 + num_revisions):
+            new_revision = create_revision(
+                title='Revision {}'.format(i),
+                document=document,
+                creator=testuser,
+                save=True)
             revisions_expected.append(new_revision)
 
         self.client.login(username='admin', password='testpass')
@@ -442,17 +455,32 @@ class BanAndCleanupTestCase(UserTestCase):
         # The title for each of the created revisions shows up in the template
         for revision in revisions_expected:
             ok_(revision.title in revisions_found_text)
+        # The original revision created by the admin user is not in the template
+        ok_(original_revision.title not in revisions_found_text)
 
 
     def test_user_revisions_in_summary_page_template(self):
         """The user's revisions show up in ban and cleanup summary template."""
         testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        # Create an oiginal revision on a document by the admin user
+        document = create_document(save=True)
+        original_revision = create_revision(
+            title='Revision 0',
+            document=document,
+            creator=admin,
+            save=True)
 
         # Create 3 revisions for testuser, titled 'Revision 1', 'Revision 2'...
         revisions_expected = []
         num_revisions = 3
-        for i in range(0, num_revisions):
-            new_revision = create_revision(title='Revision {}'.format(i), save=True)
+        for i in range(1, 1 + num_revisions):
+            new_revision = create_revision(
+                title='Revision {}'.format(i),
+                document=document,
+                creator=testuser,
+                save=True)
             revisions_expected.append(new_revision)
 
         self.client.login(username='admin', password='testpass')

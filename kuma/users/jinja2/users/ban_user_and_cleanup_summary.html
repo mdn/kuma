@@ -24,8 +24,8 @@
     <div id="revisions-reverted">
       {% for revision in revisions_reverted %}
         <li>
-          <a href="{{ url('wiki.document', revision.document.slug) }}">{{ revision.document.title }}</a>
-          <a href="{{ url('wiki.document', revision.document.slug) }}" class="button">
+          <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ revision.title }}</a>
+          <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}" class="button">
             {{ _('View Page') }}
             <i aria-hidden="true" class="icon-circle-arrow-right"></i>
           </a>
@@ -45,7 +45,7 @@
             <a href="{{ url('wiki.revision', revision_needing_follow_up.document.slug, revision_needing_follow_up.id) }}">
               {{ revision_needing_follow_up.document.title }}
             </a>
-            <a href="{{ url('wiki.revision', revision_needing_follow_up.document.slug, revision_needing_follow_up.id) }}" class="button">
+            <a href="{{ url('wiki.document', revision_needing_follow_up.document.slug) }}" class="button">
               {{ _('View Page') }}
               <i aria-hidden="true" class="icon-circle-arrow-right"></i>
             </a>
