@@ -37,8 +37,8 @@ Ban {{ detail_user }}
     </section><!-- /#user-head -->
 
     <section id="docs-activity" class="user-section">
-        {# TODO: Do we really want to paginate here? Probably need to paginate only for revisions page. #}
-        {% include "dashboards/includes/revision_dashboard_body.html" %}
+        {# TODO: Do we really want to paginate here? #}
+        {% include "users/includes/user_revision_history_form.html" %}
 
         <form action="{{ url('users.ban_and_cleanup',detail_user.id) }}" method="POST">
           {% csrf_token %}

@@ -104,7 +104,6 @@ def revisions(request):
             request.user.is_authenticated() and
             request.user.has_perm('wiki.add_revisionakismetsubmission')
         ),
-        'show_author': True,
     }
 
     # Serve the response HTML conditionally upon request type
