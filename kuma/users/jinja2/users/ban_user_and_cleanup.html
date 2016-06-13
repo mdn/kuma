@@ -30,7 +30,6 @@ Ban {{ detail_user }}
         </h1>
 
         <div class="user-buttons">
-          {{ ban_link(detail_user, user) }} Go to regular user ban page
 
           {% with accounts=social_accounts(detail_user) %}
             {% include "users/includes/user_profile_data.html" %}
@@ -41,6 +40,13 @@ Ban {{ detail_user }}
     <section id="docs-activity" class="user-section">
         {# TODO: Do we really want to paginate here? Probably need to paginate only for revisions page. #}
         {% include "dashboards/includes/revision_dashboard_body.html" %}
+
+        <form action="{{ url('users.ban_and_cleanup',detail_user.id) }}" method="POST">
+          {% csrf_token %}
+          <button type="submit">{{ _('Ban User') }}</button>
+        </form>
+          {{ ban_link(detail_user, user) }} Go to regular user ban page
+
     </section><!-- /#docs-activity -->
 
 </section><!-- /#content-main -->

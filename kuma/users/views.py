@@ -85,6 +85,7 @@ def ban_user(request, user_id):
                    'common_reasons': common_reasons})
 
 
+@permission_required('users.add_userban')
 def ban_user_and_cleanup(request, user_id):
     """
     A page to ban a user for the reason of "Spam" and mark the user's revisions
@@ -95,13 +96,36 @@ def ban_user_and_cleanup(request, user_id):
     except User.DoesNotExist:
         raise Http404
 
-    revisions = user.created_revisions.prefetch_related('document').defer('content', 'summary').order_by('-created')
-    revisions = paginate(request, revisions, per_page=10)
+    if request.method == 'POST':
+#        ban = UserBan(user=user,
+#                      by=request.user,
+#                      reason='Spam',
+#                      is_active=True)
+#        ban.save()
 
-    return render(request,
-                  'users/ban_user_and_cleanup.html',
-                  {'detail_user': user,
-                   'revisions': revisions})
+        # TODO: In the future this will take the revisions out of request.POST
+        # and either revert them or not. For now list all of the revisions
+        revisions_reverted = user.created_revisions.prefetch_related('document')\
+                                 .defer('content', 'summary').order_by('-created')
+        revisions_needing_follow_up = revisions_reverted
+
+        context = {'detail_user': user,
+                   'form': UserBanForm(),
+                   'revisions_reverted': revisions_reverted,
+                   'revisions_needing_follow_up': revisions_needing_follow_up}
+
+        return render(request,
+                      'users/ban_user_and_cleanup_summary.html',
+                      context)
+
+    else:
+        revisions = user.created_revisions.prefetch_related('document').defer('content', 'summary').order_by('-created')
+        revisions = paginate(request, revisions, per_page=10)
+
+        return render(request,
+                      'users/ban_user_and_cleanup.html',
+                      {'detail_user': user,
+                       'revisions': revisions})
 
 
 def user_detail(request, username):
