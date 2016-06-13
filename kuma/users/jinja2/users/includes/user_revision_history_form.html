@@ -9,13 +9,11 @@
                 <th class="dashboard-revision">{{ _('Revision') }}</th>
                 <th class="dashboard-title">{{ _('Title') }}</th>
                 <th class="dashboard-comment">{{ _('Comment') }}</th>
-                {% if show_author %}
-                <th class="dashboard-author">{{ _('Author') }}{% if show_ips %} <button id="show_ips_btn">{{ _('Toggle IPs') }}</button>{% endif %}</th>
-                {% endif %}
+                <th class="dashboard-tags">{{ _('Tags') }}</th>
             </tr>
         </thead>
-        <tbody>
-            {% for revision in revisions %}
+        {% for revision in revisions %}
+            <tbody>
                 {% set previous_id = revision.previous.id %}
                 {% set revision_url = revision.document.get_absolute_url() %}
                 <tr
@@ -36,25 +34,28 @@
                     <td class="dashboard-comment">
                         {{ format_comment(revision) }}
                     </td>
+                    <td class="dashboard-tags">
+                        {% set tags = revision.document.tags.all().order_by('name') %}
+                        {% include "wiki/includes/document_tag.html" %}
+                    </td>
                 </tr>
                 <tr>
                     <td colspan=5>
                         {% if previous_id %}
                             {% with revision_from=revision.previous, revision_to=revision %}
+                              <div class="dashboard-compare">
                                 {% include "wiki/includes/revision_diff_table.html" %}
+                              </div>
                             {% endwith %}
                         {% endif %}
                     </td>
                 </tr>
-
-            {% endfor %}
-        </tbody>
+            </tbody>
+        {% endfor %}
     </table>
 
 {% else: %}
-
-    <p>{{ _('There are no revisions from this user.') }}</p>
-
+    <p>{{ _('This user has not created any revisions.') }}</p>
 {% endif %}
 
 {{ revisions|paginator }}
