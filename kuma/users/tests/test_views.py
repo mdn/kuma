@@ -207,6 +207,29 @@ class BanAndCleanupTestCase(UserTestCase):
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
 
+    def test_ban_nonexistent_user(self):
+        """GETs and POSTs to ban_and_cleanup for nonexistent user return 404."""
+        testuser = self.user_model.objects.get(username='testuser')
+        testuser2 = self.user_model.objects.get(username='testuser2')
+
+        # GET request
+        self.client.login(username='admin',
+                          password='testpass')
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+        testuser.delete()
+        resp = self.client.get(ban_url)
+        eq_(404, resp.status_code)
+
+        # POST request
+        self.client.login(username='admin',
+                          password='testpass')
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser2.id})
+        testuser2.delete()
+        resp = self.client.post(ban_url)
+        eq_(404, resp.status_code)
+
     def test_post_returns_summary_page(self):
         """POSTing to the ban and cleanup url returns the summary page."""
         testuser = self.user_model.objects.get(username='testuser')
