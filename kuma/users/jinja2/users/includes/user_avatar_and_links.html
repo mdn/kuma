@@ -1,41 +1,4 @@
-        {% if detail_user.title or detail_user.organization or detail_user.location or detail_user.irc_nickname %}
-        <ul class="user-info">
-          {% if detail_user.title %}<li class="title">{{ detail_user.title }}</li>{% endif %}
-          {% if detail_user.organization %}<li class="org">{{ detail_user.organization }}</li>{% endif %}
-          {% if detail_user.location %}<li class="loc">{{ detail_user.location }}</li>{% endif %}
-          {% if detail_user.irc_nickname %}<li class="irc">IRC: {{ detail_user.irc_nickname }}</li>{% endif %}
-        </ul>
-        {% endif %}
-
-        {% set tag_ns = 'profile:interest:' %}
-        {% set tags = detail_user.tags.all_ns(tag_ns) %}
-        {% if tags|length %}
-        <div class="user-tags">
-          <h2>{{ _("Interests") }}</h2>
-          <ul>
-            {% for tag in tags %}
-              <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-
-        {% set tag_ns = 'profile:expertise:' %}
-        {% set tags = detail_user.tags.all_ns(tag_ns) %}
-        {% if tags|length %}
-        <div class="user-tags">
-          <h2>{{ _("Areas of Expertise") }}</h2>
-          <ul>
-            {% for tag in tags %}
-              <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-        <div class="user-since">{% trans date_joined=datetimeformat(detail_user.date_joined, format='date') %}Member since {{ date_joined }}{% endtrans %}</div>
-      </div>
-      <div class="column-2 ">
-        <figure>
+<figure>
           <img src="{{ gravatar_url(detail_user.email, size=200) }}" alt="{{ detail_user.username }}" width="200" height="200" class="user-photo avatar" />
         </figure>
 
@@ -70,3 +33,4 @@
           <li class="facebook"><i class="icon-facebook" aria-hidden="true"></i><a href="{{ detail_user.facebook_url }}" rel="me external" class="url">{{ _("Facebook") }}</a></li>
         {% endif %}
 
+        </ul>

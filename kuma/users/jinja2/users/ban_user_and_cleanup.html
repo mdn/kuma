@@ -25,18 +25,13 @@
   <section id="content-main" class="full">
     <section id="user-head" class="column-container column-container-reverse vcard user-head">
       <div class="column-10">
-        <h1 class="user-title">
-            <span class="nickname">{{ detail_user.username }}</span>
-            {% if detail_user.fullname %}
-                <b class="user-title-fullname">(<span class="fn">{{ detail_user.fullname }}</span>)</b>
-            {% endif %}
-        </h1>
-
-        <div class="user-buttons">
-          {% with accounts=social_accounts(detail_user) %}
-            {% include "users/includes/user_profile_data.html" %}
-          {% endwith %}
-        </div>
+        {% include "users/includes/user_title_info.html" %}
+      </div>
+      <div class="column-2 ">
+        {% with accounts=social_accounts(detail_user) %}
+          {% include "users/includes/user_avatar_and_links.html" %}
+        {% endwith %}
+      </div>
     </section><!-- /#user-head -->
 
     <section id="docs-activity" class="user-section">
