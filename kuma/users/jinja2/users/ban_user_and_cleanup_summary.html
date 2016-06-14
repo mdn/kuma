@@ -22,6 +22,7 @@
 
     <h2>The following revisions were reverted:</h2>
     <div id="revisions-reverted">
+      {% if revisions_reverted %}
       {% for revision in revisions_reverted %}
         <li>
           <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ revision.title }}</a>
@@ -35,11 +36,14 @@
           </a>
         </li>
       {% endfor %}
+      {% else %}
+      <p>The user did not have any revisions that were reverted.</p>
+      {% endif %}
     </div>
 
     <h2>Pages needing follow up:</h2>
-    {% if revisions_needing_follow_up %}
-      <div id="revisions-followup">
+    <div id="revisions-followup">
+      {% if revisions_needing_follow_up %}
         {% for revision_needing_follow_up in revisions_needing_follow_up %}
           <li>
             <a href="{{ url('wiki.revision', revision_needing_follow_up.document.slug, revision_needing_follow_up.id) }}">
@@ -59,9 +63,9 @@
             </a>
           </li>
         {% endfor %}
-      </div>
-    {% else %}
-      The user did not have any revisions needing follow-up.
-    {% endif %}
+      {% else %}
+        <p>The user did not have any revisions needing follow-up.</p>
+      {% endif %}
+    </div>
   </section>
 {% endblock content %}

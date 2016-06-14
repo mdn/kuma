@@ -458,6 +458,33 @@ class BanAndCleanupTestCase(UserTestCase):
         # The original revision created by the admin user is not in the template
         ok_(original_revision.title not in revisions_found_text)
 
+    def test_no_user_revisions_in_one_click_page_template(self):
+        """If the user has no revisions, it should be stated in the template."""
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        # Create an oiginal revision on a document by the admin user
+        document = create_document(save=True)
+        original_revision = create_revision(
+            title='Revision 0',
+            document=document,
+            creator=admin,
+            save=True)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        no_revisions = page.find('#docs-activity p')
+
+        eq_(len(revisions_found), 0)
+        ok_("This user has not created any revisions." in no_revisions.text())
+
     def test_user_revisions_in_summary_page_template(self):
         """The user's revisions show up in ban and cleanup summary template."""
         testuser = self.user_model.objects.get(username='testuser')
@@ -502,6 +529,42 @@ class BanAndCleanupTestCase(UserTestCase):
             ok_(revision.title in revisions_reverted_text)
         # The title for the original revision is not in the template
         ok_(original_revision.title not in revisions_reverted_text)
+
+    def test_no_user_revisions_summary_page_template(self):
+        """If user has no revisions, it should be stated in summary template."""
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        # Create an oiginal revision on a document by the admin user
+        document = create_document(save=True)
+        original_revision = create_revision(
+            title='Revision 0',
+            document=document,
+            creator=admin,
+            save=True)
+
+        # The expected text
+        exp_reverted = "The user did not have any revisions that were reverted."
+        exp_followup = "The user did not have any revisions needing follow-up."
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        resp = self.client.post(full_ban_url)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_followup = page.find('#revisions-followup li')
+        revisions_reverted_section = page.find('#revisions-reverted')
+        revisions_followup_section = page.find('#revisions-followup')
+
+        eq_(len(revisions_reverted), 0)
+        eq_(len(revisions_followup), 0)
+        ok_(exp_reverted in revisions_reverted_section.text())
+        ok_(exp_followup in revisions_followup_section.text())
 
 #    TODO: Phase III:
 #    def test_unreverted_changes_in_summary_page_template(self):
