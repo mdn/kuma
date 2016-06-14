@@ -96,12 +96,19 @@ def ban_user_and_cleanup(request, user_id):
     except User.DoesNotExist:
         raise Http404
 
+    # Is this user already banned?
+    user_ban = UserBan.objects.filter(user=user, is_active=True)
+
     if request.method == 'POST':
-        # ban = UserBan(user=user,
-        #     by=request.user,
-        #     reason='Spam',
-        #     is_active=True)
-        #     ban.save()
+        # If the user is not banned, ban user; else, update'by' and 'reason
+        if not user_ban.exists():
+            ban = UserBan(user=user,
+                          by=request.user,
+                          reason='Spam',
+                          is_active=True)
+            ban.save()
+        else:
+            user_ban.update(by=request.user, reason='Spam')
 
         # TODO: In the future this will take the revisions out of request.POST
         # and either revert them or not. For now list all of the revisions
@@ -124,6 +131,7 @@ def ban_user_and_cleanup(request, user_id):
     return render(request,
                   'users/ban_user_and_cleanup.html',
                   {'detail_user': user,
+                   'user_banned': user_ban,
                    'revisions': revisions})
 
 

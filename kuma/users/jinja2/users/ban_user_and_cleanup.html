@@ -18,7 +18,11 @@
 <section id="content">
 {# TODO: Add an if block if the user has already been identified as a spammer #}
 
-<h1>Identify <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> as a spammer?</h1>
+{% if not user_banned %}
+  <h1>Identify <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> as a spammer?</h1>
+{% else %}
+  <h1><a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> has already been banned. You may review their revisions below.</h1>
+{% endif %}
 
 <div class="wrap">
 
@@ -42,10 +46,15 @@
     <section id="docs-activity" class="user-section">
         {% include "users/includes/user_revision_history_form.html" %}
 
-        <form action="{{ url('users.ban_and_cleanup',detail_user.id) }}" method="POST">
+        <form id="ban-and-cleanup-form" action="{{ url('users.ban_and_cleanup',detail_user.id) }}" method="POST">
           {% csrf_token %}
           <p>
-            <button type="submit" class="button negative ban-link">Ban User for Spam</button> <a href="{{ url('users.ban_user',detail_user.id) }}">Ban user for other reasons.</a>
+            {% if not user_banned or revisions %}
+              <button type="submit" class="button negative ban-link">
+                {% if not user_banned and revisions %}Ban User for Spam{% else %}Revert revisions{% endif %}
+              </button>
+              <a href="{{ url('users.ban_user',detail_user.id) }}">Ban user for other reasons.</a>
+            {% endif %}
           </p>
 
         </form>
