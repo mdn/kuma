@@ -132,7 +132,8 @@ def ban_user_and_cleanup(request, user_id):
                   'users/ban_user_and_cleanup.html',
                   {'detail_user': user,
                    'user_banned': user_ban,
-                   'revisions': revisions})
+                   'revisions': revisions,
+                   'on_ban_page': True})
 
 
 def user_detail(request, username):

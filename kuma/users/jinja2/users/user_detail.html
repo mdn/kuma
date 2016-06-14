@@ -22,51 +22,14 @@
   <section id="content-main" class="full">
     <section id="user-head" class="column-container column-container-reverse vcard user-head">
       <div class="column-10">
-        <h1 class="user-title">
-            <span class="nickname">{{ detail_user.username }}</span>
-            {% if detail_user.fullname %}
-                <b class="user-title-fullname">(<span class="fn">{{ detail_user.fullname }}</span>)</b>
-            {% endif %}
-            {% if user.is_authenticated() and is_me %}
-                {% include 'socialaccount/snippets/login_service_icon.html' %}
-            {% endif %}
-        </h1>
-
-        <div class="user-buttons">
-          {% if not is_me and user.has_perm('users.add_userban') %}
-            {{ ban_link(detail_user, user) }}
-          {% endif %}
-
-          {% if user.is_superuser %}
-            {{ admin_link(detail_user) }}
-          {% endif %}
-
-          <!-- Only shown for the user and admins -->
-          {% if detail_user.allows_editing_by(user) %}
-              <a id="edit-user" href="{{ url('users.user_edit', username=detail_user.username) }}" class="button neutral">{{ _("Edit") }}<i aria-hidden="true" class="icon-pencil"></i></a>
-              {% if is_me %}
-              <button id="advanced-menu" class="neutral only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
-              <div class="submenu js-submenu" id="advanced-menu-submenu">
-                <!-- this page -->
-                <div class="submenu-column">
-                  <div class="title">{{ _('Manage') }}</div>
-                  <ul>
-                    <li><a href="{{ url('socialaccount_connections') }}" class="neutral">{{ _("Account connections") }}</a></li>
-                    <li><a href="{{ url('authkeys.list') }}" class="neutral">{{ _("API keys") }}</a></li>
-                    <li><a href="{{ url('account_email') }}" class="neutral">{{ _("Email addresses") }}</a></li>
-                  </ul>
-                </div>
-              </div>
-              {% endif %}
-          {% endif %}
-        </div>
-
-     {% with accounts=social_accounts(detail_user) %}
-       {% include "users/includes/user_profile_data.html" %}
-     {% endwith %}
-
+        {% include "users/includes/user_title_info.html" %}
       </div>
-    </section>
+      <div class="column-2 ">
+        {% with accounts=social_accounts(detail_user) %}
+          {% include "users/includes/user_avatar_and_links.html" %}
+        {% endwith %}
+      </div>
+    </section><!-- /#user-head -->
 
           <section id="docs-activity" class="user-section">
             <header>
@@ -112,7 +75,7 @@
               <tfoot>
               </tfoot>
             </table>
-          </section>
+          </section><!-- /#docs-activity -->
 
   </section><!-- /#content-main -->
 </div>

@@ -4,7 +4,7 @@
 
 {% block bodyclass %}user ban-user{% endblock %}
 
-{% block title %}Ban {{ detail_user }}{% endblock %}
+{% block title %}{{ _('Ban') }} {{ detail_user }}{% endblock %}
 {% set styles = ('dashboards', 'jquery-ui') %}
 {% set classes = 'compare' %}
 
@@ -19,7 +19,7 @@
 {# TODO: Add an if block if the user has already been identified as a spammer #}
 
 {% if not user_banned %}
-  <h1>Identify <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> as a spammer?</h1>
+  <h1>{{ _('Identify') }} <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> {{ _('as a spammer?') }}</h1>
 {% else %}
   <h1><a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> has already been banned. You may review their revisions below.</h1>
 {% endif %}
@@ -29,18 +29,13 @@
   <section id="content-main" class="full">
     <section id="user-head" class="column-container column-container-reverse vcard user-head">
       <div class="column-10">
-        <h1 class="user-title">
-            <span class="nickname">{{ detail_user.username }}</span>
-            {% if detail_user.fullname %}
-                <b class="user-title-fullname">(<span class="fn">{{ detail_user.fullname }}</span>)</b>
-            {% endif %}
-        </h1>
-
-        <div class="user-buttons">
-          {% with accounts=social_accounts(detail_user) %}
-            {% include "users/includes/user_profile_data.html" %}
-          {% endwith %}
-        </div>
+        {% include "users/includes/user_title_info.html" %}
+      </div>
+      <div class="column-2 ">
+        {% with accounts=social_accounts(detail_user) %}
+          {% include "users/includes/user_avatar_and_links.html" %}
+        {% endwith %}
+      </div>
     </section><!-- /#user-head -->
 
     <section id="docs-activity" class="user-section">
@@ -51,9 +46,9 @@
           <p>
             {% if not user_banned or revisions %}
               <button type="submit" class="button negative ban-link">
-                {% if not user_banned and revisions %}Ban User for Spam{% else %}Revert revisions{% endif %}
+                {% if not user_banned and revisions %}{{ _('Ban User for Spam') }}{% else %}{{ _('Revert revisions') }}{% endif %}
               </button>
-              <a href="{{ url('users.ban_user',detail_user.id) }}">Ban user for other reasons.</a>
+              <a href="{{ url('users.ban_user',detail_user.id) }}">{{ _('Ban user for other reasons.') }}</a>
             {% endif %}
           </p>
 
@@ -63,4 +58,3 @@
 </section><!-- /#content-main -->
 
 {% endblock %}
-

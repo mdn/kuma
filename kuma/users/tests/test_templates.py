@@ -481,7 +481,7 @@ class BanAndCleanupTestCase(UserTestCase):
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
-        no_revisions = page.find('#docs-activity p')
+        no_revisions = page.find('#docs-activity div')
 
         eq_(len(revisions_found), 0)
         ok_("This user has not created any revisions." in no_revisions.text())
