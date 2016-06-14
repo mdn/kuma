@@ -10,6 +10,7 @@
                 <th class="dashboard-title">{{ _('Title') }}</th>
                 <th class="dashboard-comment">{{ _('Comment') }}</th>
                 <th class="dashboard-tags">{{ _('Tags') }}</th>
+                <th class="dashboard-history-link">{{ _('History') }}</th>
             </tr>
         </thead>
         {% for revision in revisions %}
@@ -37,6 +38,10 @@
                     <td class="dashboard-tags">
                         {% set tags = revision.document.tags.all().order_by('name') %}
                         {% include "wiki/includes/document_tag.html" %}
+                    </td>
+                    <td class="dashboard-history-link">
+                        <a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="history">{{ _("View page
+                        history") }}</a>
                     </td>
                 </tr>
                 <tr>
