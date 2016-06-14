@@ -14,6 +14,7 @@ from kuma.wiki.tests import revision as create_revision, document as create_docu
 
 from . import UserTestCase
 from .test_views import TESTUSER_PASSWORD
+from ..models import UserBan
 
 
 def add_persona_verify_response(mock_requests, data):
@@ -465,7 +466,7 @@ class BanAndCleanupTestCase(UserTestCase):
 
         # Create an oiginal revision on a document by the admin user
         document = create_document(save=True)
-        original_revision = create_revision(
+        create_revision(
             title='Revision 0',
             document=document,
             creator=admin,
@@ -484,6 +485,68 @@ class BanAndCleanupTestCase(UserTestCase):
 
         eq_(len(revisions_found), 0)
         ok_("This user has not created any revisions." in no_revisions.text())
+
+    def test_banned_user_one_click_page_template(self):
+        """Test the template for a user that has already been banned."""
+        testuser = self.user_model.objects.get(username='testuser')
+        testuser2 = self.user_model.objects.get(username='testuser2')
+        admin = self.user_model.objects.get(username='admin')
+
+        # Create an oiginal revision on a document by the admin user
+        document = create_document(save=True)
+        create_revision(
+            title='Revision 0',
+            document=document,
+            creator=admin,
+            save=True)
+        # There are some revisions made by testuser; none by testuser2
+        num_revisions = 3
+        for i in range(1, 1 + num_revisions):
+            create_revision(
+                title='Revision {}'.format(i),
+                document=document,
+                creator=testuser,
+                save=True)
+
+        # Ban both testuser and testuser2
+        UserBan.objects.create(user=testuser, by=admin,
+                               reason='Banned by unit test.',
+                               is_active=True)
+        UserBan.objects.create(user=testuser2, by=admin,
+                               reason='Banned by unit test.',
+                               is_active=True)
+
+        self.client.login(username='admin', password='testpass')
+
+        # For testuser (banned, but revisions need to be reversed) the button
+        # on the form should read "Revert revisions"
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+
+        eq_(len(revisions_found), num_revisions)
+        eq_(ban_button.text(), "Revert revisions")
+
+        # For testuser2 (banned, has no revisions needing to be reversed) there
+        # should be no button on the form
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser2.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+
+        eq_(len(revisions_found), 0)
+        eq_(len(ban_button), 0)
 
     def test_user_revisions_in_summary_page_template(self):
         """The user's revisions show up in ban and cleanup summary template."""
@@ -537,7 +600,7 @@ class BanAndCleanupTestCase(UserTestCase):
 
         # Create an oiginal revision on a document by the admin user
         document = create_document(save=True)
-        original_revision = create_revision(
+        create_revision(
             title='Revision 0',
             document=document,
             creator=admin,

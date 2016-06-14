@@ -219,27 +219,57 @@ class BanAndCleanupTestCase(UserTestCase):
         resp = self.client.post(ban_url)
         eq_(200, resp.status_code)
 
-#     TODO: Phase II
-#    def test_post_bans_user(self):
-#        """POSTing to the ban and cleanup url bans user for "spam" reason."""
-#        testuser = self.user_model.objects.get(username='testuser')
-#        admin = self.user_model.objects.get(username='admin')
-#
-#        self.client.login(username='admin', password='testpass')
-#
-#        ban_url = reverse('users.ban_and_cleanup',
-#                          kwargs={'user_id': testuser.id})
-#
-#        resp = self.client.post(ban_url)
-#        eq_(200, resp.status_code)
-#
-#        testuser_banned = self.user_model.objects.get(username='testuser')
-#        ok_(not testuser_banned.is_active)
-#
-#        bans = UserBan.objects.filter(user=testuser,
-#                                      by=admin,
-#                                      reason='Spam')
-#        ok_(bans.count())
+    def test_post_bans_user(self):
+        """POSTing to the ban and cleanup url bans user for "spam" reason."""
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        self.client.login(username='admin', password='testpass')
+
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.post(ban_url)
+        eq_(200, resp.status_code)
+
+        testuser_banned = self.user_model.objects.get(username='testuser')
+        ok_(not testuser_banned.is_active)
+
+        bans = UserBan.objects.filter(user=testuser,
+                                      by=admin,
+                                      reason='Spam')
+        ok_(bans.count())
+
+    def test_post_banned_user(self):
+        """POSTing to ban and cleanup url for a banned user updates UserBan."""
+        testuser = self.user_model.objects.get(username='testuser')
+        testuser2 = self.user_model.objects.get(username='testuser2')
+        admin = self.user_model.objects.get(username='admin')
+
+        UserBan.objects.create(user=testuser, by=testuser2,
+                               reason='Banned by unit test.',
+                               is_active=True)
+
+        self.client.login(username='admin', password='testpass')
+
+        ban_url = reverse('users.ban_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+
+        resp = self.client.post(ban_url)
+        eq_(200, resp.status_code)
+
+        ok_(not testuser.is_active)
+
+        bans = UserBan.objects.filter(user=testuser)
+
+        # Assert that the ban exists, and 'by' and 'reason' fields are updated
+        ok_(bans.count())
+        eq_(bans.first().is_active, True)
+        eq_(bans.first().by, admin)
+        eq_(bans.first().reason, 'Spam')
+
+#    TODO: Phase II:
+#    def test_post_submits_revisions_to_akismet_as_spam(self):
 #
 #    TODO: Phase III:
 #    def test_post_reverts_revisions(self):
