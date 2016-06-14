@@ -4,7 +4,10 @@
 
 {% block bodyclass %}user ban-user{% endblock %}
 
-{% block title %}Ban {{ detail_user }}{% endblock %}
+{% block title %}
+  {{ _('Ban') }}
+  {{ detail_user }}
+{% endblock %}
 {% set styles = ('dashboards', 'jquery-ui') %}
 {% set classes = 'compare' %}
 
@@ -16,28 +19,39 @@
 
 {% block content %}
   <section id="content">
-    <div>
-      {{ detail_user }} identified as a spammer.
-    </div>
+    <h1>
+      <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a>
+      {{ _('identified as a spammer.') }}
+    </h1>
 
-    <h2>The following revisions were reverted:</h2>
+    <h2>
+      {{ _('The following revisions were reverted:') }}
+    </h2>
     <div id="revisions-reverted">
-      {% for revision in revisions_reverted %}
-        <li>
-          <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ revision.title }}</a>
-          <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}" class="button">
-            {{ _('View Page') }}
-            <i aria-hidden="true" class="icon-circle-arrow-right"></i>
-          </a>
-          <a href="{{ url('wiki.document_revisions', revision.document.slug) }}" class="button">
-             History
-            <i aria-hidden="true" class="icon-book"></i>
-          </a>
-        </li>
-      {% endfor %}
+    {% if revisions_needing_follow_up %}
+        {% for revision in revisions_reverted %}
+          <li>
+            <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ revision.title }}</a>
+            <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}" class="button">
+              {{ _('View Page') }}
+              <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+            </a>
+            <a href="{{ url('wiki.document_revisions', revision.document.slug) }}" class="button">
+               {{ _('History') }}
+              <i aria-hidden="true" class="icon-book"></i>
+            </a>
+          </li>
+        {% endfor %}
+    {% else %}
+      {{ _('The user did not have any revisions that were reverted.') }}
+    {% endif %}
     </div>
 
-    <h2>Pages needing follow up:</h2>
+    <br /><br />
+
+    <h2>
+      {{ _('Pages needing follow up:') }}
+    </h2>
     {% if revisions_needing_follow_up %}
       <div id="revisions-followup">
         {% for revision_needing_follow_up in revisions_needing_follow_up %}
@@ -50,18 +64,18 @@
               <i aria-hidden="true" class="icon-circle-arrow-right"></i>
             </a>
             <a href="{{ url('wiki.document_revisions', revision_needing_follow_up.document.slug) }}" class="button">
-              History
+              {{ _('History') }}
               <i aria-hidden="true" class="icon-book"></i>
             </a>
             <a href="{{ url('wiki.delete_document', revision_needing_follow_up.document.slug) }}" class="button">
-              Delete
+              {{ _('Delete') }}
               <i aria-hidden="true" class="icon-trash"></i>
             </a>
           </li>
         {% endfor %}
       </div>
     {% else %}
-      The user did not have any revisions needing follow-up.
+      {{ _('The user did not have any revisions needing follow-up.') }}
     {% endif %}
   </section>
 {% endblock content %}

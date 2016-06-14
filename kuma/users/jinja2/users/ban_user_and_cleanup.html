@@ -4,7 +4,7 @@
 
 {% block bodyclass %}user ban-user{% endblock %}
 
-{% block title %}Ban {{ detail_user }}{% endblock %}
+{% block title %}{{ _('Ban') }} {{ detail_user }}{% endblock %}
 {% set styles = ('dashboards', 'jquery-ui') %}
 {% set classes = 'compare' %}
 
@@ -18,7 +18,11 @@
 <section id="content">
 {# TODO: Add an if block if the user has already been identified as a spammer #}
 
-<h1>Identify <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> as a spammer?</h1>
+<h1>
+  {{ _('Identify') }}
+  <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a>
+  {{ _('as a spammer?') }}
+</h1>
 
 <div class="wrap">
 
@@ -40,7 +44,12 @@
         <form action="{{ url('users.ban_and_cleanup',detail_user.id) }}" method="POST">
           {% csrf_token %}
           <p>
-            <button type="submit" class="button negative ban-link">Ban User for Spam</button> <a href="{{ url('users.ban_user',detail_user.id) }}">Ban user for other reasons.</a>
+            <button type="submit" class="button negative ban-link">
+              {{ _('Ban User for Spam') }}
+            </button>
+            <a href="{{ url('users.ban_user',detail_user.id) }}">
+              {{ _('Ban user for other reasons.') }}
+            </a>
           </p>
 
         </form>
@@ -49,4 +58,3 @@
 </section><!-- /#content-main -->
 
 {% endblock %}
-
