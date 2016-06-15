@@ -95,12 +95,7 @@ def user_detail(request, username):
         return render(request, '403.html',
                       {'reason': 'bannedprofile'}, status=403)
 
-    docs_feed_items = None
-
-    context = {
-        'detail_user': detail_user,
-        'docs_feed_items': docs_feed_items,
-    }
+    context = {'detail_user': detail_user}
     return render(request, 'users/user_detail.html', context)
 
 
