@@ -26,7 +26,7 @@ def revisions(request):
     revisions = (Revision.objects.prefetch_related('creator__bans',
                                                    'document',
                                                    'akismet_submissions')
-                                 .order_by('-created')
+                                 .order_by('-id')
                                  .defer('content'))
 
     query_kwargs = False
