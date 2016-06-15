@@ -25,9 +25,9 @@ def gravatar_url(email, secure=True, size=220, rating='pg',
 
 @library.global_function
 @contextfunction
-def ban_link(context, ban_user, banner_user):
+def ban_links(context, ban_user, banner_user):
     """Returns a link to ban a user"""
-    link = ''
+    links = ''
     if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
         active_ban = ban_user.active_ban
         if active_ban:
@@ -45,7 +45,12 @@ def ban_link(context, ban_user, banner_user):
             link = ('<a href="%s" class="button negative ban-link">%s'
                     '<i aria-hidden="true" class="icon-ban"></i></a>'
                     % (url, ugettext('Ban User')))
-    return Markup(link)
+        url_ban_cleanup = reverse('users.ban_and_cleanup', kwargs={'user_id': ban_user.id})
+        link_cleanup = ('<a href="%s" class="button negative ban-link">%s'
+                    '<i aria-hidden="true" class="icon-ban"></i></a>'
+                    % (url_ban_cleanup, ugettext('Ban User and Cleanup')))
+        links = link_cleanup + ' ' + link
+    return Markup(links)
 
 
 @library.global_function

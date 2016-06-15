@@ -10,7 +10,7 @@
 
 <div class="user-buttons">
   {% if not is_me and user.has_perm('users.add_userban') and not on_ban_page %}
-    {{ ban_link(detail_user, user) }}
+    {{ ban_links(detail_user, user) }}
   {% endif %}
 
   {% if user.is_superuser %}
