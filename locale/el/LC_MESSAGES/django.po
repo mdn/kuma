@@ -1,17 +1,18 @@
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Γιώργος Φιωτάκης <fiotakis@otenet.gr>\n"
+"PO-Revision-Date: 2016-06-12 13:40+0000\n"
+"Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Translate Toolkit 1.6.0\n"
+"X-Generator: Pontoon\n"
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
 msgid "Permission Denied"
@@ -43,9 +44,9 @@ msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr ""
 
 #: jinja2/403.html:50
-#, fuzzy, python-format
+#, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
-msgstr "<li><a href=\"/logout\">Αποσυνδεθείτε</a> για να προσπαθήσετε ξανά.</li>"
+msgstr "<li><a href=\"%(logout_url)s\">Αποσυνδεθείτε</a> για να δοκιμάσετε ξανά.</li>"
 
 #: jinja2/403.html:54 jinja2/handlers/400.html:36
 #, fuzzy, python-format
@@ -95,7 +96,7 @@ msgstr ""
 
 #: jinja2/base.html:75
 msgid "Select language"
-msgstr ""
+msgstr "Επιλέξτε γλώσσα"
 
 #: jinja2/base.html:77
 msgid "Skip to search"
@@ -103,7 +104,7 @@ msgstr ""
 
 #: jinja2/base.html:98 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
-msgstr ""
+msgstr "Εργαλεία"
 
 #: jinja2/base.html:102
 msgid "Contribute to MDN"
@@ -305,11 +306,11 @@ msgstr "Φοβερα demo για το <span class=\"web\">διαδικτυο</sp
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
-msgstr ""
+msgstr "Προφίλ"
 
 #: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
 msgid "Sign Out"
-msgstr ""
+msgstr "Έξοδος"
 
 #: jinja2/includes/common_macros.html:44
 #, python-format
@@ -326,15 +327,15 @@ msgstr "Μετάβαση"
 
 #: jinja2/includes/login.html:6
 msgid "Sign out"
-msgstr ""
+msgstr "Έξοδος"
 
 #: jinja2/includes/login.html:17
 msgid "Sign in"
-msgstr ""
+msgstr "Είσοδος"
 
 #: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:112 kuma/users/jinja2/users/user_detail.html:116
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: jinja2/includes/login.html:28 kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
@@ -485,20 +486,20 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
-msgstr ""
+msgstr "Αρχείο"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65 kuma/wiki/models.py:1911
 msgid "Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:46 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
 msgid "Comments"
-msgstr ""
+msgstr "Σχόλια"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 #, fuzzy
@@ -511,7 +512,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
-msgstr ""
+msgstr "Μέγεθος"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:78
 #, fuzzy
@@ -543,7 +544,7 @@ msgstr ""
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr ""
+msgstr "Κλειδί αναζήτησης"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
@@ -555,7 +556,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
-msgstr ""
+msgstr "Δημιουργήθηκε"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
@@ -595,8 +596,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
-"clear as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
+" as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -950,8 +951,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
-"Firefox OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
+" OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1118,8 +1119,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
-"little bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
+" bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
@@ -1148,19 +1149,19 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
-msgstr ""
+msgstr "Επιλογή χρώματος"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr ""
+msgstr "Γκρι"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr ""
+msgstr "Πορτοκαλί"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr ""
+msgstr "Κόκκινο"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
@@ -1421,8 +1422,8 @@ msgstr ""
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
-"\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1884,8 +1885,8 @@ msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 "connect with my MDN profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
-"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1930,8 +1931,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
+"href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
@@ -2040,7 +2041,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:148 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/document.html:385
 msgid "Edit page"
@@ -2653,8 +2654,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
-"\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
+"href=\"%(email_link)s\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -2823,15 +2824,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
-"a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
+"page</a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:249
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
-"in a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
+" a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:267
@@ -3499,8 +3500,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
-"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
+"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
@@ -3780,18 +3781,15 @@ msgstr ""
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Resubmit"
 #~ msgstr "Αποτελέσματα αναζήτησης"
 
-#, fuzzy
 #~ msgid "About me"
 #~ msgstr "Περί MDN"
 
 #~ msgid "Discard Changes"
 #~ msgstr "Απόρριψη αλλαγών"
 
-#, fuzzy
 #~ msgid "Send me the newsletter"
 #~ msgstr "Δείτε την επόμενη εικόνα"
 
@@ -3908,7 +3906,6 @@ msgstr ""
 #~ msgid "W3C Spec"
 #~ msgstr "Προδιαγραφή W3C"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
 #~ msgstr "http://www.w3.org/TR/html5/video.html#audio"
 
@@ -3918,15 +3915,14 @@ msgstr ""
 #~ msgid "http://en.wikipedia.org/wiki/Canvas_element"
 #~ msgstr "http://en.wikipedia.org/wiki/Canvas_element"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
 #~ msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
 
 #~ msgid ""
 #~ "Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
 #~ msgstr ""
-#~ "Η τρίτη έκδοση των επικαλυπτώμενων φύλλων στυλ ( Cascading Style Sheets - CSS3) παρέχει διάφορα νέα χαρακτηριστικά και ιδιότητες για τη βελτίωση της μορφοποίησης και της εμφάνισης εγγράφων "
-#~ "γραμμένων με διάφορες γλώσσες markup, όπως η HTML ή η XML."
+#~ "Η τρίτη έκδοση των επικαλυπτώμενων φύλλων στυλ ( Cascading Style Sheets - CSS3) παρέχει διάφορα νέα χαρακτηριστικά και ιδιότητες για τη βελτίωση της μορφοποίησης και της εμφάνισης εγγράφων γραμμένων"
+#~ " με διάφορες γλώσσες markup, όπως η HTML ή η XML."
 
 #~ msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
 #~ msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
@@ -3969,8 +3965,7 @@ msgstr ""
 #~ msgid "Forms"
 #~ msgstr "Φόρμες"
 
-#~ msgid ""
-#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 #~ msgstr ""
 #~ "Τα στοιχεία και οι ιδιότητες φορμών της HTML5 παρέχουν περισσότερο έλεγχο απ' ό,τι στην HTML4 και διευκολύνουν τη διαχείριση αφού δεν είναι πια αναγκαία η χρήση πολύπλοκων σεναρίων εντολών και η "
 #~ "εφαρμογή στυλ που απαιτούσε η HTML4."
@@ -4070,7 +4065,6 @@ msgstr ""
 #~ msgid "http://en.wikipedia.org/wiki/HTML5_video"
 #~ msgstr "http://en.wikipedia.org/wiki/HTML5_video"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
 #~ msgstr "http://www.w3.org/TR/html5/video.html#audio"
 
@@ -4191,7 +4185,6 @@ msgstr ""
 #~ msgid "Search results for demo submissions matching \"%s\""
 #~ msgstr "Αποτελέσματα αναζήτησης για demo που ταιριάζουν με «%s»"
 
-#, fuzzy
 #~ msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
 #~ msgstr "Παρακαλούμε το μέγεθος αρχείου να είναι μικρότερο από %s. Τρέχον μέγεθος αρχείου: %s"
 
@@ -4267,7 +4260,6 @@ msgstr ""
 #~ msgid "access denied"
 #~ msgstr "απαγορεύεται η πρόσβαση"
 
-#, fuzzy
 #~ msgid "%(subtitle)s | Demo Studio"
 #~ msgstr "{subtitle} | Demo Studio"
 
@@ -4277,7 +4269,6 @@ msgstr ""
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Submit a Demo"
 #~ msgstr "Υποβολη demo"
 
@@ -4288,8 +4279,8 @@ msgstr ""
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
 #~ msgstr ""
-#~ "<p>Πρόκειται να αφαιρέσετε το <strong>%(demo_title)s</strong> από το Demo Studio.</p> <p>Η παρουσίαση του demo, ο πηγαίος κώδικας και τα στατιστικά του θα <strong>διαγραφούν</strong>.</p> "
-#~ "<p>Αυτή η ενέργεια <strong>δεν είναι αναστρέψιμη</strong>."
+#~ "<p>Πρόκειται να αφαιρέσετε το <strong>%(demo_title)s</strong> από το Demo Studio.</p> <p>Η παρουσίαση του demo, ο πηγαίος κώδικας και τα στατιστικά του θα <strong>διαγραφούν</strong>.</p> <p>Αυτή η "
+#~ "ενέργεια <strong>δεν είναι αναστρέψιμη</strong>."
 
 #~ msgid "Mozilla Demo Studio"
 #~ msgstr "Mozilla Demo Studio"
@@ -4297,14 +4288,12 @@ msgstr ""
 #~ msgid "Learn More"
 #~ msgstr "Μάθετε περισότερα"
 
-#, fuzzy
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "Μετάβαση στο προηγούμενο demo, {demo_title}"
 
 #~ msgid "Prev"
 #~ msgstr "Προηγούμενο"
 
-#, fuzzy
 #~ msgid "Go to the next demo, %(demo_title)s"
 #~ msgstr "Μετάβαση στο επόμενο demo, {demo_title}"
 
@@ -4314,7 +4303,6 @@ msgstr ""
 #~ msgid "See the next image"
 #~ msgstr "Δείτε την επόμενη εικόνα"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Launch Demo"
 #~ msgstr "Εκκινηση demo"
 
@@ -4345,17 +4333,14 @@ msgstr ""
 #~ msgid "Built using"
 #~ msgstr "Φτιάχτηκε με χρήση"
 
-#, fuzzy
 #~ msgid "See more demos made with %(tag_title)s"
 #~ msgstr "Δείτε περισσότερα demo που φτιάχτηκαν με {tag_title}"
 
-#, fuzzy
 #~ msgid "This demo has been viewed %(num)s time"
 #~ msgid_plural "This demo has been viewed %(num)s times"
 #~ msgstr[0] "Αυτό το demo έχει προβληθεί {count} φορά"
 #~ msgstr[1] "Αυτό το demo έχει προβληθεί {count} φορές"
 
-#, fuzzy
 #~ msgid "%(num)s person liked this demo"
 #~ msgid_plural "%(num)s people liked this demo"
 #~ msgstr[0] "Αυτό το demo αρέσει σε {count} άτομο"
@@ -4376,7 +4361,6 @@ msgstr ""
 #~ msgid "More About This Demo From The Author"
 #~ msgstr "Περισσότερα σχετικά μ' αυτό το demo από το δημιουργό του"
 
-#, fuzzy
 #~ msgid "About this Demo"
 #~ msgstr "Αφαίρεση αυτού του demo;"
 
@@ -4386,7 +4370,6 @@ msgstr ""
 #~ msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
 #~ msgstr "Αυτό το demo διατίθεται σύμφωνα με την άδεια <a href=\"%(link)s\">%(title)s</a>."
 
-#, fuzzy
 #~ msgid "More by %(creator)s"
 #~ msgstr "Περισσότερα από τον/την {creator_link}"
 
@@ -4402,11 +4385,9 @@ msgstr ""
 #~ msgid "Demo is not by this author"
 #~ msgstr "Το demo ανήκει σε άλλο προγραμματιστή"
 
-#, fuzzy
 #~ msgid "Demos tagged %(tag)s"
 #~ msgstr "Demo με ετικέτα: {tag}"
 
-#, fuzzy
 #~ msgid "Subscribe to a feed of %(tag_title)s demos"
 #~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
 
@@ -4422,23 +4403,18 @@ msgstr ""
 #~ msgid "Recent demos"
 #~ msgstr "Πρόσφατα demo"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Featured demos"
 #~ msgstr "Προβεβλημενα demo"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Featured Demos"
 #~ msgstr "Προβεβλημενα demo"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Launch"
 #~ msgstr "Εκκινηση"
 
-#, fuzzy
 #~ msgid "Search demos"
 #~ msgstr "Αναζήτηση στα demo για «{q}»"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Browse by Technology"
 #~ msgstr "Περιηγηση με βαση την τεχνολογια"
 
@@ -4460,40 +4436,33 @@ msgstr ""
 #~ msgid "Subscribe to a feed of all demos"
 #~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για όλα τα demo"
 
-#, fuzzy
 #~ msgid "Search for \"%(query)s\""
 #~ msgstr "Αναζήτηση για «{q}»"
 
-#, fuzzy
 #~ msgid "Search results for \"%(query)s\""
 #~ msgstr "Αποτελέσματα αναζήτησης για «{q}»"
 
-#, fuzzy
 #~ msgid "Search demos for \"%(query)s\""
 #~ msgstr "Αναζήτηση στα demo για «{q}»"
 
-#, fuzzy
 #~ msgid "Subscribe to a feed of search results for \"%(query)s\""
 #~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για αποτελέσματα αναζήτησης του «{q}»"
 
-#, fuzzy
 #~ msgid "%(tag_title)s Demos"
 #~ msgstr "Demo με ετικέτα: {tag_title}"
 
-#, fuzzy
 #~ msgid "Edit %(demo_title)s"
 #~ msgstr "Επεξεργασία {demo_title}"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Submit a New Demo"
 #~ msgstr "Υποβολη νεου demo"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
-#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
+#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
-#~ "<p>Είτε φτιάχνετε ένα νέο θαυμαστό τόπο στο διαδίκτυο, είτε απλά πειραματίζεστε με τη νέα τεχνολογία, σας προσκαλούμε να προσθέσετε τα δικά σας  demo για να μοιραστείτε τις εμπειρίες σας (ή απλά "
-#~ "να τα επιδείξετε) με άλλους προγραμματιστές.</p> <p>Σας παρακαλούμε να συμπληρώσετε την παρακάτω φόρμα για να είστε σίγουροι ότι το demo σας θα υποβληθεί με επιτυχία στο Demo Studio.</p>"
+#~ "<p>Είτε φτιάχνετε ένα νέο θαυμαστό τόπο στο διαδίκτυο, είτε απλά πειραματίζεστε με τη νέα τεχνολογία, σας προσκαλούμε να προσθέσετε τα δικά σας  demo για να μοιραστείτε τις εμπειρίες σας (ή απλά να "
+#~ "τα επιδείξετε) με άλλους προγραμματιστές.</p> <p>Σας παρακαλούμε να συμπληρώσετε την παρακάτω φόρμα για να είστε σίγουροι ότι το demo σας θα υποβληθεί με επιτυχία στο Demo Studio.</p>"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "Περιγράψτε το demo σας"
@@ -4521,28 +4490,26 @@ msgstr ""
 #~ msgid "Preparing Your Demo"
 #~ msgstr "Ετοιμάζοντας το demo σας"
 
-#, fuzzy
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
-#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
-#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
-#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
+#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
+#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
+#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο "
-#~ "βασικό κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> "
-#~ "<li>Αν το demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s"
-#~ "\">λογαριασμό στο MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να "
-#~ "συμπεριλάβετε δεσμούς στις σελίδες των δημιουργών του.</li> </ul>"
+#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο βασικό "
+#~ "κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> <li>Αν το "
+#~ "demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s\">λογαριασμό στο"
+#~ " MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να συμπεριλάβετε δεσμούς "
+#~ "στις σελίδες των δημιουργών του.</li> </ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "Παραθέστε τον πηγαίο κώδικα"
 
 #~ msgid "<p>Upload a ZIP file of your source code, in which the main page of your demo is named <code>index.html</code> in the root directory.</p>"
 #~ msgstr ""
-#~ "<p>Αποστείλετε ένα αρχείο ZIP  με τον πηγαίο κώδικα σας, στο οποίο η κεντρική σελίδα του demo σας θα βρίσκεται στο βασικό κατάλογο του συμπιεσμένου αρχείου και θα έχει όνομα <code>index.html</"
-#~ "code>.</p>"
+#~ "<p>Αποστείλετε ένα αρχείο ZIP  με τον πηγαίο κώδικα σας, στο οποίο η κεντρική σελίδα του demo σας θα βρίσκεται στο βασικό κατάλογο του συμπιεσμένου αρχείου και θα έχει όνομα "
+#~ "<code>index.html</code>.</p>"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Submit demo"
 #~ msgstr "Υποβολη demo"
 
@@ -4550,51 +4517,46 @@ msgstr ""
 #~ msgstr "Αποθήκευση αλλαγών"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
-#~ "other web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
+#~ "web developers.</p>"
 #~ msgstr ""
-#~ "<p>Είτε δημιουργείτε μια απίθανη νέα εμπειρία για τους χρήστες του διαδικτύου, είτε απλά πειραματίζεστε με τις τελευταίες εξελίξεις της τεχνολογίας, σας προσκαλούμε να υποβάλετε τα demo σας και "
-#~ "να τα μοιραστείτε (ή απλά να τα δείξετε) με άλλους δημιουργούς.</p>"
+#~ "<p>Είτε δημιουργείτε μια απίθανη νέα εμπειρία για τους χρήστες του διαδικτύου, είτε απλά πειραματίζεστε με τις τελευταίες εξελίξεις της τεχνολογίας, σας προσκαλούμε να υποβάλετε τα demo σας και να "
+#~ "τα μοιραστείτε (ή απλά να τα δείξετε) με άλλους δημιουργούς.</p>"
 
 #~ msgid "Before You Begin"
 #~ msgstr "Πριν ξεκινήσετε"
 
-#, fuzzy
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
-#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
-#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
+#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
+#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Θα πρέπει να είστε διατεθειμένοι να <strong>παρέχετε τον πηγαίο κώδικα</strong> του demo σας. Τα demo φιλοξενούνται στους διακομιστές του Demo Studio.</li> <li>Ο πηγαίος κώδικας του "
-#~ "demo σας θα πρέπει να διατίθεται σύμφωνα με τους όρους μιας  <strong>ανοικτής άδειας χρήσης</strong>, όπως οι MPL, GPL, ή BSD.</li> <li>Το demo σας θα πρέπει να πραγματεύεται <strong>ανοικτές "
-#~ "τεχνολογίες για το διαδίκτυο</strong>, όπως η HTML5 και το CSS3.</li> <li>Το demo σας θα πρέπει να υποστηρίζεται από μια ευρεία γκάμα <strong>σύγχρονων περιηγητών</strong>, όπως οι Firefox, "
-#~ "Chrome, Safari, και Opera.</li> </ul>"
+#~ "<ul> <li>Θα πρέπει να είστε διατεθειμένοι να <strong>παρέχετε τον πηγαίο κώδικα</strong> του demo σας. Τα demo φιλοξενούνται στους διακομιστές του Demo Studio.</li> <li>Ο πηγαίος κώδικας του demo "
+#~ "σας θα πρέπει να διατίθεται σύμφωνα με τους όρους μιας  <strong>ανοικτής άδειας χρήσης</strong>, όπως οι MPL, GPL, ή BSD.</li> <li>Το demo σας θα πρέπει να πραγματεύεται <strong>ανοικτές τεχνολογίες"
+#~ " για το διαδίκτυο</strong>, όπως η HTML5 και το CSS3.</li> <li>Το demo σας θα πρέπει να υποστηρίζεται από μια ευρεία γκάμα <strong>σύγχρονων περιηγητών</strong>, όπως οι Firefox, Chrome, Safari, και"
+#~ " Opera.</li> </ul>"
 
-#, fuzzy
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
-#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
-#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
+#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
+#~ " license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο "
-#~ "βασικό κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> "
-#~ "<li>Αν το demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s"
-#~ "\">λογαριασμό στο MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να "
-#~ "συμπεριλάβετε δεσμούς στις σελίδες των δημιουργών του.</li> </ul>"
+#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο βασικό "
+#~ "κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> <li>Αν το "
+#~ "demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s\">λογαριασμό στο"
+#~ " MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να συμπεριλάβετε δεσμούς "
+#~ "στις σελίδες των δημιουργών του.</li> </ul>"
 
-#, fuzzy
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <strong><a href=\"%(signup_url)s\">λογαριασμό στο MDN</a></strong>.</p>"
 
-#, fuzzy
 #~ msgid "Log In to Profile"
 #~ msgstr "Σύνδεση σε λογαριασμό"
 
 #~ msgid "Terms for Contributors"
 #~ msgstr "Όροι συντελεστών"
 
-#, fuzzy
 #~ msgid "Demo Studio: Terms for Contributors"
 #~ msgstr "Όροι συντελεστών"
 
@@ -4604,7 +4566,6 @@ msgstr ""
 #~ msgid "Search the Demo Studio"
 #~ msgstr "Αναζήτηση στο Demo Studio"
 
-#, fuzzy
 #~ msgid "See %(display_name)s's profile"
 #~ msgstr "Δείτε το προφίλ του/της {display_name}"
 
@@ -4679,7 +4640,6 @@ msgstr ""
 #~ msgid "%(number)d %(type)s"
 #~ msgstr "%(number)d %(type)s"
 
-#, fuzzy
 #~ msgid "Subscribe to a feed of %(display_name)s's demos"
 #~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo του/της {display_name}"
 
@@ -4704,8 +4664,6 @@ msgstr ""
 #~ msgid "{start}&ndash;{end} of {total}"
 #~ msgstr "{start}&ndash;{end} από {total}"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
-#, fuzzy
 #~ msgid "<span class=\"title-prefix\">Moving</span> <em>{title}</em>"
 #~ msgstr "Δημοφιλη αρθρα για  <span class=\"mobile\">κινητα</span>"
 
@@ -4737,7 +4695,6 @@ msgstr ""
 #~ msgid "Add your comment"
 #~ msgstr "Προσθέστε το σχόλιο σας"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Get the Source Code"
 #~ msgstr "Δειτε τον πηγαιο κωδικα"
 
@@ -4754,11 +4711,11 @@ msgstr ""
 #~ msgstr "Ο/Η <cite class=\"author fn\">%(comment_profile_link)s</cite> είπε,"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
-#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
+#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "Δημοσιεύτηκε <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"μόνιμος δεσμός προς το σχόλιο του/της %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
-#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Δημοσιεύτηκε <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"μόνιμος δεσμός προς το σχόλιο του/της %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
+#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "Απαντήστε σ' αυτό το σχόλιο από {full_name}"
@@ -4772,7 +4729,6 @@ msgstr ""
 #~ msgid "(multiple)"
 #~ msgstr "(πολλαπλά)"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Doc Center"
 #~ msgstr "Εγγραφα"
 
@@ -4842,14 +4798,12 @@ msgstr ""
 #~ msgid "Quality Assurance"
 #~ msgstr "Quality Assurance"
 
-# https://developer-stage9.mozilla.org/el/demos/
 #~ msgid "Most Active Docs"
 #~ msgstr "Εγγραφα με την περισσοτερη δραστηριοτητα"
 
 #~ msgid "Last edited by:"
 #~ msgstr "Τελευταία επεξεργασία από:"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Doc Of The Day"
 #~ msgstr "Εγγραφο της ημερας"
 
@@ -4892,11 +4846,9 @@ msgstr ""
 #~ msgid "Start-to-finish success stories. See how add-on developers made magic with Mozilla."
 #~ msgstr "Επιτυχημένες ιστορίες από την αρχή μέχρι το τέλος. Δείτε πως κάποιο δημιουργοί πρόσθετων έκαναν τα μαγικά τους με τον Mozilla."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All add-ons development documentation"
 #~ msgstr "Ολη η τεκμηριωση για την αναπτυξη προσθετων"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Watch <span class=\"addons\">Add-on</span> Videos"
 #~ msgstr "Δειτε βιντεο για <span class=\"addons\">προσθετα</span>"
 
@@ -4909,7 +4861,6 @@ msgstr ""
 #~ msgid "Watch Myk Melez create an Add-on in 5 minutes using the new Add-on Builder!"
 #~ msgstr "Παρακολουθήστε τον Myk Melez να φτιάχνει ένα πρόσθετο μέσα σε 5 λεπτά με τη βοήθεια του νέου Add-on Builder!"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Favorite <span class=\"addons\">Add-on</span> Tools"
 #~ msgstr "Χρησιμα εργαλεια για <span class=\"addons\">προσθετα</span>"
 
@@ -4925,44 +4876,37 @@ msgstr ""
 #~ msgid "Check your add-on for common problems and errors. Open to anyone, not just add-ons hosted here."
 #~ msgstr "Ελέγξτε το πρόσθετο σας για κοινότυπα προβλήματα και σφάλματα. Μπορεί να χρησιμοποιηθεί από οποιονδήποτε, όχι μόνο για πρόσθετα που φιλοξενούμε."
 
-# https://developer-stage9.mozilla.org/el/demos/
 #~ msgid "All add-on development tools"
 #~ msgstr "Εργαλεια αναπτυξης προσθετων"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All add-ons development entries"
 #~ msgstr "Ολες οι εγγραφες για αναπτυξη προσθετων"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Forums"
 #~ msgstr "Φορουμ"
 
 #~ msgid "Search MDN"
 #~ msgstr "Αναζήτηση στο MDN"
 
-#, fuzzy
 #~ msgid "<p>Want to learn to use the technologies that power the Web? <br>We've put together a great collection of resources to get you started.</p>"
 #~ msgstr "<p>Θέλετε να μάθετε πως να χρησιμοποιήσετε τις τεχνολογίες που δίνουν πνοή στο διαδίκτυο; <br>Έχουμε συγκεντρώσει μια πλούσια συλλογή πηγών για να ξεκινήσετε.</p>"
 
-#, fuzzy
 #~ msgid "<p><strong>HyperText Markup Language</strong> is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you learn HTML.</p>"
 #~ msgstr ""
-#~ "<p><strong>Η HyperText Markup Language</strong> είναι η βασική γλώσσα σύνταξης για να βάλετε πληροφορίες στον παγκόσμιο ιστό. Αν θέλετε να δημιουργήσετε ή να τροποποιήσετε ιστοσελίδες, το "
-#~ "καλύτερο που έχετε να κάνετε, είναι να μάθετε HTML.</p>"
+#~ "<p><strong>Η HyperText Markup Language</strong> είναι η βασική γλώσσα σύνταξης για να βάλετε πληροφορίες στον παγκόσμιο ιστό. Αν θέλετε να δημιουργήσετε ή να τροποποιήσετε ιστοσελίδες, το καλύτερο "
+#~ "που έχετε να κάνετε, είναι να μάθετε HTML.</p>"
 
-#, fuzzy
 #~ msgid ""
 #~ "<p><strong>Cascading Style Sheets</strong> is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define the appearance and "
 #~ "location of the HTML elements within the pages.</p>"
 #~ msgstr ""
-#~ "<p><strong>Τα Cascading Style Sheets</strong> Είναι μια γλώσσα που περιγράφει την εμφάνιση των ιστοσελίδων . Για να δημιουργήσετε ευπαρουσίαστες ιστοσελίδες, θα πρέπει να μάθετε CSS ώστε να "
-#~ "μπορείτε να ορίσετε την εμφάνιση και την τοποθέτηση των στοιχείων της HTML μέσα στις σελίδες.</p>"
+#~ "<p><strong>Τα Cascading Style Sheets</strong> Είναι μια γλώσσα που περιγράφει την εμφάνιση των ιστοσελίδων . Για να δημιουργήσετε ευπαρουσίαστες ιστοσελίδες, θα πρέπει να μάθετε CSS ώστε να μπορείτε"
+#~ " να ορίσετε την εμφάνιση και την τοποθέτηση των στοιχείων της HTML μέσα στις σελίδες.</p>"
 
-#, fuzzy
 #~ msgid "<p><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and forms.</p>"
 #~ msgstr ""
-#~ "<p><strong>Η JavaScript</strong> (για συντομία JS) είναι η γλώσσα προγραμματισμού που επιτρέπει στις ιστοσελίδες να ανταποκρίνονται σε αλληλεπιδράσεις με τους χρήστες πέρα από τη βασική "
-#~ "υποστήριξη αλληλεπίδρασης που προσφέρουν οι δεσμοί και οι φόρμες της HTML.</p>"
+#~ "<p><strong>Η JavaScript</strong> (για συντομία JS) είναι η γλώσσα προγραμματισμού που επιτρέπει στις ιστοσελίδες να ανταποκρίνονται σε αλληλεπιδράσεις με τους χρήστες πέρα από τη βασική υποστήριξη "
+#~ "αλληλεπίδρασης που προσφέρουν οι δεσμοί και οι φόρμες της HTML.</p>"
 
 #~ msgid "Learn CSS"
 #~ msgstr "Μάθετε CSS"
@@ -4974,8 +4918,7 @@ msgstr ""
 #~ msgstr "Εισαγωγικό επίπεδο"
 
 #~ msgid "This tutorial introduces you to Cascading Style Sheets (CSS). It guides you through the basic features of CSS with practical examples that you can try for yourself on your own computer."
-#~ msgstr ""
-#~ "Αυτό το σεμινάριο είναι εισαγωγικό στα Cascading Style Sheets (CSS). Σας καθοδηγεί στα βασικά χαρακτηριστικά του CSS με πρακτικά παραδείγματα που μπορείτε να δοκιμάσετε στον υπολογιστή σας."
+#~ msgstr "Αυτό το σεμινάριο είναι εισαγωγικό στα Cascading Style Sheets (CSS). Σας καθοδηγεί στα βασικά χαρακτηριστικά του CSS με πρακτικά παραδείγματα που μπορείτε να δοκιμάσετε στον υπολογιστή σας."
 
 #~ msgid "CSS Basics"
 #~ msgstr "Βασικές αρχές CSS"
@@ -4998,7 +4941,6 @@ msgstr ""
 #~ msgid "Adding a Touch of Style"
 #~ msgstr "Προσθέτοντας πινελιές στυλ"
 
-#, fuzzy
 #~ msgid "A brief beginner's guide to styling web pages with CSS."
 #~ msgstr "Ένας σύντομος οδηγός για αρχάριους για τη μορφοποίηση ιστοσελίδων με CSS."
 
@@ -5062,10 +5004,9 @@ msgstr ""
 #~ msgid "The @font-face feature from CSS3 allows you to use custom typefaces on the web in an accessible, manipulable, and scalable way."
 #~ msgstr "Το χαρακτηριστικό @font-face του CSS3, σας επιτρέπει να χρησιμοποιείτε προσαρμοσμένες γραμματοσειρές για το διαδίκτυο με ένα εύκολα προσβάσιμο, διαχειρίσιμο και επεκτάσιμο τρόπο."
 
-#, fuzzy
 #~ msgid ""
-#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers "
-#~ "and so can't take advantage."
+#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and so"
+#~ " can't take advantage."
 #~ msgstr ""
 #~ "Αυτές οι σελίδες αναφέρονται στο <strong>CSS3</strong>, την πιο πρόσφατη και υπό ανάπτυξη έκδοση του CSS. Πολλά από τα χαρακτηριστικά του CSS3 υποστηρίζονται ήδη με διάφορους τρόπους από τους "
 #~ "σύγχρονους περιηγητές, αλλά αρκετοί χρήστες χρησιμοποιούν παλιότερους περιηγητές και δεν μπορούν να τα απολαύσουν."
@@ -5077,11 +5018,10 @@ msgstr ""
 #~ msgstr "Τα βασικά της HTML"
 
 #~ msgid ""
-#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater "
-#~ "depth."
+#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth."
 #~ msgstr ""
-#~ "Τι είναι η HTML, τι κάνει, ένα σύντομο ιστορικό της και ποια είναι η δομή ενός εγγράφου HTML. Τα άρθρα που ακολουθούν μετά από το παρών, αναπτύσσουν με περισσότερες λεπτομέρειες κάθε ξεχωριστό "
-#~ "τμήμα της HTML."
+#~ "Τι είναι η HTML, τι κάνει, ένα σύντομο ιστορικό της και ποια είναι η δομή ενός εγγράφου HTML. Τα άρθρα που ακολουθούν μετά από το παρών, αναπτύσσουν με περισσότερες λεπτομέρειες κάθε ξεχωριστό τμήμα"
+#~ " της HTML."
 
 #~ msgid "Basic Structure of a Web Page"
 #~ msgstr "Βασική δομή μιας ιστοσελίδας"
@@ -5113,11 +5053,10 @@ msgstr ""
 #~ msgid "HTML Challenges"
 #~ msgstr "Προκλήσεις HTML"
 
-#, fuzzy
 #~ msgid "Use these challenges to hone your HTML skills (for example, \"Should I use an &lt;h2&gt; element or a &lt;strong&gt; element?\"), focusing on meaningful mark-up."
 #~ msgstr ""
-#~ "Χρησιμοποιείστε αυτές τις προκλήσεις για να βελτιώσετε τις γνώσεις σας στη HTML (για παράδειγμα, «Να χρησιμοποιήσω ένα στοιχείο &lt;h2&gt; ή ένα στοιχείο &lt;strong&gt; ;»), προσπαθώντας να "
-#~ "γράψετε ευανάγνωστο mark-up."
+#~ "Χρησιμοποιείστε αυτές τις προκλήσεις για να βελτιώσετε τις γνώσεις σας στη HTML (για παράδειγμα, «Να χρησιμοποιήσω ένα στοιχείο &lt;h2&gt; ή ένα στοιχείο &lt;strong&gt; ;»), προσπαθώντας να γράψετε "
+#~ "ευανάγνωστο mark-up."
 
 #~ msgid "A comprehensive reference for HTML elements, and how Firefox and other browsers support them."
 #~ msgstr "Μια πλήρης αναφορά των στοιχείων της HTML  και η υποστήριξη τους από τον Firefox κι άλλους περιηγητές."
@@ -5146,7 +5085,6 @@ msgstr ""
 #~ msgid "Some suggestions to help you get on board with HTML5."
 #~ msgstr "Μερικές προτάσεις που θα σας βοηθήσουν να μεταβείτε σε HTML5."
 
-#, fuzzy
 #~ msgid "HTML5 Rocks"
 #~ msgstr "HTML5"
 
@@ -5171,7 +5109,6 @@ msgstr ""
 #~ msgid "HTML5 Examples"
 #~ msgstr "Παραδείγματα HTML5"
 
-#, fuzzy
 #~ msgid "Web o' Wonder"
 #~ msgstr "Web O' Wonder"
 
@@ -5199,13 +5136,12 @@ msgstr ""
 #~ msgid "Showcase of sites that use HTML5 to help you learn about how it should be used."
 #~ msgstr "Παρουσίαση σελίδων που χρησιμοποιούν HTML5 για να σας βοηθήσει να μάθετε πως θα πρέπει να χρησιμοποιείται."
 
-#, fuzzy
 #~ msgid ""
-#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so "
-#~ "can't take advantage."
+#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so can't "
+#~ "take advantage."
 #~ msgstr ""
-#~ "Αυτές οι σελίδες αναφέρονται στην <strong>HTML5</strong>, την επερχόμενη πιο πρόσφατη έκδοση του πρότυπου. Πολλά από τα χαρακτηριστικά της HTML5 υποστηρίζονται από τους σύγχρονους περιηγητές, "
-#~ "αλλά αρκετοί χρήστες χρησιμοποιούν παλιούς περιηγητές και δεν μπορούν να τα απολαύσουν."
+#~ "Αυτές οι σελίδες αναφέρονται στην <strong>HTML5</strong>, την επερχόμενη πιο πρόσφατη έκδοση του πρότυπου. Πολλά από τα χαρακτηριστικά της HTML5 υποστηρίζονται από τους σύγχρονους περιηγητές, αλλά "
+#~ "αρκετοί χρήστες χρησιμοποιούν παλιούς περιηγητές και δεν μπορούν να τα απολαύσουν."
 
 #~ msgid "Learn JavaScript"
 #~ msgstr "Μάθετε JavaScript"
@@ -5228,14 +5164,12 @@ msgstr ""
 #~ msgid "JavaScript Best Practices"
 #~ msgstr "Καλύτερες πρακτικές της JavaScript"
 
-#, fuzzy
 #~ msgid "Eloquent JavaScript"
 #~ msgstr "/en/JavaScript"
 
 #~ msgid "The JavaScript Programming Language"
 #~ msgstr "Η γλώσσα προγραμματισμού JavaScript"
 
-#, fuzzy
 #~ msgid "Douglas Crockford explores the language as it is today, and how it came to be."
 #~ msgstr "Ο Douglas Crockford explores the language as it is today, and how it came to be."
 
@@ -5248,7 +5182,6 @@ msgstr ""
 #~ msgid "Learning Advanced JavaScript"
 #~ msgstr "Εκμάθηση JavaScript για προχωρημένους"
 
-#, fuzzy
 #~ msgid "John Resig's guide to advanced JavaScript."
 #~ msgstr "Ο οδηγός του John Resig για την JavaScript για προχωρημένους."
 
@@ -5290,8 +5223,8 @@ msgstr ""
 
 #~ msgid "Get the latest news, status and developer documentation on the Mozilla mobile project. Check out the mobile project's goals, and how you can help out and get involved!"
 #~ msgstr ""
-#~ "Λάβετε τα πιο πρόσφατα νέα, ενημερώσεις για την κατάσταση και τεκμηρίωση για δημιουργούς από τον τομέα για κινητά του έργου Mozilla. Ρίξτε μια ματιά στους στόχους του έργου για τα κινητά και "
-#~ "δείτε πως μπορείτε να συμμετέχετε και να βοηθήσετε!"
+#~ "Λάβετε τα πιο πρόσφατα νέα, ενημερώσεις για την κατάσταση και τεκμηρίωση για δημιουργούς από τον τομέα για κινητά του έργου Mozilla. Ρίξτε μια ματιά στους στόχους του έργου για τα κινητά και δείτε "
+#~ "πως μπορείτε να συμμετέχετε και να βοηθήσετε!"
 
 #~ msgid "Build Great Mobile Add-ons"
 #~ msgstr "Φτιάξτε εξαιρετικά πρόσθετα για κινητά"
@@ -5300,8 +5233,8 @@ msgstr ""
 #~ "Firefox is the world's first Web browser to support mobile add-ons. Learn about <a href=\"%(basics_url)s\">Extension Basics</a>, <a href=\"%(best_practices_url)s\">Extension Best Practices</a>, "
 #~ "helpful <a href=\"%(snippets_url)s\">Code Snippets</a>, and more so you can build innovative add-ons for Firefox on Android and Firefox on Nokia's Meego platform."
 #~ msgstr ""
-#~ "Ο Firefox είναι ο πρώτος περιηγητής παγκοσμίως που υποστηρίζει πρόσθετα σχεδιασμένα για κινητά. Μάθετε τα <a href=\"%(basics_url)s\">βασικά για επεκτάσεις</a>, τις <a href="
-#~ "\"%(best_practices_url)s\">καλύτερες πρακτικές για επεκτάσεις</a>, δείτε βοηθητικά <a href=\"%(snippets_url)s\">τμήματα κώδικα</a> κι ακόμα περισσότερα, ώστε να μπορείτε να φτιάξετε καινοτόμα "
+#~ "Ο Firefox είναι ο πρώτος περιηγητής παγκοσμίως που υποστηρίζει πρόσθετα σχεδιασμένα για κινητά. Μάθετε τα <a href=\"%(basics_url)s\">βασικά για επεκτάσεις</a>, τις <a "
+#~ "href=\"%(best_practices_url)s\">καλύτερες πρακτικές για επεκτάσεις</a>, δείτε βοηθητικά <a href=\"%(snippets_url)s\">τμήματα κώδικα</a> κι ακόμα περισσότερα, ώστε να μπορείτε να φτιάξετε καινοτόμα "
 #~ "πρόσθετα για τον  Firefox σε Android και στην πλατφόρμα Meego της Nokia."
 
 #~ msgid "Location-Aware Applications"
@@ -5311,8 +5244,8 @@ msgstr ""
 #~ "Learn how to use the <a href=\"%(geo_url)s\">Geolocation API</a> and put people on the right path. Location-Aware Browsing is a must when you're out and about on your mobile. Learn how to build "
 #~ "innovative apps that delight your audience."
 #~ msgstr ""
-#~ "Μάθετε πως να χρησιμοποιείτε το  <a href=\"%(geo_url)s\">API γεωτοποθεσίας (Geolocation)</a> και δείξτε στους άλλους το σωστό δρόμο. Η περιήγηση με βάση την τοποθεσία είναι σχεδόν απαραίτητη "
-#~ "όταν χρησιμοποιείτε το κινητό για περιήγηση. Μάθετε πως να φτιάξετε καινοτόμες εφαρμογές που θα ενθουσιάσουν το κοινό σας."
+#~ "Μάθετε πως να χρησιμοποιείτε το  <a href=\"%(geo_url)s\">API γεωτοποθεσίας (Geolocation)</a> και δείξτε στους άλλους το σωστό δρόμο. Η περιήγηση με βάση την τοποθεσία είναι σχεδόν απαραίτητη όταν "
+#~ "χρησιμοποιείτε το κινητό για περιήγηση. Μάθετε πως να φτιάξετε καινοτόμες εφαρμογές που θα ενθουσιάσουν το κοινό σας."
 
 #~ msgid "Help build Firefox for Mobile"
 #~ msgstr "Βοηθήστε στην ανάπτυξη του Firefox για κινητά"
@@ -5324,7 +5257,6 @@ msgstr ""
 #~ "Η βοήθεια σας είναι ζωτικής σημασίας για την επιτυχία του Firefox. Πείτε μας τα σχόλια σας στο <a href=\"%(irc_url)s\">κανάλι IRC</a>, <a href=\"%(meeting_url)s\">συμμετέχετε στην εβδομαδιαία "
 #~ "συνεδρίαση ανάπτυξης κάθε Τετάρτη</a>, ή <a href=\"%(bugzilla_url)s\">καταχωρήστε κάποιο bug που εντοπίσατε</a>."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All mobile development documentation"
 #~ msgstr "Ολη η τεκμηριωση για την αναπτυξη σε κινητα"
 
@@ -5347,11 +5279,11 @@ msgstr ""
 #~ msgstr "Firefox για κινητά: Τι θα ακολουθήσει"
 
 #~ msgid ""
-#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the "
-#~ "world's best mobile Web browser."
+#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the world's "
+#~ "best mobile Web browser."
 #~ msgstr ""
-#~ "Τα διάφορα έργα και ο σχεδιασμός δεν σταματούν ποτέ. Ετοιμάζουμε κάποια απίθανα νέα χαρακτηριστικά και βελτιώσεις για την επόμενη σταθερή μας έκδοση. Ρίξτε μια ματιά και δείτε πως μπορείτε να "
-#~ "μας βοηθήσετε να συνεχίσουμε την ανάπτυξη του καλύτερου περιηγητή για κινητά στον κόσμο."
+#~ "Τα διάφορα έργα και ο σχεδιασμός δεν σταματούν ποτέ. Ετοιμάζουμε κάποια απίθανα νέα χαρακτηριστικά και βελτιώσεις για την επόμενη σταθερή μας έκδοση. Ρίξτε μια ματιά και δείτε πως μπορείτε να μας "
+#~ "βοηθήσετε να συνεχίσουμε την ανάπτυξη του καλύτερου περιηγητή για κινητά στον κόσμο."
 
 #~ msgid "\"HTML5 is Great for Mobile, Developers Say\""
 #~ msgstr "«Οι προγραμματιστές λένε ότι η HTML5 είναι εξαιρετική στα κινητά»"
@@ -5360,12 +5292,12 @@ msgstr ""
 #~ msgstr "Ακούστε τι λένε άλλοι προγραμματιστές για τα πλεονεκτήματα της HTML5 και την ανάπτυξη στο ιστό για κινητά, σ' αυτό το άρθρο του ReadWriteWeb:"
 
 #~ msgid ""
-#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
-#~ "that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact that"
+#~ " apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
 #~ msgstr ""
-#~ "«'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' Το γεγονός "
-#~ "ότι οι εφαρμογές μπορούν να εγκατασταθούν από ένα οποιοδήποτε URL αντί να περιμένει ο χρήστης να κατεβάσει κάτι από ένα App Store, σημαίνει ότι έτσι οι δημιουργοί μειώνουν τους φραγμούς στη "
-#~ "διαδικασία  προώθησης της εφαρμογής τους.»"
+#~ "«'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' Το γεγονός ότι"
+#~ " οι εφαρμογές μπορούν να εγκατασταθούν από ένα οποιοδήποτε URL αντί να περιμένει ο χρήστης να κατεβάσει κάτι από ένα App Store, σημαίνει ότι έτσι οι δημιουργοί μειώνουν τους φραγμούς στη διαδικασία"
+#~ "  προώθησης της εφαρμογής τους.»"
 
 #~ msgid "Android APIs"
 #~ msgstr "Android APIs"
@@ -5373,7 +5305,6 @@ msgstr ""
 #~ msgid "Access Android APIs on this Android Developer page."
 #~ msgstr "Δείτε τα API του Android σ' αυτή τη σελίδα για προγραμματιστές του Android."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All mobile development entries"
 #~ msgstr "Ολες οι εγγραφες για αναπτυξη σε κινητα"
 
@@ -5390,25 +5321,23 @@ msgstr ""
 #~ msgstr "Μάθετε περισσότερα για την τεχνολογία που χρησιμοποιείται στον πυρήνα των εφαρμογών και των υπηρεσιών Mozilla."
 
 #~ msgid "There are several ways you can use Mozilla code in your own project. Find everything you need to develop \"powered by Mozilla\" applications."
-#~ msgstr ""
-#~ "Υπάρχουν διάφοροι τρόποι που μπορείτε να χρησιμοποιήσετε τον κώδικα του Mozilla στο δικό σας έργο. Βρείτε όλα όσα θα χρειαστείτε για να φτιάξετε εφαρμογές που θα είναι «powered by Mozilla»."
+#~ msgstr "Υπάρχουν διάφοροι τρόποι που μπορείτε να χρησιμοποιήσετε τον κώδικα του Mozilla στο δικό σας έργο. Βρείτε όλα όσα θα χρειαστείτε για να φτιάξετε εφαρμογές που θα είναι «powered by Mozilla»."
 
 #~ msgid "Debugging"
 #~ msgstr "Αποσφαλμάτωση"
 
 #~ msgid "Mozilla developers have come up with not just technologies and features to help you debug code, but have devised tips and techniques that can help too."
 #~ msgstr ""
-#~ "Οι δημιουργοί του έργου Mozilla δεν έχουν φτιάξει μόνο την απαραίτητη τεχνολογία και τα εργαλεία για την αποσφαλμάτωση του κώδικα σας, αλλά διαθέτουν και σχεδιαστικές συμβουλές και τεχνικές που "
-#~ "θα σας βοηθήσουν."
+#~ "Οι δημιουργοί του έργου Mozilla δεν έχουν φτιάξει μόνο την απαραίτητη τεχνολογία και τα εργαλεία για την αποσφαλμάτωση του κώδικα σας, αλλά διαθέτουν και σχεδιαστικές συμβουλές και τεχνικές που θα "
+#~ "σας βοηθήσουν."
 
 #~ msgid ""
 #~ "Localization (L10n) is the process of translating software user interfaces from one language to another and adapting it to suit a foreign culture. These resources are about making Mozilla-based "
 #~ "applications/extensions localizable."
 #~ msgstr ""
-#~ "Με τον όρο localization (L10n), εννοούμε τη διαδικασία μετάφρασης της διασύνδεσης χρήστη ενός προγράμματος από μια γλώσσα σε μια άλλη και την προσαρμογή του στην αντίστοιχη κουλτούρα και τις "
-#~ "ανάγκες αυτής της γλώσσας. Αυτές οι πηγές αφορούν τη διαδικασία προετοιμασίας των εφαρμογών/επεκτάσεων που βασίζονται σε κώδικα του Mozilla για την υποστήριξη localization."
+#~ "Με τον όρο localization (L10n), εννοούμε τη διαδικασία μετάφρασης της διασύνδεσης χρήστη ενός προγράμματος από μια γλώσσα σε μια άλλη και την προσαρμογή του στην αντίστοιχη κουλτούρα και τις ανάγκες"
+#~ " αυτής της γλώσσας. Αυτές οι πηγές αφορούν τη διαδικασία προετοιμασίας των εφαρμογών/επεκτάσεων που βασίζονται σε κώδικα του Mozilla για την υποστήριξη localization."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All applications development documentation"
 #~ msgstr "Ολη η τεκμηριωση για αναπτυξη εφαρμογων"
 
@@ -5424,11 +5353,9 @@ msgstr ""
 #~ msgid "A Mozilla source tree browser."
 #~ msgstr "Περιηγητής για το Mozilla source tree."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All application development tools"
 #~ msgstr "Ολα τα εργαλεια για αναπτυξη εφαρμογων"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All application development entries"
 #~ msgstr "Ολες οι εγγραφες για αναπτυξη εφαρμογων"
 
@@ -5458,7 +5385,6 @@ msgstr ""
 #~ msgid "The DOM is the architecture for Web documents; learn how to use the DOM and its API to look at and manipulate Web content."
 #~ msgstr "Το DOM είναι η αρχιτεκτονική των διαδικτυακών σελίδων· μάθετε πως να χρησιμοποιείτε το DOM και το  API του για να βλέπετε και να διαχειρίζεστε περιεχόμενο στο διαδίκτυο."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All web development documentation"
 #~ msgstr "Ολη η τεκμηριωση για αναπτυξη στο διαδικτυο"
 
@@ -5480,7 +5406,6 @@ msgstr ""
 #~ msgid "Another great Firefox/Firebug Add-on that helps you view and manage cookies in your browser."
 #~ msgstr "Άλλο ένα πρόσθετο για τον Firefox/Firebug που σας βοηθάει να δείτε και να διαχειριστείτε τα  cookies στον περιηγητή σας."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All web development entries"
 #~ msgstr "Ολες οι εγγραφες για αναπτυξη στο διαδικτυο"
 
@@ -5653,30 +5578,27 @@ msgstr ""
 #~ msgstr "<a href=\"%(builder_url)s\">Φτιάξτε τα δικά σας πρόσθετα</a> και κουβεντιάστε για αυτά με την <a href=\"%(dev_url)s\">κοινότητα δημιουργών πρόσθετων</a>."
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups "
-#~ "through <a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. "
-#~ "Share your discoveries, struggles, and victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups through <a"
+#~ " href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. Share your "
+#~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
 #~ "<h2>Βαρεθήκατε να μαθαίνετε μόνοι σας;<br>Θέλετε να είστε μέρος μιας κοινότητας ανθρώπων που μαθαίνουν τις ανοικτές τεχνολογίες του διαδικτύου;</h2> <p>Σκεφθήτε την πιθανότητα να γραφτείτε στις "
-#~ "δωρεάν δικτυακές ομάδες μελέτης του <a href=\"http://p2pu.org/\">Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing"
-#~ "\">School of Webcraft</a>. Μοιραστείτε τις ανακαλύψεις, τους προβληματισμούς και τις κατακτήσεις σας πάνω στη γνώση, με άλλους ανθρώπους που μαθαίνουν όπως κι εσείς.</p>"
+#~ "δωρεάν δικτυακές ομάδες μελέτης του <a href=\"http://p2pu.org/\">Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School"
+#~ " of Webcraft</a>. Μοιραστείτε τις ανακαλύψεις, τους προβληματισμούς και τις κατακτήσεις σας πάνω στη γνώση, με άλλους ανθρώπους που μαθαίνουν όπως κι εσείς.</p>"
 
-#, fuzzy
 #~ msgid ""
 #~ "<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through <a "
 #~ "href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. Share your "
 #~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
 #~ "<h2>Βαρεθήκατε να μαθαίνετε μόνοι σας;<br>Θέλετε να είστε μέρος μιας κοινότητας ανθρώπων που μαθαίνουν τις ανοικτές τεχνολογίες του διαδικτύου;</h2> <p>Σκεφθήτε την πιθανότητα να γραφτείτε στις "
-#~ "δωρεάν δικτυακές ομάδες μελέτης του <a href=\"http://p2pu.org/\">Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing"
-#~ "\">School of Webcraft</a>. Μοιραστείτε τις ανακαλύψεις, τους προβληματισμούς και τις κατακτήσεις σας πάνω στη γνώση, με άλλους ανθρώπους που μαθαίνουν όπως κι εσείς.</p>"
+#~ "δωρεάν δικτυακές ομάδες μελέτης του <a href=\"http://p2pu.org/\">Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School"
+#~ " of Webcraft</a>. Μοιραστείτε τις ανακαλύψεις, τους προβληματισμούς και τις κατακτήσεις σας πάνω στη γνώση, με άλλους ανθρώπους που μαθαίνουν όπως κι εσείς.</p>"
 
-#~ msgid ""
-#~ "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Log in</a> to try again.</li> <li><a href=\"/Special:UserRegistration\">Register</a> to edit docs, submit demos, and post to forums."
-#~ "</li>"
+#~ msgid "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Log in</a> to try again.</li> <li><a href=\"/Special:UserRegistration\">Register</a> to edit docs, submit demos, and post to forums.</li>"
 #~ msgstr ""
-#~ "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Συνδεθείτε</a> για να προσπαθήσετε ξανά.</li> <li><a href=\"/Special:UserRegistration\">Εγγραφείτε</a> για να επεξεργαστείτε "
-#~ "έγγραφα, να υποβάλετε  demo και να δημοσιεύεστε στα φόρουμ.</li>"
+#~ "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Συνδεθείτε</a> για να προσπαθήσετε ξανά.</li> <li><a href=\"/Special:UserRegistration\">Εγγραφείτε</a> για να επεξεργαστείτε έγγραφα, να"
+#~ " υποβάλετε  demo και να δημοσιεύεστε στα φόρουμ.</li>"
 
 #~ msgid "<p><a href=\"/Special:UserRegistration\">Register</a> or <a href=\"/Special:UserLogin\">log in</a> to add your own.</p>"
 #~ msgstr "<p><a href=\"/Special:UserRegistration\">Εγγραφείτε</a> ή <a href=\"/Special:UserLogin\">συνδεθείτε</a> για να προσθέσετε το δικό σας.</p>"
@@ -5691,20 +5613,19 @@ msgstr ""
 #~ "<p>No computer has ever made a mistake or distorted information. We are all, by any practical definition of the words, foolproof and incapable of error. So it can only be attributable to human "
 #~ "error. If so, <a href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website\">file a bug</a> for my human operators.</p>"
 #~ msgstr ""
-#~ "<p>Κανένας υπολογιστής δεν έκανε ποτέ λάθος, ούτε παραμόρφωσε πληροφορίες. Είμαστε κυριολεκτικά και μεταφορικά αλάνθαστοι και ανίκανοι να παράγουμε σφάλματα. Οτιδήποτε δεν λειτουργεί σωστά "
-#~ "μπορεί να αποδοθεί μόνο σε ανθρώπινα λάθη και παραλήψεις. Αν κάτι δεν λειτουργεί σωστά λοιπόν, <a href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer"
-#~ "%20Network&component=Website\">καταχωρήστε ένα bug</a> για να το δουν οι άνθρωποι που με διαχειρίζονται.</p>"
+#~ "<p>Κανένας υπολογιστής δεν έκανε ποτέ λάθος, ούτε παραμόρφωσε πληροφορίες. Είμαστε κυριολεκτικά και μεταφορικά αλάνθαστοι και ανίκανοι να παράγουμε σφάλματα. Οτιδήποτε δεν λειτουργεί σωστά μπορεί να"
+#~ " αποδοθεί μόνο σε ανθρώπινα λάθη και παραλήψεις. Αν κάτι δεν λειτουργεί σωστά λοιπόν, <a "
+#~ "href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website\">καταχωρήστε ένα bug</a> για να το δουν οι άνθρωποι που με διαχειρίζονται.</p>"
 
-#, fuzzy
 #~ msgid ""
-#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-#~ "<li>View <strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
+#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> <li>View "
+#~ "<strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
 #~ "<strong>documentation</strong> to learn about the open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>Καλωσορίσατε στο Mozilla Demo Studio, όπου προγραμματιστές σαν κι εσάς μπορούν να αναπτύξουν, να μοιραστούν, να επιδείξουν και να μάθουν όλες τις νέες δικτυακές τεχνολογίες. Δείτε όλες τις "
-#~ "νέες δυνατότητες, εξερευνώντας το Demo Studio:</p> <ul> <li>Δείτε <strong>demo</strong> που αποδεικνύουν τι μπορεί να φτιαχτεί με HTML, CSS, και JavaScript.</li> <li>Επιθεωρήστε τον "
-#~ "<strong>πηγαίο κώδικα</strong> αυτών των demo για να δείτε πως ακριβώς δουλεύουν.</li> <li>Διαβάστε την <strong>τεκμηρίωση</strong> για να μάθετε σχετικά με τα ανοικτά πρότυπα και την τεχνολογία "
-#~ "που είναι η κινητήρια δύναμη του διαδικτύου.</li> </ul>"
+#~ "<p>Καλωσορίσατε στο Mozilla Demo Studio, όπου προγραμματιστές σαν κι εσάς μπορούν να αναπτύξουν, να μοιραστούν, να επιδείξουν και να μάθουν όλες τις νέες δικτυακές τεχνολογίες. Δείτε όλες τις νέες "
+#~ "δυνατότητες, εξερευνώντας το Demo Studio:</p> <ul> <li>Δείτε <strong>demo</strong> που αποδεικνύουν τι μπορεί να φτιαχτεί με HTML, CSS, και JavaScript.</li> <li>Επιθεωρήστε τον <strong>πηγαίο "
+#~ "κώδικα</strong> αυτών των demo για να δείτε πως ακριβώς δουλεύουν.</li> <li>Διαβάστε την <strong>τεκμηρίωση</strong> για να μάθετε σχετικά με τα ανοικτά πρότυπα και την τεχνολογία που είναι η "
+#~ "κινητήρια δύναμη του διαδικτύου.</li> </ul>"
 
 #~ msgid "A comprehensive, usable, and accurate resource for everyone developing for the Open Web."
 #~ msgstr "Μια περιεκτική, εύχρηστη και ακριβής πηγή γνώσης για οποιονδήποτε αναπτύσσει για το ανοικτό διαδίκτυο."
@@ -5724,7 +5645,6 @@ msgstr ""
 #~ msgid "Aurora"
 #~ msgstr "Aurora"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Be Heard."
 #~ msgstr "Μιληστε"
 
@@ -5774,14 +5694,12 @@ msgstr ""
 #~ "Experience the very latest features before they go to beta by trying out the new Aurora builds. Test things out early and help decide what makes it to final release. Note: Aurora is not for the "
 #~ "faint of heart, but that's the price of being on the cutting edge."
 #~ msgstr ""
-#~ "Δείτε τα πιο πρόσφατα ενσωματωμένα χαρακτηριστικά πριν φτάσουν σε έκδοση beta  δοκιμάζοντας τις νέες εκδόσεις Aurora. Δοκιμάστε χαρακτηριστικά πρώτοι και βοηθήστε στη λήψη αποφάσεων για το ποια "
-#~ "θα υπάρχουν στην σταθερή έκδοση. Σημείωση: Οι εκδόσεις Aurora δεν είναι κατάλληλες για τον οποιοδήποτε, αυτό σημαίνει να είσαι στην αιχμή της τεχνολογίας."
+#~ "Δείτε τα πιο πρόσφατα ενσωματωμένα χαρακτηριστικά πριν φτάσουν σε έκδοση beta  δοκιμάζοντας τις νέες εκδόσεις Aurora. Δοκιμάστε χαρακτηριστικά πρώτοι και βοηθήστε στη λήψη αποφάσεων για το ποια θα "
+#~ "υπάρχουν στην σταθερή έκδοση. Σημείωση: Οι εκδόσεις Aurora δεν είναι κατάλληλες για τον οποιοδήποτε, αυτό σημαίνει να είσαι στην αιχμή της τεχνολογίας."
 
-# https://developer-stage9.mozilla.org/el/demos/
 #~ msgid "Favorite <span class=\"mozilla\">Mozilla</span> Tools"
 #~ msgstr "Δημοφιλη εργαλεια <span class=\"mozilla\">Mozilla</span>"
 
-# https://developer-stage9.mozilla.org/el/demos/
 #~ msgid "Favorite <span class=\"web\">Web</span> Developer Tools"
 #~ msgstr "Δημοφιλη εργαλεια για αναπτυξη στο <span class=\"web\">διαδικτυο</span>"
 
@@ -5818,15 +5736,12 @@ msgstr ""
 #~ msgid "Key Topics for <a href=\"%(web_url)s\" class=\"web\">Web</a> Developers"
 #~ msgstr "Κύρια θέματα για δημιουργούς <a href=\"%(web_url)s\" class=\"web\">ιστοσελίδων</a>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Key Topics for <span class=\"web\">Web</span> Developers"
 #~ msgstr "Σημαντικα θεματα για δημιουργους του <span class=\"web\">διαδικτυου</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Latest <span class=\"addons\">Add-ons</span> Comments from Our Community:"
 #~ msgstr "Προσφατα σχολια για <span class=\"addons\">προσθετα</span> απο την κοινοτητα μας:"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Latest <span class=\"addons\">Add-ons</span> Discussions from Our Forums:"
 #~ msgstr "Προσφατες συζητησεις για <span class=\"addons\">προσθετα</span> απο τα φορουμ μας:"
 
@@ -5845,69 +5760,58 @@ msgstr ""
 #~ msgid "Maximum of %s tags allowed"
 #~ msgstr "Επιτρέπονται μέχρι %s ετικέτες"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "More"
 #~ msgstr "Περισσοτερα"
 
 #~ msgid ""
 #~ "Mozilla and <a href=\"%(p2pu)s\">P2PU</a> are creating the <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes are globally "
-#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and "
-#~ "build careers on open web technology."
+#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and build "
+#~ "careers on open web technology."
 #~ msgstr ""
-#~ "Η κοινότητα Mozilla και το <a href=\"%(p2pu)s\">P2PU</a>, δημιούργησαν το <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, μια νέα πλατφόρμα εκμάθησης για το διαδίκτυο. Η πρόσβαση στα "
-#~ "μαθήματα είναι δυνατή από οποιοδήποτε μέρος του κόσμου, είναι 100%% δωρεάν και συμμετέχουν αποκλειστικά εθελοντές, καθηγητές και μαθητές όπως κι εσείς. Ο στόχος της είναι να γίνει ένα ενεργητικό "
-#~ "σύστημα αλληλοβοήθειας, ώστε να διευκολύνει τους πάντες να έχουν πρόσβαση στις ανοικτές τεχνολογίες του διαδικτύου και να κάνουν καριέρα μ'αυτές."
+#~ "Η κοινότητα Mozilla και το <a href=\"%(p2pu)s\">P2PU</a>, δημιούργησαν το <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, μια νέα πλατφόρμα εκμάθησης για το διαδίκτυο. Η πρόσβαση στα μαθήματα "
+#~ "είναι δυνατή από οποιοδήποτε μέρος του κόσμου, είναι 100%% δωρεάν και συμμετέχουν αποκλειστικά εθελοντές, καθηγητές και μαθητές όπως κι εσείς. Ο στόχος της είναι να γίνει ένα ενεργητικό σύστημα "
+#~ "αλληλοβοήθειας, ώστε να διευκολύνει τους πάντες να έχουν πρόσβαση στις ανοικτές τεχνολογίες του διαδικτύου και να κάνουν καριέρα μ'αυτές."
 
 #~ msgid ""
-#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest "
-#~ "enhancements in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
+#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest enhancements"
+#~ " in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
 #~ msgstr ""
-#~ "Η κοινότητα Mozilla συνεχίζει να ηγείται της προσπάθειας για την υιοθέτηση της HTML5 κι άλλων ανερχόμενων ανοικτών τεχνολογιών για το διαδίκτυο. Μάθετε περισσότερα για τις <a href="
-#~ "\"%(devmo_html5)s\">προδιαγραφές της HTML5</a> και τις πιο πρόσφατες βελτιώσεις σε HTML5, CSS3 και άλλα <a href=\"%(devmo_fx4dev)s\">χαρακτηριστικά για δημιουργούς στον Firefox 4</a>."
+#~ "Η κοινότητα Mozilla συνεχίζει να ηγείται της προσπάθειας για την υιοθέτηση της HTML5 κι άλλων ανερχόμενων ανοικτών τεχνολογιών για το διαδίκτυο. Μάθετε περισσότερα για τις <a "
+#~ "href=\"%(devmo_html5)s\">προδιαγραφές της HTML5</a> και τις πιο πρόσφατες βελτιώσεις σε HTML5, CSS3 και άλλα <a href=\"%(devmo_fx4dev)s\">χαρακτηριστικά για δημιουργούς στον Firefox 4</a>."
 
 #~ msgid "New to MDN?"
 #~ msgstr "Είστε νέοι στο MDN;"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "News & Updates"
 #~ msgstr "Νεα & Ενημερωσεις"
 
 #~ msgid "Participating in the Mozilla Project"
 #~ msgstr "Συμμετοχή στο έργο Mozilla"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular <span class=\"addons\">Add-ons</span> Documentation"
 #~ msgstr "Δημοφιλης τεκμηριωση για <span class=\"addons\">προσθετα</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular <span class=\"mobile\">Mobile</span> Documentation"
 #~ msgstr "Δημοφιλης τεκμηριωση για <span class=\"mobile\">κινητα</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular <span class=\"mozilla\">Mozilla</span> Documentation"
 #~ msgstr "Δημοφιλης τεκμηριωση <span class=\"mozilla\">Mozilla</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular <span class=\"web\">Web</span> Documentation"
 #~ msgstr "Δημοφιλης τεκμηριωση για το <span class=\"web\">διαδικτυο</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular Topics for <span class=\"web\">Web</span> Developers"
 #~ msgstr "Δημοφιλη θεματα για δημιουργους <span class=\"web\">διαδικτυου</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Recent <span class=\"addons\">Add-ons</span> News &amp; Updates"
 #~ msgstr "Προσφατα νεα &amp; ενημερωσεις για <span class=\"addons\">προσθετα</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Recent <span class=\"mobile\">Mobile</span> News &amp; Updates"
 #~ msgstr "Προσφατα νεα &amp; ενημερωσεις για <span class=\"mobile\">κινητα</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Recent <span class=\"mozilla\">Mozilla</span> News &amp; Updates"
 #~ msgstr "Προσφατες ενημερωσεις &amp; νεα απο το εργο <span class=\"mozilla\">Mozilla</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Recent <span class=\"web\">Web</span> News &amp; Updates"
 #~ msgstr "Προσφατα νεα &amp; ενημερωσεις για το <span class=\"web\">διαδικτυο</span>"
 
@@ -5915,8 +5819,7 @@ msgstr ""
 #~ msgstr "School of Webcraft"
 
 #~ msgid "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
-#~ msgstr ""
-#~ "Δείτε πως μπορείτε να <a href=\"%(devmo_participate)s\">συμμετέχετε</a> στη <a href=\"%(devmo_l10n)s\">μετάφραση</a>, την <a href=\"%(devmo_qa)s\">quality assurance</a> κι άλλα έργα Mozilla."
+#~ msgstr "Δείτε πως μπορείτε να <a href=\"%(devmo_participate)s\">συμμετέχετε</a> στη <a href=\"%(devmo_l10n)s\">μετάφραση</a>, την <a href=\"%(devmo_qa)s\">quality assurance</a> κι άλλα έργα Mozilla."
 
 #~ msgid "See more about {title} by {author}"
 #~ msgstr "Δείτε περισσότερα σχετικά με το {title} του/της {author}"
@@ -5937,29 +5840,30 @@ msgstr ""
 #~ msgstr "Η ετικέτα «%s» δεν υπάρχει στο σύνολο των ετικετών"
 
 #~ msgid ""
-#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s"
-#~ "\">big chart full of check marks</a> to prove it."
+#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s\">big "
+#~ "chart full of check marks</a> to prove it."
 #~ msgstr ""
-#~ "Δοκιμάστε την <a href=\"%(fx4_features)s\">επόμενη έκδοση του Firefox</a> και βοηθήστε μας να κάνουμε τον καλύτερο περιηγητή του κόσμου, ακόμα πιο καλό. Ο Firefox 4 ωθεί το σύγχρονο διαδίκτυο "
-#~ "ακόμα πιο μπροστά και έχουμε μια <a href=\"%(fx4_tech)s\">μεγάλη λίστα επιτευγμάτων</a> για να το αποδείξουμε."
+#~ "Δοκιμάστε την <a href=\"%(fx4_features)s\">επόμενη έκδοση του Firefox</a> και βοηθήστε μας να κάνουμε τον καλύτερο περιηγητή του κόσμου, ακόμα πιο καλό. Ο Firefox 4 ωθεί το σύγχρονο διαδίκτυο ακόμα "
+#~ "πιο μπροστά και έχουμε μια <a href=\"%(fx4_tech)s\">μεγάλη λίστα επιτευγμάτων</a> για να το αποδείξουμε."
 
 #~ msgid "The Document Object Model describes the layout and content of web pages."
 #~ msgstr "Το Document Object Model περιγράφει το σχεδιασμό και το περιεχόμενο των ιστοσελίδων."
 
 #~ msgid ""
-#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a href=\"http://www.apple.com/safari/"
-#~ "\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links provided."
+#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a "
+#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video "
+#~ "download links provided."
 #~ msgstr ""
-#~ "Αυτό το βίντεο απαιτεί περιηγητή που να υποστηρίζει ανοιχτές μορφές βίντεο: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 ή μεταγενέστερο</li> <li><a href=\"http://www."
-#~ "apple.com/safari/\">Safari</a> 3.1 ή μεταγενέστερο</li> </ul> ή το <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Εναλλακτικά, μπορείτε να κάνετε λήψη του βίντεο μέσω "
-#~ "των δεσμών που παρέχουμε."
+#~ "Αυτό το βίντεο απαιτεί περιηγητή που να υποστηρίζει ανοιχτές μορφές βίντεο: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 ή μεταγενέστερο</li> <li><a "
+#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 ή μεταγενέστερο</li> </ul> ή το <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Εναλλακτικά, μπορείτε να κάνετε λήψη "
+#~ "του βίντεο μέσω των δεσμών που παρέχουμε."
 
 #~ msgid "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies."
 #~ msgstr "Χρησιμοποιήστε το Add-ons Builder για να αναπτύξετε εύκολα και γρήγορα μια επέκταση για τον Firefox χρησιμοποιώντας απλά την τεχνολογία που θα χρησιμοποιούσατε και για τον ιστό."
 
 #~ msgid ""
-#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a href="
-#~ "\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
+#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a "
+#~ "href=\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
 #~ msgstr ""
 #~ "Χρησιμοποιήστε το Add-ons Builder για να δημιουργήσετε γρήγορα και εύκολα μια επέκταση για τον Firefox χρησιμοποιώντας μόνο τεχνολογίες που χρησιμοποιείτε καθημερινά στο διαδίκτυο. Υπάρχουν <a "
 #~ "href=\"%(tutorial)s\">οδηγίες</a> για να ξεκινήσετε και μια <a href=\"%(api)s\">πληθώρα API στη βασική βιβλιοθήκη</a> για να μπορείτε να προσθέσετε λειτουργίες στον Firefox."
@@ -5970,7 +5874,6 @@ msgstr ""
 #~ msgid "Want to see what the Web is really capable of? Explore the Web o' Wonder website and prepare to be amazed!"
 #~ msgstr "Θέλετε να δείτε τις πραγματικές δυνατότητες τους διαδικτύου; Εξερευνήστε τις σελίδες του Web o' Wonder και προετοιμαστείτε για εκπλήξεις!"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Watch <span class=\"mobile\">Mobile</span> Videos"
 #~ msgstr "Δειτε βιντεο για <span class=\"mobile\">κινητα</span>"
 
