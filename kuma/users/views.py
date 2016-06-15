@@ -131,7 +131,7 @@ def ban_user_and_cleanup_summary(request, user_id):
                       by=request.user,
                       reason='Spam',
                       is_active=True)
-        #ban.save()
+        # ban.save()
     else:
         user_ban.update(by=request.user, reason='Spam')
 
@@ -153,6 +153,7 @@ def ban_user_and_cleanup_summary(request, user_id):
     return render(request,
                   'users/ban_user_and_cleanup_summary.html',
                   context)
+
 
 def user_detail(request, username):
     """
