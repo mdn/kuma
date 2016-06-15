@@ -55,6 +55,9 @@ users_patterns = [
     url(r'^ban_and_cleanup/(?P<user_id>\d+)$',
         views.ban_user_and_cleanup,
         name='users.ban_and_cleanup'),
+    url(r'^ban_summary/(?P<user_id>\d+)$',
+        views.ban_user_and_cleanup_summary,
+        name='users.ban_user_and_cleanup_summary'),
 ]
 
 

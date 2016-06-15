@@ -16,6 +16,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext_lazy as _
 from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
@@ -99,32 +100,6 @@ def ban_user_and_cleanup(request, user_id):
     # Is this user already banned?
     user_ban = UserBan.objects.filter(user=user, is_active=True)
 
-    if request.method == 'POST':
-        # If the user is not banned, ban user; else, update'by' and 'reason
-        if not user_ban.exists():
-            ban = UserBan(user=user,
-                          by=request.user,
-                          reason='Spam',
-                          is_active=True)
-            ban.save()
-        else:
-            user_ban.update(by=request.user, reason='Spam')
-
-        # TODO: In the future this will take the revisions out of request.POST
-        # and either revert them or not. For now list all of the revisions
-        revisions_reverted = user.created_revisions.prefetch_related('document')\
-                                 .defer('content', 'summary').order_by('-created')
-        revisions_needing_follow_up = revisions_reverted
-
-        context = {'detail_user': user,
-                   'form': UserBanForm(),
-                   'revisions_reverted': revisions_reverted,
-                   'revisions_needing_follow_up': revisions_needing_follow_up}
-
-        return render(request,
-                      'users/ban_user_and_cleanup_summary.html',
-                      context)
-
     revisions = user.created_revisions.prefetch_related('document').defer('content', 'summary').order_by('-created')
     revisions = paginate(request, revisions, per_page=20)
 
@@ -135,6 +110,49 @@ def ban_user_and_cleanup(request, user_id):
                    'revisions': revisions,
                    'on_ban_page': True})
 
+
+@require_POST
+@permission_required('users.add_userban')
+def ban_user_and_cleanup_summary(request, user_id):
+    """
+    A summary page of actions taken when banning a user and reverting revisions
+    """
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        raise Http404
+
+    # Is this user already banned?
+    user_ban = UserBan.objects.filter(user=user, is_active=True)
+
+    # If the user is not banned, ban user; else, update 'by' and 'reason'
+    if not user_ban.exists():
+        ban = UserBan(user=user,
+                      by=request.user,
+                      reason='Spam',
+                      is_active=True)
+        #ban.save()
+    else:
+        user_ban.update(by=request.user, reason='Spam')
+
+    # TODO: In the future this will take the revisions out of request.POST
+    # and either revert them or not. For now list all of the revisions
+    revisions_reverted = user.created_revisions.prefetch_related('document')\
+                             .defer('content', 'summary').order_by('-created')
+
+    # TODO: for now, we'll just list the top 25 revisions for each resultset
+    # to avoid users with lots of revisions crashing the site.
+    revisions_needing_follow_up = revisions_reverted[:25]
+    revisions_reverted = revisions_reverted[:25]
+
+    context = {'detail_user': user,
+               'form': UserBanForm(),
+               'revisions_reverted': revisions_reverted,
+               'revisions_needing_follow_up': revisions_needing_follow_up}
+
+    return render(request,
+                  'users/ban_user_and_cleanup_summary.html',
+                  context)
 
 def user_detail(request, username):
     """
