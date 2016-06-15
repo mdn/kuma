@@ -53,9 +53,9 @@ django-dbgettext==0.1.2 \
     --hash=sha256:f5a115b2338a9d71a333a4b89cec14afbd8fd0180f98ff35a9c7f5d96ee969a8
 
 # Add CreationDateTimeField, management commands
-django-extensions==1.6.1 \
-    --hash=sha256:4799534f35eba1c07cb6f9859aa5bb719886769f5d35d2a38e7490ce90c0ce69 \
-    --hash=sha256:f98f991d2b039033ac5faa638c0d1afb2720abf4d9d781573c3592d6899480a1
+django-extensions==1.6.7 \
+    --hash=sha256:7c33f1be6acf7414539cfdef2967bf6240d3c9317551b5d84622dff7824cd3c6 \
+    --hash=sha256:ebdfc329207231f63b5ccb591407aadbc1a524af752e52690f0646eb7ff52943
 
 # Modern flat theme for Django admin
 django-flat-theme==1.1.3 \
