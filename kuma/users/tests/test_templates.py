@@ -420,7 +420,7 @@ class BanAndCleanupTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         original_revision = create_revision(
             title='Revision 0',
@@ -464,7 +464,7 @@ class BanAndCleanupTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         create_revision(
             title='Revision 0',
@@ -492,7 +492,7 @@ class BanAndCleanupTestCase(UserTestCase):
         testuser2 = self.user_model.objects.get(username='testuser2')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         create_revision(
             title='Revision 0',
@@ -556,7 +556,7 @@ class BanUserAndCleanupSummaryTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         original_revision = create_revision(
             title='Revision 0',
@@ -601,7 +601,7 @@ class BanUserAndCleanupSummaryTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         create_revision(
             title='Revision 0',
@@ -632,5 +632,42 @@ class BanUserAndCleanupSummaryTestCase(UserTestCase):
         ok_(exp_reverted in revisions_reverted_section.text())
         ok_(exp_followup in revisions_followup_section.text())
 
+
 #    TODO: Phase III:
 #    def test_unreverted_changes_in_summary_page_template(self):
+
+
+class ProfileDetailTestCase(UserTestCase):
+    def test_user_profile_detail_ban_link(self):
+        """The user profile page for a user who has been banned"""
+        """should display correct text on ban links if user is banned or not banned"""
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        self.client.login(username='admin', password='testpass')
+
+        profile_url = reverse('users.user_detail',
+                              kwargs={'username': testuser.username})
+
+        # The user is not banned, display appropriate links
+        resp = self.client.get(profile_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        ban_link = page.find('#ban_link')
+        ban_cleanup_link = page.find('#cleanup_link')
+        eq_("Ban User", ban_link.text())
+        eq_("Ban User & Clean Up", ban_cleanup_link.text())
+
+        # The user is banned, display appropriate links
+        UserBan.objects.create(user=testuser, by=admin,
+                               reason='Banned by unit test.',
+                               is_active=True)
+        resp = self.client.get(profile_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        ban_link = page.find('#ban_link')
+        ban_cleanup_link = page.find('#cleanup_link')
+        eq_("Banned", ban_link.text())
+        eq_("Clean Up Revisions", ban_cleanup_link.text())

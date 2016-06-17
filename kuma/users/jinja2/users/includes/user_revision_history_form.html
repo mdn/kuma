@@ -40,8 +40,7 @@
                         {% include "wiki/includes/document_tag.html" %}
                     </td>
                     <td class="dashboard-history-link">
-                        <a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="history">{{ _("View page
-                        history") }}</a>
+                        <a id="history" href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="button">{{ _("History") }}<i aria-hidden="true" class="icon-book"></i></a></a>
                     </td>
                 </tr>
                 <tr>
