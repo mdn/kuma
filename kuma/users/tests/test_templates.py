@@ -420,7 +420,7 @@ class BanAndCleanupTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         original_revision = create_revision(
             title='Revision 0',
@@ -464,7 +464,7 @@ class BanAndCleanupTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         create_revision(
             title='Revision 0',
@@ -492,7 +492,7 @@ class BanAndCleanupTestCase(UserTestCase):
         testuser2 = self.user_model.objects.get(username='testuser2')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         create_revision(
             title='Revision 0',
@@ -556,7 +556,7 @@ class BanUserAndCleanupSummaryTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         original_revision = create_revision(
             title='Revision 0',
@@ -601,7 +601,7 @@ class BanUserAndCleanupSummaryTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
         admin = self.user_model.objects.get(username='admin')
 
-        # Create an oiginal revision on a document by the admin user
+        # Create an original revision on a document by the admin user
         document = create_document(save=True)
         create_revision(
             title='Revision 0',
