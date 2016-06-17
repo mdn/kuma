@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-17 12:33+0000\n"
+"PO-Revision-Date: 2016-06-17 14:05+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -16,54 +16,54 @@ msgstr ""
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
 msgid "Permission Denied"
-msgstr "Geen toestemming"
+msgstr "Gjin tastimming"
 
 #: jinja2/403.html:23
 msgid "The wiki is in read-only mode."
-msgstr "De wiki bevindt zich in alleen-lezenmodus."
+msgstr "De wiki is yn allinnich-lêzemoadus."
 
 #: jinja2/403.html:25
 msgid "Your profile has been banned from making edits."
-msgstr "Uw profiel mag geen bewerkingen uitvoeren."
+msgstr "Jo profyl mei gjin bewurkingen útfiere."
 
 #: jinja2/403.html:27
 msgid "This user's profile has been banned."
-msgstr "Het profiel van deze gebruiker is geblokkeerd."
+msgstr "It profyl fan dizze brûker is blokkearre."
 
 #: jinja2/403.html:29
 msgid "You must sign in to view all history"
-msgstr "U moet zich aanmelden om alle geschiedenis weer te geven"
+msgstr "Jo moatte jo oanmelde om alle skiednis wer te jaan"
 
 #: jinja2/403.html:39 jinja2/handlers/400.html:21
 #, python-format
 msgid "<p>We're sorry %(name)s, we're afraid we can't do that.</p>"
-msgstr "<p>Het spijt ons %(name)s, dat kunnen we helaas niet doen.</p>"
+msgstr "<p>It spyt ús %(name)s, dat kinne wy spitigernôch net dwaan.</p>"
 
 #: jinja2/403.html:43 jinja2/handlers/400.html:25
 msgid "<p>We're sorry, we're afraid we can't do that.</p>"
-msgstr "<p>Het spijt ons, dat kunnen we helaas niet doen.</p>"
+msgstr "<p>It spyt ús, dat kinne wy spitigernôch net dwaan.</p>"
 
 #: jinja2/403.html:50
 #, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
-msgstr "<li><a href=\"%(logout_url)s\">Meld u af</a> om het opnieuw te proberen.</li>"
+msgstr "<li><a href=\"%(logout_url)s\">Meld jo ôf</a> om it opnij te probearjen.</li>"
 
 #: jinja2/403.html:54 jinja2/handlers/400.html:36
 #, python-format
 msgid "<li><a href=\"%(login_url)s\">Sign in</a> to try again.</li>"
-msgstr "<li><a href=\"%(login_url)s\">Meld u aan</a> om het opnieuw te proberen.</li>"
+msgstr "<li><a href=\"%(login_url)s\">Meld jo oan</a> om it opnij te probearjen.</li>"
 
 #: jinja2/403.html:62
 msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> door Matthew Inman van <a href=\"http://theoatmeal.com\" "
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> troch Matthew Inman fan <a href=\"http://theoatmeal.com\" "
 "rel=\"nofollow\">The Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
-msgstr "Niet gevonden"
+msgstr "Net fûn"
 
 #: jinja2/404.html:20
 msgid "We're sorry, we couldn't find what you were looking for."
@@ -77,7 +77,7 @@ msgstr "U kunt een zoekopdracht proberen of opnieuw beginnen op de <a href=\"%(h
 #: jinja2/404.html:28
 #, python-format
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
-msgstr "Als u op een documentatiekoppeling hebt geklikt, kunt u zich aanmelden en de pagina aanmaken. <a href=\"%(bug_form_url)s\" rel=\"nofollow\">Meld anders een bug</a>. Bedankt!"
+msgstr "As jo op in dokumintaasjekeppeling klikt hawwe, kinne jo jo oanmelde en de side oanmeitsje. <a href=\"%(bug_form_url)s\" rel=\"nofollow\">Meld oars in bug</a>. Tank!"
 
 #: jinja2/404.html:36
 #, python-format
@@ -106,7 +106,7 @@ msgstr "Naar zoeken"
 
 #: jinja2/base.html:98 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
-msgstr "Hulpmiddelen"
+msgstr "Helpmiddelen"
 
 #: jinja2/base.html:102
 msgid "Contribute to MDN"
@@ -122,7 +122,7 @@ msgstr "Documenten beoordelen of vertalen"
 
 #: jinja2/base.html:108
 msgid "Site Tools"
-msgstr "Website-hulpmiddelen"
+msgstr "Website-helpmiddelen"
 
 #: jinja2/base.html:110
 msgid "Revision dashboard"
@@ -134,11 +134,11 @@ msgstr "Documentatiestatus"
 
 #: jinja2/base.html:120
 msgid "Web Platform"
-msgstr "Webplatform"
+msgstr "Webplatfoarm"
 
 #: jinja2/base.html:124
 msgid "Technologies"
-msgstr "Technologieën"
+msgstr "Technologyën"
 
 #: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
@@ -170,31 +170,31 @@ msgstr "MathML"
 
 #: jinja2/base.html:135
 msgid "References & Guides"
-msgstr "Referenties en gidsen"
+msgstr "Referinsjes en gidsen"
 
 #: jinja2/base.html:137
 msgid "Learn the Web"
-msgstr "Het web leren"
+msgstr "It web leare"
 
 #: jinja2/base.html:138
 msgid "Tutorials"
-msgstr "Handleidingen"
+msgstr "Hânliedingen"
 
 #: jinja2/base.html:139
 msgid "References"
-msgstr "Referenties"
+msgstr "Referinsjes"
 
 #: jinja2/base.html:140
 msgid "Developer Guides"
-msgstr "Gidsen voor ontwikkelaars"
+msgstr "Gidsen foar ûntwikkelers"
 
 #: jinja2/base.html:141
 msgid "Accessibility"
-msgstr "Toegankelijkheid"
+msgstr "Tagonklikheid"
 
 #: jinja2/base.html:142
 msgid "...more docs"
-msgstr "…meer documenten"
+msgstr "…mear dokuminten"
 
 #: jinja2/base.html:146
 msgid "Mozilla Docs"
@@ -222,23 +222,23 @@ msgstr "Persona"
 
 #: jinja2/base.html:159
 msgid "Developer Tools"
-msgstr "Hulpmiddelen voor ontwikkelaars"
+msgstr "Helpmiddelen foar ûntwikkelers"
 
 #: jinja2/base.html:159
 msgid "Feedback"
-msgstr "Feedback"
+msgstr "Kommentaar"
 
 #: jinja2/base.html:164
 msgid "Get Firefox help"
-msgstr "Hulp bij Firefox verkrijgen"
+msgstr "Help by Firefox krije"
 
 #: jinja2/base.html:165
 msgid "Get web development help"
-msgstr "Hulp bij webontwikkeling verkrijgen"
+msgstr "Help by webûntwikling krije"
 
 #: jinja2/base.html:168
 msgid "Join the MDN community"
-msgstr "Deelnemen aan de MDN-gemeenschap"
+msgstr "Dielnimme oan de MDN-mienskip"
 
 #: jinja2/base.html:169
 msgid "Report a content problem"
@@ -246,7 +246,7 @@ msgstr "Een inhoudsprobleem melden"
 
 #: jinja2/base.html:170
 msgid "Report a bug"
-msgstr "Een bug melden"
+msgstr "In bug melde"
 
 #: jinja2/base.html:177 jinja2/base.html:178 jinja2/base.html:180 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
@@ -319,7 +319,7 @@ msgstr "Afmelden"
 
 #: jinja2/includes/login.html:17
 msgid "Sign in"
-msgstr "Aanmelden"
+msgstr "Oanmelde"
 
 #: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:112 kuma/users/jinja2/users/user_detail.html:116
 msgid "GitHub"
@@ -667,7 +667,7 @@ msgstr "API’s / DOM"
 
 #: kuma/core/translations/search/filter/apps/name.py:4
 msgid "Open Web Apps"
-msgstr "Open webapps"
+msgstr "Iepen webapps"
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
@@ -699,7 +699,7 @@ msgstr "Spellen"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
-msgstr "Handleiding en zelfstudie"
+msgstr "Hânlieding en selsstúdzje"
 
 #: kuma/core/translations/search/filter/intermediate/name.py:4
 msgid "Intermediate"
@@ -715,7 +715,7 @@ msgstr "SVG"
 
 #: kuma/core/translations/search/filter/webdev/name.py:4
 msgid "Web Development"
-msgstr "Webontwikkeling"
+msgstr "Webûntwikkeling"
 
 #: kuma/core/translations/search/filter/webgl/name.py:4
 msgid "WebGL"
@@ -935,7 +935,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
-msgstr "Gedeelde kennis <span>voor het open web</span>"
+msgstr "Dielde kennis <span>foar it iepen web</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
@@ -947,11 +947,11 @@ msgstr "Onderwerpen tonen"
 
 #: kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
-msgstr "Webtechnologieën"
+msgstr "Webtechnologyën"
 
 #: kuma/landing/jinja2/landing/homepage.html:72
 msgid "Web<br />Platform"
-msgstr "Web-<br />platform"
+msgstr "Web-<br />platfoarm"
 
 #: kuma/landing/jinja2/landing/homepage.html:74
 msgid "Web APIs &amp; DOM"
@@ -967,7 +967,7 @@ msgstr "CSS3"
 
 #: kuma/landing/jinja2/landing/homepage.html:78 kuma/landing/jinja2/landing/homepage.html:98
 msgid "more..."
-msgstr "meer…"
+msgstr "mear…"
 
 #: kuma/landing/jinja2/landing/homepage.html:82
 msgid "Mozilla<br> Docs"
@@ -975,11 +975,11 @@ msgstr "Mozilla<br> Docs"
 
 #: kuma/landing/jinja2/landing/homepage.html:87
 msgid "App Center"
-msgstr "App-centrum"
+msgstr "App-sintrum"
 
 #: kuma/landing/jinja2/landing/homepage.html:92
 msgid "Developer<br />Tools"
-msgstr "Hulpmiddelen voor<br />ontwikkelaars"
+msgstr "Helpmiddelen foar<br />ûntwikkelers"
 
 #: kuma/landing/jinja2/landing/homepage.html:94
 msgid "Page Inspector"
@@ -995,23 +995,23 @@ msgstr "JavaScript-debugger"
 
 #: kuma/landing/jinja2/landing/homepage.html:97
 msgid "Performance Tools"
-msgstr "Prestatiehulpmiddelen"
+msgstr "Prestaasjehelpmiddelen"
 
 #: kuma/landing/jinja2/landing/homepage.html:102
 msgid "Connect"
-msgstr "Verbinden"
+msgstr "Ferbine"
 
 #: kuma/landing/jinja2/landing/homepage.html:103
 msgid "Get Web technology news from Mozilla, get help from other developers, and more!"
-msgstr "Ontvang webtechnologienieuws van Mozilla, verkrijg hulp van andere ontwikkelaars, en meer!"
+msgstr "Untfang webtechnologynijs fan Mozilla, krij help fan oare ûntwikkelers, en mear!"
 
 #: kuma/landing/jinja2/landing/homepage.html:104
 msgid "Learn more and sign up!"
-msgstr "Lees meer en registreer!"
+msgstr "Lês mear en registrearje!"
 
 #: kuma/landing/jinja2/landing/homepage.html:113
 msgid "Open Web and Mobile"
-msgstr "Webontwikkeling leren"
+msgstr "Webûntwikling leare"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
@@ -1019,19 +1019,19 @@ msgstr "Webontwikkeling leren"
 
 #: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
-msgstr "Gebruik de browser voor ontwikkelaars zoals u"
+msgstr "Brûk de browser foar ûntwikkelers lykas jo"
 
 #: kuma/landing/jinja2/landing/homepage.html:122
 msgid "Build Open Web Apps"
-msgstr "Open webapps bouwen"
+msgstr "Iepen webapps meitsje"
 
 #: kuma/landing/jinja2/landing/homepage.html:130
 msgid "<a href=\"http://hacks.mozilla.org\">read more at hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
-msgstr "<a href=\"http://hacks.mozilla.org\">lees meer op hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
+msgstr "<a href=\"http://hacks.mozilla.org\">lês mear op hacks.mozilla.org <i aria-hidden=\"true\" class=\"icon-arrow-right\"></i></a></span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:135
 msgid "Get Involved"
-msgstr "Meewerken"
+msgstr "Meiwurkje"
 
 #: kuma/landing/jinja2/landing/homepage.html:137
 #, python-format
@@ -1039,8 +1039,8 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">Sluit u aan bij <span class=\"number\">%(contributors)s</span>medewerkers</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> talen en"
-" locales</span> <span class=\"row3\">over de hele wereld.</span> </p>"
+"<p class=\"numbers\"> <span class=\"row1\">Slút jo oan by <span class=\"number\">%(contributors)s</span>meiwurkers</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> talen en "
+"locales</span> <span class=\"row3\">oer de hiele wrâld.</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
@@ -1393,8 +1393,8 @@ msgid ""
 "Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
 "rel=\"nofollow\">file a bug</a>."
 msgstr ""
-"Sorry, u moet minstens één gekoppelde account hebben om u te kunnen aanmelden. Koppel eerst een andere account om deze te ontkoppelen. <a href=\"%(bug_form_url)s\" rel=\"nofollow\">Meld een bug</a> "
-"om uw MDN-profiel te verwijderen."
+"Sorry, jo moatte op syn minst ien keppele account hawwe om jo oan melde te kinnen. Keppelje earst in oar account om dizze te ûntkeppeljen. <a href=\"%(bug_form_url)s\" rel=\"nofollow\">Meld in "
+"bug</a> om jo MDN-profyl fuort te smiten."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -1489,7 +1489,7 @@ msgstr "%(banned_user)s geblokkeerd door %(banned_by)s"
 #: kuma/users/models.py:32
 #, python-format
 msgid "%s (no longer active)"
-msgstr "%s (niet meer actief)"
+msgstr "%s (net mear aktyf)"
 
 #: kuma/users/models.py:51
 msgid "Language"
@@ -1681,7 +1681,7 @@ msgstr "U hebt bevestigd dat <a href=\"mailto:%(email)s\">%(email)s</a> een e-ma
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
-msgstr "Aanmelden"
+msgstr "Oanmelde"
 
 #: kuma/users/jinja2/account/login.html:11
 msgid "Please sign in"
@@ -1689,7 +1689,7 @@ msgstr "Meld u aan"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using any of the services below. A MDN profile will be created for you if you don't already have one."
-msgstr "Om mee te helpen dient u zich aan te melden bij MDN. U kunt zich via de onderstaande services aanmelden. Als u dit nog niet hebt, zal er een MDN-profiel voor u worden aangemaakt."
+msgstr "Om mei te helpen moatte jo jo oanmelde by MDN. Jo kinne jo fia de ûndersteande services oanmelde. As jo dit noch net hawwe, sil der in MDN-profyl foar jo oanmakke wurde."
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -1799,11 +1799,11 @@ msgstr "OpenID-aanmelding"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
-msgstr "Aanmelden bij account mislukt"
+msgstr "Oanmelden by account mislearre"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:8
 msgid "An error occurred while attempting to sign in with your account."
-msgstr "Er is een fout opgetreden bij het aanmelden bij uw account."
+msgstr "Der is in flater bard by it oanmelden by jo account."
 
 #: kuma/users/jinja2/socialaccount/connections.html:3
 msgid "Account Connections"
@@ -1815,7 +1815,7 @@ msgstr "Accountkoppelingen"
 
 #: kuma/users/jinja2/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
-msgstr "U kunt zich op de volgende manieren bij uw profiel aanmelden:"
+msgstr "Jo kinne jo op de folgjende manieren by jo profyl oanmelde:"
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
@@ -1939,7 +1939,7 @@ msgstr "Koppelen met Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with Persona"
-msgstr "Aanmelden met Persona"
+msgstr "Oanmelde mei Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
@@ -1947,7 +1947,7 @@ msgstr "Koppelen met GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
 msgid "Sign in with GitHub"
-msgstr "Aanmelden met GitHub"
+msgstr "Oanmelde mei GitHub"
 
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
@@ -3480,8 +3480,8 @@ msgid ""
 "Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
 "href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
-"Uw inzending bevat inhoud die mogelijk niet geschikt is voor MDN. Herhaalde pogingen tot indienen van ongeschikt materiaal kan leiden tot deactivering van uw account. Zie onze handleiding ‘<a "
-"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>’ voor details over wat er onder geschikt materiaal valt."
+"Jo ynstjoering befettet ynhâld dy't mooglik net geskikt is foar MDN. Werhelle besykjen ta yntsjinjen fan ûngeskikt materiaal kin liede ta deaktivearing fan jo account. Sjoch ús hânlieding ‘<a "
+"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>’ foar details oer wat der ûnder geskikt materiaal falt."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format

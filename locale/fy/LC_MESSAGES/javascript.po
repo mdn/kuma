@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-17 13:06+0000\n"
+"PO-Revision-Date: 2016-06-17 13:12+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -269,72 +269,72 @@ msgstr "Selecteer een sectie"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:91
 msgid "Sections in Document"
-msgstr "Secties in document"
+msgstr "Seksjes yn dokumint"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:12
 msgid "What should the sample title be?"
-msgstr "Wat zou de voorbeeldtitel moeten zijn?"
+msgstr "Wat soe de foarbyldtitel wêze moatte?"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:23
 msgid "HTML Content"
-msgstr "HTML-inhoud"
+msgstr "HTML-ynhâld"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:24
 msgid "Sample HTML Content"
-msgstr "Voorbeeld van HTML-inhoud"
+msgstr "Foarbyld fan HTML-ynhâld"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:27
 msgid "CSS Content"
-msgstr "CSS-inhoud"
+msgstr "CSS-ynhâld"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:28
 msgid "Sample CSS Content"
-msgstr "Voorbeeld van CSS-inhoud"
+msgstr "Foarbyld fan CSS-ynhâld"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:31
 msgid "JavaScript Content"
-msgstr "JavaScript-inhoud"
+msgstr "JavaScript-ynhâld"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:32
 msgid "Sample JavaScript Content"
-msgstr "Voorbeeld van JavaScript-inhoud"
+msgstr "Foarbyld fan JavaScript-ynhâld"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-sampler/plugin.js:52
 msgid "Insert Code Sample Template"
-msgstr "Codevoorbeeldsjabloon invoegen"
+msgstr "Koadefoarbyldsjabloan ynfoegje"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:24
 msgid "Syntax Highlighter"
-msgstr "Syntaxismarkeerder"
+msgstr "Syntaksismarkearder"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-syntaxhighlighter/plugin.js:30
 msgid "No Highlight"
-msgstr "Geen markering"
+msgstr "Gjin markearring"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:27
 msgid "Embed YouTube Video"
-msgstr "YouTube-video inbedden"
+msgstr "YouTube-fideo ynbedde"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:28
 msgid "Locate a YouTube Video"
-msgstr "Een YouTube-video zoeken"
+msgstr "In YouTube-fideo sykje"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:29
 msgid "Paste YouTube Video URL"
-msgstr "YouTube-video-URL plakken"
+msgstr "YouTube-fideo-URL plakke"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:30
 msgid "Aspect ratio"
-msgstr "Hoogte-breedteverhouding"
+msgstr "Hichte-breedteferhâlding"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:31
 msgid "You must input a valid YouTube video URL."
-msgstr "U moet een geldige YouTube-video-URL opgeven."
+msgstr "Jo moatte in jildige YouTube-fideo-URL opjaan."
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:32
 msgid "The URL you've entered doesn't appear to be valid"
-msgstr "De URL die u hebt ingevoerd lijkt niet geldig te zijn"
+msgstr "De URL dy't jo ynfierd hawwe liket net jildich te wêzen"
 
 #: kuma/static/js/libs/ckeditor/source/plugins/mdn-youtube/plugin.js:33
 msgid "Default"
-msgstr "Standaard"
+msgstr "Standert"
