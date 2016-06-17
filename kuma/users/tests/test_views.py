@@ -208,7 +208,7 @@ class BanAndCleanupTestCase(UserTestCase):
         eq_(200, resp.status_code)
 
     def test_ban_nonexistent_user(self):
-        """GETs and POSTs to ban_and_cleanup for nonexistent user return 404."""
+        """GETs to ban_and_cleanup for nonexistent user return 404."""
         testuser = self.user_model.objects.get(username='testuser')
         testuser2 = self.user_model.objects.get(username='testuser2')
 
@@ -221,10 +221,20 @@ class BanAndCleanupTestCase(UserTestCase):
         resp = self.client.get(ban_url)
         eq_(404, resp.status_code)
 
+
+@pytest.mark.bans
+class BanUserAndCleanupSummaryTestCase(UserTestCase):
+    localizing_client = True
+
+    def test_ban_nonexistent_user(self):
+        """POSTs to ban_and_cleanup for nonexistent user return 404."""
+        testuser = self.user_model.objects.get(username='testuser')
+        testuser2 = self.user_model.objects.get(username='testuser2')
+
         # POST request
         self.client.login(username='admin',
                           password='testpass')
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'user_id': testuser2.id})
         testuser2.delete()
         resp = self.client.post(ban_url)
@@ -236,7 +246,7 @@ class BanAndCleanupTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'user_id': testuser.id})
 
         resp = self.client.post(ban_url)
@@ -249,7 +259,7 @@ class BanAndCleanupTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'user_id': testuser.id})
 
         resp = self.client.post(ban_url)
@@ -275,7 +285,7 @@ class BanAndCleanupTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'user_id': testuser.id})
 
         resp = self.client.post(ban_url)

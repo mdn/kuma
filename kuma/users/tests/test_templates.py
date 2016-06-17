@@ -548,6 +548,9 @@ class BanAndCleanupTestCase(UserTestCase):
         eq_(len(revisions_found), 0)
         eq_(len(ban_button), 0)
 
+
+@pytest.mark.bans
+class BanUserAndCleanupSummaryTestCase(UserTestCase):
     def test_user_revisions_in_summary_page_template(self):
         """The user's revisions show up in ban and cleanup summary template."""
         testuser = self.user_model.objects.get(username='testuser')
@@ -573,7 +576,7 @@ class BanAndCleanupTestCase(UserTestCase):
             revisions_expected.append(new_revision)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'user_id': testuser.id})
         full_ban_url = self.client.get(ban_url)['Location']
 
@@ -611,7 +614,7 @@ class BanAndCleanupTestCase(UserTestCase):
         exp_followup = "The user did not have any revisions needing follow-up."
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'user_id': testuser.id})
         full_ban_url = self.client.get(ban_url)['Location']
 
