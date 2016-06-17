@@ -192,7 +192,7 @@ class BanAndCleanupTestCase(UserTestCase):
         # testuser doesn't have ban permission, can't ban.
         self.client.login(username='testuser',
                           password='testpass')
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': admin.id})
         resp = self.client.get(ban_url)
         eq_(302, resp.status_code)
@@ -202,19 +202,19 @@ class BanAndCleanupTestCase(UserTestCase):
         # admin has ban permission, can ban.
         self.client.login(username='admin',
                           password='testpass')
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': testuser.id})
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
 
     def test_ban_nonexistent_user(self):
-        """GETs to ban_and_cleanup for nonexistent user return 404."""
+        """GETs to ban_user_and_cleanup for nonexistent user return 404."""
         testuser = self.user_model.objects.get(username='testuser')
 
         # GET request
         self.client.login(username='admin',
                           password='testpass')
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': testuser.id})
         testuser.delete()
         resp = self.client.get(ban_url)
@@ -226,7 +226,7 @@ class BanUserAndCleanupSummaryTestCase(UserTestCase):
     localizing_client = True
 
     def test_ban_nonexistent_user(self):
-        """POSTs to ban_and_cleanup for nonexistent user return 404."""
+        """POSTs to ban_user_and_cleanup for nonexistent user return 404."""
         testuser = self.user_model.objects.get(username='testuser')
 
         # POST request

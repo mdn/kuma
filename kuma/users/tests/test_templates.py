@@ -440,7 +440,7 @@ class BanAndCleanupTestCase(UserTestCase):
             revisions_expected.append(new_revision)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': testuser.id})
 
         resp = self.client.get(ban_url, follow=True)
@@ -473,7 +473,7 @@ class BanAndCleanupTestCase(UserTestCase):
             save=True)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': testuser.id})
 
         resp = self.client.get(ban_url, follow=True)
@@ -520,7 +520,7 @@ class BanAndCleanupTestCase(UserTestCase):
 
         # For testuser (banned, but revisions need to be reversed) the button
         # on the form should read "Revert revisions"
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': testuser.id})
 
         resp = self.client.get(ban_url, follow=True)
@@ -535,7 +535,7 @@ class BanAndCleanupTestCase(UserTestCase):
 
         # For testuser2 (banned, has no revisions needing to be reversed) there
         # should be no button on the form
-        ban_url = reverse('users.ban_and_cleanup',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': testuser2.id})
 
         resp = self.client.get(ban_url, follow=True)
