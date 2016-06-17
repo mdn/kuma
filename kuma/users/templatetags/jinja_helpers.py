@@ -30,6 +30,7 @@ def ban_links(context, ban_user, banner_user):
     links = ''
     if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
         active_ban = ban_user.active_ban
+        url_ban_cleanup = reverse('users.ban_and_cleanup', kwargs={'user_id': ban_user.id})
         if active_ban:
             url = reverse('admin:users_userban_change', args=(active_ban.id,))
             title = ugettext('Banned on %(ban_date)s by %(ban_admin)s.') % {
@@ -40,15 +41,17 @@ def ban_links(context, ban_user, banner_user):
             link = ('<a href="%s" class="button ban-link" title="%s">%s'
                     '<i aria-hidden="true" class="icon-ban"></i></a>'
                     % (url, title, ugettext('Banned')))
+            link_cleanup = ('<a href="%s" class="button negative ban-link">%s'
+                            '<i aria-hidden="true" class="icon-ban"></i></a>'
+                            % (url_ban_cleanup, ugettext('Clean Up Revisions')))
         else:
             url = reverse('users.ban_user', kwargs={'user_id': ban_user.id})
             link = ('<a href="%s" class="button negative ban-link">%s'
                     '<i aria-hidden="true" class="icon-ban"></i></a>'
                     % (url, ugettext('Ban User')))
-        url_ban_cleanup = reverse('users.ban_and_cleanup', kwargs={'user_id': ban_user.id})
-        link_cleanup = ('<a href="%s" class="button negative ban-link">%s'
-                        '<i aria-hidden="true" class="icon-ban"></i></a>'
-                        % (url_ban_cleanup, ugettext('Ban User and Cleanup')))
+            link_cleanup = ('<a href="%s" class="button negative ban-link">%s'
+                            '<i aria-hidden="true" class="icon-ban"></i></a>'
+                            % (url_ban_cleanup, ugettext('Ban User & Cleanup')))
         links = link_cleanup + ' ' + link
     return Markup(links)
 
