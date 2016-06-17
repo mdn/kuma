@@ -47,8 +47,8 @@ def ban_links(context, ban_user, banner_user):
                     % (url, ugettext('Ban User')))
         url_ban_cleanup = reverse('users.ban_and_cleanup', kwargs={'user_id': ban_user.id})
         link_cleanup = ('<a href="%s" class="button negative ban-link">%s'
-                    '<i aria-hidden="true" class="icon-ban"></i></a>'
-                    % (url_ban_cleanup, ugettext('Ban User and Cleanup')))
+                        '<i aria-hidden="true" class="icon-ban"></i></a>'
+                        % (url_ban_cleanup, ugettext('Ban User and Cleanup')))
         links = link_cleanup + ' ' + link
     return Markup(links)
 
