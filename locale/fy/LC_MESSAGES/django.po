@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-17 14:05+0000\n"
+"PO-Revision-Date: 2016-06-17 14:15+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -110,11 +110,11 @@ msgstr "Helpmiddelen"
 
 #: jinja2/base.html:102
 msgid "Contribute to MDN"
-msgstr "Bijdragen aan MDN"
+msgstr "Bydrage oan MDN"
 
 #: jinja2/base.html:104
 msgid "Get started"
-msgstr "Aan de slag"
+msgstr "Oan it wurk"
 
 #: jinja2/base.html:105
 msgid "Review or localize docs"
@@ -277,7 +277,7 @@ msgstr "Cookies"
 
 #: jinja2/base.html:205
 msgid "Contribute to the code"
-msgstr "Bijdragen aan de code"
+msgstr "Bydrage oan de koade"
 
 #: jinja2/handlers/400.html:32
 msgid "<li><a href=\"/logout\">Log out</a> to try again.</li>"
@@ -307,7 +307,7 @@ msgstr "Wilt u meehelpen?<br /> <a href=\"%(login_url)s\">Meld u aan</a>"
 
 #: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:87
 msgid "Other languages:"
-msgstr "Andere talen:"
+msgstr "Oare talen:"
 
 #: jinja2/includes/lang_switcher.html:15 kuma/wiki/jinja2/wiki/document.html:98
 msgid "Go"
@@ -1044,7 +1044,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
-msgstr "Help MDN te verbeteren"
+msgstr "Help MDN te ferbetterjen"
 
 #: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
@@ -1052,27 +1052,27 @@ msgstr "Alle onderdelen van MDN (documenten en de website zelf) worden gemaakt d
 
 #: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
-msgstr "Aan de slag"
+msgstr "Oan it wurk"
 
 #: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
-msgstr "Redactionele beoordeling"
+msgstr "Redaksjonele beoardieling"
 
 #: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
-msgstr "Technische beoordeling"
+msgstr "Technyske beoardieling"
 
 #: kuma/landing/jinja2/landing/homepage.html:168
 msgid "Translating"
-msgstr "Vertalen"
+msgstr "Oersette"
 
 #: kuma/landing/jinja2/landing/homepage.html:169
 msgid "Promoting MDN"
-msgstr "MDN promoten"
+msgstr "MDN promoatsje"
 
 #: kuma/landing/jinja2/landing/homepage.html:170
 msgid "Contributing to the MDN codebase"
-msgstr "Bijdragen aan de MDN-codebase"
+msgstr "Bydrage oan de MDN-koadebase"
 
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
@@ -1081,7 +1081,7 @@ msgstr "Geplaatst op %(entrydate)s door %(authorlink)s"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
-msgstr "MDN promoten"
+msgstr "MDN promoatsje"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
@@ -1923,7 +1923,7 @@ msgstr "met Mozilla’s <a href=\"%(terms_url)s\">Voorwaarden</a> en <a href=\"%
 
 #: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
-msgstr "Mijn MDN-profiel aanmaken"
+msgstr "Myn MDN-profyl oanmeitsje"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with Persona"
@@ -2201,7 +2201,7 @@ msgstr "Houdt u van zowel woorden als code?"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:26
 msgid "Want to translate MDN to your language?"
-msgstr "Wilt u MDN naar uw taal vertalen?"
+msgstr "Wolle jo MDN nei jo taal oersette?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:33
@@ -2267,7 +2267,7 @@ msgstr "Technisch - codevoorbeelden, API’s of technologieën"
 
 #: kuma/wiki/constants.py:208 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
-msgstr "Redactioneel - proza, grammatica of inhoud"
+msgstr "Redaksjoneel - proza, grammatika of ynhâld"
 
 #: kuma/wiki/constants.py:213
 msgid "Localization in progress - not completely translated yet."
@@ -2818,12 +2818,12 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:267
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "Dit artikel heeft een technische beoordeling nodig. <a href=\"%(url)s\">Hoe u kunt helpen.</a>"
+msgstr "Dit artikel hat in technyske beoardieling nedich. <a href=\"%(url)s\">Hoe't jo helpe kinne.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:276
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "Dit artikel heeft een redactionele beoordeling nodig. <a href=\"%(url)s\">Hoe u kunt helpen.</a>"
+msgstr "Dit artikel hat in redaksjonele beoardieling nedich. <a href=\"%(url)s\">Hoe't jo helpe kinne.</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:284
 #, python-format
@@ -3574,12 +3574,14 @@ msgstr "Alle artikelen voor beoordeling"
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
 msgid "Please review these articles for spelling, grammar, formatting, layout, etc., and then clear the Editorial review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
-msgstr "Controleer deze artikelen op spelling, grammatica, opmaak, vormgeving etc., en wis daarna de vlag Redactionele beoordeling. <a href=\"%(url)s\">Bekijk meer gedetailleerde instructies</a>."
+msgstr ""
+"Kontrolearje dizze artikelen op stavering, grammatika, opmaak, foarmjouwing ensfh., en wiskje dêrnei de flagge Redaksjonele beoardieling. <a href=\"%(url)s\">Besjoch mear detaillearre "
+"ynstruksjes</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:31
 #, python-format
 msgid "Please review these articles for technical accuracy and completeness, and then clear the Technical review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
-msgstr "Controleer deze artikelen op technische juistheid en voltooiing, en wis daarna de vlag Technische beoordeling. <a href=\"%(url)s\">Bekijk meer gedetailleerde instructies</a>."
+msgstr "Kontrolearje dizze artikelen op technyske krektheid en foltôging, en wiskje dêrnei de flagge Technyske beoardieling. <a href=\"%(url)s\">Besjoch mear detaillearre ynstruksjes</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
 #, python-format
