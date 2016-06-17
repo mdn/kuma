@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-04-25 09:17+0000\n"
-"Last-Translator: Sara Todaro <sara.todaro@mozillaitalia.org>\n"
+"PO-Revision-Date: 2016-06-07 16:01+0000\n"
+"Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -41,11 +41,11 @@ msgstr "Non chiedermelo più"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "Grazie per aver condiviso le tue opinioni."
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
-msgstr ""
+msgstr "Eviteremo di infastidirti con altri bug in futuro."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
@@ -176,18 +176,16 @@ msgid "saved"
 msgstr "Salvato"
 
 #: kuma/static/js/wiki-edit.js:609
-#, fuzzy
 msgid "autosaved"
-msgstr "Salvato"
+msgstr "salvata automaticamente"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
 msgstr "Pubblicata"
 
 #: kuma/static/js/wiki-edit.js:622
-#, fuzzy
 msgid "discarded"
-msgstr "Elimina questa bozza"
+msgstr "rigettata"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
@@ -200,7 +198,7 @@ msgstr "Salvataggio automatico disattivato."
 #: kuma/static/js/wiki-samples.js:97
 #, python-format
 msgid "Open in %(site)s "
-msgstr ""
+msgstr "Apri in %(site)s "
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."

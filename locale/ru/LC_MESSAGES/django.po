@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-05-31 09:12+0000\n"
+"PO-Revision-Date: 2016-06-13 11:03+0000\n"
 "Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
@@ -73,7 +73,7 @@ msgstr "Извините, мы не можем найти то, что вы ищ
 #: jinja2/404.html:24
 #, python-format
 msgid "You can try a search or start over on the <a href=\"%(homepage_url)s\">home page</a>."
-msgstr "Вы можеть попытаться поискать или начать сначала на <a href=\"%(homepage_url)s\">домашней странице</a>."
+msgstr "Вы можете попытаться поискать или начать сначала на <a href=\"%(homepage_url)s\">домашней странице</a>."
 
 #: jinja2/404.html:28
 #, python-format
@@ -775,7 +775,7 @@ msgstr "Неизвестные авторы"
 
 #: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:14
 msgid "Locale:"
-msgstr "Локализация:"
+msgstr "Локаль:"
 
 #: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
 msgid "User:"
@@ -3053,8 +3053,7 @@ msgstr "Запрошен перенос страницы"
 #, python-format
 msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
 msgstr ""
-"<h1>Запланирован перенос страницы</h1> <p>Перенос %(old_slug)s &rarr; <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> Вы получите письмо после удачного переноса или если возникнут какие-либо "
-"ошибки.</p>"
+"<h1>Запланирован перенос страницы</h1> <p>Перенос %(old_slug)s в <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> Вы получите письмо после удачного переноса или если возникнут какие-либо ошибки.</p>"
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
@@ -3512,7 +3511,7 @@ msgstr "Заголовок на %(locale)s:"
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
 msgid "Slug in %(locale)s:"
-msgstr "Заголовок на %(locale)s:"
+msgstr "URL на %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save\"."

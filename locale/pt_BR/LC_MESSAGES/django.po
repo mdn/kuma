@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-05-26 17:21+0000\n"
-"Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
+"PO-Revision-Date: 2016-06-09 19:50+0000\n"
+"Last-Translator: Wolfgang Marcos <wolfgang@alcateia.eti.br>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -1964,7 +1964,7 @@ msgstr "Entrar com GitHub"
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
 msgid "Why are you banning %(user)s"
-msgstr ""
+msgstr "Por que você está banindo %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
@@ -3594,11 +3594,13 @@ msgstr "Todos os artigos que necessitam revisão"
 #, python-format
 msgid "Please review these articles for spelling, grammar, formatting, layout, etc., and then clear the Editorial review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
 msgstr ""
+"Por favor revise estes artigos em busca de problemas de ortografia, gramática, formatação, layout, etc e então remova a flag de Review Editorial. <a href=\"%(url)s\">Veja instruções mais "
+"detalhadas</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:31
 #, python-format
 msgid "Please review these articles for technical accuracy and completeness, and then clear the Technical review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
-msgstr ""
+msgstr "Por favor revise estes artigos em busca de problemas de acurácia técnica e completude e então remova a flag de Review Técnico. <a href=\"%(url)s\">Veja instruções mais detalhadas</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
 #, python-format

@@ -1,11 +1,11 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-02-26 21:42+0000\n"
-"Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
+"PO-Revision-Date: 2016-06-09 17:34+0000\n"
+"Last-Translator: Michał Dziewoński <mdziewonski@mozilla.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -41,11 +41,11 @@ msgstr "Nie pytaj ponownie"
 
 #: kuma/static/js/helpfulness.js:45
 msgid "Thanks for your feedback!"
-msgstr ""
+msgstr "Dziękujemy za twoją opinię!"
 
 #: kuma/static/js/helpfulness.js:54
 msgid "We won't bug you again."
-msgstr ""
+msgstr "Nie będziemy cię już kłopotali."
 
 #: kuma/static/js/helpfulness.js:59
 msgid "Translate it into my language"
@@ -141,11 +141,11 @@ msgstr "Pokaż starą tabelę."
 
 #: kuma/static/js/wiki-edit.js:401
 msgid "Save Draft"
-msgstr ""
+msgstr "Zapisz wersję roboczą"
 
 #: kuma/static/js/wiki-edit.js:406
 msgid "Enable autosave."
-msgstr ""
+msgstr "Włącz automatyczny zapis."
 
 #: kuma/static/js/wiki-edit.js:414
 msgid "an unknown date"
@@ -165,42 +165,40 @@ msgstr "Odrzuć szkic"
 
 #: kuma/static/js/wiki-edit.js:442
 msgid "restored"
-msgstr ""
+msgstr "przywrócono"
 
 #: kuma/static/js/wiki-edit.js:571
 msgid "Draft"
-msgstr ""
+msgstr "Wersja robocza"
 
 #: kuma/static/js/wiki-edit.js:590
 msgid "saved"
 msgstr "zapisano"
 
 #: kuma/static/js/wiki-edit.js:609
-#, fuzzy
 msgid "autosaved"
 msgstr "zapisano"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr ""
+msgstr "opublikowano"
 
 #: kuma/static/js/wiki-edit.js:622
-#, fuzzy
 msgid "discarded"
-msgstr "Odrzuć szkic"
+msgstr "odrzucono"
 
 #: kuma/static/js/wiki-edit.js:660
 msgid "Autosave enabled."
-msgstr ""
+msgstr "Automatyczny zapis włączony."
 
 #: kuma/static/js/wiki-edit.js:667
 msgid "Autosave disabled."
-msgstr ""
+msgstr "Automatyczny zapis wyłączony."
 
 #: kuma/static/js/wiki-samples.js:97
 #, python-format
 msgid "Open in %(site)s "
-msgstr ""
+msgstr "Otwórz w %(site)s "
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."

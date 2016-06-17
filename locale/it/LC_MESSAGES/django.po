@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-01 11:26+0000\n"
+"PO-Revision-Date: 2016-06-07 15:54+0000\n"
 "Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
@@ -217,7 +217,7 @@ msgstr "Firefox Marketplace"
 
 #: jinja2/base.html:154 kuma/core/translations/search/filter/b2g-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:85
 msgid "B2G OS"
-msgstr ""
+msgstr "B2G OS"
 
 #: jinja2/base.html:155 jinja2/includes/login.html:20
 msgid "Persona"
@@ -764,14 +764,12 @@ msgid "30 days"
 msgstr "30 giorni"
 
 #: kuma/dashboards/forms.py:23
-#, fuzzy
 msgid "All Authors"
-msgstr "Autore"
+msgstr "Tutti gli autori"
 
 #: kuma/dashboards/forms.py:24
-#, fuzzy
 msgid "Known Authors"
-msgstr "Autore"
+msgstr "Autori noti"
 
 #: kuma/dashboards/forms.py:25
 msgid "Unknown Authors"
@@ -802,18 +800,16 @@ msgid "Preceding Period:"
 msgstr "Periodo precedente:"
 
 #: kuma/dashboards/forms.py:57
-#, fuzzy
 msgid "Authors"
-msgstr "Autore"
+msgstr "Autori"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
 msgstr "Pannello versioni"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
-#, fuzzy
 msgid "Authors:"
-msgstr "Autore"
+msgstr "Autori:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:210
 msgid "Filter"
@@ -1062,7 +1058,7 @@ msgstr "Per iniziare"
 
 #: kuma/landing/jinja2/landing/homepage.html:162
 msgid "Editorial review"
-msgstr "Revisione editoriale"
+msgstr "Revisione stilistica"
 
 #: kuma/landing/jinja2/landing/homepage.html:163
 msgid "Technical review"
@@ -1970,21 +1966,19 @@ msgstr "Accedi con GitHub"
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
 msgid "Why are you banning %(user)s"
-msgstr ""
+msgstr "Il motivo per cui hai deciso di sospendere %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:25
-#, fuzzy
 msgid "Choose a reason"
-msgstr "Scegli un colore"
+msgstr "Scegli un motivo"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
-msgstr ""
+msgstr "o scrivi il motivo nell’area di testo sottostante"
 
 #: kuma/users/jinja2/users/ban_user.html:37
-#, fuzzy
 msgid "Ban user"
-msgstr "Espelli questo utente"
+msgstr "Sospendi questo utente"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2289,7 +2283,7 @@ msgstr "Tecniche – Codice d’esempio, API o tecnologie"
 
 #: kuma/wiki/constants.py:208 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
-msgstr "Editoriale – stile, grammatica o contenuto"
+msgstr "Stilistica – stile, grammatica o contenuto"
 
 #: kuma/wiki/constants.py:213
 msgid "Localization in progress - not completely translated yet."
@@ -2838,14 +2832,14 @@ msgstr ""
 "href=\"%(url)s\">ricarica la pagina</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:267
-#, fuzzy, python-format
+#, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "<p>Questo articolo necessita di una revisione tecnica.</p>"
+msgstr "Questo articolo richiede una revisione tecnica. <a href=\"%(url)s\">Scopri come puoi essere d’aiuto</a>."
 
 #: kuma/wiki/jinja2/wiki/document.html:276
-#, fuzzy, python-format
+#, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
-msgstr "<p>Questo articolo necessita di una revisione editoriale.</p>"
+msgstr "Questo articolo richiede una revisione stilistica. <a href=\"%(url)s\">Scopri come puoi essere d’aiuto</a>.`"
 
 #: kuma/wiki/jinja2/wiki/document.html:284
 #, python-format
@@ -2942,9 +2936,8 @@ msgid "Minutes"
 msgstr "Minuti"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
-#, fuzzy
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
-msgstr "Utilizza la ricerca sottostante per trovare il documento originale, poi fai clic su “Salva modifiche”."
+msgstr "Trova il documento originale per questa traduzione utilizzando lo strumento di ricerca sottostante e quindi fai clic su “Pubblica”."
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
@@ -3253,9 +3246,8 @@ msgid "You are subscribed to edits on: %(title)s."
 msgstr "Hai effettuato l’iscrizione per ricevere gli aggiornamenti all’articolo: %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:5
-#, fuzzy
 msgid "This article needs these reviews:"
-msgstr "Questo articolo necessita di una revisione tecnica."
+msgstr "Questo articolo necessita delle seguenti revisioni:"
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
@@ -3413,9 +3405,8 @@ msgid "Need Help?"
 msgstr "Hai bisogno di aiuto?"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
-#, fuzzy
 msgid "Editor Guide"
-msgstr "Editoriale"
+msgstr "Guida di stile"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
@@ -3480,14 +3471,12 @@ msgid "Discard changes and create a new document?"
 msgstr "Annullare le modifiche e creare un nuovo documento?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
-#, fuzzy
 msgid "Publish and Keep Editing"
-msgstr "Salva e continua con le modifiche"
+msgstr "Pubblica e continua con le modifiche"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
-#, fuzzy
 msgid "Discard"
-msgstr "Scarta questa demo"
+msgstr "Rigetta"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
@@ -3515,9 +3504,9 @@ msgstr ""
 "informazioni circa i contenuti appropriati in MDN consulta la nostra guida “<a href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>”."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
-#, fuzzy, python-format
+#, python-format
 msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "Se ritieni di aver ricevuto questo messaggio per errore, <a href=\"%(admin_email)s\">contatta l’amministratore del sito</a>."
+msgstr "Se ritieni di aver ricevuto questo messaggio per errore, salva una bozza del contenuto e <a href=\"%(admin_email)s\">contatta l’amministratore del sito</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
@@ -3534,9 +3523,8 @@ msgid "Slug in %(locale)s:"
 msgstr "Slug in %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
-#, fuzzy
 msgid "Find the translation source with the lookup above and then click \"Save\"."
-msgstr "Trova il documento originale della traduzione tramite il campo di ricerca in alto, poi premi “Salva modifiche”."
+msgstr "Trova il documento originale della traduzione tramite il campo di ricerca in alto, poi premi “Salva”."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
@@ -3607,11 +3595,15 @@ msgstr "Tutti gli articoli che necessitano di revisione"
 #, python-format
 msgid "Please review these articles for spelling, grammar, formatting, layout, etc., and then clear the Editorial review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
 msgstr ""
+"Controlla i seguenti articoli e correggi eventuali errori di digitazione, grammaticali, di formattazione, di layout, ecc. A lavoro completato, rimuovi il relativo flag di revisione stilistica. <a "
+"href=\"%(url)s\">Ulteriori informazioni</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:31
 #, python-format
 msgid "Please review these articles for technical accuracy and completeness, and then clear the Technical review flag. <a href=\"%(url)s\">See more detailed instructions</a>."
 msgstr ""
+"Effettua un controllo qualitativo sulla completezza e l'accuratezza dei contenuti dei seguenti articoli. A lavoro completato, rimuovi il flag di revisione tecnica. <a href=\"%(url)s\">Ulteriori "
+"informazioni</a>."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
 #, python-format
