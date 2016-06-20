@@ -187,10 +187,5 @@ class User(AbstractUser):
         """
         return self.bans.filter(is_active=True).first()
 
-    def wiki_revisions(self, count=5):
-        return (self.created_revisions.prefetch_related('document')
-                                      .defer('content', 'summary')
-                                      .order_by('-created')[:count])
-
     def allows_editing_by(self, user):
         return user.is_staff or user.is_superuser or user.pk == self.pk

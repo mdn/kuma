@@ -156,7 +156,7 @@
 
         </header>
 
-        {% if request.user.wiki_revisions().count() == 0 and not revision_form.errors %}
+        {% if not revision_form.errors and not request.user.created_revisions.exists() %}
           <section class="first-contrib-welcome">
             <h2>{{ _('Thank you for taking the time to improve MDN!') }}</h2>
             <p>
