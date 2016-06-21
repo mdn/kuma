@@ -3,6 +3,7 @@ from django.utils.crypto import get_random_string
 from allauth.account.models import EmailAddress
 
 from kuma.core.tests import KumaTestCase, KumaTransactionTestCase
+from kuma.wiki.tests import revision as create_revision, document as create_document
 
 
 class UserTestMixin(object):
@@ -46,3 +47,34 @@ def email(save=False, **kwargs):
     if save:
         email.save()
     return email
+
+
+class SampleRevisionsMixin(object):
+    """Mixin with an original revision and a method to create more revisions."""
+    def setUp(self):
+        super(SampleRevisionsMixin, self).setUp()
+
+        # Some users to use in the tests
+        self.testuser = self.user_model.objects.get(username='testuser')
+        self.testuser2 = self.user_model.objects.get(username='testuser2')
+        self.admin = self.user_model.objects.get(username='admin')
+
+        # Create an original revision on a document by the admin user
+        self.document = create_document(save=True)
+        self.original_revision = create_revision(
+            title='Revision 0',
+            document=self.document,
+            creator=self.admin,
+            save=True)
+
+    def create_revisions(self, num, document, creator):
+        """Create as many revisions as requested, and return a list of them."""
+        revisions_created = []
+        for i in range(1, 1 + num):
+            new_revision = create_revision(
+                title='Revision {}'.format(i),
+                document=document,
+                creator=creator,
+                save=True)
+            revisions_created.append(new_revision)
+        return revisions_created

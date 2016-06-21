@@ -18,7 +18,7 @@ from pyquery import PyQuery as pq
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 
-from . import UserTestCase, email, user
+from . import SampleRevisionsMixin, UserTestCase, email, user
 from ..models import UserBan
 from ..providers.github.provider import KumaGitHubProvider
 from ..signup import SignupForm
@@ -222,81 +222,57 @@ class BanAndCleanupTestCase(UserTestCase):
 
 
 @pytest.mark.bans
-class BanUserAndCleanupSummaryTestCase(UserTestCase):
+class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     localizing_client = True
+
+    def setUp(self):
+        super(BanUserAndCleanupSummaryTestCase, self).setUp()
+
+        self.ban_testuser_url = reverse('users.ban_user_and_cleanup_summary',
+                                        kwargs={'user_id': self.testuser.id})
+        self.client.login(username='admin', password='testpass')
 
     def test_ban_nonexistent_user(self):
         """POSTs to ban_user_and_cleanup for nonexistent user return 404."""
-        testuser = self.user_model.objects.get(username='testuser')
-
-        # POST request
-        self.client.login(username='admin',
-                          password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': testuser.id})
-        testuser.delete()
-        resp = self.client.post(ban_url)
+        self.testuser.delete()
+        resp = self.client.post(self.ban_testuser_url)
         eq_(404, resp.status_code)
 
     def test_post_returns_summary_page(self):
-        """POSTing to the ban and cleanup url returns the summary page."""
-        testuser = self.user_model.objects.get(username='testuser')
-
-        self.client.login(username='admin', password='testpass')
-
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': testuser.id})
-
-        resp = self.client.post(ban_url)
+        """POSTing to ban_user_and_cleanup returns the summary page."""
+        resp = self.client.post(self.ban_testuser_url)
         eq_(200, resp.status_code)
 
     def test_post_bans_user(self):
-        """POSTing to the ban and cleanup url bans user for "spam" reason."""
-        testuser = self.user_model.objects.get(username='testuser')
-        admin = self.user_model.objects.get(username='admin')
-
-        self.client.login(username='admin', password='testpass')
-
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': testuser.id})
-
-        resp = self.client.post(ban_url)
+        """POSTing to the ban_user_and_cleanup bans user for "spam" reason."""
+        resp = self.client.post(self.ban_testuser_url)
         eq_(200, resp.status_code)
 
         testuser_banned = self.user_model.objects.get(username='testuser')
         ok_(not testuser_banned.is_active)
 
-        bans = UserBan.objects.filter(user=testuser,
-                                      by=admin,
+        bans = UserBan.objects.filter(user=self.testuser,
+                                      by=self.admin,
                                       reason='Spam')
         ok_(bans.count())
 
     def test_post_banned_user(self):
-        """POSTing to ban and cleanup url for a banned user updates UserBan."""
-        testuser = self.user_model.objects.get(username='testuser')
-        testuser2 = self.user_model.objects.get(username='testuser2')
-        admin = self.user_model.objects.get(username='admin')
-
-        UserBan.objects.create(user=testuser, by=testuser2,
+        """POSTing to ban_user_and_cleanup for a banned user updates UserBan."""
+        UserBan.objects.create(user=self.testuser, by=self.testuser2,
                                reason='Banned by unit test.',
                                is_active=True)
 
-        self.client.login(username='admin', password='testpass')
-
-        ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': testuser.id})
-
-        resp = self.client.post(ban_url)
+        resp = self.client.post(self.ban_testuser_url)
         eq_(200, resp.status_code)
 
-        ok_(not testuser.is_active)
+        ok_(not self.testuser.is_active)
 
-        bans = UserBan.objects.filter(user=testuser)
+        bans = UserBan.objects.filter(user=self.testuser)
 
         # Assert that the ban exists, and 'by' and 'reason' fields are updated
         ok_(bans.count())
         eq_(bans.first().is_active, True)
-        eq_(bans.first().by, admin)
+        eq_(bans.first().by, self.admin)
         eq_(bans.first().reason, 'Spam')
 
 #    TODO: Phase II:
