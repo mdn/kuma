@@ -484,7 +484,7 @@ class BanAndCleanupTestCase(UserTestCase):
         no_revisions = page.find('#docs-activity div')
 
         eq_(len(revisions_found), 0)
-        ok_("This user has not created any revisions." in no_revisions.text())
+        ok_("This user has not created any revisions in the past three days." in no_revisions.text())
 
     def test_banned_user_one_click_page_template(self):
         """Test the template for a user that has already been banned."""
@@ -519,7 +519,7 @@ class BanAndCleanupTestCase(UserTestCase):
         self.client.login(username='admin', password='testpass')
 
         # For testuser (banned, but revisions need to be reversed) the button
-        # on the form should read "Revert revisions"
+        # on the form should read "Revert Revisions"
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': testuser.id})
 
@@ -531,7 +531,7 @@ class BanAndCleanupTestCase(UserTestCase):
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
 
         eq_(len(revisions_found), num_revisions)
-        eq_(ban_button.text(), "Revert revisions")
+        eq_(ban_button.text(), "Revert Revisions")
 
         # For testuser2 (banned, has no revisions needing to be reversed) there
         # should be no button on the form

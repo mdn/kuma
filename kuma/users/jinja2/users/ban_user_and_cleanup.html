@@ -47,9 +47,15 @@
           <p>
             {% if not user_banned or revisions %}
               <button type="submit" class="button negative ban-link">
-                {% if not user_banned and revisions %}{{ _('Ban User for Spam') }}{% else %}{{ _('Revert revisions') }}{% endif %}
+                {% if user_banned and revisions %}
+                  {{ _('Revert Revisions') }}
+                {% else %}
+                  {{ _('Ban User for Spam & Revert Revisions') }}
+                {% endif %}
               </button>
               <a href="{{ url('users.ban_user',detail_user.id) }}">{{ _('Ban user for other reasons.') }}</a>
+            {% else %}
+              {{ _('User has not made any revisions in the past three days, and this user was already banned.') }}
             {% endif %}
           </p>
 
