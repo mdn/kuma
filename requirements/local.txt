@@ -16,9 +16,9 @@ ndg-httpsclient==0.4.0 \
     --hash=sha256:e8c155fdebd9c4bcb0810b4ed01ae1987554b1ee034dd7532d7b8fdae38a6274
 
 # Code quality checker
-flake8==2.5.4 \
-    --hash=sha256:fb5a67af4024622287a76abf6b7fe4fb3cfacf765a790976ce64f52c44c88e4a \
-    --hash=sha256:cc1e58179f6cf10524c7bfdd378f5536d0a61497688517791639a5ecc867492f
+flake8==2.6.0 \
+    --hash=sha256:d37bae8d6c836ea9f29a670f870b1652ff08d9b52b371fe1b7a53eb95e335f29 \
+    --hash=sha256:5ae018121a495edeb83097ba1bdd1a8481db24e1f0d54e8a78edb26ba0df82cf
 
 # Better test runner, related plugins
 pytest==2.8.7 \
