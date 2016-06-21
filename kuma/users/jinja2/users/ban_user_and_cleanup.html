@@ -18,9 +18,16 @@
 <section id="content">
 
 {% if not user_banned %}
-  <h1>{{ _('Identify') }} <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> {{ _('as a spammer?') }}</h1>
+  <h1>
+    {{ _('Identify <a href="%(url)s">%(user)s</a> as a spammer?', url=detail_user.get_absolute_url(), user=detail_user) }}
+  </h1>
 {% else %}
-  <h1><a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> has already been banned. You may review their revisions below.</h1>
+  <h1>
+    {{ _('<a href="%(url)s">%(user)s</a> has been banned.', url=detail_user.get_absolute_url(), user=detail_user) }}
+  </h1>
+  <p>
+  {{ _('Because %(user)s has already been banned, you may review and revert their revisions below.', user=detail_user) }}
+  </p>
 {% endif %}
 
 <div class="wrap">
