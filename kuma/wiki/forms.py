@@ -759,7 +759,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         Does some specific things when the revision is fully saved.
         """
         # have to check for first edit before we save
-        is_first_edit = self.request.user.wiki_revisions().count() == 0
+        is_first_edit = not self.request.user.wiki_revisions().exists()
 
         # Making sure we don't commit the saving right away since we
         # want to do other things here.
