@@ -3,7 +3,7 @@ Crawl-delay: 5
 Sitemap: https://developer.mozilla.org/sitemap.xml
 Request-rate: 1/5
 
-Disallow: /*admin/
+Disallow: /*/admin/*
 Disallow: /*docs/feeds
 Disallow: /*docs/templates
 Disallow: /*docs*Template:
