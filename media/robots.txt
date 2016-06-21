@@ -3,11 +3,11 @@ Crawl-delay: 5
 Sitemap: https://developer.mozilla.org/sitemap.xml
 Request-rate: 1/5
 
-Disallow: /*admin*
+Disallow: /*admin/
 Disallow: /*docs/feeds
 Disallow: /*docs/templates
 Disallow: /*docs*Template:
-Disallow: /*dashboards*
+Disallow: /*/dashboards/*
 Disallow: /*docs/all
 Disallow: /*docs/tag*
 Disallow: /*docs/needs-review*
@@ -43,12 +43,11 @@ Disallow: /*$subscribe_to_tree
 Disallow: /*$vote
 Disallow: /*docs.json
 Disallow: /*docs/ckeditor_config.js
-Disallow: /*files/
+Disallow: /*/files/
 Disallow: /media
 Disallow: /*move-requested
 Disallow: /*preview-wiki-content
-Disallow: /*profiles*edit
-Disallow: /*search*
+Disallow: /*profiles*/edit
 Disallow: /skins
 Disallow: /*type=feed
 Disallow: /*users/
