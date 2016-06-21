@@ -16,7 +16,6 @@
 
 {% block content %}
 <section id="content">
-{# TODO: Add an if block if the user has already been identified as a spammer #}
 
 {% if not user_banned %}
   <h1>{{ _('Identify') }} <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> {{ _('as a spammer?') }}</h1>
