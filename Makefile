@@ -77,6 +77,12 @@ localerefresh: localeextract localetest localecompile compilejsi18n collectstati
 	@echo Commit the new files with:
 	@echo git add --all locale\; git commit -m \"MDN string update $(shell date +%Y-%m-%d)\"
 
+pull-base:
+	docker pull ${BASE_IMAGE}
+
+pull-kuma:
+	docker pull ${KUMA_IMAGE}
+
 build-base:
 	docker build -f Dockerfile-base -t ${BASE_IMAGE} .
 
