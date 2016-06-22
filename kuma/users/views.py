@@ -103,7 +103,7 @@ def ban_user_and_cleanup(request, user_id):
     # Get revisions for the past 3 days for this user
     date_three_days_ago = datetime.now().date() - timedelta(days=3)
     revisions = user.created_revisions.prefetch_related('document')
-    revisions = revisions.defer('content', 'summary').order_by('-created')
+    revisions = revisions.defer('content', 'summary').order_by('-id')
     revisions = revisions.filter(created__gte=date_three_days_ago)
 
     return render(request,
@@ -142,7 +142,7 @@ def ban_user_and_cleanup_summary(request, user_id):
     # and either revert them or not. For now list all of the revisions for the past 3 days
     date_three_days_ago = datetime.now().date() - timedelta(days=3)
     revisions_reverted = user.created_revisions.prefetch_related('document')
-    revisions_reverted = revisions_reverted.defer('content', 'summary').order_by('-created')
+    revisions_reverted = revisions_reverted.defer('content', 'summary').order_by('-id')
     revisions_reverted = revisions_reverted.filter(created__gte=date_three_days_ago)
 
     # TODO: for now, we'll just list the top 25 revisions for each resultset
