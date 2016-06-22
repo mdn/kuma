@@ -23,6 +23,8 @@ from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required
 from kuma.core.utils import paginate
+from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
+from kuma.wiki.models import RevisionAkismetSubmission
 
 from .forms import UserBanForm, UserEditForm
 from .models import User, UserBan
@@ -134,6 +136,22 @@ def ban_user_and_cleanup_summary(request, user_id):
         ban.save()
     else:
         user_ban.update(by=request.user, reason='Spam')
+
+    # The revisions to be reverted
+    revisions_to_be_reverted = user.created_revisions\
+        .filter(id__in=request.POST.getlist('revision-id'))\
+        .prefetch_related('document').defer('content', 'summary')\
+        .order_by('-created')
+
+    # Submit revisions to Akismet as spam
+    for revision in revisions_to_be_reverted:
+        submission = RevisionAkismetSubmission(sender=request.user, type="spam")
+        akismet_submission_data = {'revision': revision.id}
+
+        data = RevisionAkismetSubmissionSpamForm(data=akismet_submission_data, instance=submission, request=request)
+        # TODO: What to do of data is not valid? Currently, fail silently
+        if data.is_valid():
+            data.save()
 
     # TODO: In the future this will take the revisions out of request.POST
     # and either revert them or not. For now list all of the revisions

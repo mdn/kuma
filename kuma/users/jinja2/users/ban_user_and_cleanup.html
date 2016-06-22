@@ -39,15 +39,13 @@
     </section><!-- /#user-head -->
 
     <section id="docs-activity" class="user-section">
-        {% include "users/includes/user_revision_history_form.html" %}
-
         <form id="ban-and-cleanup-form" action="{{ url('users.ban_user_and_cleanup_summary', detail_user.id) }}" method="POST">
-
           {% csrf_token %}
+          {% include "users/includes/user_revision_history_form.html" %}
           <p>
             {% if not user_banned or revisions %}
               <button type="submit" class="button negative ban-link">
-                {% if not user_banned and revisions %}{{ _('Ban User for Spam') }}{% else %}{{ _('Revert revisions') }}{% endif %}
+                {% if not user_banned and revisions %}{{ _('Ban User for Spam') }}{% elif not user_banned%}{{ _('Ban User') }}{% else %}{{ _('Revert revisions') }}{% endif %}
               </button>
               <a href="{{ url('users.ban_user',detail_user.id) }}">{{ _('Ban user for other reasons.') }}</a>
             {% endif %}

@@ -6,6 +6,7 @@
     <table class="dashboard-table" width="100%">
         <thead>
             <tr>
+                <th class="dashboard-spam">{{ _('Spam') }}</th>
                 <th class="dashboard-revision">{{ _('Revision') }}</th>
                 <th class="dashboard-title">{{ _('Title') }}</th>
                 <th class="dashboard-comment">{{ _('Comment') }}</th>
@@ -51,6 +52,17 @@
                                 {% include "wiki/includes/revision_diff_table.html" %}
                               </div>
                             {% endwith %}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr colspan=5>
+                    <td colspan=5>
+                        <input type="checkbox" name="revision-id" value="{{ revision.id }}" checked></input>
+                        <strong>Spam. </strong>
+                        Revert to last edit.
+                        {% if previous_id %}At: {{ datetimeformat(revision.previous.created, format='datetime') }}.
+                            By: <a href="{{ revision.previous.creator.get_absolute_url() }}">{{ revision.previous.creator.username }}</a>.
+                            Comment: "{{ revision.previous.comment }}".
                         {% endif %}
                     </td>
                 </tr>
