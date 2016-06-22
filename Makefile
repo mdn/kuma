@@ -32,11 +32,12 @@ compilecss:
 
 compilejsi18n:
 	@ echo "## Generating JavaScript translation catalogs ##"
+	@ mkdir -p build/locale
 	@ python manage.py compilejsi18n
 
 collectstatic:
 	@ echo "## Collecting and building static files ##"
-	@ mkdir -p build/assets build/locale
+	@ mkdir -p build/assets
 	@ python manage.py collectstatic --noinput
 
 install:
