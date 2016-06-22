@@ -4,10 +4,7 @@
 
 {% block bodyclass %}user ban-user{% endblock %}
 
-{% block title %}
-  {{ _('Ban') }}
-  {{ detail_user }}
-{% endblock %}
+{% block title %}{{ _('Ban %(user)s', user=detail_user) }}{% endblock %}
 {% set styles = ('dashboards', 'jquery-ui') %}
 {% set classes = 'compare' %}
 
@@ -20,8 +17,7 @@
 {% block content %}
   <section id="content">
     <h1>
-      <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a>
-      {{ _('identified as a spammer.') }}
+      {{ _('<a href="%(url)s">%(user)s</a> identified as a spammer.', url=detail_user.get_absolute_url(), user=detail_user) }}
     </h1>
 
     <h2>

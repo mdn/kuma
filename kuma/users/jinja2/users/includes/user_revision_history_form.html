@@ -1,7 +1,5 @@
 {% from "wiki/includes/document_macros.html" import revision_diff with context %}
 
-{{ revisions|paginator }}
-
 {% if revisions|count %}
     <table class="dashboard-table" width="100%">
         <thead>
@@ -71,7 +69,5 @@
     </table>
 
 {% else: %}
-    <div>{{ _('This user has not created any revisions.') }}</div>
+    <div>{{ _('This user has not created any revisions in the past three days.') }}</div>
 {% endif %}
-
-{{ revisions|paginator }}

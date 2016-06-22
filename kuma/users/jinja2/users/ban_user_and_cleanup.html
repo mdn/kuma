@@ -4,7 +4,7 @@
 
 {% block bodyclass %}user ban-user{% endblock %}
 
-{% block title %}{{ _('Ban') }} {{ detail_user }}{% endblock %}
+{% block title %}{{ _('Ban %(user)s', user=detail_user) }}{% endblock %}
 {% set styles = ('dashboards', 'jquery-ui') %}
 {% set classes = 'compare' %}
 
@@ -16,12 +16,18 @@
 
 {% block content %}
 <section id="content">
-{# TODO: Add an if block if the user has already been identified as a spammer #}
 
 {% if not user_banned %}
-  <h1>{{ _('Identify') }} <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> {{ _('as a spammer?') }}</h1>
+  <h1>
+    {{ _('Identify <a href="%(url)s">%(user)s</a> as a spammer?', url=detail_user.get_absolute_url(), user=detail_user) }}
+  </h1>
 {% else %}
-  <h1><a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a> has already been banned. You may review their revisions below.</h1>
+  <h1>
+    {{ _('<a href="%(url)s">%(user)s</a> has been banned.', url=detail_user.get_absolute_url(), user=detail_user) }}
+  </h1>
+  <p>
+  {{ _('Because %(user)s has already been banned, you may review and revert their revisions below.', user=detail_user) }}
+  </p>
 {% endif %}
 
 <div class="wrap">
@@ -45,9 +51,17 @@
           <p>
             {% if not user_banned or revisions %}
               <button type="submit" class="button negative ban-link">
-                {% if not user_banned and revisions %}{{ _('Ban User for Spam') }}{% elif not user_banned%}{{ _('Ban User') }}{% else %}{{ _('Revert revisions') }}{% endif %}
+                {% if user_banned and revisions %}
+                  {{ _('Revert Revisions') }}
+                {% elif revisions %}
+                  {{ _('Ban User for Spam and Revert Revisions') }}
+                {% else %}
+                  {{ _('Ban User for Spam') }}
+                {% endif %}
               </button>
               <a href="{{ url('users.ban_user',detail_user.id) }}">{{ _('Ban user for other reasons.') }}</a>
+            {% else %}
+              {{ _('User has not made any revisions in the past three days, and this user was already banned.') }}
             {% endif %}
           </p>
 

@@ -1,6 +1,7 @@
 import collections
 import json
 import operator
+from datetime import datetime, timedelta
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -22,7 +23,6 @@ from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required
-from kuma.core.utils import paginate
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import RevisionAkismetSubmission
 
@@ -102,8 +102,11 @@ def ban_user_and_cleanup(request, user_id):
     # Is this user already banned?
     user_ban = UserBan.objects.filter(user=user, is_active=True)
 
-    revisions = user.created_revisions.prefetch_related('document').defer('content', 'summary').order_by('-created')
-    revisions = paginate(request, revisions, per_page=20)
+    # Get revisions for the past 3 days for this user
+    date_three_days_ago = datetime.now().date() - timedelta(days=3)
+    revisions = user.created_revisions.prefetch_related('document')
+    revisions = revisions.defer('content', 'summary').order_by('-created')
+    revisions = revisions.filter(created__gte=date_three_days_ago)
 
     return render(request,
                   'users/ban_user_and_cleanup.html',
@@ -154,14 +157,16 @@ def ban_user_and_cleanup_summary(request, user_id):
             data.save()
 
     # TODO: In the future this will take the revisions out of request.POST
-    # and either revert them or not. For now list all of the revisions
-    revisions_reverted = user.created_revisions.prefetch_related('document')\
-                             .defer('content', 'summary').order_by('-created')
+    # and either revert them or not. For now list all of the revisions for the past 3 days
+    date_three_days_ago = datetime.now().date() - timedelta(days=3)
+    revisions_reverted = user.created_revisions.prefetch_related('document')
+    revisions_reverted = revisions_reverted.defer('content', 'summary').order_by('-created')
+    revisions_reverted = revisions_reverted.filter(created__gte=date_three_days_ago)
 
     # TODO: for now, we'll just list the top 25 revisions for each resultset
     # to avoid users with lots of revisions crashing the site.
-    revisions_needing_follow_up = revisions_reverted[:25]
-    revisions_reverted = revisions_reverted[:25]
+    revisions_needing_follow_up = revisions_reverted
+    revisions_reverted = revisions_reverted
 
     context = {'detail_user': user,
                'form': UserBanForm(),
