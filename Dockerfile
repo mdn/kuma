@@ -5,5 +5,5 @@
 
 FROM quay.io/mozmar/kuma_base:latest
 COPY . /app
-RUN make compilecss compilejsi18n collectstatic
+RUN make build-static
 RUN ./manage.py update_product_details

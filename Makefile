@@ -40,6 +40,8 @@ collectstatic:
 	@ mkdir -p build/assets
 	@ python manage.py collectstatic --noinput
 
+build-static: compilecss compilejsi18n collectstatic
+
 install:
 	@ echo "## Installing $(requirements) ##"
 	@ pip install $(requirements)
