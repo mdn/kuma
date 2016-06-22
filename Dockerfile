@@ -5,5 +5,5 @@
 
 FROM quay.io/mozmar/kuma_base:latest
 COPY . /app
-RUN make build-static
+RUN make build-static && rm -rf build
 RUN ./manage.py update_product_details
