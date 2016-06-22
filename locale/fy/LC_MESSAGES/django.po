@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-22 07:02+0000\n"
+"PO-Revision-Date: 2016-06-22 07:42+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -102,7 +102,7 @@ msgstr "Taal selecteren"
 
 #: jinja2/base.html:77
 msgid "Skip to search"
-msgstr "Naar zoeken"
+msgstr "Nei sykjen"
 
 #: jinja2/base.html:98 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
@@ -238,11 +238,11 @@ msgstr "Help by webûntwikling krije"
 
 #: jinja2/base.html:168
 msgid "Join the MDN community"
-msgstr "Dielnimme oan de MDN-mienskip"
+msgstr "Dielnimme oan MDN-mienskip"
 
 #: jinja2/base.html:169
 msgid "Report a content problem"
-msgstr "Een inhoudsprobleem melden"
+msgstr "In ynhâldsprobleem melde"
 
 #: jinja2/base.html:170
 msgid "Report a bug"
@@ -252,7 +252,7 @@ msgstr "In bug melde"
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
-msgstr "Zoeken"
+msgstr "Sykje"
 
 #: jinja2/base.html:196
 #, python-format
@@ -285,7 +285,7 @@ msgstr "<li><a href=\"/logout\">Meld u af</a> om het opnieuw te proberen.</li>"
 
 #: jinja2/includes/common_macros.html:18
 msgid "Search Firefox Help"
-msgstr "Zoeken in Firefox Help"
+msgstr "Sykje yn Firefox Help"
 
 #: jinja2/includes/common_macros.html:36
 #, python-format
@@ -303,7 +303,7 @@ msgstr "Afmelden"
 #: jinja2/includes/common_macros.html:44
 #, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
-msgstr "Wilt u meehelpen?<br /> <a href=\"%(login_url)s\">Meld u aan</a>"
+msgstr "Wolle jo meihelpe?<br /> <a href=\"%(login_url)s\">Meld jo oan</a>"
 
 #: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:87
 msgid "Other languages:"
@@ -528,7 +528,7 @@ msgstr "n.v.t."
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr "Sleutel opzoeken"
+msgstr "Kaai opsykje"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
@@ -568,12 +568,12 @@ msgstr "U hebt nog een API-sleutels."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:25
 msgid "View key usage history"
-msgstr "Geschiedenis van sleutelgebruik weergeven"
+msgstr "Skiednis fan kaaigebrûk werjaan"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:26
 #, python-format
 msgid "History (%(count)s)"
-msgstr "Geschiedenis (%(count)s)"
+msgstr "Skiednis (%(count)s)"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
@@ -827,7 +827,7 @@ msgstr "Side bewurkje"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
-msgstr "Geschiedenis"
+msgstr "Skiednis"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/wiki/models.py:1864
 msgid "Revision"
@@ -1270,12 +1270,12 @@ msgstr "groepsnaam"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
-msgstr "Zoeken niet beschikbaar"
+msgstr "Sykjen net beskikber"
 
 #. Search Mozilla Developer Network documentation
 #: kuma/search/jinja2/search/plugin.html:5
 msgid "Search Mozilla Developer Network documentation"
-msgstr "Mozilla Developer Network-documentatie doorzoeken"
+msgstr "Mozilla Developer Network-dokumintaasje trochsykje"
 
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
@@ -1289,7 +1289,7 @@ msgstr "vertaald vanaf <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(p
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
-msgstr "MDN-website doorzoeken"
+msgstr "MDN-website trochsykje"
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
@@ -1349,7 +1349,7 @@ msgstr "Resultaten van %(start)s tot %(end)s."
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
 msgid "Search again in %(default_locale_native)s only"
-msgstr "Nogmaals zoeken, alleen in het %(default_locale_native)s"
+msgstr "Nochris sykje, allinnich yn it %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
@@ -1685,7 +1685,7 @@ msgstr "Oanmelde"
 
 #: kuma/users/jinja2/account/login.html:11
 msgid "Please sign in"
-msgstr "Meld u aan"
+msgstr "Meld jo oan"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using any of the services below. A MDN profile will be created for you if you don't already have one."
@@ -1756,7 +1756,7 @@ msgstr "Registreren"
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr "Hebt u al een profiel? <a href=\"%(login_url)s\">Meld u dan aan</a>."
+msgstr "Hawwe jo al in profyl? <a href=\"%(login_url)s\">Meld jo dan oan</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3 kuma/users/jinja2/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
@@ -1795,7 +1795,7 @@ msgstr "u bent al aangemeld als %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
-msgstr "OpenID-aanmelding"
+msgstr "OpenID-oanmelding"
 
 #: kuma/users/jinja2/socialaccount/authentication_error.html:3 kuma/users/jinja2/socialaccount/authentication_error.html:6
 msgid "Account Sign In Failure"
@@ -1836,7 +1836,7 @@ msgstr "Aanmelding geannuleerd"
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
 msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
-msgstr "U hebt besloten de aanmelding bij onze website via een van uw bestaande accounts te annuleren. Als dit een vergissing was, ga dan verder met <a href=\"%(login_url)s\">aanmelden</a>."
+msgstr "Jo hawwe besletten de oanmelding by ús website fia ien fan jo besteande accounts te annulearjen. As dit in fersin wie, gean dan fierder mei <a href=\"%(login_url)s\">oanmelden</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
 msgid "Create your MDN profile to continue"
@@ -1845,8 +1845,7 @@ msgstr "Maak uw MDN-profiel aan om verder te gaan"
 #: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-msgstr ""
-"Er bestaat al een profiel met dit e-mailadres. <a href=\"%(connections_url)s\">U dient zich aan te melden en uw sociale-accountkoppelingen te bezoeken</a> om Persona aan uw MDN-profiel te koppelen."
+msgstr "Der bestiet al in profyl mei dit e-mailadres. <a href=\"%(connections_url)s\">Jo moatte jo oanmelde en jo sosjale-accountkeppelingen te besykje</a> om Persona oan jo MDN-profyl te keppeljen."
 
 #: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
@@ -1878,7 +1877,7 @@ msgstr "<strong>Kies in brûkersnamme</strong> om jo MDN-profyl yn te stellen. J
 
 #: kuma/users/jinja2/socialaccount/signup.html:67
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr "<strong>Kies een gebruikersnaam en e-mailadres</strong> om uw MDN-profiel in te stellen. Uw gebruikersnaam zal op MDN worden weergegeven om bijdragen die u levert te identificeren."
+msgstr "<strong>Kies in brûkersnamme en e-mailadres</strong> om jo MDN-profyl yn te stellen. Jo brûkersnamme sil op MDN werjûn om bydragen dy't jo leverje te identifisearjen."
 
 #: kuma/users/jinja2/socialaccount/signup.html:75
 #, python-format
@@ -1888,7 +1887,7 @@ msgstr "Als u <strong>problemen hebt</strong> bij het aanmelden of het aanmaken 
 #: kuma/users/jinja2/socialaccount/signup.html:100
 #, python-format
 msgid "Your GitHub username %(username)s is already taken. Please choose another."
-msgstr "Uw GitHub-gebruikersnaam %(username)s is al in gebruik. Kies een andere."
+msgstr "Jo GitHub-brûkersnamme %(username)s is al yn gebrûk. Kies in oare."
 
 #: kuma/users/jinja2/socialaccount/signup.html:104
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
@@ -1956,7 +1955,7 @@ msgstr "Waarom blokkeert u %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
-msgstr "Kies een reden"
+msgstr "Kies in reden"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
@@ -1984,7 +1983,7 @@ msgstr "Bewurkje"
 
 #: kuma/users/jinja2/users/user_detail.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
 msgid "Advanced"
-msgstr "Geavanceerd"
+msgstr "Avansearre"
 
 #: kuma/users/jinja2/users/user_detail.html:53
 msgid "Manage"
@@ -2029,7 +2028,7 @@ msgstr "Volledige diff bekijken"
 
 #: kuma/users/jinja2/users/user_detail.html:159 kuma/wiki/jinja2/wiki/document.html:386
 msgid "View page history"
-msgstr "Paginageschiedenis weergeven"
+msgstr "Sideskiednis werjaan"
 
 #: kuma/users/jinja2/users/user_detail.html:171
 #, python-format
@@ -2096,11 +2095,11 @@ msgstr "Wijzigen"
 
 #: kuma/users/jinja2/users/user_edit.html:101
 msgid "Use your Persona account to sign in."
-msgstr "Gebruik uw Persona-account om u aan te melden."
+msgstr "Brûk jo Persona-account om jo oan te melden."
 
 #: kuma/users/jinja2/users/user_edit.html:120
 msgid "Use your GitHub account to sign in."
-msgstr "Gebruik uw GitHub-account om u aan te melden."
+msgstr "Brûk jo GitHub-account om jo oan te melden."
 
 #: kuma/users/jinja2/users/user_edit.html:144 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Publish"
@@ -2127,8 +2126,8 @@ msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
-"Ga nu verder door een taak op MDN te kiezen, en uit te voeren! Er zijn een aantal begintaken waaruit u kunt kiezen, of u nu <a href=\"%(words_link)s\">van woorden houdt</a>, <a "
-"href=\"%(code_link)s\">van code houdt</a>, <a href=\"%(both_link)s\">zowel van woorden als van code houdt</a>, of dat u <a href=\"%(translate_link)s\">MDN naar uw taal wilt vertalen</a>."
+"Gean no fierder troch in taak op MDN te kiezen, en út te fieren! Der binne in oantal begjintaken wêr't jo út kieze kinne, of jo no <a href=\"%(words_link)s\">fan wurden hâlde</a>, <a "
+"href=\"%(code_link)s\">fan koade hâlde</a>, <a href=\"%(both_link)s\">sawol fan wurden as fan koade hâlde</a>, of dat jo <a href=\"%(translate_link)s\">MDN nei jo taal oersette wolle</a>."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2180,8 +2179,8 @@ msgid ""
 "You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
 "interests."
 msgstr ""
-"U hebt de eerste stap om te beginnen op MDN voltooid door een profiel aan te maken. Ga nu verder door een taak op MDN te kiezen, en uit te voeren! Er zijn een aantal begintaken waaruit u kunt "
-"kiezen, gebaseerd op uw interesses."
+"Jo hawwe de earste stap om te begjinnen op MDN foltôge troch in profyl oan te meitsjen. Gean no fierder troch in taak op MDN te kiezen, en út te fieren! Der binne in oantal begjintaken wêr't jo út "
+"kieze kinne, basearre op jo ynteresses."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
@@ -2662,7 +2661,7 @@ msgstr "Revisies vergelijken"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:18
 msgid "Back to History"
-msgstr "Terug naar Geschiedenis"
+msgstr "Werom nei Skiednis"
 
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:3
 #, python-format
@@ -2828,11 +2827,11 @@ msgstr "Dit artikel hat in redaksjonele beoardieling nedich. <a href=\"%(url)s\"
 #: kuma/wiki/jinja2/wiki/document.html:284
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
-msgstr "Deze vertaling is niet volledig. Help <a href=\"%(translate_url)s\">dit artikel te vertalen</a> vanuit het Engels."
+msgstr "Dizze oersetting is net folslein. Help <a href=\"%(translate_url)s\">dit artikel oer te setten</a> fan it Ingelsk út."
 
 #: kuma/wiki/jinja2/wiki/document.html:289
 msgid "This translation is in progress."
-msgstr "Aan deze vertaling wordt gewerkt."
+msgstr "Oan dizze oersetting wurdt wurke."
 
 #: kuma/wiki/jinja2/wiki/document.html:296
 #, python-format
@@ -2925,7 +2924,7 @@ msgstr "Zoek de bron van de vertaling via het onderstaande zoekveld en klik daar
 
 #: kuma/wiki/jinja2/wiki/edit.html:147 kuma/wiki/jinja2/wiki/includes/translate_description.html:62
 msgid "Lookup:"
-msgstr "Opzoeken:"
+msgstr "Opsykje:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:161
 msgid "Thank you for taking the time to improve MDN!"
@@ -3011,7 +3010,7 @@ msgstr "Nieuwe identificator:"
 
 #: kuma/wiki/jinja2/wiki/move.html:81
 msgid "Look up by Document Title"
-msgstr "Zoeken op documenttitel"
+msgstr "Sykje op dokuminttitel"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
@@ -3213,7 +3212,7 @@ msgstr "Artikel bewurkje:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
-msgstr "Artikelgeschiedenis:"
+msgstr "Artikelskiednis:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:40
 #, python-format
@@ -3279,7 +3278,7 @@ msgstr "Converteren naar inhoudszone"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:88
 msgid "Print this article"
-msgstr "Dit artikel afdrukken"
+msgstr "Dit artikel ôfdrukke"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
@@ -3287,7 +3286,7 @@ msgstr "broodkruimels"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
-msgstr "Zie ook"
+msgstr "Sjoch ek"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
@@ -3472,7 +3471,7 @@ msgstr "Lees hoe u revisieopmerkingen gebruikt"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
-msgstr "Vertel ons waarom u aanvullingen en wijzigingen hebt aangebracht. Dit is optioneel, maar maakt de paginageschiedenis begrijpelijker."
+msgstr "Fertel ús wêrom't jo oanfollingen en wizigingen oanbrocht hawwe. Dit is opsjoneel, mar makket de sideskiednis begrypliker."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
@@ -3591,15 +3590,15 @@ msgstr "%(count)s documenten gevonden."
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
 msgid "Revision History | %(document)s"
-msgstr "Revisiegeschiedenis | %(document)s"
+msgstr "Revyzjeskiednis | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:14
 msgid "History of"
-msgstr "Geschiedenis van"
+msgstr "Skiednis fan"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:17
 msgid "Revision history for:"
-msgstr "Revisiegeschiedenis voor:"
+msgstr "Revyzjeskiednis foar:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
@@ -3704,7 +3703,7 @@ msgstr "Er is een fout opgetreden bij het genereren van de inhoud."
 
 #: kuma/wiki/views/delete.py:54
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
-msgstr "Document bestaat al. Noot: u kunt geen document dat is verplaatst terugzetten voordat u de omleiding ervan verwijdert."
+msgstr "Dokumint bestiet al. Noat: jo kinne gjin dokumint dat ferpleatst is weromsette eardat jo de omlieding derfan fuortsmite."
 
 #: kuma/wiki/views/document.py:608
 #, python-format
