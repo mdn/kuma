@@ -44,13 +44,23 @@
                 </tr>
                 <tr>
                     <td colspan=5>
+                        {# If this is a revision, compare with most recent revision #}
                         {% if previous_id %}
                             {% with revision_from=revision.previous, revision_to=revision %}
                               <div class="dashboard-compare">
                                 {% include "wiki/includes/revision_diff_table.html" %}
                               </div>
                             {% endwith %}
+
+                        {# If this is a new translation, compare it with English translation #}
+                        {% elif revision.document.locale != 'en-US' %}
+                            {% with revision_from=revision.document.parent.current_revision, revision_to=revision %}
+                              <div class="dashboard-compare">
+                                {% include "wiki/includes/revision_diff_table.html" %}
+                              </div>
+                            {% endwith %}
                         {% endif %}
+
                     </td>
                 </tr>
                 <tr colspan=5>
