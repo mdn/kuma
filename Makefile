@@ -36,7 +36,7 @@ compilejsi18n:
 
 collectstatic:
 	@ echo "## Collecting and building static files ##"
-	@ mkdir -p build/assets
+	@ mkdir -p build/assets build/locale
 	@ python manage.py collectstatic --noinput
 
 install:
