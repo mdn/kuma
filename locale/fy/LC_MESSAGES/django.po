@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-22 07:42+0000\n"
+"PO-Revision-Date: 2016-06-22 11:00+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -72,7 +72,7 @@ msgstr "Het spijt ons, we konden niet vinden wat u zocht."
 #: jinja2/404.html:24
 #, python-format
 msgid "You can try a search or start over on the <a href=\"%(homepage_url)s\">home page</a>."
-msgstr "U kunt een zoekopdracht proberen of opnieuw beginnen op de <a href=\"%(homepage_url)s\">beginpagina</a>."
+msgstr "Jo kinne in sykopdracht probearje of opnij begjinne op de <a href=\"%(homepage_url)s\">begjinside</a>."
 
 #: jinja2/404.html:28
 #, python-format
@@ -298,7 +298,7 @@ msgstr "Profiel"
 
 #: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
 msgid "Sign Out"
-msgstr "Afmelden"
+msgstr "Ofmelde"
 
 #: jinja2/includes/common_macros.html:44
 #, python-format
@@ -315,7 +315,7 @@ msgstr "Ga"
 
 #: jinja2/includes/login.html:6
 msgid "Sign out"
-msgstr "Afmelden"
+msgstr "Ofmelde"
 
 #: jinja2/includes/login.html:17
 msgid "Sign in"
@@ -339,15 +339,15 @@ msgstr "Volgende"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
-msgstr "Afmelden van deze e-mailberichten:"
+msgstr "Ofmelde fan dizze e-mailberjochten:"
 
 #: jinja2/tidings/unsubscribe.html:2 jinja2/tidings/unsubscribe.html:12 jinja2/tidings/unsubscribe_error.html:2 jinja2/tidings/unsubscribe_success.html:2
 msgid "Unsubscribe"
-msgstr "Afmelden"
+msgstr "Ofmelde"
 
 #: jinja2/tidings/unsubscribe.html:7
 msgid "Are you sure you want to unsubscribe?"
-msgstr "Weet u zeker dat u zich wilt afmelden?"
+msgstr "Binne jo wis dat jo jo ôfmelde wolle?"
 
 #: jinja2/tidings/unsubscribe.html:13 kuma/authkeys/jinja2/authkeys/delete.html:16 kuma/authkeys/jinja2/authkeys/new.html:17 kuma/wiki/jinja2/wiki/confirm_document_delete.html:39
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:40 kuma/wiki/jinja2/wiki/move.html:93
@@ -356,15 +356,15 @@ msgstr "Annuleren"
 
 #: jinja2/tidings/unsubscribe_error.html:7
 msgid "Unsubscribe Error"
-msgstr "Fout bij afmelden"
+msgstr "Flater by ôfmelden"
 
 #: jinja2/tidings/unsubscribe_error.html:10
 msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
 msgstr ""
-"We konden uw aanmelding niet vinden. Of deze is al geannuleerd, of er was sprake van een fout in de koppeling voor het afmelden. Zorg ervoor dat de hele koppeling uit het e-mailbericht in de browser"
-" komt. Als het laatste deel ervan wordt afgebroken naar een tweede regel, probeer de koppeling dan te kopiëren en in de browser te plakken."
+"Wy koenen jo oanmelding net fine. Of dizze is al annulearre, of der wie sprake fan in flater yn de keppeling foar it ôfmelden. Soargje derfoar dat de hiele keppeling út it e-mailberjocht yn de "
+"browser komt. As it lêste part derfan ôfbrutsen wurdt nei in twadde rigel, probearje de keppeling dan te kopiearjen en yn de browser te plakken."
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -395,11 +395,11 @@ msgstr "Bijlagen"
 
 #: kuma/attachments/feeds.py:9
 msgid "MDN recent file changes"
-msgstr "Recente MDN-bestandswijzigingen"
+msgstr "Resinte MDN-bestânswizigingen"
 
 #: kuma/attachments/feeds.py:10
 msgid "Recent revisions to MDN file attachments"
-msgstr "Recente revisies van MDN-bestandsbijlagen"
+msgstr "Resinte revyzjes fan MDN-bestânsbylagen"
 
 #: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
@@ -819,7 +819,7 @@ msgstr "Terugzetten"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:340
 msgid "View Page"
-msgstr "Pagina weergeven"
+msgstr "Side werjaan"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:343
 msgid "Edit Page"
@@ -1497,7 +1497,7 @@ msgstr "Taal"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
-msgstr "Beginpagina"
+msgstr "Begjinside"
 
 #: kuma/users/models.py:60
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
@@ -1693,7 +1693,7 @@ msgstr "Om mei te helpen moatte jo jo oanmelde by MDN. Jo kinne jo fia de ûnder
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
-msgstr "Weet u zeker dat u zich wilt afmelden?"
+msgstr "Binne jo wis dat jo jo ôfmelde wolle?"
 
 #: kuma/users/jinja2/account/password_change.html:3 kuma/users/jinja2/account/password_change.html:8 kuma/users/jinja2/account/password_change.html:13
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
@@ -2000,11 +2000,11 @@ msgstr "Ervaringsgebieden"
 #: kuma/users/jinja2/users/user_detail.html:98
 #, python-format
 msgid "Member since %(date_joined)s"
-msgstr "Lid sinds %(date_joined)s"
+msgstr "Lid sûnt %(date_joined)s"
 
 #: kuma/users/jinja2/users/user_detail.html:142
 msgid "Recent Docs Activity"
-msgstr "Recente documentactiviteit"
+msgstr "Resinte dokumintaktiviteit"
 
 #: kuma/users/jinja2/users/user_detail.html:142
 msgid "View all activity"
@@ -2012,7 +2012,7 @@ msgstr "Alle activiteit weergeven"
 
 #: kuma/users/jinja2/users/user_detail.html:147
 msgid "Page"
-msgstr "Pagina"
+msgstr "Side"
 
 #: kuma/users/jinja2/users/user_detail.html:148 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
@@ -2279,7 +2279,7 @@ msgstr "Seksje bewurkje"
 #: kuma/wiki/events.py:72
 #, python-format
 msgid "[MDN] Page \"%(document_title)s\" changed by %(creator)s"
-msgstr "[MDN] Pagina ‘%(document_title)s’ is gewijzigd door %(creator)s"
+msgstr "[MDN] Side ‘%(document_title)s’ is wizige troch %(creator)s"
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
@@ -2295,16 +2295,16 @@ msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
-msgstr "Recente wijzigingen aan MDN-documenten"
+msgstr "Resinte wizigingen oan MDN-dokuminten"
 
 #: kuma/wiki/feeds.py:149
 msgid "Recent changes to MDN documents"
-msgstr "Recente wijzigingen aan MDN-documenten"
+msgstr "Resinte wizigingen oan MDN-dokuminten"
 
 #: kuma/wiki/feeds.py:155
 #, python-format
 msgid "MDN recent changes to documents tagged %s"
-msgstr "Recente wijzigingen aan MDN-documenten met het label %s"
+msgstr "Resinte wizigingen oan MDN-dokuminten mei it label %s"
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
@@ -2312,7 +2312,7 @@ msgstr "MDN-documenten die beoordeling nodig hebben"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
-msgstr "Recente wijzigingen aan MDN-documenten die moeten worden beoordeeld"
+msgstr "Resinte wizigingen oan MDN-dokuminten dy't beoardield wurde moatte"
 
 #: kuma/wiki/feeds.py:189
 #, python-format
@@ -2330,11 +2330,11 @@ msgstr "‘%s’-vertalingen in MDN die moeten worden bijgewerkt"
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
-msgstr "Recente MDN-revisies"
+msgstr "Resinte MDN-revyzjes"
 
 #: kuma/wiki/feeds.py:260
 msgid "Recent revisions to MDN documents"
-msgstr "Recente revisies van MDN-documenten"
+msgstr "Resinte revyzjes fan MDN-dokuminten"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
@@ -3023,7 +3023,7 @@ msgstr "%(count)s pagina’s verplaatsen"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 msgid "Move Page"
-msgstr "Pagina verplaatsen"
+msgstr "Side ferpleatse"
 
 #: kuma/wiki/jinja2/wiki/move.html:97
 #, python-format
@@ -3317,7 +3317,7 @@ msgstr "Abonneren op %(title)s en alle sub-artikelen ervan"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:129
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr "Afmelden voor %(title)s en alle sub-artikelen ervan"
+msgstr "Ofmelden foar %(title)s en alle sub-artikelen derfan"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "You are now subscribed to this article and all its sub-articles."
@@ -3339,7 +3339,7 @@ msgstr "Abonneren op %(title)s"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:145
 #, python-format
 msgid "Unsubscribe from %(title)s"
-msgstr "Afmelden voor %(title)s"
+msgstr "Ofmelde foar %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
 #, python-format
@@ -3359,7 +3359,7 @@ msgstr "Abonneren op versie in het <bdi>%(language)s</bdi>"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:160
 #, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
-msgstr "Afmelden voor versie in het <bdi>%(language)s</bdi>"
+msgstr "Ofmelde foar ferzje yn it <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
 #, python-format
@@ -3443,7 +3443,7 @@ msgstr "Volledige tekst van fout:"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
-msgstr "Nieuwe pagina"
+msgstr "Nije side "
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
@@ -3643,7 +3643,7 @@ msgstr "Documenten opruimen"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
-msgstr "Beginpagina"
+msgstr "Begjinside"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
 msgid "Documents"
