@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-17 14:15+0000\n"
+"PO-Revision-Date: 2016-06-22 07:02+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -257,15 +257,15 @@ msgstr "Zoeken"
 #: jinja2/base.html:196
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
-msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network en individuele medewerkers.</p> <p>Inhoud is beschikbaar onder <a href=\"%(copyright_url)s\">deze licenties</a>.</p>"
+msgstr "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network en yndividuele meiwurkers.</p> <p>Ynhâld is beskikber ûnder <a href=\"%(copyright_url)s\">dizze lisinsjes</a>.</p>"
 
 #: jinja2/base.html:201
 msgid "About MDN"
-msgstr "Over MDN"
+msgstr "Oer MDN"
 
 #: jinja2/base.html:202
 msgid "Terms"
-msgstr "Voorwaarden"
+msgstr "Betingsten"
 
 #: jinja2/base.html:203
 msgid "Privacy"
@@ -823,7 +823,7 @@ msgstr "Pagina weergeven"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:343
 msgid "Edit Page"
-msgstr "Pagina bewerken"
+msgstr "Side bewurkje"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
@@ -860,7 +860,7 @@ msgstr "IP:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:52
 msgid "Ban IP from Editing"
-msgstr "IP blokkeren voor bewerken"
+msgstr "IP blokkearje foar bewurkjen"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:54
 msgid "User agent:"
@@ -939,7 +939,7 @@ msgstr "Dielde kennis <span>foar it iepen web</span>"
 
 #: kuma/landing/jinja2/landing/homepage.html:42 kuma/landing/jinja2/landing/homepage.html:59 kuma/search/jinja2/search/results.html:59
 msgid "Search the docs"
-msgstr "De documenten doorzoeken"
+msgstr "De dokuminten trochsykje"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
@@ -1048,7 +1048,7 @@ msgstr "Help MDN te ferbetterjen"
 
 #: kuma/landing/jinja2/landing/homepage.html:155
 msgid "All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:"
-msgstr "Alle onderdelen van MDN (documenten en de website zelf) worden gemaakt door een open gemeenschap van ontwikkelaars. Sluit u bij ons aan! Kies een van deze manieren om te helpen:"
+msgstr "Alle ûnderdielen fan MDN (dokuminten en de website sels) wurde makke troch in iepen mienskip fan ûntwikkelers. Slút jo by ús oan! Kies ien fan dizze manieren om te helpen:"
 
 #: kuma/landing/jinja2/landing/homepage.html:161
 msgid "Getting started"
@@ -1077,7 +1077,7 @@ msgstr "Bydrage oan de MDN-koadebase"
 #: kuma/landing/jinja2/landing/newsfeed.html:10
 #, python-format
 msgid "Posted %(entrydate)s by %(authorlink)s"
-msgstr "Geplaatst op %(entrydate)s door %(authorlink)s"
+msgstr "Pleatst op %(entrydate)s troch %(authorlink)s"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:5 kuma/landing/jinja2/landing/promote_buttons.html:17
 msgid "Promote MDN"
@@ -1103,7 +1103,7 @@ msgstr "Voorbeeld"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
-msgstr "Kies een knoppenstijl"
+msgstr "Kies in knoppenstyl"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
@@ -1123,7 +1123,7 @@ msgstr "Werkset voor ontwikkelaars"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
-msgstr "Kies een kleur"
+msgstr "Kies in kleur"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
@@ -1575,7 +1575,7 @@ msgstr "Gebruikersnaam is te lang (%(show_value)s tekens). Deze moet %(limit_val
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
-msgstr "U moet akkoord gaan met de gebruiksvoorwaarden."
+msgstr "Jo moatte akkoard gean mei de brûksbetingsten."
 
 #: kuma/users/signup.py:34
 msgid "I agree"
@@ -1650,7 +1650,7 @@ msgstr "E-mailadres toevoegen"
 
 #: kuma/users/jinja2/account/email.html:60 kuma/users/jinja2/socialaccount/connections.html:70
 msgid "Edit profile"
-msgstr "Profiel bewerken"
+msgstr "Profyl bewurkje"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
@@ -1866,15 +1866,15 @@ msgstr[1] ""
 #: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
 msgid "Thanks for signing in to MDN with %(provider_name)s. You have one more step to join MDN: <strong>create your MDN profile</strong>."
-msgstr "Bedankt voor het aanmelden bij MDN met %(provider_name)s. Er is nog één stap te gaan om met MDN mee te doen: <strong>maak uw MDN-profiel aan</strong>."
+msgstr "Tank foar it oanmelden by MDN mei %(provider_name)s. Der is noch ien stap te gean om mei MDN mei te dwaan: <strong>meitsje jo MDN-profyl oan</strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:54
 msgid "You can access everything on the MDN website even without an MDN profile. However, by joining MDN, you'll be able to edit docs and have your own profile page."
-msgstr "U kunt alles op de MDN-website benaderen, ook zonder een MDN-profiel. Door u bij MDN aan te sluiten, kunt u echter documenten bewerken en uw eigen profielpagina beheren."
+msgstr "Jo kinne alles op de MDN-website benaderje, ek sûnder in MDN-profyl. Troch jo by MDN oan te sluten, kinne jo lykwols dokuminten bewurkje en jo eigen profylside beheare."
 
 #: kuma/users/jinja2/socialaccount/signup.html:61
 msgid "To set up your MDN profile, please <strong>choose a username</strong>. Your username will be displayed on MDN to identify any contributions that you make."
-msgstr "<strong>Kies een gebruikersnaam</strong> om uw MDN-profiel in te stellen. Uw gebruikersnaam zal op MDN worden weergegeven om bijdragen die u levert te identificeren."
+msgstr "<strong>Kies in brûkersnamme</strong> om jo MDN-profyl yn te stellen. Jo brûkersnamme sil op MDN werjûn wurde om bydragen dy't jo leverje te identifisearjen."
 
 #: kuma/users/jinja2/socialaccount/signup.html:67
 msgid "To set up your MDN profile, please <strong>choose a username and email address</strong>. Your username will be displayed on MDN to identify any contributions that you make."
@@ -1914,12 +1914,12 @@ msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
-msgstr "Voorwaarden en privacy"
+msgstr "Betingsten en privacy"
 
 #: kuma/users/jinja2/socialaccount/signup.html:173
 #, python-format
 msgid "to Mozilla's <a href=\"%(terms_url)s\">Terms</a> and <a href=\"%(privacy_url)s\">Privacy Notice</a>."
-msgstr "met Mozilla’s <a href=\"%(terms_url)s\">Voorwaarden</a> en <a href=\"%(privacy_url)s\">Privacyverklaring</a>."
+msgstr "mei Mozilla’s <a href=\"%(terms_url)s\">Betingsten</a> en <a href=\"%(privacy_url)s\">Privacyferklearring</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:183
 msgid "Create my MDN profile"
@@ -1980,7 +1980,7 @@ msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik hie
 
 #: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
-msgstr "Bewerken"
+msgstr "Bewurkje"
 
 #: kuma/users/jinja2/users/user_detail.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
 msgid "Advanced"
@@ -2021,7 +2021,7 @@ msgstr "Datum"
 
 #: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/document.html:385
 msgid "Edit page"
-msgstr "Pagina bewerken"
+msgstr "Side bewurkje"
 
 #: kuma/users/jinja2/users/user_detail.html:158
 msgid "View complete diff"
@@ -2042,7 +2042,7 @@ msgstr "Deze gebruiker heeft geen activiteit."
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
-msgstr "Uw profiel bewerken"
+msgstr "Jo profyl bewurkje"
 
 #: kuma/users/jinja2/users/user_edit.html:35
 msgid "Change your avatar at"
@@ -2068,7 +2068,7 @@ msgstr "Primaire e-mailadres"
 
 #: kuma/users/jinja2/users/user_edit.html:62
 msgid "Edit email"
-msgstr "E-mailadres bewerken"
+msgstr "E-mailadres bewurkje"
 
 #: kuma/users/jinja2/users/user_edit.html:74
 msgid "Interests (tags)"
@@ -2076,7 +2076,7 @@ msgstr "Interesses (labels)"
 
 #: kuma/users/jinja2/users/user_edit.html:75
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
-msgstr "Scheid labels met komma’s of spaties. Verbind labels die uit meerdere woorden bestaan met rechte dubbele aanhalingstekens, zoals \"objectgeoriënteerd programmeren\"."
+msgstr "Skied labels mei komma’s of spaasjes. Ferbyn labels dy't út mear wurden bestean mei rjochte dûbele oanhellingstekens, lykas \"objektoriëntearre programmearje\"."
 
 #: kuma/users/jinja2/users/user_edit.html:81
 msgid "Areas of expertise"
@@ -2137,7 +2137,7 @@ msgstr "Praat met ons!"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
 msgid "Want to talk to someone about MDN? There are a few ways you can do that:"
-msgstr "Wilt u iemand spreken over MDN? Er zijn een paar manieren om dat te doen:"
+msgstr "Wolle jo mei ien prate oer MDN? Der binne in pear manieren om dat te dwaan:"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:38
 #, python-format
@@ -2275,7 +2275,7 @@ msgstr "Aan vertaling wordt gewerkt - nog niet volledig vertaald."
 
 #: kuma/wiki/content.py:718
 msgid "Edit section"
-msgstr "Sectie bewerken"
+msgstr "Seksje bewurkje"
 
 #: kuma/wiki/events.py:72
 #, python-format
@@ -2424,7 +2424,7 @@ msgstr "Dit document is aangepast terwijl u het bewerkte."
 
 #: kuma/wiki/forms.py:69
 msgid "Changing this document's slug requires moving it and its children."
-msgstr "Wijzigen van de identificator van dit document vereist verplaatsen van dit en onderliggende documenten."
+msgstr "Wizigjen fan de identificator fan dit dokumint fereasket ferpleatsen fan dit en ûnderlizzende dokuminten."
 
 #: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:864 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
@@ -2511,7 +2511,7 @@ msgstr "geüpload naar het document"
 
 #: kuma/wiki/models.py:179
 msgid "linked in the document content"
-msgstr "gekoppeld in de documentinhoud"
+msgstr "keppele yn de dokumintynhâld"
 
 #: kuma/wiki/models.py:193
 #, python-format
@@ -2777,7 +2777,7 @@ msgstr "Volgend zoekresultaat"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
 msgid "see all contributors"
-msgstr "alle medewerkers tonen"
+msgstr "alle meiwurkers toane"
 
 #: kuma/wiki/jinja2/wiki/document.html:181
 msgid "hide contributors"
@@ -2837,7 +2837,7 @@ msgstr "Aan deze vertaling wordt gewerkt."
 #: kuma/wiki/jinja2/wiki/document.html:296
 #, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
-msgstr "Onze vrijwilligers hebben dit artikel nog niet naar het <bdi>%(locale)s</bdi> vertaald. <a href=\"%(help_link)s\">Doe mee en help de klus te klaren!</a>"
+msgstr "Us frijwilligers hawwe dit artikel net nei it <bdi>%(locale)s</bdi> oerset (Dat hoecht ek net). <a href=\"%(help_link)s\">Doch mei en help dit putsje te foltôgjen!</a>"
 
 #: kuma/wiki/jinja2/wiki/document.html:307
 msgid "This article doesn't have any content yet."
@@ -2858,29 +2858,29 @@ msgstr "Documentlabels en -medewerkers"
 
 #: kuma/wiki/jinja2/wiki/document.html:339
 msgid "Contributors to this page:"
-msgstr "Aan deze pagina hebben bijgedragen:"
+msgstr "Oan dizze side hawwe bydroegen:"
 
 #: kuma/wiki/jinja2/wiki/document.html:345
 msgid "Last updated by:"
-msgstr "Laatst bijgewerkt door:"
+msgstr "Lêst bywurke troch:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:6
 #, python-format
 msgid "%(title)s | Edit Template"
-msgstr "%(title)s | Sjabloon bewerken"
+msgstr "%(title)s | Sjabloan bewurkje"
 
 #: kuma/wiki/jinja2/wiki/edit.html:8
 #, python-format
 msgid "%(title)s | Edit Article"
-msgstr "%(title)s | Artikel bewerken"
+msgstr "%(title)s | Artikel bewurkje"
 
 #: kuma/wiki/jinja2/wiki/edit.html:31
 msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
 msgstr ""
-"Beoordeel de verschillen tussen uw wijzigingen en de opgeslagen wijzigingen sinds u met het bewerken begon. U kunt nogmaals opslaan, maar probeer eventuele conflicten handmatig op te lossen, zodat "
-"de gemaakte wijzigingen vanaf de aanvang niet verloren gaan."
+"Beoardiel de ferskillen tusken jo wizigingen en de bewarre wizigingen sûnt jo mei it bewurkjen begûn binne. Jo kinne nochris bewarje, mar probearje mooglike konflikten hânmjittich op te lossen, "
+"sadat de makke wizigingen fan de oanfang ôf net ferlern gean."
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
@@ -2901,7 +2901,7 @@ msgstr "Samenvatting voor zoekresultaten:"
 
 #: kuma/wiki/jinja2/wiki/edit.html:106
 msgid "Edit Page Title and Properties"
-msgstr "Paginatitel en eigenschappen bewerken"
+msgstr "Sidetitel en eigenskippen bewurkje"
 
 #: kuma/wiki/jinja2/wiki/edit.html:126
 msgid "Rendering max age:"
@@ -2966,7 +2966,7 @@ msgstr "laatst aangepast op %(modified)s"
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:9
 #, python-format
 msgid "Edit %(locale)s translation"
-msgstr "Vertaling naar het %(locale)s bewerken"
+msgstr "Oersetting nei it %(locale)s bewurkje"
 
 #: kuma/wiki/jinja2/wiki/move.html:2
 #, python-format
@@ -3110,8 +3110,8 @@ msgid ""
 "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"Inhoud is beschikbaar onder een voor dit project specifieke licentie. &middot; <a href=\"%(about_url)s\">Over MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Bijdragen aan de code</a> "
-"&middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacybeleid</a>"
+"Ynhâld is beskikber ûnder in foar dit projekt spesifike lisinsje. &middot; <a href=\"%(about_url)s\">Oer MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Bydragen oan de koade</a> &middot; <a "
+"href=\"//www.mozilla.org/en-US/privacy\">Privacybelied</a>"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:43
 #, python-format
@@ -3119,8 +3119,8 @@ msgid ""
 "&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
 "<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Mozilla Developer Network en individuele medewerkers<br /> Inhoud is beschikbaar onder een voor dit project specifieke licentie. &middot; <a href=\"%(about_url)s\">Over MDN</a> "
-"&middot; <a href=\"//github.com/mozilla/kuma\">Bijdragen aan de code</a> &middot; <a href=\"//www.mozilla.org/privacy\">Privacybeleid</a>"
+"&copy; 2005-2015 Mozilla Developer Network en yndividuele meiwurkers<br /> Ynhâld is beskikber ûnder in foar dit projekt spesifike lisinsje. &middot; <a href=\"%(about_url)s\">Oer MDN</a> &middot; "
+"<a href=\"//github.com/mozilla/kuma\">Bydragen oan de koade</a> &middot; <a href=\"//www.mozilla.org/privacy\">Privacybelied</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
@@ -3209,7 +3209,7 @@ msgstr "Artikel weergeven:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:27
 msgid "Edit Article:"
-msgstr "Artikel bewerken:"
+msgstr "Artikel bewurkje:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:31
 msgid "Article History:"
@@ -3411,8 +3411,8 @@ msgstr[1] "Meer informatie over deze fouten"
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
 msgstr ""
-"Iedereen met een MDN-profiel kan een document bewerken om een fout te herstellen. Gebruik de <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript-gids voor probleemoplossing</a> "
-"als een beginpunt."
+"Eltsenien mei in MDN-profyl kin in dokumint bewurkje om in flater te werstellen. Brûk de <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript-gids foar probleemoplossing</a> as in"
+" begjinpunt."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -3428,7 +3428,7 @@ msgstr "Sjabloon aanmaken"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
-msgstr "Sjabloon bewerken"
+msgstr "Sjabloan bewurkje"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
@@ -3436,7 +3436,7 @@ msgstr "Macro parsen:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
-msgstr "Document bewerken"
+msgstr "Dokumint bewurkje"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
@@ -3452,7 +3452,7 @@ msgstr "Wijzigingen verwerpen en een nieuw document aanmaken?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
 msgid "Publish and Keep Editing"
-msgstr "Publiceren en bewerken voortzetten"
+msgstr "Publisearjen en bewurkjen trochsette"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
 msgid "Discard"
@@ -3657,7 +3657,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"          De volgende documenten zullen definitief uit de database worden verwijderd. Dit kan niet ongedaan worden gemaakt. Klik op de toets ‘Terug’ in uw browser om te annuleren.\n"
+"          De folgjende dokuminten sille definityf út de database fuortsmiten wurde. Dit kin net ûngedien makke wurde. Klik op de toets ‘Tebek’ yn jo browser om te annulearjen.\n"
 "        "
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
@@ -3728,7 +3728,7 @@ msgstr "Parsefout bij aanvraag: %s"
 
 #: kuma/wiki/views/document.py:753
 msgid "ETag precondition failed"
-msgstr "ETag-randvoorwaarde mislukt"
+msgstr "ETag-rânbetingst mislearre"
 
 #: kuma/wiki/views/edit.py:114
 msgid "Sections may only be edited inline."
