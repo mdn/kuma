@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-22 11:00+0000\n"
+"PO-Revision-Date: 2016-06-22 12:02+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -423,11 +423,11 @@ msgstr "Het bijlagebestand dat naar de prullenbak is verplaatst"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
-msgstr "De datum en tijd waarop de bijlage is verwijderd"
+msgstr "De datum en tiid wêrop de bylage fuortsmiten is"
 
 #: kuma/attachments/models.py:224
 msgid "The username of the user who trashed the attachment"
-msgstr "De gebruikersnaam van de gebruiker die de bijlage heeft verwijderd"
+msgstr "De brûkersnamme fan de brûker dy't de bylage fuortsmiten hat"
 
 #: kuma/attachments/models.py:229
 msgid "Whether or not this attachment was the current attachment revision at the time of trashing."
@@ -487,7 +487,7 @@ msgstr "Beschrijving"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
 msgid "Comments"
-msgstr "Reacties"
+msgstr "Reaksjes"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 msgid "Attached to this article"
@@ -598,9 +598,9 @@ msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
-"<p>Uw nieuwe sleutel is aangemaakt. Maak een notitie van de onderstaande details (bv. door ze naar de instellingen van uw applicatie te kopiëren). Deze informatie zal nooit meer worden weergegeven "
-"en kan niet meer worden teruggewonnen bij verlies ervan.</p> <p><strong>NOOT:</strong> <a class=\"button\" href=\"%(list_url)s\">ga terug naar de sleutellijst</a> als u klaar bent. Vernieuwen van "
-"deze pagina zal een nieuwe sleutel aanmaken.</p>"
+"<p>Jo nije kaai is oanmakke. Meitsje in notysje fan de ûndersteande details (byg. troch se nei de ynstellingen fan jo applikaasje te kopiearjen). Dizze ynformaasje sil nea mear werjûn wurde en kin "
+"net mear wermwûn wurde by ferlies derfan.</p> <p><strong>NOAT:</strong> <a class=\"button\" href=\"%(list_url)s\">gean werom nei de kaailist</a> as jo klear binne. Fernijen fan dizze side sil in "
+"nije kaai oanmeitsje.</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -836,7 +836,7 @@ msgstr "Revisie"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:149 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
 #: kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
-msgstr "Reactie"
+msgstr "Reaksje"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Author"
@@ -1262,11 +1262,11 @@ msgstr "Er ging iets mis met de zoekopdracht. Probeer het over enkele minuten op
 
 #: kuma/search/views.py:94
 msgid "name"
-msgstr "naam"
+msgstr "namme"
 
 #: kuma/search/views.py:95
 msgid "groupname"
-msgstr "groepsnaam"
+msgstr "groepsnamme"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
@@ -1398,11 +1398,11 @@ msgstr ""
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
-msgstr "Een e-mailadres kan niet als gebruikersnaam worden gebruikt."
+msgstr "In e-mailadres kin net as brûkersnamme brûkt wurde."
 
 #: kuma/users/adapters.py:48
 msgid "The username you entered already exists."
-msgstr "De ingevoerde gebruikersnaam bestaat al."
+msgstr "De ynfierde brûkersnamme bestiet al."
 
 #: kuma/users/apps.py:24
 msgid "User"
@@ -1427,11 +1427,11 @@ msgstr "hash"
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
-msgstr "Gebruikersnaam mag alleen letters, cijfers en deze tekens bevatten: . - _ +"
+msgstr "Brûkersnamme mei allinnich letters, sifers en dizze tekens befetsje: . - _ +"
 
 #: kuma/users/forms.py:30 kuma/users/models.py:41
 msgid "Timezone"
-msgstr "Tijdzone"
+msgstr "Tiidssône"
 
 #: kuma/users/forms.py:36
 msgid "Beta tester"
@@ -1447,7 +1447,7 @@ msgstr "Ervaring"
 
 #: kuma/users/forms.py:52
 msgid "Username"
-msgstr "Gebruikersnaam"
+msgstr "Brûkersnamme"
 
 #: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:107 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
 msgid "Twitter"
@@ -1479,7 +1479,7 @@ msgstr "Dit veld kan niet leeg zijn."
 
 #: kuma/users/forms.py:151
 msgid "Username already in use."
-msgstr "Gebruikersnaam wordt al gebruikt."
+msgstr "Brûkersnamme wurdt al brûkt."
 
 #: kuma/users/models.py:29
 #, python-format
@@ -1505,15 +1505,15 @@ msgstr "Deze URL heeft een ongeldig formaat. Geldige URL’s zien eruit als http
 
 #: kuma/users/models.py:70
 msgid "Name"
-msgstr "Naam"
+msgstr "Namme"
 
 #: kuma/users/models.py:75
 msgid "Organization"
-msgstr "Organisatie"
+msgstr "Organisaasje"
 
 #: kuma/users/models.py:80
 msgid "Location"
-msgstr "Locatie"
+msgstr "Lokaasje"
 
 #: kuma/users/models.py:85
 msgid "About Me"
@@ -1521,7 +1521,7 @@ msgstr "Over mij"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
-msgstr "IRC-nicknaam"
+msgstr "IRC-nicknamme"
 
 #: kuma/users/models.py:94 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79 kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
@@ -1561,17 +1561,17 @@ msgstr "Website"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
-msgstr "Gebruikersnaam is vereist."
+msgstr "Brûkersnamme is fereaske."
 
 #: kuma/users/signup.py:10
 #, python-format
 msgid "Username is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "Gebruikersnaam is te kort (%(show_value)s tekens). Deze moet minstens %(limit_value)s tekens bevatten."
+msgstr "Brûkersnamme is te koart (%(show_value)s tekens). Dizze moat op syn minst %(limit_value)s tekens befetsje."
 
 #: kuma/users/signup.py:12
 #, python-format
 msgid "Username is too long (%(show_value)s characters). It must be %(limit_value)s characters or less."
-msgstr "Gebruikersnaam is te lang (%(show_value)s tekens). Deze moet %(limit_value)s of minder tekens bevatten."
+msgstr "Brûkersnamme is te lang (%(show_value)s tekens). Dizze moat %(limit_value)s of minder tekens befetsje."
 
 #: kuma/users/signup.py:15
 msgid "You must agree to the terms of use."
@@ -1605,11 +1605,11 @@ msgstr "Anders:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
-msgstr "Profiel inactief"
+msgstr "Profyl ynaktyf"
 
 #: kuma/users/jinja2/account/account_inactive.html:9
 msgid "This profile is inactive."
-msgstr "Dit profiel is inactief."
+msgstr "Dit profyl is ynaktyf."
 
 #: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/user_detail.html:57
 msgid "Email addresses"
@@ -1618,7 +1618,7 @@ msgstr "E-mailadressen"
 #: kuma/users/jinja2/account/email.html:11
 #, python-format
 msgid "%(email)s is your <em>primary</em> email address"
-msgstr "%(email)s is uw <em>primaire</em> e-mailadres"
+msgstr "%(email)s is jo <em>primêre</em> e-mailadres"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
@@ -1626,7 +1626,7 @@ msgstr "U hebt ook de volgende e-mailadressen toegevoegd:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
-msgstr "Primair maken"
+msgstr "Primêr meitsje"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
@@ -1638,7 +1638,7 @@ msgstr "Verwijderen"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
-msgstr "<strong>Waarschuwing:</strong> u hebt geen e-mailadressen aan dit profiel toegevoegd. Zonder e-mailadres kunt u geen meldingen ontvangen."
+msgstr "<strong>Warskôging:</strong> jo hawwe gjin e-mailadressen oan dit profyl tafoege. Sûnder e-mailadres kinne jo gjin meldingen ûntfange."
 
 #: kuma/users/jinja2/account/email.html:49
 msgid "Add email address"
@@ -1760,7 +1760,7 @@ msgstr "Hawwe jo al in profyl? <a href=\"%(login_url)s\">Meld jo dan oan</a>."
 
 #: kuma/users/jinja2/account/signup_closed.html:3 kuma/users/jinja2/account/signup_closed.html:7
 msgid "Profile Creation Disabled"
-msgstr "Aanmaken van profiel uitgeschakeld"
+msgstr "Oanmeitsjen fan profyl útskeakele"
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -1840,7 +1840,7 @@ msgstr "Jo hawwe besletten de oanmelding by ús website fia ien fan jo besteande
 
 #: kuma/users/jinja2/socialaccount/signup.html:3 kuma/users/jinja2/socialaccount/signup.html:19
 msgid "Create your MDN profile to continue"
-msgstr "Maak uw MDN-profiel aan om verder te gaan"
+msgstr "Meitsje jo MDN-profyl oan om fierder te gean"
 
 #: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
@@ -1856,8 +1856,8 @@ msgid_plural ""
 "A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
 "next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
-"Er bestaat al een profiel met een onderstaand e-mailadres. Hebt u al een MDN-profiel? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, koppelen"
-" met mijn MDN-profiel</a>"
+"Der bestiet al in profyl mei ûndersteand e-mailadres. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, keppelje mei "
+"myn MDN-profyl</a>"
 msgstr[1] ""
 "Er bestaat al een profiel met een van deze onderstaande e-mailadressen. Hebt u al een MDN-profiel? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
 "next=\"%(persona_next_url)s\">Ja, koppelen met mijn MDN-profiel</a>"
@@ -1891,7 +1891,7 @@ msgstr "Jo GitHub-brûkersnamme %(username)s is al yn gebrûk. Kies in oare."
 
 #: kuma/users/jinja2/socialaccount/signup.html:104
 msgid "Please enter the name you'd like to display to other users to identify your contributions."
-msgstr "Voer de naam in die u bij andere gebruikers wilt weergeven om uw bijdragen te kunnen herkennen."
+msgstr "Fier de namme yn dy't jo by oare brûkers werjaan wolle om jo bydragen werkenne te kinnen."
 
 #: kuma/users/jinja2/socialaccount/signup.html:118
 #, python-format
@@ -1899,8 +1899,8 @@ msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
 msgstr ""
-"Er bestaat al een profiel met het geselecteerde e-mailadres. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Koppel uw %(provider_name)s-account "
-"ermee.</a>"
+"Der bestiet al in profyl mei it selektearre e-mailadres. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Keppelje jo %(provider_name)s-account "
+"dermei.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
@@ -2008,7 +2008,7 @@ msgstr "Resinte dokumintaktiviteit"
 
 #: kuma/users/jinja2/users/user_detail.html:142
 msgid "View all activity"
-msgstr "Alle activiteit weergeven"
+msgstr "Alle aktiviteit werjaan"
 
 #: kuma/users/jinja2/users/user_detail.html:147
 msgid "Page"
@@ -2024,7 +2024,7 @@ msgstr "Side bewurkje"
 
 #: kuma/users/jinja2/users/user_detail.html:158
 msgid "View complete diff"
-msgstr "Volledige diff bekijken"
+msgstr "Folsleine diff besjen"
 
 #: kuma/users/jinja2/users/user_detail.html:159 kuma/wiki/jinja2/wiki/document.html:386
 msgid "View page history"
@@ -2045,25 +2045,25 @@ msgstr "Jo profyl bewurkje"
 
 #: kuma/users/jinja2/users/user_edit.html:35
 msgid "Change your avatar at"
-msgstr "Wijzig uw avatar op"
+msgstr "Wizigje jo avatar op"
 
 #: kuma/users/jinja2/users/user_edit.html:39
 msgid "View profile"
-msgstr "Profiel bekijken"
+msgstr "Profyl besjen"
 
 #: kuma/users/jinja2/users/user_edit.html:47
 msgid "You're editing a different profile than your own. Please take care!"
-msgstr "U bewerkt een ander profiel dan dat van uzelf. Wees voorzichtig!"
+msgstr "Jo bewurkje in oar profyl as dat fan josels. Wês foarsichtich!"
 
 #: kuma/users/jinja2/users/user_edit.html:58
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
-"We horen graag uw feedback over wijzigingen aan de website! Bètatesters krijgen eerst toegang tot nieuwe functies en af en toe sturen we een e-mailbericht waarin we vragen bepaalde dingen te helpen "
-"testen."
+"Wy heare graach jo kommentaar oer wizigingen oan de website! Bètatesters krije earst tagong ta nije funksjes en sa no en dan stjoere wy in e-mailberjocht wêryn wy freegje bepaalde saken te helpen te"
+" testen."
 
 #: kuma/users/jinja2/users/user_edit.html:61
 msgid "Primary Email"
-msgstr "Primaire e-mailadres"
+msgstr "Primêre e-mailadres"
 
 #: kuma/users/jinja2/users/user_edit.html:62
 msgid "Edit email"
@@ -2113,12 +2113,12 @@ msgstr "Hallo %(username)s!"
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
 msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
-msgstr "Bedankt voor het aanmaken van een profiel op het <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - een gemeenschap die geweldige hulpbronnen maakt voor ontwikkelaars als u."
+msgstr "Tank foar it oanmeitsjen fan in profyl op it <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - in mienskip dy't bjusterbaarlike helpboarnen makket foar ûntwikkelers as jo."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
 msgid "You've completed the first step of <a href=\"%(started_link)s\">Getting Started on MDN</a> by creating a profile."
-msgstr "U hebt de eerste stap om te <a href=\"%(started_link)s\">Beginnen op MDN</a> voltooid door een profiel aan te maken."
+msgstr "Jo hawwe de earste stap om te <a href=\"%(started_link)s\">Begjinnen op MDN</a> foltôge troch in profyl oan te meitsjen."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:21
 #, python-format
@@ -2171,7 +2171,7 @@ msgstr "Hallo %(username)s"
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
 msgid "Thanks for creating a profile on Mozilla Developer Network (MDN) -- a community making great resources for developers like you."
-msgstr "Bedankt voor het aanmaken van een profiel op het Mozilla Developer Network (MDN) -- een gemeenschap die geweldige hulpbronnen maakt voor ontwikkelaars als u."
+msgstr "Tank foar it oanmeitsjen fan in profyl op it Mozilla Developer Network (MDN) -- in mienskip dy't bjusterbaarlike helpboarnen makket foar ûntwikkelers as jo."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:10
@@ -2270,7 +2270,7 @@ msgstr "Redaksjoneel - proza, grammatika of ynhâld"
 
 #: kuma/wiki/constants.py:213
 msgid "Localization in progress - not completely translated yet."
-msgstr "Aan vertaling wordt gewerkt - nog niet volledig vertaald."
+msgstr "Oan oersetting wurdt wurke - noch net folslein oerset."
 
 #: kuma/wiki/content.py:718
 msgid "Edit section"
@@ -2287,7 +2287,7 @@ msgstr "MDN-documenten"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
-msgstr "Door gebruikers van MDN geschreven documenten"
+msgstr "Troch brûkers fan MDN skreaune dokuminten"
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
@@ -2342,17 +2342,17 @@ msgstr "Vergelijking tonen"
 
 #: kuma/wiki/forms.py:35
 msgid "Please provide a title."
-msgstr "Geef een titel op."
+msgstr "Jou in titel op."
 
 #: kuma/wiki/forms.py:36
 #, python-format
 msgid "The title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "De titel is te kort (%(show_value)s tekens). Deze moet minstens %(limit_value)s tekens bevatten."
+msgstr "De titel is te koart (%(show_value)s tekens). Dizze moat op syn minst %(limit_value)s tekens befetsje."
 
 #: kuma/wiki/forms.py:38
 #, python-format
 msgid "Please keep the length of the title to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr "Houd de lengte van de titel op %(limit_value)s tekens of minder. Deze is nu %(show_value)s tekens."
+msgstr "Hâld de lingte fan de titel op %(limit_value)s tekens of minder. Dizze is no %(show_value)s tekens."
 
 #: kuma/wiki/forms.py:41
 msgid "Name Your Article"
@@ -2432,7 +2432,7 @@ msgstr "Titel:"
 
 #: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:865
 msgid "Title of article"
-msgstr "Titel van artikel"
+msgstr "Titel fan artikel"
 
 #: kuma/wiki/forms.py:344 kuma/wiki/forms.py:419 kuma/wiki/jinja2/wiki/create.html:41 kuma/wiki/jinja2/wiki/includes/document_macros.html:70
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:22
@@ -2465,7 +2465,7 @@ msgstr "Samenvatting voor zoekresultaat:"
 
 #: kuma/wiki/forms.py:445
 msgid "Only displayed on search results page"
-msgstr "Alleen weergegeven op zoekresultatenpagina"
+msgstr "Allinnich werjûn op sykresultatenside"
 
 #: kuma/wiki/forms.py:456 kuma/wiki/jinja2/wiki/edit.html:92 kuma/wiki/jinja2/wiki/includes/document_macros.html:80
 msgid "Content:"
@@ -2473,7 +2473,7 @@ msgstr "Inhoud:"
 
 #: kuma/wiki/forms.py:465
 msgid "Comment:"
-msgstr "Reactie:"
+msgstr "Reaksje:"
 
 #: kuma/wiki/forms.py:468
 msgid "Tag this revision for review?"
@@ -2629,7 +2629,7 @@ msgstr "%(total)d documenten worden naar %(total_chunks)d segmenten van grootte 
 
 #: kuma/wiki/jinja2/403-create-page.html:3
 msgid "You're trying to create a new page."
-msgstr "U probeert een nieuwe pagina te maken."
+msgstr "Jo probearje in nije side te meitsjen."
 
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
@@ -2646,9 +2646,9 @@ msgid ""
 "feature? What feature? Is there a glossary term you’d like to add? What term?). </li> <li>Have made some good edits to existing pages.</li> <li>Have been contributing to the site for a while.</li> "
 "</ul>"
 msgstr ""
-"<p>Waarschijnlijk heb u meer kans op het verkrijgen van toestemming voor het maken van nieuwe pagina’s als u:</p> <ul> <li>Ons uw MDN-gebruikersnaam meldt.</li> <li>Ons vertelt waarom u nieuwe "
-"pagina’s zou willen maken (Documenteert u een nieuwe functie? Welke functie? Is er een term die u aan de woordenlijst wilt toevoegen? Welke term?). </li> <li>Een aantal goede bewerkingen aan "
-"bestaande pagina’s hebt aangebracht.</li> <li>Al een tijdje aan de website hebt bijgedragen.</li> </ul>"
+"<p>Wierskynlik hawwe jo mear kâns op it krijen fan tastimming foar it meitsjen fan nije siden as jo:</p> <ul> <li>Us jo MDN-brûkersnamme meldt.</li> <li>Us fertelle wêrom't jo nije siden meitsje "
+"wolle (Dokumentearje jo in nije funksje? Hokker funksje? Is der in term dy't jo oan de wurdlist tafoegje wolle? Hokker term?). </li> <li>In oantal goede bewurkingen oan besteande siden oanbrocht "
+"hawwe.</li> <li>Al in tiid oan de website bydroegen hawwe.</li> </ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -2785,7 +2785,7 @@ msgstr "medewerkers verbergen"
 #: kuma/wiki/jinja2/wiki/document.html:185
 #, python-format
 msgid "View profile: %(username)s"
-msgstr "Profiel weergeven: %(username)s"
+msgstr "Profyl werjaan: %(username)s"
 
 #: kuma/wiki/jinja2/wiki/document.html:210
 msgid "In This Article"
@@ -2794,7 +2794,7 @@ msgstr "In dit artikel"
 #: kuma/wiki/jinja2/wiki/document.html:232
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
-msgstr "Dit document wordt voor het eerst door het systeem weergegeven. <a href=\"%(url)s\">Vernieuw deze pagina</a> over enkele minuten om de volledige inhoud te bekijken."
+msgstr "Dit dokumint wurdt foar it earst troch it systeem werjûn. <a href=\"%(url)s\">Fernij dizze side</a> oer inkele minuten om de folsleine ynhâld te besjen."
 
 #: kuma/wiki/jinja2/wiki/document.html:240
 #, python-format
@@ -2974,11 +2974,11 @@ msgstr "Artikel verplaatsen | %(document)s"
 
 #: kuma/wiki/jinja2/wiki/move.html:20
 msgid "Please specify the new location for this page by filling out the fields below. Be sure your new destination follows these rules:"
-msgstr "Geef de nieuwe locatie voor deze pagina op door de onderstaande velden in te vullen. Zorg ervoor dat het nieuwe doel aan deze regels voldoet:"
+msgstr "Jou de nije lokaasje foar dizze side op, troch de ûndersteande fjilden yn te foljen. Soargje derfoar dat it nije doel oan dizze rigels foldocht:"
 
 #: kuma/wiki/jinja2/wiki/move.html:22
 msgid "Make sure the location you specify is located immediately under an existing page."
-msgstr "Zorg ervoor dat de opgegeven locatie zich direct onder een bestaande pagina bevindt."
+msgstr "Soargje derfoar dat de opjûne lokaasje direkt ûnder in besteande side stiet."
 
 #: kuma/wiki/jinja2/wiki/move.html:23
 msgid "Don't include the URL scheme (\"https://\")."
@@ -3014,7 +3014,7 @@ msgstr "Sykje op dokuminttitel"
 
 #: kuma/wiki/jinja2/wiki/move.html:84
 msgid "Parent Title"
-msgstr "Bovenliggende titel"
+msgstr "Bopelizzende titel"
 
 #: kuma/wiki/jinja2/wiki/move.html:92
 #, python-format
@@ -3064,7 +3064,7 @@ msgstr "Revisie-identificator:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:21
 msgid "Revision title:"
-msgstr "Revisietitel:"
+msgstr "Revyzjetitel:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:25
 msgid "Revision id:"
@@ -3196,7 +3196,7 @@ msgstr "%(creator)s heeft %(document_title)s gewijzigd."
 #. This is in an email.
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:13
 msgid "View User Profile:"
-msgstr "Gebruikersprofiel weergeven:"
+msgstr "Brûkersprofyl werjaan:"
 
 #: kuma/wiki/jinja2/wiki/email/edited.ltxt:18
 msgid "Compare on MDN:"
@@ -3439,7 +3439,7 @@ msgstr "Dokumint bewurkje"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:65
 msgid "Full text of error:"
-msgstr "Volledige tekst van fout:"
+msgstr "Folsleine tekst fan flater:"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
@@ -3494,7 +3494,7 @@ msgstr "Beschrijving vertalen"
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
 msgid "Title in %(locale)s:"
-msgstr "Titel in het %(locale)s:"
+msgstr "Titel yn it %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
@@ -3735,7 +3735,7 @@ msgstr "Secties mogen alleen inline worden bewerkt."
 
 #: kuma/wiki/views/misc.py:53
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
-msgstr "Automatische suggestie vereist een gedeeltelijke titel. Bekijk de hoofdpagina voor een volledige documentindex."
+msgstr "Automatyske suggestje fereasket in stik fan in titel. Besjoch de haadside foar in folsleine dokumintyndeks."
 
 #: kuma/wiki/views/misc.py:106
 #, python-format
