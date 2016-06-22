@@ -145,8 +145,7 @@ def ban_user_and_cleanup_summary(request, user_id):
     revisions_reverted = revisions_reverted.defer('content', 'summary').order_by('-id')
     revisions_reverted = revisions_reverted.filter(created__gte=date_three_days_ago)
 
-    # TODO: for now, we'll just list the top 25 revisions for each resultset
-    # to avoid users with lots of revisions crashing the site.
+    # TODO: revisions_needing_follow_up will be revisions that have not been reverted
     revisions_needing_follow_up = revisions_reverted
     revisions_reverted = revisions_reverted
 
