@@ -1,8 +1,3 @@
-# This is a work in progress.
-#
-# The preferred way to set up development is still using Vagrant as documented here:
-# http://kuma.readthedocs.org/en/latest/installation.html
-
 FROM quay.io/deis/base:0.3.0
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -39,5 +34,6 @@ ENV PIPELINE_UGLIFYJS_BINARY=/usr/local/bin/uglifyjs
 
 COPY ./requirements /app/requirements
 RUN pip install --no-cache-dir -r requirements/local.txt
-# TODO: add supervisor to requirements/local.txt if needed
-#RUN pip install supervisor
+
+ENV WEB_CONCURRENCY=4
+CMD gunicorn --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application

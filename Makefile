@@ -1,9 +1,12 @@
 VERSION ?= $(shell git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
 BASE_IMAGE_NAME ?= kuma_base
+KUMA_IMAGE_NAME ?= kuma
 REGISTRY ?= quay.io/
 IMAGE_PREFIX ?= mozmar
 BASE_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
 BASE_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:latest
+KUMA_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
+KUMA_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:latest
 
 target = kuma
 requirements = -r requirements/local.txt
@@ -74,14 +77,26 @@ localerefresh: localeextract localetest localecompile compilejsi18n collectstati
 build-base:
 	docker build -f Dockerfile-base -t ${BASE_IMAGE} .
 
+build-kuma:
+	docker build -t ${KUMA_IMAGE} .
+
+build: build-base build-kuma
+
 push-base:
 	docker push ${BASE_IMAGE}
 
+push-kuma:
+	docker push ${KUMA_IMAGE}
+
+push: push-base push-kuma
+
 tag-latest:
 	docker tag ${BASE_IMAGE} ${BASE_IMAGE_LATEST}
+	docker tag ${KUMA_IMAGE} ${KUMA_IMAGE_LATEST}
 
-push-latest: push-base tag-latest
+push-latest: push tag-latest
 	docker push ${BASE_IMAGE_LATEST}
+	docker push ${KUMA_IMAGE_LATEST}
 
 # Those tasks don't have file targets
 .PHONY: test coveragetest intern locust clean locale install compilecss compilejsi18n collectstatic localetest localeextract localecompile localerefresh
