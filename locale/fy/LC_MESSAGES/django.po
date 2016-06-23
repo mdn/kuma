@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-23 14:20+0000\n"
+"PO-Revision-Date: 2016-06-23 14:25+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -1677,7 +1677,7 @@ msgstr "Dizze keppeling foar de e-mailadresbefêstiging is ferrûn of ûnjildich
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
 msgid "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr "U hebt bevestigd dat <a href=\"mailto:%(email)s\">%(email)s</a> een e-mailadres is voor gebruiker %(user_display)s."
+msgstr "Jo hawwe befêstige dat <a href=\"mailto:%(email)s\">%(email)s</a> in e-mailadres is foar brûker %(user_display)s."
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
@@ -1704,34 +1704,32 @@ msgstr "Wachtwurd wizigje"
 #: kuma/users/jinja2/account/password_reset.html:3 kuma/users/jinja2/account/password_reset.html:8 kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
 msgid "Password Reset"
-msgstr "Wachtwoordwijziging"
+msgstr "Wachtwurdwiziging"
 
 #: kuma/users/jinja2/account/password_reset.html:13
 msgid "Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it."
-msgstr "Uw wachtwoord vergeten? Voer hieronder uw e-mailadres in en we sturen u een e-mailbericht waarmee u het opnieuw kunt instellen."
+msgstr "Jo wachtwurd ferjitten? Fier hjirûnder jo e-mailadres yn en wy stjoere jo in e-mailberjocht wêrmei't jo it opnij ynstelle kinne."
 
 #: kuma/users/jinja2/account/password_reset.html:18
 msgid "Reset My Password"
-msgstr "Mijn wachtwoord opnieuw instellen"
+msgstr "Myn wachtwurd opnij ynstelle"
 
 #: kuma/users/jinja2/account/password_reset.html:21
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr "Neem contact op als moeite hebt met het opnieuw instellen van uw wachtwoord."
+msgstr "Nim kontakt op as jo swierrichheden hawwe mei it opnij ynstellen fan jo wachtwurd."
 
 #: kuma/users/jinja2/account/password_reset_done.html:14
 msgid "We have sent you an email. Please contact us if you do not receive it within a few minutes."
-msgstr "We hebben u een e-mailbericht gestuurd. Neem contact op als u dit niet binnen enkele minuten ontvangt."
+msgstr "Wy hawwe jo in e-mailberjocht stjoerd. Nim kontakt op as jo dit net binnen inkele minuten ûntfange."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr "Ongeldige token"
+msgstr "Unjildige token"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
 msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
-msgstr ""
-"De koppeling voor het wijzigen van het wachtwoord was ongeldig, mogelijk omdat deze al is gebruikt. Doe een <a href=\"%(passwd_reset_url)s\">nieuwe aanvraag voor opnieuw instellen van het "
-"wachtwoord</a>."
+msgstr "De keppeling foar it wizigjen fan it wachtwurd wie ûnjildich, mooglik omdat dizze al brûkt is. Doch in <a href=\"%(passwd_reset_url)s\">nije oanfraach foar opnij ynstellen fan it wachtwurd</a>."
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:23
 msgid "Change password"
@@ -1739,19 +1737,19 @@ msgstr "Wachtwurd wizigje"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:26 kuma/users/jinja2/account/password_reset_from_key_done.html:8
 msgid "Your password is now changed."
-msgstr "Uw wachtwoord is nu gewijzigd."
+msgstr "Jo wachtwurd is no wizige."
 
 #: kuma/users/jinja2/account/password_set.html:3 kuma/users/jinja2/account/password_set.html:7 kuma/users/jinja2/account/password_set.html:12
 msgid "Set Password"
-msgstr "Wachtwoord instellen"
+msgstr "Wachtwurd ynstelle"
 
 #: kuma/users/jinja2/account/signup.html:3
 msgid "Signup"
-msgstr "Registratie"
+msgstr "Registraasje"
 
 #: kuma/users/jinja2/account/signup.html:8 kuma/users/jinja2/account/signup.html:18
 msgid "Sign Up"
-msgstr "Registreren"
+msgstr "Registrearje"
 
 #: kuma/users/jinja2/account/signup.html:10
 #, python-format
@@ -1765,7 +1763,7 @@ msgstr "Oanmeitsjen fan profyl útskeakele"
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
 msgid "Confirm Your Email Address"
-msgstr "Bevestig uw e-mailadres"
+msgstr "Befêstigje jo e-mailadres"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
