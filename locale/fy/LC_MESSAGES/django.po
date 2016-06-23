@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-23 12:58+0000\n"
+"PO-Revision-Date: 2016-06-23 14:20+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -1093,13 +1093,13 @@ msgid ""
 "source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
 " bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol> <li><strong>Haal knoppen op:</strong> gebruik het onderstaande formulier om een ​​aangepaste knop en broncode te creëren voor het promoten van MDN op uw website of blog.</li> <li><strong> "
-"Plaats knoppen:</strong> kopieer de broncode en plak deze ergens op uw website of blog om mensen te helpen naar MDN door te klikken.</li> <li><strong> Voel u goed:</strong> wees trots op de "
-"wetenswaardigheid dat u het leven van ontwikkelaars een beetje beter maakt door MDN met de wereld te delen.</li> </ol>"
+"<ol> <li><strong>Helje knoppen op:</strong> brûk it ûndersteande formulier om in o​anpaste knop en boarnekoade te meitsjen foar it promoatsjen fan MDN op jo website of blog.</li> <li><strong> Pleats"
+" knoppen:</strong> kopiearje de boarnekoade en plak dizze earne op jo website of blog om minsken te helpen nei MDN troch te klikken.</li> <li><strong> Fiel jo goed:</strong> wês grutsk op de "
+"wittensweardichheid dat jo it libben fan ûntwikkelers in bytsje better meitsje troch MDN mei de wrâld te dielen.</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
-msgstr "Voorbeeld"
+msgstr "Foarbyld"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:40
 msgid "Choose a button style"
@@ -1107,19 +1107,19 @@ msgstr "Kies in knoppenstyl"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:45
 msgid "Better Docs"
-msgstr "Betere documenten"
+msgstr "Bettere dokuminten"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:51
 msgid "Developer Powered"
-msgstr "Mogelijk gemaakt door ontwikkelaars"
+msgstr "Mooglik makke troch ûntwikkelers"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:57
 msgid "For Developers, By Developers"
-msgstr "Voor ontwikkelaars, door ontwikkelaars"
+msgstr "Foar ûntwikkelers, troch ûntwikkelers"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:63
 msgid "Web Developer Toolbox"
-msgstr "Werkset voor ontwikkelaars"
+msgstr "Wurkset foar ûntwikkelers"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
@@ -1127,7 +1127,7 @@ msgstr "Kies in kleur"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr "Grijs"
+msgstr "Griis"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
@@ -1135,11 +1135,11 @@ msgstr "Oranje"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr "Rood"
+msgstr "Read"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
-msgstr "Vervang &lt;FOO&gt; door"
+msgstr "Ferfang &lt;FOO&gt; troch"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:124
 msgid "Add your custom button to your website"
@@ -1147,118 +1147,118 @@ msgstr "Jo eigen knoppen tafoegje oan jo website"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:125
 msgid "Your source code:"
-msgstr "Uw broncode:"
+msgstr "Jo boarnekoade:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:127
 msgid "Your button will take people to:"
-msgstr "Uw knop brengt mensen naar:"
+msgstr "Jo knop bringt minsken nei:"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:162 kuma/landing/jinja2/landing/promote_buttons.html:166 kuma/landing/jinja2/landing/promote_buttons.html:170
 msgid "Better CSS docs for a better Web on MDN"
-msgstr "Betere CSS-documenten voor een beter web op MDN"
+msgstr "Bettere CSS-dokuminten foar in better web op MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:163 kuma/landing/jinja2/landing/promote_buttons.html:167 kuma/landing/jinja2/landing/promote_buttons.html:171
 msgid "Better HTML docs for a better Web on MDN"
-msgstr "Betere HTML-documenten voor een beter web op MDN"
+msgstr "Bettere HTML-dokuminten foar in better web op MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:164 kuma/landing/jinja2/landing/promote_buttons.html:168 kuma/landing/jinja2/landing/promote_buttons.html:172
 msgid "Better JavaScript docs for a better Web on MDN"
-msgstr "Betere JavaScript-documenten voor een beter web op MDN"
+msgstr "Bettere JavaScript-dokuminten foar in better web op MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:165 kuma/landing/jinja2/landing/promote_buttons.html:169 kuma/landing/jinja2/landing/promote_buttons.html:173
 msgid "Better Web docs for a better Web on MDN"
-msgstr "Betere webdocumenten voor een beter web op MDN"
+msgstr "Bettere webdokuminten foar in better web op MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:174 kuma/landing/jinja2/landing/promote_buttons.html:178 kuma/landing/jinja2/landing/promote_buttons.html:182
 msgid "MDN is Developer Powered for CSS docs and more."
-msgstr "MDN is ontwikkelaargedreven voor CSS-documenten en meer."
+msgstr "MDN is ûntwikkelerdreaun foar CSS-dokuminten en mear."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:175 kuma/landing/jinja2/landing/promote_buttons.html:179 kuma/landing/jinja2/landing/promote_buttons.html:183
 msgid "MDN is Developer Powered for HTML docs and more."
-msgstr "MDN is ontwikkelaargedreven voor HTML-documenten en meer."
+msgstr "MDN is ûntwikkelerdreaun foar HTML-dokuminten en mear."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:176 kuma/landing/jinja2/landing/promote_buttons.html:180 kuma/landing/jinja2/landing/promote_buttons.html:184
 msgid "MDN is Developer Powered for JavaScript docs and more."
-msgstr "MDN is ontwikkelaargedreven voor JavaScript-documenten en meer."
+msgstr "MDN is ûntwikkelerdreaun foar JavaScript-dokuminten en mear."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:177 kuma/landing/jinja2/landing/promote_buttons.html:181 kuma/landing/jinja2/landing/promote_buttons.html:185
 msgid "MDN is Developer Powered for Web docs and more."
-msgstr "MDN is ontwikkelaargedreven voor webdocumenten en meer."
+msgstr "MDN is ûntwikkelerdreaun foar webdokuminten en mear."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:186 kuma/landing/jinja2/landing/promote_buttons.html:190 kuma/landing/jinja2/landing/promote_buttons.html:194
 msgid "CSS docs by developers, for developers on MDN"
-msgstr "CSS-documenten door ontwikkelaars, voor ontwikkelaars op MDN"
+msgstr "CSS-dokuminten troch ûntwikkelers, foar ûntwikkelers op MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:187 kuma/landing/jinja2/landing/promote_buttons.html:191 kuma/landing/jinja2/landing/promote_buttons.html:195
 msgid "HTML docs by developers, for developers on MDN"
-msgstr "HTML-documenten door ontwikkelaars, voor ontwikkelaars op MDN"
+msgstr "HTML-dokuminten troch ûntwikkelers, foar ûntwikkelers op MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:188 kuma/landing/jinja2/landing/promote_buttons.html:192 kuma/landing/jinja2/landing/promote_buttons.html:196
 msgid "JavaScript docs by developers, for developers on MDN"
-msgstr "JavaScript-documenten door ontwikkelaars, voor ontwikkelaars op MDN"
+msgstr "JavaScript-dokuminten troch ûntwikkelers, foar ûntwikkelers op MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:189 kuma/landing/jinja2/landing/promote_buttons.html:193 kuma/landing/jinja2/landing/promote_buttons.html:197
 msgid "Web docs by developers, for developers on MDN"
-msgstr "Webdocumenten door ontwikkelaars, voor ontwikkelaars op MDN"
+msgstr "Webdokuminten troch ûntwikkelers, foar ûntwikkelers op MDN"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:198 kuma/landing/jinja2/landing/promote_buttons.html:199 kuma/landing/jinja2/landing/promote_buttons.html:200
 msgid "MDN is your Web Developer Toolbox for docs and more on HTML, CSS, JavaScript and other Web standards and open technologies."
-msgstr "MDN is uw werkset voor webontwikkelaars voor documenten en meer over HTML, CSS, JavaScript en andere webstandaarden en open technologieën."
+msgstr "MDN is jo wurkset foar webûntwikkelers foar dokuminten en mear oer HTML, CSS, JavaScript en oare webstanderts en iepen technologyën."
 
 #: kuma/search/admin.py:11
 msgid "Can't promote more than one index at once."
-msgstr "Kan niet meer dan één index tegelijk opwaarderen."
+msgstr "Kin net mear as ien yndeks tagelyk opwurdearje."
 
 #: kuma/search/admin.py:15
 #, python-format
 msgid "Promoted search index %s."
-msgstr "Zoekindex %s opgewaardeerd."
+msgstr "Sykyndeks %s opwurdearre."
 
 #: kuma/search/admin.py:16
 msgid "Promote selected search index to current index"
-msgstr "Geselecteerde zoekindex opwaarderen naar huidige index"
+msgstr "Selektearre sykyndeks opwurdearje nei aktuele yndeks"
 
 #: kuma/search/admin.py:21
 msgid "Can't demote more than one index at once."
-msgstr "Kan niet meer dan één index tegelijk afwaarderen."
+msgstr "Kin net mear as ien yndeks tagelyk ôfwurdearje."
 
 #: kuma/search/admin.py:24
 msgid "Can't demote the index if there is only one. Create and populate a new one first."
-msgstr "Kan de index niet afwaarderen als er maar één bestaat. Maak eerst een nieuwe en vul deze in."
+msgstr "Kin de yndeks net ôfwurdearje as der mar ien bestiet. Meitsje earst in nije en folje dizze yn."
 
 #: kuma/search/admin.py:29
 #, python-format
 msgid "Demoted search index %s."
-msgstr "Zoekindex %s afgewaardeerd."
+msgstr "Sykyndeks %s ôfwurdearre."
 
 #: kuma/search/admin.py:30
 msgid "Demote selected search index (automatic fallback to previous index)"
-msgstr "Geselecteerde zoekindex afwaarderen (automatische terugval naar vorige index)"
+msgstr "Selektearre sykyndeks ôfwurdearje (automatyske tebekfal nei foarige yndeks)"
 
 #: kuma/search/admin.py:37
 msgid "Can't populate more than one index at once."
-msgstr "Kan niet meer dan één index tegelijk invullen."
+msgstr "Kin net mear as ien yndeks tagelyk ynfolje."
 
 #: kuma/search/admin.py:42
 msgid "Populate selected search index via Celery"
-msgstr "Geselecteerde zoekindex invullen via Celery"
+msgstr "Selektearre sykyndeks ynfolje fia Celery"
 
 #: kuma/search/admin.py:57
 msgid "Is current index?"
-msgstr "Is dit de huidige index?"
+msgstr "Is dit de aktuele yndeks?"
 
 #: kuma/search/forms.py:17
 #, python-format
 msgid "There is already a successor to the current index %s"
-msgstr "Er is al een opvolger voor de huidige index %s"
+msgstr "Der is al in opfolger foar de aktuele yndeks %s"
 
 #: kuma/search/utils.py:14
 msgid "Search is temporarily unavailable. Please try again in a few minutes."
-msgstr "De zoekfunctie is tijdelijk niet beschikbaar. Probeer het over enkele minuten nog eens."
+msgstr "De sykfunksje is tydlik net beskikber. Probearje it oer inkele minuten nochris."
 
 #: kuma/search/utils.py:17
 msgid "Something went wrong with the search query. Please try again in a few minutes."
-msgstr "Er ging iets mis met de zoekopdracht. Probeer het over enkele minuten opnieuw."
+msgstr "Der gie wat mis mei de sykopdracht. Probearje it oer inkele minuten opnij."
 
 #: kuma/search/views.py:94
 msgid "name"
@@ -1280,12 +1280,12 @@ msgstr "Mozilla Developer Network-dokumintaasje trochsykje"
 #: kuma/search/jinja2/search/results.html:13
 #, python-format
 msgid "Search Results for \"%(query)s\""
-msgstr "Zoekresultaten voor ‘%(query)s’"
+msgstr "Sykresultaten foar ‘%(query)s’"
 
 #: kuma/search/jinja2/search/results.html:39
 #, python-format
 msgid "translated from <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
-msgstr "vertaald vanaf <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a>"
+msgstr "oerset fan <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">%(parent_title)s (%(parent_language)s)</a> ôf"
 
 #: kuma/search/jinja2/search/results.html:51
 msgid "MDN Site Search"
@@ -1299,43 +1299,43 @@ msgstr "Resultaten"
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s."
-msgstr[0] "%(count)s document gevonden voor ‘%(query)s’ in het %(locale_native)s."
-msgstr[1] "%(count)s documenten gevonden voor ‘%(query)s’ in het %(locale_native)s."
+msgstr[0] "%(count)s dokumint fûn foar ‘%(query)s’ yn it %(locale_native)s."
+msgstr[1] "%(count)s dokuminten fûn foar ‘%(query)s’ yn it %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:80
 #, python-format
 msgid "%(count)s document found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found for \"%(query)s\" in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] "%(count)s document gevonden voor ‘%(query)s’ in het %(locale_native)s en het %(default_locale_native)s."
-msgstr[1] "%(count)s documenten gevonden voor ‘%(query)s’ in het %(locale_native)s en het %(default_locale_native)s."
+msgstr[0] "%(count)s dokumint fûn foar ‘%(query)s’ yn it %(locale_native)s en it %(default_locale_native)s."
+msgstr[1] "%(count)s dokuminten fûn foar ‘%(query)s’ yn it %(locale_native)s en it %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:88
 #, python-format
 msgid "%(count)s document found in %(locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s."
-msgstr[0] "%(count)s document gevonden in het %(locale_native)s."
-msgstr[1] "%(count)s documenten gevonden in het %(locale_native)s."
+msgstr[0] "%(count)s dokumint fûn yn it %(locale_native)s."
+msgstr[1] "%(count)s dokuminten fûn yn it %(locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:94
 #, python-format
 msgid "%(count)s document found in %(locale_native)s and %(default_locale_native)s."
 msgid_plural "%(count)s documents found in %(locale_native)s and %(default_locale_native)s."
-msgstr[0] "%(count)s document gevonden in het %(locale_native)s en het %(default_locale_native)s."
-msgstr[1] "%(count)s documenten gevonden in het %(locale_native)s en het %(default_locale_native)s."
+msgstr[0] "%(count)s dokumint fûn yn it %(locale_native)s en it %(default_locale_native)s."
+msgstr[1] "%(count)s dokuminten fûn yn it %(locale_native)s en it %(default_locale_native)s."
 
 #: kuma/search/jinja2/search/results.html:104
 #, python-format
 msgid "%(count)s document found for \"%(query)s\"."
 msgid_plural "%(count)s documents found for \"%(query)s\"."
-msgstr[0] "%(count)s document gevonden voor ‘%(query)s’."
-msgstr[1] "%(count)s documenten gevonden voor ‘%(query)s’."
+msgstr[0] "%(count)s dokumint fûn foar ‘%(query)s’."
+msgstr[1] "%(count)s dokuminten fûn foar ‘%(query)s’."
 
 #: kuma/search/jinja2/search/results.html:110
 #, python-format
 msgid "%(count)s document found."
 msgid_plural "%(count)s documents found."
-msgstr[0] "%(count)s document gevonden."
-msgstr[1] "%(count)s documenten gevonden."
+msgstr[0] "%(count)s dokumint fûn."
+msgstr[1] "%(count)s dokuminten fûn."
 
 #: kuma/search/jinja2/search/results.html:119
 msgid "Showing all results."
@@ -1344,7 +1344,7 @@ msgstr "Alle resultaten."
 #: kuma/search/jinja2/search/results.html:121
 #, python-format
 msgid "Showing results %(start)s to %(end)s."
-msgstr "Resultaten van %(start)s tot %(end)s."
+msgstr "Resultaten fan %(start)s oant %(end)s."
 
 #: kuma/search/jinja2/search/results.html:127
 #, python-format
@@ -1353,23 +1353,23 @@ msgstr "Nochris sykje, allinnich yn it %(default_locale_native)s"
 
 #: kuma/search/jinja2/search/results.html:141
 msgid "Docs"
-msgstr "Documenten"
+msgstr "Dokuminten"
 
 #: kuma/search/jinja2/search/results.html:176
 msgid "Filter by"
-msgstr "Filteren op"
+msgstr "Filterje op"
 
 #: kuma/spam/forms.py:9
 msgid "The submitted data contains invalid content."
-msgstr "De ingediende gegevens bevatten ongeldige inhoud."
+msgstr "De yntsjinne gegevens befetsje ûnjildige ynhâld."
 
 #: kuma/spam/forms.py:103
 msgid "The submitted data contains invalid content. Please try again."
-msgstr "De ingediende gegevens bevatten ongeldige inhoud. Probeer het opnieuw."
+msgstr "De yntsjinne gegevens befetsje ûnjildige ynhâld. Probearje it opnij."
 
 #: kuma/spam/models.py:10
 msgid "created"
-msgstr "gemaakt"
+msgstr "makke"
 
 #: kuma/spam/models.py:27
 msgid "Spam"
@@ -1381,7 +1381,7 @@ msgstr "Ham"
 
 #: kuma/spam/models.py:32
 msgid "sent at"
-msgstr "verzonden op"
+msgstr "ferstjoerd op"
 
 #: kuma/spam/models.py:36
 msgid "type"
@@ -1406,12 +1406,12 @@ msgstr "De ynfierde brûkersnamme bestiet al."
 
 #: kuma/users/apps.py:24
 msgid "User"
-msgstr "Gebruiker"
+msgstr "Brûker"
 
 #: kuma/users/apps.py:69
 #, python-format
 msgid "You have completed the first step of <a href=\"%s\">getting started with MDN</a>"
-msgstr "U hebt de eerste stap om te <a href=\"%s\">beginnen met MDN</a> voltooid"
+msgstr "Jo hawwe de earste stap om te <a href=\"%s\">begjinnen mei MDN</a> foltôge"
 
 #: kuma/users/backends.py:32
 msgid "algorithm"
@@ -1443,7 +1443,7 @@ msgstr "Ynteresses"
 
 #: kuma/users/forms.py:46
 msgid "Expertise"
-msgstr "Ervaring"
+msgstr "Underfining"
 
 #: kuma/users/forms.py:52
 msgid "Username"
@@ -1475,7 +1475,7 @@ msgstr "Underfiningsgebieden moatte in subset wêze fan ynteresses"
 
 #: kuma/users/forms.py:145
 msgid "This field cannot be blank."
-msgstr "Dit veld kan niet leeg zijn."
+msgstr "Dit fjild kin net leech wêze."
 
 #: kuma/users/forms.py:151
 msgid "Username already in use."
@@ -1484,7 +1484,7 @@ msgstr "Brûkersnamme wurdt al brûkt."
 #: kuma/users/models.py:29
 #, python-format
 msgid "%(banned_user)s banned by %(banned_by)s"
-msgstr "%(banned_user)s geblokkeerd door %(banned_by)s"
+msgstr "%(banned_user)s blokkearre troch %(banned_by)s"
 
 #: kuma/users/models.py:32
 #, python-format
@@ -1501,7 +1501,7 @@ msgstr "Begjinside"
 
 #: kuma/users/models.py:60
 msgid "This URL has an invalid format. Valid URLs look like http://example.com/my_page."
-msgstr "Deze URL heeft een ongeldig formaat. Geldige URL’s zien eruit als http://example.com/my_page."
+msgstr "Dizze URL hat in ûnjildich formaat. Jildige URL’s sjogge der út as http://example.com/my_page."
 
 #: kuma/users/models.py:70
 msgid "Name"
@@ -1517,7 +1517,7 @@ msgstr "Lokaasje"
 
 #: kuma/users/models.py:85
 msgid "About Me"
-msgstr "Over mij"
+msgstr "Oer my"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
@@ -1529,31 +1529,31 @@ msgstr "Labels"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
-msgstr "Voer een geldige website-URL in."
+msgstr "Fier in jildige website-URL yn."
 
 #: kuma/users/models.py:104
 msgid "Enter a valid Twitter URL."
-msgstr "Voer een geldige Twitter-URL in."
+msgstr "Fier in jildige Twitter-URL yn."
 
 #: kuma/users/models.py:109
 msgid "Enter a valid GitHub URL."
-msgstr "Voer een geldige GitHub-URL in."
+msgstr "Fier in jildige GitHub-URL yn."
 
 #: kuma/users/models.py:114
 msgid "Enter a valid Stack Overflow URL."
-msgstr "Voer een geldige Stack Overflow-URL in."
+msgstr "Fier in jildige Stack Overflow-URL yn."
 
 #: kuma/users/models.py:119
 msgid "Enter a valid LinkedIn URL."
-msgstr "Voer een geldige LinkedIn-URL in."
+msgstr "Fier in jildige LinkedIn-URL yn."
 
 #: kuma/users/models.py:124
 msgid "Enter a valid Mozillians URL."
-msgstr "Voer een geldige Mozillians-URL in."
+msgstr "Fier in jildige Mozillians-URL yn."
 
 #: kuma/users/models.py:129
 msgid "Enter a valid Facebook URL."
-msgstr "Voer een geldige Facebook-URL in."
+msgstr "Fier in jildige Facebook-URL yn."
 
 #: kuma/users/models.py:136
 msgid "Website"
@@ -1579,11 +1579,11 @@ msgstr "Jo moatte akkoard gean mei de brûksbetingsten."
 
 #: kuma/users/signup.py:34
 msgid "I agree"
-msgstr "Ik ga akkoord"
+msgstr "Ik gean akkoard"
 
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
-msgstr "Zet de volgende stap om mee te doen op MDN!"
+msgstr "Set de folgjende stap om mei te dwaan op MDN!"
 
 #: kuma/users/views.py:198
 msgid "Email address"
@@ -1592,16 +1592,16 @@ msgstr "E-mailadres"
 #: kuma/users/views.py:257
 #, python-format
 msgid "%(email)s <b>Verified</b>"
-msgstr "%(email)s <b>geverifieerd</b>"
+msgstr "%(email)s <b>ferifiearre</b>"
 
 #: kuma/users/views.py:260
 #, python-format
 msgid "%(email)s Unverified"
-msgstr "%(email)s niet geverifieerd"
+msgstr "%(email)s net ferifiearre"
 
 #: kuma/users/views.py:263 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
-msgstr "Anders:"
+msgstr "Oars:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
@@ -1622,7 +1622,7 @@ msgstr "%(email)s is jo <em>primêre</em> e-mailadres"
 
 #: kuma/users/jinja2/account/email.html:15
 msgid "You've also added the following email addresses:"
-msgstr "U hebt ook de volgende e-mailadressen toegevoegd:"
+msgstr "Jo hawwe ek de folgjende e-mailadressen tafoege:"
 
 #: kuma/users/jinja2/account/email.html:28
 msgid "Make Primary"
@@ -1630,11 +1630,11 @@ msgstr "Primêr meitsje"
 
 #: kuma/users/jinja2/account/email.html:30
 msgid "Re-send Confirmation"
-msgstr "Bevestiging opnieuw verzenden"
+msgstr "Befêstiging opnij ferstjoere"
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
-msgstr "Verwijderen"
+msgstr "Fuortsmite"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
@@ -1654,25 +1654,25 @@ msgstr "Profyl bewurkje"
 
 #: kuma/users/jinja2/account/email.html:71
 msgid "Do you really want to remove the selected email address?"
-msgstr "Wilt u het geselecteerde e-mailadres echt verwijderen?"
+msgstr "Wolle jo it selektearre e-mailadres echt fuortsmite?"
 
 #: kuma/users/jinja2/account/email_confirm.html:3 kuma/users/jinja2/account/email_confirm.html:9 kuma/users/jinja2/account/email_confirmed.html:3 kuma/users/jinja2/account/email_confirmed.html:8
 msgid "Confirm Email Address"
-msgstr "E-mailadres bevestigen"
+msgstr "E-mailadres befêstigje"
 
 #: kuma/users/jinja2/account/email_confirm.html:13
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email address for user %(user_display)s."
-msgstr "Bevestig dat <a href=\"mailto:%(email)s\">%(email)s</a> een e-mailadres voor gebruiker %(user_display)s is."
+msgstr "Befêstigje dat <a href=\"mailto:%(email)s\">%(email)s</a> in e-mailadres foar brûker %(user_display)s is."
 
 #: kuma/users/jinja2/account/email_confirm.html:17
 msgid "Confirm"
-msgstr "Bevestigen"
+msgstr "Befêstigje"
 
 #: kuma/users/jinja2/account/email_confirm.html:22
 #, python-format
 msgid "This email confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new email confirmation request</a>."
-msgstr "Deze koppeling voor de e-mailadresbevestiging is verlopen of ongeldig. <a href=\"%(email_url)s\">Dien een nieuwe aanvraag voor e-mailadresbevestiging in</a>."
+msgstr "Dizze keppeling foar de e-mailadresbefêstiging is ferrûn of ûnjildich. <a href=\"%(email_url)s\">Tsjinje in nije oanfraach foar e-mailadresbefêstiging in</a>."
 
 #: kuma/users/jinja2/account/email_confirmed.html:10
 #, python-format
