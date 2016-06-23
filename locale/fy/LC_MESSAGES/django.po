@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-22 12:26+0000\n"
+"PO-Revision-Date: 2016-06-23 11:58+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -378,7 +378,7 @@ msgstr "Jo binne ôfmeld."
 #, python-format
 msgid "The following attachment files were moved to the trash: %(filenames)s. You may want to review them before their automatic purge after %(days)s days from the file storage."
 msgstr ""
-"De folgjende bylagebestanen binne nei it jiskefet ferpleatst: %(filenames)s. Miskien wolle jo dizze foar harren automatyske opskjinning nei %(days)s dagen út it bestânsûnthâld noch kontrolearje."
+"De folgjende bylagebestannen binne nei it jiskefet ferpleatst: %(filenames)s. Miskien wolle jo dizze foar harren automatyske opskjinning nei %(days)s dagen út it bestânsûnthâld noch kontrolearje."
 
 #: kuma/attachments/admin.py:64
 msgid "and"
@@ -387,8 +387,7 @@ msgstr "en"
 #: kuma/attachments/admin.py:127
 #, python-format
 msgid "The attachment file \"%(filename)s\" was moved to the trash. You may want to review the file before its automatic purge after %(days)s days from the file storage system."
-msgstr ""
-"Het bijlagebestand ‘%(filename)s’ is naar de prullenbak verplaatst. Wellicht wilt u het bestand voor de automatische opschoning na %(days)s dagen uit het bestandsopslagsysteem nog controleren."
+msgstr "It bylagebestân ‘%(filename)s’ is nei it jiskefet ferpleatst. Miskien wolle jo it bestân foar de automatyske opskjinning nei %(days)s dagen út it bestânsûnthâlsysteem noch kontrolearje."
 
 #: kuma/attachments/apps.py:12 kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Attachments"
@@ -404,23 +403,23 @@ msgstr "Resinte revyzjes fan MDN-bestânsbylagen"
 
 #: kuma/attachments/forms.py:10
 msgid "Files of this type are not permitted."
-msgstr "Bestanden van dit type zijn niet toegestaan."
+msgstr "Bestannen fan dit type binne net tastien."
 
 #: kuma/attachments/models.py:112
 msgid "The MIME type is used when serving the attachment. Automatically populated by inspecting the file on upload. Please only override if needed."
-msgstr "Het MIME-type wordt bij het aanbieden van de bijlage gebruikt. Dit wordt automatisch ingevuld door het bestand bij het uploaden te inspecteren. Overschrijf dit alleen als het nodig is."
+msgstr "It MIME-type wurdt by it oanbieden fan de bylage brûkt. Dit wurdt automatysk ynfold troch it bestân by it opladen te ynspektearjen. Oerskriuw dit allinnich as it nedich is."
 
 #: kuma/attachments/models.py:140
 msgid "attachment revision"
-msgstr "revisie van bijlage"
+msgstr "revyzje fan bylage"
 
 #: kuma/attachments/models.py:141
 msgid "attachment revisions"
-msgstr "revisies van bijlage"
+msgstr "revyzjes fan bylage"
 
 #: kuma/attachments/models.py:214
 msgid "The attachment file that was trashed"
-msgstr "Het bijlagebestand dat naar de prullenbak is verplaatst"
+msgstr "It bylagebestân dat nei it jiskefet ferpleatst is"
 
 #: kuma/attachments/models.py:219
 msgid "The date and time the attachment was trashed"
@@ -436,46 +435,46 @@ msgstr "Of dizze bylage de aktuele revyzje fan de bylage wie ten tide fan it fuo
 
 #: kuma/attachments/models.py:234
 msgid "Trashed attachment"
-msgstr "Verwijderde bijlage"
+msgstr "Fuortsmiten bylage"
 
 #: kuma/attachments/models.py:235
 msgid "Trashed attachments"
-msgstr "Verwijderde bijlagen"
+msgstr "Fuortsmiten bylagen"
 
 #. 'title' is the title of the document.
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:3
 #, python-format
 msgid "Attachments | %(title)s"
-msgstr "Bijlagen | %(title)s"
+msgstr "Bylagen | %(title)s"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:21
 #, python-format
 msgid "Upload file to article %(title)s"
-msgstr "Bestand naar artikel %(title)s uploaden"
+msgstr "Bestân nei artikel %(title)s oplade"
 
 #: kuma/attachments/jinja2/attachments/edit_attachment.html:30
 msgid "Upload files"
-msgstr "Bestanden uploaden"
+msgstr "Bestannen oplade"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:7
 msgid "Learn how to use Attachments"
-msgstr "Lees hoe u bijlagen gebruikt"
+msgstr "Lês hoe't jo bylagen brûke"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:11 kuma/attachments/jinja2/attachments/includes/attachment_list.html:20
 msgid "Upload Files"
-msgstr "Bestanden uploaden"
+msgstr "Bestannen oplade"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:16
 msgid "This document has no attachments."
-msgstr "Dit document heeft geen bijlagen."
+msgstr "Dit dokumint hat gjin bylagen."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:18
 msgid "Images can be attached, and then linked in the article."
-msgstr "Afbeeldingen kunnen worden bijgevoegd, en daarna in het artikel worden gekoppeld."
+msgstr "Ofbyldingen kinne tafoege wurde en dêrnei yn it artikel keppele wurde."
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
-msgstr "Bestand"
+msgstr "Bestân"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65 kuma/wiki/models.py:1911
 msgid "Title"
@@ -484,7 +483,7 @@ msgstr "Titel"
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:46 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
-msgstr "Beschrijving"
+msgstr "Beskriuwing"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
 msgid "Comments"
@@ -492,31 +491,31 @@ msgstr "Reaksjes"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 msgid "Attached to this article"
-msgstr "Gekoppeld aan dit artikel"
+msgstr "Keppele oan dit artikel"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:72
 msgid "Attached to another article"
-msgstr "Gekoppeld aan een ander artikel"
+msgstr "Keppele oan in oar artikel"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
-msgstr "Grootte"
+msgstr "Grutte"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:78
 msgid "Last modified"
-msgstr "Laatst gewijzigd"
+msgstr "Lêst wizige"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:79
 msgid "Uploaded by"
-msgstr "Geüpload door"
+msgstr "Opladen troch"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:82
 msgid "Linked in article"
-msgstr "Gekoppeld in artikel"
+msgstr "Keppele yn artikel"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:84
 msgid "Article attached to"
-msgstr "Artikel waaraan gekoppeld"
+msgstr "Artikel weroan keppele"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:97
 #, python-format
@@ -525,7 +524,7 @@ msgstr "%(bytes)s bytes"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:99 kuma/attachments/jinja2/attachments/includes/attachment_list.html:118
 msgid "n/a"
-msgstr "n.v.t."
+msgstr "n.f.t."
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
@@ -537,35 +536,35 @@ msgstr "Gehasht geheim"
 
 #: kuma/authkeys/models.py:35
 msgid "Description of intended use"
-msgstr "Beschrijving van bedoeld gebruik"
+msgstr "Beskriuwing fan bedoeld gebrûk"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
-msgstr "Gemaakt"
+msgstr "Oanmakke"
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
-msgstr "Verwijderen"
+msgstr "Fuortsmite"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
-msgstr "Deze sleutel is nog niet gebruikt."
+msgstr "Dizze kaai is noch net brûkt."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:8
 msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
 msgstr ""
-"Dit zijn uw API-sleutels. Ze zijn handig voor het bouwen van applicaties die namens u taken op MDN uitvoeren. Als u er een aantal niet meer gebruikt, of als u vermoedt dat er één is blootgesteld aan"
-" partijen die u niet met uw account vertrouwt, verwijder dan de sleutel. Er kan altijd eenvoudig een vervangende sleutel worden aangemaakt."
+"Dit binne jo API-kaaien. Se binne handich foar it bouwen fan applikaasjes dy't yn jo namme taken op MDN útfiere. As jo der in oantal net mear brûke, of as jo fermoedzje dat der ien bleatsteld is oan"
+" partijen dy't jo net mei jo account fertrouwe, smyt dan de kaai fuort. Der kin altyd ienfâldichwei in ferfangende kaai oanmakke wurde."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
-msgstr "Een nieuwe sleutel aanmaken"
+msgstr "In nije kaai oanmeitsje"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:16
 msgid "You have no API keys, yet."
-msgstr "U hebt nog een API-sleutels."
+msgstr "Jo hawwe noch gjin API-kaaien."
 
 #: kuma/authkeys/jinja2/authkeys/list.html:25
 msgid "View key usage history"
@@ -579,19 +578,19 @@ msgstr "Skiednis (%(count)s)"
 #: kuma/authkeys/jinja2/authkeys/list.html:35
 #, python-format
 msgid "You need a special permission to use API keys. You may request permission by <a href=\"%(bugzilla_url)s\">filing a bug</a>."
-msgstr "U hebt speciale toestemming nodig om API-sleutels te kunnen gebruiken. U kunt om toestemming vragen door <a href=\"%(bugzilla_url)s\">een bug te melden</a>."
+msgstr "Jo hawwe spesjale tastimming nedich om API-kaaien brûke te kinnen. Jo kinne om tastimming freegje troch <a href=\"%(bugzilla_url)s\">in bug te melden</a>."
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
 "<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
 " as you can.</p>"
 msgstr ""
-"<p>Beschrijf hieronder uw bedoelde gebruik voor deze sleutel. <p><strong>NOOT:</strong> dit is uw enige middel om deze sleutel later te identificeren, anders dan de datum en tijd van de aanmaak "
-"ervan. Wees dus zo duidelijk mogelijk.</p>"
+"<p>Beskriuw hjirûnder jo bedoelde gebrûk foar dizze kaai. <p><strong>NOAT:</strong> dit is jo ienige middel om dizze kaai letter te identifisearjen, oars as de datum en tiid fan de oanmaak derfan. "
+"Wês dus sa dúdlik mooglik.</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
-msgstr "Aanmaken"
+msgstr "Oanmeitsje"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:20
 #, python-format
@@ -605,7 +604,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
-msgstr "Sleutel-ID"
+msgstr "Kaai-ID"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:32
 msgid "Secret"
@@ -618,12 +617,12 @@ msgstr "Core"
 #: kuma/core/form_fields.py:57
 #, python-format
 msgid "Ensure this value has at least %(limit_value)s characters (it has %(show_value)s)."
-msgstr "Zorg ervoor dat deze waarde minstens %(limit_value)s tekens bevat (deze heeft er %(show_value)s)."
+msgstr "Soargje derfoar dat dizze wearde op syn minst %(limit_value)s tekens befettet (dizze hat %(show_value)s)."
 
 #: kuma/core/form_fields.py:62
 #, python-format
 msgid "Ensure this value has at most %(limit_value)s characters (it has %(show_value)s)."
-msgstr "Zorg ervoor dat deze waarde hoogstens %(limit_value)s tekens bevat (deze heeft er %(show_value)s)."
+msgstr "Soargje derfoar dat dizze wearde op syn meast %(limit_value)s tekens befettet (dizze hat %(show_value)s)."
 
 #: kuma/core/sections.py:13
 msgid "Mozilla"
@@ -631,7 +630,7 @@ msgstr "Mozilla"
 
 #: kuma/core/sections.py:27 kuma/core/translations/search/filter/mobile/name.py:4
 msgid "Mobile"
-msgstr "Mobiel"
+msgstr "Mobyl"
 
 #: kuma/core/sections.py:34 kuma/landing/jinja2/landing/promote_buttons.html:117
 msgid "Web"
@@ -644,7 +643,7 @@ msgstr "Moz Hacks"
 #: kuma/core/utils.py:430
 #, python-format
 msgid "Today at %s"
-msgstr "Vandaag om %s"
+msgstr "Hjoed om %s"
 
 #: kuma/core/templatetags/jinja_helpers.py:88
 msgid "Yes"
@@ -656,11 +655,11 @@ msgstr "Nee"
 
 #: kuma/core/translations/search/filter/addons/name.py:4
 msgid "Add-ons & Extensions"
-msgstr "Add-ons en extensies"
+msgstr "Add-ons en útwreidingen"
 
 #: kuma/core/translations/search/filter/advanced/name.py:4
 msgid "I'm an Expert"
-msgstr "Ik ben een expert"
+msgstr "Ik bin in ekspert"
 
 #: kuma/core/translations/search/filter/api/name.py:4
 msgid "APIs and DOM"
@@ -672,7 +671,7 @@ msgstr "Iepen webapps"
 
 #: kuma/core/translations/search/filter/beginner/name.py:4
 msgid "I'm Learning"
-msgstr "Ik ben beginner"
+msgstr "Ik bin begjinner"
 
 #: kuma/core/translations/search/filter/canvas/name.py:4
 msgid "Canvas"
@@ -680,15 +679,15 @@ msgstr "Canvas"
 
 #: kuma/core/translations/search/filter/code/name.py:4
 msgid "Code Samples"
-msgstr "Codevoorbeelden"
+msgstr "Koadefoarbylden"
 
 #: kuma/core/translations/search/filter/firefox-desktop/name.py:4
 msgid "Firefox for Desktop"
-msgstr "Firefox voor desktop"
+msgstr "Firefox foar desktop"
 
 #: kuma/core/translations/search/filter/firefox-mobile/name.py:4
 msgid "Firefox for Android"
-msgstr "Firefox voor Android"
+msgstr "Firefox foar Android"
 
 #: kuma/core/translations/search/filter/firefox-os/name.py:4
 msgid "Firefox OS"
@@ -696,7 +695,7 @@ msgstr "Firefox OS"
 
 #: kuma/core/translations/search/filter/games/name.py:4
 msgid "Games"
-msgstr "Spellen"
+msgstr "Spultsjes"
 
 #: kuma/core/translations/search/filter/howto/name.py:4
 msgid "How-To & Tutorial"
@@ -728,15 +727,15 @@ msgstr "XUL"
 
 #: kuma/core/translations/search/filtergroup/document-type/name.py:4
 msgid "Document type"
-msgstr "Documenttype"
+msgstr "Dokuminttype"
 
 #: kuma/core/translations/search/filtergroup/skill-level/name.py:4
 msgid "Skill level"
-msgstr "Vaardigheidsniveau"
+msgstr "Feardichheidsnivo"
 
 #: kuma/core/translations/search/filtergroup/topics/name.py:4
 msgid "Topics"
-msgstr "Onderwerpen"
+msgstr "Underwerpen"
 
 #: kuma/dashboards/forms.py:8
 msgid "All Locales"
@@ -744,19 +743,19 @@ msgstr "Alle locales"
 
 #: kuma/dashboards/forms.py:10
 msgid "None"
-msgstr "Geen"
+msgstr "Gjin"
 
 #: kuma/dashboards/forms.py:11
 msgid "Hour"
-msgstr "Uur"
+msgstr "Oer"
 
 #: kuma/dashboards/forms.py:12
 msgid "Day"
-msgstr "Dag"
+msgstr "Dei"
 
 #: kuma/dashboards/forms.py:13
 msgid "Week"
-msgstr "Week"
+msgstr "Wike"
 
 #: kuma/dashboards/forms.py:14
 msgid "30 days"
@@ -768,11 +767,11 @@ msgstr "Alle auteurs"
 
 #: kuma/dashboards/forms.py:24
 msgid "Known Authors"
-msgstr "Bekende auteurs"
+msgstr "Ferneamde auteurs"
 
 #: kuma/dashboards/forms.py:25
 msgid "Unknown Authors"
-msgstr "Onbekende auteurs"
+msgstr "Unbekende auteurs"
 
 #: kuma/dashboards/forms.py:33 kuma/dashboards/jinja2/dashboards/revisions.html:14
 msgid "Locale:"
@@ -780,23 +779,23 @@ msgstr "Locale:"
 
 #: kuma/dashboards/forms.py:37 kuma/dashboards/jinja2/dashboards/revisions.html:19
 msgid "User:"
-msgstr "Gebruiker:"
+msgstr "Brûker:"
 
 #: kuma/dashboards/forms.py:41 kuma/dashboards/jinja2/dashboards/revisions.html:24
 msgid "Topic:"
-msgstr "Onderwerp:"
+msgstr "Underwerp:"
 
 #: kuma/dashboards/forms.py:43 kuma/dashboards/jinja2/dashboards/revisions.html:30
 msgid "Start Date:"
-msgstr "Begindatum:"
+msgstr "Begjindatum:"
 
 #: kuma/dashboards/forms.py:47 kuma/dashboards/jinja2/dashboards/revisions.html:35
 msgid "End Date:"
-msgstr "Einddatum:"
+msgstr "Eindatum:"
 
 #: kuma/dashboards/forms.py:53 kuma/dashboards/jinja2/dashboards/revisions.html:40
 msgid "Preceding Period:"
-msgstr "Voorgaande periode:"
+msgstr "Foargeande perioade:"
 
 #: kuma/dashboards/forms.py:57
 msgid "Authors"
@@ -804,7 +803,7 @@ msgstr "Auteurs"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:2
 msgid "Revision Dashboard"
-msgstr "Revisiedashboard"
+msgstr "Revyzjedashboerd"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:45
 msgid "Authors:"
@@ -812,11 +811,11 @@ msgstr "Auteurs:"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:210
 msgid "Filter"
-msgstr "Filteren"
+msgstr "Filterje"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:39
 msgid "Revert"
-msgstr "Terugzetten"
+msgstr "Weromsette"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:340
 msgid "View Page"
@@ -832,7 +831,7 @@ msgstr "Skiednis"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/wiki/models.py:1864
 msgid "Revision"
-msgstr "Revisie"
+msgstr "Revyzje"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:149 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
 #: kuma/wiki/jinja2/wiki/revision.html:42
@@ -845,7 +844,7 @@ msgstr "Auteur"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:10
 msgid "Toggle IPs"
-msgstr "IP’s wisselen"
+msgstr "IP’s wikselje"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35
 msgid "new"
