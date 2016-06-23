@@ -679,7 +679,10 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     @property
     def akismet_error_message(self):
-        return mark_safe(render_to_string('wiki/includes/spam_error.html', {}))
+        request = getattr(self, 'request', None)
+        user = request and request.user
+        return mark_safe(render_to_string('wiki/includes/spam_error.html',
+                                          {'user': user}))
 
     def akismet_error(self, parameters, exception=None):
         """

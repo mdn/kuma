@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 
+from django.contrib.auth.models import Permission
 from django.core import mail
 from django.test import RequestFactory
 
@@ -9,6 +10,7 @@ import requests_mock
 from constance.test import override_config
 from waffle.models import Flag
 
+from kuma.core.urlresolvers import reverse
 from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG,
                                  SPAM_SPAMMER_FLAG, SPAM_TESTING_FLAG,
                                  SPAM_CHECKS_FLAG, VERIFY_URL)
@@ -479,6 +481,9 @@ class RevisionFormEditTests(RevisionFormViewTests):
         rev_form = self.setup_form(mock_requests, is_spam='true')
         assert not rev_form.is_valid()
         assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
+        admin_path = reverse('admin:wiki_documentspamattempt_changelist')
+        admin_url = admin_path
+        assert admin_url not in rev_form.akismet_error_message
 
         assert DocumentSpamAttempt.objects.count() > 0
         attempt = DocumentSpamAttempt.objects.latest()
@@ -496,6 +501,18 @@ class RevisionFormEditTests(RevisionFormViewTests):
         assert attempt.title in body
         assert attempt.slug in body
         assert attempt.user.username in body
+
+    @requests_mock.mock()
+    @pytest.mark.spam
+    def test_akismet_spam_moderator_prompt(self, mock_requests):
+        rev_form = self.setup_form(mock_requests, is_spam='true')
+        change_perm = Permission.objects.get(codename='change_documentspamattempt')
+        self.testuser.user_permissions.add(change_perm)
+        assert not rev_form.is_valid()
+        assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
+        admin_path = reverse('admin:wiki_documentspamattempt_changelist')
+        admin_url = admin_path + '?review__exact=0'
+        assert admin_url in rev_form.akismet_error_message
 
     @requests_mock.mock()
     @pytest.mark.spam
