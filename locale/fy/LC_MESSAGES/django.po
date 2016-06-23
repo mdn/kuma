@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-23 11:58+0000\n"
+"PO-Revision-Date: 2016-06-23 12:58+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -873,21 +873,21 @@ msgstr "Referrer:"
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:65
 #, python-format
 msgid "banned %(ban_date)s by %(user)s"
-msgstr "geblokkeerd op %(ban_date)s door %(user)s"
+msgstr "blokkearre op %(ban_date)s troch %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:79
 #, python-format
 msgid "Submitted as %(submission_type)s"
-msgstr "Ingediend als %(submission_type)s"
+msgstr "Yntsjinne as %(submission_type)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:82
 #, python-format
 msgid "%(sent_date)s by %(user)s"
-msgstr "op %(sent_date)s door %(user)s"
+msgstr "op %(sent_date)s troch %(user)s"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:89
 msgid "Submit as:"
-msgstr "Indienen als:"
+msgstr "Yntsjinje as:"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:91
 msgid "spam"
@@ -895,43 +895,43 @@ msgstr "spam"
 
 #: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:103
 msgid "There are no revisions matching this filter set."
-msgstr "Er zijn geen revisies die aan deze filterset voldoen."
+msgstr "Der binne gjin revyzjes dy't oan dizze filterset foldogge."
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:8 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:11
 msgid "Stop getting emailed when English revisions are approved"
-msgstr "Geen e-mail meer ontvangen als Engelse revisies worden goedgekeurd"
+msgstr "Gjin e-mail mear ûntfange as Ingelske revyzjes goedkard wurde"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:20 kuma/dashboards/jinja2/dashboards/includes/watch_approved.html:23
 msgid "Get emailed when English revisions are approved"
-msgstr "E-mail ontvangen als Engelse revisies worden goedgekeurd"
+msgstr "E-mail ûntfange as Ingelske revyzjes goedkard wurde"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:7 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:10
 msgid "Stop getting emailed when English reviews are waiting"
-msgstr "Geen e-mail meer ontvangen als Engelse revisies wachten"
+msgstr "Gjin e-mail mear ûntfange as Ingelske revyzjes wachtsje"
 
 #. Please localize 'English' here.
 #. Please replace 'English' with your language.
 #: kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:18 kuma/dashboards/jinja2/dashboards/includes/watch_locale.html:21
 msgid "Get emailed when English reviews are waiting"
-msgstr "E-mail ontvangen als Engelse revisies wachten"
+msgstr "E-mail ûntfange as Ingelske revyzjes wachtsje"
 
 #: kuma/landing/jinja2/landing/fellowship.html:12
 msgid "The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla."
-msgstr "Het Mozilla Developer Network (MDN) Fellowship Program nodigt webontwikkelaars van wereldklasse uit om met Mozilla de wereld te helpen veranderen."
+msgstr "It Mozilla Developer Network (MDN) Fellowship Program noeget webûntwikkelers fan wrâldklasse út om mei Mozilla de wrâld te helpen feroarjen."
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
 "The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
 " OS."
 msgstr ""
-"Het Mozilla Developer Network (MDN) biedt informatie over Open Web-technologieën, waaronder HTML, CSS en API’s voor zowel websites als HTML5-apps. Ook documenteert het Mozilla-producten, zoals "
-"Firefox OS."
+"It Mozilla Developer Network (MDN) biedt ynformaasje oer Open Web-technologyën, wêrûnder HTML, CSS en API’s foar sawol websites as HTML5-apps. Ek dokumintearret it Mozilla-produkten, lykas Firefox "
+"OS."
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
@@ -943,7 +943,7 @@ msgstr "De dokuminten trochsykje"
 
 #: kuma/landing/jinja2/landing/homepage.html:45
 msgid "Show topics"
-msgstr "Onderwerpen tonen"
+msgstr "Underwerpen toane"
 
 #: kuma/landing/jinja2/landing/homepage.html:69
 msgid "Web Technologies"
@@ -1015,7 +1015,7 @@ msgstr "Webûntwikling leare"
 
 #: kuma/landing/jinja2/landing/homepage.html:116
 msgid "Learn Web Development"
-msgstr "Webontwikkeling leren"
+msgstr "Webûntwikling leare"
 
 #: kuma/landing/jinja2/landing/homepage.html:119
 msgid "Get The Browser For Developers Like You"
@@ -1085,7 +1085,7 @@ msgstr "MDN promoatsje"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:19
 msgid "Spread some developer love."
-msgstr "Verpreid ontwikkelaarsliefde."
+msgstr "Ferspried ûntwikkelersleafde."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
