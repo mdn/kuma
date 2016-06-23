@@ -458,7 +458,54 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(len(revisions_found), 0)
         ok_("This user has not created any revisions in the past three days." in no_revisions.text())
 
-    def test_banned_user_one_click_page_template(self):
+    def test_not_banned_user_one_click_page_template_ban_button(self):
+        """Test the ban button text for a user that has not been banned."""
+        # There are some revisions made by self.testuser; none by self.testuser2
+        num_revisions = 3
+        self.create_revisions(
+            num=num_revisions,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+
+        # For self.testuser (not banned, and revisions need to be reverted) the
+        # button on the form should read "Ban User for Spam & Revert Revisions"
+        # and there should be a link to ban a user for other reasons
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
+
+        eq_(len(revisions_found), num_revisions)
+        eq_(ban_button.text(), "Ban User for Spam & Revert Revisions")
+        eq_(len(ban_other_reasons), 1)
+
+        # For self.testuser2 (not banned, no revisions needing to be reverted)
+        # the button on the form should read "Ban User for Spam". There should
+        # be no link to ban for other reasons
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser2.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
+
+        eq_(len(revisions_found), 0)
+        eq_(ban_button.text(), "Ban User for Spam")
+        eq_(len(ban_other_reasons), 0)
+
+    def test_banned_user_one_click_page_template_ban_button(self):
         """Test the template for a user that has already been banned."""
         # There are some revisions made by self.testuser; none by self.testuser2
         num_revisions = 3
@@ -477,8 +524,9 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        # For self.testuser (banned, but revisions need to be reversed) the
-        # button on the form should read "Revert Revisions"
+        # For self.testuser (banned, but revisions need to be reverted) the
+        # button on the form should read "Revert Revisions". There should
+        # be no link to ban for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': self.testuser.id})
 
@@ -488,12 +536,15 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
 
         eq_(len(revisions_found), num_revisions)
         eq_(ban_button.text(), "Revert Revisions")
+        eq_(len(ban_other_reasons), 0)
 
-        # For self.testuser2 (banned, has no revisions needing to be reversed)
-        # there should be no button on the form
+        # For self.testuser2 (banned, has no revisions needing to be reverted)
+        # there should be no button on the form and no link to
+        # ban for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': self.testuser2.id})
 
@@ -503,9 +554,11 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
 
         eq_(len(revisions_found), 0)
         eq_(len(ban_button), 0)
+        eq_(len(ban_other_reasons), 0)
 
 
 @pytest.mark.bans
