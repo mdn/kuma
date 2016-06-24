@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-05-26 18:46+0000\n"
+"PO-Revision-Date: 2016-06-24 20:25+0000\n"
 "Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
@@ -173,7 +173,7 @@ msgstr "Черновик"
 
 #: kuma/static/js/wiki-edit.js:590
 msgid "saved"
-msgstr "сохранено"
+msgstr "сохранён"
 
 #: kuma/static/js/wiki-edit.js:609
 msgid "autosaved"
@@ -181,7 +181,7 @@ msgstr "автосохранён"
 
 #: kuma/static/js/wiki-edit.js:618
 msgid "published"
-msgstr "опубликовано"
+msgstr "опубликован"
 
 #: kuma/static/js/wiki-edit.js:622
 msgid "discarded"
@@ -196,7 +196,7 @@ msgid "Autosave disabled."
 msgstr "Автосохранение выключено."
 
 #: kuma/static/js/wiki-samples.js:97
-#, fuzzy, python-format
+#, python-format
 msgid "Open in %(site)s"
 msgstr "Открыть на %(site)s"
 
