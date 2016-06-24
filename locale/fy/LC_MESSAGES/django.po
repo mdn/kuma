@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-23 14:25+0000\n"
+"PO-Revision-Date: 2016-06-24 10:02+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -1767,15 +1767,15 @@ msgstr "Befêstigje jo e-mailadres"
 
 #: kuma/users/jinja2/account/verification_sent.html:9
 msgid "We have sent an email to you for confirmation. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes."
-msgstr "We hebben u een e-mailbericht gestuurd voor bevestiging. Klik op de gegeven koppeling om het registratieproces te voltooien. Neem contact op als u dit niet binnen enkele minuten ontvangt."
+msgstr "Wy hawwe jo in e-mailberjocht stjoerd foar befêstiging. Klik op de keppeling om it registraasjeproses te foltôgjen. Nim kontakt op as jo dit net binnen inkele minuten ûntfang."
 
 #: kuma/users/jinja2/account/verified_email_required.html:9
 msgid "This part of the site requires us to confirm that you are who you claim to be. For this purpose, we require that you confirm ownership of your email address."
-msgstr "Dit gedeelte van de website vereist bevestiging dat u bent wie u zegt te zijn. Voor dit doel is het nodig dat u het eigendom van uw e-mailadres bevestigt."
+msgstr "Dit part fan de website fereasket befêstiging dat jo binne wa't jo sizze. Foar dit doel is it nedich dat jo it eigendom fan jo e-mailadres befêstigje."
 
 #: kuma/users/jinja2/account/verified_email_required.html:13
 msgid "We have sent an email to you for confirmation. Please click on the link inside this email. Please contact us if you do not receive it within a few minutes."
-msgstr "We hebben u een e-mailbericht gestuurd voor bevestiging. Klik op de koppeling binnen dit e-mailbericht. Neem contact op als u dit niet binnen enkele minuten ontvangt."
+msgstr "Wy hawwe jo in e-mailberjocht stjoerd foar befêstiging. Klik op de keppeling binnen dit e-mailberjocht. Nim kontakt op as jo dit net binnen inkele minuten ûntfange."
 
 #: kuma/users/jinja2/account/verified_email_required.html:17
 #, python-format
@@ -1784,12 +1784,12 @@ msgstr "<strong>Noat:</strong> jo kinne noch hieltyd <a href=\"%(email_url)s\">j
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr "Noot"
+msgstr "Noat"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
 msgid "you are already logged in as %(user_display)s."
-msgstr "u bent al aangemeld als %(user_display)s."
+msgstr "jo binne al oanmeld as %(user_display)s."
 
 #: kuma/users/jinja2/openid/login.html:3 kuma/users/jinja2/openid/login.html:6
 msgid "OpenID Sign In"
@@ -1805,11 +1805,11 @@ msgstr "Der is in flater bard by it oanmelden by jo account."
 
 #: kuma/users/jinja2/socialaccount/connections.html:3
 msgid "Account Connections"
-msgstr "Accountkoppelingen"
+msgstr "Accountkeppelingen"
 
 #: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/user_detail.html:55
 msgid "Account connections"
-msgstr "Accountkoppelingen"
+msgstr "Accountkeppelingen"
 
 #: kuma/users/jinja2/socialaccount/connections.html:11
 msgid "You can sign in to your profile using any of the following:"
@@ -1817,19 +1817,19 @@ msgstr "Jo kinne jo op de folgjende manieren by jo profyl oanmelde:"
 
 #: kuma/users/jinja2/socialaccount/connections.html:50
 msgid "Disconnect"
-msgstr "Ontkoppelen"
+msgstr "Untkeppelje"
 
 #: kuma/users/jinja2/socialaccount/connections.html:58
 msgid "You have no connected accounts."
-msgstr "U hebt geen gekoppelde accounts."
+msgstr "Jo hawwe gjin keppele accounts."
 
 #: kuma/users/jinja2/socialaccount/connections.html:61
 msgid "Connect a new account"
-msgstr "Een nieuwe account koppelen"
+msgstr "In nij account keppelje"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:3 kuma/users/jinja2/socialaccount/login_cancelled.html:7
 msgid "Login Cancelled"
-msgstr "Aanmelding geannuleerd"
+msgstr "Oanmelding annulearre"
 
 #: kuma/users/jinja2/socialaccount/login_cancelled.html:9
 #, python-format
@@ -1857,8 +1857,8 @@ msgstr[0] ""
 "Der bestiet al in profyl mei ûndersteand e-mailadres. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ja, keppelje mei "
 "myn MDN-profyl</a>"
 msgstr[1] ""
-"Er bestaat al een profiel met een van deze onderstaande e-mailadressen. Hebt u al een MDN-profiel? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-"next=\"%(persona_next_url)s\">Ja, koppelen met mijn MDN-profiel</a>"
+"Der bestiet al in profyl mei ien fan dizze ûndersteande e-mailadressen. Hawwe jo al in MDN-profyl? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Ja, keppelje mei myn MDN-profyl</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
@@ -1880,7 +1880,7 @@ msgstr "<strong>Kies in brûkersnamme en e-mailadres</strong> om jo MDN-profyl y
 #: kuma/users/jinja2/socialaccount/signup.html:75
 #, python-format
 msgid "If you're <strong>having trouble</strong> signing in or creating an MDN profile, <strong><a href=\"%(bug_href)s\" rel=\"external\">let us know</a></strong>."
-msgstr "Als u <strong>problemen hebt</strong> bij het aanmelden of het aanmaken van een MDN-profiel, <strong><a href=\"%(bug_href)s\" rel=\"external\">laat het dan weten</a></strong>."
+msgstr "As jo <strong>problemen hawwe</strong> by it oanmelden of it oanmeitsjen fan in MDN-profyl, <strong><a href=\"%(bug_href)s\" rel=\"external\">lit it dan witte</a></strong>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:100
 #, python-format
@@ -1906,8 +1906,8 @@ msgid ""
 "What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
 "href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Welk e-mailadres moeten we gebruiken om u MDN-gerelateerde berichten en meldingen te sturen? Dit adres zal <strong>niet</strong> op MDN worden weergegeven en zal worden gebruikt volgens ons <a "
-"href=\"%(privacy_url)s\">privacybeleid</a>."
+"Hokker e-mailadres moatte wy brûke om jo MDN-relatearre berjochten en meldingen te stjoeren? Dit adres sil <strong>niet</strong> op MDN werjûn wurde en sil brûkt wurde neffens ús <a "
+"href=\"%(privacy_url)s\">privacybelied</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
@@ -1924,15 +1924,15 @@ msgstr "Myn MDN-profyl oanmeitsje"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:2
 msgid "Signed in with Persona"
-msgstr "Aangemeld met Persona"
+msgstr "Oanmeld mei Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/login_service_icon.html:4
 msgid "Signed in with GitHub"
-msgstr "Aangemeld met GitHub"
+msgstr "Oanmeld mei GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:18
 msgid "Connect with Persona"
-msgstr "Koppelen met Persona"
+msgstr "Keppelje mei Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:20
 msgid "Sign in with Persona"
@@ -1940,7 +1940,7 @@ msgstr "Oanmelde mei Persona"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:29
 msgid "Connect with GitHub"
-msgstr "Koppelen met GitHub"
+msgstr "Keppelje mei GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
 msgid "Sign in with GitHub"
@@ -1949,7 +1949,7 @@ msgstr "Oanmelde mei GitHub"
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
 msgid "Why are you banning %(user)s"
-msgstr "Waarom blokkeert u %(user)s"
+msgstr "Wêrom blokkearje jo %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
@@ -1957,23 +1957,23 @@ msgstr "Kies in reden"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
-msgstr "of voer in het tekstveld hieronder een reden in"
+msgstr "of fier yn it tekstfjild hjirûnder in reden yn"
 
 #: kuma/users/jinja2/users/ban_user.html:37
 msgid "Ban user"
-msgstr "Gebruiker blokkeren"
+msgstr "Brûker blokkearje"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
-msgstr "U bent geblokkeerd"
+msgstr "Jo binne blokkearre"
 
 #: kuma/users/jinja2/users/user_banned.html:20
 msgid "You have been banned for the following reasons:"
-msgstr "U bent om de volgende redenen geblokkeerd:"
+msgstr "Jo binne om de folgjende redenen blokkearre:"
 
 #: kuma/users/jinja2/users/user_banned.html:30
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
-msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik hier</a> om deze blokkering aan te vechten.</p>"
+msgstr "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Klik hjir</a> om dizze blokkearring oan te fjochtsjen.</p>"
 
 #: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
@@ -1985,15 +1985,15 @@ msgstr "Avansearre"
 
 #: kuma/users/jinja2/users/user_detail.html:53
 msgid "Manage"
-msgstr "Beheren"
+msgstr "Beheare"
 
 #: kuma/users/jinja2/users/user_detail.html:56
 msgid "API keys"
-msgstr "API-sleutels"
+msgstr "API-kaaien"
 
 #: kuma/users/jinja2/users/user_detail.html:90
 msgid "Areas of Expertise"
-msgstr "Ervaringsgebieden"
+msgstr "Underfiningsgebieden"
 
 #: kuma/users/jinja2/users/user_detail.html:98
 #, python-format
@@ -2031,11 +2031,11 @@ msgstr "Sideskiednis werjaan"
 #: kuma/users/jinja2/users/user_detail.html:171
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
-msgstr "<p class=\"none\">U hebt niet aan MDN-documenten bijgedragen. <a href=\"%(docs_url)s\">Geef hem van katoen!</a></p>"
+msgstr "<p class=\"none\">Jo hawwe net oan MDN-dokuminten bydroegen. <a href=\"%(docs_url)s\">Jou him in waan op 'e hoed!</a></p>"
 
 #: kuma/users/jinja2/users/user_detail.html:175
 msgid "This user has no activity."
-msgstr "Deze gebruiker heeft geen activiteit."
+msgstr "Dizze brûker hat gjin aktiviteit."
 
 #: kuma/users/jinja2/users/user_edit.html:11
 msgid "Edit Your Profile"
@@ -2077,7 +2077,7 @@ msgstr "Skied labels mei komma’s of spaasjes. Ferbyn labels dy't út mear wurd
 
 #: kuma/users/jinja2/users/user_edit.html:81
 msgid "Areas of expertise"
-msgstr "Ervaringsgebieden"
+msgstr "Underfiningsgebieden"
 
 #: kuma/users/jinja2/users/user_edit.html:82
 msgid "Add your interests first, then declare yourself an expert in selected topics."
@@ -2129,7 +2129,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
-msgstr "Praat met ons!"
+msgstr "Praat mei ús!"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:35 kuma/users/jinja2/users/email/welcome/plain.ltxt:30
@@ -2147,18 +2147,18 @@ msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"Real-time-chat: <a href=\"%(channel_link)s\">kanaal #mdn op irc.mozilla.org</a>. (Meer info over <a href=\"%(irc_link)s\">IRC</a>.) Daar kunt u de MDN schrijvende stafleden vinden: Eric Shepherd "
-"(sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), en mij (jms), gemeenschapsbeheerder van MDN."
+"Real-time-chat: <a href=\"%(channel_link)s\">kanaal #mdn op irc.mozilla.org</a>. (Mear ynfo oer <a href=\"%(irc_link)s\">IRC</a>.) Dêr kinne jo de MDN skriuwende stêfleden fine: Eric Shepherd "
+"(sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), en my (jms), mienskipsbehearder fan MDN."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
 msgid "Blog: On the <a href=\"%(blog_link)s\">about:community</a> blog, look for the posts tagged with <a href=\"%(tagged_link)s\">Developer Engagement</a>."
-msgstr "Blog: kijk op de <a href=\"%(blog_link)s\">about:community</a>-blog naar berichten met het label <a href=\"%(tagged_link)s\">Developer Engagement</a>."
+msgstr "Blog: sjoch op de <a href=\"%(blog_link)s\">about:community</a>-blog nei berjochten mei it label <a href=\"%(tagged_link)s\">Developer Engagement</a>."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:60 kuma/users/jinja2/users/email/welcome/plain.ltxt:51
 msgid "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
-msgstr "Wees niet verlegen, als u twijfels, problemen of vragen hebt, neem dan contact op! We zijn er om te helpen."
+msgstr "Wês net ferlegen, as jo twivels, problemen of fragen hawwe, nim dan kontakt op! Wy binne der om te helpen."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
@@ -2183,17 +2183,17 @@ msgstr ""
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
 msgid "Like words?"
-msgstr "Houdt u van woorden?"
+msgstr "Hâlde jo fan wurden?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:18
 msgid "Like code?"
-msgstr "Houdt u van code?"
+msgstr "Hâlde jo fan koade?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:22
 msgid "Like both words and code?"
-msgstr "Houdt u van zowel woorden als code?"
+msgstr "Hâlde jo fan sawol wurden as koade?"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:26
@@ -2220,7 +2220,7 @@ msgstr "Real-time-chat: kanaal #mdn op irc.mozilla.org"
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:42
 #, python-format
 msgid "See %(irc_link)s for more info about IRC."
-msgstr "Zie %(irc_link)s voor meer info over IRC."
+msgstr "Sjoch %(irc_link)s foar mear ynfo oer IRC."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:45
@@ -2228,8 +2228,8 @@ msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
 msgstr ""
-"Hier kunt u de vor MDN schrijvende stafbeheerders vinden: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) en mij (jms),"
-" MDN’s gemeenschapsbeheerder."
+"Hjir kinne jo de foar MDN skriuwende stêfbehearders fine: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills) en my (jms), "
+"MDN’s mienskipsbehearder."
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -2240,19 +2240,19 @@ msgstr "Blog: %(blog_link)s"
 #: kuma/users/templatetags/jinja_helpers.py:35
 #, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
-msgstr "Geblokkeerd op %(ban_date)s door %(ban_admin)s."
+msgstr "Blokkearre op %(ban_date)s troch %(ban_admin)s."
 
 #: kuma/users/templatetags/jinja_helpers.py:42
 msgid "Banned"
-msgstr "Geblokkeerd"
+msgstr "Blokkearre"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
 msgid "Ban User"
-msgstr "Gebruiker blokkeren"
+msgstr "Brûker blokkearre"
 
 #: kuma/users/templatetags/jinja_helpers.py:58
 msgid "Admin"
-msgstr "Beheer"
+msgstr "Behear"
 
 #: kuma/wiki/apps.py:58 kuma/wiki/templates/admin/wiki/purge_documents.html:23 kuma/wiki/templates/admin/wiki/document/load_data_form.html:23
 msgid "Wiki"
@@ -2260,7 +2260,7 @@ msgstr "Wiki"
 
 #: kuma/wiki/constants.py:207 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
-msgstr "Technisch - codevoorbeelden, API’s of technologieën"
+msgstr "Technysk - koadefoarbylden, API’s of technologyën"
 
 #: kuma/wiki/constants.py:208 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
@@ -2281,7 +2281,7 @@ msgstr "[MDN] Side ‘%(document_title)s’ is wizige troch %(creator)s"
 
 #: kuma/wiki/feeds.py:28
 msgid "MDN documents"
-msgstr "MDN-documenten"
+msgstr "MDN-dokuminten"
 
 #: kuma/wiki/feeds.py:29
 msgid "Documents authored by MDN users"
@@ -2306,7 +2306,7 @@ msgstr "Resinte wizigingen oan MDN-dokuminten mei it label %s"
 
 #: kuma/wiki/feeds.py:182
 msgid "MDN documents in need of review"
-msgstr "MDN-documenten die beoordeling nodig hebben"
+msgstr "MDN-dokuminten dy't beoardieling nedich hawwe"
 
 #: kuma/wiki/feeds.py:183
 msgid "Recent changes to MDN documents that need to be reviewed"
@@ -2315,16 +2315,16 @@ msgstr "Resinte wizigingen oan MDN-dokuminten dy't beoardield wurde moatte"
 #: kuma/wiki/feeds.py:189
 #, python-format
 msgid "MDN documents for %s review"
-msgstr "MDN-documenten voor %s-beoordeling"
+msgstr "MDN-dokuminten foar %s-beoardieling"
 
 #: kuma/wiki/feeds.py:193
 msgid "MDN documents for review"
-msgstr "MDN-documenten voor beoordeling"
+msgstr "MDN-dokuminten foar beoardieling"
 
 #: kuma/wiki/feeds.py:223
 #, python-format
 msgid "MDN '%s' translations in need of update"
-msgstr "‘%s’-vertalingen in MDN die moeten worden bijgewerkt"
+msgstr "‘%s’-oersettingen yn MDN dy't bywurke wurde moatte"
 
 #: kuma/wiki/feeds.py:259
 msgid "MDN recent revisions"
@@ -2336,7 +2336,7 @@ msgstr "Resinte revyzjes fan MDN-dokuminten"
 
 #: kuma/wiki/feeds.py:351
 msgid "Show comparison"
-msgstr "Vergelijking tonen"
+msgstr "Fergeliking toane"
 
 #: kuma/wiki/forms.py:35
 msgid "Please provide a title."
@@ -2354,39 +2354,39 @@ msgstr "Hâld de lingte fan de titel op %(limit_value)s tekens of minder. Dizze 
 
 #: kuma/wiki/forms.py:41
 msgid "Name Your Article"
-msgstr "Benoem uw artikel"
+msgstr "Beneam jo artikel"
 
 #: kuma/wiki/forms.py:42
 msgid "Please provide a slug."
-msgstr "Geef een identificator op."
+msgstr "Jou in identificator op."
 
 #: kuma/wiki/forms.py:43
 msgid "The slug provided is not valid."
-msgstr "De opgegeven identificator is niet geldig."
+msgstr "De opjûne identificator is net jildich."
 
 #: kuma/wiki/forms.py:44
 #, python-format
 msgid "The slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "De identificator is te kort (%(show_value)s tekens). Deze moet minstens %(limit_value)s tekens bevatten."
+msgstr "De identificator is te koart (%(show_value)s tekens). Dizze moat op syn minst %(limit_value)s tekens befetsje."
 
 #: kuma/wiki/forms.py:46
 #, python-format
 msgid "Please keep the length of the slug to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr "Houd de lengte van de identificator op %(limit_value)s tekens of minder. Momenteel is deze %(show_value)s tekens."
+msgstr "Hâld de lingte fan de identificator op %(limit_value)s tekens of minder. No is dizze %(show_value)s tekens."
 
 #: kuma/wiki/forms.py:49
 msgid "Please provide a summary."
-msgstr "Geef een samenvatting op."
+msgstr "Jou in gearfetting op."
 
 #: kuma/wiki/forms.py:50
 #, python-format
 msgid "The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters."
-msgstr "De samenvatting is te kort (%(show_value)s tekens). Deze moet minstens %(limit_value)s tekens bevatten."
+msgstr "De gearfetting is te koart (%(show_value)s tekens). Dizze moat op syn minst %(limit_value)s tekens befetsje."
 
 #: kuma/wiki/forms.py:52
 #, python-format
 msgid "Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters."
-msgstr "Houd de lengte van de samenvatting op %(limit_value)s tekens of minder. Momenteel is deze %(show_value)s tekens."
+msgstr "Hâld de lingte fan de gearfetting op %(limit_value)s tekens of minder. No is dizze %(show_value)s tekens."
 
 #: kuma/wiki/forms.py:55
 msgid "Please provide content."
