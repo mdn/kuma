@@ -1,6 +1,7 @@
 import collections
 import json
 import operator
+from datetime import datetime, timedelta
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -16,6 +17,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext_lazy as _
 from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
@@ -80,8 +82,81 @@ def ban_user(request, user_id):
     return render(request,
                   'users/ban_user.html',
                   {'form': form,
-                   'user_to_ban': user,
+                   'detail_user': user,
                    'common_reasons': common_reasons})
+
+
+@permission_required('users.add_userban')
+def ban_user_and_cleanup(request, user_id):
+    """
+    A page to ban a user for the reason of "Spam" and mark the user's revisions
+    and page creations as spam, reverting as many of them as possible.
+    """
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        raise Http404
+
+    # Is this user already banned?
+    user_ban = UserBan.objects.filter(user=user, is_active=True)
+
+    # Get revisions for the past 3 days for this user
+    date_three_days_ago = datetime.now().date() - timedelta(days=3)
+    revisions = user.created_revisions.prefetch_related('document')
+    revisions = revisions.defer('content', 'summary').order_by('-id')
+    revisions = revisions.filter(created__gte=date_three_days_ago)
+
+    return render(request,
+                  'users/ban_user_and_cleanup.html',
+                  {'detail_user': user,
+                   'user_banned': user_ban,
+                   'revisions': revisions,
+                   'on_ban_page': True})
+
+
+@require_POST
+@permission_required('users.add_userban')
+def ban_user_and_cleanup_summary(request, user_id):
+    """
+    A summary page of actions taken when banning a user and reverting revisions
+    """
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        raise Http404
+
+    # Is this user already banned?
+    user_ban = UserBan.objects.filter(user=user, is_active=True)
+
+    # If the user is not banned, ban user; else, update 'by' and 'reason'
+    if not user_ban.exists():
+        ban = UserBan(user=user,
+                      by=request.user,
+                      reason='Spam',
+                      is_active=True)
+        ban.save()
+    else:
+        user_ban.update(by=request.user, reason='Spam')
+
+    # TODO: In the future this will take the revisions out of request.POST
+    # and either revert them or not. For now list all of the revisions for the past 3 days
+    date_three_days_ago = datetime.now().date() - timedelta(days=3)
+    revisions_reverted = user.created_revisions.prefetch_related('document')
+    revisions_reverted = revisions_reverted.defer('content', 'summary').order_by('-id')
+    revisions_reverted = revisions_reverted.filter(created__gte=date_three_days_ago)
+
+    # TODO: revisions_needing_follow_up will be revisions that have not been reverted
+    revisions_needing_follow_up = revisions_reverted
+    revisions_reverted = revisions_reverted
+
+    context = {'detail_user': user,
+               'form': UserBanForm(),
+               'revisions_reverted': revisions_reverted,
+               'revisions_needing_follow_up': revisions_needing_follow_up}
+
+    return render(request,
+                  'users/ban_user_and_cleanup_summary.html',
+                  context)
 
 
 def user_detail(request, username):

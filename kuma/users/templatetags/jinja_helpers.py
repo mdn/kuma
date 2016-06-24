@@ -25,11 +25,12 @@ def gravatar_url(email, secure=True, size=220, rating='pg',
 
 @library.global_function
 @contextfunction
-def ban_link(context, ban_user, banner_user):
+def ban_links(context, ban_user, banner_user):
     """Returns a link to ban a user"""
-    link = ''
+    links = ''
     if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
         active_ban = ban_user.active_ban
+        url_ban_cleanup = reverse('users.ban_user_and_cleanup', kwargs={'user_id': ban_user.id})
         if active_ban:
             url = reverse('admin:users_userban_change', args=(active_ban.id,))
             title = ugettext('Banned on %(ban_date)s by %(ban_admin)s.') % {
@@ -37,15 +38,22 @@ def ban_link(context, ban_user, banner_user):
                                            format='date', output='json'),
                 'ban_admin': active_ban.by,
             }
-            link = ('<a href="%s" class="button ban-link" title="%s">%s'
+            link = ('<a id="ban_link" href="%s" class="button ban-link" title="%s">%s'
                     '<i aria-hidden="true" class="icon-ban"></i></a>'
                     % (url, title, ugettext('Banned')))
+            link_cleanup = ('<a id="cleanup_link" href="%s" class="button negative ban-link">%s'
+                            '<i aria-hidden="true" class="icon-ban"></i></a>'
+                            % (url_ban_cleanup, ugettext('Clean Up Revisions')))
         else:
             url = reverse('users.ban_user', kwargs={'user_id': ban_user.id})
-            link = ('<a href="%s" class="button negative ban-link">%s'
+            link = ('<a id="ban_link" href="%s" class="button negative ban-link">%s'
                     '<i aria-hidden="true" class="icon-ban"></i></a>'
                     % (url, ugettext('Ban User')))
-    return Markup(link)
+            link_cleanup = ('<a id="cleanup_link" href="%s" class="button negative ban-link">%s'
+                            '<i aria-hidden="true" class="icon-ban"></i></a>'
+                            % (url_ban_cleanup, ugettext('Ban User & Clean Up')))
+        links = link_cleanup + ' ' + link
+    return Markup(links)
 
 
 @library.global_function

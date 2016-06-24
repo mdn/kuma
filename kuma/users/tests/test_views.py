@@ -18,7 +18,7 @@ from pyquery import PyQuery as pq
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 
-from . import UserTestCase, email, user
+from . import SampleRevisionsMixin, UserTestCase, email, user
 from ..models import UserBan
 from ..providers.github.provider import KumaGitHubProvider
 from ..signup import SignupForm
@@ -178,6 +178,112 @@ class BanTestCase(UserTestCase):
         resp = self.client.get(ban_url)
         eq_(302, resp.status_code)
         ok_(testuser.get_absolute_url() in resp['Location'])
+
+
+@pytest.mark.bans
+class BanAndCleanupTestCase(UserTestCase):
+    localizing_client = True
+
+    def test_ban_permission(self):
+        """The ban permission controls access to the ban and cleanup view."""
+        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username='testuser')
+
+        # testuser doesn't have ban permission, can't ban.
+        self.client.login(username='testuser',
+                          password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': admin.id})
+        resp = self.client.get(ban_url)
+        eq_(302, resp.status_code)
+        ok_(str(settings.LOGIN_URL) in resp['Location'])
+        self.client.logout()
+
+        # admin has ban permission, can ban.
+        self.client.login(username='admin',
+                          password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+        resp = self.client.get(ban_url)
+        eq_(200, resp.status_code)
+
+    def test_ban_nonexistent_user(self):
+        """GETs to ban_user_and_cleanup for nonexistent user return 404."""
+        testuser = self.user_model.objects.get(username='testuser')
+
+        # GET request
+        self.client.login(username='admin',
+                          password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': testuser.id})
+        testuser.delete()
+        resp = self.client.get(ban_url)
+        eq_(404, resp.status_code)
+
+
+@pytest.mark.bans
+class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
+    localizing_client = True
+
+    def setUp(self):
+        super(BanUserAndCleanupSummaryTestCase, self).setUp()
+
+        self.ban_testuser_url = reverse('users.ban_user_and_cleanup_summary',
+                                        kwargs={'user_id': self.testuser.id})
+        self.client.login(username='admin', password='testpass')
+
+    def test_ban_nonexistent_user(self):
+        """POSTs to ban_user_and_cleanup for nonexistent user return 404."""
+        self.testuser.delete()
+        resp = self.client.post(self.ban_testuser_url)
+        eq_(404, resp.status_code)
+
+    def test_post_returns_summary_page(self):
+        """POSTing to ban_user_and_cleanup returns the summary page."""
+        resp = self.client.post(self.ban_testuser_url)
+        eq_(200, resp.status_code)
+
+    def test_post_bans_user(self):
+        """POSTing to the ban_user_and_cleanup bans user for "spam" reason."""
+        resp = self.client.post(self.ban_testuser_url)
+        eq_(200, resp.status_code)
+
+        testuser_banned = self.user_model.objects.get(username='testuser')
+        ok_(not testuser_banned.is_active)
+
+        bans = UserBan.objects.filter(user=self.testuser,
+                                      by=self.admin,
+                                      reason='Spam')
+        ok_(bans.count())
+
+    def test_post_banned_user(self):
+        """POSTing to ban_user_and_cleanup for a banned user updates UserBan."""
+        UserBan.objects.create(user=self.testuser, by=self.testuser2,
+                               reason='Banned by unit test.',
+                               is_active=True)
+
+        resp = self.client.post(self.ban_testuser_url)
+        eq_(200, resp.status_code)
+
+        ok_(not self.testuser.is_active)
+
+        bans = UserBan.objects.filter(user=self.testuser)
+
+        # Assert that the ban exists, and 'by' and 'reason' fields are updated
+        ok_(bans.count())
+        eq_(bans.first().is_active, True)
+        eq_(bans.first().by, self.admin)
+        eq_(bans.first().reason, 'Spam')
+
+#    TODO: Phase II:
+#    def test_post_submits_revisions_to_akismet_as_spam(self):
+#
+#    TODO: Phase III:
+#    def test_post_reverts_revisions(self):
+#    def test_post_deletes_new_pages(self):
+#
+#    TODO: Phase IV:
+#    def test_post_sends_email(self):
 
 
 class UserViewsTest(UserTestCase):

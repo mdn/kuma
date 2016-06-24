@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block body_attributes %}{% endblock %}
+
+{% block bodyclass %}user ban-user{% endblock %}
+
+{% block title %}{{ _('Ban %(user)s', user=detail_user) }}{% endblock %}
+{% set styles = ('dashboards', 'jquery-ui') %}
+{% set classes = 'compare' %}
+
+{% block site_css %}
+  {{ super() }}
+  {% stylesheet 'users' %}
+  {% stylesheet 'user-banned' %}
+{% endblock %}
+
+{% block content %}
+  <section id="content">
+    <h1>
+      {{ _('<a href="%(url)s">%(user)s</a> identified as a spammer.', url=detail_user.get_absolute_url(), user=detail_user) }}
+    </h1>
+
+    <h2>
+      {{ _('The following revisions were reverted:') }}
+    </h2>
+    <div>
+      {{ _('(Note: No revisions were actually reverted. This feature will be added in Phase 2.)') }}
+    </div>
+    <br />
+    <div id="revisions-reverted">
+      {% if revisions_reverted %}
+
+        {% for revision in revisions_reverted %}
+          <li>
+            <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ revision.title }}</a>
+            <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}" class="button">
+              {{ _('View Page') }}
+              <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+            </a>
+            <a href="{{ url('wiki.document_revisions', revision.document.slug) }}" class="button">
+              {{ _('History') }}
+              <i aria-hidden="true" class="icon-book"></i>
+            </a>
+          </li>
+        {% endfor %}
+
+      {% else %}
+      <p>{{ _('The user did not have any revisions that were reverted.') }}</p>
+      {% endif %}
+    </div>
+
+    <br /><br />
+
+    <h2>
+      {{ _('Pages needing follow up:') }}
+    </h2>
+    <div id="revisions-followup">
+      {% if revisions_needing_follow_up %}
+
+        {% for revision_needing_follow_up in revisions_needing_follow_up %}
+          <li>
+            <a href="{{ url('wiki.revision', revision_needing_follow_up.document.slug, revision_needing_follow_up.id) }}">
+              {{ revision_needing_follow_up.document.title }}
+            </a>
+            <a href="{{ url('wiki.document', revision_needing_follow_up.document.slug) }}" class="button">
+              {{ _('View Page') }}
+              <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+            </a>
+            <a href="{{ url('wiki.document_revisions', revision_needing_follow_up.document.slug) }}" class="button">
+              {{ _('History') }}
+              <i aria-hidden="true" class="icon-book"></i>
+            </a>
+            <a href="{{ url('wiki.delete_document', revision_needing_follow_up.document.slug) }}" class="button">
+              {{ _('Delete') }}
+              <i aria-hidden="true" class="icon-trash"></i>
+            </a>
+          </li>
+        {% endfor %}
+
+      {% else %}
+
+        <p>{{ _('The user did not have any revisions needing follow-up.') }}</p>
+
+      {% endif %}
+    </div>
+  </section>
+{% endblock content %}

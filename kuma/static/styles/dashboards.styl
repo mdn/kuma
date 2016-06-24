@@ -29,7 +29,7 @@
             }
         }
 
-        .new, .locale, .deleted {
+        .new, .edit, .locale, .deleted {
             set-font-size(11px);
             border-radius: 8px;
             color: #fff;
@@ -39,6 +39,9 @@
         }
         .new {
             background: rgba-fallback(rgba(green, 0.6));
+        }
+        .edit {
+            background: $blue;
         }
         .locale {
             background: rgba-fallback(rgba(#777, 0.6));
@@ -56,45 +59,17 @@
         vertical-align: text-top;
     }
 
+    /* needs extra specificity to over-ride rules above */
     .dashboard-title,
     .dashboard-comment,
-    .dashboard-author {
+    .dashboard-author,
+    .dashboard-tags {
         @extend $column-3;
     }
 
     .dashboard-spam {
         @extend $column-1;
         word-break: break-all;
-    }
-
-    .dashboard-title {
-        word-break: break-all;
-    }
-
-    .dashboard-slug {
-        set-smaller-font-size();
-        opacity: 0.8;
-        font-style: italic;
-        display: block;
-    }
-
-    .dashboard-detail {
-        border-top: 0;
-    }
-
-    .dashboard-detail-details {
-        display: none;
-        padding: 0 6px;
-    }
-
-    .submission-spam {
-        font-weight: bold;
-        color: $negative;
-    }
-
-    .submission-ham {
-        font-weight: bold;
-        color: $positive;
     }
 
     #page-buttons {
@@ -106,6 +81,96 @@
     }
 }
 
+.dashboard-table-spam {
+
+    /* styles over riding both the revision table and diff */
+
+    tbody tr {
+        border-top: none;
+        cursor: default;
+    }
+
+    tbody > tr:hover {
+        background: inherit;
+    }
+
+    /* styles over riding just the revision table, not the diff */
+
+    > tbody {
+        border-bottom: 5px solid #000;
+    }
+
+    > tbody > tr > td {
+        padding: 2px 2px 10px 2px;
+        vertical-align: top;
+    }
+
+    > tbody > tr:first-child > td {
+        padding-top: $grid-spacing;
+    }
+
+    > tbody > tr:last-child > td {
+        padding-bottom: $grid-spacing;
+    }
+}
+
+.dashboard-title {
+    word-break: break-all;
+}
+
+.dashboard-slug {
+    set-smaller-font-size();
+    opacity: 0.8;
+    font-style: italic;
+    display: block;
+}
+
+.dashboard-detail {
+    border-top: 0;
+}
+
+.dashboard-detail-details {
+    display: none;
+    padding: 0 6px;
+}
+
+.submission-spam {
+    font-weight: bold;
+    color: $negative;
+}
+
+.submission-ham {
+    font-weight: bold;
+    color: $positive;
+}
+
+.dashboard-spam {
+    word-break: normal;
+}
+
+.dashboard-confirm {
+    set-larger-font-size();
+    font-weight: bold;
+}
+
+td.dashboard-comment {
+    font-style: italic;
+}
+
+.dashboard-compare {
+    max-height: 200px;
+    overflow: hidden;
+    overflow-y: scroll;
+    border :1px solid #000;
+
+    .diff {
+        margin-top: 0 !important;
+    }
+
+    .diff thead tr {
+        background-color: #adadad;
+    }
+}
 
 #revision-filter {
     #id_start_date, #id_end_date {

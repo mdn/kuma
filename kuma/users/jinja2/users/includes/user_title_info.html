@@ -1,0 +1,73 @@
+<h1 class="user-title">
+    <span class="nickname">{{ detail_user.username }}</span>
+    {% if detail_user.fullname %}
+        <b class="user-title-fullname">(<span class="fn">{{ detail_user.fullname }}</span>)</b>
+    {% endif %}
+    {% if user.is_authenticated() and is_me %}
+        {% include 'socialaccount/snippets/login_service_icon.html' %}
+    {% endif %}
+</h1>
+
+<div class="user-buttons">
+  {% if not is_me and user.has_perm('users.add_userban') and not on_ban_page %}
+    {{ ban_links(detail_user, user) }}
+  {% endif %}
+
+  {% if user.is_superuser %}
+    {{ admin_link(detail_user) }}
+  {% endif %}
+
+  <!-- Only shown for the user and admins -->
+  {% if detail_user.allows_editing_by(user) %}
+      <a id="edit-user" href="{{ url('users.user_edit', username=detail_user.username) }}" class="button neutral">{{ _("Edit") }}<i aria-hidden="true" class="icon-pencil"></i></a>
+      {% if is_me %}
+      <button id="advanced-menu" class="neutral only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
+      <div class="submenu js-submenu" id="advanced-menu-submenu">
+        <!-- this page -->
+        <div class="submenu-column">
+          <div class="title">{{ _('Manage') }}</div>
+          <ul>
+            <li><a href="{{ url('socialaccount_connections') }}" class="neutral">{{ _("Account connections") }}</a></li>
+            <li><a href="{{ url('authkeys.list') }}" class="neutral">{{ _("API keys") }}</a></li>
+            <li><a href="{{ url('account_email') }}" class="neutral">{{ _("Email addresses") }}</a></li>
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+  {% endif %}
+</div>
+{% if detail_user.title or detail_user.organization or detail_user.location or detail_user.irc_nickname %}
+<ul class="user-info">
+  {% if detail_user.title %}<li class="title">{{ detail_user.title }}</li>{% endif %}
+  {% if detail_user.organization %}<li class="org">{{ detail_user.organization }}</li>{% endif %}
+  {% if detail_user.location %}<li class="loc">{{ detail_user.location }}</li>{% endif %}
+  {% if detail_user.irc_nickname %}<li class="irc">IRC: {{ detail_user.irc_nickname }}</li>{% endif %}
+</ul>
+{% endif %}
+
+{% set tag_ns = 'profile:interest:' %}
+{% set tags = detail_user.tags.all_ns(tag_ns) %}
+{% if tags|length %}
+<div class="user-tags">
+  <h2>{{ _("Interests") }}</h2>
+  <ul>
+    {% for tag in tags %}
+      <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{% set tag_ns = 'profile:expertise:' %}
+{% set tags = detail_user.tags.all_ns(tag_ns) %}
+{% if tags|length %}
+<div class="user-tags">
+  <h2>{{ _("Areas of Expertise") }}</h2>
+  <ul>
+    {% for tag in tags %}
+      <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+<div class="user-since">{% trans date_joined=datetimeformat(detail_user.date_joined, format='date') %}Member since {{ date_joined }}{% endtrans %}</div>

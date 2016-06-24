@@ -11,8 +11,9 @@ from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
-from . import UserTestCase
+from . import SampleRevisionsMixin, UserTestCase
 from .test_views import TESTUSER_PASSWORD
+from ..models import UserBan
 
 
 def add_persona_verify_response(mock_requests, data):
@@ -409,3 +410,253 @@ class BanTestCase(UserTestCase):
         eq_(len(reasons_to_ban_found), len(reasons_to_ban_expected))
         for reason in reasons_to_ban_found:
             ok_(reason.text in reasons_to_ban_expected)
+
+
+@pytest.mark.bans
+class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
+    def test_user_revisions_in_one_click_page_template(self):
+        """The user's revisions show up in the ban and cleanup template."""
+        # Create 3 revisions for testuser, titled 'Revision 1', 'Revision 2'...
+        revisions_expected = self.create_revisions(
+            num=3,
+            creator=self.testuser,
+            document=self.document)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        revisions_found_text = ''
+        for rev in revisions_found:
+            revisions_found_text += rev.text_content()
+
+        eq_(len(revisions_found), len(revisions_expected))
+        # The title for each of the created revisions shows up in the template
+        for revision in revisions_expected:
+            ok_(revision.title in revisions_found_text)
+        # The original revision created by the admin user is not in the template
+        ok_(self.original_revision.title not in revisions_found_text)
+
+    def test_no_user_revisions_in_one_click_page_template(self):
+        """If the user has no revisions, it should be stated in the template."""
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        no_revisions = page.find('#docs-activity div')
+
+        eq_(len(revisions_found), 0)
+        ok_("This user has not created any revisions in the past three days." in no_revisions.text())
+
+    def test_not_banned_user_one_click_page_template_ban_button(self):
+        """Test the ban button text for a user that has not been banned."""
+        # There are some revisions made by self.testuser; none by self.testuser2
+        num_revisions = 3
+        self.create_revisions(
+            num=num_revisions,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+
+        # For self.testuser (not banned, and revisions need to be reverted) the
+        # button on the form should read "Ban User for Spam & Revert Revisions"
+        # and there should be a link to ban a user for other reasons
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
+
+        eq_(len(revisions_found), num_revisions)
+        eq_(ban_button.text(), "Ban User for Spam & Revert Revisions")
+        eq_(len(ban_other_reasons), 1)
+
+        # For self.testuser2 (not banned, no revisions needing to be reverted)
+        # the button on the form should read "Ban User for Spam". There should
+        # be no link to ban for other reasons
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser2.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
+
+        eq_(len(revisions_found), 0)
+        eq_(ban_button.text(), "Ban User for Spam")
+        eq_(len(ban_other_reasons), 0)
+
+    def test_banned_user_one_click_page_template_ban_button(self):
+        """Test the template for a user that has already been banned."""
+        # There are some revisions made by self.testuser; none by self.testuser2
+        num_revisions = 3
+        self.create_revisions(
+            num=num_revisions,
+            document=self.document,
+            creator=self.testuser)
+
+        # Ban both self.testuser and self.testuser2
+        UserBan.objects.create(user=self.testuser, by=self.admin,
+                               reason='Banned by unit test.',
+                               is_active=True)
+        UserBan.objects.create(user=self.testuser2, by=self.admin,
+                               reason='Banned by unit test.',
+                               is_active=True)
+
+        self.client.login(username='admin', password='testpass')
+
+        # For self.testuser (banned, but revisions need to be reverted) the
+        # button on the form should read "Revert Revisions". There should
+        # be no link to ban for other reasons
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
+
+        eq_(len(revisions_found), num_revisions)
+        eq_(ban_button.text(), "Revert Revisions")
+        eq_(len(ban_other_reasons), 0)
+
+        # For self.testuser2 (banned, has no revisions needing to be reverted)
+        # there should be no button on the form and no link to
+        # ban for other reasons
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser2.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
+
+        eq_(len(revisions_found), 0)
+        eq_(len(ban_button), 0)
+        eq_(len(ban_other_reasons), 0)
+
+
+@pytest.mark.bans
+class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
+    def test_user_revisions_in_summary_page_template(self):
+        """The user's revisions show up in ban and cleanup summary template."""
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        revisions_expected = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        resp = self.client.post(full_ban_url)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_reverted_text = ''
+        for rev in revisions_reverted:
+            revisions_reverted_text += rev.text_content()
+
+        eq_(len(revisions_reverted), len(revisions_expected))
+        # The title for each of the created revisions shows up in the template
+        for revision in revisions_expected:
+            ok_(revision.title in revisions_reverted_text)
+        # The title for the original revision is not in the template
+        ok_(self.original_revision.title not in revisions_reverted_text)
+
+    def test_no_user_revisions_summary_page_template(self):
+        """If user has no revisions, it should be stated in summary template."""
+        # The expected text
+        exp_reverted = "The user did not have any revisions that were reverted."
+        exp_followup = "The user did not have any revisions needing follow-up."
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        resp = self.client.post(full_ban_url)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_followup = page.find('#revisions-followup li')
+        revisions_reverted_section = page.find('#revisions-reverted')
+        revisions_followup_section = page.find('#revisions-followup')
+
+        eq_(len(revisions_reverted), 0)
+        eq_(len(revisions_followup), 0)
+        ok_(exp_reverted in revisions_reverted_section.text())
+        ok_(exp_followup in revisions_followup_section.text())
+
+
+#    TODO: Phase III:
+#    def test_unreverted_changes_in_summary_page_template(self):
+
+
+class ProfileDetailTestCase(UserTestCase):
+    def test_user_profile_detail_ban_link(self):
+        """
+        Tests the user profile page for a user who has been banned.
+
+        The correct text (depending on if the user has been banned or not)
+        should be displayed on the ban links.
+        """
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+
+        self.client.login(username='admin', password='testpass')
+
+        profile_url = reverse('users.user_detail',
+                              kwargs={'username': testuser.username})
+
+        # The user is not banned, display appropriate links
+        resp = self.client.get(profile_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        ban_link = page.find('#ban_link')
+        ban_cleanup_link = page.find('#cleanup_link')
+        eq_("Ban User", ban_link.text())
+        eq_("Ban User & Clean Up", ban_cleanup_link.text())
+
+        # The user is banned, display appropriate links
+        UserBan.objects.create(user=testuser, by=admin,
+                               reason='Banned by unit test.',
+                               is_active=True)
+        resp = self.client.get(profile_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        ban_link = page.find('#ban_link')
+        ban_cleanup_link = page.find('#cleanup_link')
+        eq_("Banned", ban_link.text())
+        eq_("Clean Up Revisions", ban_cleanup_link.text())

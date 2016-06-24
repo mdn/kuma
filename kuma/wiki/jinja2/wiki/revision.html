@@ -32,7 +32,7 @@
           <li>
             <mark>{{ _('Creator:') }}</mark>
             <span>{{ revision.creator }}</span>
-            {{ ban_link(revision.creator, request.user) }}
+            {{ ban_links(revision.creator, request.user) }}
           </li>
           <li>
             <mark>{{ _('Is current revision?') }}</mark>
