@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: 2016-06-24 11:02+0000\n"
+"PO-Revision-Date: 2016-06-24 11:26+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -3280,7 +3280,7 @@ msgstr "Dit artikel ôfdrukke"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:2
 msgid "breadcrumbs"
-msgstr "broodkruimels"
+msgstr "breakrommels"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
@@ -3293,11 +3293,11 @@ msgstr "Revyzjes wizigje"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:37 kuma/wiki/jinja2/wiki/includes/document_macros.html:53
 #, python-format
 msgid "Revision %(num)s:"
-msgstr "Revisie %(num)s:"
+msgstr "Revyzje %(num)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:82 kuma/wiki/jinja2/wiki/includes/revision_diff_table.html:8
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
-msgstr "De server verwerkt de inhoudsvergelijking. Vernieuw deze pagina over enkele minuten."
+msgstr "De server ferwurket de ynhâldsfergeliking. Fernij dizze side oer inkele minuten."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:107
 msgid "Share:"
@@ -3310,29 +3310,29 @@ msgstr "Google+"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
-msgstr "Abonneren op %(title)s en alle sub-artikelen ervan"
+msgstr "Abonnearje op %(title)s en alle sub-artikelen deran"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:129
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
-msgstr "Ofmelden foar %(title)s en alle sub-artikelen derfan"
+msgstr "Ofmelde foar %(title)s en alle sub-artikelen derfan"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "You are now subscribed to this article and all its sub-articles."
-msgstr "U bent nu geabonneerd op dit artikel en alle sub-artikelen ervan."
+msgstr "Jo binne no abonnearre op dit artikel en alle sub-artikelen derfan."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
 msgid "You have been unsubscribed from this article and all its sub-articles."
-msgstr "U bent afgemeld voor dit artikel en alle sub-artikelen ervan."
+msgstr "Jo binne ôfmeld foar dit artikel en alle sub-artikelen derfan."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
 msgid "Updating subscription status"
-msgstr "Abonnementsstatus bijwerken"
+msgstr "Abonnemintsteat bywurkje"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:144
 #, python-format
 msgid "Subscribe to %(title)s"
-msgstr "Abonneren op %(title)s"
+msgstr "Abonnearje op %(title)s"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:145
 #, python-format
@@ -3342,17 +3342,17 @@ msgstr "Ofmelde foar %(title)s"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
 #, python-format
 msgid "You are now subscribed to %(title)s."
-msgstr "U bent nu geabonneerd op %(title)s."
+msgstr "Jo binne no abonnearre op %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
 #, python-format
 msgid "You have been unsubscribed from %(title)s."
-msgstr "U bent afgemeld voor %(title)s."
+msgstr "Jo binne ôfmeld foar %(title)s."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:159
 #, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
-msgstr "Abonneren op versie in het <bdi>%(language)s</bdi>"
+msgstr "Abonnearje op ferzje yn it <bdi>%(language)s</bdi>"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:160
 #, python-format
@@ -3362,48 +3362,48 @@ msgstr "Ofmelde foar ferzje yn it <bdi>%(language)s</bdi>"
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
 #, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
-msgstr "U bent nu geabonneerd op de versie in het %(language)s van dit artikel."
+msgstr "Jo binne no abonnearre op de ferzje yn it %(language)s fan dit artikel."
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
-msgstr "U bent nu afgemeld voor de versie in het %(language)s van dit artikel."
+msgstr "Jo binne no ôfmeld foar de ferzje yn it %(language)s fan dit artikel."
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "Generate table of contents"
-msgstr "Inhoudsopgave genereren"
+msgstr "Ynhâldsopjefte generearje"
 
 #: kuma/wiki/jinja2/wiki/includes/document_toc_field.html:2 kuma/wiki/jinja2/wiki/includes/translate_description.html:50
 msgid "TOC:"
-msgstr "Inhoudsopgave:"
+msgstr "Ynhâldsopjefte:"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:2
 msgid "Need Help?"
-msgstr "Hulp nodig?"
+msgstr "Help nedich?"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:4
 msgid "Editor Guide"
-msgstr "Gids voor editors"
+msgstr "Gids foar editors"
 
 #: kuma/wiki/jinja2/wiki/includes/guide_links.html:6
 msgid "Style Guide"
-msgstr "Stijlgids"
+msgstr "Stylgids"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:3
 msgid "There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below."
 msgid_plural "There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below."
-msgstr[0] "Er is een scriptfout op deze pagina. Terwijl deze door website-editors wordt verholpen, kunt u hieronder een gedeelte van de inhoud bekijken."
-msgstr[1] "Er zijn scriptfouten op deze pagina. Terwijl deze door website-editors worden verholpen, kunt u hieronder een gedeelte van de inhoud bekijken."
+msgstr[0] "Der is in scriptflater op dizze side. Wylst dizze troch website-editors ferholpen wurde, kinne jo hjirûnder in part fan de ynhâld besjen."
+msgstr[1] "Der binne scriptflaters op dizze side. Wylst dizze troch website-editors ferholpen wurde, kinne jo hjirûnder in part fan de ynhâld besjen."
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:11
 msgid "Hide error information"
-msgstr "Foutgegevens verbergen"
+msgstr "Flatergegevens ferstopje"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:12
 msgid "More information about this error"
 msgid_plural "More information about these errors"
-msgstr[0] "Meer informatie over deze fout"
-msgstr[1] "Meer informatie over deze fouten"
+msgstr[0] "Mear ynformaasje oer dizze flater"
+msgstr[1] "Mear ynformaasje oer dizze flaters"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
@@ -3413,15 +3413,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
-msgstr "Fouttype:"
+msgstr "Flatertype:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:41
 msgid "In macro:"
-msgstr "In macro:"
+msgstr "Yn macro:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:46
 msgid "Create Template"
-msgstr "Sjabloon aanmaken"
+msgstr "Sjabloan oanmeitsje"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:49
 msgid "Edit Template"
@@ -3429,7 +3429,7 @@ msgstr "Sjabloan bewurkje"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:52
 msgid "Parsing macro:"
-msgstr "Macro parsen:"
+msgstr "Macro parse:"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:60
 msgid "Edit Document"
@@ -3445,7 +3445,7 @@ msgstr "Nije side "
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
-msgstr "Wijzigingen verwerpen en een nieuw document aanmaken?"
+msgstr "Wizigingen ferwerpe en in nij dokumint oanmeitsje?"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:23
 msgid "Publish and Keep Editing"
@@ -3453,19 +3453,19 @@ msgstr "Publisearjen en bewurkjen trochsette"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
 msgid "Discard"
-msgstr "Verwerpen"
+msgstr "Ferwerpe"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
-msgstr "Beoordeling nodig?"
+msgstr "Beoardieling nedich?"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Revision Comment"
-msgstr "Revisieopmerking"
+msgstr "Revyzjeopmerking"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:2
 msgid "Learn how to use Revision Comments"
-msgstr "Lees hoe u revisieopmerkingen gebruikt"
+msgstr "Lês hoe't jo revyzjeopmerkingen brûke"
 
 #: kuma/wiki/jinja2/wiki/includes/revision_comment.html:3
 msgid "Tell us why you made additions and changes. It is optional, but will make page history easier to understand."
@@ -3483,11 +3483,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
 msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
-msgstr "Als u denkt dat u dit bericht ten onrechte hebt ontvangen, sla dan een concept op van uw inhoud en <a href=\"%(admin_email)s\">neem contact op met de websitebeheerders</a>."
+msgstr "As jo tinke dat jo dit berjocht ten ûnrjochte ûntfongen hawwe, bewarje dan in konsept fan jo ynhâld en <a href=\"%(admin_email)s\">nim kontakt op mei de websitebehearders</a>."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
-msgstr "Beschrijving vertalen"
+msgstr "Beskriuwing oersette"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:15
 #, python-format
@@ -3497,76 +3497,76 @@ msgstr "Titel yn it %(locale)s:"
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:26
 #, python-format
 msgid "Slug in %(locale)s:"
-msgstr "Identificator in het %(locale)s:"
+msgstr "Identificator yn it %(locale)s:"
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:66
 msgid "Find the translation source with the lookup above and then click \"Save\"."
-msgstr "Zoek de bron van de vertaling via het bovenstaande zoekveld en klik daarna op ‘Opslaan’."
+msgstr "Sykje de boarne fan de oersetting fia it boppesteande sykfjild en klik dêrnei op ‘Bewarje’."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:2
 #, python-format
 msgid "Found %(num)s document."
 msgid_plural "Found %(num)s documents"
-msgstr[0] "%(num)s document gevonden."
-msgstr[1] "%(num)s documenten gevonden."
+msgstr[0] "%(num)s dokumint fûn."
+msgstr[1] "%(num)s dokuminten fûn."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:4
 #, python-format
 msgid "Articles tagged: %(tag)s"
-msgstr "Artikelen met het label %(tag)s"
+msgstr "Artikelen mei it label %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:6
 msgid "All templates"
-msgstr "Alle sjablonen"
+msgstr "Alle sjabloanen"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:7
 #, python-format
 msgid "Found %(num)s template."
 msgid_plural "Found %(num)s templates"
-msgstr[0] "%(num)s sjabloon gevonden."
-msgstr[1] "%(num)s sjablonen gevonden."
+msgstr[0] "%(num)s sjabloan fûn."
+msgstr[1] "%(num)s sjabloanen fûn."
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:9
 msgid "Documents with errors"
-msgstr "Documenten met fouten"
+msgstr "Dokuminten mei flaters"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:11
 msgid "Top level documents"
-msgstr "Topleveldocumenten"
+msgstr "Topleveldokuminten"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:13
 msgid "Documents with no parent"
-msgstr "Documenten zonder bovenliggende"
+msgstr "Dokuminten sûnder boppelizzende"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:15
 msgid "All documents"
-msgstr "Alle documenten"
+msgstr "Alle dokuminten"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:30
 msgid "Translation updates needed"
-msgstr "Vertalingsupdates nodig"
+msgstr "Oersettingsfernijingen nedich"
 
 #: kuma/wiki/jinja2/wiki/list/documents.html:55 kuma/wiki/jinja2/wiki/list/needs_review.html:46 kuma/wiki/jinja2/wiki/list/with_localization_tags.html:30
 msgid "There are no articles."
-msgstr "Er zijn geen artikelen."
+msgstr "Der binne gjin artikelen."
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:4
 #, python-format
 msgid "Documents for %(tag)s review"
-msgstr "Documenten voor beoordeling met %(tag)s"
+msgstr "Dokuminten foar beoardieling mei %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:7
 msgid "Documents for review"
-msgstr "Documenten voor beoordeling"
+msgstr "Dokuminten foar beoardieling"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:12
 #, python-format
 msgid "Articles in Need of Review Tagged: %(tag)s"
-msgstr "Artikelen voor beoordeling met het label %(tag)s"
+msgstr "Artikelen foar beoardieling mei it label %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:14
 msgid "All Articles in Need of Review"
-msgstr "Alle artikelen voor beoordeling"
+msgstr "Alle artikelen foar beoardieling"
 
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:25
 #, python-format
@@ -3583,7 +3583,7 @@ msgstr "Kontrolearje dizze artikelen op technyske krektheid en foltôging, en wi
 #: kuma/wiki/jinja2/wiki/list/needs_review.html:36
 #, python-format
 msgid "Found %(count)s documents."
-msgstr "%(count)s documenten gevonden."
+msgstr "%(count)s dokuminten fûn."
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:2
 #, python-format
@@ -3600,15 +3600,15 @@ msgstr "Revyzjeskiednis foar:"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Translations"
-msgstr "Geselecteerde vertalingen vergelijken"
+msgstr "Selektearre oersettingen fergelykje"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:42
 msgid "Compare Selected Revisions"
-msgstr "Geselecteerde revisies vergelijken"
+msgstr "Selektearre revyzjes fergelykje"
 
 #: kuma/wiki/jinja2/wiki/list/revisions.html:78
 msgid "This document has no revisions."
-msgstr "Dit document heeft geen revisies."
+msgstr "Dit dokumint hat gjin revyzjes."
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:2
 msgid "All Tags"
@@ -3616,28 +3616,28 @@ msgstr "Alle labels"
 
 #: kuma/wiki/jinja2/wiki/list/tags.html:18
 msgid "There are no tags."
-msgstr "Er zijn geen labels."
+msgstr "Der binne gjin labels."
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:3
 #, python-format
 msgid "Localized articles tagged with: %(tag)s"
-msgstr "Vertaalde artikelen met het label %(tag)s"
+msgstr "Oersette artikelen mei it label %(tag)s"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:5
 msgid "Articles tagged with any localization tags"
-msgstr "Artikelen gelabeld met een lokalisatielabel"
+msgstr "Artikelen labele mei in lokalisaasjelabel"
 
 #: kuma/wiki/jinja2/wiki/list/with_localization_tags.html:15
 #, python-format
 msgid "Found %(count)s document."
 msgid_plural "Found %(count)s documents."
-msgstr[0] "%(count)s document gevonden."
-msgstr[1] "%(count)s documenten gevonden."
+msgstr[0] "%(count)s dokumint fûn."
+msgstr[1] "%(count)s dokuminten fûn."
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:4 kuma/wiki/templates/admin/wiki/purge_documents.html:25 kuma/wiki/templates/admin/wiki/purge_documents.html:30
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:54
 msgid "Purge documents"
-msgstr "Documenten opruimen"
+msgstr "Dokuminten opromje"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
@@ -3645,7 +3645,7 @@ msgstr "Begjinside"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
 msgid "Documents"
-msgstr "Documenten"
+msgstr "Dokuminten"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:39
 msgid ""
@@ -3659,7 +3659,7 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:8
 msgid "\"Load documents\""
-msgstr "‘Documenten laden’"
+msgstr "‘Dokuminten lade’"
 
 #: kuma/wiki/templates/admin/wiki/document/change_list.html:12
 #, python-format
@@ -3668,36 +3668,36 @@ msgstr "%(name)s tafoegje"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:4 kuma/wiki/templates/admin/wiki/document/load_data_form.html:25 kuma/wiki/templates/admin/wiki/document/load_data_form.html:30
 msgid "Load documents"
-msgstr "Documenten laden"
+msgstr "Dokuminten lade"
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:37
 msgid "Please correct the error below."
-msgstr "Corrigeer de onderstaande fout."
+msgstr "Korrizjearje de ûndersteande flater."
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr "Laden"
+msgstr "Lade"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
-msgstr "Akismet-inzendingsdetails"
+msgstr "Akismet-ynstjoeringsdetails"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:10
 msgid "To send the submission to Akismet please save the form below."
-msgstr "Sla het onderstaande formulier op om de inzending naar Akismet te versturen."
+msgstr "Bewarje it ûndersteande formulier om de ynstjoering nei Akismet te ferstjoeren."
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_list.html:4
 msgid "Select an Akismet submission for more details"
-msgstr "Selecteer een Akismet-inzending voor meer details"
+msgstr "Selektearje in Akismet-ynstjoering foar mear details"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
-msgstr "Revisie %s"
+msgstr "Revyzje %s"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
-msgstr "Er is een fout opgetreden bij het genereren van de inhoud."
+msgstr "Der is in flater bard by it generearjen fan de ynhâld."
 
 #: kuma/wiki/views/delete.py:54
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
@@ -3706,22 +3706,22 @@ msgstr "Dokumint bestiet al. Noat: jo kinne gjin dokumint dat ferpleatst is wero
 #: kuma/wiki/views/document.py:608
 #, python-format
 msgid "Redirected from %(url)s"
-msgstr "Doorgestuurd vanaf %(url)s"
+msgstr "Trochstjoerd fan %(url)s ôf"
 
 #: kuma/wiki/views/document.py:656
 #, python-format
 msgid "I learned about %(title)s on MDN."
-msgstr "Ik heb iets over %(title)s gehoord op MDN."
+msgstr "Ik haw wat oer %(title)s heard op MDN."
 
 #: kuma/wiki/views/document.py:726
 #, python-format
 msgid "Unsupported content-type: %s"
-msgstr "Niet-ondersteund inhoudstype: %s"
+msgstr "Net-stipe ynhâldstype: %s"
 
 #: kuma/wiki/views/document.py:733
 #, python-format
 msgid "Request parsing error: %s"
-msgstr "Parsefout bij aanvraag: %s"
+msgstr "Parseflater by oanfraach: %s"
 
 #: kuma/wiki/views/document.py:753
 msgid "ETag precondition failed"
@@ -3729,7 +3729,7 @@ msgstr "ETag-rânbetingst mislearre"
 
 #: kuma/wiki/views/edit.py:114
 msgid "Sections may only be edited inline."
-msgstr "Secties mogen alleen inline worden bewerkt."
+msgstr "Seksjes meie allinnich inline bewurke wurde."
 
 #: kuma/wiki/views/misc.py:53
 msgid "Autosuggest requires a partial title. For a full document index, see the main page."
@@ -3738,20 +3738,20 @@ msgstr "Automatyske suggestje fereasket in stik fan in titel. Besjoch de haadsid
 #: kuma/wiki/views/misc.py:106
 #, python-format
 msgid "%(obj_count)d object(s) loaded."
-msgstr "%(obj_count)d object(en) geladen."
+msgstr "%(obj_count)d object(en) laden."
 
 #: kuma/wiki/views/misc.py:110
 #, python-format
 msgid "Failed to import data: %(error)s"
-msgstr "Importeren van gegevens mislukt: %(error)s"
+msgstr "Ymportearjen fan gegevens mislearre: %(error)s"
 
 #: kuma/wiki/views/revision.py:140
 msgid "Document has been edited; please re-review."
-msgstr "Document is bewerkt; beoordeel het opnieuw."
+msgstr "Dokumint is bewurke; beoardiel it opnij."
 
 #: kuma/wiki/views/translate.py:72
 msgid "You cannot translate this document."
-msgstr "U kunt dit document niet vertalen."
+msgstr "Jo kinne dit dokumint net oersette."
 
 #: templates/admin/search/index/change_list.html:8
 #, python-format
