@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-05-26 09:18-0700\n"
+"POT-Creation-Date: 2016-06-24 12:43-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Wolof https://pontoon.mozilla.org/wo/\n"
@@ -194,7 +194,7 @@ msgstr ""
 
 #: kuma/static/js/wiki-samples.js:97
 #, python-format
-msgid "Open in %(site)s "
+msgid "Open in %(site)s"
 msgstr ""
 
 #: kuma/static/js/wiki-tags-edit.js:48

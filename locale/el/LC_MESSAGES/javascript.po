@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-05-26 09:18-0700\n"
+"POT-Creation-Date: 2016-06-24 12:43-0700\n"
 "PO-Revision-Date: 2016-06-19 18:37+0000\n"
 "Last-Translator: Alfredos-Panagiotis Damkalis <fredy@fredy.gr>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
@@ -195,8 +195,8 @@ msgid "Autosave disabled."
 msgstr "Απενεργοποιήθηκε η αυτόματη αποθήκευση."
 
 #: kuma/static/js/wiki-samples.js:97
-#, python-format
-msgid "Open in %(site)s "
+#, fuzzy, python-format
+msgid "Open in %(site)s"
 msgstr "Άνοιγμα σε %(site)s "
 
 #: kuma/static/js/wiki-tags-edit.js:48

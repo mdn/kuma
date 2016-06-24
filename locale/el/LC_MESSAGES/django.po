@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-05-26 09:18-0700\n"
+"POT-Creation-Date: 2016-06-24 12:43-0700\n"
 "PO-Revision-Date: 2016-06-12 13:40+0000\n"
 "Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
@@ -317,11 +317,11 @@ msgstr "Έξοδος"
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
 msgstr ""
 
-#: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:87
+#: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:86
 msgid "Other languages:"
 msgstr "Άλλες γλώσσες:"
 
-#: jinja2/includes/lang_switcher.html:15 kuma/wiki/jinja2/wiki/document.html:98
+#: jinja2/includes/lang_switcher.html:15 kuma/wiki/jinja2/wiki/document.html:97
 msgid "Go"
 msgstr "Μετάβαση"
 
@@ -333,7 +333,8 @@ msgstr "Έξοδος"
 msgid "Sign in"
 msgstr "Είσοδος"
 
-#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:112 kuma/users/jinja2/users/user_detail.html:116
+#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_avatar_and_links.html:12
+#: kuma/users/jinja2/users/includes/user_avatar_and_links.html:16
 msgid "GitHub"
 msgstr "GitHub"
 
@@ -488,7 +489,8 @@ msgstr ""
 msgid "File"
 msgstr "Αρχείο"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65 kuma/wiki/models.py:1911
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1911
 msgid "Title"
 msgstr "Τίτλος"
 
@@ -558,7 +560,8 @@ msgstr ""
 msgid "Created"
 msgstr "Δημιουργήθηκε"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:74 kuma/wiki/jinja2/wiki/confirm_document_delete.html:15
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -596,8 +599,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -838,7 +841,7 @@ msgstr ""
 msgid "Revert"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:340
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:37 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:66 kuma/wiki/feeds.py:340
 msgid "View Page"
 msgstr ""
 
@@ -846,16 +849,18 @@ msgstr ""
 msgid "Edit Page"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:41 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:70
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/users/jinja2/users/includes/user_revision_history_form.html:41 kuma/wiki/feeds.py:364
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/wiki/models.py:1864
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/wiki/models.py:1864
 msgid "Revision"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:149 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
-#: kuma/wiki/jinja2/wiki/revision.html:42
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:9
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
 msgstr "Σχόλιο"
 
@@ -867,11 +872,11 @@ msgstr ""
 msgid "Toggle IPs"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:26
 msgid "new"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:27
 #, fuzzy
 msgid "deleted"
 msgstr "Διαγραφή"
@@ -951,8 +956,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1119,8 +1124,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
@@ -1422,8 +1427,8 @@ msgstr ""
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1467,7 +1472,7 @@ msgstr ""
 msgid "Beta tester"
 msgstr ""
 
-#: kuma/users/forms.py:40 kuma/users/jinja2/users/user_detail.html:77
+#: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:52
 msgid "Interests"
 msgstr ""
 
@@ -1479,23 +1484,23 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:107 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_avatar_and_links.html:7
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/user_detail.html:121
+#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_avatar_and_links.html:21
 msgid "Stack Overflow"
 msgstr ""
 
-#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/user_detail.html:125
+#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_avatar_and_links.html:25
 msgid "LinkedIn"
 msgstr ""
 
-#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/user_detail.html:129
+#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_avatar_and_links.html:29
 msgid "Mozillians"
 msgstr ""
 
-#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/user_detail.html:133 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
+#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_avatar_and_links.html:33
 msgid "Facebook"
 msgstr ""
 
@@ -1553,7 +1558,8 @@ msgstr ""
 msgid "IRC nickname"
 msgstr ""
 
-#: kuma/users/models.py:94 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79 kuma/wiki/jinja2/wiki/edit.html:191
+#: kuma/users/models.py:94 kuma/users/jinja2/users/includes/user_revision_history_form.html:10 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
+#: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
 msgstr ""
 
@@ -1615,21 +1621,21 @@ msgstr ""
 msgid "Take the next step to get involved on MDN!"
 msgstr ""
 
-#: kuma/users/views.py:198
+#: kuma/users/views.py:268
 msgid "Email address"
 msgstr ""
 
-#: kuma/users/views.py:257
+#: kuma/users/views.py:327
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr ""
 
-#: kuma/users/views.py:260
+#: kuma/users/views.py:330
 #, python-format
 msgid "%(email)s Unverified"
 msgstr ""
 
-#: kuma/users/views.py:263 kuma/users/jinja2/socialaccount/signup.html:135
+#: kuma/users/views.py:333 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr ""
 
@@ -1641,7 +1647,7 @@ msgstr ""
 msgid "This profile is inactive."
 msgstr ""
 
-#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/user_detail.html:57
+#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:32
 msgid "Email addresses"
 msgstr ""
 
@@ -1840,7 +1846,7 @@ msgstr ""
 msgid "Account Connections"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/user_detail.html:55
+#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Account connections"
 msgstr ""
 
@@ -1885,8 +1891,8 @@ msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 "connect with my MDN profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-"next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1931,8 +1937,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
@@ -1972,6 +1978,11 @@ msgstr ""
 msgid "Sign in with GitHub"
 msgstr ""
 
+#: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
+#, python-format
+msgid "Ban %(user)s"
+msgstr ""
+
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
 msgid "Why are you banning %(user)s"
@@ -1989,6 +2000,66 @@ msgstr ""
 msgid "Ban user"
 msgstr ""
 
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
+#, python-format
+msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
+#, python-format
+msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
+#, python-format
+msgid "Because %(user)s has already been banned, you may review and revert their revisions below."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:57
+msgid "Revert Revisions"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:59
+msgid "Ban User for Spam"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
+msgid "Ban User for Spam & Revert Revisions"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:65
+msgid "Ban user for other reasons."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:68
+msgid "User has not made any revisions in the past three days, and this user was already banned."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:20
+#, python-format
+msgid "<a href=\"%(url)s\">%(user)s</a> identified as a spammer."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:24
+msgid "The following revisions were reverted:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:27
+msgid "(Note: No revisions were actually reverted. This feature will be added in Phase 2.)"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
+msgid "The user did not have any revisions that were reverted."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:55
+msgid "Pages needing follow up:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:82
+msgid "The user did not have any revisions needing follow-up."
+msgstr ""
+
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
 msgstr ""
@@ -2001,66 +2072,40 @@ msgstr ""
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
-msgid "Edit"
-msgstr "Επεξεργασία"
-
-#: kuma/users/jinja2/users/user_detail.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
-#, fuzzy
-msgid "Advanced"
-msgstr "Προχωρημένο επίπεδο"
-
-#: kuma/users/jinja2/users/user_detail.html:53
-msgid "Manage"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:56
-msgid "API keys"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:90
-msgid "Areas of Expertise"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:98
-#, python-format
-msgid "Member since %(date_joined)s"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:142
+#: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:142
+#: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:147
+#: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:148 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+#: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
 msgstr "Ημερομηνία"
 
-#: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/document.html:385
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:382
 msgid "Edit page"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:158
+#: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:159 kuma/wiki/jinja2/wiki/document.html:386
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:383
 msgid "View page history"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:171
+#: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:175
+#: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
 msgstr ""
 
@@ -2256,20 +2301,59 @@ msgstr ""
 msgid "Blog: %(blog_link)s"
 msgstr ""
 
-#: kuma/users/templatetags/jinja_helpers.py:35
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:60
+#, fuzzy
+msgid "This user has not created any revisions in the past three days."
+msgstr "Δεν είναι δημιουργία του συντάκτη"
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
+#, fuzzy
+msgid "Advanced"
+msgstr "Προχωρημένο επίπεδο"
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:28
+msgid "Manage"
+msgstr ""
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:31
+msgid "API keys"
+msgstr ""
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:65
+msgid "Areas of Expertise"
+msgstr ""
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:73
+#, python-format
+msgid "Member since %(date_joined)s"
+msgstr ""
+
+#: kuma/users/templatetags/jinja_helpers.py:36
 #, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
 msgstr ""
 
-#: kuma/users/templatetags/jinja_helpers.py:42
+#: kuma/users/templatetags/jinja_helpers.py:43
 msgid "Banned"
 msgstr ""
 
-#: kuma/users/templatetags/jinja_helpers.py:47
+#: kuma/users/templatetags/jinja_helpers.py:46
+msgid "Clean Up Revisions"
+msgstr ""
+
+#: kuma/users/templatetags/jinja_helpers.py:51
 msgid "Ban User"
 msgstr ""
 
-#: kuma/users/templatetags/jinja_helpers.py:58
+#: kuma/users/templatetags/jinja_helpers.py:54
+msgid "Ban User & Clean Up"
+msgstr ""
+
+#: kuma/users/templatetags/jinja_helpers.py:66
 msgid "Admin"
 msgstr ""
 
@@ -2442,12 +2526,12 @@ msgstr ""
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:864 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:867 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr ""
 
-#: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:865
+#: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:868
 msgid "Title of article"
 msgstr ""
 
@@ -2500,11 +2584,11 @@ msgstr ""
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:871
+#: kuma/wiki/forms.py:874
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:872
+#: kuma/wiki/forms.py:875
 msgid "New article URL"
 msgstr ""
 
@@ -2654,8 +2738,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -2777,112 +2861,112 @@ msgstr ""
 msgid "Restore this document"
 msgstr "Αναφέρετε αυτό το σχόλιο"
 
-#: kuma/wiki/jinja2/wiki/document.html:167
+#: kuma/wiki/jinja2/wiki/document.html:166
 #, fuzzy
 msgid "Previous Search Result"
 msgstr "Αποτελέσματα αναζήτησης"
 
-#: kuma/wiki/jinja2/wiki/document.html:167 kuma/wiki/jinja2/wiki/document.html:177
+#: kuma/wiki/jinja2/wiki/document.html:166 kuma/wiki/jinja2/wiki/document.html:176
 #, fuzzy
 msgid "No Previous Search Result"
 msgstr "Αποτελέσματα αναζήτησης"
 
-#: kuma/wiki/jinja2/wiki/document.html:173
+#: kuma/wiki/jinja2/wiki/document.html:172
 #, fuzzy
 msgid "Your Search Results"
 msgstr "Αποτελέσματα αναζήτησης"
 
-#: kuma/wiki/jinja2/wiki/document.html:177
+#: kuma/wiki/jinja2/wiki/document.html:176
 #, fuzzy
 msgid "Next Search Result"
 msgstr "Αποτελέσματα αναζήτησης"
 
-#: kuma/wiki/jinja2/wiki/document.html:181
+#: kuma/wiki/jinja2/wiki/document.html:180
 #, fuzzy
 msgid "see all contributors"
 msgstr "Όροι συντελεστών"
 
-#: kuma/wiki/jinja2/wiki/document.html:181
+#: kuma/wiki/jinja2/wiki/document.html:180
 #, fuzzy
 msgid "hide contributors"
 msgstr "Όροι συντελεστών"
 
-#: kuma/wiki/jinja2/wiki/document.html:185
+#: kuma/wiki/jinja2/wiki/document.html:184
 #, python-format
 msgid "View profile: %(username)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:210
+#: kuma/wiki/jinja2/wiki/document.html:209
 msgid "In This Article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:232
+#: kuma/wiki/jinja2/wiki/document.html:231
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:240
+#: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:249
+#: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:267
+#: kuma/wiki/jinja2/wiki/document.html:266
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:276
+#: kuma/wiki/jinja2/wiki/document.html:275
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:284
+#: kuma/wiki/jinja2/wiki/document.html:283
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:289
+#: kuma/wiki/jinja2/wiki/document.html:288
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:296
+#: kuma/wiki/jinja2/wiki/document.html:295
 #, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:307
+#: kuma/wiki/jinja2/wiki/document.html:306
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:310
+#: kuma/wiki/jinja2/wiki/document.html:309
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:323
+#: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:333
+#: kuma/wiki/jinja2/wiki/document.html:330
 #, fuzzy
 msgid "Document Tags and Contributors"
 msgstr "Όροι συντελεστών"
 
-#: kuma/wiki/jinja2/wiki/document.html:339
+#: kuma/wiki/jinja2/wiki/document.html:336
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "Μετάβαση στην πρώτη σελίδα"
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:342
 msgid "Last updated by:"
 msgstr ""
 
@@ -3322,73 +3406,64 @@ msgstr ""
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:107
-#, fuzzy
-msgid "Share:"
-msgstr "Διαμοιρασμός"
-
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:111
-msgid "Google+"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:102
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:129
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:103
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
 msgid "Updating subscription status"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:144
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:118
 #, fuzzy, python-format
 msgid "Subscribe to %(title)s"
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:145
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:119
 #, fuzzy, python-format
 msgid "Unsubscribe from %(title)s"
 msgstr "Συνδρομή"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
 #, fuzzy, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
 #, fuzzy, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr "Συνδρομή"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:159
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
 #, fuzzy, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo του/της {display_name}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:160
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:134
 #, fuzzy, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo του/της {display_name}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
 #, fuzzy, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr ""
@@ -3500,13 +3575,18 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
 msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
+#, python-format
+msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
@@ -3781,6 +3861,10 @@ msgstr ""
 msgid "Elasticsearch server: %(backend)s"
 msgstr ""
 
+#, fuzzy
+#~ msgid "Share:"
+#~ msgstr "Διαμοιρασμός"
+
 #~ msgid "Resubmit"
 #~ msgstr "Αποτελέσματα αναζήτησης"
 
@@ -3845,9 +3929,6 @@ msgstr ""
 
 #~ msgid "This contains inappropriate content"
 #~ msgstr "Περιέχει ανάρμοστο περιεχόμενο"
-
-#~ msgid "This was not created by the author"
-#~ msgstr "Δεν είναι δημιουργία του συντάκτη"
 
 #~ msgid "The author is fake"
 #~ msgstr "Τα στοιχεία του συντάκτη είναι ψευδή"
@@ -3921,8 +4002,8 @@ msgstr ""
 #~ msgid ""
 #~ "Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."
 #~ msgstr ""
-#~ "Η τρίτη έκδοση των επικαλυπτώμενων φύλλων στυλ ( Cascading Style Sheets - CSS3) παρέχει διάφορα νέα χαρακτηριστικά και ιδιότητες για τη βελτίωση της μορφοποίησης και της εμφάνισης εγγράφων γραμμένων"
-#~ " με διάφορες γλώσσες markup, όπως η HTML ή η XML."
+#~ "Η τρίτη έκδοση των επικαλυπτώμενων φύλλων στυλ ( Cascading Style Sheets - CSS3) παρέχει διάφορα νέα χαρακτηριστικά και ιδιότητες για τη βελτίωση της μορφοποίησης και της εμφάνισης εγγράφων "
+#~ "γραμμένων με διάφορες γλώσσες markup, όπως η HTML ή η XML."
 
 #~ msgid "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
 #~ msgstr "http://en.wikipedia.org/wiki/Cascading_Style_Sheets"
@@ -3965,7 +4046,8 @@ msgstr ""
 #~ msgid "Forms"
 #~ msgstr "Φόρμες"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 #~ msgstr ""
 #~ "Τα στοιχεία και οι ιδιότητες φορμών της HTML5 παρέχουν περισσότερο έλεγχο απ' ό,τι στην HTML4 και διευκολύνουν τη διαχείριση αφού δεν είναι πια αναγκαία η χρήση πολύπλοκων σεναρίων εντολών και η "
 #~ "εφαρμογή στυλ που απαιτούσε η HTML4."
@@ -4279,8 +4361,8 @@ msgstr ""
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
 #~ msgstr ""
-#~ "<p>Πρόκειται να αφαιρέσετε το <strong>%(demo_title)s</strong> από το Demo Studio.</p> <p>Η παρουσίαση του demo, ο πηγαίος κώδικας και τα στατιστικά του θα <strong>διαγραφούν</strong>.</p> <p>Αυτή η "
-#~ "ενέργεια <strong>δεν είναι αναστρέψιμη</strong>."
+#~ "<p>Πρόκειται να αφαιρέσετε το <strong>%(demo_title)s</strong> από το Demo Studio.</p> <p>Η παρουσίαση του demo, ο πηγαίος κώδικας και τα στατιστικά του θα <strong>διαγραφούν</strong>.</p> "
+#~ "<p>Αυτή η ενέργεια <strong>δεν είναι αναστρέψιμη</strong>."
 
 #~ msgid "Mozilla Demo Studio"
 #~ msgstr "Mozilla Demo Studio"
@@ -4458,11 +4540,11 @@ msgstr ""
 #~ msgstr "Υποβολη νεου demo"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
-#~ "<p>Είτε φτιάχνετε ένα νέο θαυμαστό τόπο στο διαδίκτυο, είτε απλά πειραματίζεστε με τη νέα τεχνολογία, σας προσκαλούμε να προσθέσετε τα δικά σας  demo για να μοιραστείτε τις εμπειρίες σας (ή απλά να "
-#~ "τα επιδείξετε) με άλλους προγραμματιστές.</p> <p>Σας παρακαλούμε να συμπληρώσετε την παρακάτω φόρμα για να είστε σίγουροι ότι το demo σας θα υποβληθεί με επιτυχία στο Demo Studio.</p>"
+#~ "<p>Είτε φτιάχνετε ένα νέο θαυμαστό τόπο στο διαδίκτυο, είτε απλά πειραματίζεστε με τη νέα τεχνολογία, σας προσκαλούμε να προσθέσετε τα δικά σας  demo για να μοιραστείτε τις εμπειρίες σας (ή απλά "
+#~ "να τα επιδείξετε) με άλλους προγραμματιστές.</p> <p>Σας παρακαλούμε να συμπληρώσετε την παρακάτω φόρμα για να είστε σίγουροι ότι το demo σας θα υποβληθεί με επιτυχία στο Demo Studio.</p>"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "Περιγράψτε το demo σας"
@@ -4491,24 +4573,24 @@ msgstr ""
 #~ msgstr "Ετοιμάζοντας το demo σας"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο βασικό "
-#~ "κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> <li>Αν το "
-#~ "demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s\">λογαριασμό στο"
-#~ " MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να συμπεριλάβετε δεσμούς "
-#~ "στις σελίδες των δημιουργών του.</li> </ul>"
+#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο "
+#~ "βασικό κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> "
+#~ "<li>Αν το demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s"
+#~ "\">λογαριασμό στο MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να "
+#~ "συμπεριλάβετε δεσμούς στις σελίδες των δημιουργών του.</li> </ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "Παραθέστε τον πηγαίο κώδικα"
 
 #~ msgid "<p>Upload a ZIP file of your source code, in which the main page of your demo is named <code>index.html</code> in the root directory.</p>"
 #~ msgstr ""
-#~ "<p>Αποστείλετε ένα αρχείο ZIP  με τον πηγαίο κώδικα σας, στο οποίο η κεντρική σελίδα του demo σας θα βρίσκεται στο βασικό κατάλογο του συμπιεσμένου αρχείου και θα έχει όνομα "
-#~ "<code>index.html</code>.</p>"
+#~ "<p>Αποστείλετε ένα αρχείο ZIP  με τον πηγαίο κώδικα σας, στο οποίο η κεντρική σελίδα του demo σας θα βρίσκεται στο βασικό κατάλογο του συμπιεσμένου αρχείου και θα έχει όνομα <code>index.html</"
+#~ "code>.</p>"
 
 #~ msgid "Submit demo"
 #~ msgstr "Υποβολη demo"
@@ -4517,36 +4599,36 @@ msgstr ""
 #~ msgstr "Αποθήκευση αλλαγών"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
 #~ msgstr ""
-#~ "<p>Είτε δημιουργείτε μια απίθανη νέα εμπειρία για τους χρήστες του διαδικτύου, είτε απλά πειραματίζεστε με τις τελευταίες εξελίξεις της τεχνολογίας, σας προσκαλούμε να υποβάλετε τα demo σας και να "
-#~ "τα μοιραστείτε (ή απλά να τα δείξετε) με άλλους δημιουργούς.</p>"
+#~ "<p>Είτε δημιουργείτε μια απίθανη νέα εμπειρία για τους χρήστες του διαδικτύου, είτε απλά πειραματίζεστε με τις τελευταίες εξελίξεις της τεχνολογίας, σας προσκαλούμε να υποβάλετε τα demo σας και "
+#~ "να τα μοιραστείτε (ή απλά να τα δείξετε) με άλλους δημιουργούς.</p>"
 
 #~ msgid "Before You Begin"
 #~ msgstr "Πριν ξεκινήσετε"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Θα πρέπει να είστε διατεθειμένοι να <strong>παρέχετε τον πηγαίο κώδικα</strong> του demo σας. Τα demo φιλοξενούνται στους διακομιστές του Demo Studio.</li> <li>Ο πηγαίος κώδικας του demo "
-#~ "σας θα πρέπει να διατίθεται σύμφωνα με τους όρους μιας  <strong>ανοικτής άδειας χρήσης</strong>, όπως οι MPL, GPL, ή BSD.</li> <li>Το demo σας θα πρέπει να πραγματεύεται <strong>ανοικτές τεχνολογίες"
-#~ " για το διαδίκτυο</strong>, όπως η HTML5 και το CSS3.</li> <li>Το demo σας θα πρέπει να υποστηρίζεται από μια ευρεία γκάμα <strong>σύγχρονων περιηγητών</strong>, όπως οι Firefox, Chrome, Safari, και"
-#~ " Opera.</li> </ul>"
+#~ "<ul> <li>Θα πρέπει να είστε διατεθειμένοι να <strong>παρέχετε τον πηγαίο κώδικα</strong> του demo σας. Τα demo φιλοξενούνται στους διακομιστές του Demo Studio.</li> <li>Ο πηγαίος κώδικας του "
+#~ "demo σας θα πρέπει να διατίθεται σύμφωνα με τους όρους μιας  <strong>ανοικτής άδειας χρήσης</strong>, όπως οι MPL, GPL, ή BSD.</li> <li>Το demo σας θα πρέπει να πραγματεύεται <strong>ανοικτές "
+#~ "τεχνολογίες για το διαδίκτυο</strong>, όπως η HTML5 και το CSS3.</li> <li>Το demo σας θα πρέπει να υποστηρίζεται από μια ευρεία γκάμα <strong>σύγχρονων περιηγητών</strong>, όπως οι Firefox, "
+#~ "Chrome, Safari, και Opera.</li> </ul>"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
-#~ " license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο βασικό "
-#~ "κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> <li>Αν το "
-#~ "demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s\">λογαριασμό στο"
-#~ " MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να συμπεριλάβετε δεσμούς "
-#~ "στις σελίδες των δημιουργών του.</li> </ul>"
+#~ "<ul> <li>Ο πηγαίος κώδικας του demo σας θα πρέπει να είναι πακεταρισμένος σε αρχείο ZIP.</li> <li>Η κεντρική σελίδα του demo σας θα πρέπει να ένα αρχείο με όνομα <code>index.html</code> στο "
+#~ "βασικό κατάλογο του ZIP.</li> <li>Το demo  σας θα πρέπει να χρησιμοποιεί μόνο τεχνολογία client-side (HTML, CSS, JavaScript). Δεν υποστηρίζονται γλώσσες server-side όπως η PHP και η Ruby.</li> "
+#~ "<li>Αν το demo  σας απαιτεί εξωτερικούς πόρους, θα πρέπει να χρησιμοποιήσετε AJAX για την πρόσβαση τους.</li> <li>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <a href=\"%(signup_url)s"
+#~ "\">λογαριασμό στο MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να "
+#~ "συμπεριλάβετε δεσμούς στις σελίδες των δημιουργών του.</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <strong><a href=\"%(signup_url)s\">λογαριασμό στο MDN</a></strong>.</p>"
@@ -4711,11 +4793,11 @@ msgstr ""
 #~ msgstr "Ο/Η <cite class=\"author fn\">%(comment_profile_link)s</cite> είπε,"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "Δημοσιεύτηκε <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"μόνιμος δεσμός προς το σχόλιο του/της %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Δημοσιεύτηκε <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"μόνιμος δεσμός προς το σχόλιο του/της %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "Απαντήστε σ' αυτό το σχόλιο από {full_name}"
@@ -4893,20 +4975,20 @@ msgstr ""
 
 #~ msgid "<p><strong>HyperText Markup Language</strong> is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you learn HTML.</p>"
 #~ msgstr ""
-#~ "<p><strong>Η HyperText Markup Language</strong> είναι η βασική γλώσσα σύνταξης για να βάλετε πληροφορίες στον παγκόσμιο ιστό. Αν θέλετε να δημιουργήσετε ή να τροποποιήσετε ιστοσελίδες, το καλύτερο "
-#~ "που έχετε να κάνετε, είναι να μάθετε HTML.</p>"
+#~ "<p><strong>Η HyperText Markup Language</strong> είναι η βασική γλώσσα σύνταξης για να βάλετε πληροφορίες στον παγκόσμιο ιστό. Αν θέλετε να δημιουργήσετε ή να τροποποιήσετε ιστοσελίδες, το "
+#~ "καλύτερο που έχετε να κάνετε, είναι να μάθετε HTML.</p>"
 
 #~ msgid ""
 #~ "<p><strong>Cascading Style Sheets</strong> is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define the appearance and "
 #~ "location of the HTML elements within the pages.</p>"
 #~ msgstr ""
-#~ "<p><strong>Τα Cascading Style Sheets</strong> Είναι μια γλώσσα που περιγράφει την εμφάνιση των ιστοσελίδων . Για να δημιουργήσετε ευπαρουσίαστες ιστοσελίδες, θα πρέπει να μάθετε CSS ώστε να μπορείτε"
-#~ " να ορίσετε την εμφάνιση και την τοποθέτηση των στοιχείων της HTML μέσα στις σελίδες.</p>"
+#~ "<p><strong>Τα Cascading Style Sheets</strong> Είναι μια γλώσσα που περιγράφει την εμφάνιση των ιστοσελίδων . Για να δημιουργήσετε ευπαρουσίαστες ιστοσελίδες, θα πρέπει να μάθετε CSS ώστε να "
+#~ "μπορείτε να ορίσετε την εμφάνιση και την τοποθέτηση των στοιχείων της HTML μέσα στις σελίδες.</p>"
 
 #~ msgid "<p><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and forms.</p>"
 #~ msgstr ""
-#~ "<p><strong>Η JavaScript</strong> (για συντομία JS) είναι η γλώσσα προγραμματισμού που επιτρέπει στις ιστοσελίδες να ανταποκρίνονται σε αλληλεπιδράσεις με τους χρήστες πέρα από τη βασική υποστήριξη "
-#~ "αλληλεπίδρασης που προσφέρουν οι δεσμοί και οι φόρμες της HTML.</p>"
+#~ "<p><strong>Η JavaScript</strong> (για συντομία JS) είναι η γλώσσα προγραμματισμού που επιτρέπει στις ιστοσελίδες να ανταποκρίνονται σε αλληλεπιδράσεις με τους χρήστες πέρα από τη βασική "
+#~ "υποστήριξη αλληλεπίδρασης που προσφέρουν οι δεσμοί και οι φόρμες της HTML.</p>"
 
 #~ msgid "Learn CSS"
 #~ msgstr "Μάθετε CSS"
@@ -4918,7 +5000,8 @@ msgstr ""
 #~ msgstr "Εισαγωγικό επίπεδο"
 
 #~ msgid "This tutorial introduces you to Cascading Style Sheets (CSS). It guides you through the basic features of CSS with practical examples that you can try for yourself on your own computer."
-#~ msgstr "Αυτό το σεμινάριο είναι εισαγωγικό στα Cascading Style Sheets (CSS). Σας καθοδηγεί στα βασικά χαρακτηριστικά του CSS με πρακτικά παραδείγματα που μπορείτε να δοκιμάσετε στον υπολογιστή σας."
+#~ msgstr ""
+#~ "Αυτό το σεμινάριο είναι εισαγωγικό στα Cascading Style Sheets (CSS). Σας καθοδηγεί στα βασικά χαρακτηριστικά του CSS με πρακτικά παραδείγματα που μπορείτε να δοκιμάσετε στον υπολογιστή σας."
 
 #~ msgid "CSS Basics"
 #~ msgstr "Βασικές αρχές CSS"
@@ -5005,8 +5088,8 @@ msgstr ""
 #~ msgstr "Το χαρακτηριστικό @font-face του CSS3, σας επιτρέπει να χρησιμοποιείτε προσαρμοσμένες γραμματοσειρές για το διαδίκτυο με ένα εύκολα προσβάσιμο, διαχειρίσιμο και επεκτάσιμο τρόπο."
 
 #~ msgid ""
-#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and so"
-#~ " can't take advantage."
+#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers "
+#~ "and so can't take advantage."
 #~ msgstr ""
 #~ "Αυτές οι σελίδες αναφέρονται στο <strong>CSS3</strong>, την πιο πρόσφατη και υπό ανάπτυξη έκδοση του CSS. Πολλά από τα χαρακτηριστικά του CSS3 υποστηρίζονται ήδη με διάφορους τρόπους από τους "
 #~ "σύγχρονους περιηγητές, αλλά αρκετοί χρήστες χρησιμοποιούν παλιότερους περιηγητές και δεν μπορούν να τα απολαύσουν."
@@ -5018,10 +5101,11 @@ msgstr ""
 #~ msgstr "Τα βασικά της HTML"
 
 #~ msgid ""
-#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth."
+#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater "
+#~ "depth."
 #~ msgstr ""
-#~ "Τι είναι η HTML, τι κάνει, ένα σύντομο ιστορικό της και ποια είναι η δομή ενός εγγράφου HTML. Τα άρθρα που ακολουθούν μετά από το παρών, αναπτύσσουν με περισσότερες λεπτομέρειες κάθε ξεχωριστό τμήμα"
-#~ " της HTML."
+#~ "Τι είναι η HTML, τι κάνει, ένα σύντομο ιστορικό της και ποια είναι η δομή ενός εγγράφου HTML. Τα άρθρα που ακολουθούν μετά από το παρών, αναπτύσσουν με περισσότερες λεπτομέρειες κάθε ξεχωριστό "
+#~ "τμήμα της HTML."
 
 #~ msgid "Basic Structure of a Web Page"
 #~ msgstr "Βασική δομή μιας ιστοσελίδας"
@@ -5055,8 +5139,8 @@ msgstr ""
 
 #~ msgid "Use these challenges to hone your HTML skills (for example, \"Should I use an &lt;h2&gt; element or a &lt;strong&gt; element?\"), focusing on meaningful mark-up."
 #~ msgstr ""
-#~ "Χρησιμοποιείστε αυτές τις προκλήσεις για να βελτιώσετε τις γνώσεις σας στη HTML (για παράδειγμα, «Να χρησιμοποιήσω ένα στοιχείο &lt;h2&gt; ή ένα στοιχείο &lt;strong&gt; ;»), προσπαθώντας να γράψετε "
-#~ "ευανάγνωστο mark-up."
+#~ "Χρησιμοποιείστε αυτές τις προκλήσεις για να βελτιώσετε τις γνώσεις σας στη HTML (για παράδειγμα, «Να χρησιμοποιήσω ένα στοιχείο &lt;h2&gt; ή ένα στοιχείο &lt;strong&gt; ;»), προσπαθώντας να "
+#~ "γράψετε ευανάγνωστο mark-up."
 
 #~ msgid "A comprehensive reference for HTML elements, and how Firefox and other browsers support them."
 #~ msgstr "Μια πλήρης αναφορά των στοιχείων της HTML  και η υποστήριξη τους από τον Firefox κι άλλους περιηγητές."
@@ -5137,11 +5221,11 @@ msgstr ""
 #~ msgstr "Παρουσίαση σελίδων που χρησιμοποιούν HTML5 για να σας βοηθήσει να μάθετε πως θα πρέπει να χρησιμοποιείται."
 
 #~ msgid ""
-#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so can't "
-#~ "take advantage."
+#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so "
+#~ "can't take advantage."
 #~ msgstr ""
-#~ "Αυτές οι σελίδες αναφέρονται στην <strong>HTML5</strong>, την επερχόμενη πιο πρόσφατη έκδοση του πρότυπου. Πολλά από τα χαρακτηριστικά της HTML5 υποστηρίζονται από τους σύγχρονους περιηγητές, αλλά "
-#~ "αρκετοί χρήστες χρησιμοποιούν παλιούς περιηγητές και δεν μπορούν να τα απολαύσουν."
+#~ "Αυτές οι σελίδες αναφέρονται στην <strong>HTML5</strong>, την επερχόμενη πιο πρόσφατη έκδοση του πρότυπου. Πολλά από τα χαρακτηριστικά της HTML5 υποστηρίζονται από τους σύγχρονους περιηγητές, "
+#~ "αλλά αρκετοί χρήστες χρησιμοποιούν παλιούς περιηγητές και δεν μπορούν να τα απολαύσουν."
 
 #~ msgid "Learn JavaScript"
 #~ msgstr "Μάθετε JavaScript"
@@ -5223,8 +5307,8 @@ msgstr ""
 
 #~ msgid "Get the latest news, status and developer documentation on the Mozilla mobile project. Check out the mobile project's goals, and how you can help out and get involved!"
 #~ msgstr ""
-#~ "Λάβετε τα πιο πρόσφατα νέα, ενημερώσεις για την κατάσταση και τεκμηρίωση για δημιουργούς από τον τομέα για κινητά του έργου Mozilla. Ρίξτε μια ματιά στους στόχους του έργου για τα κινητά και δείτε "
-#~ "πως μπορείτε να συμμετέχετε και να βοηθήσετε!"
+#~ "Λάβετε τα πιο πρόσφατα νέα, ενημερώσεις για την κατάσταση και τεκμηρίωση για δημιουργούς από τον τομέα για κινητά του έργου Mozilla. Ρίξτε μια ματιά στους στόχους του έργου για τα κινητά και "
+#~ "δείτε πως μπορείτε να συμμετέχετε και να βοηθήσετε!"
 
 #~ msgid "Build Great Mobile Add-ons"
 #~ msgstr "Φτιάξτε εξαιρετικά πρόσθετα για κινητά"
@@ -5233,8 +5317,8 @@ msgstr ""
 #~ "Firefox is the world's first Web browser to support mobile add-ons. Learn about <a href=\"%(basics_url)s\">Extension Basics</a>, <a href=\"%(best_practices_url)s\">Extension Best Practices</a>, "
 #~ "helpful <a href=\"%(snippets_url)s\">Code Snippets</a>, and more so you can build innovative add-ons for Firefox on Android and Firefox on Nokia's Meego platform."
 #~ msgstr ""
-#~ "Ο Firefox είναι ο πρώτος περιηγητής παγκοσμίως που υποστηρίζει πρόσθετα σχεδιασμένα για κινητά. Μάθετε τα <a href=\"%(basics_url)s\">βασικά για επεκτάσεις</a>, τις <a "
-#~ "href=\"%(best_practices_url)s\">καλύτερες πρακτικές για επεκτάσεις</a>, δείτε βοηθητικά <a href=\"%(snippets_url)s\">τμήματα κώδικα</a> κι ακόμα περισσότερα, ώστε να μπορείτε να φτιάξετε καινοτόμα "
+#~ "Ο Firefox είναι ο πρώτος περιηγητής παγκοσμίως που υποστηρίζει πρόσθετα σχεδιασμένα για κινητά. Μάθετε τα <a href=\"%(basics_url)s\">βασικά για επεκτάσεις</a>, τις <a href="
+#~ "\"%(best_practices_url)s\">καλύτερες πρακτικές για επεκτάσεις</a>, δείτε βοηθητικά <a href=\"%(snippets_url)s\">τμήματα κώδικα</a> κι ακόμα περισσότερα, ώστε να μπορείτε να φτιάξετε καινοτόμα "
 #~ "πρόσθετα για τον  Firefox σε Android και στην πλατφόρμα Meego της Nokia."
 
 #~ msgid "Location-Aware Applications"
@@ -5244,8 +5328,8 @@ msgstr ""
 #~ "Learn how to use the <a href=\"%(geo_url)s\">Geolocation API</a> and put people on the right path. Location-Aware Browsing is a must when you're out and about on your mobile. Learn how to build "
 #~ "innovative apps that delight your audience."
 #~ msgstr ""
-#~ "Μάθετε πως να χρησιμοποιείτε το  <a href=\"%(geo_url)s\">API γεωτοποθεσίας (Geolocation)</a> και δείξτε στους άλλους το σωστό δρόμο. Η περιήγηση με βάση την τοποθεσία είναι σχεδόν απαραίτητη όταν "
-#~ "χρησιμοποιείτε το κινητό για περιήγηση. Μάθετε πως να φτιάξετε καινοτόμες εφαρμογές που θα ενθουσιάσουν το κοινό σας."
+#~ "Μάθετε πως να χρησιμοποιείτε το  <a href=\"%(geo_url)s\">API γεωτοποθεσίας (Geolocation)</a> και δείξτε στους άλλους το σωστό δρόμο. Η περιήγηση με βάση την τοποθεσία είναι σχεδόν απαραίτητη "
+#~ "όταν χρησιμοποιείτε το κινητό για περιήγηση. Μάθετε πως να φτιάξετε καινοτόμες εφαρμογές που θα ενθουσιάσουν το κοινό σας."
 
 #~ msgid "Help build Firefox for Mobile"
 #~ msgstr "Βοηθήστε στην ανάπτυξη του Firefox για κινητά"
@@ -5279,11 +5363,11 @@ msgstr ""
 #~ msgstr "Firefox για κινητά: Τι θα ακολουθήσει"
 
 #~ msgid ""
-#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the world's "
-#~ "best mobile Web browser."
+#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the "
+#~ "world's best mobile Web browser."
 #~ msgstr ""
-#~ "Τα διάφορα έργα και ο σχεδιασμός δεν σταματούν ποτέ. Ετοιμάζουμε κάποια απίθανα νέα χαρακτηριστικά και βελτιώσεις για την επόμενη σταθερή μας έκδοση. Ρίξτε μια ματιά και δείτε πως μπορείτε να μας "
-#~ "βοηθήσετε να συνεχίσουμε την ανάπτυξη του καλύτερου περιηγητή για κινητά στον κόσμο."
+#~ "Τα διάφορα έργα και ο σχεδιασμός δεν σταματούν ποτέ. Ετοιμάζουμε κάποια απίθανα νέα χαρακτηριστικά και βελτιώσεις για την επόμενη σταθερή μας έκδοση. Ρίξτε μια ματιά και δείτε πως μπορείτε να "
+#~ "μας βοηθήσετε να συνεχίσουμε την ανάπτυξη του καλύτερου περιηγητή για κινητά στον κόσμο."
 
 #~ msgid "\"HTML5 is Great for Mobile, Developers Say\""
 #~ msgstr "«Οι προγραμματιστές λένε ότι η HTML5 είναι εξαιρετική στα κινητά»"
@@ -5292,12 +5376,12 @@ msgstr ""
 #~ msgstr "Ακούστε τι λένε άλλοι προγραμματιστές για τα πλεονεκτήματα της HTML5 και την ανάπτυξη στο ιστό για κινητά, σ' αυτό το άρθρο του ReadWriteWeb:"
 
 #~ msgid ""
-#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact that"
-#~ " apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
+#~ "that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
 #~ msgstr ""
-#~ "«'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' Το γεγονός ότι"
-#~ " οι εφαρμογές μπορούν να εγκατασταθούν από ένα οποιοδήποτε URL αντί να περιμένει ο χρήστης να κατεβάσει κάτι από ένα App Store, σημαίνει ότι έτσι οι δημιουργοί μειώνουν τους φραγμούς στη διαδικασία"
-#~ "  προώθησης της εφαρμογής τους.»"
+#~ "«'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' Το γεγονός "
+#~ "ότι οι εφαρμογές μπορούν να εγκατασταθούν από ένα οποιοδήποτε URL αντί να περιμένει ο χρήστης να κατεβάσει κάτι από ένα App Store, σημαίνει ότι έτσι οι δημιουργοί μειώνουν τους φραγμούς στη "
+#~ "διαδικασία  προώθησης της εφαρμογής τους.»"
 
 #~ msgid "Android APIs"
 #~ msgstr "Android APIs"
@@ -5321,22 +5405,23 @@ msgstr ""
 #~ msgstr "Μάθετε περισσότερα για την τεχνολογία που χρησιμοποιείται στον πυρήνα των εφαρμογών και των υπηρεσιών Mozilla."
 
 #~ msgid "There are several ways you can use Mozilla code in your own project. Find everything you need to develop \"powered by Mozilla\" applications."
-#~ msgstr "Υπάρχουν διάφοροι τρόποι που μπορείτε να χρησιμοποιήσετε τον κώδικα του Mozilla στο δικό σας έργο. Βρείτε όλα όσα θα χρειαστείτε για να φτιάξετε εφαρμογές που θα είναι «powered by Mozilla»."
+#~ msgstr ""
+#~ "Υπάρχουν διάφοροι τρόποι που μπορείτε να χρησιμοποιήσετε τον κώδικα του Mozilla στο δικό σας έργο. Βρείτε όλα όσα θα χρειαστείτε για να φτιάξετε εφαρμογές που θα είναι «powered by Mozilla»."
 
 #~ msgid "Debugging"
 #~ msgstr "Αποσφαλμάτωση"
 
 #~ msgid "Mozilla developers have come up with not just technologies and features to help you debug code, but have devised tips and techniques that can help too."
 #~ msgstr ""
-#~ "Οι δημιουργοί του έργου Mozilla δεν έχουν φτιάξει μόνο την απαραίτητη τεχνολογία και τα εργαλεία για την αποσφαλμάτωση του κώδικα σας, αλλά διαθέτουν και σχεδιαστικές συμβουλές και τεχνικές που θα "
-#~ "σας βοηθήσουν."
+#~ "Οι δημιουργοί του έργου Mozilla δεν έχουν φτιάξει μόνο την απαραίτητη τεχνολογία και τα εργαλεία για την αποσφαλμάτωση του κώδικα σας, αλλά διαθέτουν και σχεδιαστικές συμβουλές και τεχνικές που "
+#~ "θα σας βοηθήσουν."
 
 #~ msgid ""
 #~ "Localization (L10n) is the process of translating software user interfaces from one language to another and adapting it to suit a foreign culture. These resources are about making Mozilla-based "
 #~ "applications/extensions localizable."
 #~ msgstr ""
-#~ "Με τον όρο localization (L10n), εννοούμε τη διαδικασία μετάφρασης της διασύνδεσης χρήστη ενός προγράμματος από μια γλώσσα σε μια άλλη και την προσαρμογή του στην αντίστοιχη κουλτούρα και τις ανάγκες"
-#~ " αυτής της γλώσσας. Αυτές οι πηγές αφορούν τη διαδικασία προετοιμασίας των εφαρμογών/επεκτάσεων που βασίζονται σε κώδικα του Mozilla για την υποστήριξη localization."
+#~ "Με τον όρο localization (L10n), εννοούμε τη διαδικασία μετάφρασης της διασύνδεσης χρήστη ενός προγράμματος από μια γλώσσα σε μια άλλη και την προσαρμογή του στην αντίστοιχη κουλτούρα και τις "
+#~ "ανάγκες αυτής της γλώσσας. Αυτές οι πηγές αφορούν τη διαδικασία προετοιμασίας των εφαρμογών/επεκτάσεων που βασίζονται σε κώδικα του Mozilla για την υποστήριξη localization."
 
 #~ msgid "All applications development documentation"
 #~ msgstr "Ολη η τεκμηριωση για αναπτυξη εφαρμογων"
@@ -5578,13 +5663,13 @@ msgstr ""
 #~ msgstr "<a href=\"%(builder_url)s\">Φτιάξτε τα δικά σας πρόσθετα</a> και κουβεντιάστε για αυτά με την <a href=\"%(dev_url)s\">κοινότητα δημιουργών πρόσθετων</a>."
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups through <a"
-#~ " href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. Share your "
-#~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups "
+#~ "through <a href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. "
+#~ "Share your discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
 #~ "<h2>Βαρεθήκατε να μαθαίνετε μόνοι σας;<br>Θέλετε να είστε μέρος μιας κοινότητας ανθρώπων που μαθαίνουν τις ανοικτές τεχνολογίες του διαδικτύου;</h2> <p>Σκεφθήτε την πιθανότητα να γραφτείτε στις "
-#~ "δωρεάν δικτυακές ομάδες μελέτης του <a href=\"http://p2pu.org/\">Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School"
-#~ " of Webcraft</a>. Μοιραστείτε τις ανακαλύψεις, τους προβληματισμούς και τις κατακτήσεις σας πάνω στη γνώση, με άλλους ανθρώπους που μαθαίνουν όπως κι εσείς.</p>"
+#~ "δωρεάν δικτυακές ομάδες μελέτης του <a href=\"http://p2pu.org/\">Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing"
+#~ "\">School of Webcraft</a>. Μοιραστείτε τις ανακαλύψεις, τους προβληματισμούς και τις κατακτήσεις σας πάνω στη γνώση, με άλλους ανθρώπους που μαθαίνουν όπως κι εσείς.</p>"
 
 #~ msgid ""
 #~ "<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through <a "
@@ -5592,13 +5677,15 @@ msgstr ""
 #~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
 #~ "<h2>Βαρεθήκατε να μαθαίνετε μόνοι σας;<br>Θέλετε να είστε μέρος μιας κοινότητας ανθρώπων που μαθαίνουν τις ανοικτές τεχνολογίες του διαδικτύου;</h2> <p>Σκεφθήτε την πιθανότητα να γραφτείτε στις "
-#~ "δωρεάν δικτυακές ομάδες μελέτης του <a href=\"http://p2pu.org/\">Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School"
-#~ " of Webcraft</a>. Μοιραστείτε τις ανακαλύψεις, τους προβληματισμούς και τις κατακτήσεις σας πάνω στη γνώση, με άλλους ανθρώπους που μαθαίνουν όπως κι εσείς.</p>"
+#~ "δωρεάν δικτυακές ομάδες μελέτης του <a href=\"http://p2pu.org/\">Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing"
+#~ "\">School of Webcraft</a>. Μοιραστείτε τις ανακαλύψεις, τους προβληματισμούς και τις κατακτήσεις σας πάνω στη γνώση, με άλλους ανθρώπους που μαθαίνουν όπως κι εσείς.</p>"
 
-#~ msgid "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Log in</a> to try again.</li> <li><a href=\"/Special:UserRegistration\">Register</a> to edit docs, submit demos, and post to forums.</li>"
+#~ msgid ""
+#~ "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Log in</a> to try again.</li> <li><a href=\"/Special:UserRegistration\">Register</a> to edit docs, submit demos, and post to forums."
+#~ "</li>"
 #~ msgstr ""
-#~ "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Συνδεθείτε</a> για να προσπαθήσετε ξανά.</li> <li><a href=\"/Special:UserRegistration\">Εγγραφείτε</a> για να επεξεργαστείτε έγγραφα, να"
-#~ " υποβάλετε  demo και να δημοσιεύεστε στα φόρουμ.</li>"
+#~ "<li><a href=\"/Special:UserLogin?returntotitle=%(returnto)s\">Συνδεθείτε</a> για να προσπαθήσετε ξανά.</li> <li><a href=\"/Special:UserRegistration\">Εγγραφείτε</a> για να επεξεργαστείτε "
+#~ "έγγραφα, να υποβάλετε  demo και να δημοσιεύεστε στα φόρουμ.</li>"
 
 #~ msgid "<p><a href=\"/Special:UserRegistration\">Register</a> or <a href=\"/Special:UserLogin\">log in</a> to add your own.</p>"
 #~ msgstr "<p><a href=\"/Special:UserRegistration\">Εγγραφείτε</a> ή <a href=\"/Special:UserLogin\">συνδεθείτε</a> για να προσθέσετε το δικό σας.</p>"
@@ -5613,19 +5700,19 @@ msgstr ""
 #~ "<p>No computer has ever made a mistake or distorted information. We are all, by any practical definition of the words, foolproof and incapable of error. So it can only be attributable to human "
 #~ "error. If so, <a href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website\">file a bug</a> for my human operators.</p>"
 #~ msgstr ""
-#~ "<p>Κανένας υπολογιστής δεν έκανε ποτέ λάθος, ούτε παραμόρφωσε πληροφορίες. Είμαστε κυριολεκτικά και μεταφορικά αλάνθαστοι και ανίκανοι να παράγουμε σφάλματα. Οτιδήποτε δεν λειτουργεί σωστά μπορεί να"
-#~ " αποδοθεί μόνο σε ανθρώπινα λάθη και παραλήψεις. Αν κάτι δεν λειτουργεί σωστά λοιπόν, <a "
-#~ "href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website\">καταχωρήστε ένα bug</a> για να το δουν οι άνθρωποι που με διαχειρίζονται.</p>"
+#~ "<p>Κανένας υπολογιστής δεν έκανε ποτέ λάθος, ούτε παραμόρφωσε πληροφορίες. Είμαστε κυριολεκτικά και μεταφορικά αλάνθαστοι και ανίκανοι να παράγουμε σφάλματα. Οτιδήποτε δεν λειτουργεί σωστά "
+#~ "μπορεί να αποδοθεί μόνο σε ανθρώπινα λάθη και παραλήψεις. Αν κάτι δεν λειτουργεί σωστά λοιπόν, <a href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer"
+#~ "%20Network&component=Website\">καταχωρήστε ένα bug</a> για να το δουν οι άνθρωποι που με διαχειρίζονται.</p>"
 
 #~ msgid ""
-#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> <li>View "
-#~ "<strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
+#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
+#~ "<li>View <strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
 #~ "<strong>documentation</strong> to learn about the open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>Καλωσορίσατε στο Mozilla Demo Studio, όπου προγραμματιστές σαν κι εσάς μπορούν να αναπτύξουν, να μοιραστούν, να επιδείξουν και να μάθουν όλες τις νέες δικτυακές τεχνολογίες. Δείτε όλες τις νέες "
-#~ "δυνατότητες, εξερευνώντας το Demo Studio:</p> <ul> <li>Δείτε <strong>demo</strong> που αποδεικνύουν τι μπορεί να φτιαχτεί με HTML, CSS, και JavaScript.</li> <li>Επιθεωρήστε τον <strong>πηγαίο "
-#~ "κώδικα</strong> αυτών των demo για να δείτε πως ακριβώς δουλεύουν.</li> <li>Διαβάστε την <strong>τεκμηρίωση</strong> για να μάθετε σχετικά με τα ανοικτά πρότυπα και την τεχνολογία που είναι η "
-#~ "κινητήρια δύναμη του διαδικτύου.</li> </ul>"
+#~ "<p>Καλωσορίσατε στο Mozilla Demo Studio, όπου προγραμματιστές σαν κι εσάς μπορούν να αναπτύξουν, να μοιραστούν, να επιδείξουν και να μάθουν όλες τις νέες δικτυακές τεχνολογίες. Δείτε όλες τις "
+#~ "νέες δυνατότητες, εξερευνώντας το Demo Studio:</p> <ul> <li>Δείτε <strong>demo</strong> που αποδεικνύουν τι μπορεί να φτιαχτεί με HTML, CSS, και JavaScript.</li> <li>Επιθεωρήστε τον "
+#~ "<strong>πηγαίο κώδικα</strong> αυτών των demo για να δείτε πως ακριβώς δουλεύουν.</li> <li>Διαβάστε την <strong>τεκμηρίωση</strong> για να μάθετε σχετικά με τα ανοικτά πρότυπα και την τεχνολογία "
+#~ "που είναι η κινητήρια δύναμη του διαδικτύου.</li> </ul>"
 
 #~ msgid "A comprehensive, usable, and accurate resource for everyone developing for the Open Web."
 #~ msgstr "Μια περιεκτική, εύχρηστη και ακριβής πηγή γνώσης για οποιονδήποτε αναπτύσσει για το ανοικτό διαδίκτυο."
@@ -5694,8 +5781,8 @@ msgstr ""
 #~ "Experience the very latest features before they go to beta by trying out the new Aurora builds. Test things out early and help decide what makes it to final release. Note: Aurora is not for the "
 #~ "faint of heart, but that's the price of being on the cutting edge."
 #~ msgstr ""
-#~ "Δείτε τα πιο πρόσφατα ενσωματωμένα χαρακτηριστικά πριν φτάσουν σε έκδοση beta  δοκιμάζοντας τις νέες εκδόσεις Aurora. Δοκιμάστε χαρακτηριστικά πρώτοι και βοηθήστε στη λήψη αποφάσεων για το ποια θα "
-#~ "υπάρχουν στην σταθερή έκδοση. Σημείωση: Οι εκδόσεις Aurora δεν είναι κατάλληλες για τον οποιοδήποτε, αυτό σημαίνει να είσαι στην αιχμή της τεχνολογίας."
+#~ "Δείτε τα πιο πρόσφατα ενσωματωμένα χαρακτηριστικά πριν φτάσουν σε έκδοση beta  δοκιμάζοντας τις νέες εκδόσεις Aurora. Δοκιμάστε χαρακτηριστικά πρώτοι και βοηθήστε στη λήψη αποφάσεων για το ποια "
+#~ "θα υπάρχουν στην σταθερή έκδοση. Σημείωση: Οι εκδόσεις Aurora δεν είναι κατάλληλες για τον οποιοδήποτε, αυτό σημαίνει να είσαι στην αιχμή της τεχνολογίας."
 
 #~ msgid "Favorite <span class=\"mozilla\">Mozilla</span> Tools"
 #~ msgstr "Δημοφιλη εργαλεια <span class=\"mozilla\">Mozilla</span>"
@@ -5765,19 +5852,19 @@ msgstr ""
 
 #~ msgid ""
 #~ "Mozilla and <a href=\"%(p2pu)s\">P2PU</a> are creating the <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes are globally "
-#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and build "
-#~ "careers on open web technology."
+#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and "
+#~ "build careers on open web technology."
 #~ msgstr ""
-#~ "Η κοινότητα Mozilla και το <a href=\"%(p2pu)s\">P2PU</a>, δημιούργησαν το <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, μια νέα πλατφόρμα εκμάθησης για το διαδίκτυο. Η πρόσβαση στα μαθήματα "
-#~ "είναι δυνατή από οποιοδήποτε μέρος του κόσμου, είναι 100%% δωρεάν και συμμετέχουν αποκλειστικά εθελοντές, καθηγητές και μαθητές όπως κι εσείς. Ο στόχος της είναι να γίνει ένα ενεργητικό σύστημα "
-#~ "αλληλοβοήθειας, ώστε να διευκολύνει τους πάντες να έχουν πρόσβαση στις ανοικτές τεχνολογίες του διαδικτύου και να κάνουν καριέρα μ'αυτές."
+#~ "Η κοινότητα Mozilla και το <a href=\"%(p2pu)s\">P2PU</a>, δημιούργησαν το <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, μια νέα πλατφόρμα εκμάθησης για το διαδίκτυο. Η πρόσβαση στα "
+#~ "μαθήματα είναι δυνατή από οποιοδήποτε μέρος του κόσμου, είναι 100%% δωρεάν και συμμετέχουν αποκλειστικά εθελοντές, καθηγητές και μαθητές όπως κι εσείς. Ο στόχος της είναι να γίνει ένα ενεργητικό "
+#~ "σύστημα αλληλοβοήθειας, ώστε να διευκολύνει τους πάντες να έχουν πρόσβαση στις ανοικτές τεχνολογίες του διαδικτύου και να κάνουν καριέρα μ'αυτές."
 
 #~ msgid ""
-#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest enhancements"
-#~ " in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
+#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest "
+#~ "enhancements in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
 #~ msgstr ""
-#~ "Η κοινότητα Mozilla συνεχίζει να ηγείται της προσπάθειας για την υιοθέτηση της HTML5 κι άλλων ανερχόμενων ανοικτών τεχνολογιών για το διαδίκτυο. Μάθετε περισσότερα για τις <a "
-#~ "href=\"%(devmo_html5)s\">προδιαγραφές της HTML5</a> και τις πιο πρόσφατες βελτιώσεις σε HTML5, CSS3 και άλλα <a href=\"%(devmo_fx4dev)s\">χαρακτηριστικά για δημιουργούς στον Firefox 4</a>."
+#~ "Η κοινότητα Mozilla συνεχίζει να ηγείται της προσπάθειας για την υιοθέτηση της HTML5 κι άλλων ανερχόμενων ανοικτών τεχνολογιών για το διαδίκτυο. Μάθετε περισσότερα για τις <a href="
+#~ "\"%(devmo_html5)s\">προδιαγραφές της HTML5</a> και τις πιο πρόσφατες βελτιώσεις σε HTML5, CSS3 και άλλα <a href=\"%(devmo_fx4dev)s\">χαρακτηριστικά για δημιουργούς στον Firefox 4</a>."
 
 #~ msgid "New to MDN?"
 #~ msgstr "Είστε νέοι στο MDN;"
@@ -5819,7 +5906,8 @@ msgstr ""
 #~ msgstr "School of Webcraft"
 
 #~ msgid "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
-#~ msgstr "Δείτε πως μπορείτε να <a href=\"%(devmo_participate)s\">συμμετέχετε</a> στη <a href=\"%(devmo_l10n)s\">μετάφραση</a>, την <a href=\"%(devmo_qa)s\">quality assurance</a> κι άλλα έργα Mozilla."
+#~ msgstr ""
+#~ "Δείτε πως μπορείτε να <a href=\"%(devmo_participate)s\">συμμετέχετε</a> στη <a href=\"%(devmo_l10n)s\">μετάφραση</a>, την <a href=\"%(devmo_qa)s\">quality assurance</a> κι άλλα έργα Mozilla."
 
 #~ msgid "See more about {title} by {author}"
 #~ msgstr "Δείτε περισσότερα σχετικά με το {title} του/της {author}"
@@ -5840,30 +5928,29 @@ msgstr ""
 #~ msgstr "Η ετικέτα «%s» δεν υπάρχει στο σύνολο των ετικετών"
 
 #~ msgid ""
-#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s\">big "
-#~ "chart full of check marks</a> to prove it."
+#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s"
+#~ "\">big chart full of check marks</a> to prove it."
 #~ msgstr ""
-#~ "Δοκιμάστε την <a href=\"%(fx4_features)s\">επόμενη έκδοση του Firefox</a> και βοηθήστε μας να κάνουμε τον καλύτερο περιηγητή του κόσμου, ακόμα πιο καλό. Ο Firefox 4 ωθεί το σύγχρονο διαδίκτυο ακόμα "
-#~ "πιο μπροστά και έχουμε μια <a href=\"%(fx4_tech)s\">μεγάλη λίστα επιτευγμάτων</a> για να το αποδείξουμε."
+#~ "Δοκιμάστε την <a href=\"%(fx4_features)s\">επόμενη έκδοση του Firefox</a> και βοηθήστε μας να κάνουμε τον καλύτερο περιηγητή του κόσμου, ακόμα πιο καλό. Ο Firefox 4 ωθεί το σύγχρονο διαδίκτυο "
+#~ "ακόμα πιο μπροστά και έχουμε μια <a href=\"%(fx4_tech)s\">μεγάλη λίστα επιτευγμάτων</a> για να το αποδείξουμε."
 
 #~ msgid "The Document Object Model describes the layout and content of web pages."
 #~ msgstr "Το Document Object Model περιγράφει το σχεδιασμό και το περιεχόμενο των ιστοσελίδων."
 
 #~ msgid ""
-#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a "
-#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video "
-#~ "download links provided."
+#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a href=\"http://www.apple.com/safari/"
+#~ "\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links provided."
 #~ msgstr ""
-#~ "Αυτό το βίντεο απαιτεί περιηγητή που να υποστηρίζει ανοιχτές μορφές βίντεο: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 ή μεταγενέστερο</li> <li><a "
-#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 ή μεταγενέστερο</li> </ul> ή το <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Εναλλακτικά, μπορείτε να κάνετε λήψη "
-#~ "του βίντεο μέσω των δεσμών που παρέχουμε."
+#~ "Αυτό το βίντεο απαιτεί περιηγητή που να υποστηρίζει ανοιχτές μορφές βίντεο: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 ή μεταγενέστερο</li> <li><a href=\"http://www."
+#~ "apple.com/safari/\">Safari</a> 3.1 ή μεταγενέστερο</li> </ul> ή το <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Εναλλακτικά, μπορείτε να κάνετε λήψη του βίντεο μέσω "
+#~ "των δεσμών που παρέχουμε."
 
 #~ msgid "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies."
 #~ msgstr "Χρησιμοποιήστε το Add-ons Builder για να αναπτύξετε εύκολα και γρήγορα μια επέκταση για τον Firefox χρησιμοποιώντας απλά την τεχνολογία που θα χρησιμοποιούσατε και για τον ιστό."
 
 #~ msgid ""
-#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a "
-#~ "href=\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
+#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a href="
+#~ "\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
 #~ msgstr ""
 #~ "Χρησιμοποιήστε το Add-ons Builder για να δημιουργήσετε γρήγορα και εύκολα μια επέκταση για τον Firefox χρησιμοποιώντας μόνο τεχνολογίες που χρησιμοποιείτε καθημερινά στο διαδίκτυο. Υπάρχουν <a "
 #~ "href=\"%(tutorial)s\">οδηγίες</a> για να ξεκινήσετε και μια <a href=\"%(api)s\">πληθώρα API στη βασική βιβλιοθήκη</a> για να μπορείτε να προσθέσετε λειτουργίες στον Firefox."

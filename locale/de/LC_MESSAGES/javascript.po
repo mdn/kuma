@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-05-26 09:18-0700\n"
+"POT-Creation-Date: 2016-06-24 12:43-0700\n"
 "PO-Revision-Date: 2016-05-26 17:38+0000\n"
 "Last-Translator: Michael Köhler <michael.koehler1@gmx.de>\n"
 "Language-Team: German https://pontoon.mozilla.org/de/\n"
@@ -196,8 +196,8 @@ msgid "Autosave disabled."
 msgstr "Automatisches Speichern deaktiviert."
 
 #: kuma/static/js/wiki-samples.js:97
-#, python-format
-msgid "Open in %(site)s "
+#, fuzzy, python-format
+msgid "Open in %(site)s"
 msgstr "Öffnen in %(site)s "
 
 #: kuma/static/js/wiki-tags-edit.js:48
@@ -213,11 +213,8 @@ msgid "Search Stack Overflow"
 msgstr "Stack Overflow durchsuchen"
 
 #: kuma/static/js/wiki.js:677
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
-msgstr ""
-"Ihr Browser unterstützt kein MathML. Stattdessen wurde eine CSS-Alternative "
-"verwendet."
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
+msgstr "Ihr Browser unterstützt kein MathML. Stattdessen wurde eine CSS-Alternative verwendet."
 
 #: kuma/static/js/wiki.js:892
 msgid "Details"
@@ -231,8 +228,7 @@ msgstr "Wählen Sie einen Anhang aus"
 msgid "No attachments available"
 msgstr "Keine Anhänge verfügbar"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Anhänge"
 
@@ -252,8 +248,7 @@ msgstr "Eine Weiterleitung einrichten"
 msgid "MDN Redirect"
 msgstr "MDN-Weiterleitung"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
@@ -348,11 +343,5 @@ msgstr "Standard"
 #~ msgid "Demo Studio"
 #~ msgstr "Demo-Studio"
 
-#~ msgid ""
-#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
-#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
-#~ "draft</a>."
-#~ msgstr ""
-#~ "Sie haben einen Entwurf in Arbeit. <a href=\"\" class=\"restoreLink\">Laden "
-#~ "Sie den Inhalt des Entwurfs</a> oder <a href=\"\" "
-#~ "class=\"discardLink\">verwerfen Sie den Entwurf</a>."
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "Sie haben einen Entwurf in Arbeit. <a href=\"\" class=\"restoreLink\">Laden Sie den Inhalt des Entwurfs</a> oder <a href=\"\" class=\"discardLink\">verwerfen Sie den Entwurf</a>."

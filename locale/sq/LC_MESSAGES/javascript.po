@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-05-26 09:18-0700\n"
+"POT-Creation-Date: 2016-06-24 12:43-0700\n"
 "PO-Revision-Date: 2016-05-29 10:41+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
@@ -197,8 +197,8 @@ msgid "Autosave disabled."
 msgstr "Vetëruajtjet u çaktivizuan."
 
 #: kuma/static/js/wiki-samples.js:97
-#, python-format
-msgid "Open in %(site)s "
+#, fuzzy, python-format
+msgid "Open in %(site)s"
 msgstr "Hape në %(site)s "
 
 #: kuma/static/js/wiki-tags-edit.js:48
@@ -214,8 +214,7 @@ msgid "Search Stack Overflow"
 msgstr "Kërkoni te Stack Overflow"
 
 #: kuma/static/js/wiki.js:677
-msgid ""
-"Your browser does not support MathML. A CSS fallback has been used instead."
+msgid "Your browser does not support MathML. A CSS fallback has been used instead."
 msgstr "Shfletuesi juaj nuk mbulon MathML. Në vend të tij është përdorur CSS."
 
 #: kuma/static/js/wiki.js:892
@@ -230,8 +229,7 @@ msgstr "Përzgjidhni një bashkëngjitje"
 msgid "No attachments available"
 msgstr "S’ka bashkëngjitje"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-image-attachment/plugin.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-link-customization/plugin.js:130
 msgid "Attachments"
 msgstr "Bashkangjitje"
 
@@ -251,8 +249,7 @@ msgstr "Krijoni një Ridrejtim"
 msgid "MDN Redirect"
 msgstr "Ridrejtim MDN-je"
 
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23
-#: kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
+#: kuma/static/js/libs/ckeditor/source/plugins/mdn-redirect/dialogs/mdn-redirect.js:23 kuma/static/js/libs/ckeditor/source/plugins/mdn-sample-finder/dialogs/mdn-sample-finder.js:44
 msgid "Document"
 msgstr "Dokument"
 
@@ -347,11 +344,5 @@ msgstr "Parazgjedhje"
 #~ msgid "Demo Studio"
 #~ msgstr "Studio Demosh"
 
-#~ msgid ""
-#~ "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the"
-#~ " draft content</a> or <a href=\"\" class=\"discardLink\">discard the "
-#~ "draft</a>."
-#~ msgstr ""
-#~ "Keni në përpunim një skicë. <a href=\"\" class=\"restoreLink\">Riktheni "
-#~ "lëndën e skicës</a> ose <a href=\"\" class=\"discardLink\">hidheni skicën "
-#~ "tej</a>."
+#~ msgid "You have a draft in progress. <a href=\"\" class=\"restoreLink\">Restore the draft content</a> or <a href=\"\" class=\"discardLink\">discard the draft</a>."
+#~ msgstr "Keni në përpunim një skicë. <a href=\"\" class=\"restoreLink\">Riktheni lëndën e skicës</a> ose <a href=\"\" class=\"discardLink\">hidheni skicën tej</a>."
