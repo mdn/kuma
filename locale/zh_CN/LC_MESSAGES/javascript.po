@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-05-31 07:17+0000\n"
+"PO-Revision-Date: 2016-06-24 20:09+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (Simplified) https://pontoon.mozilla.org/zh_CN/\n"
 "Language: zh_CN\n"
@@ -196,7 +196,7 @@ msgid "Autosave disabled."
 msgstr "自动保存已禁用。"
 
 #: kuma/static/js/wiki-samples.js:97
-#, fuzzy, python-format
+#, python-format
 msgid "Open in %(site)s"
 msgstr "在 %(site)s 中打开"
 
