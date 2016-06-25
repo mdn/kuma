@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-06-25 16:03+0000\n"
+"PO-Revision-Date: 2016-06-25 16:12+0000\n"
 "Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
@@ -2023,28 +2023,27 @@ msgstr "Пользователь не делал никаких ревизий �
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:20
 #, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> identified as a spammer."
-msgstr ""
+msgstr "<a href=\"%(url)s\">%(user)s</a> обозначен как спамер."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:24
-#, fuzzy
 msgid "The following revisions were reverted:"
-msgstr "Были запрошены следующие проверки:"
+msgstr "Следующие ревизии откачены:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:27
 msgid "(Note: No revisions were actually reverted. This feature will be added in Phase 2.)"
-msgstr ""
+msgstr "(Замечание: Никакие ревизии не откатывались. Эта возможность будет добавлена в Фазе 2.)"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "The user did not have any revisions that were reverted."
-msgstr ""
+msgstr "Пользователь не делал каких-либо ревизий, которые были откачены."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:55
 msgid "Pages needing follow up:"
-msgstr ""
+msgstr "Страницы требующие проверки:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:82
 msgid "The user did not have any revisions needing follow-up."
-msgstr ""
+msgstr "Пользователь не делал каких-либо ревизий требующих проверки."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2335,7 +2334,7 @@ msgstr "Заблокирован"
 
 #: kuma/users/templatetags/jinja_helpers.py:46
 msgid "Clean Up Revisions"
-msgstr ""
+msgstr "Удалить ревизии"
 
 #: kuma/users/templatetags/jinja_helpers.py:51
 msgid "Ban User"
@@ -2343,7 +2342,7 @@ msgstr "Заблокировать пользователя"
 
 #: kuma/users/templatetags/jinja_helpers.py:54
 msgid "Ban User & Clean Up"
-msgstr ""
+msgstr "Заблокировать пользователя и прибраться"
 
 #: kuma/users/templatetags/jinja_helpers.py:66
 msgid "Admin"
@@ -3578,7 +3577,7 @@ msgstr "Если вы думаете, что получили это сообщ�
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
-msgstr ""
+msgstr "Если вы модератор спама, то вы можете <a href=\"%(akismet_submission_url)s\" target=\"_blank\">отметить это представление как не спам</a> и попробовать отправить его снова."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
