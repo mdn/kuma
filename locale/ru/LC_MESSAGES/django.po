@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-06-24 20:36+0000\n"
+"PO-Revision-Date: 2016-06-25 16:03+0000\n"
 "Last-Translator: Victor Bychek <a@bychek.ru>\n"
 "Language-Team: Russian https://pontoon.mozilla.org/ru/\n"
 "Language: ru\n"
@@ -1986,9 +1986,9 @@ msgid "Ban user"
 msgstr "Заблокировать пользователя"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
-#, fuzzy, python-format
+#, python-format
 msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
-msgstr "Ревизия %(id)s от <a href=\"%(user_profile_url)s\">%(user)s</a>, сделанная %(date)s"
+msgstr "Обозначить <a href=\"%(url)s\">%(user)s</a> как спамера?"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
 #, python-format
@@ -1998,7 +1998,7 @@ msgstr "<a href=\"%(url)s\">%(user)s</a> заблокирован."
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
 msgid "Because %(user)s has already been banned, you may review and revert their revisions below."
-msgstr ""
+msgstr "Так как %(user)s уже заблокирован, вы можете просмотреть и откатить его ревизии ниже."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:57
 msgid "Revert Revisions"
@@ -2018,7 +2018,7 @@ msgstr "Заблокировать пользователя по другой п
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:68
 msgid "User has not made any revisions in the past three days, and this user was already banned."
-msgstr ""
+msgstr "Пользователь не делал никаких ревизий в последние 3 дня, и уже заблокирован."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:20
 #, python-format
