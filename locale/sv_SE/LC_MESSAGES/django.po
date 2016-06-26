@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-06-26 11:36+0000\n"
+"PO-Revision-Date: 2016-06-26 12:14+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
@@ -1952,9 +1952,9 @@ msgid "Sign in with GitHub"
 msgstr "Logga in med GitHub"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
-#, fuzzy, python-format
+#, python-format
 msgid "Ban %(user)s"
-msgstr "Bannlys användare"
+msgstr "Bannlys %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
@@ -2027,11 +2027,11 @@ msgstr "Användaren har inte några revideringar som återställts."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:55
 msgid "Pages needing follow up:"
-msgstr ""
+msgstr "Sidor som behöver uppföljning:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:82
 msgid "The user did not have any revisions needing follow-up."
-msgstr ""
+msgstr "Användaren har inte några revideringar som behöver uppföljning."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2281,9 +2281,8 @@ msgid "Blog: %(blog_link)s"
 msgstr "Blogg: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:60
-#, fuzzy
 msgid "This user has not created any revisions in the past three days."
-msgstr "Detta skapades inte av författaren"
+msgstr "Den här användaren har inte skapat några revideringar under de senaste tre dagarna."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
@@ -2317,20 +2316,19 @@ msgstr "Bannlyst den %(ban_date)s av %(ban_admin)s."
 
 #: kuma/users/templatetags/jinja_helpers.py:43
 msgid "Banned"
-msgstr "Bannad"
+msgstr "Bannlyst"
 
 #: kuma/users/templatetags/jinja_helpers.py:46
-#, fuzzy
 msgid "Clean Up Revisions"
-msgstr "Ändra revisioner"
+msgstr "Rensa upp revideringar"
 
 #: kuma/users/templatetags/jinja_helpers.py:51
 msgid "Ban User"
-msgstr "Banna användare"
+msgstr "Bannlys användare"
 
 #: kuma/users/templatetags/jinja_helpers.py:54
 msgid "Ban User & Clean Up"
-msgstr ""
+msgstr "Bannlys användare och rensa upp"
 
 #: kuma/users/templatetags/jinja_helpers.py:66
 msgid "Admin"
@@ -3560,7 +3558,7 @@ msgstr "Om du tror att du har fått detta meddelande av misstag, vänligen spara
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
-msgstr ""
+msgstr "Om du är ett spam-moderator, kan du <a href=\"%(akismet_submission_url)s\" target=\"_blank\">markera detta bidrag som skräppost</a> och försöka skicka in det igen."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"

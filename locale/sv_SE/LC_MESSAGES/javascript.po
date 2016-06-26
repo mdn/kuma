@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-05-26 17:52+0000\n"
+"PO-Revision-Date: 2016-06-24 20:12+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish https://pontoon.mozilla.org/sv_SE/\n"
 "Language: sv_SE\n"
@@ -195,7 +195,7 @@ msgid "Autosave disabled."
 msgstr "Spara automatiskt inaktiverad."
 
 #: kuma/static/js/wiki-samples.js:97
-#, fuzzy, python-format
+#, python-format
 msgid "Open in %(site)s"
 msgstr "Öppna i %(site)s"
 
