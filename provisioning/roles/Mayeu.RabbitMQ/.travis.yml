@@ -5,7 +5,7 @@ before_install:
   - sudo apt-get update -qq
 install:
   # Install Ansible.
-  - pip install ansible==1.6.0
+  - pip install ansible
 
   # Create an inventory file for testing.
   - "printf 'rabbit-standalone ansible_ssh_host=localhost' > inventory"
