@@ -10,16 +10,16 @@
     state=present
   with_items: rabbitmq_vhost_definitions
 
-- name: add rabbitmq user and set priveleges
+- name: add rabbitmq user and set privileges
   rabbitmq_user:
     user={{ item.user }}
     password={{ item.password }}
     vhost={{ item.vhost | default('/', false) }}
     node={{ item.node | default('rabbit') }}
     tags={{ (item.tags | default('')) | join(',') }}
-    configure_priv=.*
-    read_priv=.*
-    write_priv=.*
+    configure_priv={{ item.configure_priv | default('.*') }}
+    read_priv={{ item.read_priv | default('.*') }}
+    write_priv={{ item.write_priv | default('.*') }}
     state=present
     force={{ item.force|default('yes') }}
   with_items: rabbitmq_users_definitions

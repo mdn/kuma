@@ -1,4 +1,4 @@
-BOX_NAME = ENV['VAGRANT_BOX_NAME'] || 'deb/jessie'
+BOX_NAME = ENV['VAGRANT_BOX_NAME'] || 'debian/jessie64'
 
 Vagrant.configure('2') do |config|
   config.vm.box = BOX_NAME
