@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-06-27 04:19+0000\n"
+"PO-Revision-Date: 2016-06-27 20:09+0000\n"
 "Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -1968,9 +1968,9 @@ msgid "Sign in with GitHub"
 msgstr "Entrar com GitHub"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
-#, fuzzy, python-format
+#, python-format
 msgid "Ban %(user)s"
-msgstr "Banir usuário"
+msgstr "Banir %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
@@ -1990,14 +1990,14 @@ msgid "Ban user"
 msgstr "Banir usuário"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
-#, fuzzy, python-format
+#, python-format
 msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
-msgstr "Revisão %(id)s por <a href=\"%(user_profile_url)s\">%(user)s</a> em %(date)s"
+msgstr "Identificar <a href=\"%(url)s\">%(user)s</a> como um spammer?"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
-#, fuzzy, python-format
+#, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
-msgstr "A conta deste usuário foi banida."
+msgstr "<a href=\"%(url)s\">%(user)s</a> foi banido."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
@@ -2005,14 +2005,12 @@ msgid "Because %(user)s has already been banned, you may review and revert their
 msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:57
-#, fuzzy
 msgid "Revert Revisions"
-msgstr "Rejeitar revisão"
+msgstr "Reverter revisões"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:59
-#, fuzzy
 msgid "Ban User for Spam"
-msgstr "Banir usuário"
+msgstr "Banir usuário por spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "Ban User for Spam & Revert Revisions"
@@ -2032,9 +2030,8 @@ msgid "<a href=\"%(url)s\">%(user)s</a> identified as a spammer."
 msgstr "<a href=\"%(url)s\">%(user)s</a> identificado como spammer."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:24
-#, fuzzy
 msgid "The following revisions were reverted:"
-msgstr "As seguintes revisões foram solicitadas:"
+msgstr "As seguintes revisões foram revertidas:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:27
 msgid "(Note: No revisions were actually reverted. This feature will be added in Phase 2.)"
@@ -2301,9 +2298,8 @@ msgid "Blog: %(blog_link)s"
 msgstr "Blog: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:60
-#, fuzzy
 msgid "This user has not created any revisions in the past three days."
-msgstr "Isso não foi criado pelo autor"
+msgstr "Este usuário não criou quaisquer revisões nos últimos três dias."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
@@ -2340,9 +2336,8 @@ msgid "Banned"
 msgstr "Banido"
 
 #: kuma/users/templatetags/jinja_helpers.py:46
-#, fuzzy
 msgid "Clean Up Revisions"
-msgstr "Alterar Revisões"
+msgstr "Limpar as revisões"
 
 #: kuma/users/templatetags/jinja_helpers.py:51
 msgid "Ban User"
