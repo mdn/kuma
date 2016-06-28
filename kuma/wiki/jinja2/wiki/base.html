@@ -3,11 +3,6 @@
 {% block site_css %}
     {{ super() }}
     {% stylesheet 'wiki' %}
-
-    {% if config.KUMA_CUSTOM_CSS_PATH and waffle.flag('enable_customcss') %}
-      <link rel="stylesheet" type="text/css"
-            href="{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1" />
-    {% endif %}
 {% endblock %}
 
 {% block site_js %}

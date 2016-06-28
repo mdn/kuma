@@ -100,10 +100,6 @@
     config.bodyClass = 'text-content redesign';
     config.contentsCss = mdn.assets.css['editor-content'];
 
-    if(window.waffle && window.waffle.flag_is_active('enable_customcss')) {
-      config.contentsCss.push('{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1');
-    }
-
     config.dialog_backgroundCoverColor = 'black';
     config.dialog_backgroundCoverOpacity = 0.3;
     config.dialog_noConfirmCancel = true;
