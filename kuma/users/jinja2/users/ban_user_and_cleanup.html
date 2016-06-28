@@ -26,50 +26,44 @@
     {{ _('<a href="%(url)s">%(user)s</a> has been banned.', url=detail_user.get_absolute_url(), user=detail_user) }}
   </h1>
   <p>
-  {{ _('Because %(user)s has already been banned, you may review and revert their revisions below.', user=detail_user) }}
+  {{ _('%(user)s has already been banned. You may review and revert their revisions below.', user=detail_user) }}
   </p>
 {% endif %}
 
-<div class="wrap">
+<section id="user-head" class="column-container column-container-reverse vcard user-head">
+  <div class="column-10">
+    {% include "users/includes/user_title_info.html" %}
+  </div>
+  <div class="column-2 ">
+    {% with accounts=social_accounts(detail_user) %}
+      {% include "users/includes/user_avatar_and_links.html" %}
+    {% endwith %}
+  </div>
+</section><!-- /#user-head -->
 
-  <section id="content-main" class="full">
-    <section id="user-head" class="column-container column-container-reverse vcard user-head">
-      <div class="column-10">
-        {% include "users/includes/user_title_info.html" %}
-      </div>
-      <div class="column-2 ">
-        {% with accounts=social_accounts(detail_user) %}
-          {% include "users/includes/user_avatar_and_links.html" %}
-        {% endwith %}
-      </div>
-    </section><!-- /#user-head -->
+<form id="ban-and-cleanup-form" action="{{ url('users.ban_user_and_cleanup_summary', detail_user.id) }}" method="POST">
+  {% csrf_token %}
+  {% include "users/includes/user_revision_history_form.html" %}
+  <p>
+    {% if not user_banned or revisions %}
+      <button type="submit" class="button negative ban-link">
+        {% if user_banned and revisions %}
+          {{ _('Submit Spam') }}
+        {% elif not user_banned and not revisions %}
+          {{ _('Ban User for Spam') }}
+        {% else %}
+          {{ _('Ban User for Spam & Submit Spam') }}
+        {% endif %}
+      </button>
+      {% if not user_banned and revisions %}
+        <a id="ban-for-other-reasons" href="{{ url('users.ban_user',detail_user.id) }}">{{ _('Ban user for other reasons.') }}</a>
+      {% endif %}
+    {% else %}
+      {{ _('User has not made any revisions in the past three days, and this user was already banned.') }}
+    {% endif %}
+  </p>
 
-    <section id="docs-activity" class="user-section">
-        <form id="ban-and-cleanup-form" action="{{ url('users.ban_user_and_cleanup_summary', detail_user.id) }}" method="POST">
-          {% csrf_token %}
-          {% include "users/includes/user_revision_history_form.html" %}
-          <p>
-            {% if not user_banned or revisions %}
-              <button type="submit" class="button negative ban-link">
-                {% if user_banned and revisions %}
-                  {{ _('Revert Revisions') }}
-                {% elif not user_banned and not revisions %}
-                  {{ _('Ban User for Spam') }}
-                {% else %}
-                  {{ _('Ban User for Spam & Revert Revisions') }}
-                {% endif %}
-              </button>
-                {% if not user_banned and revisions %}
-                  <a id="ban-for-other-reasons" href="{{ url('users.ban_user',detail_user.id) }}">{{ _('Ban user for other reasons.') }}</a>
-                {% endif %}
-            {% else %}
-              {{ _('User has not made any revisions in the past three days, and this user was already banned.') }}
-            {% endif %}
-          </p>
+</form>
 
-        </form>
-
-    </section><!-- /#docs-activity -->
-</section><!-- /#content-main -->
 
 {% endblock %}
