@@ -23,7 +23,6 @@ from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required
-from kuma.core.utils import paginate
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import RevisionAkismetSubmission
 
@@ -148,14 +147,20 @@ def ban_user_and_cleanup_summary(request, user_id):
         .order_by('-created')
 
     # Submit revisions to Akismet as spam
+    not_submitted_to_akismet = []
     for revision in revisions_to_be_reverted:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
         akismet_submission_data = {'revision': revision.id}
 
-        data = RevisionAkismetSubmissionSpamForm(data=akismet_submission_data, instance=submission, request=request)
-        # TODO: What to do of data is not valid? Currently, fail silently
+        data = RevisionAkismetSubmissionSpamForm(
+            data=akismet_submission_data,
+            instance=submission,
+            request=request)
+        # Submit to Akismet or note that validation & sending to Akismet failed
         if data.is_valid():
             data.save()
+        else:
+            not_submitted_to_akismet.append(revision)
 
     # TODO: In the future this will take the revisions out of request.POST
     # and either revert them or not. For now list all of the revisions for the past 3 days
@@ -165,8 +170,10 @@ def ban_user_and_cleanup_summary(request, user_id):
     revisions_reverted = revisions_reverted.filter(created__gte=date_three_days_ago)
 
     # TODO: revisions_needing_follow_up will be revisions that have not been reverted
-    revisions_needing_follow_up = revisions_reverted
-    revisions_reverted = revisions_reverted
+    revisions_needing_follow_up = {
+        'manual_revert': revisions_reverted,
+        'not_submitted_to_akismet': not_submitted_to_akismet
+    }
 
     context = {'detail_user': user,
                'form': UserBanForm(),

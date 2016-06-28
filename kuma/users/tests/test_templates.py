@@ -4,6 +4,7 @@ import requests_mock
 from constance import config as constance_config
 from constance.test.utils import override_config
 from django.conf import settings
+from mock import patch
 from pyquery import PyQuery as pq
 from waffle.models import Flag
 
@@ -617,6 +618,38 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ok_(exp_reverted in revisions_reverted_section.text())
         ok_(exp_followup in revisions_followup_section.text())
 
+    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
+    def test_user_revisions_not_submitted_to_akismet(self, mock_form):
+        """If revision not submitted to Akismet, summary template states this"""
+        expect_txt = 'The following revisions could not be submitted to Akismet'
+        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
+        mock_form.return_value = False
+
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        revisions_created = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_needing_follow_up_section = page.find('#revisions-followup')
+        not_submitted = page.find('#not-submitted-to-akismet li')
+
+        # The form is_valid() method should have been called for each revision
+        eq_(mock_form.call_count, len(revisions_created))
+        # Template should state that the revisions were not submitted to Akismet
+        ok_(expect_txt in revisions_needing_follow_up_section.text())
+        # All of the revisions should be in the 'not submitted' section
+        eq_(len(not_submitted), len(revisions_created))
 
 #    TODO: Phase III:
 #    def test_unreverted_changes_in_summary_page_template(self):

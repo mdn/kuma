@@ -24,7 +24,7 @@
       {{ _('The following revisions were reverted:') }}
     </h2>
     <div>
-      {{ _('(Note: No revisions were actually reverted. This feature will be added in Phase 2.)') }}
+      {{ _('(Note: No revisions were actually reverted. This feature will be added in Phase 3.)') }}
     </div>
     <br />
     <div id="revisions-reverted">
@@ -55,33 +55,50 @@
       {{ _('Pages needing follow up:') }}
     </h2>
     <div id="revisions-followup">
-      {% if revisions_needing_follow_up %}
-
-        {% for revision_needing_follow_up in revisions_needing_follow_up %}
-          <li>
-            <a href="{{ url('wiki.revision', revision_needing_follow_up.document.slug, revision_needing_follow_up.id) }}">
-              {{ revision_needing_follow_up.document.title }}
-            </a>
-            <a href="{{ url('wiki.document', revision_needing_follow_up.document.slug) }}" class="button">
-              {{ _('View Page') }}
-              <i aria-hidden="true" class="icon-circle-arrow-right"></i>
-            </a>
-            <a href="{{ url('wiki.document_revisions', revision_needing_follow_up.document.slug) }}" class="button">
-              {{ _('History') }}
-              <i aria-hidden="true" class="icon-book"></i>
-            </a>
-            <a href="{{ url('wiki.delete_document', revision_needing_follow_up.document.slug) }}" class="button">
-              {{ _('Delete') }}
-              <i aria-hidden="true" class="icon-trash"></i>
-            </a>
-          </li>
-        {% endfor %}
-
-      {% else %}
-
-        <p>{{ _('The user did not have any revisions needing follow-up.') }}</p>
-
+      {% if revisions_needing_follow_up.manual_revert %}
+        <h4>{{ _('The following revisions were not reverted') }}</h4>
+          <div id='manual-revert-needed'>
+          {% for revision_needing_follow_up in revisions_needing_follow_up.manual_revert %}
+            <li>
+              <a href="{{ url('wiki.revision', revision_needing_follow_up.document.slug, revision_needing_follow_up.id) }}">
+                {{ revision_needing_follow_up.document.title }}
+              </a>
+              <a href="{{ url('wiki.document', revision_needing_follow_up.document.slug) }}" class="button">
+                {{ _('View Page') }}
+                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+              </a>
+              <a href="{{ url('wiki.document_revisions', revision_needing_follow_up.document.slug) }}" class="button">
+                {{ _('History') }}
+                <i aria-hidden="true" class="icon-book"></i>
+              </a>
+              <a href="{{ url('wiki.delete_document', revision_needing_follow_up.document.slug) }}" class="button">
+                {{ _('Delete') }}
+                <i aria-hidden="true" class="icon-trash"></i>
+              </a>
+            </li>
+          {% endfor %}
+        </div>
       {% endif %}
+      {% if revisions_needing_follow_up.not_submitted_to_akismet %}
+        <h4>{{ _('The following revisions could not be submitted to Akismet.') }}</h4>
+        <div id='not-submitted-to-akismet'>
+          {% for revision_needing_follow_up in revisions_needing_follow_up.not_submitted_to_akismet %}
+            <li>
+              <a href="{{ url('wiki.revision', revision_needing_follow_up.document.slug, revision_needing_follow_up.id) }}">
+                {{ revision_needing_follow_up.document.title }}
+              </a>
+              <a href="{{ url('wiki.document', revision_needing_follow_up.document.slug) }}" class="button">
+                {{ _('View Page') }}
+                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+              </a>
+            </li>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if not revisions_needing_follow_up.manual_revert and not revisions_needing_follow_up.not_sent_to_akismet %}
+        <p>{{ _('The user did not have any revisions needing follow-up.') }}</p>
+      {% endif %}
+
     </div>
   </section>
 {% endblock content %}
