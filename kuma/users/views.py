@@ -147,6 +147,7 @@ def ban_user_and_cleanup_summary(request, user_id):
         .order_by('-created')
 
     # Submit revisions to Akismet as spam
+    submitted_to_akismet = []
     not_submitted_to_akismet = []
     for revision in revisions_to_be_reverted:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
@@ -159,6 +160,7 @@ def ban_user_and_cleanup_summary(request, user_id):
         # Submit to Akismet or note that validation & sending to Akismet failed
         if data.is_valid():
             data.save()
+            submitted_to_akismet.append(revision)
         else:
             not_submitted_to_akismet.append(revision)
 
@@ -178,6 +180,7 @@ def ban_user_and_cleanup_summary(request, user_id):
     context = {'detail_user': user,
                'form': UserBanForm(),
                'revisions_reverted': revisions_reverted,
+               'revisions_reported_as_spam': submitted_to_akismet,
                'revisions_needing_follow_up': revisions_needing_follow_up}
 
     return render(request,

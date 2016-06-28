@@ -31,21 +31,30 @@
       {% if revisions_reverted %}
 
         {% for revision in revisions_reverted %}
-          <li>
-            <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ revision.title }}</a>
-            <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}" class="button">
-              {{ _('View Page') }}
-              <i aria-hidden="true" class="icon-circle-arrow-right"></i>
-            </a>
-            <a href="{{ url('wiki.document_revisions', revision.document.slug) }}" class="button">
-              {{ _('History') }}
-              <i aria-hidden="true" class="icon-book"></i>
-            </a>
-          </li>
         {% endfor %}
 
       {% else %}
       <p>{{ _('The user did not have any revisions that were reverted.') }}</p>
+      {% endif %}
+    </div>
+
+    <br /><br />
+
+    <h2>
+      {{ _('The following revisions were reported as spam.') }}
+    </h2>
+    <br />
+    <div id="revisions-reported-as-spam">
+      {% if revisions_reported_as_spam %}
+        {% for revision in revisions_reported_as_spam %}
+          <li>
+            <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">
+              {{ revision.title }}
+            </a>
+          </li>
+        {% endfor %}
+      {% else %}
+      <p>{{ _('The user did not have any revisions that were reported as spam.') }}</p>
       {% endif %}
     </div>
 

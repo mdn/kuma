@@ -564,35 +564,37 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
 @pytest.mark.bans
 class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
-#    # TODO: Phase III
-#    def test_user_reverted_revisions_in_summary_page_template(self):
-#        """User's reverted revisions show up in ban and cleanup summary page"""
-#        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
-#        revisions_expected = self.create_revisions(
-#            num=3,
-#            document=self.document,
-#            creator=self.testuser)
-#
-#        self.client.login(username='admin', password='testpass')
-#        ban_url = reverse('users.ban_user_and_cleanup_summary',
-#                          kwargs={'user_id': self.testuser.id})
-#        full_ban_url = self.client.get(ban_url)['Location']
-#
-#        resp = self.client.post(full_ban_url)
-#        eq_(200, resp.status_code)
-#        page = pq(resp.content)
-#
-#        revisions_reverted = page.find('#revisions-reverted li')
-#        revisions_reverted_text = ''
-#        for rev in revisions_reverted:
-#            revisions_reverted_text += rev.text_content()
-#
-#        eq_(len(revisions_reverted), len(revisions_expected))
-#        # The title for each of the created revisions shows up in the template
-#        for revision in revisions_expected:
-#            ok_(revision.title in revisions_reverted_text)
-#        # The title for the original revision is not in the template
-#        ok_(self.original_revision.title not in revisions_reverted_text)
+    """
+    # TODO: Phase III
+    def test_user_reverted_revisions_in_summary_page_template(self):
+        "#"#"User's reverted revisions show up in ban and cleanup summary page"#"#"
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        revisions_expected = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        resp = self.client.post(full_ban_url)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_reverted_text = ''
+        for rev in revisions_reverted:
+            revisions_reverted_text += rev.text_content()
+
+        eq_(len(revisions_reverted), len(revisions_expected))
+        # The title for each of the created revisions shows up in the template
+        for revision in revisions_expected:
+            ok_(revision.title in revisions_reverted_text)
+        # The title for the original revision is not in the template
+        ok_(self.original_revision.title not in revisions_reverted_text)
+    """
 
     def test_no_user_revisions_summary_page_template(self):
         """If user has no revisions, it should be stated in summary template."""
@@ -618,6 +620,42 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(len(revisions_followup), 0)
         ok_(exp_reverted in revisions_reverted_section.text())
         ok_(exp_followup in revisions_followup_section.text())
+
+    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
+    def test_user_revisions_submitted_to_akismet_in_template(self, mock_form):
+        """If revision submitted to Akismet, summary template states this"""
+        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
+        mock_form.return_value = True
+
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        revisions_created = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
+        revisions_reported_as_spam_text = ''
+        for rev in revisions_reported_as_spam:
+            revisions_reported_as_spam_text += rev.text_content()
+
+        # The form is_valid() method should have been called for each revision
+        eq_(mock_form.call_count, len(revisions_created))
+        eq_(len(revisions_reported_as_spam), len(revisions_created))
+        # The title for each of the created revisions shows up in the template
+        for revision in revisions_created:
+            ok_(revision.title in revisions_reported_as_spam_text)
+        # The title for the original revision is not in the template
+        ok_(self.original_revision.title not in revisions_reported_as_spam_text)
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_user_revisions_not_submitted_to_akismet(self, mock_form):
