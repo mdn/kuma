@@ -11,6 +11,7 @@ from waffle.models import Flag
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
+from kuma.wiki.tests import document as create_document, revision as create_revision
 
 from . import SampleRevisionsMixin, UserTestCase
 from .test_views import TESTUSER_PASSWORD
@@ -689,6 +690,106 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ok_(expect_txt in revisions_needing_follow_up_section.text())
         # All of the revisions should be in the 'not submitted' section
         eq_(len(not_submitted), len(revisions_created))
+
+    def test_delete_link_appears_summary_page(self):
+        """
+        Delete link should only appear on summary page sometimes.
+
+        This should occur if: 1.) The user created the document and
+        2.) the document has no other revision.
+        """
+        # Create an original revision on a document by the admin user
+        new_document = create_document(save=True)
+        new_revision = create_revision(
+            title='Revision 0',
+            document=new_document,
+            creator=self.testuser,
+            save=True)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [new_revision.id]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        delete_url = reverse(
+            'wiki.delete_document',
+            kwargs={'document_path': new_document.slug},
+            force_locale=True)
+        delete_link = page.find('#revisions-followup a[href="{url}"]'.format(
+            url=delete_url))
+
+        # There should be 1 delete link found
+        eq_(len(delete_link), 1)
+
+    def test_delete_link_does_not_appear_summary_page(self):
+        """
+        Delete link should not only appear on summary page sometimes.
+
+        This should occur if: 1.) The user did not create the document or
+        2.) the document has other revisions.
+        """
+        # 1.) User makes a revision on another user's document
+        testuser_revisions = self.create_revisions(
+            num=1,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [testuser_revisions[0].id]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        delete_url = reverse(
+            'wiki.delete_document',
+            kwargs={'document_path': self.document.slug},
+            force_locale=True)
+        delete_link = page.find('#revisions-followup a[href="{url}"]'.format(
+            url=delete_url))
+
+        # There should not be a link to delete the document
+        eq_(len(delete_link), 0)
+
+        # User creates a document, but another user makes a revision on it
+        new_document = create_document(save=True)
+        testuser_revisions = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.testuser)
+        create_revision(
+            title='Revision 1',
+            document=new_document,
+            creator=self.testuser2,
+            save=True)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [testuser_revisions[0].id]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        delete_url = reverse(
+            'wiki.delete_document',
+            kwargs={'document_path': new_document.slug},
+            force_locale=True)
+        delete_link = page.find('#revisions-followup a[href="{url}"]'.format(
+            url=delete_url))
+
+        # There should not be a link to delete the document
+        eq_(len(delete_link), 0)
 
 #    TODO: Phase III:
 #    def test_unreverted_changes_in_summary_page_template(self):

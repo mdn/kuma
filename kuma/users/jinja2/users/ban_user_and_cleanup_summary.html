@@ -80,10 +80,13 @@
                 {{ _('History') }}
                 <i aria-hidden="true" class="icon-book"></i>
               </a>
-              <a href="{{ url('wiki.delete_document', revision_needing_follow_up.document.slug) }}" class="button">
-                {{ _('Delete') }}
-                <i aria-hidden="true" class="icon-trash"></i>
-              </a>
+              {# Include a delete link if spammer created this document and there are no newer revisions on this document #}
+              {% if revision_needing_follow_up.document.revisions.order_by('created').first().creator == detail_user and revision_needing_follow_up.id == revision_needing_follow_up.document.current_or_latest_revision.id %}
+                <a href="{{ url('wiki.delete_document', revision_needing_follow_up.document.slug) }}" class="button">
+                  {{ _('Delete') }}
+                  <i aria-hidden="true" class="icon-trash"></i>
+                </a>
+              {% endif %}
             </li>
           {% endfor %}
         </div>
