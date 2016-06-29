@@ -791,8 +791,83 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # There should not be a link to delete the document
         eq_(len(delete_link), 0)
 
+    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
+    def test_list_revisions_reported_as_spam_once_for_distinct_documents(self, mock_form):
+        """
+        Only 1 revision per document should be shown on the summary page.
+
+        This test verifies that only 1 revision per document shows up in the
+        "The following revisions were reported as spam" section
+        """
+        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
+        mock_form.return_value = True
+
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # There are all on self.document
+        revisions_created = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
+
+        # Since all of the revisions were made on the same document, only 1 of
+        # them should be shown in the template
+        eq_(len(revisions_reported_as_spam), 1)
+
+    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
+    def test_list_revisions_needing_followup_once_for_distinct_documents(self, mock_form):
+        """
+        Only 1 revision per document should be shown on the summary page.
+
+        This test verifies that only 1 revision per document shows up in the
+        "Pages needing follow up" section
+        """
+        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
+        mock_form.return_value = False
+
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # There are all on self.document
+        revisions_created = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_needing_follow_up = page.find('#manual-revert-needed li')
+
+        # Since all of the revisions were made on the same document, only 1 of
+        # them should be shown in the template
+        eq_(len(revisions_needing_follow_up), 1)
+
 #    TODO: Phase III:
 #    def test_unreverted_changes_in_summary_page_template(self):
+#    def test_list_reverted_revisions_once_for_distinct_documents(self):
+#        """
+#        Only 1 revision per document should be shown on the summary page.
+#
+#        This test verifies that only 1 revision per document shows up in the
+#        "The following revisions were reverted" section
+#        """
 
 
 class ProfileDetailTestCase(UserTestCase):

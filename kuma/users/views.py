@@ -14,7 +14,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Max, Q
 from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
@@ -24,7 +24,7 @@ from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
-from kuma.wiki.models import RevisionAkismetSubmission
+from kuma.wiki.models import Document, Revision, RevisionAkismetSubmission
 
 from .forms import UserBanForm, UserEditForm
 from .models import User, UserBan
@@ -146,10 +146,26 @@ def ban_user_and_cleanup_summary(request, user_id):
         .prefetch_related('document').defer('content', 'summary')\
         .order_by('-created')
 
+    # TODO: In the future this will take the revisions out of request.POST
+    # and either revert them or not. For now list all of the revisions for the past 3 days
+    date_three_days_ago = datetime.now().date() - timedelta(days=3)
+    revisions_reverted = user.created_revisions.prefetch_related('document')
+    revisions_reverted = revisions_reverted.defer('content', 'summary').order_by('-id')
+    revisions_reverted = revisions_reverted.filter(created__gte=date_three_days_ago)
+
+    distinct_doc_rev_ids = list(
+        Document.objects.filter(
+            revisions__in=revisions_reverted
+        ).annotate(
+            latest_rev=Max('revisions')
+        ).values_list('latest_rev', flat=True)
+    )
+    revisions_reverted_by_distinct_doc = revisions_reverted.filter(id__in=distinct_doc_rev_ids)
+
     # Submit revisions to Akismet as spam
     submitted_to_akismet = []
     not_submitted_to_akismet = []
-    for revision in revisions_to_be_reverted:
+    for revision in revisions_reverted_by_distinct_doc:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
         akismet_submission_data = {'revision': revision.id}
 
@@ -164,16 +180,9 @@ def ban_user_and_cleanup_summary(request, user_id):
         else:
             not_submitted_to_akismet.append(revision)
 
-    # TODO: In the future this will take the revisions out of request.POST
-    # and either revert them or not. For now list all of the revisions for the past 3 days
-    date_three_days_ago = datetime.now().date() - timedelta(days=3)
-    revisions_reverted = user.created_revisions.prefetch_related('document')
-    revisions_reverted = revisions_reverted.defer('content', 'summary').order_by('-id')
-    revisions_reverted = revisions_reverted.filter(created__gte=date_three_days_ago)
-
     # TODO: revisions_needing_follow_up will be revisions that have not been reverted
     revisions_needing_follow_up = {
-        'manual_revert': revisions_reverted,
+        'manual_revert': revisions_reverted_by_distinct_doc,
         'not_submitted_to_akismet': not_submitted_to_akismet
     }
 
