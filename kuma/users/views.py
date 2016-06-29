@@ -13,7 +13,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
@@ -24,7 +24,8 @@ from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
-from kuma.wiki.models import RevisionAkismetSubmission
+from kuma.wiki.models import Document, DocumentDeletionLog, Revision, RevisionAkismetSubmission
+from kuma.wiki.utils import locale_and_slug_from_path
 
 from .forms import UserBanForm, UserEditForm
 from .models import User, UserBan
@@ -146,7 +147,11 @@ def ban_user_and_cleanup_summary(request, user_id):
         .prefetch_related('document').defer('content', 'summary')\
         .order_by('-created')
 
-    # Submit revisions to Akismet as spam
+    # 1. Submit revisions to Akismet as spam
+    # 2. If this is the most recent revision for a document:
+    #    Revert revision if it has a previous version OR
+    #    Delete revision if it is a new document
+    revisions_reverted_list = []
     for revision in revisions_to_be_reverted:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
         akismet_submission_data = {'revision': revision.id}
@@ -156,16 +161,31 @@ def ban_user_and_cleanup_summary(request, user_id):
         if data.is_valid():
             data.save()
 
-    # TODO: In the future this will take the revisions out of request.POST
-    # and either revert them or not. For now list all of the revisions for the past 3 days
+        # If there is a previous version, and this revision is the current one, revert it
+        if revision.previous:
+            if revision.id == revision.document.current_revision.id:
+                reverted = revert_document(request=request,
+                                           document_path=revision.document.slug,
+                                           revision_id=revision.previous.id)
+                if reverted:
+                    revisions_reverted_list.append(revision.pk)
+
+        # If this is a new doc, delete it
+        else:
+            deleted = delete_document(request=request,
+                                      document_slug=revision.document.slug,
+                                      document_locale=revision.document.locale)
+            if deleted:
+                revisions_reverted_list.append(revision.pk)
+
+    # List of all revisions by user in the past 3 days
     date_three_days_ago = datetime.now().date() - timedelta(days=3)
     revisions_reverted = user.created_revisions.prefetch_related('document')
     revisions_reverted = revisions_reverted.defer('content', 'summary').order_by('-id')
     revisions_reverted = revisions_reverted.filter(created__gte=date_three_days_ago)
-
-    # TODO: revisions_needing_follow_up will be revisions that have not been reverted
-    revisions_needing_follow_up = revisions_reverted
-    revisions_reverted = revisions_reverted
+    # Create a list of revisions reverted and list of those that were not reverted
+    revisions_needing_follow_up = revisions_reverted.exclude(pk__in=revisions_reverted_list)
+    revisions_reverted = revisions_reverted.filter(pk__in=revisions_reverted_list)
 
     context = {'detail_user': user,
                'form': UserBanForm(),
@@ -175,6 +195,53 @@ def ban_user_and_cleanup_summary(request, user_id):
     return render(request,
                   'users/ban_user_and_cleanup_summary.html',
                   context)
+
+
+@permission_required('users.add_userban')
+def revert_document(request, document_path, revision_id):
+    """
+    Revert document to a specific revision.
+    """
+    _, document_slug, __ = (
+        locale_and_slug_from_path(document_path, request))
+
+    revision = get_object_or_404(Revision.objects.select_related('document'),
+                                 pk=revision_id,
+                                 document__slug=document_slug)
+
+    comment = "spam"
+    document = revision.document
+    old_revision_pk = revision.pk
+    try:
+        new_revision = document.revert(revision, request.user, comment)
+        # schedule a rendering of the new revision if it really was saved
+        if new_revision.pk != old_revision_pk:
+            document.schedule_rendering('max-age=0')
+    except IntegrityError:
+        return False
+    return True
+
+
+@permission_required('wiki.delete_document')
+def delete_document(request, document_slug, document_locale):
+    """
+    Delete a Document.
+    """
+    document = Document.objects.filter(locale=document_locale,
+                                       slug=document_slug).first()
+
+    if not document:
+        return False
+
+    DocumentDeletionLog.objects.create(
+        locale=document.locale,
+        slug=document.slug,
+        user=request.user,
+        reason='Spam',
+    )
+    document.delete()
+
+    return True
 
 
 def user_detail(request, username):

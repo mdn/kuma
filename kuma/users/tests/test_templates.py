@@ -523,7 +523,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
                           kwargs={'user_id': self.testuser.id})
         full_ban_url = self.client.get(ban_url)['Location']
 
-        resp = self.client.post(full_ban_url)
+        data = {'revision-id': [rev.id for rev in revisions_expected]}
+        resp = self.client.post(full_ban_url, data=data)
         eq_(200, resp.status_code)
         page = pq(resp.content)
 
@@ -532,10 +533,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         for rev in revisions_reverted:
             revisions_reverted_text += rev.text_content()
 
-        eq_(len(revisions_reverted), len(revisions_expected))
-        # The title for each of the created revisions shows up in the template
-        for revision in revisions_expected:
-            ok_(revision.title in revisions_reverted_text)
+        # Only one of the three revisions (on the same doc) needs to be reverted
+        eq_(len(revisions_reverted), 1)
         # The title for the original revision is not in the template
         ok_(self.original_revision.title not in revisions_reverted_text)
 
