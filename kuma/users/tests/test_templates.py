@@ -629,9 +629,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         mock_form.return_value = True
 
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # Don't specify document so a new one is created for each revision
         revisions_created = self.create_revisions(
             num=3,
-            document=self.document,
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
@@ -649,8 +649,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         for rev in revisions_reported_as_spam:
             revisions_reported_as_spam_text += rev.text_content()
 
-        # The form is_valid() method should have been called for each revision
-        eq_(mock_form.call_count, len(revisions_created))
         eq_(len(revisions_reported_as_spam), len(revisions_created))
         # The title for each of the created revisions shows up in the template
         for revision in revisions_created:
@@ -666,9 +664,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         mock_form.return_value = False
 
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # Don't specify document so a new one is created for each revision
         revisions_created = self.create_revisions(
             num=3,
-            document=self.document,
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
@@ -684,8 +682,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_needing_follow_up_section = page.find('#revisions-followup')
         not_submitted = page.find('#not-submitted-to-akismet li')
 
-        # The form is_valid() method should have been called for each revision
-        eq_(mock_form.call_count, len(revisions_created))
         # Template should state that the revisions were not submitted to Akismet
         ok_(expect_txt in revisions_needing_follow_up_section.text())
         # All of the revisions should be in the 'not submitted' section
@@ -698,7 +694,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         This should occur if: 1.) The user created the document and
         2.) the document has no other revision.
         """
-        # Create an original revision on a document by the admin user
+        # Create an original revision on a document by the self.testuser
         new_document = create_document(save=True)
         new_revision = create_revision(
             title='Revision 0',

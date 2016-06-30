@@ -294,10 +294,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def test_post_submits_revisions_to_akismet_as_spam(self, mock_requests):
         """POSTing to ban_user_and_cleanup url submits revisions to akismet."""
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # Don't specify document so a new one is created for each revision
         num_revisions = 3
         revisions_created = self.create_revisions(
             num=num_revisions,
-            document=self.document,
             creator=self.testuser)
 
         # Enable Akismet and mock calls to it
@@ -345,10 +345,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def test_post_submits_no_revisions_to_akismet_when_revisions_not_in_request(self, mock_requests):
         """POSTing to ban_user_and_cleanup url without revisions in request."""
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # Don't specify document so a new one is created for each revision
         num_revisions = 3
         self.create_revisions(
             num=num_revisions,
-            document=self.document,
             creator=self.testuser)
 
         # Enable Akismet and mock calls to it
