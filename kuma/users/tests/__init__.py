@@ -67,7 +67,6 @@ class SampleRevisionsMixin(object):
             creator=self.admin,
             save=True)
 
-
     def create_revisions(self, num, creator, document=None):
         """Create as many revisions as requested, and return a list of them."""
         # If document is None, then we create a new document for each revision
