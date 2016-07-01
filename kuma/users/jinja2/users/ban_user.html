@@ -4,7 +4,7 @@
 
 {% block bodyclass %}user ban-user{% endblock %}
 
-{% block title %}Ban {{ detail_user }}{% endblock %}
+{% block title %}{{ _('Ban %(user)s', user=detail_user) }}{% endblock %}
 
 {% block site_css %}
   {{ super() }}

@@ -1,17 +1,18 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-05-26 09:18-0700\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Γιώργος Φιωτάκης <fiotakis@otenet.gr>\n"
+"POT-Creation-Date: 2016-06-24 12:43-0700\n"
+"PO-Revision-Date: 2016-06-12 13:40+0000\n"
+"Last-Translator: Jim Spentzos <jamesspentzos@hotmail.com>\n"
 "Language-Team: Greek https://pontoon.mozilla.org/el/\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Translate Toolkit 1.6.0\n"
+"X-Generator: Pontoon\n"
 
 #: jinja2/403.html:5 jinja2/403.html:19 jinja2/handlers/400.html:5
 msgid "Permission Denied"
@@ -43,9 +44,9 @@ msgid "<p>We're sorry, we're afraid we can't do that.</p>"
 msgstr ""
 
 #: jinja2/403.html:50
-#, fuzzy, python-format
+#, python-format
 msgid "<li><a href=\"%(logout_url)s\">Sign out</a> to try again.</li>"
-msgstr "<li><a href=\"/logout\">Αποσυνδεθείτε</a> για να προσπαθήσετε ξανά.</li>"
+msgstr "<li><a href=\"%(logout_url)s\">Αποσυνδεθείτε</a> για να δοκιμάσετε ξανά.</li>"
 
 #: jinja2/403.html:54 jinja2/handlers/400.html:36
 #, fuzzy, python-format
@@ -95,7 +96,7 @@ msgstr ""
 
 #: jinja2/base.html:75
 msgid "Select language"
-msgstr ""
+msgstr "Επιλέξτε γλώσσα"
 
 #: jinja2/base.html:77
 msgid "Skip to search"
@@ -103,7 +104,7 @@ msgstr ""
 
 #: jinja2/base.html:98 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
-msgstr ""
+msgstr "Εργαλεία"
 
 #: jinja2/base.html:102
 msgid "Contribute to MDN"
@@ -305,36 +306,37 @@ msgstr "Φοβερα demo για το <span class=\"web\">διαδικτυο</sp
 
 #: jinja2/includes/common_macros.html:38
 msgid "Profile"
-msgstr ""
+msgstr "Προφίλ"
 
 #: jinja2/includes/common_macros.html:40 kuma/users/jinja2/account/logout.html:3 kuma/users/jinja2/account/logout.html:8 kuma/users/jinja2/account/logout.html:17
 msgid "Sign Out"
-msgstr ""
+msgstr "Έξοδος"
 
 #: jinja2/includes/common_macros.html:44
 #, python-format
 msgid "Want to contribute?<br /> <a href=\"%(login_url)s\">Sign in</a>"
 msgstr ""
 
-#: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:87
+#: jinja2/includes/lang_switcher.html:2 kuma/wiki/jinja2/wiki/document.html:86
 msgid "Other languages:"
 msgstr "Άλλες γλώσσες:"
 
-#: jinja2/includes/lang_switcher.html:15 kuma/wiki/jinja2/wiki/document.html:98
+#: jinja2/includes/lang_switcher.html:15 kuma/wiki/jinja2/wiki/document.html:97
 msgid "Go"
 msgstr "Μετάβαση"
 
 #: jinja2/includes/login.html:6
 msgid "Sign out"
-msgstr ""
+msgstr "Έξοδος"
 
 #: jinja2/includes/login.html:17
 msgid "Sign in"
-msgstr ""
+msgstr "Είσοδος"
 
-#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/user_detail.html:112 kuma/users/jinja2/users/user_detail.html:116
+#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_avatar_and_links.html:12
+#: kuma/users/jinja2/users/includes/user_avatar_and_links.html:16
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: jinja2/includes/login.html:28 kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
@@ -485,20 +487,21 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
-msgstr ""
+msgstr "Αρχείο"
 
-#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65 kuma/wiki/models.py:1911
+#: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1911
 msgid "Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:46 kuma/authkeys/jinja2/authkeys/delete.html:9 kuma/authkeys/jinja2/authkeys/history.html:10
 #: kuma/authkeys/jinja2/authkeys/new.html:36
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:47
 msgid "Comments"
-msgstr ""
+msgstr "Σχόλια"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:70
 #, fuzzy
@@ -511,7 +514,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
-msgstr ""
+msgstr "Μέγεθος"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:78
 #, fuzzy
@@ -543,7 +546,7 @@ msgstr ""
 
 #: kuma/authkeys/models.py:31
 msgid "Lookup key"
-msgstr ""
+msgstr "Κλειδί αναζήτησης"
 
 #: kuma/authkeys/models.py:33
 msgid "Hashed secret"
@@ -555,9 +558,10 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/delete.html:7 kuma/authkeys/jinja2/authkeys/history.html:8 kuma/authkeys/jinja2/authkeys/new.html:34
 msgid "Created"
-msgstr ""
+msgstr "Δημιουργήθηκε"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:74 kuma/wiki/jinja2/wiki/confirm_document_delete.html:15
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -837,7 +841,7 @@ msgstr ""
 msgid "Revert"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:340
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:37 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:66 kuma/wiki/feeds.py:340
 msgid "View Page"
 msgstr ""
 
@@ -845,16 +849,18 @@ msgstr ""
 msgid "Edit Page"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:41 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:70
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/users/jinja2/users/includes/user_revision_history_form.html:41 kuma/wiki/feeds.py:364
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/wiki/models.py:1864
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/wiki/models.py:1864
 msgid "Revision"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:149 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32
-#: kuma/wiki/jinja2/wiki/revision.html:42
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:9
+#: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
 msgstr "Σχόλιο"
 
@@ -866,11 +872,11 @@ msgstr ""
 msgid "Toggle IPs"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:26
 msgid "new"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:27
 #, fuzzy
 msgid "deleted"
 msgstr "Διαγραφή"
@@ -1148,19 +1154,19 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:70
 msgid "Choose a color"
-msgstr ""
+msgstr "Επιλογή χρώματος"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:75
 msgid "Gray"
-msgstr ""
+msgstr "Γκρι"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:81
 msgid "Orange"
-msgstr ""
+msgstr "Πορτοκαλί"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr ""
+msgstr "Κόκκινο"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
@@ -1466,7 +1472,7 @@ msgstr ""
 msgid "Beta tester"
 msgstr ""
 
-#: kuma/users/forms.py:40 kuma/users/jinja2/users/user_detail.html:77
+#: kuma/users/forms.py:40 kuma/users/jinja2/users/includes/user_title_info.html:52
 msgid "Interests"
 msgstr ""
 
@@ -1478,23 +1484,23 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/user_detail.html:107 kuma/wiki/jinja2/wiki/includes/document_macros.html:109
+#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_avatar_and_links.html:7
 msgid "Twitter"
 msgstr "Twitter"
 
-#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/user_detail.html:121
+#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_avatar_and_links.html:21
 msgid "Stack Overflow"
 msgstr ""
 
-#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/user_detail.html:125
+#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_avatar_and_links.html:25
 msgid "LinkedIn"
 msgstr ""
 
-#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/user_detail.html:129
+#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_avatar_and_links.html:29
 msgid "Mozillians"
 msgstr ""
 
-#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/user_detail.html:133 kuma/wiki/jinja2/wiki/includes/document_macros.html:110
+#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_avatar_and_links.html:33
 msgid "Facebook"
 msgstr ""
 
@@ -1552,7 +1558,8 @@ msgstr ""
 msgid "IRC nickname"
 msgstr ""
 
-#: kuma/users/models.py:94 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79 kuma/wiki/jinja2/wiki/edit.html:191
+#: kuma/users/models.py:94 kuma/users/jinja2/users/includes/user_revision_history_form.html:10 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
+#: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
 msgstr ""
 
@@ -1614,21 +1621,21 @@ msgstr ""
 msgid "Take the next step to get involved on MDN!"
 msgstr ""
 
-#: kuma/users/views.py:198
+#: kuma/users/views.py:268
 msgid "Email address"
 msgstr ""
 
-#: kuma/users/views.py:257
+#: kuma/users/views.py:327
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr ""
 
-#: kuma/users/views.py:260
+#: kuma/users/views.py:330
 #, python-format
 msgid "%(email)s Unverified"
 msgstr ""
 
-#: kuma/users/views.py:263 kuma/users/jinja2/socialaccount/signup.html:135
+#: kuma/users/views.py:333 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr ""
 
@@ -1640,7 +1647,7 @@ msgstr ""
 msgid "This profile is inactive."
 msgstr ""
 
-#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/user_detail.html:57
+#: kuma/users/jinja2/account/email.html:3 kuma/users/jinja2/account/email.html:7 kuma/users/jinja2/users/includes/user_title_info.html:32
 msgid "Email addresses"
 msgstr ""
 
@@ -1839,7 +1846,7 @@ msgstr ""
 msgid "Account Connections"
 msgstr ""
 
-#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/user_detail.html:55
+#: kuma/users/jinja2/socialaccount/connections.html:6 kuma/users/jinja2/users/includes/user_title_info.html:30
 msgid "Account connections"
 msgstr ""
 
@@ -1971,6 +1978,11 @@ msgstr ""
 msgid "Sign in with GitHub"
 msgstr ""
 
+#: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
+#, python-format
+msgid "Ban %(user)s"
+msgstr ""
+
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
 msgid "Why are you banning %(user)s"
@@ -1988,6 +2000,66 @@ msgstr ""
 msgid "Ban user"
 msgstr ""
 
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
+#, python-format
+msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
+#, python-format
+msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
+#, python-format
+msgid "Because %(user)s has already been banned, you may review and revert their revisions below."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:57
+msgid "Revert Revisions"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:59
+msgid "Ban User for Spam"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
+msgid "Ban User for Spam & Revert Revisions"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:65
+msgid "Ban user for other reasons."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:68
+msgid "User has not made any revisions in the past three days, and this user was already banned."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:20
+#, python-format
+msgid "<a href=\"%(url)s\">%(user)s</a> identified as a spammer."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:24
+msgid "The following revisions were reverted:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:27
+msgid "(Note: No revisions were actually reverted. This feature will be added in Phase 2.)"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
+msgid "The user did not have any revisions that were reverted."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:55
+msgid "Pages needing follow up:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:82
+msgid "The user did not have any revisions needing follow-up."
+msgstr ""
+
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
 msgstr ""
@@ -2000,66 +2072,40 @@ msgstr ""
 msgid "<p><a href=\"mailto:mdn-admins@mozilla.org?subject=Ban Appeal\">Click here</a> to appeal this ban.</p>"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:47 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
-msgid "Edit"
-msgstr "Επεξεργασία"
-
-#: kuma/users/jinja2/users/user_detail.html:49 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
-#, fuzzy
-msgid "Advanced"
-msgstr "Προχωρημένο επίπεδο"
-
-#: kuma/users/jinja2/users/user_detail.html:53
-msgid "Manage"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:56
-msgid "API keys"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:90
-msgid "Areas of Expertise"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:98
-#, python-format
-msgid "Member since %(date_joined)s"
-msgstr ""
-
-#: kuma/users/jinja2/users/user_detail.html:142
+#: kuma/users/jinja2/users/user_detail.html:36
 msgid "Recent Docs Activity"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:142
+#: kuma/users/jinja2/users/user_detail.html:36
 msgid "View all activity"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:147
+#: kuma/users/jinja2/users/user_detail.html:41
 msgid "Page"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:148 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
+#: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
-#: kuma/users/jinja2/users/user_detail.html:157 kuma/wiki/jinja2/wiki/document.html:385
+#: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:382
 msgid "Edit page"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:158
+#: kuma/users/jinja2/users/user_detail.html:52
 msgid "View complete diff"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:159 kuma/wiki/jinja2/wiki/document.html:386
+#: kuma/users/jinja2/users/user_detail.html:53 kuma/wiki/jinja2/wiki/document.html:383
 msgid "View page history"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:171
+#: kuma/users/jinja2/users/user_detail.html:65
 #, python-format
 msgid "<p class=\"none\">You haven't contributed to any MDN docs. <a href=\"%(docs_url)s\">Pitch in!</a></p>"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_detail.html:175
+#: kuma/users/jinja2/users/user_detail.html:69
 msgid "This user has no activity."
 msgstr ""
 
@@ -2255,20 +2301,59 @@ msgstr ""
 msgid "Blog: %(blog_link)s"
 msgstr ""
 
-#: kuma/users/templatetags/jinja_helpers.py:35
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:60
+#, fuzzy
+msgid "This user has not created any revisions in the past three days."
+msgstr "Δεν είναι δημιουργία του συντάκτη"
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
+#, fuzzy
+msgid "Advanced"
+msgstr "Προχωρημένο επίπεδο"
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:28
+msgid "Manage"
+msgstr ""
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:31
+msgid "API keys"
+msgstr ""
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:65
+msgid "Areas of Expertise"
+msgstr ""
+
+#: kuma/users/jinja2/users/includes/user_title_info.html:73
+#, python-format
+msgid "Member since %(date_joined)s"
+msgstr ""
+
+#: kuma/users/templatetags/jinja_helpers.py:36
 #, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
 msgstr ""
 
-#: kuma/users/templatetags/jinja_helpers.py:42
+#: kuma/users/templatetags/jinja_helpers.py:43
 msgid "Banned"
 msgstr ""
 
-#: kuma/users/templatetags/jinja_helpers.py:47
+#: kuma/users/templatetags/jinja_helpers.py:46
+msgid "Clean Up Revisions"
+msgstr ""
+
+#: kuma/users/templatetags/jinja_helpers.py:51
 msgid "Ban User"
 msgstr ""
 
-#: kuma/users/templatetags/jinja_helpers.py:58
+#: kuma/users/templatetags/jinja_helpers.py:54
+msgid "Ban User & Clean Up"
+msgstr ""
+
+#: kuma/users/templatetags/jinja_helpers.py:66
 msgid "Admin"
 msgstr ""
 
@@ -2441,12 +2526,12 @@ msgstr ""
 msgid "Changing this document's slug requires moving it and its children."
 msgstr ""
 
-#: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:864 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:867 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr ""
 
-#: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:865
+#: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:868
 msgid "Title of article"
 msgstr ""
 
@@ -2499,11 +2584,11 @@ msgstr ""
 msgid "Tag this revision for localization?"
 msgstr ""
 
-#: kuma/wiki/forms.py:871
+#: kuma/wiki/forms.py:874
 msgid "New slug:"
 msgstr ""
 
-#: kuma/wiki/forms.py:872
+#: kuma/wiki/forms.py:875
 msgid "New article URL"
 msgstr ""
 
@@ -2776,112 +2861,112 @@ msgstr ""
 msgid "Restore this document"
 msgstr "Αναφέρετε αυτό το σχόλιο"
 
-#: kuma/wiki/jinja2/wiki/document.html:167
+#: kuma/wiki/jinja2/wiki/document.html:166
 #, fuzzy
 msgid "Previous Search Result"
 msgstr "Αποτελέσματα αναζήτησης"
 
-#: kuma/wiki/jinja2/wiki/document.html:167 kuma/wiki/jinja2/wiki/document.html:177
+#: kuma/wiki/jinja2/wiki/document.html:166 kuma/wiki/jinja2/wiki/document.html:176
 #, fuzzy
 msgid "No Previous Search Result"
 msgstr "Αποτελέσματα αναζήτησης"
 
-#: kuma/wiki/jinja2/wiki/document.html:173
+#: kuma/wiki/jinja2/wiki/document.html:172
 #, fuzzy
 msgid "Your Search Results"
 msgstr "Αποτελέσματα αναζήτησης"
 
-#: kuma/wiki/jinja2/wiki/document.html:177
+#: kuma/wiki/jinja2/wiki/document.html:176
 #, fuzzy
 msgid "Next Search Result"
 msgstr "Αποτελέσματα αναζήτησης"
 
-#: kuma/wiki/jinja2/wiki/document.html:181
+#: kuma/wiki/jinja2/wiki/document.html:180
 #, fuzzy
 msgid "see all contributors"
 msgstr "Όροι συντελεστών"
 
-#: kuma/wiki/jinja2/wiki/document.html:181
+#: kuma/wiki/jinja2/wiki/document.html:180
 #, fuzzy
 msgid "hide contributors"
 msgstr "Όροι συντελεστών"
 
-#: kuma/wiki/jinja2/wiki/document.html:185
+#: kuma/wiki/jinja2/wiki/document.html:184
 #, python-format
 msgid "View profile: %(username)s"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:210
+#: kuma/wiki/jinja2/wiki/document.html:209
 msgid "In This Article"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:232
+#: kuma/wiki/jinja2/wiki/document.html:231
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:240
+#: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
 "a> in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:249
+#: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
 "An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
 "in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:267
+#: kuma/wiki/jinja2/wiki/document.html:266
 #, python-format
 msgid "This article needs a technical review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:276
+#: kuma/wiki/jinja2/wiki/document.html:275
 #, python-format
 msgid "This article needs an editorial review. <a href=\"%(url)s\">How you can help.</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:284
+#: kuma/wiki/jinja2/wiki/document.html:283
 #, python-format
 msgid "This translation is incomplete. Please help <a href=\"%(translate_url)s\">translate this article</a> from English."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:289
+#: kuma/wiki/jinja2/wiki/document.html:288
 msgid "This translation is in progress."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:296
+#: kuma/wiki/jinja2/wiki/document.html:295
 #, python-format
 msgid "Our volunteers haven't translated this article into <bdi>%(locale)s</bdi> yet. <a href=\"%(help_link)s\">Join us and help get the job done!</a>"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:307
+#: kuma/wiki/jinja2/wiki/document.html:306
 msgid "This article doesn't have any content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:310
+#: kuma/wiki/jinja2/wiki/document.html:309
 #, python-format
 msgid "Search for <a href=\"%(search_link)s\" rel=\"nofollow, noindex\">pages that use %(title)s</a> to see example use cases and how many pages use this macro."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:323
+#: kuma/wiki/jinja2/wiki/document.html:322
 msgid "This article doesn't have approved content yet."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/document.html:333
+#: kuma/wiki/jinja2/wiki/document.html:330
 #, fuzzy
 msgid "Document Tags and Contributors"
 msgstr "Όροι συντελεστών"
 
-#: kuma/wiki/jinja2/wiki/document.html:339
+#: kuma/wiki/jinja2/wiki/document.html:336
 #, fuzzy
 msgid "Contributors to this page:"
 msgstr "Μετάβαση στην πρώτη σελίδα"
 
-#: kuma/wiki/jinja2/wiki/document.html:345
+#: kuma/wiki/jinja2/wiki/document.html:342
 msgid "Last updated by:"
 msgstr ""
 
@@ -3321,73 +3406,64 @@ msgstr ""
 msgid "The server is rendering the content comparison. Please refresh this page in a few minutes."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:107
-#, fuzzy
-msgid "Share:"
-msgstr "Διαμοιρασμός"
-
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:111
-msgid "Google+"
-msgstr ""
-
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:128
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:102
 #, python-format
 msgid "Subscribe to %(title)s and all its sub-articles"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:129
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:103
 #, python-format
 msgid "Unsubscribe from %(title)s and all its sub-articles"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
 msgid "You are now subscribed to this article and all its sub-articles."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:132
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:106
 msgid "You have been unsubscribed from this article and all its sub-articles."
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:143
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:117
 msgid "Updating subscription status"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:144
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:118
 #, fuzzy, python-format
 msgid "Subscribe to %(title)s"
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:145
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:119
 #, fuzzy, python-format
 msgid "Unsubscribe from %(title)s"
 msgstr "Συνδρομή"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
 #, fuzzy, python-format
 msgid "You are now subscribed to %(title)s."
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:148
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:122
 #, fuzzy, python-format
 msgid "You have been unsubscribed from %(title)s."
 msgstr "Συνδρομή"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:159
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:133
 #, fuzzy, python-format
 msgid "Subscribe to <bdi>%(language)s</bdi> version"
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo του/της {display_name}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:160
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:134
 #, fuzzy, python-format
 msgid "Unsubscribe from <bdi>%(language)s</bdi> version"
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo του/της {display_name}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
 #, fuzzy, python-format
 msgid "You are now subscribed to the %(language)s version of this article."
 msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
 
-#: kuma/wiki/jinja2/wiki/includes/document_macros.html:163
+#: kuma/wiki/jinja2/wiki/includes/document_macros.html:137
 #, python-format
 msgid "You have been unsubscribed from the %(language)s version of this article."
 msgstr ""
@@ -3506,6 +3582,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
 msgid "If you believe you’ve received this message by mistake, please save a draft of your content and <a href=\"%(admin_email)s\"> contact the site administrators</a>."
+msgstr ""
+
+#: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
+#, python-format
+msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
@@ -3781,17 +3862,18 @@ msgid "Elasticsearch server: %(backend)s"
 msgstr ""
 
 #, fuzzy
+#~ msgid "Share:"
+#~ msgstr "Διαμοιρασμός"
+
 #~ msgid "Resubmit"
 #~ msgstr "Αποτελέσματα αναζήτησης"
 
-#, fuzzy
 #~ msgid "About me"
 #~ msgstr "Περί MDN"
 
 #~ msgid "Discard Changes"
 #~ msgstr "Απόρριψη αλλαγών"
 
-#, fuzzy
 #~ msgid "Send me the newsletter"
 #~ msgstr "Δείτε την επόμενη εικόνα"
 
@@ -3847,9 +3929,6 @@ msgstr ""
 
 #~ msgid "This contains inappropriate content"
 #~ msgstr "Περιέχει ανάρμοστο περιεχόμενο"
-
-#~ msgid "This was not created by the author"
-#~ msgstr "Δεν είναι δημιουργία του συντάκτη"
 
 #~ msgid "The author is fake"
 #~ msgstr "Τα στοιχεία του συντάκτη είναι ψευδή"
@@ -3908,7 +3987,6 @@ msgstr ""
 #~ msgid "W3C Spec"
 #~ msgstr "Προδιαγραφή W3C"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element"
 #~ msgstr "http://www.w3.org/TR/html5/video.html#audio"
 
@@ -3918,7 +3996,6 @@ msgstr ""
 #~ msgid "http://en.wikipedia.org/wiki/Canvas_element"
 #~ msgstr "http://en.wikipedia.org/wiki/Canvas_element"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/scripting-1.html#the-canvas-element"
 #~ msgstr "http://www.w3.org/TR/html5/the-canvas-element.html"
 
@@ -4070,7 +4147,6 @@ msgstr ""
 #~ msgid "http://en.wikipedia.org/wiki/HTML5_video"
 #~ msgstr "http://en.wikipedia.org/wiki/HTML5_video"
 
-#, fuzzy
 #~ msgid "http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element"
 #~ msgstr "http://www.w3.org/TR/html5/video.html#audio"
 
@@ -4191,7 +4267,6 @@ msgstr ""
 #~ msgid "Search results for demo submissions matching \"%s\""
 #~ msgstr "Αποτελέσματα αναζήτησης για demo που ταιριάζουν με «%s»"
 
-#, fuzzy
 #~ msgid "Please keep filesize under %(max_size)s. Current filesize %(file_size)s"
 #~ msgstr "Παρακαλούμε το μέγεθος αρχείου να είναι μικρότερο από %s. Τρέχον μέγεθος αρχείου: %s"
 
@@ -4267,7 +4342,6 @@ msgstr ""
 #~ msgid "access denied"
 #~ msgstr "απαγορεύεται η πρόσβαση"
 
-#, fuzzy
 #~ msgid "%(subtitle)s | Demo Studio"
 #~ msgstr "{subtitle} | Demo Studio"
 
@@ -4277,7 +4351,6 @@ msgstr ""
 #~ msgid "Demo Studio"
 #~ msgstr "Demo Studio"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Submit a Demo"
 #~ msgstr "Υποβολη demo"
 
@@ -4297,14 +4370,12 @@ msgstr ""
 #~ msgid "Learn More"
 #~ msgstr "Μάθετε περισότερα"
 
-#, fuzzy
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "Μετάβαση στο προηγούμενο demo, {demo_title}"
 
 #~ msgid "Prev"
 #~ msgstr "Προηγούμενο"
 
-#, fuzzy
 #~ msgid "Go to the next demo, %(demo_title)s"
 #~ msgstr "Μετάβαση στο επόμενο demo, {demo_title}"
 
@@ -4314,7 +4385,6 @@ msgstr ""
 #~ msgid "See the next image"
 #~ msgstr "Δείτε την επόμενη εικόνα"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Launch Demo"
 #~ msgstr "Εκκινηση demo"
 
@@ -4345,17 +4415,14 @@ msgstr ""
 #~ msgid "Built using"
 #~ msgstr "Φτιάχτηκε με χρήση"
 
-#, fuzzy
 #~ msgid "See more demos made with %(tag_title)s"
 #~ msgstr "Δείτε περισσότερα demo που φτιάχτηκαν με {tag_title}"
 
-#, fuzzy
 #~ msgid "This demo has been viewed %(num)s time"
 #~ msgid_plural "This demo has been viewed %(num)s times"
 #~ msgstr[0] "Αυτό το demo έχει προβληθεί {count} φορά"
 #~ msgstr[1] "Αυτό το demo έχει προβληθεί {count} φορές"
 
-#, fuzzy
 #~ msgid "%(num)s person liked this demo"
 #~ msgid_plural "%(num)s people liked this demo"
 #~ msgstr[0] "Αυτό το demo αρέσει σε {count} άτομο"
@@ -4376,7 +4443,6 @@ msgstr ""
 #~ msgid "More About This Demo From The Author"
 #~ msgstr "Περισσότερα σχετικά μ' αυτό το demo από το δημιουργό του"
 
-#, fuzzy
 #~ msgid "About this Demo"
 #~ msgstr "Αφαίρεση αυτού του demo;"
 
@@ -4386,7 +4452,6 @@ msgstr ""
 #~ msgid "This demo is released under the <a href=\"%(link)s\">%(title)s</a> license."
 #~ msgstr "Αυτό το demo διατίθεται σύμφωνα με την άδεια <a href=\"%(link)s\">%(title)s</a>."
 
-#, fuzzy
 #~ msgid "More by %(creator)s"
 #~ msgstr "Περισσότερα από τον/την {creator_link}"
 
@@ -4402,11 +4467,9 @@ msgstr ""
 #~ msgid "Demo is not by this author"
 #~ msgstr "Το demo ανήκει σε άλλο προγραμματιστή"
 
-#, fuzzy
 #~ msgid "Demos tagged %(tag)s"
 #~ msgstr "Demo με ετικέτα: {tag}"
 
-#, fuzzy
 #~ msgid "Subscribe to a feed of %(tag_title)s demos"
 #~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo με ετικέτα: {tag_title}"
 
@@ -4422,23 +4485,18 @@ msgstr ""
 #~ msgid "Recent demos"
 #~ msgstr "Πρόσφατα demo"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Featured demos"
 #~ msgstr "Προβεβλημενα demo"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Featured Demos"
 #~ msgstr "Προβεβλημενα demo"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Launch"
 #~ msgstr "Εκκινηση"
 
-#, fuzzy
 #~ msgid "Search demos"
 #~ msgstr "Αναζήτηση στα demo για «{q}»"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Browse by Technology"
 #~ msgstr "Περιηγηση με βαση την τεχνολογια"
 
@@ -4460,31 +4518,24 @@ msgstr ""
 #~ msgid "Subscribe to a feed of all demos"
 #~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για όλα τα demo"
 
-#, fuzzy
 #~ msgid "Search for \"%(query)s\""
 #~ msgstr "Αναζήτηση για «{q}»"
 
-#, fuzzy
 #~ msgid "Search results for \"%(query)s\""
 #~ msgstr "Αποτελέσματα αναζήτησης για «{q}»"
 
-#, fuzzy
 #~ msgid "Search demos for \"%(query)s\""
 #~ msgstr "Αναζήτηση στα demo για «{q}»"
 
-#, fuzzy
 #~ msgid "Subscribe to a feed of search results for \"%(query)s\""
 #~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για αποτελέσματα αναζήτησης του «{q}»"
 
-#, fuzzy
 #~ msgid "%(tag_title)s Demos"
 #~ msgstr "Demo με ετικέτα: {tag_title}"
 
-#, fuzzy
 #~ msgid "Edit %(demo_title)s"
 #~ msgstr "Επεξεργασία {demo_title}"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Submit a New Demo"
 #~ msgstr "Υποβολη νεου demo"
 
@@ -4521,7 +4572,6 @@ msgstr ""
 #~ msgid "Preparing Your Demo"
 #~ msgstr "Ετοιμάζοντας το demo σας"
 
-#, fuzzy
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
 #~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
@@ -4542,7 +4592,6 @@ msgstr ""
 #~ "<p>Αποστείλετε ένα αρχείο ZIP  με τον πηγαίο κώδικα σας, στο οποίο η κεντρική σελίδα του demo σας θα βρίσκεται στο βασικό κατάλογο του συμπιεσμένου αρχείου και θα έχει όνομα <code>index.html</"
 #~ "code>.</p>"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Submit demo"
 #~ msgstr "Υποβολη demo"
 
@@ -4559,7 +4608,6 @@ msgstr ""
 #~ msgid "Before You Begin"
 #~ msgstr "Πριν ξεκινήσετε"
 
-#, fuzzy
 #~ msgid ""
 #~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
 #~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
@@ -4570,7 +4618,6 @@ msgstr ""
 #~ "τεχνολογίες για το διαδίκτυο</strong>, όπως η HTML5 και το CSS3.</li> <li>Το demo σας θα πρέπει να υποστηρίζεται από μια ευρεία γκάμα <strong>σύγχρονων περιηγητών</strong>, όπως οι Firefox, "
 #~ "Chrome, Safari, και Opera.</li> </ul>"
 
-#, fuzzy
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
 #~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
@@ -4583,18 +4630,15 @@ msgstr ""
 #~ "\">λογαριασμό στο MDN</a>.</li> <li>Σας παρακαλούμε να γνωστοποιήσετε στο πλαίσιο λεπτομερειών του demo τυχών περιεχόμενο τρίτων που δεν μπορεί να διατεθεί σύμφωνα με την άδεια CC-BY-SA και να "
 #~ "συμπεριλάβετε δεσμούς στις σελίδες των δημιουργών του.</li> </ul>"
 
-#, fuzzy
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>Για να υποβάλετε το demo σας, θα πρέπει να έχετε ένα <strong><a href=\"%(signup_url)s\">λογαριασμό στο MDN</a></strong>.</p>"
 
-#, fuzzy
 #~ msgid "Log In to Profile"
 #~ msgstr "Σύνδεση σε λογαριασμό"
 
 #~ msgid "Terms for Contributors"
 #~ msgstr "Όροι συντελεστών"
 
-#, fuzzy
 #~ msgid "Demo Studio: Terms for Contributors"
 #~ msgstr "Όροι συντελεστών"
 
@@ -4604,7 +4648,6 @@ msgstr ""
 #~ msgid "Search the Demo Studio"
 #~ msgstr "Αναζήτηση στο Demo Studio"
 
-#, fuzzy
 #~ msgid "See %(display_name)s's profile"
 #~ msgstr "Δείτε το προφίλ του/της {display_name}"
 
@@ -4679,7 +4722,6 @@ msgstr ""
 #~ msgid "%(number)d %(type)s"
 #~ msgstr "%(number)d %(type)s"
 
-#, fuzzy
 #~ msgid "Subscribe to a feed of %(display_name)s's demos"
 #~ msgstr "Εγγραφείτε συνδρομητές σε αρχείο ροής για demo του/της {display_name}"
 
@@ -4704,8 +4746,6 @@ msgstr ""
 #~ msgid "{start}&ndash;{end} of {total}"
 #~ msgstr "{start}&ndash;{end} από {total}"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
-#, fuzzy
 #~ msgid "<span class=\"title-prefix\">Moving</span> <em>{title}</em>"
 #~ msgstr "Δημοφιλη αρθρα για  <span class=\"mobile\">κινητα</span>"
 
@@ -4737,7 +4777,6 @@ msgstr ""
 #~ msgid "Add your comment"
 #~ msgstr "Προσθέστε το σχόλιο σας"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Get the Source Code"
 #~ msgstr "Δειτε τον πηγαιο κωδικα"
 
@@ -4772,7 +4811,6 @@ msgstr ""
 #~ msgid "(multiple)"
 #~ msgstr "(πολλαπλά)"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Doc Center"
 #~ msgstr "Εγγραφα"
 
@@ -4842,14 +4880,12 @@ msgstr ""
 #~ msgid "Quality Assurance"
 #~ msgstr "Quality Assurance"
 
-# https://developer-stage9.mozilla.org/el/demos/
 #~ msgid "Most Active Docs"
 #~ msgstr "Εγγραφα με την περισσοτερη δραστηριοτητα"
 
 #~ msgid "Last edited by:"
 #~ msgstr "Τελευταία επεξεργασία από:"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Doc Of The Day"
 #~ msgstr "Εγγραφο της ημερας"
 
@@ -4892,11 +4928,9 @@ msgstr ""
 #~ msgid "Start-to-finish success stories. See how add-on developers made magic with Mozilla."
 #~ msgstr "Επιτυχημένες ιστορίες από την αρχή μέχρι το τέλος. Δείτε πως κάποιο δημιουργοί πρόσθετων έκαναν τα μαγικά τους με τον Mozilla."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All add-ons development documentation"
 #~ msgstr "Ολη η τεκμηριωση για την αναπτυξη προσθετων"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Watch <span class=\"addons\">Add-on</span> Videos"
 #~ msgstr "Δειτε βιντεο για <span class=\"addons\">προσθετα</span>"
 
@@ -4909,7 +4943,6 @@ msgstr ""
 #~ msgid "Watch Myk Melez create an Add-on in 5 minutes using the new Add-on Builder!"
 #~ msgstr "Παρακολουθήστε τον Myk Melez να φτιάχνει ένα πρόσθετο μέσα σε 5 λεπτά με τη βοήθεια του νέου Add-on Builder!"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Favorite <span class=\"addons\">Add-on</span> Tools"
 #~ msgstr "Χρησιμα εργαλεια για <span class=\"addons\">προσθετα</span>"
 
@@ -4925,32 +4958,26 @@ msgstr ""
 #~ msgid "Check your add-on for common problems and errors. Open to anyone, not just add-ons hosted here."
 #~ msgstr "Ελέγξτε το πρόσθετο σας για κοινότυπα προβλήματα και σφάλματα. Μπορεί να χρησιμοποιηθεί από οποιονδήποτε, όχι μόνο για πρόσθετα που φιλοξενούμε."
 
-# https://developer-stage9.mozilla.org/el/demos/
 #~ msgid "All add-on development tools"
 #~ msgstr "Εργαλεια αναπτυξης προσθετων"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All add-ons development entries"
 #~ msgstr "Ολες οι εγγραφες για αναπτυξη προσθετων"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Forums"
 #~ msgstr "Φορουμ"
 
 #~ msgid "Search MDN"
 #~ msgstr "Αναζήτηση στο MDN"
 
-#, fuzzy
 #~ msgid "<p>Want to learn to use the technologies that power the Web? <br>We've put together a great collection of resources to get you started.</p>"
 #~ msgstr "<p>Θέλετε να μάθετε πως να χρησιμοποιήσετε τις τεχνολογίες που δίνουν πνοή στο διαδίκτυο; <br>Έχουμε συγκεντρώσει μια πλούσια συλλογή πηγών για να ξεκινήσετε.</p>"
 
-#, fuzzy
 #~ msgid "<p><strong>HyperText Markup Language</strong> is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you learn HTML.</p>"
 #~ msgstr ""
 #~ "<p><strong>Η HyperText Markup Language</strong> είναι η βασική γλώσσα σύνταξης για να βάλετε πληροφορίες στον παγκόσμιο ιστό. Αν θέλετε να δημιουργήσετε ή να τροποποιήσετε ιστοσελίδες, το "
 #~ "καλύτερο που έχετε να κάνετε, είναι να μάθετε HTML.</p>"
 
-#, fuzzy
 #~ msgid ""
 #~ "<p><strong>Cascading Style Sheets</strong> is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define the appearance and "
 #~ "location of the HTML elements within the pages.</p>"
@@ -4958,7 +4985,6 @@ msgstr ""
 #~ "<p><strong>Τα Cascading Style Sheets</strong> Είναι μια γλώσσα που περιγράφει την εμφάνιση των ιστοσελίδων . Για να δημιουργήσετε ευπαρουσίαστες ιστοσελίδες, θα πρέπει να μάθετε CSS ώστε να "
 #~ "μπορείτε να ορίσετε την εμφάνιση και την τοποθέτηση των στοιχείων της HTML μέσα στις σελίδες.</p>"
 
-#, fuzzy
 #~ msgid "<p><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and forms.</p>"
 #~ msgstr ""
 #~ "<p><strong>Η JavaScript</strong> (για συντομία JS) είναι η γλώσσα προγραμματισμού που επιτρέπει στις ιστοσελίδες να ανταποκρίνονται σε αλληλεπιδράσεις με τους χρήστες πέρα από τη βασική "
@@ -4998,7 +5024,6 @@ msgstr ""
 #~ msgid "Adding a Touch of Style"
 #~ msgstr "Προσθέτοντας πινελιές στυλ"
 
-#, fuzzy
 #~ msgid "A brief beginner's guide to styling web pages with CSS."
 #~ msgstr "Ένας σύντομος οδηγός για αρχάριους για τη μορφοποίηση ιστοσελίδων με CSS."
 
@@ -5062,7 +5087,6 @@ msgstr ""
 #~ msgid "The @font-face feature from CSS3 allows you to use custom typefaces on the web in an accessible, manipulable, and scalable way."
 #~ msgstr "Το χαρακτηριστικό @font-face του CSS3, σας επιτρέπει να χρησιμοποιείτε προσαρμοσμένες γραμματοσειρές για το διαδίκτυο με ένα εύκολα προσβάσιμο, διαχειρίσιμο και επεκτάσιμο τρόπο."
 
-#, fuzzy
 #~ msgid ""
 #~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers "
 #~ "and so can't take advantage."
@@ -5113,7 +5137,6 @@ msgstr ""
 #~ msgid "HTML Challenges"
 #~ msgstr "Προκλήσεις HTML"
 
-#, fuzzy
 #~ msgid "Use these challenges to hone your HTML skills (for example, \"Should I use an &lt;h2&gt; element or a &lt;strong&gt; element?\"), focusing on meaningful mark-up."
 #~ msgstr ""
 #~ "Χρησιμοποιείστε αυτές τις προκλήσεις για να βελτιώσετε τις γνώσεις σας στη HTML (για παράδειγμα, «Να χρησιμοποιήσω ένα στοιχείο &lt;h2&gt; ή ένα στοιχείο &lt;strong&gt; ;»), προσπαθώντας να "
@@ -5146,7 +5169,6 @@ msgstr ""
 #~ msgid "Some suggestions to help you get on board with HTML5."
 #~ msgstr "Μερικές προτάσεις που θα σας βοηθήσουν να μεταβείτε σε HTML5."
 
-#, fuzzy
 #~ msgid "HTML5 Rocks"
 #~ msgstr "HTML5"
 
@@ -5171,7 +5193,6 @@ msgstr ""
 #~ msgid "HTML5 Examples"
 #~ msgstr "Παραδείγματα HTML5"
 
-#, fuzzy
 #~ msgid "Web o' Wonder"
 #~ msgstr "Web O' Wonder"
 
@@ -5199,7 +5220,6 @@ msgstr ""
 #~ msgid "Showcase of sites that use HTML5 to help you learn about how it should be used."
 #~ msgstr "Παρουσίαση σελίδων που χρησιμοποιούν HTML5 για να σας βοηθήσει να μάθετε πως θα πρέπει να χρησιμοποιείται."
 
-#, fuzzy
 #~ msgid ""
 #~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so "
 #~ "can't take advantage."
@@ -5228,14 +5248,12 @@ msgstr ""
 #~ msgid "JavaScript Best Practices"
 #~ msgstr "Καλύτερες πρακτικές της JavaScript"
 
-#, fuzzy
 #~ msgid "Eloquent JavaScript"
 #~ msgstr "/en/JavaScript"
 
 #~ msgid "The JavaScript Programming Language"
 #~ msgstr "Η γλώσσα προγραμματισμού JavaScript"
 
-#, fuzzy
 #~ msgid "Douglas Crockford explores the language as it is today, and how it came to be."
 #~ msgstr "Ο Douglas Crockford explores the language as it is today, and how it came to be."
 
@@ -5248,7 +5266,6 @@ msgstr ""
 #~ msgid "Learning Advanced JavaScript"
 #~ msgstr "Εκμάθηση JavaScript για προχωρημένους"
 
-#, fuzzy
 #~ msgid "John Resig's guide to advanced JavaScript."
 #~ msgstr "Ο οδηγός του John Resig για την JavaScript για προχωρημένους."
 
@@ -5324,7 +5341,6 @@ msgstr ""
 #~ "Η βοήθεια σας είναι ζωτικής σημασίας για την επιτυχία του Firefox. Πείτε μας τα σχόλια σας στο <a href=\"%(irc_url)s\">κανάλι IRC</a>, <a href=\"%(meeting_url)s\">συμμετέχετε στην εβδομαδιαία "
 #~ "συνεδρίαση ανάπτυξης κάθε Τετάρτη</a>, ή <a href=\"%(bugzilla_url)s\">καταχωρήστε κάποιο bug που εντοπίσατε</a>."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All mobile development documentation"
 #~ msgstr "Ολη η τεκμηριωση για την αναπτυξη σε κινητα"
 
@@ -5373,7 +5389,6 @@ msgstr ""
 #~ msgid "Access Android APIs on this Android Developer page."
 #~ msgstr "Δείτε τα API του Android σ' αυτή τη σελίδα για προγραμματιστές του Android."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All mobile development entries"
 #~ msgstr "Ολες οι εγγραφες για αναπτυξη σε κινητα"
 
@@ -5408,7 +5423,6 @@ msgstr ""
 #~ "Με τον όρο localization (L10n), εννοούμε τη διαδικασία μετάφρασης της διασύνδεσης χρήστη ενός προγράμματος από μια γλώσσα σε μια άλλη και την προσαρμογή του στην αντίστοιχη κουλτούρα και τις "
 #~ "ανάγκες αυτής της γλώσσας. Αυτές οι πηγές αφορούν τη διαδικασία προετοιμασίας των εφαρμογών/επεκτάσεων που βασίζονται σε κώδικα του Mozilla για την υποστήριξη localization."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All applications development documentation"
 #~ msgstr "Ολη η τεκμηριωση για αναπτυξη εφαρμογων"
 
@@ -5424,11 +5438,9 @@ msgstr ""
 #~ msgid "A Mozilla source tree browser."
 #~ msgstr "Περιηγητής για το Mozilla source tree."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All application development tools"
 #~ msgstr "Ολα τα εργαλεια για αναπτυξη εφαρμογων"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All application development entries"
 #~ msgstr "Ολες οι εγγραφες για αναπτυξη εφαρμογων"
 
@@ -5458,7 +5470,6 @@ msgstr ""
 #~ msgid "The DOM is the architecture for Web documents; learn how to use the DOM and its API to look at and manipulate Web content."
 #~ msgstr "Το DOM είναι η αρχιτεκτονική των διαδικτυακών σελίδων· μάθετε πως να χρησιμοποιείτε το DOM και το  API του για να βλέπετε και να διαχειρίζεστε περιεχόμενο στο διαδίκτυο."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All web development documentation"
 #~ msgstr "Ολη η τεκμηριωση για αναπτυξη στο διαδικτυο"
 
@@ -5480,7 +5491,6 @@ msgstr ""
 #~ msgid "Another great Firefox/Firebug Add-on that helps you view and manage cookies in your browser."
 #~ msgstr "Άλλο ένα πρόσθετο για τον Firefox/Firebug που σας βοηθάει να δείτε και να διαχειριστείτε τα  cookies στον περιηγητή σας."
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "All web development entries"
 #~ msgstr "Ολες οι εγγραφες για αναπτυξη στο διαδικτυο"
 
@@ -5661,7 +5671,6 @@ msgstr ""
 #~ "δωρεάν δικτυακές ομάδες μελέτης του <a href=\"http://p2pu.org/\">Peer-to-Peer University<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing"
 #~ "\">School of Webcraft</a>. Μοιραστείτε τις ανακαλύψεις, τους προβληματισμούς και τις κατακτήσεις σας πάνω στη γνώση, με άλλους ανθρώπους που μαθαίνουν όπως κι εσείς.</p>"
 
-#, fuzzy
 #~ msgid ""
 #~ "<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through <a "
 #~ "href=\"http://p2pu.org/\">Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span></a> <a href=\"http://p2pu.org/webcraft/course-listing\">School of Webcraft</a>. Share your "
@@ -5695,7 +5704,6 @@ msgstr ""
 #~ "μπορεί να αποδοθεί μόνο σε ανθρώπινα λάθη και παραλήψεις. Αν κάτι δεν λειτουργεί σωστά λοιπόν, <a href=\"https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer"
 #~ "%20Network&component=Website\">καταχωρήστε ένα bug</a> για να το δουν οι άνθρωποι που με διαχειρίζονται.</p>"
 
-#, fuzzy
 #~ msgid ""
 #~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
 #~ "<li>View <strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
@@ -5724,7 +5732,6 @@ msgstr ""
 #~ msgid "Aurora"
 #~ msgstr "Aurora"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "Be Heard."
 #~ msgstr "Μιληστε"
 
@@ -5777,11 +5784,9 @@ msgstr ""
 #~ "Δείτε τα πιο πρόσφατα ενσωματωμένα χαρακτηριστικά πριν φτάσουν σε έκδοση beta  δοκιμάζοντας τις νέες εκδόσεις Aurora. Δοκιμάστε χαρακτηριστικά πρώτοι και βοηθήστε στη λήψη αποφάσεων για το ποια "
 #~ "θα υπάρχουν στην σταθερή έκδοση. Σημείωση: Οι εκδόσεις Aurora δεν είναι κατάλληλες για τον οποιοδήποτε, αυτό σημαίνει να είσαι στην αιχμή της τεχνολογίας."
 
-# https://developer-stage9.mozilla.org/el/demos/
 #~ msgid "Favorite <span class=\"mozilla\">Mozilla</span> Tools"
 #~ msgstr "Δημοφιλη εργαλεια <span class=\"mozilla\">Mozilla</span>"
 
-# https://developer-stage9.mozilla.org/el/demos/
 #~ msgid "Favorite <span class=\"web\">Web</span> Developer Tools"
 #~ msgstr "Δημοφιλη εργαλεια για αναπτυξη στο <span class=\"web\">διαδικτυο</span>"
 
@@ -5818,15 +5823,12 @@ msgstr ""
 #~ msgid "Key Topics for <a href=\"%(web_url)s\" class=\"web\">Web</a> Developers"
 #~ msgstr "Κύρια θέματα για δημιουργούς <a href=\"%(web_url)s\" class=\"web\">ιστοσελίδων</a>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Key Topics for <span class=\"web\">Web</span> Developers"
 #~ msgstr "Σημαντικα θεματα για δημιουργους του <span class=\"web\">διαδικτυου</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Latest <span class=\"addons\">Add-ons</span> Comments from Our Community:"
 #~ msgstr "Προσφατα σχολια για <span class=\"addons\">προσθετα</span> απο την κοινοτητα μας:"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Latest <span class=\"addons\">Add-ons</span> Discussions from Our Forums:"
 #~ msgstr "Προσφατες συζητησεις για <span class=\"addons\">προσθετα</span> απο τα φορουμ μας:"
 
@@ -5845,7 +5847,6 @@ msgstr ""
 #~ msgid "Maximum of %s tags allowed"
 #~ msgstr "Επιτρέπονται μέχρι %s ετικέτες"
 
-# Χωρίς τόνους λόγω του css text-transform: uppercase.
 #~ msgid "More"
 #~ msgstr "Περισσοτερα"
 
@@ -5868,46 +5869,36 @@ msgstr ""
 #~ msgid "New to MDN?"
 #~ msgstr "Είστε νέοι στο MDN;"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "News & Updates"
 #~ msgstr "Νεα & Ενημερωσεις"
 
 #~ msgid "Participating in the Mozilla Project"
 #~ msgstr "Συμμετοχή στο έργο Mozilla"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular <span class=\"addons\">Add-ons</span> Documentation"
 #~ msgstr "Δημοφιλης τεκμηριωση για <span class=\"addons\">προσθετα</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular <span class=\"mobile\">Mobile</span> Documentation"
 #~ msgstr "Δημοφιλης τεκμηριωση για <span class=\"mobile\">κινητα</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular <span class=\"mozilla\">Mozilla</span> Documentation"
 #~ msgstr "Δημοφιλης τεκμηριωση <span class=\"mozilla\">Mozilla</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular <span class=\"web\">Web</span> Documentation"
 #~ msgstr "Δημοφιλης τεκμηριωση για το <span class=\"web\">διαδικτυο</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Popular Topics for <span class=\"web\">Web</span> Developers"
 #~ msgstr "Δημοφιλη θεματα για δημιουργους <span class=\"web\">διαδικτυου</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Recent <span class=\"addons\">Add-ons</span> News &amp; Updates"
 #~ msgstr "Προσφατα νεα &amp; ενημερωσεις για <span class=\"addons\">προσθετα</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Recent <span class=\"mobile\">Mobile</span> News &amp; Updates"
 #~ msgstr "Προσφατα νεα &amp; ενημερωσεις για <span class=\"mobile\">κινητα</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Recent <span class=\"mozilla\">Mozilla</span> News &amp; Updates"
 #~ msgstr "Προσφατες ενημερωσεις &amp; νεα απο το εργο <span class=\"mozilla\">Mozilla</span>"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Recent <span class=\"web\">Web</span> News &amp; Updates"
 #~ msgstr "Προσφατα νεα &amp; ενημερωσεις για το <span class=\"web\">διαδικτυο</span>"
 
@@ -5970,7 +5961,6 @@ msgstr ""
 #~ msgid "Want to see what the Web is really capable of? Explore the Web o' Wonder website and prepare to be amazed!"
 #~ msgstr "Θέλετε να δείτε τις πραγματικές δυνατότητες τους διαδικτύου; Εξερευνήστε τις σελίδες του Web o' Wonder και προετοιμαστείτε για εκπλήξεις!"
 
-# Χωρίς τόνους λόγω του text-transform: uppercase στο CSS.
 #~ msgid "Watch <span class=\"mobile\">Mobile</span> Videos"
 #~ msgstr "Δειτε βιντεο για <span class=\"mobile\">κινητα</span>"
 

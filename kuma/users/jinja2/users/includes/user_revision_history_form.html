@@ -1,7 +1,7 @@
 {% from "wiki/includes/document_macros.html" import revision_diff with context %}
 
 {% if revisions|count %}
-    <table class="dashboard-table" width="100%">
+    <table class="dashboard-table dashboard-table-spam" width="100%">
         <thead>
             <tr>
                 <th class="dashboard-spam">{{ _('Spam') }}</th>
@@ -9,7 +9,6 @@
                 <th class="dashboard-title">{{ _('Title') }}</th>
                 <th class="dashboard-comment">{{ _('Comment') }}</th>
                 <th class="dashboard-tags">{{ _('Tags') }}</th>
-                <th class="dashboard-history-link">{{ _('History') }}</th>
             </tr>
         </thead>
         {% for revision in revisions %}
@@ -20,6 +19,7 @@
                     tabindex="0"
                     class="dashboard-row {% if not previous_id %}dashboard-row-new{% endif %}"
                     >
+                    <td></td> <!--- Empty row -->
                     <td class="dashboard-revision">
                         <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
                         <br />
@@ -38,12 +38,10 @@
                         {% set tags = revision.document.tags.all().order_by('name') %}
                         {% include "wiki/includes/document_tag.html" %}
                     </td>
-                    <td class="dashboard-history-link">
-                        <a id="history" href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="button">{{ _("History") }}<i aria-hidden="true" class="icon-book"></i></a></a>
-                    </td>
                 </tr>
                 <tr>
-                    <td colspan=5>
+                    <td></td>
+                    <td colspan=4>
                         {# If this is a revision, compare with most recent revision #}
                         {% if previous_id %}
                             {% with revision_from=revision.previous, revision_to=revision %}
@@ -65,18 +63,25 @@
                 </tr>
                 <tr colspan=5>
                     <td colspan=5>
-                        <input type="checkbox" name="revision-id" value="{{ revision.id }}" checked></input>
-                        <strong>Spam. </strong>
-                        {% if revision.id == revision.document.current_revision.id %}
-                            Report as spam. Revert to last edit.
-                        {% elif not previous_id and revision.document.locale != 'en-US' %}
-                            Report as spam. Delete this new translation.
+                        {% if not revision.akismet_submissions.all() %}
+                            <input type="checkbox" name="revision-id" value="{{ revision.id }}" checked></input>
+                            <strong>{{ _('Spam.') }} </strong>
+                            {% if revision.id == revision.document.current_revision.id %}
+                                {{ _('Report as spam. Revert to last edit.') }}
+                            {% elif not previous_id and revision.document.locale != 'en-US' %}
+                                {{ _('Report as spam. Delete this new translation.') }}
+                            {% else %}
+                                {{ _('Report as spam. Cannot revert: not the most recent revision. Page will be flagged for follow up on the summary page.') }}
+                            {% endif %}
+                            {% if previous_id %}
+                                {{ _('Ban %(user)s', user=detail_user) }}
+
+                                {{ _('At: %(date)s .', date=datetimeformat(revision.previous.created, format='datetime')) }}
+                                {{ _('By: <a href="%(url)s">%(username)s</a>.', url=revision.previous.creator.get_absolute_url(), username=revision.previous.creator.username) }}
+                                {{ _('Comment: "%(comment)s".', comment=revision.previous.comment) }}
+                            {% endif %}
                         {% else %}
-                            Report as spam. Cannot revert: not the most recent revision. Page will be flagged for follow up on the summary page.
-                        {% endif %}
-                        {% if previous_id %}At: {{ datetimeformat(revision.previous.created, format='datetime') }}.
-                            By: <a href="{{ revision.previous.creator.get_absolute_url() }}">{{ revision.previous.creator.username }}</a>.
-                            Comment: "{{ revision.previous.comment }}".
+                            <p>{{ _('Already reported as spam.') }}</p>
                         {% endif %}
                     </td>
                 </tr>

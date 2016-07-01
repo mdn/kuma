@@ -166,7 +166,7 @@ class DocumentsRecentFeed(DocumentsFeed):
                             .filter_for_list(tag_name=self.tag,
                                              locale=self.locale)
                             .filter(current_revision__isnull=False)
-                            .order_by('-current_revision__created')
+                            .order_by('-current_revision__id')
                             .values_list('pk', flat=True)[:MAX_FEED_ITEMS])
         return (Document.objects.filter(pk__in=list(item_pks))
                                 .defer('html')
@@ -201,7 +201,7 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
         item_pks = (Document.objects
                             .filter_for_review(tag_name=tag, locale=self.locale)
                             .filter(current_revision__isnull=False)
-                            .order_by('-current_revision__created')
+                            .order_by('-current_revision__id')
                             .values_list('pk', flat=True)[:MAX_FEED_ITEMS])
         return (Document.objects.filter(pk__in=list(item_pks))
                                 .defer('html')
@@ -231,7 +231,7 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
                         .prefetch_related('parent')
                         .filter(locale=self.locale, parent__isnull=False)
                         .filter(modified__lt=F('parent__modified'))
-                        .order_by('-parent__current_revision__created')
+                        .order_by('-parent__current_revision__id')
                 [:MAX_FEED_ITEMS])
 
     def get_context_data(self, **kwargs):
@@ -241,7 +241,7 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
         obj = context.get('obj')
         trans_based_on_pk = (Revision.objects.filter(document=obj.parent)
                                              .filter(created__lte=obj.modified)
-                                             .order_by('created')
+                                             .order_by('id')
                                              .values_list('pk', flat=True)
                                              .first())
         mod_url = get_compare_url(obj.parent,
@@ -275,7 +275,7 @@ class RevisionsFeed(DocumentsFeed):
 
         # Temporarily storing the selected revision PKs in a list
         # to speed up retrieval (max MAX_FEED_ITEMS size)
-        item_pks = (items.order_by('-created')
+        item_pks = (items.order_by('-id')
                          .values_list('pk', flat=True)[start:finish])
         return (Revision.objects.filter(pk__in=list(item_pks))
                                 .prefetch_related('creator',

@@ -679,7 +679,10 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     @property
     def akismet_error_message(self):
-        return mark_safe(render_to_string('wiki/includes/spam_error.html', {}))
+        request = getattr(self, 'request', None)
+        user = request and request.user
+        return mark_safe(render_to_string('wiki/includes/spam_error.html',
+                                          {'user': user}))
 
     def akismet_error(self, parameters, exception=None):
         """
@@ -759,7 +762,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         Does some specific things when the revision is fully saved.
         """
         # have to check for first edit before we save
-        is_first_edit = self.request.user.wiki_revisions().count() == 0
+        is_first_edit = not self.request.user.wiki_revisions().exists()
 
         # Making sure we don't commit the saving right away since we
         # want to do other things here.

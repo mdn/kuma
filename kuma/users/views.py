@@ -14,7 +14,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.db import IntegrityError, transaction
-from django.db.models import Q
+from django.db.models import Max, Q
 from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
@@ -121,7 +121,11 @@ def ban_user_and_cleanup(request, user_id):
 @permission_required('users.add_userban')
 def ban_user_and_cleanup_summary(request, user_id):
     """
-    A summary page of actions taken when banning a user and reverting revisions
+    A summary page of actions taken when banning a user and reverting revisions.
+    This method takes all the revisions from the last three days,
+    sends back the list of revisions that were successfully reverted/deleted
+    and submitted to Akismet, and also a list of
+    revisions where no action was taken (revisions needing follow up).
     """
     try:
         user = User.objects.get(pk=user_id)
@@ -141,25 +145,48 @@ def ban_user_and_cleanup_summary(request, user_id):
     else:
         user_ban.update(by=request.user, reason='Spam')
 
-    # The revisions to be reverted
-    revisions_to_be_reverted = user.created_revisions\
-        .filter(id__in=request.POST.getlist('revision-id'))\
-        .prefetch_related('document').defer('content', 'summary')\
-        .order_by('-created')
+    date_three_days_ago = datetime.now().date() - timedelta(days=3)
+    revisions_from_last_three_days = user.created_revisions.prefetch_related('document')
+    revisions_from_last_three_days = revisions_from_last_three_days.defer('content', 'summary').order_by('-id')
+    revisions_from_last_three_days = revisions_from_last_three_days.filter(created__gte=date_three_days_ago)
+
+    distinct_doc_rev_ids = list(
+        Document.objects.filter(
+            revisions__in=revisions_from_last_three_days
+        ).annotate(
+            latest_rev=Max('revisions')
+        ).values_list('latest_rev', flat=True)
+    )
+    revisions_by_distinct_doc = revisions_from_last_three_days.filter(id__in=distinct_doc_rev_ids)
+
+    # The revisions to be submitted to Akismet
+    revisions_to_mark_as_spam_and_revert = revisions_from_last_three_days.filter(
+        id__in=request.POST.getlist('revision-id'))
 
     # 1. Submit revisions to Akismet as spam
     # 2. If this is the most recent revision for a document:
     #    Revert revision if it has a previous version OR
     #    Delete revision if it is a new document
+    submitted_to_akismet = []
+    not_submitted_to_akismet = []
     revisions_reverted_list = []
-    for revision in revisions_to_be_reverted:
+    for revision in revisions_to_mark_as_spam_and_revert:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
         akismet_submission_data = {'revision': revision.id}
 
-        data = RevisionAkismetSubmissionSpamForm(data=akismet_submission_data, instance=submission, request=request)
-        # TODO: What to do of data is not valid? Currently, fail silently
+        data = RevisionAkismetSubmissionSpamForm(
+            data=akismet_submission_data,
+            instance=submission,
+            request=request)
+        # Submit to Akismet or note that validation & sending to Akismet failed
         if data.is_valid():
             data.save()
+            # Since we only want to display 1 revision per document, only add to
+            # this list if this is one of the revisions for a distinct document
+            if revision in revisions_by_distinct_doc:
+                submitted_to_akismet.append(revision)
+        else:
+            not_submitted_to_akismet.append(revision)
 
         # If there is a previous version, and this revision is the current one, revert it
         if revision.previous:
@@ -167,7 +194,7 @@ def ban_user_and_cleanup_summary(request, user_id):
                 reverted = revert_document(request=request,
                                            document_path=revision.document.slug,
                                            revision_id=revision.previous.id)
-                if reverted:
+                if reverted and revision in revisions_by_distinct_doc:
                     revisions_reverted_list.append(revision.pk)
 
         # If this is a new doc, delete it
@@ -175,21 +202,21 @@ def ban_user_and_cleanup_summary(request, user_id):
             deleted = delete_document(request=request,
                                       document_slug=revision.document.slug,
                                       document_locale=revision.document.locale)
-            if deleted:
+            if deleted and revision in revisions_by_distinct_doc:
                 revisions_reverted_list.append(revision.pk)
 
-    # List of all revisions by user in the past 3 days
-    date_three_days_ago = datetime.now().date() - timedelta(days=3)
-    revisions_reverted = user.created_revisions.prefetch_related('document')
-    revisions_reverted = revisions_reverted.defer('content', 'summary').order_by('-id')
-    revisions_reverted = revisions_reverted.filter(created__gte=date_three_days_ago)
-    # Create a list of revisions reverted and list of those that were not reverted
-    revisions_needing_follow_up = revisions_reverted.exclude(pk__in=revisions_reverted_list)
-    revisions_reverted = revisions_reverted.filter(pk__in=revisions_reverted_list)
+    revisions_needing_follow_up = revisions_from_last_three_days.exclude(pk__in=revisions_reverted_list)
+    revisions_reverted = revisions_from_last_three_days.filter(pk__in=revisions_reverted_list)
+
+    revisions_needing_follow_up = {
+        'manual_revert': revisions_needing_follow_up,
+        'not_submitted_to_akismet': not_submitted_to_akismet
+    }
 
     context = {'detail_user': user,
                'form': UserBanForm(),
                'revisions_reverted': revisions_reverted,
+               'revisions_reported_as_spam': submitted_to_akismet,
                'revisions_needing_follow_up': revisions_needing_follow_up}
 
     return render(request,
@@ -255,12 +282,7 @@ def user_detail(request, username):
         return render(request, '403.html',
                       {'reason': 'bannedprofile'}, status=403)
 
-    docs_feed_items = None
-
-    context = {
-        'detail_user': detail_user,
-        'docs_feed_items': docs_feed_items,
-    }
+    context = {'detail_user': detail_user}
     return render(request, 'users/user_detail.html', context)
 
 

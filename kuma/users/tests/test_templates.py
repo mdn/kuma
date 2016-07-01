@@ -4,12 +4,14 @@ import requests_mock
 from constance import config as constance_config
 from constance.test.utils import override_config
 from django.conf import settings
+from mock import patch
 from pyquery import PyQuery as pq
 from waffle.models import Flag
 
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
+from kuma.wiki.tests import document as create_document, revision as create_revision
 
 from . import SampleRevisionsMixin, UserTestCase
 from .test_views import TESTUSER_PASSWORD
@@ -453,12 +455,59 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
-        no_revisions = page.find('#docs-activity div')
+        no_revisions = page.find('#ban-and-cleanup-form')
 
         eq_(len(revisions_found), 0)
         ok_("This user has not created any revisions in the past three days." in no_revisions.text())
 
-    def test_banned_user_one_click_page_template(self):
+    def test_not_banned_user_one_click_page_template_ban_button(self):
+        """Test the ban button text for a user that has not been banned."""
+        # There are some revisions made by self.testuser; none by self.testuser2
+        num_revisions = 3
+        self.create_revisions(
+            num=num_revisions,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+
+        # For self.testuser (not banned, and revisions need to be reverted) the
+        # button on the form should read "Ban User for Spam & Submit Spam"
+        # and there should be a link to ban a user for other reasons
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
+
+        eq_(len(revisions_found), num_revisions)
+        eq_(ban_button.text(), "Ban User for Spam & Submit Spam")
+        eq_(len(ban_other_reasons), 1)
+
+        # For self.testuser2 (not banned, no revisions needing to be reverted)
+        # the button on the form should read "Ban User for Spam". There should
+        # be no link to ban for other reasons
+        ban_url = reverse('users.ban_user_and_cleanup',
+                          kwargs={'user_id': self.testuser2.id})
+
+        resp = self.client.get(ban_url, follow=True)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_found = page.find('.dashboard-row')
+        ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
+
+        eq_(len(revisions_found), 0)
+        eq_(ban_button.text(), "Ban User for Spam")
+        eq_(len(ban_other_reasons), 0)
+
+    def test_banned_user_one_click_page_template_ban_button(self):
         """Test the template for a user that has already been banned."""
         # There are some revisions made by self.testuser; none by self.testuser2
         num_revisions = 3
@@ -477,8 +526,9 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        # For self.testuser (banned, but revisions need to be reversed) the
-        # button on the form should read "Revert Revisions"
+        # For self.testuser (banned, but revisions need to be reverted) the
+        # button on the form should read "Submit Spam". There should
+        # be no link to ban for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': self.testuser.id})
 
@@ -489,11 +539,15 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
 
-        eq_(len(revisions_found), num_revisions)
-        eq_(ban_button.text(), "Revert Revisions")
+        ban_other_reasons = page.find('#ban-for-other-reasons')
 
-        # For self.testuser2 (banned, has no revisions needing to be reversed)
-        # there should be no button on the form
+        eq_(len(revisions_found), num_revisions)
+        eq_(ban_button.text(), "Submit Spam")
+        eq_(len(ban_other_reasons), 0)
+
+        # For self.testuser2 (banned, has no revisions needing to be reverted)
+        # there should be no button on the form and no link to
+        # ban for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': self.testuser2.id})
 
@@ -503,13 +557,16 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         revisions_found = page.find('.dashboard-row')
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
+        ban_other_reasons = page.find('#ban-for-other-reasons')
 
         eq_(len(revisions_found), 0)
         eq_(len(ban_button), 0)
+        eq_(len(ban_other_reasons), 0)
 
 
 @pytest.mark.bans
 class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
+
     def test_user_revisions_in_summary_page_template(self):
         """The user's revisions show up in ban and cleanup summary template."""
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
@@ -563,9 +620,250 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ok_(exp_reverted in revisions_reverted_section.text())
         ok_(exp_followup in revisions_followup_section.text())
 
+    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
+    def test_user_revisions_submitted_to_akismet_in_template(self, mock_form):
+        """If revision submitted to Akismet, summary template states this"""
+        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
+        mock_form.return_value = True
+
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # Don't specify document so a new one is created for each revision
+        revisions_created = self.create_revisions(
+            num=3,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
+        revisions_reported_as_spam_text = ''
+        for rev in revisions_reported_as_spam:
+            revisions_reported_as_spam_text += rev.text_content()
+
+        eq_(len(revisions_reported_as_spam), len(revisions_created))
+        # The title for each of the created revisions shows up in the template
+        for revision in revisions_created:
+            ok_(revision.title in revisions_reported_as_spam_text)
+        # The title for the original revision is not in the template
+        ok_(self.original_revision.title not in revisions_reported_as_spam_text)
+
+    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
+    def test_user_revisions_not_submitted_to_akismet(self, mock_form):
+        """If revision not submitted to Akismet, summary template states this"""
+        expect_txt = 'The following revisions could not be submitted to Akismet'
+        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
+        mock_form.return_value = False
+
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # Don't specify document so a new one is created for each revision
+        revisions_created = self.create_revisions(
+            num=3,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_needing_follow_up_section = page.find('#revisions-followup')
+        not_submitted = page.find('#not-submitted-to-akismet li')
+
+        # Template should state that the revisions were not submitted to Akismet
+        ok_(expect_txt in revisions_needing_follow_up_section.text())
+        # All of the revisions should be in the 'not submitted' section
+        eq_(len(not_submitted), len(revisions_created))
+
+    def test_delete_link_appears_summary_page(self):
+        """
+        Delete link should only appear on summary page sometimes.
+
+        This should occur if:
+        1.) The user created the document and
+        2.) the document has no other revision.
+        """
+        # Create an original revision on a document by the self.testuser
+        new_document = create_document(save=True)
+        new_revision = create_revision(
+            title='Revision 0',
+            document=new_document,
+            creator=self.testuser,
+            save=True)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [new_revision.id]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        delete_url = reverse(
+            'wiki.delete_document',
+            kwargs={'document_path': new_document.slug},
+            force_locale=True)
+        delete_link = page.find('#revisions-followup a[href="{url}"]'.format(
+            url=delete_url))
+
+        # There should be 1 delete link found
+        eq_(len(delete_link), 1)
+
+    def test_delete_link_does_not_appear_summary_page(self):
+        """
+        Delete link should not only appear on summary page sometimes.
+
+        This should occur if:
+        1.) The user did not create the document or
+        2.) the document has other revisions.
+        """
+        # 1.) User makes a revision on another user's document
+        testuser_revisions = self.create_revisions(
+            num=1,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [testuser_revisions[0].id]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        delete_url = reverse(
+            'wiki.delete_document',
+            kwargs={'document_path': self.document.slug},
+            force_locale=True)
+        delete_link = page.find('#revisions-followup a[href="{url}"]'.format(
+            url=delete_url))
+
+        # There should not be a link to delete the document
+        eq_(len(delete_link), 0)
+
+        # User creates a document, but another user makes a revision on it
+        new_document = create_document(save=True)
+        testuser_revisions = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.testuser)
+        create_revision(
+            title='Revision 1',
+            document=new_document,
+            creator=self.testuser2,
+            save=True)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [testuser_revisions[0].id]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        delete_url = reverse(
+            'wiki.delete_document',
+            kwargs={'document_path': new_document.slug},
+            force_locale=True)
+        delete_link = page.find('#revisions-followup a[href="{url}"]'.format(
+            url=delete_url))
+
+        # There should not be a link to delete the document
+        eq_(len(delete_link), 0)
+
+    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
+    def test_list_revisions_reported_as_spam_once_for_distinct_documents(self, mock_form):
+        """
+        Only 1 revision per document should be shown on the summary page.
+
+        This test verifies that only 1 revision per document shows up in the
+        "The following revisions were reported as spam" section
+        """
+        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
+        mock_form.return_value = True
+
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # There are all on self.document
+        revisions_created = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
+
+        # Since all of the revisions were made on the same document, only 1 of
+        # them should be shown in the template
+        eq_(len(revisions_reported_as_spam), 1)
+
+    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
+    def test_list_revisions_needing_followup_once_for_distinct_documents(self, mock_form):
+        """
+        Only 1 revision per document should be shown on the summary page.
+
+        This test verifies that only 1 revision per document shows up in the
+        "Pages needing follow up" section
+        """
+        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
+        mock_form.return_value = False
+
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # There are all on self.document
+        revisions_created = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_needing_follow_up = page.find('#manual-revert-needed li')
+
+        # Since all of the revisions were made on the same document, only 1 of
+        # them should be shown in the template
+        eq_(len(revisions_needing_follow_up), 1)
 
 #    TODO: Phase III:
 #    def test_unreverted_changes_in_summary_page_template(self):
+#    def test_list_reverted_revisions_once_for_distinct_documents(self):
+#        """
+#        Only 1 revision per document should be shown on the summary page.
+#
+#        This test verifies that only 1 revision per document shows up in the
+#        "The following revisions were reverted" section
+#        """
 
 
 class ProfileDetailTestCase(UserTestCase):
