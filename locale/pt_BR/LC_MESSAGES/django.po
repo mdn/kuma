@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-06-27 20:09+0000\n"
+"PO-Revision-Date: 2016-07-02 23:10+0000\n"
 "Last-Translator: Marco Aurélio <fxhelp@yahoo.com>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -2002,7 +2002,7 @@ msgstr "<a href=\"%(url)s\">%(user)s</a> foi banido."
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
 msgid "Because %(user)s has already been banned, you may review and revert their revisions below."
-msgstr ""
+msgstr "Como o usuário %(user)s foi banido, você poderá revisar e reverter suas revisões abaixo."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:57
 msgid "Revert Revisions"
@@ -2014,15 +2014,15 @@ msgstr "Banir usuário por spam"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "Ban User for Spam & Revert Revisions"
-msgstr ""
+msgstr "Banir usuário por spam e reverter revisões"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:65
 msgid "Ban user for other reasons."
-msgstr ""
+msgstr "Banir usuário por outras razões."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:68
 msgid "User has not made any revisions in the past three days, and this user was already banned."
-msgstr ""
+msgstr "Usuário não fez quaisquer revisões nos últimos três dias e já foi banido."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:20
 #, python-format
@@ -2035,7 +2035,7 @@ msgstr "As seguintes revisões foram revertidas:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:27
 msgid "(Note: No revisions were actually reverted. This feature will be added in Phase 2.)"
-msgstr ""
+msgstr "(Nota: Nenhuma revisão foi revertida. Essa funcionalidade será adicionada na Fase 2.)"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "The user did not have any revisions that were reverted."
@@ -2043,11 +2043,11 @@ msgstr "O usuário não tem quaisquer revisões para serem revertidas."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:55
 msgid "Pages needing follow up:"
-msgstr ""
+msgstr "Páginas que precisam de acompanhamento:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:82
 msgid "The user did not have any revisions needing follow-up."
-msgstr ""
+msgstr "O usuário não possui nenhuma revisão que necessite acompanhamento."
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2345,7 +2345,7 @@ msgstr "Banir usuário"
 
 #: kuma/users/templatetags/jinja_helpers.py:54
 msgid "Ban User & Clean Up"
-msgstr ""
+msgstr "Banir usuário & Limpar"
 
 #: kuma/users/templatetags/jinja_helpers.py:66
 msgid "Admin"
@@ -3585,7 +3585,7 @@ msgstr "Se acha que recebeu esta mensagem por erro, por favor guarde um rascunho
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:19
 #, python-format
 msgid "If you are a spam moderator, you can <a href=\"%(akismet_submission_url)s\" target=\"_blank\">mark this submission as ham</a> and try submitting it again."
-msgstr ""
+msgstr "Se é um moderador de spam, pode <a href=\"%(akismet_submission_url)s\" target=\"_blank\">marcar esta submissão como ham</a> e tentar submetê-la novamente."
 
 #: kuma/wiki/jinja2/wiki/includes/translate_description.html:6
 msgid "Translate Description"
