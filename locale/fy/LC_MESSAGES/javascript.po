@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-06-17 13:12+0000\n"
+"PO-Revision-Date: 2016-07-04 10:58+0000\n"
 "Last-Translator: fryskefirefox <fryskefirefox@gmail.com>\n"
 "Language-Team: Frisian https://pontoon.mozilla.org/fy_NL/\n"
 "Language: fy_NL\n"
@@ -195,9 +195,9 @@ msgid "Autosave disabled."
 msgstr "Automatysk bewarjen útskeakele."
 
 #: kuma/static/js/wiki-samples.js:97
-#, fuzzy, python-format
+#, python-format
 msgid "Open in %(site)s"
-msgstr "Iepenje yn %(site)s "
+msgstr "Iepenje yn %(site)s"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
