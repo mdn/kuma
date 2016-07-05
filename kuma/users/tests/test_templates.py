@@ -870,15 +870,76 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # them should be shown in the template
         eq_(len(revisions_needing_follow_up), 1)
 
-#    TODO: Phase III:
-#    def test_unreverted_changes_in_summary_page_template(self):
-#    def test_list_reverted_revisions_once_for_distinct_documents(self):
-#        """
-#        Only 1 revision per document should be shown on the summary page.
-#
-#        This test verifies that only 1 revision per document shows up in the
-#        "The following revisions were reverted" section
-#        """
+    def test_newest_revision_is_not_spam(self):
+        """
+        Test with a spam user who has made revisions to a single document,
+        but another user has made a more recent revision.
+        The newest revision was created by a non-spam user,
+        so none of the revisions actually need to be reverted.
+        """
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        spam_revisions = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+        newest_revision = self.create_revisions(
+            num=1,
+            document=self.document,
+            creator=self.admin)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in spam_revisions]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_needing_follow_up = page.find('#manual-revert-needed li')
+        revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
+
+        # Because no revisions needed to be reverted, none need follow up
+        eq_(len(revisions_needing_follow_up), 0)
+        # Only one document is listed on the reported as spam list (distinct document)
+        eq_(len(revisions_reported_as_spam), 1)
+
+    def test_multiple_revisions_are_spam(self):
+        """
+        Test with a spam user who has made multiple revisions to a single document.
+        This document should be reverted to the last version that was created
+        by a non-spam user (self.admin).
+        The newest revision was created by a non-spam user,
+        so none of the revisions actually need to be reverted.
+        """
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        prior_safe_revision = self.create_revisions(
+            num=1,
+            document=self.document,
+            creator=self.admin)
+        spam_revisions = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'user_id': self.testuser.id})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        data = {'revision-id': [rev.id for rev in spam_revisions]}
+        resp = self.client.post(full_ban_url, data=data)
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        revisions_needing_follow_up = page.find('#manual-revert-needed li')
+        revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
+
+        # Because no revisions needed to be reverted, none need follow up
+        eq_(len(revisions_needing_follow_up), 0)
+        # Only one document is listed on the reported as spam list (distinct document)
+        eq_(len(revisions_reported_as_spam), 1)
 
 
 class ProfileDetailTestCase(UserTestCase):
