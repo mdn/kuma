@@ -54,8 +54,10 @@
                 <tr>
                     <td colspan=5>
                       {% if not revision.akismet_submissions.all() %}
-                        <input type="checkbox" name="revision-id" value="{{ revision.id }}" checked></input>
-                        <strong>Spam</strong>
+                        <label>
+                          <input type="checkbox" name="revision-id" value="{{ revision.id }}" checked></input>
+                          <strong>Spam</strong>
+                        </label>
                       {% else %}
                         <p>Already reported as spam.</p>
                       {% endif %}

@@ -45,7 +45,9 @@
   {% csrf_token %}
   {% include "users/includes/user_revision_history_form.html" %}
   <p>
-    {% if not user_banned or revisions %}
+    {% if user == detail_user %}
+      <p>{{ _('You cannot ban yourself for spam.') }}</p>
+    {% elif not user_banned or revisions %}
       <button type="submit" class="button negative ban-link">
         {% if user_banned and revisions %}
           {{ _('Submit Spam') }}
