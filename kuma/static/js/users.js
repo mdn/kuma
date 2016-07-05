@@ -48,6 +48,13 @@
                 '</label></li>');
         });
 
+        // hide or show expertise based on if there are tags to check
+        if(taglist.find('li').length) {
+            $('#id_user-expertise').parent().show();
+        } else {
+            $('#id_user-expertise').parent().hide();
+        }
+
         // Do this mutual update, so any checkboxes that have disappeared
         // also get removed from the field.
         updateTaglistFromField();
@@ -60,10 +67,12 @@
         var expertise = $('#id_user-expertise');
         var eTags = expertise.val().split(',');
 
-        $('#tags-expertise .tag-expert input[type=checkbox]').removeAttr('checked');
+        $('#tags-expertise .tag-expert input[type=checkbox]').prop('checked', false);
         $.each(eTags, function(idx, tag) {
             tag = $.trim(tag);
-            $('#tags-expertise .tag-expert input[value=' + tag + ']').attr('checked', 'checked');
+            if(tag !== '') {
+                $('#tags-expertise .tag-expert input[value=' + tag + ']').prop('checked', true);
+            }
         });
     });
 
@@ -78,7 +87,10 @@
     $(document).ready(function(){
 
         // Convert interests text field into a tag-it widget
+        // also lowercase to deal with database weirdness
+        var interests = $('#id_user-interests').val().toLowerCase();
         $('#id_user-interests').hide()
+            .val(interests)
             .after('<ul id="tagit-interests"></ul>')
             .change(rebuildExpertiseTaglist);
 
@@ -95,9 +107,13 @@
         // Set the new tag element text
         $('#tagit-interests .tagit-new input').attr('placeholder', gettext('New interest...'));
 
-        // Convert the expertise text field into tag list with checkboxes sync'd to
-        // interests
-        $("#id_user-expertise").hide().after("<ul id='tags-expertise' class='tags'></ul>");
+        // Convert the expertise text field into tag list
+        // lowercase to deal with database weirdness
+        // checkboxes sync'd to interests
+        var expertise = $('#id_user-expertise').val().toLowerCase();
+        $('#id_user-expertise').hide()
+        .val(expertise)
+        .after('<ul id="tags-expertise" class="tags"></ul>');
 
         $('#tags-expertise').click(updateFieldFromTaglist);
         rebuildExpertiseTaglist();
