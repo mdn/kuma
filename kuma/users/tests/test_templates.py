@@ -600,8 +600,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def test_no_user_revisions_summary_page_template(self):
         """If user has no revisions, it should be stated in summary template."""
         # The expected text
-        exp_reverted = "The user did not have any revisions that were reverted."
-        exp_followup = "The user did not have any revisions needing follow-up."
+        # TODO: Add in Phase III
+        # exp_reverted = "None."
+        expected_text = 'None.'
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
@@ -614,13 +615,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_followup = page.find('#revisions-followup li')
-        revisions_reverted_section = page.find('#revisions-reverted')
+        # TODO: Add in Phase III
+        # revisions_reverted_section = page.find('#revisions-reverted')
         revisions_followup_section = page.find('#revisions-followup')
 
         eq_(len(revisions_reverted), 0)
         eq_(len(revisions_followup), 0)
-        ok_(exp_reverted in revisions_reverted_section.text())
-        ok_(exp_followup in revisions_followup_section.text())
+        # TODO: Add in Phase III
+        # ok_(expected_text in revisions_reverted_section.text())
+        ok_(expected_text in revisions_followup_section.text())
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_user_revisions_submitted_to_akismet_in_template(self, mock_form):
@@ -658,8 +661,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_user_revisions_not_submitted_to_akismet(self, mock_form):
-        """If revision not submitted to Akismet, summary template states this"""
-        expect_txt = 'The following revisions could not be submitted to Akismet'
+        """If revision not submitted to Akismet, summary template shows this."""
         # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
         mock_form.return_value = False
 
@@ -679,17 +681,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(200, resp.status_code)
         page = pq(resp.content)
 
-        revisions_needing_follow_up_section = page.find('#revisions-followup')
         not_submitted = page.find('#not-submitted-to-akismet li')
 
-        # Template should state that the revisions were not submitted to Akismet
-        ok_(expect_txt in revisions_needing_follow_up_section.text())
         # All of the revisions should be in the 'not submitted' section
         eq_(len(not_submitted), len(revisions_created))
 
-    def test_delete_link_appears_summary_page(self):
+    def test_delete_link_appears_summary_page_needs_followup_section(self):
         """
-        Delete link should only appear on summary page sometimes.
+        Delete link should appear on the summary page follow up section sometimes
 
         This should occur if: 1.) The user created the document and
         2.) the document has no other revision.
@@ -716,7 +715,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             'wiki.delete_document',
             kwargs={'document_path': new_document.slug},
             force_locale=True)
-        delete_link = page.find('#revisions-followup a[href="{url}"]'.format(
+        delete_link = page.find('#manual-revert-needed a[href="{url}"]'.format(
             url=delete_url))
 
         # There should be 1 delete link found
