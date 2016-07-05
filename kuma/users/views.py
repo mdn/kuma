@@ -160,8 +160,9 @@ def ban_user_and_cleanup_summary(request, user_id):
     revisions_by_distinct_doc = revisions_from_last_three_days.filter(id__in=distinct_doc_rev_ids)
 
     # The revisions to be submitted to Akismet
+    # these must be sorted descending so that they are reverted accordingly
     revisions_to_mark_as_spam_and_revert = revisions_from_last_three_days.filter(
-        id__in=request.POST.getlist('revision-id'))
+        id__in=request.POST.getlist('revision-id')).order_by('-id')
 
     # 1. Submit revisions to Akismet as spam
     # 2. If this is the most recent revision for a document:
@@ -170,6 +171,7 @@ def ban_user_and_cleanup_summary(request, user_id):
     submitted_to_akismet = []
     not_submitted_to_akismet = []
     revisions_reverted_list = []
+    revisions_needing_follow_up_list = []
     for revision in revisions_to_mark_as_spam_and_revert:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
         akismet_submission_data = {'revision': revision.id}
@@ -188,24 +190,39 @@ def ban_user_and_cleanup_summary(request, user_id):
         else:
             not_submitted_to_akismet.append(revision)
 
-        # If there is a previous version, and this revision is the current one, revert it
-        if revision.previous:
-            if revision.id == revision.document.current_revision.id:
+        # If there is a current revision and the revision is not in the spam list,
+        # to be reverted, do not revert any revisions
+        if revision.document.current_revision not in revisions_to_mark_as_spam_and_revert:
+            pass
+        else:
+            # If this is a new revision on an existing document, revert it
+            if revision.previous:
                 reverted = revert_document(request=request,
                                            document_path=revision.document.slug,
                                            revision_id=revision.previous.id)
-                if reverted and revision in revisions_by_distinct_doc:
+                if reverted:
+                    if revision in revisions_by_distinct_doc:
+                        # If the revision was reverted and it is a distinct document,
+                        # list that document in the list of successfully reverted documents
+                        revisions_reverted_list.append(revision.pk)
+                elif revision in revisions_by_distinct_doc:
+                    # If the revert was unsuccessful, include this in the follow-up list
+                    revisions_needing_follow_up_list.append(revision.pk)
+
+            # If this is a new document/translation, delete it
+            else:
+                deleted = delete_document(request=request,
+                                          document_slug=revision.document.slug,
+                                          document_locale=revision.document.locale)
+                if deleted:
+                    # If this document was deleted, include it in the list
+                    # of successfully reverted documents
                     revisions_reverted_list.append(revision.pk)
+                else:
+                    # If the delete was unsuccessful, include this in the follow-up list
+                    revisions_needing_follow_up_list.append(revision.pk)
 
-        # If this is a new doc, delete it
-        else:
-            deleted = delete_document(request=request,
-                                      document_slug=revision.document.slug,
-                                      document_locale=revision.document.locale)
-            if deleted and revision in revisions_by_distinct_doc:
-                revisions_reverted_list.append(revision.pk)
-
-    revisions_needing_follow_up = revisions_from_last_three_days.exclude(pk__in=revisions_reverted_list)
+    revisions_needing_follow_up = revisions_from_last_three_days.filter(pk__in=revisions_needing_follow_up_list)
     revisions_reverted = revisions_from_last_three_days.filter(pk__in=revisions_reverted_list)
 
     revisions_needing_follow_up = {

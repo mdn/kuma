@@ -685,14 +685,21 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # All of the revisions should be in the 'not submitted' section
         eq_(len(not_submitted), len(revisions_created))
 
-    def test_delete_link_appears_summary_page(self):
+    @patch('kuma.users.views.delete_document')
+    def test_delete_link_in_summary_page_follow_up(self, mock_delete):
         """
-        Delete link should only appear on summary page sometimes.
+        Delete link should only appear on summary page follow up section,
+        in certain cases.
 
         This should occur if:
         1.) The user created the document and
-        2.) the document has no other revision.
+        2.) the document has no other revision
+        3.) the revision has not been reverted.
+
+        In this test, we make sure this revision is not reverted
+        by mocking delete_document().
         """
+        mock_delete.return_value = False
         # Create an original revision on a document by the self.testuser
         new_document = create_document(save=True)
         new_revision = create_revision(
@@ -721,14 +728,19 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # There should be 1 delete link found
         eq_(len(delete_link), 1)
 
-    def test_delete_link_does_not_appear_summary_page(self):
+    @patch('kuma.users.views.revert_document')
+    def test_no_delete_link_in_summary_page_follow_up(self, mock_revert):
         """
-        Delete link should not only appear on summary page sometimes.
+        Delete link should not appear on summary page in some cases.
 
         This should occur if:
         1.) The user did not create the document or
         2.) the document has other revisions.
+
+        In this test, we make sure this revision is not reverted
+        by mocking revert_document().
         """
+        mock_revert.return_value = False
         # 1.) User makes a revision on another user's document
         testuser_revisions = self.create_revisions(
             num=1,
@@ -822,15 +834,18 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(len(revisions_reported_as_spam), 1)
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
-    def test_list_revisions_needing_followup_once_for_distinct_documents(self, mock_form):
+    @patch('kuma.users.views.revert_document')
+    def test_list_revisions_needing_followup_once_for_distinct_documents(self, mock_form, mock_revert):
         """
         Only 1 revision per document should be shown on the summary page.
 
         This test verifies that only 1 revision per document shows up in the
-        "Pages needing follow up" section
+        "Pages needing follow up" section, when we do not call revert by mocking it
         """
         # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
         mock_form.return_value = False
+        # Mock the revert_document() method so that nothing is reverted
+        mock_revert.return_value = False
 
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         # There are all on self.document
