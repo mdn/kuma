@@ -70,12 +70,9 @@
                                 {{ _('Report as spam. Revert to last edit.') }}
                             {% elif not previous_id and revision.document.locale != 'en-US' %}
                                 {{ _('Report as spam. Delete this new translation.') }}
-                            {% else %}
-                                {{ _('Report as spam. Cannot revert: not the most recent revision. Page will be flagged for follow up on the summary page.') }}
                             {% endif %}
                             {% if previous_id %}
                                 {{ _('Ban %(user)s', user=detail_user) }}
-
                                 {{ _('At: %(date)s .', date=datetimeformat(revision.previous.created, format='datetime')) }}
                                 {{ _('By: <a href="%(url)s">%(username)s</a>.', url=revision.previous.creator.get_absolute_url(), username=revision.previous.creator.username) }}
                                 {{ _('Comment: "%(comment)s".', comment=revision.previous.comment) }}
