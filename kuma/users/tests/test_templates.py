@@ -870,6 +870,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # them should be shown in the template
         eq_(len(revisions_needing_follow_up), 1)
 
+#    TODO: Phase III:
+#    The above comment is a marker to make merging in Phase II branch easier
+
     def test_newest_revision_is_not_spam(self):
         """
         Test with a spam user who has made revisions to a single document,
@@ -882,7 +885,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             num=3,
             document=self.document,
             creator=self.testuser)
-        newest_revision = self.create_revisions(
+        self.create_revisions(
             num=1,
             document=self.document,
             creator=self.admin)
@@ -914,7 +917,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         so none of the revisions actually need to be reverted.
         """
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
-        prior_safe_revision = self.create_revisions(
+        self.create_revisions(
             num=1,
             document=self.document,
             creator=self.admin)
