@@ -107,12 +107,14 @@ def ban_user_and_cleanup(request, user_id):
     revisions = user.created_revisions.prefetch_related('document')
     revisions = revisions.defer('content', 'summary').order_by('-id')
     revisions = revisions.filter(created__gte=date_three_days_ago)
+    revisions_not_spam = revisions.filter(akismet_submissions=None)
 
     return render(request,
                   'users/ban_user_and_cleanup.html',
                   {'detail_user': user,
                    'user_banned': user_ban,
                    'revisions': revisions,
+                   'revisions_not_spam': revisions_not_spam,
                    'on_ban_page': True})
 
 
@@ -140,26 +142,26 @@ def ban_user_and_cleanup_summary(request, user_id):
     else:
         user_ban.update(by=request.user, reason='Spam')
 
-    # TODO: In the future this will take the revisions out of request.POST
-    # and either revert them or not. For now list all of the revisions for the past 3 days
     date_three_days_ago = datetime.now().date() - timedelta(days=3)
-    revisions_to_be_reverted = user.created_revisions.prefetch_related('document')
-    revisions_to_be_reverted = revisions_to_be_reverted.defer('content', 'summary').order_by('-id')
-    revisions_to_be_reverted = revisions_to_be_reverted.filter(created__gte=date_three_days_ago)
+    revisions_from_last_three_days = user.created_revisions.prefetch_related('document')
+    revisions_from_last_three_days = revisions_from_last_three_days.defer('content', 'summary').order_by('-id')
+    revisions_from_last_three_days = revisions_from_last_three_days.filter(created__gte=date_three_days_ago)
 
     distinct_doc_rev_ids = list(
         Document.objects.filter(
-            revisions__in=revisions_to_be_reverted
+            revisions__in=revisions_from_last_three_days
         ).annotate(
             latest_rev=Max('revisions')
         ).values_list('latest_rev', flat=True)
     )
-    revisions_to_be_reverted_by_distinct_doc = revisions_to_be_reverted.filter(id__in=distinct_doc_rev_ids)
+    revisions_from_last_three_days_by_distinct_doc = revisions_from_last_three_days.filter(id__in=distinct_doc_rev_ids)
+    # TODO: Phase III: In the future we will take the revisions out of request.POST
+    # and either revert them or not.
 
+    """ The "Actions Taken" section """
     # The revisions to be submitted to Akismet
-    revisions_to_be_submitted_to_akismet = revisions_to_be_reverted.filter(
+    revisions_to_be_submitted_to_akismet = revisions_from_last_three_days.filter(
         id__in=request.POST.getlist('revision-id'))
-
     # Submit revisions to Akismet as spam
     submitted_to_akismet = []
     not_submitted_to_akismet = []
@@ -176,22 +178,79 @@ def ban_user_and_cleanup_summary(request, user_id):
             data.save()
             # Since we only want to display 1 revision per document, only add to
             # this list if this is one of the revisions for a distinct document
-            if revision in revisions_to_be_reverted_by_distinct_doc:
-                submitted_to_akismet.append(revision)
+            submitted_to_akismet.append(revision)
         else:
             not_submitted_to_akismet.append(revision)
+    # Find just the latest revision for each document
+    if len(submitted_to_akismet) > 0:
+        distinct_submitted_to_akismet_rev_ids = list(
+            Document.objects.filter(
+                revisions__in=submitted_to_akismet
+            ).annotate(
+                latest_rev=Max('revisions')
+            ).values_list('latest_rev', flat=True)
+        )
+        submitted_to_akismet_by_distinct_doc = [rev for rev in submitted_to_akismet if rev.id in distinct_submitted_to_akismet_rev_ids]
+    else:
+        submitted_to_akismet_by_distinct_doc = []
+    if len(not_submitted_to_akismet) > 0:
+        distinct_not_submitted_to_akismet_rev_ids = list(
+            Document.objects.filter(
+                revisions__in=not_submitted_to_akismet
+            ).annotate(
+                latest_rev=Max('revisions')
+            ).values_list('latest_rev', flat=True)
+        )
+        not_submitted_to_akismet_by_distinct_doc = [rev for rev in not_submitted_to_akismet if rev.id in distinct_not_submitted_to_akismet_rev_ids]
+    else:
+        not_submitted_to_akismet_by_distinct_doc = []
+    actions_taken = {'revisions_reported_as_spam': submitted_to_akismet_by_distinct_doc}
 
-    # TODO: revisions_needing_follow_up will be revisions that have not been reverted
-    revisions_needing_follow_up = {
-        'manual_revert': revisions_to_be_reverted_by_distinct_doc,
-        'not_submitted_to_akismet': not_submitted_to_akismet
+    """ The "Needs followup" section """
+    # TODO: Phase III: needs_follow_up will include revisions that have not been reverted
+    # TODO: Phase IV: If user made actions while reviewer was banning them
+    new_action_by_user = []
+    needs_follow_up = {
+        'manual_revert': new_action_by_user,
+        'not_submitted_to_akismet': not_submitted_to_akismet_by_distinct_doc
+    }
+
+    """ The "No Actions Taken" section """
+    revisions_already_spam = revisions_from_last_three_days.filter(
+        id__in=request.POST.getlist('revision-already-spam')
+    )
+    distinct_already_spam_rev_ids = list(
+        Document.objects.filter(
+            revisions__in=revisions_already_spam
+        ).annotate(
+            latest_rev=Max('revisions')
+        ).values_list('latest_rev', flat=True)
+    )
+    revisions_already_spam_by_distinct_doc = revisions_already_spam.filter(id__in=distinct_already_spam_rev_ids)
+    not_identified_as_spam = revisions_from_last_three_days.exclude(
+        id__in=revisions_already_spam.values_list('id', flat=True)).exclude(
+        id__in=revisions_to_be_submitted_to_akismet.values_list('id', flat=True))
+    distinct_not_identified_as_spam_rev_ids = list(
+        Document.objects.filter(
+            revisions__in=not_identified_as_spam
+        ).annotate(
+            latest_rev=Max('revisions')
+        ).values_list('latest_rev', flat=True)
+    )
+    not_identified_as_spam_by_distinct_doc = not_identified_as_spam.filter(id__in=distinct_not_identified_as_spam_rev_ids)
+    # TODO: Phase III: Remove the "Not deleted not reverted" section, after adding the "Reverted" and "Deleted" sections
+    not_deleted_not_reverted = revisions_from_last_three_days_by_distinct_doc
+    no_actions_taken = {
+        'revisions_already_identified_as_spam': revisions_already_spam_by_distinct_doc,
+        'revisions_not_identified_as_spam': not_identified_as_spam_by_distinct_doc,
+        'revisions_not_deleted_not_reverted': not_deleted_not_reverted
     }
 
     context = {'detail_user': user,
                'form': UserBanForm(),
-               'revisions_reverted': revisions_to_be_reverted,
-               'revisions_reported_as_spam': submitted_to_akismet,
-               'revisions_needing_follow_up': revisions_needing_follow_up}
+               'actions_taken': actions_taken,
+               'needs_follow_up': needs_follow_up,
+               'no_actions_taken': no_actions_taken}
 
     return render(request,
                   'users/ban_user_and_cleanup_summary.html',

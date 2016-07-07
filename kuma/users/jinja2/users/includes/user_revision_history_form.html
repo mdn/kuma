@@ -59,6 +59,7 @@
                           <strong>Spam</strong>
                         </label>
                       {% else %}
+                        <label><input type="checkbox" name="revision-already-spam" value="{{ revision.id }}" checked style="visibility:hidden;"></input></label>
                         <p>Already reported as spam.</p>
                       {% endif %}
                     </td>

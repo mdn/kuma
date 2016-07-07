@@ -47,21 +47,21 @@
   <p>
     {% if user == detail_user %}
       <p>{{ _('You cannot ban yourself for spam.') }}</p>
-    {% elif not user_banned or revisions %}
+    {% elif not user_banned or revisions_not_spam %}
       <button type="submit" class="button negative ban-link">
-        {% if user_banned and revisions %}
+        {% if user_banned and revisions_not_spam %}
           {{ _('Submit Spam') }}
-        {% elif not user_banned and not revisions %}
+        {% elif not user_banned and not revisions_not_spam %}
           {{ _('Ban User for Spam') }}
         {% else %}
           {{ _('Ban User for Spam & Submit Spam') }}
         {% endif %}
       </button>
-      {% if not user_banned and revisions %}
+      {% if not user_banned and revisions_not_spam %}
         <a id="ban-for-other-reasons" href="{{ url('users.ban_user',detail_user.id) }}">{{ _('Ban user for other reasons.') }}</a>
       {% endif %}
     {% else %}
-      {{ _('User has not made any revisions in the past three days, and this user was already banned.') }}
+      {{ _('User has not made any revisions to be reverted in the past three days, and this user was already banned.') }}
     {% endif %}
   </p>
 
