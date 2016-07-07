@@ -78,7 +78,7 @@ class SampleRevisionsMixin(object):
             if create_new_documents is True:
                 document = create_document(save=True)
             new_revision = create_revision(
-                title='Revision {}'.format(i),
+                title='Doc id {} Revision {}'.format(document.id, i),
                 document=document,
                 creator=creator,
                 save=True)
