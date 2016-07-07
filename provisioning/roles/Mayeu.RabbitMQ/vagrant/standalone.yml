@@ -8,11 +8,13 @@
         - vhost:    sensu
           user:     sensu
           password: placeholder
+          tags:
+            - administrator
       rabbitmq_federation: true
       rabbitmq_federation_configuration:
         - name:  test
           vhost: sensu
-          value: '{"uri" : "amqp://server-name", "expires" : 3600000}'
+          value: '{"uri": "amqp://server-name", "expires": 3600000}'
       rabbitmq_policy_configuration:
         - name:    policy
           pattern: '.'

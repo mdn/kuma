@@ -1,3 +1,16 @@
+# Announce
+
+Long time no update. I'm back on this playbook again, I'll be merging fixes (url,
+key checking,...) in master and releasing a working tagged version.
+
+Then I'll focus on creating a next branche that will be the version 2.0 of this
+playbook. The main things I plan to do with the version 2 is going to separate
+the installation steps from the pure configuration. I don't want to support a
+gazillion OS in one playbook. Thus, you'll be able to make a
+ansible-playbook-rabbitmq-install-my-little-snowflak-os yourself :)
+
+Thank you all for all the participation!
+
 # Rabbitmq Playbook
 
 Playbook to install and configure rabbitmq. Will come with various
@@ -106,8 +119,8 @@ Defining the vhosts configuration
 ```yaml
 rabbitmq_vhost_definitions:
   - name:    vhost1
-    node:    node_name #Optionnal, default to "rabbit"
-    tracing: yes       #Optionnal, default to "no"
+    node:    node_name #Optional, defaults to "rabbit"
+    tracing: yes       #Optional, defaults to "no"
 ```
 
 Defining the users configuration:
@@ -117,12 +130,15 @@ rabbitmq_users_definitions:
   - vhost:    vhost1
     user:     user1
     password: password1
-    node:     node_name  # Optionnal, default to "rabbit"
+    node:     node_name  # Optional, defaults to "rabbit"
+    configure_priv: "^resource.*" # Optional, defaults to ".*"
+    read_priv: "^$" # Disallow reading.
+    write_priv: "^$" # Disallow writing.
   - vhost:    vhost1
     user:     user2
     password: password2
     force:    no
-    tags:                # Optionnal, user tags
+    tags:                # Optional, user tags
     - administrator
 ```
 
