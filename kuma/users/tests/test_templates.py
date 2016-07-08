@@ -725,16 +725,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam_text = ''
         for rev in revisions_reported_as_spam:
             revisions_reported_as_spam_text += rev.text_content()
-        # TODO: Add in Phase III
-        # revisions_reverted = page.find('#revisions-reverted li')
-        # revisions_deleted= page.find('#revisions-deleted li')
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_deleted= page.find('#revisions-deleted li')
         # TODO: Add in Phase IV
         # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), len(revisions_created))
-        # TODO: Add in Phase III
-        # eq_(len(revisions_reverted), 0)
-        # eq_(len(revisions_deleted), len(revisions_created))
+        eq_(len(revisions_reverted), 0)
+        eq_(len(revisions_deleted), len(revisions_created))
         # TODO: Add in Phase IV
         # eq_(len(revisions_emailed), len(revisions_created))
         # The title for each of the created revisions shows up in the template
@@ -745,15 +743,13 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
-        # TODO: Add in Phase III
-        # could_not_delete = page.find('#could-not-delete li')
-        # could_not_revert = page.find('#could-not-revert li')
+        could_not_delete = page.find('#not-deleted li')
+        could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase IV
         # new_actions = page.find('#new-actions-by-user li')
         eq_(len(not_submitted_to_akismet), 0)
-        # TODO: Add in Phase III
-        # eq_(len(could_not_delete), 0)
-        # eq_(len(could_not_revert), 0)
+        eq_(len(could_not_delete), 0)
+        eq_(len(could_not_revert), 0)
         # TODO: Add in Phase IV
         # eq_(len(new_actions), 0)
 
@@ -787,30 +783,26 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # The "Actions taken" section
         banned_user = page.find('#banned-user li').text()
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
-        # TODO: Add in Phase III
-        # revisions_reverted = page.find('#revisions-reverted li')
-        # revisions_deleted= page.find('#revisions-deleted li')
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_deleted= page.find('#revisions-deleted li')
         # TODO: Add in Phase IV
         # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), 1)
-        # TODO: Add in Phase III
-        # eq_(len(revisions_reverted), 1)
-        # eq_(len(revisions_deleted), 0)
+        eq_(len(revisions_reverted), 1)
+        eq_(len(revisions_deleted), 0)
         # TODO: Add in Phase IV
         # eq_(len(revisions_emailed), 1)
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
-        # TODO: Add in Phase III
-        # could_not_delete = page.find('#could-not-delete li')
-        # could_not_revert = page.find('#could-not-revert li')
+        could_not_delete = page.find('#not-deleted li')
+        could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase IV
         # new_actions = page.find('#new-actions-by-user li')
         eq_(len(not_submitted_to_akismet), 0)
-        # TODO: Add in Phase III
-        # eq_(len(could_not_delete), 0)
-        # eq_(len(could_not_revert), 0)
+        eq_(len(could_not_delete), 0)
+        eq_(len(could_not_revert), 0)
         # TODO: Add in Phase IV
         # eq_(len(new_actions), 0)
 
