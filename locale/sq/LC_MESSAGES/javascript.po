@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-06-24 12:43-0700\n"
-"PO-Revision-Date: 2016-05-29 10:41+0000\n"
+"PO-Revision-Date: 2016-07-08 11:16+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
 "Language: sq\n"
@@ -197,9 +197,9 @@ msgid "Autosave disabled."
 msgstr "Vetëruajtjet u çaktivizuan."
 
 #: kuma/static/js/wiki-samples.js:97
-#, fuzzy, python-format
+#, python-format
 msgid "Open in %(site)s"
-msgstr "Hape në %(site)s "
+msgstr "Hape në %(site)s"
 
 #: kuma/static/js/wiki-tags-edit.js:48
 msgid "New tag..."
