@@ -32,8 +32,9 @@ Vagrant.configure('2') do |config|
     config.vm.box = 'ubuntu/trusty64'
     config.vm.define 'developer-local'
     config.vm.network :private_network, ip: IP
-    config.vm.hostname = 'developer-local.allizom.org'
-    config.hostsupdater.aliases = ['mdn-local.mozillademos.org']
+    # Vagrant will mangle the line for 127.0.0.1 in the VM's /etc/hosts if this option is set.
+    # config.vm.hostname = 'developer-local.allizom.org'
+    config.hostsupdater.aliases = ['developer-local.allizom.org', 'mdn-local.mozillademos.org']
     config.ssh.forward_agent = true
 
     if USE_CACHIER
