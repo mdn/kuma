@@ -13,7 +13,6 @@ from django.core import mail
 from django.test.utils import override_settings
 from django.utils.http import urlquote
 from pyquery import PyQuery as pq
-from waffle.models import Flag
 
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
@@ -51,21 +50,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(r.document.title, doc('main#content div.document-head h1').text())
         eq_(r.document.html, doc('article#wikiArticle').text())
-
-    def test_custom_css_waffle(self):
-        """
-        Verify KUMA_CUSTOM_CSS_PATH is only included when waffle flag is
-        active.
-        """
-        r = revision(save=True, content='Some text.', is_approved=True)
-        response = self.client.get(r.document.get_absolute_url())
-        eq_(200, response.status_code)
-        ok_(config.KUMA_CUSTOM_CSS_PATH not in response.content)
-
-        Flag.objects.create(name='enable_customcss', everyone=True)
-        response = self.client.get(r.document.get_absolute_url())
-        eq_(200, response.status_code)
-        ok_(config.KUMA_CUSTOM_CSS_PATH in response.content)
 
     @pytest.mark.breadcrumbs
     def test_document_breadcrumbs(self):

@@ -19,6 +19,7 @@
 
 {% block site_js %}
   {{ super() }}
+  {% javascript 'jquery-ui' %}
   {% javascript 'users' %}
 {% endblock %}
 
@@ -90,9 +91,8 @@
                 <legend><b>{{ _('My Profiles') }}</b></legend>
                 <ul>
                   <li id="field_persona_url" class="field site persona">
-                    <label><i class="icon-user" aria-hidden="true"></i>Persona</label>
+                    <label><i class="icon-user" aria-hidden="true"></i>Persona <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a></label>
                     {% if accounts.persona %}
-                    <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
                     <div class="field-account">
                       {% for persona_account in accounts.persona %}{{ persona_account.uid }}{% if not loop.last %}, {% endif %}{% endfor %}
                     </div>
@@ -108,17 +108,16 @@
 
                   <li id="field_github_url" class="field site github">
                   {% if accounts.github %}
-                    <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub</label>
-                    <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
+                    <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a></label>
                     <div class="field-account">
                       {% for github_account in accounts.github %}{% if github_account.extra_data %}{{ github_account.get_profile_url() }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}
                     </div>
                   {% else %}
                       <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub
+                          <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
+                            {{ _('Use your GitHub account to sign in.') }}
+                          </a>
                       </label>
-                      <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
-                        {{ _('Use your GitHub account to sign in.') }}
-                      </a>
                       {{ user_form.github_url }}
                   {% endif %}
                   </li>

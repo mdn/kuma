@@ -63,23 +63,17 @@
                 </tr>
                 <tr colspan=5>
                     <td colspan=5>
-                        {% if not revision.akismet_submissions.all() %}
-                            <input type="checkbox" name="revision-id" value="{{ revision.id }}" checked></input>
-                            <strong>{{ _('Spam.') }} </strong>
-                            {% if not previous_id and revision.document.locale != 'en-US' %}
-                                {{ _('Report as spam. Delete this new translation.') }}
-                            {% else %}
-                                {{ _('Report as spam. Revert to last edit.') }}
-                            {% endif %}
-                            {% if previous_id %}
-                                {{ _('Ban %(user)s', user=detail_user) }}
-                                {{ _('At: %(date)s .', date=datetimeformat(revision.previous.created, format='datetime')) }}
-                                {{ _('By: <a href="%(url)s">%(username)s</a>.', url=revision.previous.creator.get_absolute_url(), username=revision.previous.creator.username) }}
-                                {{ _('Comment: "%(comment)s".', comment=revision.previous.comment) }}
-                            {% endif %}
-                        {% else %}
-                            <p>{{ _('Already reported as spam.') }}</p>
-                        {% endif %}
+                      {% if not revision.akismet_submissions.all() %}
+                        <label>
+                          <input type="checkbox" name="revision-id" value="{{ revision.id }}" checked></input>
+                          <strong>{{ _('Spam') }}</strong>
+                        </label>
+                      {% else %}
+                        <label>
+                            <input type="checkbox" name="revision-already-spam" value="{{ revision.id }}" checked style="visibility:hidden;"></input>
+                        </label>
+                        <p>{{ _('Already reported as spam.') }}</p>
+                      {% endif %}
                     </td>
                 </tr>
             </tbody>

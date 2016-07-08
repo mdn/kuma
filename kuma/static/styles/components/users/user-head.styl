@@ -1,7 +1,6 @@
 .user-head {
     background: $light-background-color;
     margin-bottom: $grid-spacing;
-    min-height: 200px;
     overflow: hidden;
     padding: $grid-spacing;
     position: relative;
@@ -10,7 +9,7 @@
 .user-buttons {
     position: absolute;
     top: $grid-spacing;
-    right: $grid-spacing;
+    bidi-style(right, $grid-spacing, left, auto);
 
     & > a {
         bidi-value(float, left, right);
@@ -34,6 +33,8 @@
 }
 
 .user-info {
+    margin-bottom: $grid-spacing;
+
     li {
         display: inline;
         bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
@@ -46,7 +47,7 @@
 
         &:first-child:before {
             content: '';
-            margin: 0;
+            bidi-style(margin-right, 0, margin-left, 0);
         }
     }
 }
@@ -55,5 +56,4 @@
     color: #6a9412;
     set-smaller-font-size();
     font-style: italic;
-    margin-bottom: $grid-spacing;
 }

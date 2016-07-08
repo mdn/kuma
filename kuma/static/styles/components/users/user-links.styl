@@ -1,24 +1,20 @@
+@require '../../includes/vars';
+
 .user-links {
-    border-spacing: ($grid-spacing / 2);
-    display: table;
-    set-smaller-font-size();
-    margin: -(@border-spacing); // Offset outer border
+    display: inline-block;
+    bidi-style(margin-left, ($icon-margin * -1), margin-right, 0);
 
     li {
-        display: table-row;
-    }
-
-    i, a {
-        display: table-cell;
-        vertical-align: middle;
+        display: inline-block;
+        bidi-style(margin-right, $content-horizontal-spacing, margin-left, 0);
+        margin-bottom: $grid-spacing;
     }
 
     i {
         set-font-size($base-font-size);
-        text-align: center;
     }
 
     a {
-        padding: 0;
+        bidi-style(padding-left, $content-horizontal-spacing, padding-right, 0);
     }
 }
