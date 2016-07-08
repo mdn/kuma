@@ -31,6 +31,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- attachments_attachment
 -- attachments_attachmentrevision
 -- attachments_documentattachment
+-- attachments_trashedattachment
 -- auth_group
 -- auth_group_permissions
 -- auth_permission

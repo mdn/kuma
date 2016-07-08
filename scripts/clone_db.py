@@ -47,6 +47,7 @@ TABLES_TO_DUMP = [x.strip() for x in """
     attachments_attachment
     attachments_attachmentrevision
     attachments_documentattachment
+    attachments_trashedattachment
     auth_group
     auth_group_permissions
     auth_permission
