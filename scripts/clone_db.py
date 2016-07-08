@@ -105,6 +105,7 @@ TABLES_TO_DUMP = [x.strip() for x in """
     wiki_reviewtag
     wiki_reviewtaggedrevision
     wiki_revision
+    wiki_revisionakismetsubmission
     wiki_revisionip
     wiki_taggeddocument
 """.splitlines() if x.strip()]

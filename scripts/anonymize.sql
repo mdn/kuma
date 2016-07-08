@@ -66,6 +66,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- wiki_reviewtag
 -- wiki_reviewtaggedrevision
 -- wiki_revision
+-- wiki_revisionakismetsubmission
 -- wiki_taggeddocument
 
 TRUNCATE account_emailconfirmation;
