@@ -515,7 +515,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(ban_button.text(), "Ban User for Spam")
         eq_(len(ban_other_reasons), 0)
 
-        # For self.testuser (not banned, no revisions needing to be reverted)
+        # For self.testuser2 (not banned, revisions already marked as spam)
         # the button on the form should read "Ban User for Spam". There should
         # be no link to ban for other reasons
         # Create some revisions made by self.testuser2 and add a Spam submission for each
@@ -523,9 +523,11 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         created_revisions = self.create_revisions(
             num=num_revisions,
             document=self.document,
-            creator=self.testuser)
+            creator=self.testuser2)
         for revision in created_revisions:
-            revision.akismet_submissions.add(RevisionAkismetSubmission(sender=self.testuser2, type="spam"))
+            revision.akismet_submissions.add(RevisionAkismetSubmission(
+                sender=self.testuser2, type="spam")
+            )
 
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': self.testuser2.id})
@@ -537,7 +539,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         ban_button = page.find('#ban-and-cleanup-form button[type=submit]')
         ban_other_reasons = page.find('#ban-for-other-reasons')
 
-        eq_(len(revisions_found), 0)
+        eq_(len(revisions_found), 3)
         eq_(ban_button.text(), "Ban User for Spam")
         eq_(len(ban_other_reasons), 0)
 
@@ -582,15 +584,12 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         We test the ban button text for a banned user who has either
         no revisions or revisions already marked as spam.
         """
-        # Ban both self.testuser and self.testuser2
-        UserBan.objects.create(user=self.testuser, by=self.admin,
-                               reason='Banned by unit test.',
-                               is_active=True)
+        # Ban self.testuser2
         UserBan.objects.create(user=self.testuser2, by=self.admin,
                                reason='Banned by unit test.',
                                is_active=True)
         self.client.login(username='admin', password='testpass')
-        # For self.testuser (banned, has no revisions needing to be reverted)
+        # For self.testuser2 (banned, has no revisions needing to be reverted)
         # there should be no button on the form and no link to
         # ban for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
@@ -608,7 +607,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(len(ban_button), 0)
         eq_(len(ban_other_reasons), 0)
 
-        # For self.testuser2 (banned, no revisions needing to be reverted)
+        # For self.testuser2 (banned, revisions already marked as spam)
         # there should be no button on the form and no link to
         # ban for other reasons
         # Create some revisions made by self.testuser2 and add a Spam submission for each
@@ -618,7 +617,9 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
             document=self.document,
             creator=self.testuser2)
         for revision in created_revisions:
-            revision.akismet_submissions.add(RevisionAkismetSubmission(sender=self.testuser2, type="spam"))
+            revision.akismet_submissions.add(RevisionAkismetSubmission(
+                sender=self.testuser2, type="spam")
+            )
 
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'user_id': self.testuser2.id})

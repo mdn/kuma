@@ -148,12 +148,10 @@ def ban_user_and_cleanup_summary(request, user_id):
     revisions_from_last_three_days = revisions_from_last_three_days.filter(created__gte=date_three_days_ago)
 
     distinct_doc_rev_ids = list(
-        Document.objects.filter(
-            revisions__in=revisions_from_last_three_days
-        ).annotate(
-            latest_rev=Max('revisions')
-        ).values_list('latest_rev', flat=True)
-    )
+        Document.objects
+        .filter(revisions__in=revisions_from_last_three_days)
+        .annotate(latest_rev=Max('revisions'))
+        .values_list('latest_rev', flat=True))
     revisions_from_last_three_days_by_distinct_doc = revisions_from_last_three_days.filter(id__in=distinct_doc_rev_ids)
     # TODO: Phase III: In the future we will take the revisions out of request.POST
     # and either revert them or not.
@@ -184,23 +182,19 @@ def ban_user_and_cleanup_summary(request, user_id):
     # Find just the latest revision for each document
     if len(submitted_to_akismet) > 0:
         distinct_submitted_to_akismet_rev_ids = list(
-            Document.objects.filter(
-                revisions__in=submitted_to_akismet
-            ).annotate(
-                latest_rev=Max('revisions')
-            ).values_list('latest_rev', flat=True)
-        )
+            Document.objects
+            .filter(revisions__in=submitted_to_akismet)
+            .annotate(latest_rev=Max('revisions'))
+            .values_list('latest_rev', flat=True))
         submitted_to_akismet_by_distinct_doc = [rev for rev in submitted_to_akismet if rev.id in distinct_submitted_to_akismet_rev_ids]
     else:
         submitted_to_akismet_by_distinct_doc = []
     if len(not_submitted_to_akismet) > 0:
         distinct_not_submitted_to_akismet_rev_ids = list(
-            Document.objects.filter(
-                revisions__in=not_submitted_to_akismet
-            ).annotate(
-                latest_rev=Max('revisions')
-            ).values_list('latest_rev', flat=True)
-        )
+            Document.objects
+            .filter(revisions__in=not_submitted_to_akismet)
+            .annotate(latest_rev=Max('revisions'))
+            .values_list('latest_rev', flat=True))
         not_submitted_to_akismet_by_distinct_doc = [rev for rev in not_submitted_to_akismet if rev.id in distinct_not_submitted_to_akismet_rev_ids]
     else:
         not_submitted_to_akismet_by_distinct_doc = []
@@ -220,23 +214,19 @@ def ban_user_and_cleanup_summary(request, user_id):
         id__in=request.POST.getlist('revision-already-spam')
     )
     distinct_already_spam_rev_ids = list(
-        Document.objects.filter(
-            revisions__in=revisions_already_spam
-        ).annotate(
-            latest_rev=Max('revisions')
-        ).values_list('latest_rev', flat=True)
-    )
+        Document.objects
+        .filter(revisions__in=revisions_already_spam)
+        .annotate(latest_rev=Max('revisions'))
+        .values_list('latest_rev', flat=True))
     revisions_already_spam_by_distinct_doc = revisions_already_spam.filter(id__in=distinct_already_spam_rev_ids)
     not_identified_as_spam = revisions_from_last_three_days.exclude(
         id__in=revisions_already_spam.values_list('id', flat=True)).exclude(
         id__in=revisions_to_be_submitted_to_akismet.values_list('id', flat=True))
     distinct_not_identified_as_spam_rev_ids = list(
-        Document.objects.filter(
-            revisions__in=not_identified_as_spam
-        ).annotate(
-            latest_rev=Max('revisions')
-        ).values_list('latest_rev', flat=True)
-    )
+        Document.objects
+        .filter(revisions__in=not_identified_as_spam)
+        .annotate(latest_rev=Max('revisions'))
+        .values_list('latest_rev', flat=True))
     not_identified_as_spam_by_distinct_doc = not_identified_as_spam.filter(id__in=distinct_not_identified_as_spam_rev_ids)
     # TODO: Phase III: Remove the "Not deleted not reverted" section, after adding the "Reverted" and "Deleted" sections
     not_deleted_not_reverted = revisions_from_last_three_days_by_distinct_doc
