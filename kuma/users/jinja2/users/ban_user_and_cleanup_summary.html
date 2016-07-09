@@ -15,73 +15,169 @@
 {% endblock %}
 
 {% block content %}
-  <section id="content">
-    <h1>
-      {{ _('<a href="%(url)s">%(user)s</a> identified as a spammer.', url=detail_user.get_absolute_url(), user=detail_user) }}
-    </h1>
+  <section class="text-content readable-line-length">
+    <h1>{{ _('Summary') }}</h1>
 
-    <h2>
-      {{ _('The following revisions were reverted:') }}
-    </h2>
-    <div>
-      {{ _('(Note: No revisions were actually reverted. This feature will be added in Phase 2.)') }}
+    <!-- Actions Taken section-->
+    <h2>{{ _('Actions Taken') }}</h2>
+    <h5><strong>{{ _('Banned:') }}</strong></h5>
+    <div id="banned-user">
+      <ul>
+        <li>
+          <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a>
+        </li>
+      </ul>
     </div>
-    <br />
-    <div id="revisions-reverted">
-      {% if revisions_reverted %}
-
-        {% for revision in revisions_reverted %}
-          <li>
-            <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ revision.title }}</a>
-            <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}" class="button">
-              {{ _('View Page') }}
-              <i aria-hidden="true" class="icon-circle-arrow-right"></i>
-            </a>
-            <a href="{{ url('wiki.document_revisions', revision.document.slug) }}" class="button">
-              {{ _('History') }}
-              <i aria-hidden="true" class="icon-book"></i>
-            </a>
-          </li>
-        {% endfor %}
-
+    <h5>{{ _('Submitted to Akismet as spam:')}}</h5>
+    <div id="revisions-reported-as-spam">
+      {% if actions_taken.revisions_reported_as_spam %}
+        <ul>
+          {% for revision in actions_taken.revisions_reported_as_spam %}
+            <li>
+              {{ revision.title }}
+            </li>
+          {% endfor %}
+        </ul>
       {% else %}
-      <p>{{ _('The user did not have any revisions that were reverted.') }}</p>
+      <p>{{ _('The user did not have any revisions that were reported as spam.') }}</p>
       {% endif %}
     </div>
 
-    <br /><br />
-
-    <h2>
-      {{ _('Pages needing follow up:') }}
-    </h2>
-    <div id="revisions-followup">
-      {% if revisions_needing_follow_up %}
-
-        {% for revision_needing_follow_up in revisions_needing_follow_up %}
-          <li>
-            <a href="{{ url('wiki.revision', revision_needing_follow_up.document.slug, revision_needing_follow_up.id) }}">
-              {{ revision_needing_follow_up.document.title }}
-            </a>
-            <a href="{{ url('wiki.document', revision_needing_follow_up.document.slug) }}" class="button">
-              {{ _('View Page') }}
-              <i aria-hidden="true" class="icon-circle-arrow-right"></i>
-            </a>
-            <a href="{{ url('wiki.document_revisions', revision_needing_follow_up.document.slug) }}" class="button">
-              {{ _('History') }}
-              <i aria-hidden="true" class="icon-book"></i>
-            </a>
-            <a href="{{ url('wiki.delete_document', revision_needing_follow_up.document.slug) }}" class="button">
-              {{ _('Delete') }}
-              <i aria-hidden="true" class="icon-trash"></i>
-            </a>
-          </li>
-        {% endfor %}
-
-      {% else %}
-
-        <p>{{ _('The user did not have any revisions needing follow-up.') }}</p>
-
-      {% endif %}
+    <!-- Needs follow up section-->
+    <div id="revisions-followup" class="notification error">
+      <h2>{{ _('Needs follow up') }}</h2>
+      <h5><strong>{{ _('New action by user:') }}</strong></h5>
+      <div id='new-actions-by-user'>
+        {% if needs_follow_up.manual_revert %}
+          <ul>
+            {% for revision in needs_follow_up.manual_revert %}
+              <li>
+                <a href="{{ revision.get_absolute_url() }}">
+                  {{ revision.document.title }}
+                </a>
+                <a href="{{ revision.document.get_absolute_url() }}" class="button">
+                  {{ _('View Page') }}
+                  <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+                </a>
+                <a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="button">
+                  {{ _('History') }}
+                  <i aria-hidden="true" class="icon-book"></i>
+                </a>
+                {# Include a delete link if spammer created this document and there are no newer revisions on this document #}
+                {% if revision.document.revisions.order_by('created').first().creator == detail_user and revision.id == revision.document.current_or_latest_revision().id %}
+                  <a href="{{ url('wiki.delete_document', revision.document.slug) }}" class="button">
+                    {{ _('Delete') }}
+                    <i aria-hidden="true" class="icon-trash"></i>
+                  </a>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <ul>{{ _('None.') }}</ul>
+        {% endif %}
+      </div>
+      <h5><strong>{{ _('Could not submit to Akismet:') }}</strong></h5>
+      <div id='not-submitted-to-akismet'>
+        {% if needs_follow_up.not_submitted_to_akismet %}
+          {% for revision in needs_follow_up.not_submitted_to_akismet %}
+            <li>
+              <a href="{{ revision.get_absolute_url() }}">
+                {{ revision.document.title }}
+              </a>
+              <a href="{{ revision.document.get_absolute_url() }}" class="button">
+                {{ _('View Page') }}
+                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+              </a>
+            </li>
+          {% endfor %}
+        {% else %}
+          {{ _('None.') }}
+        {% endif %}
+      </div>
     </div>
+
+    <!-- No actions taken section-->
+    <h2>{{ _('No actions taken') }}</h2>
+    <h5><strong>{{ _('Already identified as spam:') }}</strong></h5>
+    <div id='already-spam'>
+      {% if no_actions_taken.revisions_already_identified_as_spam %}
+        <ul>
+          {% for revision in no_actions_taken.revisions_already_identified_as_spam %}
+            <li>
+              <a href="{{ revision.get_absolute_url() }}">
+                {{ revision.document.title }}
+              </a>
+              <a href="{{ revision.document.get_absolute_url() }}" class="button">
+                {{ _('View Page') }}
+                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+              </a>
+              <a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="button">
+                {{ _('History') }}
+                <i aria-hidden="true" class="icon-book"></i>
+              </a>
+              {# Include a delete link if spammer created this document and there are no newer revisions on this document #}
+              {% if revision.document.revisions.order_by('created').first().creator == detail_user and revision.id == revision.document.current_or_latest_revision().id %}
+                <a href="{{ url('wiki.delete_document', revision.document.slug) }}" class="button">
+                  {{ _('Delete') }}
+                  <i aria-hidden="true" class="icon-trash"></i>
+                </a>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          {{ _('None.') }}
+        {% endif%}
+    </div>
+    <h5><strong>{{ _('Not identified as spam:') }}</strong></h5>
+    <div id='not-spam'>
+      {% if no_actions_taken.revisions_not_identified_as_spam %}
+        <ul>
+          {% for revision in no_actions_taken.revisions_not_identified_as_spam %}
+            <li>
+              <a href="{{ revision.get_absolute_url() }}">
+                {{ revision.document.title }}
+              </a>
+              <a href="{{ revision.document.get_absolute_url() }}" class="button">
+                {{ _('View Page') }}
+                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+              </a>
+              <a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="button">
+                {{ _('History') }}
+                <i aria-hidden="true" class="icon-book"></i>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {{ _('None.') }}
+      {% endif%}
+    </div>
+    <h5><strong>{{ _('Did not delete or revert:') }}</strong></h5>
+    <div id='no-delete-no-revert'>
+      {% if no_actions_taken.revisions_not_deleted_not_reverted %}
+        <ul>
+          {% for revision in no_actions_taken.revisions_not_deleted_not_reverted %}
+            <li>
+              <a href="{{ revision.get_absolute_url() }}">
+                {{ revision.document.title }}
+              </a>
+              <a href="{{ revision.document.get_absolute_url() }}" class="button">
+                {{ _('View Page') }}
+                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+              </a>
+              <a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="button">
+                {{ _('History') }}
+                <i aria-hidden="true" class="icon-book"></i>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+      {{ _('None.') }}
+      {% endif%}
+    </div>
+
   </section>
 {% endblock content %}

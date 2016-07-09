@@ -4,6 +4,7 @@ from urlparse import parse_qs, urlparse
 
 import mock
 import pytest
+import requests_mock
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
@@ -14,9 +15,13 @@ from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
 from pyquery import PyQuery as pq
+from waffle.models import Flag
 
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
+from kuma.spam.akismet import Akismet
+from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
+from kuma.wiki.models import RevisionAkismetSubmission
 
 from . import SampleRevisionsMixin, UserTestCase, email, user
 from ..models import UserBan
@@ -230,7 +235,16 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.ban_testuser_url = reverse('users.ban_user_and_cleanup_summary',
                                         kwargs={'user_id': self.testuser.id})
+        self.ban_testuser2_url = reverse('users.ban_user_and_cleanup_summary',
+                                         kwargs={'user_id': self.testuser2.id})
         self.client.login(username='admin', password='testpass')
+
+    def enable_akismet_and_mock_requests(self, mock_requests):
+        """Enable Akismet and mock calls to it. Return the mock object."""
+        Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG, everyone=True)
+        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
+        return mock_requests
 
     def test_ban_nonexistent_user(self):
         """POSTs to ban_user_and_cleanup for nonexistent user return 404."""
@@ -275,9 +289,105 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(bans.first().by, self.admin)
         eq_(bans.first().reason, 'Spam')
 
-#    TODO: Phase II:
-#    def test_post_submits_revisions_to_akismet_as_spam(self):
-#
+    @override_config(AKISMET_KEY='dashboard')
+    @requests_mock.mock()
+    def test_post_submits_revisions_to_akismet_as_spam(self, mock_requests):
+        """POSTing to ban_user_and_cleanup url submits revisions to akismet."""
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # Don't specify document so a new one is created for each revision
+        num_revisions = 3
+        revisions_created = self.create_revisions(
+            num=num_revisions,
+            creator=self.testuser)
+
+        # Enable Akismet and mock calls to it
+        mock_requests = self.enable_akismet_and_mock_requests(mock_requests)
+
+        # The request
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # All of self.testuser's revisions have been submitted
+        testuser_submissions = RevisionAkismetSubmission.objects.filter(revision__creator=self.testuser.id)
+        eq_(testuser_submissions.count(), num_revisions)
+        for submission in testuser_submissions:
+            ok_(submission.revision in revisions_created)
+        # Akismet endpoints were called twice for each revision
+        ok_(mock_requests.called)
+        eq_(mock_requests.call_count, 2 * num_revisions)
+
+    @override_config(AKISMET_KEY='dashboard')
+    @requests_mock.mock()
+    def test_post_submits_no_revisions_to_akismet_when_no_user_revisions(self, mock_requests):
+        """POSTing to ban_user_and_cleanup url for a user with no revisions."""
+        # Enable Akismet and mock calls to it
+        mock_requests = self.enable_akismet_and_mock_requests(mock_requests)
+
+        # User has no revisions
+        data = {'revision-id': []}
+
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # Akismet endpoints were not called
+        eq_(mock_requests.call_count, 0)
+
+    @override_config(AKISMET_KEY='dashboard')
+    @requests_mock.mock()
+    def test_post_submits_no_revisions_to_akismet_when_revisions_not_in_request(self, mock_requests):
+        """POSTing to ban_user_and_cleanup url without revisions in request."""
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        # Don't specify document so a new one is created for each revision
+        num_revisions = 3
+        self.create_revisions(
+            num=num_revisions,
+            creator=self.testuser)
+
+        # Enable Akismet and mock calls to it
+        mock_requests = self.enable_akismet_and_mock_requests(mock_requests)
+
+        # User's revisions were not in request.POST (not selected in the template)
+        data = {'revision-id': []}
+
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # No revisions submitted for self.testuser, since no revisions were selected
+        testuser_submissions = RevisionAkismetSubmission.objects.filter(
+            revision__creator=self.testuser.id)
+        eq_(testuser_submissions.count(), 0)
+        # Akismet endpoints were not called
+        eq_(mock_requests.call_count, 0)
+
+    @override_config(AKISMET_KEY='dashboard')
+    @requests_mock.mock()
+    def test_post_submits_no_revisions_to_akismet_when_wrong_revisions_in_request(self, mock_requests):
+        """POSTing to ban_user_and_cleanup url with non-user revisions."""
+        # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
+        num_revisions = 3
+        revisions_created = self.create_revisions(
+            num=num_revisions,
+            document=self.document,
+            creator=self.testuser)
+
+        # Enable Akismet and mock calls to it
+        mock_requests = self.enable_akismet_and_mock_requests(mock_requests)
+
+        # User being banned did not create the revisions being POSTed
+        data = {'revision-id': [rev.id for rev in revisions_created]}
+
+        resp = self.client.post(self.ban_testuser2_url, data=data)
+        eq_(200, resp.status_code)
+
+        # No revisions submitted for self.testuser2, since revisions in the POST
+        # were made by self.testuser
+        testuser2_submissions = RevisionAkismetSubmission.objects.filter(
+            revision__creator=self.testuser2.id)
+        eq_(testuser2_submissions.count(), 0)
+        # Akismet endpoints were not called
+        eq_(mock_requests.call_count, 0)
+
 #    TODO: Phase III:
 #    def test_post_reverts_revisions(self):
 #    def test_post_deletes_new_pages(self):

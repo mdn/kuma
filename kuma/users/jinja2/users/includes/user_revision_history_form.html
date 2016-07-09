@@ -1,14 +1,14 @@
 {% from "wiki/includes/document_macros.html" import revision_diff with context %}
 
 {% if revisions|count %}
-    <table class="dashboard-table" width="100%">
+    <table class="dashboard-table dashboard-table-spam" width="100%">
         <thead>
             <tr>
+                <th class="dashboard-spam">{{ _('Spam') }}</th>
                 <th class="dashboard-revision">{{ _('Revision') }}</th>
                 <th class="dashboard-title">{{ _('Title') }}</th>
                 <th class="dashboard-comment">{{ _('Comment') }}</th>
                 <th class="dashboard-tags">{{ _('Tags') }}</th>
-                <th class="dashboard-history-link">{{ _('History') }}</th>
             </tr>
         </thead>
         {% for revision in revisions %}
@@ -19,6 +19,7 @@
                     tabindex="0"
                     class="dashboard-row {% if not previous_id %}dashboard-row-new{% endif %}"
                     >
+                    <td></td>
                     <td class="dashboard-revision">
                         <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
                         <br />
@@ -37,12 +38,10 @@
                         {% set tags = revision.document.tags.all().order_by('name') %}
                         {% include "wiki/includes/document_tag.html" %}
                     </td>
-                    <td class="dashboard-history-link">
-                        <a id="history" href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="button">{{ _("History") }}<i aria-hidden="true" class="icon-book"></i></a></a>
-                    </td>
                 </tr>
                 <tr>
-                    <td colspan=5>
+                    <td></td>
+                    <td colspan=4>
                         {% if previous_id %}
                             {% with revision_from=revision.previous, revision_to=revision %}
                               <div class="dashboard-compare">
@@ -50,6 +49,19 @@
                               </div>
                             {% endwith %}
                         {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=5>
+                      {% if not revision.akismet_submissions.all() %}
+                        <label>
+                          <input type="checkbox" name="revision-id" value="{{ revision.id }}" checked></input>
+                          <strong>Spam</strong>
+                        </label>
+                      {% else %}
+                        <label><input type="checkbox" name="revision-already-spam" value="{{ revision.id }}" checked style="visibility:hidden;"></input></label>
+                        <p>Already reported as spam.</p>
+                      {% endif %}
                     </td>
                 </tr>
             </tbody>

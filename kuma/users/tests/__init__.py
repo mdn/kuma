@@ -67,12 +67,16 @@ class SampleRevisionsMixin(object):
             creator=self.admin,
             save=True)
 
-    def create_revisions(self, num, document, creator):
+    def create_revisions(self, num, creator, document=None):
         """Create as many revisions as requested, and return a list of them."""
+        # If document is None, then we create a new document for each revision
+        create_new_documents = not document
         revisions_created = []
         for i in range(1, 1 + num):
+            if create_new_documents is True:
+                document = create_document(save=True)
             new_revision = create_revision(
-                title='Revision {}'.format(i),
+                title='Doc id {} Revision {}'.format(document.id, i),
                 document=document,
                 creator=creator,
                 save=True)
