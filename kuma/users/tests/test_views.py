@@ -314,9 +314,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(testuser_submissions.count(), num_revisions)
         for submission in testuser_submissions:
             ok_(submission.revision in revisions_created)
-        # No revisions submitted for self.testuser2, since self.testuser2 had no revisions
-        testuser2_submissions = RevisionAkismetSubmission.objects.filter(revision__creator=self.testuser2.id)
-        eq_(testuser2_submissions.count(), 0)
         # Akismet endpoints were called twice for each revision
         ok_(mock_requests.called)
         eq_(mock_requests.call_count, 2 * num_revisions)
@@ -334,10 +331,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         resp = self.client.post(self.ban_testuser_url, data=data)
         eq_(200, resp.status_code)
 
-        # No revisions submitted for self.testuser2, since self.testuser2 had no revisions
-        testuser2_submissions = RevisionAkismetSubmission.objects.filter(
-            revision__creator=self.testuser2.id)
-        eq_(testuser2_submissions.count(), 0)
         # Akismet endpoints were not called
         eq_(mock_requests.call_count, 0)
 
