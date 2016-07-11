@@ -21,7 +21,9 @@ from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
-from kuma.wiki.models import RevisionAkismetSubmission
+from kuma.wiki.models import Document, Revision, RevisionAkismetSubmission
+from kuma.wiki.tests import document as create_document
+
 
 from . import SampleRevisionsMixin, UserTestCase, email, user
 from ..models import UserBan
@@ -388,10 +390,119 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # Akismet endpoints were not called
         eq_(mock_requests.call_count, 0)
 
-#    TODO: Phase III:
-#    def test_post_reverts_revisions(self):
-#    def test_post_deletes_new_pages(self):
-#
+    def test_post_deletes_new_page(self):
+        """POSTing to ban_user_and_cleanup url with a new document."""
+        # Create a new document and revisions as testuser
+        # Revisions will be reverted and then document will be deleted.
+        new_document = create_document(save=True)
+        new_revisions = self.create_revisions(
+            num=3,
+            document=new_document,
+            creator=self.testuser)
+
+        # Pass in all revisions, each should be reverted then the
+        # document will be deleted as well
+        data = {'revision-id': [rev.id for rev in new_revisions]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # Test that the document was deleted successfully
+        deleted_doc = Document.admin_objects.filter(pk=new_document.pk).first()
+        eq_(deleted_doc.deleted, True)
+
+    def test_post_reverts_page(self):
+        """POSTing to ban_user_and_cleanup url with revisions to a document."""
+        # Create a new document and first revision as an admin
+        # and spam revisions as testuser.
+        # Document should be reverted with a new revision by admin.
+        new_document = create_document(save=True)
+        self.create_revisions(num=1, document=new_document, creator=self.admin)
+        spam_revisions = self.create_revisions(
+            num=3,
+            document=new_document,
+            creator=self.testuser)
+
+        # Before we send in the spam,
+        # last spam_revisions[] should be the current revision
+        eq_(new_document.current_revision.id, spam_revisions[2].id)
+        # and testuser is the creator of this current revision
+        eq_(new_document.current_revision.creator, self.testuser)
+
+        # Pass in all spam revisions, each should be reverted then the
+        # document should return to the original revision
+        data = {'revision-id': [rev.id for rev in spam_revisions]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        new_document = Document.objects.filter(id=new_document.id).first()
+        # Make sure that the current revision is not the spam revision
+        for revision in spam_revisions:
+            ok_(revision.id != new_document.current_revision.id)
+        # The most recent Revision object should be the document's current revision
+        latest_revision = Revision.objects.order_by('-id').first()
+        eq_(new_document.current_revision.id, latest_revision.id)
+        # Admin is the creator of this current revision
+        eq_(new_document.current_revision.creator, self.admin)
+
+    def test_post_one_reverts_one_does_not_revert(self):
+        """POSTing to ban_user_and_cleanup url with revisions to 2 documents."""
+        # Document A will have latest revision by the admin, but older spam revisions
+        # Document B will have latest revision by spammer
+        # Document A should not revert (although there are older spam revisions)
+        # Document B will revert
+        new_document_a = create_document(save=True)
+        new_document_b = create_document(save=True)
+        self.create_revisions(
+            num=1, document=new_document_a, creator=self.admin)
+        self.create_revisions(
+            num=1, document=new_document_b, creator=self.admin)
+        spam_revisions_a = self.create_revisions(
+            num=3,
+            document=new_document_a,
+            creator=self.testuser)
+        safe_revision_a = self.create_revisions(
+            num=1,
+            document=new_document_a,
+            creator=self.admin)
+        spam_revisions_b = self.create_revisions(
+            num=3,
+            document=new_document_b,
+            creator=self.testuser)
+
+        # Pass in all spam revisions:
+        # A revisions will not be reverted
+        # B revisions will be reverted
+        data = {'revision-id': [rev.id for rev in spam_revisions_a + spam_revisions_b]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # Document A: No changes should have been made
+        new_document_a = Document.objects.filter(id=new_document_a.id).first()
+        eq_(new_document_a.current_revision.id, safe_revision_a[0].id)
+        revisions_a = Revision.objects.filter(document=new_document_a)
+        eq_(revisions_a.count(), 5)  # Total of 5 revisions, no new revisions were made
+
+        # Document B: Make sure that the current revision is not the spam revision
+        new_document_b = Document.objects.filter(id=new_document_b.id).first()
+        for revision in spam_revisions_b:
+            ok_(revision.id != new_document_b.current_revision.id)
+        # The most recent Revision for this document
+        # should be the document's current revision
+        latest_revision_b = Revision.objects.filter(
+            document=new_document_b).order_by('-id').first()
+        eq_(new_document_b.current_revision.id, latest_revision_b.id)
+        # Admin is the creator of this current revision
+        eq_(new_document_b.current_revision.creator, self.admin)
+        revisions_b = Revision.objects.filter(document=new_document_b)
+        # 7 revisions on B = 1 initial + 3 spam revisions + 3 new revert revisions
+        eq_(revisions_b.count(), 7)
+
 #    TODO: Phase IV:
 #    def test_post_sends_email(self):
 
