@@ -1012,6 +1012,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             document=doc2,
             creator=self.testuser)
         # Create yet another new document and 3 revisions on it
+        # this new doc should be deleted when we send in all revisions.
         doc3 = create_document(save=True)
         revs_doc_3 = self.create_revisions(
             num=3,
@@ -1038,9 +1039,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # The "Actions taken" section
         banned_user = page.find('#banned-user li').text()
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
-        # TODO: Add in Phase III
-        # revisions_reverted = page.find('#revisions-reverted li')
-        # revisions_deleted= page.find('#revisions-deleted li')
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_deleted = page.find('#revisions-deleted li')
         # TODO: Add in Phase IV
         # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
@@ -1049,34 +1049,29 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         for item in revisions_reported_as_spam:
             # Verify that the revision title matches what we're looking for
             ok_(item.text_content().strip() in [revs_doc_1[0].title, revs_doc_2[1].title, revs_doc_3[2].title])
-        # TODO: Add in Phase III
-        # eq_(len(revisions_reverted), 1)
-        # eq_(len(revisions_deleted), 0)
+        eq_(len(revisions_reverted), 1)
+        eq_(len(revisions_deleted), 1)
         # TODO: Add in Phase IV
         # eq_(len(revisions_emailed), 1)
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
-        # TODO: Add in Phase III
-        # could_not_delete = page.find('#could-not-delete li')
-        # could_not_revert = page.find('#could-not-revert li')
+        could_not_delete = page.find('#not-deleted li')
+        could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase IV
         # new_actions = page.find('#new-actions-by-user li')
         eq_(len(not_submitted_to_akismet), 0)
-        # TODO: Add in Phase III
-        # eq_(len(could_not_delete), 0)
-        # eq_(len(could_not_revert), 0)
+        eq_(len(could_not_delete), 0)
+        eq_(len(could_not_revert), 0)
         # TODO: Add in Phase IV
         # eq_(len(new_actions), 0)
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
-        no_delete_no_revert = page.find('#no-delete-no-revert li')
         eq_(len(already_spam), 0)
         # Revisions from self.document, doc1, and doc2 should be considered 'not spam'
         eq_(len(not_spam), 3)
-        eq_(len(no_delete_no_revert), 4)
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_delete_link_appears_summary_page(self, mock_form):
