@@ -13,7 +13,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.db.models import Max, Q
 from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
@@ -24,7 +24,8 @@ from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
-from kuma.wiki.models import Document, RevisionAkismetSubmission
+from kuma.wiki.models import Document, DocumentDeletionLog, Revision, RevisionAkismetSubmission
+from kuma.wiki.utils import locale_and_slug_from_path
 
 from .forms import UserBanForm, UserEditForm
 from .models import User, UserBan
@@ -123,6 +124,10 @@ def ban_user_and_cleanup(request, user_id):
 def ban_user_and_cleanup_summary(request, user_id):
     """
     A summary page of actions taken when banning a user and reverting revisions
+    This method takes all the revisions from the last three days,
+    sends back the list of revisions that were successfully reverted/deleted
+    and submitted to Akismet, and also a list of
+    revisions where no action was taken (revisions needing follow up).
     """
     try:
         user = User.objects.get(pk=user_id)
@@ -147,23 +152,23 @@ def ban_user_and_cleanup_summary(request, user_id):
     revisions_from_last_three_days = revisions_from_last_three_days.defer('content', 'summary').order_by('-id')
     revisions_from_last_three_days = revisions_from_last_three_days.filter(created__gte=date_three_days_ago)
 
-    distinct_doc_rev_ids = list(
-        Document.objects
-        .filter(revisions__in=revisions_from_last_three_days)
-        .annotate(latest_rev=Max('revisions'))
-        .values_list('latest_rev', flat=True))
-    revisions_from_last_three_days_by_distinct_doc = revisions_from_last_three_days.filter(id__in=distinct_doc_rev_ids)
-    # TODO: Phase III: In the future we will take the revisions out of request.POST
-    # and either revert them or not.
-
     """ The "Actions Taken" section """
-    # The revisions to be submitted to Akismet
-    revisions_to_be_submitted_to_akismet = revisions_from_last_three_days.filter(
-        id__in=request.POST.getlist('revision-id'))
-    # Submit revisions to Akismet as spam
+    # The revisions to be submitted to Akismet and reverted,
+    # these must be sorted descending so that they are reverted accordingly
+    revisions_to_mark_as_spam_and_revert = revisions_from_last_three_days.filter(
+        id__in=request.POST.getlist('revision-id')).order_by('-id')    # Submit revisions to Akismet as spam
+
+    # 1. Submit revisions to Akismet as spam
+    # 2. If this is the most recent revision for a document:
+    #    Revert revision if it has a previous version OR
+    #    Delete revision if it is a new document
     submitted_to_akismet = []
     not_submitted_to_akismet = []
-    for revision in revisions_to_be_submitted_to_akismet:
+    revisions_reverted_list = []
+    revisions_not_reverted_list = []
+    revisions_deleted_list = []
+    revisions_not_deleted_list = []
+    for revision in revisions_to_mark_as_spam_and_revert:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
         akismet_submission_data = {'revision': revision.id}
 
@@ -179,72 +184,150 @@ def ban_user_and_cleanup_summary(request, user_id):
             submitted_to_akismet.append(revision)
         else:
             not_submitted_to_akismet.append(revision)
+
+        # If there is a current revision and the revision is not in the spam list,
+        # to be reverted, do not revert any revisions
+        if revision.document.current_revision not in revisions_to_mark_as_spam_and_revert:
+            pass
+        else:
+            # If this is a new revision on an existing document, revert it
+            if revision.previous:
+                reverted = revert_document(request=request,
+                                           document_path=revision.document.slug,
+                                           revision_id=revision.previous.id)
+                if reverted:
+                    revisions_reverted_list.append(revision)
+                else:
+                    # If the revert was unsuccessful, include this in the follow-up list
+                    revisions_not_reverted_list.append(revision)
+
+            # If this is a new document/translation, delete it
+            else:
+                deleted = delete_document(request=request,
+                                          document_slug=revision.document.slug,
+                                          document_locale=revision.document.locale)
+                if deleted:
+                    revisions_deleted_list.append(revision)
+                else:
+                    # If the delete was unsuccessful, include this in the follow-up list
+                    revisions_not_deleted_list.append(revision)
+
     # Find just the latest revision for each document
-    if len(submitted_to_akismet) > 0:
-        distinct_submitted_to_akismet_rev_ids = list(
-            Document.objects
-            .filter(revisions__in=submitted_to_akismet)
-            .annotate(latest_rev=Max('revisions'))
-            .values_list('latest_rev', flat=True))
-        submitted_to_akismet_by_distinct_doc = [rev for rev in submitted_to_akismet if rev.id in distinct_submitted_to_akismet_rev_ids]
-    else:
-        submitted_to_akismet_by_distinct_doc = []
-    if len(not_submitted_to_akismet) > 0:
-        distinct_not_submitted_to_akismet_rev_ids = list(
-            Document.objects
-            .filter(revisions__in=not_submitted_to_akismet)
-            .annotate(latest_rev=Max('revisions'))
-            .values_list('latest_rev', flat=True))
-        not_submitted_to_akismet_by_distinct_doc = [rev for rev in not_submitted_to_akismet if rev.id in distinct_not_submitted_to_akismet_rev_ids]
-    else:
-        not_submitted_to_akismet_by_distinct_doc = []
-    actions_taken = {'revisions_reported_as_spam': submitted_to_akismet_by_distinct_doc}
+    submitted_to_akismet_by_distinct_doc = revision_by_distinct_doc(submitted_to_akismet)
+    not_submitted_to_akismet_by_distinct_doc = revision_by_distinct_doc(not_submitted_to_akismet)
+    revisions_reverted_by_distinct_doc = revision_by_distinct_doc(revisions_reverted_list)
+    revisions_not_reverted_by_distinct_doc = revision_by_distinct_doc(revisions_not_reverted_list)
+    revisions_deleted_by_distinct_doc = revision_by_distinct_doc(revisions_deleted_list)
+    revisions_not_deleted_by_distinct_doc = revision_by_distinct_doc(revisions_not_deleted_list)
+
+    actions_taken = {
+        'revisions_reported_as_spam': submitted_to_akismet_by_distinct_doc,
+        'revisions_reverted_list': revisions_reverted_by_distinct_doc,
+        'revisions_deleted_list': revisions_deleted_by_distinct_doc
+    }
 
     """ The "Needs followup" section """
-    # TODO: Phase III: needs_follow_up will include revisions that have not been reverted
     # TODO: Phase IV: If user made actions while reviewer was banning them
     new_action_by_user = []
     needs_follow_up = {
         'manual_revert': new_action_by_user,
-        'not_submitted_to_akismet': not_submitted_to_akismet_by_distinct_doc
+        'not_submitted_to_akismet': not_submitted_to_akismet_by_distinct_doc,
+        'not_reverted_list': revisions_not_reverted_by_distinct_doc,
+        'not_deleted_list': revisions_not_deleted_by_distinct_doc
     }
 
     """ The "No Actions Taken" section """
     revisions_already_spam = revisions_from_last_three_days.filter(
         id__in=request.POST.getlist('revision-already-spam')
     )
-    distinct_already_spam_rev_ids = list(
-        Document.objects
-        .filter(revisions__in=revisions_already_spam)
-        .annotate(latest_rev=Max('revisions'))
-        .values_list('latest_rev', flat=True))
-    revisions_already_spam_by_distinct_doc = revisions_already_spam.filter(id__in=distinct_already_spam_rev_ids)
+    revisions_already_spam = [rev for rev in revisions_already_spam]
+    revisions_already_spam_by_distinct_doc = revision_by_distinct_doc(revisions_already_spam)
+
+    revisions_already_spam_ids = [rev.id for rev in revisions_already_spam]
     not_identified_as_spam = revisions_from_last_three_days.exclude(
-        id__in=revisions_already_spam.values_list('id', flat=True)).exclude(
-        id__in=revisions_to_be_submitted_to_akismet.values_list('id', flat=True))
-    distinct_not_identified_as_spam_rev_ids = list(
-        Document.objects
-        .filter(revisions__in=not_identified_as_spam)
-        .annotate(latest_rev=Max('revisions'))
-        .values_list('latest_rev', flat=True))
-    not_identified_as_spam_by_distinct_doc = not_identified_as_spam.filter(id__in=distinct_not_identified_as_spam_rev_ids)
-    # TODO: Phase III: Remove the "Not deleted not reverted" section, after adding the "Reverted" and "Deleted" sections
-    not_deleted_not_reverted = revisions_from_last_three_days_by_distinct_doc
+        id__in=revisions_already_spam_ids).exclude(
+        id__in=revisions_to_mark_as_spam_and_revert.values_list('id', flat=True))
+    not_identified_as_spam = [rev for rev in not_identified_as_spam]
+    not_identified_as_spam_by_distinct_doc = revision_by_distinct_doc(not_identified_as_spam)
+
     no_actions_taken = {
         'revisions_already_identified_as_spam': revisions_already_spam_by_distinct_doc,
-        'revisions_not_identified_as_spam': not_identified_as_spam_by_distinct_doc,
-        'revisions_not_deleted_not_reverted': not_deleted_not_reverted
+        'revisions_not_identified_as_spam': not_identified_as_spam_by_distinct_doc
     }
 
     context = {'detail_user': user,
                'form': UserBanForm(),
                'actions_taken': actions_taken,
                'needs_follow_up': needs_follow_up,
-               'no_actions_taken': no_actions_taken}
+               'no_actions_taken': no_actions_taken
+               }
 
     return render(request,
                   'users/ban_user_and_cleanup_summary.html',
                   context)
+
+
+def revision_by_distinct_doc(list_of_revisions):
+    if len(list_of_revisions):
+        list_of_revisions_distinct_doc = list(
+            Document.admin_objects.filter(
+                revisions__in=list_of_revisions
+            ).annotate(
+                latest_rev=Max('revisions')
+            ).values_list('latest_rev', flat=True)
+        )
+        list_of_revisions_distinct_doc = [rev for rev in list_of_revisions if rev.id in list_of_revisions_distinct_doc]
+    else:
+        list_of_revisions_distinct_doc = []
+
+    return list_of_revisions_distinct_doc
+
+
+@permission_required('users.add_userban')
+def revert_document(request, document_path, revision_id):
+    """
+    Revert document to a specific revision.
+    """
+    _, document_slug, __ = (
+        locale_and_slug_from_path(document_path, request))
+
+    revision = get_object_or_404(Revision.objects.select_related('document'),
+                                 pk=revision_id,
+                                 document__slug=document_slug)
+
+    comment = "spam"
+    document = revision.document
+    old_revision_pk = revision.pk
+    try:
+        new_revision = document.revert(revision, request.user, comment)
+        # schedule a rendering of the new revision if it really was saved
+        if new_revision.pk != old_revision_pk:
+            document.schedule_rendering('max-age=0')
+    except IntegrityError:
+        return False
+    return True
+
+
+@permission_required('wiki.delete_document')
+def delete_document(request, document_slug, document_locale):
+    """
+    Delete a Document.
+    """
+    document = Document.objects.filter(locale=document_locale,
+                                       slug=document_slug).first()
+
+    if not document:
+        return False
+
+    DocumentDeletionLog.objects.create(
+        locale=document.locale,
+        slug=document.slug,
+        user=request.user,
+        reason='Spam',
+    )
+    document.delete()
+
+    return True
 
 
 def user_detail(request, username):

@@ -27,7 +27,7 @@
           <a href="{{ detail_user.get_absolute_url() }}">{{ detail_user }}</a>
         </li>
       </ul>
-    </div>
+    </div><!-- /#banned-user -->
     <h5>{{ _('Submitted to Akismet as spam:')}}</h5>
     <div id="revisions-reported-as-spam">
       {% if actions_taken.revisions_reported_as_spam %}
@@ -41,7 +41,37 @@
       {% else %}
       <p>{{ _('The user did not have any revisions that were reported as spam.') }}</p>
       {% endif %}
-    </div>
+    </div><!-- /#revisions-reported-as-spam -->
+
+    <h5>{{ _('Deleted:')}}</h5>
+    <div id="revisions-deleted">
+      {% if actions_taken.revisions_deleted_list %}
+        <ul>
+          {% for revision in actions_taken.revisions_deleted_list %}
+            <li>
+              {{ revision.title }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+      <p>{{ _('The user did not have any revisions that were deleted.') }}</p>
+      {% endif %}
+    </div><!-- /#revisions-deleted -->
+
+    <h5>{{ _('Reverted:')}}</h5>
+    <div id="revisions-reverted">
+      {% if actions_taken.revisions_reverted_list %}
+        <ul>
+          {% for revision in actions_taken.revisions_reverted_list %}
+            <li>
+              {{ revision.title }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+      <p>{{ _('The user did not have any revisions that were reverted.') }}</p>
+      {% endif %}
+    </div><!-- /#revisions-reverted -->
 
     <!-- Needs follow up section-->
     <div id="revisions-followup" class="notification error">
@@ -76,7 +106,8 @@
         {% else %}
           <ul>{{ _('None.') }}</ul>
         {% endif %}
-      </div>
+      </div><!-- /#new-actions-by-user -->
+
       <h5><strong>{{ _('Could not submit to Akismet:') }}</strong></h5>
       <div id='not-submitted-to-akismet'>
         {% if needs_follow_up.not_submitted_to_akismet %}
@@ -94,8 +125,46 @@
         {% else %}
           {{ _('None.') }}
         {% endif %}
-      </div>
-    </div>
+      </div><!-- /#not-submitted-to-akismet -->
+
+      <h5><strong>{{ _('Could not delete:') }}</strong></h5>
+      <div id='not-deleted'>
+        {% if needs_follow_up.not_deleted_list %}
+          {% for revision in needs_follow_up.not_deleted_list %}
+            <li>
+              <a href="{{ revision.get_absolute_url() }}">
+                {{ revision.document.title }}
+              </a>
+              <a href="{{ revision.document.get_absolute_url() }}" class="button">
+                {{ _('View Page') }}
+                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+              </a>
+            </li>
+          {% endfor %}
+        {% else %}
+          {{ _('None.') }}
+        {% endif %}
+      </div><!-- /#not-deleted -->
+
+      <h5><strong>{{ _('Could not revert:') }}</strong></h5>
+      <div id='not-reverted'>
+        {% if needs_follow_up.not_reverted_list %}
+          {% for revision in needs_follow_up.not_reverted_list %}
+            <li>
+              <a href="{{ revision.get_absolute_url() }}">
+                {{ revision.document.title }}
+              </a>
+              <a href="{{ revision.document.get_absolute_url() }}" class="button">
+                {{ _('View Page') }}
+                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+              </a>
+            </li>
+          {% endfor %}
+        {% else %}
+          {{ _('None.') }}
+        {% endif %}
+      </div><!-- /#not-reverted -->
+    </div><!-- /#revisions-followup -->
 
     <!-- No actions taken section-->
     <h2>{{ _('No actions taken') }}</h2>
@@ -129,7 +198,7 @@
         {% else %}
           {{ _('None.') }}
         {% endif%}
-    </div>
+    </div><!-- /#already-spam -->
     <h5><strong>{{ _('Not identified as spam:') }}</strong></h5>
     <div id='not-spam'>
       {% if no_actions_taken.revisions_not_identified_as_spam %}
@@ -153,31 +222,7 @@
       {% else %}
         {{ _('None.') }}
       {% endif%}
-    </div>
-    <h5><strong>{{ _('Did not delete or revert:') }}</strong></h5>
-    <div id='no-delete-no-revert'>
-      {% if no_actions_taken.revisions_not_deleted_not_reverted %}
-        <ul>
-          {% for revision in no_actions_taken.revisions_not_deleted_not_reverted %}
-            <li>
-              <a href="{{ revision.get_absolute_url() }}">
-                {{ revision.document.title }}
-              </a>
-              <a href="{{ revision.document.get_absolute_url() }}" class="button">
-                {{ _('View Page') }}
-                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
-              </a>
-              <a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="button">
-                {{ _('History') }}
-                <i aria-hidden="true" class="icon-book"></i>
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-      {{ _('None.') }}
-      {% endif%}
-    </div>
+    </div><!-- /#not-spam -->
 
   </section>
 {% endblock content %}
