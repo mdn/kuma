@@ -725,16 +725,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam_text = ''
         for rev in revisions_reported_as_spam:
             revisions_reported_as_spam_text += rev.text_content()
-        # TODO: Add in Phase III
-        # revisions_reverted = page.find('#revisions-reverted li')
-        # revisions_deleted= page.find('#revisions-deleted li')
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_deleted= page.find('#revisions-deleted li')
         # TODO: Add in Phase IV
         # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), len(revisions_created))
-        # TODO: Add in Phase III
-        # eq_(len(revisions_reverted), 0)
-        # eq_(len(revisions_deleted), len(revisions_created))
+        eq_(len(revisions_reverted), 0)
+        eq_(len(revisions_deleted), len(revisions_created))
         # TODO: Add in Phase IV
         # eq_(len(revisions_emailed), len(revisions_created))
         # The title for each of the created revisions shows up in the template
@@ -745,25 +743,21 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
-        # TODO: Add in Phase III
-        # could_not_delete = page.find('#could-not-delete li')
-        # could_not_revert = page.find('#could-not-revert li')
+        could_not_delete = page.find('#not-deleted li')
+        could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase IV
         # new_actions = page.find('#new-actions-by-user li')
         eq_(len(not_submitted_to_akismet), 0)
-        # TODO: Add in Phase III
-        # eq_(len(could_not_delete), 0)
-        # eq_(len(could_not_revert), 0)
+        eq_(len(could_not_delete), 0)
+        eq_(len(could_not_revert), 0)
         # TODO: Add in Phase IV
         # eq_(len(new_actions), 0)
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
-        no_delete_no_revert = page.find('#no-delete-no-revert li')
         eq_(len(already_spam), 0)
         eq_(len(not_spam), 0)
-        eq_(len(no_delete_no_revert), 3)
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_revisions_posted_same_doc(self, mock_form):
