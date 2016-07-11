@@ -957,42 +957,36 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # The "Actions taken" section
         banned_user = page.find('#banned-user li').text()
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
-        # TODO: Add in Phase III
-        # revisions_reverted = page.find('#revisions-reverted li')
-        # revisions_deleted= page.find('#revisions-deleted li')
+        revisions_reverted = page.find('#revisions-reverted li')
+        revisions_deleted = page.find('#revisions-deleted li')
         # TODO: Add in Phase IV
         # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), 0)
-        # TODO: Add in Phase III
-        # eq_(len(revisions_reverted), 1)
-        # eq_(len(revisions_deleted), 0)
+        eq_(len(revisions_reverted), 0)
+        eq_(len(revisions_deleted), 0)
         # TODO: Add in Phase IV
         # eq_(len(revisions_emailed), 1)
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
-        # TODO: Add in Phase III
-        # could_not_delete = page.find('#could-not-delete li')
-        # could_not_revert = page.find('#could-not-revert li')
+        could_not_delete = page.find('#not-deleted li')
+        could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase IV
         # new_actions = page.find('#new-actions-by-user li')
         # There were no errors submitting to Akismet, so no follow up is needed
         eq_(len(not_submitted_to_akismet), 0)
-        # TODO: Add in Phase III
-        # eq_(len(could_not_delete), 0)
-        # eq_(len(could_not_revert), 0)
+        eq_(len(could_not_delete), 0)
+        eq_(len(could_not_revert), 0)
         # TODO: Add in Phase IV
         # eq_(len(new_actions), 0)
 
         # The "No actions taken" section
         already_spam = page.find('#already-spam li')
         not_spam = page.find('#not-spam li')
-        no_delete_no_revert = page.find('#no-delete-no-revert li')
         # One revision should show up for each of the documents
         eq_(len(already_spam), 2)
         eq_(len(not_spam), 0)
-        eq_(len(no_delete_no_revert), 2)
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_some_revision_ids_posted(self, mock_form):
