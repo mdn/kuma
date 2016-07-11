@@ -1229,18 +1229,17 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             document=doc1,
             creator=self.testuser2,
             save=True)
-        # TODO: Phase III
         # User creates another document, but another user makes a revision on it
-        # doc2 = create_document(save=True)
-        # testuser_revisions = self.create_revisions(
-        #     num=1,
-        #     document=doc2,
-        #     creator=self.testuser)
-        # create_revision(
-        #     title='Revision 1',
-        #     document=doc2,
-        #     creator=self.testuser2,
-        #     save=True)
+        doc2 = create_document(save=True)
+        testuser_revisions = self.create_revisions(
+            num=1,
+            document=doc2,
+            creator=self.testuser)
+        create_revision(
+            title='Revision 1',
+            document=doc2,
+            creator=self.testuser2,
+            save=True)
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
@@ -1256,17 +1255,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             'wiki.delete_document',
             kwargs={'document_path': doc1.slug},
             force_locale=True)
-        # TODO: PhaseIII
-        # delete_url_reverted = reverse(
-        #     'wiki.delete_document',
-        #     kwargs={'document_path': doc2.slug},
-        #     force_locale=True)
+        delete_url_reverted = reverse(
+            'wiki.delete_document',
+            kwargs={'document_path': doc2.slug},
+            force_locale=True)
         # TODO: PhaseIV
         # delete_url_new_action
 
-        # TODO: PhaseIII
-        # delete_link_reverted_section = page.find('#reverted a[href="{url}"]'.format(
-        #     url=delete_url_reverted))
+        delete_link_reverted_section = page.find('#reverted a[href="{url}"]'.format(
+            url=delete_url_reverted))
         # TODO: PhaseIV
         # delete_link_new_action_section = page.find('#new-actions-by-user a[href="{url}"]'.format(
         #     url=delete_url_new_action))
@@ -1274,8 +1271,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             url=delete_url_already_spam))
 
         # There should not be a delete link in any of these sections
-        # TODO: PhaseIII
-        # eq_(len(delete_link_reverted_section), 0)
+        eq_(len(delete_link_reverted_section), 0)
         # TODO: PhaseIV
         # eq_(len(delete_link_new_action_section), 0)
         eq_(len(delete_link_already_spam_section), 0)
