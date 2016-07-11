@@ -152,15 +152,6 @@ def ban_user_and_cleanup_summary(request, user_id):
     revisions_from_last_three_days = revisions_from_last_three_days.defer('content', 'summary').order_by('-id')
     revisions_from_last_three_days = revisions_from_last_three_days.filter(created__gte=date_three_days_ago)
 
-    distinct_doc_rev_ids = list(
-        Document.objects
-        .filter(revisions__in=revisions_from_last_three_days)
-        .annotate(latest_rev=Max('revisions'))
-        .values_list('latest_rev', flat=True))
-    revisions_from_last_three_days_by_distinct_doc = revisions_from_last_three_days.filter(id__in=distinct_doc_rev_ids)
-    # TODO: Phase III: In the future we will take the revisions out of request.POST
-    # and either revert them or not.
-
     """ The "Actions Taken" section """
     # The revisions to be submitted to Akismet and reverted,
     # these must be sorted descending so that they are reverted accordingly
