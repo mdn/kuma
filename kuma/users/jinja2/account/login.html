@@ -4,6 +4,8 @@
 
 {% set classes = 'login' %}
 
+{% set socialaccount_providers = get_providers() %}
+
 {% block content %}
 <div class="text-content readable-line-length">
   <article id="login">
@@ -11,17 +13,30 @@
       <h1>{{ _("Please sign in") }}</h1>
 
       <p>{% trans %}
-      In order to contribute, you need to sign in to MDN. You can sign in using
-      any of the services below. A MDN profile will be created for you if you
-      don't already have one.
+      All content on MDN is free and available without signing in.
       {% endtrans %}</p>
 
-  {% set socialaccount_providers = get_providers() %}
-  {% if socialaccount_providers  %}
-      {% with process="login" %}
-        {% include "socialaccount/snippets/provider_list.html" %}
-      {% endwith %}
-  {% endif %}
+      <p>{% trans %}
+      In order to contribute, you need to sign in to MDN. You can sign in using
+      GitHub and a MDN profile will be created for you if you don't already
+      have one.
+      {% endtrans %}</p>
+
+      {% if socialaccount_providers  %}
+          {% with process="create" %}
+            {% include "socialaccount/snippets/provider_list.html" %}
+          {% endwith %}
+      {% endif %}
+
+      <p>{% trans %}
+      If you already have a MDN profile sign in:
+      {% endtrans %}</p>
+
+      {% if socialaccount_providers  %}
+          {% with process="login" %}
+            {% include "socialaccount/snippets/provider_list.html" %}
+          {% endwith %}
+      {% endif %}
 
     {# hidden form to measure bot submissions from this page #}
     <form class="hidden" method="post" action="{{ url('users.honeypot') }}">

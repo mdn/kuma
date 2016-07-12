@@ -17,12 +17,17 @@
                 {{ _('Sign in') }}
               </span>
               <span class="oauth-icon oauth-github" data-service="GitHub" data-href="{{ github_url }}" title="{{ _('GitHub') }}"><i class="icon-github" aria-hidden="true"></i></span>
-              <span class="oauth-icon oauth-persona launch-persona-login wait-for-persona disabled" data-service="Persona" data-next="{{ next_url }}" title="{{ _('Persona') }}"><i class="icon-user" aria-hidden="true"></i></span>
           </div>
           <div class="oauth-login-picker" aria-hidden="true">
               <ul>
-                  <li class="wait-for-persona disabled"><a href="{{ url('account_login') }}" class="login-link launch-persona-login" data-next="{{ next_url }}" data-service="Persona"><i class="icon-user" aria-hidden="true"></i>Persona</a></li>
-                  <li><a href="{{ github_url }}" class="login-link" data-service="GitHub"><i class="icon-github" aria-hidden="true"></i>GitHub</a></li>
+                  <li>
+                    {{ _('Sign in or create an account:') }}<br>
+                    <a href="{{ github_url }}" class="login-link" data-service="GitHub"><i class="icon-github" aria-hidden="true"></i>GitHub</a>
+                  </li>
+                  <li class="wait-for-persona disabled">
+                      {{ _('Sign in:') }} <a href="/docs/MDN/Contribute/Persona_Sign_In_on_MDN"><i aria-hidden="true" title="{{ _('Why is Persona sign in only?') }}" class="icon-question-sign"></i></a><br>
+                      <a href="{{ url('account_login') }}" class="login-link launch-persona-login" data-next="{{ next_url }}" data-service="Persona"><i class="icon-user" aria-hidden="true"></i>Persona</a>
+                  </li>
               </ul>
               {% if waffle.flag('registration_disabled') %}
                 <div class="notification error">{{ _("We are sorry, but profile creation is currently disabled.") }}</div>
