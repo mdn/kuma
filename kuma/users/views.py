@@ -202,8 +202,7 @@ def ban_user_and_cleanup_summary(request, user_id):
             # If this is a new document/translation, delete it
             else:
                 deleted = delete_document(request=request,
-                                          document_slug=revision.document.slug,
-                                          document_locale=revision.document.locale)
+                                          document=revision.document)
                 if deleted:
                     revisions_deleted_list.append(revision)
                 else:
@@ -303,13 +302,10 @@ def revert_document(request, revision_id):
 
 
 @permission_required('wiki.delete_document')
-def delete_document(request, document_slug, document_locale):
+def delete_document(request, document):
     """
     Delete a Document.
     """
-    document = Document.objects.filter(locale=document_locale,
-                                       slug=document_slug).first()
-
     if not document:
         return False
 
