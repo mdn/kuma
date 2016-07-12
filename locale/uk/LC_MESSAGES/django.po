@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-12 07:37-0700\n"
-"PO-Revision-Date: 2016-07-12 20:02+0000\n"
+"PO-Revision-Date: 2016-07-12 20:07+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
 "Language: uk\n"
@@ -98,7 +98,7 @@ msgstr "Mozilla Developer Network"
 #: jinja2/base.html:75
 #, python-format
 msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
-msgstr ""
+msgstr "Ви увійшли з Persona. <a href=\"%(persona_info)s\">Persona вимкнена. Читайте далі.</a>"
 
 #: jinja2/base.html:83
 msgid "Skip to main content"
@@ -343,7 +343,7 @@ msgstr "Увійти:"
 
 #: jinja2/includes/login.html:28
 msgid "Why is Persona sign in only?"
-msgstr ""
+msgstr "Чому вхід лише з Persona?"
 
 #: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
@@ -1720,7 +1720,7 @@ msgstr "Будь ласка, увійдіть"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
-msgstr ""
+msgstr "Всі матеріали на MDN є безкоштовними і доступні без входу в систему."
 
 #: kuma/users/jinja2/account/login.html:19
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
@@ -1728,7 +1728,7 @@ msgstr "Щоб зробити внесок, вам потрібно увійти
 
 #: kuma/users/jinja2/account/login.html:31
 msgid "If you already have a MDN profile sign in:"
-msgstr ""
+msgstr "Якщо ви вже маєте обліковий запис MDN, увійдіть:"
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -2101,7 +2101,7 @@ msgstr "Жодних дій вжито"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:102
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "Вже визначено як спам:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133
 msgid "Not identified as spam:"
@@ -2109,7 +2109,7 @@ msgstr "Не визначено як спам:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
 msgid "Did not delete or revert:"
-msgstr ""
+msgstr "Не видаляти або повернути:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
