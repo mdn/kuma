@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-12 07:37-0700\n"
-"PO-Revision-Date: 2016-07-12 18:03+0000\n"
+"PO-Revision-Date: 2016-07-12 18:07+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -2029,9 +2029,9 @@ msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
 msgstr "<a href=\"%(url)s\">%(user)s</a> のアカウントが停止されました。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
-#, fuzzy, python-format
+#, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr "%(user)s のアカウントは既に停止されているため、以下のリビジョンをレビュー、取り消しできます。"
+msgstr "%(user)s のアカウントは既に停止されています。この人物による以下のリビジョンをレビュー、取り消しできます。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
@@ -2046,27 +2046,24 @@ msgid "Ban User for Spam"
 msgstr "ユーザをスパム行為のためアカウント停止にする"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
-#, fuzzy
 msgid "Ban User for Spam & Submit Spam"
-msgstr "ユーザをスパム行為のためアカウント停止にする"
+msgstr "ユーザをスパム行為のためアカウント停止にする & スパムを報告"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
 msgstr "他の理由でユーザをアカウント停止にする。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
-#, fuzzy
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr "ユーザが過去 3 日間に作成したリビジョンはなく、このユーザは既にアカウント停止されています。"
+msgstr "ユーザが過去 3 日間に作成した取り消し可能なリビジョンはなく、このユーザは既にアカウント停止されています。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
 msgstr "要約"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
-#, fuzzy
 msgid "Actions Taken"
-msgstr "アクション!"
+msgstr "実行されたアクション"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
 msgid "Banned:"
@@ -2077,9 +2074,8 @@ msgid "Submitted to Akismet as spam:"
 msgstr "スパムとして Akismet に送信したもの:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:42
-#, fuzzy
 msgid "The user did not have any revisions that were reported as spam."
-msgstr "このユーザが編集したもので取り消されたリビジョンはありません。"
+msgstr "このユーザが編集したものでスパムとして報告されたリビジョンはありません。"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "Needs follow up"
@@ -2099,18 +2095,16 @@ msgid "Could not submit to Akismet:"
 msgstr "Akismet へ投稿できなかった項目:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:101
-#, fuzzy
 msgid "No actions taken"
-msgstr "アクティベーションキー"
+msgstr "アクションは何も実行されていません"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:102
 msgid "Already identified as spam:"
 msgstr "既にスパムとして特定されているユーザ:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133
-#, fuzzy
 msgid "Not identified as spam:"
-msgstr "スパム認定済み"
+msgstr "スパムとして認定されていない項目:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
 msgid "Did not delete or revert:"
