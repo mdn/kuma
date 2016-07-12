@@ -66,7 +66,9 @@
         <ul>
           {% for revision in actions_taken.revisions_reverted_list %}
             <li>
-              {{ revision.title }}
+              <a href="{{ revision.get_absolute_url() }}">
+                {{ revision.title }}
+              </a>
             </li>
           {% endfor %}
         </ul>
