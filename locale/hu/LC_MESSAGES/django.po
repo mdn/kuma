@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-12 07:37-0700\n"
-"PO-Revision-Date: 2016-07-12 21:02+0000\n"
+"PO-Revision-Date: 2016-07-12 21:05+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
 "Language: hu\n"
@@ -100,7 +100,7 @@ msgstr "Mozilla Developer Network"
 #: jinja2/base.html:75
 #, python-format
 msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
-msgstr ""
+msgstr "Personával jelentkezett be. <a href=\"%(persona_info)s\">A Persona kikapcsolásra kerül. Olvasson tovább.</a>"
 
 #: jinja2/base.html:83
 msgid "Skip to main content"
@@ -356,7 +356,7 @@ msgstr "Bejelentkezés:"
 
 #: jinja2/includes/login.html:28
 msgid "Why is Persona sign in only?"
-msgstr ""
+msgstr "A Personával miért csak bejelentkezni lehet?"
 
 #: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
@@ -1744,7 +1744,7 @@ msgstr "Kérem jelentkezzen be"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
-msgstr ""
+msgstr "Az MDN-en minden tartalom szabad és elérhető bejelentkezés nélkül."
 
 #: kuma/users/jinja2/account/login.html:19
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
@@ -1752,7 +1752,7 @@ msgstr "A közreműködéshez be kell jelentkeznie az MDN-be. Bejelentkezhet a G
 
 #: kuma/users/jinja2/account/login.html:31
 msgid "If you already have a MDN profile sign in:"
-msgstr ""
+msgstr "Ha már van MDN profilja, jelentkezzen be:"
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -2052,7 +2052,7 @@ msgstr "%(user)s már ki lett tiltva. Lent átnézheti és visszavonhatja a verz
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
-msgstr ""
+msgstr "Nem tilthatja ki magát spamelésért."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
 msgid "Submit Spam"
@@ -2076,7 +2076,7 @@ msgstr "A felhasználó nem készített egyetlen visszaállítandó verziót sem
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
-msgstr ""
+msgstr "Összefoglalás"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
 msgid "Actions Taken"
@@ -2100,7 +2100,7 @@ msgstr "Nyomon követést igényel"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:49
 msgid "New action by user:"
-msgstr ""
+msgstr "Új műveletek felhasználónként:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:95 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:130
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:154 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:178
@@ -2117,7 +2117,7 @@ msgstr "Nem történtek intézkedések"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:102
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "Már spamként azonosított:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133
 msgid "Not identified as spam:"
@@ -2125,7 +2125,7 @@ msgstr "Nem spamként azonosított:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
 msgid "Did not delete or revert:"
-msgstr ""
+msgstr "Nem törölte és nem állította vissza:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
