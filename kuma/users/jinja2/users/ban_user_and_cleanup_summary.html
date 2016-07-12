@@ -49,7 +49,9 @@
         <ul>
           {% for revision in actions_taken.revisions_deleted_list %}
             <li>
-              {{ revision.title }}
+              <a href="{{ revision.document.get_absolute_url() }}">
+                {{ revision.document.title }}
+              </a>
             </li>
           {% endfor %}
         </ul>

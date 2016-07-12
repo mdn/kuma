@@ -19,7 +19,7 @@
                     tabindex="0"
                     class="dashboard-row {% if not previous_id %}dashboard-row-new{% endif %}"
                     >
-                    <td></td> <!--- Empty cell -->
+                    <td></td> <!-- This cell intentionally left blank -->
                     <td class="dashboard-revision">
                         <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
                         <br />
