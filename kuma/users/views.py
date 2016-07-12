@@ -25,7 +25,6 @@ from taggit.utils import parse_tags
 from kuma.core.decorators import login_required
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import Document, DocumentDeletionLog, Revision, RevisionAkismetSubmission
-from kuma.wiki.utils import locale_and_slug_from_path
 
 from .forms import UserBanForm, UserEditForm
 from .models import User, UserBan
@@ -193,7 +192,6 @@ def ban_user_and_cleanup_summary(request, user_id):
             # If this is a new revision on an existing document, revert it
             if revision.previous:
                 reverted = revert_document(request=request,
-                                           document_path=revision.document.slug,
                                            revision_id=revision.previous.id)
                 if reverted:
                     revisions_reverted_list.append(revision)
@@ -284,16 +282,12 @@ def revision_by_distinct_doc(list_of_revisions):
 
 
 @permission_required('users.add_userban')
-def revert_document(request, document_path, revision_id):
+def revert_document(request, revision_id):
     """
     Revert document to a specific revision.
     """
-    _, document_slug, __ = (
-        locale_and_slug_from_path(document_path, request))
-
     revision = get_object_or_404(Revision.objects.select_related('document'),
-                                 pk=revision_id,
-                                 document__slug=document_slug)
+                                 pk=revision_id)
 
     comment = "spam"
     document = revision.document
