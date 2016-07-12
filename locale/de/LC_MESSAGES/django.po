@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-12 07:37-0700\n"
-"PO-Revision-Date: 2016-07-12 17:33+0000\n"
+"PO-Revision-Date: 2016-07-12 17:38+0000\n"
 "Last-Translator: Michael Köhler <michael.koehler1@gmx.de>\n"
 "Language-Team: German https://pontoon.mozilla.org/de/\n"
 "Language: de\n"
@@ -341,14 +341,12 @@ msgid "GitHub"
 msgstr "GitHub"
 
 #: jinja2/includes/login.html:24
-#, fuzzy
 msgid "Sign in or create an account:"
-msgstr "Benutzerkonto erstellen"
+msgstr "Anmelden oder Benutzerkonto erstellen:"
 
 #: jinja2/includes/login.html:28
-#, fuzzy
 msgid "Sign in:"
-msgstr "Anmelden"
+msgstr "Anmelden:"
 
 #: jinja2/includes/login.html:28
 msgid "Why is Persona sign in only?"
@@ -1740,13 +1738,12 @@ msgid "All content on MDN is free and available without signing in."
 msgstr "Alle Inhalte auf MDN sind kostenlos und ohne Anmeldung zugänglich."
 
 #: kuma/users/jinja2/account/login.html:19
-#, fuzzy
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
-msgstr "Um mitzuwirken, müssen Sie sich bei MDN anmelden. Sie können sich mit einem der folgenden Dienste anmelden. Ein MDN-Profil wird für Sie erstellt, wenn Sie noch keines haben."
+msgstr "Um mitzuwirken, müssen Sie sich bei MDN anmelden. Sie können sich per GitHub anmelden und es wird ein MDN-Profil wird für Sie erstellt, wenn Sie noch keines haben."
 
 #: kuma/users/jinja2/account/login.html:31
 msgid "If you already have a MDN profile sign in:"
-msgstr ""
+msgstr "Wenn Sie bereits ein MDN-Profil haben, melden Sie sich an:"
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -2009,9 +2006,8 @@ msgid "Connect with GitHub"
 msgstr "Mit GitHub verbinden"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
-#, fuzzy
 msgid "Create MDN profile with GitHub"
-msgstr "Erstellen Sie Ihr MDN-Profil, um fortzufahren"
+msgstr "MDN-Profil mit GitHub erstellen"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:33
 msgid "Sign in with GitHub"
@@ -2050,99 +2046,86 @@ msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
 msgstr "<a href=\"%(url)s\">%(user)s</a> wurde gesperrt."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
-#, fuzzy, python-format
+#, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr "%(user)s wurde bereits gesperrt, daher können Sie hier seine Änderungen überprüfen und rückgängig machen."
+msgstr "%(user)s wurde bereits gesperrt. Sie können hier seine Änderungen überprüfen und rückgängig machen."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
-msgstr ""
+msgstr "Sie können sich nicht selbst wegen Spam sperren."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
-#, fuzzy
 msgid "Submit Spam"
-msgstr "Übermitteln als:"
+msgstr "Spam übermitteln"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
 msgid "Ban User for Spam"
 msgstr "Benutzer wegen Spam sperren"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
-#, fuzzy
 msgid "Ban User for Spam & Submit Spam"
-msgstr "Benutzer wegen Spam sperren"
+msgstr "Benutzer wegen Spam sperren & Spam übermitteln"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
 msgstr "Benutzer aus anderen Gründen sperren."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
-#, fuzzy
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr "Dieser Benutzer hat in den letzten drei Tagen keine Änderungen vorgenommen und wurde bereits gesperrt."
+msgstr "Dieser Benutzer hat in den letzten drei Tagen keine Änderungen vorgenommen, die rückgängig gemacht werden könnten, und wurde bereits gesperrt."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
-#, fuzzy
 msgid "Summary"
-msgstr "Zusammenfassung der Bearbeitung"
+msgstr "Zusammenfassung"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
-#, fuzzy
 msgid "Actions Taken"
-msgstr "Los geht’s!"
+msgstr "Durchgeführte Aktionen"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
-#, fuzzy
 msgid "Banned:"
-msgstr "Gesperrt"
+msgstr "Gesperrt:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
-#, fuzzy
 msgid "Submitted to Akismet as spam:"
-msgstr "Daten an Akismet übermittelt"
+msgstr "Als Spam an Akismet gemeldet:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:42
-#, fuzzy
 msgid "The user did not have any revisions that were reported as spam."
-msgstr "Dieser Benutzer hatte keine Änderungen, die rückgängig gemacht wurden."
+msgstr "Dieser Benutzer hatte keine Änderungen, die als Spam gemeldet wurden."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
-#, fuzzy
 msgid "Needs follow up"
-msgstr "Seiten, die überprüft werden müssen:"
+msgstr "Benötigt Überprüfung"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:49
 msgid "New action by user:"
-msgstr ""
+msgstr "Neue Aktion von Benutzer:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:95 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:130
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:154 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:178
-#, fuzzy
 msgid "None."
-msgstr "Keine"
+msgstr "Keine."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:80
-#, fuzzy
 msgid "Could not submit to Akismet:"
-msgstr "Daten an Akismet übermittelt"
+msgstr "Übermittlung an Akismet fehlgeschlagen:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:101
-#, fuzzy
 msgid "No actions taken"
-msgstr "Aktivierungsschlüssel"
+msgstr "Keine Aktion durchgeführt"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:102
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "Bereits als Spam identifiziert:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133
-#, fuzzy
 msgid "Not identified as spam:"
-msgstr "Als Spam bestätigt"
+msgstr "Nicht als Spam identifiziert:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
 msgid "Did not delete or revert:"
-msgstr ""
+msgstr "Nicht gelöscht oder zurückgesetzt:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
