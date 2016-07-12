@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-06-24 12:43-0700\n"
+"POT-Creation-Date: 2016-07-12 07:37-0700\n"
 "PO-Revision-Date: 2016-06-24 20:11+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
@@ -95,7 +95,7 @@ msgstr "選択なし"
 msgid "Selected: "
 msgstr "選択済み: "
 
-#: kuma/static/js/users.js:96
+#: kuma/static/js/users.js:108
 msgid "New interest..."
 msgstr "新たな興味..."
 

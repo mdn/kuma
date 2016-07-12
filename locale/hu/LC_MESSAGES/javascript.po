@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-06-24 12:43-0700\n"
+"POT-Creation-Date: 2016-07-12 07:37-0700\n"
 "PO-Revision-Date: 2016-06-24 20:10+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
@@ -95,7 +95,7 @@ msgstr "Nincs kiválasztva"
 msgid "Selected: "
 msgstr "Kiválasztva: "
 
-#: kuma/static/js/users.js:96
+#: kuma/static/js/users.js:108
 msgid "New interest..."
 msgstr "Új érdeklődési kör…"
 

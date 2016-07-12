@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-06-24 12:43-0700\n"
+"POT-Creation-Date: 2016-07-12 07:37-0700\n"
 "PO-Revision-Date: 2016-06-27 23:46+0000\n"
 "Last-Translator: Ton <tonnes.mb@gmail.com>\n"
 "Language-Team: Dutch https://pontoon.mozilla.org/nl/\n"
@@ -96,7 +96,7 @@ msgstr "Geen selectie"
 msgid "Selected: "
 msgstr "Geselecteerd: "
 
-#: kuma/static/js/users.js:96
+#: kuma/static/js/users.js:108
 msgid "New interest..."
 msgstr "Nieuwe interesse…"
 

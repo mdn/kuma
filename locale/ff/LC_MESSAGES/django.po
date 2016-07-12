@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-06-24 12:43-0700\n"
+"POT-Creation-Date: 2016-07-12 07:37-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Fulah https://pontoon.mozilla.org/ff/\n"
@@ -84,194 +84,199 @@ msgstr ""
 msgid "Internal Server Error"
 msgstr ""
 
-#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:91 kuma/search/jinja2/search/plugin.html:3
+#: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:100 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
 msgstr ""
 
-#: jinja2/base.html:74
+#: jinja2/base.html:75
+#, python-format
+msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
+msgstr ""
+
+#: jinja2/base.html:83
 msgid "Skip to main content"
 msgstr ""
 
-#: jinja2/base.html:75
+#: jinja2/base.html:84
 msgid "Select language"
 msgstr ""
 
-#: jinja2/base.html:77
+#: jinja2/base.html:86
 msgid "Skip to search"
 msgstr ""
 
-#: jinja2/base.html:98 kuma/core/translations/search/filter/tools/name.py:4
+#: jinja2/base.html:107 kuma/core/translations/search/filter/tools/name.py:4
 msgid "Tools"
 msgstr ""
 
-#: jinja2/base.html:102
+#: jinja2/base.html:111
 msgid "Contribute to MDN"
 msgstr ""
 
-#: jinja2/base.html:104
+#: jinja2/base.html:113
 msgid "Get started"
 msgstr ""
 
-#: jinja2/base.html:105
+#: jinja2/base.html:114
 msgid "Review or localize docs"
 msgstr ""
 
-#: jinja2/base.html:108
+#: jinja2/base.html:117
 msgid "Site Tools"
 msgstr ""
 
-#: jinja2/base.html:110
+#: jinja2/base.html:119
 msgid "Revision dashboard"
 msgstr ""
 
-#: jinja2/base.html:111
+#: jinja2/base.html:120
 msgid "Documentation status"
 msgstr ""
 
-#: jinja2/base.html:120
+#: jinja2/base.html:129
 msgid "Web Platform"
 msgstr ""
 
-#: jinja2/base.html:124
+#: jinja2/base.html:133
 msgid "Technologies"
 msgstr ""
 
-#: jinja2/base.html:126 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
+#: jinja2/base.html:135 kuma/core/translations/search/filter/html/name.py:4 kuma/landing/jinja2/landing/homepage.html:75 kuma/landing/jinja2/landing/promote_buttons.html:105
 msgid "HTML"
 msgstr ""
 
-#: jinja2/base.html:127 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
+#: jinja2/base.html:136 kuma/core/translations/search/filter/css/name.py:4 kuma/landing/jinja2/landing/homepage.html:76 kuma/landing/jinja2/landing/promote_buttons.html:99
 msgid "CSS"
 msgstr ""
 
-#: jinja2/base.html:128 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
+#: jinja2/base.html:137 kuma/core/translations/search/filter/js/name.py:4 kuma/landing/jinja2/landing/homepage.html:77 kuma/landing/jinja2/landing/promote_buttons.html:111
 msgid "JavaScript"
 msgstr ""
 
-#: jinja2/base.html:129
+#: jinja2/base.html:138
 msgid "Graphics"
 msgstr ""
 
-#: jinja2/base.html:130
+#: jinja2/base.html:139
 msgid "APIs / DOM"
 msgstr ""
 
-#: jinja2/base.html:131 kuma/core/sections.py:20
+#: jinja2/base.html:140 kuma/core/sections.py:20
 msgid "Apps"
 msgstr ""
 
-#: jinja2/base.html:132 kuma/core/translations/search/filter/mathml/name.py:4
+#: jinja2/base.html:141 kuma/core/translations/search/filter/mathml/name.py:4
 msgid "MathML"
 msgstr ""
 
-#: jinja2/base.html:135
+#: jinja2/base.html:144
 msgid "References & Guides"
 msgstr ""
 
-#: jinja2/base.html:137
+#: jinja2/base.html:146
 msgid "Learn the Web"
 msgstr ""
 
-#: jinja2/base.html:138
+#: jinja2/base.html:147
 msgid "Tutorials"
 msgstr ""
 
-#: jinja2/base.html:139
+#: jinja2/base.html:148
 msgid "References"
 msgstr ""
 
-#: jinja2/base.html:140
+#: jinja2/base.html:149
 msgid "Developer Guides"
 msgstr ""
 
-#: jinja2/base.html:141
+#: jinja2/base.html:150
 msgid "Accessibility"
 msgstr ""
 
-#: jinja2/base.html:142
+#: jinja2/base.html:151
 msgid "...more docs"
 msgstr ""
 
-#: jinja2/base.html:146
+#: jinja2/base.html:155
 msgid "Mozilla Docs"
 msgstr ""
 
-#: jinja2/base.html:151 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
+#: jinja2/base.html:160 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
 msgid "Add-ons"
 msgstr ""
 
-#: jinja2/base.html:152 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:84
+#: jinja2/base.html:161 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Firefox"
 msgstr ""
 
-#: jinja2/base.html:153 kuma/landing/jinja2/landing/homepage.html:86
+#: jinja2/base.html:162 kuma/landing/jinja2/landing/homepage.html:86
 msgid "Firefox Marketplace"
 msgstr ""
 
-#: jinja2/base.html:154 kuma/core/translations/search/filter/b2g-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:85
+#: jinja2/base.html:163 kuma/core/translations/search/filter/b2g-os/name.py:4 kuma/landing/jinja2/landing/homepage.html:85
 msgid "B2G OS"
 msgstr ""
 
-#: jinja2/base.html:155 jinja2/includes/login.html:20
+#: jinja2/base.html:164
 msgid "Persona"
 msgstr ""
 
-#: jinja2/base.html:159
+#: jinja2/base.html:168
 msgid "Developer Tools"
 msgstr ""
 
-#: jinja2/base.html:159
+#: jinja2/base.html:168
 msgid "Feedback"
 msgstr ""
 
-#: jinja2/base.html:164
+#: jinja2/base.html:173
 msgid "Get Firefox help"
 msgstr ""
 
-#: jinja2/base.html:165
+#: jinja2/base.html:174
 msgid "Get web development help"
 msgstr ""
 
-#: jinja2/base.html:168
+#: jinja2/base.html:177
 msgid "Join the MDN community"
 msgstr ""
 
-#: jinja2/base.html:169
+#: jinja2/base.html:178
 msgid "Report a content problem"
 msgstr ""
 
-#: jinja2/base.html:170
+#: jinja2/base.html:179
 msgid "Report a bug"
 msgstr ""
 
-#: jinja2/base.html:177 jinja2/base.html:178 jinja2/base.html:180 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
+#: jinja2/base.html:186 jinja2/base.html:187 jinja2/base.html:189 jinja2/includes/common_macros.html:26 jinja2/includes/common_macros.html:27 kuma/landing/jinja2/landing/homepage.html:38
 #: kuma/landing/jinja2/landing/homepage.html:48 kuma/landing/jinja2/landing/homepage.html:55 kuma/landing/jinja2/landing/homepage.html:60 kuma/search/jinja2/search/base.html:2
 #: kuma/search/jinja2/search/results.html:15 kuma/search/jinja2/search/results.html:52 kuma/search/jinja2/search/results.html:55 kuma/search/jinja2/search/results.html:60
 msgid "Search"
 msgstr ""
 
-#: jinja2/base.html:196
+#: jinja2/base.html:205
 #, python-format
 msgid "<p>&copy; 2005-%(thisyear)s Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href=\"%(copyright_url)s\">these licenses</a>.</p>"
 msgstr ""
 
-#: jinja2/base.html:201
+#: jinja2/base.html:210
 msgid "About MDN"
 msgstr ""
 
-#: jinja2/base.html:202
+#: jinja2/base.html:211
 msgid "Terms"
 msgstr ""
 
-#: jinja2/base.html:203
+#: jinja2/base.html:212
 msgid "Privacy"
 msgstr ""
 
-#: jinja2/base.html:204
+#: jinja2/base.html:213
 msgid "Cookies"
 msgstr ""
 
-#: jinja2/base.html:205
+#: jinja2/base.html:214
 msgid "Contribute to the code"
 msgstr ""
 
@@ -317,12 +322,23 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_avatar_and_links.html:12
-#: kuma/users/jinja2/users/includes/user_avatar_and_links.html:16
+#: jinja2/includes/login.html:19 kuma/users/forms.py:68 kuma/users/models.py:146 kuma/users/jinja2/users/includes/user_title_info.html:81 kuma/users/jinja2/users/includes/user_title_info.html:85
 msgid "GitHub"
 msgstr ""
 
-#: jinja2/includes/login.html:28 kuma/users/jinja2/account/signup_closed.html:9
+#: jinja2/includes/login.html:24
+msgid "Sign in or create an account:"
+msgstr ""
+
+#: jinja2/includes/login.html:28
+msgid "Sign in:"
+msgstr ""
+
+#: jinja2/includes/login.html:28
+msgid "Why is Persona sign in only?"
+msgstr ""
+
+#: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
 msgstr ""
 
@@ -471,7 +487,7 @@ msgid "File"
 msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1911
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
 msgid "Title"
 msgstr ""
 
@@ -537,8 +553,8 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:74 kuma/wiki/jinja2/wiki/confirm_document_delete.html:15
-#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:69 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:122
+#: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
 msgstr ""
 
@@ -806,7 +822,9 @@ msgstr ""
 msgid "Revert"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:37 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:66 kuma/wiki/feeds.py:340
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:59 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:89
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:112 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:143 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:167
+#: kuma/wiki/feeds.py:340
 msgid "View Page"
 msgstr ""
 
@@ -814,17 +832,16 @@ msgstr ""
 msgid "Edit Page"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:41 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:70
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/users/jinja2/users/includes/user_revision_history_form.html:41 kuma/wiki/feeds.py:364
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:63 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:116
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:147 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:171 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/wiki/models.py:1864
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:8 kuma/wiki/models.py:1864
 msgid "Revision"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:9
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:9 kuma/users/jinja2/users/user_detail.html:43 kuma/users/jinja2/users/includes/user_revision_history_form.html:10
 #: kuma/wiki/jinja2/wiki/confirm_revision_revert.html:32 kuma/wiki/jinja2/wiki/revision.html:42
 msgid "Comment"
 msgstr ""
@@ -837,11 +854,11 @@ msgstr ""
 msgid "Toggle IPs"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:26
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:27
 msgid "new"
 msgstr ""
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:27
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:28
 msgid "deleted"
 msgstr ""
 
@@ -1355,7 +1372,7 @@ msgstr ""
 msgid "created"
 msgstr ""
 
-#: kuma/spam/models.py:27
+#: kuma/spam/models.py:27 kuma/users/jinja2/users/includes/user_revision_history_form.html:7
 msgid "Spam"
 msgstr ""
 
@@ -1431,23 +1448,23 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_avatar_and_links.html:7
+#: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:76
 msgid "Twitter"
 msgstr ""
 
-#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_avatar_and_links.html:21
+#: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:90
 msgid "Stack Overflow"
 msgstr ""
 
-#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_avatar_and_links.html:25
+#: kuma/users/forms.py:86 kuma/users/models.py:156 kuma/users/jinja2/users/includes/user_title_info.html:94
 msgid "LinkedIn"
 msgstr ""
 
-#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_avatar_and_links.html:29
+#: kuma/users/forms.py:95 kuma/users/models.py:141 kuma/users/jinja2/users/includes/user_title_info.html:98
 msgid "Mozillians"
 msgstr ""
 
-#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_avatar_and_links.html:33
+#: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:102
 msgid "Facebook"
 msgstr ""
 
@@ -1505,7 +1522,7 @@ msgstr ""
 msgid "IRC nickname"
 msgstr ""
 
-#: kuma/users/models.py:94 kuma/users/jinja2/users/includes/user_revision_history_form.html:10 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
+#: kuma/users/models.py:94 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
 msgstr ""
@@ -1568,21 +1585,21 @@ msgstr ""
 msgid "Take the next step to get involved on MDN!"
 msgstr ""
 
-#: kuma/users/views.py:268
+#: kuma/users/views.py:356
 msgid "Email address"
 msgstr ""
 
-#: kuma/users/views.py:327
+#: kuma/users/views.py:415
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr ""
 
-#: kuma/users/views.py:330
+#: kuma/users/views.py:418
 #, python-format
 msgid "%(email)s Unverified"
 msgstr ""
 
-#: kuma/users/views.py:333 kuma/users/jinja2/socialaccount/signup.html:135
+#: kuma/users/views.py:421 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr ""
 
@@ -1666,12 +1683,20 @@ msgstr ""
 msgid "Sign In"
 msgstr ""
 
-#: kuma/users/jinja2/account/login.html:11
+#: kuma/users/jinja2/account/login.html:13
 msgid "Please sign in"
 msgstr ""
 
-#: kuma/users/jinja2/account/login.html:13
-msgid "In order to contribute, you need to sign in to MDN. You can sign in using any of the services below. A MDN profile will be created for you if you don't already have one."
+#: kuma/users/jinja2/account/login.html:15
+msgid "All content on MDN is free and available without signing in."
+msgstr ""
+
+#: kuma/users/jinja2/account/login.html:19
+msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
+msgstr ""
+
+#: kuma/users/jinja2/account/login.html:31
+msgid "If you already have a MDN profile sign in:"
 msgstr ""
 
 #: kuma/users/jinja2/account/logout.html:10
@@ -1918,6 +1943,10 @@ msgid "Connect with GitHub"
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
+msgid "Create MDN profile with GitHub"
+msgstr ""
+
+#: kuma/users/jinja2/socialaccount/snippets/provider_list.html:33
 msgid "Sign in with GitHub"
 msgstr ""
 
@@ -1955,52 +1984,84 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
-msgid "Because %(user)s has already been banned, you may review and revert their revisions below."
+msgid "%(user)s has already been banned. You may review and revert their revisions below."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:57
-msgid "Revert Revisions"
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
+msgid "You cannot ban yourself for spam."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:59
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
+msgid "Submit Spam"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
 msgid "Ban User for Spam"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
-msgid "Ban User for Spam & Revert Revisions"
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
+msgid "Ban User for Spam & Submit Spam"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:65
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup.html:68
-msgid "User has not made any revisions in the past three days, and this user was already banned."
+#: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
+msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:20
-#, python-format
-msgid "<a href=\"%(url)s\">%(user)s</a> identified as a spammer."
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
+msgid "Summary"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:24
-msgid "The following revisions were reverted:"
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
+msgid "Actions Taken"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:27
-msgid "(Note: No revisions were actually reverted. This feature will be added in Phase 2.)"
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
+msgid "Banned:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
+msgid "Submitted to Akismet as spam:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:42
+msgid "The user did not have any revisions that were reported as spam."
 msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
-msgid "The user did not have any revisions that were reverted."
+msgid "Needs follow up"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:55
-msgid "Pages needing follow up:"
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:49
+msgid "New action by user:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:82
-msgid "The user did not have any revisions needing follow-up."
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:95 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:130
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:154 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:178
+msgid "None."
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:80
+msgid "Could not submit to Akismet:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:101
+msgid "No actions taken"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:102
+msgid "Already identified as spam:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133
+msgid "Not identified as spam:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
+msgid "Did not delete or revert:"
 msgstr ""
 
 #: kuma/users/jinja2/users/user_banned.html:2
@@ -2056,51 +2117,51 @@ msgstr ""
 msgid "Edit Your Profile"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:35
+#: kuma/users/jinja2/users/user_edit.html:36
 msgid "Change your avatar at"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:39
+#: kuma/users/jinja2/users/user_edit.html:40
 msgid "View profile"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:47
+#: kuma/users/jinja2/users/user_edit.html:48
 msgid "You're editing a different profile than your own. Please take care!"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:58
+#: kuma/users/jinja2/users/user_edit.html:59
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:61
+#: kuma/users/jinja2/users/user_edit.html:62
 msgid "Primary Email"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:62
+#: kuma/users/jinja2/users/user_edit.html:63
 msgid "Edit email"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:74
+#: kuma/users/jinja2/users/user_edit.html:75
 msgid "Interests (tags)"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:75
+#: kuma/users/jinja2/users/user_edit.html:76
 msgid "Separate tags with commas or spaces. Join multi-word tags with double quotes, like \"web standards\"."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:81
+#: kuma/users/jinja2/users/user_edit.html:82
 msgid "Areas of expertise"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:82
+#: kuma/users/jinja2/users/user_edit.html:83
 msgid "Add your interests first, then declare yourself an expert in selected topics."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:90
+#: kuma/users/jinja2/users/user_edit.html:91
 msgid "My Profiles"
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:95 kuma/users/jinja2/users/user_edit.html:112
+#: kuma/users/jinja2/users/user_edit.html:94 kuma/users/jinja2/users/user_edit.html:111
 msgid "Change"
 msgstr ""
 
@@ -2108,11 +2169,11 @@ msgstr ""
 msgid "Use your Persona account to sign in."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:120
+#: kuma/users/jinja2/users/user_edit.html:118
 msgid "Use your GitHub account to sign in."
 msgstr ""
 
-#: kuma/users/jinja2/users/user_edit.html:144 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
+#: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Publish"
 msgstr ""
 
@@ -2242,7 +2303,7 @@ msgstr ""
 msgid "Blog: %(blog_link)s"
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:60
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:72
 msgid "This user has not created any revisions in the past three days."
 msgstr ""
 
@@ -2266,7 +2327,7 @@ msgstr ""
 msgid "Areas of Expertise"
 msgstr ""
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:73
+#: kuma/users/jinja2/users/includes/user_title_info.html:107
 #, python-format
 msgid "Member since %(date_joined)s"
 msgstr ""
@@ -3716,27 +3777,27 @@ msgstr ""
 msgid "Document already exists. Note: You cannot revert a document that has been moved until you delete its redirect."
 msgstr ""
 
-#: kuma/wiki/views/document.py:608
+#: kuma/wiki/views/document.py:607
 #, python-format
 msgid "Redirected from %(url)s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:656
+#: kuma/wiki/views/document.py:655
 #, python-format
 msgid "I learned about %(title)s on MDN."
 msgstr ""
 
-#: kuma/wiki/views/document.py:726
+#: kuma/wiki/views/document.py:725
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:733
+#: kuma/wiki/views/document.py:732
 #, python-format
 msgid "Request parsing error: %s"
 msgstr ""
 
-#: kuma/wiki/views/document.py:753
+#: kuma/wiki/views/document.py:752
 msgid "ETag precondition failed"
 msgstr ""
 
