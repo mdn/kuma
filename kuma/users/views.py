@@ -245,7 +245,7 @@ def ban_user_and_cleanup_summary(request, user_id):
     revisions_already_spam = revisions_from_last_three_days.filter(
         id__in=request.POST.getlist('revision-already-spam')
     )
-    revisions_already_spam = [rev for rev in revisions_already_spam]
+    revisions_already_spam = list(revisions_already_spam)
     revisions_already_spam_by_distinct_doc = revision_by_distinct_doc(revisions_already_spam)
 
     revisions_already_spam_ids = [rev.id for rev in revisions_already_spam]

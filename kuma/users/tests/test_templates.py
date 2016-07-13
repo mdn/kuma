@@ -641,8 +641,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
     def test_no_revisions_posted(self):
         """If user has no revisions, it should be stated in summary template."""
-        # The expected text
-
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'user_id': self.testuser.id})
@@ -1315,11 +1313,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
     def test_multiple_revisions_are_spam(self):
         """
-        Test with a spam user who has made multiple revisions to a single document.
-        This document should be reverted to the last version that was created
-        by a non-spam user (self.admin).
-        The newest revision was created by a non-spam user,
-        so none of the revisions actually need to be reverted.
+        Test with a spam user who has made multiple revisions to a single
+        document.  This document should be reverted to the last version that was
+        created by a non-spam user (self.admin).
+
+        The original revision was created by the admin and then three more were
+        created by the spammer, with no addition revisions afterwards, so we
+        should wind up reverting to the original revision.
+
         """
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         self.create_revisions(
