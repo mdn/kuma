@@ -995,7 +995,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         mock_form.return_value = True
 
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
-        revs_self_doc = self.create_revisions(
+        self.create_revisions(
             num=3,
             document=self.document,
             creator=self.testuser)
