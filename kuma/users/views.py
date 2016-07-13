@@ -186,9 +186,14 @@ def ban_user_and_cleanup_summary(request, user_id):
 
         # If there is a current revision and the revision is not in the spam list,
         # to be reverted, do not revert any revisions
+        revision.document.refresh_from_db(fields=['current_revision'])
         if revision.document.current_revision not in revisions_to_mark_as_spam_and_revert:
             pass
         else:
+            # Loop through all previous revisions to find the oldest spam
+            # revision on a specific document from this request.
+            while revision.previous in revisions_to_mark_as_spam_and_revert:
+                revision = revision.previous
             # If this is a new revision on an existing document, revert it
             if revision.previous:
                 reverted = revert_document(request=request,
