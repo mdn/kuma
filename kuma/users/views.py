@@ -186,33 +186,36 @@ def ban_user_and_cleanup_summary(request, user_id):
 
         # If there is a current revision and the revision is not in the spam list,
         # to be reverted, do not revert any revisions
-        revision.document.refresh_from_db(fields=['current_revision'])
+        try:
+            revision.document.refresh_from_db(fields=['current_revision'])
+        except Document.DoesNotExist:
+            continue  # This document was previously deleted in this loop, continue
         if revision.document.current_revision not in revisions_to_mark_as_spam_and_revert:
-            pass
-        else:
-            # Loop through all previous revisions to find the oldest spam
-            # revision on a specific document from this request.
-            while revision.previous in revisions_to_mark_as_spam_and_revert:
-                revision = revision.previous
-            # If this is a new revision on an existing document, revert it
-            if revision.previous:
-                reverted = revert_document(request=request,
-                                           revision_id=revision.previous.id)
-                if reverted:
-                    revisions_reverted_list.append(revision)
-                else:
-                    # If the revert was unsuccessful, include this in the follow-up list
-                    revisions_not_reverted_list.append(revision)
+            continue  # This document has a more current revision, no need to revert
 
-            # If this is a new document/translation, delete it
+        # Loop through all previous revisions to find the oldest spam
+        # revision on a specific document from this request.
+        while revision.previous in revisions_to_mark_as_spam_and_revert:
+            revision = revision.previous
+        # If this is a new revision on an existing document, revert it
+        if revision.previous:
+            reverted = revert_document(request=request,
+                                       revision_id=revision.previous.id)
+            if reverted:
+                revisions_reverted_list.append(revision)
             else:
-                deleted = delete_document(request=request,
-                                          document=revision.document)
-                if deleted:
-                    revisions_deleted_list.append(revision)
-                else:
-                    # If the delete was unsuccessful, include this in the follow-up list
-                    revisions_not_deleted_list.append(revision)
+                # If the revert was unsuccessful, include this in the follow-up list
+                revisions_not_reverted_list.append(revision)
+
+        # If this is a new document/translation, delete it
+        else:
+            deleted = delete_document(request=request,
+                                      document=revision.document)
+            if deleted:
+                revisions_deleted_list.append(revision)
+            else:
+                # If the delete was unsuccessful, include this in the follow-up list
+                revisions_not_deleted_list.append(revision)
 
     # Find just the latest revision for each document
     submitted_to_akismet_by_distinct_doc = revision_by_distinct_doc(submitted_to_akismet)

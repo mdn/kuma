@@ -500,8 +500,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # Admin is the creator of this current revision
         eq_(new_document_b.current_revision.creator, self.admin)
         revisions_b = Revision.objects.filter(document=new_document_b)
-        # 7 revisions on B = 1 initial + 3 spam revisions + 3 new revert revisions
-        eq_(revisions_b.count(), 7)
+        # 5 total revisions on B = 1 initial + 3 spam revisions + 1 new reverted revision
+        eq_(revisions_b.count(), 5)
 
 #    TODO: Phase IV:
 #    def test_post_sends_email(self):
