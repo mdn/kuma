@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-12 07:37-0700\n"
-"PO-Revision-Date: 2016-07-12 16:20+0000\n"
+"PO-Revision-Date: 2016-07-13 08:37+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
 "Language: es\n"
@@ -2045,11 +2045,11 @@ msgstr "<a href=\"%(url)s\">%(user)s</a> ha sido bloqueado."
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr "%(user)s ya ha sido bloquedo. Puedes revisar y revertir sus revisiones más abajo."
+msgstr "%(user)s ya ha sido restringido. Puedes revisar y revertir sus revisiones más abajo."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
-msgstr ""
+msgstr "No puedes restringirte a ti mismo por spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
 msgid "Submit Spam"
@@ -2068,72 +2068,61 @@ msgid "Ban user for other reasons."
 msgstr "Restringir usuario por otras razones."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
-#, fuzzy
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr "El usuario no ha hecho ninguna revision en los ultimos tres días, y este usuario ya ha sido restringido."
+msgstr "El usuario no ha hecho ninguna revisión en los últimos tres días, y este usuario ya ha sido restringido."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
-#, fuzzy
 msgid "Summary"
-msgstr "Editar resumen"
+msgstr "Resumen"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
-#, fuzzy
 msgid "Actions Taken"
-msgstr "¡Acción!"
+msgstr "Acciones tomadas"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
-#, fuzzy
 msgid "Banned:"
-msgstr "Entrada denegada"
+msgstr "Restringido:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
-#, fuzzy
 msgid "Submitted to Akismet as spam:"
-msgstr "Información enviada a Akismet"
+msgstr "Enviado a Akismet como spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:42
-#, fuzzy
 msgid "The user did not have any revisions that were reported as spam."
-msgstr "El usuario no tiene ninguna revisión que haya sido revertida."
+msgstr "El usuario no tuvo ninguna revisión registrada como spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
-#, fuzzy
 msgid "Needs follow up"
-msgstr "Páginas que necesitan seguimiento:"
+msgstr "Necesita seguimiento"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:49
 msgid "New action by user:"
-msgstr ""
+msgstr "Nueva acción del usuario:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:95 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:130
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:154 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:178
-#, fuzzy
 msgid "None."
-msgstr "Ninguno"
+msgstr "Ninguna."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:80
-#, fuzzy
 msgid "Could not submit to Akismet:"
-msgstr "Información enviada a Akismet"
+msgstr "No se pudo enviar a Akismet"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:101
-#, fuzzy
 msgid "No actions taken"
-msgstr "clave de activación"
+msgstr "No se realizó ninguna acción"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:102
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "Ya identificada como spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133
-#, fuzzy
 msgid "Not identified as spam:"
-msgstr "Confirmado como spam"
+msgstr "No identificado como spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
 msgid "Did not delete or revert:"
-msgstr ""
+msgstr "No se eliminó ni revirtió:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
