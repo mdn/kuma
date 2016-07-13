@@ -14,6 +14,9 @@ from django.conf import settings
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
+from django.db import IntegrityError
+from django.http import Http404
+from django.test import RequestFactory
 from pyquery import PyQuery as pq
 from waffle.models import Flag
 
@@ -21,7 +24,8 @@ from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
-from kuma.wiki.models import Document, Revision, RevisionAkismetSubmission
+from kuma.wiki.models import (Document, Revision, RevisionAkismetSubmission,
+                              DocumentDeletionLog)
 from kuma.wiki.tests import document as create_document
 
 
@@ -29,6 +33,7 @@ from . import SampleRevisionsMixin, UserTestCase, email, user
 from ..models import UserBan
 from ..providers.github.provider import KumaGitHubProvider
 from ..signup import SignupForm
+from ..views import delete_document, revert_document
 
 
 TESTUSER_PASSWORD = 'testpass'
@@ -248,6 +253,58 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         mock_requests.post(SPAM_URL, content=Akismet.submission_success)
         return mock_requests
 
+    def test_delete_document(self):
+        """
+        A given document can be deleted, and will create a corresponding DocumentDeletionLog.
+        """
+        factory = RequestFactory()
+        request = factory.get(self.ban_testuser_url)
+        request.user = self.admin
+
+        # Trying to delete a document that is None will fail without error.
+        success = delete_document(request, None)
+        self.assertFalse(success)
+
+        # Calling on a real document deletes the document and creates the log object
+        self.assertFalse(DocumentDeletionLog.objects.exists())
+        success = delete_document(request, self.document)
+        self.assertTrue(success)
+        self.assertFalse(Document.objects.filter(id=self.document.id).exists())
+        self.assertTrue(DocumentDeletionLog.objects.exists())
+
+    def test_revert_document(self):
+        factory = RequestFactory()
+        request = factory.get(self.ban_testuser_url)
+        request.user = self.admin
+
+        # Create a spam revision on top of the original good rev.
+        revisions_created = self.create_revisions(
+            num=1,
+            document=self.document,
+            creator=self.testuser)
+        revision_id = revisions_created[0].id
+
+        # Reverting a non-existent rev raises a 404
+        with self.assertRaises(Http404):
+            revert_document(request, revision_id + 1)
+
+        # Reverting an existing rev succeeds
+        success = revert_document(request, revision_id)
+        self.assertTrue(success)
+        self.document.refresh_from_db(fields=['current_revision'])
+        self.assertNotEqual(revision_id, self.document.current_revision.id)
+
+        # If an IntegrityError is raised when we try to revert, it fails without error.
+        revision_id = self.document.current_revision.id
+        with mock.patch('kuma.wiki.models.datetime') as datetime_mock:
+            # Just get any old thing inside the call to raise an IntegrityError
+            datetime_mock.now.side_effect = IntegrityError()
+
+            success = revert_document(request, revision_id)
+        self.assertFalse(success)
+        self.document.refresh_from_db(fields=['current_revision'])
+        self.assertEqual(revision_id, self.document.current_revision.id)
+
     def test_ban_nonexistent_user(self):
         """POSTs to ban_user_and_cleanup for nonexistent user return 404."""
         self.testuser.delete()
@@ -419,10 +476,14 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # Document should be reverted with a new revision by admin.
         new_document = create_document(save=True)
         self.create_revisions(num=1, document=new_document, creator=self.admin)
+        original_content = new_document.current_revision.content
         spam_revisions = self.create_revisions(
             num=3,
             document=new_document,
             creator=self.testuser)
+        for rev in spam_revisions:
+            rev.content = "Spam!"
+            rev.save()
 
         # Before we send in the spam,
         # last spam_revisions[] should be the current revision
@@ -447,6 +508,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(new_document.current_revision.id, latest_revision.id)
         # Admin is the creator of this current revision
         eq_(new_document.current_revision.creator, self.admin)
+        # The new revision's content is the same as the original's
+        eq_(new_document.current_revision.content, original_content)
 
     def test_post_one_reverts_one_does_not_revert(self):
         """POSTing to ban_user_and_cleanup url with revisions to 2 documents."""
