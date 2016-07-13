@@ -759,7 +759,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
     @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
     def test_revisions_posted_same_doc(self, mock_form):
-        """Only 1 revision per document should be shown on the summary page."""
+        """
+        Only 1 revision per document should be shown on the summary page.  All
+        revisions here are spam except for the original, so this document will
+        be reverted.
+        """
         # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
         mock_form.return_value = True
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
@@ -784,7 +788,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
         # TODO: Add in Phase IV
-        # revisions_emailed= page.find('#revisions-emailed li')
+        # revisions_emailed = page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), 1)
         eq_(len(revisions_reverted), 1)
@@ -946,7 +950,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
                           kwargs={'user_id': self.testuser.id})
         full_ban_url = self.client.get(ban_url)['Location']
 
-        revisions_created_ids = [rev.id for rev in revisions_created_self_document] + [rev.id for rev in revisions_created_new_document]
+        revisions_created_ids = [
+            rev.id for rev in revisions_created_self_document
+        ] + [
+            rev.id for rev in revisions_created_new_document
+        ]
         data = {'revision-already-spam': revisions_created_ids}
         resp = self.client.post(full_ban_url, data=data)
         eq_(200, resp.status_code)
@@ -1344,8 +1352,11 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         revisions_needing_follow_up = page.find('#manual-revert-needed li')
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
+        revisions_reverted = page.find('#revisions-reverted li')
 
-        # Because no revisions needed to be reverted, none need follow up
+        # Only one set of reverted revisions
+        eq_(len(revisions_reverted), 1)
+        # Because no additional revisions to be reverted are left over, none need following up
         eq_(len(revisions_needing_follow_up), 0)
         # Only one document is listed on the reported as spam list (distinct document)
         eq_(len(revisions_reported_as_spam), 1)
