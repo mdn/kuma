@@ -995,7 +995,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         mock_form.return_value = True
 
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
-        revs_doc_1 = self.create_revisions(
+        revs_self_doc = self.create_revisions(
             num=3,
             document=self.document,
             creator=self.testuser)
@@ -1026,6 +1026,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # POST no revisions from self.document, the 1st from doc1,
         # the 1st and 2nd revisions from doc2, and all revisions from doc 3
+        # doc 1 and doc 2 should have no action (newest revision is unchecked)
+        # doc 3 should be deleted
         posted_ids = [
             revs_doc_1[0].id,
             revs_doc_2[0].id, revs_doc_2[1].id,
@@ -1049,7 +1051,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         for item in revisions_reported_as_spam:
             # Verify that the revision title matches what we're looking for
             ok_(item.text_content().strip() in [revs_doc_1[0].title, revs_doc_2[1].title, revs_doc_3[2].title])
-        eq_(len(revisions_reverted), 1)
+        eq_(len(revisions_reverted), 0)
         eq_(len(revisions_deleted), 1)
         # TODO: Add in Phase IV
         # eq_(len(revisions_emailed), 1)
