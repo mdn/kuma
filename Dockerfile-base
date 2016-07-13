@@ -1,0 +1,41 @@
+FROM quay.io/deis/base:0.3.0
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# disable this when preparing for Django upgrade
+ENV PYTHONWARNINGS=ignore
+
+WORKDIR /app
+EXPOSE 8000
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python2.7 libpython2.7 python-dev \
+    python-pip python-setuptools gettext build-essential \
+    nodejs npm \
+    libtidy-0.99-0 libtidy-dev \
+    libxml2-dev libxslt1.1 libxslt1-dev \
+    libffi-dev \
+    libjpeg-dev \
+    libmagic-dev \
+    libmysqlclient-dev \
+    mysql-client  # Only for local dev.
+RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+
+RUN npm install -g \
+    fibers@1.0.13 \
+    cssmin@0.4.3 \
+    csslint@0.10.0 \
+    jshint@2.7.0 \
+    stylus@0.49.2 \
+    uglify-js@2.4.13
+ENV PIPELINE_CSSMIN_BINARY=/usr/local/bin/cssmin
+ENV PIPELINE_UGLIFYJS_BINARY=/usr/local/bin/uglifyjs
+
+COPY ./requirements /app/requirements
+RUN pip install --no-cache-dir -r requirements/local.txt
+
+ENV WEB_CONCURRENCY=4
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout=120", "kuma.wsgi:application"]
+
+ENV PROD_DETAILS_DIR=/app/product_details_json
