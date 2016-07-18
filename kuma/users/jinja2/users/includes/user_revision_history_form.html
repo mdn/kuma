@@ -54,7 +54,13 @@
                                 {% include "wiki/includes/revision_diff_table.html" %}
                               </div>
                             {% endwith %}
-                         {% endif %}
+                        {% else %}
+                            {% with revision_from=revision, revision_to=revision %}
+                              <div class="dashboard-compare">
+                                {% include "wiki/includes/revision_diff_table.html" %}
+                              </div>
+                            {% endwith %}
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>
