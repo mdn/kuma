@@ -43,7 +43,7 @@
   {% include "users/includes/user_revision_history_form.html" %}
   <p>
     {% if user == detail_user %}
-      <p>{{ _('You cannot ban yourself for spam.') }}</p>
+      {{ _('You cannot ban yourself for spam.') }}
     {% elif not user_banned or revisions_not_spam %}
       <button type="submit" class="button negative ban-link">
         {% if user_banned and revisions_not_spam %}

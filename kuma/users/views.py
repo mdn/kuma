@@ -232,7 +232,7 @@ def ban_user_and_cleanup_summary(request, user_id):
     }
 
     """ The "Needs followup" section """
-    # TODO: Phase IV: If user made actions while reviewer was banning them
+    # TODO: Phase V: If user made actions while reviewer was banning them
     new_action_by_user = []
     needs_follow_up = {
         'manual_revert': new_action_by_user,
@@ -281,7 +281,8 @@ def revision_by_distinct_doc(list_of_revisions):
                 latest_rev=Max('revisions')
             ).values_list('latest_rev', flat=True)
         )
-        list_of_revisions_distinct_doc = [rev for rev in list_of_revisions if rev.id in list_of_revisions_distinct_doc]
+        list_of_revisions_distinct_doc = [rev for rev in list_of_revisions
+                                          if rev.id in list_of_revisions_distinct_doc]
     else:
         list_of_revisions_distinct_doc = []
 
@@ -302,7 +303,7 @@ def revert_document(request, revision_id):
     try:
         new_revision = document.revert(revision, request.user, comment)
         # schedule a rendering of the new revision if it really was saved
-        if new_revision.pk != old_revision_pk:
+        if new_revision.pk != old_revision_pk:  # pragma: no branch
             document.schedule_rendering('max-age=0')
     except IntegrityError:
         return False

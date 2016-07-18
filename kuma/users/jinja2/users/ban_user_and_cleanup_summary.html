@@ -66,9 +66,10 @@
         <ul>
           {% for revision in actions_taken.revisions_reverted_list %}
             <li>
-              <a href="{{ revision.get_absolute_url() }}">
+              <a href="{{ revision.document.get_absolute_url() }}">
                 {{ revision.title }}
               </a>
+              [<a href="{{ revision.get_absolute_url() }}">{{ revision.pk }}</a>]
             </li>
           {% endfor %}
         </ul>
@@ -108,7 +109,7 @@
             {% endfor %}
           </ul>
         {% else %}
-          <ul>{{ _('None.') }}</ul>
+          {{ _('None.') }}
         {% endif %}
       </div><!-- /#new-actions-by-user -->
 
