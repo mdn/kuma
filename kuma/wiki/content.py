@@ -156,6 +156,8 @@ class Extractor(object):
             if src is not None:
                 # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
                 src = src.replace(u'\xa0', u' ')
+                # Bug 1284781: &nbsp; is incorrectly parsed on embed sample
+                src = src.replace(u'&nbsp;', u' ')
             if src:
                 data[part] = src
 

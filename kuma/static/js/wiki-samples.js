@@ -55,6 +55,8 @@
     }
 
     function openSample(sampleCodeHost, section, title, htmlCode, cssCode, jsCode) {
+        // replace &nbsp; in CSS Samples to fix bug 1284781
+        var cssCleanCode = cssCode.replace(/\xA0/g, " ");
         //track the click and sample code host as event
         mdn.analytics.trackEvent({
             category: 'Samples',
@@ -65,9 +67,9 @@
         if(win.ga) ga('set', 'dimension8', 'Yes');
 
         if(sampleCodeHost === 'jsfiddle') {
-            openJSFiddle(title, htmlCode, cssCode, jsCode);
+            openJSFiddle(title, htmlCode, cssCleanCode, jsCode);
         } else if(sampleCodeHost === 'codepen') {
-            openCodepen(title, htmlCode, cssCode, jsCode);
+            openCodepen(title, htmlCode, cssCleanCode, jsCode);
         }
     }
 

@@ -684,6 +684,26 @@ class ContentSectionToolTests(UserTestCase):
         result = rev.document.extract.code_sample('bug819999')
         ok_(result['css'].find(u'\xa0') == -1)
 
+    def test_bug1284781(self):
+        """
+        Non-breaking spaces are turned to normal spaces in code sample
+        extraction.
+        """
+        rev = revision(is_approved=True, save=True, content="""
+            <h2 id="bug1284781">Bug 1284781</h2>
+            <pre class="brush: css">
+            .widget select,
+            .no-widget .select {
+            &nbsp; position : absolute;
+            &nbsp; left&nbsp;&nbsp;&nbsp;&nbsp; : -5000em;
+            &nbsp; height&nbsp;&nbsp; : 0;
+            &nbsp; overflow : hidden;
+            }
+            </pre>
+        """)
+        result = rev.document.extract.code_sample('bug1284781')
+        ok_(result['css'].find(u'&nbsp;') == -1)
+
     def test_bug1173170(self):
         """
         Make sure the colons in sample ids doesn't trip up the code
