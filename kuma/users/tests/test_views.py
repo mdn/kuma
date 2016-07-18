@@ -60,7 +60,7 @@ class BanTestCase(UserTestCase):
         self.client.login(username='testuser',
                           password='testpass')
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': admin.id})
+                          kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
         eq_(302, resp.status_code)
         ok_(str(settings.LOGIN_URL) in resp['Location'])
@@ -70,7 +70,7 @@ class BanTestCase(UserTestCase):
         self.client.login(username='admin',
                           password='testpass')
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
 
@@ -82,7 +82,7 @@ class BanTestCase(UserTestCase):
 
         data = {'reason': 'Banned by unit test.'}
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
 
         resp = self.client.post(ban_url, data)
         eq_(302, resp.status_code)
@@ -102,15 +102,15 @@ class BanTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        nonexistent_user_id = self.user_model.objects.last().id + 1
+        nonexistent_username = 'foo'
         data = {'reason': 'Banned by unit test.'}
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': nonexistent_user_id})
+                          kwargs={'username': nonexistent_username})
 
         resp = self.client.post(ban_url, data)
         eq_(404, resp.status_code)
 
-        bans = UserBan.objects.filter(user__id=nonexistent_user_id,
+        bans = UserBan.objects.filter(user__username=nonexistent_username,
                                       by=admin,
                                       reason='Banned by unit test.')
         eq_(bans.count(), 0)
@@ -123,7 +123,7 @@ class BanTestCase(UserTestCase):
         self.client.login(username='admin', password='testpass')
 
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
 
         # POST without data kwargs
         resp = self.client.post(ban_url)
@@ -178,7 +178,7 @@ class BanTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
@@ -205,7 +205,7 @@ class BanAndCleanupTestCase(UserTestCase):
         self.client.login(username='testuser',
                           password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': admin.id})
+                          kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
         eq_(302, resp.status_code)
         ok_(str(settings.LOGIN_URL) in resp['Location'])
@@ -215,7 +215,7 @@ class BanAndCleanupTestCase(UserTestCase):
         self.client.login(username='admin',
                           password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
 
@@ -227,7 +227,7 @@ class BanAndCleanupTestCase(UserTestCase):
         self.client.login(username='admin',
                           password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
         testuser.delete()
         resp = self.client.get(ban_url)
         eq_(404, resp.status_code)
@@ -241,9 +241,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         super(BanUserAndCleanupSummaryTestCase, self).setUp()
 
         self.ban_testuser_url = reverse('users.ban_user_and_cleanup_summary',
-                                        kwargs={'user_id': self.testuser.id})
+                                        kwargs={'username': self.testuser.username})
         self.ban_testuser2_url = reverse('users.ban_user_and_cleanup_summary',
-                                         kwargs={'user_id': self.testuser2.id})
+                                         kwargs={'username': self.testuser2.username})
         self.client.login(username='admin', password='testpass')
 
     def enable_akismet_and_mock_requests(self, mock_requests):

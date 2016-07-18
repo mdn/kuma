@@ -357,7 +357,7 @@ class BanTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
@@ -380,7 +380,7 @@ class BanTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
@@ -401,7 +401,7 @@ class BanTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
@@ -427,7 +427,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
 
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
@@ -449,7 +449,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         """If the user has no revisions, it should be stated in the template."""
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
 
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
@@ -476,7 +476,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # button on the form should read "Ban User for Spam & Submit Spam"
         # and there should be a link to ban a user for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
 
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
@@ -502,7 +502,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # the button on the form should read "Ban User for Spam". There should
         # be no link to ban for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
         page = pq(resp.content)
@@ -530,7 +530,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
             )
 
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': self.testuser2.id})
+                          kwargs={'username': self.testuser2.username})
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
         page = pq(resp.content)
@@ -563,7 +563,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # button on the form should read "Submit Spam". There should
         # be no link to ban for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
 
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
@@ -593,7 +593,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # there should be no button on the form and no link to
         # ban for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': self.testuser2.id})
+                          kwargs={'username': self.testuser2.username})
 
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
@@ -622,7 +622,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
             )
 
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': self.testuser2.id})
+                          kwargs={'username': self.testuser2.username})
         resp = self.client.get(ban_url, follow=True)
         eq_(200, resp.status_code)
         page = pq(resp.content)
@@ -643,7 +643,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         """If user has no revisions, it should be stated in summary template."""
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         resp = self.client.post(full_ban_url)
@@ -709,7 +709,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-id': [rev.id for rev in revisions_created]}
@@ -774,7 +774,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-id': [rev.id for rev in revisions_created]}
@@ -829,7 +829,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-id': [rev.id for rev in revisions_created]}
@@ -887,7 +887,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-id': []}
@@ -947,7 +947,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         revisions_created_ids = [
@@ -1027,7 +1027,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         # POST no revisions from self.document, the 1st from doc1,
@@ -1113,7 +1113,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-id': [rev_doc1.id], 'revision-already-spam': [rev_doc2.id]}
@@ -1181,7 +1181,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-already-spam': [revisions_already_spam[0].id]}
@@ -1251,7 +1251,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-already-spam': [testuser_revisions[0].id]}
@@ -1303,7 +1303,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-id': [rev.id for rev in spam_revisions]}
@@ -1342,7 +1342,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
-                          kwargs={'user_id': self.testuser.id})
+                          kwargs={'username': self.testuser.username})
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-id': [rev.id for rev in spam_revisions]}

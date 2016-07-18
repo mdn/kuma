@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.db import IntegrityError, transaction
 from django.db.models import Max, Q
-from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
+from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext_lazy as _
@@ -51,15 +51,13 @@ INTEREST_SUGGESTIONS = [
 
 
 @permission_required('users.add_userban')
-def ban_user(request, user_id):
+def ban_user(request, username):
     """
     Ban a user.
     """
     User = get_user_model()
-    try:
-        user = User.objects.get(pk=user_id)
-    except User.DoesNotExist:
-        raise Http404
+    user = get_object_or_404(User, username=username)
+
     if request.method == 'POST':
         form = UserBanForm(data=request.POST)
         if form.is_valid():
@@ -89,15 +87,12 @@ def ban_user(request, user_id):
 
 
 @permission_required('users.add_userban')
-def ban_user_and_cleanup(request, user_id):
+def ban_user_and_cleanup(request, username):
     """
     A page to ban a user for the reason of "Spam" and mark the user's revisions
     and page creations as spam, reverting as many of them as possible.
     """
-    try:
-        user = User.objects.get(pk=user_id)
-    except User.DoesNotExist:
-        raise Http404
+    user = get_object_or_404(User, username=username)
 
     # Is this user already banned?
     user_ban = UserBan.objects.filter(user=user, is_active=True)
@@ -120,7 +115,7 @@ def ban_user_and_cleanup(request, user_id):
 
 @require_POST
 @permission_required('users.add_userban')
-def ban_user_and_cleanup_summary(request, user_id):
+def ban_user_and_cleanup_summary(request, username):
     """
     A summary page of actions taken when banning a user and reverting revisions
     This method takes all the revisions from the last three days,
@@ -128,10 +123,7 @@ def ban_user_and_cleanup_summary(request, user_id):
     and submitted to Akismet, and also a list of
     revisions where no action was taken (revisions needing follow up).
     """
-    try:
-        user = User.objects.get(pk=user_id)
-    except User.DoesNotExist:
-        raise Http404
+    user = get_object_or_404(User, username=username)
 
     # Is this user already banned?
     user_ban = UserBan.objects.filter(user=user, is_active=True)

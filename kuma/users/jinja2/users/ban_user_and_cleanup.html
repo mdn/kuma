@@ -38,7 +38,7 @@
   </div>
 </section><!-- /#user-head -->
 
-<form id="ban-and-cleanup-form" action="{{ url('users.ban_user_and_cleanup_summary', detail_user.id) }}" method="POST">
+<form id="ban-and-cleanup-form" action="{{ url('users.ban_user_and_cleanup_summary', detail_user.username) }}" method="POST">
   {% csrf_token %}
   {% include "users/includes/user_revision_history_form.html" %}
   <p>
@@ -55,7 +55,7 @@
         {% endif %}
       </button>
       {% if not user_banned and revisions_not_spam %}
-        <a id="ban-for-other-reasons" href="{{ url('users.ban_user',detail_user.id) }}">{{ _('Ban user for other reasons.') }}</a>
+        <a id="ban-for-other-reasons" href="{{ url('users.ban_user',detail_user.username) }}">{{ _('Ban user for other reasons.') }}</a>
       {% endif %}
     {% else %}
       {{ _('User has not made any revisions to be reverted in the past three days, and this user was already banned.') }}
