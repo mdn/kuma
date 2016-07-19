@@ -159,6 +159,11 @@ def ban_user_and_cleanup_summary(request, username):
     revisions_not_reverted_list = []
     revisions_deleted_list = []
     revisions_not_deleted_list = []
+    latest_is_not_spam = [
+        rev for rev in revision_by_distinct_doc(revisions_to_mark_as_spam_and_revert)
+        if rev.document.current_revision != rev
+    ]
+
     for revision in revisions_to_mark_as_spam_and_revert:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
         akismet_submission_data = {'revision': revision.id}
@@ -246,6 +251,7 @@ def ban_user_and_cleanup_summary(request, username):
     identified_as_not_spam_by_distinct_doc = revision_by_distinct_doc(identified_as_not_spam)
 
     no_actions_taken = {
+        'latest_revision_is_not_spam': latest_is_not_spam,
         'revisions_already_identified_as_spam': revisions_already_spam_by_distinct_doc,
         'revisions_identified_as_not_spam': identified_as_not_spam_by_distinct_doc
     }
