@@ -113,6 +113,27 @@
         {% endif %}
       </div><!-- /#new-actions-by-user -->
 
+      <h5><strong>{{ _('Revisions skipped due to newer non-spam revision:') }}</strong></h5>
+      <div id='skipped-revisions'>
+        {% if needs_follow_up.skipped_revisions %}
+          <ul>
+          {% for revision in needs_follow_up.skipped_revisions %}
+            <li>
+              <a href="{{ revision.get_absolute_url() }}">
+                {{ revision.document.title }}
+              </a>
+              <a href="{{ revision.document.get_absolute_url() }}" class="button">
+                {{ _('View Page') }}
+                <i aria-hidden="true" class="icon-circle-arrow-right"></i>
+              </a>
+            </li>
+          {% endfor %}
+          </ul>
+        {% else %}
+          {{ _('None.') }}
+        {% endif %}
+      </div><!-- /#skipped-revisions -->
+
       <h5><strong>{{ _('Could not submit to Akismet:') }}</strong></h5>
       <div id='not-submitted-to-akismet'>
         {% if needs_follow_up.not_submitted_to_akismet %}
@@ -128,6 +149,7 @@
               </a>
             </li>
           {% endfor %}
+          </ul>
         {% else %}
           {{ _('None.') }}
         {% endif %}
@@ -147,7 +169,6 @@
               </a>
             </li>
           {% endfor %}
-          </ul>
         {% else %}
           {{ _('None.') }}
         {% endif %}

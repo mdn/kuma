@@ -163,6 +163,7 @@ def ban_user_and_cleanup_summary(request, username):
         rev for rev in revision_by_distinct_doc(revisions_to_mark_as_spam_and_revert)
         if rev.document.current_revision != rev
     ]
+    previous_good_rev = {}
 
     for revision in revisions_to_mark_as_spam_and_revert:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
@@ -188,6 +189,9 @@ def ban_user_and_cleanup_summary(request, username):
         except Document.DoesNotExist:
             continue  # This document was previously deleted in this loop, continue
         if revision.document.current_revision not in revisions_to_mark_as_spam_and_revert:
+            if revision.document_id not in previous_good_rev:
+                previous_good_rev[revision.document_id] = revision.document.current_revision
+
             continue  # This document has a more current revision, no need to revert
 
         # Loop through all previous revisions to find the oldest spam
@@ -196,6 +200,8 @@ def ban_user_and_cleanup_summary(request, username):
             revision = revision.previous
         # If this is a new revision on an existing document, revert it
         if revision.previous:
+            previous_good_rev[revision.document_id] = revision.previous
+
             reverted = revert_document(request=request,
                                        revision_id=revision.previous.id)
             if reverted:
@@ -231,8 +237,14 @@ def ban_user_and_cleanup_summary(request, username):
     """ The "Needs followup" section """
     # TODO: Phase V: If user made actions while reviewer was banning them
     new_action_by_user = []
+    skipped_revisions = [rev for rev in revisions_to_mark_as_spam_and_revert
+                         if rev.document_id in previous_good_rev and
+                         rev.id < previous_good_rev[rev.document_id].id]
+    skipped_revisions = revision_by_distinct_doc(skipped_revisions)
+
     needs_follow_up = {
         'manual_revert': new_action_by_user,
+        'skipped_revisions': skipped_revisions,
         'not_submitted_to_akismet': not_submitted_to_akismet_by_distinct_doc,
         'not_reverted_list': revisions_not_reverted_by_distinct_doc,
         'not_deleted_list': revisions_not_deleted_by_distinct_doc
