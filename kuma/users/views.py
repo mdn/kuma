@@ -14,7 +14,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.db import IntegrityError, transaction
-from django.db.models import Max, Q
+from django.db.models import Q
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
@@ -147,7 +147,7 @@ def ban_user_and_cleanup_summary(request, username):
     # The revisions to be submitted to Akismet and reverted,
     # these must be sorted descending so that they are reverted accordingly
     revisions_to_mark_as_spam_and_revert = revisions_from_last_three_days.filter(
-        id__in=request.POST.getlist('revision-id')).order_by('-id')    # Submit revisions to Akismet as spam
+        id__in=request.POST.getlist('revision-id')).order_by('-id')
 
     # 1. Submit revisions to Akismet as spam
     # 2. If this is the most recent revision for a document:
@@ -265,20 +265,13 @@ def ban_user_and_cleanup_summary(request, username):
 
 
 def revision_by_distinct_doc(list_of_revisions):
-    if len(list_of_revisions):
-        list_of_revisions_distinct_doc = list(
-            Document.admin_objects.filter(
-                revisions__in=list_of_revisions
-            ).annotate(
-                latest_rev=Max('revisions')
-            ).values_list('latest_rev', flat=True)
-        )
-        list_of_revisions_distinct_doc = [rev for rev in list_of_revisions
-                                          if rev.id in list_of_revisions_distinct_doc]
-    else:
-        list_of_revisions_distinct_doc = []
+    documents = {}
+    for rev in list_of_revisions:
+        documents.setdefault(rev.document_id, rev)
+        if documents[rev.document_id].id < rev.id:
+            documents[rev.document_id] = rev
 
-    return list_of_revisions_distinct_doc
+    return [documents[doc_id] for doc_id in sorted(documents)]
 
 
 @permission_required('users.add_userban')
