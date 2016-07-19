@@ -240,24 +240,21 @@ def ban_user_and_cleanup_summary(request, username):
     revisions_already_spam = list(revisions_already_spam)
     revisions_already_spam_by_distinct_doc = revision_by_distinct_doc(revisions_already_spam)
 
-    revisions_already_spam_ids = [rev.id for rev in revisions_already_spam]
-    not_identified_as_spam = revisions_from_last_three_days.exclude(
-        id__in=revisions_already_spam_ids).exclude(
-        id__in=revisions_to_mark_as_spam_and_revert.values_list('id', flat=True))
-    not_identified_as_spam = [rev for rev in not_identified_as_spam]
-    not_identified_as_spam_by_distinct_doc = revision_by_distinct_doc(not_identified_as_spam)
+    identified_as_not_spam = [rev for rev in revisions_from_last_three_days
+                              if rev not in revisions_already_spam and
+                              rev not in revisions_to_mark_as_spam_and_revert]
+    identified_as_not_spam_by_distinct_doc = revision_by_distinct_doc(identified_as_not_spam)
 
     no_actions_taken = {
         'revisions_already_identified_as_spam': revisions_already_spam_by_distinct_doc,
-        'revisions_not_identified_as_spam': not_identified_as_spam_by_distinct_doc
+        'revisions_identified_as_not_spam': identified_as_not_spam_by_distinct_doc
     }
 
     context = {'detail_user': user,
                'form': UserBanForm(),
                'actions_taken': actions_taken,
                'needs_follow_up': needs_follow_up,
-               'no_actions_taken': no_actions_taken
-               }
+               'no_actions_taken': no_actions_taken}
 
     return render(request,
                   'users/ban_user_and_cleanup_summary.html',

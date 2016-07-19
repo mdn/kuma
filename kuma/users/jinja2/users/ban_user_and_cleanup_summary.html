@@ -116,6 +116,7 @@
       <h5><strong>{{ _('Could not submit to Akismet:') }}</strong></h5>
       <div id='not-submitted-to-akismet'>
         {% if needs_follow_up.not_submitted_to_akismet %}
+          <ul>
           {% for revision in needs_follow_up.not_submitted_to_akismet %}
             <li>
               <a href="{{ revision.get_absolute_url() }}">
@@ -146,6 +147,7 @@
               </a>
             </li>
           {% endfor %}
+          </ul>
         {% else %}
           {{ _('None.') }}
         {% endif %}
@@ -204,11 +206,11 @@
           {{ _('None.') }}
         {% endif%}
     </div><!-- /#already-spam -->
-    <h5><strong>{{ _('Not identified as spam:') }}</strong></h5>
+    <h5><strong>{{ _('Identified as not spam:') }}</strong></h5>
     <div id='not-spam'>
-      {% if no_actions_taken.revisions_not_identified_as_spam %}
+      {% if no_actions_taken.revisions_identified_as_not_spam %}
         <ul>
-          {% for revision in no_actions_taken.revisions_not_identified_as_spam %}
+          {% for revision in no_actions_taken.revisions_identified_as_not_spam %}
             <li>
               <a href="{{ revision.get_absolute_url() }}">
                 {{ revision.document.title }}
