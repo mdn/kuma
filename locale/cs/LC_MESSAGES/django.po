@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-12 07:37-0700\n"
-"PO-Revision-Date: 2016-07-17 10:18+0000\n"
+"PO-Revision-Date: 2016-07-18 23:31+0000\n"
 "Last-Translator: Tomáš Zelina <zelitomas@gmail.com>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
 "Language: cs\n"
@@ -2057,7 +2057,7 @@ msgstr "Odesláno do Akismetu jako spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:42
 msgid "The user did not have any revisions that were reported as spam."
-msgstr ""
+msgstr "Uživatel nemá žádné revize označené jako spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 msgid "Needs follow up"
@@ -2078,7 +2078,7 @@ msgstr "Nelze odeslat do Akismetu:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:101
 msgid "No actions taken"
-msgstr ""
+msgstr "Nebyla přijata žádná opatření"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:102
 msgid "Already identified as spam:"
@@ -2155,11 +2155,13 @@ msgstr "Zobrazit profil"
 
 #: kuma/users/jinja2/users/user_edit.html:48
 msgid "You're editing a different profile than your own. Please take care!"
-msgstr ""
+msgstr "Upravujete profil, který nevlastníte. Buďte prosím opatrní!"
 
 #: kuma/users/jinja2/users/user_edit.html:59
 msgid "We'd love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things."
 msgstr ""
+"Rádi bychom obdrželi vaši zpětnou vazbu na změny této stránky! Beta testeři získají přístup k novým funkcím dříve, než ostatní, a občas jim zašleme e-mail s žádostí o pomoc s testováním určitých "
+"věcí."
 
 #: kuma/users/jinja2/users/user_edit.html:62
 msgid "Primary Email"
@@ -2195,11 +2197,11 @@ msgstr "Změnit"
 
 #: kuma/users/jinja2/users/user_edit.html:101
 msgid "Use your Persona account to sign in."
-msgstr ""
+msgstr "K přihlášení použijte svůj účet Persona."
 
 #: kuma/users/jinja2/users/user_edit.html:118
 msgid "Use your GitHub account to sign in."
-msgstr ""
+msgstr "K přihlášení použijte svůj účet na GitHubu."
 
 #: kuma/users/jinja2/users/user_edit.html:143 kuma/wiki/jinja2/wiki/includes/page_buttons.html:27
 msgid "Publish"
@@ -2213,7 +2215,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
 msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
-msgstr ""
+msgstr "Děkujeme za vytvoření profilu na <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - komunitě lidí vytvářejících užitečné zdroje pro vývojáře, jako jste vy."
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
@@ -2333,7 +2335,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:72
 msgid "This user has not created any revisions in the past three days."
-msgstr ""
+msgstr "Tento uživatel v uplynulých třech dnech nevytvořil žádné revize."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
@@ -3026,15 +3028,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
-msgstr ""
+msgstr "Dny"
 
 #: kuma/wiki/jinja2/wiki/edit.html:132
 msgid "Hours"
-msgstr ""
+msgstr "Hodiny"
 
 #: kuma/wiki/jinja2/wiki/edit.html:136
 msgid "Minutes"
-msgstr ""
+msgstr "Minuty"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
@@ -3051,11 +3053,11 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/edit.html:163
 #, python-format
 msgid "It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target=\"_blank\" href=\"%(url)s\">Editor Guide</a>."
-msgstr ""
+msgstr "Vypadá to, že toto je váš první příspěvek na MDN. Odpovědi na časté dotazy ohledně editace můžete najít v našem <a target=\"_blank\" href=\"%(url)s\">Průvodci editora</a>."
 
 #: kuma/wiki/jinja2/wiki/edit.html:167
 msgid "Don't be afraid to break something, you can always revert your changes."
-msgstr ""
+msgstr "Nebojte se, že něco zničíte - změny můžete kdekoli vrátit."
 
 #: kuma/wiki/jinja2/wiki/edit.html:168
 msgid "Have fun and be proud of your contribution!"
@@ -3063,12 +3065,12 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Learn how to tag an article"
-msgstr ""
+msgstr "Zjistěte, jak označit článek"
 
 #: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
-msgstr ""
+msgstr "Kategorizujte článek. Díky tomu bude nalezitelný se správnými filtry vyhledávače. <a target=\"_blank\" href=\"%(url)s\">Přečtete se Průvodce označováním</a>."
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -3104,7 +3106,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/move.html:24
 msgid "Enter only the part of the URL following \"/docs/\"."
-msgstr ""
+msgstr "Zadejte pouze část URL, které následuje po \"/docs/\"."
 
 #: kuma/wiki/jinja2/wiki/move.html:25
 msgid "Don't include a trailing slash (this will be removed for you if you include it, but you should leave it out)."
@@ -3344,7 +3346,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
@@ -3368,7 +3370,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:64
 msgid "Clone this article"
-msgstr ""
+msgstr "Klonovat tento článek"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:67
 msgid "Move this article"
