@@ -1,18 +1,13 @@
-import json
 import os
-from urlparse import parse_qs, urlparse
 
 import mock
 import pytest
 import requests_mock
 from allauth.account.models import EmailAddress
-from allauth.socialaccount.models import SocialAccount, SocialApp
-from allauth.socialaccount.providers import registry
-from allauth.tests import MockedResponse, mocked_response
+from allauth.socialaccount.models import SocialAccount
 from constance.test.utils import override_config
 from django.conf import settings
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
-from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
 from django.db import IntegrityError
 from django.http import Http404
@@ -29,9 +24,8 @@ from kuma.wiki.models import (Document, Revision, RevisionAkismetSubmission,
 from kuma.wiki.tests import document as create_document
 
 
-from . import SampleRevisionsMixin, UserTestCase, email, user
+from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase, email, user
 from ..models import UserBan
-from ..providers.github.provider import KumaGitHubProvider
 from ..signup import SignupForm
 from ..views import delete_document, revert_document
 
@@ -965,7 +959,7 @@ class Test404Case(UserTestCase):
         self.client.logout()
 
 
-class AllauthPersonaTestCase(UserTestCase):
+class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
     """
     Test sign-up/in flow with Persona.
     """
@@ -978,17 +972,15 @@ class AllauthPersonaTestCase(UserTestCase):
         Failed Persona auth does not crash or otherwise error, but
         correctly redirects to an explanatory page.
         """
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'failure',
-                'reason': 'this email address has been naughty'
-            }
-            response = self.client.post(reverse('persona_login'),
-                                        follow=True)
-            eq_(200, response.status_code)
-            eq_(response.redirect_chain,
-                [('http://testserver/users/persona/complete?process=&next=',
-                  302)])
+        data = {
+            'status': 'failure',
+            'reason': 'this email address has been naughty'
+        }
+        response = self.persona_login(verifier_data=data)
+        eq_(200, response.status_code)
+        eq_(response.redirect_chain,
+            [('http://testserver/users/persona/complete?process=&next=',
+              302)])
 
     def test_persona_auth_success(self):
         """
@@ -996,22 +988,14 @@ class AllauthPersonaTestCase(UserTestCase):
         account with that email) user redirects to the signup
         completion page.
         """
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'okay',
-                'email': 'views_persona_auth@example.com',
-            }
-            response = self.client.post(reverse('persona_login'),
-                                        follow=True)
-            eq_(response.status_code, 200)
-            expected_redirects = [
-                ('http://testserver/users/persona/complete?process=&next=',
-                 302),
-                ('http://testserver/users/account/signup',
-                 302),
-            ]
-            for red in expected_redirects:
-                ok_(red in response.redirect_chain)
+        response = self.persona_login()
+        eq_(response.status_code, 200)
+        expected_redirects = [
+            ('http://testserver/users/persona/complete?process=&next=', 302),
+            ('http://testserver/users/account/signup', 302),
+        ]
+        for red in expected_redirects:
+            ok_(red in response.redirect_chain)
 
     def test_persona_signin(self):
         """
@@ -1020,22 +1004,16 @@ class AllauthPersonaTestCase(UserTestCase):
         successful and redirects to the home page when no explicit
         'next' is provided.
         """
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'okay',
-                'email': self.existing_persona_email,
-            }
-            response = self.client.post(reverse('persona_login'),
-                                        follow=True)
-            eq_(response.status_code, 200)
-            expected_redirects = [
-                ('http://testserver/users/persona/complete?process=&next=',
-                 302),
-                ('http://testserver/en-US/',
-                 301)
-            ]
-            for red in expected_redirects:
-                ok_(red in response.redirect_chain)
+        data = self.persona_verifier_data.copy()
+        data['email'] = self.existing_persona_email
+        response = self.persona_login(verifier_data=data)
+        eq_(response.status_code, 200)
+        expected_redirects = [
+            ('http://testserver/users/persona/complete?process=&next=', 302),
+            ('http://testserver/en-US/', 301)
+        ]
+        for red in expected_redirects:
+            ok_(red in response.redirect_chain)
 
     def test_persona_signin_next(self):
         """
@@ -1043,31 +1021,19 @@ class AllauthPersonaTestCase(UserTestCase):
         from a page which supplied a 'next' parameter, they are
         redirected back to that page following authentication.
         """
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'okay',
-                'email': self.existing_persona_email,
-            }
-            doc_url = reverse('wiki.document', args=['article-title'],
-                              locale=settings.WIKI_DEFAULT_LANGUAGE)
-            response = self.client.post(reverse('persona_login'),
-                                        data={'next': doc_url},
-                                        follow=True)
-            ok_(('http://testserver%s' % doc_url, 302) in response.redirect_chain)
+        data = self.persona_verifier_data.copy()
+        data['email'] = self.existing_persona_email
+        doc_url = reverse('wiki.document', args=['article-title'],
+                          locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.persona_login(verifier_data=data, next_url=doc_url)
+        ok_(('http://testserver%s' % doc_url, 302) in response.redirect_chain)
 
     @override_config(RECAPTCHA_PRIVATE_KEY='private_key',
                      RECAPTCHA_PUBLIC_KEY='public_key')
     def test_persona_signin_captcha(self):
-        persona_signup_email = 'views_persona_django_user@example.com'
+        persona_signup_email = self.persona_verifier_data['email']
         persona_signup_username = 'views_persona_django_user'
-
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'okay',
-                'email': persona_signup_email,
-            }
-            self.client.post(reverse('persona_login'), follow=True)
-
+        self.persona_login()
         data = {'website': '',
                 'username': persona_signup_username,
                 'email': persona_signup_email,
@@ -1088,148 +1054,99 @@ class AllauthPersonaTestCase(UserTestCase):
         """
         Signing up with Persona creates a new Django User instance.
         """
-        persona_signup_email = 'views_persona_django_user@example.com'
+        persona_signup_email = self.persona_verifier_data['email']
         persona_signup_username = 'views_persona_django_user'
-
-        with mock.patch('requests.post') as requests_mock:
-            old_count = self.user_model.objects.count()
-            requests_mock.return_value.json.return_value = {
-                'status': 'okay',
+        old_count = self.user_model.objects.count()
+        self.persona_login()
+        data = {'website': '',
+                'username': persona_signup_username,
                 'email': persona_signup_email,
-            }
-            self.client.post(reverse('persona_login'), follow=True)
-            data = {'website': '',
-                    'username': persona_signup_username,
-                    'email': persona_signup_email,
-                    'terms': True,
-                    'g-recaptcha-response': 'PASSED'}
-            signup_url = reverse('socialaccount_signup',
-                                 locale=settings.WIKI_DEFAULT_LANGUAGE)
-            response = self.client.post(signup_url, data=data, follow=True)
-            eq_(response.status_code, 200)
-            # not on the signup page anymore
-            ok_('form' not in response.context)
+                'terms': True,
+                'g-recaptcha-response': 'PASSED'}
+        signup_url = reverse('socialaccount_signup',
+                             locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.client.post(signup_url, data=data, follow=True)
+        eq_(response.status_code, 200)
+        # not on the signup page anymore
+        ok_('form' not in response.context)
 
-            # Did we get a new user?
-            eq_(old_count + 1, self.user_model.objects.count())
+        # Did we get a new user?
+        eq_(old_count + 1, self.user_model.objects.count())
 
-            # Does it have the right attributes?
-            testuser = None
-            try:
-                testuser = self.user_model.objects.order_by('-date_joined')[0]
-            except IndexError:
-                pass
-            ok_(testuser)
-            ok_(testuser.is_active)
-            eq_(persona_signup_username, testuser.username)
-            eq_(persona_signup_email, testuser.email)
-            ok_(testuser.password.startswith(UNUSABLE_PASSWORD_PREFIX))
+        # Does it have the right attributes?
+        testuser = None
+        try:
+            testuser = self.user_model.objects.order_by('-date_joined')[0]
+        except IndexError:
+            pass
+        ok_(testuser)
+        ok_(testuser.is_active)
+        eq_(persona_signup_username, testuser.username)
+        eq_(persona_signup_email, testuser.email)
+        ok_(testuser.password.startswith(UNUSABLE_PASSWORD_PREFIX))
 
     @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
     def test_persona_signup_create_socialaccount(self):
         """
         Signing up with Persona creates a new SocialAccount instance.
         """
-        persona_signup_email = 'views_persona_socialaccount@example.com'
+        persona_signup_email = self.persona_verifier_data['email']
         persona_signup_username = 'views_persona_socialaccount'
-
-        with mock.patch('requests.post') as requests_mock:
-            requests_mock.return_value.json.return_value = {
-                'status': 'okay',
+        self.persona_login()
+        self.client.post(reverse('persona_login'), follow=True)
+        data = {'website': '',
+                'username': persona_signup_username,
                 'email': persona_signup_email,
-            }
-            self.client.post(reverse('persona_login'), follow=True)
-            data = {'website': '',
-                    'username': persona_signup_username,
-                    'email': persona_signup_email,
-                    'terms': True,
-                    'g-recaptcha-response': 'PASSED'}
-            signup_url = reverse('socialaccount_signup',
-                                 locale=settings.WIKI_DEFAULT_LANGUAGE)
-            self.client.post(signup_url, data=data, follow=True)
-            try:
-                socialaccount = (SocialAccount.objects
-                                              .filter(user__username=persona_signup_username))[0]
-            except IndexError:
-                socialaccount = None
-            ok_(socialaccount is not None)
-            eq_('persona', socialaccount.provider)
-            eq_(persona_signup_email, socialaccount.uid)
-            eq_({'status': 'okay', 'email': persona_signup_email},
-                socialaccount.extra_data)
-            testuser = self.user_model.objects.get(username=persona_signup_username)
-            eq_(testuser.id, socialaccount.user.id)
+                'terms': True,
+                'g-recaptcha-response': 'PASSED'}
+        signup_url = reverse('socialaccount_signup',
+                             locale=settings.WIKI_DEFAULT_LANGUAGE)
+        self.client.post(signup_url, data=data, follow=True)
+        try:
+            socialaccount = (SocialAccount.objects
+                             .filter(user__username=persona_signup_username))[0]
+        except IndexError:
+            socialaccount = None
+        ok_(socialaccount is not None)
+        eq_('persona', socialaccount.provider)
+        eq_(persona_signup_email, socialaccount.uid)
+        eq_(self.persona_verifier_data, socialaccount.extra_data)
+        testuser = self.user_model.objects.get(username=persona_signup_username)
+        eq_(testuser.id, socialaccount.user.id)
 
 
-class KumaGitHubTests(UserTestCase):
+class KumaGitHubTests(UserTestCase, SocialTestMixin):
     localizing_client = False
-    mocked_user_response = """
-        {
-            "login": "%(username)s",
-            "id": 1,
-            "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-            "gravatar_id": "somehexcode",
-            "url": "https://api.github.com/users/octocat",
-            "html_url": "https://github.com/octocat",
-            "followers_url": "https://api.github.com/users/octocat/followers",
-            "following_url": "https://api.github.com/users/octocat/following{/other_user}",
-            "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
-            "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
-            "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
-            "organizations_url": "https://api.github.com/users/octocat/orgs",
-            "repos_url": "https://api.github.com/users/octocat/repos",
-            "events_url": "https://api.github.com/users/octocat/events{/privacy}",
-            "received_events_url": "https://api.github.com/users/octocat/received_events",
-            "type": "User",
-            "site_admin": false,
-            "name": "monalisa octocat",
-            "company": "GitHub",
-            "blog": "https://github.com/blog",
-            "location": "San Francisco",
-            "email": %(public_email)s,
-            "hireable": false,
-            "public_repos": 2,
-            "public_gists": 1,
-            "followers": 20,
-            "following": 0,
-            "created_at": "2008-01-14T04:33:35Z",
-            "updated_at": "2008-01-14T04:33:35Z"
-        }"""
-    mocked_email_response = """
-        [
-            {
-                "email": "%(verified_email)s",
-                "verified": true,
-                "primary": true
-            }
-        ]"""
-
-    def get_login_response_json(self, with_refresh_token=True):
-        rt = ''
-        if with_refresh_token:
-            rt = ',"refresh_token": "testrf"'
-        return """{
-            "uid":"weibo",
-            "access_token":"testac"
-            %s }""" % rt
 
     def setUp(self):
         self.signup_url = reverse('socialaccount_signup',
                                   locale=settings.WIKI_DEFAULT_LANGUAGE)
-        self.provider = registry.by_id(KumaGitHubProvider.id)
-        app = SocialApp.objects.create(provider=self.provider.id,
-                                       name=self.provider.id,
-                                       client_id='app123id',
-                                       key=self.provider.id,
-                                       secret='dummy')
-        app.sites.add(Site.objects.get_current())
 
     def test_login(self):
-        resp = self.login()
+        resp = self.github_login()
         self.assertRedirects(resp, self.signup_url)
 
+    @override_config(RECAPTCHA_PRIVATE_KEY='private_key',
+                     RECAPTCHA_PUBLIC_KEY='public_key')
+    def test_signin_captcha(self):
+        resp = self.github_login()
+        self.assertRedirects(resp, self.signup_url)
+
+        data = {'website': '',
+                'username': 'octocat',
+                'email': 'octo.cat@github-inc.com',
+                'terms': True,
+                'g-recaptcha-response': 'FAILED'}
+
+        with mock.patch('captcha.client.request') as request_mock:
+            request_mock.return_value.read.return_value = '{"success": null}'
+            response = self.client.post(self.signup_url, data=data, follow=True)
+        eq_(response.status_code, 200)
+        eq_(response.context['form'].errors,
+            {'captcha': [u'Incorrect, please try again.']})
+
     def test_matching_user(self):
-        self.login()
+        self.github_login()
         response = self.client.get(self.signup_url)
         self.assertTrue('matching_user' in response.context)
         self.assertEqual(response.context['matching_user'], None)
@@ -1239,27 +1156,44 @@ class KumaGitHubTests(UserTestCase):
 
     @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
     def test_email_addresses(self):
-        self.login(username='octocat2')
+        public_email = 'octocat-public@example.com'
+        private_email = 'octocat-private@example.com'
+        unverified_email = 'octocat-trash@example.com'
+        profile_data = self.github_profile_data.copy()
+        profile_data['email'] = public_email
+        email_data = [
+            {
+                'email': private_email,
+                'verified': True,
+                'primary': True
+            }, {
+                'email': unverified_email,
+                'verified': False,
+                'primary': False
+            }
+        ]
+        self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
+        assert private_email not in response.context
         email_address = response.context['email_addresses']
 
         # first check if the public email address has been found
-        self.assertTrue('octocat@github.com' in email_address)
-        self.assertEqual(email_address['octocat@github.com'],
+        self.assertTrue(public_email in email_address)
+        self.assertEqual(email_address[public_email],
                          {'verified': False,
-                          'email': 'octocat@github.com',
+                          'email': public_email,
                           'primary': False})
         # then check if the private and verified-at-GitHub email address
         # has been found
-        self.assertTrue('octo.cat@github-inc.com' in email_address)
-        self.assertEqual(email_address['octo.cat@github-inc.com'],
+        self.assertTrue(private_email in email_address)
+        self.assertEqual(email_address[private_email],
                          {'verified': True,
-                          'email': 'octo.cat@github-inc.com',
+                          'email': private_email,
                           'primary': True})
         # then check if the radio button's default value is the public email
         # address
         self.assertEqual(response.context['form'].initial['email'],
-                         'octocat@github.com')
+                         public_email)
 
         unverified_email = 'o.ctocat@gmail.com'
         data = {
@@ -1281,18 +1215,26 @@ class KumaGitHubTests(UserTestCase):
         self.assertFalse(unverified_email_addresses[0].verified)
 
     def test_email_addresses_with_no_public(self):
-        self.login(username='private_octocat',
-                   verified_email='octocat@github.com',
-                   public_email=None)
+        profile_data = self.github_profile_data.copy()
+        profile_data['email'] = None
+        email_data = self.github_email_data[:]
+        private_email = 'octocat.private@example.com'
+        email_data[0]['email'] = private_email
+        self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
-        self.assertEqual(response.context["form"].initial["email"], 'octocat@github.com')
+        self.assertEqual(response.context["form"].initial["email"],
+                         private_email)
 
     def test_matching_accounts(self):
         testemail = 'octo.cat.III@github-inc.com'
-        self.login(username='octocat3', verified_email=testemail)
+        profile_data = self.github_profile_data.copy()
+        profile_data['email'] = testemail
+        email_data = self.github_email_data[:]
+        email_data[0]['email'] = testemail
+        self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
-        self.assertEqual(list(response.context['matching_accounts']),
-                         [])
+        self.assertFalse(response.context['matching_accounts'])
+
         # assuming there is already a Persona account with the given email
         # address
         octocat3 = user(username='octocat3', is_active=True,
@@ -1301,31 +1243,29 @@ class KumaGitHubTests(UserTestCase):
                                                       provider='persona',
                                                       user=octocat3)
         response = self.client.get(self.signup_url)
-        self.assertTrue(response.context['matching_accounts'],
-                        [social_account])
+        self.assertEqual(list(response.context['matching_accounts']),
+                         [social_account])
 
-    def test_account_tokens(self, multiple_login=False):
+    def test_account_tokens(self):
         testemail = 'account_token@acme.com'
         testuser = user(username='user', is_active=True,
                         email=testemail, password='test', save=True)
         email(user=testuser, email=testemail,
               primary=True, verified=True, save=True)
-        self.client.login(username=testuser.username,
-                          password='test')
-        self.login(process='connect')
-        if multiple_login:
-            self.login(with_refresh_token=False, process='connect')
-        # get account
+        self.client.login(username=testuser.username, password='test')
+
+        token = 'access_token'
+        refresh_token = 'refresh_token'
+        token_data = self.github_token_data.copy()
+        token_data['access_token'] = token
+        token_data['refresh_token'] = refresh_token
+
+        self.github_login(token_data=token_data, process='connect')
         social_account = SocialAccount.objects.get(user=testuser,
-                                                   provider=self.provider.id)
-        # get token
+                                                   provider='github')
         social_token = social_account.socialtoken_set.get()
-        # verify access_token and refresh_token
-        self.assertEqual('testac', social_token.token)
-        self.assertEqual(social_token.token_secret,
-                         json.loads(self.get_login_response_json(
-                             with_refresh_token=True)).get(
-                                 'refresh_token', ''))
+        self.assertEqual(token, social_token.token)
+        self.assertEqual(refresh_token, social_token.token_secret)
 
     def test_account_refresh_token_saved_next_login(self):
         """
@@ -1333,35 +1273,25 @@ class KumaGitHubTests(UserTestCase):
         saved refresh token. Systems such as google's oauth only send
         a refresh token on first login.
         """
-        self.test_account_tokens(multiple_login=True)
+        # Setup a user with a token and refresh token
+        testemail = 'account_token@acme.com'
+        testuser = user(username='user', is_active=True,
+                        email=testemail, password='test', save=True)
+        email(user=testuser, email=testemail,
+              primary=True, verified=True, save=True)
+        token = 'access_token'
+        refresh_token = 'refresh_token'
+        app = self.ensure_github_app()
+        sa = testuser.socialaccount_set.create(provider=app.provider)
+        sa.socialtoken_set.create(app=app, token=token, token_secret=refresh_token)
 
-    def login(self,
-              username='octocat',
-              verified_email='octo.cat@github-inc.com',
-              process='login', with_refresh_token=True,
-              public_email='octocat@github.com'):
-        resp = self.client.get(reverse('github_login',
-                                       locale=settings.WIKI_DEFAULT_LANGUAGE),
-                               {'process': process})
-        path = urlparse(resp['location'])
-        query = parse_qs(path.query)
-        complete_url = reverse('github_callback', unprefixed=True)
-        self.assertGreater(query['redirect_uri'][0]
-                           .find(complete_url), 0)
-        response_json = self.get_login_response_json(
-            with_refresh_token=with_refresh_token)
-        with mocked_response(
-            MockedResponse(200, response_json,
-                           {'content-type': 'application/json'}),
-                MockedResponse(200,
-                               self.mocked_user_response %
-                               {'username': username,
-                                'public_email': json.dumps(public_email)}),
-                MockedResponse(200,
-                               self.mocked_email_response %
-                               {'verified_email': verified_email})):
-            resp = self.client.get(complete_url,
-                                   {'code': 'test',
-                                    'state': query['state'][0]},
-                                   follow=True)
-        return resp
+        # Login without a refresh token
+        token_data = self.github_token_data.copy()
+        token_data['access_token'] = token
+        self.github_login(token_data=token_data, process='connect')
+
+        # Refresh token is still in database
+        sa.refresh_from_db()
+        social_token = sa.socialtoken_set.get()
+        self.assertEqual(token, social_token.token)
+        self.assertEqual(refresh_token, social_token.token_secret)
