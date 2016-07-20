@@ -6,6 +6,7 @@ from django.conf import settings
 from mock import patch
 from pyquery import PyQuery as pq
 from waffle.models import Flag
+from waffle.testutils import override_switch
 from django.db import IntegrityError
 
 from kuma.core.tests import eq_, ok_
@@ -16,6 +17,7 @@ from kuma.wiki.tests import document as create_document, revision as create_revi
 
 from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase
 from .test_views import TESTUSER_PASSWORD
+from ..constants import PERSONA_SIGNUP_SWITCH
 from ..models import User, UserBan
 
 
@@ -30,7 +32,17 @@ class SignupTests(UserTestCase, SocialTestMixin):
         'Terms',
         'Privacy Notice')
 
-    def test_signup_page_persona(self):
+    @override_switch(PERSONA_SIGNUP_SWITCH, active=False)
+    def test_signup_page_persona_disabled(self):
+        response = self.persona_login()
+        self.assertNotContains(response, 'Sign In Failure')
+        self.assertContains(response, 'Profile Creation Disabled')
+        self.assertContains(response,
+                            'We are sorry, but you can not create a profile'
+                            ' with Persona.')
+
+    @override_switch(PERSONA_SIGNUP_SWITCH, active=True)
+    def test_signup_page_person_enabled(self):
         response = self.persona_login()
         self.assertNotContains(response, 'Sign In Failure')
         for test_string in self.profile_create_strings:
@@ -47,14 +59,14 @@ class SignupTests(UserTestCase, SocialTestMixin):
             name='registration_disabled',
             everyone=True
         )
-        response = self.persona_login()
+        response = self.github_login()
         self.assertNotContains(response, 'Sign In Failure')
         self.assertContains(response, 'Profile Creation Disabled')
 
         # re-enable registration
         registration_disabled.everyone = False
         registration_disabled.save()
-        response = self.persona_login()
+        response = self.github_login()
         test_strings = ['Create your MDN profile to continue',
                         'choose a username',
                         'having trouble']
@@ -147,6 +159,7 @@ class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
                 '" id="id_email" />'):
             self.assertNotContains(response, unexpected_string)
 
+    @override_switch(PERSONA_SIGNUP_SWITCH, active=True)
     def test_persona_auth_success_copy(self):
         """
         Successful Persona auth of a new user displays a success
@@ -258,6 +271,7 @@ class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
             ok_(auth_persona_form.attr(auth_attr[0]))
             eq_(auth_attr[1], auth_persona_form.attr(auth_attr[0]))
 
+    @override_switch(PERSONA_SIGNUP_SWITCH, active=True)
     def test_persona_signup_copy(self):
         """
         After a new user signs up with Persona, their username, an

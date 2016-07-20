@@ -14,6 +14,7 @@ from django.http import Http404
 from django.test import RequestFactory
 from pyquery import PyQuery as pq
 from waffle.models import Flag
+from waffle.testutils import override_switch
 
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
@@ -25,6 +26,7 @@ from kuma.wiki.tests import document as create_document
 
 
 from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase, email, user
+from ..constants import PERSONA_SIGNUP_SWITCH
 from ..models import UserBan
 from ..signup import SignupForm
 from ..views import delete_document, revert_document
@@ -1030,6 +1032,7 @@ class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
 
     @override_config(RECAPTCHA_PRIVATE_KEY='private_key',
                      RECAPTCHA_PUBLIC_KEY='public_key')
+    @override_switch(PERSONA_SIGNUP_SWITCH, active=True)
     def test_persona_signin_captcha(self):
         persona_signup_email = self.persona_verifier_data['email']
         persona_signup_username = 'views_persona_django_user'
@@ -1050,6 +1053,7 @@ class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
             {'captcha': [u'Incorrect, please try again.']})
 
     @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
+    @override_switch(PERSONA_SIGNUP_SWITCH, active=True)
     def test_persona_signup_create_django_user(self):
         """
         Signing up with Persona creates a new Django User instance.
@@ -1086,6 +1090,7 @@ class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
         ok_(testuser.password.startswith(UNUSABLE_PASSWORD_PREFIX))
 
     @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
+    @override_switch(PERSONA_SIGNUP_SWITCH, active=True)
     def test_persona_signup_create_socialaccount(self):
         """
         Signing up with Persona creates a new SocialAccount instance.
