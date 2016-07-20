@@ -462,7 +462,11 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         }
     )
 
-    comment = StrippedCharField(required=False, label=_(u'Comment:'))
+    comment = StrippedCharField(
+        max_length=255,
+        required=False,
+        label=_(u'Comment:')
+    )
 
     review_tags = forms.MultipleChoiceField(
         label=ugettext("Tag this revision for review?"),
