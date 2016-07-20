@@ -7,11 +7,12 @@ from django.conf import settings
 from mock import patch
 from pyquery import PyQuery as pq
 from waffle.models import Flag
+from django.db import IntegrityError
 
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
-from kuma.wiki.models import RevisionAkismetSubmission
+from kuma.wiki.models import RevisionAkismetSubmission, DocumentDeletionLog, Document
 from kuma.wiki.tests import document as create_document, revision as create_revision
 
 from . import SampleRevisionsMixin, UserTestCase
@@ -1474,6 +1475,133 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_not_spam = page.find('#not-spam li')
 
         # No documents were left unreverted due to having a good rev for its latest
+        eq_(len(revisions_not_reverted), 0)
+        # No documents had revs that were already marked as spam
+        eq_(len(revisions_already_spam), 0)
+        # No documents had revs that were unchecked in the spam form
+        eq_(len(revisions_not_spam), 0)
+
+    def test_delete_document_failure(self):
+        # Create a new spam document with a single revision
+        spam_revision = self.create_revisions(
+            num=1,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'username': self.testuser.username})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        with patch.object(DocumentDeletionLog.objects, 'create') as dl_mock:
+            # Just raise an IntegrityError to get delete_document to fail
+            dl_mock.side_effect = IntegrityError()
+
+            data = {'revision-id': [rev.id for rev in spam_revision]}
+            resp = self.client.post(full_ban_url, data=data)
+
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        eq_(DocumentDeletionLog.objects.count(), 0)
+
+        # 'Actions taken' section
+
+        revisions_deleted = page.find('#revisions-deleted li')
+        revisions_reverted = page.find('#revisions-reverted li')
+
+        # The document failed to be deleted
+        eq_(len(revisions_deleted), 0)
+        # It wouldn't have been reverted anyway
+        eq_(len(revisions_reverted), 0)
+
+        # 'Needs follow-up' section
+
+        revisions_added_afterwards = page.find('#new-actions-by-user li')
+        revisions_skipped = page.find('#skipped-revisions li')
+        revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
+        could_not_delete = page.find('#not-deleted li')
+        could_not_revert = page.find('#not-reverted li')
+
+        # To be implemented in Phase V
+        eq_(len(revisions_added_afterwards), 0)
+        # Nothing happened
+        eq_(len(revisions_skipped), 0)
+        # Akismet reporting happens first
+        eq_(len(revisions_reported_as_spam), 1)
+        # The deletion failed, so it goes here
+        eq_(len(could_not_delete), 1)
+        eq_(len(could_not_revert), 0)
+
+        # 'No action' section
+
+        revisions_not_reverted = page.find('#latest-revision-non-spam li')
+        revisions_already_spam = page.find('#already-spam li')
+        revisions_not_spam = page.find('#not-spam li')
+
+        # No good revisions superceding bad ones
+        eq_(len(revisions_not_reverted), 0)
+        # No documents had revs that were already marked as spam
+        eq_(len(revisions_already_spam), 0)
+        # No documents had revs that were unchecked in the spam form
+        eq_(len(revisions_not_spam), 0)
+
+    def test_revert_document_failure(self):
+        # Create some spam revisions on a previously good document.
+        spam_revisions = self.create_revisions(
+            num=3,
+            document=self.document,
+            creator=self.testuser)
+
+        self.client.login(username='admin', password='testpass')
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
+                          kwargs={'username': self.testuser.username})
+        full_ban_url = self.client.get(ban_url)['Location']
+
+        with patch.object(Document, 'revert') as revert_mock:
+            # Just raise an IntegrityError to get revert_document to fail
+            revert_mock.side_effect = IntegrityError()
+
+            data = {'revision-id': [rev.id for rev in spam_revisions]}
+            resp = self.client.post(full_ban_url, data=data)
+
+        eq_(200, resp.status_code)
+        page = pq(resp.content)
+
+        # 'Actions taken' section
+
+        revisions_deleted = page.find('#revisions-deleted li')
+        revisions_reverted = page.find('#revisions-reverted li')
+
+        # The document wouldn't have been deleted
+        eq_(len(revisions_deleted), 0)
+        # It failed to be reverted
+        eq_(len(revisions_reverted), 0)
+
+        # 'Needs follow-up' section
+
+        revisions_added_afterwards = page.find('#new-actions-by-user li')
+        revisions_skipped = page.find('#skipped-revisions li')
+        revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
+        could_not_delete = page.find('#not-deleted li')
+        could_not_revert = page.find('#not-reverted li')
+
+        # To be implemented in Phase V
+        eq_(len(revisions_added_afterwards), 0)
+        # Nothing happened
+        eq_(len(revisions_skipped), 0)
+        # Akismet reporting happens first
+        eq_(len(revisions_reported_as_spam), 1)
+        eq_(len(could_not_delete), 0)
+        # The revert failed, so it goes here
+        eq_(len(could_not_revert), 1)
+
+        # 'No action' section
+
+        revisions_not_reverted = page.find('#latest-revision-non-spam li')
+        revisions_already_spam = page.find('#already-spam li')
+        revisions_not_spam = page.find('#not-spam li')
+
+        # No good revisions superceding bad ones
         eq_(len(revisions_not_reverted), 0)
         # No documents had revs that were already marked as spam
         eq_(len(revisions_already_spam), 0)

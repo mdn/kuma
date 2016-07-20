@@ -315,17 +315,16 @@ def delete_document(request, document):
     """
     Delete a Document.
     """
-    if not document:
+    try:
+        DocumentDeletionLog.objects.create(
+            locale=document.locale,
+            slug=document.slug,
+            user=request.user,
+            reason='Spam',
+        )
+        document.delete()
+    except Exception:
         return False
-
-    DocumentDeletionLog.objects.create(
-        locale=document.locale,
-        slug=document.slug,
-        user=request.user,
-        reason='Spam',
-    )
-    document.delete()
-
     return True
 
 
