@@ -33,8 +33,10 @@ class SignupTests(UserTestCase, SocialTestMixin):
     def test_signup_page_persona(self):
         response = self.persona_login()
         self.assertNotContains(response, 'Sign In Failure')
-        for test_string in self.profile_create_strings:
-            self.assertContains(response, test_string)
+        self.assertContains(response, 'Profile Creation Disabled')
+        self.assertContains(response,
+                            'We are sorry, but you can not create a profile'
+                            ' with Persona.')
 
     def test_signup_page_github(self):
         response = self.github_login()
@@ -47,14 +49,14 @@ class SignupTests(UserTestCase, SocialTestMixin):
             name='registration_disabled',
             everyone=True
         )
-        response = self.persona_login()
+        response = self.github_login()
         self.assertNotContains(response, 'Sign In Failure')
         self.assertContains(response, 'Profile Creation Disabled')
 
         # re-enable registration
         registration_disabled.everyone = False
         registration_disabled.save()
-        response = self.persona_login()
+        response = self.github_login()
         test_strings = ['Create your MDN profile to continue',
                         'choose a username',
                         'having trouble']
@@ -147,41 +149,6 @@ class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
                 '" id="id_email" />'):
             self.assertNotContains(response, unexpected_string)
 
-    def test_persona_auth_success_copy(self):
-        """
-        Successful Persona auth of a new user displays a success
-        message and the Persona-specific signup form, correctly
-        populated, and does not display the failure copy.
-        """
-        persona_signup_email = self.persona_verifier_data['email']
-        response = self.persona_login()
-        for expected_string in (
-            # Test that we got:
-            #
-            # * Persona sign-in success message
-            #
-            # * Form with action set to the account-signup URL.
-            #
-            # * Username field, blank
-            #
-            # * Hidden email address field, pre-populated with the
-            #   address used to authenticate to Persona.
-            'Thanks for signing in to MDN with Persona.',
-            ('<form class="submission readable-line-length" method="post" '
-             'action="/en-US/users/account/signup">'),
-            ('<input autofocus="autofocus" id="id_username" '
-             'maxlength="30" name="username" placeholder="Username" '
-             'required="required" type="text" />'),
-            ('<input id="id_email" name="email" type="hidden" '
-             'value="%s" />' % persona_signup_email)):
-            self.assertContains(response, expected_string)
-
-        for unexpected_string in (
-            '<Account Sign In Failure',
-            '<An error occurred while attempting to sign '
-                'in with your account.'):
-            self.assertNotContains(response, unexpected_string)
-
     def test_persona_signin_copy(self):
         """
         After an existing user successfully authenticates with
@@ -257,56 +224,6 @@ class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
         for auth_attr in auth_attrs:
             ok_(auth_persona_form.attr(auth_attr[0]))
             eq_(auth_attr[1], auth_persona_form.attr(auth_attr[0]))
-
-    def test_persona_signup_copy(self):
-        """
-        After a new user signs up with Persona, their username, an
-        indication that Persona was used to log in, and a logout link
-        appear in the auth tools section of the page.
-        """
-        persona_signup_email = self.persona_verifier_data['email']
-        persona_signup_username = 'templates_persona_signup_copy'
-        self.persona_login()
-
-        data = {'website': '',
-                'username': persona_signup_username,
-                'email': persona_signup_email,
-                'terms': True}
-        response = self.client.post(
-            reverse('socialaccount_signup',
-                    locale=settings.WIKI_DEFAULT_LANGUAGE),
-            data=data, follow=True)
-
-        user_url = reverse(
-            'users.user_detail',
-            kwargs={'username': persona_signup_username},
-            locale=settings.WIKI_DEFAULT_LANGUAGE)
-        signout_url = urlparams(
-            reverse('account_logout',
-                    locale=settings.WIKI_DEFAULT_LANGUAGE),
-            next=reverse('home',
-                         locale=settings.WIKI_DEFAULT_LANGUAGE))
-        parsed = pq(response.content)
-
-        login_info = parsed.find('.oauth-logged-in')
-        ok_(len(login_info.children()))
-
-        signed_in_message = login_info.children()[0]
-        ok_('title' in signed_in_message.attrib)
-        eq_('Signed in with Persona',
-            signed_in_message.attrib['title'])
-
-        auth_links = login_info.children()[1].getchildren()
-        ok_(len(auth_links))
-
-        user_link = auth_links[0].getchildren()[0]
-        ok_('href' in user_link.attrib)
-        eq_(user_url, user_link.attrib['href'])
-
-        signout_link = auth_links[1].getchildren()[0]
-        ok_('href' in signout_link.attrib)
-        eq_(signout_url.replace('%2F', '/'),  # urlparams() encodes slashes
-            signout_link.attrib['href'])
 
 
 class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):

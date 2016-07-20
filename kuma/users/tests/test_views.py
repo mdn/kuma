@@ -9,7 +9,6 @@ from allauth.socialaccount.models import SocialAccount
 from constance.test.utils import override_config
 from django.conf import settings
 from django.core import mail
-from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.core.paginator import PageNotAnInteger
 from django.db import IntegrityError
 from django.http import Http404
@@ -1119,92 +1118,6 @@ class AllauthPersonaTestCase(UserTestCase, SocialTestMixin):
                           locale=settings.WIKI_DEFAULT_LANGUAGE)
         response = self.persona_login(verifier_data=data, next_url=doc_url)
         ok_(('http://testserver%s' % doc_url, 302) in response.redirect_chain)
-
-    @override_config(RECAPTCHA_PRIVATE_KEY='private_key',
-                     RECAPTCHA_PUBLIC_KEY='public_key')
-    def test_persona_signin_captcha(self):
-        persona_signup_email = self.persona_verifier_data['email']
-        persona_signup_username = 'views_persona_django_user'
-        self.persona_login()
-        data = {'website': '',
-                'username': persona_signup_username,
-                'email': persona_signup_email,
-                'terms': True,
-                'g-recaptcha-response': 'FAILED'}
-        signup_url = reverse('socialaccount_signup',
-                             locale=settings.WIKI_DEFAULT_LANGUAGE)
-
-        with mock.patch('captcha.client.request') as request_mock:
-            request_mock.return_value.read.return_value = '{"success": null}'
-            response = self.client.post(signup_url, data=data, follow=True)
-        eq_(response.status_code, 200)
-        eq_(response.context['form'].errors,
-            {'captcha': [u'Incorrect, please try again.']})
-
-    @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
-    def test_persona_signup_create_django_user(self):
-        """
-        Signing up with Persona creates a new Django User instance.
-        """
-        persona_signup_email = self.persona_verifier_data['email']
-        persona_signup_username = 'views_persona_django_user'
-        old_count = self.user_model.objects.count()
-        self.persona_login()
-        data = {'website': '',
-                'username': persona_signup_username,
-                'email': persona_signup_email,
-                'terms': True,
-                'g-recaptcha-response': 'PASSED'}
-        signup_url = reverse('socialaccount_signup',
-                             locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.client.post(signup_url, data=data, follow=True)
-        eq_(response.status_code, 200)
-        # not on the signup page anymore
-        ok_('form' not in response.context)
-
-        # Did we get a new user?
-        eq_(old_count + 1, self.user_model.objects.count())
-
-        # Does it have the right attributes?
-        testuser = None
-        try:
-            testuser = self.user_model.objects.order_by('-date_joined')[0]
-        except IndexError:
-            pass
-        ok_(testuser)
-        ok_(testuser.is_active)
-        eq_(persona_signup_username, testuser.username)
-        eq_(persona_signup_email, testuser.email)
-        ok_(testuser.password.startswith(UNUSABLE_PASSWORD_PREFIX))
-
-    @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
-    def test_persona_signup_create_socialaccount(self):
-        """
-        Signing up with Persona creates a new SocialAccount instance.
-        """
-        persona_signup_email = self.persona_verifier_data['email']
-        persona_signup_username = 'views_persona_socialaccount'
-        self.persona_login()
-        self.client.post(reverse('persona_login'), follow=True)
-        data = {'website': '',
-                'username': persona_signup_username,
-                'email': persona_signup_email,
-                'terms': True,
-                'g-recaptcha-response': 'PASSED'}
-        signup_url = reverse('socialaccount_signup',
-                             locale=settings.WIKI_DEFAULT_LANGUAGE)
-        self.client.post(signup_url, data=data, follow=True)
-        try:
-            socialaccount = (SocialAccount.objects
-                             .filter(user__username=persona_signup_username))[0]
-        except IndexError:
-            socialaccount = None
-        ok_(socialaccount is not None)
-        eq_('persona', socialaccount.provider)
-        eq_(persona_signup_email, socialaccount.uid)
-        eq_(self.persona_verifier_data, socialaccount.extra_data)
-        testuser = self.user_model.objects.get(username=persona_signup_username)
-        eq_(testuser.id, socialaccount.user.id)
 
 
 class KumaGitHubTests(UserTestCase, SocialTestMixin):

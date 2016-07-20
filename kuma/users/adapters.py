@@ -101,8 +101,13 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         because the default adapter uses the account adpater above
         as the default.
         """
-        # Check if profile creation is disabled via waffle
-        return not flag_is_active(request, 'registration_disabled')
+        if flag_is_active(request, 'registration_disabled'):
+            return False
+        elif sociallogin.account.provider == 'persona':
+            request.used_persona = True
+            return False
+        else:
+            return True
 
     def validate_disconnect(self, account, accounts):
         """
