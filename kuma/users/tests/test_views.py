@@ -566,6 +566,75 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # 5 total revisions on B = 1 initial + 3 spam revisions + 1 new reverted revision
         eq_(revisions_b.count(), 5)
 
+    def test_current_rev_is_non_spam(self):
+        new_document = create_document(save=True)
+        self.create_revisions(
+            num=1, document=new_document, creator=self.admin)
+        spam_revisions = self.create_revisions(
+            num=3,
+            document=new_document,
+            creator=self.testuser)
+        safe_revision = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.admin)
+
+        # Pass in spam revisions:
+        data = {'revision-id': [rev.id for rev in spam_revisions]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # No changes should have been made to the document
+        new_document = Document.objects.get(id=new_document.id)
+        eq_(new_document.current_revision.id, safe_revision[0].id)
+        revisions = Revision.objects.filter(document=new_document)
+        eq_(revisions.count(), 5)  # Total of 5 revisions, no new revisions were made
+
+    def test_intermediate_non_spam_rev(self):
+        new_document = create_document(save=True)
+        # Create 4 revisions: one good, one spam, one good, then finally one spam
+        self.create_revisions(
+            num=1, document=new_document, creator=self.admin)
+        spam_revision1 = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.testuser)
+        safe_revision = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.admin)
+        # Set the content of the last good revision, so we can compare afterwards
+        safe_revision[0].content = "Safe"
+        safe_revision[0].save()
+        spam_revision2 = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.testuser)
+
+        # Pass in spam revisions:
+        data = {'revision-id': [rev.id for rev in spam_revision1 + spam_revision2]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # The document should be reverted to the last good revision
+        new_document = Document.objects.get(id=new_document.id)
+
+        # Make sure that the current revision is not either of the spam revisions
+        for revision in spam_revision1 + spam_revision2:
+            ok_(revision.id != new_document.current_revision.id)
+
+        # And that it did actually revert
+        ok_(new_document.current_revision.id != safe_revision[0].id)
+
+        revisions = Revision.objects.filter(document=new_document)
+        eq_(revisions.count(), 5)  # Total of 5 revisions, a new revision was made
+
+        eq_(new_document.current_revision.content, "Safe")
+
 #    TODO: Phase IV:
 #    def test_post_sends_email(self):
 
