@@ -31,6 +31,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- attachments_attachment
 -- attachments_attachmentrevision
 -- attachments_documentattachment
+-- attachments_trashedattachment
 -- auth_group
 -- auth_group_permissions
 -- auth_permission
@@ -65,6 +66,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- wiki_reviewtag
 -- wiki_reviewtaggedrevision
 -- wiki_revision
+-- wiki_revisionakismetsubmission
 -- wiki_taggeddocument
 
 TRUNCATE account_emailconfirmation;
@@ -88,45 +90,6 @@ TRUNCATE socialaccount_socialapp_sites;
 TRUNCATE socialaccount_socialtoken;
 TRUNCATE tidings_watch;
 TRUNCATE tidings_watchfilter;
-
--- Should be dropped
-DROP TABLE IF EXISTS auth_message; -- Removed in Django 1.4
-DROP TABLE IF EXISTS django_cache; -- Legacy, 0 records in prod
-DROP TABLE IF EXISTS tagging_tag;  -- Not in production
-DROP TABLE IF EXISTS tagging_taggeditem;  -- Not in production
-
--- To be dropped in bug 1184470, August 2015
-DROP TABLE IF EXISTS badger_award;
-DROP TABLE IF EXISTS badger_badge_prerequisites;
-DROP TABLE IF EXISTS badger_badge;
-DROP TABLE IF EXISTS badger_deferredaward;
-DROP TABLE IF EXISTS badger_nomination;
-DROP TABLE IF EXISTS badger_progress;
-DROP TABLE IF EXISTS banishments;
-DROP TABLE IF EXISTS dashboards_wikidocumentvisits;
-DROP TABLE IF EXISTS devmo_calendar;
-DROP TABLE IF EXISTS devmo_event;
-DROP TABLE IF EXISTS gallery_image;
-DROP TABLE IF EXISTS gallery_video;
-DROP TABLE IF EXISTS notifications_eventwatch;
-DROP TABLE IF EXISTS notifications_watch;
-DROP TABLE IF EXISTS notifications_watchfilter;
-DROP TABLE IF EXISTS schema_version;
-DROP TABLE IF EXISTS south_migrationhistory;
-DROP TABLE IF EXISTS teamwork_policy;
-DROP TABLE IF EXISTS teamwork_policy_groups;
-DROP TABLE IF EXISTS teamwork_policy_permissions;
-DROP TABLE IF EXISTS teamwork_policy_users;
-DROP TABLE IF EXISTS teamwork_role;
-DROP TABLE IF EXISTS teamwork_role_permissions;
-DROP TABLE IF EXISTS teamwork_role_users;
-DROP TABLE IF EXISTS teamwork_team;
-DROP TABLE IF EXISTS threadedcomments_freethreadedcomment;
-DROP TABLE IF EXISTS threadedcomments_testmodel;
-DROP TABLE IF EXISTS threadedcomments_threadedcomment;
-
--- To be dropped in bug 1180208, August 2015
-DROP TABLE IF EXISTS user_profiles;
 
 UPDATE account_emailaddress SET
     email = CONCAT(MD5(CONCAT(email, @common_hash_secret)), '@example.com');
