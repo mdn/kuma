@@ -678,6 +678,7 @@ def document(request, document_slug, document_locale):
         'seo_parent_title': seo_parent_title,
         'share_text': share_text,
         'search_url': get_search_url_from_referer(request) or '',
+        'analytics_page_revision': doc.current_revision_id,
     }
     response = render(request, 'wiki/document.html', context)
     return _set_common_headers(doc, rendering_params['section'], response)

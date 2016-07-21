@@ -25,11 +25,10 @@
         ga('set', 'dimension9', 'Enabled');
     {% endif %}
 
-
-    {% if document %}
+    {%- if analytics_page_revision %}
         // dimension12 == 'Page Revision"
-        ga('set', 'dimension12', {{ document.current_revision.id }});
-    {% endif %}
+        ga('set', 'dimension12', {{ analytics_page_revision }});
+    {%- endif %}
 
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
