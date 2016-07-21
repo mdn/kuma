@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-07-12 07:37-0700\n"
+"POT-Creation-Date: 2016-07-21 12:49-0700\n"
 "PO-Revision-Date: 2016-06-09 17:37+0000\n"
 "Last-Translator: Michał Dziewoński <mdziewonski@mozilla.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
@@ -563,7 +563,7 @@ msgstr "Opis zamierzonego użycia"
 msgid "Created"
 msgstr "Utworzono"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:69 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:122
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:104 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:243
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
 msgstr "Usuń"
@@ -839,8 +839,9 @@ msgstr "Filtr"
 msgid "Revert"
 msgstr "Przywróć"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:59 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:89
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:112 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:143 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:167
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:94 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:126
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:147 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:167 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:186
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:209 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:233 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:264
 #: kuma/wiki/feeds.py:340
 msgid "View Page"
 msgstr "Zobacz stronę"
@@ -849,8 +850,8 @@ msgstr "Zobacz stronę"
 msgid "Edit Page"
 msgstr "Edytuj stronę"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:63 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:116
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:147 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:171 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:98 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:213
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:237 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:268 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
 msgstr "Historia"
 
@@ -871,11 +872,11 @@ msgstr "Autor"
 msgid "Toggle IPs"
 msgstr "Zmień IP"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:27
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:35 kuma/users/jinja2/users/includes/user_revision_history_form.html:24
 msgid "new"
 msgstr "nowy"
 
-#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:28
+#: kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:36 kuma/users/jinja2/users/includes/user_revision_history_form.html:25
 msgid "deleted"
 msgstr "usunięte"
 
@@ -1402,7 +1403,7 @@ msgstr "Przesłane dane zawierają nieprawidłową treść. Spróbuj ponownie."
 msgid "created"
 msgstr "utworzono"
 
-#: kuma/spam/models.py:27 kuma/users/jinja2/users/includes/user_revision_history_form.html:7
+#: kuma/spam/models.py:27 kuma/users/jinja2/users/includes/user_revision_history_form.html:7 kuma/users/jinja2/users/includes/user_revision_history_form.html:71
 msgid "Spam"
 msgstr "Spam"
 
@@ -1617,21 +1618,21 @@ msgstr "Zgadzam się"
 msgid "Take the next step to get involved on MDN!"
 msgstr "Zrób kolejny krok, by zaangażować się na MDN!"
 
-#: kuma/users/views.py:356
+#: kuma/users/views.py:437
 msgid "Email address"
 msgstr "Adres e-mail"
 
-#: kuma/users/views.py:415
+#: kuma/users/views.py:496
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>Zweryfikowano</b>"
 
-#: kuma/users/views.py:418
+#: kuma/users/views.py:499
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s Nie zweryfikowany"
 
-#: kuma/users/views.py:421 kuma/users/jinja2/socialaccount/signup.html:135
+#: kuma/users/views.py:502 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr "Inne:"
 
@@ -2086,41 +2087,75 @@ msgstr "Dane przesłane do Akismet"
 msgid "The user did not have any revisions that were reported as spam."
 msgstr "To nie zostało stworzone przez autora"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:46
+#, fuzzy
+msgid "Deleted:"
+msgstr "Usuń"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:59
+#, fuzzy
+msgid "The user did not have any revisions that were deleted."
+msgstr "To nie zostało stworzone przez autora"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:63
+#, fuzzy
+msgid "Reverted:"
+msgstr "Przywróć"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77
+#, fuzzy
+msgid "The user did not have any revisions that were reverted."
+msgstr "To nie zostało stworzone przez autora"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:83
 msgid "Needs follow up"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:49
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:84
 msgid "New action by user:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:95 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:130
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:154 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:178
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:112 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:154
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:173 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:192 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:220
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:251 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:275
 #, fuzzy
 msgid "None."
 msgstr "Brak"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:80
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:116
+msgid "Revisions skipped due to newer non-spam revision:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:137
 #, fuzzy
 msgid "Could not submit to Akismet:"
 msgstr "Dane przesłane do Akismet"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:101
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:158
+#, fuzzy
+msgid "Could not delete:"
+msgstr "Dokument został usunięty"
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:177
+msgid "Could not revert:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:198
 msgid "No actions taken"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:102
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:199
+msgid "Latest revision is non-spam:"
+msgstr ""
+
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
 msgid "Already identified as spam:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:254
 #, fuzzy
-msgid "Not identified as spam:"
+msgid "Identified as not spam:"
 msgstr "Potwierdzony spam"
-
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:157
-msgid "Did not delete or revert:"
-msgstr ""
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2369,7 +2404,11 @@ msgstr ""
 msgid "Blog: %(blog_link)s"
 msgstr "Blog: %(blog_link)s"
 
-#: kuma/users/jinja2/users/includes/user_revision_history_form.html:72
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
+msgid "Already reported as spam."
+msgstr ""
+
+#: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 #, fuzzy
 msgid "This user has not created any revisions in the past three days."
 msgstr "To nie zostało stworzone przez autora"
@@ -2399,29 +2438,29 @@ msgstr "Obszary wiedzy specjalistycznej"
 msgid "Member since %(date_joined)s"
 msgstr "Członek od %(date_joined)s"
 
-#: kuma/users/templatetags/jinja_helpers.py:36
+#: kuma/users/templatetags/jinja_helpers.py:37
 #, python-format
 msgid "Banned on %(ban_date)s by %(ban_admin)s."
 msgstr "Zablokowany na %(ban_date)s przez %(ban_admin)s."
 
-#: kuma/users/templatetags/jinja_helpers.py:43
+#: kuma/users/templatetags/jinja_helpers.py:44
 msgid "Banned"
 msgstr "Zablokowany"
 
-#: kuma/users/templatetags/jinja_helpers.py:46
+#: kuma/users/templatetags/jinja_helpers.py:47
 #, fuzzy
 msgid "Clean Up Revisions"
 msgstr "Wybierz inną wersję"
 
-#: kuma/users/templatetags/jinja_helpers.py:51
+#: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
 msgstr "Blokowanie użytkowników"
 
-#: kuma/users/templatetags/jinja_helpers.py:54
+#: kuma/users/templatetags/jinja_helpers.py:55
 msgid "Ban User & Clean Up"
 msgstr ""
 
-#: kuma/users/templatetags/jinja_helpers.py:66
+#: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
 msgstr "Administrator"
 
@@ -2594,12 +2633,12 @@ msgstr "Ten artykuł został zmodyfikowany w trakcie twojej edycji."
 msgid "Changing this document's slug requires moving it and its children."
 msgstr "Zmiana ciągu słów tego dokumentu pociąga za sobą przeniesienie jego i powiązanych z nim dokumentów."
 
-#: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:867 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
+#: kuma/wiki/forms.py:335 kuma/wiki/forms.py:405 kuma/wiki/forms.py:871 kuma/wiki/jinja2/wiki/create.html:37 kuma/wiki/jinja2/wiki/edit.html:68 kuma/wiki/jinja2/wiki/edit.html:116
 #: kuma/wiki/jinja2/wiki/move.html:60 kuma/wiki/jinja2/wiki/includes/document_macros.html:66 kuma/wiki/jinja2/wiki/includes/translate_description.html:11
 msgid "Title:"
 msgstr "Tytuł:"
 
-#: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:868
+#: kuma/wiki/forms.py:336 kuma/wiki/forms.py:406 kuma/wiki/forms.py:872
 msgid "Title of article"
 msgstr "Tytuł artykułu"
 
@@ -2640,23 +2679,23 @@ msgstr "Krótki opis artykułu wyświetlany tylko na stronie wyników wyszukiwan
 msgid "Content:"
 msgstr "Treść:"
 
-#: kuma/wiki/forms.py:465
+#: kuma/wiki/forms.py:468
 msgid "Comment:"
 msgstr "Komentarz"
 
-#: kuma/wiki/forms.py:468
+#: kuma/wiki/forms.py:472
 msgid "Tag this revision for review?"
 msgstr "Oznaczyć tę wersję do sprawdzenia?"
 
-#: kuma/wiki/forms.py:475
+#: kuma/wiki/forms.py:479
 msgid "Tag this revision for localization?"
 msgstr "Oznaczyć tę wersje do lokalizacji?"
 
-#: kuma/wiki/forms.py:874
+#: kuma/wiki/forms.py:878
 msgid "New slug:"
 msgstr "Nowy ciąg słów:"
 
-#: kuma/wiki/forms.py:875
+#: kuma/wiki/forms.py:879
 msgid "New article URL"
 msgstr "Adres URL artykułu"
 
@@ -3883,17 +3922,17 @@ msgstr "Przekierowano z %(url)s"
 msgid "I learned about %(title)s on MDN."
 msgstr "Dowiedziałem się o %(title)s na MDN."
 
-#: kuma/wiki/views/document.py:725
+#: kuma/wiki/views/document.py:726
 #, python-format
 msgid "Unsupported content-type: %s"
 msgstr "Nieobsługiwany typ treści: %s"
 
-#: kuma/wiki/views/document.py:732
+#: kuma/wiki/views/document.py:733
 #, python-format
 msgid "Request parsing error: %s"
 msgstr "Błąd przetwarzania: %s"
 
-#: kuma/wiki/views/document.py:752
+#: kuma/wiki/views/document.py:753
 msgid "ETag precondition failed"
 msgstr "Nie powiodło się użycie warunku eTag"
 
