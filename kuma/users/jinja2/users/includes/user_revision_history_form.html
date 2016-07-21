@@ -15,11 +15,8 @@
             <tbody>
                 {% set previous_id = revision.previous.id %}
                 {% set revision_url = revision.document.get_absolute_url() %}
-                <tr
-                    tabindex="0"
-                    class="dashboard-row {% if not previous_id %}dashboard-row-new{% endif %}"
-                    >
-                    <td></td>
+                <tr class="dashboard-row {% if not previous_id %}dashboard-row-new{% endif %}">
+                    <td></td> <!-- This cell intentionally left blank -->
                     <td class="dashboard-revision">
                         <a href="{{ url('wiki.revision', revision.document.slug, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
                         <br />
@@ -42,8 +39,23 @@
                 <tr>
                     <td></td>
                     <td colspan=4>
+                        {# If this is a revision, compare with most recent revision #}
                         {% if previous_id %}
                             {% with revision_from=revision.previous, revision_to=revision %}
+                              <div class="dashboard-compare">
+                                {% include "wiki/includes/revision_diff_table.html" %}
+                              </div>
+                            {% endwith %}
+
+                        {# If this is a new translation, compare it with English translation #}
+                        {% elif revision.document.locale != 'en-US' %}
+                            {% with revision_from=revision.based_on, revision_to=revision %}
+                              <div class="dashboard-compare">
+                                {% include "wiki/includes/revision_diff_table.html" %}
+                              </div>
+                            {% endwith %}
+                        {% else %}
+                            {% with revision_from=revision, revision_to=revision %}
                               <div class="dashboard-compare">
                                 {% include "wiki/includes/revision_diff_table.html" %}
                               </div>
@@ -56,11 +68,13 @@
                       {% if not revision.akismet_submissions.all() %}
                         <label>
                           <input type="checkbox" name="revision-id" value="{{ revision.id }}" checked></input>
-                          <strong>Spam</strong>
+                          <strong>{{ _('Spam') }}</strong>
                         </label>
                       {% else %}
-                        <label><input type="checkbox" name="revision-already-spam" value="{{ revision.id }}" checked style="visibility:hidden;"></input></label>
-                        <p>Already reported as spam.</p>
+                        <label>
+                          <input type="checkbox" name="revision-already-spam" value="{{ revision.id }}" checked style="visibility:hidden;"></input>
+                        </label>
+                        <p>{{ _('Already reported as spam.') }}</p>
                       {% endif %}
                     </td>
                 </tr>

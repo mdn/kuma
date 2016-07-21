@@ -14,6 +14,9 @@ from django.conf import settings
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
+from django.db import IntegrityError
+from django.http import Http404
+from django.test import RequestFactory
 from pyquery import PyQuery as pq
 from waffle.models import Flag
 
@@ -21,12 +24,16 @@ from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
-from kuma.wiki.models import RevisionAkismetSubmission
+from kuma.wiki.models import (Document, Revision, RevisionAkismetSubmission,
+                              DocumentDeletionLog)
+from kuma.wiki.tests import document as create_document
+
 
 from . import SampleRevisionsMixin, UserTestCase, email, user
 from ..models import UserBan
 from ..providers.github.provider import KumaGitHubProvider
 from ..signup import SignupForm
+from ..views import delete_document, revert_document
 
 
 TESTUSER_PASSWORD = 'testpass'
@@ -53,7 +60,7 @@ class BanTestCase(UserTestCase):
         self.client.login(username='testuser',
                           password='testpass')
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': admin.id})
+                          kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
         eq_(302, resp.status_code)
         ok_(str(settings.LOGIN_URL) in resp['Location'])
@@ -63,7 +70,7 @@ class BanTestCase(UserTestCase):
         self.client.login(username='admin',
                           password='testpass')
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
 
@@ -75,7 +82,7 @@ class BanTestCase(UserTestCase):
 
         data = {'reason': 'Banned by unit test.'}
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
 
         resp = self.client.post(ban_url, data)
         eq_(302, resp.status_code)
@@ -95,15 +102,15 @@ class BanTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        nonexistent_user_id = self.user_model.objects.last().id + 1
+        nonexistent_username = 'foo'
         data = {'reason': 'Banned by unit test.'}
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': nonexistent_user_id})
+                          kwargs={'username': nonexistent_username})
 
         resp = self.client.post(ban_url, data)
         eq_(404, resp.status_code)
 
-        bans = UserBan.objects.filter(user__id=nonexistent_user_id,
+        bans = UserBan.objects.filter(user__username=nonexistent_username,
                                       by=admin,
                                       reason='Banned by unit test.')
         eq_(bans.count(), 0)
@@ -116,7 +123,7 @@ class BanTestCase(UserTestCase):
         self.client.login(username='admin', password='testpass')
 
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
 
         # POST without data kwargs
         resp = self.client.post(ban_url)
@@ -171,7 +178,7 @@ class BanTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
@@ -198,7 +205,7 @@ class BanAndCleanupTestCase(UserTestCase):
         self.client.login(username='testuser',
                           password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': admin.id})
+                          kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
         eq_(302, resp.status_code)
         ok_(str(settings.LOGIN_URL) in resp['Location'])
@@ -208,7 +215,7 @@ class BanAndCleanupTestCase(UserTestCase):
         self.client.login(username='admin',
                           password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
 
@@ -220,7 +227,7 @@ class BanAndCleanupTestCase(UserTestCase):
         self.client.login(username='admin',
                           password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'user_id': testuser.id})
+                          kwargs={'username': testuser.username})
         testuser.delete()
         resp = self.client.get(ban_url)
         eq_(404, resp.status_code)
@@ -234,9 +241,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         super(BanUserAndCleanupSummaryTestCase, self).setUp()
 
         self.ban_testuser_url = reverse('users.ban_user_and_cleanup_summary',
-                                        kwargs={'user_id': self.testuser.id})
+                                        kwargs={'username': self.testuser.username})
         self.ban_testuser2_url = reverse('users.ban_user_and_cleanup_summary',
-                                         kwargs={'user_id': self.testuser2.id})
+                                         kwargs={'username': self.testuser2.username})
         self.client.login(username='admin', password='testpass')
 
     def enable_akismet_and_mock_requests(self, mock_requests):
@@ -245,6 +252,58 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         mock_requests.post(VERIFY_URL, content='valid')
         mock_requests.post(SPAM_URL, content=Akismet.submission_success)
         return mock_requests
+
+    def test_delete_document(self):
+        """
+        A given document can be deleted, and will create a corresponding DocumentDeletionLog.
+        """
+        factory = RequestFactory()
+        request = factory.get(self.ban_testuser_url)
+        request.user = self.admin
+
+        # Trying to delete a document that is None will fail without error.
+        success = delete_document(request, None)
+        self.assertFalse(success)
+
+        # Calling on a real document deletes the document and creates the log object
+        self.assertFalse(DocumentDeletionLog.objects.exists())
+        success = delete_document(request, self.document)
+        self.assertTrue(success)
+        self.assertFalse(Document.objects.filter(id=self.document.id).exists())
+        self.assertTrue(DocumentDeletionLog.objects.exists())
+
+    def test_revert_document(self):
+        factory = RequestFactory()
+        request = factory.get(self.ban_testuser_url)
+        request.user = self.admin
+
+        # Create a spam revision on top of the original good rev.
+        revisions_created = self.create_revisions(
+            num=1,
+            document=self.document,
+            creator=self.testuser)
+        revision_id = revisions_created[0].id
+
+        # Reverting a non-existent rev raises a 404
+        with self.assertRaises(Http404):
+            revert_document(request, revision_id + 1)
+
+        # Reverting an existing rev succeeds
+        success = revert_document(request, revision_id)
+        self.assertTrue(success)
+        self.document.refresh_from_db(fields=['current_revision'])
+        self.assertNotEqual(revision_id, self.document.current_revision.id)
+
+        # If an IntegrityError is raised when we try to revert, it fails without error.
+        revision_id = self.document.current_revision.id
+        with mock.patch('kuma.wiki.models.datetime') as datetime_mock:
+            # Just get any old thing inside the call to raise an IntegrityError
+            datetime_mock.now.side_effect = IntegrityError()
+
+            success = revert_document(request, revision_id)
+        self.assertFalse(success)
+        self.document.refresh_from_db(fields=['current_revision'])
+        self.assertEqual(revision_id, self.document.current_revision.id)
 
     def test_ban_nonexistent_user(self):
         """POSTs to ban_user_and_cleanup for nonexistent user return 404."""
@@ -388,10 +447,194 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # Akismet endpoints were not called
         eq_(mock_requests.call_count, 0)
 
-#    TODO: Phase III:
-#    def test_post_reverts_revisions(self):
-#    def test_post_deletes_new_pages(self):
-#
+    def test_post_deletes_new_page(self):
+        """POSTing to ban_user_and_cleanup url with a new document."""
+        # Create a new document and revisions as testuser
+        # Revisions will be reverted and then document will be deleted.
+        new_document = create_document(save=True)
+        new_revisions = self.create_revisions(
+            num=3,
+            document=new_document,
+            creator=self.testuser)
+
+        # Pass in all revisions, each should be reverted then the
+        # document will be deleted as well
+        data = {'revision-id': [rev.id for rev in new_revisions]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # Test that the document was deleted successfully
+        deleted_doc = Document.admin_objects.filter(pk=new_document.pk).first()
+        eq_(deleted_doc.deleted, True)
+
+    def test_post_reverts_page(self):
+        """POSTing to ban_user_and_cleanup url with revisions to a document."""
+        # Create a new document and first revision as an admin
+        # and spam revisions as testuser.
+        # Document should be reverted with a new revision by admin.
+        new_document = create_document(save=True)
+        self.create_revisions(num=1, document=new_document, creator=self.admin)
+        original_content = new_document.current_revision.content
+        spam_revisions = self.create_revisions(
+            num=3,
+            document=new_document,
+            creator=self.testuser)
+        for rev in spam_revisions:
+            rev.content = "Spam!"
+            rev.save()
+
+        # Before we send in the spam,
+        # last spam_revisions[] should be the current revision
+        eq_(new_document.current_revision.id, spam_revisions[2].id)
+        # and testuser is the creator of this current revision
+        eq_(new_document.current_revision.creator, self.testuser)
+
+        # Pass in all spam revisions, each should be reverted then the
+        # document should return to the original revision
+        data = {'revision-id': [rev.id for rev in spam_revisions]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        new_document = Document.objects.filter(id=new_document.id).first()
+        # Make sure that the current revision is not the spam revision
+        for revision in spam_revisions:
+            ok_(revision.id != new_document.current_revision.id)
+        # The most recent Revision object should be the document's current revision
+        latest_revision = Revision.objects.order_by('-id').first()
+        eq_(new_document.current_revision.id, latest_revision.id)
+        # Admin is the creator of this current revision
+        eq_(new_document.current_revision.creator, self.admin)
+        # The new revision's content is the same as the original's
+        eq_(new_document.current_revision.content, original_content)
+
+    def test_post_one_reverts_one_does_not_revert(self):
+        """POSTing to ban_user_and_cleanup url with revisions to 2 documents."""
+        # Document A will have latest revision by the admin, but older spam revisions
+        # Document B will have latest revision by spammer
+        # Document A should not revert (although there are older spam revisions)
+        # Document B will revert
+        new_document_a = create_document(save=True)
+        new_document_b = create_document(save=True)
+        self.create_revisions(
+            num=1, document=new_document_a, creator=self.admin)
+        self.create_revisions(
+            num=1, document=new_document_b, creator=self.admin)
+        spam_revisions_a = self.create_revisions(
+            num=3,
+            document=new_document_a,
+            creator=self.testuser)
+        safe_revision_a = self.create_revisions(
+            num=1,
+            document=new_document_a,
+            creator=self.admin)
+        spam_revisions_b = self.create_revisions(
+            num=3,
+            document=new_document_b,
+            creator=self.testuser)
+
+        # Pass in all spam revisions:
+        # A revisions will not be reverted
+        # B revisions will be reverted
+        data = {'revision-id': [rev.id for rev in spam_revisions_a + spam_revisions_b]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # Document A: No changes should have been made
+        new_document_a = Document.objects.filter(id=new_document_a.id).first()
+        eq_(new_document_a.current_revision.id, safe_revision_a[0].id)
+        revisions_a = Revision.objects.filter(document=new_document_a)
+        eq_(revisions_a.count(), 5)  # Total of 5 revisions, no new revisions were made
+
+        # Document B: Make sure that the current revision is not the spam revision
+        new_document_b = Document.objects.filter(id=new_document_b.id).first()
+        for revision in spam_revisions_b:
+            ok_(revision.id != new_document_b.current_revision.id)
+        # The most recent Revision for this document
+        # should be the document's current revision
+        latest_revision_b = Revision.objects.filter(
+            document=new_document_b).order_by('-id').first()
+        eq_(new_document_b.current_revision.id, latest_revision_b.id)
+        # Admin is the creator of this current revision
+        eq_(new_document_b.current_revision.creator, self.admin)
+        revisions_b = Revision.objects.filter(document=new_document_b)
+        # 5 total revisions on B = 1 initial + 3 spam revisions + 1 new reverted revision
+        eq_(revisions_b.count(), 5)
+
+    def test_current_rev_is_non_spam(self):
+        new_document = create_document(save=True)
+        self.create_revisions(
+            num=1, document=new_document, creator=self.admin)
+        spam_revisions = self.create_revisions(
+            num=3,
+            document=new_document,
+            creator=self.testuser)
+        safe_revision = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.admin)
+
+        # Pass in spam revisions:
+        data = {'revision-id': [rev.id for rev in spam_revisions]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # No changes should have been made to the document
+        new_document = Document.objects.get(id=new_document.id)
+        eq_(new_document.current_revision.id, safe_revision[0].id)
+        revisions = Revision.objects.filter(document=new_document)
+        eq_(revisions.count(), 5)  # Total of 5 revisions, no new revisions were made
+
+    def test_intermediate_non_spam_rev(self):
+        new_document = create_document(save=True)
+        # Create 4 revisions: one good, one spam, one good, then finally one spam
+        self.create_revisions(
+            num=1, document=new_document, creator=self.admin)
+        spam_revision1 = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.testuser)
+        safe_revision = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.admin)
+        # Set the content of the last good revision, so we can compare afterwards
+        safe_revision[0].content = "Safe"
+        safe_revision[0].save()
+        spam_revision2 = self.create_revisions(
+            num=1,
+            document=new_document,
+            creator=self.testuser)
+
+        # Pass in spam revisions:
+        data = {'revision-id': [rev.id for rev in spam_revision1 + spam_revision2]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        # The document should be reverted to the last good revision
+        new_document = Document.objects.get(id=new_document.id)
+
+        # Make sure that the current revision is not either of the spam revisions
+        for revision in spam_revision1 + spam_revision2:
+            ok_(revision.id != new_document.current_revision.id)
+
+        # And that it did actually revert
+        ok_(new_document.current_revision.id != safe_revision[0].id)
+
+        revisions = Revision.objects.filter(document=new_document)
+        eq_(revisions.count(), 5)  # Total of 5 revisions, a new revision was made
+
+        eq_(new_document.current_revision.content, "Safe")
+
 #    TODO: Phase IV:
 #    def test_post_sends_email(self):
 

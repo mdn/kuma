@@ -29,7 +29,7 @@
         </div>
 
         <h5>{{ _('or enter a reason in the text box below') }}:</h5>
-        <form method="post" id="ban-user-form" action="{{ url('users.ban_user',detail_user.id) }}">
+        <form method="post" id="ban-user-form" action="{{ url('users.ban_user',detail_user.username) }}">
           {% csrf_token %}
           {{ form.reason.errors }}
           <div>{{ form.reason }}</div>
