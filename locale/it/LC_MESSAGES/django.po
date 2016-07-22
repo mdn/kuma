@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-21 12:49-0700\n"
-"PO-Revision-Date: 2016-07-21 18:53+0000\n"
+"PO-Revision-Date: 2016-07-22 11:29+0000\n"
 "Last-Translator: Sandro Della Giustina <gialloporpora@mozillaitalia.org>\n"
 "Language-Team: Italian https://pontoon.mozilla.org/it/\n"
 "Language: it\n"
@@ -2079,22 +2079,18 @@ msgid "The user did not have any revisions that were reported as spam."
 msgstr "Nessuna modifica di questo utente è stata segnalata come spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:46
-#, fuzzy
 msgid "Deleted:"
-msgstr "Elimina"
+msgstr "Eliminati:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:59
-#, fuzzy
 msgid "The user did not have any revisions that were deleted."
-msgstr "Non è stata annullata alcuna modifica di questo utente."
+msgstr "aNon è stata annullata alcuna modifica di questo utente."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:63
-#, fuzzy
 msgid "Reverted:"
-msgstr "Ripristina"
+msgstr "Annullate:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77
-#, fuzzy
 msgid "The user did not have any revisions that were reverted."
 msgstr "Non è stata annullata alcuna modifica di questo utente."
 
@@ -2114,20 +2110,19 @@ msgstr "Niente da segnalare."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:116
 msgid "Revisions skipped due to newer non-spam revision:"
-msgstr ""
+msgstr "Scartate per l’esistenza di nuove revisioni senza spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:137
 msgid "Could not submit to Akismet:"
 msgstr "Contenuti non trasmessi a Akismet:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:158
-#, fuzzy
 msgid "Could not delete:"
-msgstr "Il documento è stato eliminato"
+msgstr "Impossibili da eliminare:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:177
 msgid "Could not revert:"
-msgstr ""
+msgstr "Impossibili da annullare:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:198
 msgid "No actions taken"
@@ -2135,16 +2130,15 @@ msgstr "Nessuna azione intrapresa"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:199
 msgid "Latest revision is non-spam:"
-msgstr ""
+msgstr "Ultima revisione senza spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
 msgid "Already identified as spam:"
 msgstr "Identificati come spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:254
-#, fuzzy
 msgid "Identified as not spam:"
-msgstr "Spam confermato"
+msgstr "Identificati come non spam:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2399,7 +2393,7 @@ msgstr "Blog: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
-msgstr ""
+msgstr "È già stato segnalato come spam."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
 msgid "This user has not created any revisions in the past three days."
