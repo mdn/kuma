@@ -10,13 +10,16 @@ from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from constance import config
 from django import forms
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
+from django.core.mail import send_mail
 from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext_lazy as _
 from honeypot.decorators import verify_honeypot_value
@@ -274,6 +277,9 @@ def ban_user_and_cleanup_summary(request, username):
                'needs_follow_up': needs_follow_up,
                'no_actions_taken': no_actions_taken}
 
+    # Send an email to the spam watch mailing list.
+    ban_and_revert_notification(user, request.user, context)
+
     return render(request,
                   'users/ban_user_and_cleanup_summary.html',
                   context)
@@ -287,6 +293,17 @@ def revision_by_distinct_doc(list_of_revisions):
             documents[rev.document_id] = rev
 
     return [documents[doc_id] for doc_id in sorted(documents)]
+
+
+def ban_and_revert_notification(spammer, moderator, info):
+    subject = u'[MDN] %s has been banned by %s' % (spammer, moderator)
+    context = {'spammer': spammer,
+               'moderator': moderator}
+    context.update(info)
+    body = render_to_string('wiki/email/spam_ban.ltxt', context)
+
+    send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
+              [config.EMAIL_LIST_SPAM_WATCH])
 
 
 @permission_required('users.add_userban')
