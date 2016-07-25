@@ -679,7 +679,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         tz = timezone(settings.TIME_ZONE)
 
         eq_(len(mail.outbox), 1)
-        eq_(mail.outbox[0].body,
+        eq_(
+            mail.outbox[0].body,
             dedent(
                 """
                 * ACTIONS TAKEN *
@@ -715,16 +716,19 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
                 Latest revision is non-spam:
 
-                  - {rev3.title} [https://example.com{rev3_url}]""".format(
-                      user=self.testuser,
-                      date_joined=tz.localize(self.testuser.date_joined).astimezone(utc),
-                      rev1=spam_revision1[0],
-                      rev2=spam_revision2[0],
-                      rev3=spam_revision3[0],
-                      rev1_url=spam_revision1[0].get_absolute_url(),
-                      rev2_doc_url=spam_revision2[0].document.get_absolute_url(),
-                      rev3_url=spam_revision3[0].get_absolute_url())
-            ))
+                  - {rev3.title} [https://example.com{rev3_url}]
+                """.format(
+                    user=self.testuser,
+                    date_joined=tz.localize(self.testuser.date_joined).astimezone(utc),
+                    rev1=spam_revision1[0],
+                    rev2=spam_revision2[0],
+                    rev3=spam_revision3[0],
+                    rev1_url=spam_revision1[0].get_absolute_url(),
+                    rev2_doc_url=spam_revision2[0].document.get_absolute_url(),
+                    rev3_url=spam_revision3[0].get_absolute_url()
+                )
+            )
+        )
 
 
 class UserViewsTest(UserTestCase):
