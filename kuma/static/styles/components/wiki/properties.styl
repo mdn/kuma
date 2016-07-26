@@ -7,6 +7,7 @@ $properties-item-spacing = $content-horizontal-spacing;
 $properties-spacing = ($grid-spacing) - $properties-item-spacing;
 $properties-indent = ($grid-spacing * 2) - $properties-item-spacing;
 
+.learn-box, /* not part of .properties so not being phased out */
 .properties, /* writing team is transitioning to use only this class - bug 1207344 */
 .cssprop,
 .htmlelt,
@@ -72,9 +73,15 @@ $properties-indent = ($grid-spacing * 2) - $properties-item-spacing;
     }
 }
 
-/* small screen improvments to table display, only need to apply to .properties
+.text-content .learn-box {
+    border-color: #f69855;
+    background-color: #fce1ce;
+}
+
+/* small screen improvements to table display, only need to apply to .properties and .learn-box
 because we can be sure that is implemented with a table element */
 @media $media-query-small-mobile {
+    .learn-box,
     .properties {
         th,
         td {
