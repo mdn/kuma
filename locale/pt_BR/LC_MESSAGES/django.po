@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-21 12:49-0700\n"
-"PO-Revision-Date: 2016-07-22 04:56+0000\n"
+"PO-Revision-Date: 2016-07-22 04:54+0000\n"
 "Last-Translator: Cynthia Pereira <cynthiacpereira@gmail.com>\n"
 "Language-Team: Portuguese (Brazilian) https://pontoon.mozilla.org/pt_BR/\n"
 "Language: pt_BR\n"
@@ -2093,7 +2093,7 @@ msgstr "Revertido:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77
 msgid "The user did not have any revisions that were reverted."
-msgstr ""
+msgstr "O usuário não tem quaisquer revisões que foram revertidas."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:83
 msgid "Needs follow up"
@@ -2112,7 +2112,7 @@ msgstr "Nenhum."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:116
 msgid "Revisions skipped due to newer non-spam revision:"
-msgstr ""
+msgstr "Revisões ignoradas devido a revisão mais recente não ser spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:137
 msgid "Could not submit to Akismet:"
@@ -2132,7 +2132,7 @@ msgstr "Não há ações tomadas"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:199
 msgid "Latest revision is non-spam:"
-msgstr ""
+msgstr "Última revisão não é spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
 msgid "Already identified as spam:"
