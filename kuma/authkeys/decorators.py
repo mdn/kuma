@@ -1,4 +1,5 @@
 import base64
+import binascii
 
 try:
     from functools import wraps
@@ -29,7 +30,7 @@ def accepts_auth_key(func):
                     if key.check_secret(secret):
                         request.authkey = key
                         request.user = key.user
-            except (ValueError, Key.DoesNotExist):
+            except (binascii.Error, ValueError, Key.DoesNotExist):
                 pass
         return func(request, *args, **kwargs)
 
