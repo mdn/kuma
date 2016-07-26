@@ -655,19 +655,13 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         banned_user = page.find('#banned-user li').text()
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        # TODO: Add in Phase IV
-        # revisions_emailed= page.find('#revisions-emailed li')
         revisions_submitted_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted_section = page.find('#revisions-reverted')
         revisions_deleted_section = page.find('#revisions-deleted')
-        # TODO: Add in Phase IV
-        # revisions_emailed_section = page.find('#revisions-emailed')
         revisions_submitted_as_spam_section = page.find('#revisions-followup')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reverted), 0)
         eq_(len(revisions_deleted), 0)
-        # TODO: Add in Phase IV
-        # eq_(len(revisions_emailed), 0)
         eq_(len(revisions_submitted_as_spam), 0)
 
         expected_text = 'The user did not have any revisions that were reverted.'
@@ -675,8 +669,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         expected_text = 'The user did not have any revisions that were deleted.'
         ok_(expected_text in revisions_deleted_section.text())
         expected_text = 'None.'
-        # TODO: Add in Phase IV
-        # ok_(expected_text in revisions_emailed_section.text())
         ok_(expected_text in revisions_submitted_as_spam_section.text())
 
         # The "Needs follow up" section
@@ -726,14 +718,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             revisions_reported_as_spam_text += rev.text_content()
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        # TODO: Add in Phase IV
-        # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), len(revisions_created))
         eq_(len(revisions_reverted), 0)
         eq_(len(revisions_deleted), len(revisions_created))
-        # TODO: Add in Phase IV
-        # eq_(len(revisions_emailed), len(revisions_created))
         # The title for each of the created revisions shows up in the template
         for revision in revisions_created:
             ok_(revision.title in revisions_reported_as_spam_text)
@@ -788,14 +776,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        # TODO: Add in Phase IV
-        # revisions_emailed = page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), 1)
         eq_(len(revisions_reverted), 1)
         eq_(len(revisions_deleted), 0)
-        # TODO: Add in Phase IV
-        # eq_(len(revisions_emailed), 1)
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -843,14 +827,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        # TODO: Add in Phase IV
-        # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), 0)
         eq_(len(revisions_reverted), 1)
         eq_(len(revisions_deleted), 0)
-        # TODO: Add in Phase IV
-        # eq_(len(revisions_emailed), 1)
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -901,14 +881,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        # TODO: Add in Phase IV
-        # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), 0)
         eq_(len(revisions_reverted), 0)
         eq_(len(revisions_deleted), 0)
-        # TODO: Add in Phase IV
-        # eq_(len(revisions_emailed), 1)
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -966,14 +942,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        # TODO: Add in Phase IV
-        # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), 0)
         eq_(len(revisions_reverted), 0)
         eq_(len(revisions_deleted), 0)
-        # TODO: Add in Phase IV
-        # eq_(len(revisions_emailed), 1)
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -1050,8 +1022,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         revisions_deleted = page.find('#revisions-deleted li')
-        # TODO: Add in Phase IV
-        # revisions_emailed= page.find('#revisions-emailed li')
         eq_(banned_user, self.testuser.username)
         eq_(len(revisions_reported_as_spam), 3)
         # The revisions shown are revs_doc_1[0], revs_doc_2[1], and revs_doc_3[2]
@@ -1060,8 +1030,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             ok_(item.text_content().strip() in [revs_doc_1[0].title, revs_doc_2[1].title, revs_doc_3[2].title])
         eq_(len(revisions_reverted), 0)
         eq_(len(revisions_deleted), 1)
-        # TODO: Add in Phase IV
-        # eq_(len(revisions_emailed), 1)
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -1102,6 +1070,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             document=doc1,
             creator=self.testuser,
             save=True)
+        # TODO: Phase V: arrange that this revision will go into the "New action by user"
+        # section.  Currently the document will wind up being deleted automatically.
+
         # Create an original revision on another document by the self.testuser
         doc2 = create_document(save=True)
         rev_doc2 = create_revision(
@@ -1109,8 +1080,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             document=doc2,
             creator=self.testuser,
             save=True)
-
-        # TODO: Phase IV: create a revision that will go into the "New action by user" section
 
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
@@ -1122,15 +1091,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         eq_(200, resp.status_code)
         page = pq(resp.content)
 
-        # TODO: PhaseIII: The revision on doc1 should have a delete link in the
-        # "Reverted" section under "Actions taken"
-        # doc1_delete_url = reverse(
-        #     'wiki.delete_document',
-        #     kwargs={'document_path': doc1.slug},
-        #     force_locale=True)
-        # doc1_delete_link = page.find('#reverted a[href="{url}"]'.format(
-        #     url=doc1_delete_url))
-        # TODO: PhaseIV: The revision done after the reviewing has begun should
+        # TODO: Phase V: The revision done after the reviewing has begun should
         # have a delete link in the "New action by user" section under "Needs follow up"
 
         # The revision on doc2 should have a delete link in the "Already identified as spam"
@@ -1143,11 +1104,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             url=doc2_delete_url))
 
         # There should be 1 delete link found in each section
-        # TODO: PhaseIII
+        # TODO: Phase V
         # eq_(len(doc1_delete_link), 1)
         eq_(len(doc2_delete_link), 1)
-        # TODO: PhaseIV
-        # eq_(len(doc3_delete_link), 1)
 
     def test_delete_link_does_not_appear_summary_page_no_create_doc(self):
         """
@@ -1166,18 +1125,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             num=1,
             document=self.document,
             creator=self.testuser)
-        # TODO: PhaseIII
-        # Create another doc and a revision by self.admin and a revision by self.testuser
-        # new_doc = create_document(save=True)
-        # self.create_revisions(
-        #     num=1,
-        #     document=new_doc,
-        #     creator=self.admin)
-        # revisions_reverted = self.create_revisions(
-        #     num=1,
-        #     document=new_doc,
-        #     creator=self.testuser)
-        # TODO: PhaseIV: Create a revision by self.testuser after reviewing has
+
+        # TODO: Phase V: Create a revision by self.testuser after reviewing has
         # begun so it shows up in the "New action by user" section
 
         self.client.login(username='admin', password='testpass')
@@ -1186,11 +1135,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         full_ban_url = self.client.get(ban_url)['Location']
 
         data = {'revision-already-spam': [revisions_already_spam[0].id]}
-        # TODO: PhaseIII
-        # data = {
-        #     'revision-id': revisions_reverted[0].id,
-        #     'revision-already-spam': [revisions_already_spam[0].id]
-        # }
         resp = self.client.post(full_ban_url, data=data)
         eq_(200, resp.status_code)
         page = pq(resp.content)
@@ -1199,9 +1143,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             'wiki.delete_document',
             kwargs={'document_path': self.document.slug},
             force_locale=True)
-        # TODO: PhaseIII
-        # delete_link_reverted_section = page.find('#reverted a[href="{url}"]'.format(
-        #     url=delete_url))
         # TODO: PhaseV
         # delete_link_new_action_section = page.find('#new-actions-by-user a[href="{url}"]'.format(
         #     url=delete_url))
@@ -1209,8 +1150,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             url=delete_url))
 
         # There should not be a delete link in any of these sections
-        # TODO: PhaseIII
-        # eq_(len(delete_link_reverted_section), 0)
         # TODO: PhaseV
         # eq_(len(delete_link_new_action_section), 0)
         eq_(len(delete_link_already_spam_section), 0)
@@ -1268,7 +1207,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             'wiki.delete_document',
             kwargs={'document_path': doc2.slug},
             force_locale=True)
-        # TODO: PhaseIV
+        # TODO: PhaseV
         # delete_url_new_action
 
         delete_link_reverted_section = page.find('#reverted a[href="{url}"]'.format(
