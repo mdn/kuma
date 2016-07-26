@@ -1230,6 +1230,21 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.assertEqual(response.context["form"].initial["email"],
                          private_email)
 
+    def test_email_addresses_with_no_alternatives(self):
+        private_email = self.github_profile_data['email']
+        self.github_login(email_data=[])
+        response = self.client.get(self.signup_url)
+        self.assertEqual(response.context["form"].initial["email"],
+                         private_email)
+
+    def test_no_email_addresses(self):
+        """Note: this does not seem to currently happen."""
+        profile_data = self.github_profile_data.copy()
+        profile_data['email'] = None
+        self.github_login(profile_data=profile_data, email_data=[])
+        response = self.client.get(self.signup_url)
+        self.assertEqual(response.context["form"].initial["email"], '')
+
     def test_matching_accounts(self):
         testemail = 'octo.cat.III@github-inc.com'
         profile_data = self.github_profile_data.copy()

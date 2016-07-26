@@ -455,43 +455,29 @@ class SignupView(BaseSignupView):
         self.matching_user = None
         initial_username = form.initial.get('username', None)
         # For GitHub users, see if we can find matching user by username
-        if self.sociallogin.account.provider == 'github':
-            User = get_user_model()
-            try:
-                self.matching_user = User.objects.get(username=initial_username)
-                # deleting the initial username because we found a matching user
-                del form.initial['username']
-            except User.DoesNotExist:
-                pass
+        assert self.sociallogin.account.provider == 'github'
+        User = get_user_model()
+        try:
+            self.matching_user = User.objects.get(username=initial_username)
+            # deleting the initial username because we found a matching user
+            del form.initial['username']
+        except User.DoesNotExist:
+            pass
 
         email = self.sociallogin.account.extra_data.get('email') or None
-
-        # For Persona users, see if we can find matching user by email address
-        if self.sociallogin.account.provider == 'persona':
-            try:
-                matching_addresses = EmailAddress.objects.filter(email=email,
-                                                                 verified=True)
-                matching_emailaddress = matching_addresses[0]
-                self.matching_user = matching_emailaddress.user
-                email_address = {'email': email,
-                                 'verified': matching_emailaddress.verified,
-                                 'primary': matching_emailaddress.primary}
-                self.email_addresses[email] = email_address
-            except IndexError:
-                pass
-
         extra_email_addresses = (self.sociallogin
                                      .account
                                      .extra_data
-                                     .get('email_addresses', None))
+                                     .get('email_addresses')) or []
 
         # if we didn't get any extra email addresses from the provider
         # but the default email is available, simply hide the form widget
-        if extra_email_addresses is None and email is not None:
+        if not extra_email_addresses and email is not None:
             form.fields['email'].widget = forms.HiddenInput()
 
-        # if there are extra email addresses from the provider (like GitHub)
-        elif extra_email_addresses is not None:
+        # let the user choose from provider's extra email addresses, or enter
+        # a new one.
+        else:
             # build a mapping of the email addresses to their other values
             # to be used later for resetting the social accounts email addresses
             for email_address in extra_email_addresses:
@@ -516,7 +502,10 @@ class SignupView(BaseSignupView):
                     label = _('%(email)s Unverified')
                 next_email = email_address['email']
                 choices.append((next_email, label % {'email': next_email}))
-            choices.append((form.other_email_value, _('Other:')))
+            if extra_email_addresses:
+                choices.append((form.other_email_value, _('Other:')))
+            else:
+                choices.append((form.other_email_value, _('Email:')))
             email_select = forms.RadioSelect(choices=choices,
                                              attrs={'id': 'email'})
             form.fields['email'].widget = email_select
@@ -563,15 +552,10 @@ class SignupView(BaseSignupView):
         context = super(SignupView, self).get_context_data(**kwargs)
         or_query = []
         # For GitHub users, find matching Persona social accounts by emails
-        if self.sociallogin.account.provider == 'github':
-            for email_address in self.email_addresses.values():
-                if email_address['verified']:
-                    or_query.append(Q(uid=email_address['email']))
-
-        # For Persona users, find matching GitHub social accounts directly
-        elif self.sociallogin.account.provider == 'persona':
-            if self.matching_user:
-                or_query.append(Q(user=self.matching_user, provider='github'))
+        assert self.sociallogin.account.provider == 'github'
+        for email_address in self.email_addresses.values():
+            if email_address['verified']:
+                or_query.append(Q(uid=email_address['email']))
 
         if or_query:
             reduced_or_query = reduce(operator.or_, or_query)
