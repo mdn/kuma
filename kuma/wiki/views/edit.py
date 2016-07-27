@@ -152,7 +152,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
 
         # Comparing against localized names for the Save button bothers me, so
         # I embedded a hidden input:
-        which_form = request.POST.get('form')
+        which_form = request.POST.get('form-type')
 
         if which_form == 'doc':
             if doc.allows_editing_by(request.user):
@@ -173,10 +173,9 @@ def edit(request, document_slug, document_locale, revision_id=None):
                     if is_async_submit:
                         data = {
                             "error" : False,
-                            "new_revision_id" : 13 #TODO: get next revision number
+                            "new_revision_id" : rev.document.revisions.order_by('-id').first().id # This is the most recent revision id
                         }
-                        json_data = json.dumps(data)
-                        return JsonResponse(json_data)
+                        return JsonResponse(data)
 
                     return redirect(urlparams(doc.get_edit_url(),
                                               opendescription=1))
@@ -221,10 +220,9 @@ def edit(request, document_slug, document_locale, revision_id=None):
                     if is_async_submit:
                         data = {
                             "error" : False,
-                            "new_revision_id" : 13 #TODO: get next revision number
+                            "new_revision_id" : rev.document.revisions.order_by('-id').first().id # This is the most recent revision id
                         }
-                        json_data = json.dumps(data)
-                        return JsonResponse(json_data)
+                        return JsonResponse(data)
 
                     if (is_raw and orig_rev is not None and
                             curr_rev.id != orig_rev.id):

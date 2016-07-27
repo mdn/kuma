@@ -494,8 +494,7 @@
             // get form data
             var formData = $form.serialize();
             var formURL = window.location.href; // submits to self
-            //console.log(formData);
-            //console.log(formURL);
+            console.log('posting this data: ', formData)
 
             // ajax submit
             $.ajax({
@@ -505,30 +504,34 @@
                 dataType : 'html',
                 success: function(data, textStatus, jqXHR) {
                     // server came back 200
-                     console.log(data, data);
+                    console.log('data is: ', data);
                     // console.log(textStatus);
                     // console.log(jqXHR);
                     // was there an error?
                     var $parsedData = $($.parseHTML(data));
-                    //console.log('parsedData:');
-                    //console.log($parsedData);
-                    var $responseErrors = $parsedData.filter('.errorlist');
+                    var $responseErrors = $parsedData.find('.errorlist');
+                    console.log('$responseErrors: ', $responseErrors);
+                    // If there are errors, saveNotification() for each of them
                     if($responseErrors.length) {
                         console.log('error found');
-                        saveNotification.error('uh-oh');
+                        var liErrors = $responseErrors.find('li')
+                        for (var i = 0; i < liErrors.length; i++) {
+                            saveNotification.error(liErrors[i])
+                        }
                         //$form.submit();
                     }
                     else {
-                        console.log('no errors - sucess!');
+                        console.log('no errors - sucesss!');
                         // assume it went well
                         saveNotification.success(gettext('Changes saved.'), 2000);
 
                         // We also need to update the form's current_rev to
                         // avoid triggering a conflict, since we just saved in
                         // the background.
-                        var responseRevision = $parsedData.filter('#id_current_rev').val();
-                        console.log(responseRevision);
-                        $('#id_current_rev').val(responseRevision);
+                        var responseRevision = JSON.parse(data)['new_revision_id'];
+                        console.log('responseRevision: ', responseRevision);
+                        // TODO: why are there multiple <input id="id_current_rev">s?
+                        $("input[id=id_current_rev]").val(responseRevision)
 
                         // Clear the review comment
                         $('#id_comment').val('');
@@ -546,8 +549,10 @@
                     // console.log(jqXHR.status);
                     // console.log(textStatus);
                     // console.log(errorThrown);
+                    var msg = "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button.";
 
-                    saveNotification.error('uh-oh', {closable: true, duration: 0});
+                    saveNotification.error(msg);
+//                    saveNotification.error(msg, {closable: true, duration: 0});
 
                     // save draft
                 }
