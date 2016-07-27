@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-21 12:49-0700\n"
-"PO-Revision-Date: 2016-07-23 15:06+0000\n"
+"PO-Revision-Date: 2016-07-27 19:28+0000\n"
 "Last-Translator: Sphinx / Julien G <sphinx_knight@hotmail.fr>\n"
 "Language-Team: French https://pontoon.mozilla.org/fr/\n"
 "Language: fr\n"
@@ -100,7 +100,7 @@ msgstr "Mozilla Developer Network"
 #: jinja2/base.html:75
 #, python-format
 msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
-msgstr "Vous avez utilisé Persona pour vous connecter. <a href=\"%(persona_info)s\">Persona sera bien désactivé. En savoir plus.</a>"
+msgstr "Vous avez utilisé Persona pour vous connecter. <a href=\"%(persona_info)s\">Persona sera bientôt désactivé. En savoir plus.</a>"
 
 #: jinja2/base.html:83
 msgid "Skip to main content"
