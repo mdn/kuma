@@ -1,10 +1,6 @@
 import base64
 import binascii
-
-try:
-    from functools import wraps
-except ImportError:
-    from django.utils.functional import wraps
+from functools import wraps
 
 from .models import Key
 
