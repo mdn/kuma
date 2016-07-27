@@ -1,5 +1,6 @@
 import json
 import os
+from textwrap import dedent
 from urlparse import parse_qs, urlparse
 
 import mock
@@ -11,6 +12,7 @@ from allauth.socialaccount.providers import registry
 from allauth.tests import MockedResponse, mocked_response
 from constance.test.utils import override_config
 from django.conf import settings
+from django.core import mail
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
@@ -19,6 +21,7 @@ from django.http import Http404
 from django.test import RequestFactory
 from pyquery import PyQuery as pq
 from waffle.models import Flag
+from pytz import timezone, utc
 
 from kuma.core.tests import eq_, ok_
 from kuma.core.urlresolvers import reverse
@@ -635,8 +638,97 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         eq_(new_document.current_revision.content, "Safe")
 
-#    TODO: Phase IV:
-#    def test_post_sends_email(self):
+    def test_post_sends_email(self):
+        # Add an existing good document with a spam rev
+        new_document1 = create_document(save=True)
+        self.create_revisions(
+            num=1, document=new_document1, creator=self.admin)
+        spam_revision1 = self.create_revisions(
+            num=1,
+            document=new_document1,
+            creator=self.testuser)
+
+        # Add a new purely spam document
+        new_document2 = create_document(save=True)
+        spam_revision2 = self.create_revisions(
+            num=1,
+            document=new_document2,
+            creator=self.testuser)
+
+        # Add a spammed document where a user submits a good rev on top
+        new_document3 = create_document(save=True)
+        self.create_revisions(
+            num=1, document=new_document3, creator=self.admin)
+        spam_revision3 = self.create_revisions(
+            num=1,
+            document=new_document3,
+            creator=self.testuser)
+        self.create_revisions(
+            num=1, document=new_document3, creator=self.admin)
+
+        eq_(len(mail.outbox), 0)
+
+        # Pass in spam revisions:
+        data = {'revision-id':
+                [rev.id for rev in spam_revision1 + spam_revision2 + spam_revision3]}
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(self.ban_testuser_url, data=data)
+        eq_(200, resp.status_code)
+
+        tz = timezone(settings.TIME_ZONE)
+
+        eq_(len(mail.outbox), 1)
+        eq_(
+            mail.outbox[0].body,
+            dedent(
+                """
+                * ACTIONS TAKEN *
+
+                Banned:
+
+                  Name: {user.username}
+                  ID: {user.pk}
+                  Joined at: {date_joined}
+                  Profile link: https://example.com/en-US/profiles/{user.username}
+
+                Submitted to Akismet as spam:
+
+                  - {rev1.title}
+                  - {rev2.title}
+                  - {rev3.title}
+
+                Deleted:
+
+                  - {rev2.document.title} [https://example.com{rev2_doc_url}]
+
+                Reverted:
+
+                  - {rev1.title} [https://example.com{rev1_url}]
+
+                * NEEDS FOLLOW UP *
+
+                Revisions skipped due to newer non-spam revision:
+
+                  - {rev3.title} [https://example.com{rev3_url}]
+
+                * NO ACTION TAKEN *
+
+                Latest revision is non-spam:
+
+                  - {rev3.title} [https://example.com{rev3_url}]
+                """.format(
+                    user=self.testuser,
+                    date_joined=tz.localize(self.testuser.date_joined).astimezone(utc),
+                    rev1=spam_revision1[0],
+                    rev2=spam_revision2[0],
+                    rev3=spam_revision3[0],
+                    rev1_url=spam_revision1[0].get_absolute_url(),
+                    rev2_doc_url=spam_revision2[0].document.get_absolute_url(),
+                    rev3_url=spam_revision3[0].get_absolute_url()
+                )
+            )
+        )
 
 
 class UserViewsTest(UserTestCase):
