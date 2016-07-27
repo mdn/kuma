@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-21 12:49-0700\n"
-"PO-Revision-Date: 2016-07-25 15:17+0000\n"
+"PO-Revision-Date: 2016-07-27 15:16+0000\n"
 "Last-Translator: avelper <avelper@mozilla-hispano.org>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
 "Language: es\n"
@@ -2124,7 +2124,7 @@ msgstr "Ninguna."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:116
 msgid "Revisions skipped due to newer non-spam revision:"
-msgstr ""
+msgstr "Se obviaron las revisiones debido a una nueva revisión no identificada como spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:137
 msgid "Could not submit to Akismet:"
@@ -2144,7 +2144,7 @@ msgstr "No se realizó ninguna acción"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:199
 msgid "Latest revision is non-spam:"
-msgstr ""
+msgstr "La última revisión no está identificada como spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
 msgid "Already identified as spam:"
