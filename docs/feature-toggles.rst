@@ -23,6 +23,7 @@ Switches
 * ``dumb_doc_urls`` - (deprecated) Disable the render-time changing of /docs/
   URLs to the equivalent Zone URLs (see `PR 3331`_ for reasoning).
 * ``enable_optimizely`` - Enable the Optimizely JavaScript
+* ``enable_persona_signup`` - Enable account signup with Persona
 * ``store_revision_ips`` - Save request data, including the IP address, to
   enable marking revisions as spam.
 * ``welcome_email`` - send welcome email to new user registrations

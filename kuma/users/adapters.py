@@ -7,11 +7,12 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
-from waffle import flag_is_active
+from waffle import flag_is_active, switch_is_active
 
 from kuma.core.urlresolvers import reverse
 
-from .constants import USERNAME_CHARACTERS, USERNAME_REGEX
+from .constants import (USERNAME_CHARACTERS, USERNAME_REGEX,
+                        PERSONA_SIGNUP_SWITCH)
 
 REMOVE_BUG_URL = "https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20delete%20my%20MDN%20account.%20My%20username%20is%3A%0D%0A%0D%0A[username]&component=User%20management&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-791=X&flag_type-800=X&flag_type-803=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=All&priority=--&product=Mozilla%20Developer%20Network&rep_platform=All&short_desc=Account%20deletion%20request%20for%20[username]&status_whiteboard=[account-mod]&target_milestone=---&version=unspecified&format=__standard__"
 REMOVE_MESSAGE = _(u"Sorry, you must have at least one connected account so "
@@ -101,8 +102,14 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         because the default adapter uses the account adpater above
         as the default.
         """
-        # Check if profile creation is disabled via waffle
-        return not flag_is_active(request, 'registration_disabled')
+        if flag_is_active(request, 'registration_disabled'):
+            return False
+        elif (sociallogin.account.provider == 'persona' and
+              not switch_is_active(PERSONA_SIGNUP_SWITCH)):
+            request.used_persona = True
+            return False
+        else:
+            return True
 
     def validate_disconnect(self, account, accounts):
         """
