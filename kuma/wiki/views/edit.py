@@ -208,6 +208,14 @@ def edit(request, document_slug, document_locale, revision_id=None):
                 if not rev_form.is_valid():
                     # Was there a mid-air collision?
                     if 'current_rev' in rev_form._errors:
+                        # If this was an Ajax POST, then return a JSONReponse
+                        if is_async_submit:
+                            data = {
+                                "error": True,
+                                "error_message": rev_form.errors['current_rev'],
+                                "new_revision_id": curr_rev.id,
+                            }
+                            return JsonResponse(data=data, status=500)
                         # Jump out to a function to escape indentation hell
                         return _edit_document_collision(
                             request, orig_rev, curr_rev, is_async_submit,

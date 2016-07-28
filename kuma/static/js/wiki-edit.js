@@ -496,7 +496,6 @@
             var formURL = window.location.href; // submits to self
             console.log('posting this data: ', formData)
 
-            // ajax submit
             $.ajax({
                 url : formURL + '?async',
                 type: "POST",
@@ -528,16 +527,22 @@
                         // We also need to update the form's current_rev to
                         // avoid triggering a conflict, since we just saved in
                         // the background.
-                        var responseRevision = JSON.parse(data)['new_revision_id'];
-                        console.log('responseRevision: ', responseRevision);
-                        // TODO: why are there multiple <input id="id_current_rev">s?
-                        $("input[id=id_current_rev]").val(responseRevision)
+                        console.log('data is: ', data)
+                        var responseData = JSON.parse(data)
+                        if (responseData['error'] == true) {
+                            saveNotification.error(responseData['error_message'])
+                        } else {
+                            var responseRevision = JSON.parse(data)['new_revision_id'];
+                            console.log('responseRevision: ', responseRevision);
+                            // TODO: why are there multiple <input id="id_current_rev">s?
+                            $("input[id=id_current_rev]").val(responseRevision)
 
-                        // Clear the review comment
-                        $('#id_comment').val('');
+                            // Clear the review comment
+                            $('#id_comment').val('');
 
-                        // Trigger a `mdn:save-success` event so dirtiness can be reset throughout the page
-                        $form.trigger('mdn:save-success');
+                            // Trigger a `mdn:save-success` event so dirtiness can be reset throughout the page
+                            $form.trigger('mdn:save-success');
+                        }
 
                         // Re-enable the form; it gets disabled to prevent double-POSTs
                         $form.data('disabled', false).removeClass('disabled');
@@ -549,9 +554,13 @@
                     // console.log(jqXHR.status);
                     // console.log(textStatus);
                     // console.log(errorThrown);
-                    var msg = "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button.";
-
-                    saveNotification.error(msg);
+                    // Try to display the error that comes back from the server
+                    try {
+                        var errorMessage = JSON.parse(jqXHR['responseText'])['error_message']
+                    } catch (err) {
+                        errorMessage = "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button.";
+                    }
+                    saveNotification.error(errorMessage);
 //                    saveNotification.error(msg, {closable: true, duration: 0});
 
                     // save draft
