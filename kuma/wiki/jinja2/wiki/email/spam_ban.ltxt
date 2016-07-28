@@ -12,7 +12,7 @@ Banned:
 
 Submitted to Akismet as spam:
 {% for revision in actions_taken.revisions_reported_as_spam %}
-  - {{ revision.title }}
+  - {{ revision.title }} [{{ revision.get_absolute_url()|absolutify }}]
 {%- endfor %}
 {%- endif %}
 
