@@ -34,7 +34,9 @@
         <ul>
           {% for revision in actions_taken.revisions_reported_as_spam %}
             <li>
-              {{ revision.title }}
+              <a href="{{ revision.get_absolute_url() }}">
+                {{ revision.title }}
+              </a>
             </li>
           {% endfor %}
         </ul>
