@@ -53,3 +53,14 @@ class KeyDecoratorsTest(TestCase):
                 ok_(request.user == u)
                 ok_(request.authkey)
                 ok_(request.authkey == key)
+
+        # Test with incorrect auth header
+        request = HttpRequest()
+        request.user = AnonymousUser()
+        request.META['HTTP_AUTHORIZATION'] = "Basic bad_auth_string"
+
+        # Make a request to the view
+        fake_view(request, 'foo', 'bar')
+
+        # The user should not be authonticated and no server error should raise
+        ok_(not request.user.is_authenticated())

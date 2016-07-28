@@ -1,9 +1,6 @@
 import base64
-
-try:
-    from functools import wraps
-except ImportError:
-    from django.utils.functional import wraps
+import binascii
+from functools import wraps
 
 from .models import Key
 
@@ -29,7 +26,7 @@ def accepts_auth_key(func):
                     if key.check_secret(secret):
                         request.authkey = key
                         request.user = key.user
-            except (ValueError, Key.DoesNotExist):
+            except (binascii.Error, ValueError, Key.DoesNotExist):
                 pass
         return func(request, *args, **kwargs)
 
