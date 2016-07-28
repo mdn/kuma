@@ -2083,9 +2083,8 @@ msgid "Deleted:"
 msgstr "Excluído:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:59
-#, fuzzy
 msgid "The user did not have any revisions that were deleted."
-msgstr "O utilizador não tem quaisquer revisões que foram relatados como spam."
+msgstr "O usuário não tem quaisquer revisões que foram excluídas."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:63
 msgid "Reverted:"
