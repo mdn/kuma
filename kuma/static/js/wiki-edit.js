@@ -459,6 +459,10 @@
     //
     function initSaveAndEditButtons () {
         var $form = $('#wiki-page-edit');
+        // Handle edits on the translate page
+        if ($form.length == 0 && $('#translate-document').length == 1) {
+            $form = $('#translate-document');
+        }
 
         // Save button submits to top-level
         $form.on('submit', function () {
@@ -471,7 +475,7 @@
 
         // save and edit attempts ajax submit
         $('.btn-save-and-edit').on('click', function(event) {
-            // TODO: diable form
+            // TODO: disable form
             console.log('save and edit triggered');
 
             // give user feedback

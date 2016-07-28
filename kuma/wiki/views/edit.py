@@ -8,6 +8,7 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_http_methods
@@ -208,6 +209,10 @@ def edit(request, document_slug, document_locale, revision_id=None):
                 if not rev_form.is_valid():
                     # Was there a mid-air collision?
                     if 'current_rev' in rev_form._errors:
+                        # Make the error message safe so the '<' and '>' don't
+                        # get turned into '&lt;' and '&gt;', respectively
+                        rev_form.errors['current_rev'][0] = mark_safe(rev_form.errors['current_rev'][0])
+
                         # If this was an Ajax POST, then return a JSONReponse
                         if is_async_submit:
                             data = {

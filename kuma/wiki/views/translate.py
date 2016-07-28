@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 
@@ -214,7 +215,26 @@ def translate(request, document_slug, document_locale, revision_id=None):
                         pass
 
                 rev_form.save(doc)
+                # If this is an Ajax POST, then return a JsonResponse
+                if request.is_ajax():
+                    data = {
+                        'error': False,
+                        'new_revision_id': rev_form.instance.id,
+                    }
+
+                    return JsonResponse(data)
                 return redirect(doc)
+            else:
+                # If this is an Ajax POST, then return a JsonResponse with error
+                if request.is_ajax():
+                    import ipdb;ipdb.set_trace()
+                    from django.utils.safestring import mark_safe
+                    data = {
+                        "error": True,
+                        "error_message": mark_safe(rev_form.errors['current_rev'][0]),
+                        "new_revision_id": rev_form.instance.id,
+                    }
+                    return JsonResponse(data=data, status=500)
 
     if doc:
         from_id = smart_int(request.GET.get('from'), None)
