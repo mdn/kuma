@@ -76,6 +76,8 @@ ALLOWED_ATTRIBUTES['li'] += ['data-default-state']
 ALLOWED_ATTRIBUTES['time'] += ['datetime']
 ALLOWED_ATTRIBUTES['ins'] = ['datetime']
 ALLOWED_ATTRIBUTES['del'] = ['datetime']
+ALLOWED_ATTRIBUTES['meter'] += ['max', 'min', 'value', 'low', 'high', 'optimum',
+                                'form']
 # MathML
 ALLOWED_ATTRIBUTES.update(dict((x, ['encoding', 'src']) for x in (
     'annotation', 'annotation-xml')))
