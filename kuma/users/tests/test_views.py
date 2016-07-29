@@ -694,9 +694,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
                 Submitted to Akismet as spam:
 
-                  - {rev1.title}
-                  - {rev2.title}
-                  - {rev3.title}
+                  - {rev1.title} [https://example.com{rev1_url}]
+                  - {rev2.title} [https://example.com{rev2_url}]
+                  - {rev3.title} [https://example.com{rev3_url}]
 
                 Deleted:
 
@@ -724,8 +724,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
                     rev2=spam_revision2[0],
                     rev3=spam_revision3[0],
                     rev1_url=spam_revision1[0].get_absolute_url(),
-                    rev2_doc_url=spam_revision2[0].document.get_absolute_url(),
-                    rev3_url=spam_revision3[0].get_absolute_url()
+                    rev2_url=spam_revision2[0].get_absolute_url(),
+                    rev3_url=spam_revision3[0].get_absolute_url(),
+                    rev2_doc_url=spam_revision2[0].document.get_absolute_url()
                 )
             )
         )
