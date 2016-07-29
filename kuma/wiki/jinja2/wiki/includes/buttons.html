@@ -37,7 +37,9 @@
         </div>
       </li>{% endif %}
 
+      {% if (not document.is_template) or (user.has_perm('wiki.change_template_document')) %}
       <li class="page-buttons-edit"><a href="{{ edit_link }}" class="button" data-optimizely-hook="button-edit-doc" id="edit-button">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
+      {% endif %}
 
         {% if user.is_authenticated() and document %}
         <li><button id="watch-menu" class="only-icon" aria-haspopup="true" aria-owns="watch-menu-submenu" aria-expanded="false"><span>{{ _('Watch') }}</span><i aria-hidden="true" class="icon-eye"></i></button>
