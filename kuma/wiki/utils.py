@@ -1,5 +1,11 @@
-import tidylib
+import json
+
 from django.conf import settings
+import tidylib
+
+from apiclient.discovery import build
+from httplib2 import Http
+from oauth2client.service_account import ServiceAccountCredentials
 
 
 def locale_and_slug_from_path(path, request=None, path_locale=None):
@@ -59,3 +65,39 @@ def tidy_content(content):
         return tidied.decode('utf-8'), errors
     else:
         return content
+
+
+def analytics_user_counts(*revs):
+    """Given some document revision numbers, returns a dict matching those
+    with the number of users Google Analytics thinks has visited each revision.
+
+    """
+
+    scopes = ['https://www.googleapis.com/auth/analytics.readonly']
+    # FIXME: pull the credentials json data from ... somewhere.
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(
+        json.loads('{}'), scopes=scopes)
+    http_auth = credentials.authorize(Http())
+    service = build('analyticsreporting', 'v4', http=http_auth)
+
+    request = service.reports().batchGet(
+        body={
+            'reportRequests': [
+                # `dimension12` is the custom variable containing a page's rev #.
+                {'dimensions': [{'name': 'ga:dimension12'}],
+                 'metrics': [{'expression': 'ga:users'}],
+                 'dimensionFilterClauses': [
+                     {'filters': [
+                         {'dimensionName': 'ga:dimension12',
+                          'operator': 'IN_LIST',
+                          'expressions': map(str, revs)}
+                     ]}
+                 ],
+                 'viewId': '66726481'}  # PK of the developer.mozilla.org site on GA.
+            ]
+        })
+
+    response = request.execute()
+
+    return {int(row['dimensions'][0]): int(row['metrics'][0]['values'][0])
+            for row in response['reports'][0]['data']['rows']}
