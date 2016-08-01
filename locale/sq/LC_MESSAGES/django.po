@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-21 12:49-0700\n"
-"PO-Revision-Date: 2016-07-31 23:27+0000\n"
+"PO-Revision-Date: 2016-08-01 07:02+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
 "Language: sq\n"
@@ -1719,11 +1719,8 @@ msgid "All content on MDN is free and available without signing in."
 msgstr ""
 
 #: kuma/users/jinja2/account/login.html:19
-#, fuzzy
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
-msgstr ""
-"Që të mund të kontribuoni, lypset të bëni hyrjen te MDN-ja. Hyrjen mund ta bëni duke përdorur cilindo nga shërbimet më poshtë. Nëse s’keni ende një të tillë, do të krijohet për ju një profil te MDN-"
-"ja."
+msgstr "Që të mund të kontribuoni, lypset të bëni hyrjen te MDN-ja. Hyrjen mund ta bëni duke përdorur GitHub-in dhe një profil MDN do të krijohet për ju, nëse s’keni ende një të tillë."
 
 #: kuma/users/jinja2/account/login.html:31
 msgid "If you already have a MDN profile sign in:"
@@ -1987,18 +1984,17 @@ msgid "Connect with GitHub"
 msgstr "Lidhuni përmes GitHub-it"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:31
-#, fuzzy
 msgid "Create MDN profile with GitHub"
-msgstr "Krijoni profilin tuaj MDN që të vazhdohet"
+msgstr "Krijoni profilin MDN me GitHub"
 
 #: kuma/users/jinja2/socialaccount/snippets/provider_list.html:33
 msgid "Sign in with GitHub"
 msgstr "Hyni me GitHub"
 
 #: kuma/users/jinja2/users/ban_user.html:7 kuma/users/jinja2/users/ban_user_and_cleanup.html:7 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:7
-#, fuzzy, python-format
+#, python-format
 msgid "Ban %(user)s"
-msgstr "Dëboje përdoruesin"
+msgstr "Dëbojeni %(user)s"
 
 #: kuma/users/jinja2/users/ban_user.html:22
 #, python-format
@@ -2018,9 +2014,9 @@ msgid "Ban user"
 msgstr "Dëboje përdoruesin"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:22
-#, fuzzy, python-format
+#, python-format
 msgid "Identify <a href=\"%(url)s\">%(user)s</a> as a spammer?"
-msgstr "Rishikimi %(id)s nga <a href=\"%(user_profile_url)s\">%(user)s</a> më %(date)s"
+msgstr "Të konsiderohet <a href=\"%(url)s\">%(user)s</a> si dërgues mesazhesh të padëshiruar?"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
 #, python-format
@@ -2042,9 +2038,8 @@ msgid "Submit Spam"
 msgstr "Parashtrojeni si:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
-#, fuzzy
 msgid "Ban User for Spam"
-msgstr "Përzini Përdoruesin"
+msgstr "Dëboje Përdoruesin Për të Padëshiruar"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
 #, fuzzy
@@ -2056,9 +2051,8 @@ msgid "Ban user for other reasons."
 msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
-#, fuzzy
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
-msgstr "S’është e krijuar nga autori"
+msgstr "Në tre ditët e fundit, përdoruesi nuk ka bërë ndonjë rishikim që të rikthehet, dhe ky përdorues qe dëbuar tashmë."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
@@ -2069,14 +2063,12 @@ msgid "Actions Taken"
 msgstr "Veprimet e Ndërmarra"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:23
-#, fuzzy
 msgid "Banned:"
-msgstr "I përzënë"
+msgstr "I dëbuar:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
-#, fuzzy
 msgid "Submitted to Akismet as spam:"
-msgstr "Të dhënat u parashtruan te Akismet-i"
+msgstr "U parashtruan te Akismet-i si i padëshiruar:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:42
 #, fuzzy
@@ -2122,9 +2114,8 @@ msgid "Revisions skipped due to newer non-spam revision:"
 msgstr ""
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:137
-#, fuzzy
 msgid "Could not submit to Akismet:"
-msgstr "Të dhënat u parashtruan te Akismet-i"
+msgstr "S’u parashtruan dot te Akismet-i:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:158
 #, fuzzy
