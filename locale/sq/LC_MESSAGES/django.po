@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-21 12:49-0700\n"
-"PO-Revision-Date: 2016-08-01 07:02+0000\n"
+"PO-Revision-Date: 2016-08-01 07:39+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian https://pontoon.mozilla.org/sq/\n"
 "Language: sq\n"
@@ -97,7 +97,7 @@ msgstr "Rrjeti i Zhvilluesve Mozilla"
 #: jinja2/base.html:75
 #, python-format
 msgid "You signed in with Persona. <a href=\"%(persona_info)s\">Persona is being turned off. Read more.</a>"
-msgstr ""
+msgstr "Keni hyrë me Persona. <a href=\"%(persona_info)s\">Persona po nxirret nga përdorimi. Lexoni më tepër.</a>"
 
 #: jinja2/base.html:83
 msgid "Skip to main content"
@@ -342,7 +342,7 @@ msgstr "Hyni:"
 
 #: jinja2/includes/login.html:28
 msgid "Why is Persona sign in only?"
-msgstr ""
+msgstr "Pse Persona është vetëm për hyrje?"
 
 #: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:9
 msgid "We are sorry, but profile creation is currently disabled."
@@ -1716,7 +1716,7 @@ msgstr "Ju lutemi, futuni"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
-msgstr ""
+msgstr "Krejt lënda në MDN është e lirë dhe mund të shfrytëzohet pa bërë hyrje gjëkundi."
 
 #: kuma/users/jinja2/account/login.html:19
 msgid "In order to contribute, you need to sign in to MDN. You can sign in using GitHub and a MDN profile will be created for you if you don't already have one."
@@ -1724,7 +1724,7 @@ msgstr "Që të mund të kontribuoni, lypset të bëni hyrjen te MDN-ja. Hyrjen 
 
 #: kuma/users/jinja2/account/login.html:31
 msgid "If you already have a MDN profile sign in:"
-msgstr ""
+msgstr "Nëse keni tashmë një profil MDN, bëni hyrjen me të:"
 
 #: kuma/users/jinja2/account/logout.html:10
 msgid "Are you sure you want to sign out?"
@@ -2021,34 +2021,32 @@ msgstr "Të konsiderohet <a href=\"%(url)s\">%(user)s</a> si dërgues mesazhesh 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:26
 #, python-format
 msgid "<a href=\"%(url)s\">%(user)s</a> has been banned."
-msgstr ""
+msgstr "<a href=\"%(url)s\">%(user)s</a> është dëbuar."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:29
 #, python-format
 msgid "%(user)s has already been banned. You may review and revert their revisions below."
-msgstr ""
+msgstr "%(user)s është dëbuar një herë. Më poshtë mund të rishikoni dhe riktheni rishikimet e tij."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:46
 msgid "You cannot ban yourself for spam."
-msgstr ""
+msgstr "S’mund të dëboni veten për dërgim të padëshiruarish."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:50
-#, fuzzy
 msgid "Submit Spam"
-msgstr "Parashtrojeni si:"
+msgstr "Parashtrojeni Si të Padëshiruar"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:52
 msgid "Ban User for Spam"
 msgstr "Dëboje Përdoruesin Për të Padëshiruar"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:54
-#, fuzzy
 msgid "Ban User for Spam & Submit Spam"
-msgstr "Përzini Përdoruesin"
+msgstr "Dëbojeni Përdoruesin për Dërgim të Padëshiruarash & Parashtroni të Padëshiruar"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:58
 msgid "Ban user for other reasons."
-msgstr ""
+msgstr "Dëbojeni përdoruesin për arsye të tjera."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup.html:61
 msgid "User has not made any revisions to be reverted in the past three days, and this user was already banned."
@@ -2056,7 +2054,7 @@ msgstr "Në tre ditët e fundit, përdoruesi nuk ka bërë ndonjë rishikim që 
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:19
 msgid "Summary"
-msgstr ""
+msgstr "Përmbledhje"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:22
 msgid "Actions Taken"
@@ -2068,40 +2066,35 @@ msgstr "I dëbuar:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:31
 msgid "Submitted to Akismet as spam:"
-msgstr "U parashtruan te Akismet-i si i padëshiruar:"
+msgstr "U parashtrua te Akismet-i si i padëshiruar:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:42
-#, fuzzy
 msgid "The user did not have any revisions that were reported as spam."
-msgstr "S’është e krijuar nga autori"
+msgstr "Përdoruesi s’kish ndonjë rishikim të raportuar si të padëshiruar."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:46
-#, fuzzy
 msgid "Deleted:"
-msgstr "Fshije"
+msgstr "Fshirë:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:59
-#, fuzzy
 msgid "The user did not have any revisions that were deleted."
-msgstr "S’është e krijuar nga autori"
+msgstr "Përdoruesi s’kish ndonjë rishikim të fshirë."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:63
-#, fuzzy
 msgid "Reverted:"
-msgstr "Rikthe"
+msgstr "Rikthyer:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77
-#, fuzzy
 msgid "The user did not have any revisions that were reverted."
-msgstr "S’është e krijuar nga autori"
+msgstr "Përdoruesi s’pati ndonjë rishikim që qe rikthyer."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:83
 msgid "Needs follow up"
-msgstr ""
+msgstr "Lyp të ndiqet"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:84
 msgid "New action by user:"
-msgstr ""
+msgstr "Veprim i ri nga përdoruesi:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:112 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:154
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:173 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:192 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:220
@@ -2111,37 +2104,35 @@ msgstr "Asnjë."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:116
 msgid "Revisions skipped due to newer non-spam revision:"
-msgstr ""
+msgstr "Rishikime të anashkaluar, për shkak të pranisë së një rishikimi më të ri jo të padëshiruar:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:137
 msgid "Could not submit to Akismet:"
 msgstr "S’u parashtruan dot te Akismet-i:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:158
-#, fuzzy
 msgid "Could not delete:"
-msgstr "Dokumenti u Fshi"
+msgstr "S’u fshi dot:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:177
 msgid "Could not revert:"
-msgstr ""
+msgstr "S’u rikthye dot:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:198
 msgid "No actions taken"
-msgstr ""
+msgstr "S’janë ndërmarrë veprime"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:199
 msgid "Latest revision is non-spam:"
-msgstr ""
+msgstr "Rishikimi i fundit s’është i padëshiruar:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
 msgid "Already identified as spam:"
-msgstr ""
+msgstr "I konsideruar tashmë si i padëshiruar:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:254
-#, fuzzy
 msgid "Identified as not spam:"
-msgstr "Ripohuar si i Padëshiruar"
+msgstr "Konsideruar si jo i padëshiruar:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2395,12 +2386,11 @@ msgstr "Blog: %(blog_link)s"
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:77
 msgid "Already reported as spam."
-msgstr ""
+msgstr "I raportuar tashmë si i padëshiruar."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
-#, fuzzy
 msgid "This user has not created any revisions in the past three days."
-msgstr "S’është e krijuar nga autori"
+msgstr "Ky përdorues s’ka krijuar ndonjë rishikim në tre ditët e fundit."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
@@ -2437,9 +2427,8 @@ msgid "Banned"
 msgstr "I përzënë"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
-#, fuzzy
 msgid "Clean Up Revisions"
-msgstr "Ndryshoni Rishikimet"
+msgstr "Pastroji Rishikimet"
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
@@ -2447,7 +2436,7 @@ msgstr "Përzini Përdoruesin"
 
 #: kuma/users/templatetags/jinja_helpers.py:55
 msgid "Ban User & Clean Up"
-msgstr ""
+msgstr "Dëboje Përdoruesin & Pastroje"
 
 #: kuma/users/templatetags/jinja_helpers.py:67
 msgid "Admin"
