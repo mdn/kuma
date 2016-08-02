@@ -7,6 +7,8 @@ from apiclient.discovery import build
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
 
+from constance import config
+
 
 def locale_and_slug_from_path(path, request=None, path_locale=None):
     """Given a proposed doc path, try to see if there's a legacy MindTouch
@@ -74,9 +76,8 @@ def analytics_user_counts(*revs):
     """
 
     scopes = ['https://www.googleapis.com/auth/analytics.readonly']
-    # FIXME: pull the credentials json data from ... somewhere.
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(
-        json.loads('{}'), scopes=scopes)
+        json.loads(config.GOOGLE_ANALYTICS_CREDENTIALS), scopes=scopes)
     http_auth = credentials.authorize(Http())
     service = build('analyticsreporting', 'v4', http=http_auth)
 
