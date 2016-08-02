@@ -190,7 +190,8 @@ class DatabaseFilterBackend(BaseFilterBackend):
             else:
                 if filter_tags:
                     facet_params = F('term', tags=filter_tags[0])
-            active_facets.append((serialized_filter['slug'], facet_params))
+            if len(filter_tags):
+                active_facets.append((serialized_filter['slug'], facet_params))
 
         if active_filters:
             if len(active_filters) == 1:
