@@ -461,8 +461,8 @@
         // Save button submits to top-level
         $('.btn-save').on('click', function () {
             if (draftingEnabled) {
-                // Clear any preserved content.
                 enableAutoSave(false);
+                // Clear any preserved content.
                 clearTimeout(DRAFT_TIMEOUT_ID);
             }
             $form.attr('action', '').removeAttr('target');

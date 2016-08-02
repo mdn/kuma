@@ -4,6 +4,8 @@
     var articleTracker = doc.location.pathname + '#answered-helpful';
     // this feature requires localStorage
     if (win.mdn.features.localStorage) {
+        // clear out any drafts from localStorage, now that we are not on the edit page
+        localStorage.removeItem('draft/edit' + location.pathname);
         var ignore = localStorage.getItem('helpful-ignore') === 'true'; // true if ever clicked ignore
         var articleAskedRecently = parseInt(localStorage.getItem(articleTracker), 10) > Date.now();
         var helpfulnessAskedRecently = parseInt(localStorage.getItem('helpfulnessTracker'), 10) > Date.now();
