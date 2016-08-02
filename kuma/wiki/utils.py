@@ -85,16 +85,20 @@ def analytics_user_counts(*revs):
         body={
             'reportRequests': [
                 # `dimension12` is the custom variable containing a page's rev #.
-                {'dimensions': [{'name': 'ga:dimension12'}],
-                 'metrics': [{'expression': 'ga:users'}],
-                 'dimensionFilterClauses': [
-                     {'filters': [
-                         {'dimensionName': 'ga:dimension12',
-                          'operator': 'IN_LIST',
-                          'expressions': map(str, revs)}
-                     ]}
-                 ],
-                 'viewId': '66726481'}  # PK of the developer.mozilla.org site on GA.
+                {
+                    'dimensions': [{'name': 'ga:dimension12'}],
+                    'metrics': [{'expression': 'ga:users'}],
+                    'dimensionFilterClauses': [
+                        {
+                            'filters': [
+                                {'dimensionName': 'ga:dimension12',
+                                 'operator': 'IN_LIST',
+                                 'expressions': map(str, revs)}
+                            ]
+                        }
+                    ],
+                    'viewId': '66726481'  # PK of the developer.mozilla.org site on GA.
+                }
             ]
         })
 
