@@ -182,6 +182,12 @@ feedparser==5.2.1 \
     --hash=sha256:bd030652c2d08532c034c27fcd7c85868e7fa3cb2b17f230a44a6bbc92519bf9 \
     --hash=sha256:cd2485472e41471632ed3029d44033ee420ad0b57111db95c240c9160a85831c
 
+# Query Google Analytics for the number of users who have hit spam pages
+google-api-python-client==1.5.1 \
+    --hash=sha256:2fd69ea71497a7de01cee4c85a9a64a593458eba0c1fec8d8a24e34d1298fdbd \
+    --hash=sha256:915a1ce62b6c20bce02c92926b05d86f67743e9b146882f2023c915aa4590b64 \
+    --hash=sha256:b32ab8e7337bc3a046506c1576d4987b30a52e5d40add6b0e9662e6dc1253b90
+
 # WSGI HTTP server
 gunicorn==19.4.5 \
     --hash=sha256:c57f1b005a4b90933303c8deed9bedeb509331aa6a0a990023a5796e52bd8988 \
