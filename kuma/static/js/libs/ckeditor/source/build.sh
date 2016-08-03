@@ -21,7 +21,7 @@ target="../build"
 echo ""
 echo "Pulling down CKEditor from GitHub..."
 rm -rf ckeditor/
-git clone https://github.com/ckeditor/ckeditor-dev.git ckeditor
+git clone -b $CKEDITOR_VERSION --single-branch https://github.com/ckeditor/ckeditor-dev.git ckeditor
 rm -rf ckeditor/.git
 
 
