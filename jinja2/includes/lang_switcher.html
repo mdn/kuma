@@ -7,8 +7,8 @@
   {% endfor %}
   <select id="language" class="autosubmit" name="lang">
     {% for code, name in settings.LANGUAGES -%}
-      <option value="{{ code }}"{% if code == LANG %} selected{% endif %}>
-        {{ name }}
+      <option title="{{ get_locale_localized(code) }}" value="{{ code }}"{% if code == LANG %} selected{% endif %}>
+        {{ name }} ({{ code }})
       </option>
     {%- endfor %}
   </select>

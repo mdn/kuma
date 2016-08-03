@@ -195,3 +195,10 @@ def in_utc(dt):
         tz = timezone(settings.TIME_ZONE)
         dt = tz.localize(dt)
     return dt.astimezone(utc)
+
+
+@library.global_function
+def get_locale_localized(locale):
+    language = settings.LOCALES[locale].english
+
+    return _(language)
