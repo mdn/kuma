@@ -65,14 +65,14 @@ If you have questions about what to work on, you can ask:
 How to submit code
 ==================
 
-MDN development process is very much like [these Mozilla Webdev guidelines](http://mozweb.readthedocs.org/en/latest/guide/development_process.html).
+MDN development process is very much like [these Mozilla Webdev guidelines](https://mozweb.readthedocs.io/en/latest/guide/development_process.html).
 
 The [GitHub Flow](https://guides.github.com/introduction/flow/) site is a great interactive guide to the flow described here.
 
 GitHub workflow
 ---------------
 
-1. [Install our development environment](http://kuma.readthedocs.org/en/latest/installation.html)
+1. [Install our development environment](https://kuma.readthedocs.io/en/latest/installation.html)
 2. Create a branch for your bug:
 
     ```

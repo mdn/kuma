@@ -1,7 +1,7 @@
 # This is a work in progress.
 #
 # The preferred way to set up development is still using Vagrant as documented here:
-# http://kuma.readthedocs.org/en/latest/installation.html
+# https://kuma.readthedocs.io/en/latest/installation.html
 
 FROM python:2.7
 

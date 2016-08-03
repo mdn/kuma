@@ -65,10 +65,10 @@ database - so we can control them without changing code. They are all listed
 and documented in the admin site's `constance section`_.
 
 .. _feature toggles: https://en.wikipedia.org/wiki/Feature_toggle
-.. _django-waffle: http://waffle.readthedocs.org/en/latest/
+.. _django-waffle: https://waffle.readthedocs.io/en/latest/
 .. _waffle section: https://developer-local.allizom.org/admin/waffle/
 .. _constance: https://github.com/comoga/django-constance
 .. _constance section: https://developer-local.allizom.org/admin/constance/config/
-.. _Waffle switches: http://waffle.readthedocs.org/en/latest/types/switch.html
-.. _Waffle flags: http://waffle.readthedocs.org/en/latest/types/flag.html
+.. _Waffle switches: https://waffle.readthedocs.io/en/latest/types/switch.html
+.. _Waffle flags: https://waffle.readthedocs.io/en/latest/types/flag.html
 .. _PR 3331: https://github.com/mozilla/kuma/pull/3331

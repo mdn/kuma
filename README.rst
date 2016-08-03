@@ -29,7 +29,7 @@ Development
 :Issues:        http://mzl.la/mdn_backlog (Product)
                 https://prs.paas.allizom.org/mozilla:kuma,kuma-lib,kumascript,mozhacks (PR Queue)
 
-:Dev Docs:      https://kuma.readthedocs.org/en/latest/installation.html
+:Dev Docs:      https://kuma.readthedocs.io/en/latest/installation.html
 
 :CI Server:     https://travis-ci.org/mozilla/kuma
 
