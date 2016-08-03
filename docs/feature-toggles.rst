@@ -46,6 +46,7 @@ other advanced criteria.
 * ``search_suggestions`` - show the advanced search filter suggestions
   interface
 * ``section_edit`` - Show section edit buttons
+* ``sg_task_completion`` - enable the Survey Gizmo pop-up
 * ``spam_admin_override`` - Tell Akismet that edits are never spam
 * ``spam_spammer_override`` - Tell Akismet that edits are always spam
 * ``spam_testing_mode`` - Tell Akismet that edits are tests, not real content
