@@ -9,19 +9,25 @@ document details how to update CKEditor within the MDN codebase.
 
 Building CKEditor
 -----------------
+To rebuild CKEditor::
 
-Building CKEditor is quite easy!
+    cd kuma/static/js/libs/ckeditor/source/ # Go to the working directory for CKEditor source
+    ./build.sh                              # Run the build script to build served CKEditor files
 
-*  `cd kuma/static/js/libs/ckeditor/source/` - Go to the working directory for CKEditor source
-*  `git submodule update --init --recursive` -  Update submodules for CKEditor
-*  `./build.sh` - Run the build script to build served CKEditor files
+Portions of the build process will take a few minutes so don't expect an
+immediate result.
 
-Portions of the build process will take a few minutes so don't expect an immediate result
+Updating CKEditor
+-----------------
+To update the CKEditor version, you'll need to edit ``build.sh`` and change
+the value of ``CKEDITOR_VERSION``.  Updating is important to keep MDN in sync
+with CKEditor's functional and security updates.
 
-Updating CKEditor Version
+Updating CKEditor Plugins
 -------------------------
+Some plugins are maintained by MDN staff in the Kuma repo. Others are updated
+to the tag or commit number specified in ``build.sh``:
 
-To update the CKEditor versions, you'll need to navigate to the CKEditor submodule and
-use git to check out a different tag of the project.
-
-Updating will be important so that we can keep MDN secure and functional as CKEditor updates.
+* `descriptionlist <https://github.com/Reinmar/ckeditor-plugin-descriptionlist>`_
+* `scayt <https://github.com/WebSpellChecker/ckeditor-plugin-scayt>`_
+* `wsc <https://github.com/WebSpellChecker/ckeditor-plugin-wsc>`_
