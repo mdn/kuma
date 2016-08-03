@@ -213,40 +213,48 @@ def edit(request, document_slug, document_locale, revision_id=None):
                         # get turned into '&lt;' and '&gt;', respectively
                         rev_form.errors['current_rev'][0] = mark_safe(rev_form.errors['current_rev'][0])
 
-                        # If this was an Ajax POST, then return a JSONReponse
+                        # If this was an Ajax POST, then return a JsonResponse
                         if is_async_submit:
                             data = {
                                 "error": True,
                                 "error_message": rev_form.errors['current_rev'],
                                 "new_revision_id": curr_rev.id,
                             }
-                            return JsonResponse(data=data, status=500)
+                            return JsonResponse(data=data, status=409)
                         # Jump out to a function to escape indentation hell
                         return _edit_document_collision(
                             request, orig_rev, curr_rev, is_async_submit,
                             is_raw, rev_form, doc_form, section_id,
                             rev, doc)
-
+                    # Was this an Ajax submission that was marked as spam?
+                    if is_async_submit and '__all__' in rev_form._errors:
+                        # Return a JsonResponse
+                        data = {
+                            "error": True,
+                            "error_message": mark_safe(rev_form.errors['__all__'][0]),
+                            "new_revision_id": curr_rev.id,
+                        }
+                        return JsonResponse(data=data)
                 if rev_form.is_valid():
                     rev_form.save(doc)
-
+                    # Is this an Ajax POST?
                     if is_async_submit:
+                        if (is_raw and orig_rev is not None and
+                                curr_rev.id != orig_rev.id):
+                            # If this is the raw view, and there was an original
+                            # revision, but the original revision differed from the
+                            # current revision at start of editing, we should tell
+                            # the client to refresh the page.
+                            response = HttpResponse('RESET')
+                            response['X-Frame-Options'] = 'SAMEORIGIN'
+                            response.status_code = 205
+                            return response
+                        # This must be an Ajax POST, but no need to refresh
                         data = {
                             "error" : False,
                             "new_revision_id" : rev.document.revisions.order_by('-id').first().id # This is the most recent revision id
                         }
                         return JsonResponse(data)
-
-                    if (is_raw and orig_rev is not None and
-                            curr_rev.id != orig_rev.id):
-                        # If this is the raw view, and there was an original
-                        # revision, but the original revision differed from the
-                        # current revision at start of editing, we should tell
-                        # the client to refresh the page.
-                        response = HttpResponse('RESET')
-                        response['X-Frame-Options'] = 'SAMEORIGIN'
-                        response.status_code = 205
-                        return response
 
                     if rev_form.instance.is_approved:
                         view = 'wiki.document'
