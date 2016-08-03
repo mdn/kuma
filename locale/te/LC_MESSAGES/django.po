@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-21 12:49-0700\n"
-"PO-Revision-Date: 2016-08-03 13:24+0000\n"
+"PO-Revision-Date: 2016-08-03 19:45+0000\n"
 "Last-Translator: Sai Karthik Karra <kskarthik91@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: te\n"
@@ -86,11 +86,11 @@ msgstr ""
 
 #: jinja2/500.html:5
 msgid "Internal Server Error"
-msgstr ""
+msgstr "అంతర్గత సర్వర్ ఎర్రర్"
 
 #: jinja2/base.html:12 jinja2/base.html:31 jinja2/base.html:37 jinja2/base.html:100 kuma/search/jinja2/search/plugin.html:3
 msgid "Mozilla Developer Network"
-msgstr ""
+msgstr "మోజిల్లా డెవలపర్ నెట్వర్క్"
 
 #: jinja2/base.html:75
 #, python-format
@@ -207,7 +207,7 @@ msgstr ""
 
 #: jinja2/base.html:160 kuma/core/sections.py:6 kuma/landing/jinja2/landing/homepage.html:88
 msgid "Add-ons"
-msgstr ""
+msgstr "యాడ్-ఆన్స్"
 
 #: jinja2/base.html:161 kuma/core/translations/search/filter/firefox/name.py:4 kuma/landing/jinja2/landing/homepage.html:84
 msgid "Firefox"
@@ -270,7 +270,7 @@ msgstr "MDN గురించి"
 
 #: jinja2/base.html:211
 msgid "Terms"
-msgstr ""
+msgstr "షరతులు"
 
 #: jinja2/base.html:212
 msgid "Privacy"
@@ -488,7 +488,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:44 kuma/attachments/jinja2/attachments/includes/attachment_list.html:76
 msgid "File"
-msgstr ""
+msgstr "ఫైల్"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:45 kuma/dashboards/jinja2/dashboards/includes/revision_dashboard_body.html:8 kuma/users/models.py:65
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:9 kuma/wiki/models.py:1911
@@ -514,7 +514,7 @@ msgstr ""
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:77
 msgid "Size"
-msgstr ""
+msgstr "సైజ్"
 
 #: kuma/attachments/jinja2/attachments/includes/attachment_list.html:78
 msgid "Last modified"
@@ -560,7 +560,7 @@ msgstr ""
 #: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:104 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:243
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
-msgstr ""
+msgstr "తొలగించు"
 
 #: kuma/authkeys/jinja2/authkeys/history.html:14
 msgid "This key has not been used yet."
@@ -617,7 +617,7 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:32
 msgid "Secret"
-msgstr ""
+msgstr "రహస్యం"
 
 #: kuma/core/apps.py:13
 msgid "Core"
@@ -1141,7 +1141,7 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:87
 msgid "Red"
-msgstr ""
+msgstr "ఎరుపు"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:94
 msgid "Replace &lt;FOO&gt; with"
@@ -1268,11 +1268,11 @@ msgstr ""
 
 #: kuma/search/views.py:94
 msgid "name"
-msgstr ""
+msgstr "పేరు"
 
 #: kuma/search/views.py:95
 msgid "groupname"
-msgstr ""
+msgstr "గ్రూప్ పేరు"
 
 #: kuma/search/jinja2/search/down.html:5
 msgid "Search Unavailable"
@@ -1299,7 +1299,7 @@ msgstr ""
 
 #: kuma/search/jinja2/search/results.html:69
 msgid "Results"
-msgstr ""
+msgstr "ఫలితాలు"
 
 #: kuma/search/jinja2/search/results.html:74
 #, python-format
@@ -1391,7 +1391,7 @@ msgstr ""
 
 #: kuma/spam/models.py:36
 msgid "type"
-msgstr ""
+msgstr "రకం"
 
 #: kuma/users/adapters.py:17
 #, python-format
@@ -1423,11 +1423,11 @@ msgstr ""
 
 #: kuma/users/backends.py:33
 msgid "salt"
-msgstr ""
+msgstr "ఉప్పు"
 
 #: kuma/users/backends.py:34
 msgid "hash"
-msgstr ""
+msgstr "హ్యాష్"
 
 #: kuma/users/constants.py:6
 msgid "Username may contain only letters, numbers, and these characters: . - _ +"
@@ -1455,7 +1455,7 @@ msgstr ""
 
 #: kuma/users/forms.py:59 kuma/users/models.py:151 kuma/users/jinja2/users/includes/user_title_info.html:76
 msgid "Twitter"
-msgstr ""
+msgstr "ట్విటర్"
 
 #: kuma/users/forms.py:77 kuma/users/models.py:166 kuma/users/jinja2/users/includes/user_title_info.html:90
 msgid "Stack Overflow"
@@ -1471,7 +1471,7 @@ msgstr ""
 
 #: kuma/users/forms.py:104 kuma/users/models.py:161 kuma/users/jinja2/users/includes/user_title_info.html:102
 msgid "Facebook"
-msgstr ""
+msgstr "ఫేస్బుక్"
 
 #: kuma/users/forms.py:136
 msgid "Areas of expertise must be a subset of interests"
@@ -1497,7 +1497,7 @@ msgstr ""
 
 #: kuma/users/models.py:51
 msgid "Language"
-msgstr ""
+msgstr "భాష"
 
 #: kuma/users/models.py:56
 msgid "Homepage"
@@ -1509,7 +1509,7 @@ msgstr ""
 
 #: kuma/users/models.py:70
 msgid "Name"
-msgstr ""
+msgstr "పేరు"
 
 #: kuma/users/models.py:75
 msgid "Organization"
@@ -1521,7 +1521,7 @@ msgstr ""
 
 #: kuma/users/models.py:85
 msgid "About Me"
-msgstr ""
+msgstr "నా గురించి"
 
 #: kuma/users/models.py:89
 msgid "IRC nickname"
@@ -1530,7 +1530,7 @@ msgstr ""
 #: kuma/users/models.py:94 kuma/users/jinja2/users/includes/user_revision_history_form.html:11 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:27 kuma/wiki/jinja2/wiki/create.html:79
 #: kuma/wiki/jinja2/wiki/edit.html:191
 msgid "Tags"
-msgstr ""
+msgstr "ట్యాగ్స్"
 
 #: kuma/users/models.py:99
 msgid "Enter a valid website URL."
@@ -1562,11 +1562,11 @@ msgstr ""
 
 #: kuma/users/models.py:136
 msgid "Website"
-msgstr ""
+msgstr "వెబ్ సైట్"
 
 #: kuma/users/signup.py:9
 msgid "Username is required."
-msgstr ""
+msgstr "యూజర్ నేమ్ కావలెను."
 
 #: kuma/users/signup.py:10
 #, python-format
@@ -1584,7 +1584,7 @@ msgstr ""
 
 #: kuma/users/signup.py:34
 msgid "I agree"
-msgstr ""
+msgstr "నేను అంగేకరిస్తున్నాను"
 
 #: kuma/users/tasks.py:38 kuma/users/jinja2/users/email/welcome/html.ltxt:6
 msgid "Take the next step to get involved on MDN!"
@@ -1592,7 +1592,7 @@ msgstr ""
 
 #: kuma/users/views.py:437
 msgid "Email address"
-msgstr ""
+msgstr "ఈ మెయిల్ చిరునామా"
 
 #: kuma/users/views.py:496
 #, python-format
@@ -1606,7 +1606,7 @@ msgstr ""
 
 #: kuma/users/views.py:502 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
-msgstr ""
+msgstr "ఇతర:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
@@ -1639,7 +1639,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:32
 msgid "Remove"
-msgstr ""
+msgstr "తొలగించు"
 
 #: kuma/users/jinja2/account/email.html:45
 msgid "<strong>Warning:</strong>\"You have not added any email addresses to this profile. Without one you cannot receive notifications."
@@ -1651,7 +1651,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/email.html:55
 msgid "Add Email"
-msgstr ""
+msgstr "ఈ మయిల్ జత చేయి"
 
 #: kuma/users/jinja2/account/email.html:60 kuma/users/jinja2/socialaccount/connections.html:70
 msgid "Edit profile"
@@ -1686,11 +1686,11 @@ msgstr ""
 
 #: kuma/users/jinja2/account/login.html:3
 msgid "Sign In"
-msgstr ""
+msgstr "సైన్ ఇన్"
 
 #: kuma/users/jinja2/account/login.html:13
 msgid "Please sign in"
-msgstr ""
+msgstr "దయచేసి సైన్ ఇన్ అవ్వండి"
 
 #: kuma/users/jinja2/account/login.html:15
 msgid "All content on MDN is free and available without signing in."
@@ -1712,7 +1712,7 @@ msgstr ""
 #: kuma/users/jinja2/account/password_reset_from_key.html:3 kuma/users/jinja2/account/password_reset_from_key.html:12 kuma/users/jinja2/account/password_reset_from_key_done.html:3
 #: kuma/users/jinja2/account/password_reset_from_key_done.html:7
 msgid "Change Password"
-msgstr ""
+msgstr "పాస్వర్డ్ మార్చు"
 
 #: kuma/users/jinja2/account/password_reset.html:3 kuma/users/jinja2/account/password_reset.html:8 kuma/users/jinja2/account/password_reset_done.html:3
 #: kuma/users/jinja2/account/password_reset_done.html:8
@@ -1737,7 +1737,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:10
 msgid "Bad Token"
-msgstr ""
+msgstr "చెడు టోకెన్"
 
 #: kuma/users/jinja2/account/password_reset_from_key.html:17
 #, python-format
@@ -1797,7 +1797,7 @@ msgstr ""
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 msgid "Note"
-msgstr ""
+msgstr "నోట్"
 
 #: kuma/users/jinja2/account/snippets/already_logged_in.html:1
 #, python-format
@@ -1967,7 +1967,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/ban_user.html:25
 msgid "Choose a reason"
-msgstr ""
+msgstr "కారణం ఎంచుకో"
 
 #: kuma/users/jinja2/users/ban_user.html:31
 msgid "or enter a reason in the text box below"
@@ -2124,7 +2124,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/user_detail.html:42 kuma/wiki/jinja2/wiki/confirm_revision_revert.html:23
 msgid "Date"
-msgstr ""
+msgstr "తేదీ"
 
 #: kuma/users/jinja2/users/user_detail.html:51 kuma/wiki/jinja2/wiki/document.html:382
 msgid "Edit page"
@@ -2268,7 +2268,7 @@ msgstr ""
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:4
 #, python-format
 msgid "Hi %(username)s"
-msgstr ""
+msgstr "హాయ్ %(username)s"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:7
@@ -2359,7 +2359,7 @@ msgstr ""
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:31
 msgid "API keys"
-msgstr ""
+msgstr "API కీస్"
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:65
 msgid "Areas of Expertise"
@@ -2430,7 +2430,7 @@ msgstr ""
 
 #: kuma/wiki/feeds.py:30
 msgid "/"
-msgstr ""
+msgstr "/"
 
 #: kuma/wiki/feeds.py:148
 msgid "MDN recent document changes"
@@ -2592,7 +2592,7 @@ msgstr ""
 
 #: kuma/wiki/forms.py:435 kuma/wiki/jinja2/wiki/edit.html:80
 msgid "Keywords:"
-msgstr ""
+msgstr "ముఖ్య పదాలు:"
 
 #: kuma/wiki/forms.py:436
 msgid "Affects search results"
@@ -2699,7 +2699,7 @@ msgstr ""
 
 #: kuma/wiki/models.py:1824
 msgid "IP address"
-msgstr ""
+msgstr "IP చిరునామా"
 
 #: kuma/wiki/models.py:1832
 msgid "User-Agent"
@@ -3011,7 +3011,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
-msgstr ""
+msgstr "మీ మార్పులు"
 
 #: kuma/wiki/jinja2/wiki/edit.html:43 kuma/wiki/jinja2/wiki/edit.html:55 kuma/wiki/jinja2/wiki/includes/document_macros.html:42 kuma/wiki/jinja2/wiki/includes/document_macros.html:58
 #, python-format
@@ -3036,15 +3036,15 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/edit.html:128
 msgid "Days"
-msgstr ""
+msgstr "రోజులు"
 
 #: kuma/wiki/jinja2/wiki/edit.html:132
 msgid "Hours"
-msgstr ""
+msgstr "గంటలు"
 
 #: kuma/wiki/jinja2/wiki/edit.html:136
 msgid "Minutes"
-msgstr ""
+msgstr "నిముషాలు"
 
 #: kuma/wiki/jinja2/wiki/edit.html:145
 msgid "Find the translation source with the lookup below and then click \"Publish.\""
@@ -3202,7 +3202,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/revision.html:33
 msgid "Creator:"
-msgstr ""
+msgstr "తయారీదారుడు:"
 
 #: kuma/wiki/jinja2/wiki/revision.html:38
 msgid "Is current revision?"
@@ -3273,7 +3273,7 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
 msgid "Show %(locale)s"
-msgstr ""
+msgstr "%(locale)s చూపించు"
 
 #: kuma/wiki/jinja2/wiki/translate.html:86
 #, python-format
@@ -3291,7 +3291,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:120
 msgid "English tags"
-msgstr ""
+msgstr "ఆంగ్ల ట్యాగ్స్"
 
 #: kuma/wiki/jinja2/wiki/translate.html:132
 msgid "This document has no tags."
@@ -3352,11 +3352,11 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/approvals.html:24
 msgid "Save"
-msgstr ""
+msgstr "సేవ్"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:19
 msgid "Languages"
-msgstr ""
+msgstr "భాషలు"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:29
 msgid "No translations exist for this article."
@@ -3368,7 +3368,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:43 kuma/wiki/jinja2/wiki/includes/buttons.html:46
 msgid "Watch"
-msgstr ""
+msgstr "గమనించు"
 
 #: kuma/wiki/jinja2/wiki/includes/buttons.html:63
 msgid "New sub-article"
@@ -3408,7 +3408,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:21
 msgid "See also"
-msgstr ""
+msgstr "ఇంకా చూడవలసినవి"
 
 #: kuma/wiki/jinja2/wiki/includes/document_macros.html:29
 msgid "Change Revisions"
@@ -3555,7 +3555,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:16
 msgid "New Page"
-msgstr ""
+msgstr "కొత్త పేజి"
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:17
 msgid "Discard changes and create a new document?"
@@ -3567,7 +3567,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/page_buttons.html:35
 msgid "Discard"
-msgstr ""
+msgstr "తొలగించు"
 
 #: kuma/wiki/jinja2/wiki/includes/review_tags.html:3
 msgid "Review needed?"
@@ -3756,7 +3756,7 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:22 kuma/wiki/templates/admin/wiki/document/load_data_form.html:22
 msgid "Home"
-msgstr ""
+msgstr "హోం"
 
 #: kuma/wiki/templates/admin/wiki/purge_documents.html:24 kuma/wiki/templates/admin/wiki/document/load_data_form.html:24
 msgid "Documents"
@@ -3788,7 +3788,7 @@ msgstr ""
 
 #: kuma/wiki/templates/admin/wiki/document/load_data_form.html:58
 msgid "Load"
-msgstr ""
+msgstr "లోడ్"
 
 #: kuma/wiki/templates/admin/wiki/revisionakismetsubmission/change_form.html:5
 msgid "Akismet submission details"
@@ -3805,7 +3805,7 @@ msgstr ""
 #: kuma/wiki/templatetags/jinja_helpers.py:101 kuma/wiki/templatetags/jinja_helpers.py:102 kuma/wiki/templatetags/jinja_helpers.py:117 kuma/wiki/templatetags/jinja_helpers.py:118
 #, python-format
 msgid "Revision %s"
-msgstr ""
+msgstr "రివిజన్ %s"
 
 #: kuma/wiki/templatetags/jinja_helpers.py:107
 msgid "There was an error generating the content."
@@ -3863,7 +3863,7 @@ msgstr ""
 
 #: kuma/wiki/views/translate.py:72
 msgid "You cannot translate this document."
-msgstr ""
+msgstr "మేరు ఈ డాక్యుమెంట్ ని తర్జుమా చేయలేరు."
 
 #: templates/admin/search/index/change_list.html:8
 #, python-format
