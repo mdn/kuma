@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-07-21 12:49-0700\n"
-"PO-Revision-Date: 2016-08-03 11:28+0000\n"
+"PO-Revision-Date: 2016-08-03 13:24+0000\n"
 "Last-Translator: Sai Karthik Karra <kskarthik91@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: te\n"
@@ -103,7 +103,7 @@ msgstr ""
 
 #: jinja2/base.html:84
 msgid "Select language"
-msgstr ""
+msgstr "భాష ఎంచుకోండి"
 
 #: jinja2/base.html:86
 msgid "Skip to search"
