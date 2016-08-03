@@ -27,7 +27,7 @@
 
     {%- if analytics_page_revision %}
         // dimension12 == 'Page Revision"
-        ga('set', 'dimension12', {{ analytics_page_revision }});
+        ga('set', 'dimension12', '{{ analytics_page_revision }}');
     {%- endif %}
 
     // dimension13 == "Saw iPerceptions Survey"
