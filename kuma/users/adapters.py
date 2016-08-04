@@ -101,13 +101,22 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         because the default adapter uses the account adpater above
         as the default.
         """
+        allowed = True
         if flag_is_active(request, 'registration_disabled'):
-            return False
+            allowed = False
         elif sociallogin.account.provider == 'persona':
+            allowed = False
             request.used_persona = True
-            return False
-        else:
-            return True
+
+        # bug 1291892: Don't confuse next login with connecting accounts
+        if not allowed:
+            for key in ('socialaccount_sociallogin', 'sociallogin_provider'):
+                try:
+                    del request.session[key]
+                except KeyError:  # pragma: no cover
+                    pass
+
+        return allowed
 
     def validate_disconnect(self, account, accounts):
         """
