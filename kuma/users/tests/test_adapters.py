@@ -67,6 +67,69 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         eq_(len(queued_messages), 1)
         eq_(django_messages.ERROR, queued_messages[0].level)
 
+    def test_pre_social_login_matched_login(self):
+        """
+        https://bugzil.la/1063830, happy path
+
+        A user tries to sign in with GitHub, but their GitHub email matches
+        an existing Persona-backed MDN account. They follow the prompt to login
+        with Persona, and the accounts are connected.
+        """
+
+        # Set up a GitHub SocialLogin in the session
+        github_account = SocialAccount.objects.get(user__username='testuser2')
+        github_login = SocialLogin(account=github_account,
+                                   user=github_account.user)
+
+        request = self.rf.get('/')
+        session = self.client.session
+        session['sociallogin_provider'] = 'github'
+        session['socialaccount_sociallogin'] = github_login.serialize()
+        session.save()
+        request.session = session
+
+        # Set up an matching Persona SocialLogin for request
+        persona_account = SocialAccount.objects.create(
+            user=github_account.user,
+            provider='persona',
+            uid=github_account.user.email)
+        persona_login = SocialLogin(account=persona_account)
+
+        # Verify the social_login receiver over-writes the provider
+        # stored in the session
+        self.adapter.pre_social_login(request, persona_login)
+        session = request.session
+        eq_(session['sociallogin_provider'], 'persona')
+
+    def test_pre_social_login_same_provider(self):
+        """
+        pre_social_login passes if existing provider is the same.
+
+        I'm not sure what the real-world counterpart of this is. Logging
+        in with a different GitHub account? Needed for branch coverage.
+        """
+
+        # Set up a GitHub SocialLogin in the session
+        github_account = SocialAccount.objects.get(user__username='testuser2')
+        github_login = SocialLogin(account=github_account,
+                                   user=github_account.user)
+
+        request = self.rf.get('/')
+        session = self.client.session
+        session['sociallogin_provider'] = 'github'
+        session['socialaccount_sociallogin'] = github_login.serialize()
+        session.save()
+        request.session = session
+
+        # Set up an un-matching GitHub SocialLogin for request
+        github2_account = SocialAccount(user=self.user_model(),
+                                        provider='github',
+                                        uid=github_account.uid + '2')
+        github2_login = SocialLogin(account=github2_account)
+
+        self.adapter.pre_social_login(request, github2_login)
+        eq_(request.session['sociallogin_provider'], 'github')
+
 
 class KumaAccountAdapterTestCase(UserTestCase):
     localizing_client = True
