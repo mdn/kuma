@@ -10,6 +10,12 @@ CKEDITOR_VERSION="4.5.7"
 CKBUILDER_VERSION="1.7.2"
 CKBUILDER_URL="http://download.cksource.com/CKBuilder/$CKBUILDER_VERSION/ckbuilder.jar"
 
+# Plugin versions
+DESCRIPTION_LIST_VERSION="e365ac622a995d535266c22f0c44b743f8fffa14"
+SCAYT_VERSION="release.4.8.4.0"
+WSC_VERSION="release.4.8.4.0"
+
+
 set -e
 
 echo "CKEditor Builder"
@@ -21,7 +27,7 @@ target="../build"
 echo ""
 echo "Pulling down CKEditor from GitHub..."
 rm -rf ckeditor/
-git clone -b $CKEDITOR_VERSION --single-branch https://github.com/ckeditor/ckeditor-dev.git ckeditor
+git clone -b $CKEDITOR_VERSION --single-branch --depth=1 https://github.com/ckeditor/ckeditor-dev.git ckeditor
 rm -rf ckeditor/.git
 
 
@@ -43,6 +49,17 @@ function error_exit
 function command_exists
 {
 	command -v "$1" > /dev/null 2>&1;
+}
+
+function download_plugin
+{
+	echo "downloading $1 plugin, version $2"
+	rm -rf plugins/$1
+	git clone $3 plugins/$1
+	cd plugins/$1
+	git checkout $2
+	cd -
+	rm -rf plugins/$1/.git
 }
 
 # Move to the script directory.
@@ -73,17 +90,11 @@ cd ../..
 echo ""
 echo "Copying extra plugins..."
 
-rm -rf plugins/descriptionlist
-git clone https://github.com/Reinmar/ckeditor-plugin-descriptionlist.git plugins/descriptionlist
-rm -rf plugins/descriptionlist/.git
+download_plugin "descriptionlist" $DESCRIPTION_LIST_VERSION "https://github.com/Reinmar/ckeditor-plugin-descriptionlist.git"
 
-rm -rf plugins/scayt
-git clone https://github.com/WebSpellChecker/ckeditor-plugin-scayt.git plugins/scayt
-rm -rf plugins/scayt/.git
+download_plugin "scayt" $SCAYT_VERSION "https://github.com/WebSpellChecker/ckeditor-plugin-scayt.git"
 
-rm -rf plugins/wsc
-git clone https://github.com/WebSpellChecker/ckeditor-plugin-wsc.git plugins/wsc
-rm -rf plugins/wsc/.git
+download_plugin "wsc" $WSC_VERSION "https://github.com/WebSpellChecker/ckeditor-plugin-wsc.git"
 
 cp -r plugins/* ckeditor/plugins/
 
