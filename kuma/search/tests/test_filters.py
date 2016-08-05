@@ -2,10 +2,13 @@ from kuma.core.tests import eq_, ok_
 from kuma.wiki.models import Document
 from kuma.wiki.signals import render_done
 
+from django.http import QueryDict
+
 from . import ElasticTestCase
 from ..filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
                        HighlightFilterBackend, LanguageFilterBackend,
-                       SearchQueryBackend)
+                       SearchQueryBackend, get_filters)
+from ..models import FilterGroup
 from ..views import SearchView
 
 
@@ -135,3 +138,20 @@ class FilterTests(ElasticTestCase):
         response = view(request)
         eq_(response.data['count'], 7)
         eq_(len(response.data['documents']), 7)
+
+    def test_get_filters(self):
+        FilterGroup.objects.create(
+            name='Topics',
+            slug='topic',
+            order=1)
+        qd = QueryDict('q=test&topic=css,canvas,js')
+        filters = get_filters(qd.getlist)
+        eq_(filters, [u'css,canvas,js'])
+
+        qd = QueryDict('q=test&topic=css,js&none=none')
+        filters = get_filters(qd.getlist)
+        eq_(filters, [u'none'])
+
+        qd = QueryDict('q=test&none=none')
+        filters = get_filters(qd.getlist)
+        eq_(filters, [u'none'])

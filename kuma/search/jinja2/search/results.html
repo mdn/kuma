@@ -171,6 +171,18 @@
       <!-- right filters -->
       <div class="column-strip search-results-filters">
         <fieldset>
+
+        <label>
+          {% if "none" in selected_filters %}
+            <i aria-hidden="true" class="icon-check"></i>
+            <input id="no_filter" type="checkbox" class="offscreen" name="none" checked="checked" value="none">
+          {% else %}
+            <i aria-hidden="true" class="icon-check-empty"></i>
+            <input id="no_filter" type="checkbox" class="offscreen" name="none" value="none">
+          {% endif %}
+          <span class="filter-name">{{ _('All Topics') }}</span>
+        </label>
+
         {% for filter_group in filters %}
           <fieldset>
             <legend><i aria-hidden="true" class="icon-th-list"></i><span class="offscreen">{{ _('Filter by') }} </span>{{ filter_group.name }}</legend>

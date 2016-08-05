@@ -20,7 +20,11 @@ def get_filters(getter_func):
 
     this will return `['css', 'html']`.
 
+    If the given URL contains 'none', then no filters should be applied.
+
     """
+    if getter_func("none"):
+        return [u'none']
     filters = collections.OrderedDict()
     for slug in FilterGroup.objects.values_list('slug', flat=True):
         for filters_slug in getter_func(slug, []):
@@ -184,8 +188,10 @@ class DatabaseFilterBackend(BaseFilterBackend):
             if len(filter_tags) > 1:
                 facet_params = F('terms', tags=list(filter_tags))
             else:
-                facet_params = F('term', tags=filter_tags[0])
-            active_facets.append((serialized_filter['slug'], facet_params))
+                if filter_tags:
+                    facet_params = F('term', tags=filter_tags[0])
+            if len(filter_tags):
+                active_facets.append((serialized_filter['slug'], facet_params))
 
         if active_filters:
             if len(active_filters) == 1:
