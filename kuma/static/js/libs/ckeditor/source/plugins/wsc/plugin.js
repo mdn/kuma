@@ -15,6 +15,7 @@ CKEDITOR.plugins.add( 'wsc', {
 		editor.config.wsc_customDictionaryIds = editor.config.wsc_customDictionaryIds || CKEDITOR.config.wsc_customDictionaryIds || '';
 		editor.config.wsc_userDictionaryName = editor.config.wsc_userDictionaryName || CKEDITOR.config.wsc_userDictionaryName || '';
 		editor.config.wsc_customLoaderScript = editor.config.wsc_customLoaderScript || CKEDITOR.config.wsc_customLoaderScript;
+		editor.config.wsc_interfaceLang = editor.config.wsc_interfaceLang; //option to customize the interface language 12/28/2015
 
 		CKEDITOR.config.wsc_cmd = editor.config.wsc_cmd || CKEDITOR.config.wsc_cmd || 'spell'; // spell, thes or grammar. default tab
 		CKEDITOR.config.wsc_version="v4.3.0-master-d769233";
