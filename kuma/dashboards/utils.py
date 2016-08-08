@@ -22,6 +22,14 @@ def spam_dashboard_recent_events(start_date=None):
         'revision__document'
     ).order_by('-id')
 
+    # Document is new; document is a translation
+    change_types = {
+        (False, False): "New Page",
+        (True, False): "Page Edit",
+        (False, True): "New Translation",
+        (True, True): "Translation Update",
+    }
+
     for rs in recent_spam:
         revision = rs.revision
         document = revision.document
@@ -52,10 +60,7 @@ def spam_dashboard_recent_events(start_date=None):
             time_active_raw = next_rev.created - revision.created
             time_active = int(time_active_raw.total_seconds())
 
-        change_type = 'changetype_{}{}'.format(
-            'edit' if revision.previous else 'new',
-            'trans' if document.parent else ''
-        )
+        change_type = change_types[bool(revision.previous), bool(document.parent)]
 
         # Gather table data
         data['recent_spam'].append({

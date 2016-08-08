@@ -1,1 +1,53 @@
 {% extends 'base.html' %}
+{% set title = 'Spam Dashboard' %}
+
+{% block title %}{{ page_title(title) }}{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+{% if processing %}
+  <p>The report is being processed. Please reload in a minute.</p>
+{% else %}
+
+  {% if recent_spam %}
+  <table>
+    <caption>Published Spam</caption>
+    <colgroup>
+      <col span="1" class="data" />
+      <col span="1" class="data" />
+      <col span="1" class="data" />
+      <col span="1" class="data" />
+      <col span="1" class="name" />
+      <col span="1" class="path" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th class="data">Date</th>
+        <th class="data">Time Active (seconds)</th>
+        <th class="data">Estimated Viewers</th>
+        <th class="data">Revision</th>
+        <th class="name">Change Type</th>
+        <th class="path">Path</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rs in recent_spam -%}
+      <tr>
+        <td class="data">{{ rs.date }}</td>
+        <td class="data">{{ rs.time_active }}</td>
+        <td class="data">0</td>{# FIXME: make use of the Google Analytics query #}
+        <td class="data"><a href="{{ rs.revision_path }}">{{ rs.revision_id }}</a></td>
+        <td class="name">{{ rs.change_type }}</td>
+        <td class="path"><a href="{{ rs.document_path }}">{{ rs.document_path }}</a></td>
+      </tr>
+      {% endfor -%}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No recent published spam.</p>
+  {% endif %}{# recent spam #}
+  <ul>
+    <li>Recent event data generated at {{ now }}</li>
+  </ul>
+{% endif %}{# processing #}
+{% endblock %}

@@ -15,6 +15,7 @@ from kuma.core.utils import paginate
 from kuma.wiki.models import Document, Revision
 
 from .forms import RevisionDashboardForm
+from .jobs import SpamDashboardRecentEvents
 from . import PAGE_SIZE
 
 
@@ -159,4 +160,9 @@ def topic_lookup(request):
     'wiki.add_userban'), raise_exception=True)
 def spam(request):
     """Dashboard for spam moderators."""
-    pass
+
+    data = SpamDashboardRecentEvents().get()
+    if not data:
+        return render(request, 'dashboards/spam.html', {'processing': True})
+
+    return render(request, 'dashboards/spam.html', data)
