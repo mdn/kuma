@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-07-12 07:37-0700\n"
+"POT-Creation-Date: 2016-08-08 13:21-0700\n"
 "PO-Revision-Date: 2016-06-24 20:12+0000\n"
 "Last-Translator: Luis Arturo Jacobo <luisartjacobo@gmail.com>\n"
 "Language-Team: Spanish https://pontoon.mozilla.org/es/\n"
@@ -195,7 +195,7 @@ msgstr "Autoguardado activado."
 msgid "Autosave disabled."
 msgstr "Autoguardado desactivado."
 
-#: kuma/static/js/wiki-samples.js:97
+#: kuma/static/js/wiki-samples.js:99
 #, python-format
 msgid "Open in %(site)s"
 msgstr "Abrir en %(site)s"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-07-21 12:49-0700\n"
+"POT-Creation-Date: 2016-08-08 13:22-0700\n"
 "PO-Revision-Date: 2016-07-13 00:42+0000\n"
 "Last-Translator: netaras <netaras@gmail.com>\n"
 "Language-Team: Korean https://pontoon.mozilla.org/ko/\n"
@@ -358,7 +358,7 @@ msgstr "로그인:"
 msgid "Why is Persona sign in only?"
 msgstr ""
 
-#: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:9
+#: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:8
 msgid "We are sorry, but profile creation is currently disabled."
 msgstr "죄송하지만, 현재 프로필 생성이 불가능합니다."
 
@@ -592,7 +592,7 @@ msgstr "사용 의도 설명"
 msgid "Created"
 msgstr "생성일"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:104 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:243
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:106 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:245
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
 msgstr "삭제"
@@ -862,7 +862,7 @@ msgstr "변경 사항 대시보드"
 msgid "Authors:"
 msgstr "저자:"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:210
+#: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:222
 msgid "Filter"
 msgstr "항목"
 
@@ -871,9 +871,9 @@ msgid "Revert"
 msgstr "복원"
 
 # 77%
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:94 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:126
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:147 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:167 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:186
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:209 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:233 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:264
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266
 #: kuma/wiki/feeds.py:340
 msgid "View Page"
 msgstr "페이지 보기"
@@ -883,8 +883,8 @@ msgstr "페이지 보기"
 msgid "Edit Page"
 msgstr "페이지 편집"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:98 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:213
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:237 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:268 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
 msgstr "이력"
 
@@ -1408,7 +1408,12 @@ msgstr "%(default_locale_native)s 만 다시 검색하기"
 msgid "Docs"
 msgstr "기술 문서"
 
-#: kuma/search/jinja2/search/results.html:176
+#: kuma/search/jinja2/search/results.html:183
+#, fuzzy
+msgid "All Topics"
+msgstr "주제"
+
+#: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
 msgstr "검색 설정"
 
@@ -1646,23 +1651,27 @@ msgstr "동의"
 msgid "Take the next step to get involved on MDN!"
 msgstr "MDN 참여하기 위한 다음 단계"
 
-#: kuma/users/views.py:437
+#: kuma/users/views.py:454
 msgid "Email address"
 msgstr "이메일 주소"
 
-#: kuma/users/views.py:496
+#: kuma/users/views.py:499
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>인증됨</b>"
 
-#: kuma/users/views.py:499
+#: kuma/users/views.py:502
 #, python-format
 msgid "%(email)s Unverified"
 msgstr "%(email)s 미인증됨"
 
-#: kuma/users/views.py:502 kuma/users/jinja2/socialaccount/signup.html:135
+#: kuma/users/views.py:506 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr "또 다른 것들:"
+
+#: kuma/users/views.py:508
+msgid "Email:"
+msgstr "이메일:"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
@@ -1828,9 +1837,14 @@ msgstr "회원 가입"
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr "이미 계정이 있습니까? 그러면 <a href=\"%(login_url)s\">로그인</a>하세요."
 
-#: kuma/users/jinja2/account/signup_closed.html:3 kuma/users/jinja2/account/signup_closed.html:7
+#: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
 msgstr "프로필 생성 불가능"
+
+#: kuma/users/jinja2/account/signup_closed.html:5
+#, python-format
+msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
+msgstr ""
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -2108,78 +2122,78 @@ msgstr "금지됨"
 msgid "Submitted to Akismet as spam:"
 msgstr "제출일"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:42
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
 #, fuzzy
 msgid "The user did not have any revisions that were reported as spam."
 msgstr "현재 개발자가 만든 데모 아님"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:46
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 #, fuzzy
 msgid "Deleted:"
 msgstr "삭제"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:59
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 #, fuzzy
 msgid "The user did not have any revisions that were deleted."
 msgstr "현재 개발자가 만든 데모 아님"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:63
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
 #, fuzzy
 msgid "Reverted:"
 msgstr "복원"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
 #, fuzzy
 msgid "The user did not have any revisions that were reverted."
 msgstr "현재 개발자가 만든 데모 아님"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:83
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:84
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
 msgstr ""
 
 # 100%
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:112 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:154
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:173 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:192 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:220
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:251 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:275
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:253 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:277
 msgid "None."
 msgstr "없음."
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:116
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:137
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
 #, fuzzy
 msgid "Could not submit to Akismet:"
 msgstr "제출일"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:158
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
 #, fuzzy
 msgid "Could not delete:"
 msgstr "문서 삭제"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:177
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:198
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
 #, fuzzy
 msgid "No actions taken"
 msgstr "활성 키"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:199
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:254
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 #, fuzzy
 msgid "Identified as not spam:"
 msgstr "스팸으로 확인"
@@ -2448,7 +2462,7 @@ msgstr ""
 msgid "This user has not created any revisions in the past three days."
 msgstr "현재 개발자가 만든 데모 아님"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
 msgstr "편집"
 
@@ -2503,19 +2517,19 @@ msgstr "관리자"
 msgid "Wiki"
 msgstr "위키"
 
-#: kuma/wiki/constants.py:207 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr "기술 - 코드 샘플, API, 테크놀로지"
 
-#: kuma/wiki/constants.py:208 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr "편집 - 산문, 문법, 내용"
 
-#: kuma/wiki/constants.py:213
+#: kuma/wiki/constants.py:215
 msgid "Localization in progress - not completely translated yet."
 msgstr "문서 지역화 중 - 모두 번역되지 않음을 양해바라며, 여러분의 도움이 필요합니다."
 
-#: kuma/wiki/content.py:718
+#: kuma/wiki/content.py:720
 msgid "Edit section"
 msgstr "섹션 편집"
 
@@ -3400,8 +3414,8 @@ msgid "Translate Content"
 msgstr "내용 번역"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
-#, python-format
-msgid "Approved %(locale)s version"
+#, fuzzy, python-format
+msgid "Approved %(locale)s version:"
 msgstr "승인된 %(locale)s 버전"
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
@@ -6787,9 +6801,6 @@ msgstr "Elasticsearch 서버: %(backend)s"
 
 #~ msgid "{city}, {country}"
 #~ msgstr "{city}, {country}"
-
-#~ msgid "Email:"
-#~ msgstr "이메일:"
 
 #~ msgid "Website:"
 #~ msgstr "웹 사이트:"

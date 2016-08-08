@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-07-12 07:37-0700\n"
+"POT-Creation-Date: 2016-08-08 13:21-0700\n"
 "PO-Revision-Date: 2016-06-26 22:20+0000\n"
 "Last-Translator: Tymur Faradzhev <faradzhev.timur@gmail.com>\n"
 "Language-Team: Ukrainian https://pontoon.mozilla.org/uk/\n"
@@ -195,7 +195,7 @@ msgstr "Автозбереження увімкнено."
 msgid "Autosave disabled."
 msgstr "Автозбереження вимкнено."
 
-#: kuma/static/js/wiki-samples.js:97
+#: kuma/static/js/wiki-samples.js:99
 #, python-format
 msgid "Open in %(site)s"
 msgstr "Відкрити на %(site)s"

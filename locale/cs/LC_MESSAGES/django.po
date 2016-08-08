@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-07-21 12:49-0700\n"
+"POT-Creation-Date: 2016-08-08 13:22-0700\n"
 "PO-Revision-Date: 2016-07-25 16:38+0000\n"
 "Last-Translator: David Walczysko <wal.davca@gmail.com>\n"
 "Language-Team: Czech https://pontoon.mozilla.org/cs/\n"
@@ -59,8 +59,8 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> od Matthewa Inmana z <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The"
-" Oatmeal</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> od Matthewa Inmana z <a href=\"http://theoatmeal.com\" rel=\"nofollow"
+"\">The Oatmeal</a></small></p>"
 
 #: jinja2/404.html:6
 msgid "Not Found"
@@ -343,7 +343,7 @@ msgstr "Přihlásit se:"
 msgid "Why is Persona sign in only?"
 msgstr "Proč se lze přes Personu pouze přihlásit?"
 
-#: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:9
+#: jinja2/includes/login.html:33 kuma/users/jinja2/account/signup_closed.html:8
 msgid "We are sorry, but profile creation is currently disabled."
 msgstr "Omlouváme se, ale nové registrace jsou v tuto chvíli nedostupné."
 
@@ -381,8 +381,8 @@ msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
 msgstr ""
-"Nemohli jsme najít vaše členství. Možná již bylo zrušeno, nebo je chyba v odhlašovacím odkazu. Prosím, ujistěte se, že jste zkopírovali celý odkaz z e-mailu do prohlížeče. Pokud poslední část odkazu"
-" v e-mailu přetéká na nový řádek, zkuste odkaz zkopírovat a vložit do prohlížeče."
+"Nemohli jsme najít vaše členství. Možná již bylo zrušeno, nebo je chyba v odhlašovacím odkazu. Prosím, ujistěte se, že jste zkopírovali celý odkaz z e-mailu do prohlížeče. Pokud poslední část "
+"odkazu v e-mailu přetéká na nový řádek, zkuste odkaz zkopírovat a vložit do prohlížeče."
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -560,7 +560,7 @@ msgstr "Popis zamýšleného použití"
 msgid "Created"
 msgstr "Vytvořeno"
 
-#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:104 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:243
+#: kuma/authkeys/jinja2/authkeys/delete.html:15 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:106 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:245
 #: kuma/wiki/jinja2/wiki/confirm_document_delete.html:15 kuma/wiki/jinja2/wiki/confirm_document_delete.html:38
 msgid "Delete"
 msgstr "Smazat"
@@ -601,8 +601,8 @@ msgstr "K použití API klíčů potřebujete speciální oprávnění. Můžete
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 "<p>Níže popište zamýšlené využití klíče. <p><strong>POZNÁMKA:</strong> Kromě data a času vytvoření to bude jediný způsob, jak můžete později identifikovat tento klíč, pokuste se jej proto vyjádřit "
 "co možná nejlépe.</p>"
@@ -825,7 +825,7 @@ msgstr "Panel revizí"
 msgid "Authors:"
 msgstr "Autoři:"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:210
+#: kuma/dashboards/jinja2/dashboards/revisions.html:49 kuma/search/jinja2/search/results.html:222
 msgid "Filter"
 msgstr "Filtrovat"
 
@@ -833,9 +833,9 @@ msgstr "Filtrovat"
 msgid "Revert"
 msgstr "Vrátit"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:94 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:126
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:147 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:167 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:186
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:209 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:233 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:264
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:96 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:128
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:149 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:169 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:188
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:211 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:235 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:266
 #: kuma/wiki/feeds.py:340
 msgid "View Page"
 msgstr "Zobrazit stránku"
@@ -844,8 +844,8 @@ msgstr "Zobrazit stránku"
 msgid "Edit Page"
 msgstr "Upravit stránku"
 
-#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:98 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:213
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:237 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:268 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "History"
 msgstr "Historie"
 
@@ -947,8 +947,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1057,8 +1057,8 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"><span class=\"row1\">Přidejte se k <span class=\"number\">%(contributors)s</span> přispěvatelům</span> <span class=\"row2\"> v <span "
-"class=\"number\">%(locales)s</span>jazycích</span> <span class=\"row3\">z celého světa.</span></p>"
+"<p class=\"numbers\"><span class=\"row1\">Přidejte se k <span class=\"number\">%(contributors)s</span> přispěvatelům</span> <span class=\"row2\"> v <span class=\"number\">%(locales)s</"
+"span>jazycích</span> <span class=\"row3\">z celého světa.</span></p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
@@ -1108,8 +1108,8 @@ msgstr "Rozšiřte trochu vývojářské lásky."
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
@@ -1376,7 +1376,12 @@ msgstr ""
 msgid "Docs"
 msgstr "Dokumenty"
 
-#: kuma/search/jinja2/search/results.html:176
+#: kuma/search/jinja2/search/results.html:183
+#, fuzzy
+msgid "All Topics"
+msgstr "Témata"
+
+#: kuma/search/jinja2/search/results.html:188
 msgid "Filter by"
 msgstr "Filtrovat podle"
 
@@ -1411,8 +1416,8 @@ msgstr "typ"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1605,23 +1610,28 @@ msgstr "Souhlasím"
 msgid "Take the next step to get involved on MDN!"
 msgstr "Učiňte další krok a zapojte se do MDN!"
 
-#: kuma/users/views.py:437
+#: kuma/users/views.py:454
 msgid "Email address"
 msgstr "E-mailová adresa"
 
-#: kuma/users/views.py:496
+#: kuma/users/views.py:499
 #, python-format
 msgid "%(email)s <b>Verified</b>"
 msgstr "%(email)s <b>ověřeno</b>"
 
-#: kuma/users/views.py:499
+#: kuma/users/views.py:502
 #, python-format
 msgid "%(email)s Unverified"
 msgstr ""
 
-#: kuma/users/views.py:502 kuma/users/jinja2/socialaccount/signup.html:135
+#: kuma/users/views.py:506 kuma/users/jinja2/socialaccount/signup.html:135
 msgid "Other:"
 msgstr "Ostatní:"
+
+#: kuma/users/views.py:508
+#, fuzzy
+msgid "Email:"
+msgstr "Přidat e-mail"
 
 #: kuma/users/jinja2/account/account_inactive.html:3 kuma/users/jinja2/account/account_inactive.html:7
 msgid "Profile Inactive"
@@ -1784,9 +1794,14 @@ msgstr "Registrovat"
 msgid "Already have an profile? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr "Již máte profil? Potom se, prosím, <a href=\"%(login_url)s\">přihlaste</a>."
 
-#: kuma/users/jinja2/account/signup_closed.html:3 kuma/users/jinja2/account/signup_closed.html:7
+#: kuma/users/jinja2/account/signup_closed.html:3
 msgid "Profile Creation Disabled"
 msgstr "Vytváření profilů je zakázáno"
+
+#: kuma/users/jinja2/account/signup_closed.html:5
+#, python-format
+msgid "We are sorry, but you can not create a profile with Persona. <a href=\"%(url)s\">Please try again with a GitHub account</a>."
+msgstr ""
 
 #: kuma/users/jinja2/account/verification_sent.html:3 kuma/users/jinja2/account/verification_sent.html:7 kuma/users/jinja2/account/verified_email_required.html:3
 #: kuma/users/jinja2/account/verified_email_required.html:7
@@ -1879,8 +1894,8 @@ msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 "connect with my MDN profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-"next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
 "Profil s e-mailovou adresou níže již existuje. Máte již MDN profil? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Ano, spojit s mým MDN "
 "profilem</a>"
@@ -1927,16 +1942,17 @@ msgstr "Zadejte prosím jméno, které byste chtěli zobrazovat ostatní uživat
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
-msgstr "Profil s vybranou e-mailovou adresou již existuje. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Připojte k ní svůj %(provider_name)s účet</a>."
+msgstr ""
+"Profil s vybranou e-mailovou adresou již existuje. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Připojte k ní svůj %(provider_name)s účet</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Kterou e-mailovou adresu bychom měli používat k zasílání zpráv a oznámení ohledně MDN? Tato e-mailová adresa <strong>nebude</strong> na MDN zobrazena a bude použita v souladu s našimi <a "
-"href=\"%(privacy_url)s\">zásadami ochrany soukromí</a>."
+"Kterou e-mailovou adresu bychom měli používat k zasílání zpráv a oznámení ohledně MDN? Tato e-mailová adresa <strong>nebude</strong> na MDN zobrazena a bude použita v souladu s našimi <a href="
+"\"%(privacy_url)s\">zásadami ochrany soukromí</a>."
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
@@ -2056,74 +2072,74 @@ msgstr ""
 msgid "Submitted to Akismet as spam:"
 msgstr "Odesláno do Akismetu jako spam:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:42
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:44
 msgid "The user did not have any revisions that were reported as spam."
 msgstr "Uživatel nemá žádné revize označené jako spam."
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:46
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
 #, fuzzy
 msgid "Deleted:"
 msgstr "Smazat"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:59
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
 #, fuzzy
 msgid "The user did not have any revisions that were deleted."
 msgstr "Uživatel nemá žádné revize označené jako spam."
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:63
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
 #, fuzzy
 msgid "Reverted:"
 msgstr "Vrátit"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:77
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
 #, fuzzy
 msgid "The user did not have any revisions that were reverted."
 msgstr "Uživatel nemá žádné revize označené jako spam."
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:83
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:84
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:86
 msgid "New action by user:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:112 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:133 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:154
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:173 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:192 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:220
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:251 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:275
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:253 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:277
 msgid "None."
 msgstr "Nic."
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:116
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:137
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
 msgid "Could not submit to Akismet:"
 msgstr "Nelze odeslat do Akismetu:"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:158
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
 #, fuzzy
 msgid "Could not delete:"
 msgstr "Dokument smazán"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:177
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:198
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:200
 msgid "No actions taken"
 msgstr "Nebyla přijata žádná opatření"
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:199
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:201
 msgid "Latest revision is non-spam:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:223
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:225
 msgid "Already identified as spam:"
 msgstr ""
 
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:254
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
 msgid "Identified as not spam:"
 msgstr ""
 
@@ -2376,7 +2392,7 @@ msgstr ""
 msgid "This user has not created any revisions in the past three days."
 msgstr "Tento uživatel v uplynulých třech dnech nevytvořil žádné revize."
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:737 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
 msgstr "Upravit"
 
@@ -2430,19 +2446,19 @@ msgstr ""
 msgid "Wiki"
 msgstr ""
 
-#: kuma/wiki/constants.py:207 kuma/wiki/jinja2/wiki/includes/approvals.html:13
+#: kuma/wiki/constants.py:209 kuma/wiki/jinja2/wiki/includes/approvals.html:13
 msgid "Technical - code samples, APIs, or technologies"
 msgstr ""
 
-#: kuma/wiki/constants.py:208 kuma/wiki/jinja2/wiki/includes/approvals.html:19
+#: kuma/wiki/constants.py:210 kuma/wiki/jinja2/wiki/includes/approvals.html:19
 msgid "Editorial - prose, grammar, or content"
 msgstr ""
 
-#: kuma/wiki/constants.py:213
+#: kuma/wiki/constants.py:215
 msgid "Localization in progress - not completely translated yet."
 msgstr ""
 
-#: kuma/wiki/content.py:718
+#: kuma/wiki/content.py:720
 msgid "Edit section"
 msgstr "Upravit sekci"
 
@@ -2804,8 +2820,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -2964,15 +2980,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:266
@@ -3273,8 +3289,8 @@ msgid ""
 "&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
 "<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2005 Mozilla Developer Network a jednotliví přispěvatelé<br /> Obsah je dostupný pod licencí specifickou pro tento projekt. &middot; <a href=\"%(about_url)s\">O MDN</a> &middot; <a "
-"href=\"//github.com/mozilla/kuma\">Přispějte do kódu</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Zásady ochrany soukromí</a>"
+"&copy; 2005-2005 Mozilla Developer Network a jednotliví přispěvatelé<br /> Obsah je dostupný pod licencí specifickou pro tento projekt. &middot; <a href=\"%(about_url)s\">O MDN</a> &middot; <a href="
+"\"//github.com/mozilla/kuma\">Přispějte do kódu</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Zásady ochrany soukromí</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
@@ -3292,7 +3308,7 @@ msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
 #, python-format
-msgid "Approved %(locale)s version"
+msgid "Approved %(locale)s version:"
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/translate.html:85
@@ -3623,8 +3639,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
@@ -4413,7 +4429,8 @@ msgstr ""
 #~ msgstr "Dev Derby skončilo"
 
 #~ msgid "From 2011 until 2013, web developers created more than 450 demos for the Dev Derby! Find them below, or <a href=\"%(demos_url)s\">visit the Demo Studio</a> for many more."
-#~ msgstr "Od roku 2011 až do roku 2013 vývojáři vytvořili více než 450 demonstrací pro Dev Derby! Podívejte se na ně níže nebo <a href=\"%(demos_url)s\">navštivte Demo Studio</a>, kde najdete mnohé další."
+#~ msgstr ""
+#~ "Od roku 2011 až do roku 2013 vývojáři vytvořili více než 450 demonstrací pro Dev Derby! Podívejte se na ně níže nebo <a href=\"%(demos_url)s\">navštivte Demo Studio</a>, kde najdete mnohé další."
 
 #~ msgid "Previous Dev Derby Challenges"
 #~ msgstr "Předchozí Dev Derby Challenges"
