@@ -16,6 +16,7 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.db.models import Q
 from django.http import Http404
+from django.template.loader import render_to_string
 from django.test.client import (BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT,
                                 FakePayload, encode_multipart)
 from django.test.utils import override_settings
@@ -32,8 +33,8 @@ from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import eq_, get_user, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
-from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.spam.akismet import Akismet
+from kuma.spam.constants import SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.users.tests import UserTestCase, user
 
 from . import (WikiTestCase, create_document_editor_group,
@@ -2285,7 +2286,134 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             eq_(data_dict['expected_tags'], review_tags)
 
     @pytest.mark.midair
-    def test_edit_midair_collision(self):
+    def test_edit_midair_collisions(self):
+
+        def midair_collision_test(is_ajax):
+            self.client.login(username='admin', password='testpass')
+
+            # Post a new document.
+            data = new_document_data()
+            resp = self.client.post(reverse('wiki.create'), data)
+            doc = Document.objects.get(slug=data['slug'])
+
+            # Edit #1 starts...
+            resp = self.client.get(reverse('wiki.edit',
+                                           args=[doc.slug]))
+            page = pq(resp.content)
+            rev_id1 = page.find('input[name="current_rev"]').attr('value')
+
+            # Edit #2 starts...
+            resp = self.client.get(reverse('wiki.edit',
+                                           args=[doc.slug]))
+            page = pq(resp.content)
+            rev_id2 = page.find('input[name="current_rev"]').attr('value')
+
+            # Edit #2 submits successfully
+            data.update({
+                'form-type': 'rev',
+                'content': 'This edit got there first',
+                'current_rev': rev_id2
+            })
+            if is_ajax:
+                resp = self.client.post(
+                    reverse('wiki.edit', args=[doc.slug]),
+                    data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+                )
+                eq_(False, json.loads(resp.content)['error'])
+            else:
+                resp = self.client.post(reverse('wiki.edit',
+                                                args=[doc.slug]), data)
+                eq_(302, resp.status_code)
+
+            # Edit #1 submits, but receives a mid-aired notification
+            data.update({
+                'form-type': 'rev',
+                'content': 'This edit gets mid-aired',
+                'current_rev': rev_id1
+            })
+
+            if is_ajax:
+                resp = self.client.post(
+                    reverse('wiki.edit', args=[doc.slug]),
+                    data,
+                    HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+                )
+            else:
+                resp = self.client.post(reverse('wiki.edit',
+                                                args=[doc.slug]), data)
+
+            history_url = reverse(
+                'wiki.document_revisions',
+                kwargs={'document_path': doc.slug}, locale=doc.locale)
+            midair_collission_error = (unicode(MIDAIR_COLLISION) % {'url': history_url}).encode('utf-8')
+
+            if is_ajax:
+                location_of_error = json.loads(resp.content)['error_message']
+            else:
+                location_of_error = resp.content
+            ok_(midair_collission_error in location_of_error,
+                "Midair collision message should appear")
+
+        midair_collision_test(is_ajax=False)
+        midair_collision_test(is_ajax=True)
+
+    @override_config(AKISMET_KEY='dashboard')
+    @requests_mock.mock()
+    @mock.patch('kuma.spam.akismet.Akismet.check_comment')
+    def test_edit_spam_ajax(self, mock_requests, mock_akismet_method):
+        """Tests attempted spam edits that occur on Ajax POSTs."""
+        # Enable Akismet
+        Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG, everyone=True)
+        try:
+            spam_checks_flag = Flag.objects.get(name=SPAM_CHECKS_FLAG)
+        except Flag.DoesNotExist:
+            spam_checks_flag = Flag(name=SPAM_CHECKS_FLAG)
+
+        spam_checks_flag.everyone = True
+        spam_checks_flag.save()
+        mock_requests.post(VERIFY_URL, content='valid')
+        # The return value of akismet.check_comment is set to True
+        mock_akismet_method.return_value = True
+
+        # self.client.login(username='admin', password='testpass')
+        self.client.login(username='testuser', password='testpass')
+
+        # Create a new document.
+        doc = document(save=True)
+        data = new_document_data()
+        # Create a revision on the document
+        revision(save=True, document=doc)
+
+        resp = self.client.get(reverse('wiki.edit',
+                                       args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit submits
+        data.update({
+            'form-type': 'rev',
+            'content': 'Spam content',
+            'current_rev': rev_id
+        })
+        resp = self.client.post(
+            reverse('wiki.edit', args=[doc.slug]),
+            data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+        spam_message = render_to_string('wiki/includes/spam_error.html')
+        # The spam message is generated without a locale during this test, so we
+        # replace the url with a url with a locale
+        no_locale = reverse('wiki.document', args=['MDN/Contribute/Does_this_belong']).encode('utf-8')
+        yes_locale = reverse('wiki.document', args=['MDN/Contribute/Does_this_belong'], force_locale=True).encode('utf-8')
+        spam_message = spam_message.replace(no_locale, yes_locale)
+        # Spam message appears in the JsonResponse content
+        ok_(spam_message in json.loads(resp.content)['error_message'],
+            "Spam message should appear")
+
+    def test_multiple_edits_ajax(self):
+        """Tests multiple sequential attempted valid edits that occur as Ajax POSTs."""
+
         self.client.login(username='admin', password='testpass')
 
         # Post a new document.
@@ -2293,13 +2421,24 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         resp = self.client.post(reverse('wiki.create'), data)
         doc = Document.objects.get(slug=data['slug'])
 
-        # Edit #1 starts...
+        # Edit #1
         resp = self.client.get(reverse('wiki.edit',
                                        args=[doc.slug]))
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
+        # Edit #1 submits successfully
+        data.update({
+            'form-type': 'rev',
+            'content': 'Edit #1',
+            'current_rev': rev_id1
+        })
+        resp1 = self.client.post(
+            reverse('wiki.edit', args=[doc.slug]),
+            data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
 
-        # Edit #2 starts...
+        # Edit #2
         resp = self.client.get(reverse('wiki.edit',
                                        args=[doc.slug]))
         page = pq(resp.content)
@@ -2311,26 +2450,16 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'content': 'This edit got there first',
             'current_rev': rev_id2
         })
-        resp = self.client.post(reverse('wiki.edit',
-                                        args=[doc.slug]), data)
-        eq_(302, resp.status_code)
+        resp2 = self.client.post(
+            reverse('wiki.edit', args=[doc.slug]),
+            data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
 
-        # Edit #1 submits, but receives a mid-aired notification
-        data.update({
-            'form-type': 'rev',
-            'content': 'This edit gets mid-aired',
-            'current_rev': rev_id1
-        })
-        resp = self.client.post(reverse('wiki.edit',
-                                        args=[doc.slug]), data)
-        eq_(200, resp.status_code)
-
-        history_url = reverse(
-            'wiki.document_revisions',
-            kwargs={'document_path': doc.slug}, locale=doc.locale)
-        midair_collission_error = (unicode(MIDAIR_COLLISION) % {'url': history_url}).encode('utf-8')
-        ok_(midair_collission_error in resp.content,
-            "Midair collision message should appear")
+        # For Ajax requests the response is a JsonResponse
+        for resp in [resp1, resp2]:
+            eq_(json.loads(resp.content)['error'], False)
+            ok_('error_message' not in json.loads(resp.content).keys())
 
     @pytest.mark.toc
     def test_toc_toggle_off(self):
