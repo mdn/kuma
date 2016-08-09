@@ -475,8 +475,8 @@
 
         // save and edit attempts ajax submit
         $('.btn-save-and-edit').on('click', function(event) {
-            // TODO: disable form
-            console.log('save and edit triggered');
+            // disable form
+            $('#wiki-page-edit').attr('disabled', true);
 
             // give user feedback
             var saveNotification = mdn.Notifier.growl('Saving changes…', { duration: 0 });
@@ -498,7 +498,6 @@
             // get form data
             var formData = $form.serialize();
             var formURL = window.location.href; // submits to self
-            console.log('posting this data: ', formData)
 
             $.ajax({
                 url : formURL + '?async',
@@ -507,38 +506,32 @@
                 dataType : 'html',
                 success: function(data, textStatus, jqXHR) {
                     // server came back 200
-                    console.log('data is: ', data);
-                    // console.log(textStatus);
-                    // console.log(jqXHR);
-                    // was there an error?
+                    // was there an error, or did the session expire?
                     var $parsedData = $($.parseHTML(data));
                     var $responseErrors = $parsedData.find('.errorlist');
-                    console.log('$responseErrors: ', $responseErrors);
+                    var $responseLoginRequired = $parsedData.find('#login');
                     // If there are errors, saveNotification() for each of them
-                    if($responseErrors.length) {
-                        console.log('error found');
+                    if ($responseErrors.length) {
                         var liErrors = $responseErrors.find('li')
                         for (var i = 0; i < liErrors.length; i++) {
                             saveNotification.error(liErrors[i])
                         }
                         //$form.submit();
-                    }
-                    else {
-                        console.log('no errors - sucesss!');
+                    // Check if the session has timed out
+                    } else if ($responseLoginRequired.length) {
+                        saveNotification.error('Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again.')
+                    } else {
                         // assume it went well
                         saveNotification.success(gettext('Changes saved.'), 2000);
 
                         // We also need to update the form's current_rev to
                         // avoid triggering a conflict, since we just saved in
                         // the background.
-                        console.log('data is: ', data)
                         var responseData = JSON.parse(data)
                         if (responseData['error'] == true) {
                             saveNotification.error(responseData['error_message'])
                         } else {
                             var responseRevision = JSON.parse(data)['new_revision_id'];
-                            console.log('responseRevision: ', responseRevision);
-                            // TODO: why are there multiple <input id="id_current_rev">s?
                             $("input[id=id_current_rev]").val(responseRevision)
 
                             // Clear the review comment
@@ -548,16 +541,11 @@
                             $form.trigger('mdn:save-success');
                         }
 
-                        // Re-enable the form; it gets disabled to prevent double-POSTs
-                        $form.data('disabled', false).removeClass('disabled');
                     }
+                    // Re-enable the form; it gets disabled to prevent double-POSTs
+                    $form.attr('disabled', false);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    //if fails
-                    // console.log(jqXHR);
-                    // console.log(jqXHR.status);
-                    // console.log(textStatus);
-                    // console.log(errorThrown);
                     // Try to display the error that comes back from the server
                     try {
                         var errorMessage = JSON.parse(jqXHR['responseText'])['error_message']
@@ -565,8 +553,8 @@
                         errorMessage = "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button.";
                     }
                     saveNotification.error(errorMessage);
-//                    saveNotification.error(msg, {closable: true, duration: 0});
-
+                    // Re-enable the form; it gets disabled to prevent double-POSTs
+                    $form.attr('disabled', false);
                     // save draft
                 }
             });
