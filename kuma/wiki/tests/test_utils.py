@@ -82,6 +82,43 @@ class AnalyticsUserCountsTests(KumaTestCase):
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
     @mock.patch('googleapiclient.discovery_cache.autodetect')
     @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
+    def test_unmatching_query(self, mock_credclass, mock_cache):
+        # Disable the discovery cache, so that we can fully control the http requests
+        # with HttpMockSequence below
+        mock_cache.return_value = None
+
+        # This is the type of data we get back if the rev doesn't match anything.
+        empty_response = """{"reports": [
+            {
+                "data": {
+                    "samplingSpaceSizes": ["2085651"],
+                    "totals": [{"values": ["0"]}],
+                    "samplesReadCounts": ["999997"]
+                },
+                "columnHeader": {
+                    "dimensions": ["ga:dimension12"],
+                    "metricHeader": {
+                        "metricHeaderEntries": [
+                            {"type": "INTEGER", "name": "ga:uniquePageviews"}
+                        ]
+                    }
+                }
+            }
+        ]}"""
+
+        mock_creds = mock_credclass.from_json_keyfile_dict.return_value
+        mock_creds.authorize.return_value = HttpMockSequence([
+            ({'status': '200'}, self.valid_discovery),
+            ({'status': '200'}, empty_response)
+        ])
+
+        results = analytics_user_counts(42)
+
+        self.assertEqual(results, {42: 0})
+
+    @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
+    @mock.patch('googleapiclient.discovery_cache.autodetect')
+    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
     def test_invalid_viewid(self, mock_credclass, mock_cache):
         # http 400
 

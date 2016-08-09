@@ -115,5 +115,10 @@ def analytics_user_counts(*revs):
 
     response = request.execute()
 
-    return {int(row['dimensions'][0]): int(row['metrics'][0]['values'][0])
-            for row in response['reports'][0]['data']['rows']}
+    data = {r: 0 for r in revs}
+    data.update({
+        int(row['dimensions'][0]): int(row['metrics'][0]['values'][0])
+        for row in response['reports'][0]['data'].get('rows', ())
+    })
+
+    return data
