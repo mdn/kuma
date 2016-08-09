@@ -1,6 +1,7 @@
 import json
 
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 import tidylib
 
 from apiclient.discovery import build
@@ -76,8 +77,18 @@ def analytics_user_counts(*revs):
     """
 
     scopes = ['https://www.googleapis.com/auth/analytics.readonly']
-    credentials = ServiceAccountCredentials.from_json_keyfile_dict(
-        json.loads(config.GOOGLE_ANALYTICS_CREDENTIALS), scopes=scopes)
+
+    try:
+        ga_cred_dict = json.loads(config.GOOGLE_ANALYTICS_CREDENTIALS)
+    except (ValueError, TypeError):
+        raise ImproperlyConfigured(
+            "GOOGLE_ANALYTICS_CREDENTIALS Constance setting is badly formed.")
+    if not ga_cred_dict:
+        raise ImproperlyConfigured(
+            "An empty GOOGLE_ANALYTICS_CREDENTIALS Constance setting is not permitted.")
+
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(ga_cred_dict,
+                                                                   scopes=scopes)
     http_auth = credentials.authorize(Http())
     service = build('analyticsreporting', 'v4', http=http_auth)
 
