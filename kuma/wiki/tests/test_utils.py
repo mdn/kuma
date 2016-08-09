@@ -41,29 +41,28 @@ class AnalyticsUserCountsTests(KumaTestCase):
         valid_response = """{"reports": [
             {
                 "data": {
-                    "rowCount": 2,
                     "rows": [
                         {
-                            "metrics": [{"values": ["15113"]}],
+                            "metrics": [{"values": ["18775"]}],
                             "dimensions": ["1068728"]
                         },
                         {
-                            "metrics": [{"values": ["847"]}],
+                            "metrics": [{"values": ["753"]}],
                             "dimensions": ["1074760"]
                         }
                     ],
-                    "maximums": [{"values": ["15113"]}],
-                    "minimums": [{"values": ["847"]}],
-                    "isDataGolden": true,
-                    "samplesReadCounts": ["1000060"],
-                    "samplingSpaceSizes": ["2065269"],
-                    "totals": [{"values": ["15960"]}]
+                    "maximums": [{"values": ["18775"]}],
+                    "minimums": [{"values": ["753"]}],
+                    "samplingSpaceSizes": ["2085651"],
+                    "totals": [{"values": ["19528"]}],
+                    "rowCount": 2,
+                    "samplesReadCounts": ["999997"]
                 },
                 "columnHeader": {
                     "dimensions": ["ga:dimension12"],
                     "metricHeader": {
                         "metricHeaderEntries": [
-                            {"type": "INTEGER", "name": "ga:users"}
+                            {"type": "INTEGER", "name": "ga:uniquePageviews"}
                         ]
                     }
                 }
@@ -78,7 +77,7 @@ class AnalyticsUserCountsTests(KumaTestCase):
 
         results = analytics_user_counts(1074760, 1068728)
 
-        self.assertEqual(results, {1074760: 847, 1068728: 15113})
+        self.assertEqual(results, {1074760: 753, 1068728: 18775})
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
     @mock.patch('googleapiclient.discovery_cache.autodetect')

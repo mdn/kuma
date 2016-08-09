@@ -98,7 +98,7 @@ def analytics_user_counts(*revs):
                 # `dimension12` is the custom variable containing a page's rev #.
                 {
                     'dimensions': [{'name': 'ga:dimension12'}],
-                    'metrics': [{'expression': 'ga:users'}],
+                    'metrics': [{'expression': 'ga:uniquePageviews'}],
                     'dimensionFilterClauses': [
                         {
                             'filters': [
