@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-08 13:22-0700\n"
-"PO-Revision-Date: 2016-08-09 23:03+0000\n"
+"PO-Revision-Date: 2016-08-09 23:07+0000\n"
 "Last-Translator: Teo Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: Polish https://pontoon.mozilla.org/pl/\n"
 "Language: pl\n"
@@ -2087,24 +2087,20 @@ msgid "The user did not have any revisions that were reported as spam."
 msgstr "Użytkownik nie dokonał żadnych zmian, które byłyby zgłoszone jako spam."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:48
-#, fuzzy
 msgid "Deleted:"
-msgstr "Usuń"
+msgstr "Usunięte:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:61
-#, fuzzy
 msgid "The user did not have any revisions that were deleted."
-msgstr "To nie zostało stworzone przez autora"
+msgstr "Użytkownik nie dokonał żadnych zmian, które byłyby usunięte."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:65
-#, fuzzy
 msgid "Reverted:"
-msgstr "Przywróć"
+msgstr "Przywrócone:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:79
-#, fuzzy
 msgid "The user did not have any revisions that were reverted."
-msgstr "To nie zostało stworzone przez autora"
+msgstr "Użytkownik nie dokonał żadnych zmian, które byłyby przywrócone."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:85
 msgid "Needs follow up"
@@ -2117,23 +2113,20 @@ msgstr "Nowe działanie podjęte przez:"
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:114 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:135 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:156
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:175 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:194 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:222
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:253 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:277
-#, fuzzy
 msgid "None."
-msgstr "Brak"
+msgstr "Brak."
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:118
 msgid "Revisions skipped due to newer non-spam revision:"
 msgstr "Sprawdzenia pominięto, ponieważ najnowsza wersja nie jest spamem:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:139
-#, fuzzy
 msgid "Could not submit to Akismet:"
-msgstr "Dane przesłane do Akismet"
+msgstr "Nie można wysłać do Akismet:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:160
-#, fuzzy
 msgid "Could not delete:"
-msgstr "Dokument został usunięty"
+msgstr "Nie można usunąć:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:179
 msgid "Could not revert:"
@@ -2152,9 +2145,8 @@ msgid "Already identified as spam:"
 msgstr "Jest już zidentyfikowane jako spam:"
 
 #: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:256
-#, fuzzy
 msgid "Identified as not spam:"
-msgstr "Potwierdzony spam"
+msgstr "Zidentyfikowane jako nie-spam:"
 
 #: kuma/users/jinja2/users/user_banned.html:2
 msgid "You've Been Banned"
@@ -2408,9 +2400,8 @@ msgid "Already reported as spam."
 msgstr "Jest już zgłoszone jako spam."
 
 #: kuma/users/jinja2/users/includes/user_revision_history_form.html:86
-#, fuzzy
 msgid "This user has not created any revisions in the past three days."
-msgstr "To nie zostało stworzone przez autora"
+msgstr "Ten użytkownik nie dokonał żadnych zmian w ciągu ostatnich trzech dni."
 
 #: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:40
 msgid "Edit"
@@ -2447,9 +2438,8 @@ msgid "Banned"
 msgstr "Zablokowany"
 
 #: kuma/users/templatetags/jinja_helpers.py:47
-#, fuzzy
 msgid "Clean Up Revisions"
-msgstr "Wybierz inną wersję"
+msgstr "Wyczyść zmiany"
 
 #: kuma/users/templatetags/jinja_helpers.py:52
 msgid "Ban User"
@@ -3342,7 +3332,7 @@ msgid "Translate Content"
 msgstr "Przetłumacz zawartość"
 
 #: kuma/wiki/jinja2/wiki/translate.html:83
-#, fuzzy, python-format
+#, python-format
 msgid "Approved %(locale)s version:"
 msgstr "Zatwierdzono wersję w języku: %(locale)s"
 
