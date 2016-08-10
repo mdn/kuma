@@ -159,3 +159,18 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         request.session['sociallogin_provider'] = (sociallogin
                                                    .account.provider)
         request.session.modified = True
+
+    def save_user(self, request, sociallogin, form):
+        """
+        Update the session after creating a new user account.
+
+        If the socialaccount_sociallogin remains in the session, then the user
+        will be unable to connect a second account unless they log out and
+        log in again.
+        """
+        super(KumaSocialAccountAdapter, self).save_user(request, sociallogin,
+                                                        form)
+        try:
+            del request.session['socialaccount_sociallogin']
+        except KeyError:  # pragma: no cover
+            pass
