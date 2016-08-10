@@ -32,6 +32,7 @@ CKEDITOR.plugins.add('mdn-sampler', {
         makeElement('pre', gettext('Sample JavaScript Content'), { 'class': 'brush: js' });
 
         // Create the IFrame?
+        makeElement('h3', gettext('Result'));
         makeElement('p', '{{ EmbedLiveSample(\'' + sampleSlug + '\') }}');
 
         editor.insertHtml(temp.getHtml());
