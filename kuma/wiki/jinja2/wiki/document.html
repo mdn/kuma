@@ -386,6 +386,16 @@
 
 {% block js %}
 
+  <!-- if this document was saved, we need to clear out the cached draft in helpfulness -->
+  <script type="text/javascript">
+    {% if request.GET.document_saved %}
+      var document_saved = 1;
+    {% else %}
+      var document_saved = 0;
+    {% endif %}
+  </script>
+  {% javascript 'helpfulness' %}
+
   {% if waffle.flag('section_edit') %}
     <script type="text/javascript">
         (function($) {
