@@ -342,10 +342,10 @@ class RevisionFormEditTests(RevisionFormViewTests):
         mock_requests.post(CHECK_URL, content=is_spam)
 
         section_id = None
-        is_iframe_target = False
+        is_async_submit = False
         rev_form = RevisionForm(request=request,
                                 data=data,
-                                is_iframe_target=is_iframe_target,
+                                is_async_submit=is_async_submit,
                                 section_id=section_id)
         rev_form.instance.document = previous_revision.document
         return rev_form

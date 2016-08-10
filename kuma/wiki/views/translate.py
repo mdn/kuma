@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 import kuma.wiki.content
@@ -201,6 +202,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                     parent_slug=slug_dict['parent'])
             rev_form.instance.document = doc  # for rev_form.clean()
 
+#            import ipdb;ipdb.set_trace()
             if rev_form.is_valid() and not doc_form_invalid:
                 parent_id = request.POST.get('parent_id', '')
 
@@ -227,8 +229,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
             else:
                 # If this is an Ajax POST, then return a JsonResponse with error
                 if request.is_ajax():
-                    import ipdb;ipdb.set_trace()
-                    from django.utils.safestring import mark_safe
                     data = {
                         "error": True,
                         "error_message": mark_safe(rev_form.errors['current_rev'][0]),

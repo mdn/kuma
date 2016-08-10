@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import textwrap
-import json
 from urllib import urlencode
 
 import newrelic.agent
@@ -172,9 +170,11 @@ def edit(request, document_slug, document_locale, revision_id=None):
 
                     # save-and-edit button
                     if is_async_submit:
+                        # This is the most recent revision id
+                        new_rev_id = rev.document.revisions.order_by('-id').first().id
                         data = {
-                            "error" : False,
-                            "new_revision_id" : rev.document.revisions.order_by('-id').first().id # This is the most recent revision id
+                            "error": False,
+                            "new_revision_id": new_rev_id
                         }
                         return JsonResponse(data)
 
@@ -250,9 +250,11 @@ def edit(request, document_slug, document_locale, revision_id=None):
                             response.status_code = 205
                             return response
                         # This must be an Ajax POST, but no need to refresh
+                        # This is the most recent revision id
+                        new_rev_id = rev.document.revisions.order_by('-id').first().id
                         data = {
-                            "error" : False,
-                            "new_revision_id" : rev.document.revisions.order_by('-id').first().id # This is the most recent revision id
+                            "error": False,
+                            "new_revision_id": new_rev_id
                         }
                         return JsonResponse(data)
 
