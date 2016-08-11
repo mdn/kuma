@@ -49,7 +49,9 @@ def raw_file(request, attachment_id, filename):
             response['Content-Length'] = rev.file.size
         except OSError:
             pass
-        response['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
+        # Follow a recommendation emitted by April in bug 1287806
+        response['Content-Security-Policy'] = 'frame-ancestors %s' % settings\
+            .DOMAIN
         return response
     else:
         return redirect(attachment.get_file_url(), permanent=True)
