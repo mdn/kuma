@@ -31,7 +31,6 @@ class TupleCsv(Csv):
 
 
 DEBUG = config('DEBUG', default=False, cast=bool)
-TEMPLATE_DEBUG = DEBUG
 
 ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
 

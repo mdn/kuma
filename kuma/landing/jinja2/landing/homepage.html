@@ -178,7 +178,7 @@
 
 {% block js %}
   {{ super() }}
-  {% if settings.TEMPLATE_DEBUG %}
+  {% if settings.DEBUG %}
       <script>
         jQuery('#home-search-form').on('submit', function() {
             mdn.optimizely.push(['trackEvent', 'submit-homepage-search-form']);
