@@ -7,8 +7,9 @@ import mock
 from googleapiclient.http import HttpMockSequence
 from googleapiclient.errors import HttpError
 
-from kuma.core.tests import KumaTestCase
+from kuma.users.tests import UserTestCase
 
+from . import revision
 from ..utils import analytics_user_counts
 
 
@@ -21,7 +22,7 @@ GA_TEST_CREDS = r"""{
 """
 
 
-class AnalyticsUserCountsTests(KumaTestCase):
+class AnalyticsUserCountsTests(UserTestCase):
     @classmethod
     def setUpClass(cls):
         super(AnalyticsUserCountsTests, cls).setUpClass()
@@ -29,6 +30,10 @@ class AnalyticsUserCountsTests(KumaTestCase):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         with open(os.path.join(dir_path, 'analyticsreporting-discover.json')) as f:
             cls.valid_discovery = f.read()
+
+    def setUp(self):
+        self.rev1 = revision(save=True)
+        self.rev2 = revision(save=True)
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
     @mock.patch('googleapiclient.discovery_cache.autodetect')
@@ -44,11 +49,11 @@ class AnalyticsUserCountsTests(KumaTestCase):
                     "rows": [
                         {
                             "metrics": [{"values": ["18775"]}],
-                            "dimensions": ["1068728"]
+                            "dimensions": ["%d"]
                         },
                         {
                             "metrics": [{"values": ["753"]}],
-                            "dimensions": ["1074760"]
+                            "dimensions": ["%d"]
                         }
                     ],
                     "maximums": [{"values": ["18775"]}],
@@ -67,7 +72,7 @@ class AnalyticsUserCountsTests(KumaTestCase):
                     }
                 }
             }
-        ]}"""
+        ]}""" % (self.rev1.id, self.rev2.id)
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
         mock_creds.authorize.return_value = HttpMockSequence([
@@ -75,9 +80,9 @@ class AnalyticsUserCountsTests(KumaTestCase):
             ({'status': '200'}, valid_response)
         ])
 
-        results = analytics_user_counts(1074760, 1068728)
+        results = analytics_user_counts([self.rev1, self.rev2])
 
-        self.assertEqual(results, {1074760: 753, 1068728: 18775})
+        self.assertEqual(results, {self.rev1.id: 18775, self.rev2.id: 753})
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
     @mock.patch('googleapiclient.discovery_cache.autodetect')
@@ -112,9 +117,9 @@ class AnalyticsUserCountsTests(KumaTestCase):
             ({'status': '200'}, empty_response)
         ])
 
-        results = analytics_user_counts(42)
+        results = analytics_user_counts([self.rev1])
 
-        self.assertEqual(results, {42: 0})
+        self.assertEqual(results, {self.rev1.id: 0})
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
     @mock.patch('googleapiclient.discovery_cache.autodetect')
@@ -133,7 +138,7 @@ class AnalyticsUserCountsTests(KumaTestCase):
         ])
 
         with self.assertRaises(HttpError):
-            analytics_user_counts(1074760, 1068728)
+            analytics_user_counts([self.rev1, self.rev2])
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
     @mock.patch('googleapiclient.discovery_cache.autodetect')
@@ -152,7 +157,7 @@ class AnalyticsUserCountsTests(KumaTestCase):
         ])
 
         with self.assertRaises(HttpError):
-            analytics_user_counts(1074760, 1068728)
+            analytics_user_counts([self.rev1, self.rev2])
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
     @mock.patch('googleapiclient.discovery_cache.autodetect')
@@ -171,7 +176,7 @@ class AnalyticsUserCountsTests(KumaTestCase):
         ])
 
         with self.assertRaises(HttpError):
-            analytics_user_counts(1074760, 1068728)
+            analytics_user_counts([self.rev1, self.rev2])
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS="{}")
     @mock.patch('googleapiclient.discovery_cache.autodetect')
@@ -187,7 +192,7 @@ class AnalyticsUserCountsTests(KumaTestCase):
         ])
 
         with self.assertRaises(ImproperlyConfigured):
-            analytics_user_counts(1074760, 1068728)
+            analytics_user_counts([self.rev1, self.rev2])
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS="{'bad config']")
     @mock.patch('googleapiclient.discovery_cache.autodetect')
@@ -203,4 +208,4 @@ class AnalyticsUserCountsTests(KumaTestCase):
         ])
 
         with self.assertRaises(ImproperlyConfigured):
-            analytics_user_counts(1074760, 1068728)
+            analytics_user_counts([self.rev1, self.rev2])

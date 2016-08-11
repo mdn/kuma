@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.conf import settings
@@ -70,8 +71,8 @@ def tidy_content(content):
         return content
 
 
-def analytics_user_counts(*revs):
-    """Given some document revision numbers, returns a dict matching those
+def analytics_user_counts(revs):
+    """Given a sequence of document revisions, returns a dict matching those
     with the number of users Google Analytics thinks has visited each revision.
 
     """
@@ -92,6 +93,9 @@ def analytics_user_counts(*revs):
     http_auth = credentials.authorize(Http())
     service = build('analyticsreporting', 'v4', http=http_auth)
 
+    end_date = datetime.date.today().isoformat()
+    start_date = min(r.created for r in revs).isoformat() if revs else end_date
+
     request = service.reports().batchGet(
         body={
             'reportRequests': [
@@ -104,9 +108,12 @@ def analytics_user_counts(*revs):
                             'filters': [
                                 {'dimensionName': 'ga:dimension12',
                                  'operator': 'IN_LIST',
-                                 'expressions': map(str, revs)}
+                                 'expressions': [r.id for r in revs]}
                             ]
                         }
+                    ],
+                    'dateRanges': [
+                        {'startDate': start_date, 'endDate': end_date}
                     ],
                     'viewId': '66726481'  # PK of the developer.mozilla.org site on GA.
                 }
@@ -115,7 +122,7 @@ def analytics_user_counts(*revs):
 
     response = request.execute()
 
-    data = {r: 0 for r in revs}
+    data = {r.id: 0 for r in revs}
     data.update({
         int(row['dimensions'][0]): int(row['metrics'][0]['values'][0])
         for row in response['reports'][0]['data'].get('rows', ())
