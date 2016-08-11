@@ -110,7 +110,7 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         response = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
         self.assertTrue(response.streaming)
         self.assertEqual(response['x-frame-options'],
-                         'ALLOW-FROM: %s' % settings.DOMAIN)
+                         'ALLOW-FROM %s' % settings.DOMAIN)
         self.assertEqual(response.status_code, 200)
         self.assertIn('Last-Modified', response)
         self.assertNotIn('1970', response['Last-Modified'])
