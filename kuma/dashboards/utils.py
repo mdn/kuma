@@ -1,8 +1,46 @@
+from collections import defaultdict
 import datetime
 
 from django.utils import timezone
 
-from kuma.wiki.models import DocumentDeletionLog, RevisionAkismetSubmission
+from kuma.wiki.models import (DocumentDeletionLog, RevisionAkismetSubmission,
+                              Revision, DocumentSpamAttempt)
+
+
+def spam_day_stats(day):
+    counts = defaultdict(int)
+    next_day = day + datetime.timedelta(days=1)
+
+    revs = Revision.objects.filter(
+        created__range=(day, next_day)
+    ).only('id').prefetch_related('akismet_submissions')
+    for rev in revs:
+        if any(a.type == 'spam' for a in rev.akismet_submissions.all()):
+            counts['published_spam'] += 1
+        else:
+            counts['published_ham'] += 1
+
+    needs_review = False
+    blocked_edits = DocumentSpamAttempt.objects.filter(
+        created__range=(day, next_day)).only('review')
+    for blocked in blocked_edits:
+        # Is it a false positive?
+        if blocked.review == DocumentSpamAttempt.HAM:
+            counts['blocked_ham'] += 1
+        elif blocked.review == DocumentSpamAttempt.SPAM:
+            counts['blocked_spam'] += 1
+        else:
+            if blocked.review == DocumentSpamAttempt.NEEDS_REVIEW:
+                needs_review = True
+            continue
+
+    return {
+        'version': 1,
+        'generated': datetime.datetime.now().isoformat(),
+        'day': day.isoformat(),
+        'needs_review': needs_review,
+        'events': dict(counts)
+    }
 
 
 def spam_dashboard_recent_events(start_date=None):
