@@ -18,9 +18,9 @@ django-debug-toolbar==1.5 \
     --hash=sha256:1416a64ca6035170513588efceddee591562ffac4e9ab2d1eeb72ccb335e04e7
 
 # Code quality checker
-flake8==2.6.0 \
-    --hash=sha256:d37bae8d6c836ea9f29a670f870b1652ff08d9b52b371fe1b7a53eb95e335f29 \
-    --hash=sha256:5ae018121a495edeb83097ba1bdd1a8481db24e1f0d54e8a78edb26ba0df82cf
+flake8==3.0.4 \
+    --hash=sha256:603a3ae7c8030219fee084728ca02a8bbd3a51829cacf97b445172a46cb04662 \
+    --hash=sha256:b4c210c998f07d6ff24325dd91fbc011f2c37bcd6bf576b188de01d8656e970d
 
 # Calculate hashes for pip 8.x+
 hashin==0.6.0 \

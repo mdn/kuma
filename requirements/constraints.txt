@@ -110,9 +110,11 @@ urllib3==1.14 \
     --hash=sha256:dd4fb13a4ce50b18338c7e4d665b21fd38632c5d4b1d9f1a1379276bd3c08d37
 
 # flake8
-mccabe==0.5.0 \
-    --hash=sha256:6c1c06d7bb6bc24a85b11eabc8944c0f6a72e6f35f208d4796dcbb27dae75ee8 \
-    --hash=sha256:379358498f58f69157b53f59f46aefda0e9a3eb81365238f69fbedf7014e21ab
+configparser==3.5.0 \
+    --hash=sha256:5308b47021bc2340965c371f0f058cc6971a04502638d4244225c49d80db273a
+mccabe==0.5.2 \
+    --hash=sha256:91cc38b2c7636aaf1903e06d96ee960fb3dff9ca3afc595627c9a638f8e86d2b \
+    --hash=sha256:3473f06c8b757bbb5cdf295099bf64032e5f7d6fe0ec2f97ee9b23cb0a435aff
 pycodestyle==2.0.0 \
     --hash=sha256:2ce83f2046f5ab85c652ceceddfbde7a64a909900989b4b43e92b10b743d0ce5 \
     --hash=sha256:37f0420b14630b0eaaf452978f3a6ea4816d787c3e6dcbba6fb255030adae2e7
