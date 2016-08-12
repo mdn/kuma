@@ -71,9 +71,10 @@ def tidy_content(content):
         return content
 
 
-def analytics_user_counts(revs):
-    """Given a sequence of document revisions, returns a dict matching those
-    with the number of users Google Analytics thinks has visited each revision.
+def analytics_upageviews(revision_ids, start_date, end_date=None):
+    """Given a sequence of document revision IDs, returns a dict matching
+    those with the number of users Google Analytics thinks has visited
+    each revision since start_date.
 
     """
 
@@ -94,7 +95,9 @@ def analytics_user_counts(revs):
     service = build('analyticsreporting', 'v4', http=http_auth)
 
     end_date = datetime.date.today().isoformat()
-    start_date = min(r.created for r in revs).isoformat() if revs else end_date
+    if hasattr(start_date, 'date'):
+        start_date = start_date.date()
+    start_date = start_date.isoformat()
 
     request = service.reports().batchGet(
         body={
@@ -108,7 +111,7 @@ def analytics_user_counts(revs):
                             'filters': [
                                 {'dimensionName': 'ga:dimension12',
                                  'operator': 'IN_LIST',
-                                 'expressions': [r.id for r in revs]}
+                                 'expressions': map(str, revision_ids)}
                             ]
                         }
                     ],
@@ -122,10 +125,24 @@ def analytics_user_counts(revs):
 
     response = request.execute()
 
-    data = {r.id: 0 for r in revs}
+    data = {int(r): 0 for r in revision_ids}
     data.update({
         int(row['dimensions'][0]): int(row['metrics'][0]['values'][0])
         for row in response['reports'][0]['data'].get('rows', ())
     })
 
     return data
+
+
+def analytics_upageviews_by_revisions(revisions):
+    """Given a sequence of Revision objects, returns a dict matching
+    their pks with the number of users Google Analytics thinks has visited
+    each revision since they were created.
+    """
+    if not revisions:
+        return {}
+
+    revision_ids = [r.id for r in revisions]
+    start_date = min(r.created for r in revisions)
+
+    return analytics_upageviews(revision_ids, start_date)
