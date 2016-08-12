@@ -7,9 +7,9 @@ django-babel==0.4.0 \
 --hash=sha256:b328dae0e594031d7b0ffded51fd6df60677d4509aee3677013a3a2f76da4e70
 
 # Analyze Django performance during request
-django-debug-toolbar==1.4 \
---hash=sha256:0cbae8760f4851d480a70b72ace5b075f8191ecf899bc97427715e50fb0e90b9 \
---hash=sha256:852a37b80df9597048591ebc87d0ce85a4edceaef015dc5360ad89cc5960c27b
+django-debug-toolbar==1.8 \
+    --hash=sha256:e9f08b94f9423ac76cfc287151182bbaddbe7521ae32bef9f9863e2ac58018d3 \
+    --hash=sha256:0b4d2b1ac49a8bc5604518e8e20f56c1c08c0c4873336107e7c773c42537876b
 
 # Code quality checker
 flake8==3.1.1 \
