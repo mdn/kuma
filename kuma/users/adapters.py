@@ -101,13 +101,22 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         because the default adapter uses the account adpater above
         as the default.
         """
+        allowed = True
         if flag_is_active(request, 'registration_disabled'):
-            return False
+            allowed = False
         elif sociallogin.account.provider == 'persona':
+            allowed = False
             request.used_persona = True
-            return False
-        else:
-            return True
+
+        # bug 1291892: Don't confuse next login with connecting accounts
+        if not allowed:
+            for key in ('socialaccount_sociallogin', 'sociallogin_provider'):
+                try:
+                    del request.session[key]
+                except KeyError:  # pragma: no cover
+                    pass
+
+        return allowed
 
     def validate_disconnect(self, account, accounts):
         """
@@ -150,3 +159,18 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         request.session['sociallogin_provider'] = (sociallogin
                                                    .account.provider)
         request.session.modified = True
+
+    def save_user(self, request, sociallogin, form):
+        """
+        Update the session after creating a new user account.
+
+        If the socialaccount_sociallogin remains in the session, then the user
+        will be unable to connect a second account unless they log out and
+        log in again.
+        """
+        super(KumaSocialAccountAdapter, self).save_user(request, sociallogin,
+                                                        form)
+        try:
+            del request.session['socialaccount_sociallogin']
+        except KeyError:  # pragma: no cover
+            pass

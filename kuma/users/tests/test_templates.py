@@ -37,12 +37,18 @@ class SignupTests(UserTestCase, SocialTestMixin):
         self.assertContains(response,
                             'We are sorry, but you can not create a profile'
                             ' with Persona.')
+        session = response.context['request'].session
+        self.assertNotIn('socialaccount_sociallogin', session)
+        self.assertNotIn('sociallogin_provider', session)
 
     def test_signup_page_github(self):
         response = self.github_login()
         self.assertNotContains(response, 'Sign In Failure')
         for test_string in self.profile_create_strings:
             self.assertContains(response, test_string)
+        session = response.context['request'].session
+        self.assertIn('socialaccount_sociallogin', session)
+        self.assertEqual(session['sociallogin_provider'], 'github')
 
     def test_signup_page_disabled(self):
         registration_disabled = Flag.objects.create(
@@ -52,6 +58,9 @@ class SignupTests(UserTestCase, SocialTestMixin):
         response = self.github_login()
         self.assertNotContains(response, 'Sign In Failure')
         self.assertContains(response, 'Profile Creation Disabled')
+        session = response.context['request'].session
+        self.assertNotIn('socialaccount_sociallogin', session)
+        self.assertNotIn('sociallogin_provider', session)
 
         # re-enable registration
         registration_disabled.everyone = False
@@ -62,6 +71,9 @@ class SignupTests(UserTestCase, SocialTestMixin):
                         'having trouble']
         for test_string in test_strings:
             self.assertContains(response, test_string)
+        session = response.context['request'].session
+        self.assertIn('socialaccount_sociallogin', session)
+        self.assertEqual(session['sociallogin_provider'], 'github')
 
 
 class AccountEmailTests(UserTestCase):
