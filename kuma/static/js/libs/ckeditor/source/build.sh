@@ -5,9 +5,9 @@
 # Build CKEditor for Kuma.
 # Based on https://github.com/ckeditor/ckeditor-presets/blob/master/build.sh
 
-CKEDITOR_VERSION="4.5.7"
+CKEDITOR_VERSION="4.5.10"
 
-CKBUILDER_VERSION="1.7.2"
+CKBUILDER_VERSION="2.3.1"
 CKBUILDER_URL="http://download.cksource.com/CKBuilder/$CKBUILDER_VERSION/ckbuilder.jar"
 
 # Plugin versions
@@ -28,13 +28,13 @@ echo ""
 echo "Pulling down CKEditor from GitHub..."
 rm -rf ckeditor/
 git clone -b $CKEDITOR_VERSION --single-branch --depth=1 https://github.com/ckeditor/ckeditor-dev.git ckeditor
-rm -rf ckeditor/.git
 
 
-# User the ckeditor-dev commit hash as the revision.
+# Use the ckeditor-dev commit hash as the revision.
 cd ckeditor/
 rev=`git rev-parse --verify --short HEAD`
 cd ..
+rm -rf ckeditor/.git
 
 PROGNAME=$(basename $0)
 MSG_UPDATE_FAILED="Warning: The attempt to update ckbuilder.jar failed. The existing file will be used."
