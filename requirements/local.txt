@@ -37,8 +37,8 @@ mock==2.0.0 \
     --hash=sha256:b158b6df76edd239b8208d481dc46b6afd45a846b7812ff0ce58971cf5bc8bba
 
 # Enhanced HTTPS support for httplib and urllib2
-ndg-httpsclient==0.4.0 \
-    --hash=sha256:e8c155fdebd9c4bcb0810b4ed01ae1987554b1ee034dd7532d7b8fdae38a6274
+ndg-httpsclient==0.4.2 \
+    --hash=sha256:580987ef194334c50389e0d7de885fccf15605c13c6eecaabd8d6c43768eb8ac
 
 # Better test runner, related plugins
 pytest==2.8.7 \
