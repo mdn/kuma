@@ -3,6 +3,7 @@ import base64
 import datetime
 import json
 import time
+from urllib import urlencode
 from urlparse import urlparse
 
 import mock
@@ -1763,9 +1764,12 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                            locale=settings.WIKI_DEFAULT_LANGUAGE)
         response = self.client.post(edit_url, child_data)
         eq_(302, response.status_code)
-        self.assertRedirects(response, reverse('wiki.document',
-                                               args=['length/length'],
-                                               locale=settings.WIKI_DEFAULT_LANGUAGE))
+        url = reverse('wiki.document',
+                      args=['length/length'],
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        params = {'document_saved': 'true'}
+        url = '%s?%s' % (url, urlencode(params))
+        self.assertRedirects(response, url)
 
         # Creating a new translation of "length" and "length/length"
         # doesn't cause errors
