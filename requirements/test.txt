@@ -1,63 +1,43 @@
-# requirements to run functional tests
+# Requirements to run functional tests
 
-apipkg==1.4 \
-    --hash=sha256:2e38399dbe842891fe85392601aab8f40a8f4cc5a9053c326de35a1cc0297ac6 \
-    --hash=sha256:65d2aa68b28e7d31233bb2ba8eb31cda40e4671f8ac2d6b241e358c9652a74b9
+-c constraints.txt
+
+# Implement bash brace expansion
 braceexpand==0.1.1 \
     --hash=sha256:f967ca39bdb98e16299a69c45a944c5d4345393615ed6470bb1e62ca3506bf41
-execnet==1.4.1 \
-    --hash=sha256:f66dd4a7519725a1b7e14ad9ae7d3df8e09b2da88062386e08e941cafc0ef3e6 \
-    --hash=sha256:d2b909c7945832e1c19cfacd96e78da68bdadc656440cfc7dfe59b766744eb8c
-requests==2.11.1 \
-    --hash=sha256:545c4855cd9d7c12671444326337013766f4eea6068c3f0307fb2dc2696d580e \
-    --hash=sha256:5acf980358283faba0b897c73959cecf8b841205bb4b2ad3ef545f46eae1a133
-py==1.4.31 \
-    --hash=sha256:4a3e4f3000c123835ac39cab5ccc510642153bc47bc1f13e2bbb53039540ae69 \
-    --hash=sha256:a6501963c725fc2554dabfece8ae9a8fb5e149c0ac0a42fd2b02c5c1c57fc114
-cssselect==0.9.1 \
-    --hash=sha256:0535a7e27014874b27ae3a4d33e8749e345bdfa62766195208b7996bf1100682
-lxml==3.5.0 \
-    --hash=sha256:f4253563021feb84aa2d4c06443418099b07356c59a3f4a77fd7eaf36d54642e \
-    --hash=sha256:2d46192109bf662413febb54fe3a3354d564bc274dd5454755b39d6a8f1f0697 \
-    --hash=sha256:f1ee626db1365fc789dc5b3807cb7ea50a0d004d60404288a97e9424daa45cfd \
-    --hash=sha256:3caadf90ba3f0442f4f75e8b6c5601b70bf17f94d41ded92232757de257ed084 \
-    --hash=sha256:3178c8fbe9a7b5356edf7d351fc97cd653527e2f90fe717ba42bdce24746137d \
-    --hash=sha256:349f93e3a4b09cc59418854ab8013d027d246757c51744bf20069bc89016f578 \
-    --hash=sha256:8628cc82957c41be10abce889a1976ceb7b9e3f36ebffa4fcb1a80901bf77adc \
-    --hash=sha256:1c9c26bb6c31c3d5b3c104e843211d9c105db60b4df6770ac42673263d55d494 \
-    --hash=sha256:793e7cfe96042fa0a11a99a70dbe61ab9275f268ea813606f63dccb288f3a1ee \
-    --hash=sha256:bb3264f80d31eb991cfe427cc20c83508eb326454c9a01a006829fa2f541be72 \
-    --hash=sha256:f396094325c1ade0c1aa69100c7e760faefafb362f17e858a531f903aff29937 \
-    --hash=sha256:01e54511034333f18772c335ec0b33a76bba988135eaf727a075897866d19604 \
-    --hash=sha256:2abf6cac9b7952047d8b7265384a9565e419a727dba675e83e4b7f5b7892b6bb \
-    --hash=sha256:6dff909020d0c030fb26004626c8f87f9116e0381702fed415caf94f5a9b9493 \
-    --hash=sha256:192fec5a960abf261bd3733a33c10c359ebd2f9a5b714a8191f382e8fa127d42 \
-    --hash=sha256:78a1ec1e674ab6dc8a0644bb4401f3fb5787b636b0aaf0c9a720923491547b1b
-pyquery==1.2.11 \
-    --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612 \
-    --hash=sha256:4a832ba73bfba03486f5445c75993a26bf62d38d26ff5fcfbde06a7bd0087fc6
+
+# Page Object Model for testing with Selenium
 PyPOM==1.0 \
     --hash=sha256:a8728981970404c3c9a14efeb23da92191749a4a4ad489130fd855e4cf8f154e \
     --hash=sha256:5c98e3d8ef2c7f96c3365a3b8295560446f2447eecdcfe393a30abf2fcc16d96
+
+# Parse HTML with CSS selectors like jquery
+# TODO: Sync version with default.txt
+pyquery==1.2.11 \
+    --hash=sha256:c5e7d7af031f5f4cc98949ff4f8a318956c72741b4075c41022b12d01f118612 \
+    --hash=sha256:4a832ba73bfba03486f5445c75993a26bf62d38d26ff5fcfbde06a7bd0087fc6
+
+# A better test runner
+# TODO: Sync version with dev.txt
 pytest==3.0.3 \
     --hash=sha256:aea87ca4240b79868ccabd14ba56a12eceb1c1e8076b585fe2fa5602a5874db7 \
     --hash=sha256:f213500a356800a483e8a146ff971ae14a8df3f2c0ae4145181aad96996abee7
-pytest-html==1.10.1 \
-    --hash=sha256:f6fc1ccefe94fb17ba289ee385bebaeccfd44cf4f05eef9116572cae699af6d6 \
-    --hash=sha256:808ddd5e9346606300eeb38a7c9ee917ca3df1c51075d02449e9cf5956ae8efb
+
+# Test plugin: Re-run flaky tests
+pytest-rerunfailures==1.0.2 \
+    --hash=sha256:1fffd37a252dc9861a84097eab65584dad962a859c41db2f58fb42d7373efa89
+
+# Test plugin: Run tests with selenium
 pytest-selenium==1.4.0 \
     --hash=sha256:7cd05ec19393f717aeee72f7b5cb628856e20ad0327f2d36d5318cb8c53980be \
     --hash=sha256:888aa5d11221c1e2e39883d9b5d7637597d8e0d07bafd5081c2a7f4bebe48dd4
-pytest-variables==1.4 \
-    --hash=sha256:29dcb084ed5d0c357e925c9a6cb454dbe7ae6192fdea2f9d1929f521b4e532e3 \
-    --hash=sha256:bd2e152e64c8f670e7969c76219a7842cf8ede795703127981ed71af38cfe08a
-selenium==2.53.6 \
-    --hash=sha256:5071f43daa2e698d60d5633ab0a6630cc68a852b360be99144f1c4c1ace2746c \
-    --hash=sha256:f507181f13768d73b98dd9647a466ea5758ef5c7f07b62a285d2bd8de9b27016
+
+# Test plugin: Run tests in parallel
 pytest-xdist==1.15.0 \
     --hash=sha256:6238395f8bd050f9288a3b10f34330edece80f4424cf2b4204d6e7d622f0f00b
-pytest-rerunfailures==1.0.2 \
-    --hash=sha256:1fffd37a252dc9861a84097eab65584dad962a859c41db2f58fb42d7373efa89
-pytest-base-url==1.1.0 \
-    --hash=sha256:90a1ce6a00a558231117b5aee32300edecbc0c2fd701c13e8cec62177900d28c \
-    --hash=sha256:001c1b2678dae82c2891db415251361b29ed6824cb2085e4821635119499071e
+
+# Better HTTP requests
+# TODO: Sync with default.txt
+requests==2.11.1 \
+    --hash=sha256:545c4855cd9d7c12671444326337013766f4eea6068c3f0307fb2dc2696d580e \
+    --hash=sha256:5acf980358283faba0b897c73959cecf8b841205bb4b2ad3ef545f46eae1a133

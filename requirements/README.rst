@@ -65,7 +65,7 @@ or deployment. Use comments to justify placement as needed.
 
 Requirements format
 -------------------
-The ``default.txt`` and ``local.txt`` should include a short comment
+Other requirements files (not ``constraints.txt``) should include a short comment
 explaining why a requirement is used. For example::
 
     # Refresh stale cache items asynchronously

@@ -370,6 +370,28 @@ coverage==4.0.3 \
     --hash=sha256:e96c13a40df389ce8cbb5ec108e5fb834989d1bedff5d8846e5aa3d270a5f3b6 \
     --hash=sha256:00d464797a236f654337181af72b4baea3d35d056ca480e45e9163bb5df496b8
 
+# pytest-selenium
+pytest-base-url==1.1.0 \
+    --hash=sha256:90a1ce6a00a558231117b5aee32300edecbc0c2fd701c13e8cec62177900d28c \
+    --hash=sha256:001c1b2678dae82c2891db415251361b29ed6824cb2085e4821635119499071e
+pytest-html==1.10.1 \
+    --hash=sha256:f6fc1ccefe94fb17ba289ee385bebaeccfd44cf4f05eef9116572cae699af6d6 \
+    --hash=sha256:808ddd5e9346606300eeb38a7c9ee917ca3df1c51075d02449e9cf5956ae8efb
+pytest-variables==1.4 \
+    --hash=sha256:29dcb084ed5d0c357e925c9a6cb454dbe7ae6192fdea2f9d1929f521b4e532e3 \
+    --hash=sha256:bd2e152e64c8f670e7969c76219a7842cf8ede795703127981ed71af38cfe08a
+selenium==2.53.6 \
+    --hash=sha256:5071f43daa2e698d60d5633ab0a6630cc68a852b360be99144f1c4c1ace2746c \
+    --hash=sha256:f507181f13768d73b98dd9647a466ea5758ef5c7f07b62a285d2bd8de9b27016
+
+# pytest-xdist
+apipkg==1.4 \
+    --hash=sha256:2e38399dbe842891fe85392601aab8f40a8f4cc5a9053c326de35a1cc0297ac6 \
+    --hash=sha256:65d2aa68b28e7d31233bb2ba8eb31cda40e4671f8ac2d6b241e358c9652a74b9
+execnet==1.4.1 \
+    --hash=sha256:f66dd4a7519725a1b7e14ad9ae7d3df8e09b2da88062386e08e941cafc0ef3e6 \
+    --hash=sha256:d2b909c7945832e1c19cfacd96e78da68bdadc656440cfc7dfe59b766744eb8c
+
 # raven
 contextlib2==0.5.1 \
     --hash=sha256:227c79e126e8a8904a81d162750581ed3d49af2395a3100be7067b7296d33d45
