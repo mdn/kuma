@@ -13,7 +13,6 @@ import time
 from itertools import islice
 
 from babel import dates, localedata
-import bitly_api
 from celery import chain, chord
 from django.conf import settings
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
@@ -32,10 +31,6 @@ from .jobs import IPBanJob
 
 
 log = logging.getLogger('kuma.core.utils')
-
-
-bitly = bitly_api.Connection(login=getattr(settings, 'BITLY_USERNAME', ''),
-                             api_key=getattr(settings, 'BITLY_API_KEY', ''))
 
 
 def paginate(request, queryset, per_page=20):
