@@ -3,11 +3,47 @@
 
 {% block title %}{{ page_title(title) }}{% endblock %}
 
+{% set stat_ids=(('spam_viewers_change', '% Change', 'rate'),
+                 ('spam_viewers', 'Spam Viewers', 'data'),
+                 ('spam_viewers_daily_average', 'Daily Average Viewers', 'data'),
+                 ('published_spam', 'Published Spam', 'data'),
+                 ('blocked_spam', 'Blocked Spam', 'data'),
+                 ('blocked_ham', 'Blocked Ham', 'data'),
+                 ('true_positive_rate', 'True Positive Rate', 'rate'),
+                 ('true_negative_rate', 'True Negative Rate', 'rate')) %}
 {% block content %}
 <h1>{{ title }}</h1>
 {% if processing %}
   <p>The report is being processed. Please reload in a minute.</p>
 {% else %}
+
+  <table class="spam-trends-table">
+    <caption>{{ _('Trends Over Time, Ending %(date)s', date=end_date ) }}</caption>
+    <thead>
+      <tr>
+        <th class="stat-header">Period</th>
+        <th class="stat-header">Start</th>
+        {% for stat, stat_name, stat_class in stat_ids -%}
+        <th class="stat-header">{{ stat_name }}</th>
+        {% endfor -%}
+      </tr>
+    </thead>
+    <tbody>
+      {% for period in trends -%}
+      <tr>
+        <th scope="row">{{ period.name }}</th>
+        <th scope="row">{{ period.start }}</th>
+        {%- for stat, stat_name, stat_class in stat_ids %}
+        {%- if stat_class == 'rate' %}
+        <td class="{{ stat_class }}">{{ "%0.1f%%" | format(100 * period.stats.get(stat, 0.0)) }}</td>
+        {%- else %}
+        <td class="{{ stat_class }}">{{ period.stats[stat] | default(0) }}</td>
+        {%- endif %}
+        {%- endfor %}
+      </tr>
+      {% endfor -%}
+    </tbody>
+  </table>
 
   {% if recent_spam %}
   <table>

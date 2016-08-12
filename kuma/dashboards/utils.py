@@ -11,10 +11,10 @@ from kuma.wiki.models import (DocumentDeletionLog, RevisionAkismetSubmission,
 
 # Rounded to nearby 7-day period for weekly cycles
 SPAM_PERIODS = (
-    (1, 'period_daily'),
-    (7, 'period_weekly'),
-    (28, 'period_monthly'),
-    (91, 'period_quarterly'),
+    (1, 'period_daily', 'Daily'),
+    (7, 'period_weekly', 'Weekly'),
+    (28, 'period_monthly', 'Monthly'),
+    (91, 'period_quarterly', 'Quarterly'),
 )
 
 
@@ -78,7 +78,7 @@ def spam_dashboard_historical_stats(periods=None, end_date=None):
     Gather spam statistics for a range of dates.
 
     Keywords Arguments:
-    periods - a sequence of (days, name) tuples
+    periods - a sequence of (days, identifier, name) tuples
     end_date - The ending anchor date for the statistics
     """
     from .jobs import SpamDayStats
@@ -86,13 +86,14 @@ def spam_dashboard_historical_stats(periods=None, end_date=None):
     periods = periods or SPAM_PERIODS
     end_date = end_date or (datetime.date.today() - datetime.timedelta(days=1))
 
-    longest = max(days for days, identifier in periods)
+    longest = max(days for days, identifier, name in periods)
     spans = [
         (identifier,
          days,
+         name,
          end_date - datetime.timedelta(days=days - 1),  # current period begins
          end_date)
-        for days, identifier in periods
+        for days, identifier, name in periods
     ]
 
     start_date = end_date - datetime.timedelta(days=longest - 1)
@@ -116,14 +117,23 @@ def spam_dashboard_historical_stats(periods=None, end_date=None):
                 job.invalidate(day)
 
         # Accumulate trends over periods
-        for period_id, length, start, end in spans:
+        for period_id, length, period_name, start, end in spans:
             # Sum up the items in day_events with any items that may
             # already be in the Counter at trends[period_id]
             if start <= day <= end:
                 trends[period_id].update(day_events)
 
+    # Prepare output data
+    data = {
+        'version': 1,
+        'generated': datetime.datetime.now().isoformat(),
+        'end_date': end_date,
+        'periods': periods,
+        'trends': [],
+    }
+
     # Calculate positive and negative rates
-    for period_id, length, start, end in spans:
+    for period_id, length, period_name, start, end in spans:
         current = trends[period_id]
         spam = current['published_spam'] + current['blocked_spam']
         ham = current['published_ham'] + current['blocked_ham']
@@ -138,12 +148,14 @@ def spam_dashboard_historical_stats(periods=None, end_date=None):
         else:
             current['true_negative_rate'] = 1.0
 
-    # Prepare output data
-    data = {
-        'version': 1,
-        'generated': datetime.datetime.now().isoformat(),
-        'trends': trends,
-    }
+        data['trends'].append({
+            'id': period_id,
+            'name': period_name,
+            'days': length,
+            'start': start.isoformat(),
+            'end': end.isoformat(),
+            'stats': current,
+        })
 
     return data
 
