@@ -8,8 +8,8 @@ certifi==2016.8.8 \
     --hash=sha256:99864ed602d8a9d212e339b15ffa438895002eda7b7db20dca5309dac9605ae9
 
 # Load testing
-locustio==0.7.3 \
-    --hash=sha256:220e1f97ece2def3454aeecc5070419518e4e16c5aa39d21eb509a38f47847ec
+locustio==0.7.5 \
+    --hash=sha256:e6ddda22751bef69a96a2ecb663b32507a66e90c6f5a0186815ea3d1ebb0c7d2
 
 # Enhanced HTTPS support for httplib and urllib2
 # Required in Vagrant to patch Python2.7 for SNI support
