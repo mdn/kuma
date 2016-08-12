@@ -3,9 +3,9 @@
 -r default.txt
 
 # Mozilla's CA bundle
-certifi==2015.11.20.1 \
-    --hash=sha256:ad86683448f7483d4147a64d96856e551734e594c4563747e9fbe2368df13d3f \
-    --hash=sha256:30b0a7354a1b32caa8b4705d3f5fb2dadefac7ba4bf8af8a2176869f93e38f16
+certifi==2016.8.8 \
+    --hash=sha256:04f0e6677e6a5a64ba83ade859bcdda254c1ccf58545eb72bc2067f51a01873c \
+    --hash=sha256:99864ed602d8a9d212e339b15ffa438895002eda7b7db20dca5309dac9605ae9
 
 # Extract messages from Django templates
 django-babel==0.4.0 \
