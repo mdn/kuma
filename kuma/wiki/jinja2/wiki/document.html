@@ -418,8 +418,8 @@
     </script>
   {% endif %}
 
-  {% if waffle.flag('iperceptions') %}
-    <script>/*Copyright 2011-2015 iPerceptions, Inc. All rights reserved. Do not distribute.iPerceptions provides this code 'as is' without warranty of any kind, either express or implied. */ window.iperceptionskey = 'a66f3d65-ba68-458d-b97c-df3af3d33d1c';(function () { var a = document.createElement('script'),b = document.getElementsByTagName('body')[0]; a.type = 'text/javascript'; a.async = true;a.src = '//universal.iperceptions.com/wrapper.js';b.appendChild(a);})();</script>
+  {% if waffle.flag('sg_task_completion') %}
+    {% javascript 'task-completion' %}
   {% endif %}
 
 {% endblock %}

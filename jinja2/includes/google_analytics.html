@@ -30,11 +30,6 @@
         ga('set', 'dimension12', {{ analytics_page_revision }});
     {%- endif %}
 
-    // dimension13 == "Saw iPerceptions Survey"
-    {% if waffle.flag('iperceptions') %}
-        ga('set', 'dimension13', 'Yes');
-    {% endif %}
-
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
         var win = window;

@@ -885,6 +885,15 @@ PIPELINE_JS = {
             'async': True,
         },
     },
+    'task-completion': {
+        'source_filenames': (
+            'js/task-completion.js',
+        ),
+        'output_filename': 'build/js/task-completion.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
     'fellowship': {
         'source_filenames': (
             'js/fellowship.js',
