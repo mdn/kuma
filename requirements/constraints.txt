@@ -77,8 +77,8 @@ requests-oauthlib==0.6.1 \
     --hash=sha256:7c708e8e2a4aa6a905cf91f28420d75db37270e0ec8fc951915c098dd8bde53e
 
 # django-debug-toolbar
-sqlparse==0.1.19 \
-    --hash=sha256:d896be1a1c7f24bffe08d7a64e6f0176b260e281c5f3685afe7826f8bada4ee8
+sqlparse==0.2.0 \
+    --hash=sha256:7fac8d39ac543499b191be19e811ff275f2df0d45c4ba5fc24850aa883ac2060
 
 # django-statici18n
 django-appconf==1.0.1 \
