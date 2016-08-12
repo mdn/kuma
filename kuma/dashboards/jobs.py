@@ -1,5 +1,7 @@
 from kuma.core.jobs import KumaJob
-from .utils import spam_day_stats, spam_dashboard_recent_events
+from .utils import (spam_day_stats,
+                    spam_dashboard_historical_stats,
+                    spam_dashboard_recent_events)
 
 
 class SpamDayStats(KumaJob):
@@ -10,6 +12,16 @@ class SpamDayStats(KumaJob):
 
     def fetch(self, day):
         return spam_day_stats(day)
+
+
+class SpamDashboardHistoricalStats(KumaJob):
+    """Cache historical spam stats for multiple days."""
+    lifetime = 60 * 60 * 24
+    fetch_on_miss = False
+    version = 12
+
+    def fetch(self, end_date):
+        return spam_dashboard_historical_stats(end_date=end_date)
 
 
 class SpamDashboardRecentEvents(KumaJob):

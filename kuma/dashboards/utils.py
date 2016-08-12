@@ -1,14 +1,36 @@
-from collections import defaultdict
+from __future__ import division
+from collections import defaultdict, Counter
 import datetime
 
+from dateutil import parser
 from django.utils import timezone
 
 from kuma.wiki.models import (DocumentDeletionLog, RevisionAkismetSubmission,
                               Revision, DocumentSpamAttempt)
 
 
+# Rounded to nearby 7-day period for weekly cycles
+SPAM_PERIODS = (
+    (1, 'period_daily'),
+    (7, 'period_weekly'),
+    (28, 'period_monthly'),
+    (91, 'period_quarterly'),
+)
+
+
+def date_range(start, end):
+    """ Return an iterator providing the dates between `start` and `end`, inclusive.
+    """
+    if getattr(start, 'date', None) is not None:
+        start = start.date()
+    if getattr(end, 'date', None) is not None:
+        end = end.date()
+    days = (end - start).days + 1
+    return (start + datetime.timedelta(days=d) for d in xrange(days))
+
+
 def spam_day_stats(day):
-    counts = defaultdict(int)
+    counts = Counter()
     next_day = day + datetime.timedelta(days=1)
 
     revs = Revision.objects.filter(
@@ -34,13 +56,96 @@ def spam_day_stats(day):
                 needs_review = True
             continue
 
+    events = {
+        'published_spam': 0,
+        'published_ham': 0,
+        'blocked_spam': 0,
+        'blocked_ham': 0,
+    }
+    events.update(counts)
+
     return {
         'version': 1,
         'generated': datetime.datetime.now().isoformat(),
         'day': day.isoformat(),
         'needs_review': needs_review,
-        'events': dict(counts)
+        'events': events
     }
+
+
+def spam_dashboard_historical_stats(periods=None, end_date=None):
+    """
+    Gather spam statistics for a range of dates.
+
+    Keywords Arguments:
+    periods - a sequence of (days, name) tuples
+    end_date - The ending anchor date for the statistics
+    """
+    from .jobs import SpamDayStats
+
+    periods = periods or SPAM_PERIODS
+    end_date = end_date or (datetime.date.today() - datetime.timedelta(days=1))
+
+    longest = max(days for days, identifier in periods)
+    spans = [
+        (identifier,
+         days,
+         end_date - datetime.timedelta(days=days - 1),  # current period begins
+         end_date)
+        for days, identifier in periods
+    ]
+
+    start_date = end_date - datetime.timedelta(days=longest - 1)
+    dates = date_range(start_date, end_date)
+
+    # Iterate over the daily stats
+    job = SpamDayStats()
+    trends = defaultdict(Counter)
+    for day in dates:
+        # Gather daily raw stats
+        raw_events = job.get(day)
+        day_events = raw_events['events']
+
+        # Regenerate stats if there are change attempts with
+        # needs_review marked and the data is stale.
+        if raw_events['needs_review']:
+            generated = parser.parse(raw_events['generated'])
+
+            age = datetime.datetime.now() - generated
+            if age.total_seconds() > 300:
+                job.invalidate(day)
+
+        # Accumulate trends over periods
+        for period_id, length, start, end in spans:
+            # Sum up the items in day_events with any items that may
+            # already be in the Counter at trends[period_id]
+            if start <= day <= end:
+                trends[period_id].update(day_events)
+
+    # Calculate positive and negative rates
+    for period_id, length, start, end in spans:
+        current = trends[period_id]
+        spam = current['published_spam'] + current['blocked_spam']
+        ham = current['published_ham'] + current['blocked_ham']
+
+        if spam:
+            current['true_positive_rate'] = current['blocked_spam'] / spam
+        else:
+            current['true_positive_rate'] = 1.0
+
+        if ham:
+            current['true_negative_rate'] = current['published_ham'] / ham
+        else:
+            current['true_negative_rate'] = 1.0
+
+    # Prepare output data
+    data = {
+        'version': 1,
+        'generated': datetime.datetime.now().isoformat(),
+        'trends': trends,
+    }
+
+    return data
 
 
 def spam_dashboard_recent_events(start_date=None):

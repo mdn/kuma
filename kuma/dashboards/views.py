@@ -15,7 +15,7 @@ from kuma.core.utils import paginate
 from kuma.wiki.models import Document, Revision
 
 from .forms import RevisionDashboardForm
-from .jobs import SpamDashboardRecentEvents
+from .jobs import SpamDashboardHistoricalStats, SpamDashboardRecentEvents
 from . import PAGE_SIZE
 
 
@@ -161,8 +161,13 @@ def topic_lookup(request):
 def spam(request):
     """Dashboard for spam moderators."""
 
-    data = SpamDashboardRecentEvents().get()
+    # Combine data sources
+    yesterday = datetime.date.today() - datetime.timedelta(days=1)
+    data = SpamDashboardHistoricalStats().get(yesterday)
+
     if not data:
         return render(request, 'dashboards/spam.html', {'processing': True})
+
+    data.update(SpamDashboardRecentEvents().get())
 
     return render(request, 'dashboards/spam.html', data)
