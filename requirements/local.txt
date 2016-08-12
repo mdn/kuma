@@ -28,8 +28,8 @@ hashin==0.6.0 \
     --hash=sha256:7563490ec8c9c361e48c7623898b3585143d379714a03bee4c3d52fb13e85086
 
 # Load testing
-locustio==0.7.3 \
-    --hash=sha256:220e1f97ece2def3454aeecc5070419518e4e16c5aa39d21eb509a38f47847ec
+locustio==0.7.5 \
+    --hash=sha256:e6ddda22751bef69a96a2ecb663b32507a66e90c6f5a0186815ea3d1ebb0c7d2
 
 # Test mocks, added to the Python 3 standard library
 mock==1.3.0 \
