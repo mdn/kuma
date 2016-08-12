@@ -57,6 +57,6 @@ tox==2.3.1 \
     --hash=sha256:bf7fcc140863820700d3ccd65b33820ba747b61c5fe4e2b91bb8c64cb21a47ee
 
 # Enables ./manage.py runserver_plus with in-browser exception debugging
-Werkzeug==0.11.4 \
-    --hash=sha256:7db3cb2d4725be0680abf64a45b18229186f03ad8b9989abbe053f9357b17b37 \
-    --hash=sha256:e48fb7e3f2bb5a740dd9a666624699a4d83e2e028555f9c46bcc8ecfc2cd8c32
+Werkzeug==0.11.10 \
+    --hash=sha256:f22b9762589decfde50149c7ee080713cbf6129b49ce2b398f59b709b161a8d3 \
+    --hash=sha256:cc64dafbacc716cdd42503cf6c44cb5a35576443d82f29f6829e5c49264aeeee
