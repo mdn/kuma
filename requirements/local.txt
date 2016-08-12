@@ -41,12 +41,12 @@ ndg-httpsclient==0.4.2 \
     --hash=sha256:580987ef194334c50389e0d7de885fccf15605c13c6eecaabd8d6c43768eb8ac
 
 # Better test runner, related plugins
-pytest==2.8.7 \
-    --hash=sha256:33612ed6de42f05640fe058aafdf08899eabcb210da74aeb0b788de9695c8bb5 \
-    --hash=sha256:fc4c86be54fce08e4b85b646a736efa18c6cde7599c1d2919f4f74629e018baf
-pytest-cov==2.2.1 \
-    --hash=sha256:a8b22e53e7f3b971454c35df99dffe21f4749f539491e935c55d3ff7e1b284fa \
-    --hash=sha256:40bfd01002ceaf9e6c5d371d3c4d541d378a4214ea03e45f934980766a809384
+pytest==2.9.2 \
+    --hash=sha256:ccc23b4aab3ef3e19e731de9baca73f3b1a7e610d9ec65b28c36a5a3305f0349 \
+    --hash=sha256:12c18abb9a09a5b2802dba75c7a2d7d6c8c0f1258abd8243e7688415d87ad1d8
+pytest-cov==2.3.1 \
+    --hash=sha256:fa0a212283cdf52e2eecc24dd6459bb7687cc29adb60cb84258fab73be8dda0f \
+    --hash=sha256:09f34ed04d5ea1a6dc7e5bc08435eaca9a2b55086c50f5cc0a3229b4001bc5f0
 pytest-django==2.9.1 \
     --hash=sha256:8be15b637738c8cbd1422a6461465c0aeab7839cf76ad2b5d190b6f1f53facd6 \
     --hash=sha256:743d0056e127ef424850ea76d93d45c92c313da0e56765806a59fc7680c25ab7

@@ -3,4 +3,4 @@
 ansible==1.9.2
 codecov==1.6.3
 tox==2.3.1
-coverage==4.0.3
+coverage==4.2
