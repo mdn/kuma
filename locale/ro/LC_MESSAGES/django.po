@@ -1,9 +1,9 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-08-08 13:22-0700\n"
+"POT-Creation-Date: 2016-08-15 09:57-0700\n"
 "PO-Revision-Date: 2016-08-15 15:31+0000\n"
 "Last-Translator: Cristian Silaghi <cristian.silaghi@mozilla.ro>\n"
 "Language-Team: Romanian https://pontoon.mozilla.org/ro/\n"
@@ -367,6 +367,243 @@ msgstr "Anterior"
 msgid "Next"
 msgstr "Următor"
 
+#: jinja2/includes/translate_locales.html:3
+msgid "Afrikaans"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:4
+msgid "Albanian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:5
+msgid "Arabic"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:6
+msgid "Azerbaijani"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:7
+msgid "Bambara"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:8
+msgid "Bengali (Bangladesh)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:9
+msgid "Bengali (India)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:10
+msgid "Burmese"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:11
+msgid "Catalan"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:12
+msgid "Chinese (Simplified)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:13
+msgid "Chinese (Traditional)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:14
+msgid "Croatian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:15
+msgid "Czech"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:16
+msgid "Dutch"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:17
+msgid "English (US)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:18
+msgid "Ewe"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:19
+msgid "Finnish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:20
+msgid "French"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:21
+msgid "Frisian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:22
+msgid "Fulah"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:23
+msgid "Georgian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:24
+msgid "German"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:25
+msgid "Greek"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:26
+msgid "Hausa"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:27
+msgid "Hebrew"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:28
+msgid "Hindi (India)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:29
+msgid "Hungarian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:30
+msgid "Igbo"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:31
+msgid "Indonesian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:32
+msgid "Irish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:33
+msgid "Italian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:34
+msgid "Japanese"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:35
+msgid "Korean"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:36
+msgid "Lingala"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:37
+msgid "Malagasy"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:38
+msgid "Malay"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:39
+msgid "Malayalam"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:40
+#, fuzzy
+msgid "Persian"
+msgstr "Persona"
+
+#: jinja2/includes/translate_locales.html:41
+msgid "Polish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:42
+msgid "Portuguese (Brazilian)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:43
+msgid "Portuguese (Portugal)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:44
+msgid "Romanian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:45
+msgid "Russian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
+msgid "Serbian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:48
+msgid "Songhai"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:49
+msgid "Spanish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:50
+msgid "Swahili"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:51
+msgid "Swedish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:52
+msgid "Tagalog"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:53
+msgid "Tamil"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:54
+msgid "Thai"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:55
+msgid "Tswana"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:56
+msgid "Turkish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:57
+msgid "Ukrainian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:58
+msgid "Vietnamese"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:59
+msgid "Wolof"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:60
+msgid "Xhosa"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:61
+msgid "Yoruba"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:62
+msgid "Zulu"
+msgstr ""
+
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
 msgstr ""
@@ -615,8 +852,8 @@ msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
-" as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
+"clear as you can.</p>"
 msgstr ""
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
@@ -863,7 +1100,7 @@ msgid "Edit Page"
 msgstr ""
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:61
 msgid "History"
 msgstr ""
 
@@ -967,8 +1204,8 @@ msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
-" OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
+"Firefox OS."
 msgstr ""
 
 #: kuma/landing/jinja2/landing/homepage.html:32
@@ -1133,8 +1370,8 @@ msgstr ""
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
-" bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
+"little bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
@@ -1445,8 +1682,8 @@ msgstr ""
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
-"rel=\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
+"\"nofollow\">file a bug</a>."
 msgstr ""
 
 #: kuma/users/adapters.py:21
@@ -1927,8 +2164,8 @@ msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 "connect with my MDN profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
-"next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
+"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -1974,8 +2211,8 @@ msgstr ""
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
-"href=\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
+"\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
@@ -2420,11 +2657,11 @@ msgstr ""
 msgid "This user has not created any revisions in the past three days."
 msgstr "This was not created by the author"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
 msgstr "Editare"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
+#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "Advanced"
 msgstr ""
 
@@ -2851,8 +3088,8 @@ msgstr ""
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
-"href=\"%(email_link)s\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
+"\">contact us</a>."
 msgstr ""
 
 #: kuma/wiki/jinja2/403-create-page.html:17
@@ -3021,15 +3258,15 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
-"page</a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
+"a> in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
-" a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
+"in a few minutes."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/document.html:266
@@ -3460,7 +3697,7 @@ msgstr ""
 msgid "Add a translation"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:43 kuma/wiki/jinja2/wiki/includes/buttons.html:46
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
 msgid "Watch"
 msgstr ""
 
@@ -3689,8 +3926,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
-"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
+"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
@@ -4163,8 +4400,10 @@ msgstr ""
 #~ msgid "Forms"
 #~ msgstr "Formulare"
 
-#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
-#~ msgstr "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgstr ""
+#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 
 #~ msgid "http://en.wikipedia.org/wiki/HTML_forms"
 #~ msgstr "http://en.wikipedia.org/wiki/HTML_forms"
@@ -4651,11 +4890,11 @@ msgstr ""
 #~ msgstr "Submit a New Demo"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "Describe Your Demo"
@@ -4682,15 +4921,15 @@ msgstr ""
 #~ msgstr "Preparing Your Demo"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Your demos source code should be packaged inside a Zip file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the Zip.</li> <li>Your demo "
-#~ "should be built on client-side technology (HTML, CSS, Javascript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
-#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
-#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demos source code should be packaged inside a Zip file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the Zip.</li> <li>Your "
+#~ "demo should be built on client-side technology (HTML, CSS, Javascript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
+#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN account</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
+#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "Provide the Source Code"
@@ -4705,34 +4944,34 @@ msgstr ""
 #~ msgstr "Save changes"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
 #~ msgstr ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
-#~ "web developers.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
+#~ "other web developers.</p>"
 
 #~ msgid "Before You Begin"
 #~ msgstr "Înainte de a începe"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
+#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
 #~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studios servers.</li> <li>Your demos source code must be available under an "
-#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
-#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
+#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
-#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
-#~ " license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>Your demos source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the root"
-#~ " of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo "
-#~ "requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA "
-#~ "license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demos source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
+#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
+#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN account</a></strong>.</p>"
@@ -4904,11 +5143,11 @@ msgstr ""
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> said,"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
-#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
+#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "Reply to this comment by {full_name}"
@@ -5187,11 +5426,11 @@ msgstr ""
 #~ msgstr "Firefox for mobile: What's coming next"
 
 #~ msgid ""
-#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the world's "
-#~ "best mobile Web browser."
+#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the "
+#~ "world's best mobile Web browser."
 #~ msgstr ""
-#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the world's "
-#~ "best mobile Web browser."
+#~ "The projects and planning never stops. We're cooking up some amazing new features and improvements for our next major release. Check it out and see how you can help us continue to make the "
+#~ "world's best mobile Web browser."
 
 #~ msgid "\"HTML5 is Great for Mobile, Developers Say\""
 #~ msgstr "\"HTML5 is Great for Mobile, Developers Say\""
@@ -5200,11 +5439,11 @@ msgstr ""
 #~ msgstr "Hear from other developers about the advantages of HTML5 and developing for the mobile Web in this article from ReadWriteWeb:"
 
 #~ msgid ""
-#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact that"
-#~ " apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
+#~ "that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
 #~ msgstr ""
-#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact that"
-#~ " apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
+#~ "\"'Hands down, the developer pool for HTML / JS rock stars is tenfold larger [and] there is no download attrition. You simply point people at a URL and there you go -- it's installed.' The fact "
+#~ "that apps can be directly installed by URL rather than by waiting for an App Store download means that developers reduce barriers to virality.\""
 
 #~ msgid "Android APIs"
 #~ msgstr "Android APIs"
@@ -5467,8 +5706,8 @@ msgstr ""
 #~ msgstr "<p><a href=\"/Special:UserRegistration\">Register</a> or <a href=\"/Special:UserLogin\">log in</a> to add your own.</p>"
 
 #~ msgid ""
-#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> <li>View "
-#~ "<strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
+#~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
+#~ "<li>View <strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li> <li>Read "
 #~ "<strong>documentation</strong> to learn about the open standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
 #~ "<p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See whats possible by exploring Demo Studio:</p> <ul> <li>View "
@@ -5597,19 +5836,19 @@ msgstr ""
 
 #~ msgid ""
 #~ "Mozilla and <a href=\"%(p2pu)s\">P2PU</a> are creating the <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes are globally "
-#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and build "
-#~ "careers on open web technology."
+#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and "
+#~ "build careers on open web technology."
 #~ msgstr ""
 #~ "Mozilla and <a href=\"%(p2pu)s\">P2PU</a> are creating the <a href=\"%(p2pu_drumbeat)s\">School of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes are globally "
-#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and build "
-#~ "careers on open web technology."
+#~ "accessible, 100%% free, and powered entirely by learners, mentors and contributors like you people. Our goal: a vibrant, peer-led system that helps people around the world easily access and "
+#~ "build careers on open web technology."
 
 #~ msgid ""
-#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest enhancements"
-#~ " in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
+#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest "
+#~ "enhancements in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
 #~ msgstr ""
-#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest enhancements"
-#~ " in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
+#~ "Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies. Find out more about the <a href=\"%(devmo_html5)s\">HTML5 spec</a> and the latest "
+#~ "enhancements in HTML5, CSS3 and other <a href=\"%(devmo_fx4dev)s\">developer features for Firefox 4</a>."
 
 #~ msgid "New to MDN?"
 #~ msgstr "New to MDN?"
@@ -5651,7 +5890,8 @@ msgstr ""
 #~ msgstr "School of Webcraft"
 
 #~ msgid "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
-#~ msgstr "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
+#~ msgstr ""
+#~ "See how you can <a href=\"%(devmo_participate)s\">participate</a> in <a href=\"%(devmo_l10n)s\">localization</a>, <a href=\"%(devmo_qa)s\">quality assurance</a>, and other Mozilla projects."
 
 #~ msgid "See more about {title} by {author}"
 #~ msgstr "See more about {title} by {author}"
@@ -5672,33 +5912,31 @@ msgstr ""
 #~ msgstr "Tag \"%s\" is not in the set of described tags"
 
 #~ msgid ""
-#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s\">big "
-#~ "chart full of check marks</a> to prove it."
+#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world's best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s"
+#~ "\">big chart full of check marks</a> to prove it."
 #~ msgstr ""
-#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world’s best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s\">big "
-#~ "chart full of check marks</a> to prove it."
+#~ "Test the <a href=\"%(fx4_features)s\">next version of Firefox</a> and help us make the world’s best browser even better. Firefox 4 advances the modern web and we have a <a href=\"%(fx4_tech)s"
+#~ "\">big chart full of check marks</a> to prove it."
 
 #~ msgid "The Document Object Model describes the layout and content of web pages."
 #~ msgstr "The Document Object Model describes the structure and content of web pages."
 
 #~ msgid ""
-#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a "
-#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video "
-#~ "download links provided."
+#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a href=\"http://www.apple.com/safari/"
+#~ "\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links provided."
 #~ msgstr ""
-#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a "
-#~ "href=\"http://www.apple.com/safari/\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video "
-#~ "download links provided."
+#~ "This video requires a browser with support for open video: <ul> <li><a href=\"http://www.mozilla.com/firefox/\">Firefox</a> 3.5 or greater</li> <li><a href=\"http://www.apple.com/safari/"
+#~ "\">Safari</a> 3.1 or greater</li> </ul> or the <a href=\"http://www.adobe.com/go/getflashplayer\">Adobe Flash Player</a>. Alternatively, you may use the video download links provided."
 
 #~ msgid "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies."
 #~ msgstr "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies."
 
 #~ msgid ""
-#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a "
-#~ "href=\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
+#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a href="
+#~ "\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
 #~ msgstr ""
-#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a "
-#~ "href=\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
+#~ "Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies. There is a <a href=\"%(tutorial)s\">tutorial</a> to get you started and a <a href="
+#~ "\"%(api)s\">variety of APIs in the core library</a> to add functionality to Firefox."
 
 #~ msgid "Want to help make our network even better?"
 #~ msgstr "Want to help make our network even better?"
@@ -5821,11 +6059,11 @@ msgstr ""
 #~ msgstr "Could you be the big winner?"
 
 #~ msgid ""
-#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until <strong>January 7,"
-#~ " 2011</strong>. Good luck!"
+#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until "
+#~ "<strong>January 7, 2011</strong>. Good luck!"
 #~ msgstr ""
-#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until <strong>January 7,"
-#~ " 2011</strong>. Good luck!"
+#~ "Develop an awesome add-on for Firefox mobile for your chance to win a trip to Barcelona, cash, prizes and tons of priceless exposure! <a href=\"%(cup_enter)s\">Enter now</a> until "
+#~ "<strong>January 7, 2011</strong>. Good luck!"
 
 #~ msgid "Favorite <span class=\"apps\">Applications</span> Tools"
 #~ msgstr "Favorite <span class=\"apps\">Applications</span> Tools"
