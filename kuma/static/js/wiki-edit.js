@@ -462,7 +462,6 @@
         $('.btn-save').on('click', function () {
             if (draftingEnabled) {
                 enableAutoSave(false);
-                // Clear any preserved content.
                 clearTimeout(DRAFT_TIMEOUT_ID);
             }
             $form.attr('action', '').removeAttr('target');
