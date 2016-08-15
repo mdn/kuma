@@ -44,6 +44,8 @@ clean:
 	mkdir -p build/locale
 
 locale:
+	# For generating a new file to let locales name localizable
+	python manage.py translate_locales_name
 	@mkdir -p locale/$(LOCALE)/LC_MESSAGES && \
 		for pot in locale/templates/LC_MESSAGES/* ; do \
 			msginit --no-translator -l $(LOCALE) -i $$pot -o locale/$(LOCALE)/LC_MESSAGES/`basename -s .pot $$pot`.po ; \
