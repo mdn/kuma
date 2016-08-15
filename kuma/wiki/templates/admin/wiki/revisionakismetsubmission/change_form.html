@@ -13,7 +13,16 @@
 {% endblock %}
 
 {% block after_field_sets %}
-{# Add submitted data, styled almost like it was a real field #}
+{% if submitted_data|truncatechars:7 == '<dl>...' %}
+{# Definition list, don't try to align it #}
+<div class="form-row field-submitted-data">
+  <div>
+    <label>Submitted Data:</label>
+    {{ submitted_data }}
+  </div>
+</div>
+{% else %}
+{# Styled almost like it was a real field #}
 <fieldset class="module aligned">
   <div class="form-row field-submitted-data">
     <div>
@@ -22,5 +31,6 @@
     </div>
   </div>
 </fieldset>
+{% endif %}
 {{ block.super }}
 {% endblock %}

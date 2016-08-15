@@ -98,7 +98,11 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         assert self.admin.submitted_data(dsa) == SUBMISSION_NOT_AVAILABLE
         data = '{"foo": "bar"}'
         dsa.data = data
-        assert self.admin.submitted_data(dsa) == data
+        expected = '\n'.join((
+            '<dl>',
+            '  <dt>foo</dt><dd>bar</dd>',
+            '</dl>'))
+        assert self.admin.submitted_data(dsa) == expected
 
     def assert_needs_review(self):
         dsa = DocumentSpamAttempt.objects.get()
@@ -356,7 +360,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
                       args=(submission.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertIn('{&quot;content&quot;: &quot;spam&quot;}',
+        self.assertIn('<dt>content</dt><dd>spam</dd>',
                       response.content)
 
     def test_view_changelist_existing(self):
