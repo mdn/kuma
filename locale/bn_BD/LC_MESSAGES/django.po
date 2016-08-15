@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
-"POT-Creation-Date: 2016-08-08 13:22-0700\n"
+"POT-Creation-Date: 2016-08-15 09:57-0700\n"
 "PO-Revision-Date: 2016-08-02 17:47+0000\n"
 "Last-Translator: Belayet Hossain <bellayet@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) https://pontoon.mozilla.org/bn_BD/\n"
@@ -359,6 +359,245 @@ msgstr "পেছনে"
 #: jinja2/includes/paginator.html:30 kuma/search/jinja2/search/results.html:159
 msgid "Next"
 msgstr "পরবর্তী"
+
+#: jinja2/includes/translate_locales.html:3
+msgid "Afrikaans"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:4
+msgid "Albanian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:5
+msgid "Arabic"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:6
+msgid "Azerbaijani"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:7
+msgid "Bambara"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:8
+msgid "Bengali (Bangladesh)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:9
+msgid "Bengali (India)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:10
+msgid "Burmese"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:11
+msgid "Catalan"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:12
+msgid "Chinese (Simplified)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:13
+msgid "Chinese (Traditional)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:14
+msgid "Croatian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:15
+msgid "Czech"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:16
+msgid "Dutch"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:17
+#, fuzzy
+msgid "English (US)"
+msgstr "ইংরেজি ট্যাগগুলো"
+
+#: jinja2/includes/translate_locales.html:18
+msgid "Ewe"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:19
+msgid "Finnish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:20
+msgid "French"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:21
+msgid "Frisian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:22
+msgid "Fulah"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:23
+msgid "Georgian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:24
+msgid "German"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:25
+msgid "Greek"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:26
+msgid "Hausa"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:27
+msgid "Hebrew"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:28
+msgid "Hindi (India)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:29
+msgid "Hungarian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:30
+msgid "Igbo"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:31
+msgid "Indonesian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:32
+msgid "Irish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:33
+msgid "Italian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:34
+msgid "Japanese"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:35
+msgid "Korean"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:36
+msgid "Lingala"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:37
+msgid "Malagasy"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:38
+msgid "Malay"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:39
+msgid "Malayalam"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:40
+#, fuzzy
+msgid "Persian"
+msgstr "পারসোনা"
+
+#: jinja2/includes/translate_locales.html:41
+#, fuzzy
+msgid "Polish"
+msgstr "প্রকাশ"
+
+#: jinja2/includes/translate_locales.html:42
+msgid "Portuguese (Brazilian)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:43
+msgid "Portuguese (Portugal)"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:44
+msgid "Romanian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:45
+msgid "Russian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
+msgid "Serbian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:48
+msgid "Songhai"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:49
+msgid "Spanish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:50
+msgid "Swahili"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:51
+msgid "Swedish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:52
+msgid "Tagalog"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:53
+msgid "Tamil"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:54
+msgid "Thai"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:55
+msgid "Tswana"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:56
+msgid "Turkish"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:57
+msgid "Ukrainian"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:58
+msgid "Vietnamese"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:59
+msgid "Wolof"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:60
+msgid "Xhosa"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:61
+msgid "Yoruba"
+msgstr ""
+
+#: jinja2/includes/translate_locales.html:62
+msgid "Zulu"
+msgstr ""
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
@@ -865,7 +1104,7 @@ msgid "Edit Page"
 msgstr "পৃষ্ঠা সম্পাদন করুন"
 
 #: kuma/dashboards/jinja2/dashboards/revisions.html:78 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:100 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:215
-#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:59
+#: kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:239 kuma/users/jinja2/users/ban_user_and_cleanup_summary.html:270 kuma/wiki/feeds.py:364 kuma/wiki/jinja2/wiki/includes/buttons.html:61
 msgid "History"
 msgstr "ইতিহাস"
 
@@ -2427,11 +2666,11 @@ msgstr "ইতিমধ্যে স্প্যাম হিসেবে রি
 msgid "This user has not created any revisions in the past three days."
 msgstr "এটা লেখক তৈরি করেননি"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:40
+#: kuma/users/jinja2/users/includes/user_title_info.html:22 kuma/wiki/content.py:739 kuma/wiki/jinja2/wiki/includes/buttons.html:41
 msgid "Edit"
 msgstr "সম্পাদনা"
 
-#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:53 kuma/wiki/jinja2/wiki/includes/buttons.html:57
+#: kuma/users/jinja2/users/includes/user_title_info.html:24 kuma/wiki/jinja2/wiki/includes/buttons.html:55 kuma/wiki/jinja2/wiki/includes/buttons.html:59
 msgid "Advanced"
 msgstr "অগ্রসর"
 
@@ -3475,7 +3714,7 @@ msgstr "আপনি ইতিমধ্যে এই উপর নিবন্�
 msgid "Add a translation"
 msgstr ""
 
-#: kuma/wiki/jinja2/wiki/includes/buttons.html:43 kuma/wiki/jinja2/wiki/includes/buttons.html:46
+#: kuma/wiki/jinja2/wiki/includes/buttons.html:45 kuma/wiki/jinja2/wiki/includes/buttons.html:48
 msgid "Watch"
 msgstr "দেখুন"
 

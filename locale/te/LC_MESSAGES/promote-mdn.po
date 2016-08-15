@@ -10,7 +10,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2012-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Telugu https://pontoon.mozilla.org/te/\n"
+"Language: te\n"
 
 #: promote-mdn.php:190
 msgid "Reloaded values from the URL."
