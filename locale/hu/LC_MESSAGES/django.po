@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-08-09 06:58+0000\n"
+"PO-Revision-Date: 2016-08-16 08:44+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian https://pontoon.mozilla.org/hu/\n"
 "Language: hu\n"
@@ -60,8 +60,8 @@ msgid ""
 "<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">Tumbeasts</a> by Matthew Inman of <a href=\"http://theoatmeal.com\" rel=\"nofollow\">The "
 "Oatmeal</a></small></p>"
 msgstr ""
-"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">A Tumblebeast-et</a> Matthew Inman készítette a <a href=\"http://theoatmeal.com\" rel="
-"\"nofollow\">The Oatmeal-tól</a></small></p>"
+"<p class=\"attrib\"><small><a href=\"http://theoatmeal.com/comics/state_web_summer#tumblr\" rel=\"nofollow\">A Tumblebeast-et</a> Matthew Inman készítette a <a href=\"http://theoatmeal.com\" "
+"rel=\"nofollow\">The Oatmeal-tól</a></small></p>"
 
 # 100%
 #: jinja2/404.html:6
@@ -80,9 +80,7 @@ msgstr "Megpróbálhat egy keresést, vagy újrakezdheti a <a href=\"%(homepage_
 #: jinja2/404.html:28
 #, python-format
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
-msgstr ""
-"Ha egy dokumentációs hivatkozást követett, akkor bejelentkezhet és létrehozhatja az oldalt. Ellenkező esetben, kérjük <a href=\"%(bug_form_url)s\" rel=\"nofollow\">jelentse be a hibát</a>. "
-"Köszönjük!"
+msgstr "Ha egy dokumentációs hivatkozást követett, akkor bejelentkezhet és létrehozhatja az oldalt. Ellenkező esetben, kérjük <a href=\"%(bug_form_url)s\" rel=\"nofollow\">jelentse be a hibát</a>. Köszönjük!"
 
 #: jinja2/404.html:36
 #, python-format
@@ -376,242 +374,239 @@ msgstr "Tovább"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
-msgstr ""
+msgstr "afrikaans"
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
-msgstr ""
+msgstr "albán"
 
 #: jinja2/includes/translate_locales.html:5
 msgid "Arabic"
-msgstr ""
+msgstr "arab"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
-msgstr ""
+msgstr "azeri"
 
 #: jinja2/includes/translate_locales.html:7
 msgid "Bambara"
-msgstr ""
+msgstr "bambara"
 
 #: jinja2/includes/translate_locales.html:8
 msgid "Bengali (Bangladesh)"
-msgstr ""
+msgstr "bengáli (bangladesi)"
 
 #: jinja2/includes/translate_locales.html:9
 msgid "Bengali (India)"
-msgstr ""
+msgstr "bengáli (indiai)"
 
 #: jinja2/includes/translate_locales.html:10
 msgid "Burmese"
-msgstr ""
+msgstr "burmai"
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Catalan"
-msgstr ""
+msgstr "katalán"
 
 #: jinja2/includes/translate_locales.html:12
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "kínai (egyszerűsített)"
 
 #: jinja2/includes/translate_locales.html:13
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "kínai (hagyományos)"
 
 #: jinja2/includes/translate_locales.html:14
 msgid "Croatian"
-msgstr ""
+msgstr "horvát"
 
 #: jinja2/includes/translate_locales.html:15
 msgid "Czech"
-msgstr ""
+msgstr "cseh"
 
 #: jinja2/includes/translate_locales.html:16
 msgid "Dutch"
-msgstr ""
+msgstr "holland"
 
 #: jinja2/includes/translate_locales.html:17
-#, fuzzy
 msgid "English (US)"
-msgstr "Angol címkék"
+msgstr "angol (egyesült államokbeli)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
-msgstr ""
+msgstr "ewe"
 
 #: jinja2/includes/translate_locales.html:19
 msgid "Finnish"
-msgstr ""
+msgstr "finn"
 
 #: jinja2/includes/translate_locales.html:20
 msgid "French"
-msgstr ""
+msgstr "francia"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "Frisian"
-msgstr ""
+msgstr "fríz"
 
 #: jinja2/includes/translate_locales.html:22
 msgid "Fulah"
-msgstr ""
+msgstr "fula"
 
 #: jinja2/includes/translate_locales.html:23
 msgid "Georgian"
-msgstr ""
+msgstr "grúz"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "German"
-msgstr ""
+msgstr "német"
 
 #: jinja2/includes/translate_locales.html:25
 msgid "Greek"
-msgstr ""
+msgstr "görög"
 
 #: jinja2/includes/translate_locales.html:26
 msgid "Hausa"
-msgstr ""
+msgstr "hausza"
 
 #: jinja2/includes/translate_locales.html:27
 msgid "Hebrew"
-msgstr ""
+msgstr "héber"
 
 #: jinja2/includes/translate_locales.html:28
 msgid "Hindi (India)"
-msgstr ""
+msgstr "hindi (indiai)"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
-msgstr ""
+msgstr "magyar"
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Igbo"
-msgstr ""
+msgstr "igbo"
 
 #: jinja2/includes/translate_locales.html:31
 msgid "Indonesian"
-msgstr ""
+msgstr "indonéz"
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Irish"
-msgstr ""
+msgstr "ír"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Italian"
-msgstr ""
+msgstr "olasz"
 
 #: jinja2/includes/translate_locales.html:34
 msgid "Japanese"
-msgstr ""
+msgstr "japán"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Korean"
-msgstr ""
+msgstr "koreai"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Lingala"
-msgstr ""
+msgstr "lingala"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Malagasy"
-msgstr ""
+msgstr "malgas"
 
 #: jinja2/includes/translate_locales.html:38
 msgid "Malay"
-msgstr ""
+msgstr "maláj"
 
 #: jinja2/includes/translate_locales.html:39
 msgid "Malayalam"
-msgstr ""
+msgstr "malajálam"
 
 #: jinja2/includes/translate_locales.html:40
-#, fuzzy
 msgid "Persian"
-msgstr "Persona"
+msgstr "perzsa"
 
 #: jinja2/includes/translate_locales.html:41
-#, fuzzy
 msgid "Polish"
-msgstr "Közzététel"
+msgstr "lengyel"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Portuguese (Brazilian)"
-msgstr ""
+msgstr "portugál (brazíliai)"
 
 #: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "portugál (portugáliai)"
 
 #: jinja2/includes/translate_locales.html:44
 msgid "Romanian"
-msgstr ""
+msgstr "román"
 
 #: jinja2/includes/translate_locales.html:45
 msgid "Russian"
-msgstr ""
+msgstr "orosz"
 
 #: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
 msgid "Serbian"
-msgstr ""
+msgstr "szerb"
 
 #: jinja2/includes/translate_locales.html:48
 msgid "Songhai"
-msgstr ""
+msgstr "szonghai"
 
 #: jinja2/includes/translate_locales.html:49
 msgid "Spanish"
-msgstr ""
+msgstr "spanyol"
 
 #: jinja2/includes/translate_locales.html:50
 msgid "Swahili"
-msgstr ""
+msgstr "szuahéli"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swedish"
-msgstr ""
+msgstr "svéd"
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Tagalog"
-msgstr ""
+msgstr "tagalog"
 
 #: jinja2/includes/translate_locales.html:53
 msgid "Tamil"
-msgstr ""
+msgstr "tamil"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Thai"
-msgstr ""
+msgstr "thai"
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Tswana"
-msgstr ""
+msgstr "csvana"
 
 #: jinja2/includes/translate_locales.html:56
 msgid "Turkish"
-msgstr ""
+msgstr "török"
 
 #: jinja2/includes/translate_locales.html:57
 msgid "Ukrainian"
-msgstr ""
+msgstr "ukrán"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Vietnamese"
-msgstr ""
+msgstr "vietnami"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Wolof"
-msgstr ""
+msgstr "volof"
 
 #: jinja2/includes/translate_locales.html:60
 msgid "Xhosa"
-msgstr ""
+msgstr "xhosza"
 
 #: jinja2/includes/translate_locales.html:61
 msgid "Yoruba"
-msgstr ""
+msgstr "joruba"
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Zulu"
-msgstr ""
+msgstr "zulu"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
@@ -863,8 +858,8 @@ msgstr "Különleges engedélyre van szüksége az API kulcsok használatához. 
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
-"clear as you can.</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
+" as you can.</p>"
 msgstr ""
 "<p>Írja le alább a kulcs tervezett felhasználási célját. <p><strong>Megjegyzés:</strong> A kulcs létrehozásának időpontján és dátumán kívül csak ez a leírás fog segíteni később a kulcs "
 "azonosításában. Emiatt legyen olyan egyértelmű, amennyire csak lehet.</p>"
@@ -1219,8 +1214,8 @@ msgstr "A Mozilla fejlesztő hálózat (MDN) Ösztöndíj programja világszínv
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
-"Firefox OS."
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
+" OS."
 msgstr ""
 "A Mozilla fejlesztői hálózat (MDN) információkkal szolgál a nyílt webes technológiákról beleértve a HTML-t, CSS-t, és az alkalmazásinterfészeket weboldalakhoz és HTML5 alkalmazásokhoz. Az MDN a "
 "Mozilla termékekről is tartalmaz dokumentációkat, mint például a Firefox OS."
@@ -1333,8 +1328,8 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">Csatlakozzon <span class=\"number\">%(contributors)s</span> közreműködőhöz</span> <span class=\"row2\"><span class=\"number\">%(locales)s</span> nyelven</"
-"span> <span class=\"row3\">a világ minden tájáról.</span> </p>"
+"<p class=\"numbers\"> <span class=\"row1\">Csatlakozzon <span class=\"number\">%(contributors)s</span> közreműködőhöz</span> <span class=\"row2\"><span class=\"number\">%(locales)s</span> "
+"nyelven</span> <span class=\"row3\">a világ minden tájáról.</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
@@ -1384,12 +1379,12 @@ msgstr "Fejlesztői szeretet terjesztése."
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
-"little bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
+" bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol><li><strong>Gombok létrehozása:</strong> Az alábbi egyszerű űrlap segítségével hozzon létre egy egyéni gombot és forráskódot az MDN népszerűsítésére honlapján vagy blogján.</"
-"li><li><strong>Gombok közzététele:</strong> Másolja a forráskódot és illessze be bárhova honlapján vagy blogján, hogy mások könnyen rátaláljanak az MDN-re.</li><li><strong>Érezze jól magát:</"
-"strong> Legyen büszke rá, hogy az MDN megosztásával a fejlesztők életét kissé jobbá teszi."
+"<ol><li><strong>Gombok létrehozása:</strong> Az alábbi egyszerű űrlap segítségével hozzon létre egy egyéni gombot és forráskódot az MDN népszerűsítésére honlapján vagy "
+"blogján.</li><li><strong>Gombok közzététele:</strong> Másolja a forráskódot és illessze be bárhova honlapján vagy blogján, hogy mások könnyen rátaláljanak az MDN-re.</li><li><strong>Érezze jól "
+"magát:</strong> Legyen büszke rá, hogy az MDN megosztásával a fejlesztők életét kissé jobbá teszi."
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
@@ -1689,11 +1684,11 @@ msgstr "típus"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
-"\"nofollow\">file a bug</a>."
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">file a bug</a>."
 msgstr ""
-"Sajnáljuk, legalább egy hozzárendelt fiókjának kell lennie hogy bejelentkezhessen. A fiók szétkapcsolása előtt először hozzá kell rendelnie egy másikat. Az MDN profilja törléséhez kérjük <a href="
-"\"%(bug_form_url)s\" rel=\"nofollow\">adjon fel egy jegyet</a>."
+"Sajnáljuk, legalább egy hozzárendelt fiókjának kell lennie hogy bejelentkezhessen. A fiók szétkapcsolása előtt először hozzá kell rendelnie egy másikat. Az MDN profilja törléséhez kérjük <a "
+"href=\"%(bug_form_url)s\" rel=\"nofollow\">adjon fel egy jegyet</a>."
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -2171,8 +2166,8 @@ msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 "connect with my MDN profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
-"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
 msgstr[0] ""
 "Az alábbi e-mail címmel már létezik profil. Van már MDN profilja? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Igen, kapcsolja össze az MDN "
 "profiljával</a>"
@@ -2216,17 +2211,16 @@ msgstr "Kérem adja meg a nevet amelyet meg szeretne jeleníteni másoknak a kö
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
-msgstr ""
-"A kiválasztott e-mail címmel már létezik profil. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Kapcsolja hozzá %(provider_name)s fiókját.</a>"
+msgstr "A kiválasztott e-mail címmel már létezik profil. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Kapcsolja hozzá %(provider_name)s fiókját.</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"%(privacy_url)s\">privacy policy</a>."
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
+"href=\"%(privacy_url)s\">privacy policy</a>."
 msgstr ""
-"Mely e-mail címet használjuk MDN-nel kapcsolatos üzenetek és értesítések küldésére? Ez a cím <strong>nem</strong> jelenik meg az MDN-en, és az <a href=\"%(privacy_url)s\">adatvédelem nyilatkozat</"
-"a> alapján lesz felhasználva."
+"Mely e-mail címet használjuk MDN-nel kapcsolatos üzenetek és értesítések küldésére? Ez a cím <strong>nem</strong> jelenik meg az MDN-en, és az <a href=\"%(privacy_url)s\">adatvédelem nyilatkozat</a>"
+" alapján lesz felhasználva."
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
@@ -3101,8 +3095,8 @@ msgstr "Új oldalt próbál létrehozni."
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
-"\">contact us</a>."
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
+"href=\"%(email_link)s\">contact us</a>."
 msgstr ""
 "Új oldal létrehozása korlátozott. Új oldal kéréséhez kérjük nyújtson be <a href=\"%(request_page_url)s\">hibabejelentést</a>. Ha új oldalak létrehozásához engedélyre van szüksége, kérjük lépjen "
 "velünk <a href=\"%(email_link)s\">kapcsolatba</a>."
@@ -3266,8 +3260,8 @@ msgstr "Ez az oldalt először rendereli le a rendszer. Kérjük <a href=\"%(url
 #: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
-"a> in a few minutes."
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
+"page</a> in a few minutes."
 msgstr ""
 "A dokumentum frissítése <abbr title=\"%(started_at)s\">épp folyamatban van</abbr>. Ha a tartalom elavultnak tűnik, vagy valami hiányzik, akkor kérjük <a href=\"%(url)s\">töltse újra az oldalt</a> "
 "egy pár percen múlva."
@@ -3275,8 +3269,8 @@ msgstr ""
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
-"in a few minutes."
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
+" a few minutes."
 msgstr ""
 "A dokumentum frissítése <abbr title=\"%(scheduled_at)s\">be lett ütemezve</abbr>. Ha úgy tűnik hogy a tartalom elavult, vagy valami hiányzik, kérjük <a href=\"%(url)s\">töltse újra az oldalt</a> "
 "néhány perc múlva."
@@ -3939,11 +3933,11 @@ msgstr "Mondja el nekünk hogy miért bővített vagy változtatta meg. Ez nem k
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
-"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
+"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
 msgstr ""
-"A beküldése olyan tartalmat tartalmaz, amely nem biztos hogy megfelelő az MDN számára. A nem megfelelő tartalmak ismételt beküldése a fiókja letiltásával végződhet. Tekintse meg a „<a href="
-"\"%(does_this_belong_url)s\">Van-e helye az MDN-en?</a>” útmutatónkat a részletekről, hogy mi tekinthető megfelelő tartalomnak."
+"A beküldése olyan tartalmat tartalmaz, amely nem biztos hogy megfelelő az MDN számára. A nem megfelelő tartalmak ismételt beküldése a fiókja letiltásával végződhet. Tekintse meg a „<a "
+"href=\"%(does_this_belong_url)s\">Van-e helye az MDN-en?</a>” útmutatónkat a részletekről, hogy mi tekinthető megfelelő tartalomnak."
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -5203,8 +5197,7 @@ msgstr "Elasticsearch kiszolgáló: %(backend)s"
 #~ msgstr "Biztos, hogy törölni szeretné ezt az avatart?"
 
 #~ msgid "You are about to permanently delete your avatar. <strong>This cannot be undone!</strong> You can always <a href=\"%(upload_url)s\">upload another avatar</a> to replace your current one."
-#~ msgstr ""
-#~ "Véglegesen törölni fogja ezt az avatart. <strong>Ez egy visszavonhatatlan művelet!</strong> Bármikor <a href=\"%(upload_url)s\">feltölthet egy másik avatart</a> és lecserélheti a jelenlegit."
+#~ msgstr "Véglegesen törölni fogja ezt az avatart. <strong>Ez egy visszavonhatatlan művelet!</strong> Bármikor <a href=\"%(upload_url)s\">feltölthet egy másik avatart</a> és lecserélheti a jelenlegit."
 
 #~ msgid "Change Avatar"
 #~ msgstr "Avatar módosítása"
@@ -5304,8 +5297,8 @@ msgstr "Elasticsearch kiszolgáló: %(backend)s"
 #~ msgstr "Megerősítő e-mail sikeresen elküldve."
 
 #~ msgid ""
-#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the "
-#~ "link in the email."
+#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the link"
+#~ " in the email."
 #~ msgstr ""
 #~ "Bejelentkezés előtt meg kell erősítenie az e-mail címét. Elküldtünk egy új megerősítő e-mailt minden fiókba a(z) <strong>%(email)s</strong> használatával. Az e-mail cím megerősítéséhez csak "
 #~ "kattintson az e-mailben kapott hivatkozásra."
