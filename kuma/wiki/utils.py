@@ -94,10 +94,15 @@ def analytics_upageviews(revision_ids, start_date, end_date=None):
     http_auth = credentials.authorize(Http())
     service = build('analyticsreporting', 'v4', http=http_auth)
 
-    end_date = datetime.date.today().isoformat()
+    if end_date is None:
+        end_date = datetime.date.today()
+
     if hasattr(start_date, 'date'):
         start_date = start_date.date()
+    if hasattr(end_date, 'date'):
+        end_date = end_date.date()
     start_date = start_date.isoformat()
+    end_date = end_date.isoformat()
 
     request = service.reports().batchGet(
         body={

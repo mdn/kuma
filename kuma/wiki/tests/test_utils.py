@@ -34,18 +34,12 @@ class RecordingHttpMockSequence(HttpMockSequence):
         return super(RecordingHttpMockSequence, self).request(*args, **kwargs)
 
 
+@override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
+@mock.patch('googleapiclient.discovery_cache.autodetect')
+@mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
 class AnalyticsUpageviewsTests(KumaTestCase):
-    @classmethod
-    def setUpClass(cls):
-        super(AnalyticsUpageviewsTests, cls).setUpClass()
-
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, 'analyticsreporting-discover.json')) as f:
-            cls.valid_discovery = f.read()
-
-        cls.start_date = datetime.date(2016, 1, 1)
-
-        cls.valid_response = """{"reports": [
+    start_date = datetime.date(2016, 1, 1)
+    valid_response = """{"reports": [
             {
                 "data": {
                     "rows": [
@@ -76,9 +70,14 @@ class AnalyticsUpageviewsTests(KumaTestCase):
             }
         ]}"""
 
-    @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
-    @mock.patch('googleapiclient.discovery_cache.autodetect')
-    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
+    @classmethod
+    def setUpClass(cls):
+        super(AnalyticsUpageviewsTests, cls).setUpClass()
+
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        with open(os.path.join(dir_path, 'analyticsreporting-discover.json')) as f:
+            cls.valid_discovery = f.read()
+
     def test_successful_query(self, mock_credclass, mock_cache):
         # Disable the discovery cache, so that we can fully control the http requests
         # with HttpMockSequence below
@@ -94,9 +93,6 @@ class AnalyticsUpageviewsTests(KumaTestCase):
 
         self.assertEqual(results, {1068728: 18775, 1074760: 753})
 
-    @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
-    @mock.patch('googleapiclient.discovery_cache.autodetect')
-    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
     def test_datetime_instead_of_date(self, mock_credclass, mock_cache):
         # Disable the discovery cache, so that we can fully control the http requests
         # with HttpMockSequence below
@@ -119,9 +115,50 @@ class AnalyticsUpageviewsTests(KumaTestCase):
 
         self.assertEqual(results, {1068728: 18775, 1074760: 753})
 
-    @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
-    @mock.patch('googleapiclient.discovery_cache.autodetect')
-    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
+    def test_end_date(self, mock_credclass, mock_cache):
+        # Disable the discovery cache, so that we can fully control the http requests
+        # with HttpMockSequence below
+        mock_cache.return_value = None
+
+        mock_creds = mock_credclass.from_json_keyfile_dict.return_value
+        sequence = RecordingHttpMockSequence([
+            ({'status': '200'}, self.valid_discovery),
+            ({'status': '200'}, self.valid_response)
+        ])
+        mock_creds.authorize.return_value = sequence
+
+        end_date = datetime.date(2016, 1, 31)
+        results = analytics_upageviews([1068728, 1074760], self.start_date, end_date)
+
+        # Check that the last request's parameters contain a
+        # representation of the end date, not the ending datetime.
+        args, kwargs = sequence.request_calls[-1]
+        self.assertIn('"endDate": "2016-01-31"', kwargs['body'])
+
+        self.assertEqual(results, {1068728: 18775, 1074760: 753})
+
+    def test_end_date_datetime_instead_of_date(self, mock_credclass, mock_cache):
+        # Disable the discovery cache, so that we can fully control the http requests
+        # with HttpMockSequence below
+        mock_cache.return_value = None
+
+        mock_creds = mock_credclass.from_json_keyfile_dict.return_value
+        sequence = RecordingHttpMockSequence([
+            ({'status': '200'}, self.valid_discovery),
+            ({'status': '200'}, self.valid_response)
+        ])
+        mock_creds.authorize.return_value = sequence
+
+        end_date = datetime.datetime(2016, 1, 31, 17, 32)
+        results = analytics_upageviews([1068728, 1074760], self.start_date, end_date)
+
+        # Check that the last request's parameters contain a
+        # representation of the end date, not the ending datetime.
+        args, kwargs = sequence.request_calls[-1]
+        self.assertIn('"endDate": "2016-01-31"', kwargs['body'])
+
+        self.assertEqual(results, {1068728: 18775, 1074760: 753})
+
     def test_longs_instead_of_ints(self, mock_credclass, mock_cache):
         # Disable the discovery cache, so that we can fully control the http requests
         # with HttpMockSequence below
@@ -143,9 +180,6 @@ class AnalyticsUpageviewsTests(KumaTestCase):
 
         self.assertEqual(results, {1068728: 18775, 1074760: 753})
 
-    @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
-    @mock.patch('googleapiclient.discovery_cache.autodetect')
-    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
     def test_unmatching_query(self, mock_credclass, mock_cache):
         # Disable the discovery cache, so that we can fully control the http requests
         # with HttpMockSequence below
@@ -180,9 +214,6 @@ class AnalyticsUpageviewsTests(KumaTestCase):
 
         self.assertEqual(results, {42: 0})
 
-    @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
-    @mock.patch('googleapiclient.discovery_cache.autodetect')
-    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
     def test_invalid_viewid(self, mock_credclass, mock_cache):
         # http 400
 
@@ -199,9 +230,6 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         with self.assertRaises(HttpError):
             analytics_upageviews([1068728, 1074760], self.start_date)
 
-    @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
-    @mock.patch('googleapiclient.discovery_cache.autodetect')
-    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
     def test_failed_authentication(self, mock_credclass, mock_cache):
         # http 401
 
@@ -218,9 +246,6 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         with self.assertRaises(HttpError):
             analytics_upageviews([1068728, 1074760], self.start_date)
 
-    @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
-    @mock.patch('googleapiclient.discovery_cache.autodetect')
-    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
     def test_user_does_not_have_analytics_account(self, mock_credclass, mock_cache):
         # http 403
 
@@ -238,8 +263,6 @@ class AnalyticsUpageviewsTests(KumaTestCase):
             analytics_upageviews([1068728, 1074760], self.start_date)
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS="{}")
-    @mock.patch('googleapiclient.discovery_cache.autodetect')
-    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
     def test_credentials_not_configured(self, mock_credclass, mock_cache):
         # Mock the network traffic, just in case.
         mock_cache.return_value = None
@@ -254,8 +277,6 @@ class AnalyticsUpageviewsTests(KumaTestCase):
             analytics_upageviews([1068728, 1074760], self.start_date)
 
     @override_config(GOOGLE_ANALYTICS_CREDENTIALS="{'bad config']")
-    @mock.patch('googleapiclient.discovery_cache.autodetect')
-    @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
     def test_credentials_malformed(self, mock_credclass, mock_cache):
         # Mock the network traffic, just in case.
         mock_cache.return_value = None
@@ -270,19 +291,18 @@ class AnalyticsUpageviewsTests(KumaTestCase):
             analytics_upageviews([1068728, 1074760], self.start_date)
 
 
+@mock.patch('kuma.wiki.utils.analytics_upageviews')
 class AnalyticsUpageviewsByRevisionsTests(UserTestCase):
     def setUp(self):
         self.rev1 = revision(save=True)
         self.rev2 = revision(save=True)
 
-    @mock.patch('kuma.wiki.utils.analytics_upageviews')
     def test_empty_call(self, mock_pageviews):
         results = analytics_upageviews_by_revisions([])
 
         self.assertEqual(results, {})
         self.assertFalse(mock_pageviews.called)
 
-    @mock.patch('kuma.wiki.utils.analytics_upageviews')
     def test_success(self, mock_pageviews):
         analytics_upageviews_by_revisions([self.rev1, self.rev2])
 
