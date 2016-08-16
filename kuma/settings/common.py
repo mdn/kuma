@@ -1176,6 +1176,10 @@ CONSTANCE_CONFIG = dict(
         '0',
         'Google Analytics Tracking Account Number (0 to disable)',
     ),
+    GOOGLE_ANALYTICS_CREDENTIALS=(
+        '{}',
+        'Google Analytics (read-only) API credentials',
+    ),
     OPTIMIZELY_PROJECT_ID=(
         '',
         'The ID value for optimizely Project Code script'

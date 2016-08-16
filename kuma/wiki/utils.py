@@ -1,5 +1,15 @@
-import tidylib
+import datetime
+import json
+
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+import tidylib
+
+from apiclient.discovery import build
+from httplib2 import Http
+from oauth2client.service_account import ServiceAccountCredentials
+
+from constance import config
 
 
 def locale_and_slug_from_path(path, request=None, path_locale=None):
@@ -59,3 +69,85 @@ def tidy_content(content):
         return tidied.decode('utf-8'), errors
     else:
         return content
+
+
+def analytics_upageviews(revision_ids, start_date, end_date=None):
+    """Given a sequence of document revision IDs, returns a dict matching
+    those with the number of users Google Analytics thinks has visited
+    each revision since start_date.
+
+    """
+
+    scopes = ['https://www.googleapis.com/auth/analytics.readonly']
+
+    try:
+        ga_cred_dict = json.loads(config.GOOGLE_ANALYTICS_CREDENTIALS)
+    except (ValueError, TypeError):
+        raise ImproperlyConfigured(
+            "GOOGLE_ANALYTICS_CREDENTIALS Constance setting is badly formed.")
+    if not ga_cred_dict:
+        raise ImproperlyConfigured(
+            "An empty GOOGLE_ANALYTICS_CREDENTIALS Constance setting is not permitted.")
+
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(ga_cred_dict,
+                                                                   scopes=scopes)
+    http_auth = credentials.authorize(Http())
+    service = build('analyticsreporting', 'v4', http=http_auth)
+
+    if end_date is None:
+        end_date = datetime.date.today()
+
+    if hasattr(start_date, 'date'):
+        start_date = start_date.date()
+    if hasattr(end_date, 'date'):
+        end_date = end_date.date()
+    start_date = start_date.isoformat()
+    end_date = end_date.isoformat()
+
+    request = service.reports().batchGet(
+        body={
+            'reportRequests': [
+                # `dimension12` is the custom variable containing a page's rev #.
+                {
+                    'dimensions': [{'name': 'ga:dimension12'}],
+                    'metrics': [{'expression': 'ga:uniquePageviews'}],
+                    'dimensionFilterClauses': [
+                        {
+                            'filters': [
+                                {'dimensionName': 'ga:dimension12',
+                                 'operator': 'IN_LIST',
+                                 'expressions': map(str, revision_ids)}
+                            ]
+                        }
+                    ],
+                    'dateRanges': [
+                        {'startDate': start_date, 'endDate': end_date}
+                    ],
+                    'viewId': '66726481'  # PK of the developer.mozilla.org site on GA.
+                }
+            ]
+        })
+
+    response = request.execute()
+
+    data = {int(r): 0 for r in revision_ids}
+    data.update({
+        int(row['dimensions'][0]): int(row['metrics'][0]['values'][0])
+        for row in response['reports'][0]['data'].get('rows', ())
+    })
+
+    return data
+
+
+def analytics_upageviews_by_revisions(revisions):
+    """Given a sequence of Revision objects, returns a dict matching
+    their pks with the number of users Google Analytics thinks has visited
+    each revision since they were created.
+    """
+    if not revisions:
+        return {}
+
+    revision_ids = [r.id for r in revisions]
+    start_date = min(r.created for r in revisions)
+
+    return analytics_upageviews(revision_ids, start_date)
