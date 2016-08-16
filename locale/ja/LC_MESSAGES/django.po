@@ -1,10 +1,10 @@
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: MDN 2016.0\n"
 "Report-Msgid-Bugs-To: dev-mdn@lists.mozilla.org\n"
 "POT-Creation-Date: 2016-08-15 09:57-0700\n"
-"PO-Revision-Date: 2016-08-09 02:08+0000\n"
+"PO-Revision-Date: 2016-08-16 00:47+0000\n"
 "Last-Translator: Kohei Yoshino <kohei.yoshino@gmail.com>\n"
 "Language-Team: Japanese https://pontoon.mozilla.org/ja/\n"
 "Language: ja\n"
@@ -78,8 +78,7 @@ msgstr "サイト内検索を試すか、<a href=\"%(homepage_url)s\">ホーム�
 #: jinja2/404.html:28
 #, python-format
 msgid "If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href=\"%(bug_form_url)s\" rel=\"nofollow\">file a bug</a>. Thanks!"
-msgstr ""
-"ドキュメントのリンクを辿ってきた場合は、ログインしてページを作成することもできます。そうでなければ、<a href=\"%(bug_form_url)s\" rel=\"nofollow\">バグを報告してください</a>。よろしくお願いします。"
+msgstr "ドキュメントのリンクを辿ってきた場合は、ログインしてページを作成することもできます。そうでなければ、<a href=\"%(bug_form_url)s\" rel=\"nofollow\">バグを報告してください</a>。よろしくお願いします。"
 
 #: jinja2/404.html:36
 #, python-format
@@ -372,242 +371,239 @@ msgstr "次へ"
 
 #: jinja2/includes/translate_locales.html:3
 msgid "Afrikaans"
-msgstr ""
+msgstr "アフリカーンス語"
 
 #: jinja2/includes/translate_locales.html:4
 msgid "Albanian"
-msgstr ""
+msgstr "アルバニア語"
 
 #: jinja2/includes/translate_locales.html:5
 msgid "Arabic"
-msgstr ""
+msgstr "アラビア語"
 
 #: jinja2/includes/translate_locales.html:6
 msgid "Azerbaijani"
-msgstr ""
+msgstr "アゼルバイジャン語"
 
 #: jinja2/includes/translate_locales.html:7
 msgid "Bambara"
-msgstr ""
+msgstr "バンバラ語"
 
 #: jinja2/includes/translate_locales.html:8
 msgid "Bengali (Bangladesh)"
-msgstr ""
+msgstr "ベンガル語 (バングラデシュ)"
 
 #: jinja2/includes/translate_locales.html:9
 msgid "Bengali (India)"
-msgstr ""
+msgstr "ベンガル語 (インド)"
 
 #: jinja2/includes/translate_locales.html:10
 msgid "Burmese"
-msgstr ""
+msgstr "ビルマ語"
 
 #: jinja2/includes/translate_locales.html:11
 msgid "Catalan"
-msgstr ""
+msgstr "カタルーニャ語"
 
 #: jinja2/includes/translate_locales.html:12
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "中国語 (簡体字)"
 
 #: jinja2/includes/translate_locales.html:13
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "中国語 (繁体字)"
 
 #: jinja2/includes/translate_locales.html:14
 msgid "Croatian"
-msgstr ""
+msgstr "クロアチア語"
 
 #: jinja2/includes/translate_locales.html:15
 msgid "Czech"
-msgstr ""
+msgstr "チェコ語"
 
 #: jinja2/includes/translate_locales.html:16
 msgid "Dutch"
-msgstr ""
+msgstr "オランダ語"
 
 #: jinja2/includes/translate_locales.html:17
-#, fuzzy
 msgid "English (US)"
-msgstr "英語のタグ"
+msgstr "英語 (アメリカ)"
 
 #: jinja2/includes/translate_locales.html:18
 msgid "Ewe"
-msgstr ""
+msgstr "エウェ語"
 
 #: jinja2/includes/translate_locales.html:19
 msgid "Finnish"
-msgstr ""
+msgstr "フィンランド語"
 
 #: jinja2/includes/translate_locales.html:20
 msgid "French"
-msgstr ""
+msgstr "フランス語"
 
 #: jinja2/includes/translate_locales.html:21
 msgid "Frisian"
-msgstr ""
+msgstr "フリジア語"
 
 #: jinja2/includes/translate_locales.html:22
 msgid "Fulah"
-msgstr ""
+msgstr "フラニ語"
 
 #: jinja2/includes/translate_locales.html:23
 msgid "Georgian"
-msgstr ""
+msgstr "グルジア語"
 
 #: jinja2/includes/translate_locales.html:24
 msgid "German"
-msgstr ""
+msgstr "ドイツ語"
 
 #: jinja2/includes/translate_locales.html:25
 msgid "Greek"
-msgstr ""
+msgstr "ギリシャ語"
 
 #: jinja2/includes/translate_locales.html:26
 msgid "Hausa"
-msgstr ""
+msgstr "ハウサ語"
 
 #: jinja2/includes/translate_locales.html:27
 msgid "Hebrew"
-msgstr ""
+msgstr "ヘブライ語"
 
 #: jinja2/includes/translate_locales.html:28
 msgid "Hindi (India)"
-msgstr ""
+msgstr "ヒンディー語 (インド)"
 
 #: jinja2/includes/translate_locales.html:29
 msgid "Hungarian"
-msgstr ""
+msgstr "ハンガリー語"
 
 #: jinja2/includes/translate_locales.html:30
 msgid "Igbo"
-msgstr ""
+msgstr "イボ語"
 
 #: jinja2/includes/translate_locales.html:31
 msgid "Indonesian"
-msgstr ""
+msgstr "インドネシア語"
 
 #: jinja2/includes/translate_locales.html:32
 msgid "Irish"
-msgstr ""
+msgstr "アイルランド語"
 
 #: jinja2/includes/translate_locales.html:33
 msgid "Italian"
-msgstr ""
+msgstr "イタリア語"
 
 #: jinja2/includes/translate_locales.html:34
 msgid "Japanese"
-msgstr ""
+msgstr "日本語"
 
 #: jinja2/includes/translate_locales.html:35
 msgid "Korean"
-msgstr ""
+msgstr "韓国語"
 
 #: jinja2/includes/translate_locales.html:36
 msgid "Lingala"
-msgstr ""
+msgstr "リンガラ語"
 
 #: jinja2/includes/translate_locales.html:37
 msgid "Malagasy"
-msgstr ""
+msgstr "マダガスカル語"
 
 #: jinja2/includes/translate_locales.html:38
 msgid "Malay"
-msgstr ""
+msgstr "マレー語"
 
 #: jinja2/includes/translate_locales.html:39
 msgid "Malayalam"
-msgstr ""
+msgstr "マラヤーラム語"
 
 #: jinja2/includes/translate_locales.html:40
-#, fuzzy
 msgid "Persian"
-msgstr "Persona"
+msgstr "ペルシャ語"
 
 #: jinja2/includes/translate_locales.html:41
-#, fuzzy
 msgid "Polish"
-msgstr "公開"
+msgstr "ポーランド語"
 
 #: jinja2/includes/translate_locales.html:42
 msgid "Portuguese (Brazilian)"
-msgstr ""
+msgstr "ポルトガル語 (ブラジル)"
 
 #: jinja2/includes/translate_locales.html:43
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "ポルトガル語 (ポルトガル)"
 
 #: jinja2/includes/translate_locales.html:44
 msgid "Romanian"
-msgstr ""
+msgstr "ルーマニア語"
 
 #: jinja2/includes/translate_locales.html:45
 msgid "Russian"
-msgstr ""
+msgstr "ロシア語"
 
 #: jinja2/includes/translate_locales.html:46 jinja2/includes/translate_locales.html:47
 msgid "Serbian"
-msgstr ""
+msgstr "セルビア語"
 
 #: jinja2/includes/translate_locales.html:48
 msgid "Songhai"
-msgstr ""
+msgstr "ソンガイ語"
 
 #: jinja2/includes/translate_locales.html:49
 msgid "Spanish"
-msgstr ""
+msgstr "スペイン語"
 
 #: jinja2/includes/translate_locales.html:50
 msgid "Swahili"
-msgstr ""
+msgstr "スワヒリ語"
 
 #: jinja2/includes/translate_locales.html:51
 msgid "Swedish"
-msgstr ""
+msgstr "スウェーデン語"
 
 #: jinja2/includes/translate_locales.html:52
 msgid "Tagalog"
-msgstr ""
+msgstr "タガログ語"
 
 #: jinja2/includes/translate_locales.html:53
 msgid "Tamil"
-msgstr ""
+msgstr "タミル語"
 
 #: jinja2/includes/translate_locales.html:54
 msgid "Thai"
-msgstr ""
+msgstr "タイ語"
 
 #: jinja2/includes/translate_locales.html:55
 msgid "Tswana"
-msgstr ""
+msgstr "ツワナ語"
 
 #: jinja2/includes/translate_locales.html:56
 msgid "Turkish"
-msgstr ""
+msgstr "トルコ語"
 
 #: jinja2/includes/translate_locales.html:57
 msgid "Ukrainian"
-msgstr ""
+msgstr "ウクライナ語"
 
 #: jinja2/includes/translate_locales.html:58
 msgid "Vietnamese"
-msgstr ""
+msgstr "ベトナム語"
 
 #: jinja2/includes/translate_locales.html:59
 msgid "Wolof"
-msgstr ""
+msgstr "ウォロフ語"
 
 #: jinja2/includes/translate_locales.html:60
 msgid "Xhosa"
-msgstr ""
+msgstr "コサ語"
 
 #: jinja2/includes/translate_locales.html:61
 msgid "Yoruba"
-msgstr ""
+msgstr "ヨルバ語"
 
 #: jinja2/includes/translate_locales.html:62
 msgid "Zulu"
-msgstr ""
+msgstr "ズールー語"
 
 #: jinja2/includes/unsubscribe_text.ltxt:3
 msgid "Unsubscribe from these emails:"
@@ -634,9 +630,7 @@ msgstr "通知解除エラー"
 msgid ""
 "We could not find your subscription. Either it has already been cancelled, or there was a mistake in the unsubscribe link. Please make sure the entire link from the email made it into the browser. "
 "If the last part of the link wraps onto a second line in the email, try copying and pasting the link into the browser."
-msgstr ""
-"メール通知を見つけられませんでした。すでに通知がキャンセルされているか、通知解除のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザに渡されているか確認してください。メール内でリン"
-"クの後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザへコピー＆ペーストしてください。"
+msgstr "メール通知を見つけられませんでした。すでに通知がキャンセルされているか、通知解除のリンクにエラーがあります。メールに書かれたリンク全体が正しくブラウザに渡されているか確認してください。メール内でリンクの後半部分が改行されて途切れてしまっている場合は、手動でリンク全体をブラウザへコピー＆ペーストしてください。"
 
 #: jinja2/tidings/unsubscribe_success.html:7
 msgid "Unsubscribed"
@@ -831,9 +825,7 @@ msgstr "このキーはまだ使用されていません。"
 msgid ""
 "These are your API keys. They're useful for building applications that perform tasks on MDN on your behalf. If you have stopped using any of them, or suspect one has been exposed to parties you "
 "don't trust with your account delete the key. It's easy to create a replacement key at any time."
-msgstr ""
-"これは、あなたの API キーです。MDN 上でタスクを実行するアプリケーションの構築に役立ちます。いずれかのキーの使用を中止したい場合、または信頼できない相手に漏洩した疑いがある場合は、キーを削除してくだ"
-"さい。代わりのキーはいつでも簡単に生成できます。"
+msgstr "これは、あなたの API キーです。MDN 上でタスクを実行するアプリケーションの構築に役立ちます。いずれかのキーの使用を中止したい場合、または信頼できない相手に漏洩した疑いがある場合は、キーを削除してください。代わりのキーはいつでも簡単に生成できます。"
 
 #: kuma/authkeys/jinja2/authkeys/list.html:14
 msgid "Create a new key"
@@ -859,10 +851,9 @@ msgstr "API キーを使用するには特別な権限が必要です。<a href=
 
 #: kuma/authkeys/jinja2/authkeys/new.html:7
 msgid ""
-"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as "
-"clear as you can.</p>"
-msgstr ""
-"<p>このキーの用途を次の欄に入力してください。<p><strong>注記:</strong> これは、キーの生成日時を除き、このキーを識別するための唯一の手段となります。よって、出来るだけ明確に記述してください。</p>"
+"<p>Describe your intended use for this key, below. <p><strong>NOTE:</strong> This will be your only means of identifying this key later, other than the date and time of its creation. So, be as clear"
+" as you can.</p>"
+msgstr "<p>このキーの用途を次の欄に入力してください。<p><strong>注記:</strong> これは、キーの生成日時を除き、このキーを識別するための唯一の手段となります。よって、出来るだけ明確に記述してください。</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:16
 msgid "Create"
@@ -874,8 +865,8 @@ msgid ""
 "<p>Your new key has been created. Please make a note of the details below (e.g. by copying them into your application's settings). This information will never be displayed again, and cannot be "
 "recovered if lost.</p> <p><strong>NOTE:</strong> When you're done, <a class=\"button\" href=\"%(list_url)s\">return to the key list</a>. Reloading this page will create a new key.</p>"
 msgstr ""
-"<p>新しいキーが生成されました。以下の詳細をメモに残しておいてください (あなたのアプリケーションの設定にコピーしておくなど)。この情報は、今後表示されないため、失われると二度と復元することができませ"
-"ん。</p> <p><strong>注記:</strong> 情報をメモに残したら、<a class=\"button\" href=\"%(list_url)s\">キーの一覧ページ</a> へ戻ってください。ページを再読み込みすると新しいキーが生成されます。</p>"
+"<p>新しいキーが生成されました。以下の詳細をメモに残しておいてください (あなたのアプリケーションの設定にコピーしておくなど)。この情報は、今後表示されないため、失われると二度と復元することができません。</p> <p><strong>注記:</strong> 情報をメモに残したら、<a class=\"button\" href=\"%(list_url)s\">キーの一覧ページ</a> "
+"へ戻ってください。ページを再読み込みすると新しいキーが生成されます。</p>"
 
 #: kuma/authkeys/jinja2/authkeys/new.html:30
 msgid "Key ID"
@@ -1216,10 +1207,9 @@ msgstr "Mozilla Developer Network (MDN) のフェローシッププログラム�
 
 #: kuma/landing/jinja2/landing/homepage.html:14
 msgid ""
-"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like "
-"Firefox OS."
-msgstr ""
-"Mozilla Developer Network (MDN) は、Web サイトと HTML5 アプリ向けの HTML、CSS、API を含むオープン Web についての情報を提供しています。また、Firefox OS のような Mozilla 製品のドキュメントもあります。"
+"The Mozilla Developer Network (MDN) provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and HTML5 Apps. It also documents Mozilla products, like Firefox"
+" OS."
+msgstr "Mozilla Developer Network (MDN) は、Web サイトと HTML5 アプリ向けの HTML、CSS、API を含むオープン Web についての情報を提供しています。また、Firefox OS のような Mozilla 製品のドキュメントもあります。"
 
 #: kuma/landing/jinja2/landing/homepage.html:32
 msgid "Shared knowledge <span>for the Open Web</span>"
@@ -1329,8 +1319,8 @@ msgid ""
 "<p class=\"numbers\"> <span class=\"row1\">Join <span class=\"number\">%(contributors)s</span> contributors</span> <span class=\"row2\">in <span class=\"number\">%(locales)s</span> languages and "
 "locales</span> <span class=\"row3\">around the world.</span> </p>"
 msgstr ""
-"<p class=\"numbers\"> <span class=\"row1\">世界中の <span class=\"number\">%(locales)s</span>の言語と地域から</span><span class=\"row2\"><span class=\"number\">%(contributors)s</span> 人の貢献者</"
-"span><span class=\"row3\">が参加しています。</span> </p>"
+"<p class=\"numbers\"> <span class=\"row1\">世界中の <span class=\"number\">%(locales)s</span>の言語と地域から</span><span class=\"row2\"><span class=\"number\">%(contributors)s</span> 人の貢献者</span><span "
+"class=\"row3\">が参加しています。</span> </p>"
 
 #: kuma/landing/jinja2/landing/homepage.html:144 kuma/landing/jinja2/landing/homepage.html:151
 msgid "Help improve MDN"
@@ -1380,12 +1370,11 @@ msgstr "開発者の愛を広める。"
 #: kuma/landing/jinja2/landing/promote_buttons.html:20
 msgid ""
 "<ol> <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li> <li><strong>Post Buttons:</strong> Copy the "
-"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a "
-"little bit better by sharing MDN with the world.</li> </ol>"
+"source code and paste it anywhere on your website or blog to help people click through to MDN.</li> <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little"
+" bit better by sharing MDN with the world.</li> </ol>"
 msgstr ""
-"<ol> <li><strong>ボタンを入手:</strong> あなたの Web サイトやブログで MDN を宣伝するために、以下の簡単なフォームでカスタムボタンのソースコードを作成してください。</li> <li><strong>ボタンを配置:</"
-"strong> ソースコードをコピーして、あなたの Web サイトやブログに貼りつけて、MDN へ訪れやすいように手助けしてください。</li> <li><strong>快感:</strong> MDN を世界に共有したことで開発者の生活を少しだけ"
-"良くできたということを忘れずにプライドを持ってください。</li> </ol>"
+"<ol> <li><strong>ボタンを入手:</strong> あなたの Web サイトやブログで MDN を宣伝するために、以下の簡単なフォームでカスタムボタンのソースコードを作成してください。</li> <li><strong>ボタンを配置:</strong> ソースコードをコピーして、あなたの Web サイトやブログに貼りつけて、MDN "
+"へ訪れやすいように手助けしてください。</li> <li><strong>快感:</strong> MDN を世界に共有したことで開発者の生活を少しだけ良くできたということを忘れずにプライドを持ってください。</li> </ol>"
 
 #: kuma/landing/jinja2/landing/promote_buttons.html:35 kuma/wiki/jinja2/wiki/includes/page_buttons.html:31
 msgid "Preview"
@@ -1679,11 +1668,9 @@ msgstr "タイプ"
 #: kuma/users/adapters.py:17
 #, python-format
 msgid ""
-"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" rel="
-"\"nofollow\">file a bug</a>."
-msgstr ""
-"申し訳ありませんが、ログインするには少なくとも 1 つの接続されたアカウントが必要です。このアカウントを切断するには、別のアカウントを先に接続してください。MDN アカウントを削除するには、<a href="
-"\"%(bug_form_url)s\" rel=\"nofollow\">バグ登録</a> してください。"
+"Sorry, you must have at least one connected account so you can sign in. To disconnect this account connect a different one first. To delete your MDN profile please <a href=\"%(bug_form_url)s\" "
+"rel=\"nofollow\">file a bug</a>."
+msgstr "申し訳ありませんが、ログインするには少なくとも 1 つの接続されたアカウントが必要です。このアカウントを切断するには、別のアカウントを先に接続してください。MDN アカウントを削除するには、<a href=\"%(bug_form_url)s\" rel=\"nofollow\">バグ登録</a> してください。"
 
 #: kuma/users/adapters.py:21
 msgid "An email address cannot be used as a username."
@@ -2160,9 +2147,7 @@ msgstr "続けるには MDN プロフィールを作成してください"
 #: kuma/users/jinja2/socialaccount/signup.html:23
 #, python-format
 msgid "A profile already exists with this email address. To connect Persona to your MDN profile, <a href=\"%(connections_url)s\">you need to sign in and visit your social account connections.</a>"
-msgstr ""
-"このメールアドレスのアカウントは既に存在しています。Persona をあなたの MDN アカウントに接続するには、<a href=\"%(connections_url)s\">ログインしてあなたのソーシャルアカウント接続ページで設定する必要"
-"があります。</a>"
+msgstr "このメールアドレスのアカウントは既に存在しています。Persona をあなたの MDN アカウントに接続するには、<a href=\"%(connections_url)s\">ログインしてあなたのソーシャルアカウント接続ページで設定する必要があります。</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:36
 #, python-format
@@ -2170,11 +2155,9 @@ msgid ""
 "A profile already exists with an email address below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Yes, "
 "connect with my MDN profile</a>"
 msgid_plural ""
-"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next="
-"\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
-msgstr[0] ""
-"このメールアドレスのアカウントはすでに存在しています。すでに MDN アカウントをお持ちですか？ <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">はい、"
-"自分の MDN アカウントと接続します</a>"
+"A profile already exists with one of these email addresses below. Do you already have an MDN profile? <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-"
+"next=\"%(persona_next_url)s\">Yes, connect with my MDN profile</a>"
+msgstr[0] "このメールアドレスのアカウントはすでに存在しています。すでに MDN アカウントをお持ちですか？ <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">はい、自分の MDN アカウントと接続します</a>"
 
 #: kuma/users/jinja2/socialaccount/signup.html:48
 #, python-format
@@ -2212,18 +2195,14 @@ msgstr "他のユーザに表示する名前を入力し、他のユーザがあ
 msgid ""
 "A profile already exists with the selected email address. <a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">Connect your %(provider_name)s account "
 "to it.</a>"
-msgstr ""
-"選択されたメールアドレスのプロファイルは既に存在します。<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">%(provider_name)s アカウントをこのアドレス"
-"と関連付けましょう</a>。"
+msgstr "選択されたメールアドレスのプロファイルは既に存在します。<a href=\"%(persona_login_url)s\" class=\"launch-persona-login\" data-next=\"%(persona_next_url)s\">%(provider_name)s アカウントをこのアドレスと関連付けましょう</a>。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:148
 #, python-format
 msgid ""
-"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="
-"\"%(privacy_url)s\">privacy policy</a>."
-msgstr ""
-"MDN 関連のメッセージや通知を受け取りたいメールアドレスを入力してください。このアドレスは MDN 上では <strong>公開されず</strong>、Mozilla の <a href=\"%(privacy_url)s\">プライバシーポリシー</a> に"
-"従って扱われます。"
+"What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a "
+"href=\"%(privacy_url)s\">privacy policy</a>."
+msgstr "MDN 関連のメッセージや通知を受け取りたいメールアドレスを入力してください。このアドレスは MDN 上では <strong>公開されず</strong>、Mozilla の <a href=\"%(privacy_url)s\">プライバシーポリシー</a> に従って扱われます。"
 
 #: kuma/users/jinja2/socialaccount/signup.html:164
 msgid "Terms and Privacy"
@@ -2531,8 +2510,7 @@ msgstr "%(username)s さん、こんにちは！"
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:11
 #, python-format
 msgid "Thanks for creating a profile on <a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you."
-msgstr ""
-"<a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> にプロファイルを作成していただき、ありがとうございます。ここはあなたのような開発者のために優れた資料を作成しているコミュニティです。"
+msgstr "<a href=\"%(mdn_link)s\">Mozilla Developer Network (MDN)</a> にプロファイルを作成していただき、ありがとうございます。ここはあなたのような開発者のために優れた資料を作成しているコミュニティです。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:16
 #, python-format
@@ -2545,8 +2523,8 @@ msgid ""
 "Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you <a href=\"%(words_link)s\">like words</a>, <a href=\"%(code_link)s\">like "
 "code</a>, <a href=\"%(both_link)s\">like both words and code</a>, or you want to <a href=\"%(translate_link)s\">translate MDN to your language</a>."
 msgstr ""
-"次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 選択可能な入門的タスクはたくさんあります。例えば <a href=\"%(words_link)s\">単語</a>、<a href=\"%(code_link)s\">コード</a>、あるいは "
-"<a href=\"%(both_link)s\">単語とコードの両方</a> を書いたり、<a href=\"%(translate_link)s\">MDN をあなたの言語に翻訳</a> したりできます。"
+"次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 選択可能な入門的タスクはたくさんあります。例えば <a href=\"%(words_link)s\">単語</a>、<a href=\"%(code_link)s\">コード</a>、あるいは <a href=\"%(both_link)s\">単語とコードの両方</a> を書いたり、<a "
+"href=\"%(translate_link)s\">MDN をあなたの言語に翻訳</a> したりできます。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:34
 msgid "Talk to us!"
@@ -2568,8 +2546,8 @@ msgid ""
 "Real-time chat: <a href=\"%(channel_link)s\">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href=\"%(irc_link)s\">IRC</a>.) You can find the MDN writing staff admins there: Eric "
 "Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager."
 msgstr ""
-"リアルタイムチャット: <a href=\"%(channel_link)s\">irc.mozilla.org 上の #mdn チャンネル</a> を使ってください (<a href=\"%(irc_link)s\">IRC の詳細はこちら</a>)。MDN の編集スタッフの Eric Shepherd "
-"(sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) が常駐しています。"
+"リアルタイムチャット: <a href=\"%(channel_link)s\">irc.mozilla.org 上の #mdn チャンネル</a> を使ってください (<a href=\"%(irc_link)s\">IRC の詳細はこちら</a>)。MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will "
+"Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) が常駐しています。"
 
 #: kuma/users/jinja2/users/email/welcome/html.ltxt:51
 #, python-format
@@ -2597,9 +2575,7 @@ msgstr "Mozilla Developer Network (MDN) にプロファイルを作成してい�
 msgid ""
 "You've completed the first step of Getting Started on MDN by creating a profile. Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose based on your "
 "interests."
-msgstr ""
-"あなたはプロファイルを作成することで MDN に参加する最初のステップを完了しました。次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 興味に応じて選択可能な入門的タスクはたくさんありま"
-"す。"
+msgstr "あなたはプロファイルを作成することで MDN に参加する最初のステップを完了しました。次に、MDN で取り組みたいタスクを選んで、実際に始めてみましょう！ 興味に応じて選択可能な入門的タスクはたくさんあります。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:14
@@ -2648,9 +2624,7 @@ msgstr "IRC の詳細は %(irc_link)s を参照してください。"
 msgid ""
 "You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's "
 "community manager."
-msgstr ""
-"MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める "
-"Janet Swisher (jms) が常駐しています。"
+msgstr "MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) が常駐しています。"
 
 #. This is an email. Whitespace matters!
 #: kuma/users/jinja2/users/email/welcome/plain.ltxt:48
@@ -3113,11 +3087,9 @@ msgstr "あなたはページを新規作成しようとしています。"
 #: kuma/wiki/jinja2/403-create-page.html:7
 #, python-format
 msgid ""
-"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a href=\"%(email_link)s"
-"\">contact us</a>."
-msgstr ""
-"ページの新規作成は制限されたアクションです。新たなページをリクエストするには <a href=\"%(request_page_url)s\">バグを登録</a> してください。ページを新規作成するための権限が必要な場合は <a href="
-"\"%(email_link)s\">ご連絡ください</a>。"
+"Creating a new page is a restricted action. To request a new page, please <a href=\"%(request_page_url)s\">file a bug</a>. If you need permission to create new pages, please <a "
+"href=\"%(email_link)s\">contact us</a>."
+msgstr "ページの新規作成は制限されたアクションです。新たなページをリクエストするには <a href=\"%(request_page_url)s\">バグを登録</a> してください。ページを新規作成するための権限が必要な場合は <a href=\"%(email_link)s\">ご連絡ください</a>。"
 
 #: kuma/wiki/jinja2/403-create-page.html:17
 msgid ""
@@ -3125,9 +3097,8 @@ msgid ""
 "feature? What feature? Is there a glossary term you’d like to add? What term?). </li> <li>Have made some good edits to existing pages.</li> <li>Have been contributing to the site for a while.</li> "
 "</ul>"
 msgstr ""
-"<p>以下の条件を満たすことでページの新規作成権限を与えられる可能性が上がります。</p> <ul>あなたの MDN ユーザ名を教えてください。</li> <li>ページを新規作成したい理由を教えてください。(新機能を解説した"
-"いのであればどのような機能か、用語集を編集したいのであればどのような用語か、など)</li> <li>既存のページにいくつかの適切な変更を加えていること。</li> <li>しばらく前からサイトに貢献していること。</"
-"li> </ul>"
+"<p>以下の条件を満たすことでページの新規作成権限を与えられる可能性が上がります。</p> <ul>あなたの MDN ユーザ名を教えてください。</li> <li>ページを新規作成したい理由を教えてください。(新機能を解説したいのであればどのような機能か、用語集を編集したいのであればどのような用語か、など)</li> <li>既存のページにいくつかの適切な変更を加えていること。</li> "
+"<li>しばらく前からサイトに貢献していること。</li> </ul>"
 
 #: kuma/wiki/jinja2/wiki/compare_revisions.html:4
 #, python-format
@@ -3285,27 +3256,21 @@ msgstr "この記事内"
 #: kuma/wiki/jinja2/wiki/document.html:231
 #, python-format
 msgid "This document is being rendered for the first time by the system. Please <a href=\"%(url)s\">reload this page</a> in a few minutes to see full content."
-msgstr ""
-"このドキュメントはシステムによる完全なレンダリングが行われる前の状態です。完全なコンテンツを表示するには数分たってから <a href=\"%(url)s\">このページを再度読み込む</a> か、スーパーリロード "
-"(<kbd>ctlr</kbd> + <kbd>F5</kbd>)をお試しください。"
+msgstr "このドキュメントはシステムによる完全なレンダリングが行われる前の状態です。完全なコンテンツを表示するには数分たってから <a href=\"%(url)s\">このページを再度読み込む</a> か、スーパーリロード (<kbd>ctlr</kbd> + <kbd>F5</kbd>)をお試しください。"
 
 #: kuma/wiki/jinja2/wiki/document.html:239
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</"
-"a> in a few minutes."
-msgstr ""
-"このドキュメントへの更新が <abbr title=\"%(started_at)s\">現在進行中</abbr> です。以下の内容が最新でなかったり一部欠けている場合は、数分後に <a href=\"%(url)s\">ページを再読み込み</a> してみてくださ"
-"い。"
+"An update to this document <abbr title=\"%(started_at)s\">is currently in progress</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this "
+"page</a> in a few minutes."
+msgstr "このドキュメントへの更新が <abbr title=\"%(started_at)s\">現在進行中</abbr> です。以下の内容が最新でなかったり一部欠けている場合は、数分後に <a href=\"%(url)s\">ページを再読み込み</a> してみてください。"
 
 #: kuma/wiki/jinja2/wiki/document.html:248
 #, python-format
 msgid ""
-"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> "
-"in a few minutes."
-msgstr ""
-"このドキュメントは <abbr title=\"%(scheduled_at)s\">更新が予定されています</abbr>。コンテンツに欠落などの問題がある場合は、数分たってから <a href=\"%(url)s\">このページを再読み込み</a> してくださ"
-"い。"
+"An update to this document <abbr title=\"%(scheduled_at)s\">has been scheduled</abbr>. If the content below seems stale or if something is missing, please <a href=\"%(url)s\">reload this page</a> in"
+" a few minutes."
+msgstr "このドキュメントは <abbr title=\"%(scheduled_at)s\">更新が予定されています</abbr>。コンテンツに欠落などの問題がある場合は、数分たってから <a href=\"%(url)s\">このページを再読み込み</a> してください。"
 
 #: kuma/wiki/jinja2/wiki/document.html:266
 #, python-format
@@ -3373,9 +3338,7 @@ msgstr "%(title)s | 記事を編集"
 msgid ""
 "Please review the differences between your changes and the changes saved since you started editing. You may save again, but try to resolve any conflicts by hand so that the changes made since you "
 "started are not lost."
-msgstr ""
-"あなたの変更と、あなたが編集を始めてから保存された変更の差分を確認してください。このまま再度保存することも可能ですが、編集を始めてから行われた変更が失われないよう、何か矛盾点があれば手作業で修正して"
-"ください。"
+msgstr "あなたの変更と、あなたが編集を始めてから保存された変更の差分を確認してください。このまま再度保存することも可能ですが、編集を始めてから行われた変更が失われないよう、何か矛盾点があれば手作業で修正してください。"
 
 #: kuma/wiki/jinja2/wiki/edit.html:41
 msgid "Your Changes"
@@ -3446,9 +3409,7 @@ msgstr "記事へのタグの付け方"
 #: kuma/wiki/jinja2/wiki/edit.html:193 kuma/wiki/jinja2/wiki/translate.html:114
 #, python-format
 msgid "Categorize the article. It will make the article findable under the right filters in the search engine. <a target=\"_blank\" href=\"%(url)s\">Read the Tagging Guide</a>."
-msgstr ""
-"記事のカテゴリを設定してください。それにより、検索エンジンで絞り込みを行った場合にもこの記事を正しく見つけられるようになります。詳しくは <a target=\"_blank\" href=\"%(url)s\">タグ付けガイド</a> を参"
-"照してください。"
+msgstr "記事のカテゴリを設定してください。それにより、検索エンジンで絞り込みを行った場合にもこの記事を正しく見つけられるようになります。詳しくは <a target=\"_blank\" href=\"%(url)s\">タグ付けガイド</a> を参照してください。"
 
 #: kuma/wiki/jinja2/wiki/feed_docs_updated.html:3
 #, python-format
@@ -3539,9 +3500,7 @@ msgstr "ページの移動がリクエストされました"
 #: kuma/wiki/jinja2/wiki/move_requested.html:9
 #, python-format
 msgid "<h1>Page Move Scheduled</h1> <p>Moving %(old_slug)s to <a href=\"%(new_url)s\">%(new_slug)s</a></p> <p> You'll receive an email when it finishes, or if any errors occur during the move.</p>"
-msgstr ""
-"<h1>ページの移動がスケジュールへ追加されました</h1> <p>%(old_slug)s から <a href=\"%(new_url)s\">%(new_slug)s</a> へ移動されます</p> <p> 完了時、あるいは移動中に何か問題が発生した場合にはメールでお"
-"知らせします。</p>"
+msgstr "<h1>ページの移動がスケジュールへ追加されました</h1> <p>%(old_slug)s から <a href=\"%(new_url)s\">%(new_slug)s</a> へ移動されます</p> <p> 完了時、あるいは移動中に何か問題が発生した場合にはメールでお知らせします。</p>"
 
 #: kuma/wiki/jinja2/wiki/preview.html:13
 msgid "This is a preview of an unsaved document."
@@ -3609,8 +3568,8 @@ msgid ""
 "Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; <a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a "
 "href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"コンテンツはこのプロジェクト固有のライセンスで公開されています。 &middot; <a href=\"%(about_url)s\">MDN について</a> &middot; <a href=\"//github.com/mozilla/kuma\">ソースコードに貢献</a> &middot; "
-"<a href=\"//www.mozilla.org/en-US/privacy\">プライバシーポリシー</a>"
+"コンテンツはこのプロジェクト固有のライセンスで公開されています。 &middot; <a href=\"%(about_url)s\">MDN について</a> &middot; <a href=\"//github.com/mozilla/kuma\">ソースコードに貢献</a> &middot; <a href=\"//www.mozilla.org/en-"
+"US/privacy\">プライバシーポリシー</a>"
 
 #: kuma/wiki/jinja2/wiki/sphinx.html:43
 #, python-format
@@ -3618,8 +3577,8 @@ msgid ""
 "&copy; 2005-2015 Mozilla Developer Network and individual contributors<br /> Content is available under a license specific to this project. &middot; <a href=\"%(about_url)s\">About MDN</a> &middot; "
 "<a href=\"//github.com/mozilla/kuma\">Contribute to the code</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">Privacy policy</a>"
 msgstr ""
-"&copy; 2005-2015 Mozilla Developer Network & 貢献者各人<br /> コンテンツはこのプロジェクト固有のライセンスで公開されています。 &middot; <a href=\"%(about_url)s\">MDN について</a> &middot; <a href="
-"\"//github.com/mozilla/kuma\">ソースコードに貢献</a> &middot; <a href=\"//www.mozilla.org/en-US/privacy\">プライバシーポリシー</a>"
+"&copy; 2005-2015 Mozilla Developer Network & 貢献者各人<br /> コンテンツはこのプロジェクト固有のライセンスで公開されています。 &middot; <a href=\"%(about_url)s\">MDN について</a> &middot; <a href=\"//github.com/mozilla/kuma\">ソースコードに貢献</a>"
+" &middot; <a href=\"//www.mozilla.org/en-US/privacy\">プライバシーポリシー</a>"
 
 #: kuma/wiki/jinja2/wiki/translate.html:7
 #, python-format
@@ -3904,9 +3863,7 @@ msgstr[0] "このエラーについての詳細情報"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:19
 msgid "Anyone with an MDN profile can edit a document to fix an error. Use the <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript troubleshooting guide</a> as a starting point."
-msgstr ""
-"MDN プロファイルを持っている人なら誰でもドキュメントを編集して問題点を修正できます。まずは <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript トラブルシューティングガイド</a> を"
-"見てみてください。"
+msgstr "MDN プロファイルを持っている人なら誰でもドキュメントを編集して問題点を修正できます。まずは <a href=\"/docs/MDN/Kuma/Troubleshooting_KumaScript_errors\">KumaScript トラブルシューティングガイド</a> を見てみてください。"
 
 #: kuma/wiki/jinja2/wiki/includes/kumascript_errors.html:29
 msgid "Error type:"
@@ -3973,11 +3930,9 @@ msgstr "変更した理由を記載してください。任意項目ですが、
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:2
 #, python-format
 msgid ""
-"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a href="
-"\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
-msgstr ""
-"あなたの投稿には MDN にふさわしくないと思われる内容が含まれています。不適切な内容を何度も投稿した場合、あなたのアカウントは凍結される可能性があります。適切な内容かどうかの詳細に関しては <a href="
-"\"%(does_this_belong_url)s\">MDN の記事掲載ガイド</a> を参照してください。"
+"Your submission includes content that may not be suitable for MDN. Repeated attempts to submit unsuitable material may result in your account being deactivated. See our guide “<a "
+"href=\"%(does_this_belong_url)s\">Does this belong on MDN?</a>” for details on what constitutes appropriate material."
+msgstr "あなたの投稿には MDN にふさわしくないと思われる内容が含まれています。不適切な内容を何度も投稿した場合、あなたのアカウントは凍結される可能性があります。適切な内容かどうかの詳細に関しては <a href=\"%(does_this_belong_url)s\">MDN の記事掲載ガイド</a> を参照してください。"
 
 #: kuma/wiki/jinja2/wiki/includes/spam_error.html:11
 #, python-format
@@ -4471,13 +4426,12 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "CSS3 アニメーションは、時間の経過によりプロパティの値を変化させ、要素の外観や位置を変化させます。JavaScript コードを最小限に減らし、トランジションよりも優れた制御ができます。"
 
 #~ msgid ""
-#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property "
-#~ "values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can "
-#~ "achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
+#~ "CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values "
+#~ "over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these "
+#~ "effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."
 #~ msgstr ""
-#~ "CSS3 アニメーションは、さらに優れた柔軟性とスタイルのコントロール、Web 体験を追加する、Firefox のようなモダンブラウザの新しい機能です。CSS3 アニメーションは、時間の経過によりプロパティの値を変化"
-#~ "させ、要素の外観や位置を変化させます。JavaScript コードを最小限に減らし、CSS トランジションよりも優れた制御ができます。動きのなかったプロパティを HTML 要素の外観や位置を動かすものにしましょう。こ"
-#~ "れらの効果は、Flash や Silverlight を必要としません。クリエイティブでダイナミックなインターフェースを CSS3 のアニメーションで実現できます。"
+#~ "CSS3 アニメーションは、さらに優れた柔軟性とスタイルのコントロール、Web 体験を追加する、Firefox のようなモダンブラウザの新しい機能です。CSS3 アニメーションは、時間の経過によりプロパティの値を変化させ、要素の外観や位置を変化させます。JavaScript コードを最小限に減らし、CSS トランジションよりも優れた制御ができます。動きのなかったプロパティを HTML "
+#~ "要素の外観や位置を動かすものにしましょう。これらの効果は、Flash や Silverlight を必要としません。クリエイティブでダイナミックなインターフェースを CSS3 のアニメーションで実現できます。"
 
 #~ msgid "July 2011 Dev Derby Challenge - HTML5 <video>"
 #~ msgstr "2011 年 7 月の Dev Derby Challenge - HTML5 <video>"
@@ -4534,11 +4488,9 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "2011 年 11 月"
 
 #~ msgid ""
-#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and "
-#~ "methods that make it easy to control and draw in."
-#~ msgstr ""
-#~ "Canvas を用いると、JavaScriptを用いて 2D の図形、ビットマップイメージ、および高度なグラフィカルエフェクトをレンダリングし、Web をペイントすることができます。<canvas> 要素はグラフィックス状態を持"
-#~ "つコンテキストを個別に持ち、容易な描画のためのメソッドも用意されています。"
+#~ "Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects. Each <canvas> element provides a graphics context with its own state and methods"
+#~ " that make it easy to control and draw in."
+#~ msgstr "Canvas を用いると、JavaScriptを用いて 2D の図形、ビットマップイメージ、および高度なグラフィカルエフェクトをレンダリングし、Web をペイントすることができます。<canvas> 要素はグラフィックス状態を持つコンテキストを個別に持ち、容易な描画のためのメソッドも用意されています。"
 
 #~ msgid "December 2011 Dev Derby Challenge - IndexedDB"
 #~ msgstr "2011 年 12 月の Dev Derby Challenge - IndexedDB"
@@ -4631,11 +4583,9 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "2012 年 7 月"
 
 #~ msgid ""
-#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate "
-#~ "user input with HTML, and more. What else can you do without JavaScript?"
-#~ msgstr ""
-#~ "Web にリッチなユーザーエクスペリエンスをもたらす事は容易ではありませんでした。今日のオープンな Web 標準は、いくつかの最も強力な機能を手軽に扱う事ができます。CSS を使用したページのアニメーション、"
-#~ "HTML でのユーザー入力の検証など、あなたは JavaScript 無しで何ができますか？"
+#~ "Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user "
+#~ "input with HTML, and more. What else can you do without JavaScript?"
+#~ msgstr "Web にリッチなユーザーエクスペリエンスをもたらす事は容易ではありませんでした。今日のオープンな Web 標準は、いくつかの最も強力な機能を手軽に扱う事ができます。CSS を使用したページのアニメーション、HTML でのユーザー入力の検証など、あなたは JavaScript 無しで何ができますか？"
 
 #~ msgid "August 2012 Dev Derby Challenge - Camera API"
 #~ msgstr "2012 年 8 月の Dev Derby Challenge - Camera API"
@@ -4668,11 +4618,9 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "2012 年 10 月"
 
 #~ msgid ""
-#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What "
-#~ "can you do with Media Queries?"
-#~ msgstr ""
-#~ "CSS メディアクエリは、レスポンシブ Web デザイン、モバイルファースト Web デザインのためのツールです。これは既に W3C 勧告となっています。画面幅の制約にとらわれず、より多くのことを伝えることができま"
-#~ "す。あなたはメディアクエリを使って何ができますか？"
+#~ "CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can "
+#~ "you do with Media Queries?"
+#~ msgstr "CSS メディアクエリは、レスポンシブ Web デザイン、モバイルファースト Web デザインのためのツールです。これは既に W3C 勧告となっています。画面幅の制約にとらわれず、より多くのことを伝えることができます。あなたはメディアクエリを使って何ができますか？"
 
 #~ msgid "November 2012 Dev Derby Challenge - Fullscreen API"
 #~ msgstr "2012 年 11 月の Dev Derby Challenge - Fullscreen API"
@@ -4684,9 +4632,7 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "2012 年 11 月"
 
 #~ msgid "With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"
-#~ msgstr ""
-#~ "フルスクリーン API を用いると、ブラウザのウィンドウの境界を脱出することができます。フルスクリーン状態の変化を検出したり、フルスクリーンページに特別なスタイルを適用する事も可能です。没入感を演出し"
-#~ "ましょう！"
+#~ msgstr "フルスクリーン API を用いると、ブラウザのウィンドウの境界を脱出することができます。フルスクリーン状態の変化を検出したり、フルスクリーンページに特別なスタイルを適用する事も可能です。没入感を演出しましょう！"
 
 #~ msgid "December 2012 Dev Derby Challenge - Offline"
 #~ msgstr "2012 年 12 月の Dev Derby Challenge - オフライン"
@@ -4698,11 +4644,9 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "2012 年 12 月"
 
 #~ msgid ""
-#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and "
-#~ "mobile users, improve performance, and more."
-#~ msgstr ""
-#~ "オープン Web の成熟したオフライン能力により、インターネット接続の有無に関わらずアプリを構築することができます。オフライン技術で、旅行者やモバイルユーザをサポートし、パフォーマンスを改善することが"
-#~ "できます。"
+#~ "With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile "
+#~ "users, improve performance, and more."
+#~ msgstr "オープン Web の成熟したオフライン能力により、インターネット接続の有無に関わらずアプリを構築することができます。オフライン技術で、旅行者やモバイルユーザをサポートし、パフォーマンスを改善することができます。"
 
 #~ msgid "January 2013 Dev Derby Challenge - Drag and Drop"
 #~ msgstr "2013 年 1 月の Dev Derby Challenge - ドラッグ＆ドロップ"
@@ -4726,11 +4670,9 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "2013 年 2 月"
 
 #~ msgid ""
-#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can "
-#~ "respond to all the interactions users have come to expect."
-#~ msgstr ""
-#~ "タッチイベント API を使うと、マルチタッチに対応したデバイスでは同時に複数のタッチを認識できます。操作が複雑なゲームやピンチ操作でのズームなどの機能を実装できます。マルチタッチを利用することで、"
-#~ "ユーザが思う通りに操作ができるアプリを開発できるようになります。"
+#~ "The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to"
+#~ " all the interactions users have come to expect."
+#~ msgstr "タッチイベント API を使うと、マルチタッチに対応したデバイスでは同時に複数のタッチを認識できます。操作が複雑なゲームやピンチ操作でのズームなどの機能を実装できます。マルチタッチを利用することで、ユーザが思う通りに操作ができるアプリを開発できるようになります。"
 
 #~ msgid "March 2013 Dev Derby Challenge - Mobile"
 #~ msgstr "2013 年 3 月の Dev Derby Challenge - モバイル"
@@ -4889,8 +4831,7 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgid "Forms"
 #~ msgstr "入力フォーム"
 
-#~ msgid ""
-#~ "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
+#~ msgid "Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."
 #~ msgstr "HTML5 での Form 関連要素とそれらの属性は HTML4 よりもさらに適切なセマンティックマークアップを提供し、HTML4 で必要であった冗長なスクリプトとスタイル設定の量を大幅に削減します。"
 
 #~ msgid "https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML"
@@ -5277,9 +5218,7 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgid ""
 #~ "<p>You are about to remove <strong>%(demo_title)s</strong> from the Demo Studio.</p> <p>The Demo's listing, source code, and statistics will be <strong>deleted</strong>.</p> <p>This action "
 #~ "<strong>cannot be undone</strong>."
-#~ msgstr ""
-#~ "<p>Demo Studio から <strong>%(demo_title)s</strong> を削除しようとしています。</p> <p>該当デモの公開リストへの登録、そのソースコードおよび統計データは<strong>削除</strong>されます。</p> <p>この操"
-#~ "作は<strong>取り消せません</strong>。"
+#~ msgstr "<p>Demo Studio から <strong>%(demo_title)s</strong> を削除しようとしています。</p> <p>該当デモの公開リストへの登録、そのソースコードおよび統計データは<strong>削除</strong>されます。</p> <p>この操作は<strong>取り消せません</strong>。"
 
 #~ msgid "<button type=\"submit\" class=\"remove\"><span>Remove demo</span></button>"
 #~ msgstr "<button type=\"submit\" class=\"remove\"><span>デモを削除</span></button>"
@@ -5292,12 +5231,11 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 
 #~ msgid ""
 #~ "<p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p> <ul> "
-#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the "
-#~ "open standards and technologies that power the Web.</li> </ul>"
+#~ "<li>View demos that showcase what HTML, CSS, and JavaScript can do.</li> <li>Inspect the source code for those demos so you can see how they work.</li> <li>Read documentation to learn about the open"
+#~ " standards and technologies that power the Web.</li> </ul>"
 #~ msgstr ""
-#~ "<p>Mozilla Demo Studio へようこそ。ここでは、あなたのような開発者が Web に関するあらゆる技術を開発または共有、デモ、学習をすることができます。Demo Studio を探索して見てください。</p> <ul> "
-#~ "<li>HTML や CSS、JavaScript を使ってできることを紹介したデモを見てください。</li> <li>デモで使用されたソースコードを調べて、その動く仕組みを見てください。</li> <li>ドキュメントを読んで、Web を動"
-#~ "かしているオープンな標準や技術を学んでください。</li> </ul>"
+#~ "<p>Mozilla Demo Studio へようこそ。ここでは、あなたのような開発者が Web に関するあらゆる技術を開発または共有、デモ、学習をすることができます。Demo Studio を探索して見てください。</p> <ul> <li>HTML や CSS、JavaScript を使ってできることを紹介したデモを見てください。</li> "
+#~ "<li>デモで使用されたソースコードを調べて、その動く仕組みを見てください。</li> <li>ドキュメントを読んで、Web を動かしているオープンな標準や技術を学んでください。</li> </ul>"
 
 #~ msgid "Go to the previous demo, %(demo_title)s"
 #~ msgstr "前のデモへ戻る &rarr; %(demo_title)s"
@@ -5535,11 +5473,11 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "新しいデモを投稿"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
-#~ "other web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
+#~ "web developers.</p> <p>Please complete the form below to ensure your demo is submitted to the Demo Studio successfully.</p>"
 #~ msgstr ""
-#~ "<p>あなたが作成したものが、まだ Web では体験したことがない、驚くような新しいものであるか、単に最新の技術の成果を体験できるものなだけであるかに関わらず、あなた自身のデモを他の Web 開発者と共有、も"
-#~ "しくは、お披露目するために投稿することをおすすめします。</p> <p>Demo Studio にデモが上手く投稿されるようにするには、以下のフォームに必要事項を英語で入力してください。</p>"
+#~ "<p>あなたが作成したものが、まだ Web では体験したことがない、驚くような新しいものであるか、単に最新の技術の成果を体験できるものなだけであるかに関わらず、あなた自身のデモを他の Web 開発者と共有、もしくは、お披露目するために投稿することをおすすめします。</p> <p>Demo Studio "
+#~ "にデモが上手く投稿されるようにするには、以下のフォームに必要事項を英語で入力してください。</p>"
 
 #~ msgid "Describe Your Demo"
 #~ msgstr "あなたのデモについて説明してください(英語)"
@@ -5569,15 +5507,14 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "デモ投稿のための準備"
 
 #~ msgid ""
-#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your "
-#~ "demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should "
-#~ "use AJAX to access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't "
-#~ "be licensed under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "<ul> <li>Your demo's source code should be packaged inside a ZIP file.</li> <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li> <li>Your demo "
+#~ "should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your demo requires external resources, it should use AJAX to"
+#~ " access them.</li> <li>To submit your demo, you need an <a href=\"%(signup_url)s\">MDN profile</a>.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed "
+#~ "under the CC-BY-SA license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul><li>デモのソースコードは ZIP ファイルに格納してください。</li><li>デモのメインページは ZIP のルートディレクトリ内の <code>index.html</code> という名前のファイルにしてください。</li><li>あなた"
-#~ "のデモはクライアントサイドの技術 (HTML, CSS, JavaScript) で構成されなければなりません。PHP や Ruby のようなサーバサイド言語はサポートされていません。</li><li>デモが外部リソースを必要とする場合"
-#~ "は、それらに AJAX でアクセスしてください。</li><li>デモを投稿するには、<a href=\"%(signup_url)s\">MDN アカウント</a>が必要です。</li><li>デモの詳細欄に、CC-BY-SA (表示-継承) の下でライセンスする"
-#~ "ことができないサードパーティのコンテンツを明記し、その作者の Web サイトへのリンクを記述してください。</li></ul>"
+#~ "<ul><li>デモのソースコードは ZIP ファイルに格納してください。</li><li>デモのメインページは ZIP のルートディレクトリ内の <code>index.html</code> という名前のファイルにしてください。</li><li>あなたのデモはクライアントサイドの技術 (HTML, CSS, JavaScript) で構成されなければなりません。PHP や Ruby "
+#~ "のようなサーバサイド言語はサポートされていません。</li><li>デモが外部リソースを必要とする場合は、それらに AJAX でアクセスしてください。</li><li>デモを投稿するには、<a href=\"%(signup_url)s\">MDN アカウント</a>が必要です。</li><li>デモの詳細欄に、CC-BY-SA (表示-継承) "
+#~ "の下でライセンスすることができないサードパーティのコンテンツを明記し、その作者の Web サイトへのリンクを記述してください。</li></ul>"
 
 #~ msgid "Provide the Source Code"
 #~ msgstr "ソースコードを提供してください"
@@ -5609,34 +5546,30 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "プロフィールを確認する"
 
 #~ msgid ""
-#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) "
-#~ "other web developers.</p>"
-#~ msgstr ""
-#~ "<p>あなたが作成したものが、まだ Web では体験したことがない、驚くような新しいものであるか、単に最新の技術の成果を体験できるものなだけであるかに関わらず、あなた自身のデモを他の Web 開発者と共有、も"
-#~ "しくは、お披露目するために投稿することをおすすめします。</p>"
+#~ "<p>Whether you are creating an amazing new way to experience the Web or just experimenting with the latest technologies, we invite you to submit your own demos to share with (or show off to) other "
+#~ "web developers.</p>"
+#~ msgstr "<p>あなたが作成したものが、まだ Web では体験したことがない、驚くような新しいものであるか、単に最新の技術の成果を体験できるものなだけであるかに関わらず、あなた自身のデモを他の Web 開発者と共有、もしくは、お披露目するために投稿することをおすすめします。</p>"
 
 #~ msgid "Before You Begin"
 #~ msgstr "始める前に"
 
 #~ msgid ""
-#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under "
-#~ "an <strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a "
-#~ "wide range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
+#~ "<ul> <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li> <li>Your demo's source code must be available under an "
+#~ "<strong>open license</strong>, such as MPL, GPL, or BSD.</li> <li>Your demo should showcase <strong>open web technologies</strong>, such as HTML5 and CSS3.</li> <li>Your demo should support a wide "
+#~ "range of <strong>modern web browsers</strong>, like Firefox, Chrome, Safari, and Opera.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>あなたはデモの<strong>ソースコードを提供する</strong>ための準備をしなければなりません。デモは Demo Studio のサーバに置かれます。</li> <li>あなたのデモのソースコードのライセンスは、MPL, "
-#~ "GPL, BSD のような<strong>オープンライセンス</strong>にしなけれればなりません。</li> <li>あなたのデモは、HTML5 および CSS3 のような<strong>オープンな Web 技術</strong>を披露するものでなければなり"
-#~ "ません。</li> <li>あなたのデモは、Firefox, Chrome, Safari そして Opera のような<strong>モダン Web ブラウザ</strong>を幅広くサポートしなくてはなりません。</li> </ul>"
+#~ "<ul> <li>あなたはデモの<strong>ソースコードを提供する</strong>ための準備をしなければなりません。デモは Demo Studio のサーバに置かれます。</li> <li>あなたのデモのソースコードのライセンスは、MPL, GPL, BSD のような<strong>オープンライセンス</strong>にしなけれればなりません。</li> "
+#~ "<li>あなたのデモは、HTML5 および CSS3 のような<strong>オープンな Web 技術</strong>を披露するものでなければなりません。</li> <li>あなたのデモは、Firefox, Chrome, Safari そして Opera のような<strong>モダン Web ブラウザ</strong>を幅広くサポートしなくてはなりません。</li> </ul>"
 
 #~ msgid ""
 #~ "<ul> <li>Your demo's source code should be packaged inside a <strong>ZIP file</strong>.</li> <li>The main page of your demo should be a file named <strong><code>index.html</code></strong> in the "
-#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If "
-#~ "your demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the "
-#~ "CC-BY-SA license and include links to the authors' websites.</li> </ul>"
+#~ "root of the ZIP.</li> <li>Your demo should be built on <strong>client-side technology</strong> (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li> <li>If your "
+#~ "demo requires external resources, it should use <strong>AJAX</strong> to access them.</li> <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA"
+#~ " license and include links to the authors' websites.</li> </ul>"
 #~ msgstr ""
-#~ "<ul> <li>デモのソースコードは <strong>ZIP ファイル</strong>に格納してください。</li> <li>デモのメインページは ZIP のルートディレクトリ内の <strong><code>index.html</code></strong> という名前の"
-#~ "ファイルにしてください。</li> <li>あなたのデモは<strong>クライアントサイドの技術</strong> (HTML, CSS, JavaScript) で構成されなければなりません。PHP や Ruby のようなサーバサイドの言語はサポートさ"
-#~ "れていません。</li> <li>あなたのデモが外部リソースを必要とする場合は、それらに <strong>AJAX</strong> でアクセスしてください。</li> <li>デモの詳細欄に、CC-BY-SA (表示-継承) の下でライセンスするこ"
-#~ "とができないサードパーティのコンテンツを明記し、その作者の Web サイトへのリンクを記述してください。</li> </ul>"
+#~ "<ul> <li>デモのソースコードは <strong>ZIP ファイル</strong>に格納してください。</li> <li>デモのメインページは ZIP のルートディレクトリ内の <strong><code>index.html</code></strong> という名前のファイルにしてください。</li> <li>あなたのデモは<strong>クライアントサイドの技術</strong>"
+#~ " (HTML, CSS, JavaScript) で構成されなければなりません。PHP や Ruby のようなサーバサイドの言語はサポートされていません。</li> <li>あなたのデモが外部リソースを必要とする場合は、それらに <strong>AJAX</strong> でアクセスしてください。</li> <li>デモの詳細欄に、CC-BY-SA (表示-継承) "
+#~ "の下でライセンスすることができないサードパーティのコンテンツを明記し、その作者の Web サイトへのリンクを記述してください。</li> </ul>"
 
 #~ msgid "<p>To submit your demo, you need an <strong><a href=\"%(signup_url)s\">MDN profile</a></strong>.</p>"
 #~ msgstr "<p>デモを投稿するには <strong><a href=\"%(signup_url)s\">MDN アカウント</a></strong> が必要です。</p>"
@@ -5879,17 +5812,17 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "%s は %s によってアカウントが停止されています"
 
 #~ msgid ""
-#~ "Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: %(list_link)s Subscribe to tell us about what you're interested in on MDN and ask questions about the "
-#~ "site. * Real-time chat: #mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier "
-#~ "(teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. * Blog: %(blog_link)s"
+#~ "Want to talk to someone about MDN? There are a few ways you can do that: * Mailing list: %(list_link)s Subscribe to tell us about what you're interested in on MDN and ask questions about the site. *"
+#~ " Real-time chat: #mdn channel on irc.mozilla.org (See %(irc_link)s for more info about IRC.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will "
+#~ "Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jms), MDN's community manager. * Blog: %(blog_link)s"
 #~ msgstr ""
-#~ "MDN について誰かと話がしたいですか？ それにはいくつかの方法があります。 * メーリングリスト: %(list_link)s を購読して、MDN 上であなたが興味のあることを教えてください。サイトに関する質問もお気軽に"
-#~ "どうぞ。 * リアルタイムチャット: irc.mozilla.org 上の #mdn チャンネルを使ってください (IRC の詳細は %(irc_link)s を見てください)。MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier "
-#~ "(teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) が常駐しています。 * ブログ: %(blog_link)s"
+#~ "MDN について誰かと話がしたいですか？ それにはいくつかの方法があります。 * メーリングリスト: %(list_link)s を購読して、MDN 上であなたが興味のあることを教えてください。サイトに関する質問もお気軽にどうぞ。 * リアルタイムチャット: irc.mozilla.org 上の #mdn チャンネルを使ってください (IRC の詳細は %(irc_link)s "
+#~ "を見てください)。MDN の編集スタッフの Eric Shepherd (sheppy)、Jean-Yves Perrier (teoli)、Will Bamberg (wbamberg)、Florian Scholz (fscholz)、Chris Mills (chrismills)、そして MDN のコミュニティマネージャを務める Janet Swisher (jms) "
+#~ "が常駐しています。 * ブログ: %(blog_link)s"
 
 #~ msgid ""
-#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a href="
-#~ "\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
+#~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\"> View '%(parent_locale)s' parent </a> (<a href=\"%(mod_url)s\">last modified at %(parent_modified)s</a>) </p> <p> <a "
+#~ "href=\"%(doc_edit_url)s\" title=\"%(doc_title)s\"> Edit '%(doc_locale)s' translation </a> (last modified at %(doc_modified)s) </p>"
 #~ msgstr ""
 #~ "<p> <a href=\"%(parent_url)s\" title=\"%(parent_title)s\">「%(parent_locale)s」の親を表示 </a> (<a href=\"%(mod_url)s\">最終更新: %(parent_modified)s</a>) </p> <p> <a href=\"%(doc_edit_url)s\" "
 #~ "title=\"%(doc_title)s\"> 「%(doc_locale)s」の翻訳を編集 </a> (最終更新: %(doc_modified)s) </p>"
@@ -5987,41 +5920,37 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "デモを投稿"
 
 #~ msgid ""
-#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose"
-#~ "\"> <li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
-#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of "
-#~ "the month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how "
-#~ "many &ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than "
-#~ "once in the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
+#~ "<p>A summary of the rules can be found below. For a complete look at the terms of the contest please see the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a>.</p> <ul class=\"prose\"> "
+#~ "<li>Almost anyone can enter (<a href=\"%(rules_url)s\">see the rules</a> for exceptions).</li> <li>There will be a new contest every month.</li> <li>Your entry must meet certain criteria; <a "
+#~ "href=\"%(rules_url)s\">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li> <li>Each contest runs from the first day of the "
+#~ "month to the last day of the month (based on <strong>US Pacific time</strong>).</li> <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how many "
+#~ "&ldquo;likes&rdquo; your entry receives.</li> <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li> <li>You can't win more than once in "
+#~ "the same calendar year.</li> <li>Please read the <a href=\"%(rules_url)s\">Dev Derby Contest Official Rules</a> before submitting your entry.</li> </ul>"
 #~ msgstr ""
-#~ "<p>ルールの概要は以下から確認できます。コンテストの条件に関する詳細は、<a href=\"%(rules_url)s\">Dev Derby Contest Official Rules (デブ・ダービー・コンテストの公式ルール)</a>をご覧ください。</p> "
-#~ "<ul class=\"prose\"> <li>コンテストには、ほぼどなたでも参加できます (例外については<a href=\"%(rules_url)s\">公式ルール</a>をご覧ください)。</li> <li>毎月、新しいコンテストが開催されています。</"
-#~ "li> <li>エントリーには一定の基準を満たす必要があります。すべての基準は <a href=\"%(rules_url)s\">公式ルール</a> をご確認ください。また、Current Challenge (開催中のコンテスト) のセクションでは、コ"
-#~ "ンテストごとの特別な基準をご覧いただけます。</li> <li>それぞれのコンテストは、毎月初日から末日まで (<strong>米国太平洋時間</strong>) に開催されます。</li> <li>審査は選抜されたレビュアたちによって"
-#~ "行われるものの、獲得した &ldquo;投票数&rdquo; が考慮に入れられるかどうかはそれぞれのレビュアによって異なります。</li> <li>毎月のコンテストの受賞者は、<strong>翌月の 20 日</strong>までに発表されま"
-#~ "す。</li> <li>同じ暦年内に複数回、受賞することはできません。</li> <li>エントリーする前に、<a href=\"%(rules_url)s\">Dev Derby Contest Official Rules (デブ・ダービー・コンテストの公式ルール)</a> "
+#~ "<p>ルールの概要は以下から確認できます。コンテストの条件に関する詳細は、<a href=\"%(rules_url)s\">Dev Derby Contest Official Rules (デブ・ダービー・コンテストの公式ルール)</a>をご覧ください。</p> <ul class=\"prose\"> <li>コンテストには、ほぼどなたでも参加できます (例外については<a "
+#~ "href=\"%(rules_url)s\">公式ルール</a>をご覧ください)。</li> <li>毎月、新しいコンテストが開催されています。</li> <li>エントリーには一定の基準を満たす必要があります。すべての基準は <a href=\"%(rules_url)s\">公式ルール</a> をご確認ください。また、Current Challenge (開催中のコンテスト) "
+#~ "のセクションでは、コンテストごとの特別な基準をご覧いただけます。</li> <li>それぞれのコンテストは、毎月初日から末日まで (<strong>米国太平洋時間</strong>) に開催されます。</li> <li>審査は選抜されたレビュアたちによって行われるものの、獲得した &ldquo;投票数&rdquo; が考慮に入れられるかどうかはそれぞれのレビュアによって異なります。</li> "
+#~ "<li>毎月のコンテストの受賞者は、<strong>翌月の 20 日</strong>までに発表されます。</li> <li>同じ暦年内に複数回、受賞することはできません。</li> <li>エントリーする前に、<a href=\"%(rules_url)s\">Dev Derby Contest Official Rules (デブ・ダービー・コンテストの公式ルール)</a> "
 #~ "をご覧ください。</li> </ul>"
 
 #~ msgid "<p>Entries will be reviewed by a panel of qualified judges, including members of the Mozilla team and outside experts. We will rate the demos across 4 dimensions:</p>"
 #~ msgstr "<p>エントリは、 Mozilla チームのメンバーや外部の専門家を含む適格な審査員のパネルによって審査されます。私たちは多角的にデモを評価します:</p>"
 
 #~ msgid ""
-#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is "
-#~ "the demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in "
-#~ "enhancing the Web today?</li> </ul>"
+#~ "<ul class=\"prose\"> <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li> <li><strong>Originality</strong> &ndash; How innovative and unique is the"
+#~ " demo?</li> <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li> <li><strong>Practicality</strong> &ndash; How useful is this demo in enhancing the "
+#~ "Web today?</li> </ul>"
 #~ msgstr ""
-#~ "<ul class=\"prose\"> <li><strong>技術</strong>&ndash;オープンWeb技術の有効性が示されているか</li> <li><strong>オリジナリティ</strong>&ndash;どの程度の革新性と独自性があるか</li> <li><strong>美し"
-#~ "さ</strong> &ndash;視覚的なデザインとインタラクションはどの程度優れているか</li> <li><strong>実用性</strong> &ndash;現在のWebの発展に貢献するものか</li> </ul>"
+#~ "<ul class=\"prose\"> <li><strong>技術</strong>&ndash;オープンWeb技術の有効性が示されているか</li> <li><strong>オリジナリティ</strong>&ndash;どの程度の革新性と独自性があるか</li> <li><strong>美しさ</strong> "
+#~ "&ndash;視覚的なデザインとインタラクションはどの程度優れているか</li> <li><strong>実用性</strong> &ndash;現在のWebの発展に貢献するものか</li> </ul>"
 
 #~ msgid "<p>The judges will use all four dimensions in scoring each entry, and any additional criteria specified for a particular contest.</p>"
 #~ msgstr "<p>審査員は各エントリを多角的に評価します。各コンテストには、特別な追加基準が設定されています。</p>"
 
 #~ msgid ""
-#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev "
-#~ "Derby to &ldquo;vote.&rdquo;</p>"
-#~ msgstr ""
-#~ "<p>審査員は、エントリにつけられた &ldquo;likes&rdquo; の数も考慮する事があります。ぜひ、他の人とあなたのデモを共有し、彼らが &ldquo;投票.&rdquo; してくれるよう、Dev Derby への訪問を促してくださ"
-#~ "い。</p>"
+#~ "<p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev Derby "
+#~ "to &ldquo;vote.&rdquo;</p>"
+#~ msgstr "<p>審査員は、エントリにつけられた &ldquo;likes&rdquo; の数も考慮する事があります。ぜひ、他の人とあなたのデモを共有し、彼らが &ldquo;投票.&rdquo; してくれるよう、Dev Derby への訪問を促してください。</p>"
 
 #~ msgid "Expert Judges"
 #~ msgstr "エキスパート審査員"
@@ -6033,8 +5962,7 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ "James is a London-based UI Developer with a passion for JavaScript, HTML5 and anything that enables him and others to create stuff of value. He's currently freelancing and working on interactive "
 #~ "media at Storygami, a new startup that he's the CTO of. James shares opinionated technical articles and code on his website and github."
 #~ msgstr ""
-#~ "ジェームズはロンドンを拠点とするUI開発者で、JavaScriptやHTML5など、価値あるものを創造するための、あらゆる技術に強い関心を持っています。現在、フリーランスで仕事をしている彼は、自身がCTOを務める新"
-#~ "興企業、Storygamiでインタラクティブメディアに取り組んでいます。ジェームズのWebサイトやGithubでは、技術関連における彼独自の視点からの記事やコードが紹介されています。"
+#~ "ジェームズはロンドンを拠点とするUI開発者で、JavaScriptやHTML5など、価値あるものを創造するための、あらゆる技術に強い関心を持っています。現在、フリーランスで仕事をしている彼は、自身がCTOを務める新興企業、Storygamiでインタラクティブメディアに取り組んでいます。ジェームズのWebサイトやGithubでは、技術関連における彼独自の視点からの記事やコードが紹介されています。"
 
 #~ msgid "Developer Engagement Community Organizer, Mozilla"
 #~ msgstr "Developer Engagement Community Organizer, Mozilla"
@@ -6042,16 +5970,14 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgid ""
 #~ "Janet has been wandering around software development since the twentieth century, and around open source software and documentation since 2004. She started working for Mozilla on developer "
 #~ "documentation in 2010, and recently became Community Manager for Developer Engagement. Her superpower is taking things literally."
-#~ msgstr ""
-#~ "20世紀からソフトウェア開発でのキャリアをスタートさせたジャネットは、2004年からオープンソースのソフトウェアとドキュメンテーションに従事しています。2010年にMozillaでの開発者ドキュメンテーション業務"
-#~ "を開始し、先日、デベロッパーエンゲージメント担当コミュニティーマネージャーに任命されました。物事を文字通りに解釈することが、彼女の大きな強みです。"
+#~ msgstr "20世紀からソフトウェア開発でのキャリアをスタートさせたジャネットは、2004年からオープンソースのソフトウェアとドキュメンテーションに従事しています。2010年にMozillaでの開発者ドキュメンテーション業務を開始し、先日、デベロッパーエンゲージメント担当コミュニティーマネージャーに任命されました。物事を文字通りに解釈することが、彼女の大きな強みです。"
 
 #~ msgid ""
 #~ "<div style=\"padding-right: 20px;\"> <h2>Dev Derby on Hiatus</h2> <p>The Dev Derby is on hiatus while we work on revamping the contest series. When it returns, you may see some changes in the "
 #~ "contest format. However, the Dev Derby mission remains unchanged: to provide a platform that helps web developers learn, share, and push the web forward.</p> <p>See you soon!</p> </div>"
 #~ msgstr ""
-#~ "<div style=\"padding-right: 20px;\"><h2>Dev Derby 中断中</h2> <p>Dev Derby はコンテストの刷新を行っており、現在中断中です。再開後は様式が変わったコンテストとなっているでしょう。しかし、Dev Derby "
-#~ "のミッションは変わりません: Web 開発者が Web を学習したり、共有したり、Web を前に押し出す助けとなるプラットフォームであることです。</p> <p>乞うご期待！</p> </div>"
+#~ "<div style=\"padding-right: 20px;\"><h2>Dev Derby 中断中</h2> <p>Dev Derby はコンテストの刷新を行っており、現在中断中です。再開後は様式が変わったコンテストとなっているでしょう。しかし、Dev Derby のミッションは変わりません: Web 開発者が Web を学習したり、共有したり、Web "
+#~ "を前に押し出す助けとなるプラットフォームであることです。</p> <p>乞うご期待！</p> </div>"
 
 #~ msgid "Previous Winner"
 #~ msgstr "前回の勝者"
@@ -6060,15 +5986,14 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "デモを見る"
 
 #~ msgid ""
-#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones"
-#~ "\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" href=\"http://www.rickshawbags.com/"
-#~ "bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a limited edition MDN t-shirt to "
-#~ "show off their geek cred.</p> </li> </ol>"
+#~ "<h1>Prizes</h1> <ol> <li class=\"first\"> <h3>Android mobile device</h3> <p>Winner gets an Android mobile device from <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-"
+#~ "phones\">Samsung</a>.</p> </li> <li class=\"second\"> <h3>Rickshaw laptop bag</h3> <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel=\"external\" "
+#~ "href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a>.</p> </li> <li class=\"third\"> <h3>MDN t-shirt</h3> <p>3rd place gets a "
+#~ "limited edition MDN t-shirt to show off their geek cred.</p> </li> </ol>"
 #~ msgstr ""
-#~ "<h1>商品</h1> <ol> <li class=\"first\"> <h3>Android モバイル端末</h3> <p>優勝者には <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a> から Android モバイル端末"
-#~ "が授与されます。</p> </li> <li class=\"second\"> <h3>Rickshaw パソコンバッグ</h3> <p>次点者は <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-"
-#~ "commuter-laptop-bag-black.html\">Rickshaw</a> からノート PC 用の手作りバッグが授与されます。</p> </li> <li class=\"third\"> <h3>MDN T シャツ</h3> <p>3 位の受賞者にはあなたがギークであることが表さ"
-#~ "れる限定 MDN T シャツが授与されます。</p> </li> </ol>"
+#~ "<h1>商品</h1> <ol> <li class=\"first\"> <h3>Android モバイル端末</h3> <p>優勝者には <a rel=\"external\" href=\"http://www.samsung.com/us/mobile/cell-phones\">Samsung</a> から Android モバイル端末が授与されます。</p> </li> <li "
+#~ "class=\"second\"> <h3>Rickshaw パソコンバッグ</h3> <p>次点者は <a rel=\"external\" href=\"http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html\">Rickshaw</a> "
+#~ "からノート PC 用の手作りバッグが授与されます。</p> </li> <li class=\"third\"> <h3>MDN T シャツ</h3> <p>3 位の受賞者にはあなたがギークであることが表される限定 MDN T シャツが授与されます。</p> </li> </ol>"
 
 #~ msgid "<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn More</strong>"
 #~ msgstr "<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>もっと詳しく</strong>"
@@ -6092,11 +6017,11 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "<cite class=\"author fn\">%(comment_profile_link)s</cite> によるコメント"
 
 #~ msgid ""
-#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
-#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "Posted <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" "
+#~ "datetime=\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 #~ msgstr ""
-#~ "投稿日時: <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime="
-#~ "\"%(comment_isotime)s\" title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
+#~ "投稿日時: <a href=\"#comment-%(comment_id)s\" rel=\"bookmark\" title=\"Permanent link to this comment by %(display_name)s\"><time class=\"published\" pubdate=\"pubdate\" datetime=\"%(comment_isotime)s\""
+#~ " title=\"%(comment_isotime)s\">%(comment_timesince)s</time></a>"
 
 #~ msgid "Reply to this comment by {full_name}"
 #~ msgstr "このコメントへの {full_name} による返信"
@@ -6134,13 +6059,12 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgid ""
 #~ "Here you can see some of the developer events at which Mozilla will be participating, and the topics on which our Mozillians will be speaking. If you are organizing an event and would like a "
 #~ "Mozillian to participate, please <a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">file a bug</a>. If you are a Mozillian speaking at an event that's not listed here, or if an "
-#~ "existing event entry needs updating, <a href=\"mailto:dev-events@mozilla.com\">let us know</a>! You can also check out the <a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla "
-#~ "Reps events</a> page to find a Mozilla Reps event near you!"
+#~ "existing event entry needs updating, <a href=\"mailto:dev-events@mozilla.com\">let us know</a>! You can also check out the <a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps "
+#~ "events</a> page to find a Mozilla Reps event near you!"
 #~ msgstr ""
-#~ "このページでは、Mozilla が参加する予定の一部の開発者イベントのほか、Mozillian が講演するテーマをご紹介しています。企画されているイベントに参加を希望される場合は、<a href=\"https://bugzilla."
-#~ "mozilla.org/form.dev-engagement-event\">からバグを登録</a>してください。Mozillian のあなたが講演を予定するイベントがリストアップされていない場合、またイベントのエントリーを更新する必要がある場合"
-#~ "は、<a href=\"mailto:dev-events@mozilla.com\">Mozillaまでお知らせください</a>。また、<a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps イベント</a>のページでは、Mozilla "
-#~ "Reps イベントの開催場所をご確認いただけます。"
+#~ "このページでは、Mozilla が参加する予定の一部の開発者イベントのほか、Mozillian が講演するテーマをご紹介しています。企画されているイベントに参加を希望される場合は、<a href=\"https://bugzilla.mozilla.org/form.dev-engagement-event\">からバグを登録</a>してください。Mozillian "
+#~ "のあなたが講演を予定するイベントがリストアップされていない場合、またイベントのエントリーを更新する必要がある場合は、<a href=\"mailto:dev-events@mozilla.com\">Mozillaまでお知らせください</a>。また、<a href=\"https://reps.mozilla.org/events/#/period/future/\">Mozilla Reps"
+#~ " イベント</a>のページでは、Mozilla Reps イベントの開催場所をご確認いただけます。"
 
 #~ msgid "Upcoming Conferences"
 #~ msgstr "開催予定のカンファレンス"
@@ -6205,21 +6129,18 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgid ""
 #~ "<p><strong>Cascading Style Sheets</strong> is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define the appearance and "
 #~ "location of the HTML elements within the pages.</p>"
-#~ msgstr ""
-#~ "<p><strong>Cascading Style Sheets</strong> は Web ページの見た目を記述するための言語です。見栄えのいい Web ページを製作するためにはページ内での HTML 要素の見た目や配置を定義する CSS を学ぶ必要が"
-#~ "あります。</p>"
+#~ msgstr "<p><strong>Cascading Style Sheets</strong> は Web ページの見た目を記述するための言語です。見栄えのいい Web ページを製作するためにはページ内での HTML 要素の見た目や配置を定義する CSS を学ぶ必要があります。</p>"
 
 #~ msgid "<p><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and forms.</p>"
 #~ msgstr "<p><strong>JavaScript</strong> (JS と省略します) は HTML のリンクやフォームによって提供される基本的なレベルを超えて、Web ページがユーザとの相互体験を可能にするプログラミング言語です。</p>"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups "
-#~ "through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, "
-#~ "struggles, and victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning on your own?<br>Do you want to join a community of people learning about open web technologies?</h2> <p>Consider signing up for free online peer study groups through "
+#~ "Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
+#~ "victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>ひとりで学習することに飽きていませんか？<br>オープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href="
-#~ "\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a>では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したこと"
-#~ "を、同じトピックを学習する仲間とぜひ共有してください。</p>"
+#~ "<h2>ひとりで学習することに飽きていませんか？<br>オープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of "
+#~ "Webcraft (スクール・オブ・Web クラフト)</a>では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
 
 #~ msgid "Learn CSS"
 #~ msgstr "CSS について学ぶ"
@@ -6228,14 +6149,13 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "最初のページへ戻る"
 
 #~ msgid ""
-#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to "
-#~ "define the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just "
-#~ "starting out, learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find "
-#~ "helpful resources here.</p>"
+#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) is a language for describing the appearance of web pages. To create good-looking web pages, you need to learn CSS in order to define "
+#~ "the appearance and location of the HTML elements within the pages.</p> <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. Whether you are just starting out, "
+#~ "learning the basics of CSS, or are an experienced web developer wanting to learn <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find helpful resources "
+#~ "here.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) はWeb ページの見た目を記述するための言語です。見た目の美しい Web ページを作るには、ページ内の HTML 要素の見た目や配置を定義するた"
-#~ "めに CSS を学習する必要があります。</p><p>このページにあるリンクは多種多様な CSS チュートリアルや CSS トレーニング素材へとつながっています。あなたが学習を始めたばかりでも、CSS の基本を学習する場"
-#~ "合でも、<strong>CSS3</strong> (最新の規格) や良い事例を学ぼうとしているWeb 開発経験者であっても、有用な情報を見つけられるでしょう。</p>"
+#~ "<p class=\"intro\">CSS (<strong>Cascading Style Sheets</strong>) はWeb ページの見た目を記述するための言語です。見た目の美しい Web ページを作るには、ページ内の HTML 要素の見た目や配置を定義するために CSS を学習する必要があります。</p><p>このページにあるリンクは多種多様な CSS チュートリアルや CSS"
+#~ " トレーニング素材へとつながっています。あなたが学習を始めたばかりでも、CSS の基本を学習する場合でも、<strong>CSS3</strong> (最新の規格) や良い事例を学ぼうとしているWeb 開発経験者であっても、有用な情報を見つけられるでしょう。</p>"
 
 #~ msgid "Introductory Level"
 #~ msgstr "入門レベル"
@@ -6355,53 +6275,45 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "@font-face での Web フォント実装のためのクイックガイド"
 
 #~ msgid "The @font-face feature from CSS3 allows you to use custom typefaces on the web in an accessible, manipulable, and scalable way."
-#~ msgstr ""
-#~ "CSS3 の @font-face の機能を使用すると、文字画像などを使用した場合と異なり、「文字検索機能などによるアクセス」、「コピー &amp; ペーストなどの操作」、「ブラウザの機能や CSS での拡大縮小が可能」な方"
-#~ "法で、Web 上でカスタム書体を使用することができます。"
+#~ msgstr "CSS3 の @font-face の機能を使用すると、文字画像などを使用した場合と異なり、「文字検索機能などによるアクセス」、「コピー &amp; ペーストなどの操作」、「ブラウザの機能や CSS での拡大縮小が可能」な方法で、Web 上でカスタム書体を使用することができます。"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online "
-#~ "peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
+#~ "<h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2> <p>Consider signing up for free online peer "
+#~ "study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
 #~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>CSS をひとりで学習することに飽きていませんか？<br>CSS や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></"
-#~ "span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮"
-#~ "闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
+#~ "<h2>CSS をひとりで学習することに飽きていませんか？<br>CSS や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-"
+#~ "webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
 
 #~ msgid ""
-#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers "
-#~ "and so can't take advantage."
-#~ msgstr ""
-#~ "このサイトでは、進化を続ける CSS の最新バージョンのである<strong>CSS3</strong>について説明します。モダンブラウザはさまざまな方法で CSS3 の機能に対応しているものの、多くのユーザはまだ古いブラウザ"
-#~ "を使用しており、この恩恵にあずかっていません。"
+#~ "This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and so"
+#~ " can't take advantage."
+#~ msgstr "このサイトでは、進化を続ける CSS の最新バージョンのである<strong>CSS3</strong>について説明します。モダンブラウザはさまざまな方法で CSS3 の機能に対応しているものの、多くのユーザはまだ古いブラウザを使用しており、この恩恵にあずかっていません。"
 
 #~ msgid ""
-#~ "<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great "
-#~ "resource, please <a href=\"%(feedback_url)s\">tell us about it</a>. We want to share these resources with our international community, so we prefer ones that provide or allow translations, "
-#~ "through an open content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
+#~ "<p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great resource, "
+#~ "please <a href=\"%(feedback_url)s\">tell us about it</a>. We want to share these resources with our international community, so we prefer ones that provide or allow translations, through an open "
+#~ "content license such as <a href=\"http://creativecommons.org\" rel=\"external\">Creative Commons</a>.</p>"
 #~ msgstr ""
-#~ "<p>これらのリソースは、オープンスタンダードや Web 開発の成功事例を採用してきた先進的な企業や Web 開発者によって構築されています。優れたリソースが含まれていないと考えられる場合は、<a href="
-#~ "\"%(feedback_url)s\">Mozilla までお知らせください</a>。こうしたリソースは、世界中の Mozilla コミュニティと共有される計画です。そのため、<a href=\"http://creativecommons.org\" rel=\"external\">ク"
-#~ "リエイティブ・コモンズ</a> などのオープンコンテンツライセンスを利用した翻訳が提供、または許可されるものが優先されます。</p>"
+#~ "<p>これらのリソースは、オープンスタンダードや Web 開発の成功事例を採用してきた先進的な企業や Web 開発者によって構築されています。優れたリソースが含まれていないと考えられる場合は、<a href=\"%(feedback_url)s\">Mozilla までお知らせください</a>。こうしたリソースは、世界中の Mozilla コミュニティと共有される計画です。そのため、<a "
+#~ "href=\"http://creativecommons.org\" rel=\"external\">クリエイティブ・コモンズ</a> などのオープンコンテンツライセンスを利用した翻訳が提供、または許可されるものが優先されます。</p>"
 
 #~ msgid "Learn HTML"
 #~ msgstr "HTML について学ぶ"
 
 #~ msgid ""
 #~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) is the core syntax for putting information on the worldwide web. If you want to create or modify web pages, it's best if you "
-#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at "
-#~ "web development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
+#~ "learn HTML.</p> <p>The links on this page lead to a variety of HTML tutorials and HTML training materials. Whether you are just starting out, learning the basics of HTML, or are an old hand at web "
+#~ "development wanting to learn <strong>HTML5</strong> (the newest version of the standard), you can find helpful resources here for HTML best practices.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) は World Wide Web に情報を配置するための中核となる構文です。Web ページを作成したり修正したりしたい場合、HTML を学ぶのが最も良"
-#~ "い方法です。</p><p>このページにあるリンクから様々な HTML チュートリアルや教材へ移動できます。あなたが HTML を始めたばかりで基礎を学んでいるところでも、<strong>HTML5</strong> (最新のバージョンの標"
-#~ "準) を学びたいベテランの Web 開発者でも、HTML の良い事例集となるリソースをここで見つけられるでしょう。</p>"
+#~ "<p class=\"intro\">HTML (<strong>HyperText Markup Language</strong>) は World Wide Web に情報を配置するための中核となる構文です。Web ページを作成したり修正したりしたい場合、HTML を学ぶのが最も良い方法です。</p><p>このページにあるリンクから様々な HTML "
+#~ "チュートリアルや教材へ移動できます。あなたが HTML を始めたばかりで基礎を学んでいるところでも、<strong>HTML5</strong> (最新のバージョンの標準) を学びたいベテランの Web 開発者でも、HTML の良い事例集となるリソースをここで見つけられるでしょう。</p>"
 
 #~ msgid "The Basics of HTML"
 #~ msgstr "HTML の基本"
 
 #~ msgid ""
-#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater "
-#~ "depth."
+#~ "What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth."
 #~ msgstr "HTML とは何か、何をするか、簡略な歴史、そして HTML ドキュメントの構造がどうなっているか。この記事に続く一連の記事は、HTML のより深い部分について知ることができます。"
 
 #~ msgid "Basic Structure of a Web Page"
@@ -6534,32 +6446,28 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "HTML5 の望ましい使用方法についての学習を支援するサイトの紹介。"
 
 #~ msgid ""
-#~ "<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through Peer-"
-#~ "to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and "
-#~ "victories with others who are learning the same things.</p>"
+#~ "<h2>Tired of learning on your own?<br>Want to join a community of people learning HTML and other open web technologies?</h2> <p>Consider signing up for free online peer study groups through Peer-to-"
+#~ "Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your discoveries, struggles, and victories "
+#~ "with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>ひとりで学習することに飽きていませんか？<br>HTML や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> "
-#~ "<a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功"
-#~ "したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
+#~ "<h2>ひとりで学習することに飽きていませんか？<br>HTML や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-"
+#~ "webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
 
 #~ msgid ""
-#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so "
-#~ "can't take advantage."
-#~ msgstr ""
-#~ "このサイトでは、HTML 標準の次期最新バージョンである <strong>HTML5</strong> について説明します。最新のブラウザでは、既に多くの HTML5 の機能がサポートされていますが、多くのユーザはまだ古いブラウザ"
-#~ "を使用しており、この恩恵にあずかっていません。"
+#~ "This site discusses <strong>HTML5</strong>, the upcoming latest version of the standard. Many HTML5 features are supported by modern browsers, but many users still have older browsers and so can't "
+#~ "take advantage."
+#~ msgstr "このサイトでは、HTML 標準の次期最新バージョンである <strong>HTML5</strong> について説明します。最新のブラウザでは、既に多くの HTML5 の機能がサポートされていますが、多くのユーザはまだ古いブラウザを使用しており、この恩恵にあずかっていません。"
 
 #~ msgid "Learn JavaScript"
 #~ msgstr "JavaScript について学ぶ"
 
 #~ msgid ""
 #~ "<p class=\"intro\"><strong>JavaScript</strong> (JS for short) is the programming language that enables web pages to respond to user interaction beyond the basic level provided by HTML links and "
-#~ "forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old "
-#~ "hand, wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
+#~ "forms.</p> <p>The links on this page lead to a variety of JavaScript tutorials and JavaScript training materials. Whether you are just starting out, wanting to learn JS basics, or are an old hand, "
+#~ "wanting to sharpen your skills, you can find helpful resources here for JS best practices.</p>"
 #~ msgstr ""
-#~ "<p class=\"intro\"><strong>JavaScript</strong> (JS と省略します) は HTML のリンクやフォームによって提供される基本的なレベルを超えて、Web ページがユーザとの相互体験を可能にするプログラミング言語で"
-#~ "す。</p> <p>このページにあるリンクから様々な JavaScript チュートリアルや教材へ移動できます。あなたが JavaScript を始めたばかりで基礎を学んでいるところでも、JavaScript の技術を向上させたいベテラン"
-#~ "の Web 開発者でも、JS の良い事例集となるリソースをここで見つけられるでしょう。</p>"
+#~ "<p class=\"intro\"><strong>JavaScript</strong> (JS と省略します) は HTML のリンクやフォームによって提供される基本的なレベルを超えて、Web ページがユーザとの相互体験を可能にするプログラミング言語です。</p> <p>このページにあるリンクから様々な JavaScript チュートリアルや教材へ移動できます。あなたが "
+#~ "JavaScript を始めたばかりで基礎を学んでいるところでも、JavaScript の技術を向上させたいベテランの Web 開発者でも、JS の良い事例集となるリソースをここで見つけられるでしょう。</p>"
 
 #~ msgid "Codecademy"
 #~ msgstr "Codecademy"
@@ -6670,13 +6578,12 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "ビギナーから上級者まであらゆる学習レベル向けの、定期的に更新される網羅的な JavaScript ガイド"
 
 #~ msgid ""
-#~ "<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free "
-#~ "online peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share "
-#~ "your discoveries, struggles, and victories with others who are learning the same things.</p>"
+#~ "<h2>Are you tired of learning JS on your own?<br>Do you want to join a community of people who are learning JavaScript and other open web technologies?</h2> <p>Consider signing up for free online "
+#~ "peer study groups through Peer-to-Peer University's<span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft</a>. Share your "
+#~ "discoveries, struggles, and victories with others who are learning the same things.</p>"
 #~ msgstr ""
-#~ "<h2>JavaScript をひとりで学習することに飽きていませんか？<br>JavaScript や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer "
-#~ "University\"></span> <a href=\"https://p2pu.org/en/schools/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あ"
-#~ "なたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
+#~ "<h2>JavaScript をひとりで学習することに飽きていませんか？<br>JavaScript や他のオープン Web 技術について学習するコミュニティに参加してみませんか？</h2> <p>P2P 大学の <span title=\"Peer-to-Peer University\"></span> <a href=\"https://p2pu.org/en/schools"
+#~ "/school-of-webcraft\">School of Webcraft (スクール・オブ・Web クラフト)</a> では、無料のオンライン相互学習グループに参加いただけます。あなたが発見、奮闘、成功したことを、同じトピックを学習する仲間とぜひ共有してください。</p>"
 
 #~ msgid "Do you want to stop receiving email notifications from the {1} <strong>{0}</strong>?"
 #~ msgstr "{1} <strong>{0}</strong> からのメール通知を停止しますか？"
@@ -6800,9 +6707,9 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ "href=\"%(why_browserid)s\" rel=\"external\">Learn more about why Mozilla is using Persona</a>.</p> <p><strong>Returning members:</strong> sign in with Persona and you'll be connected to your MDN "
 #~ "profile (all your information is still here).</p> <p><strong>New members:</strong> sign in with Persona first, then you'll be able to set up your new MDN profile.</p>"
 #~ msgstr ""
-#~ "<h3>これは何ですか？</h3> <p>MDN は、メールアドレスだけでログインできる安全で簡単な <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a> に切り替わりました。<a href="
-#~ "\"%(why_browserid)s\" rel=\"external\">Mozilla が Persona を使う理由についてはこちらをご覧ください</a>。</p> <p><strong>登録済みの方:</strong> Persona でログインすると、MDN プロフィール (すべての"
-#~ "情報がまだそこにあります) に接続します。</p> <p><strong>未登録の方:</strong> まず Persona でログインしてください。すると、MDN プロフィールを作成できるようになります。</p>"
+#~ "<h3>これは何ですか？</h3> <p>MDN は、メールアドレスだけでログインできる安全で簡単な <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a> に切り替わりました。<a href=\"%(why_browserid)s\" rel=\"external\">Mozilla が "
+#~ "Persona を使う理由についてはこちらをご覧ください</a>。</p> <p><strong>登録済みの方:</strong> Persona でログインすると、MDN プロフィール (すべての情報がまだそこにあります) に接続します。</p> <p><strong>未登録の方:</strong> まず Persona でログインしてください。すると、MDN "
+#~ "プロフィールを作成できるようになります。</p>"
 
 #~ msgid "Register"
 #~ msgstr "登録"
@@ -6811,11 +6718,9 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "Persona にはこちらから登録できます。"
 
 #~ msgid ""
-#~ "MDN has switched to <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a>, a safe and simple way to sign in with just your e-mail address. <a href=\"%(why_browserid)s\" rel=\"external"
-#~ "\">Learn more about it.</a>"
-#~ msgstr ""
-#~ "MDN は、メールアドレスだけでログイン可能な安全で簡単なシステムの <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a> に移行しました。<a href=\"%(why_browserid)s\" rel=\"external\">詳細は"
-#~ "こちらから</a>"
+#~ "MDN has switched to <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a>, a safe and simple way to sign in with just your e-mail address. <a href=\"%(why_browserid)s\" rel=\"external\">Learn "
+#~ "more about it.</a>"
+#~ msgstr "MDN は、メールアドレスだけでログイン可能な安全で簡単なシステムの <a href=\"%(browserid_href)s\" rel=\"external\">Persona</a> に移行しました。<a href=\"%(why_browserid)s\" rel=\"external\">詳細はこちらから</a>"
 
 #~ msgid "New MDN Members"
 #~ msgstr "新規の MDN メンバー"
@@ -6839,8 +6744,8 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ "<h3>What's this?</h3> <p>MDN has switched to <a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a>, a safe and simple way to sign in with just your e-mail address. <a "
 #~ "href=\"%(why_browserid)s\" rel=\"external\">Learn more about why Mozilla is using Persona</a>.</p>"
 #~ msgstr ""
-#~ "<h3>Persona とは</h3><p>MDN は<a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a> を利用しています。これはメールアドレスのみを利用するシンプルな認証方式です。<a href="
-#~ "\"%(why_browserid)s\" rel=\"external\">Mozilla が Persona を利用する理由についてはこちら</a>。</p>"
+#~ "<h3>Persona とは</h3><p>MDN は<a href=\"%(browserid_href)s\" target=\"_blank\" rel=\"external\">Persona</a> を利用しています。これはメールアドレスのみを利用するシンプルな認証方式です。<a href=\"%(why_browserid)s\" rel=\"external\">Mozilla "
+#~ "が Persona を利用する理由についてはこちら</a>。</p>"
 
 #~ msgid "To change your MDN email, simply sign in below with the new email address."
 #~ msgstr "MDN で利用するメールアドレスを変更するためには、下記のボタンをクリック後、新しいメールアドレスでログインしてください。"
@@ -6968,8 +6873,8 @@ msgstr "Elasticsearch サーバ: %(backend)s"
 #~ msgstr "確認メールが送信されました。"
 
 #~ msgid ""
-#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the "
-#~ "link in the email."
+#~ "Before you can log in, you need to confirm your email address. We've sent a new confirmation email to any account using <strong>%(email)s</strong>. To confirm the email address, just follow the link"
+#~ " in the email."
 #~ msgstr "ログインできるようになるにはメールアドレスの確認が必要です。<strong>%(email)s</strong> に送信された確認メール中にあるリンクをクリックして、メールアドレスを確認してください。"
 
 #~ msgid "No email found for this account"
