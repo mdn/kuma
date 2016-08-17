@@ -49,7 +49,7 @@ def raw_file(request, attachment_id, filename):
             response['Content-Length'] = rev.file.size
         except OSError:
             pass
-        response['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
+        response['X-Frame-Options'] = 'ALLOW-FROM %s' % settings.DOMAIN
         return response
     else:
         return redirect(attachment.get_file_url(), permanent=True)
