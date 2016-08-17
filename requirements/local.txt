@@ -23,10 +23,9 @@ flake8==2.6.0 \
     --hash=sha256:5ae018121a495edeb83097ba1bdd1a8481db24e1f0d54e8a78edb26ba0df82cf
 
 # Calculate hashes for pip 8.x+
-hashin==0.4.1 \
-    --hash=sha256:b26ace086e24d84152a7e6d7d12b336383e835110d5e2e30dfbf22fa336a2e58 \
-    --hash=sha256:e0266d240d589f2419ff669528934db5876d34a19f516fa8b39c42d8221c0591 \
-    --hash=sha256:745623e60c649a6092cdbbb62b758e89654f4d69ec88ad76be8c20685f8ea1ab
+hashin==0.6.0 \
+    --hash=sha256:8d54551aae64dc8c135dfd5c89efd81a5014f7ce79da642b3fc3eef44ccf7a26 \
+    --hash=sha256:7563490ec8c9c361e48c7623898b3585143d379714a03bee4c3d52fb13e85086
 
 # Load testing
 locustio==0.7.3 \
@@ -56,10 +55,6 @@ pytest-django==2.9.1 \
 tox==2.3.1 \
     --hash=sha256:1823c93ca378092c10bbde428213d3f5066b30adb09e5c001087a83e3e0a402a \
     --hash=sha256:bf7fcc140863820700d3ccd65b33820ba747b61c5fe4e2b91bb8c64cb21a47ee
-
-# Provides translation tools (podebug might be only one "used")
-translate-toolkit==1.13.0 \
-    --hash=sha256:dcbbf49058e4196a06e988d9dc1e762321ab0d057c4be035b84e3c11353fc2f8
 
 # Enables ./manage.py runserver_plus with in-browser exception debugging
 Werkzeug==0.11.4 \
