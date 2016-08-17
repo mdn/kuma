@@ -5,7 +5,7 @@
 
 {% set stat_ids=(('spam_viewers_change', '% Change', 'rate'),
                  ('spam_viewers', 'Spam Viewers', 'data'),
-                 ('spam_viewers_daily_average', 'Daily Average Viewers', 'data'),
+                 ('spam_viewers_daily_average', 'Daily Average Viewers', 'float'),
                  ('published_spam', 'Published Spam', 'data'),
                  ('blocked_spam', 'Blocked Spam', 'data'),
                  ('blocked_ham', 'Blocked Ham', 'data'),
@@ -36,6 +36,8 @@
         {%- for stat, stat_name, stat_class in stat_ids %}
         {%- if stat_class == 'rate' %}
         <td class="{{ stat_class }}">{{ "%0.1f%%" | format(100 * period.stats.get(stat, 0.0)) }}</td>
+        {%- elif stat_class == 'float' %}
+        <td class="{{ stat_class }}">{{ "%0.1f" | format(period.stats.get(stat, 0.0)) }}</td>
         {%- else %}
         <td class="{{ stat_class }}">{{ period.stats[stat] | default(0) }}</td>
         {%- endif %}

@@ -15,7 +15,7 @@ from kuma.core.utils import paginate
 from kuma.wiki.models import Document, Revision
 
 from .forms import RevisionDashboardForm
-from .jobs import SpamDashboardHistoricalStats, SpamDashboardRecentEvents
+from .jobs import SpamDashboardHistoricalStats
 from . import PAGE_SIZE
 
 
@@ -167,7 +167,5 @@ def spam(request):
 
     if not data:
         return render(request, 'dashboards/spam.html', {'processing': True})
-
-    data.update(SpamDashboardRecentEvents().get())
 
     return render(request, 'dashboards/spam.html', data)

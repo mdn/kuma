@@ -30,5 +30,6 @@ class SpamDashboardRecentEvents(KumaJob):
     fetch_on_miss = True
     version = 2
 
-    def fetch(self):
-        return spam_dashboard_recent_events()
+    def fetch(self, start_date, end_date):
+        return spam_dashboard_recent_events(start_date=start_date,
+                                            end_date=end_date)

@@ -32,7 +32,7 @@ def date_range(start, end):
 
 def chunker(seq, size):
     for i in xrange(0, len(seq), size):
-        yield seq[i:i+size]
+        yield seq[i:i + size]
 
 
 def spam_day_stats(day):
@@ -87,9 +87,11 @@ def spam_dashboard_historical_stats(periods=None, end_date=None):
     periods - a sequence of (days, identifier, name) tuples
     end_date - The ending anchor date for the statistics
     """
-    from .jobs import SpamDayStats
+    from .jobs import SpamDayStats, SpamDashboardRecentEvents
 
     periods = periods or SPAM_PERIODS
+    if hasattr(end_date, 'date'):
+        end_date = end_date.date()
     end_date = end_date or (datetime.date.today() - datetime.timedelta(days=1))
 
     longest = max(days for days, identifier, name in periods)
@@ -138,21 +140,42 @@ def spam_dashboard_historical_stats(periods=None, end_date=None):
         'trends': [],
     }
 
+    job = SpamDashboardRecentEvents()
+    events_data = job.get(start_date, end_date + datetime.timedelta(days=1)) or {}
+
     # Calculate positive and negative rates
     for period_id, length, period_name, start, end in spans:
-        current = trends[period_id]
-        spam = current['published_spam'] + current['blocked_spam']
-        ham = current['published_ham'] + current['blocked_ham']
+        period = trends[period_id]
+        previous_start = start - datetime.timedelta(days=length)
+        previous_end = start - datetime.timedelta(days=1)
+
+        # Accumulate the spam viewer counts for the previous and
+        # current periods of this length.
+        period['spam_viewers'] = 0
+        period['spam_viewers_previous'] = 0
+        for item in events_data.get('recent_spam', ()):
+            if start <= item['date'] <= end:
+                period['spam_viewers'] += item['viewers']
+            elif previous_start <= item['date'] <= previous_end:
+                period['spam_viewers_previous'] += item['viewers']
+
+        period['spam_viewers_daily_average'] = period['spam_viewers'] / length
+        if period['spam_viewers_previous']:
+            delta = period['spam_viewers'] - period['spam_viewers_previous']
+            period['spam_viewers_change'] = delta / period['spam_viewers_previous']
+
+        spam = period['published_spam'] + period['blocked_spam']
+        ham = period['published_ham'] + period['blocked_ham']
 
         if spam:
-            current['true_positive_rate'] = current['blocked_spam'] / spam
+            period['true_positive_rate'] = period['blocked_spam'] / spam
         else:
-            current['true_positive_rate'] = 1.0
+            period['true_positive_rate'] = 1.0
 
         if ham:
-            current['true_negative_rate'] = current['published_ham'] / ham
+            period['true_negative_rate'] = period['published_ham'] / ham
         else:
-            current['true_negative_rate'] = 1.0
+            period['true_negative_rate'] = 1.0
 
         data['trends'].append({
             'id': period_id,
@@ -160,25 +183,32 @@ def spam_dashboard_historical_stats(periods=None, end_date=None):
             'days': length,
             'start': start.isoformat(),
             'end': end.isoformat(),
-            'stats': current,
+            'stats': period,
         })
 
+    data.update(events_data)
     return data
 
 
-def spam_dashboard_recent_events(start_date=None):
+def spam_dashboard_recent_events(start=None, end=None):
     """Gather data for recent spam events."""
     now = timezone.now()
     data = {
         'now': now,
         'recent_spam': [],
     }
-    if not start_date:
-        start_date = now - datetime.timedelta(days=181)
+
+    # Define the start and end dates/datetimes.
+    if not end:
+        end = now
+    if not start:
+        start = end - datetime.timedelta(days=183)
 
     # Gather recent published spam
     recent_spam = RevisionAkismetSubmission.objects.filter(
-        type='spam', revision__created__gt=start_date
+        type='spam',
+        revision__created__gt=start,
+        revision__created__lt=end
     ).select_related(
         'revision__document'
     ).order_by('-id')
