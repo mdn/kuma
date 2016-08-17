@@ -7,6 +7,7 @@ from django.utils import timezone
 
 from kuma.wiki.models import (DocumentDeletionLog, RevisionAkismetSubmission,
                               Revision, DocumentSpamAttempt)
+from kuma.wiki.utils import analytics_upageviews
 
 
 # Rounded to nearby 7-day period for weekly cycles
@@ -27,6 +28,11 @@ def date_range(start, end):
         end = end.date()
     days = (end - start).days + 1
     return (start + datetime.timedelta(days=d) for d in xrange(days))
+
+
+def chunker(seq, size):
+    for i in xrange(0, len(seq), size):
+        yield seq[i:i+size]
 
 
 def spam_day_stats(day):
@@ -226,5 +232,14 @@ def spam_dashboard_recent_events(start_date=None):
             'change_type': change_type,
             'document_path': revision.document.get_absolute_url(),
         })
+
+    # Update the data with the number of viewers from Google Analytics.
+    for chunk in chunker(data['recent_spam'], 250):
+        start_date = min(item['date'] for item in chunk)
+        revs = [item['revision_id'] for item in chunk]
+
+        views = analytics_upageviews(revs, start_date)
+        for item in chunk:
+            item['viewers'] = views[item['revision_id']]
 
     return data

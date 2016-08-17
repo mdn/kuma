@@ -71,7 +71,7 @@
       <tr>
         <td class="data">{{ rs.date }}</td>
         <td class="data">{{ rs.time_active }}</td>
-        <td class="data">0</td>{# FIXME: make use of the Google Analytics query #}
+        <td class="data">{{ rs.viewers }}</td>
         <td class="data"><a href="{{ rs.revision_path }}">{{ rs.revision_id }}</a></td>
         <td class="name">{{ rs.change_type }}</td>
         <td class="path"><a href="{{ rs.document_path }}">{{ rs.document_path }}</a></td>
