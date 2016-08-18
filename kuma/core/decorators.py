@@ -93,6 +93,8 @@ def permission_required(perm, login_url=None, redirect=REDIRECT_FIELD_NAME,
 # http://stackoverflow.com/a/2095648/571420
 # http://stackoverflow.com/a/2068407/571420
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching_FAQ
+# Fixed in Django 1.9:
+# https://docs.djangoproject.com/en/1.9/topics/http/decorators/#caching
 def never_cache(view_func):
     def _wrapped_view_func(request, *args, **kwargs):
         resp = view_func(request, *args, **kwargs)
