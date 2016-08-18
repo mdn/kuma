@@ -7,7 +7,7 @@
 
 - name: add the official rabbitmq repository
   copy:
-    src=rabbitmq.list
+    src={{ role_path }}/files/rabbitmq.list
     dest=/etc/apt/sources.list.d/
     backup=yes
   register: aptrepo
