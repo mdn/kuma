@@ -1,3 +1,5 @@
+{% set is_me = user.pk == detail_user.pk %}
+
 <h1 class="user-title">
     <span class="nickname">{{ detail_user.username }}</span>
     {% if detail_user.fullname %}
