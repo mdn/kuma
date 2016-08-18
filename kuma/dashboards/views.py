@@ -157,7 +157,7 @@ def topic_lookup(request):
 @permission_required((
     'wiki.add_revisionakismetsubmission',
     'wiki.add_documentspamattempt',
-    'wiki.add_userban'), raise_exception=True)
+    'users.add_userban'), raise_exception=True)
 def spam(request):
     """Dashboard for spam moderators."""
 
