@@ -484,7 +484,7 @@
             // record event
             mdn.analytics.trackEvent({
                     category: 'Wiki',
-                    action: 'Button',
+                    action: 'Button', // now "Publish and keep editing" but keeping label for analytics continuity
                     label: 'Save and Keep Editing'
                 });
 
@@ -512,14 +512,12 @@
                     var $responseLoginRequired = $parsedData.find('#login');
                     // If there are errors, saveNotification() for each of them
                     if ($responseErrors.length) {
-                        var liErrors = $responseErrors.find('li')
-                        for (var i = 0; i < liErrors.length; i++) {
-                            saveNotification.error(liErrors[i])
-                        }
+                        var $liErrors = $responseErrors.find('li');
+                        saveNotification.error($liErrors);
                         //$form.submit();
                     // Check if the session has timed out
                     } else if ($responseLoginRequired.length) {
-                        saveNotification.error('Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again.')
+                        saveNotification.error(gettext('Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again.'));
                     } else {
                         // assume it went well
                         saveNotification.success(gettext('Changes saved.'), 2000);
@@ -527,12 +525,12 @@
                         // We also need to update the form's current_rev to
                         // avoid triggering a conflict, since we just saved in
                         // the background.
-                        var responseData = JSON.parse(data)
-                        if (responseData['error'] == true) {
-                            saveNotification.error(responseData['error_message'])
+                        var responseData = JSON.parse(data);
+                        if (responseData['error'] === true) {
+                            saveNotification.error(responseData['error_message']);
                         } else {
                             var responseRevision = JSON.parse(data)['new_revision_id'];
-                            $("input[id=id_current_rev]").val(responseRevision)
+                            $("input[id=id_current_rev]").val(responseRevision);
 
                             // Clear the review comment
                             $('#id_comment').val('');
@@ -548,14 +546,13 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     // Try to display the error that comes back from the server
                     try {
-                        var errorMessage = JSON.parse(jqXHR['responseText'])['error_message']
+                        var errorMessage = JSON.parse(jqXHR['responseText'])['error_message'];
                     } catch (err) {
-                        errorMessage = "Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button.";
+                        errorMessage = gettext("Publishing failed. Please copy and paste your changes into a safe place and try submitting the form using the 'Publish' button.");
                     }
                     saveNotification.error(errorMessage);
                     // Re-enable the form; it gets disabled to prevent double-POSTs
                     $form.attr('disabled', false);
-                    // save draft
                 }
             });
 /*

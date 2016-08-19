@@ -202,7 +202,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                     parent_slug=slug_dict['parent'])
             rev_form.instance.document = doc  # for rev_form.clean()
 
-#            import ipdb;ipdb.set_trace()
             if rev_form.is_valid() and not doc_form_invalid:
                 parent_id = request.POST.get('parent_id', '')
 
@@ -234,7 +233,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                         "error_message": mark_safe(rev_form.errors['current_rev'][0]),
                         "new_revision_id": rev_form.instance.id,
                     }
-                    return JsonResponse(data=data, status=500)
+                    return JsonResponse(data=data)
 
     if doc:
         from_id = smart_int(request.GET.get('from'), None)
