@@ -4,6 +4,7 @@ import pytest
 from pyquery import PyQuery as pq
 
 from django.contrib.auth.models import Permission
+from django.core.exceptions import ImproperlyConfigured
 from waffle.models import Flag, Switch
 
 from kuma.core.tests import eq_, ok_
@@ -233,16 +234,17 @@ class RevisionsDashTest(UserTestCase):
         eq_(5, revisions.length)
 
 
+@mock.patch('kuma.dashboards.utils.analytics_upageviews')
 class SpamDashTest(SampleRevisionsMixin, UserTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
-    def test_not_logged_in(self):
+    def test_not_logged_in(self, mock_analytics_upageviews):
         """A user who is not logged in is not able to see the dashboard."""
         response = self.client.get(reverse('dashboards.spam',
                                            locale='en-US'))
         eq_(302, response.status_code)
 
-    def test_permissions(self):
+    def test_permissions(self, mock_analytics_upageviews):
         """A user with correct permissions is able to see the dashboard."""
         self.client.login(username='testuser', password='testpass')
         # Attempt to see spam dashboard as a logged-in user without permissions
@@ -275,7 +277,38 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         ok_('dashboards/spam.html' in
             [template.name for template in response.templates])
 
-    @mock.patch('kuma.dashboards.utils.analytics_upageviews')
+    def test_misconfigured_google_analytics_does_not_block(self, mock_analytics_upageviews):
+        """If the constance setting for the Google Analytics API credentials is not
+        configured, or is misconfigured, calls to analytics_upageviews will
+        raise an ImproperlyConfigured error.  Show that we still get the rest of
+        the stats, along with a message.
+
+        """
+        mock_analytics_upageviews.side_effect = ImproperlyConfigured("Oops!")
+
+        rev = self.create_revisions(
+            num=1,
+            creator=self.testuser,
+            document=self.document
+        )[0]
+        rev.created = datetime.datetime.today() - datetime.timedelta(days=1)
+        rev.save()
+        rev.akismet_submissions.create(sender=self.admin, type='spam')
+
+        self.client.login(username='admin', password='testpass')
+        # The first response will say that the report is being processed
+        response = self.client.get(reverse('dashboards.spam', locale='en-US'))
+        eq_(200, response.status_code)
+
+        response2 = self.client.get(reverse('dashboards.spam', locale='en-US'))
+
+        self.assertContains(response2, "Oops!", status_code=200)
+        page = pq(response2.content)
+        spam_trends_table = page.find('.spam-trends-table')
+        eq_(len(spam_trends_table), 1)
+        spam_events_table = page.find('.spam-events-table')
+        eq_(len(spam_events_table), 1)
+
     def test_recent_spam_revisions_show(self, mock_analytics_upageviews):
         """The correct spam revisions should show up."""
         doc1 = create_document(save=True)
@@ -314,7 +347,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 
         response2 = self.client.get(reverse('dashboards.spam', locale='en-US'))
         page = pq(response2.content)
-        table_rows = page.find('#recent-spam-table tbody tr')
+        table_rows = page.find('.spam-events-table tbody tr')
         table_row_text = ''
         for table_row in table_rows:
             table_row_text += table_row.text_content()
@@ -327,7 +360,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
             )
             ok_(document_url in table_row_text)
 
-    def test_spam_trends_show(self):
+    def test_spam_trends_show(self, mock_analytics_upageviews):
         """The spam trends table shows up."""
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
@@ -339,7 +372,6 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         spam_trends_table = page.find('.spam-trends-table')
         eq_(len(spam_trends_table), 1)
 
-    @mock.patch('kuma.dashboards.utils.analytics_upageviews')
     def test_spam_trends_stats(self, mock_analytics_upageviews):
         """Test that the correct stats show up on the spam trends dashboard."""
         # Period length

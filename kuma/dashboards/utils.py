@@ -156,9 +156,9 @@ def spam_dashboard_historical_stats(periods=None, end_date=None):
         period['spam_viewers_previous'] = 0
         for item in events_data.get('recent_spam', ()):
             if start <= item['date'] <= end:
-                period['spam_viewers'] += item['viewers']
+                period['spam_viewers'] += item.get('viewers', 0)
             elif previous_start <= item['date'] <= previous_end:
-                period['spam_viewers_previous'] += item['viewers']
+                period['spam_viewers_previous'] += item.get('viewers', 0)
 
         period['spam_viewers_daily_average'] = period['spam_viewers'] / length
         if period['spam_viewers_previous']:
