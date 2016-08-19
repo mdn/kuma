@@ -76,8 +76,9 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             user_url = reverse('users.user_edit',
                                kwargs={'username': request.user.username},
                                locale=request.LANGUAGE_CODE)
+            connections_url = reverse('socialaccount_connections')
             next_url = request.session.get('sociallogin_next_url', None)
-            if next_url != user_url:
+            if next_url not in (user_url, connections_url):
                 return
 
         # and add an extra tag to the account messages
