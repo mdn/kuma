@@ -23,6 +23,7 @@ from django.test.utils import override_settings
 from django.utils.encoding import smart_str
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
+from waffle.testutils import override_flag
 
 from kuma.attachments.models import Attachment
 from kuma.attachments.tests import make_test_file
@@ -2286,91 +2287,87 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             eq_(data_dict['expected_tags'], review_tags)
 
     @pytest.mark.midair
-    def test_edit_midair_collisions(self):
+    def test_edit_midair_collisions(self, is_ajax=False):
+        """Tests midair collisions for non-ajax submissions."""
+        self.client.login(username='admin', password='testpass')
 
-        def midair_collision_test(is_ajax):
-            self.client.login(username='admin', password='testpass')
+        # Post a new document.
+        data = new_document_data()
+        resp = self.client.post(reverse('wiki.create'), data)
+        doc = Document.objects.get(slug=data['slug'])
 
-            # Post a new document.
-            data = new_document_data()
-            resp = self.client.post(reverse('wiki.create'), data)
-            doc = Document.objects.get(slug=data['slug'])
+        # Edit #1 starts...
+        resp = self.client.get(reverse('wiki.edit',
+                                       args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
-            # Edit #1 starts...
-            resp = self.client.get(reverse('wiki.edit',
-                                           args=[doc.slug]))
-            page = pq(resp.content)
-            rev_id1 = page.find('input[name="current_rev"]').attr('value')
+        # Edit #2 starts...
+        resp = self.client.get(reverse('wiki.edit',
+                                       args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
-            # Edit #2 starts...
-            resp = self.client.get(reverse('wiki.edit',
-                                           args=[doc.slug]))
-            page = pq(resp.content)
-            rev_id2 = page.find('input[name="current_rev"]').attr('value')
+        # Edit #2 submits successfully
+        data.update({
+            'form-type': 'rev',
+            'content': 'This edit got there first',
+            'current_rev': rev_id2
+        })
+        if is_ajax:
+            resp = self.client.post(
+                reverse('wiki.edit', args=[doc.slug]),
+                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            )
+            eq_(False, json.loads(resp.content)['error'])
+        else:
+            resp = self.client.post(reverse('wiki.edit',
+                                            args=[doc.slug]), data)
+            eq_(302, resp.status_code)
 
-            # Edit #2 submits successfully
-            data.update({
-                'form-type': 'rev',
-                'content': 'This edit got there first',
-                'current_rev': rev_id2
-            })
-            if is_ajax:
-                resp = self.client.post(
-                    reverse('wiki.edit', args=[doc.slug]),
-                    data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-                )
-                eq_(False, json.loads(resp.content)['error'])
-            else:
-                resp = self.client.post(reverse('wiki.edit',
-                                                args=[doc.slug]), data)
-                eq_(302, resp.status_code)
+        # Edit #1 submits, but receives a mid-aired notification
+        data.update({
+            'form-type': 'rev',
+            'content': 'This edit gets mid-aired',
+            'current_rev': rev_id1
+        })
 
-            # Edit #1 submits, but receives a mid-aired notification
-            data.update({
-                'form-type': 'rev',
-                'content': 'This edit gets mid-aired',
-                'current_rev': rev_id1
-            })
+        if is_ajax:
+            resp = self.client.post(
+                reverse('wiki.edit', args=[doc.slug]),
+                data,
+                HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            )
+        else:
+            resp = self.client.post(reverse('wiki.edit',
+                                            args=[doc.slug]), data)
 
-            if is_ajax:
-                resp = self.client.post(
-                    reverse('wiki.edit', args=[doc.slug]),
-                    data,
-                    HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-                )
-            else:
-                resp = self.client.post(reverse('wiki.edit',
-                                                args=[doc.slug]), data)
+        history_url = reverse(
+            'wiki.document_revisions',
+            kwargs={'document_path': doc.slug}, locale=doc.locale)
+        midair_collission_error = (unicode(MIDAIR_COLLISION) % {'url': history_url}).encode('utf-8')
 
-            history_url = reverse(
-                'wiki.document_revisions',
-                kwargs={'document_path': doc.slug}, locale=doc.locale)
-            midair_collission_error = (unicode(MIDAIR_COLLISION) % {'url': history_url}).encode('utf-8')
+        if is_ajax:
+            location_of_error = json.loads(resp.content)['error_message']
+        else:
+            location_of_error = resp.content
+        ok_(midair_collission_error in location_of_error,
+            "Midair collision message should appear")
 
-            if is_ajax:
-                location_of_error = json.loads(resp.content)['error_message']
-            else:
-                location_of_error = resp.content
-            ok_(midair_collission_error in location_of_error,
-                "Midair collision message should appear")
+    @pytest.mark.midair
+    def test_edit_midair_collisions_ajax(self):
+        """Tests midair collisions for ajax submissions."""
+        self.test_edit_midair_collisions(self, is_ajax=True)
 
-        midair_collision_test(is_ajax=False)
-        midair_collision_test(is_ajax=True)
-
+    @override_flag(SPAM_SUBMISSIONS_FLAG, active=True)
+    @override_flag(SPAM_CHECKS_FLAG, active=True)
     @override_config(AKISMET_KEY='dashboard')
     @requests_mock.mock()
     @mock.patch('kuma.spam.akismet.Akismet.check_comment')
     def test_edit_spam_ajax(self, mock_requests, mock_akismet_method):
         """Tests attempted spam edits that occur on Ajax POSTs."""
-        # Enable Akismet
-        Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG, everyone=True)
-        try:
-            spam_checks_flag = Flag.objects.get(name=SPAM_CHECKS_FLAG)
-        except Flag.DoesNotExist:
-            spam_checks_flag = Flag(name=SPAM_CHECKS_FLAG)
+        # Note: Akismet is enabled by the Flag overrides
 
-        spam_checks_flag.everyone = True
-        spam_checks_flag.save()
         mock_requests.post(VERIFY_URL, content='valid')
         # The return value of akismet.check_comment is set to True
         mock_akismet_method.return_value = True
@@ -3283,8 +3280,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit', args=[rev.document.slug]),
                                 data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        # With the raw API, we should get a 409 Conflict on collision.
-        eq_(409, resp.status_code)
+        eq_(200, resp.status_code)
         # We receive the midair collission message
         history_url = reverse(
             'wiki.document_revisions',
