@@ -4,6 +4,7 @@ import datetime
 
 from dateutil import parser
 from django.utils import timezone
+from django.core.exceptions import ImproperlyConfigured
 
 from kuma.wiki.models import (DocumentDeletionLog, RevisionAkismetSubmission,
                               Revision, DocumentSpamAttempt)
@@ -268,7 +269,12 @@ def spam_dashboard_recent_events(start=None, end=None):
         start_date = min(item['date'] for item in chunk)
         revs = [item['revision_id'] for item in chunk]
 
-        views = analytics_upageviews(revs, start_date)
+        try:
+            views = analytics_upageviews(revs, start_date)
+        except ImproperlyConfigured as e:
+            data['improperly_configured'] = e.message
+            break
+
         for item in chunk:
             item['viewers'] = views[item['revision_id']]
 

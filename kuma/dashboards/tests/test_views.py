@@ -356,7 +356,6 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         thirtyfive_days_ago = today - datetime.timedelta(days=35)
         quarterly_start_date = today - datetime.timedelta(days=days_in_quarter)
         hundred_days_ago = today - datetime.timedelta(days=100)
-        a_year_ago = datetime.datetime.now() - datetime.timedelta(days=365)
 
         # Revisions made by self.testuser: 3 made today, 3 made 3 days ago,
         # 3 made 10 days ago, 3 made 35 days ago, 3 made 100 days ago

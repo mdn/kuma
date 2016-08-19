@@ -13,6 +13,9 @@
                  ('true_negative_rate', 'True Negative Rate', 'rate')) %}
 {% block content %}
 <h1>{{ title }}</h1>
+{% if improperly_configured %}
+  <p>{{ improperly_configured }}</p>
+{% endif %}
 {% if processing %}
   <p>The report is being processed. Please reload in a minute.</p>
 {% else %}
