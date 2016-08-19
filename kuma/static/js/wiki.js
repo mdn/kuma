@@ -941,4 +941,10 @@
         initDetailsTags();
     }
 
+    // clear out any drafts from localStorage, now that the document has been saved
+    if (typeof document_saved !== 'undefined' && document_saved) {
+      localStorage.removeItem('draft/edit' + location.pathname);
+      localStorage.removeItem('draft/edit' + location.pathname + '#save-time');
+    }
+
 })(window, document, jQuery);
