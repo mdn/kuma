@@ -114,6 +114,74 @@
     }
 }
 
+.spam-trends-table {
+    border: 0;
+    border-collapse: collapse;
+}
+
+.spam-trends-table caption {
+    text-align: center;
+}
+
+.spam-trends-table .data,
+.spam-trends-table .float,
+.spam-trends-table .rate {
+    text-align: right;
+    font-family: monospace;
+}
+
+.spam-trends-table .stat-header,
+.spam-trends-table .data,
+.spam-trends-table .float {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.spam-trends-table .rate {
+    padding-left: 1em;
+    padding-right: 0.5em;
+}
+
+.spam-events-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.spam-events-table td {
+    word-break: keep-all;
+}
+
+.spam-events-table .data {
+    font-family: monospace;
+}
+
+.spam-events-table .name {
+    text-align: left;
+    padding-right: 5px;
+}
+
+.spam-events-table .path,
+.spam-events-table .name
+{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spam-events-table th {
+    vertical-align: bottom;
+}
+
+.spam-events-table .data,
+.spam-events-table .name {
+    /* 100% - (path %) / 5 columns */
+    width: 12%
+}
+
+.spam-events-table .path {
+    width: 40%
+}
+
 .dashboard-title {
     word-break: break-all;
 }

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% set styles = ('dashboards',) %}
 {% set title = 'Spam Dashboard' %}
 
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -51,7 +52,7 @@
   </table>
 
   {% if recent_spam %}
-  <table id="recent-spam-table">
+  <table id="spam-events-table">
     <caption>Published Spam</caption>
     <colgroup>
       <col span="1" class="data" />
