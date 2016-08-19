@@ -478,8 +478,11 @@
             // disable form
             $('#wiki-page-edit').attr('disabled', true);
 
+            // Clear previous notification messages, if any
+            $('.notification button.close').click();
+
             // give user feedback
-            var saveNotification = mdn.Notifier.growl('Saving changes…', { duration: 0 });
+            var saveNotification = mdn.Notifier.growl('Saving changes…', { duration: 0 , closable: true});
 
             // record event
             mdn.analytics.trackEvent({
@@ -510,11 +513,18 @@
                     var $parsedData = $($.parseHTML(data));
                     var $responseErrors = $parsedData.find('.errorlist');
                     var $responseLoginRequired = $parsedData.find('#login');
-                    // If there are errors, saveNotification() for each of them
+                    try {
+                      var jsonErrorMessage = JSON.parse(jqXHR['responseText'])['error_message'];
+                    } catch (err) {
+                      var jsonErrorMessage = undefined;
+                    }
+                    // If there are errors, saveNotification() for them
                     if ($responseErrors.length) {
                         var $liErrors = $responseErrors.find('li');
                         saveNotification.error($liErrors);
-                        //$form.submit();
+                    // If there was an error from the json response, saveNotification() for it
+                    } else if (typeof(jsonErrorMessage) !== 'undefined') {
+                        saveNotification.error(gettext(jsonErrorMessage));
                     // Check if the session has timed out
                     } else if ($responseLoginRequired.length) {
                         saveNotification.error(gettext('Publishing failed. You are not currently signed in. Please use a new tab to sign in and try publishing again.'));
