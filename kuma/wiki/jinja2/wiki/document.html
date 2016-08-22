@@ -94,12 +94,12 @@
     <form class="languages go" method="get" action="{{ wiki_url('Web') }}">
       <label for="language">{{ _('Other languages:') }}</label>
       <select id="language" class="wiki-l10n" name="next" dir="ltr">
-        <option value="{{ doc_abs_url }}" selected>
-          {{ document.language }}
+        <option title="{{ get_locale_localized(document.locale) }}" value="{{ doc_abs_url }}" selected>
+          {{ document.language }} ({{ document.locale }})
         </option>
         {% for translation in other_translations %}
-          <option value="{{ translation.get_absolute_url() }}">
-            {{ translation.language }}
+          <option title="{{ get_locale_localized(translation.locale) }}" value="{{ translation.get_absolute_url() }}">
+            {{ translation.language }} ({{ translation.locale }})
           </option>
         {%- endfor %}
       </select>
