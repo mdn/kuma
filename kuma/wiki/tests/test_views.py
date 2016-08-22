@@ -2034,7 +2034,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Check the languages drop-down
         resp = self.client.get(resp['Location'])
         translations = pq(resp.content)('ul#translations li')
-        ok_('A Test Article' in translations.html())
         ok_('English (US)' in translations.text())
 
     def test_translation_source(self):
