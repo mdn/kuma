@@ -129,6 +129,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
     if user_has_rev_perm:
         initial = {
             'based_on': based_on_rev.id,
+            'current_rev': doc.current_or_latest_revision().id if doc else None,
             'comment': '',
             'toc_depth': based_on_rev.toc_depth,
             'localization_tags': ['inprogress'],
@@ -228,9 +229,15 @@ def translate(request, document_slug, document_locale, revision_id=None):
             else:
                 # If this is an Ajax POST, then return a JsonResponse with error
                 if request.is_ajax():
+                    if 'current_rev' in rev_form._errors:
+                        # Make the error message safe so the '<' and '>' don't
+                        # get turned into '&lt;' and '&gt;', respectively
+                        rev_form.errors['current_rev'][0] = mark_safe(
+                            rev_form.errors['current_rev'][0])
+                    errors = [rev_form.errors[key][0] for key in rev_form.errors.keys()]
                     data = {
                         "error": True,
-                        "error_message": mark_safe(rev_form.errors['current_rev'][0]),
+                        "error_message": errors,
                         "new_revision_id": rev_form.instance.id,
                     }
                     return JsonResponse(data=data)

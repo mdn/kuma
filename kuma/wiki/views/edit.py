@@ -168,16 +168,6 @@ def edit(request, document_slug, document_locale, revision_id=None):
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(parent=None)
 
-                    # save-and-edit button
-                    if is_async_submit:
-                        # This is the most recent revision id
-                        new_rev_id = rev.document.revisions.order_by('-id').first().id
-                        data = {
-                            "error": False,
-                            "new_revision_id": new_rev_id
-                        }
-                        return JsonResponse(data)
-
                     return redirect(urlparams(doc.get_edit_url(),
                                               opendescription=1))
                 disclose_description = True
@@ -207,20 +197,22 @@ def edit(request, document_slug, document_locale, revision_id=None):
                 curr_rev = doc.current_revision
 
                 if not rev_form.is_valid():
-                    # Was there a mid-air collision?
-                    if 'current_rev' in rev_form._errors:
-                        # Make the error message safe so the '<' and '>' don't
-                        # get turned into '&lt;' and '&gt;', respectively
-                        rev_form.errors['current_rev'][0] = mark_safe(rev_form.errors['current_rev'][0])
+                    # If this was an Ajax POST, then return a JsonResponse
+                    if is_async_submit:
+                        # Was there a mid-air collision?
+                        if 'current_rev' in rev_form._errors:
+                            # Make the error message safe so the '<' and '>' don't
+                            # get turned into '&lt;' and '&gt;', respectively
+                            rev_form.errors['current_rev'][0] = mark_safe(
+                                rev_form.errors['current_rev'][0])
+                        errors = [rev_form.errors[key][0] for key in rev_form.errors.keys()]
 
-                        # If this was an Ajax POST, then return a JsonResponse
-                        if is_async_submit:
-                            data = {
-                                "error": True,
-                                "error_message": rev_form.errors['current_rev'],
-                                "new_revision_id": curr_rev.id,
-                            }
-                            return JsonResponse(data=data, status=409)
+                        data = {
+                            "error": True,
+                            "error_message": errors,
+                            "new_revision_id": curr_rev.id,
+                        }
+                        return JsonResponse(data=data)
                         # Jump out to a function to escape indentation hell
                         return _edit_document_collision(
                             request, orig_rev, curr_rev, is_async_submit,
@@ -237,19 +229,18 @@ def edit(request, document_slug, document_locale, revision_id=None):
                         return JsonResponse(data=data)
                 if rev_form.is_valid():
                     rev_form.save(doc)
+                    if (is_raw and orig_rev is not None and
+                            curr_rev.id != orig_rev.id):
+                        # If this is the raw view, and there was an original
+                        # revision, but the original revision differed from the
+                        # current revision at start of editing, we should tell
+                        # the client to refresh the page.
+                        response = HttpResponse('RESET')
+                        response['X-Frame-Options'] = 'SAMEORIGIN'
+                        response.status_code = 205
+                        return response
                     # Is this an Ajax POST?
                     if is_async_submit:
-                        if (is_raw and orig_rev is not None and
-                                curr_rev.id != orig_rev.id):
-                            # If this is the raw view, and there was an original
-                            # revision, but the original revision differed from the
-                            # current revision at start of editing, we should tell
-                            # the client to refresh the page.
-                            response = HttpResponse('RESET')
-                            response['X-Frame-Options'] = 'SAMEORIGIN'
-                            response.status_code = 205
-                            return response
-                        # This must be an Ajax POST, but no need to refresh
                         # This is the most recent revision id
                         new_rev_id = rev.document.revisions.order_by('-id').first().id
                         data = {
