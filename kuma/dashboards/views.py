@@ -2,6 +2,7 @@ import datetime
 import json
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -9,10 +10,12 @@ from django.utils import timezone
 from django.views.decorators.http import require_GET
 import waffle
 
+from kuma.core.decorators import login_required
 from kuma.core.utils import paginate
 from kuma.wiki.models import Document, Revision
 
 from .forms import RevisionDashboardForm
+from .jobs import SpamDashboardHistoricalStats
 from . import PAGE_SIZE
 
 
@@ -147,3 +150,22 @@ def topic_lookup(request):
     data = json.dumps(topiclist)
     return HttpResponse(data,
                         content_type='application/json; charset=utf-8')
+
+
+@require_GET
+@login_required
+@permission_required((
+    'wiki.add_revisionakismetsubmission',
+    'wiki.add_documentspamattempt',
+    'users.add_userban'), raise_exception=True)
+def spam(request):
+    """Dashboard for spam moderators."""
+
+    # Combine data sources
+    yesterday = datetime.date.today() - datetime.timedelta(days=1)
+    data = SpamDashboardHistoricalStats().get(yesterday)
+
+    if not data:
+        return render(request, 'dashboards/spam.html', {'processing': True})
+
+    return render(request, 'dashboards/spam.html', data)
