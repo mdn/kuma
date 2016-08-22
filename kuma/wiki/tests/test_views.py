@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import base64
 import datetime
+import HTMLParser
 import json
 import time
 from urllib import urlencode
@@ -2287,7 +2288,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             eq_(data_dict['expected_tags'], review_tags)
 
     @pytest.mark.midair
-    def test_edit_midair_collisions(self, is_ajax=False):
+    def test_edit_midair_collisions(self, is_ajax=False, translate_locale=None):
         """Tests midair collisions for non-ajax submissions."""
         self.client.login(username='admin', password='testpass')
 
@@ -2295,34 +2296,59 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         resp = self.client.post(reverse('wiki.create'), data)
         doc = Document.objects.get(slug=data['slug'])
+        # This is the url to post new revisions for the rest of this test
+        posting_url = reverse('wiki.edit', args=[doc.slug])
 
         # Edit #1 starts...
-        resp = self.client.get(reverse('wiki.edit',
-                                       args=[doc.slug]))
+        resp = self.client.get(
+            reverse('wiki.edit', args=[doc.slug])
+        )
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
-
         # Edit #2 starts...
-        resp = self.client.get(reverse('wiki.edit',
-                                       args=[doc.slug]))
+        resp = self.client.get(
+            reverse('wiki.edit', args=[doc.slug])
+        )
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
-        # Edit #2 submits successfully
+        # Update data for the POST we are about to attempt
         data.update({
             'form-type': 'rev',
             'content': 'This edit got there first',
             'current_rev': rev_id2
         })
+        # If this is a translation test, then create a translation and a
+        # revision on it. Then update data.
+        if translate_locale:
+            translation = document(parent=doc, locale=translate_locale, save=True)
+            translation_rev = revision(
+                document=translation,
+                based_on=translation.parent.current_or_latest_revision(),
+                save=True
+            )
+            rev_id1 = rev_id2 = translation_rev.id
+            posting_url = reverse(
+                'wiki.edit',
+                args=[translation_rev.document.slug],
+                locale=translate_locale
+            )
+            data.update({
+                'title': translation.title,
+                'locale': translation.locale,
+                'slug': translation.slug,
+                'current_rev': rev_id2
+            })
+
+        # Edit #2 submits successfully
         if is_ajax:
             resp = self.client.post(
-                reverse('wiki.edit', args=[doc.slug]),
+                posting_url,
                 data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
             )
             eq_(False, json.loads(resp.content)['error'])
         else:
-            resp = self.client.post(reverse('wiki.edit',
-                                            args=[doc.slug]), data)
+            resp = self.client.post(posting_url, data)
             eq_(302, resp.status_code)
 
         # Edit #1 submits, but receives a mid-aired notification
@@ -2331,40 +2357,53 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'content': 'This edit gets mid-aired',
             'current_rev': rev_id1
         })
-
         if is_ajax:
             resp = self.client.post(
-                reverse('wiki.edit', args=[doc.slug]),
+                posting_url,
                 data,
                 HTTP_X_REQUESTED_WITH='XMLHttpRequest'
             )
         else:
-            resp = self.client.post(reverse('wiki.edit',
-                                            args=[doc.slug]), data)
+            resp = self.client.post(posting_url, data)
 
+        # The url of the document's history
+        locale = translate_locale if translate_locale else doc.locale
+        doc_path = translation.slug if translate_locale else doc.slug
         history_url = reverse(
-            'wiki.document_revisions',
-            kwargs={'document_path': doc.slug}, locale=doc.locale)
-        midair_collission_error = (unicode(MIDAIR_COLLISION) % {'url': history_url}).encode('utf-8')
+            'wiki.document_revisions', kwargs={'document_path': doc_path}, locale=locale
+        )
+        # The midair collission error, with the document url
+        midair_collission_error = (unicode(
+            MIDAIR_COLLISION) % {'url': history_url}
+        ).encode('utf-8')
 
         if is_ajax:
             location_of_error = json.loads(resp.content)['error_message']
         else:
-            location_of_error = resp.content
+            # If this is not an ajax post, then the error comes back in escaped
+            # html. We unescape the resp.content, but not all of it, since that
+            # causes ascii errors.
+            start_of_error = resp.content.index(midair_collission_error[0:20])
+            # Add an some extra characters to the end, since the unescaped length
+            # is a little less than the escaped length
+            end_of_error = start_of_error + len(midair_collission_error) + 20
+            location_of_error = HTMLParser.HTMLParser().unescape(
+                resp.content[start_of_error: end_of_error]
+            )
         ok_(midair_collission_error in location_of_error,
             "Midair collision message should appear")
 
     @pytest.mark.midair
     def test_edit_midair_collisions_ajax(self):
         """Tests midair collisions for ajax submissions."""
-        self.test_edit_midair_collisions(self, is_ajax=True)
+        self.test_edit_midair_collisions(is_ajax=True)
 
     @override_flag(SPAM_SUBMISSIONS_FLAG, active=True)
     @override_flag(SPAM_CHECKS_FLAG, active=True)
     @override_config(AKISMET_KEY='dashboard')
     @requests_mock.mock()
     @mock.patch('kuma.spam.akismet.Akismet.check_comment')
-    def test_edit_spam_ajax(self, mock_requests, mock_akismet_method):
+    def test_edit_spam_ajax(self, mock_requests, mock_akismet_method, translate_locale=None):
         """Tests attempted spam edits that occur on Ajax POSTs."""
         # Note: Akismet is enabled by the Flag overrides
 
@@ -2380,9 +2419,30 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         # Create a revision on the document
         revision(save=True, document=doc)
+        # This is the url to post new revisions for the rest of this test
+        posting_url = reverse('wiki.edit', args=[doc.slug])
 
-        resp = self.client.get(reverse('wiki.edit',
-                                       args=[doc.slug]))
+        # If this is a translation test, then create a translation and a revision on it
+        if translate_locale:
+            translation = document(
+                parent=doc,
+                locale=translate_locale,
+                save=True
+            )
+            translation_rev = revision(
+                document=translation,
+                based_on=translation.parent.current_or_latest_revision(),
+                save=True
+            )
+            # rev_id = translation_rev.id
+            posting_url = reverse(
+                'wiki.edit',
+                args=[translation_rev.document.slug],
+                locale=translate_locale
+            )
+
+        # Get the rev id
+        resp = self.client.get(posting_url)
         page = pq(resp.content)
         rev_id = page.find('input[name="current_rev"]').attr('value')
 
@@ -2393,7 +2453,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'current_rev': rev_id
         })
         resp = self.client.post(
-            reverse('wiki.edit', args=[doc.slug]),
+            posting_url,
             data,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
@@ -2401,14 +2461,22 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         spam_message = render_to_string('wiki/includes/spam_error.html')
         # The spam message is generated without a locale during this test, so we
         # replace the url with a url with a locale
-        no_locale = reverse('wiki.document', args=['MDN/Contribute/Does_this_belong']).encode('utf-8')
-        yes_locale = reverse('wiki.document', args=['MDN/Contribute/Does_this_belong'], force_locale=True).encode('utf-8')
+        args = ['MDN/Contribute/Does_this_belong']
+        no_locale = reverse('wiki.document', args=args).encode('utf-8')
+        if translate_locale:
+            yes_locale = reverse(
+                'wiki.document', args=args, locale=translate_locale
+            ).encode('utf-8')
+        else:
+            yes_locale = reverse(
+                'wiki.document', args=args, force_locale=True
+            ).encode('utf-8')
         spam_message = spam_message.replace(no_locale, yes_locale)
         # Spam message appears in the JsonResponse content
         ok_(spam_message in json.loads(resp.content)['error_message'],
             "Spam message should appear")
 
-    def test_multiple_edits_ajax(self):
+    def test_multiple_edits_ajax(self, translate_locale=None):
         """Tests multiple sequential attempted valid edits that occur as Ajax POSTs."""
 
         self.client.login(username='admin', password='testpass')
@@ -2417,12 +2485,27 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         resp = self.client.post(reverse('wiki.create'), data)
         doc = Document.objects.get(slug=data['slug'])
+        # This is the url to post new revisions for the rest of this test
+        if translate_locale:
+            posting_url = reverse('wiki.edit', args=[doc.slug], locale=translate_locale)
+        else:
+            posting_url = reverse('wiki.edit', args=[doc.slug])
+
+        if translate_locale:
+            # Post a new translation on doc
+            translate_url = reverse(
+                'wiki.translate',
+                args=[data['slug']],
+                locale=settings.WIKI_DEFAULT_LANGUAGE
+            ) + '?tolocale={}'.format(translate_locale)
+            self.client.post(translate_url, data, follow=True)
+            data.update({'locale': translate_locale})
 
         # Edit #1
-        resp = self.client.get(reverse('wiki.edit',
-                                       args=[doc.slug]))
+        resp = self.client.get(posting_url)
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
+
         # Edit #1 submits successfully
         data.update({
             'form-type': 'rev',
@@ -2430,25 +2513,24 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'current_rev': rev_id1
         })
         resp1 = self.client.post(
-            reverse('wiki.edit', args=[doc.slug]),
+            posting_url,
             data,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
 
         # Edit #2
-        resp = self.client.get(reverse('wiki.edit',
-                                       args=[doc.slug]))
+        resp = self.client.get(posting_url)
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 submits successfully
         data.update({
             'form-type': 'rev',
-            'content': 'This edit got there first',
+            'content': 'Edit #2',
             'current_rev': rev_id2
         })
         resp2 = self.client.post(
-            reverse('wiki.edit', args=[doc.slug]),
+            posting_url,
             data,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
@@ -2457,6 +2539,23 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         for resp in [resp1, resp2]:
             eq_(json.loads(resp.content)['error'], False)
             ok_('error_message' not in json.loads(resp.content).keys())
+
+    def test_multiple_translation_edits_ajax(self):
+        """Tests multiple sequential valid transalation edits that occur as Ajax POSTs."""
+        self.test_multiple_edits_ajax(translate_locale='es')
+
+    # test translation fails as well
+    def test_translation_midair_collission(self):
+        """Tests midair collisions for non-ajax translation revisions."""
+        self.test_edit_midair_collisions(is_ajax=False, translate_locale='az')
+
+    def test_translation_midair_collission_ajax(self):
+        """Tests midair collisions for ajax translation revisions."""
+        self.test_edit_midair_collisions(is_ajax=True, translate_locale='af')
+
+    def test_translation_spam_ajax(self):
+        """Tests attempted translation spam edits that occur on Ajax POSTs."""
+        self.test_edit_spam_ajax(translate_locale='ru')
 
     @pytest.mark.toc
     def test_toc_toggle_off(self):
