@@ -3,7 +3,6 @@ from collections import defaultdict, Counter
 import datetime
 
 from dateutil import parser
-from django.utils import timezone
 from django.core.exceptions import ImproperlyConfigured
 
 from kuma.wiki.models import (DocumentDeletionLog, RevisionAkismetSubmission,
@@ -193,9 +192,9 @@ def spam_dashboard_historical_stats(periods=None, end_date=None):
 
 def spam_dashboard_recent_events(start=None, end=None):
     """Gather data for recent spam events."""
-    now = timezone.now()
+    now = datetime.datetime.now()
     data = {
-        'now': now,
+        'events_generated': now.isoformat(),
         'recent_spam': [],
     }
 
