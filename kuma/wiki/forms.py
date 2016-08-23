@@ -17,6 +17,7 @@ from taggit.utils import parse_tags
 
 import kuma.wiki.content
 from kuma.core.form_fields import StrippedCharField
+from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import AkismetError
 from kuma.spam.forms import AkismetCheckFormMixin, AkismetSubmissionFormMixin
 
@@ -64,8 +65,10 @@ COMMENT_LONG = _(u'Please keep the length of the comment to '
 SLUG_COLLIDES = _(u'Another document with this slug already exists.')
 OTHER_COLLIDES = _(u'Another document with this metadata already exists.')
 
-MIDAIR_COLLISION = _(u'This document was modified while you were '
-                     u'editing it.')
+MIDAIR_COLLISION = _(u'Publishing failed. Conflicting edit attempts detected. '
+                     u'Please copy and paste your edits to a safe place and '
+                     u'visit the <a href="%(url)s">revision history</a> page '
+                     u'to see what was changed before making further edits.')
 MOVE_REQUIRED = _(u"Changing this document's slug requires "
                   u"moving it and its children.")
 
@@ -495,7 +498,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.section_id = kwargs.pop('section_id', None)
-        self.is_iframe_target = kwargs.pop('is_iframe_target', None)
+        self.is_async_submit = kwargs.pop('is_async_submit', None)
 
         # when creating a new document with a parent, this will be set
         self.parent_slug = kwargs.pop('parent_slug', None)
@@ -536,7 +539,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     def clean_slug(self):
         # Since this form can change the URL of the page on which the editing
         # happens, changes to the slug are ignored for an iframe submissions
-        if self.is_iframe_target:
+        if self.is_async_submit:
             return self.instance.document.slug
 
         # Get the cleaned slug
@@ -659,13 +662,21 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                     if orig_ct != curr_ct:
                         # Oops. Looks like the section did actually get
                         # changed, so yeah this is a collision.
-                        raise forms.ValidationError(MIDAIR_COLLISION)
+                        url = reverse(
+                            'wiki.document_revisions',
+                            kwargs={'document_path': self.instance.document.slug}
+                        )
+                        raise forms.ValidationError(MIDAIR_COLLISION % {'url': url})
 
                     return current_rev
 
                 else:
                     # No section edit, so this is a flat-out collision.
-                    raise forms.ValidationError(MIDAIR_COLLISION)
+                    url = reverse(
+                        'wiki.document_revisions',
+                        kwargs={'document_path': self.instance.document.slug}
+                    )
+                    raise forms.ValidationError(MIDAIR_COLLISION % {'url': url})
 
         except Document.DoesNotExist:
             # If there's no document yet, just bail.

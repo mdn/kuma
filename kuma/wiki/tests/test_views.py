@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import base64
 import datetime
+import HTMLParser
 import json
 import time
 from urllib import urlencode
@@ -16,12 +17,14 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.db.models import Q
 from django.http import Http404
+from django.template.loader import render_to_string
 from django.test.client import (BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT,
                                 FakePayload, encode_multipart)
 from django.test.utils import override_settings
 from django.utils.encoding import smart_str
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
+from waffle.testutils import override_flag
 
 from kuma.attachments.models import Attachment
 from kuma.attachments.tests import make_test_file
@@ -32,8 +35,8 @@ from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import eq_, get_user, ok_
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
-from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.spam.akismet import Akismet
+from kuma.spam.constants import SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.users.tests import UserTestCase, user
 
 from . import (WikiTestCase, create_document_editor_group,
@@ -500,7 +503,7 @@ class PermissionTests(UserTestCase, WikiTestCase):
                         url = reverse('wiki.create', locale=locale)
                         resp = self.client.post(url, data, follow=False)
                     else:
-                        data['form'] = 'rev'
+                        data['form-type'] = 'rev'
                         url = reverse('wiki.edit', args=(slug,), locale=locale)
                         resp = self.client.post(url, data, follow=False)
 
@@ -1240,7 +1243,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         old_title = doc.title
         data = new_document_data()
         data.update({'title': new_title,
-                     'form': 'rev'})
+                     'form-type': 'rev'})
         data['slug'] = ''
         url = reverse('wiki.edit', args=[doc.slug])
         self.client.post(url, data)
@@ -1274,7 +1277,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         new_title = 'Some New Title'
         data = new_document_data()
         data.update({'title': new_title,
-                     'form': 'rev'})
+                     'form-type': 'rev'})
         data['slug'] = ''
         url = reverse('wiki.edit', args=[d.slug])
         self.client.post(url, data)
@@ -1326,7 +1329,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Now, post an update with duplicate slug
         data.update({
-            'form': 'rev',
+            'form-type': 'rev',
             'slug': exist_slug
         })
         resp = self.client.post(reverse('wiki.edit',
@@ -1357,7 +1360,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         eq_(302, resp.status_code)
 
         # Change title and slug
-        data.update({'form': 'rev',
+        data.update({'form-type': 'rev',
                      'title': changed_title,
                      'slug': changed_slug})
         resp = self.client.post(reverse('wiki.edit',
@@ -1366,7 +1369,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         eq_(302, resp.status_code)
 
         # Change title and slug back to originals, clobbering the redirect
-        data.update({'form': 'rev',
+        data.update({'form-type': 'rev',
                      'title': exist_title,
                      'slug': exist_slug})
         resp = self.client.post(reverse('wiki.edit',
@@ -1625,7 +1628,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 # ensure the slug stays the same (i.e. no parent prepending)
                 def test_invalid_slug_translate(inv_slug, url, data):
                     data['slug'] = inv_slug
-                    data['form'] = 'both'
+                    data['form-type'] = 'both'
                     response = self.client.post(url, data)
                     eq_(200, response.status_code)  # 200 = bad, invalid data
                     page = pq(response.content)
@@ -1640,7 +1643,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
                 # Push a valid translation
                 translate_data['slug'] = translate_slug
-                translate_data['form'] = 'both'
+                translate_data['form-type'] = 'both'
                 response = self.client.post(foreign_url, translate_data)
                 eq_(302, response.status_code)
                 # Ensure no redirect
@@ -1671,7 +1674,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 # Attempt an invalid edit of the root, ensure the slug stays
                 # the same (i.e. no parent prepending)
                 edit_data['slug'] = invalid_slug
-                edit_data['form'] = 'both'
+                edit_data['form-type'] = 'both'
                 response = self.client.post(reverse('wiki.edit',
                                                     args=[edit_doc.slug],
                                                     locale=foreign_locale),
@@ -1707,7 +1710,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             def _run_slug_edit_tests(edit_slug, edit_data, edit_doc, loc):
 
                 edit_data['slug'] = edit_data['slug'] + '_Updated'
-                edit_data['form'] = 'rev'
+                edit_data['form-type'] = 'rev'
                 response = self.client.post(reverse('wiki.edit',
                                                     args=[edit_doc.slug],
                                                     locale=loc),
@@ -1758,7 +1761,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                      locale=settings.WIKI_DEFAULT_LANGUAGE))
 
         # Editing "length/length" document doesn't cause errors
-        child_data['form'] = 'rev'
+        child_data['form-type'] = 'rev'
         child_data['slug'] = ''
         edit_url = reverse('wiki.edit', args=['length/length'],
                            locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -1773,7 +1776,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Creating a new translation of "length" and "length/length"
         # doesn't cause errors
-        child_data['form'] = 'both'
+        child_data['form-type'] = 'both'
         child_data['slug'] = 'length'
         translate_url = reverse('wiki.document', args=[child_data['slug']],
                                 locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -2030,7 +2033,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(pq(response.content)('li.metadata-choose-parent'))
 
         # Set the parent
-        data.update({'form': 'rev', 'parent_id': en_d.id})
+        data.update({'form-type': 'rev', 'parent_id': en_d.id})
         resp = self.client.post(url, data)
         eq_(302, resp.status_code)
         ok_('fr/docs/a-test-article' in resp['Location'])
@@ -2116,7 +2119,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert_tag_state(ts1, ts2)
 
         # Now, update the tags.
-        data.update({'form': 'rev', 'tags': ', '.join(ts2)})
+        data.update({'form-type': 'rev', 'tags': ', '.join(ts2)})
         self.client.post(reverse('wiki.edit',
                                  args=[path]), data)
         assert_tag_state(ts2, ts1)
@@ -2142,7 +2145,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Now, post an update with two tags
         data.update({
-            'form': 'rev',
+            'form-type': 'rev',
             'review_tags': ['editorial', 'technical'],
         })
         response = self.client.post(reverse('wiki.edit',
@@ -2189,7 +2192,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Post an edit that removes one of the tags.
         data.update({
-            'form': 'rev',
+            'form-type': 'rev',
             'review_tags': ['editorial', ]
         })
         response = self.client.post(reverse('wiki.edit',
@@ -2285,48 +2288,274 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             eq_(data_dict['expected_tags'], review_tags)
 
     @pytest.mark.midair
-    def test_edit_midair_collision(self):
+    def test_edit_midair_collisions(self, is_ajax=False, translate_locale=None):
+        """Tests midair collisions for non-ajax submissions."""
         self.client.login(username='admin', password='testpass')
 
         # Post a new document.
         data = new_document_data()
         resp = self.client.post(reverse('wiki.create'), data)
         doc = Document.objects.get(slug=data['slug'])
+        # This is the url to post new revisions for the rest of this test
+        posting_url = reverse('wiki.edit', args=[doc.slug])
 
         # Edit #1 starts...
-        resp = self.client.get(reverse('wiki.edit',
-                                       args=[doc.slug]))
+        resp = self.client.get(
+            reverse('wiki.edit', args=[doc.slug])
+        )
+        page = pq(resp.content)
+        rev_id1 = page.find('input[name="current_rev"]').attr('value')
+        # Edit #2 starts...
+        resp = self.client.get(
+            reverse('wiki.edit', args=[doc.slug])
+        )
+        page = pq(resp.content)
+        rev_id2 = page.find('input[name="current_rev"]').attr('value')
+
+        # Update data for the POST we are about to attempt
+        data.update({
+            'form-type': 'rev',
+            'content': 'This edit got there first',
+            'current_rev': rev_id2
+        })
+        # If this is a translation test, then create a translation and a
+        # revision on it. Then update data.
+        if translate_locale:
+            translation = document(parent=doc, locale=translate_locale, save=True)
+            translation_rev = revision(
+                document=translation,
+                based_on=translation.parent.current_or_latest_revision(),
+                save=True
+            )
+            rev_id1 = rev_id2 = translation_rev.id
+            posting_url = reverse(
+                'wiki.edit',
+                args=[translation_rev.document.slug],
+                locale=translate_locale
+            )
+            data.update({
+                'title': translation.title,
+                'locale': translation.locale,
+                'slug': translation.slug,
+                'current_rev': rev_id2
+            })
+
+        # Edit #2 submits successfully
+        if is_ajax:
+            resp = self.client.post(
+                posting_url,
+                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            )
+            eq_(False, json.loads(resp.content)['error'])
+        else:
+            resp = self.client.post(posting_url, data)
+            eq_(302, resp.status_code)
+
+        # Edit #1 submits, but receives a mid-aired notification
+        data.update({
+            'form-type': 'rev',
+            'content': 'This edit gets mid-aired',
+            'current_rev': rev_id1
+        })
+        if is_ajax:
+            resp = self.client.post(
+                posting_url,
+                data,
+                HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            )
+        else:
+            resp = self.client.post(posting_url, data)
+
+        # The url of the document's history
+        locale = translate_locale if translate_locale else doc.locale
+        doc_path = translation.slug if translate_locale else doc.slug
+        history_url = reverse(
+            'wiki.document_revisions', kwargs={'document_path': doc_path}, locale=locale
+        )
+        # The midair collission error, with the document url
+        midair_collission_error = (unicode(
+            MIDAIR_COLLISION) % {'url': history_url}
+        ).encode('utf-8')
+
+        if is_ajax:
+            location_of_error = json.loads(resp.content)['error_message']
+        else:
+            # If this is not an ajax post, then the error comes back in escaped
+            # html. We unescape the resp.content, but not all of it, since that
+            # causes ascii errors.
+            start_of_error = resp.content.index(midair_collission_error[0:20])
+            # Add an some extra characters to the end, since the unescaped length
+            # is a little less than the escaped length
+            end_of_error = start_of_error + len(midair_collission_error) + 20
+            location_of_error = HTMLParser.HTMLParser().unescape(
+                resp.content[start_of_error: end_of_error]
+            )
+        ok_(midair_collission_error in location_of_error,
+            "Midair collision message should appear")
+
+    @pytest.mark.midair
+    def test_edit_midair_collisions_ajax(self):
+        """Tests midair collisions for ajax submissions."""
+        self.test_edit_midair_collisions(is_ajax=True)
+
+    @override_flag(SPAM_SUBMISSIONS_FLAG, active=True)
+    @override_flag(SPAM_CHECKS_FLAG, active=True)
+    @override_config(AKISMET_KEY='dashboard')
+    @requests_mock.mock()
+    @mock.patch('kuma.spam.akismet.Akismet.check_comment')
+    def test_edit_spam_ajax(self, mock_requests, mock_akismet_method, translate_locale=None):
+        """Tests attempted spam edits that occur on Ajax POSTs."""
+        # Note: Akismet is enabled by the Flag overrides
+
+        mock_requests.post(VERIFY_URL, content='valid')
+        # The return value of akismet.check_comment is set to True
+        mock_akismet_method.return_value = True
+
+        # self.client.login(username='admin', password='testpass')
+        self.client.login(username='testuser', password='testpass')
+
+        # Create a new document.
+        doc = document(save=True)
+        data = new_document_data()
+        # Create a revision on the document
+        revision(save=True, document=doc)
+        # This is the url to post new revisions for the rest of this test
+        posting_url = reverse('wiki.edit', args=[doc.slug])
+
+        # If this is a translation test, then create a translation and a revision on it
+        if translate_locale:
+            translation = document(
+                parent=doc,
+                locale=translate_locale,
+                save=True
+            )
+            translation_rev = revision(
+                document=translation,
+                based_on=translation.parent.current_or_latest_revision(),
+                save=True
+            )
+            # rev_id = translation_rev.id
+            posting_url = reverse(
+                'wiki.edit',
+                args=[translation_rev.document.slug],
+                locale=translate_locale
+            )
+
+        # Get the rev id
+        resp = self.client.get(posting_url)
+        page = pq(resp.content)
+        rev_id = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit submits
+        data.update({
+            'form-type': 'rev',
+            'content': 'Spam content',
+            'current_rev': rev_id
+        })
+        resp = self.client.post(
+            posting_url,
+            data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+        spam_message = render_to_string('wiki/includes/spam_error.html')
+        # The spam message is generated without a locale during this test, so we
+        # replace the url with a url with a locale
+        args = ['MDN/Contribute/Does_this_belong']
+        no_locale = reverse('wiki.document', args=args).encode('utf-8')
+        if translate_locale:
+            yes_locale = reverse(
+                'wiki.document', args=args, locale=translate_locale
+            ).encode('utf-8')
+        else:
+            yes_locale = reverse(
+                'wiki.document', args=args, force_locale=True
+            ).encode('utf-8')
+        spam_message = spam_message.replace(no_locale, yes_locale)
+        # Spam message appears in the JsonResponse content
+        ok_(spam_message in json.loads(resp.content)['error_message'],
+            "Spam message should appear")
+
+    def test_multiple_edits_ajax(self, translate_locale=None):
+        """Tests multiple sequential attempted valid edits that occur as Ajax POSTs."""
+
+        self.client.login(username='admin', password='testpass')
+
+        # Post a new document.
+        data = new_document_data()
+        resp = self.client.post(reverse('wiki.create'), data)
+        doc = Document.objects.get(slug=data['slug'])
+        # This is the url to post new revisions for the rest of this test
+        if translate_locale:
+            posting_url = reverse('wiki.edit', args=[doc.slug], locale=translate_locale)
+        else:
+            posting_url = reverse('wiki.edit', args=[doc.slug])
+
+        if translate_locale:
+            # Post a new translation on doc
+            translate_url = reverse(
+                'wiki.translate',
+                args=[data['slug']],
+                locale=settings.WIKI_DEFAULT_LANGUAGE
+            ) + '?tolocale={}'.format(translate_locale)
+            self.client.post(translate_url, data, follow=True)
+            data.update({'locale': translate_locale})
+
+        # Edit #1
+        resp = self.client.get(posting_url)
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
-        # Edit #2 starts...
-        resp = self.client.get(reverse('wiki.edit',
-                                       args=[doc.slug]))
+        # Edit #1 submits successfully
+        data.update({
+            'form-type': 'rev',
+            'content': 'Edit #1',
+            'current_rev': rev_id1
+        })
+        resp1 = self.client.post(
+            posting_url,
+            data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+        # Edit #2
+        resp = self.client.get(posting_url)
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 submits successfully
         data.update({
-            'form': 'rev',
-            'content': 'This edit got there first',
+            'form-type': 'rev',
+            'content': 'Edit #2',
             'current_rev': rev_id2
         })
-        resp = self.client.post(reverse('wiki.edit',
-                                        args=[doc.slug]), data)
-        eq_(302, resp.status_code)
+        resp2 = self.client.post(
+            posting_url,
+            data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
 
-        # Edit #1 submits, but receives a mid-aired notification
-        data.update({
-            'form': 'rev',
-            'content': 'This edit gets mid-aired',
-            'current_rev': rev_id1
-        })
-        resp = self.client.post(reverse('wiki.edit',
-                                        args=[doc.slug]), data)
-        eq_(200, resp.status_code)
+        # For Ajax requests the response is a JsonResponse
+        for resp in [resp1, resp2]:
+            eq_(json.loads(resp.content)['error'], False)
+            ok_('error_message' not in json.loads(resp.content).keys())
 
-        ok_(unicode(MIDAIR_COLLISION).encode('utf-8') in resp.content,
-            "Midair collision message should appear")
+    def test_multiple_translation_edits_ajax(self):
+        """Tests multiple sequential valid transalation edits that occur as Ajax POSTs."""
+        self.test_multiple_edits_ajax(translate_locale='es')
+
+    # test translation fails as well
+    def test_translation_midair_collission(self):
+        """Tests midair collisions for non-ajax translation revisions."""
+        self.test_edit_midair_collisions(is_ajax=False, translate_locale='az')
+
+    def test_translation_midair_collission_ajax(self):
+        """Tests midair collisions for ajax translation revisions."""
+        self.test_edit_midair_collisions(is_ajax=True, translate_locale='af')
+
+    def test_translation_spam_ajax(self):
+        """Tests attempted translation spam edits that occur on Ajax POSTs."""
+        self.test_edit_spam_ajax(translate_locale='ru')
 
     @pytest.mark.toc
     def test_toc_toggle_off(self):
@@ -2336,7 +2565,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc = rev.document
         data = new_document_data()
         ok_(Document.objects.get(slug=doc.slug, locale=doc.locale).show_toc)
-        data['form'] = 'rev'
+        data['form-type'] = 'rev'
         data['toc_depth'] = 0
         data['slug'] = doc.slug
         data['title'] = doc.title
@@ -2356,7 +2585,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(not Document.objects.get(slug=rev.document.slug,
                                      locale=rev.document.locale).show_toc)
         data = new_document_data()
-        data['form'] = 'rev'
+        data['form-type'] = 'rev'
         data['slug'] = rev.document.slug
         data['title'] = rev.document.title
         self.client.post(reverse('wiki.edit', args=[rev.document.slug]),
@@ -2547,7 +2776,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug=slug)
 
-        data.update({'form': 'rev',
+        data.update({'form-type': 'rev',
                      'content': 'This revision should NOT record IP',
                      'comment': 'This revision should NOT record IP'})
 
@@ -2589,7 +2818,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc = Document.objects.get(
             locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
 
-        data.update({'form': 'rev',
+        data.update({'form-type': 'rev',
                      'content': 'This edit should not send an email',
                      'comment': 'This edit should not send an email'})
 
@@ -2632,7 +2861,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         testuser2 = get_user(username='testuser2')
         EditDocumentEvent.notify(testuser2, rev.document)
 
-        data.update({'form': 'rev',
+        data.update({'form-type': 'rev',
                      'slug': rev.document.slug,
                      'title': rev.document.title,
                      'content': 'This edit should send an email',
@@ -2656,7 +2885,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         testuser01 = get_user(username='testuser01')
         EditDocumentEvent.notify(testuser01, rev.document)
 
-        data.update({'form': 'rev',
+        data.update({'form-type': 'rev',
                      'slug': rev.document.slug,
                      'content': 'This edit should send 2 emails',
                      'comment': 'This edit should send 2 emails'})
@@ -2689,7 +2918,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()
-        data.update({'form': 'rev',
+        data.update({'form-type': 'rev',
                      'slug': child_doc.slug,
                      'content': 'This edit should send an email',
                      'comment': 'This edit should send an email'})
@@ -2716,7 +2945,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()
-        data.update({'form': 'rev',
+        data.update({'form-type': 'rev',
                      'slug': grandchild_doc.slug,
                      'content': 'This edit should send an email',
                      'comment': 'This edit should send an email'})
@@ -2745,7 +2974,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()
-        data.update({'form': 'rev',
+        data.update({'form-type': 'rev',
                      'slug': child_doc.slug,
                      'content': 'This edit should send an email',
                      'comment': 'This edit should send an email'})
@@ -2931,7 +3160,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             normalize_html(response.content))
 
     @pytest.mark.midair
-    def test_raw_section_edit(self):
+    def test_raw_section_edit_ajax(self):
         self.client.login(username='admin', password='testpass')
         rev = revision(is_approved=True, save=True, content="""
             <h1 id="s1">s1</h1>
@@ -2950,20 +3179,16 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <h1 id="s2">s2</h1>
             <p>replace</p>
         """
-        expected = """
-            <h1 id="s2">s2</h1>
-            <p>replace</p>
-        """
         response = self.client.post('%s?section=s2&raw=true' %
                                     reverse('wiki.edit',
                                             args=[rev.document.slug]),
-                                    {"form": "rev",
+                                    {"form-type": "rev",
                                      "slug": rev.document.slug,
                                      "content": replace},
                                     follow=True,
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(normalize_html(expected),
-            normalize_html(response.content))
+        eq_({'error': False, 'new_revision_id': rev.id + 1},
+            json.loads(response.content))
 
         expected = """
             <h1 id="s1">s1</h1>
@@ -2985,7 +3210,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             normalize_html(response.content))
 
     @pytest.mark.midair
-    def test_midair_section_merge(self):
+    def test_midair_section_merge_ajax(self):
         """If a page was changed while someone was editing, but the changes
         didn't affect the specific section being edited, then ignore the midair
         warning"""
@@ -3024,7 +3249,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
         """
         data = {
-            'form': 'rev',
+            'form-type': 'rev',
             'content': rev.content,
             'slug': ''
         }
@@ -3046,7 +3271,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
 
         # Edit #2 submits successfully
         data.update({
-            'form': 'rev',
+            'form-type': 'rev',
             'content': replace_2,
             'current_rev': rev_id2,
             'slug': rev.document.slug
@@ -3055,12 +3280,13 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                 reverse('wiki.edit', args=[rev.document.slug]),
                                 data,
                                 HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(302, resp.status_code)
+
+        eq_(json.loads(resp.content)['error'], False)
 
         # Edit #1 submits, but since it's a different section, there's no
         # mid-air collision
         data.update({
-            'form': 'rev',
+            'form-type': 'rev',
             'content': replace_1,
             'current_rev': rev_id1
         })
@@ -3087,7 +3313,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             unicode(response['x-kuma-revision']))
 
     @pytest.mark.midair
-    def test_midair_section_collision(self):
+    def test_midair_section_collision_ajax(self):
         """If both a revision and the edited section has changed, then a
         section edit is a collision."""
         self.client.login(username='admin', password='testpass')
@@ -3114,7 +3340,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>first replace</p>
         """
         data = {
-            'form': 'rev',
+            'form-type': 'rev',
             'content': rev.content
         }
 
@@ -3134,7 +3360,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
 
         # Edit #2 submits successfully
         data.update({
-            'form': 'rev',
+            'form-type': 'rev',
             'content': replace_2,
             'slug': rev.document.slug,
             'current_rev': rev_id2
@@ -3142,7 +3368,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit', args=[rev.document.slug]),
                                 data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(302, resp.status_code)
+        eq_(False, json.loads(resp.content)['error'])
 
         # Edit #1 submits, but since it's the same section, there's a collision
         data.update({
@@ -3153,8 +3379,14 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit', args=[rev.document.slug]),
                                 data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        # With the raw API, we should get a 409 Conflict on collision.
-        eq_(409, resp.status_code)
+        eq_(200, resp.status_code)
+        # We receive the midair collission message
+        history_url = reverse(
+            'wiki.document_revisions',
+            kwargs={'document_path': rev.document.slug}, locale=rev.document.locale)
+        midair_collission_error = (unicode(MIDAIR_COLLISION) % {'url': history_url}).encode('utf-8')
+        ok_(midair_collission_error in json.loads(resp.content)['error_message'],
+            "Midair collision message should appear")
 
     def test_raw_include_option(self):
         doc_src = u"""
@@ -3209,7 +3441,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         """
         self.client.post('%s?section=s2&raw=true' %
                          reverse('wiki.edit', args=[rev.document.slug]),
-                         {"form": "rev", "slug": rev.document.slug, "content": replace},
+                         {"form-type": "rev", "slug": rev.document.slug, "content": replace},
                          follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=rev.document.id).current_revision
         ok_(rev.id != changed.id)
@@ -3242,7 +3474,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         """
         self.client.post('%s?section=s2&raw=true' %
                          reverse('wiki.edit', args=[rev.document.slug]),
-                         {"form": "rev", "slug": rev.document.slug, "content": replace},
+                         {"form-type": "rev", "slug": rev.document.slug, "content": replace},
                          follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=rev.document.id).current_revision
         ok_(rev.id != changed.id)
@@ -3691,7 +3923,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
 
         data = new_document_data()
         data.update({
-            'form': 'rev',
+            'form-type': 'rev',
             'content': 'This is an update',
         })
 
@@ -3703,7 +3935,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         mock_document_schedule_rendering.reset_mock()
 
         data.update({
-            'form': 'both',
+            'form-type': 'both',
             'content': 'This is a translation',
         })
         translate_url = (reverse('wiki.translate', args=[data['slug']],

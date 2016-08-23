@@ -19,8 +19,9 @@
 
 <ul class="page-buttons">
   {% if document %}
+  {# No save-and-edit on new pages because slug changes confuse it #}
   <li>
-    <button type="submit" class="button positive btn-save-and-edit" data-optimizely-hook="button-save-and-keep-editing button-save-and-keep-editing-{{ location }}"><span>{{ _('Publish and Keep Editing') }}</span><i aria-hidden="true" class="icon-pencil"></i></button>
+    <button type="button" class="button positive btn-save-and-edit" data-optimizely-hook="button-save-and-keep-editing button-save-and-keep-editing-{{ location }}"><span>{{ _('Publish and Keep Editing') }}</span><i aria-hidden="true" class="icon-pencil"></i></button>
   </li>
   {% endif %}
   <li>

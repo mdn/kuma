@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 import kuma.wiki.content
@@ -127,6 +129,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
     if user_has_rev_perm:
         initial = {
             'based_on': based_on_rev.id,
+            'current_rev': doc.current_or_latest_revision().id if doc else None,
             'comment': '',
             'toc_depth': based_on_rev.toc_depth,
             'localization_tags': ['inprogress'],
@@ -147,7 +150,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                 parent_slug=slug_dict['parent'])
 
     if request.method == 'POST':
-        which_form = request.POST.get('form', 'both')
+        which_form = request.POST.get('form-type', 'both')
         doc_form_invalid = False
 
         # Grab the posted slug value in case it's invalid
@@ -214,7 +217,30 @@ def translate(request, document_slug, document_locale, revision_id=None):
                         pass
 
                 rev_form.save(doc)
+                # If this is an Ajax POST, then return a JsonResponse
+                if request.is_ajax():
+                    data = {
+                        'error': False,
+                        'new_revision_id': rev_form.instance.id,
+                    }
+
+                    return JsonResponse(data)
                 return redirect(doc)
+            else:
+                # If this is an Ajax POST, then return a JsonResponse with error
+                if request.is_ajax():
+                    if 'current_rev' in rev_form._errors:
+                        # Make the error message safe so the '<' and '>' don't
+                        # get turned into '&lt;' and '&gt;', respectively
+                        rev_form.errors['current_rev'][0] = mark_safe(
+                            rev_form.errors['current_rev'][0])
+                    errors = [rev_form.errors[key][0] for key in rev_form.errors.keys()]
+                    data = {
+                        "error": True,
+                        "error_message": errors,
+                        "new_revision_id": rev_form.instance.id,
+                    }
+                    return JsonResponse(data=data)
 
     if doc:
         from_id = smart_int(request.GET.get('from'), None)

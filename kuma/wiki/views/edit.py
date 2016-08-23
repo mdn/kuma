@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-import textwrap
 from urllib import urlencode
 
 import newrelic.agent
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_http_methods
@@ -27,7 +27,7 @@ from .utils import document_form_initial, split_slug
 
 
 @xframe_options_sameorigin
-def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
+def _edit_document_collision(request, orig_rev, curr_rev, is_async_submit,
                              is_raw, rev_form, doc_form, section_id, rev, doc):
     """
     Handle when a mid-air collision is detected upon submission
@@ -136,7 +136,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
             raise PermissionDenied
 
     else:  # POST
-        is_iframe_target = request.GET.get('iframe', False)
+        is_async_submit = request.is_ajax()
         is_raw = request.GET.get('raw', False)
         need_edit_links = request.GET.get('edit_links', False)
         parent_id = request.POST.get('parent_id', '')
@@ -151,7 +151,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
 
         # Comparing against localized names for the Save button bothers me, so
         # I embedded a hidden input:
-        which_form = request.POST.get('form')
+        which_form = request.POST.get('form-type')
 
         if which_form == 'doc':
             if doc.allows_editing_by(request.user):
@@ -168,17 +168,6 @@ def edit(request, document_slug, document_locale, revision_id=None):
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(parent=None)
 
-                    if is_iframe_target:
-                        # TODO: Does this really need to be a template? Just
-                        # shoehorning data into a single HTML element.
-                        response = HttpResponse(textwrap.dedent("""
-                            <span id="iframe-response"
-                                  data-status="OK"
-                                  data-current-revision="%s">OK</span>
-                        """ % doc.current_revision.id))
-                        response['X-Frame-Options'] = 'SAMEORIGIN'
-                        return response
-
                     return redirect(urlparams(doc.get_edit_url(),
                                               opendescription=1))
                 disclose_description = True
@@ -193,7 +182,7 @@ def edit(request, document_slug, document_locale, revision_id=None):
 
                 rev_form = RevisionForm(request=request,
                                         data=post_data,
-                                        is_iframe_target=is_iframe_target,
+                                        is_async_submit=is_async_submit,
                                         section_id=section_id)
                 rev_form.instance.document = doc  # for rev_form.clean()
 
@@ -208,28 +197,38 @@ def edit(request, document_slug, document_locale, revision_id=None):
                 curr_rev = doc.current_revision
 
                 if not rev_form.is_valid():
-                    # Was there a mid-air collision?
-                    if 'current_rev' in rev_form._errors:
+                    # If this was an Ajax POST, then return a JsonResponse
+                    if is_async_submit:
+                        # Was there a mid-air collision?
+                        if 'current_rev' in rev_form._errors:
+                            # Make the error message safe so the '<' and '>' don't
+                            # get turned into '&lt;' and '&gt;', respectively
+                            rev_form.errors['current_rev'][0] = mark_safe(
+                                rev_form.errors['current_rev'][0])
+                        errors = [rev_form.errors[key][0] for key in rev_form.errors.keys()]
+
+                        data = {
+                            "error": True,
+                            "error_message": errors,
+                            "new_revision_id": curr_rev.id,
+                        }
+                        return JsonResponse(data=data)
                         # Jump out to a function to escape indentation hell
                         return _edit_document_collision(
-                            request, orig_rev, curr_rev, is_iframe_target,
+                            request, orig_rev, curr_rev, is_async_submit,
                             is_raw, rev_form, doc_form, section_id,
                             rev, doc)
-
+                    # Was this an Ajax submission that was marked as spam?
+                    if is_async_submit and '__all__' in rev_form._errors:
+                        # Return a JsonResponse
+                        data = {
+                            "error": True,
+                            "error_message": mark_safe(rev_form.errors['__all__'][0]),
+                            "new_revision_id": curr_rev.id,
+                        }
+                        return JsonResponse(data=data)
                 if rev_form.is_valid():
                     rev_form.save(doc)
-
-                    if is_iframe_target:
-                        # TODO: Does this really need to be a template? Just
-                        # shoehorning data into a single HTML element.
-                        response = HttpResponse("""
-                            <span id="iframe-response"
-                                  data-status="OK"
-                                  data-current-revision="%s">OK</span>
-                        """ % doc.current_revision.id)
-                        response['X-Frame-Options'] = 'SAMEORIGIN'
-                        return response
-
                     if (is_raw and orig_rev is not None and
                             curr_rev.id != orig_rev.id):
                         # If this is the raw view, and there was an original
@@ -240,6 +239,15 @@ def edit(request, document_slug, document_locale, revision_id=None):
                         response['X-Frame-Options'] = 'SAMEORIGIN'
                         response.status_code = 205
                         return response
+                    # Is this an Ajax POST?
+                    if is_async_submit:
+                        # This is the most recent revision id
+                        new_rev_id = rev.document.revisions.order_by('-id').first().id
+                        data = {
+                            "error": False,
+                            "new_revision_id": new_rev_id
+                        }
+                        return JsonResponse(data)
 
                     if rev_form.instance.is_approved:
                         view = 'wiki.document'
