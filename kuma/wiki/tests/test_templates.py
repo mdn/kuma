@@ -203,6 +203,51 @@ class DocumentTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' not in response.content)
 
+    def test_lang_switcher_footer(self):
+        """Test the language switcher footer"""
+        parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
+        trans_bn_bd = document(parent=parent, locale="bn-BD", save=True)
+        trans_ar = document(parent=parent, locale="ar", save=True)
+        trans_pt_br = document(parent=parent, locale="pt-BR", save=True)
+        trans_fr = document(parent=parent, locale="fr", save=True)
+
+        response = self.client.get(trans_pt_br.get_absolute_url())
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        options = doc(".languages.go select.wiki-l10n option")
+
+        # The requeseted document language name should be at first
+        ok_(trans_pt_br.language in options[0].text)
+        ok_(parent.language not in options[0].text)
+        # The parent document language should be at at second
+        ok_(parent.language in options[1].text)
+        ok_(trans_ar.language not in options[1].text)
+        # Then should be ar, bn-BD, fr
+        ok_(trans_ar.language in options[2].text)
+        ok_(trans_bn_bd.language in options[3].text)
+        ok_(trans_fr.language in options[4].text)
+
+    def test_lang_switcher_button(self):
+        parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
+        trans_bn_bd = document(parent=parent, locale="bn-BD", save=True)
+        trans_ar = document(parent=parent, locale="ar", save=True)
+        trans_pt_br = document(parent=parent, locale="pt-BR", save=True)
+        trans_fr = document(parent=parent, locale="fr", save=True)
+
+        response = self.client.get(trans_pt_br.get_absolute_url())
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        options = doc("#languages-menu-submenu ul#translations li a")
+
+        # The requeseted document language name should not be at button
+        ok_(trans_pt_br.language not in options[0].text)
+        # Parent document language name should be at first
+        ok_(parent.language in options[0].text)
+        # Then should be ar, bn-BD, fr
+        ok_(trans_ar.language in options[1].text)
+        ok_(trans_bn_bd.language in options[2].text)
+        ok_(trans_fr.language in options[3].text)
+
 
 class RevisionTests(UserTestCase, WikiTestCase):
     """Tests for the Revision template"""
