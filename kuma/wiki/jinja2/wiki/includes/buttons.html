@@ -23,7 +23,7 @@
             <ul id="translations">
               {% if document.other_translations %}
                 {% for translation in document.other_translations %}
-                  <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.slug, locale=translation.locale) }}" title="{{ translation.title }} – {{ get_locale_localized(translation.locale) }}">{{ translation.language }} ({{ translation.locale }})</a></bdi></li>
+                  <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.slug, locale=translation.locale) }}" title="{{ get_locale_localized(translation.locale) }}">{{ translation.language }} ({{ translation.locale }})</a></bdi></li>
                 {% endfor %}
               {% else %}
                 <li class="smaller">{{ _('No translations exist for this article.') }}</li>
