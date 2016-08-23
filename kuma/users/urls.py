@@ -5,6 +5,7 @@ from django.conf.urls import include, url
 from allauth.account import views as account_views
 from allauth.socialaccount import providers, views as socialaccount_views
 
+from kuma.core.decorators import never_cache
 from . import views
 
 
@@ -19,7 +20,7 @@ account_patterns = [
         views.signup,
         name='socialaccount_signup'),
     url(r'^connections/?$',
-        socialaccount_views.connections,
+        never_cache(socialaccount_views.connections),
         name='socialaccount_connections'),
     url(r'^inactive/?$',
         account_views.account_inactive,

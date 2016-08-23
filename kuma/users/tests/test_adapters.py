@@ -4,9 +4,10 @@ from django.test import RequestFactory
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.models import SocialLogin, SocialAccount
 
-from kuma.core.tests import eq_, ok_
+from kuma.core.tests import eq_
 from kuma.core.urlresolvers import reverse
 from kuma.users.adapters import KumaSocialAccountAdapter, KumaAccountAdapter
+
 
 from . import UserTestCase
 
@@ -134,45 +135,58 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 class KumaAccountAdapterTestCase(UserTestCase):
     localizing_client = True
     rf = RequestFactory()
+    message_template = 'socialaccount/messages/account_connected.txt'
 
     def setUp(self):
         """ extra setUp to make a working session """
         super(KumaAccountAdapterTestCase, self).setUp()
         self.adapter = KumaAccountAdapter()
+        self.user = self.user_model.objects.get(username='testuser')
 
-    def test_account_connected_message(self):
-        """ https://bugzil.la/1054461 """
-        message_template = 'socialaccount/messages/account_connected.txt'
+    def test_account_connected_message(
+            self, next_url='/', has_message=False, extra_tags=''):
+        """
+        Test that the account connection message depends on the next URL.
+
+        https://bugzil.la/1054461
+        """
         request = self.rf.get('/')
-
-        # first check for the case in which the next url in the account
-        # connection process is the frontpage, there shouldn't be a message
+        request.user = self.user
         session = self.client.session
-        session['sociallogin_next_url'] = '/'
-        session.save()
-        request.session = session
-        request.user = self.user_model.objects.get(username='testuser')
-        request.LANGUAGE_CODE = 'en-US'
-        messages = self.get_messages(request)
-
-        self.adapter.add_message(request, django_messages.INFO,
-                                 message_template)
-        eq_(len(messages), 0)
-
-        # secondly check for the case in which the next url in the connection
-        # process is the profile edit page, there should be a message
-        session = self.client.session
-        next_url = reverse('users.user_edit',
-                           kwargs={'username': request.user.username},
-                           locale=request.LANGUAGE_CODE)
         session['sociallogin_next_url'] = next_url
         session.save()
         request.session = session
+        request.LANGUAGE_CODE = 'en-US'
         messages = self.get_messages(request)
-
         self.adapter.add_message(request, django_messages.INFO,
-                                 message_template)
+                                 self.message_template, extra_tags=extra_tags)
+
         queued_messages = list(messages)
-        eq_(len(queued_messages), 1)
-        eq_(django_messages.SUCCESS, queued_messages[0].level)
-        ok_('connected' in queued_messages[0].message)
+        if has_message:
+            assert len(queued_messages) == 1
+            message_data = queued_messages[0]
+            assert message_data.level == django_messages.SUCCESS
+            assert 'connected' in message_data.message
+        else:
+            assert not queued_messages
+        return queued_messages
+
+    def test_account_connected_message_user_edit(self):
+        """Connection message appears if the profile edit is the next page."""
+        next_url = reverse('users.user_edit',
+                           kwargs={'username': self.user.username},
+                           locale='en-US')
+        messages = self.test_account_connected_message(next_url, True)
+        assert messages[0].tags == 'account success'
+
+    def test_account_connected_message_connection_page(self):
+        """Message appears on the connections page (bug 1229906)."""
+        next_url = reverse('socialaccount_connections')
+        self.test_account_connected_message(next_url, True)
+
+    def test_extra_tags(self):
+        """Extra tags can be added to the message."""
+        next_url = reverse('socialaccount_connections')
+        messages = self.test_account_connected_message(next_url, True,
+                                                       extra_tags='congrats')
+        assert messages[0].tags == 'congrats account success'
