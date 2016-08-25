@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from string import ascii_lowercase
 import json
 
 from django.contrib import admin
@@ -9,10 +10,9 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
-from django.template.defaultfilters import linebreaksbr, truncatechars
+from django.template.defaultfilters import truncatechars
 from django.utils import timezone
-from django.utils.encoding import smart_text
-from django.utils.html import escape
+from django.utils.html import escape, format_html, format_html_join
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
 from waffle import flag_is_active
@@ -266,6 +266,22 @@ rendering_info.allow_tags = True
 rendering_info.short_description = 'Rendering'
 rendering_info.admin_order_field = 'last_rendered_at'
 
+SUBMISSION_NOT_AVAILABLE = mark_safe(
+    '<em>Akismet submission not available.</em>')
+
+
+def akismet_data_as_dl(akismet_data):
+    if not akismet_data:
+        return SUBMISSION_NOT_AVAILABLE
+    data = json.loads(akismet_data)
+    raw_keys = [key for key in sorted(data.keys()) if key]
+    keys = ([key for key in raw_keys if key[0] in ascii_lowercase] +
+            [key for key in raw_keys if key[0] not in ascii_lowercase])
+    out = format_html(u'<dl>\n  {}\n</dl>',
+                      format_html_join(u'\n  ', u'<dt>{}</dt><dd>{}</dd>',
+                                       ((key, data[key]) for key in keys)))
+    return out
+
 
 @admin.register(Document)
 class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
@@ -343,8 +359,6 @@ class DocumentTagAdmin(admin.ModelAdmin):
 class DocumentZoneAdmin(admin.ModelAdmin):
     raw_id_fields = ('document',)
 
-SUBMISSION_NOT_AVAILABLE = 'Akismet submission not available.'
-
 
 @admin.register(DocumentSpamAttempt)
 class DocumentSpamAttemptAdmin(admin.ModelAdmin):
@@ -358,8 +372,8 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
     search_fields = ['title', 'slug', 'user__username']
     raw_id_fields = ['user', 'document']
     fields = [
-        'created', 'user', 'title', 'slug', 'document', 'submitted_data',
-        'review', 'reviewed', 'reviewer']
+        'created', 'user', 'title', 'slug', 'document',
+        'review', 'reviewed', 'reviewer', 'submitted_data']
     readonly_fields = ['created', 'submitted_data', 'reviewer', 'reviewed']
 
     MAX_LENGTH = 25
@@ -441,7 +455,7 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
         obj.save()
 
     def submitted_data(self, instance):
-        return instance.data or SUBMISSION_NOT_AVAILABLE
+        return akismet_data_as_dl(instance.data)
 
 
 @admin.register(Revision)
@@ -464,7 +478,7 @@ class RevisionIPAdmin(admin.ModelAdmin):
 
     def submitted_data(self, obj):
         """Display Akismet data, if saved at edit time."""
-        return obj.data or SUBMISSION_NOT_AVAILABLE
+        return akismet_data_as_dl(obj.data)
 
 
 @admin.register(RevisionAkismetSubmission)
@@ -552,10 +566,7 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
                     revision_id=revision_id).first()
             else:
                 revision_ip = None
-        if revision_ip and revision_ip.data:
-            return linebreaksbr(smart_text(revision_ip.data))
-        else:
-            return SUBMISSION_NOT_AVAILABLE
+        return akismet_data_as_dl(revision_ip and revision_ip.data)
 
 
 @admin.register(EditorToolbar)
