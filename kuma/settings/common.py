@@ -479,6 +479,7 @@ INSTALLED_APPS = (
 
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
+    'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
 
     # MDN
     'kuma.core',
@@ -503,7 +504,6 @@ INSTALLED_APPS = (
     'constance.backends.database',
     'constance',
     'waffle',
-    'soapbox',
     'kuma.authkeys',
     'tidings',
     'djcelery',
