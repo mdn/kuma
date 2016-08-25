@@ -1102,10 +1102,6 @@ WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 TIDINGS_FROM_ADDRESS = 'notifications@developer.mozilla.org'
 TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
-# bit.ly
-BITLY_USERNAME = config('BITLY_USERNAME', default='')
-BITLY_API_KEY = config('BITLY_API_KEY', default='')
-
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 # must be an entry in the CACHES setting!
 CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'

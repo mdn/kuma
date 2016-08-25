@@ -5,7 +5,6 @@ from datetime import datetime
 
 import mock
 import pytest
-from BeautifulSoup import BeautifulSoup
 from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -203,22 +202,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' not in response.content)
-
-    @pytest.mark.toc
-    def test_show_toc_hidden_input_for_templates(self):
-        """Toggling show_toc on/off through the toc_depth field should
-        cause table of contents to appear/disappear."""
-        doc_content = """w00t"""
-        doc = document(slug="Template:w00t", save=True)
-        r = revision(document=doc, save=True, content=doc_content,
-                     is_approved=True)
-        response = self.client.get(r.document.get_absolute_url())
-        eq_(200, response.status_code)
-        soup = BeautifulSoup(response.content)
-        hidden_inputs = soup.findAll("input", type="hidden")
-        for input in hidden_inputs:
-            if input['name'] == 'toc_depth':
-                eq_(0, input['value'])
 
 
 class RevisionTests(UserTestCase, WikiTestCase):
@@ -603,6 +586,22 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         doc = Document.objects.get(pk=self.d.pk)
         eq_(new_title, doc.title)
+
+    @pytest.mark.toc
+    def test_toc_hidden_input_for_templates(self):
+        """The toc_depth field is hidden when editing a template."""
+        doc_content = """w00t"""
+        doc = document(locale='en-US', slug="Template:w00t", save=True)
+        revision(document=doc, save=True, content=doc_content,
+                 is_approved=True)
+        url = reverse('wiki.edit', args=[doc.slug], locale=doc.locale)
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+        parsed = pq(response.content)
+        toc_depth = parsed('input[name=toc_depth]')
+        eq_(1, len(toc_depth))
+        eq_('hidden', toc_depth[0].type)
+        eq_('0', toc_depth[0].value)
 
 
 class DocumentListTests(UserTestCase, WikiTestCase):
