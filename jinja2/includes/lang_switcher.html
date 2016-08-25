@@ -10,7 +10,7 @@
   <select id="language" class="autosubmit" name="lang">
     {# The default locale should always be in the first choice -#}
     <option title="{{ get_locale_localized(default_locale) }}" value="{{ default_locale }}">
-      {{ dafault_language }} ({{ default_locale }})
+      {{ default_language }} ({{ default_locale }})
     </option>
     {% for code, name in settings.LANGUAGES -%}
       {% if code != default_locale %}
