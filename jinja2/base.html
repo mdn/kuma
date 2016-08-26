@@ -136,6 +136,7 @@
               <li><a href="{{ wiki_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
               <li><a href="{{ wiki_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
               <li><a href="{{ wiki_url('Web/Guide/Graphics') }}">{{ _('Graphics') }}</a></li>
+              <li><a href="{{ wiki_url('Web/HTTP') }}">{{ _('HTTP') }}</a></li>
               <li><a href="{{ wiki_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
               <li><a href="{{ wiki_url('Web/Apps') }}">{{ _('Apps') }}</a></li>
               <li><a href="{{ wiki_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
@@ -148,6 +149,7 @@
               <li><a href="{{ wiki_url('Web/Reference') }}">{{ _('References') }}</a></li>
               <li><a href="{{ wiki_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
               <li><a href="{{ wiki_url('Web/Accessibility') }}">{{ _('Accessibility') }}</a></li>
+              <li><a href="{{ wiki_url('Games') }}">{{ _('Game development') }}</a></li>
               <li><a href="{{ wiki_url('Web') }}">{{ _('...more docs') }}</a></li>
             </ul>
           </div>
@@ -159,9 +161,7 @@
             <ul>
               <li><a href="{{ wiki_url('Mozilla/Add-ons') }}">{{ _('Add-ons') }}</a></li>
               <li><a href="{{ wiki_url('Mozilla/Firefox') }}">{{ _('Firefox') }}</a></li>
-              <li><a href="{{ wiki_url('Mozilla/Marketplace') }}">{{ _('Firefox Marketplace') }}</a></li>
-              <li><a href="{{ wiki_url('Mozilla/B2G_OS') }}">{{ _('B2G OS') }}</a></li>
-              <li><a href="{{ wiki_url('Persona') }}">{{ _('Persona') }}</a></li>
+              <li><a href="{{ wiki_url('Mozilla/Add-ons/WebExtensions') }}">{{ _('WebExtensions') }}</a></li>
             </ul>
           </div>
         </div>
@@ -175,7 +175,7 @@
             </ul>
             <ul>
               <li><a href="{{ wiki_url('MDN/Community') }}">{{ _('Join the MDN community') }}</a></li>
-              <li><a href="https://bugzilla.mozilla.org/form.doc">{{ _('Report a content problem') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
+              <li><a href="https://bugzilla.mozilla.org/form.doc?bug_file_loc={{ request.build_absolute_uri()|urlencode }}">{{ _('Report a content problem') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
               <li><a href="https://bugzilla.mozilla.org/form.mdn">{{ _('Report a bug') }}<i aria-hidden="true" class="icon-external-link"></i></a></li>
             </ul>
           </div>
