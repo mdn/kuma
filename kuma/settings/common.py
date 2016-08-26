@@ -555,7 +555,7 @@ TEMPLATES = [
                 'django_jinja.builtins.extensions.UrlsExtension',
                 'django_jinja.builtins.extensions.StaticFilesExtension',
                 'django_jinja.builtins.extensions.DjangoFiltersExtension',
-                'pipeline.templatetags.ext.PipelineExtension',
+                'pipeline.jinja2.PipelineExtension',
                 'waffle.jinja.WaffleExtension',
             ],
         }
@@ -604,11 +604,6 @@ STATICI18N_DOMAIN = 'javascript'
 
 # Cache non-versioned static files for one week
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
-
-PIPELINE_DISABLE_WRAPPER = True
-
-PIPELINE_CSS_COMPRESSOR = 'kuma.core.pipeline.cleancss.CleanCSSCompressor'
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
 
 PIPELINE_CSS = {
     'mdn': {
@@ -938,6 +933,14 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/ace.js',
     },
+}
+
+PIPELINE = {
+    'STYLESHEETS': PIPELINE_CSS,
+    'JAVASCRIPT': PIPELINE_JS,
+    'DISABLE_WRAPPER': True,
+    'CSS_COMPRESSOR': 'kuma.core.pipeline.cleancss.CleanCSSCompressor',
+    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
 }
 
 #
